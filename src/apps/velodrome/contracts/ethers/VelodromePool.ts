@@ -15,13 +15,13 @@ import type {
 } from 'ethers';
 import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
 import type { Listener, Provider } from '@ethersproject/providers';
-import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
 export declare namespace Pair {
   export type ObservationStruct = {
-    timestamp: BigNumberish;
-    reserve0Cumulative: BigNumberish;
-    reserve1Cumulative: BigNumberish;
+    timestamp: PromiseOrValue<BigNumberish>;
+    reserve0Cumulative: PromiseOrValue<BigNumberish>;
+    reserve1Cumulative: PromiseOrValue<BigNumberish>;
   };
 
   export type ObservationStructOutput = [BigNumber, BigNumber, BigNumber] & {
@@ -127,53 +127,98 @@ export interface VelodromePoolInterface extends utils.Interface {
       | 'transferFrom',
   ): FunctionFragment;
 
-  encodeFunctionData(functionFragment: 'allowance', values: [string, string]): string;
-  encodeFunctionData(functionFragment: 'approve', values: [string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'balanceOf', values: [string]): string;
+  encodeFunctionData(functionFragment: 'allowance', values: [PromiseOrValue<string>, PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'approve',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'balanceOf', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'blockTimestampLast', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'burn', values: [string]): string;
+  encodeFunctionData(functionFragment: 'burn', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'claimFees', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'claimable0', values: [string]): string;
-  encodeFunctionData(functionFragment: 'claimable1', values: [string]): string;
-  encodeFunctionData(functionFragment: 'current', values: [string, BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'claimable0', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'claimable1', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'current',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
   encodeFunctionData(functionFragment: 'currentCumulativePrices', values?: undefined): string;
   encodeFunctionData(functionFragment: 'decimals', values?: undefined): string;
   encodeFunctionData(functionFragment: 'fees', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'getAmountOut', values: [BigNumberish, string]): string;
+  encodeFunctionData(
+    functionFragment: 'getAmountOut',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>],
+  ): string;
   encodeFunctionData(functionFragment: 'getReserves', values?: undefined): string;
   encodeFunctionData(functionFragment: 'index0', values?: undefined): string;
   encodeFunctionData(functionFragment: 'index1', values?: undefined): string;
   encodeFunctionData(functionFragment: 'lastObservation', values?: undefined): string;
   encodeFunctionData(functionFragment: 'metadata', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'mint', values: [string]): string;
+  encodeFunctionData(functionFragment: 'mint', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'name', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'nonces', values: [string]): string;
+  encodeFunctionData(functionFragment: 'nonces', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'observationLength', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'observations', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'observations', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(
     functionFragment: 'permit',
-    values: [string, string, BigNumberish, BigNumberish, BigNumberish, BytesLike, BytesLike],
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BytesLike>,
+      PromiseOrValue<BytesLike>,
+    ],
   ): string;
-  encodeFunctionData(functionFragment: 'prices', values: [string, BigNumberish, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'quote', values: [string, BigNumberish, BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'prices',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'quote',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+  ): string;
   encodeFunctionData(functionFragment: 'reserve0', values?: undefined): string;
   encodeFunctionData(functionFragment: 'reserve0CumulativeLast', values?: undefined): string;
   encodeFunctionData(functionFragment: 'reserve1', values?: undefined): string;
   encodeFunctionData(functionFragment: 'reserve1CumulativeLast', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'sample', values: [string, BigNumberish, BigNumberish, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'skim', values: [string]): string;
+  encodeFunctionData(
+    functionFragment: 'sample',
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+    ],
+  ): string;
+  encodeFunctionData(functionFragment: 'skim', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'stable', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'supplyIndex0', values: [string]): string;
-  encodeFunctionData(functionFragment: 'supplyIndex1', values: [string]): string;
-  encodeFunctionData(functionFragment: 'swap', values: [BigNumberish, BigNumberish, string, BytesLike]): string;
+  encodeFunctionData(functionFragment: 'supplyIndex0', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'supplyIndex1', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'swap',
+    values: [
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BytesLike>,
+    ],
+  ): string;
   encodeFunctionData(functionFragment: 'symbol', values?: undefined): string;
   encodeFunctionData(functionFragment: 'sync', values?: undefined): string;
   encodeFunctionData(functionFragment: 'token0', values?: undefined): string;
   encodeFunctionData(functionFragment: 'token1', values?: undefined): string;
   encodeFunctionData(functionFragment: 'tokens', values?: undefined): string;
   encodeFunctionData(functionFragment: 'totalSupply', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'transfer', values: [string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'transferFrom', values: [string, string, BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'transfer',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'transferFrom',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
 
   decodeFunctionResult(functionFragment: 'allowance', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'approve', data: BytesLike): Result;
@@ -340,29 +385,36 @@ export interface VelodromePool extends BaseContract {
   removeListener: OnEvent<this>;
 
   functions: {
-    allowance(arg0: string, arg1: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    allowance(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber]>;
 
     approve(
-      spender: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      spender: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    balanceOf(arg0: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    balanceOf(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     blockTimestampLast(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    burn(to: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    burn(
+      to: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<ContractTransaction>;
 
-    claimFees(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    claimFees(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
-    claimable0(arg0: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    claimable0(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    claimable1(arg0: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    claimable1(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     current(
-      tokenIn: string,
-      amountIn: BigNumberish,
+      tokenIn: PromiseOrValue<string>,
+      amountIn: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber] & { amountOut: BigNumber }>;
 
@@ -378,7 +430,11 @@ export interface VelodromePool extends BaseContract {
 
     fees(overrides?: CallOverrides): Promise<[string]>;
 
-    getAmountOut(amountIn: BigNumberish, tokenIn: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    getAmountOut(
+      amountIn: PromiseOrValue<BigNumberish>,
+      tokenIn: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber]>;
 
     getReserves(overrides?: CallOverrides): Promise<
       [BigNumber, BigNumber, BigNumber] & {
@@ -406,16 +462,19 @@ export interface VelodromePool extends BaseContract {
       }
     >;
 
-    mint(to: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    mint(
+      to: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<ContractTransaction>;
 
     name(overrides?: CallOverrides): Promise<[string]>;
 
-    nonces(arg0: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    nonces(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     observationLength(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     observations(
-      arg0: BigNumberish,
+      arg0: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<
       [BigNumber, BigNumber, BigNumber] & {
@@ -426,27 +485,27 @@ export interface VelodromePool extends BaseContract {
     >;
 
     permit(
-      owner: string,
-      spender: string,
-      value: BigNumberish,
-      deadline: BigNumberish,
-      v: BigNumberish,
-      r: BytesLike,
-      s: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      owner: PromiseOrValue<string>,
+      spender: PromiseOrValue<string>,
+      value: PromiseOrValue<BigNumberish>,
+      deadline: PromiseOrValue<BigNumberish>,
+      v: PromiseOrValue<BigNumberish>,
+      r: PromiseOrValue<BytesLike>,
+      s: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     prices(
-      tokenIn: string,
-      amountIn: BigNumberish,
-      points: BigNumberish,
+      tokenIn: PromiseOrValue<string>,
+      amountIn: PromiseOrValue<BigNumberish>,
+      points: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber[]]>;
 
     quote(
-      tokenIn: string,
-      amountIn: BigNumberish,
-      granularity: BigNumberish,
+      tokenIn: PromiseOrValue<string>,
+      amountIn: PromiseOrValue<BigNumberish>,
+      granularity: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber] & { amountOut: BigNumber }>;
 
@@ -459,32 +518,35 @@ export interface VelodromePool extends BaseContract {
     reserve1CumulativeLast(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     sample(
-      tokenIn: string,
-      amountIn: BigNumberish,
-      points: BigNumberish,
-      window: BigNumberish,
+      tokenIn: PromiseOrValue<string>,
+      amountIn: PromiseOrValue<BigNumberish>,
+      points: PromiseOrValue<BigNumberish>,
+      window: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber[]]>;
 
-    skim(to: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    skim(
+      to: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<ContractTransaction>;
 
     stable(overrides?: CallOverrides): Promise<[boolean]>;
 
-    supplyIndex0(arg0: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    supplyIndex0(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    supplyIndex1(arg0: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    supplyIndex1(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     swap(
-      amount0Out: BigNumberish,
-      amount1Out: BigNumberish,
-      to: string,
-      data: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      amount0Out: PromiseOrValue<BigNumberish>,
+      amount1Out: PromiseOrValue<BigNumberish>,
+      to: PromiseOrValue<string>,
+      data: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     symbol(overrides?: CallOverrides): Promise<[string]>;
 
-    sync(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    sync(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     token0(overrides?: CallOverrides): Promise<[string]>;
 
@@ -495,40 +557,47 @@ export interface VelodromePool extends BaseContract {
     totalSupply(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     transfer(
-      dst: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      dst: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     transferFrom(
-      src: string,
-      dst: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      src: PromiseOrValue<string>,
+      dst: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
   };
 
-  allowance(arg0: string, arg1: string, overrides?: CallOverrides): Promise<BigNumber>;
+  allowance(arg0: PromiseOrValue<string>, arg1: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   approve(
-    spender: string,
-    amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    spender: PromiseOrValue<string>,
+    amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  balanceOf(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+  balanceOf(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   blockTimestampLast(overrides?: CallOverrides): Promise<BigNumber>;
 
-  burn(to: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  burn(
+    to: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
+  ): Promise<ContractTransaction>;
 
-  claimFees(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  claimFees(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
-  claimable0(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+  claimable0(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  claimable1(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+  claimable1(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  current(tokenIn: string, amountIn: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+  current(
+    tokenIn: PromiseOrValue<string>,
+    amountIn: PromiseOrValue<BigNumberish>,
+    overrides?: CallOverrides,
+  ): Promise<BigNumber>;
 
   currentCumulativePrices(overrides?: CallOverrides): Promise<
     [BigNumber, BigNumber, BigNumber] & {
@@ -542,7 +611,11 @@ export interface VelodromePool extends BaseContract {
 
   fees(overrides?: CallOverrides): Promise<string>;
 
-  getAmountOut(amountIn: BigNumberish, tokenIn: string, overrides?: CallOverrides): Promise<BigNumber>;
+  getAmountOut(
+    amountIn: PromiseOrValue<BigNumberish>,
+    tokenIn: PromiseOrValue<string>,
+    overrides?: CallOverrides,
+  ): Promise<BigNumber>;
 
   getReserves(overrides?: CallOverrides): Promise<
     [BigNumber, BigNumber, BigNumber] & {
@@ -570,16 +643,19 @@ export interface VelodromePool extends BaseContract {
     }
   >;
 
-  mint(to: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  mint(
+    to: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
+  ): Promise<ContractTransaction>;
 
   name(overrides?: CallOverrides): Promise<string>;
 
-  nonces(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+  nonces(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   observationLength(overrides?: CallOverrides): Promise<BigNumber>;
 
   observations(
-    arg0: BigNumberish,
+    arg0: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides,
   ): Promise<
     [BigNumber, BigNumber, BigNumber] & {
@@ -590,27 +666,27 @@ export interface VelodromePool extends BaseContract {
   >;
 
   permit(
-    owner: string,
-    spender: string,
-    value: BigNumberish,
-    deadline: BigNumberish,
-    v: BigNumberish,
-    r: BytesLike,
-    s: BytesLike,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    owner: PromiseOrValue<string>,
+    spender: PromiseOrValue<string>,
+    value: PromiseOrValue<BigNumberish>,
+    deadline: PromiseOrValue<BigNumberish>,
+    v: PromiseOrValue<BigNumberish>,
+    r: PromiseOrValue<BytesLike>,
+    s: PromiseOrValue<BytesLike>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   prices(
-    tokenIn: string,
-    amountIn: BigNumberish,
-    points: BigNumberish,
+    tokenIn: PromiseOrValue<string>,
+    amountIn: PromiseOrValue<BigNumberish>,
+    points: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides,
   ): Promise<BigNumber[]>;
 
   quote(
-    tokenIn: string,
-    amountIn: BigNumberish,
-    granularity: BigNumberish,
+    tokenIn: PromiseOrValue<string>,
+    amountIn: PromiseOrValue<BigNumberish>,
+    granularity: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides,
   ): Promise<BigNumber>;
 
@@ -623,32 +699,35 @@ export interface VelodromePool extends BaseContract {
   reserve1CumulativeLast(overrides?: CallOverrides): Promise<BigNumber>;
 
   sample(
-    tokenIn: string,
-    amountIn: BigNumberish,
-    points: BigNumberish,
-    window: BigNumberish,
+    tokenIn: PromiseOrValue<string>,
+    amountIn: PromiseOrValue<BigNumberish>,
+    points: PromiseOrValue<BigNumberish>,
+    window: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides,
   ): Promise<BigNumber[]>;
 
-  skim(to: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  skim(
+    to: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
+  ): Promise<ContractTransaction>;
 
   stable(overrides?: CallOverrides): Promise<boolean>;
 
-  supplyIndex0(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+  supplyIndex0(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  supplyIndex1(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+  supplyIndex1(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   swap(
-    amount0Out: BigNumberish,
-    amount1Out: BigNumberish,
-    to: string,
-    data: BytesLike,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    amount0Out: PromiseOrValue<BigNumberish>,
+    amount1Out: PromiseOrValue<BigNumberish>,
+    to: PromiseOrValue<string>,
+    data: PromiseOrValue<BytesLike>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   symbol(overrides?: CallOverrides): Promise<string>;
 
-  sync(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  sync(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   token0(overrides?: CallOverrides): Promise<string>;
 
@@ -659,29 +738,37 @@ export interface VelodromePool extends BaseContract {
   totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
   transfer(
-    dst: string,
-    amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    dst: PromiseOrValue<string>,
+    amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   transferFrom(
-    src: string,
-    dst: string,
-    amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    src: PromiseOrValue<string>,
+    dst: PromiseOrValue<string>,
+    amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   callStatic: {
-    allowance(arg0: string, arg1: string, overrides?: CallOverrides): Promise<BigNumber>;
+    allowance(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    approve(spender: string, amount: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+    approve(
+      spender: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
 
-    balanceOf(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    balanceOf(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     blockTimestampLast(overrides?: CallOverrides): Promise<BigNumber>;
 
     burn(
-      to: string,
+      to: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber, BigNumber] & { amount0: BigNumber; amount1: BigNumber }>;
 
@@ -689,11 +776,15 @@ export interface VelodromePool extends BaseContract {
       overrides?: CallOverrides,
     ): Promise<[BigNumber, BigNumber] & { claimed0: BigNumber; claimed1: BigNumber }>;
 
-    claimable0(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    claimable0(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    claimable1(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    claimable1(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    current(tokenIn: string, amountIn: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    current(
+      tokenIn: PromiseOrValue<string>,
+      amountIn: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     currentCumulativePrices(overrides?: CallOverrides): Promise<
       [BigNumber, BigNumber, BigNumber] & {
@@ -707,7 +798,11 @@ export interface VelodromePool extends BaseContract {
 
     fees(overrides?: CallOverrides): Promise<string>;
 
-    getAmountOut(amountIn: BigNumberish, tokenIn: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getAmountOut(
+      amountIn: PromiseOrValue<BigNumberish>,
+      tokenIn: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     getReserves(overrides?: CallOverrides): Promise<
       [BigNumber, BigNumber, BigNumber] & {
@@ -735,16 +830,16 @@ export interface VelodromePool extends BaseContract {
       }
     >;
 
-    mint(to: string, overrides?: CallOverrides): Promise<BigNumber>;
+    mint(to: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     name(overrides?: CallOverrides): Promise<string>;
 
-    nonces(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    nonces(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     observationLength(overrides?: CallOverrides): Promise<BigNumber>;
 
     observations(
-      arg0: BigNumberish,
+      arg0: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<
       [BigNumber, BigNumber, BigNumber] & {
@@ -755,27 +850,27 @@ export interface VelodromePool extends BaseContract {
     >;
 
     permit(
-      owner: string,
-      spender: string,
-      value: BigNumberish,
-      deadline: BigNumberish,
-      v: BigNumberish,
-      r: BytesLike,
-      s: BytesLike,
+      owner: PromiseOrValue<string>,
+      spender: PromiseOrValue<string>,
+      value: PromiseOrValue<BigNumberish>,
+      deadline: PromiseOrValue<BigNumberish>,
+      v: PromiseOrValue<BigNumberish>,
+      r: PromiseOrValue<BytesLike>,
+      s: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
     prices(
-      tokenIn: string,
-      amountIn: BigNumberish,
-      points: BigNumberish,
+      tokenIn: PromiseOrValue<string>,
+      amountIn: PromiseOrValue<BigNumberish>,
+      points: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<BigNumber[]>;
 
     quote(
-      tokenIn: string,
-      amountIn: BigNumberish,
-      granularity: BigNumberish,
+      tokenIn: PromiseOrValue<string>,
+      amountIn: PromiseOrValue<BigNumberish>,
+      granularity: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
@@ -788,26 +883,26 @@ export interface VelodromePool extends BaseContract {
     reserve1CumulativeLast(overrides?: CallOverrides): Promise<BigNumber>;
 
     sample(
-      tokenIn: string,
-      amountIn: BigNumberish,
-      points: BigNumberish,
-      window: BigNumberish,
+      tokenIn: PromiseOrValue<string>,
+      amountIn: PromiseOrValue<BigNumberish>,
+      points: PromiseOrValue<BigNumberish>,
+      window: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<BigNumber[]>;
 
-    skim(to: string, overrides?: CallOverrides): Promise<void>;
+    skim(to: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     stable(overrides?: CallOverrides): Promise<boolean>;
 
-    supplyIndex0(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    supplyIndex0(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    supplyIndex1(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    supplyIndex1(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     swap(
-      amount0Out: BigNumberish,
-      amount1Out: BigNumberish,
-      to: string,
-      data: BytesLike,
+      amount0Out: PromiseOrValue<BigNumberish>,
+      amount1Out: PromiseOrValue<BigNumberish>,
+      to: PromiseOrValue<string>,
+      data: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
@@ -823,87 +918,134 @@ export interface VelodromePool extends BaseContract {
 
     totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
-    transfer(dst: string, amount: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+    transfer(
+      dst: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
 
-    transferFrom(src: string, dst: string, amount: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+    transferFrom(
+      src: PromiseOrValue<string>,
+      dst: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
   };
 
   filters: {
     'Approval(address,address,uint256)'(
-      owner?: string | null,
-      spender?: string | null,
+      owner?: PromiseOrValue<string> | null,
+      spender?: PromiseOrValue<string> | null,
       amount?: null,
     ): ApprovalEventFilter;
-    Approval(owner?: string | null, spender?: string | null, amount?: null): ApprovalEventFilter;
+    Approval(
+      owner?: PromiseOrValue<string> | null,
+      spender?: PromiseOrValue<string> | null,
+      amount?: null,
+    ): ApprovalEventFilter;
 
     'Burn(address,uint256,uint256,address)'(
-      sender?: string | null,
+      sender?: PromiseOrValue<string> | null,
       amount0?: null,
       amount1?: null,
-      to?: string | null,
+      to?: PromiseOrValue<string> | null,
     ): BurnEventFilter;
-    Burn(sender?: string | null, amount0?: null, amount1?: null, to?: string | null): BurnEventFilter;
+    Burn(
+      sender?: PromiseOrValue<string> | null,
+      amount0?: null,
+      amount1?: null,
+      to?: PromiseOrValue<string> | null,
+    ): BurnEventFilter;
 
     'Claim(address,address,uint256,uint256)'(
-      sender?: string | null,
-      recipient?: string | null,
+      sender?: PromiseOrValue<string> | null,
+      recipient?: PromiseOrValue<string> | null,
       amount0?: null,
       amount1?: null,
     ): ClaimEventFilter;
-    Claim(sender?: string | null, recipient?: string | null, amount0?: null, amount1?: null): ClaimEventFilter;
+    Claim(
+      sender?: PromiseOrValue<string> | null,
+      recipient?: PromiseOrValue<string> | null,
+      amount0?: null,
+      amount1?: null,
+    ): ClaimEventFilter;
 
-    'Fees(address,uint256,uint256)'(sender?: string | null, amount0?: null, amount1?: null): FeesEventFilter;
-    Fees(sender?: string | null, amount0?: null, amount1?: null): FeesEventFilter;
+    'Fees(address,uint256,uint256)'(
+      sender?: PromiseOrValue<string> | null,
+      amount0?: null,
+      amount1?: null,
+    ): FeesEventFilter;
+    Fees(sender?: PromiseOrValue<string> | null, amount0?: null, amount1?: null): FeesEventFilter;
 
-    'Mint(address,uint256,uint256)'(sender?: string | null, amount0?: null, amount1?: null): MintEventFilter;
-    Mint(sender?: string | null, amount0?: null, amount1?: null): MintEventFilter;
+    'Mint(address,uint256,uint256)'(
+      sender?: PromiseOrValue<string> | null,
+      amount0?: null,
+      amount1?: null,
+    ): MintEventFilter;
+    Mint(sender?: PromiseOrValue<string> | null, amount0?: null, amount1?: null): MintEventFilter;
 
     'Swap(address,uint256,uint256,uint256,uint256,address)'(
-      sender?: string | null,
+      sender?: PromiseOrValue<string> | null,
       amount0In?: null,
       amount1In?: null,
       amount0Out?: null,
       amount1Out?: null,
-      to?: string | null,
+      to?: PromiseOrValue<string> | null,
     ): SwapEventFilter;
     Swap(
-      sender?: string | null,
+      sender?: PromiseOrValue<string> | null,
       amount0In?: null,
       amount1In?: null,
       amount0Out?: null,
       amount1Out?: null,
-      to?: string | null,
+      to?: PromiseOrValue<string> | null,
     ): SwapEventFilter;
 
     'Sync(uint256,uint256)'(reserve0?: null, reserve1?: null): SyncEventFilter;
     Sync(reserve0?: null, reserve1?: null): SyncEventFilter;
 
-    'Transfer(address,address,uint256)'(from?: string | null, to?: string | null, amount?: null): TransferEventFilter;
-    Transfer(from?: string | null, to?: string | null, amount?: null): TransferEventFilter;
+    'Transfer(address,address,uint256)'(
+      from?: PromiseOrValue<string> | null,
+      to?: PromiseOrValue<string> | null,
+      amount?: null,
+    ): TransferEventFilter;
+    Transfer(
+      from?: PromiseOrValue<string> | null,
+      to?: PromiseOrValue<string> | null,
+      amount?: null,
+    ): TransferEventFilter;
   };
 
   estimateGas: {
-    allowance(arg0: string, arg1: string, overrides?: CallOverrides): Promise<BigNumber>;
-
-    approve(
-      spender: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+    allowance(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
-    balanceOf(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    approve(
+      spender: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
+
+    balanceOf(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     blockTimestampLast(overrides?: CallOverrides): Promise<BigNumber>;
 
-    burn(to: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    burn(to: PromiseOrValue<string>, overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
-    claimFees(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    claimFees(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
-    claimable0(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    claimable0(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    claimable1(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    claimable1(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    current(tokenIn: string, amountIn: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    current(
+      tokenIn: PromiseOrValue<string>,
+      amountIn: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     currentCumulativePrices(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -911,7 +1053,11 @@ export interface VelodromePool extends BaseContract {
 
     fees(overrides?: CallOverrides): Promise<BigNumber>;
 
-    getAmountOut(amountIn: BigNumberish, tokenIn: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getAmountOut(
+      amountIn: PromiseOrValue<BigNumberish>,
+      tokenIn: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     getReserves(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -923,38 +1069,38 @@ export interface VelodromePool extends BaseContract {
 
     metadata(overrides?: CallOverrides): Promise<BigNumber>;
 
-    mint(to: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    mint(to: PromiseOrValue<string>, overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     name(overrides?: CallOverrides): Promise<BigNumber>;
 
-    nonces(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    nonces(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     observationLength(overrides?: CallOverrides): Promise<BigNumber>;
 
-    observations(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    observations(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     permit(
-      owner: string,
-      spender: string,
-      value: BigNumberish,
-      deadline: BigNumberish,
-      v: BigNumberish,
-      r: BytesLike,
-      s: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      owner: PromiseOrValue<string>,
+      spender: PromiseOrValue<string>,
+      value: PromiseOrValue<BigNumberish>,
+      deadline: PromiseOrValue<BigNumberish>,
+      v: PromiseOrValue<BigNumberish>,
+      r: PromiseOrValue<BytesLike>,
+      s: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     prices(
-      tokenIn: string,
-      amountIn: BigNumberish,
-      points: BigNumberish,
+      tokenIn: PromiseOrValue<string>,
+      amountIn: PromiseOrValue<BigNumberish>,
+      points: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     quote(
-      tokenIn: string,
-      amountIn: BigNumberish,
-      granularity: BigNumberish,
+      tokenIn: PromiseOrValue<string>,
+      amountIn: PromiseOrValue<BigNumberish>,
+      granularity: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
@@ -967,32 +1113,32 @@ export interface VelodromePool extends BaseContract {
     reserve1CumulativeLast(overrides?: CallOverrides): Promise<BigNumber>;
 
     sample(
-      tokenIn: string,
-      amountIn: BigNumberish,
-      points: BigNumberish,
-      window: BigNumberish,
+      tokenIn: PromiseOrValue<string>,
+      amountIn: PromiseOrValue<BigNumberish>,
+      points: PromiseOrValue<BigNumberish>,
+      window: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
-    skim(to: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    skim(to: PromiseOrValue<string>, overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     stable(overrides?: CallOverrides): Promise<BigNumber>;
 
-    supplyIndex0(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    supplyIndex0(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    supplyIndex1(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    supplyIndex1(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     swap(
-      amount0Out: BigNumberish,
-      amount1Out: BigNumberish,
-      to: string,
-      data: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      amount0Out: PromiseOrValue<BigNumberish>,
+      amount1Out: PromiseOrValue<BigNumberish>,
+      to: PromiseOrValue<string>,
+      data: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     symbol(overrides?: CallOverrides): Promise<BigNumber>;
 
-    sync(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    sync(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     token0(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -1003,41 +1149,52 @@ export interface VelodromePool extends BaseContract {
     totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
     transfer(
-      dst: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      dst: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     transferFrom(
-      src: string,
-      dst: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      src: PromiseOrValue<string>,
+      dst: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
   };
 
   populateTransaction: {
-    allowance(arg0: string, arg1: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    approve(
-      spender: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+    allowance(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
-    balanceOf(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    approve(
+      spender: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<PopulatedTransaction>;
+
+    balanceOf(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     blockTimestampLast(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    burn(to: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    burn(
+      to: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<PopulatedTransaction>;
 
-    claimFees(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    claimFees(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
-    claimable0(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    claimable0(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    claimable1(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    claimable1(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    current(tokenIn: string, amountIn: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    current(
+      tokenIn: PromiseOrValue<string>,
+      amountIn: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
     currentCumulativePrices(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
@@ -1045,7 +1202,11 @@ export interface VelodromePool extends BaseContract {
 
     fees(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    getAmountOut(amountIn: BigNumberish, tokenIn: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getAmountOut(
+      amountIn: PromiseOrValue<BigNumberish>,
+      tokenIn: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
     getReserves(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
@@ -1057,38 +1218,41 @@ export interface VelodromePool extends BaseContract {
 
     metadata(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    mint(to: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    mint(
+      to: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<PopulatedTransaction>;
 
     name(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    nonces(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    nonces(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     observationLength(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    observations(arg0: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    observations(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     permit(
-      owner: string,
-      spender: string,
-      value: BigNumberish,
-      deadline: BigNumberish,
-      v: BigNumberish,
-      r: BytesLike,
-      s: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      owner: PromiseOrValue<string>,
+      spender: PromiseOrValue<string>,
+      value: PromiseOrValue<BigNumberish>,
+      deadline: PromiseOrValue<BigNumberish>,
+      v: PromiseOrValue<BigNumberish>,
+      r: PromiseOrValue<BytesLike>,
+      s: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     prices(
-      tokenIn: string,
-      amountIn: BigNumberish,
-      points: BigNumberish,
+      tokenIn: PromiseOrValue<string>,
+      amountIn: PromiseOrValue<BigNumberish>,
+      points: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     quote(
-      tokenIn: string,
-      amountIn: BigNumberish,
-      granularity: BigNumberish,
+      tokenIn: PromiseOrValue<string>,
+      amountIn: PromiseOrValue<BigNumberish>,
+      granularity: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
@@ -1101,32 +1265,35 @@ export interface VelodromePool extends BaseContract {
     reserve1CumulativeLast(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     sample(
-      tokenIn: string,
-      amountIn: BigNumberish,
-      points: BigNumberish,
-      window: BigNumberish,
+      tokenIn: PromiseOrValue<string>,
+      amountIn: PromiseOrValue<BigNumberish>,
+      points: PromiseOrValue<BigNumberish>,
+      window: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
-    skim(to: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    skim(
+      to: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<PopulatedTransaction>;
 
     stable(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    supplyIndex0(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    supplyIndex0(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    supplyIndex1(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    supplyIndex1(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     swap(
-      amount0Out: BigNumberish,
-      amount1Out: BigNumberish,
-      to: string,
-      data: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      amount0Out: PromiseOrValue<BigNumberish>,
+      amount1Out: PromiseOrValue<BigNumberish>,
+      to: PromiseOrValue<string>,
+      data: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     symbol(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    sync(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    sync(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     token0(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
@@ -1137,16 +1304,16 @@ export interface VelodromePool extends BaseContract {
     totalSupply(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     transfer(
-      dst: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      dst: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     transferFrom(
-      src: string,
-      dst: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      src: PromiseOrValue<string>,
+      dst: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
   };
 }

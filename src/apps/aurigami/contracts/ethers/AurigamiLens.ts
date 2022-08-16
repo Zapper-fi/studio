@@ -16,16 +16,16 @@ import type {
 } from 'ethers';
 import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
 import type { Listener, Provider } from '@ethersproject/providers';
-import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
 export declare namespace AuriLens {
   export type AuTokenBalancesStruct = {
-    auToken: string;
-    balanceOf: BigNumberish;
-    borrowBalanceCurrent: BigNumberish;
-    balanceOfUnderlying: BigNumberish;
-    tokenBalance: BigNumberish;
-    tokenAllowance: BigNumberish;
+    auToken: PromiseOrValue<string>;
+    balanceOf: PromiseOrValue<BigNumberish>;
+    borrowBalanceCurrent: PromiseOrValue<BigNumberish>;
+    balanceOfUnderlying: PromiseOrValue<BigNumberish>;
+    tokenBalance: PromiseOrValue<BigNumberish>;
+    tokenAllowance: PromiseOrValue<BigNumberish>;
   };
 
   export type AuTokenBalancesStructOutput = [string, BigNumber, BigNumber, BigNumber, BigNumber, BigNumber] & {
@@ -38,25 +38,25 @@ export declare namespace AuriLens {
   };
 
   export type AuTokenMetadataStruct = {
-    auToken: string;
-    exchangeRateCurrent: BigNumberish;
-    supplyRatePerBlock: BigNumberish;
-    borrowRatePerBlock: BigNumberish;
-    reserveFactorMantissa: BigNumberish;
-    totalBorrows: BigNumberish;
-    totalReserves: BigNumberish;
-    totalSupply: BigNumberish;
-    totalCash: BigNumberish;
-    isListed: boolean;
-    collateralFactorMantissa: BigNumberish;
-    underlyingAssetAddress: string;
-    auTokenDecimals: BigNumberish;
-    underlyingDecimals: BigNumberish;
-    plyRewardSupplySpeed: BigNumberish;
-    plyRewardBorrowSpeed: BigNumberish;
-    auroraRewardSupplySpeed: BigNumberish;
-    auroraRewardBorrowSpeed: BigNumberish;
-    borrowCap: BigNumberish;
+    auToken: PromiseOrValue<string>;
+    exchangeRateCurrent: PromiseOrValue<BigNumberish>;
+    supplyRatePerBlock: PromiseOrValue<BigNumberish>;
+    borrowRatePerBlock: PromiseOrValue<BigNumberish>;
+    reserveFactorMantissa: PromiseOrValue<BigNumberish>;
+    totalBorrows: PromiseOrValue<BigNumberish>;
+    totalReserves: PromiseOrValue<BigNumberish>;
+    totalSupply: PromiseOrValue<BigNumberish>;
+    totalCash: PromiseOrValue<BigNumberish>;
+    isListed: PromiseOrValue<boolean>;
+    collateralFactorMantissa: PromiseOrValue<BigNumberish>;
+    underlyingAssetAddress: PromiseOrValue<string>;
+    auTokenDecimals: PromiseOrValue<BigNumberish>;
+    underlyingDecimals: PromiseOrValue<BigNumberish>;
+    plyRewardSupplySpeed: PromiseOrValue<BigNumberish>;
+    plyRewardBorrowSpeed: PromiseOrValue<BigNumberish>;
+    auroraRewardSupplySpeed: PromiseOrValue<BigNumberish>;
+    auroraRewardBorrowSpeed: PromiseOrValue<BigNumberish>;
+    borrowCap: PromiseOrValue<BigNumberish>;
   };
 
   export type AuTokenMetadataStructOutput = [
@@ -102,8 +102,8 @@ export declare namespace AuriLens {
   };
 
   export type AuTokenUnderlyingPriceStruct = {
-    auToken: string;
-    underlyingPrice: BigNumberish;
+    auToken: PromiseOrValue<string>;
+    underlyingPrice: PromiseOrValue<BigNumberish>;
   };
 
   export type AuTokenUnderlyingPriceStructOutput = [string, BigNumber] & {
@@ -112,9 +112,9 @@ export declare namespace AuriLens {
   };
 
   export type RewardBalancesMetadataStruct = {
-    plyAccrured: BigNumberish;
-    auroraClaimable: BigNumberish;
-    wnearClaimable: BigNumberish;
+    plyAccrured: PromiseOrValue<BigNumberish>;
+    auroraClaimable: PromiseOrValue<BigNumberish>;
+    wnearClaimable: PromiseOrValue<BigNumberish>;
   };
 
   export type RewardBalancesMetadataStructOutput = [BigNumber, BigNumber, BigNumber] & {
@@ -124,9 +124,9 @@ export declare namespace AuriLens {
   };
 
   export type AccountLimitsStruct = {
-    markets: string[];
-    liquidity: BigNumberish;
-    shortfall: BigNumberish;
+    markets: PromiseOrValue<string>[];
+    liquidity: PromiseOrValue<BigNumberish>;
+    shortfall: PromiseOrValue<BigNumberish>;
   };
 
   export type AccountLimitsStructOutput = [string[], BigNumber, BigNumber] & {
@@ -136,10 +136,10 @@ export declare namespace AuriLens {
   };
 
   export type RewardSpeedsStruct = {
-    plyRewardSupplySpeed: BigNumberish;
-    plyRewardBorrowSpeed: BigNumberish;
-    auroraRewardSupplySpeed: BigNumberish;
-    auroraRewardBorrowSpeed: BigNumberish;
+    plyRewardSupplySpeed: PromiseOrValue<BigNumberish>;
+    plyRewardBorrowSpeed: PromiseOrValue<BigNumberish>;
+    auroraRewardSupplySpeed: PromiseOrValue<BigNumberish>;
+    auroraRewardBorrowSpeed: PromiseOrValue<BigNumberish>;
   };
 
   export type RewardSpeedsStructOutput = [BigNumber, BigNumber, BigNumber, BigNumber] & {
@@ -201,26 +201,44 @@ export interface AurigamiLensInterface extends utils.Interface {
   ): FunctionFragment;
 
   encodeFunctionData(functionFragment: 'WNEAR', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'auTokenBalances', values: [string]): string;
-  encodeFunctionData(functionFragment: 'auTokenBalancesAll', values: [string[]]): string;
-  encodeFunctionData(functionFragment: 'auTokenMetadataAllNonView', values: [string[]]): string;
-  encodeFunctionData(functionFragment: 'auTokenMetadataNonView', values: [string]): string;
-  encodeFunctionData(functionFragment: 'auTokenUnderlyingPrice', values: [string]): string;
-  encodeFunctionData(functionFragment: 'auTokenUnderlyingPriceAll', values: [string[]]): string;
+  encodeFunctionData(functionFragment: 'auTokenBalances', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'auTokenBalancesAll', values: [PromiseOrValue<string>[]]): string;
+  encodeFunctionData(functionFragment: 'auTokenMetadataAllNonView', values: [PromiseOrValue<string>[]]): string;
+  encodeFunctionData(functionFragment: 'auTokenMetadataNonView', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'auTokenUnderlyingPrice', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'auTokenUnderlyingPriceAll', values: [PromiseOrValue<string>[]]): string;
   encodeFunctionData(functionFragment: 'claimOwnership', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'claimRewards', values: [string, string, BigNumberish[]]): string;
-  encodeFunctionData(functionFragment: 'getAccountLimits', values: [string]): string;
-  encodeFunctionData(functionFragment: 'getAddresses', values: [string]): string;
-  encodeFunctionData(functionFragment: 'getPercentLock', values: [string, string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'getRewardSpeeds', values: [string, string]): string;
-  encodeFunctionData(functionFragment: 'getWeekToUnlock', values: [string, string, BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'claimRewards',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<BigNumberish>[]],
+  ): string;
+  encodeFunctionData(functionFragment: 'getAccountLimits', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'getAddresses', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'getPercentLock',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'getRewardSpeeds',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'getWeekToUnlock',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
   encodeFunctionData(functionFragment: 'initialize', values?: undefined): string;
   encodeFunctionData(functionFragment: 'owner', values?: undefined): string;
   encodeFunctionData(functionFragment: 'pendingOwner', values?: undefined): string;
   encodeFunctionData(functionFragment: 'proxiableUUID', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'transferOwnership', values: [string, boolean, boolean]): string;
-  encodeFunctionData(functionFragment: 'upgradeTo', values: [string]): string;
-  encodeFunctionData(functionFragment: 'upgradeToAndCall', values: [string, BytesLike]): string;
+  encodeFunctionData(
+    functionFragment: 'transferOwnership',
+    values: [PromiseOrValue<string>, PromiseOrValue<boolean>, PromiseOrValue<boolean>],
+  ): string;
+  encodeFunctionData(functionFragment: 'upgradeTo', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'upgradeToAndCall',
+    values: [PromiseOrValue<string>, PromiseOrValue<BytesLike>],
+  ): string;
 
   decodeFunctionResult(functionFragment: 'WNEAR', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'auTokenBalances', data: BytesLike): Result;
@@ -313,48 +331,51 @@ export interface AurigamiLens extends BaseContract {
     WNEAR(overrides?: CallOverrides): Promise<[string]>;
 
     auTokenBalances(
-      auToken: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      auToken: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     auTokenBalancesAll(
-      auTokens: string[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      auTokens: PromiseOrValue<string>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     auTokenMetadataAllNonView(
-      auTokens: string[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      auTokens: PromiseOrValue<string>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     auTokenMetadataNonView(
-      auToken: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      auToken: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     auTokenUnderlyingPrice(
-      auToken: string,
+      auToken: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<[AuriLens.AuTokenUnderlyingPriceStructOutput]>;
 
     auTokenUnderlyingPriceAll(
-      auTokens: string[],
+      auTokens: PromiseOrValue<string>[],
       overrides?: CallOverrides,
     ): Promise<[AuriLens.AuTokenUnderlyingPriceStructOutput[]]>;
 
-    claimOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    claimOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     claimRewards(
-      comptroller: string,
-      fairLaunch: string,
-      pids: BigNumberish[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      comptroller: PromiseOrValue<string>,
+      fairLaunch: PromiseOrValue<string>,
+      pids: PromiseOrValue<BigNumberish>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    getAccountLimits(comptroller: string, overrides?: CallOverrides): Promise<[AuriLens.AccountLimitsStructOutput]>;
+    getAccountLimits(
+      comptroller: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<[AuriLens.AccountLimitsStructOutput]>;
 
     getAddresses(
-      comptroller: string,
+      comptroller: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<
       [string, string, string, string] & {
@@ -366,15 +387,15 @@ export interface AurigamiLens extends BaseContract {
     >;
 
     getPercentLock(
-      pulp: string,
-      account: string,
-      weekInt: BigNumberish,
+      pulp: PromiseOrValue<string>,
+      account: PromiseOrValue<string>,
+      weekInt: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber] & { percentLock: BigNumber }>;
 
     getRewardSpeeds(
-      comptroller: string,
-      auToken: string,
+      comptroller: PromiseOrValue<string>,
+      auToken: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<
       [AuriLens.RewardSpeedsStructOutput] & {
@@ -383,13 +404,13 @@ export interface AurigamiLens extends BaseContract {
     >;
 
     getWeekToUnlock(
-      pulp: string,
-      account: string,
-      targetUnlockPercent: BigNumberish,
+      pulp: PromiseOrValue<string>,
+      account: PromiseOrValue<string>,
+      targetUnlockPercent: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber]>;
 
-    initialize(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    initialize(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     owner(overrides?: CallOverrides): Promise<[string]>;
 
@@ -398,69 +419,72 @@ export interface AurigamiLens extends BaseContract {
     proxiableUUID(overrides?: CallOverrides): Promise<[string]>;
 
     transferOwnership(
-      newOwner: string,
-      direct: boolean,
-      renounce: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      direct: PromiseOrValue<boolean>,
+      renounce: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     upgradeTo(
-      newImplementation: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newImplementation: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     upgradeToAndCall(
-      newImplementation: string,
-      data: BytesLike,
-      overrides?: PayableOverrides & { from?: string | Promise<string> },
+      newImplementation: PromiseOrValue<string>,
+      data: PromiseOrValue<BytesLike>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
   };
 
   WNEAR(overrides?: CallOverrides): Promise<string>;
 
   auTokenBalances(
-    auToken: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    auToken: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   auTokenBalancesAll(
-    auTokens: string[],
-    overrides?: Overrides & { from?: string | Promise<string> },
+    auTokens: PromiseOrValue<string>[],
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   auTokenMetadataAllNonView(
-    auTokens: string[],
-    overrides?: Overrides & { from?: string | Promise<string> },
+    auTokens: PromiseOrValue<string>[],
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   auTokenMetadataNonView(
-    auToken: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    auToken: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   auTokenUnderlyingPrice(
-    auToken: string,
+    auToken: PromiseOrValue<string>,
     overrides?: CallOverrides,
   ): Promise<AuriLens.AuTokenUnderlyingPriceStructOutput>;
 
   auTokenUnderlyingPriceAll(
-    auTokens: string[],
+    auTokens: PromiseOrValue<string>[],
     overrides?: CallOverrides,
   ): Promise<AuriLens.AuTokenUnderlyingPriceStructOutput[]>;
 
-  claimOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  claimOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   claimRewards(
-    comptroller: string,
-    fairLaunch: string,
-    pids: BigNumberish[],
-    overrides?: Overrides & { from?: string | Promise<string> },
+    comptroller: PromiseOrValue<string>,
+    fairLaunch: PromiseOrValue<string>,
+    pids: PromiseOrValue<BigNumberish>[],
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  getAccountLimits(comptroller: string, overrides?: CallOverrides): Promise<AuriLens.AccountLimitsStructOutput>;
+  getAccountLimits(
+    comptroller: PromiseOrValue<string>,
+    overrides?: CallOverrides,
+  ): Promise<AuriLens.AccountLimitsStructOutput>;
 
   getAddresses(
-    comptroller: string,
+    comptroller: PromiseOrValue<string>,
     overrides?: CallOverrides,
   ): Promise<
     [string, string, string, string] & {
@@ -471,22 +495,27 @@ export interface AurigamiLens extends BaseContract {
     }
   >;
 
-  getPercentLock(pulp: string, account: string, weekInt: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+  getPercentLock(
+    pulp: PromiseOrValue<string>,
+    account: PromiseOrValue<string>,
+    weekInt: PromiseOrValue<BigNumberish>,
+    overrides?: CallOverrides,
+  ): Promise<BigNumber>;
 
   getRewardSpeeds(
-    comptroller: string,
-    auToken: string,
+    comptroller: PromiseOrValue<string>,
+    auToken: PromiseOrValue<string>,
     overrides?: CallOverrides,
   ): Promise<AuriLens.RewardSpeedsStructOutput>;
 
   getWeekToUnlock(
-    pulp: string,
-    account: string,
-    targetUnlockPercent: BigNumberish,
+    pulp: PromiseOrValue<string>,
+    account: PromiseOrValue<string>,
+    targetUnlockPercent: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides,
   ): Promise<BigNumber>;
 
-  initialize(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  initialize(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   owner(overrides?: CallOverrides): Promise<string>;
 
@@ -495,60 +524,72 @@ export interface AurigamiLens extends BaseContract {
   proxiableUUID(overrides?: CallOverrides): Promise<string>;
 
   transferOwnership(
-    newOwner: string,
-    direct: boolean,
-    renounce: boolean,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    newOwner: PromiseOrValue<string>,
+    direct: PromiseOrValue<boolean>,
+    renounce: PromiseOrValue<boolean>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   upgradeTo(
-    newImplementation: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    newImplementation: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   upgradeToAndCall(
-    newImplementation: string,
-    data: BytesLike,
-    overrides?: PayableOverrides & { from?: string | Promise<string> },
+    newImplementation: PromiseOrValue<string>,
+    data: PromiseOrValue<BytesLike>,
+    overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   callStatic: {
     WNEAR(overrides?: CallOverrides): Promise<string>;
 
-    auTokenBalances(auToken: string, overrides?: CallOverrides): Promise<AuriLens.AuTokenBalancesStructOutput>;
+    auTokenBalances(
+      auToken: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<AuriLens.AuTokenBalancesStructOutput>;
 
-    auTokenBalancesAll(auTokens: string[], overrides?: CallOverrides): Promise<AuriLens.AuTokenBalancesStructOutput[]>;
+    auTokenBalancesAll(
+      auTokens: PromiseOrValue<string>[],
+      overrides?: CallOverrides,
+    ): Promise<AuriLens.AuTokenBalancesStructOutput[]>;
 
     auTokenMetadataAllNonView(
-      auTokens: string[],
+      auTokens: PromiseOrValue<string>[],
       overrides?: CallOverrides,
     ): Promise<AuriLens.AuTokenMetadataStructOutput[]>;
 
-    auTokenMetadataNonView(auToken: string, overrides?: CallOverrides): Promise<AuriLens.AuTokenMetadataStructOutput>;
+    auTokenMetadataNonView(
+      auToken: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<AuriLens.AuTokenMetadataStructOutput>;
 
     auTokenUnderlyingPrice(
-      auToken: string,
+      auToken: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<AuriLens.AuTokenUnderlyingPriceStructOutput>;
 
     auTokenUnderlyingPriceAll(
-      auTokens: string[],
+      auTokens: PromiseOrValue<string>[],
       overrides?: CallOverrides,
     ): Promise<AuriLens.AuTokenUnderlyingPriceStructOutput[]>;
 
     claimOwnership(overrides?: CallOverrides): Promise<void>;
 
     claimRewards(
-      comptroller: string,
-      fairLaunch: string,
-      pids: BigNumberish[],
+      comptroller: PromiseOrValue<string>,
+      fairLaunch: PromiseOrValue<string>,
+      pids: PromiseOrValue<BigNumberish>[],
       overrides?: CallOverrides,
     ): Promise<AuriLens.RewardBalancesMetadataStructOutput>;
 
-    getAccountLimits(comptroller: string, overrides?: CallOverrides): Promise<AuriLens.AccountLimitsStructOutput>;
+    getAccountLimits(
+      comptroller: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<AuriLens.AccountLimitsStructOutput>;
 
     getAddresses(
-      comptroller: string,
+      comptroller: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<
       [string, string, string, string] & {
@@ -559,18 +600,23 @@ export interface AurigamiLens extends BaseContract {
       }
     >;
 
-    getPercentLock(pulp: string, account: string, weekInt: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    getPercentLock(
+      pulp: PromiseOrValue<string>,
+      account: PromiseOrValue<string>,
+      weekInt: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     getRewardSpeeds(
-      comptroller: string,
-      auToken: string,
+      comptroller: PromiseOrValue<string>,
+      auToken: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<AuriLens.RewardSpeedsStructOutput>;
 
     getWeekToUnlock(
-      pulp: string,
-      account: string,
-      targetUnlockPercent: BigNumberish,
+      pulp: PromiseOrValue<string>,
+      account: PromiseOrValue<string>,
+      targetUnlockPercent: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
@@ -582,79 +628,103 @@ export interface AurigamiLens extends BaseContract {
 
     proxiableUUID(overrides?: CallOverrides): Promise<string>;
 
-    transferOwnership(newOwner: string, direct: boolean, renounce: boolean, overrides?: CallOverrides): Promise<void>;
+    transferOwnership(
+      newOwner: PromiseOrValue<string>,
+      direct: PromiseOrValue<boolean>,
+      renounce: PromiseOrValue<boolean>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    upgradeTo(newImplementation: string, overrides?: CallOverrides): Promise<void>;
+    upgradeTo(newImplementation: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    upgradeToAndCall(newImplementation: string, data: BytesLike, overrides?: CallOverrides): Promise<void>;
+    upgradeToAndCall(
+      newImplementation: PromiseOrValue<string>,
+      data: PromiseOrValue<BytesLike>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
   };
 
   filters: {
     'AdminChanged(address,address)'(previousAdmin?: null, newAdmin?: null): AdminChangedEventFilter;
     AdminChanged(previousAdmin?: null, newAdmin?: null): AdminChangedEventFilter;
 
-    'BeaconUpgraded(address)'(beacon?: string | null): BeaconUpgradedEventFilter;
-    BeaconUpgraded(beacon?: string | null): BeaconUpgradedEventFilter;
+    'BeaconUpgraded(address)'(beacon?: PromiseOrValue<string> | null): BeaconUpgradedEventFilter;
+    BeaconUpgraded(beacon?: PromiseOrValue<string> | null): BeaconUpgradedEventFilter;
 
     'OwnershipTransferred(address,address)'(
-      previousOwner?: string | null,
-      newOwner?: string | null,
+      previousOwner?: PromiseOrValue<string> | null,
+      newOwner?: PromiseOrValue<string> | null,
     ): OwnershipTransferredEventFilter;
-    OwnershipTransferred(previousOwner?: string | null, newOwner?: string | null): OwnershipTransferredEventFilter;
+    OwnershipTransferred(
+      previousOwner?: PromiseOrValue<string> | null,
+      newOwner?: PromiseOrValue<string> | null,
+    ): OwnershipTransferredEventFilter;
 
-    'Upgraded(address)'(implementation?: string | null): UpgradedEventFilter;
-    Upgraded(implementation?: string | null): UpgradedEventFilter;
+    'Upgraded(address)'(implementation?: PromiseOrValue<string> | null): UpgradedEventFilter;
+    Upgraded(implementation?: PromiseOrValue<string> | null): UpgradedEventFilter;
   };
 
   estimateGas: {
     WNEAR(overrides?: CallOverrides): Promise<BigNumber>;
 
-    auTokenBalances(auToken: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    auTokenBalances(
+      auToken: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     auTokenBalancesAll(
-      auTokens: string[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      auTokens: PromiseOrValue<string>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     auTokenMetadataAllNonView(
-      auTokens: string[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      auTokens: PromiseOrValue<string>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     auTokenMetadataNonView(
-      auToken: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      auToken: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    auTokenUnderlyingPrice(auToken: string, overrides?: CallOverrides): Promise<BigNumber>;
+    auTokenUnderlyingPrice(auToken: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    auTokenUnderlyingPriceAll(auTokens: string[], overrides?: CallOverrides): Promise<BigNumber>;
+    auTokenUnderlyingPriceAll(auTokens: PromiseOrValue<string>[], overrides?: CallOverrides): Promise<BigNumber>;
 
-    claimOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    claimOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     claimRewards(
-      comptroller: string,
-      fairLaunch: string,
-      pids: BigNumberish[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      comptroller: PromiseOrValue<string>,
+      fairLaunch: PromiseOrValue<string>,
+      pids: PromiseOrValue<BigNumberish>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    getAccountLimits(comptroller: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getAccountLimits(comptroller: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    getAddresses(comptroller: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getAddresses(comptroller: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    getPercentLock(pulp: string, account: string, weekInt: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
-
-    getRewardSpeeds(comptroller: string, auToken: string, overrides?: CallOverrides): Promise<BigNumber>;
-
-    getWeekToUnlock(
-      pulp: string,
-      account: string,
-      targetUnlockPercent: BigNumberish,
+    getPercentLock(
+      pulp: PromiseOrValue<string>,
+      account: PromiseOrValue<string>,
+      weekInt: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
-    initialize(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    getRewardSpeeds(
+      comptroller: PromiseOrValue<string>,
+      auToken: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
+
+    getWeekToUnlock(
+      pulp: PromiseOrValue<string>,
+      account: PromiseOrValue<string>,
+      targetUnlockPercent: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
+
+    initialize(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     owner(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -663,21 +733,21 @@ export interface AurigamiLens extends BaseContract {
     proxiableUUID(overrides?: CallOverrides): Promise<BigNumber>;
 
     transferOwnership(
-      newOwner: string,
-      direct: boolean,
-      renounce: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      direct: PromiseOrValue<boolean>,
+      renounce: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     upgradeTo(
-      newImplementation: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newImplementation: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     upgradeToAndCall(
-      newImplementation: string,
-      data: BytesLike,
-      overrides?: PayableOverrides & { from?: string | Promise<string> },
+      newImplementation: PromiseOrValue<string>,
+      data: PromiseOrValue<BytesLike>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
   };
 
@@ -685,59 +755,66 @@ export interface AurigamiLens extends BaseContract {
     WNEAR(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     auTokenBalances(
-      auToken: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      auToken: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     auTokenBalancesAll(
-      auTokens: string[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      auTokens: PromiseOrValue<string>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     auTokenMetadataAllNonView(
-      auTokens: string[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      auTokens: PromiseOrValue<string>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     auTokenMetadataNonView(
-      auToken: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      auToken: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    auTokenUnderlyingPrice(auToken: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    auTokenUnderlyingPrice(auToken: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    auTokenUnderlyingPriceAll(auTokens: string[], overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    auTokenUnderlyingPriceAll(
+      auTokens: PromiseOrValue<string>[],
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
-    claimOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    claimOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     claimRewards(
-      comptroller: string,
-      fairLaunch: string,
-      pids: BigNumberish[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      comptroller: PromiseOrValue<string>,
+      fairLaunch: PromiseOrValue<string>,
+      pids: PromiseOrValue<BigNumberish>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    getAccountLimits(comptroller: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getAccountLimits(comptroller: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    getAddresses(comptroller: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getAddresses(comptroller: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     getPercentLock(
-      pulp: string,
-      account: string,
-      weekInt: BigNumberish,
+      pulp: PromiseOrValue<string>,
+      account: PromiseOrValue<string>,
+      weekInt: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
-    getRewardSpeeds(comptroller: string, auToken: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getRewardSpeeds(
+      comptroller: PromiseOrValue<string>,
+      auToken: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
     getWeekToUnlock(
-      pulp: string,
-      account: string,
-      targetUnlockPercent: BigNumberish,
+      pulp: PromiseOrValue<string>,
+      account: PromiseOrValue<string>,
+      targetUnlockPercent: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
-    initialize(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    initialize(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
@@ -746,21 +823,21 @@ export interface AurigamiLens extends BaseContract {
     proxiableUUID(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     transferOwnership(
-      newOwner: string,
-      direct: boolean,
-      renounce: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      direct: PromiseOrValue<boolean>,
+      renounce: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     upgradeTo(
-      newImplementation: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newImplementation: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     upgradeToAndCall(
-      newImplementation: string,
-      data: BytesLike,
-      overrides?: PayableOverrides & { from?: string | Promise<string> },
+      newImplementation: PromiseOrValue<string>,
+      data: PromiseOrValue<BytesLike>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
   };
 }

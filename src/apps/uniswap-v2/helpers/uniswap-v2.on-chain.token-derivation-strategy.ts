@@ -1,5 +1,5 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { isNull } from 'lodash';
+import { compact, isNil, isNull, keyBy } from 'lodash';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { ZERO_ADDRESS } from '~app-toolkit/constants/address';
@@ -33,12 +33,17 @@ export class UniswapV2OnChainTokenDerivationStrategy {
       factoryAddress,
       network,
       tokenAddress,
-      baseTokensByAddress,
       resolvePoolUnderlyingTokenAddresses,
       resolveFactoryContract,
       resolvePoolContract,
       resolvePoolReserves,
+      tokenDependencySelector,
     }) => {
+      const baseTokenMatches = await tokenDependencySelector
+        .getMany(priceDerivationWhitelist.map(address => ({ network, address })))
+        .then(tokens => compact(tokens))
+        .then(tokens => keyBy(tokens, ({ address }) => address));
+
       const multicall = this.appToolkit.getMulticall(network);
       const factoryContract = resolveFactoryContract({ address: factoryAddress, network });
 
@@ -68,35 +73,41 @@ export class UniswapV2OnChainTokenDerivationStrategy {
         decimals: decimals,
       };
 
-      for (let i = 0; i < priceDerivationWhitelist.length; i++) {
-        const knownTokenAddress = priceDerivationWhitelist[i];
-        const poolAddress = await resolvePoolAddress({
-          factoryContract,
-          multicall,
-          token0: tokenAddress,
-          token1: knownTokenAddress,
-        });
+      const derivationResults = await Promise.all(
+        priceDerivationWhitelist.map(async knownTokenAddress => {
+          const poolAddress = await resolvePoolAddress({
+            factoryContract,
+            multicall,
+            token0: tokenAddress,
+            token1: knownTokenAddress,
+          });
 
-        if (poolAddress === ZERO_ADDRESS) continue;
-        const knownToken = baseTokensByAddress[knownTokenAddress];
-        const poolContract = resolvePoolContract({ address: poolAddress, network });
-        const tokensRaw = await resolvePoolUnderlyingTokenAddresses({ multicall, poolContract });
-        const reserves = await resolvePoolReserves({ multicall, poolContract });
-        const tokens = tokensRaw.map(t => t.toLowerCase());
+          if (poolAddress === ZERO_ADDRESS) return null;
 
-        const unknownIndex = tokens.findIndex(t => t === tokenAddress);
-        const knownIndex = 1 - unknownIndex;
+          const knownToken = baseTokenMatches[knownTokenAddress];
+          if (!knownToken) return null;
 
-        const knownReserve = Number(reserves[knownIndex]) / 10 ** knownToken.decimals;
-        const unknownReserve = Number(reserves[unknownIndex]) / 10 ** decimals;
-        const knownLiquidity = knownToken.price * knownReserve;
-        if (knownLiquidity < 1) continue; // Minimum liquidity check
+          const poolContract = resolvePoolContract({ address: poolAddress, network });
+          const tokensRaw = await resolvePoolUnderlyingTokenAddresses({ multicall, poolContract });
+          const reserves = await resolvePoolReserves({ multicall, poolContract });
+          const tokens = tokensRaw.map(t => t.toLowerCase());
 
-        const price = knownLiquidity / unknownReserve;
-        return { ...baseToken, price };
-      }
+          const unknownIndex = tokens.findIndex(t => t === tokenAddress);
+          const knownIndex = 1 - unknownIndex;
 
-      return baseToken;
+          const knownReserve = Number(reserves[knownIndex]) / 10 ** knownToken.decimals;
+          const unknownReserve = Number(reserves[unknownIndex]) / 10 ** decimals;
+          const knownLiquidity = knownToken.price * knownReserve;
+          if (knownLiquidity < 1) return null; // Minimum liquidity check
+
+          const price = knownLiquidity / unknownReserve;
+          return { ...baseToken, price };
+        }),
+      );
+
+      const validDerivationResult = derivationResults.find(dr => !isNil(dr));
+
+      return validDerivationResult ?? baseToken;
     };
   }
 }

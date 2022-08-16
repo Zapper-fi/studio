@@ -15,7 +15,7 @@ import type {
 } from 'ethers';
 import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
 import type { Listener, Provider } from '@ethersproject/providers';
-import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
 export interface KeeperDaoLiquidityPoolDistributorInterface extends utils.Interface {
   functions: {
@@ -45,16 +45,27 @@ export interface KeeperDaoLiquidityPoolDistributorInterface extends utils.Interf
       | 'updateAccountManager',
   ): FunctionFragment;
 
-  encodeFunctionData(functionFragment: 'blacklistRecoverableToken', values: [string]): string;
-  encodeFunctionData(functionFragment: 'claim', values: [string, BigNumberish, BigNumberish, BytesLike]): string;
-  encodeFunctionData(functionFragment: 'claimedAmount', values: [string]): string;
-  encodeFunctionData(functionFragment: 'hashForSignature', values: [string, BigNumberish, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'lastUsedNonce', values: [string]): string;
+  encodeFunctionData(functionFragment: 'blacklistRecoverableToken', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'claim',
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BytesLike>,
+    ],
+  ): string;
+  encodeFunctionData(functionFragment: 'claimedAmount', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'hashForSignature',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'lastUsedNonce', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'owner', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'recoverTokens', values: [string]): string;
+  encodeFunctionData(functionFragment: 'recoverTokens', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'renounceOwnership', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'transferOwnership', values: [string]): string;
-  encodeFunctionData(functionFragment: 'updateAccountManager', values: [string]): string;
+  encodeFunctionData(functionFragment: 'transferOwnership', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'updateAccountManager', values: [PromiseOrValue<string>]): string;
 
   decodeFunctionResult(functionFragment: 'blacklistRecoverableToken', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'claim', data: BytesLike): Result;
@@ -126,229 +137,235 @@ export interface KeeperDaoLiquidityPoolDistributor extends BaseContract {
 
   functions: {
     blacklistRecoverableToken(
-      _token: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _token: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     claim(
-      _to: string,
-      _earningsToDate: BigNumberish,
-      _nonce: BigNumberish,
-      _signature: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _to: PromiseOrValue<string>,
+      _earningsToDate: PromiseOrValue<BigNumberish>,
+      _nonce: PromiseOrValue<BigNumberish>,
+      _signature: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    claimedAmount(arg0: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    claimedAmount(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     hashForSignature(
-      _owner: string,
-      _earningsToDate: BigNumberish,
-      _nonce: BigNumberish,
+      _owner: PromiseOrValue<string>,
+      _earningsToDate: PromiseOrValue<BigNumberish>,
+      _nonce: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<[string]>;
 
-    lastUsedNonce(arg0: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    lastUsedNonce(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     owner(overrides?: CallOverrides): Promise<[string]>;
 
     recoverTokens(
-      _token: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _token: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     updateAccountManager(
-      _newAccountManager: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _newAccountManager: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
   };
 
   blacklistRecoverableToken(
-    _token: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _token: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   claim(
-    _to: string,
-    _earningsToDate: BigNumberish,
-    _nonce: BigNumberish,
-    _signature: BytesLike,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _to: PromiseOrValue<string>,
+    _earningsToDate: PromiseOrValue<BigNumberish>,
+    _nonce: PromiseOrValue<BigNumberish>,
+    _signature: PromiseOrValue<BytesLike>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  claimedAmount(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+  claimedAmount(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   hashForSignature(
-    _owner: string,
-    _earningsToDate: BigNumberish,
-    _nonce: BigNumberish,
+    _owner: PromiseOrValue<string>,
+    _earningsToDate: PromiseOrValue<BigNumberish>,
+    _nonce: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides,
   ): Promise<string>;
 
-  lastUsedNonce(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+  lastUsedNonce(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   owner(overrides?: CallOverrides): Promise<string>;
 
   recoverTokens(
-    _token: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _token: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   transferOwnership(
-    newOwner: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    newOwner: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   updateAccountManager(
-    _newAccountManager: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _newAccountManager: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   callStatic: {
-    blacklistRecoverableToken(_token: string, overrides?: CallOverrides): Promise<void>;
+    blacklistRecoverableToken(_token: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     claim(
-      _to: string,
-      _earningsToDate: BigNumberish,
-      _nonce: BigNumberish,
-      _signature: BytesLike,
+      _to: PromiseOrValue<string>,
+      _earningsToDate: PromiseOrValue<BigNumberish>,
+      _nonce: PromiseOrValue<BigNumberish>,
+      _signature: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
-    claimedAmount(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    claimedAmount(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     hashForSignature(
-      _owner: string,
-      _earningsToDate: BigNumberish,
-      _nonce: BigNumberish,
+      _owner: PromiseOrValue<string>,
+      _earningsToDate: PromiseOrValue<BigNumberish>,
+      _nonce: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<string>;
 
-    lastUsedNonce(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    lastUsedNonce(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     owner(overrides?: CallOverrides): Promise<string>;
 
-    recoverTokens(_token: string, overrides?: CallOverrides): Promise<void>;
+    recoverTokens(_token: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     renounceOwnership(overrides?: CallOverrides): Promise<void>;
 
-    transferOwnership(newOwner: string, overrides?: CallOverrides): Promise<void>;
+    transferOwnership(newOwner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    updateAccountManager(_newAccountManager: string, overrides?: CallOverrides): Promise<void>;
+    updateAccountManager(_newAccountManager: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
   };
 
   filters: {
     'AccountManagerChanged(address,address)'(
-      _oldAccountManager?: string | null,
-      _newAccountManager?: string | null,
+      _oldAccountManager?: PromiseOrValue<string> | null,
+      _newAccountManager?: PromiseOrValue<string> | null,
     ): AccountManagerChangedEventFilter;
     AccountManagerChanged(
-      _oldAccountManager?: string | null,
-      _newAccountManager?: string | null,
+      _oldAccountManager?: PromiseOrValue<string> | null,
+      _newAccountManager?: PromiseOrValue<string> | null,
     ): AccountManagerChangedEventFilter;
 
-    'Claimed(address,uint256)'(_redeemer?: string | null, _amount?: null): ClaimedEventFilter;
-    Claimed(_redeemer?: string | null, _amount?: null): ClaimedEventFilter;
+    'Claimed(address,uint256)'(_redeemer?: PromiseOrValue<string> | null, _amount?: null): ClaimedEventFilter;
+    Claimed(_redeemer?: PromiseOrValue<string> | null, _amount?: null): ClaimedEventFilter;
 
     'OwnershipTransferred(address,address)'(
-      previousOwner?: string | null,
-      newOwner?: string | null,
+      previousOwner?: PromiseOrValue<string> | null,
+      newOwner?: PromiseOrValue<string> | null,
     ): OwnershipTransferredEventFilter;
-    OwnershipTransferred(previousOwner?: string | null, newOwner?: string | null): OwnershipTransferredEventFilter;
+    OwnershipTransferred(
+      previousOwner?: PromiseOrValue<string> | null,
+      newOwner?: PromiseOrValue<string> | null,
+    ): OwnershipTransferredEventFilter;
   };
 
   estimateGas: {
     blacklistRecoverableToken(
-      _token: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _token: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     claim(
-      _to: string,
-      _earningsToDate: BigNumberish,
-      _nonce: BigNumberish,
-      _signature: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _to: PromiseOrValue<string>,
+      _earningsToDate: PromiseOrValue<BigNumberish>,
+      _nonce: PromiseOrValue<BigNumberish>,
+      _signature: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    claimedAmount(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    claimedAmount(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     hashForSignature(
-      _owner: string,
-      _earningsToDate: BigNumberish,
-      _nonce: BigNumberish,
+      _owner: PromiseOrValue<string>,
+      _earningsToDate: PromiseOrValue<BigNumberish>,
+      _nonce: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
-    lastUsedNonce(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    lastUsedNonce(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     owner(overrides?: CallOverrides): Promise<BigNumber>;
 
-    recoverTokens(_token: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    recoverTokens(
+      _token: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
-    renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     updateAccountManager(
-      _newAccountManager: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _newAccountManager: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
   };
 
   populateTransaction: {
     blacklistRecoverableToken(
-      _token: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _token: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     claim(
-      _to: string,
-      _earningsToDate: BigNumberish,
-      _nonce: BigNumberish,
-      _signature: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _to: PromiseOrValue<string>,
+      _earningsToDate: PromiseOrValue<BigNumberish>,
+      _nonce: PromiseOrValue<BigNumberish>,
+      _signature: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    claimedAmount(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    claimedAmount(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     hashForSignature(
-      _owner: string,
-      _earningsToDate: BigNumberish,
-      _nonce: BigNumberish,
+      _owner: PromiseOrValue<string>,
+      _earningsToDate: PromiseOrValue<BigNumberish>,
+      _nonce: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
-    lastUsedNonce(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    lastUsedNonce(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     recoverTokens(
-      _token: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _token: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     updateAccountManager(
-      _newAccountManager: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _newAccountManager: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
   };
 }

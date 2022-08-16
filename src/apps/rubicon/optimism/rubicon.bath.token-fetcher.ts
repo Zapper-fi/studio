@@ -20,7 +20,6 @@ const network = Network.OPTIMISM_MAINNET;
 
 // Test:
 // http://localhost:5001/apps/rubicon/tokens?groupIds[]=bathToken&network=optimism
-
 @Register.TokenPositionFetcher({ appId, groupId, network })
 export class OptimismRubiconBathTokenFetcher implements PositionFetcher<AppTokenPosition> {
   constructor(
@@ -60,12 +59,21 @@ export class OptimismRubiconBathTokenFetcher implements PositionFetcher<AppToken
           multicall.wrap(contract).convertToAssets(BigNumber.from((1e18).toString())),
         ]);
 
+        // console.log('query this ERC20', underlyingTokenAddressRaw);
+
+        const underlyingAssetContract = this.rubiconContractFactory.erc20({
+          address: underlyingTokenAddressRaw,
+          network,
+        });
+
         // Request the symbol, decimals, ands supply for the Bath Token
         const [symbol, decimals, supplyRaw] = await Promise.all([
           multicall.wrap(contract).symbol(),
-          multicall.wrap(contract).decimals(),
+          underlyingAssetContract.decimals(),
           multicall.wrap(contract).totalSupply(),
         ]);
+
+        // console.log('Got these decimals', decimals, 'from multicall', symbol);
 
         // Denormalize the supply
         const supply = Number(supplyRaw) / 10 ** decimals;
@@ -105,8 +113,8 @@ export class OptimismRubiconBathTokenFetcher implements PositionFetcher<AppToken
           dataProps: {},
           displayProps: {
             label,
-            images,
             secondaryLabel,
+            images,
           },
         };
 

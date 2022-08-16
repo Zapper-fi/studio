@@ -2,7 +2,9 @@
 /* tslint:disable */
 /* eslint-disable */
 export type { BeethovenXBeetsBar } from './BeethovenXBeetsBar';
+export type { BeethovenXGauge } from './BeethovenXGauge';
 export type { BeethovenXMasterchef } from './BeethovenXMasterchef';
 export * as factories from './factories';
 export { BeethovenXBeetsBar__factory } from './factories/BeethovenXBeetsBar__factory';
+export { BeethovenXGauge__factory } from './factories/BeethovenXGauge__factory';
 export { BeethovenXMasterchef__factory } from './factories/BeethovenXMasterchef__factory';

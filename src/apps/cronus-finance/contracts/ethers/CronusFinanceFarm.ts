@@ -15,7 +15,7 @@ import type {
 } from 'ethers';
 import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
 import type { Listener, Provider } from '@ethersproject/providers';
-import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
 export interface CronusFinanceFarmInterface extends utils.Interface {
   functions: {
@@ -107,40 +107,64 @@ export interface CronusFinanceFarmInterface extends utils.Interface {
   encodeFunctionData(functionFragment: 'CRN', values?: undefined): string;
   encodeFunctionData(functionFragment: 'MASTER_CHEF', values?: undefined): string;
   encodeFunctionData(functionFragment: 'MASTER_PID', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'add', values: [BigNumberish, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'claim', values: [BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'add',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'claim', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'crnPerSec', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'depositWithExactCrn', values: [BigNumberish, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'depositWithExactCrnFor', values: [BigNumberish, BigNumberish, string]): string;
-  encodeFunctionData(functionFragment: 'depositWithExactLP', values: [BigNumberish, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'depositWithExactLPFor', values: [BigNumberish, BigNumberish, string]): string;
-  encodeFunctionData(functionFragment: 'emergencyWithdraw', values: [BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'depositWithExactCrn',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'depositWithExactCrnFor',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>, PromiseOrValue<string>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'depositWithExactLP',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'depositWithExactLPFor',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>, PromiseOrValue<string>],
+  ): string;
+  encodeFunctionData(functionFragment: 'emergencyWithdraw', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'emergencyWithdrawFee', values?: undefined): string;
   encodeFunctionData(functionFragment: 'feeRecipient', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'getCLPAmount', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'getCRNAmount', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'getCLPAmount', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'getCRNAmount', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'harvestFromMasterChef', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'init', values: [string]): string;
-  encodeFunctionData(functionFragment: 'isLockAdded', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'lockInfo', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'init', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'isLockAdded', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'lockInfo', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'locksCount', values?: undefined): string;
   encodeFunctionData(functionFragment: 'massUpdateLocks', values?: undefined): string;
   encodeFunctionData(functionFragment: 'owner', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'pendingTokens', values: [BigNumberish, string]): string;
+  encodeFunctionData(
+    functionFragment: 'pendingTokens',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>],
+  ): string;
   encodeFunctionData(functionFragment: 'ratio', values?: undefined): string;
   encodeFunctionData(functionFragment: 'renounceOwnership', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'set', values: [BigNumberish, BigNumberish, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'setEmergencyWithdrawFee', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'setFeeRecipient', values: [string]): string;
-  encodeFunctionData(functionFragment: 'setRatio', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'setUnlockAll', values: [boolean]): string;
-  encodeFunctionData(functionFragment: 'setWithdrawFee', values: [BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'set',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'setEmergencyWithdrawFee', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'setFeeRecipient', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'setRatio', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'setUnlockAll', values: [PromiseOrValue<boolean>]): string;
+  encodeFunctionData(functionFragment: 'setWithdrawFee', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'totalAllocPoint', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'transferOwnership', values: [string]): string;
+  encodeFunctionData(functionFragment: 'transferOwnership', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'unlockAll', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'updateLock', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'userInfo', values: [BigNumberish, string]): string;
-  encodeFunctionData(functionFragment: 'withdraw', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'updateLock', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(
+    functionFragment: 'userInfo',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>],
+  ): string;
+  encodeFunctionData(functionFragment: 'withdraw', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'withdrawFee', values?: undefined): string;
 
   decodeFunctionResult(functionFragment: 'CLP', data: BytesLike): Result;
@@ -324,65 +348,68 @@ export interface CronusFinanceFarm extends BaseContract {
     MASTER_PID(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     add(
-      allocPoint: BigNumberish,
-      lockDuration: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      allocPoint: PromiseOrValue<BigNumberish>,
+      lockDuration: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     claim(
-      lockId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      lockId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     crnPerSec(overrides?: CallOverrides): Promise<[BigNumber] & { amount: BigNumber }>;
 
     depositWithExactCrn(
-      lockId: BigNumberish,
-      crnAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      lockId: PromiseOrValue<BigNumberish>,
+      crnAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     depositWithExactCrnFor(
-      lockId: BigNumberish,
-      crnAmount: BigNumberish,
-      beneficiary: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      lockId: PromiseOrValue<BigNumberish>,
+      crnAmount: PromiseOrValue<BigNumberish>,
+      beneficiary: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     depositWithExactLP(
-      lockId: BigNumberish,
-      clpAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      lockId: PromiseOrValue<BigNumberish>,
+      clpAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     depositWithExactLPFor(
-      lockId: BigNumberish,
-      clpAmount: BigNumberish,
-      beneficiary: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      lockId: PromiseOrValue<BigNumberish>,
+      clpAmount: PromiseOrValue<BigNumberish>,
+      beneficiary: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     emergencyWithdraw(
-      lockId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      lockId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     emergencyWithdrawFee(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     feeRecipient(overrides?: CallOverrides): Promise<[string]>;
 
-    getCLPAmount(CRN_amount: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber]>;
+    getCLPAmount(CRN_amount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    getCRNAmount(CLP_Amount: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber]>;
+    getCRNAmount(CLP_Amount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    harvestFromMasterChef(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    harvestFromMasterChef(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
-    init(dummyToken: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    init(
+      dummyToken: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<ContractTransaction>;
 
-    isLockAdded(arg0: BigNumberish, overrides?: CallOverrides): Promise<[boolean]>;
+    isLockAdded(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[boolean]>;
 
     lockInfo(
-      arg0: BigNumberish,
+      arg0: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<
       [BigNumber, BigNumber, BigNumber, BigNumber, BigNumber, BigNumber] & {
@@ -397,69 +424,69 @@ export interface CronusFinanceFarm extends BaseContract {
 
     locksCount(overrides?: CallOverrides): Promise<[BigNumber] & { locks: BigNumber }>;
 
-    massUpdateLocks(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    massUpdateLocks(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     owner(overrides?: CallOverrides): Promise<[string]>;
 
     pendingTokens(
-      _lockId: BigNumberish,
-      _user: string,
+      _lockId: PromiseOrValue<BigNumberish>,
+      _user: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber] & { pendingCrn: BigNumber }>;
 
     ratio(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     set(
-      _lockId: BigNumberish,
-      _allocPoint: BigNumberish,
-      _lockDuration: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _lockId: PromiseOrValue<BigNumberish>,
+      _allocPoint: PromiseOrValue<BigNumberish>,
+      _lockDuration: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setEmergencyWithdrawFee(
-      _emergencyWithdrawFee: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _emergencyWithdrawFee: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setFeeRecipient(
-      _feeRecipient: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _feeRecipient: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setRatio(
-      _ratio: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _ratio: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setUnlockAll(
-      _unlock: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _unlock: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setWithdrawFee(
-      _withdrawFee: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _withdrawFee: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     totalAllocPoint(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     unlockAll(overrides?: CallOverrides): Promise<[boolean]>;
 
     updateLock(
-      lockId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      lockId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     userInfo(
-      arg0: BigNumberish,
-      arg1: string,
+      arg0: PromiseOrValue<BigNumberish>,
+      arg1: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<
       [BigNumber, BigNumber, BigNumber, BigNumber, BigNumber] & {
@@ -472,8 +499,8 @@ export interface CronusFinanceFarm extends BaseContract {
     >;
 
     withdraw(
-      lockId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      lockId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     withdrawFee(overrides?: CallOverrides): Promise<[BigNumber]>;
@@ -488,65 +515,68 @@ export interface CronusFinanceFarm extends BaseContract {
   MASTER_PID(overrides?: CallOverrides): Promise<BigNumber>;
 
   add(
-    allocPoint: BigNumberish,
-    lockDuration: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    allocPoint: PromiseOrValue<BigNumberish>,
+    lockDuration: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   claim(
-    lockId: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    lockId: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   crnPerSec(overrides?: CallOverrides): Promise<BigNumber>;
 
   depositWithExactCrn(
-    lockId: BigNumberish,
-    crnAmount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    lockId: PromiseOrValue<BigNumberish>,
+    crnAmount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   depositWithExactCrnFor(
-    lockId: BigNumberish,
-    crnAmount: BigNumberish,
-    beneficiary: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    lockId: PromiseOrValue<BigNumberish>,
+    crnAmount: PromiseOrValue<BigNumberish>,
+    beneficiary: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   depositWithExactLP(
-    lockId: BigNumberish,
-    clpAmount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    lockId: PromiseOrValue<BigNumberish>,
+    clpAmount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   depositWithExactLPFor(
-    lockId: BigNumberish,
-    clpAmount: BigNumberish,
-    beneficiary: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    lockId: PromiseOrValue<BigNumberish>,
+    clpAmount: PromiseOrValue<BigNumberish>,
+    beneficiary: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   emergencyWithdraw(
-    lockId: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    lockId: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   emergencyWithdrawFee(overrides?: CallOverrides): Promise<BigNumber>;
 
   feeRecipient(overrides?: CallOverrides): Promise<string>;
 
-  getCLPAmount(CRN_amount: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+  getCLPAmount(CRN_amount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  getCRNAmount(CLP_Amount: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+  getCRNAmount(CLP_Amount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  harvestFromMasterChef(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  harvestFromMasterChef(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
-  init(dummyToken: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  init(
+    dummyToken: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
+  ): Promise<ContractTransaction>;
 
-  isLockAdded(arg0: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+  isLockAdded(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<boolean>;
 
   lockInfo(
-    arg0: BigNumberish,
+    arg0: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides,
   ): Promise<
     [BigNumber, BigNumber, BigNumber, BigNumber, BigNumber, BigNumber] & {
@@ -561,65 +591,69 @@ export interface CronusFinanceFarm extends BaseContract {
 
   locksCount(overrides?: CallOverrides): Promise<BigNumber>;
 
-  massUpdateLocks(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  massUpdateLocks(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   owner(overrides?: CallOverrides): Promise<string>;
 
-  pendingTokens(_lockId: BigNumberish, _user: string, overrides?: CallOverrides): Promise<BigNumber>;
+  pendingTokens(
+    _lockId: PromiseOrValue<BigNumberish>,
+    _user: PromiseOrValue<string>,
+    overrides?: CallOverrides,
+  ): Promise<BigNumber>;
 
   ratio(overrides?: CallOverrides): Promise<BigNumber>;
 
-  renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   set(
-    _lockId: BigNumberish,
-    _allocPoint: BigNumberish,
-    _lockDuration: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _lockId: PromiseOrValue<BigNumberish>,
+    _allocPoint: PromiseOrValue<BigNumberish>,
+    _lockDuration: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setEmergencyWithdrawFee(
-    _emergencyWithdrawFee: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _emergencyWithdrawFee: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setFeeRecipient(
-    _feeRecipient: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _feeRecipient: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setRatio(
-    _ratio: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _ratio: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setUnlockAll(
-    _unlock: boolean,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _unlock: PromiseOrValue<boolean>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setWithdrawFee(
-    _withdrawFee: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _withdrawFee: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   totalAllocPoint(overrides?: CallOverrides): Promise<BigNumber>;
 
   transferOwnership(
-    newOwner: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    newOwner: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   unlockAll(overrides?: CallOverrides): Promise<boolean>;
 
   updateLock(
-    lockId: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    lockId: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   userInfo(
-    arg0: BigNumberish,
-    arg1: string,
+    arg0: PromiseOrValue<BigNumberish>,
+    arg1: PromiseOrValue<string>,
     overrides?: CallOverrides,
   ): Promise<
     [BigNumber, BigNumber, BigNumber, BigNumber, BigNumber] & {
@@ -632,8 +666,8 @@ export interface CronusFinanceFarm extends BaseContract {
   >;
 
   withdraw(
-    lockId: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    lockId: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   withdrawFee(overrides?: CallOverrides): Promise<BigNumber>;
@@ -647,48 +681,60 @@ export interface CronusFinanceFarm extends BaseContract {
 
     MASTER_PID(overrides?: CallOverrides): Promise<BigNumber>;
 
-    add(allocPoint: BigNumberish, lockDuration: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    add(
+      allocPoint: PromiseOrValue<BigNumberish>,
+      lockDuration: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    claim(lockId: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    claim(lockId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
     crnPerSec(overrides?: CallOverrides): Promise<BigNumber>;
 
-    depositWithExactCrn(lockId: BigNumberish, crnAmount: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    depositWithExactCrn(
+      lockId: PromiseOrValue<BigNumberish>,
+      crnAmount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
     depositWithExactCrnFor(
-      lockId: BigNumberish,
-      crnAmount: BigNumberish,
-      beneficiary: string,
+      lockId: PromiseOrValue<BigNumberish>,
+      crnAmount: PromiseOrValue<BigNumberish>,
+      beneficiary: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
-    depositWithExactLP(lockId: BigNumberish, clpAmount: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    depositWithExactLP(
+      lockId: PromiseOrValue<BigNumberish>,
+      clpAmount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
     depositWithExactLPFor(
-      lockId: BigNumberish,
-      clpAmount: BigNumberish,
-      beneficiary: string,
+      lockId: PromiseOrValue<BigNumberish>,
+      clpAmount: PromiseOrValue<BigNumberish>,
+      beneficiary: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
-    emergencyWithdraw(lockId: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    emergencyWithdraw(lockId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
     emergencyWithdrawFee(overrides?: CallOverrides): Promise<BigNumber>;
 
     feeRecipient(overrides?: CallOverrides): Promise<string>;
 
-    getCLPAmount(CRN_amount: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    getCLPAmount(CRN_amount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    getCRNAmount(CLP_Amount: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    getCRNAmount(CLP_Amount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     harvestFromMasterChef(overrides?: CallOverrides): Promise<void>;
 
-    init(dummyToken: string, overrides?: CallOverrides): Promise<void>;
+    init(dummyToken: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    isLockAdded(arg0: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+    isLockAdded(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<boolean>;
 
     lockInfo(
-      arg0: BigNumberish,
+      arg0: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<
       [BigNumber, BigNumber, BigNumber, BigNumber, BigNumber, BigNumber] & {
@@ -707,40 +753,47 @@ export interface CronusFinanceFarm extends BaseContract {
 
     owner(overrides?: CallOverrides): Promise<string>;
 
-    pendingTokens(_lockId: BigNumberish, _user: string, overrides?: CallOverrides): Promise<BigNumber>;
+    pendingTokens(
+      _lockId: PromiseOrValue<BigNumberish>,
+      _user: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     ratio(overrides?: CallOverrides): Promise<BigNumber>;
 
     renounceOwnership(overrides?: CallOverrides): Promise<void>;
 
     set(
-      _lockId: BigNumberish,
-      _allocPoint: BigNumberish,
-      _lockDuration: BigNumberish,
+      _lockId: PromiseOrValue<BigNumberish>,
+      _allocPoint: PromiseOrValue<BigNumberish>,
+      _lockDuration: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
-    setEmergencyWithdrawFee(_emergencyWithdrawFee: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    setEmergencyWithdrawFee(
+      _emergencyWithdrawFee: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    setFeeRecipient(_feeRecipient: string, overrides?: CallOverrides): Promise<void>;
+    setFeeRecipient(_feeRecipient: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    setRatio(_ratio: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    setRatio(_ratio: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
-    setUnlockAll(_unlock: boolean, overrides?: CallOverrides): Promise<void>;
+    setUnlockAll(_unlock: PromiseOrValue<boolean>, overrides?: CallOverrides): Promise<void>;
 
-    setWithdrawFee(_withdrawFee: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    setWithdrawFee(_withdrawFee: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
     totalAllocPoint(overrides?: CallOverrides): Promise<BigNumber>;
 
-    transferOwnership(newOwner: string, overrides?: CallOverrides): Promise<void>;
+    transferOwnership(newOwner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     unlockAll(overrides?: CallOverrides): Promise<boolean>;
 
-    updateLock(lockId: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    updateLock(lockId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
     userInfo(
-      arg0: BigNumberish,
-      arg1: string,
+      arg0: PromiseOrValue<BigNumberish>,
+      arg1: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<
       [BigNumber, BigNumber, BigNumber, BigNumber, BigNumber] & {
@@ -752,95 +805,102 @@ export interface CronusFinanceFarm extends BaseContract {
       }
     >;
 
-    withdraw(lockId: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    withdraw(lockId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
     withdrawFee(overrides?: CallOverrides): Promise<BigNumber>;
   };
 
   filters: {
     'Add(uint256,uint256,uint256)'(
-      lockId?: BigNumberish | null,
+      lockId?: PromiseOrValue<BigNumberish> | null,
       allocPoint?: null,
       lockDuration?: null,
     ): AddEventFilter;
-    Add(lockId?: BigNumberish | null, allocPoint?: null, lockDuration?: null): AddEventFilter;
+    Add(lockId?: PromiseOrValue<BigNumberish> | null, allocPoint?: null, lockDuration?: null): AddEventFilter;
 
     'Deposit(address,uint256,uint256,uint256,uint256)'(
-      user?: string | null,
-      lockId?: BigNumberish | null,
+      user?: PromiseOrValue<string> | null,
+      lockId?: PromiseOrValue<BigNumberish> | null,
       amount?: null,
       crnAmount?: null,
       clpAmount?: null,
     ): DepositEventFilter;
     Deposit(
-      user?: string | null,
-      lockId?: BigNumberish | null,
+      user?: PromiseOrValue<string> | null,
+      lockId?: PromiseOrValue<BigNumberish> | null,
       amount?: null,
       crnAmount?: null,
       clpAmount?: null,
     ): DepositEventFilter;
 
     'EmergencyWithdraw(address,uint256,uint256,uint256,uint256)'(
-      user?: string | null,
-      lockId?: BigNumberish | null,
+      user?: PromiseOrValue<string> | null,
+      lockId?: PromiseOrValue<BigNumberish> | null,
       amount?: null,
       crnAmount?: null,
       clpAmount?: null,
     ): EmergencyWithdrawEventFilter;
     EmergencyWithdraw(
-      user?: string | null,
-      lockId?: BigNumberish | null,
+      user?: PromiseOrValue<string> | null,
+      lockId?: PromiseOrValue<BigNumberish> | null,
       amount?: null,
       crnAmount?: null,
       clpAmount?: null,
     ): EmergencyWithdrawEventFilter;
 
     'Harvest(address,uint256,uint256)'(
-      user?: string | null,
-      lockId?: BigNumberish | null,
+      user?: PromiseOrValue<string> | null,
+      lockId?: PromiseOrValue<BigNumberish> | null,
       amount?: null,
     ): HarvestEventFilter;
-    Harvest(user?: string | null, lockId?: BigNumberish | null, amount?: null): HarvestEventFilter;
+    Harvest(
+      user?: PromiseOrValue<string> | null,
+      lockId?: PromiseOrValue<BigNumberish> | null,
+      amount?: null,
+    ): HarvestEventFilter;
 
     'Init()'(): InitEventFilter;
     Init(): InitEventFilter;
 
     'OwnershipTransferred(address,address)'(
-      previousOwner?: string | null,
-      newOwner?: string | null,
+      previousOwner?: PromiseOrValue<string> | null,
+      newOwner?: PromiseOrValue<string> | null,
     ): OwnershipTransferredEventFilter;
-    OwnershipTransferred(previousOwner?: string | null, newOwner?: string | null): OwnershipTransferredEventFilter;
+    OwnershipTransferred(
+      previousOwner?: PromiseOrValue<string> | null,
+      newOwner?: PromiseOrValue<string> | null,
+    ): OwnershipTransferredEventFilter;
 
     'Set(uint256,uint256,uint256)'(
-      lockId?: BigNumberish | null,
+      lockId?: PromiseOrValue<BigNumberish> | null,
       allocPoint?: null,
       lockDuration?: null,
     ): SetEventFilter;
-    Set(lockId?: BigNumberish | null, allocPoint?: null, lockDuration?: null): SetEventFilter;
+    Set(lockId?: PromiseOrValue<BigNumberish> | null, allocPoint?: null, lockDuration?: null): SetEventFilter;
 
     'UpdatePool(uint256,uint256,uint256,uint256)'(
-      lockId?: BigNumberish | null,
+      lockId?: PromiseOrValue<BigNumberish> | null,
       lastRewardTimestamp?: null,
       totalDeposit?: null,
       accCrnPerShare?: null,
     ): UpdatePoolEventFilter;
     UpdatePool(
-      lockId?: BigNumberish | null,
+      lockId?: PromiseOrValue<BigNumberish> | null,
       lastRewardTimestamp?: null,
       totalDeposit?: null,
       accCrnPerShare?: null,
     ): UpdatePoolEventFilter;
 
     'Withdraw(address,uint256,uint256,uint256,uint256)'(
-      user?: string | null,
-      lockId?: BigNumberish | null,
+      user?: PromiseOrValue<string> | null,
+      lockId?: PromiseOrValue<BigNumberish> | null,
       amount?: null,
       crnAmount?: null,
       clpAmount?: null,
     ): WithdrawEventFilter;
     Withdraw(
-      user?: string | null,
-      lockId?: BigNumberish | null,
+      user?: PromiseOrValue<string> | null,
+      lockId?: PromiseOrValue<BigNumberish> | null,
       amount?: null,
       crnAmount?: null,
       clpAmount?: null,
@@ -857,114 +917,140 @@ export interface CronusFinanceFarm extends BaseContract {
     MASTER_PID(overrides?: CallOverrides): Promise<BigNumber>;
 
     add(
-      allocPoint: BigNumberish,
-      lockDuration: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      allocPoint: PromiseOrValue<BigNumberish>,
+      lockDuration: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    claim(lockId: BigNumberish, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    claim(
+      lockId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     crnPerSec(overrides?: CallOverrides): Promise<BigNumber>;
 
     depositWithExactCrn(
-      lockId: BigNumberish,
-      crnAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      lockId: PromiseOrValue<BigNumberish>,
+      crnAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     depositWithExactCrnFor(
-      lockId: BigNumberish,
-      crnAmount: BigNumberish,
-      beneficiary: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      lockId: PromiseOrValue<BigNumberish>,
+      crnAmount: PromiseOrValue<BigNumberish>,
+      beneficiary: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     depositWithExactLP(
-      lockId: BigNumberish,
-      clpAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      lockId: PromiseOrValue<BigNumberish>,
+      clpAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     depositWithExactLPFor(
-      lockId: BigNumberish,
-      clpAmount: BigNumberish,
-      beneficiary: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      lockId: PromiseOrValue<BigNumberish>,
+      clpAmount: PromiseOrValue<BigNumberish>,
+      beneficiary: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     emergencyWithdraw(
-      lockId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      lockId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     emergencyWithdrawFee(overrides?: CallOverrides): Promise<BigNumber>;
 
     feeRecipient(overrides?: CallOverrides): Promise<BigNumber>;
 
-    getCLPAmount(CRN_amount: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    getCLPAmount(CRN_amount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    getCRNAmount(CLP_Amount: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    getCRNAmount(CLP_Amount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    harvestFromMasterChef(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    harvestFromMasterChef(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
-    init(dummyToken: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    init(
+      dummyToken: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
-    isLockAdded(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    isLockAdded(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    lockInfo(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    lockInfo(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     locksCount(overrides?: CallOverrides): Promise<BigNumber>;
 
-    massUpdateLocks(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    massUpdateLocks(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     owner(overrides?: CallOverrides): Promise<BigNumber>;
 
-    pendingTokens(_lockId: BigNumberish, _user: string, overrides?: CallOverrides): Promise<BigNumber>;
+    pendingTokens(
+      _lockId: PromiseOrValue<BigNumberish>,
+      _user: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     ratio(overrides?: CallOverrides): Promise<BigNumber>;
 
-    renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     set(
-      _lockId: BigNumberish,
-      _allocPoint: BigNumberish,
-      _lockDuration: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _lockId: PromiseOrValue<BigNumberish>,
+      _allocPoint: PromiseOrValue<BigNumberish>,
+      _lockDuration: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setEmergencyWithdrawFee(
-      _emergencyWithdrawFee: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _emergencyWithdrawFee: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setFeeRecipient(
-      _feeRecipient: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _feeRecipient: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    setRatio(_ratio: BigNumberish, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    setRatio(
+      _ratio: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
-    setUnlockAll(_unlock: boolean, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    setUnlockAll(
+      _unlock: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     setWithdrawFee(
-      _withdrawFee: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _withdrawFee: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     totalAllocPoint(overrides?: CallOverrides): Promise<BigNumber>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     unlockAll(overrides?: CallOverrides): Promise<BigNumber>;
 
-    updateLock(lockId: BigNumberish, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    updateLock(
+      lockId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
-    userInfo(arg0: BigNumberish, arg1: string, overrides?: CallOverrides): Promise<BigNumber>;
+    userInfo(
+      arg0: PromiseOrValue<BigNumberish>,
+      arg1: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    withdraw(lockId: BigNumberish, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    withdraw(
+      lockId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     withdrawFee(overrides?: CallOverrides): Promise<BigNumber>;
   };
@@ -979,131 +1065,139 @@ export interface CronusFinanceFarm extends BaseContract {
     MASTER_PID(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     add(
-      allocPoint: BigNumberish,
-      lockDuration: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      allocPoint: PromiseOrValue<BigNumberish>,
+      lockDuration: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     claim(
-      lockId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      lockId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     crnPerSec(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     depositWithExactCrn(
-      lockId: BigNumberish,
-      crnAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      lockId: PromiseOrValue<BigNumberish>,
+      crnAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     depositWithExactCrnFor(
-      lockId: BigNumberish,
-      crnAmount: BigNumberish,
-      beneficiary: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      lockId: PromiseOrValue<BigNumberish>,
+      crnAmount: PromiseOrValue<BigNumberish>,
+      beneficiary: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     depositWithExactLP(
-      lockId: BigNumberish,
-      clpAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      lockId: PromiseOrValue<BigNumberish>,
+      clpAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     depositWithExactLPFor(
-      lockId: BigNumberish,
-      clpAmount: BigNumberish,
-      beneficiary: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      lockId: PromiseOrValue<BigNumberish>,
+      clpAmount: PromiseOrValue<BigNumberish>,
+      beneficiary: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     emergencyWithdraw(
-      lockId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      lockId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     emergencyWithdrawFee(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     feeRecipient(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    getCLPAmount(CRN_amount: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getCLPAmount(CRN_amount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    getCRNAmount(CLP_Amount: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getCRNAmount(CLP_Amount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    harvestFromMasterChef(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    harvestFromMasterChef(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     init(
-      dummyToken: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      dummyToken: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    isLockAdded(arg0: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    isLockAdded(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    lockInfo(arg0: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    lockInfo(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     locksCount(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    massUpdateLocks(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    massUpdateLocks(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    pendingTokens(_lockId: BigNumberish, _user: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    pendingTokens(
+      _lockId: PromiseOrValue<BigNumberish>,
+      _user: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
     ratio(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     set(
-      _lockId: BigNumberish,
-      _allocPoint: BigNumberish,
-      _lockDuration: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _lockId: PromiseOrValue<BigNumberish>,
+      _allocPoint: PromiseOrValue<BigNumberish>,
+      _lockDuration: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setEmergencyWithdrawFee(
-      _emergencyWithdrawFee: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _emergencyWithdrawFee: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setFeeRecipient(
-      _feeRecipient: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _feeRecipient: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setRatio(
-      _ratio: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _ratio: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setUnlockAll(
-      _unlock: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _unlock: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setWithdrawFee(
-      _withdrawFee: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _withdrawFee: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     totalAllocPoint(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     unlockAll(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     updateLock(
-      lockId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      lockId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    userInfo(arg0: BigNumberish, arg1: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    userInfo(
+      arg0: PromiseOrValue<BigNumberish>,
+      arg1: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
     withdraw(
-      lockId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      lockId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     withdrawFee(overrides?: CallOverrides): Promise<PopulatedTransaction>;

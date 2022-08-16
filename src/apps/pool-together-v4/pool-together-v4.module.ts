@@ -3,7 +3,7 @@ import { AbstractApp } from '~app/app.dynamic-module';
 
 import { AvalanchePoolTogetherV4BalanceFetcher } from './avalanche/pool-together-v4.balance-fetcher';
 import { AvalanchePoolTogetherV4TicketTokenFetcher } from './avalanche/pool-together-v4.ticket-token-fetcher';
-import { PoolTogetherContractFactory } from './contracts';
+import { PoolTogetherV4ContractFactory } from './contracts';
 import { EthereumPoolTogetherV4BalanceFetcher } from './ethereum/pool-together-v4.balance-fetcher';
 import { EthereumPoolTogetherV4TicketTokenFetcher } from './ethereum/pool-together-v4.ticket-token-fetcher';
 import { PoolTogetherV4AirdropTokenBalancesHelper } from './helpers/pool-together-v4.airdrop.balance-helper';
@@ -20,7 +20,7 @@ import POOL_TOGETHER_V4_DEFINITION, { PoolTogetherV4AppDefinition } from './pool
   appId: POOL_TOGETHER_V4_DEFINITION.id,
   providers: [
     PoolTogetherV4AppDefinition,
-    PoolTogetherContractFactory,
+    PoolTogetherV4ContractFactory,
     PoolTogetherV4ApiPrizePoolRegistry,
     // Helpers
     PoolTogetherV4AirdropTokenBalancesHelper,

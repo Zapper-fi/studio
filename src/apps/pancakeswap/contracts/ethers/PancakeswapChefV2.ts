@@ -15,15 +15,15 @@ import type {
 } from 'ethers';
 import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
 import type { Listener, Provider } from '@ethersproject/providers';
-import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
 export declare namespace MasterChefV2 {
   export type PoolInfoStruct = {
-    accCakePerShare: BigNumberish;
-    lastRewardBlock: BigNumberish;
-    allocPoint: BigNumberish;
-    totalBoostedShare: BigNumberish;
-    isRegular: boolean;
+    accCakePerShare: PromiseOrValue<BigNumberish>;
+    lastRewardBlock: PromiseOrValue<BigNumberish>;
+    allocPoint: PromiseOrValue<BigNumberish>;
+    totalBoostedShare: PromiseOrValue<BigNumberish>;
+    isRegular: PromiseOrValue<boolean>;
   };
 
   export type PoolInfoStructOutput = [BigNumber, BigNumber, BigNumber, BigNumber, boolean] & {
@@ -137,44 +137,76 @@ export interface PancakeswapChefV2Interface extends utils.Interface {
   encodeFunctionData(functionFragment: 'MASTER_CHEF', values?: undefined): string;
   encodeFunctionData(functionFragment: 'MASTER_PID', values?: undefined): string;
   encodeFunctionData(functionFragment: 'MAX_BOOST_PRECISION', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'add', values: [BigNumberish, string, boolean, boolean]): string;
+  encodeFunctionData(
+    functionFragment: 'add',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>, PromiseOrValue<boolean>, PromiseOrValue<boolean>],
+  ): string;
   encodeFunctionData(functionFragment: 'boostContract', values?: undefined): string;
   encodeFunctionData(functionFragment: 'burnAdmin', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'burnCake', values: [boolean]): string;
-  encodeFunctionData(functionFragment: 'cakePerBlock', values: [boolean]): string;
+  encodeFunctionData(functionFragment: 'burnCake', values: [PromiseOrValue<boolean>]): string;
+  encodeFunctionData(functionFragment: 'cakePerBlock', values: [PromiseOrValue<boolean>]): string;
   encodeFunctionData(functionFragment: 'cakePerBlockToBurn', values?: undefined): string;
   encodeFunctionData(functionFragment: 'cakeRateToBurn', values?: undefined): string;
   encodeFunctionData(functionFragment: 'cakeRateToRegularFarm', values?: undefined): string;
   encodeFunctionData(functionFragment: 'cakeRateToSpecialFarm', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'deposit', values: [BigNumberish, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'emergencyWithdraw', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'getBoostMultiplier', values: [string, BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'deposit',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'emergencyWithdraw', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(
+    functionFragment: 'getBoostMultiplier',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
   encodeFunctionData(functionFragment: 'harvestFromMasterChef', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'init', values: [string]): string;
+  encodeFunctionData(functionFragment: 'init', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'lastBurnedBlock', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'lpToken', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'lpToken', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'massUpdatePools', values?: undefined): string;
   encodeFunctionData(functionFragment: 'owner', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'pendingCake', values: [BigNumberish, string]): string;
-  encodeFunctionData(functionFragment: 'poolInfo', values: [BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'pendingCake',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>],
+  ): string;
+  encodeFunctionData(functionFragment: 'poolInfo', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'poolLength', values?: undefined): string;
   encodeFunctionData(functionFragment: 'renounceOwnership', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'set', values: [BigNumberish, BigNumberish, boolean]): string;
+  encodeFunctionData(
+    functionFragment: 'set',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>, PromiseOrValue<boolean>],
+  ): string;
   encodeFunctionData(functionFragment: 'totalRegularAllocPoint', values?: undefined): string;
   encodeFunctionData(functionFragment: 'totalSpecialAllocPoint', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'transferOwnership', values: [string]): string;
-  encodeFunctionData(functionFragment: 'updateBoostContract', values: [string]): string;
-  encodeFunctionData(functionFragment: 'updateBoostMultiplier', values: [string, BigNumberish, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'updateBurnAdmin', values: [string]): string;
+  encodeFunctionData(functionFragment: 'transferOwnership', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'updateBoostContract', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'updateBoostMultiplier',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'updateBurnAdmin', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(
     functionFragment: 'updateCakeRate',
-    values: [BigNumberish, BigNumberish, BigNumberish, boolean],
+    values: [
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<boolean>,
+    ],
   ): string;
-  encodeFunctionData(functionFragment: 'updatePool', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'updateWhiteList', values: [string, boolean]): string;
-  encodeFunctionData(functionFragment: 'userInfo', values: [BigNumberish, string]): string;
-  encodeFunctionData(functionFragment: 'whiteList', values: [string]): string;
-  encodeFunctionData(functionFragment: 'withdraw', values: [BigNumberish, BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'updatePool', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(
+    functionFragment: 'updateWhiteList',
+    values: [PromiseOrValue<string>, PromiseOrValue<boolean>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'userInfo',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>],
+  ): string;
+  encodeFunctionData(functionFragment: 'whiteList', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'withdraw',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+  ): string;
 
   decodeFunctionResult(functionFragment: 'ACC_CAKE_PRECISION', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'BOOST_PRECISION', data: BytesLike): Result;
@@ -404,11 +436,11 @@ export interface PancakeswapChefV2 extends BaseContract {
     MAX_BOOST_PRECISION(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     add(
-      _allocPoint: BigNumberish,
-      _lpToken: string,
-      _isRegular: boolean,
-      _withUpdate: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _allocPoint: PromiseOrValue<BigNumberish>,
+      _lpToken: PromiseOrValue<string>,
+      _isRegular: PromiseOrValue<boolean>,
+      _withUpdate: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     boostContract(overrides?: CallOverrides): Promise<[string]>;
@@ -416,11 +448,14 @@ export interface PancakeswapChefV2 extends BaseContract {
     burnAdmin(overrides?: CallOverrides): Promise<[string]>;
 
     burnCake(
-      _withUpdate: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _withUpdate: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    cakePerBlock(_isRegular: boolean, overrides?: CallOverrides): Promise<[BigNumber] & { amount: BigNumber }>;
+    cakePerBlock(
+      _isRegular: PromiseOrValue<boolean>,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber] & { amount: BigNumber }>;
 
     cakePerBlockToBurn(overrides?: CallOverrides): Promise<[BigNumber] & { amount: BigNumber }>;
 
@@ -431,34 +466,45 @@ export interface PancakeswapChefV2 extends BaseContract {
     cakeRateToSpecialFarm(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     deposit(
-      _pid: BigNumberish,
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _pid: PromiseOrValue<BigNumberish>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     emergencyWithdraw(
-      _pid: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _pid: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    getBoostMultiplier(_user: string, _pid: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber]>;
+    getBoostMultiplier(
+      _user: PromiseOrValue<string>,
+      _pid: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber]>;
 
-    harvestFromMasterChef(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    harvestFromMasterChef(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
-    init(dummyToken: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    init(
+      dummyToken: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<ContractTransaction>;
 
     lastBurnedBlock(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    lpToken(arg0: BigNumberish, overrides?: CallOverrides): Promise<[string]>;
+    lpToken(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[string]>;
 
-    massUpdatePools(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    massUpdatePools(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     owner(overrides?: CallOverrides): Promise<[string]>;
 
-    pendingCake(_pid: BigNumberish, _user: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    pendingCake(
+      _pid: PromiseOrValue<BigNumberish>,
+      _user: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber]>;
 
     poolInfo(
-      arg0: BigNumberish,
+      arg0: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<
       [BigNumber, BigNumber, BigNumber, BigNumber, boolean] & {
@@ -472,13 +518,13 @@ export interface PancakeswapChefV2 extends BaseContract {
 
     poolLength(overrides?: CallOverrides): Promise<[BigNumber] & { pools: BigNumber }>;
 
-    renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     set(
-      _pid: BigNumberish,
-      _allocPoint: BigNumberish,
-      _withUpdate: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _pid: PromiseOrValue<BigNumberish>,
+      _allocPoint: PromiseOrValue<BigNumberish>,
+      _withUpdate: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     totalRegularAllocPoint(overrides?: CallOverrides): Promise<[BigNumber]>;
@@ -486,49 +532,49 @@ export interface PancakeswapChefV2 extends BaseContract {
     totalSpecialAllocPoint(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     updateBoostContract(
-      _newBoostContract: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _newBoostContract: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     updateBoostMultiplier(
-      _user: string,
-      _pid: BigNumberish,
-      _newMultiplier: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _user: PromiseOrValue<string>,
+      _pid: PromiseOrValue<BigNumberish>,
+      _newMultiplier: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     updateBurnAdmin(
-      _newAdmin: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _newAdmin: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     updateCakeRate(
-      _burnRate: BigNumberish,
-      _regularFarmRate: BigNumberish,
-      _specialFarmRate: BigNumberish,
-      _withUpdate: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _burnRate: PromiseOrValue<BigNumberish>,
+      _regularFarmRate: PromiseOrValue<BigNumberish>,
+      _specialFarmRate: PromiseOrValue<BigNumberish>,
+      _withUpdate: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     updatePool(
-      _pid: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _pid: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     updateWhiteList(
-      _user: string,
-      _isValid: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _user: PromiseOrValue<string>,
+      _isValid: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     userInfo(
-      arg0: BigNumberish,
-      arg1: string,
+      arg0: PromiseOrValue<BigNumberish>,
+      arg1: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<
       [BigNumber, BigNumber, BigNumber] & {
@@ -538,12 +584,12 @@ export interface PancakeswapChefV2 extends BaseContract {
       }
     >;
 
-    whiteList(arg0: string, overrides?: CallOverrides): Promise<[boolean]>;
+    whiteList(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[boolean]>;
 
     withdraw(
-      _pid: BigNumberish,
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _pid: PromiseOrValue<BigNumberish>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
   };
 
@@ -564,11 +610,11 @@ export interface PancakeswapChefV2 extends BaseContract {
   MAX_BOOST_PRECISION(overrides?: CallOverrides): Promise<BigNumber>;
 
   add(
-    _allocPoint: BigNumberish,
-    _lpToken: string,
-    _isRegular: boolean,
-    _withUpdate: boolean,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _allocPoint: PromiseOrValue<BigNumberish>,
+    _lpToken: PromiseOrValue<string>,
+    _isRegular: PromiseOrValue<boolean>,
+    _withUpdate: PromiseOrValue<boolean>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   boostContract(overrides?: CallOverrides): Promise<string>;
@@ -576,11 +622,11 @@ export interface PancakeswapChefV2 extends BaseContract {
   burnAdmin(overrides?: CallOverrides): Promise<string>;
 
   burnCake(
-    _withUpdate: boolean,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _withUpdate: PromiseOrValue<boolean>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  cakePerBlock(_isRegular: boolean, overrides?: CallOverrides): Promise<BigNumber>;
+  cakePerBlock(_isRegular: PromiseOrValue<boolean>, overrides?: CallOverrides): Promise<BigNumber>;
 
   cakePerBlockToBurn(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -591,34 +637,45 @@ export interface PancakeswapChefV2 extends BaseContract {
   cakeRateToSpecialFarm(overrides?: CallOverrides): Promise<BigNumber>;
 
   deposit(
-    _pid: BigNumberish,
-    _amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _pid: PromiseOrValue<BigNumberish>,
+    _amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   emergencyWithdraw(
-    _pid: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _pid: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  getBoostMultiplier(_user: string, _pid: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+  getBoostMultiplier(
+    _user: PromiseOrValue<string>,
+    _pid: PromiseOrValue<BigNumberish>,
+    overrides?: CallOverrides,
+  ): Promise<BigNumber>;
 
-  harvestFromMasterChef(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  harvestFromMasterChef(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
-  init(dummyToken: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  init(
+    dummyToken: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
+  ): Promise<ContractTransaction>;
 
   lastBurnedBlock(overrides?: CallOverrides): Promise<BigNumber>;
 
-  lpToken(arg0: BigNumberish, overrides?: CallOverrides): Promise<string>;
+  lpToken(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
 
-  massUpdatePools(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  massUpdatePools(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   owner(overrides?: CallOverrides): Promise<string>;
 
-  pendingCake(_pid: BigNumberish, _user: string, overrides?: CallOverrides): Promise<BigNumber>;
+  pendingCake(
+    _pid: PromiseOrValue<BigNumberish>,
+    _user: PromiseOrValue<string>,
+    overrides?: CallOverrides,
+  ): Promise<BigNumber>;
 
   poolInfo(
-    arg0: BigNumberish,
+    arg0: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides,
   ): Promise<
     [BigNumber, BigNumber, BigNumber, BigNumber, boolean] & {
@@ -632,13 +689,13 @@ export interface PancakeswapChefV2 extends BaseContract {
 
   poolLength(overrides?: CallOverrides): Promise<BigNumber>;
 
-  renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   set(
-    _pid: BigNumberish,
-    _allocPoint: BigNumberish,
-    _withUpdate: boolean,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _pid: PromiseOrValue<BigNumberish>,
+    _allocPoint: PromiseOrValue<BigNumberish>,
+    _withUpdate: PromiseOrValue<boolean>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   totalRegularAllocPoint(overrides?: CallOverrides): Promise<BigNumber>;
@@ -646,49 +703,49 @@ export interface PancakeswapChefV2 extends BaseContract {
   totalSpecialAllocPoint(overrides?: CallOverrides): Promise<BigNumber>;
 
   transferOwnership(
-    newOwner: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    newOwner: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   updateBoostContract(
-    _newBoostContract: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _newBoostContract: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   updateBoostMultiplier(
-    _user: string,
-    _pid: BigNumberish,
-    _newMultiplier: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _user: PromiseOrValue<string>,
+    _pid: PromiseOrValue<BigNumberish>,
+    _newMultiplier: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   updateBurnAdmin(
-    _newAdmin: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _newAdmin: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   updateCakeRate(
-    _burnRate: BigNumberish,
-    _regularFarmRate: BigNumberish,
-    _specialFarmRate: BigNumberish,
-    _withUpdate: boolean,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _burnRate: PromiseOrValue<BigNumberish>,
+    _regularFarmRate: PromiseOrValue<BigNumberish>,
+    _specialFarmRate: PromiseOrValue<BigNumberish>,
+    _withUpdate: PromiseOrValue<boolean>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   updatePool(
-    _pid: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _pid: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   updateWhiteList(
-    _user: string,
-    _isValid: boolean,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _user: PromiseOrValue<string>,
+    _isValid: PromiseOrValue<boolean>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   userInfo(
-    arg0: BigNumberish,
-    arg1: string,
+    arg0: PromiseOrValue<BigNumberish>,
+    arg1: PromiseOrValue<string>,
     overrides?: CallOverrides,
   ): Promise<
     [BigNumber, BigNumber, BigNumber] & {
@@ -698,12 +755,12 @@ export interface PancakeswapChefV2 extends BaseContract {
     }
   >;
 
-  whiteList(arg0: string, overrides?: CallOverrides): Promise<boolean>;
+  whiteList(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
   withdraw(
-    _pid: BigNumberish,
-    _amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _pid: PromiseOrValue<BigNumberish>,
+    _amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   callStatic: {
@@ -724,10 +781,10 @@ export interface PancakeswapChefV2 extends BaseContract {
     MAX_BOOST_PRECISION(overrides?: CallOverrides): Promise<BigNumber>;
 
     add(
-      _allocPoint: BigNumberish,
-      _lpToken: string,
-      _isRegular: boolean,
-      _withUpdate: boolean,
+      _allocPoint: PromiseOrValue<BigNumberish>,
+      _lpToken: PromiseOrValue<string>,
+      _isRegular: PromiseOrValue<boolean>,
+      _withUpdate: PromiseOrValue<boolean>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
@@ -735,9 +792,9 @@ export interface PancakeswapChefV2 extends BaseContract {
 
     burnAdmin(overrides?: CallOverrides): Promise<string>;
 
-    burnCake(_withUpdate: boolean, overrides?: CallOverrides): Promise<void>;
+    burnCake(_withUpdate: PromiseOrValue<boolean>, overrides?: CallOverrides): Promise<void>;
 
-    cakePerBlock(_isRegular: boolean, overrides?: CallOverrides): Promise<BigNumber>;
+    cakePerBlock(_isRegular: PromiseOrValue<boolean>, overrides?: CallOverrides): Promise<BigNumber>;
 
     cakePerBlockToBurn(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -747,28 +804,40 @@ export interface PancakeswapChefV2 extends BaseContract {
 
     cakeRateToSpecialFarm(overrides?: CallOverrides): Promise<BigNumber>;
 
-    deposit(_pid: BigNumberish, _amount: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    deposit(
+      _pid: PromiseOrValue<BigNumberish>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    emergencyWithdraw(_pid: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    emergencyWithdraw(_pid: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
-    getBoostMultiplier(_user: string, _pid: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    getBoostMultiplier(
+      _user: PromiseOrValue<string>,
+      _pid: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     harvestFromMasterChef(overrides?: CallOverrides): Promise<void>;
 
-    init(dummyToken: string, overrides?: CallOverrides): Promise<void>;
+    init(dummyToken: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     lastBurnedBlock(overrides?: CallOverrides): Promise<BigNumber>;
 
-    lpToken(arg0: BigNumberish, overrides?: CallOverrides): Promise<string>;
+    lpToken(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
 
     massUpdatePools(overrides?: CallOverrides): Promise<void>;
 
     owner(overrides?: CallOverrides): Promise<string>;
 
-    pendingCake(_pid: BigNumberish, _user: string, overrides?: CallOverrides): Promise<BigNumber>;
+    pendingCake(
+      _pid: PromiseOrValue<BigNumberish>,
+      _user: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     poolInfo(
-      arg0: BigNumberish,
+      arg0: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<
       [BigNumber, BigNumber, BigNumber, BigNumber, boolean] & {
@@ -784,40 +853,52 @@ export interface PancakeswapChefV2 extends BaseContract {
 
     renounceOwnership(overrides?: CallOverrides): Promise<void>;
 
-    set(_pid: BigNumberish, _allocPoint: BigNumberish, _withUpdate: boolean, overrides?: CallOverrides): Promise<void>;
+    set(
+      _pid: PromiseOrValue<BigNumberish>,
+      _allocPoint: PromiseOrValue<BigNumberish>,
+      _withUpdate: PromiseOrValue<boolean>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
     totalRegularAllocPoint(overrides?: CallOverrides): Promise<BigNumber>;
 
     totalSpecialAllocPoint(overrides?: CallOverrides): Promise<BigNumber>;
 
-    transferOwnership(newOwner: string, overrides?: CallOverrides): Promise<void>;
+    transferOwnership(newOwner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    updateBoostContract(_newBoostContract: string, overrides?: CallOverrides): Promise<void>;
+    updateBoostContract(_newBoostContract: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     updateBoostMultiplier(
-      _user: string,
-      _pid: BigNumberish,
-      _newMultiplier: BigNumberish,
+      _user: PromiseOrValue<string>,
+      _pid: PromiseOrValue<BigNumberish>,
+      _newMultiplier: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
-    updateBurnAdmin(_newAdmin: string, overrides?: CallOverrides): Promise<void>;
+    updateBurnAdmin(_newAdmin: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     updateCakeRate(
-      _burnRate: BigNumberish,
-      _regularFarmRate: BigNumberish,
-      _specialFarmRate: BigNumberish,
-      _withUpdate: boolean,
+      _burnRate: PromiseOrValue<BigNumberish>,
+      _regularFarmRate: PromiseOrValue<BigNumberish>,
+      _specialFarmRate: PromiseOrValue<BigNumberish>,
+      _withUpdate: PromiseOrValue<boolean>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
-    updatePool(_pid: BigNumberish, overrides?: CallOverrides): Promise<MasterChefV2.PoolInfoStructOutput>;
+    updatePool(
+      _pid: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<MasterChefV2.PoolInfoStructOutput>;
 
-    updateWhiteList(_user: string, _isValid: boolean, overrides?: CallOverrides): Promise<void>;
+    updateWhiteList(
+      _user: PromiseOrValue<string>,
+      _isValid: PromiseOrValue<boolean>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
     userInfo(
-      arg0: BigNumberish,
-      arg1: string,
+      arg0: PromiseOrValue<BigNumberish>,
+      arg1: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<
       [BigNumber, BigNumber, BigNumber] & {
@@ -827,69 +908,90 @@ export interface PancakeswapChefV2 extends BaseContract {
       }
     >;
 
-    whiteList(arg0: string, overrides?: CallOverrides): Promise<boolean>;
+    whiteList(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
-    withdraw(_pid: BigNumberish, _amount: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    withdraw(
+      _pid: PromiseOrValue<BigNumberish>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
   };
 
   filters: {
     'AddPool(uint256,uint256,address,bool)'(
-      pid?: BigNumberish | null,
+      pid?: PromiseOrValue<BigNumberish> | null,
       allocPoint?: null,
-      lpToken?: string | null,
+      lpToken?: PromiseOrValue<string> | null,
       isRegular?: null,
     ): AddPoolEventFilter;
     AddPool(
-      pid?: BigNumberish | null,
+      pid?: PromiseOrValue<BigNumberish> | null,
       allocPoint?: null,
-      lpToken?: string | null,
+      lpToken?: PromiseOrValue<string> | null,
       isRegular?: null,
     ): AddPoolEventFilter;
 
     'Deposit(address,uint256,uint256)'(
-      user?: string | null,
-      pid?: BigNumberish | null,
+      user?: PromiseOrValue<string> | null,
+      pid?: PromiseOrValue<BigNumberish> | null,
       amount?: null,
     ): DepositEventFilter;
-    Deposit(user?: string | null, pid?: BigNumberish | null, amount?: null): DepositEventFilter;
+    Deposit(
+      user?: PromiseOrValue<string> | null,
+      pid?: PromiseOrValue<BigNumberish> | null,
+      amount?: null,
+    ): DepositEventFilter;
 
     'EmergencyWithdraw(address,uint256,uint256)'(
-      user?: string | null,
-      pid?: BigNumberish | null,
+      user?: PromiseOrValue<string> | null,
+      pid?: PromiseOrValue<BigNumberish> | null,
       amount?: null,
     ): EmergencyWithdrawEventFilter;
-    EmergencyWithdraw(user?: string | null, pid?: BigNumberish | null, amount?: null): EmergencyWithdrawEventFilter;
+    EmergencyWithdraw(
+      user?: PromiseOrValue<string> | null,
+      pid?: PromiseOrValue<BigNumberish> | null,
+      amount?: null,
+    ): EmergencyWithdrawEventFilter;
 
     'Init()'(): InitEventFilter;
     Init(): InitEventFilter;
 
     'OwnershipTransferred(address,address)'(
-      previousOwner?: string | null,
-      newOwner?: string | null,
+      previousOwner?: PromiseOrValue<string> | null,
+      newOwner?: PromiseOrValue<string> | null,
     ): OwnershipTransferredEventFilter;
-    OwnershipTransferred(previousOwner?: string | null, newOwner?: string | null): OwnershipTransferredEventFilter;
+    OwnershipTransferred(
+      previousOwner?: PromiseOrValue<string> | null,
+      newOwner?: PromiseOrValue<string> | null,
+    ): OwnershipTransferredEventFilter;
 
-    'SetPool(uint256,uint256)'(pid?: BigNumberish | null, allocPoint?: null): SetPoolEventFilter;
-    SetPool(pid?: BigNumberish | null, allocPoint?: null): SetPoolEventFilter;
+    'SetPool(uint256,uint256)'(pid?: PromiseOrValue<BigNumberish> | null, allocPoint?: null): SetPoolEventFilter;
+    SetPool(pid?: PromiseOrValue<BigNumberish> | null, allocPoint?: null): SetPoolEventFilter;
 
-    'UpdateBoostContract(address)'(boostContract?: string | null): UpdateBoostContractEventFilter;
-    UpdateBoostContract(boostContract?: string | null): UpdateBoostContractEventFilter;
+    'UpdateBoostContract(address)'(boostContract?: PromiseOrValue<string> | null): UpdateBoostContractEventFilter;
+    UpdateBoostContract(boostContract?: PromiseOrValue<string> | null): UpdateBoostContractEventFilter;
 
     'UpdateBoostMultiplier(address,uint256,uint256,uint256)'(
-      user?: string | null,
+      user?: PromiseOrValue<string> | null,
       pid?: null,
       oldMultiplier?: null,
       newMultiplier?: null,
     ): UpdateBoostMultiplierEventFilter;
     UpdateBoostMultiplier(
-      user?: string | null,
+      user?: PromiseOrValue<string> | null,
       pid?: null,
       oldMultiplier?: null,
       newMultiplier?: null,
     ): UpdateBoostMultiplierEventFilter;
 
-    'UpdateBurnAdmin(address,address)'(oldAdmin?: string | null, newAdmin?: string | null): UpdateBurnAdminEventFilter;
-    UpdateBurnAdmin(oldAdmin?: string | null, newAdmin?: string | null): UpdateBurnAdminEventFilter;
+    'UpdateBurnAdmin(address,address)'(
+      oldAdmin?: PromiseOrValue<string> | null,
+      newAdmin?: PromiseOrValue<string> | null,
+    ): UpdateBurnAdminEventFilter;
+    UpdateBurnAdmin(
+      oldAdmin?: PromiseOrValue<string> | null,
+      newAdmin?: PromiseOrValue<string> | null,
+    ): UpdateBurnAdminEventFilter;
 
     'UpdateCakeRate(uint256,uint256,uint256)'(
       burnRate?: null,
@@ -899,27 +1001,31 @@ export interface PancakeswapChefV2 extends BaseContract {
     UpdateCakeRate(burnRate?: null, regularFarmRate?: null, specialFarmRate?: null): UpdateCakeRateEventFilter;
 
     'UpdatePool(uint256,uint256,uint256,uint256)'(
-      pid?: BigNumberish | null,
+      pid?: PromiseOrValue<BigNumberish> | null,
       lastRewardBlock?: null,
       lpSupply?: null,
       accCakePerShare?: null,
     ): UpdatePoolEventFilter;
     UpdatePool(
-      pid?: BigNumberish | null,
+      pid?: PromiseOrValue<BigNumberish> | null,
       lastRewardBlock?: null,
       lpSupply?: null,
       accCakePerShare?: null,
     ): UpdatePoolEventFilter;
 
-    'UpdateWhiteList(address,bool)'(user?: string | null, isValid?: null): UpdateWhiteListEventFilter;
-    UpdateWhiteList(user?: string | null, isValid?: null): UpdateWhiteListEventFilter;
+    'UpdateWhiteList(address,bool)'(user?: PromiseOrValue<string> | null, isValid?: null): UpdateWhiteListEventFilter;
+    UpdateWhiteList(user?: PromiseOrValue<string> | null, isValid?: null): UpdateWhiteListEventFilter;
 
     'Withdraw(address,uint256,uint256)'(
-      user?: string | null,
-      pid?: BigNumberish | null,
+      user?: PromiseOrValue<string> | null,
+      pid?: PromiseOrValue<BigNumberish> | null,
       amount?: null,
     ): WithdrawEventFilter;
-    Withdraw(user?: string | null, pid?: BigNumberish | null, amount?: null): WithdrawEventFilter;
+    Withdraw(
+      user?: PromiseOrValue<string> | null,
+      pid?: PromiseOrValue<BigNumberish> | null,
+      amount?: null,
+    ): WithdrawEventFilter;
   };
 
   estimateGas: {
@@ -940,20 +1046,23 @@ export interface PancakeswapChefV2 extends BaseContract {
     MAX_BOOST_PRECISION(overrides?: CallOverrides): Promise<BigNumber>;
 
     add(
-      _allocPoint: BigNumberish,
-      _lpToken: string,
-      _isRegular: boolean,
-      _withUpdate: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _allocPoint: PromiseOrValue<BigNumberish>,
+      _lpToken: PromiseOrValue<string>,
+      _isRegular: PromiseOrValue<boolean>,
+      _withUpdate: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     boostContract(overrides?: CallOverrides): Promise<BigNumber>;
 
     burnAdmin(overrides?: CallOverrides): Promise<BigNumber>;
 
-    burnCake(_withUpdate: boolean, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    burnCake(
+      _withUpdate: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
-    cakePerBlock(_isRegular: boolean, overrides?: CallOverrides): Promise<BigNumber>;
+    cakePerBlock(_isRegular: PromiseOrValue<boolean>, overrides?: CallOverrides): Promise<BigNumber>;
 
     cakePerBlockToBurn(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -964,43 +1073,54 @@ export interface PancakeswapChefV2 extends BaseContract {
     cakeRateToSpecialFarm(overrides?: CallOverrides): Promise<BigNumber>;
 
     deposit(
-      _pid: BigNumberish,
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _pid: PromiseOrValue<BigNumberish>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     emergencyWithdraw(
-      _pid: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _pid: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    getBoostMultiplier(_user: string, _pid: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    getBoostMultiplier(
+      _user: PromiseOrValue<string>,
+      _pid: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    harvestFromMasterChef(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    harvestFromMasterChef(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
-    init(dummyToken: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    init(
+      dummyToken: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     lastBurnedBlock(overrides?: CallOverrides): Promise<BigNumber>;
 
-    lpToken(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    lpToken(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    massUpdatePools(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    massUpdatePools(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     owner(overrides?: CallOverrides): Promise<BigNumber>;
 
-    pendingCake(_pid: BigNumberish, _user: string, overrides?: CallOverrides): Promise<BigNumber>;
+    pendingCake(
+      _pid: PromiseOrValue<BigNumberish>,
+      _user: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    poolInfo(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    poolInfo(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     poolLength(overrides?: CallOverrides): Promise<BigNumber>;
 
-    renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     set(
-      _pid: BigNumberish,
-      _allocPoint: BigNumberish,
-      _withUpdate: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _pid: PromiseOrValue<BigNumberish>,
+      _allocPoint: PromiseOrValue<BigNumberish>,
+      _withUpdate: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     totalRegularAllocPoint(overrides?: CallOverrides): Promise<BigNumber>;
@@ -1008,48 +1128,58 @@ export interface PancakeswapChefV2 extends BaseContract {
     totalSpecialAllocPoint(overrides?: CallOverrides): Promise<BigNumber>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     updateBoostContract(
-      _newBoostContract: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _newBoostContract: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     updateBoostMultiplier(
-      _user: string,
-      _pid: BigNumberish,
-      _newMultiplier: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _user: PromiseOrValue<string>,
+      _pid: PromiseOrValue<BigNumberish>,
+      _newMultiplier: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    updateBurnAdmin(_newAdmin: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    updateBurnAdmin(
+      _newAdmin: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     updateCakeRate(
-      _burnRate: BigNumberish,
-      _regularFarmRate: BigNumberish,
-      _specialFarmRate: BigNumberish,
-      _withUpdate: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _burnRate: PromiseOrValue<BigNumberish>,
+      _regularFarmRate: PromiseOrValue<BigNumberish>,
+      _specialFarmRate: PromiseOrValue<BigNumberish>,
+      _withUpdate: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    updatePool(_pid: BigNumberish, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    updatePool(
+      _pid: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     updateWhiteList(
-      _user: string,
-      _isValid: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _user: PromiseOrValue<string>,
+      _isValid: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    userInfo(arg0: BigNumberish, arg1: string, overrides?: CallOverrides): Promise<BigNumber>;
+    userInfo(
+      arg0: PromiseOrValue<BigNumberish>,
+      arg1: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    whiteList(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    whiteList(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     withdraw(
-      _pid: BigNumberish,
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _pid: PromiseOrValue<BigNumberish>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
   };
 
@@ -1071,11 +1201,11 @@ export interface PancakeswapChefV2 extends BaseContract {
     MAX_BOOST_PRECISION(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     add(
-      _allocPoint: BigNumberish,
-      _lpToken: string,
-      _isRegular: boolean,
-      _withUpdate: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _allocPoint: PromiseOrValue<BigNumberish>,
+      _lpToken: PromiseOrValue<string>,
+      _isRegular: PromiseOrValue<boolean>,
+      _withUpdate: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     boostContract(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -1083,11 +1213,11 @@ export interface PancakeswapChefV2 extends BaseContract {
     burnAdmin(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     burnCake(
-      _withUpdate: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _withUpdate: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    cakePerBlock(_isRegular: boolean, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    cakePerBlock(_isRegular: PromiseOrValue<boolean>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     cakePerBlockToBurn(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
@@ -1098,46 +1228,54 @@ export interface PancakeswapChefV2 extends BaseContract {
     cakeRateToSpecialFarm(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     deposit(
-      _pid: BigNumberish,
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _pid: PromiseOrValue<BigNumberish>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     emergencyWithdraw(
-      _pid: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _pid: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    getBoostMultiplier(_user: string, _pid: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getBoostMultiplier(
+      _user: PromiseOrValue<string>,
+      _pid: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
-    harvestFromMasterChef(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    harvestFromMasterChef(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     init(
-      dummyToken: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      dummyToken: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     lastBurnedBlock(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    lpToken(arg0: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    lpToken(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    massUpdatePools(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    massUpdatePools(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    pendingCake(_pid: BigNumberish, _user: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    pendingCake(
+      _pid: PromiseOrValue<BigNumberish>,
+      _user: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
-    poolInfo(arg0: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    poolInfo(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     poolLength(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     set(
-      _pid: BigNumberish,
-      _allocPoint: BigNumberish,
-      _withUpdate: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _pid: PromiseOrValue<BigNumberish>,
+      _allocPoint: PromiseOrValue<BigNumberish>,
+      _withUpdate: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     totalRegularAllocPoint(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -1145,54 +1283,58 @@ export interface PancakeswapChefV2 extends BaseContract {
     totalSpecialAllocPoint(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     updateBoostContract(
-      _newBoostContract: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _newBoostContract: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     updateBoostMultiplier(
-      _user: string,
-      _pid: BigNumberish,
-      _newMultiplier: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _user: PromiseOrValue<string>,
+      _pid: PromiseOrValue<BigNumberish>,
+      _newMultiplier: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     updateBurnAdmin(
-      _newAdmin: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _newAdmin: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     updateCakeRate(
-      _burnRate: BigNumberish,
-      _regularFarmRate: BigNumberish,
-      _specialFarmRate: BigNumberish,
-      _withUpdate: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _burnRate: PromiseOrValue<BigNumberish>,
+      _regularFarmRate: PromiseOrValue<BigNumberish>,
+      _specialFarmRate: PromiseOrValue<BigNumberish>,
+      _withUpdate: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     updatePool(
-      _pid: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _pid: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     updateWhiteList(
-      _user: string,
-      _isValid: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _user: PromiseOrValue<string>,
+      _isValid: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    userInfo(arg0: BigNumberish, arg1: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    userInfo(
+      arg0: PromiseOrValue<BigNumberish>,
+      arg1: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
-    whiteList(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    whiteList(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     withdraw(
-      _pid: BigNumberish,
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _pid: PromiseOrValue<BigNumberish>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
   };
 }

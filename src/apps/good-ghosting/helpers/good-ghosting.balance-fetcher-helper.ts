@@ -14,6 +14,7 @@ import { isClaimable, isSupplied } from '~position/position.utils';
 import { Network } from '~types/network.interface';
 import { NetworkId } from '../helpers/constants';
 
+import { NetworkId } from '../helpers/constants';
 import { GoodGhostingGameConfigFetcherHelper } from '../helpers/good-ghosting.game.config-fetcher';
 
 @Injectable()

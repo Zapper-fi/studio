@@ -15,12 +15,12 @@ import type {
 } from 'ethers';
 import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
 import type { Listener, Provider } from '@ethersproject/providers';
-import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
 export declare namespace AuraLocker {
   export type DelegateeCheckpointStruct = {
-    votes: BigNumberish;
-    epochStart: BigNumberish;
+    votes: PromiseOrValue<BigNumberish>;
+    epochStart: PromiseOrValue<BigNumberish>;
   };
 
   export type DelegateeCheckpointStructOutput = [BigNumber, number] & {
@@ -28,7 +28,10 @@ export declare namespace AuraLocker {
     epochStart: number;
   };
 
-  export type EarnedDataStruct = { token: string; amount: BigNumberish };
+  export type EarnedDataStruct = {
+    token: PromiseOrValue<string>;
+    amount: PromiseOrValue<BigNumberish>;
+  };
 
   export type EarnedDataStructOutput = [string, BigNumber] & {
     token: string;
@@ -36,8 +39,8 @@ export declare namespace AuraLocker {
   };
 
   export type LockedBalanceStruct = {
-    amount: BigNumberish;
-    unlockTime: BigNumberish;
+    amount: PromiseOrValue<BigNumberish>;
+    unlockTime: PromiseOrValue<BigNumberish>;
   };
 
   export type LockedBalanceStructOutput = [BigNumber, number] & {
@@ -174,66 +177,105 @@ export interface AuraLockerInterface extends utils.Interface {
       | 'userLocks',
   ): FunctionFragment;
 
-  encodeFunctionData(functionFragment: 'addReward', values: [string, string]): string;
-  encodeFunctionData(functionFragment: 'approveRewardDistributor', values: [string, string, boolean]): string;
-  encodeFunctionData(functionFragment: 'balanceAtEpochOf', values: [BigNumberish, string]): string;
-  encodeFunctionData(functionFragment: 'balanceOf', values: [string]): string;
-  encodeFunctionData(functionFragment: 'balances', values: [string]): string;
-  encodeFunctionData(functionFragment: 'blacklist', values: [string]): string;
+  encodeFunctionData(functionFragment: 'addReward', values: [PromiseOrValue<string>, PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'approveRewardDistributor',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<boolean>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'balanceAtEpochOf',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>],
+  ): string;
+  encodeFunctionData(functionFragment: 'balanceOf', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'balances', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'blacklist', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'checkpointEpoch', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'checkpoints', values: [string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'claimableRewards', values: [string]): string;
+  encodeFunctionData(
+    functionFragment: 'checkpoints',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'claimableRewards', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'cvxCrv', values?: undefined): string;
   encodeFunctionData(functionFragment: 'cvxcrvStaking', values?: undefined): string;
   encodeFunctionData(functionFragment: 'decimals', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'delegate', values: [string]): string;
-  encodeFunctionData(functionFragment: 'delegateeUnlocks', values: [string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'delegates', values: [string]): string;
+  encodeFunctionData(functionFragment: 'delegate', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'delegateeUnlocks',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'delegates', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'denominator', values?: undefined): string;
   encodeFunctionData(functionFragment: 'emergencyWithdraw', values?: undefined): string;
   encodeFunctionData(functionFragment: 'epochCount', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'epochs', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'findEpochId', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'getPastTotalSupply', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'getPastVotes', values: [string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'getReward(address,bool)', values: [string, boolean]): string;
-  encodeFunctionData(functionFragment: 'getReward(address)', values: [string]): string;
-  encodeFunctionData(functionFragment: 'getReward(address,bool[])', values: [string, boolean[]]): string;
-  encodeFunctionData(functionFragment: 'getVotes', values: [string]): string;
+  encodeFunctionData(functionFragment: 'epochs', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'findEpochId', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'getPastTotalSupply', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(
+    functionFragment: 'getPastVotes',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'getReward(address,bool)',
+    values: [PromiseOrValue<string>, PromiseOrValue<boolean>],
+  ): string;
+  encodeFunctionData(functionFragment: 'getReward(address)', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'getReward(address,bool[])',
+    values: [PromiseOrValue<string>, PromiseOrValue<boolean>[]],
+  ): string;
+  encodeFunctionData(functionFragment: 'getVotes', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'isShutdown', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'kickExpiredLocks', values: [string]): string;
+  encodeFunctionData(functionFragment: 'kickExpiredLocks', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'kickRewardEpochDelay', values?: undefined): string;
   encodeFunctionData(functionFragment: 'kickRewardPerEpoch', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'lastTimeRewardApplicable', values: [string]): string;
-  encodeFunctionData(functionFragment: 'lock', values: [string, BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'lastTimeRewardApplicable', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'lock', values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'lockDuration', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'lockedBalances', values: [string]): string;
+  encodeFunctionData(functionFragment: 'lockedBalances', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'lockedSupply', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'modifyBlacklist', values: [string, boolean]): string;
+  encodeFunctionData(
+    functionFragment: 'modifyBlacklist',
+    values: [PromiseOrValue<string>, PromiseOrValue<boolean>],
+  ): string;
   encodeFunctionData(functionFragment: 'name', values?: undefined): string;
   encodeFunctionData(functionFragment: 'newRewardRatio', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'numCheckpoints', values: [string]): string;
+  encodeFunctionData(functionFragment: 'numCheckpoints', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'owner', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'processExpiredLocks', values: [boolean]): string;
-  encodeFunctionData(functionFragment: 'queueNewRewards', values: [string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'queuedRewards', values: [string]): string;
-  encodeFunctionData(functionFragment: 'recoverERC20', values: [string, BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'processExpiredLocks', values: [PromiseOrValue<boolean>]): string;
+  encodeFunctionData(
+    functionFragment: 'queueNewRewards',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'queuedRewards', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'recoverERC20',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
   encodeFunctionData(functionFragment: 'renounceOwnership', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'rewardData', values: [string]): string;
-  encodeFunctionData(functionFragment: 'rewardDistributors', values: [string, string]): string;
-  encodeFunctionData(functionFragment: 'rewardPerToken', values: [string]): string;
-  encodeFunctionData(functionFragment: 'rewardTokens', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'rewardData', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'rewardDistributors',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>],
+  ): string;
+  encodeFunctionData(functionFragment: 'rewardPerToken', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'rewardTokens', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'rewardsDuration', values?: undefined): string;
   encodeFunctionData(functionFragment: 'setApprovals', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'setKickIncentive', values: [BigNumberish, BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'setKickIncentive',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+  ): string;
   encodeFunctionData(functionFragment: 'shutdown', values?: undefined): string;
   encodeFunctionData(functionFragment: 'stakingToken', values?: undefined): string;
   encodeFunctionData(functionFragment: 'symbol', values?: undefined): string;
   encodeFunctionData(functionFragment: 'totalSupply', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'totalSupplyAtEpoch', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'transferOwnership', values: [string]): string;
-  encodeFunctionData(functionFragment: 'userData', values: [string, string]): string;
-  encodeFunctionData(functionFragment: 'userLocks', values: [string, BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'totalSupplyAtEpoch', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'transferOwnership', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'userData', values: [PromiseOrValue<string>, PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'userLocks',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
 
   decodeFunctionResult(functionFragment: 'addReward', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'approveRewardDistributor', data: BytesLike): Result;
@@ -446,43 +488,43 @@ export interface AuraLocker extends BaseContract {
 
   functions: {
     addReward(
-      _rewardsToken: string,
-      _distributor: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _rewardsToken: PromiseOrValue<string>,
+      _distributor: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     approveRewardDistributor(
-      _rewardsToken: string,
-      _distributor: string,
-      _approved: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _rewardsToken: PromiseOrValue<string>,
+      _distributor: PromiseOrValue<string>,
+      _approved: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     balanceAtEpochOf(
-      _epoch: BigNumberish,
-      _user: string,
+      _epoch: PromiseOrValue<BigNumberish>,
+      _user: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber] & { amount: BigNumber }>;
 
-    balanceOf(_user: string, overrides?: CallOverrides): Promise<[BigNumber] & { amount: BigNumber }>;
+    balanceOf(_user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber] & { amount: BigNumber }>;
 
     balances(
-      arg0: string,
+      arg0: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber, number] & { locked: BigNumber; nextUnlockIndex: number }>;
 
-    blacklist(arg0: string, overrides?: CallOverrides): Promise<[boolean]>;
+    blacklist(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[boolean]>;
 
-    checkpointEpoch(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    checkpointEpoch(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     checkpoints(
-      account: string,
-      pos: BigNumberish,
+      account: PromiseOrValue<string>,
+      pos: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<[AuraLocker.DelegateeCheckpointStructOutput]>;
 
     claimableRewards(
-      _account: string,
+      _account: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<
       [AuraLocker.EarnedDataStructOutput[]] & {
@@ -497,77 +539,84 @@ export interface AuraLocker extends BaseContract {
     decimals(overrides?: CallOverrides): Promise<[number]>;
 
     delegate(
-      newDelegatee: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newDelegatee: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    delegateeUnlocks(arg0: string, arg1: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber]>;
+    delegateeUnlocks(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber]>;
 
-    delegates(account: string, overrides?: CallOverrides): Promise<[string]>;
+    delegates(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[string]>;
 
     denominator(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    emergencyWithdraw(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    emergencyWithdraw(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     epochCount(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     epochs(
-      arg0: BigNumberish,
+      arg0: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber, number] & { supply: BigNumber; date: number }>;
 
-    findEpochId(_time: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber] & { epoch: BigNumber }>;
+    findEpochId(
+      _time: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber] & { epoch: BigNumber }>;
 
-    getPastTotalSupply(timestamp: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber]>;
+    getPastTotalSupply(timestamp: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     getPastVotes(
-      account: string,
-      timestamp: BigNumberish,
+      account: PromiseOrValue<string>,
+      timestamp: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber] & { votes: BigNumber }>;
 
     'getReward(address,bool)'(
-      _account: string,
-      _stake: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _account: PromiseOrValue<string>,
+      _stake: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     'getReward(address)'(
-      _account: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     'getReward(address,bool[])'(
-      _account: string,
-      _skipIdx: boolean[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _account: PromiseOrValue<string>,
+      _skipIdx: PromiseOrValue<boolean>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    getVotes(account: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    getVotes(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     isShutdown(overrides?: CallOverrides): Promise<[boolean]>;
 
     kickExpiredLocks(
-      _account: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     kickRewardEpochDelay(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     kickRewardPerEpoch(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    lastTimeRewardApplicable(_rewardsToken: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    lastTimeRewardApplicable(_rewardsToken: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     lock(
-      _account: string,
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _account: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     lockDuration(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     lockedBalances(
-      _user: string,
+      _user: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<
       [BigNumber, BigNumber, BigNumber, AuraLocker.LockedBalanceStructOutput[]] & {
@@ -581,42 +630,42 @@ export interface AuraLocker extends BaseContract {
     lockedSupply(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     modifyBlacklist(
-      _account: string,
-      _blacklisted: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _account: PromiseOrValue<string>,
+      _blacklisted: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     name(overrides?: CallOverrides): Promise<[string]>;
 
     newRewardRatio(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    numCheckpoints(account: string, overrides?: CallOverrides): Promise<[number]>;
+    numCheckpoints(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[number]>;
 
     owner(overrides?: CallOverrides): Promise<[string]>;
 
     processExpiredLocks(
-      _relock: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _relock: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     queueNewRewards(
-      _rewardsToken: string,
-      _rewards: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _rewardsToken: PromiseOrValue<string>,
+      _rewards: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    queuedRewards(arg0: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    queuedRewards(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     recoverERC20(
-      _tokenAddress: string,
-      _tokenAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _tokenAddress: PromiseOrValue<string>,
+      _tokenAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     rewardData(
-      arg0: string,
+      arg0: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<
       [number, number, BigNumber, BigNumber] & {
@@ -627,23 +676,27 @@ export interface AuraLocker extends BaseContract {
       }
     >;
 
-    rewardDistributors(arg0: string, arg1: string, overrides?: CallOverrides): Promise<[boolean]>;
+    rewardDistributors(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<[boolean]>;
 
-    rewardPerToken(_rewardsToken: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    rewardPerToken(_rewardsToken: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    rewardTokens(arg0: BigNumberish, overrides?: CallOverrides): Promise<[string]>;
+    rewardTokens(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[string]>;
 
     rewardsDuration(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    setApprovals(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    setApprovals(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     setKickIncentive(
-      _rate: BigNumberish,
-      _delay: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _rate: PromiseOrValue<BigNumberish>,
+      _delay: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    shutdown(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    shutdown(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     stakingToken(overrides?: CallOverrides): Promise<[string]>;
 
@@ -651,16 +704,19 @@ export interface AuraLocker extends BaseContract {
 
     totalSupply(overrides?: CallOverrides): Promise<[BigNumber] & { supply: BigNumber }>;
 
-    totalSupplyAtEpoch(_epoch: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber] & { supply: BigNumber }>;
+    totalSupplyAtEpoch(
+      _epoch: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber] & { supply: BigNumber }>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     userData(
-      arg0: string,
-      arg1: string,
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<
       [BigNumber, BigNumber] & {
@@ -670,45 +726,52 @@ export interface AuraLocker extends BaseContract {
     >;
 
     userLocks(
-      arg0: string,
-      arg1: BigNumberish,
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber, number] & { amount: BigNumber; unlockTime: number }>;
   };
 
   addReward(
-    _rewardsToken: string,
-    _distributor: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _rewardsToken: PromiseOrValue<string>,
+    _distributor: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   approveRewardDistributor(
-    _rewardsToken: string,
-    _distributor: string,
-    _approved: boolean,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _rewardsToken: PromiseOrValue<string>,
+    _distributor: PromiseOrValue<string>,
+    _approved: PromiseOrValue<boolean>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  balanceAtEpochOf(_epoch: BigNumberish, _user: string, overrides?: CallOverrides): Promise<BigNumber>;
+  balanceAtEpochOf(
+    _epoch: PromiseOrValue<BigNumberish>,
+    _user: PromiseOrValue<string>,
+    overrides?: CallOverrides,
+  ): Promise<BigNumber>;
 
-  balanceOf(_user: string, overrides?: CallOverrides): Promise<BigNumber>;
+  balanceOf(_user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   balances(
-    arg0: string,
+    arg0: PromiseOrValue<string>,
     overrides?: CallOverrides,
   ): Promise<[BigNumber, number] & { locked: BigNumber; nextUnlockIndex: number }>;
 
-  blacklist(arg0: string, overrides?: CallOverrides): Promise<boolean>;
+  blacklist(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
-  checkpointEpoch(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  checkpointEpoch(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   checkpoints(
-    account: string,
-    pos: BigNumberish,
+    account: PromiseOrValue<string>,
+    pos: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides,
   ): Promise<AuraLocker.DelegateeCheckpointStructOutput>;
 
-  claimableRewards(_account: string, overrides?: CallOverrides): Promise<AuraLocker.EarnedDataStructOutput[]>;
+  claimableRewards(
+    _account: PromiseOrValue<string>,
+    overrides?: CallOverrides,
+  ): Promise<AuraLocker.EarnedDataStructOutput[]>;
 
   cvxCrv(overrides?: CallOverrides): Promise<string>;
 
@@ -717,73 +780,81 @@ export interface AuraLocker extends BaseContract {
   decimals(overrides?: CallOverrides): Promise<number>;
 
   delegate(
-    newDelegatee: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    newDelegatee: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  delegateeUnlocks(arg0: string, arg1: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+  delegateeUnlocks(
+    arg0: PromiseOrValue<string>,
+    arg1: PromiseOrValue<BigNumberish>,
+    overrides?: CallOverrides,
+  ): Promise<BigNumber>;
 
-  delegates(account: string, overrides?: CallOverrides): Promise<string>;
+  delegates(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<string>;
 
   denominator(overrides?: CallOverrides): Promise<BigNumber>;
 
-  emergencyWithdraw(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  emergencyWithdraw(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   epochCount(overrides?: CallOverrides): Promise<BigNumber>;
 
   epochs(
-    arg0: BigNumberish,
+    arg0: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides,
   ): Promise<[BigNumber, number] & { supply: BigNumber; date: number }>;
 
-  findEpochId(_time: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+  findEpochId(_time: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  getPastTotalSupply(timestamp: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+  getPastTotalSupply(timestamp: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  getPastVotes(account: string, timestamp: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+  getPastVotes(
+    account: PromiseOrValue<string>,
+    timestamp: PromiseOrValue<BigNumberish>,
+    overrides?: CallOverrides,
+  ): Promise<BigNumber>;
 
   'getReward(address,bool)'(
-    _account: string,
-    _stake: boolean,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _account: PromiseOrValue<string>,
+    _stake: PromiseOrValue<boolean>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   'getReward(address)'(
-    _account: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _account: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   'getReward(address,bool[])'(
-    _account: string,
-    _skipIdx: boolean[],
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _account: PromiseOrValue<string>,
+    _skipIdx: PromiseOrValue<boolean>[],
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  getVotes(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+  getVotes(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   isShutdown(overrides?: CallOverrides): Promise<boolean>;
 
   kickExpiredLocks(
-    _account: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _account: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   kickRewardEpochDelay(overrides?: CallOverrides): Promise<BigNumber>;
 
   kickRewardPerEpoch(overrides?: CallOverrides): Promise<BigNumber>;
 
-  lastTimeRewardApplicable(_rewardsToken: string, overrides?: CallOverrides): Promise<BigNumber>;
+  lastTimeRewardApplicable(_rewardsToken: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   lock(
-    _account: string,
-    _amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _account: PromiseOrValue<string>,
+    _amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   lockDuration(overrides?: CallOverrides): Promise<BigNumber>;
 
   lockedBalances(
-    _user: string,
+    _user: PromiseOrValue<string>,
     overrides?: CallOverrides,
   ): Promise<
     [BigNumber, BigNumber, BigNumber, AuraLocker.LockedBalanceStructOutput[]] & {
@@ -797,42 +868,42 @@ export interface AuraLocker extends BaseContract {
   lockedSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
   modifyBlacklist(
-    _account: string,
-    _blacklisted: boolean,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _account: PromiseOrValue<string>,
+    _blacklisted: PromiseOrValue<boolean>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   name(overrides?: CallOverrides): Promise<string>;
 
   newRewardRatio(overrides?: CallOverrides): Promise<BigNumber>;
 
-  numCheckpoints(account: string, overrides?: CallOverrides): Promise<number>;
+  numCheckpoints(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<number>;
 
   owner(overrides?: CallOverrides): Promise<string>;
 
   processExpiredLocks(
-    _relock: boolean,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _relock: PromiseOrValue<boolean>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   queueNewRewards(
-    _rewardsToken: string,
-    _rewards: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _rewardsToken: PromiseOrValue<string>,
+    _rewards: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  queuedRewards(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+  queuedRewards(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   recoverERC20(
-    _tokenAddress: string,
-    _tokenAmount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _tokenAddress: PromiseOrValue<string>,
+    _tokenAmount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   rewardData(
-    arg0: string,
+    arg0: PromiseOrValue<string>,
     overrides?: CallOverrides,
   ): Promise<
     [number, number, BigNumber, BigNumber] & {
@@ -843,23 +914,27 @@ export interface AuraLocker extends BaseContract {
     }
   >;
 
-  rewardDistributors(arg0: string, arg1: string, overrides?: CallOverrides): Promise<boolean>;
+  rewardDistributors(
+    arg0: PromiseOrValue<string>,
+    arg1: PromiseOrValue<string>,
+    overrides?: CallOverrides,
+  ): Promise<boolean>;
 
-  rewardPerToken(_rewardsToken: string, overrides?: CallOverrides): Promise<BigNumber>;
+  rewardPerToken(_rewardsToken: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  rewardTokens(arg0: BigNumberish, overrides?: CallOverrides): Promise<string>;
+  rewardTokens(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
 
   rewardsDuration(overrides?: CallOverrides): Promise<BigNumber>;
 
-  setApprovals(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  setApprovals(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   setKickIncentive(
-    _rate: BigNumberish,
-    _delay: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _rate: PromiseOrValue<BigNumberish>,
+    _delay: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  shutdown(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  shutdown(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   stakingToken(overrides?: CallOverrides): Promise<string>;
 
@@ -867,16 +942,16 @@ export interface AuraLocker extends BaseContract {
 
   totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
-  totalSupplyAtEpoch(_epoch: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+  totalSupplyAtEpoch(_epoch: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
   transferOwnership(
-    newOwner: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    newOwner: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   userData(
-    arg0: string,
-    arg1: string,
+    arg0: PromiseOrValue<string>,
+    arg1: PromiseOrValue<string>,
     overrides?: CallOverrides,
   ): Promise<
     [BigNumber, BigNumber] & {
@@ -886,41 +961,52 @@ export interface AuraLocker extends BaseContract {
   >;
 
   userLocks(
-    arg0: string,
-    arg1: BigNumberish,
+    arg0: PromiseOrValue<string>,
+    arg1: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides,
   ): Promise<[BigNumber, number] & { amount: BigNumber; unlockTime: number }>;
 
   callStatic: {
-    addReward(_rewardsToken: string, _distributor: string, overrides?: CallOverrides): Promise<void>;
-
-    approveRewardDistributor(
-      _rewardsToken: string,
-      _distributor: string,
-      _approved: boolean,
+    addReward(
+      _rewardsToken: PromiseOrValue<string>,
+      _distributor: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
-    balanceAtEpochOf(_epoch: BigNumberish, _user: string, overrides?: CallOverrides): Promise<BigNumber>;
+    approveRewardDistributor(
+      _rewardsToken: PromiseOrValue<string>,
+      _distributor: PromiseOrValue<string>,
+      _approved: PromiseOrValue<boolean>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    balanceOf(_user: string, overrides?: CallOverrides): Promise<BigNumber>;
+    balanceAtEpochOf(
+      _epoch: PromiseOrValue<BigNumberish>,
+      _user: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
+
+    balanceOf(_user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     balances(
-      arg0: string,
+      arg0: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber, number] & { locked: BigNumber; nextUnlockIndex: number }>;
 
-    blacklist(arg0: string, overrides?: CallOverrides): Promise<boolean>;
+    blacklist(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
     checkpointEpoch(overrides?: CallOverrides): Promise<void>;
 
     checkpoints(
-      account: string,
-      pos: BigNumberish,
+      account: PromiseOrValue<string>,
+      pos: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<AuraLocker.DelegateeCheckpointStructOutput>;
 
-    claimableRewards(_account: string, overrides?: CallOverrides): Promise<AuraLocker.EarnedDataStructOutput[]>;
+    claimableRewards(
+      _account: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<AuraLocker.EarnedDataStructOutput[]>;
 
     cvxCrv(overrides?: CallOverrides): Promise<string>;
 
@@ -928,11 +1014,15 @@ export interface AuraLocker extends BaseContract {
 
     decimals(overrides?: CallOverrides): Promise<number>;
 
-    delegate(newDelegatee: string, overrides?: CallOverrides): Promise<void>;
+    delegate(newDelegatee: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    delegateeUnlocks(arg0: string, arg1: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    delegateeUnlocks(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    delegates(account: string, overrides?: CallOverrides): Promise<string>;
+    delegates(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<string>;
 
     denominator(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -941,40 +1031,56 @@ export interface AuraLocker extends BaseContract {
     epochCount(overrides?: CallOverrides): Promise<BigNumber>;
 
     epochs(
-      arg0: BigNumberish,
+      arg0: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber, number] & { supply: BigNumber; date: number }>;
 
-    findEpochId(_time: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    findEpochId(_time: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    getPastTotalSupply(timestamp: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    getPastTotalSupply(timestamp: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    getPastVotes(account: string, timestamp: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    getPastVotes(
+      account: PromiseOrValue<string>,
+      timestamp: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    'getReward(address,bool)'(_account: string, _stake: boolean, overrides?: CallOverrides): Promise<void>;
+    'getReward(address,bool)'(
+      _account: PromiseOrValue<string>,
+      _stake: PromiseOrValue<boolean>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    'getReward(address)'(_account: string, overrides?: CallOverrides): Promise<void>;
+    'getReward(address)'(_account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    'getReward(address,bool[])'(_account: string, _skipIdx: boolean[], overrides?: CallOverrides): Promise<void>;
+    'getReward(address,bool[])'(
+      _account: PromiseOrValue<string>,
+      _skipIdx: PromiseOrValue<boolean>[],
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    getVotes(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getVotes(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     isShutdown(overrides?: CallOverrides): Promise<boolean>;
 
-    kickExpiredLocks(_account: string, overrides?: CallOverrides): Promise<void>;
+    kickExpiredLocks(_account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     kickRewardEpochDelay(overrides?: CallOverrides): Promise<BigNumber>;
 
     kickRewardPerEpoch(overrides?: CallOverrides): Promise<BigNumber>;
 
-    lastTimeRewardApplicable(_rewardsToken: string, overrides?: CallOverrides): Promise<BigNumber>;
+    lastTimeRewardApplicable(_rewardsToken: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    lock(_account: string, _amount: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    lock(
+      _account: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
     lockDuration(overrides?: CallOverrides): Promise<BigNumber>;
 
     lockedBalances(
-      _user: string,
+      _user: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<
       [BigNumber, BigNumber, BigNumber, AuraLocker.LockedBalanceStructOutput[]] & {
@@ -987,28 +1093,40 @@ export interface AuraLocker extends BaseContract {
 
     lockedSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
-    modifyBlacklist(_account: string, _blacklisted: boolean, overrides?: CallOverrides): Promise<void>;
+    modifyBlacklist(
+      _account: PromiseOrValue<string>,
+      _blacklisted: PromiseOrValue<boolean>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
     name(overrides?: CallOverrides): Promise<string>;
 
     newRewardRatio(overrides?: CallOverrides): Promise<BigNumber>;
 
-    numCheckpoints(account: string, overrides?: CallOverrides): Promise<number>;
+    numCheckpoints(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<number>;
 
     owner(overrides?: CallOverrides): Promise<string>;
 
-    processExpiredLocks(_relock: boolean, overrides?: CallOverrides): Promise<void>;
+    processExpiredLocks(_relock: PromiseOrValue<boolean>, overrides?: CallOverrides): Promise<void>;
 
-    queueNewRewards(_rewardsToken: string, _rewards: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    queueNewRewards(
+      _rewardsToken: PromiseOrValue<string>,
+      _rewards: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    queuedRewards(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    queuedRewards(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    recoverERC20(_tokenAddress: string, _tokenAmount: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    recoverERC20(
+      _tokenAddress: PromiseOrValue<string>,
+      _tokenAmount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
     renounceOwnership(overrides?: CallOverrides): Promise<void>;
 
     rewardData(
-      arg0: string,
+      arg0: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<
       [number, number, BigNumber, BigNumber] & {
@@ -1019,17 +1137,25 @@ export interface AuraLocker extends BaseContract {
       }
     >;
 
-    rewardDistributors(arg0: string, arg1: string, overrides?: CallOverrides): Promise<boolean>;
+    rewardDistributors(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
 
-    rewardPerToken(_rewardsToken: string, overrides?: CallOverrides): Promise<BigNumber>;
+    rewardPerToken(_rewardsToken: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    rewardTokens(arg0: BigNumberish, overrides?: CallOverrides): Promise<string>;
+    rewardTokens(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
 
     rewardsDuration(overrides?: CallOverrides): Promise<BigNumber>;
 
     setApprovals(overrides?: CallOverrides): Promise<void>;
 
-    setKickIncentive(_rate: BigNumberish, _delay: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    setKickIncentive(
+      _rate: PromiseOrValue<BigNumberish>,
+      _delay: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
     shutdown(overrides?: CallOverrides): Promise<void>;
 
@@ -1039,13 +1165,13 @@ export interface AuraLocker extends BaseContract {
 
     totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
-    totalSupplyAtEpoch(_epoch: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    totalSupplyAtEpoch(_epoch: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    transferOwnership(newOwner: string, overrides?: CallOverrides): Promise<void>;
+    transferOwnership(newOwner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     userData(
-      arg0: string,
-      arg1: string,
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<
       [BigNumber, BigNumber] & {
@@ -1055,8 +1181,8 @@ export interface AuraLocker extends BaseContract {
     >;
 
     userLocks(
-      arg0: string,
-      arg1: BigNumberish,
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber, number] & { amount: BigNumber; unlockTime: number }>;
   };
@@ -1066,89 +1192,112 @@ export interface AuraLocker extends BaseContract {
     BlacklistModified(account?: null, blacklisted?: null): BlacklistModifiedEventFilter;
 
     'DelegateChanged(address,address,address)'(
-      delegator?: string | null,
-      fromDelegate?: string | null,
-      toDelegate?: string | null,
+      delegator?: PromiseOrValue<string> | null,
+      fromDelegate?: PromiseOrValue<string> | null,
+      toDelegate?: PromiseOrValue<string> | null,
     ): DelegateChangedEventFilter;
     DelegateChanged(
-      delegator?: string | null,
-      fromDelegate?: string | null,
-      toDelegate?: string | null,
+      delegator?: PromiseOrValue<string> | null,
+      fromDelegate?: PromiseOrValue<string> | null,
+      toDelegate?: PromiseOrValue<string> | null,
     ): DelegateChangedEventFilter;
 
-    'DelegateCheckpointed(address)'(delegate?: string | null): DelegateCheckpointedEventFilter;
-    DelegateCheckpointed(delegate?: string | null): DelegateCheckpointedEventFilter;
+    'DelegateCheckpointed(address)'(delegate?: PromiseOrValue<string> | null): DelegateCheckpointedEventFilter;
+    DelegateCheckpointed(delegate?: PromiseOrValue<string> | null): DelegateCheckpointedEventFilter;
 
     'KickIncentiveSet(uint256,uint256)'(rate?: null, delay?: null): KickIncentiveSetEventFilter;
     KickIncentiveSet(rate?: null, delay?: null): KickIncentiveSetEventFilter;
 
     'KickReward(address,address,uint256)'(
-      _user?: string | null,
-      _kicked?: string | null,
+      _user?: PromiseOrValue<string> | null,
+      _kicked?: PromiseOrValue<string> | null,
       _reward?: null,
     ): KickRewardEventFilter;
-    KickReward(_user?: string | null, _kicked?: string | null, _reward?: null): KickRewardEventFilter;
+    KickReward(
+      _user?: PromiseOrValue<string> | null,
+      _kicked?: PromiseOrValue<string> | null,
+      _reward?: null,
+    ): KickRewardEventFilter;
 
     'OwnershipTransferred(address,address)'(
-      previousOwner?: string | null,
-      newOwner?: string | null,
+      previousOwner?: PromiseOrValue<string> | null,
+      newOwner?: PromiseOrValue<string> | null,
     ): OwnershipTransferredEventFilter;
-    OwnershipTransferred(previousOwner?: string | null, newOwner?: string | null): OwnershipTransferredEventFilter;
+    OwnershipTransferred(
+      previousOwner?: PromiseOrValue<string> | null,
+      newOwner?: PromiseOrValue<string> | null,
+    ): OwnershipTransferredEventFilter;
 
     'Recovered(address,uint256)'(_token?: null, _amount?: null): RecoveredEventFilter;
     Recovered(_token?: null, _amount?: null): RecoveredEventFilter;
 
-    'RewardAdded(address,uint256)'(_token?: string | null, _reward?: null): RewardAddedEventFilter;
-    RewardAdded(_token?: string | null, _reward?: null): RewardAddedEventFilter;
+    'RewardAdded(address,uint256)'(_token?: PromiseOrValue<string> | null, _reward?: null): RewardAddedEventFilter;
+    RewardAdded(_token?: PromiseOrValue<string> | null, _reward?: null): RewardAddedEventFilter;
 
     'RewardPaid(address,address,uint256)'(
-      _user?: string | null,
-      _rewardsToken?: string | null,
+      _user?: PromiseOrValue<string> | null,
+      _rewardsToken?: PromiseOrValue<string> | null,
       _reward?: null,
     ): RewardPaidEventFilter;
-    RewardPaid(_user?: string | null, _rewardsToken?: string | null, _reward?: null): RewardPaidEventFilter;
+    RewardPaid(
+      _user?: PromiseOrValue<string> | null,
+      _rewardsToken?: PromiseOrValue<string> | null,
+      _reward?: null,
+    ): RewardPaidEventFilter;
 
     'Shutdown()'(): ShutdownEventFilter;
     Shutdown(): ShutdownEventFilter;
 
     'Staked(address,uint256,uint256)'(
-      _user?: string | null,
+      _user?: PromiseOrValue<string> | null,
       _paidAmount?: null,
       _lockedAmount?: null,
     ): StakedEventFilter;
-    Staked(_user?: string | null, _paidAmount?: null, _lockedAmount?: null): StakedEventFilter;
+    Staked(_user?: PromiseOrValue<string> | null, _paidAmount?: null, _lockedAmount?: null): StakedEventFilter;
 
-    'Withdrawn(address,uint256,bool)'(_user?: string | null, _amount?: null, _relocked?: null): WithdrawnEventFilter;
-    Withdrawn(_user?: string | null, _amount?: null, _relocked?: null): WithdrawnEventFilter;
+    'Withdrawn(address,uint256,bool)'(
+      _user?: PromiseOrValue<string> | null,
+      _amount?: null,
+      _relocked?: null,
+    ): WithdrawnEventFilter;
+    Withdrawn(_user?: PromiseOrValue<string> | null, _amount?: null, _relocked?: null): WithdrawnEventFilter;
   };
 
   estimateGas: {
     addReward(
-      _rewardsToken: string,
-      _distributor: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _rewardsToken: PromiseOrValue<string>,
+      _distributor: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     approveRewardDistributor(
-      _rewardsToken: string,
-      _distributor: string,
-      _approved: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _rewardsToken: PromiseOrValue<string>,
+      _distributor: PromiseOrValue<string>,
+      _approved: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    balanceAtEpochOf(_epoch: BigNumberish, _user: string, overrides?: CallOverrides): Promise<BigNumber>;
+    balanceAtEpochOf(
+      _epoch: PromiseOrValue<BigNumberish>,
+      _user: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    balanceOf(_user: string, overrides?: CallOverrides): Promise<BigNumber>;
+    balanceOf(_user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    balances(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    balances(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    blacklist(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    blacklist(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    checkpointEpoch(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    checkpointEpoch(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
-    checkpoints(account: string, pos: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    checkpoints(
+      account: PromiseOrValue<string>,
+      pos: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    claimableRewards(_account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    claimableRewards(_account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     cvxCrv(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -1156,121 +1305,139 @@ export interface AuraLocker extends BaseContract {
 
     decimals(overrides?: CallOverrides): Promise<BigNumber>;
 
-    delegate(newDelegatee: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    delegate(
+      newDelegatee: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
-    delegateeUnlocks(arg0: string, arg1: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    delegateeUnlocks(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    delegates(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    delegates(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     denominator(overrides?: CallOverrides): Promise<BigNumber>;
 
-    emergencyWithdraw(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    emergencyWithdraw(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     epochCount(overrides?: CallOverrides): Promise<BigNumber>;
 
-    epochs(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    epochs(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    findEpochId(_time: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    findEpochId(_time: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    getPastTotalSupply(timestamp: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    getPastTotalSupply(timestamp: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    getPastVotes(account: string, timestamp: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    getPastVotes(
+      account: PromiseOrValue<string>,
+      timestamp: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     'getReward(address,bool)'(
-      _account: string,
-      _stake: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _account: PromiseOrValue<string>,
+      _stake: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     'getReward(address)'(
-      _account: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     'getReward(address,bool[])'(
-      _account: string,
-      _skipIdx: boolean[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _account: PromiseOrValue<string>,
+      _skipIdx: PromiseOrValue<boolean>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    getVotes(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getVotes(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     isShutdown(overrides?: CallOverrides): Promise<BigNumber>;
 
-    kickExpiredLocks(_account: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    kickExpiredLocks(
+      _account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     kickRewardEpochDelay(overrides?: CallOverrides): Promise<BigNumber>;
 
     kickRewardPerEpoch(overrides?: CallOverrides): Promise<BigNumber>;
 
-    lastTimeRewardApplicable(_rewardsToken: string, overrides?: CallOverrides): Promise<BigNumber>;
+    lastTimeRewardApplicable(_rewardsToken: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     lock(
-      _account: string,
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _account: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     lockDuration(overrides?: CallOverrides): Promise<BigNumber>;
 
-    lockedBalances(_user: string, overrides?: CallOverrides): Promise<BigNumber>;
+    lockedBalances(_user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     lockedSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
     modifyBlacklist(
-      _account: string,
-      _blacklisted: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _account: PromiseOrValue<string>,
+      _blacklisted: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     name(overrides?: CallOverrides): Promise<BigNumber>;
 
     newRewardRatio(overrides?: CallOverrides): Promise<BigNumber>;
 
-    numCheckpoints(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    numCheckpoints(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     owner(overrides?: CallOverrides): Promise<BigNumber>;
 
     processExpiredLocks(
-      _relock: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _relock: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     queueNewRewards(
-      _rewardsToken: string,
-      _rewards: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _rewardsToken: PromiseOrValue<string>,
+      _rewards: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    queuedRewards(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    queuedRewards(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     recoverERC20(
-      _tokenAddress: string,
-      _tokenAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _tokenAddress: PromiseOrValue<string>,
+      _tokenAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
-    rewardData(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    rewardData(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    rewardDistributors(arg0: string, arg1: string, overrides?: CallOverrides): Promise<BigNumber>;
+    rewardDistributors(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    rewardPerToken(_rewardsToken: string, overrides?: CallOverrides): Promise<BigNumber>;
+    rewardPerToken(_rewardsToken: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    rewardTokens(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    rewardTokens(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     rewardsDuration(overrides?: CallOverrides): Promise<BigNumber>;
 
-    setApprovals(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    setApprovals(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     setKickIncentive(
-      _rate: BigNumberish,
-      _delay: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _rate: PromiseOrValue<BigNumberish>,
+      _delay: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    shutdown(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    shutdown(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     stakingToken(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -1278,45 +1445,57 @@ export interface AuraLocker extends BaseContract {
 
     totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
-    totalSupplyAtEpoch(_epoch: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    totalSupplyAtEpoch(_epoch: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    userData(arg0: string, arg1: string, overrides?: CallOverrides): Promise<BigNumber>;
+    userData(arg0: PromiseOrValue<string>, arg1: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    userLocks(arg0: string, arg1: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    userLocks(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
   };
 
   populateTransaction: {
     addReward(
-      _rewardsToken: string,
-      _distributor: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _rewardsToken: PromiseOrValue<string>,
+      _distributor: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     approveRewardDistributor(
-      _rewardsToken: string,
-      _distributor: string,
-      _approved: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _rewardsToken: PromiseOrValue<string>,
+      _distributor: PromiseOrValue<string>,
+      _approved: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    balanceAtEpochOf(_epoch: BigNumberish, _user: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    balanceAtEpochOf(
+      _epoch: PromiseOrValue<BigNumberish>,
+      _user: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
-    balanceOf(_user: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    balanceOf(_user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    balances(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    balances(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    blacklist(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    blacklist(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    checkpointEpoch(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    checkpointEpoch(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
-    checkpoints(account: string, pos: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    checkpoints(
+      account: PromiseOrValue<string>,
+      pos: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
-    claimableRewards(_account: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    claimableRewards(_account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     cvxCrv(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
@@ -1325,126 +1504,144 @@ export interface AuraLocker extends BaseContract {
     decimals(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     delegate(
-      newDelegatee: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newDelegatee: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    delegateeUnlocks(arg0: string, arg1: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    delegateeUnlocks(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
-    delegates(account: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    delegates(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     denominator(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    emergencyWithdraw(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    emergencyWithdraw(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     epochCount(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    epochs(arg0: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    epochs(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    findEpochId(_time: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    findEpochId(_time: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    getPastTotalSupply(timestamp: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getPastTotalSupply(
+      timestamp: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
-    getPastVotes(account: string, timestamp: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getPastVotes(
+      account: PromiseOrValue<string>,
+      timestamp: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
     'getReward(address,bool)'(
-      _account: string,
-      _stake: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _account: PromiseOrValue<string>,
+      _stake: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     'getReward(address)'(
-      _account: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     'getReward(address,bool[])'(
-      _account: string,
-      _skipIdx: boolean[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _account: PromiseOrValue<string>,
+      _skipIdx: PromiseOrValue<boolean>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    getVotes(account: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getVotes(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     isShutdown(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     kickExpiredLocks(
-      _account: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     kickRewardEpochDelay(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     kickRewardPerEpoch(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    lastTimeRewardApplicable(_rewardsToken: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    lastTimeRewardApplicable(
+      _rewardsToken: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
     lock(
-      _account: string,
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _account: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     lockDuration(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    lockedBalances(_user: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    lockedBalances(_user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     lockedSupply(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     modifyBlacklist(
-      _account: string,
-      _blacklisted: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _account: PromiseOrValue<string>,
+      _blacklisted: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     name(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     newRewardRatio(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    numCheckpoints(account: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    numCheckpoints(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     processExpiredLocks(
-      _relock: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _relock: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     queueNewRewards(
-      _rewardsToken: string,
-      _rewards: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _rewardsToken: PromiseOrValue<string>,
+      _rewards: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    queuedRewards(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    queuedRewards(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     recoverERC20(
-      _tokenAddress: string,
-      _tokenAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _tokenAddress: PromiseOrValue<string>,
+      _tokenAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
-    rewardData(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    rewardData(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    rewardDistributors(arg0: string, arg1: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    rewardDistributors(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
-    rewardPerToken(_rewardsToken: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    rewardPerToken(_rewardsToken: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    rewardTokens(arg0: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    rewardTokens(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     rewardsDuration(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    setApprovals(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    setApprovals(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     setKickIncentive(
-      _rate: BigNumberish,
-      _delay: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _rate: PromiseOrValue<BigNumberish>,
+      _delay: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    shutdown(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    shutdown(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     stakingToken(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
@@ -1452,15 +1649,23 @@ export interface AuraLocker extends BaseContract {
 
     totalSupply(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    totalSupplyAtEpoch(_epoch: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    totalSupplyAtEpoch(_epoch: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    userData(arg0: string, arg1: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    userData(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
-    userLocks(arg0: string, arg1: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    userLocks(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
   };
 }

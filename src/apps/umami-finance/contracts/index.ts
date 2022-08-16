@@ -6,6 +6,7 @@ import { Network } from '~types/network.interface';
 
 import { UmamiFinanceCompound__factory } from './ethers';
 import { UmamiFinanceMarinate__factory } from './ethers';
+import { UmamiFinanceVault__factory } from './ethers';
 
 // eslint-disable-next-line
 type ContractOpts = { address: string; network: Network };
@@ -22,7 +23,11 @@ export class UmamiFinanceContractFactory extends ContractFactory {
   umamiFinanceMarinate({ address, network }: ContractOpts) {
     return UmamiFinanceMarinate__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
+  umamiFinanceVault({ address, network }: ContractOpts) {
+    return UmamiFinanceVault__factory.connect(address, this.appToolkit.getNetworkProvider(network));
+  }
 }
 
 export type { UmamiFinanceCompound } from './ethers';
 export type { UmamiFinanceMarinate } from './ethers';
+export type { UmamiFinanceVault } from './ethers';

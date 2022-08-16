@@ -15,7 +15,7 @@ import type {
 } from 'ethers';
 import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
 import type { Listener, Provider } from '@ethersproject/providers';
-import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
 export interface AaveStakedTokenIncentivesControllerInterface extends utils.Interface {
   functions: {
@@ -71,23 +71,38 @@ export interface AaveStakedTokenIncentivesControllerInterface extends utils.Inte
   encodeFunctionData(functionFragment: 'REVISION', values?: undefined): string;
   encodeFunctionData(functionFragment: 'REWARD_TOKEN', values?: undefined): string;
   encodeFunctionData(functionFragment: 'STAKE_TOKEN', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'assets', values: [string]): string;
-  encodeFunctionData(functionFragment: 'claimRewards', values: [string[], BigNumberish, string]): string;
+  encodeFunctionData(functionFragment: 'assets', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'claimRewards',
+    values: [PromiseOrValue<string>[], PromiseOrValue<BigNumberish>, PromiseOrValue<string>],
+  ): string;
   encodeFunctionData(
     functionFragment: 'claimRewardsOnBehalf',
-    values: [string[], BigNumberish, string, string],
+    values: [PromiseOrValue<string>[], PromiseOrValue<BigNumberish>, PromiseOrValue<string>, PromiseOrValue<string>],
   ): string;
-  encodeFunctionData(functionFragment: 'configureAssets', values: [string[], BigNumberish[]]): string;
-  encodeFunctionData(functionFragment: 'getAssetData', values: [string]): string;
-  encodeFunctionData(functionFragment: 'getClaimer', values: [string]): string;
+  encodeFunctionData(
+    functionFragment: 'configureAssets',
+    values: [PromiseOrValue<string>[], PromiseOrValue<BigNumberish>[]],
+  ): string;
+  encodeFunctionData(functionFragment: 'getAssetData', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'getClaimer', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'getDistributionEnd', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'getRewardsBalance', values: [string[], string]): string;
-  encodeFunctionData(functionFragment: 'getUserAssetData', values: [string, string]): string;
-  encodeFunctionData(functionFragment: 'getUserUnclaimedRewards', values: [string]): string;
-  encodeFunctionData(functionFragment: 'handleAction', values: [string, BigNumberish, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'initialize', values: [string]): string;
-  encodeFunctionData(functionFragment: 'setClaimer', values: [string, string]): string;
-  encodeFunctionData(functionFragment: 'setDistributionEnd', values: [BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'getRewardsBalance',
+    values: [PromiseOrValue<string>[], PromiseOrValue<string>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'getUserAssetData',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>],
+  ): string;
+  encodeFunctionData(functionFragment: 'getUserUnclaimedRewards', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'handleAction',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'initialize', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'setClaimer', values: [PromiseOrValue<string>, PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'setDistributionEnd', values: [PromiseOrValue<BigNumberish>]): string;
 
   decodeFunctionResult(functionFragment: 'DISTRIBUTION_END', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'EMISSION_MANAGER', data: BytesLike): Result;
@@ -223,7 +238,7 @@ export interface AaveStakedTokenIncentivesController extends BaseContract {
     STAKE_TOKEN(overrides?: CallOverrides): Promise<[string]>;
 
     assets(
-      arg0: string,
+      arg0: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<
       [BigNumber, BigNumber, number] & {
@@ -234,59 +249,67 @@ export interface AaveStakedTokenIncentivesController extends BaseContract {
     >;
 
     claimRewards(
-      assets: string[],
-      amount: BigNumberish,
-      to: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      assets: PromiseOrValue<string>[],
+      amount: PromiseOrValue<BigNumberish>,
+      to: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     claimRewardsOnBehalf(
-      assets: string[],
-      amount: BigNumberish,
-      user: string,
-      to: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      assets: PromiseOrValue<string>[],
+      amount: PromiseOrValue<BigNumberish>,
+      user: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     configureAssets(
-      assets: string[],
-      emissionsPerSecond: BigNumberish[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      assets: PromiseOrValue<string>[],
+      emissionsPerSecond: PromiseOrValue<BigNumberish>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    getAssetData(asset: string, overrides?: CallOverrides): Promise<[BigNumber, BigNumber, BigNumber]>;
+    getAssetData(asset: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber, BigNumber, BigNumber]>;
 
-    getClaimer(user: string, overrides?: CallOverrides): Promise<[string]>;
+    getClaimer(user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[string]>;
 
     getDistributionEnd(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    getRewardsBalance(assets: string[], user: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    getRewardsBalance(
+      assets: PromiseOrValue<string>[],
+      user: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber]>;
 
-    getUserAssetData(user: string, asset: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    getUserAssetData(
+      user: PromiseOrValue<string>,
+      asset: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber]>;
 
-    getUserUnclaimedRewards(_user: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    getUserUnclaimedRewards(_user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     handleAction(
-      user: string,
-      totalSupply: BigNumberish,
-      userBalance: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      user: PromiseOrValue<string>,
+      totalSupply: PromiseOrValue<BigNumberish>,
+      userBalance: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     initialize(
-      addressesProvider: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      addressesProvider: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setClaimer(
-      user: string,
-      caller: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      user: PromiseOrValue<string>,
+      caller: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setDistributionEnd(
-      distributionEnd: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      distributionEnd: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
   };
 
@@ -303,7 +326,7 @@ export interface AaveStakedTokenIncentivesController extends BaseContract {
   STAKE_TOKEN(overrides?: CallOverrides): Promise<string>;
 
   assets(
-    arg0: string,
+    arg0: PromiseOrValue<string>,
     overrides?: CallOverrides,
   ): Promise<
     [BigNumber, BigNumber, number] & {
@@ -314,59 +337,67 @@ export interface AaveStakedTokenIncentivesController extends BaseContract {
   >;
 
   claimRewards(
-    assets: string[],
-    amount: BigNumberish,
-    to: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    assets: PromiseOrValue<string>[],
+    amount: PromiseOrValue<BigNumberish>,
+    to: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   claimRewardsOnBehalf(
-    assets: string[],
-    amount: BigNumberish,
-    user: string,
-    to: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    assets: PromiseOrValue<string>[],
+    amount: PromiseOrValue<BigNumberish>,
+    user: PromiseOrValue<string>,
+    to: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   configureAssets(
-    assets: string[],
-    emissionsPerSecond: BigNumberish[],
-    overrides?: Overrides & { from?: string | Promise<string> },
+    assets: PromiseOrValue<string>[],
+    emissionsPerSecond: PromiseOrValue<BigNumberish>[],
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  getAssetData(asset: string, overrides?: CallOverrides): Promise<[BigNumber, BigNumber, BigNumber]>;
+  getAssetData(asset: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber, BigNumber, BigNumber]>;
 
-  getClaimer(user: string, overrides?: CallOverrides): Promise<string>;
+  getClaimer(user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<string>;
 
   getDistributionEnd(overrides?: CallOverrides): Promise<BigNumber>;
 
-  getRewardsBalance(assets: string[], user: string, overrides?: CallOverrides): Promise<BigNumber>;
+  getRewardsBalance(
+    assets: PromiseOrValue<string>[],
+    user: PromiseOrValue<string>,
+    overrides?: CallOverrides,
+  ): Promise<BigNumber>;
 
-  getUserAssetData(user: string, asset: string, overrides?: CallOverrides): Promise<BigNumber>;
+  getUserAssetData(
+    user: PromiseOrValue<string>,
+    asset: PromiseOrValue<string>,
+    overrides?: CallOverrides,
+  ): Promise<BigNumber>;
 
-  getUserUnclaimedRewards(_user: string, overrides?: CallOverrides): Promise<BigNumber>;
+  getUserUnclaimedRewards(_user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   handleAction(
-    user: string,
-    totalSupply: BigNumberish,
-    userBalance: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    user: PromiseOrValue<string>,
+    totalSupply: PromiseOrValue<BigNumberish>,
+    userBalance: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   initialize(
-    addressesProvider: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    addressesProvider: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setClaimer(
-    user: string,
-    caller: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    user: PromiseOrValue<string>,
+    caller: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setDistributionEnd(
-    distributionEnd: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    distributionEnd: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   callStatic: {
@@ -383,7 +414,7 @@ export interface AaveStakedTokenIncentivesController extends BaseContract {
     STAKE_TOKEN(overrides?: CallOverrides): Promise<string>;
 
     assets(
-      arg0: string,
+      arg0: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<
       [BigNumber, BigNumber, number] & {
@@ -393,79 +424,109 @@ export interface AaveStakedTokenIncentivesController extends BaseContract {
       }
     >;
 
-    claimRewards(assets: string[], amount: BigNumberish, to: string, overrides?: CallOverrides): Promise<BigNumber>;
-
-    claimRewardsOnBehalf(
-      assets: string[],
-      amount: BigNumberish,
-      user: string,
-      to: string,
+    claimRewards(
+      assets: PromiseOrValue<string>[],
+      amount: PromiseOrValue<BigNumberish>,
+      to: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
-    configureAssets(assets: string[], emissionsPerSecond: BigNumberish[], overrides?: CallOverrides): Promise<void>;
+    claimRewardsOnBehalf(
+      assets: PromiseOrValue<string>[],
+      amount: PromiseOrValue<BigNumberish>,
+      user: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    getAssetData(asset: string, overrides?: CallOverrides): Promise<[BigNumber, BigNumber, BigNumber]>;
-
-    getClaimer(user: string, overrides?: CallOverrides): Promise<string>;
-
-    getDistributionEnd(overrides?: CallOverrides): Promise<BigNumber>;
-
-    getRewardsBalance(assets: string[], user: string, overrides?: CallOverrides): Promise<BigNumber>;
-
-    getUserAssetData(user: string, asset: string, overrides?: CallOverrides): Promise<BigNumber>;
-
-    getUserUnclaimedRewards(_user: string, overrides?: CallOverrides): Promise<BigNumber>;
-
-    handleAction(
-      user: string,
-      totalSupply: BigNumberish,
-      userBalance: BigNumberish,
+    configureAssets(
+      assets: PromiseOrValue<string>[],
+      emissionsPerSecond: PromiseOrValue<BigNumberish>[],
       overrides?: CallOverrides,
     ): Promise<void>;
 
-    initialize(addressesProvider: string, overrides?: CallOverrides): Promise<void>;
+    getAssetData(asset: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber, BigNumber, BigNumber]>;
 
-    setClaimer(user: string, caller: string, overrides?: CallOverrides): Promise<void>;
+    getClaimer(user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<string>;
 
-    setDistributionEnd(distributionEnd: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    getDistributionEnd(overrides?: CallOverrides): Promise<BigNumber>;
+
+    getRewardsBalance(
+      assets: PromiseOrValue<string>[],
+      user: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
+
+    getUserAssetData(
+      user: PromiseOrValue<string>,
+      asset: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
+
+    getUserUnclaimedRewards(_user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
+
+    handleAction(
+      user: PromiseOrValue<string>,
+      totalSupply: PromiseOrValue<BigNumberish>,
+      userBalance: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
+
+    initialize(addressesProvider: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
+
+    setClaimer(user: PromiseOrValue<string>, caller: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
+
+    setDistributionEnd(distributionEnd: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
   };
 
   filters: {
-    'AssetConfigUpdated(address,uint256)'(asset?: string | null, emission?: null): AssetConfigUpdatedEventFilter;
-    AssetConfigUpdated(asset?: string | null, emission?: null): AssetConfigUpdatedEventFilter;
+    'AssetConfigUpdated(address,uint256)'(
+      asset?: PromiseOrValue<string> | null,
+      emission?: null,
+    ): AssetConfigUpdatedEventFilter;
+    AssetConfigUpdated(asset?: PromiseOrValue<string> | null, emission?: null): AssetConfigUpdatedEventFilter;
 
-    'AssetIndexUpdated(address,uint256)'(asset?: string | null, index?: null): AssetIndexUpdatedEventFilter;
-    AssetIndexUpdated(asset?: string | null, index?: null): AssetIndexUpdatedEventFilter;
+    'AssetIndexUpdated(address,uint256)'(
+      asset?: PromiseOrValue<string> | null,
+      index?: null,
+    ): AssetIndexUpdatedEventFilter;
+    AssetIndexUpdated(asset?: PromiseOrValue<string> | null, index?: null): AssetIndexUpdatedEventFilter;
 
-    'ClaimerSet(address,address)'(user?: string | null, claimer?: string | null): ClaimerSetEventFilter;
-    ClaimerSet(user?: string | null, claimer?: string | null): ClaimerSetEventFilter;
+    'ClaimerSet(address,address)'(
+      user?: PromiseOrValue<string> | null,
+      claimer?: PromiseOrValue<string> | null,
+    ): ClaimerSetEventFilter;
+    ClaimerSet(user?: PromiseOrValue<string> | null, claimer?: PromiseOrValue<string> | null): ClaimerSetEventFilter;
 
     'DistributionEndUpdated(uint256)'(newDistributionEnd?: null): DistributionEndUpdatedEventFilter;
     DistributionEndUpdated(newDistributionEnd?: null): DistributionEndUpdatedEventFilter;
 
-    'RewardsAccrued(address,uint256)'(user?: string | null, amount?: null): RewardsAccruedEventFilter;
-    RewardsAccrued(user?: string | null, amount?: null): RewardsAccruedEventFilter;
+    'RewardsAccrued(address,uint256)'(user?: PromiseOrValue<string> | null, amount?: null): RewardsAccruedEventFilter;
+    RewardsAccrued(user?: PromiseOrValue<string> | null, amount?: null): RewardsAccruedEventFilter;
 
     'RewardsClaimed(address,address,address,uint256)'(
-      user?: string | null,
-      to?: string | null,
-      claimer?: string | null,
+      user?: PromiseOrValue<string> | null,
+      to?: PromiseOrValue<string> | null,
+      claimer?: PromiseOrValue<string> | null,
       amount?: null,
     ): RewardsClaimedEventFilter;
     RewardsClaimed(
-      user?: string | null,
-      to?: string | null,
-      claimer?: string | null,
+      user?: PromiseOrValue<string> | null,
+      to?: PromiseOrValue<string> | null,
+      claimer?: PromiseOrValue<string> | null,
       amount?: null,
     ): RewardsClaimedEventFilter;
 
     'UserIndexUpdated(address,address,uint256)'(
-      user?: string | null,
-      asset?: string | null,
+      user?: PromiseOrValue<string> | null,
+      asset?: PromiseOrValue<string> | null,
       index?: null,
     ): UserIndexUpdatedEventFilter;
-    UserIndexUpdated(user?: string | null, asset?: string | null, index?: null): UserIndexUpdatedEventFilter;
+    UserIndexUpdated(
+      user?: PromiseOrValue<string> | null,
+      asset?: PromiseOrValue<string> | null,
+      index?: null,
+    ): UserIndexUpdatedEventFilter;
   };
 
   estimateGas: {
@@ -481,62 +542,70 @@ export interface AaveStakedTokenIncentivesController extends BaseContract {
 
     STAKE_TOKEN(overrides?: CallOverrides): Promise<BigNumber>;
 
-    assets(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    assets(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     claimRewards(
-      assets: string[],
-      amount: BigNumberish,
-      to: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      assets: PromiseOrValue<string>[],
+      amount: PromiseOrValue<BigNumberish>,
+      to: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     claimRewardsOnBehalf(
-      assets: string[],
-      amount: BigNumberish,
-      user: string,
-      to: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      assets: PromiseOrValue<string>[],
+      amount: PromiseOrValue<BigNumberish>,
+      user: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     configureAssets(
-      assets: string[],
-      emissionsPerSecond: BigNumberish[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      assets: PromiseOrValue<string>[],
+      emissionsPerSecond: PromiseOrValue<BigNumberish>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    getAssetData(asset: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getAssetData(asset: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    getClaimer(user: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getClaimer(user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     getDistributionEnd(overrides?: CallOverrides): Promise<BigNumber>;
 
-    getRewardsBalance(assets: string[], user: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getRewardsBalance(
+      assets: PromiseOrValue<string>[],
+      user: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    getUserAssetData(user: string, asset: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getUserAssetData(
+      user: PromiseOrValue<string>,
+      asset: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    getUserUnclaimedRewards(_user: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getUserUnclaimedRewards(_user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     handleAction(
-      user: string,
-      totalSupply: BigNumberish,
-      userBalance: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      user: PromiseOrValue<string>,
+      totalSupply: PromiseOrValue<BigNumberish>,
+      userBalance: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     initialize(
-      addressesProvider: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      addressesProvider: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setClaimer(
-      user: string,
-      caller: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      user: PromiseOrValue<string>,
+      caller: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setDistributionEnd(
-      distributionEnd: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      distributionEnd: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
   };
 
@@ -553,62 +622,70 @@ export interface AaveStakedTokenIncentivesController extends BaseContract {
 
     STAKE_TOKEN(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    assets(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    assets(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     claimRewards(
-      assets: string[],
-      amount: BigNumberish,
-      to: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      assets: PromiseOrValue<string>[],
+      amount: PromiseOrValue<BigNumberish>,
+      to: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     claimRewardsOnBehalf(
-      assets: string[],
-      amount: BigNumberish,
-      user: string,
-      to: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      assets: PromiseOrValue<string>[],
+      amount: PromiseOrValue<BigNumberish>,
+      user: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     configureAssets(
-      assets: string[],
-      emissionsPerSecond: BigNumberish[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      assets: PromiseOrValue<string>[],
+      emissionsPerSecond: PromiseOrValue<BigNumberish>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    getAssetData(asset: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getAssetData(asset: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    getClaimer(user: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getClaimer(user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     getDistributionEnd(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    getRewardsBalance(assets: string[], user: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getRewardsBalance(
+      assets: PromiseOrValue<string>[],
+      user: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
-    getUserAssetData(user: string, asset: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getUserAssetData(
+      user: PromiseOrValue<string>,
+      asset: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
-    getUserUnclaimedRewards(_user: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getUserUnclaimedRewards(_user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     handleAction(
-      user: string,
-      totalSupply: BigNumberish,
-      userBalance: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      user: PromiseOrValue<string>,
+      totalSupply: PromiseOrValue<BigNumberish>,
+      userBalance: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     initialize(
-      addressesProvider: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      addressesProvider: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setClaimer(
-      user: string,
-      caller: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      user: PromiseOrValue<string>,
+      caller: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setDistributionEnd(
-      distributionEnd: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      distributionEnd: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
   };
 }

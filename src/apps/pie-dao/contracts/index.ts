@@ -8,6 +8,7 @@ import { PieDaoReferralRewards__factory } from './ethers';
 import { PieDaoStaking__factory } from './ethers';
 import { PieDaoVoteLockedDough__factory } from './ethers';
 
+// eslint-disable-next-line
 type ContractOpts = { address: string; network: Network };
 
 @Injectable()

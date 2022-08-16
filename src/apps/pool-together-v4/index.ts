@@ -1,6 +1,6 @@
 export { POOL_TOGETHER_V4_DEFINITION, PoolTogetherV4AppDefinition } from './pool-together-v4.definition';
 export { PoolTogetherV4AppModule } from './pool-together-v4.module';
-export { PoolTogetherContractFactory } from './contracts';
+export { PoolTogetherV4ContractFactory } from './contracts';
 
 /* Contracts */
 export type { PoolTogetherMerkleDistributor } from './contracts';

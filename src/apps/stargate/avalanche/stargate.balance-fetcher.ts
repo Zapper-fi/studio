@@ -18,6 +18,15 @@ export class AvalancheStargateBalanceFetcher implements BalanceFetcher {
     @Inject(StargateContractFactory) private readonly contractFactory: StargateContractFactory,
   ) {}
 
+  private async getVeBalances(address: string) {
+    return this.appToolkit.helpers.tokenBalanceHelper.getTokenBalances({
+      appId: STARGATE_DEFINITION.id,
+      groupId: STARGATE_DEFINITION.groups.ve.id,
+      network,
+      address,
+    });
+  }
+
   async getPoolTokenBalances(address: string) {
     return this.appToolkit.helpers.tokenBalanceHelper.getTokenBalances({
       address,
@@ -44,18 +53,26 @@ export class AvalancheStargateBalanceFetcher implements BalanceFetcher {
       }),
       resolveClaimableTokenBalances: this.appToolkit.helpers.masterChefDefaultClaimableBalanceStrategy.build({
         resolveClaimableBalance: ({ multicall, contract, contractPosition, address }) =>
-          multicall.wrap(contract).pendingStargate(contractPosition.dataProps.poolIndex, address),
+          multicall
+            .wrap(contract)
+            .pendingStargate(contractPosition.dataProps.poolIndex, address)
+            .catch(() => 0),
       }),
     });
   }
 
   async getBalances(address: string) {
-    const [poolTokenBalances, stakedBalances] = await Promise.all([
+    const [veTokenBalances, poolTokenBalances, stakedBalances] = await Promise.all([
+      this.getVeBalances(address),
       this.getPoolTokenBalances(address),
       this.getStakedBalances(address),
     ]);
 
     return presentBalanceFetcherResponse([
+      {
+        label: 'VotedEscrow',
+        assets: veTokenBalances,
+      },
       {
         label: 'Pools',
         assets: poolTokenBalances,

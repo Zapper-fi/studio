@@ -2,7 +2,7 @@ import { Inject } from '@nestjs/common';
 import BigNumber from 'bignumber.js';
 import { BigNumberish } from 'ethers';
 import { compact } from 'lodash';
-import { keyBy, sortBy } from 'lodash';
+import { sortBy } from 'lodash';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import {
@@ -13,7 +13,7 @@ import { getImagesFromToken } from '~app-toolkit/helpers/presentation/image.pres
 import { IMulticallWrapper } from '~multicall/multicall.interface';
 import { ContractType } from '~position/contract.interface';
 import { AppTokenPosition, Token } from '~position/position.interface';
-import { AppGroupsDefinition } from '~position/position.service';
+import { TokenDependencySelector } from '~position/selectors/token-dependency-selector.interface';
 import { BaseToken } from '~position/token.interface';
 import { Network } from '~types/network.interface';
 
@@ -40,7 +40,6 @@ export type UniswapV2PoolTokenHelperParams<T = UniswapFactory, V = UniswapPair> 
   minLiquidity?: number;
   hiddenTokens?: string[];
   blockedPools?: string[];
-  appTokenDependencies?: AppGroupsDefinition[];
   priceDerivationWhitelist?: string[];
   resolveFactoryContract(opts: { address: string; network: Network }): T;
   resolvePoolContract(opts: { address: string; network: Network }): V;
@@ -56,7 +55,7 @@ export type UniswapV2PoolTokenHelperParams<T = UniswapFactory, V = UniswapPair> 
     network: Network;
     factoryAddress: string;
     tokenAddress: string;
-    baseTokensByAddress: Record<string, BaseToken>;
+    tokenDependencySelector: TokenDependencySelector;
     resolveFactoryContract(opts: { address: string; network: Network }): T;
     resolvePoolContract(opts: { address: string; network: Network }): V;
     resolvePoolUnderlyingTokenAddresses(opts: {
@@ -94,7 +93,6 @@ export class UniswapV2PoolTokenHelper {
     minLiquidity = 0,
     hiddenTokens = [],
     blockedPools = [],
-    appTokenDependencies = [],
     resolveFactoryContract,
     resolvePoolContract,
     resolveDerivedUnderlyingToken,
@@ -107,12 +105,7 @@ export class UniswapV2PoolTokenHelper {
     resolvePoolVolumes = async () => [],
   }: UniswapV2PoolTokenHelperParams<T, V>) {
     const multicall = this.appToolkit.getMulticall(network);
-
-    const baseTokens = await this.appToolkit.getBaseTokenPrices(network);
-
-    const appTokens = await this.appToolkit.getAppTokenPositions(...appTokenDependencies);
-    const baseTokensByAddress = keyBy(baseTokens, p => p.address);
-    const appTokensByAddress = keyBy(appTokens, p => p.address);
+    const tokenSelector = this.appToolkit.getTokenDependencySelector({ tags: { network, context: appId } });
 
     const poolAddresses: ResolvePoolTokenAddressesResponse = await resolvePoolTokenAddresses({
       appId,
@@ -129,9 +122,10 @@ export class UniswapV2PoolTokenHelper {
       resolvePoolContract,
     }).catch(() => []);
 
-    const poolTokens = await Promise.all(
+    // NB: Token addresses are resolved first because of a Multicall batch size of 250
+    // This allows DL to use its max batch size of 1000+ in the next loop
+    const poolTokensWithAddresses = await Promise.all(
       poolAddresses.map(async address => {
-        const type = ContractType.APP_TOKEN;
         const poolContract = resolvePoolContract({ address, network });
         const [token0AddressRaw, token1AddressRaw] = await resolvePoolUnderlyingTokenAddresses({
           multicall,
@@ -142,17 +136,27 @@ export class UniswapV2PoolTokenHelper {
         const token1Address = token1AddressRaw.toLowerCase();
         if (hiddenTokens.includes(token0Address) || hiddenTokens.includes(token1Address)) return null;
 
+        return { address, token0Address, token1Address };
+      }),
+    );
+
+    const poolTokens = await Promise.all(
+      compact(poolTokensWithAddresses).map(async ({ address, token0Address, token1Address }) => {
+        const type = ContractType.APP_TOKEN;
+        const poolContract = resolvePoolContract({ address, network });
+
         const resolvedTokens = await Promise.all(
           [token0Address, token1Address].map(async tokenAddress => {
-            const underlyingToken = appTokensByAddress[tokenAddress] ?? baseTokensByAddress[tokenAddress];
+            const underlyingToken = await tokenSelector.getOne({ network, address: tokenAddress });
+
             if (underlyingToken) return underlyingToken;
             if (!resolveDerivedUnderlyingToken) return null;
 
             return resolveDerivedUnderlyingToken({
               appId,
-              baseTokensByAddress,
               factoryAddress,
               network,
+              tokenDependencySelector: tokenSelector,
               resolveFactoryContract,
               resolvePoolContract,
               resolvePoolReserves,

@@ -16,7 +16,7 @@ import type {
 } from 'ethers';
 import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
 import type { Listener, Provider } from '@ethersproject/providers';
-import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
 export interface BProtocolCompoundRegistryInterface extends utils.Interface {
   functions: {
@@ -89,33 +89,42 @@ export interface BProtocolCompoundRegistryInterface extends utils.Interface {
   encodeFunctionData(functionFragment: 'avatarImpl', values?: undefined): string;
   encodeFunctionData(functionFragment: 'avatarLength', values?: undefined): string;
   encodeFunctionData(functionFragment: 'avatarList', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'avatarOf', values: [string]): string;
-  encodeFunctionData(functionFragment: 'avatars', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'avatarOf', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'avatars', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'bComptroller', values?: undefined): string;
   encodeFunctionData(functionFragment: 'cEther', values?: undefined): string;
   encodeFunctionData(functionFragment: 'comp', values?: undefined): string;
   encodeFunctionData(functionFragment: 'compVoter', values?: undefined): string;
   encodeFunctionData(functionFragment: 'comptroller', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'delegate', values: [string, string]): string;
-  encodeFunctionData(functionFragment: 'delegateAndExecuteOnce', values: [string, string, BytesLike]): string;
-  encodeFunctionData(functionFragment: 'delegateAvatar', values: [string]): string;
-  encodeFunctionData(functionFragment: 'doesAvatarExist', values: [string]): string;
-  encodeFunctionData(functionFragment: 'doesAvatarExistFor', values: [string]): string;
+  encodeFunctionData(functionFragment: 'delegate', values: [PromiseOrValue<string>, PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'delegateAndExecuteOnce',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<BytesLike>],
+  ): string;
+  encodeFunctionData(functionFragment: 'delegateAvatar', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'doesAvatarExist', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'doesAvatarExistFor', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'dummyCaller', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'getAvatar', values: [string]): string;
+  encodeFunctionData(functionFragment: 'getAvatar', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'isOwner', values?: undefined): string;
   encodeFunctionData(functionFragment: 'newAvatar', values?: undefined): string;
   encodeFunctionData(functionFragment: 'owner', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'ownerOf', values: [string]): string;
+  encodeFunctionData(functionFragment: 'ownerOf', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'pool', values?: undefined): string;
   encodeFunctionData(functionFragment: 'renounceOwnership', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'revokeDelegateAvatar', values: [string]): string;
+  encodeFunctionData(functionFragment: 'revokeDelegateAvatar', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'score', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'setPool', values: [string]): string;
-  encodeFunctionData(functionFragment: 'setScore', values: [string]): string;
-  encodeFunctionData(functionFragment: 'setWhitelistAvatarCall', values: [string, BytesLike, boolean]): string;
-  encodeFunctionData(functionFragment: 'transferOwnership', values: [string]): string;
-  encodeFunctionData(functionFragment: 'whitelistedAvatarCalls', values: [string, BytesLike]): string;
+  encodeFunctionData(functionFragment: 'setPool', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'setScore', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'setWhitelistAvatarCall',
+    values: [PromiseOrValue<string>, PromiseOrValue<BytesLike>, PromiseOrValue<boolean>],
+  ): string;
+  encodeFunctionData(functionFragment: 'transferOwnership', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'whitelistedAvatarCalls',
+    values: [PromiseOrValue<string>, PromiseOrValue<BytesLike>],
+  ): string;
 
   decodeFunctionResult(functionFragment: 'avatarImpl', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'avatarLength', data: BytesLike): Result;
@@ -255,9 +264,9 @@ export interface BProtocolCompoundRegistry extends BaseContract {
 
     avatarList(overrides?: CallOverrides): Promise<[string[]]>;
 
-    avatarOf(arg0: string, overrides?: CallOverrides): Promise<[string]>;
+    avatarOf(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[string]>;
 
-    avatars(arg0: BigNumberish, overrides?: CallOverrides): Promise<[string]>;
+    avatars(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[string]>;
 
     bComptroller(overrides?: CallOverrides): Promise<[string]>;
 
@@ -269,70 +278,77 @@ export interface BProtocolCompoundRegistry extends BaseContract {
 
     comptroller(overrides?: CallOverrides): Promise<[string]>;
 
-    delegate(arg0: string, arg1: string, overrides?: CallOverrides): Promise<[boolean]>;
+    delegate(arg0: PromiseOrValue<string>, arg1: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[boolean]>;
 
     delegateAndExecuteOnce(
-      delegatee: string,
-      target: string,
-      data: BytesLike,
-      overrides?: PayableOverrides & { from?: string | Promise<string> },
+      delegatee: PromiseOrValue<string>,
+      target: PromiseOrValue<string>,
+      data: PromiseOrValue<BytesLike>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     delegateAvatar(
-      delegatee: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      delegatee: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    doesAvatarExist(_avatar: string, overrides?: CallOverrides): Promise<[boolean]>;
+    doesAvatarExist(_avatar: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[boolean]>;
 
-    doesAvatarExistFor(_owner: string, overrides?: CallOverrides): Promise<[boolean]>;
+    doesAvatarExistFor(_owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[boolean]>;
 
     dummyCaller(overrides?: CallOverrides): Promise<[string]>;
 
     getAvatar(
-      _owner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _owner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     isOwner(overrides?: CallOverrides): Promise<[boolean]>;
 
-    newAvatar(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    newAvatar(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     owner(overrides?: CallOverrides): Promise<[string]>;
 
-    ownerOf(arg0: string, overrides?: CallOverrides): Promise<[string]>;
+    ownerOf(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[string]>;
 
     pool(overrides?: CallOverrides): Promise<[string]>;
 
-    renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     revokeDelegateAvatar(
-      delegatee: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      delegatee: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     score(overrides?: CallOverrides): Promise<[string]>;
 
-    setPool(newPool: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    setPool(
+      newPool: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<ContractTransaction>;
 
     setScore(
-      newScore: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newScore: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setWhitelistAvatarCall(
-      target: string,
-      functionSig: BytesLike,
-      list: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      target: PromiseOrValue<string>,
+      functionSig: PromiseOrValue<BytesLike>,
+      list: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    whitelistedAvatarCalls(arg0: string, arg1: BytesLike, overrides?: CallOverrides): Promise<[boolean]>;
+    whitelistedAvatarCalls(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<BytesLike>,
+      overrides?: CallOverrides,
+    ): Promise<[boolean]>;
   };
 
   avatarImpl(overrides?: CallOverrides): Promise<string>;
@@ -341,9 +357,9 @@ export interface BProtocolCompoundRegistry extends BaseContract {
 
   avatarList(overrides?: CallOverrides): Promise<string[]>;
 
-  avatarOf(arg0: string, overrides?: CallOverrides): Promise<string>;
+  avatarOf(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<string>;
 
-  avatars(arg0: BigNumberish, overrides?: CallOverrides): Promise<string>;
+  avatars(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
 
   bComptroller(overrides?: CallOverrides): Promise<string>;
 
@@ -355,64 +371,77 @@ export interface BProtocolCompoundRegistry extends BaseContract {
 
   comptroller(overrides?: CallOverrides): Promise<string>;
 
-  delegate(arg0: string, arg1: string, overrides?: CallOverrides): Promise<boolean>;
+  delegate(arg0: PromiseOrValue<string>, arg1: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
   delegateAndExecuteOnce(
-    delegatee: string,
-    target: string,
-    data: BytesLike,
-    overrides?: PayableOverrides & { from?: string | Promise<string> },
+    delegatee: PromiseOrValue<string>,
+    target: PromiseOrValue<string>,
+    data: PromiseOrValue<BytesLike>,
+    overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   delegateAvatar(
-    delegatee: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    delegatee: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  doesAvatarExist(_avatar: string, overrides?: CallOverrides): Promise<boolean>;
+  doesAvatarExist(_avatar: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
-  doesAvatarExistFor(_owner: string, overrides?: CallOverrides): Promise<boolean>;
+  doesAvatarExistFor(_owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
   dummyCaller(overrides?: CallOverrides): Promise<string>;
 
-  getAvatar(_owner: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  getAvatar(
+    _owner: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
+  ): Promise<ContractTransaction>;
 
   isOwner(overrides?: CallOverrides): Promise<boolean>;
 
-  newAvatar(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  newAvatar(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   owner(overrides?: CallOverrides): Promise<string>;
 
-  ownerOf(arg0: string, overrides?: CallOverrides): Promise<string>;
+  ownerOf(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<string>;
 
   pool(overrides?: CallOverrides): Promise<string>;
 
-  renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   revokeDelegateAvatar(
-    delegatee: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    delegatee: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   score(overrides?: CallOverrides): Promise<string>;
 
-  setPool(newPool: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  setPool(
+    newPool: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
+  ): Promise<ContractTransaction>;
 
-  setScore(newScore: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  setScore(
+    newScore: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
+  ): Promise<ContractTransaction>;
 
   setWhitelistAvatarCall(
-    target: string,
-    functionSig: BytesLike,
-    list: boolean,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    target: PromiseOrValue<string>,
+    functionSig: PromiseOrValue<BytesLike>,
+    list: PromiseOrValue<boolean>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   transferOwnership(
-    newOwner: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    newOwner: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  whitelistedAvatarCalls(arg0: string, arg1: BytesLike, overrides?: CallOverrides): Promise<boolean>;
+  whitelistedAvatarCalls(
+    arg0: PromiseOrValue<string>,
+    arg1: PromiseOrValue<BytesLike>,
+    overrides?: CallOverrides,
+  ): Promise<boolean>;
 
   callStatic: {
     avatarImpl(overrides?: CallOverrides): Promise<string>;
@@ -421,9 +450,9 @@ export interface BProtocolCompoundRegistry extends BaseContract {
 
     avatarList(overrides?: CallOverrides): Promise<string[]>;
 
-    avatarOf(arg0: string, overrides?: CallOverrides): Promise<string>;
+    avatarOf(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<string>;
 
-    avatars(arg0: BigNumberish, overrides?: CallOverrides): Promise<string>;
+    avatars(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
 
     bComptroller(overrides?: CallOverrides): Promise<string>;
 
@@ -435,24 +464,24 @@ export interface BProtocolCompoundRegistry extends BaseContract {
 
     comptroller(overrides?: CallOverrides): Promise<string>;
 
-    delegate(arg0: string, arg1: string, overrides?: CallOverrides): Promise<boolean>;
+    delegate(arg0: PromiseOrValue<string>, arg1: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
     delegateAndExecuteOnce(
-      delegatee: string,
-      target: string,
-      data: BytesLike,
+      delegatee: PromiseOrValue<string>,
+      target: PromiseOrValue<string>,
+      data: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
-    delegateAvatar(delegatee: string, overrides?: CallOverrides): Promise<void>;
+    delegateAvatar(delegatee: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    doesAvatarExist(_avatar: string, overrides?: CallOverrides): Promise<boolean>;
+    doesAvatarExist(_avatar: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
-    doesAvatarExistFor(_owner: string, overrides?: CallOverrides): Promise<boolean>;
+    doesAvatarExistFor(_owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
     dummyCaller(overrides?: CallOverrides): Promise<string>;
 
-    getAvatar(_owner: string, overrides?: CallOverrides): Promise<string>;
+    getAvatar(_owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<string>;
 
     isOwner(overrides?: CallOverrides): Promise<boolean>;
 
@@ -460,30 +489,34 @@ export interface BProtocolCompoundRegistry extends BaseContract {
 
     owner(overrides?: CallOverrides): Promise<string>;
 
-    ownerOf(arg0: string, overrides?: CallOverrides): Promise<string>;
+    ownerOf(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<string>;
 
     pool(overrides?: CallOverrides): Promise<string>;
 
     renounceOwnership(overrides?: CallOverrides): Promise<void>;
 
-    revokeDelegateAvatar(delegatee: string, overrides?: CallOverrides): Promise<void>;
+    revokeDelegateAvatar(delegatee: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     score(overrides?: CallOverrides): Promise<string>;
 
-    setPool(newPool: string, overrides?: CallOverrides): Promise<void>;
+    setPool(newPool: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    setScore(newScore: string, overrides?: CallOverrides): Promise<void>;
+    setScore(newScore: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     setWhitelistAvatarCall(
-      target: string,
-      functionSig: BytesLike,
-      list: boolean,
+      target: PromiseOrValue<string>,
+      functionSig: PromiseOrValue<BytesLike>,
+      list: PromiseOrValue<boolean>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
-    transferOwnership(newOwner: string, overrides?: CallOverrides): Promise<void>;
+    transferOwnership(newOwner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    whitelistedAvatarCalls(arg0: string, arg1: BytesLike, overrides?: CallOverrides): Promise<boolean>;
+    whitelistedAvatarCalls(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<BytesLike>,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
   };
 
   filters: {
@@ -495,14 +528,14 @@ export interface BProtocolCompoundRegistry extends BaseContract {
     AvatarCallWhitelisted(target?: null, functionSig?: null, whitelist?: null): AvatarCallWhitelistedEventFilter;
 
     'Delegate(address,address,address)'(
-      delegator?: string | null,
+      delegator?: PromiseOrValue<string> | null,
       avatar?: null,
       delegatee?: null,
     ): DelegateEventFilter;
-    Delegate(delegator?: string | null, avatar?: null, delegatee?: null): DelegateEventFilter;
+    Delegate(delegator?: PromiseOrValue<string> | null, avatar?: null, delegatee?: null): DelegateEventFilter;
 
-    'NewAvatar(address,address)'(avatar?: string | null, owner?: null): NewAvatarEventFilter;
-    NewAvatar(avatar?: string | null, owner?: null): NewAvatarEventFilter;
+    'NewAvatar(address,address)'(avatar?: PromiseOrValue<string> | null, owner?: null): NewAvatarEventFilter;
+    NewAvatar(avatar?: PromiseOrValue<string> | null, owner?: null): NewAvatarEventFilter;
 
     'NewPool(address,address)'(oldPool?: null, newPool?: null): NewPoolEventFilter;
     NewPool(oldPool?: null, newPool?: null): NewPoolEventFilter;
@@ -511,17 +544,24 @@ export interface BProtocolCompoundRegistry extends BaseContract {
     NewScore(oldScore?: null, newScore?: null): NewScoreEventFilter;
 
     'OwnershipTransferred(address,address)'(
-      previousOwner?: string | null,
-      newOwner?: string | null,
+      previousOwner?: PromiseOrValue<string> | null,
+      newOwner?: PromiseOrValue<string> | null,
     ): OwnershipTransferredEventFilter;
-    OwnershipTransferred(previousOwner?: string | null, newOwner?: string | null): OwnershipTransferredEventFilter;
+    OwnershipTransferred(
+      previousOwner?: PromiseOrValue<string> | null,
+      newOwner?: PromiseOrValue<string> | null,
+    ): OwnershipTransferredEventFilter;
 
     'RevokeDelegate(address,address,address)'(
-      delegator?: string | null,
+      delegator?: PromiseOrValue<string> | null,
       avatar?: null,
       delegatee?: null,
     ): RevokeDelegateEventFilter;
-    RevokeDelegate(delegator?: string | null, avatar?: null, delegatee?: null): RevokeDelegateEventFilter;
+    RevokeDelegate(
+      delegator?: PromiseOrValue<string> | null,
+      avatar?: null,
+      delegatee?: null,
+    ): RevokeDelegateEventFilter;
   };
 
   estimateGas: {
@@ -531,9 +571,9 @@ export interface BProtocolCompoundRegistry extends BaseContract {
 
     avatarList(overrides?: CallOverrides): Promise<BigNumber>;
 
-    avatarOf(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    avatarOf(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    avatars(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    avatars(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     bComptroller(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -545,61 +585,77 @@ export interface BProtocolCompoundRegistry extends BaseContract {
 
     comptroller(overrides?: CallOverrides): Promise<BigNumber>;
 
-    delegate(arg0: string, arg1: string, overrides?: CallOverrides): Promise<BigNumber>;
+    delegate(arg0: PromiseOrValue<string>, arg1: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     delegateAndExecuteOnce(
-      delegatee: string,
-      target: string,
-      data: BytesLike,
-      overrides?: PayableOverrides & { from?: string | Promise<string> },
+      delegatee: PromiseOrValue<string>,
+      target: PromiseOrValue<string>,
+      data: PromiseOrValue<BytesLike>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    delegateAvatar(delegatee: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    delegateAvatar(
+      delegatee: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
-    doesAvatarExist(_avatar: string, overrides?: CallOverrides): Promise<BigNumber>;
+    doesAvatarExist(_avatar: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    doesAvatarExistFor(_owner: string, overrides?: CallOverrides): Promise<BigNumber>;
+    doesAvatarExistFor(_owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     dummyCaller(overrides?: CallOverrides): Promise<BigNumber>;
 
-    getAvatar(_owner: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    getAvatar(
+      _owner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     isOwner(overrides?: CallOverrides): Promise<BigNumber>;
 
-    newAvatar(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    newAvatar(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     owner(overrides?: CallOverrides): Promise<BigNumber>;
 
-    ownerOf(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    ownerOf(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     pool(overrides?: CallOverrides): Promise<BigNumber>;
 
-    renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     revokeDelegateAvatar(
-      delegatee: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      delegatee: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     score(overrides?: CallOverrides): Promise<BigNumber>;
 
-    setPool(newPool: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    setPool(
+      newPool: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
-    setScore(newScore: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    setScore(
+      newScore: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     setWhitelistAvatarCall(
-      target: string,
-      functionSig: BytesLike,
-      list: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      target: PromiseOrValue<string>,
+      functionSig: PromiseOrValue<BytesLike>,
+      list: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    whitelistedAvatarCalls(arg0: string, arg1: BytesLike, overrides?: CallOverrides): Promise<BigNumber>;
+    whitelistedAvatarCalls(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<BytesLike>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
   };
 
   populateTransaction: {
@@ -609,9 +665,9 @@ export interface BProtocolCompoundRegistry extends BaseContract {
 
     avatarList(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    avatarOf(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    avatarOf(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    avatars(arg0: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    avatars(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     bComptroller(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
@@ -623,72 +679,80 @@ export interface BProtocolCompoundRegistry extends BaseContract {
 
     comptroller(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    delegate(arg0: string, arg1: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    delegate(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
     delegateAndExecuteOnce(
-      delegatee: string,
-      target: string,
-      data: BytesLike,
-      overrides?: PayableOverrides & { from?: string | Promise<string> },
+      delegatee: PromiseOrValue<string>,
+      target: PromiseOrValue<string>,
+      data: PromiseOrValue<BytesLike>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     delegateAvatar(
-      delegatee: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      delegatee: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    doesAvatarExist(_avatar: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    doesAvatarExist(_avatar: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    doesAvatarExistFor(_owner: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    doesAvatarExistFor(_owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     dummyCaller(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     getAvatar(
-      _owner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _owner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     isOwner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    newAvatar(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    newAvatar(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    ownerOf(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    ownerOf(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     pool(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     revokeDelegateAvatar(
-      delegatee: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      delegatee: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     score(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     setPool(
-      newPool: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newPool: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setScore(
-      newScore: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newScore: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setWhitelistAvatarCall(
-      target: string,
-      functionSig: BytesLike,
-      list: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      target: PromiseOrValue<string>,
+      functionSig: PromiseOrValue<BytesLike>,
+      list: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    whitelistedAvatarCalls(arg0: string, arg1: BytesLike, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    whitelistedAvatarCalls(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<BytesLike>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
   };
 }

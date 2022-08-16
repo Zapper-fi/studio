@@ -8,8 +8,10 @@ import { Register } from '~app-toolkit/decorators';
 import { presentBalanceFetcherResponse } from '~app-toolkit/helpers/presentation/balance-fetcher-response.present';
 import { BalanceFetcher } from '~balance/balance-fetcher.interface';
 import { ContractPositionBalance } from '~position/position-balance.interface';
+import { isClaimable, isSupplied } from '~position/position.utils';
 import { Network } from '~types/network.interface';
 
+import { PolygonContractFactory } from '../contracts';
 import { POLYGON_DEFINITION } from '../polygon.definition';
 
 import { PolygonStakingContractPositionDataProps } from './polygon.staking.contract-position-fetcher';
@@ -36,9 +38,14 @@ const network = Network.ETHEREUM_MAINNET;
 
 @Register.BalanceFetcher(POLYGON_DEFINITION.id, network)
 export class EthereumPolygonBalanceFetcher implements BalanceFetcher {
-  constructor(@Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit) {}
+  constructor(
+    @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
+    @Inject(PolygonContractFactory) private readonly polygonContractFactory: PolygonContractFactory,
+  ) {}
 
   async getDelegatedBalances(address: string) {
+    const multicall = this.appToolkit.getMulticall(network);
+
     const data = await this.appToolkit.helpers.theGraphHelper.gqlFetchAll<DelegatedMaticResponse>({
       endpoint: GQL_ENDPOINT,
       query: DELEGATED_MATIC_QUERY,
@@ -54,20 +61,40 @@ export class EthereumPolygonBalanceFetcher implements BalanceFetcher {
       network,
     });
 
-    const balances = data.delegators.map(delegator => {
-      const position = positions.find(v => v.dataProps.validatorId === Number(delegator.validatorId));
-      if (!position) return null;
+    const balances = await Promise.all(
+      data.delegators.map(async delegator => {
+        const position = positions.find(v => v.dataProps.validatorId === Number(delegator.validatorId));
+        if (!position) return null;
 
-      const tokens = [drillBalance(position.tokens[0], delegator.delegatedAmount)];
-      const balanceUSD = sumBy(tokens, v => v.balanceUSD);
-      const balance: ContractPositionBalance<PolygonStakingContractPositionDataProps> = {
-        ...position,
-        tokens,
-        balanceUSD,
-      };
+        const contract = this.polygonContractFactory.polygonValidatorShare({
+          address: position.dataProps.validatorShareAddress,
+          network,
+        });
 
-      return balance;
-    });
+        const [balanceRaw, claimableBalanceRaw] = await Promise.all([
+          multicall.wrap(contract).balanceOf(address),
+          multicall.wrap(contract).getLiquidRewards(address),
+        ]);
+
+        const suppliedToken = position.tokens.find(isSupplied);
+        const claimableToken = position.tokens.find(isClaimable);
+        if (!suppliedToken || !claimableToken) return null;
+
+        const tokens = [
+          drillBalance(suppliedToken, balanceRaw.toString()),
+          drillBalance(claimableToken, claimableBalanceRaw.toString()),
+        ];
+
+        const balanceUSD = sumBy(tokens, v => v.balanceUSD);
+        const balance: ContractPositionBalance<PolygonStakingContractPositionDataProps> = {
+          ...position,
+          tokens,
+          balanceUSD,
+        };
+
+        return balance;
+      }),
+    );
 
     return compact(balances);
   }

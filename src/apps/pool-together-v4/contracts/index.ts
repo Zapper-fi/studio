@@ -13,7 +13,7 @@ import { PoolTogetherV4Ticket__factory } from './ethers';
 type ContractOpts = { address: string; network: Network };
 
 @Injectable()
-export class PoolTogetherContractFactory extends ContractFactory {
+export class PoolTogetherV4ContractFactory extends ContractFactory {
   constructor(@Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit) {
     super((network: Network) => appToolkit.getNetworkProvider(network));
   }

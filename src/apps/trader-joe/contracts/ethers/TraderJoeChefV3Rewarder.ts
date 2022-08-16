@@ -15,12 +15,12 @@ import type {
 } from 'ethers';
 import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
 import type { Listener, Provider } from '@ethersproject/providers';
-import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
 export declare namespace SimpleRewarderPerSec {
   export type PoolInfoStruct = {
-    accTokenPerShare: BigNumberish;
-    lastRewardTimestamp: BigNumberish;
+    accTokenPerShare: PromiseOrValue<BigNumberish>;
+    lastRewardTimestamp: PromiseOrValue<BigNumberish>;
   };
 
   export type PoolInfoStructOutput = [BigNumber, BigNumber] & {
@@ -77,17 +77,23 @@ export interface TraderJoeChefV3RewarderInterface extends utils.Interface {
   encodeFunctionData(functionFragment: 'emergencyWithdraw', values?: undefined): string;
   encodeFunctionData(functionFragment: 'isNative', values?: undefined): string;
   encodeFunctionData(functionFragment: 'lpToken', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'onJoeReward', values: [string, BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'onJoeReward',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
   encodeFunctionData(functionFragment: 'owner', values?: undefined): string;
   encodeFunctionData(functionFragment: 'pendingOwner', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'pendingTokens', values: [string]): string;
+  encodeFunctionData(functionFragment: 'pendingTokens', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'poolInfo', values?: undefined): string;
   encodeFunctionData(functionFragment: 'rewardToken', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'setRewardRate', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'setRewardRate', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'tokenPerSec', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'transferOwnership', values: [string, boolean, boolean]): string;
+  encodeFunctionData(
+    functionFragment: 'transferOwnership',
+    values: [PromiseOrValue<string>, PromiseOrValue<boolean>, PromiseOrValue<boolean>],
+  ): string;
   encodeFunctionData(functionFragment: 'updatePool', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'userInfo', values: [string]): string;
+  encodeFunctionData(functionFragment: 'userInfo', values: [PromiseOrValue<string>]): string;
 
   decodeFunctionResult(functionFragment: 'MCJ', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'balance', data: BytesLike): Result;
@@ -169,25 +175,28 @@ export interface TraderJoeChefV3Rewarder extends BaseContract {
 
     balance(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    claimOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    claimOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
-    emergencyWithdraw(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    emergencyWithdraw(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     isNative(overrides?: CallOverrides): Promise<[boolean]>;
 
     lpToken(overrides?: CallOverrides): Promise<[string]>;
 
     onJoeReward(
-      _user: string,
-      _lpAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _user: PromiseOrValue<string>,
+      _lpAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     owner(overrides?: CallOverrides): Promise<[string]>;
 
     pendingOwner(overrides?: CallOverrides): Promise<[string]>;
 
-    pendingTokens(_user: string, overrides?: CallOverrides): Promise<[BigNumber] & { pending: BigNumber }>;
+    pendingTokens(
+      _user: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber] & { pending: BigNumber }>;
 
     poolInfo(overrides?: CallOverrides): Promise<
       [BigNumber, BigNumber] & {
@@ -199,23 +208,23 @@ export interface TraderJoeChefV3Rewarder extends BaseContract {
     rewardToken(overrides?: CallOverrides): Promise<[string]>;
 
     setRewardRate(
-      _tokenPerSec: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _tokenPerSec: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     tokenPerSec(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     transferOwnership(
-      newOwner: string,
-      direct: boolean,
-      renounce: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      direct: PromiseOrValue<boolean>,
+      renounce: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    updatePool(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    updatePool(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     userInfo(
-      arg0: string,
+      arg0: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber, BigNumber] & { amount: BigNumber; rewardDebt: BigNumber }>;
   };
@@ -224,25 +233,25 @@ export interface TraderJoeChefV3Rewarder extends BaseContract {
 
   balance(overrides?: CallOverrides): Promise<BigNumber>;
 
-  claimOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  claimOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
-  emergencyWithdraw(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  emergencyWithdraw(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   isNative(overrides?: CallOverrides): Promise<boolean>;
 
   lpToken(overrides?: CallOverrides): Promise<string>;
 
   onJoeReward(
-    _user: string,
-    _lpAmount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _user: PromiseOrValue<string>,
+    _lpAmount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   owner(overrides?: CallOverrides): Promise<string>;
 
   pendingOwner(overrides?: CallOverrides): Promise<string>;
 
-  pendingTokens(_user: string, overrides?: CallOverrides): Promise<BigNumber>;
+  pendingTokens(_user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   poolInfo(overrides?: CallOverrides): Promise<
     [BigNumber, BigNumber] & {
@@ -254,23 +263,23 @@ export interface TraderJoeChefV3Rewarder extends BaseContract {
   rewardToken(overrides?: CallOverrides): Promise<string>;
 
   setRewardRate(
-    _tokenPerSec: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _tokenPerSec: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   tokenPerSec(overrides?: CallOverrides): Promise<BigNumber>;
 
   transferOwnership(
-    newOwner: string,
-    direct: boolean,
-    renounce: boolean,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    newOwner: PromiseOrValue<string>,
+    direct: PromiseOrValue<boolean>,
+    renounce: PromiseOrValue<boolean>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  updatePool(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  updatePool(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   userInfo(
-    arg0: string,
+    arg0: PromiseOrValue<string>,
     overrides?: CallOverrides,
   ): Promise<[BigNumber, BigNumber] & { amount: BigNumber; rewardDebt: BigNumber }>;
 
@@ -287,13 +296,17 @@ export interface TraderJoeChefV3Rewarder extends BaseContract {
 
     lpToken(overrides?: CallOverrides): Promise<string>;
 
-    onJoeReward(_user: string, _lpAmount: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    onJoeReward(
+      _user: PromiseOrValue<string>,
+      _lpAmount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
     owner(overrides?: CallOverrides): Promise<string>;
 
     pendingOwner(overrides?: CallOverrides): Promise<string>;
 
-    pendingTokens(_user: string, overrides?: CallOverrides): Promise<BigNumber>;
+    pendingTokens(_user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     poolInfo(overrides?: CallOverrides): Promise<
       [BigNumber, BigNumber] & {
@@ -304,29 +317,37 @@ export interface TraderJoeChefV3Rewarder extends BaseContract {
 
     rewardToken(overrides?: CallOverrides): Promise<string>;
 
-    setRewardRate(_tokenPerSec: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    setRewardRate(_tokenPerSec: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
     tokenPerSec(overrides?: CallOverrides): Promise<BigNumber>;
 
-    transferOwnership(newOwner: string, direct: boolean, renounce: boolean, overrides?: CallOverrides): Promise<void>;
+    transferOwnership(
+      newOwner: PromiseOrValue<string>,
+      direct: PromiseOrValue<boolean>,
+      renounce: PromiseOrValue<boolean>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
     updatePool(overrides?: CallOverrides): Promise<SimpleRewarderPerSec.PoolInfoStructOutput>;
 
     userInfo(
-      arg0: string,
+      arg0: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber, BigNumber] & { amount: BigNumber; rewardDebt: BigNumber }>;
   };
 
   filters: {
-    'OnReward(address,uint256)'(user?: string | null, amount?: null): OnRewardEventFilter;
-    OnReward(user?: string | null, amount?: null): OnRewardEventFilter;
+    'OnReward(address,uint256)'(user?: PromiseOrValue<string> | null, amount?: null): OnRewardEventFilter;
+    OnReward(user?: PromiseOrValue<string> | null, amount?: null): OnRewardEventFilter;
 
     'OwnershipTransferred(address,address)'(
-      previousOwner?: string | null,
-      newOwner?: string | null,
+      previousOwner?: PromiseOrValue<string> | null,
+      newOwner?: PromiseOrValue<string> | null,
     ): OwnershipTransferredEventFilter;
-    OwnershipTransferred(previousOwner?: string | null, newOwner?: string | null): OwnershipTransferredEventFilter;
+    OwnershipTransferred(
+      previousOwner?: PromiseOrValue<string> | null,
+      newOwner?: PromiseOrValue<string> | null,
+    ): OwnershipTransferredEventFilter;
 
     'RewardRateUpdated(uint256,uint256)'(oldRate?: null, newRate?: null): RewardRateUpdatedEventFilter;
     RewardRateUpdated(oldRate?: null, newRate?: null): RewardRateUpdatedEventFilter;
@@ -337,47 +358,47 @@ export interface TraderJoeChefV3Rewarder extends BaseContract {
 
     balance(overrides?: CallOverrides): Promise<BigNumber>;
 
-    claimOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    claimOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
-    emergencyWithdraw(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    emergencyWithdraw(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     isNative(overrides?: CallOverrides): Promise<BigNumber>;
 
     lpToken(overrides?: CallOverrides): Promise<BigNumber>;
 
     onJoeReward(
-      _user: string,
-      _lpAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _user: PromiseOrValue<string>,
+      _lpAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     owner(overrides?: CallOverrides): Promise<BigNumber>;
 
     pendingOwner(overrides?: CallOverrides): Promise<BigNumber>;
 
-    pendingTokens(_user: string, overrides?: CallOverrides): Promise<BigNumber>;
+    pendingTokens(_user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     poolInfo(overrides?: CallOverrides): Promise<BigNumber>;
 
     rewardToken(overrides?: CallOverrides): Promise<BigNumber>;
 
     setRewardRate(
-      _tokenPerSec: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _tokenPerSec: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     tokenPerSec(overrides?: CallOverrides): Promise<BigNumber>;
 
     transferOwnership(
-      newOwner: string,
-      direct: boolean,
-      renounce: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      direct: PromiseOrValue<boolean>,
+      renounce: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    updatePool(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    updatePool(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
-    userInfo(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    userInfo(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
   };
 
   populateTransaction: {
@@ -385,46 +406,46 @@ export interface TraderJoeChefV3Rewarder extends BaseContract {
 
     balance(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    claimOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    claimOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
-    emergencyWithdraw(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    emergencyWithdraw(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     isNative(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     lpToken(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     onJoeReward(
-      _user: string,
-      _lpAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _user: PromiseOrValue<string>,
+      _lpAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     pendingOwner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    pendingTokens(_user: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    pendingTokens(_user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     poolInfo(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     rewardToken(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     setRewardRate(
-      _tokenPerSec: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _tokenPerSec: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     tokenPerSec(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     transferOwnership(
-      newOwner: string,
-      direct: boolean,
-      renounce: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      direct: PromiseOrValue<boolean>,
+      renounce: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    updatePool(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    updatePool(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
-    userInfo(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    userInfo(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
   };
 }

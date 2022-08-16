@@ -15,7 +15,7 @@ import type {
 } from 'ethers';
 import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
 import type { Listener, Provider } from '@ethersproject/providers';
-import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
 export interface QiDaoVaultInfoInterface extends utils.Interface {
   functions: {
@@ -165,82 +165,109 @@ export interface QiDaoVaultInfoInterface extends utils.Interface {
 
   encodeFunctionData(functionFragment: '_meta', values?: undefined): string;
   encodeFunctionData(functionFragment: '_minimumCollateralPercentage', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'approve', values: [string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'balanceOf', values: [string]): string;
+  encodeFunctionData(
+    functionFragment: 'approve',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'balanceOf', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'base', values?: undefined): string;
   encodeFunctionData(functionFragment: 'baseURI', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'borrowToken', values: [BigNumberish, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'changeEthPriceSource', values: [string]): string;
-  encodeFunctionData(functionFragment: 'checkCollateralPercentage', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'checkCost', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'checkExtract', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'checkLiquidation', values: [BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'borrowToken',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'changeEthPriceSource', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'checkCollateralPercentage', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'checkCost', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'checkExtract', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'checkLiquidation', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'closingFee', values?: undefined): string;
   encodeFunctionData(functionFragment: 'collateral', values?: undefined): string;
   encodeFunctionData(functionFragment: 'collateralDecimals', values?: undefined): string;
   encodeFunctionData(functionFragment: 'createVault', values?: undefined): string;
   encodeFunctionData(functionFragment: 'debtRatio', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'depositCollateral', values: [BigNumberish, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'destroyVault', values: [BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'depositCollateral',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'destroyVault', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'ethPriceSource', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'exists', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'exists', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'gainRatio', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'getApproved', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'getApproved', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'getClosingFee', values?: undefined): string;
   encodeFunctionData(functionFragment: 'getDebtCeiling', values?: undefined): string;
   encodeFunctionData(functionFragment: 'getEthPriceSource', values?: undefined): string;
   encodeFunctionData(functionFragment: 'getOpeningFee', values?: undefined): string;
   encodeFunctionData(functionFragment: 'getPaid', values?: undefined): string;
   encodeFunctionData(functionFragment: 'getTokenPriceSource', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'isApprovedForAll', values: [string, string]): string;
+  encodeFunctionData(
+    functionFragment: 'isApprovedForAll',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>],
+  ): string;
   encodeFunctionData(functionFragment: 'isOwner', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'liquidateVault', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'liquidateVault', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'mai', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'maticDebt', values: [string]): string;
+  encodeFunctionData(functionFragment: 'maticDebt', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'name', values?: undefined): string;
   encodeFunctionData(functionFragment: 'openingFee', values?: undefined): string;
   encodeFunctionData(functionFragment: 'owner', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'ownerOf', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'payBackToken', values: [BigNumberish, BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'ownerOf', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(
+    functionFragment: 'payBackToken',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+  ): string;
   encodeFunctionData(functionFragment: 'renounceOwnership', values?: undefined): string;
   encodeFunctionData(
     functionFragment: 'safeTransferFrom(address,address,uint256)',
-    values: [string, string, BigNumberish],
+    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
   ): string;
   encodeFunctionData(
     functionFragment: 'safeTransferFrom(address,address,uint256,bytes)',
-    values: [string, string, BigNumberish, BytesLike],
+    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<BigNumberish>, PromiseOrValue<BytesLike>],
   ): string;
-  encodeFunctionData(functionFragment: 'setApprovalForAll', values: [string, boolean]): string;
-  encodeFunctionData(functionFragment: 'setBaseURI', values: [string]): string;
-  encodeFunctionData(functionFragment: 'setClosingFee', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'setDebtRatio', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'setGainRatio', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'setMinCollateralRatio', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'setOpeningFee', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'setStabilityPool', values: [string]): string;
-  encodeFunctionData(functionFragment: 'setTokenPeg', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'setTreasury', values: [BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'setApprovalForAll',
+    values: [PromiseOrValue<string>, PromiseOrValue<boolean>],
+  ): string;
+  encodeFunctionData(functionFragment: 'setBaseURI', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'setClosingFee', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'setDebtRatio', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'setGainRatio', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'setMinCollateralRatio', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'setOpeningFee', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'setStabilityPool', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'setTokenPeg', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'setTreasury', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'stabilityPool', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'supportsInterface', values: [BytesLike]): string;
+  encodeFunctionData(functionFragment: 'supportsInterface', values: [PromiseOrValue<BytesLike>]): string;
   encodeFunctionData(functionFragment: 'symbol', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'tokenByIndex', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'tokenOfOwnerByIndex', values: [string, BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'tokenByIndex', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(
+    functionFragment: 'tokenOfOwnerByIndex',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
   encodeFunctionData(functionFragment: 'tokenPeg', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'tokenURI', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'tokenURI', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'totalSupply', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'transferFrom', values: [string, string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'transferOwnership', values: [string]): string;
-  encodeFunctionData(functionFragment: 'transferToken(uint256)', values: [BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'transferFrom',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'transferOwnership', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'transferToken(uint256)', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(
     functionFragment: 'transferToken(address,address,uint256)',
-    values: [string, string, BigNumberish],
+    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
   ): string;
   encodeFunctionData(functionFragment: 'treasury', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'vaultCollateral', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'vaultCollateral', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'vaultCount', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'vaultDebt', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'withdrawCollateral', values: [BigNumberish, BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'vaultDebt', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(
+    functionFragment: 'withdrawCollateral',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+  ): string;
 
   decodeFunctionResult(functionFragment: '_meta', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: '_minimumCollateralPercentage', data: BytesLike): Result;
@@ -476,35 +503,35 @@ export interface QiDaoVaultInfo extends BaseContract {
     _minimumCollateralPercentage(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     approve(
-      to: string,
-      tokenId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      to: PromiseOrValue<string>,
+      tokenId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    balanceOf(owner: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    balanceOf(owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     base(overrides?: CallOverrides): Promise<[string]>;
 
     baseURI(overrides?: CallOverrides): Promise<[string]>;
 
     borrowToken(
-      vaultID: BigNumberish,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      vaultID: PromiseOrValue<BigNumberish>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     changeEthPriceSource(
-      ethPriceSourceAddress: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      ethPriceSourceAddress: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    checkCollateralPercentage(vaultID: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber]>;
+    checkCollateralPercentage(vaultID: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    checkCost(vaultID: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber]>;
+    checkCost(vaultID: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    checkExtract(vaultID: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber]>;
+    checkExtract(vaultID: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    checkLiquidation(vaultID: BigNumberish, overrides?: CallOverrides): Promise<[boolean]>;
+    checkLiquidation(vaultID: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[boolean]>;
 
     closingFee(overrides?: CallOverrides): Promise<[BigNumber]>;
 
@@ -512,28 +539,28 @@ export interface QiDaoVaultInfo extends BaseContract {
 
     collateralDecimals(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    createVault(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    createVault(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     debtRatio(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     depositCollateral(
-      vaultID: BigNumberish,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      vaultID: PromiseOrValue<BigNumberish>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     destroyVault(
-      vaultID: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      vaultID: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     ethPriceSource(overrides?: CallOverrides): Promise<[string]>;
 
-    exists(vaultID: BigNumberish, overrides?: CallOverrides): Promise<[boolean]>;
+    exists(vaultID: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[boolean]>;
 
     gainRatio(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    getApproved(tokenId: BigNumberish, overrides?: CallOverrides): Promise<[string]>;
+    getApproved(tokenId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[string]>;
 
     getClosingFee(overrides?: CallOverrides): Promise<[BigNumber]>;
 
@@ -543,22 +570,26 @@ export interface QiDaoVaultInfo extends BaseContract {
 
     getOpeningFee(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    getPaid(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    getPaid(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     getTokenPriceSource(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    isApprovedForAll(owner: string, operator: string, overrides?: CallOverrides): Promise<[boolean]>;
+    isApprovedForAll(
+      owner: PromiseOrValue<string>,
+      operator: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<[boolean]>;
 
     isOwner(overrides?: CallOverrides): Promise<[boolean]>;
 
     liquidateVault(
-      vaultID: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      vaultID: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     mai(overrides?: CallOverrides): Promise<[string]>;
 
-    maticDebt(arg0: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    maticDebt(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     name(overrides?: CallOverrides): Promise<[string]>;
 
@@ -566,134 +597,138 @@ export interface QiDaoVaultInfo extends BaseContract {
 
     owner(overrides?: CallOverrides): Promise<[string]>;
 
-    ownerOf(tokenId: BigNumberish, overrides?: CallOverrides): Promise<[string]>;
+    ownerOf(tokenId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[string]>;
 
     payBackToken(
-      vaultID: BigNumberish,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      vaultID: PromiseOrValue<BigNumberish>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     'safeTransferFrom(address,address,uint256)'(
-      from: string,
-      to: string,
-      tokenId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      tokenId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     'safeTransferFrom(address,address,uint256,bytes)'(
-      from: string,
-      to: string,
-      tokenId: BigNumberish,
-      _data: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      tokenId: PromiseOrValue<BigNumberish>,
+      _data: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setApprovalForAll(
-      to: string,
-      approved: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      to: PromiseOrValue<string>,
+      approved: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setBaseURI(
-      baseURI: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      baseURI: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setClosingFee(
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setDebtRatio(
-      _debtRatio: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _debtRatio: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setGainRatio(
-      _gainRatio: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _gainRatio: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setMinCollateralRatio(
-      minimumCollateralPercentage: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      minimumCollateralPercentage: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setOpeningFee(
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setStabilityPool(
-      _pool: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _pool: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setTokenPeg(
-      _tokenPeg: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _tokenPeg: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setTreasury(
-      _treasury: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _treasury: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     stabilityPool(overrides?: CallOverrides): Promise<[string]>;
 
-    supportsInterface(interfaceId: BytesLike, overrides?: CallOverrides): Promise<[boolean]>;
+    supportsInterface(interfaceId: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<[boolean]>;
 
     symbol(overrides?: CallOverrides): Promise<[string]>;
 
-    tokenByIndex(index: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber]>;
+    tokenByIndex(index: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    tokenOfOwnerByIndex(owner: string, index: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber]>;
+    tokenOfOwnerByIndex(
+      owner: PromiseOrValue<string>,
+      index: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber]>;
 
     tokenPeg(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    tokenURI(tokenId: BigNumberish, overrides?: CallOverrides): Promise<[string]>;
+    tokenURI(tokenId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[string]>;
 
     totalSupply(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     transferFrom(
-      from: string,
-      to: string,
-      tokenId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      tokenId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     'transferToken(uint256)'(
-      amountToken: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      amountToken: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     'transferToken(address,address,uint256)'(
-      to: string,
-      token: string,
-      amountToken: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      to: PromiseOrValue<string>,
+      token: PromiseOrValue<string>,
+      amountToken: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     treasury(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    vaultCollateral(arg0: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber]>;
+    vaultCollateral(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     vaultCount(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    vaultDebt(arg0: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber]>;
+    vaultDebt(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     withdrawCollateral(
-      vaultID: BigNumberish,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      vaultID: PromiseOrValue<BigNumberish>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
   };
 
@@ -702,35 +737,35 @@ export interface QiDaoVaultInfo extends BaseContract {
   _minimumCollateralPercentage(overrides?: CallOverrides): Promise<BigNumber>;
 
   approve(
-    to: string,
-    tokenId: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    to: PromiseOrValue<string>,
+    tokenId: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  balanceOf(owner: string, overrides?: CallOverrides): Promise<BigNumber>;
+  balanceOf(owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   base(overrides?: CallOverrides): Promise<string>;
 
   baseURI(overrides?: CallOverrides): Promise<string>;
 
   borrowToken(
-    vaultID: BigNumberish,
-    amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    vaultID: PromiseOrValue<BigNumberish>,
+    amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   changeEthPriceSource(
-    ethPriceSourceAddress: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    ethPriceSourceAddress: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  checkCollateralPercentage(vaultID: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+  checkCollateralPercentage(vaultID: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  checkCost(vaultID: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+  checkCost(vaultID: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  checkExtract(vaultID: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+  checkExtract(vaultID: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  checkLiquidation(vaultID: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+  checkLiquidation(vaultID: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<boolean>;
 
   closingFee(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -738,28 +773,28 @@ export interface QiDaoVaultInfo extends BaseContract {
 
   collateralDecimals(overrides?: CallOverrides): Promise<BigNumber>;
 
-  createVault(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  createVault(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   debtRatio(overrides?: CallOverrides): Promise<BigNumber>;
 
   depositCollateral(
-    vaultID: BigNumberish,
-    amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    vaultID: PromiseOrValue<BigNumberish>,
+    amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   destroyVault(
-    vaultID: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    vaultID: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   ethPriceSource(overrides?: CallOverrides): Promise<string>;
 
-  exists(vaultID: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+  exists(vaultID: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<boolean>;
 
   gainRatio(overrides?: CallOverrides): Promise<BigNumber>;
 
-  getApproved(tokenId: BigNumberish, overrides?: CallOverrides): Promise<string>;
+  getApproved(tokenId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
 
   getClosingFee(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -769,22 +804,26 @@ export interface QiDaoVaultInfo extends BaseContract {
 
   getOpeningFee(overrides?: CallOverrides): Promise<BigNumber>;
 
-  getPaid(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  getPaid(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   getTokenPriceSource(overrides?: CallOverrides): Promise<BigNumber>;
 
-  isApprovedForAll(owner: string, operator: string, overrides?: CallOverrides): Promise<boolean>;
+  isApprovedForAll(
+    owner: PromiseOrValue<string>,
+    operator: PromiseOrValue<string>,
+    overrides?: CallOverrides,
+  ): Promise<boolean>;
 
   isOwner(overrides?: CallOverrides): Promise<boolean>;
 
   liquidateVault(
-    vaultID: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    vaultID: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   mai(overrides?: CallOverrides): Promise<string>;
 
-  maticDebt(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+  maticDebt(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   name(overrides?: CallOverrides): Promise<string>;
 
@@ -792,134 +831,138 @@ export interface QiDaoVaultInfo extends BaseContract {
 
   owner(overrides?: CallOverrides): Promise<string>;
 
-  ownerOf(tokenId: BigNumberish, overrides?: CallOverrides): Promise<string>;
+  ownerOf(tokenId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
 
   payBackToken(
-    vaultID: BigNumberish,
-    amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    vaultID: PromiseOrValue<BigNumberish>,
+    amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   'safeTransferFrom(address,address,uint256)'(
-    from: string,
-    to: string,
-    tokenId: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    from: PromiseOrValue<string>,
+    to: PromiseOrValue<string>,
+    tokenId: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   'safeTransferFrom(address,address,uint256,bytes)'(
-    from: string,
-    to: string,
-    tokenId: BigNumberish,
-    _data: BytesLike,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    from: PromiseOrValue<string>,
+    to: PromiseOrValue<string>,
+    tokenId: PromiseOrValue<BigNumberish>,
+    _data: PromiseOrValue<BytesLike>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setApprovalForAll(
-    to: string,
-    approved: boolean,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    to: PromiseOrValue<string>,
+    approved: PromiseOrValue<boolean>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setBaseURI(
-    baseURI: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    baseURI: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setClosingFee(
-    amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setDebtRatio(
-    _debtRatio: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _debtRatio: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setGainRatio(
-    _gainRatio: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _gainRatio: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setMinCollateralRatio(
-    minimumCollateralPercentage: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    minimumCollateralPercentage: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setOpeningFee(
-    amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setStabilityPool(
-    _pool: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _pool: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setTokenPeg(
-    _tokenPeg: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _tokenPeg: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setTreasury(
-    _treasury: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _treasury: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   stabilityPool(overrides?: CallOverrides): Promise<string>;
 
-  supportsInterface(interfaceId: BytesLike, overrides?: CallOverrides): Promise<boolean>;
+  supportsInterface(interfaceId: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<boolean>;
 
   symbol(overrides?: CallOverrides): Promise<string>;
 
-  tokenByIndex(index: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+  tokenByIndex(index: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  tokenOfOwnerByIndex(owner: string, index: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+  tokenOfOwnerByIndex(
+    owner: PromiseOrValue<string>,
+    index: PromiseOrValue<BigNumberish>,
+    overrides?: CallOverrides,
+  ): Promise<BigNumber>;
 
   tokenPeg(overrides?: CallOverrides): Promise<BigNumber>;
 
-  tokenURI(tokenId: BigNumberish, overrides?: CallOverrides): Promise<string>;
+  tokenURI(tokenId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
 
   totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
   transferFrom(
-    from: string,
-    to: string,
-    tokenId: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    from: PromiseOrValue<string>,
+    to: PromiseOrValue<string>,
+    tokenId: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   transferOwnership(
-    newOwner: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    newOwner: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   'transferToken(uint256)'(
-    amountToken: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    amountToken: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   'transferToken(address,address,uint256)'(
-    to: string,
-    token: string,
-    amountToken: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    to: PromiseOrValue<string>,
+    token: PromiseOrValue<string>,
+    amountToken: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   treasury(overrides?: CallOverrides): Promise<BigNumber>;
 
-  vaultCollateral(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+  vaultCollateral(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
   vaultCount(overrides?: CallOverrides): Promise<BigNumber>;
 
-  vaultDebt(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+  vaultDebt(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
   withdrawCollateral(
-    vaultID: BigNumberish,
-    amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    vaultID: PromiseOrValue<BigNumberish>,
+    amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   callStatic: {
@@ -927,25 +970,33 @@ export interface QiDaoVaultInfo extends BaseContract {
 
     _minimumCollateralPercentage(overrides?: CallOverrides): Promise<BigNumber>;
 
-    approve(to: string, tokenId: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    approve(
+      to: PromiseOrValue<string>,
+      tokenId: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    balanceOf(owner: string, overrides?: CallOverrides): Promise<BigNumber>;
+    balanceOf(owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     base(overrides?: CallOverrides): Promise<string>;
 
     baseURI(overrides?: CallOverrides): Promise<string>;
 
-    borrowToken(vaultID: BigNumberish, amount: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    borrowToken(
+      vaultID: PromiseOrValue<BigNumberish>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    changeEthPriceSource(ethPriceSourceAddress: string, overrides?: CallOverrides): Promise<void>;
+    changeEthPriceSource(ethPriceSourceAddress: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    checkCollateralPercentage(vaultID: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    checkCollateralPercentage(vaultID: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    checkCost(vaultID: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    checkCost(vaultID: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    checkExtract(vaultID: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    checkExtract(vaultID: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    checkLiquidation(vaultID: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+    checkLiquidation(vaultID: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<boolean>;
 
     closingFee(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -957,17 +1008,21 @@ export interface QiDaoVaultInfo extends BaseContract {
 
     debtRatio(overrides?: CallOverrides): Promise<BigNumber>;
 
-    depositCollateral(vaultID: BigNumberish, amount: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    depositCollateral(
+      vaultID: PromiseOrValue<BigNumberish>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    destroyVault(vaultID: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    destroyVault(vaultID: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
     ethPriceSource(overrides?: CallOverrides): Promise<string>;
 
-    exists(vaultID: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+    exists(vaultID: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<boolean>;
 
     gainRatio(overrides?: CallOverrides): Promise<BigNumber>;
 
-    getApproved(tokenId: BigNumberish, overrides?: CallOverrides): Promise<string>;
+    getApproved(tokenId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
 
     getClosingFee(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -981,15 +1036,19 @@ export interface QiDaoVaultInfo extends BaseContract {
 
     getTokenPriceSource(overrides?: CallOverrides): Promise<BigNumber>;
 
-    isApprovedForAll(owner: string, operator: string, overrides?: CallOverrides): Promise<boolean>;
+    isApprovedForAll(
+      owner: PromiseOrValue<string>,
+      operator: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
 
     isOwner(overrides?: CallOverrides): Promise<boolean>;
 
-    liquidateVault(vaultID: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    liquidateVault(vaultID: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
     mai(overrides?: CallOverrides): Promise<string>;
 
-    maticDebt(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    maticDebt(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     name(overrides?: CallOverrides): Promise<string>;
 
@@ -997,101 +1056,133 @@ export interface QiDaoVaultInfo extends BaseContract {
 
     owner(overrides?: CallOverrides): Promise<string>;
 
-    ownerOf(tokenId: BigNumberish, overrides?: CallOverrides): Promise<string>;
+    ownerOf(tokenId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
 
-    payBackToken(vaultID: BigNumberish, amount: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    payBackToken(
+      vaultID: PromiseOrValue<BigNumberish>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
     renounceOwnership(overrides?: CallOverrides): Promise<void>;
 
     'safeTransferFrom(address,address,uint256)'(
-      from: string,
-      to: string,
-      tokenId: BigNumberish,
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      tokenId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
     'safeTransferFrom(address,address,uint256,bytes)'(
-      from: string,
-      to: string,
-      tokenId: BigNumberish,
-      _data: BytesLike,
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      tokenId: PromiseOrValue<BigNumberish>,
+      _data: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
-    setApprovalForAll(to: string, approved: boolean, overrides?: CallOverrides): Promise<void>;
+    setApprovalForAll(
+      to: PromiseOrValue<string>,
+      approved: PromiseOrValue<boolean>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    setBaseURI(baseURI: string, overrides?: CallOverrides): Promise<void>;
+    setBaseURI(baseURI: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    setClosingFee(amount: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    setClosingFee(amount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
-    setDebtRatio(_debtRatio: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    setDebtRatio(_debtRatio: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
-    setGainRatio(_gainRatio: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    setGainRatio(_gainRatio: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
-    setMinCollateralRatio(minimumCollateralPercentage: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    setMinCollateralRatio(
+      minimumCollateralPercentage: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    setOpeningFee(amount: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    setOpeningFee(amount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
-    setStabilityPool(_pool: string, overrides?: CallOverrides): Promise<void>;
+    setStabilityPool(_pool: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    setTokenPeg(_tokenPeg: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    setTokenPeg(_tokenPeg: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
-    setTreasury(_treasury: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    setTreasury(_treasury: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
     stabilityPool(overrides?: CallOverrides): Promise<string>;
 
-    supportsInterface(interfaceId: BytesLike, overrides?: CallOverrides): Promise<boolean>;
+    supportsInterface(interfaceId: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<boolean>;
 
     symbol(overrides?: CallOverrides): Promise<string>;
 
-    tokenByIndex(index: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    tokenByIndex(index: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    tokenOfOwnerByIndex(owner: string, index: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    tokenOfOwnerByIndex(
+      owner: PromiseOrValue<string>,
+      index: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     tokenPeg(overrides?: CallOverrides): Promise<BigNumber>;
 
-    tokenURI(tokenId: BigNumberish, overrides?: CallOverrides): Promise<string>;
+    tokenURI(tokenId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
 
     totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
-    transferFrom(from: string, to: string, tokenId: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    transferFrom(
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      tokenId: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    transferOwnership(newOwner: string, overrides?: CallOverrides): Promise<void>;
+    transferOwnership(newOwner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    'transferToken(uint256)'(amountToken: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    'transferToken(uint256)'(amountToken: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
     'transferToken(address,address,uint256)'(
-      to: string,
-      token: string,
-      amountToken: BigNumberish,
+      to: PromiseOrValue<string>,
+      token: PromiseOrValue<string>,
+      amountToken: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
     treasury(overrides?: CallOverrides): Promise<BigNumber>;
 
-    vaultCollateral(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    vaultCollateral(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     vaultCount(overrides?: CallOverrides): Promise<BigNumber>;
 
-    vaultDebt(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    vaultDebt(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    withdrawCollateral(vaultID: BigNumberish, amount: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    withdrawCollateral(
+      vaultID: PromiseOrValue<BigNumberish>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
   };
 
   filters: {
     'Approval(address,address,uint256)'(
-      owner?: string | null,
-      approved?: string | null,
-      tokenId?: BigNumberish | null,
+      owner?: PromiseOrValue<string> | null,
+      approved?: PromiseOrValue<string> | null,
+      tokenId?: PromiseOrValue<BigNumberish> | null,
     ): ApprovalEventFilter;
-    Approval(owner?: string | null, approved?: string | null, tokenId?: BigNumberish | null): ApprovalEventFilter;
+    Approval(
+      owner?: PromiseOrValue<string> | null,
+      approved?: PromiseOrValue<string> | null,
+      tokenId?: PromiseOrValue<BigNumberish> | null,
+    ): ApprovalEventFilter;
 
     'ApprovalForAll(address,address,bool)'(
-      owner?: string | null,
-      operator?: string | null,
+      owner?: PromiseOrValue<string> | null,
+      operator?: PromiseOrValue<string> | null,
       approved?: null,
     ): ApprovalForAllEventFilter;
-    ApprovalForAll(owner?: string | null, operator?: string | null, approved?: null): ApprovalForAllEventFilter;
+    ApprovalForAll(
+      owner?: PromiseOrValue<string> | null,
+      operator?: PromiseOrValue<string> | null,
+      approved?: null,
+    ): ApprovalForAllEventFilter;
 
     'BorrowToken(uint256,uint256)'(vaultID?: null, amount?: null): BorrowTokenEventFilter;
     BorrowToken(vaultID?: null, amount?: null): BorrowTokenEventFilter;
@@ -1123,20 +1214,27 @@ export interface QiDaoVaultInfo extends BaseContract {
     ): LiquidateVaultEventFilter;
 
     'OwnershipTransferred(address,address)'(
-      previousOwner?: string | null,
-      newOwner?: string | null,
+      previousOwner?: PromiseOrValue<string> | null,
+      newOwner?: PromiseOrValue<string> | null,
     ): OwnershipTransferredEventFilter;
-    OwnershipTransferred(previousOwner?: string | null, newOwner?: string | null): OwnershipTransferredEventFilter;
+    OwnershipTransferred(
+      previousOwner?: PromiseOrValue<string> | null,
+      newOwner?: PromiseOrValue<string> | null,
+    ): OwnershipTransferredEventFilter;
 
     'PayBackToken(uint256,uint256,uint256)'(vaultID?: null, amount?: null, closingFee?: null): PayBackTokenEventFilter;
     PayBackToken(vaultID?: null, amount?: null, closingFee?: null): PayBackTokenEventFilter;
 
     'Transfer(address,address,uint256)'(
-      from?: string | null,
-      to?: string | null,
-      tokenId?: BigNumberish | null,
+      from?: PromiseOrValue<string> | null,
+      to?: PromiseOrValue<string> | null,
+      tokenId?: PromiseOrValue<BigNumberish> | null,
     ): TransferEventFilter;
-    Transfer(from?: string | null, to?: string | null, tokenId?: BigNumberish | null): TransferEventFilter;
+    Transfer(
+      from?: PromiseOrValue<string> | null,
+      to?: PromiseOrValue<string> | null,
+      tokenId?: PromiseOrValue<BigNumberish> | null,
+    ): TransferEventFilter;
 
     'TransferVault(uint256,address,address)'(vaultID?: null, from?: null, to?: null): TransferVaultEventFilter;
     TransferVault(vaultID?: null, from?: null, to?: null): TransferVaultEventFilter;
@@ -1151,35 +1249,35 @@ export interface QiDaoVaultInfo extends BaseContract {
     _minimumCollateralPercentage(overrides?: CallOverrides): Promise<BigNumber>;
 
     approve(
-      to: string,
-      tokenId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      to: PromiseOrValue<string>,
+      tokenId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    balanceOf(owner: string, overrides?: CallOverrides): Promise<BigNumber>;
+    balanceOf(owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     base(overrides?: CallOverrides): Promise<BigNumber>;
 
     baseURI(overrides?: CallOverrides): Promise<BigNumber>;
 
     borrowToken(
-      vaultID: BigNumberish,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      vaultID: PromiseOrValue<BigNumberish>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     changeEthPriceSource(
-      ethPriceSourceAddress: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      ethPriceSourceAddress: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    checkCollateralPercentage(vaultID: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    checkCollateralPercentage(vaultID: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    checkCost(vaultID: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    checkCost(vaultID: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    checkExtract(vaultID: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    checkExtract(vaultID: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    checkLiquidation(vaultID: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    checkLiquidation(vaultID: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     closingFee(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -1187,28 +1285,28 @@ export interface QiDaoVaultInfo extends BaseContract {
 
     collateralDecimals(overrides?: CallOverrides): Promise<BigNumber>;
 
-    createVault(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    createVault(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     debtRatio(overrides?: CallOverrides): Promise<BigNumber>;
 
     depositCollateral(
-      vaultID: BigNumberish,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      vaultID: PromiseOrValue<BigNumberish>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     destroyVault(
-      vaultID: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      vaultID: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     ethPriceSource(overrides?: CallOverrides): Promise<BigNumber>;
 
-    exists(vaultID: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    exists(vaultID: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     gainRatio(overrides?: CallOverrides): Promise<BigNumber>;
 
-    getApproved(tokenId: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    getApproved(tokenId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     getClosingFee(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -1218,22 +1316,26 @@ export interface QiDaoVaultInfo extends BaseContract {
 
     getOpeningFee(overrides?: CallOverrides): Promise<BigNumber>;
 
-    getPaid(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    getPaid(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     getTokenPriceSource(overrides?: CallOverrides): Promise<BigNumber>;
 
-    isApprovedForAll(owner: string, operator: string, overrides?: CallOverrides): Promise<BigNumber>;
+    isApprovedForAll(
+      owner: PromiseOrValue<string>,
+      operator: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     isOwner(overrides?: CallOverrides): Promise<BigNumber>;
 
     liquidateVault(
-      vaultID: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      vaultID: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     mai(overrides?: CallOverrides): Promise<BigNumber>;
 
-    maticDebt(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    maticDebt(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     name(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -1241,128 +1343,138 @@ export interface QiDaoVaultInfo extends BaseContract {
 
     owner(overrides?: CallOverrides): Promise<BigNumber>;
 
-    ownerOf(tokenId: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    ownerOf(tokenId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     payBackToken(
-      vaultID: BigNumberish,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      vaultID: PromiseOrValue<BigNumberish>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     'safeTransferFrom(address,address,uint256)'(
-      from: string,
-      to: string,
-      tokenId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      tokenId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     'safeTransferFrom(address,address,uint256,bytes)'(
-      from: string,
-      to: string,
-      tokenId: BigNumberish,
-      _data: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      tokenId: PromiseOrValue<BigNumberish>,
+      _data: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setApprovalForAll(
-      to: string,
-      approved: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      to: PromiseOrValue<string>,
+      approved: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    setBaseURI(baseURI: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    setBaseURI(
+      baseURI: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     setClosingFee(
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setDebtRatio(
-      _debtRatio: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _debtRatio: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setGainRatio(
-      _gainRatio: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _gainRatio: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setMinCollateralRatio(
-      minimumCollateralPercentage: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      minimumCollateralPercentage: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setOpeningFee(
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    setStabilityPool(_pool: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    setStabilityPool(
+      _pool: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     setTokenPeg(
-      _tokenPeg: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _tokenPeg: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setTreasury(
-      _treasury: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _treasury: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     stabilityPool(overrides?: CallOverrides): Promise<BigNumber>;
 
-    supportsInterface(interfaceId: BytesLike, overrides?: CallOverrides): Promise<BigNumber>;
+    supportsInterface(interfaceId: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<BigNumber>;
 
     symbol(overrides?: CallOverrides): Promise<BigNumber>;
 
-    tokenByIndex(index: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    tokenByIndex(index: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    tokenOfOwnerByIndex(owner: string, index: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    tokenOfOwnerByIndex(
+      owner: PromiseOrValue<string>,
+      index: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     tokenPeg(overrides?: CallOverrides): Promise<BigNumber>;
 
-    tokenURI(tokenId: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    tokenURI(tokenId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
     transferFrom(
-      from: string,
-      to: string,
-      tokenId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      tokenId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     'transferToken(uint256)'(
-      amountToken: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      amountToken: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     'transferToken(address,address,uint256)'(
-      to: string,
-      token: string,
-      amountToken: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      to: PromiseOrValue<string>,
+      token: PromiseOrValue<string>,
+      amountToken: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     treasury(overrides?: CallOverrides): Promise<BigNumber>;
 
-    vaultCollateral(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    vaultCollateral(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     vaultCount(overrides?: CallOverrides): Promise<BigNumber>;
 
-    vaultDebt(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    vaultDebt(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     withdrawCollateral(
-      vaultID: BigNumberish,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      vaultID: PromiseOrValue<BigNumberish>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
   };
 
@@ -1372,35 +1484,38 @@ export interface QiDaoVaultInfo extends BaseContract {
     _minimumCollateralPercentage(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     approve(
-      to: string,
-      tokenId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      to: PromiseOrValue<string>,
+      tokenId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    balanceOf(owner: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    balanceOf(owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     base(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     baseURI(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     borrowToken(
-      vaultID: BigNumberish,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      vaultID: PromiseOrValue<BigNumberish>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     changeEthPriceSource(
-      ethPriceSourceAddress: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      ethPriceSourceAddress: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    checkCollateralPercentage(vaultID: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    checkCollateralPercentage(
+      vaultID: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
-    checkCost(vaultID: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    checkCost(vaultID: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    checkExtract(vaultID: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    checkExtract(vaultID: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    checkLiquidation(vaultID: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    checkLiquidation(vaultID: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     closingFee(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
@@ -1408,28 +1523,28 @@ export interface QiDaoVaultInfo extends BaseContract {
 
     collateralDecimals(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    createVault(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    createVault(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     debtRatio(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     depositCollateral(
-      vaultID: BigNumberish,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      vaultID: PromiseOrValue<BigNumberish>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     destroyVault(
-      vaultID: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      vaultID: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     ethPriceSource(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    exists(vaultID: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    exists(vaultID: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     gainRatio(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    getApproved(tokenId: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getApproved(tokenId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     getClosingFee(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
@@ -1439,22 +1554,26 @@ export interface QiDaoVaultInfo extends BaseContract {
 
     getOpeningFee(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    getPaid(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    getPaid(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     getTokenPriceSource(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    isApprovedForAll(owner: string, operator: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    isApprovedForAll(
+      owner: PromiseOrValue<string>,
+      operator: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
     isOwner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     liquidateVault(
-      vaultID: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      vaultID: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     mai(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    maticDebt(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    maticDebt(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     name(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
@@ -1462,134 +1581,138 @@ export interface QiDaoVaultInfo extends BaseContract {
 
     owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    ownerOf(tokenId: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    ownerOf(tokenId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     payBackToken(
-      vaultID: BigNumberish,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      vaultID: PromiseOrValue<BigNumberish>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     'safeTransferFrom(address,address,uint256)'(
-      from: string,
-      to: string,
-      tokenId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      tokenId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     'safeTransferFrom(address,address,uint256,bytes)'(
-      from: string,
-      to: string,
-      tokenId: BigNumberish,
-      _data: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      tokenId: PromiseOrValue<BigNumberish>,
+      _data: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setApprovalForAll(
-      to: string,
-      approved: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      to: PromiseOrValue<string>,
+      approved: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setBaseURI(
-      baseURI: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      baseURI: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setClosingFee(
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setDebtRatio(
-      _debtRatio: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _debtRatio: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setGainRatio(
-      _gainRatio: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _gainRatio: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setMinCollateralRatio(
-      minimumCollateralPercentage: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      minimumCollateralPercentage: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setOpeningFee(
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setStabilityPool(
-      _pool: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _pool: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setTokenPeg(
-      _tokenPeg: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _tokenPeg: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setTreasury(
-      _treasury: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _treasury: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     stabilityPool(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    supportsInterface(interfaceId: BytesLike, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    supportsInterface(interfaceId: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     symbol(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    tokenByIndex(index: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    tokenByIndex(index: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    tokenOfOwnerByIndex(owner: string, index: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    tokenOfOwnerByIndex(
+      owner: PromiseOrValue<string>,
+      index: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
     tokenPeg(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    tokenURI(tokenId: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    tokenURI(tokenId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     totalSupply(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     transferFrom(
-      from: string,
-      to: string,
-      tokenId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      tokenId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     'transferToken(uint256)'(
-      amountToken: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      amountToken: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     'transferToken(address,address,uint256)'(
-      to: string,
-      token: string,
-      amountToken: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      to: PromiseOrValue<string>,
+      token: PromiseOrValue<string>,
+      amountToken: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     treasury(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    vaultCollateral(arg0: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    vaultCollateral(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     vaultCount(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    vaultDebt(arg0: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    vaultDebt(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     withdrawCollateral(
-      vaultID: BigNumberish,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      vaultID: PromiseOrValue<BigNumberish>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
   };
 }

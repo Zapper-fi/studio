@@ -16,7 +16,7 @@ import type {
 } from 'ethers';
 import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
 import type { Listener, Provider } from '@ethersproject/providers';
-import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
 export interface BancorNetworkInterface extends utils.Interface {
   functions: {
@@ -121,76 +121,174 @@ export interface BancorNetworkInterface extends utils.Interface {
   ): FunctionFragment;
 
   encodeFunctionData(functionFragment: 'DEFAULT_ADMIN_ROLE', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'addPoolCollection', values: [string]): string;
-  encodeFunctionData(functionFragment: 'cancelWithdrawal', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'collectionByPool', values: [string]): string;
-  encodeFunctionData(functionFragment: 'createPool', values: [BigNumberish, string]): string;
-  encodeFunctionData(functionFragment: 'createPools', values: [BigNumberish, string[]]): string;
-  encodeFunctionData(functionFragment: 'deposit', values: [string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'depositFor', values: [string, string, BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'addPoolCollection', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'cancelWithdrawal', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'collectionByPool', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'createPool',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'createPools',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>[]],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'deposit',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'depositFor',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
   encodeFunctionData(
     functionFragment: 'depositForPermitted',
-    values: [string, string, BigNumberish, BigNumberish, BigNumberish, BytesLike, BytesLike],
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BytesLike>,
+      PromiseOrValue<BytesLike>,
+    ],
   ): string;
   encodeFunctionData(
     functionFragment: 'depositPermitted',
-    values: [string, BigNumberish, BigNumberish, BigNumberish, BytesLike, BytesLike],
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BytesLike>,
+      PromiseOrValue<BytesLike>,
+    ],
   ): string;
-  encodeFunctionData(functionFragment: 'flashLoan', values: [string, BigNumberish, string, BytesLike]): string;
-  encodeFunctionData(functionFragment: 'getRoleAdmin', values: [BytesLike]): string;
-  encodeFunctionData(functionFragment: 'getRoleMember', values: [BytesLike, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'getRoleMemberCount', values: [BytesLike]): string;
-  encodeFunctionData(functionFragment: 'grantRole', values: [BytesLike, string]): string;
-  encodeFunctionData(functionFragment: 'hasRole', values: [BytesLike, string]): string;
-  encodeFunctionData(functionFragment: 'initWithdrawal', values: [string, BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'flashLoan',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>, PromiseOrValue<string>, PromiseOrValue<BytesLike>],
+  ): string;
+  encodeFunctionData(functionFragment: 'getRoleAdmin', values: [PromiseOrValue<BytesLike>]): string;
+  encodeFunctionData(
+    functionFragment: 'getRoleMember',
+    values: [PromiseOrValue<BytesLike>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'getRoleMemberCount', values: [PromiseOrValue<BytesLike>]): string;
+  encodeFunctionData(
+    functionFragment: 'grantRole',
+    values: [PromiseOrValue<BytesLike>, PromiseOrValue<string>],
+  ): string;
+  encodeFunctionData(functionFragment: 'hasRole', values: [PromiseOrValue<BytesLike>, PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'initWithdrawal',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
   encodeFunctionData(
     functionFragment: 'initWithdrawalPermitted',
-    values: [string, BigNumberish, BigNumberish, BigNumberish, BytesLike, BytesLike],
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BytesLike>,
+      PromiseOrValue<BytesLike>,
+    ],
   ): string;
-  encodeFunctionData(functionFragment: 'initialize', values: [string, string, string]): string;
+  encodeFunctionData(
+    functionFragment: 'initialize',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<string>],
+  ): string;
   encodeFunctionData(functionFragment: 'isPaused', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'isPoolValid', values: [string]): string;
-  encodeFunctionData(functionFragment: 'latestPoolCollection', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'isPoolValid', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'latestPoolCollection', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'liquidityPools', values?: undefined): string;
   encodeFunctionData(
     functionFragment: 'migrateLiquidity',
-    values: [string, string, BigNumberish, BigNumberish, BigNumberish],
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+    ],
   ): string;
-  encodeFunctionData(functionFragment: 'migratePools', values: [string[]]): string;
+  encodeFunctionData(functionFragment: 'migratePools', values: [PromiseOrValue<string>[]]): string;
   encodeFunctionData(functionFragment: 'pause', values?: undefined): string;
   encodeFunctionData(functionFragment: 'paused', values?: undefined): string;
   encodeFunctionData(functionFragment: 'pendingNetworkFeeAmount', values?: undefined): string;
   encodeFunctionData(functionFragment: 'poolCollections', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'postUpgrade', values: [BytesLike]): string;
-  encodeFunctionData(functionFragment: 'removePoolCollection', values: [string, string]): string;
-  encodeFunctionData(functionFragment: 'renounceRole', values: [BytesLike, string]): string;
+  encodeFunctionData(functionFragment: 'postUpgrade', values: [PromiseOrValue<BytesLike>]): string;
+  encodeFunctionData(
+    functionFragment: 'removePoolCollection',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'renounceRole',
+    values: [PromiseOrValue<BytesLike>, PromiseOrValue<string>],
+  ): string;
   encodeFunctionData(functionFragment: 'resume', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'revokeRole', values: [BytesLike, string]): string;
+  encodeFunctionData(
+    functionFragment: 'revokeRole',
+    values: [PromiseOrValue<BytesLike>, PromiseOrValue<string>],
+  ): string;
   encodeFunctionData(functionFragment: 'roleAdmin', values?: undefined): string;
   encodeFunctionData(functionFragment: 'roleEmergencyStopper', values?: undefined): string;
   encodeFunctionData(functionFragment: 'roleMigrationManager', values?: undefined): string;
   encodeFunctionData(functionFragment: 'roleNetworkFeeManager', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'setLatestPoolCollection', values: [string]): string;
-  encodeFunctionData(functionFragment: 'supportsInterface', values: [BytesLike]): string;
+  encodeFunctionData(functionFragment: 'setLatestPoolCollection', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'supportsInterface', values: [PromiseOrValue<BytesLike>]): string;
   encodeFunctionData(
     functionFragment: 'tradeBySourceAmount',
-    values: [string, string, BigNumberish, BigNumberish, BigNumberish, string],
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<string>,
+    ],
   ): string;
   encodeFunctionData(
     functionFragment: 'tradeBySourceAmountPermitted',
-    values: [string, string, BigNumberish, BigNumberish, BigNumberish, string, BigNumberish, BytesLike, BytesLike],
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BytesLike>,
+      PromiseOrValue<BytesLike>,
+    ],
   ): string;
   encodeFunctionData(
     functionFragment: 'tradeByTargetAmount',
-    values: [string, string, BigNumberish, BigNumberish, BigNumberish, string],
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<string>,
+    ],
   ): string;
   encodeFunctionData(
     functionFragment: 'tradeByTargetAmountPermitted',
-    values: [string, string, BigNumberish, BigNumberish, BigNumberish, string, BigNumberish, BytesLike, BytesLike],
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BytesLike>,
+      PromiseOrValue<BytesLike>,
+    ],
   ): string;
   encodeFunctionData(functionFragment: 'version', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'withdraw', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'withdrawNetworkFees', values: [string]): string;
+  encodeFunctionData(functionFragment: 'withdraw', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'withdrawNetworkFees', values: [PromiseOrValue<string>]): string;
 
   decodeFunctionResult(functionFragment: 'DEFAULT_ADMIN_ROLE', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'addPoolCollection', data: BytesLike): Result;
@@ -446,131 +544,139 @@ export interface BancorNetwork extends BaseContract {
     DEFAULT_ADMIN_ROLE(overrides?: CallOverrides): Promise<[string]>;
 
     addPoolCollection(
-      poolCollection: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      poolCollection: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     cancelWithdrawal(
-      id: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      id: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    collectionByPool(pool: string, overrides?: CallOverrides): Promise<[string]>;
+    collectionByPool(pool: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[string]>;
 
     createPool(
-      poolType: BigNumberish,
-      token: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      poolType: PromiseOrValue<BigNumberish>,
+      token: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     createPools(
-      poolType: BigNumberish,
-      tokens: string[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      poolType: PromiseOrValue<BigNumberish>,
+      tokens: PromiseOrValue<string>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     deposit(
-      pool: string,
-      tokenAmount: BigNumberish,
-      overrides?: PayableOverrides & { from?: string | Promise<string> },
+      pool: PromiseOrValue<string>,
+      tokenAmount: PromiseOrValue<BigNumberish>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     depositFor(
-      provider: string,
-      pool: string,
-      tokenAmount: BigNumberish,
-      overrides?: PayableOverrides & { from?: string | Promise<string> },
+      provider: PromiseOrValue<string>,
+      pool: PromiseOrValue<string>,
+      tokenAmount: PromiseOrValue<BigNumberish>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     depositForPermitted(
-      provider: string,
-      pool: string,
-      tokenAmount: BigNumberish,
-      deadline: BigNumberish,
-      v: BigNumberish,
-      r: BytesLike,
-      s: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      provider: PromiseOrValue<string>,
+      pool: PromiseOrValue<string>,
+      tokenAmount: PromiseOrValue<BigNumberish>,
+      deadline: PromiseOrValue<BigNumberish>,
+      v: PromiseOrValue<BigNumberish>,
+      r: PromiseOrValue<BytesLike>,
+      s: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     depositPermitted(
-      pool: string,
-      tokenAmount: BigNumberish,
-      deadline: BigNumberish,
-      v: BigNumberish,
-      r: BytesLike,
-      s: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      pool: PromiseOrValue<string>,
+      tokenAmount: PromiseOrValue<BigNumberish>,
+      deadline: PromiseOrValue<BigNumberish>,
+      v: PromiseOrValue<BigNumberish>,
+      r: PromiseOrValue<BytesLike>,
+      s: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     flashLoan(
-      token: string,
-      amount: BigNumberish,
-      recipient: string,
-      data: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      token: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      recipient: PromiseOrValue<string>,
+      data: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    getRoleAdmin(role: BytesLike, overrides?: CallOverrides): Promise<[string]>;
+    getRoleAdmin(role: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<[string]>;
 
-    getRoleMember(role: BytesLike, index: BigNumberish, overrides?: CallOverrides): Promise<[string]>;
+    getRoleMember(
+      role: PromiseOrValue<BytesLike>,
+      index: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<[string]>;
 
-    getRoleMemberCount(role: BytesLike, overrides?: CallOverrides): Promise<[BigNumber]>;
+    getRoleMemberCount(role: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     grantRole(
-      role: BytesLike,
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    hasRole(role: BytesLike, account: string, overrides?: CallOverrides): Promise<[boolean]>;
+    hasRole(
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<[boolean]>;
 
     initWithdrawal(
-      poolToken: string,
-      poolTokenAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      poolToken: PromiseOrValue<string>,
+      poolTokenAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     initWithdrawalPermitted(
-      poolToken: string,
-      poolTokenAmount: BigNumberish,
-      deadline: BigNumberish,
-      v: BigNumberish,
-      r: BytesLike,
-      s: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      poolToken: PromiseOrValue<string>,
+      poolTokenAmount: PromiseOrValue<BigNumberish>,
+      deadline: PromiseOrValue<BigNumberish>,
+      v: PromiseOrValue<BigNumberish>,
+      r: PromiseOrValue<BytesLike>,
+      s: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     initialize(
-      initBNTPool: string,
-      initPendingWithdrawals: string,
-      initPoolMigrator: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      initBNTPool: PromiseOrValue<string>,
+      initPendingWithdrawals: PromiseOrValue<string>,
+      initPoolMigrator: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     isPaused(overrides?: CallOverrides): Promise<[boolean]>;
 
-    isPoolValid(pool: string, overrides?: CallOverrides): Promise<[boolean]>;
+    isPoolValid(pool: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[boolean]>;
 
-    latestPoolCollection(poolType: BigNumberish, overrides?: CallOverrides): Promise<[string]>;
+    latestPoolCollection(poolType: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[string]>;
 
     liquidityPools(overrides?: CallOverrides): Promise<[string[]]>;
 
     migrateLiquidity(
-      token: string,
-      provider: string,
-      amount: BigNumberish,
-      availableAmount: BigNumberish,
-      originalAmount: BigNumberish,
-      overrides?: PayableOverrides & { from?: string | Promise<string> },
+      token: PromiseOrValue<string>,
+      provider: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      availableAmount: PromiseOrValue<BigNumberish>,
+      originalAmount: PromiseOrValue<BigNumberish>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     migratePools(
-      pools: string[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      pools: PromiseOrValue<string>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    pause(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    pause(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     paused(overrides?: CallOverrides): Promise<[boolean]>;
 
@@ -579,28 +685,28 @@ export interface BancorNetwork extends BaseContract {
     poolCollections(overrides?: CallOverrides): Promise<[string[]]>;
 
     postUpgrade(
-      data: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      data: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     removePoolCollection(
-      poolCollection: string,
-      newLatestPoolCollection: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      poolCollection: PromiseOrValue<string>,
+      newLatestPoolCollection: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     renounceRole(
-      role: BytesLike,
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    resume(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    resume(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     revokeRole(
-      role: BytesLike,
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     roleAdmin(overrides?: CallOverrides): Promise<[string]>;
@@ -612,199 +718,207 @@ export interface BancorNetwork extends BaseContract {
     roleNetworkFeeManager(overrides?: CallOverrides): Promise<[string]>;
 
     setLatestPoolCollection(
-      poolCollection: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      poolCollection: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    supportsInterface(interfaceId: BytesLike, overrides?: CallOverrides): Promise<[boolean]>;
+    supportsInterface(interfaceId: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<[boolean]>;
 
     tradeBySourceAmount(
-      sourceToken: string,
-      targetToken: string,
-      sourceAmount: BigNumberish,
-      minReturnAmount: BigNumberish,
-      deadline: BigNumberish,
-      beneficiary: string,
-      overrides?: PayableOverrides & { from?: string | Promise<string> },
+      sourceToken: PromiseOrValue<string>,
+      targetToken: PromiseOrValue<string>,
+      sourceAmount: PromiseOrValue<BigNumberish>,
+      minReturnAmount: PromiseOrValue<BigNumberish>,
+      deadline: PromiseOrValue<BigNumberish>,
+      beneficiary: PromiseOrValue<string>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     tradeBySourceAmountPermitted(
-      sourceToken: string,
-      targetToken: string,
-      sourceAmount: BigNumberish,
-      minReturnAmount: BigNumberish,
-      deadline: BigNumberish,
-      beneficiary: string,
-      v: BigNumberish,
-      r: BytesLike,
-      s: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      sourceToken: PromiseOrValue<string>,
+      targetToken: PromiseOrValue<string>,
+      sourceAmount: PromiseOrValue<BigNumberish>,
+      minReturnAmount: PromiseOrValue<BigNumberish>,
+      deadline: PromiseOrValue<BigNumberish>,
+      beneficiary: PromiseOrValue<string>,
+      v: PromiseOrValue<BigNumberish>,
+      r: PromiseOrValue<BytesLike>,
+      s: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     tradeByTargetAmount(
-      sourceToken: string,
-      targetToken: string,
-      targetAmount: BigNumberish,
-      maxSourceAmount: BigNumberish,
-      deadline: BigNumberish,
-      beneficiary: string,
-      overrides?: PayableOverrides & { from?: string | Promise<string> },
+      sourceToken: PromiseOrValue<string>,
+      targetToken: PromiseOrValue<string>,
+      targetAmount: PromiseOrValue<BigNumberish>,
+      maxSourceAmount: PromiseOrValue<BigNumberish>,
+      deadline: PromiseOrValue<BigNumberish>,
+      beneficiary: PromiseOrValue<string>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     tradeByTargetAmountPermitted(
-      sourceToken: string,
-      targetToken: string,
-      targetAmount: BigNumberish,
-      maxSourceAmount: BigNumberish,
-      deadline: BigNumberish,
-      beneficiary: string,
-      v: BigNumberish,
-      r: BytesLike,
-      s: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      sourceToken: PromiseOrValue<string>,
+      targetToken: PromiseOrValue<string>,
+      targetAmount: PromiseOrValue<BigNumberish>,
+      maxSourceAmount: PromiseOrValue<BigNumberish>,
+      deadline: PromiseOrValue<BigNumberish>,
+      beneficiary: PromiseOrValue<string>,
+      v: PromiseOrValue<BigNumberish>,
+      r: PromiseOrValue<BytesLike>,
+      s: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     version(overrides?: CallOverrides): Promise<[number]>;
 
     withdraw(
-      id: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      id: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     withdrawNetworkFees(
-      recipient: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      recipient: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
   };
 
   DEFAULT_ADMIN_ROLE(overrides?: CallOverrides): Promise<string>;
 
   addPoolCollection(
-    poolCollection: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    poolCollection: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   cancelWithdrawal(
-    id: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    id: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  collectionByPool(pool: string, overrides?: CallOverrides): Promise<string>;
+  collectionByPool(pool: PromiseOrValue<string>, overrides?: CallOverrides): Promise<string>;
 
   createPool(
-    poolType: BigNumberish,
-    token: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    poolType: PromiseOrValue<BigNumberish>,
+    token: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   createPools(
-    poolType: BigNumberish,
-    tokens: string[],
-    overrides?: Overrides & { from?: string | Promise<string> },
+    poolType: PromiseOrValue<BigNumberish>,
+    tokens: PromiseOrValue<string>[],
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   deposit(
-    pool: string,
-    tokenAmount: BigNumberish,
-    overrides?: PayableOverrides & { from?: string | Promise<string> },
+    pool: PromiseOrValue<string>,
+    tokenAmount: PromiseOrValue<BigNumberish>,
+    overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   depositFor(
-    provider: string,
-    pool: string,
-    tokenAmount: BigNumberish,
-    overrides?: PayableOverrides & { from?: string | Promise<string> },
+    provider: PromiseOrValue<string>,
+    pool: PromiseOrValue<string>,
+    tokenAmount: PromiseOrValue<BigNumberish>,
+    overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   depositForPermitted(
-    provider: string,
-    pool: string,
-    tokenAmount: BigNumberish,
-    deadline: BigNumberish,
-    v: BigNumberish,
-    r: BytesLike,
-    s: BytesLike,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    provider: PromiseOrValue<string>,
+    pool: PromiseOrValue<string>,
+    tokenAmount: PromiseOrValue<BigNumberish>,
+    deadline: PromiseOrValue<BigNumberish>,
+    v: PromiseOrValue<BigNumberish>,
+    r: PromiseOrValue<BytesLike>,
+    s: PromiseOrValue<BytesLike>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   depositPermitted(
-    pool: string,
-    tokenAmount: BigNumberish,
-    deadline: BigNumberish,
-    v: BigNumberish,
-    r: BytesLike,
-    s: BytesLike,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    pool: PromiseOrValue<string>,
+    tokenAmount: PromiseOrValue<BigNumberish>,
+    deadline: PromiseOrValue<BigNumberish>,
+    v: PromiseOrValue<BigNumberish>,
+    r: PromiseOrValue<BytesLike>,
+    s: PromiseOrValue<BytesLike>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   flashLoan(
-    token: string,
-    amount: BigNumberish,
-    recipient: string,
-    data: BytesLike,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    token: PromiseOrValue<string>,
+    amount: PromiseOrValue<BigNumberish>,
+    recipient: PromiseOrValue<string>,
+    data: PromiseOrValue<BytesLike>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  getRoleAdmin(role: BytesLike, overrides?: CallOverrides): Promise<string>;
+  getRoleAdmin(role: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<string>;
 
-  getRoleMember(role: BytesLike, index: BigNumberish, overrides?: CallOverrides): Promise<string>;
+  getRoleMember(
+    role: PromiseOrValue<BytesLike>,
+    index: PromiseOrValue<BigNumberish>,
+    overrides?: CallOverrides,
+  ): Promise<string>;
 
-  getRoleMemberCount(role: BytesLike, overrides?: CallOverrides): Promise<BigNumber>;
+  getRoleMemberCount(role: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<BigNumber>;
 
   grantRole(
-    role: BytesLike,
-    account: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    role: PromiseOrValue<BytesLike>,
+    account: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  hasRole(role: BytesLike, account: string, overrides?: CallOverrides): Promise<boolean>;
+  hasRole(
+    role: PromiseOrValue<BytesLike>,
+    account: PromiseOrValue<string>,
+    overrides?: CallOverrides,
+  ): Promise<boolean>;
 
   initWithdrawal(
-    poolToken: string,
-    poolTokenAmount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    poolToken: PromiseOrValue<string>,
+    poolTokenAmount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   initWithdrawalPermitted(
-    poolToken: string,
-    poolTokenAmount: BigNumberish,
-    deadline: BigNumberish,
-    v: BigNumberish,
-    r: BytesLike,
-    s: BytesLike,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    poolToken: PromiseOrValue<string>,
+    poolTokenAmount: PromiseOrValue<BigNumberish>,
+    deadline: PromiseOrValue<BigNumberish>,
+    v: PromiseOrValue<BigNumberish>,
+    r: PromiseOrValue<BytesLike>,
+    s: PromiseOrValue<BytesLike>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   initialize(
-    initBNTPool: string,
-    initPendingWithdrawals: string,
-    initPoolMigrator: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    initBNTPool: PromiseOrValue<string>,
+    initPendingWithdrawals: PromiseOrValue<string>,
+    initPoolMigrator: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   isPaused(overrides?: CallOverrides): Promise<boolean>;
 
-  isPoolValid(pool: string, overrides?: CallOverrides): Promise<boolean>;
+  isPoolValid(pool: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
-  latestPoolCollection(poolType: BigNumberish, overrides?: CallOverrides): Promise<string>;
+  latestPoolCollection(poolType: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
 
   liquidityPools(overrides?: CallOverrides): Promise<string[]>;
 
   migrateLiquidity(
-    token: string,
-    provider: string,
-    amount: BigNumberish,
-    availableAmount: BigNumberish,
-    originalAmount: BigNumberish,
-    overrides?: PayableOverrides & { from?: string | Promise<string> },
+    token: PromiseOrValue<string>,
+    provider: PromiseOrValue<string>,
+    amount: PromiseOrValue<BigNumberish>,
+    availableAmount: PromiseOrValue<BigNumberish>,
+    originalAmount: PromiseOrValue<BigNumberish>,
+    overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   migratePools(
-    pools: string[],
-    overrides?: Overrides & { from?: string | Promise<string> },
+    pools: PromiseOrValue<string>[],
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  pause(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  pause(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   paused(overrides?: CallOverrides): Promise<boolean>;
 
@@ -813,28 +927,28 @@ export interface BancorNetwork extends BaseContract {
   poolCollections(overrides?: CallOverrides): Promise<string[]>;
 
   postUpgrade(
-    data: BytesLike,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    data: PromiseOrValue<BytesLike>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   removePoolCollection(
-    poolCollection: string,
-    newLatestPoolCollection: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    poolCollection: PromiseOrValue<string>,
+    newLatestPoolCollection: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   renounceRole(
-    role: BytesLike,
-    account: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    role: PromiseOrValue<BytesLike>,
+    account: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  resume(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  resume(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   revokeRole(
-    role: BytesLike,
-    account: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    role: PromiseOrValue<BytesLike>,
+    account: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   roleAdmin(overrides?: CallOverrides): Promise<string>;
@@ -846,165 +960,196 @@ export interface BancorNetwork extends BaseContract {
   roleNetworkFeeManager(overrides?: CallOverrides): Promise<string>;
 
   setLatestPoolCollection(
-    poolCollection: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    poolCollection: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  supportsInterface(interfaceId: BytesLike, overrides?: CallOverrides): Promise<boolean>;
+  supportsInterface(interfaceId: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<boolean>;
 
   tradeBySourceAmount(
-    sourceToken: string,
-    targetToken: string,
-    sourceAmount: BigNumberish,
-    minReturnAmount: BigNumberish,
-    deadline: BigNumberish,
-    beneficiary: string,
-    overrides?: PayableOverrides & { from?: string | Promise<string> },
+    sourceToken: PromiseOrValue<string>,
+    targetToken: PromiseOrValue<string>,
+    sourceAmount: PromiseOrValue<BigNumberish>,
+    minReturnAmount: PromiseOrValue<BigNumberish>,
+    deadline: PromiseOrValue<BigNumberish>,
+    beneficiary: PromiseOrValue<string>,
+    overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   tradeBySourceAmountPermitted(
-    sourceToken: string,
-    targetToken: string,
-    sourceAmount: BigNumberish,
-    minReturnAmount: BigNumberish,
-    deadline: BigNumberish,
-    beneficiary: string,
-    v: BigNumberish,
-    r: BytesLike,
-    s: BytesLike,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    sourceToken: PromiseOrValue<string>,
+    targetToken: PromiseOrValue<string>,
+    sourceAmount: PromiseOrValue<BigNumberish>,
+    minReturnAmount: PromiseOrValue<BigNumberish>,
+    deadline: PromiseOrValue<BigNumberish>,
+    beneficiary: PromiseOrValue<string>,
+    v: PromiseOrValue<BigNumberish>,
+    r: PromiseOrValue<BytesLike>,
+    s: PromiseOrValue<BytesLike>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   tradeByTargetAmount(
-    sourceToken: string,
-    targetToken: string,
-    targetAmount: BigNumberish,
-    maxSourceAmount: BigNumberish,
-    deadline: BigNumberish,
-    beneficiary: string,
-    overrides?: PayableOverrides & { from?: string | Promise<string> },
+    sourceToken: PromiseOrValue<string>,
+    targetToken: PromiseOrValue<string>,
+    targetAmount: PromiseOrValue<BigNumberish>,
+    maxSourceAmount: PromiseOrValue<BigNumberish>,
+    deadline: PromiseOrValue<BigNumberish>,
+    beneficiary: PromiseOrValue<string>,
+    overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   tradeByTargetAmountPermitted(
-    sourceToken: string,
-    targetToken: string,
-    targetAmount: BigNumberish,
-    maxSourceAmount: BigNumberish,
-    deadline: BigNumberish,
-    beneficiary: string,
-    v: BigNumberish,
-    r: BytesLike,
-    s: BytesLike,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    sourceToken: PromiseOrValue<string>,
+    targetToken: PromiseOrValue<string>,
+    targetAmount: PromiseOrValue<BigNumberish>,
+    maxSourceAmount: PromiseOrValue<BigNumberish>,
+    deadline: PromiseOrValue<BigNumberish>,
+    beneficiary: PromiseOrValue<string>,
+    v: PromiseOrValue<BigNumberish>,
+    r: PromiseOrValue<BytesLike>,
+    s: PromiseOrValue<BytesLike>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   version(overrides?: CallOverrides): Promise<number>;
 
-  withdraw(id: BigNumberish, overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  withdraw(
+    id: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
+  ): Promise<ContractTransaction>;
 
   withdrawNetworkFees(
-    recipient: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    recipient: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   callStatic: {
     DEFAULT_ADMIN_ROLE(overrides?: CallOverrides): Promise<string>;
 
-    addPoolCollection(poolCollection: string, overrides?: CallOverrides): Promise<void>;
+    addPoolCollection(poolCollection: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    cancelWithdrawal(id: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    cancelWithdrawal(id: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    collectionByPool(pool: string, overrides?: CallOverrides): Promise<string>;
+    collectionByPool(pool: PromiseOrValue<string>, overrides?: CallOverrides): Promise<string>;
 
-    createPool(poolType: BigNumberish, token: string, overrides?: CallOverrides): Promise<void>;
+    createPool(
+      poolType: PromiseOrValue<BigNumberish>,
+      token: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    createPools(poolType: BigNumberish, tokens: string[], overrides?: CallOverrides): Promise<void>;
+    createPools(
+      poolType: PromiseOrValue<BigNumberish>,
+      tokens: PromiseOrValue<string>[],
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    deposit(pool: string, tokenAmount: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    deposit(
+      pool: PromiseOrValue<string>,
+      tokenAmount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     depositFor(
-      provider: string,
-      pool: string,
-      tokenAmount: BigNumberish,
+      provider: PromiseOrValue<string>,
+      pool: PromiseOrValue<string>,
+      tokenAmount: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     depositForPermitted(
-      provider: string,
-      pool: string,
-      tokenAmount: BigNumberish,
-      deadline: BigNumberish,
-      v: BigNumberish,
-      r: BytesLike,
-      s: BytesLike,
+      provider: PromiseOrValue<string>,
+      pool: PromiseOrValue<string>,
+      tokenAmount: PromiseOrValue<BigNumberish>,
+      deadline: PromiseOrValue<BigNumberish>,
+      v: PromiseOrValue<BigNumberish>,
+      r: PromiseOrValue<BytesLike>,
+      s: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     depositPermitted(
-      pool: string,
-      tokenAmount: BigNumberish,
-      deadline: BigNumberish,
-      v: BigNumberish,
-      r: BytesLike,
-      s: BytesLike,
+      pool: PromiseOrValue<string>,
+      tokenAmount: PromiseOrValue<BigNumberish>,
+      deadline: PromiseOrValue<BigNumberish>,
+      v: PromiseOrValue<BigNumberish>,
+      r: PromiseOrValue<BytesLike>,
+      s: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     flashLoan(
-      token: string,
-      amount: BigNumberish,
-      recipient: string,
-      data: BytesLike,
+      token: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      recipient: PromiseOrValue<string>,
+      data: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
-    getRoleAdmin(role: BytesLike, overrides?: CallOverrides): Promise<string>;
+    getRoleAdmin(role: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<string>;
 
-    getRoleMember(role: BytesLike, index: BigNumberish, overrides?: CallOverrides): Promise<string>;
+    getRoleMember(
+      role: PromiseOrValue<BytesLike>,
+      index: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<string>;
 
-    getRoleMemberCount(role: BytesLike, overrides?: CallOverrides): Promise<BigNumber>;
+    getRoleMemberCount(role: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    grantRole(role: BytesLike, account: string, overrides?: CallOverrides): Promise<void>;
+    grantRole(
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    hasRole(role: BytesLike, account: string, overrides?: CallOverrides): Promise<boolean>;
+    hasRole(
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
 
-    initWithdrawal(poolToken: string, poolTokenAmount: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    initWithdrawal(
+      poolToken: PromiseOrValue<string>,
+      poolTokenAmount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     initWithdrawalPermitted(
-      poolToken: string,
-      poolTokenAmount: BigNumberish,
-      deadline: BigNumberish,
-      v: BigNumberish,
-      r: BytesLike,
-      s: BytesLike,
+      poolToken: PromiseOrValue<string>,
+      poolTokenAmount: PromiseOrValue<BigNumberish>,
+      deadline: PromiseOrValue<BigNumberish>,
+      v: PromiseOrValue<BigNumberish>,
+      r: PromiseOrValue<BytesLike>,
+      s: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     initialize(
-      initBNTPool: string,
-      initPendingWithdrawals: string,
-      initPoolMigrator: string,
+      initBNTPool: PromiseOrValue<string>,
+      initPendingWithdrawals: PromiseOrValue<string>,
+      initPoolMigrator: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
     isPaused(overrides?: CallOverrides): Promise<boolean>;
 
-    isPoolValid(pool: string, overrides?: CallOverrides): Promise<boolean>;
+    isPoolValid(pool: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
-    latestPoolCollection(poolType: BigNumberish, overrides?: CallOverrides): Promise<string>;
+    latestPoolCollection(poolType: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
 
     liquidityPools(overrides?: CallOverrides): Promise<string[]>;
 
     migrateLiquidity(
-      token: string,
-      provider: string,
-      amount: BigNumberish,
-      availableAmount: BigNumberish,
-      originalAmount: BigNumberish,
+      token: PromiseOrValue<string>,
+      provider: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      availableAmount: PromiseOrValue<BigNumberish>,
+      originalAmount: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
-    migratePools(pools: string[], overrides?: CallOverrides): Promise<void>;
+    migratePools(pools: PromiseOrValue<string>[], overrides?: CallOverrides): Promise<void>;
 
     pause(overrides?: CallOverrides): Promise<void>;
 
@@ -1014,19 +1159,27 @@ export interface BancorNetwork extends BaseContract {
 
     poolCollections(overrides?: CallOverrides): Promise<string[]>;
 
-    postUpgrade(data: BytesLike, overrides?: CallOverrides): Promise<void>;
+    postUpgrade(data: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<void>;
 
     removePoolCollection(
-      poolCollection: string,
-      newLatestPoolCollection: string,
+      poolCollection: PromiseOrValue<string>,
+      newLatestPoolCollection: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
-    renounceRole(role: BytesLike, account: string, overrides?: CallOverrides): Promise<void>;
+    renounceRole(
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
     resume(overrides?: CallOverrides): Promise<void>;
 
-    revokeRole(role: BytesLike, account: string, overrides?: CallOverrides): Promise<void>;
+    revokeRole(
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
     roleAdmin(overrides?: CallOverrides): Promise<string>;
 
@@ -1036,172 +1189,201 @@ export interface BancorNetwork extends BaseContract {
 
     roleNetworkFeeManager(overrides?: CallOverrides): Promise<string>;
 
-    setLatestPoolCollection(poolCollection: string, overrides?: CallOverrides): Promise<void>;
+    setLatestPoolCollection(poolCollection: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    supportsInterface(interfaceId: BytesLike, overrides?: CallOverrides): Promise<boolean>;
+    supportsInterface(interfaceId: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<boolean>;
 
     tradeBySourceAmount(
-      sourceToken: string,
-      targetToken: string,
-      sourceAmount: BigNumberish,
-      minReturnAmount: BigNumberish,
-      deadline: BigNumberish,
-      beneficiary: string,
+      sourceToken: PromiseOrValue<string>,
+      targetToken: PromiseOrValue<string>,
+      sourceAmount: PromiseOrValue<BigNumberish>,
+      minReturnAmount: PromiseOrValue<BigNumberish>,
+      deadline: PromiseOrValue<BigNumberish>,
+      beneficiary: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     tradeBySourceAmountPermitted(
-      sourceToken: string,
-      targetToken: string,
-      sourceAmount: BigNumberish,
-      minReturnAmount: BigNumberish,
-      deadline: BigNumberish,
-      beneficiary: string,
-      v: BigNumberish,
-      r: BytesLike,
-      s: BytesLike,
+      sourceToken: PromiseOrValue<string>,
+      targetToken: PromiseOrValue<string>,
+      sourceAmount: PromiseOrValue<BigNumberish>,
+      minReturnAmount: PromiseOrValue<BigNumberish>,
+      deadline: PromiseOrValue<BigNumberish>,
+      beneficiary: PromiseOrValue<string>,
+      v: PromiseOrValue<BigNumberish>,
+      r: PromiseOrValue<BytesLike>,
+      s: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     tradeByTargetAmount(
-      sourceToken: string,
-      targetToken: string,
-      targetAmount: BigNumberish,
-      maxSourceAmount: BigNumberish,
-      deadline: BigNumberish,
-      beneficiary: string,
+      sourceToken: PromiseOrValue<string>,
+      targetToken: PromiseOrValue<string>,
+      targetAmount: PromiseOrValue<BigNumberish>,
+      maxSourceAmount: PromiseOrValue<BigNumberish>,
+      deadline: PromiseOrValue<BigNumberish>,
+      beneficiary: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     tradeByTargetAmountPermitted(
-      sourceToken: string,
-      targetToken: string,
-      targetAmount: BigNumberish,
-      maxSourceAmount: BigNumberish,
-      deadline: BigNumberish,
-      beneficiary: string,
-      v: BigNumberish,
-      r: BytesLike,
-      s: BytesLike,
+      sourceToken: PromiseOrValue<string>,
+      targetToken: PromiseOrValue<string>,
+      targetAmount: PromiseOrValue<BigNumberish>,
+      maxSourceAmount: PromiseOrValue<BigNumberish>,
+      deadline: PromiseOrValue<BigNumberish>,
+      beneficiary: PromiseOrValue<string>,
+      v: PromiseOrValue<BigNumberish>,
+      r: PromiseOrValue<BytesLike>,
+      s: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     version(overrides?: CallOverrides): Promise<number>;
 
-    withdraw(id: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    withdraw(id: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    withdrawNetworkFees(recipient: string, overrides?: CallOverrides): Promise<BigNumber>;
+    withdrawNetworkFees(recipient: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
   };
 
   filters: {
     'FlashLoanCompleted(address,address,uint256,uint256)'(
-      token?: string | null,
-      borrower?: string | null,
+      token?: PromiseOrValue<string> | null,
+      borrower?: PromiseOrValue<string> | null,
       amount?: null,
       feeAmount?: null,
     ): FlashLoanCompletedEventFilter;
     FlashLoanCompleted(
-      token?: string | null,
-      borrower?: string | null,
+      token?: PromiseOrValue<string> | null,
+      borrower?: PromiseOrValue<string> | null,
       amount?: null,
       feeAmount?: null,
     ): FlashLoanCompletedEventFilter;
 
     'FundsMigrated(bytes32,address,address,uint256,uint256,uint256)'(
-      contextId?: BytesLike | null,
-      token?: string | null,
-      provider?: string | null,
+      contextId?: PromiseOrValue<BytesLike> | null,
+      token?: PromiseOrValue<string> | null,
+      provider?: PromiseOrValue<string> | null,
       amount?: null,
       availableAmount?: null,
       originalAmount?: null,
     ): FundsMigratedEventFilter;
     FundsMigrated(
-      contextId?: BytesLike | null,
-      token?: string | null,
-      provider?: string | null,
+      contextId?: PromiseOrValue<BytesLike> | null,
+      token?: PromiseOrValue<string> | null,
+      provider?: PromiseOrValue<string> | null,
       amount?: null,
       availableAmount?: null,
       originalAmount?: null,
     ): FundsMigratedEventFilter;
 
     'LatestPoolCollectionReplaced(uint16,address,address)'(
-      poolType?: BigNumberish | null,
-      prevPoolCollection?: string | null,
-      newPoolCollection?: string | null,
+      poolType?: PromiseOrValue<BigNumberish> | null,
+      prevPoolCollection?: PromiseOrValue<string> | null,
+      newPoolCollection?: PromiseOrValue<string> | null,
     ): LatestPoolCollectionReplacedEventFilter;
     LatestPoolCollectionReplaced(
-      poolType?: BigNumberish | null,
-      prevPoolCollection?: string | null,
-      newPoolCollection?: string | null,
+      poolType?: PromiseOrValue<BigNumberish> | null,
+      prevPoolCollection?: PromiseOrValue<string> | null,
+      newPoolCollection?: PromiseOrValue<string> | null,
     ): LatestPoolCollectionReplacedEventFilter;
 
     'NetworkFeesWithdrawn(address,address,uint256)'(
-      caller?: string | null,
-      recipient?: string | null,
+      caller?: PromiseOrValue<string> | null,
+      recipient?: PromiseOrValue<string> | null,
       amount?: null,
     ): NetworkFeesWithdrawnEventFilter;
     NetworkFeesWithdrawn(
-      caller?: string | null,
-      recipient?: string | null,
+      caller?: PromiseOrValue<string> | null,
+      recipient?: PromiseOrValue<string> | null,
       amount?: null,
     ): NetworkFeesWithdrawnEventFilter;
 
     'Paused(address)'(account?: null): PausedEventFilter;
     Paused(account?: null): PausedEventFilter;
 
-    'PoolAdded(address,address)'(pool?: string | null, poolCollection?: string | null): PoolAddedEventFilter;
-    PoolAdded(pool?: string | null, poolCollection?: string | null): PoolAddedEventFilter;
+    'PoolAdded(address,address)'(
+      pool?: PromiseOrValue<string> | null,
+      poolCollection?: PromiseOrValue<string> | null,
+    ): PoolAddedEventFilter;
+    PoolAdded(
+      pool?: PromiseOrValue<string> | null,
+      poolCollection?: PromiseOrValue<string> | null,
+    ): PoolAddedEventFilter;
 
     'PoolCollectionAdded(uint16,address)'(
-      poolType?: BigNumberish | null,
-      poolCollection?: string | null,
+      poolType?: PromiseOrValue<BigNumberish> | null,
+      poolCollection?: PromiseOrValue<string> | null,
     ): PoolCollectionAddedEventFilter;
-    PoolCollectionAdded(poolType?: BigNumberish | null, poolCollection?: string | null): PoolCollectionAddedEventFilter;
+    PoolCollectionAdded(
+      poolType?: PromiseOrValue<BigNumberish> | null,
+      poolCollection?: PromiseOrValue<string> | null,
+    ): PoolCollectionAddedEventFilter;
 
     'PoolCollectionRemoved(uint16,address)'(
-      poolType?: BigNumberish | null,
-      poolCollection?: string | null,
+      poolType?: PromiseOrValue<BigNumberish> | null,
+      poolCollection?: PromiseOrValue<string> | null,
     ): PoolCollectionRemovedEventFilter;
     PoolCollectionRemoved(
-      poolType?: BigNumberish | null,
-      poolCollection?: string | null,
+      poolType?: PromiseOrValue<BigNumberish> | null,
+      poolCollection?: PromiseOrValue<string> | null,
     ): PoolCollectionRemovedEventFilter;
 
-    'PoolCreated(address,address)'(pool?: string | null, poolCollection?: string | null): PoolCreatedEventFilter;
-    PoolCreated(pool?: string | null, poolCollection?: string | null): PoolCreatedEventFilter;
+    'PoolCreated(address,address)'(
+      pool?: PromiseOrValue<string> | null,
+      poolCollection?: PromiseOrValue<string> | null,
+    ): PoolCreatedEventFilter;
+    PoolCreated(
+      pool?: PromiseOrValue<string> | null,
+      poolCollection?: PromiseOrValue<string> | null,
+    ): PoolCreatedEventFilter;
 
-    'PoolRemoved(address,address)'(pool?: string | null, poolCollection?: string | null): PoolRemovedEventFilter;
-    PoolRemoved(pool?: string | null, poolCollection?: string | null): PoolRemovedEventFilter;
+    'PoolRemoved(address,address)'(
+      pool?: PromiseOrValue<string> | null,
+      poolCollection?: PromiseOrValue<string> | null,
+    ): PoolRemovedEventFilter;
+    PoolRemoved(
+      pool?: PromiseOrValue<string> | null,
+      poolCollection?: PromiseOrValue<string> | null,
+    ): PoolRemovedEventFilter;
 
     'RoleAdminChanged(bytes32,bytes32,bytes32)'(
-      role?: BytesLike | null,
-      previousAdminRole?: BytesLike | null,
-      newAdminRole?: BytesLike | null,
+      role?: PromiseOrValue<BytesLike> | null,
+      previousAdminRole?: PromiseOrValue<BytesLike> | null,
+      newAdminRole?: PromiseOrValue<BytesLike> | null,
     ): RoleAdminChangedEventFilter;
     RoleAdminChanged(
-      role?: BytesLike | null,
-      previousAdminRole?: BytesLike | null,
-      newAdminRole?: BytesLike | null,
+      role?: PromiseOrValue<BytesLike> | null,
+      previousAdminRole?: PromiseOrValue<BytesLike> | null,
+      newAdminRole?: PromiseOrValue<BytesLike> | null,
     ): RoleAdminChangedEventFilter;
 
     'RoleGranted(bytes32,address,address)'(
-      role?: BytesLike | null,
-      account?: string | null,
-      sender?: string | null,
+      role?: PromiseOrValue<BytesLike> | null,
+      account?: PromiseOrValue<string> | null,
+      sender?: PromiseOrValue<string> | null,
     ): RoleGrantedEventFilter;
-    RoleGranted(role?: BytesLike | null, account?: string | null, sender?: string | null): RoleGrantedEventFilter;
+    RoleGranted(
+      role?: PromiseOrValue<BytesLike> | null,
+      account?: PromiseOrValue<string> | null,
+      sender?: PromiseOrValue<string> | null,
+    ): RoleGrantedEventFilter;
 
     'RoleRevoked(bytes32,address,address)'(
-      role?: BytesLike | null,
-      account?: string | null,
-      sender?: string | null,
+      role?: PromiseOrValue<BytesLike> | null,
+      account?: PromiseOrValue<string> | null,
+      sender?: PromiseOrValue<string> | null,
     ): RoleRevokedEventFilter;
-    RoleRevoked(role?: BytesLike | null, account?: string | null, sender?: string | null): RoleRevokedEventFilter;
+    RoleRevoked(
+      role?: PromiseOrValue<BytesLike> | null,
+      account?: PromiseOrValue<string> | null,
+      sender?: PromiseOrValue<string> | null,
+    ): RoleRevokedEventFilter;
 
     'TokensTraded(bytes32,address,address,uint256,uint256,uint256,uint256,uint256,address)'(
-      contextId?: BytesLike | null,
-      sourceToken?: string | null,
-      targetToken?: string | null,
+      contextId?: PromiseOrValue<BytesLike> | null,
+      sourceToken?: PromiseOrValue<string> | null,
+      targetToken?: PromiseOrValue<string> | null,
       sourceAmount?: null,
       targetAmount?: null,
       bntAmount?: null,
@@ -1210,9 +1392,9 @@ export interface BancorNetwork extends BaseContract {
       trader?: null,
     ): TokensTradedEventFilter;
     TokensTraded(
-      contextId?: BytesLike | null,
-      sourceToken?: string | null,
-      targetToken?: string | null,
+      contextId?: PromiseOrValue<BytesLike> | null,
+      sourceToken?: PromiseOrValue<string> | null,
+      targetToken?: PromiseOrValue<string> | null,
       sourceAmount?: null,
       targetAmount?: null,
       bntAmount?: null,
@@ -1229,125 +1411,139 @@ export interface BancorNetwork extends BaseContract {
     DEFAULT_ADMIN_ROLE(overrides?: CallOverrides): Promise<BigNumber>;
 
     addPoolCollection(
-      poolCollection: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      poolCollection: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    cancelWithdrawal(id: BigNumberish, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    cancelWithdrawal(
+      id: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
-    collectionByPool(pool: string, overrides?: CallOverrides): Promise<BigNumber>;
+    collectionByPool(pool: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     createPool(
-      poolType: BigNumberish,
-      token: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      poolType: PromiseOrValue<BigNumberish>,
+      token: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     createPools(
-      poolType: BigNumberish,
-      tokens: string[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      poolType: PromiseOrValue<BigNumberish>,
+      tokens: PromiseOrValue<string>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     deposit(
-      pool: string,
-      tokenAmount: BigNumberish,
-      overrides?: PayableOverrides & { from?: string | Promise<string> },
+      pool: PromiseOrValue<string>,
+      tokenAmount: PromiseOrValue<BigNumberish>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     depositFor(
-      provider: string,
-      pool: string,
-      tokenAmount: BigNumberish,
-      overrides?: PayableOverrides & { from?: string | Promise<string> },
+      provider: PromiseOrValue<string>,
+      pool: PromiseOrValue<string>,
+      tokenAmount: PromiseOrValue<BigNumberish>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     depositForPermitted(
-      provider: string,
-      pool: string,
-      tokenAmount: BigNumberish,
-      deadline: BigNumberish,
-      v: BigNumberish,
-      r: BytesLike,
-      s: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      provider: PromiseOrValue<string>,
+      pool: PromiseOrValue<string>,
+      tokenAmount: PromiseOrValue<BigNumberish>,
+      deadline: PromiseOrValue<BigNumberish>,
+      v: PromiseOrValue<BigNumberish>,
+      r: PromiseOrValue<BytesLike>,
+      s: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     depositPermitted(
-      pool: string,
-      tokenAmount: BigNumberish,
-      deadline: BigNumberish,
-      v: BigNumberish,
-      r: BytesLike,
-      s: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      pool: PromiseOrValue<string>,
+      tokenAmount: PromiseOrValue<BigNumberish>,
+      deadline: PromiseOrValue<BigNumberish>,
+      v: PromiseOrValue<BigNumberish>,
+      r: PromiseOrValue<BytesLike>,
+      s: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     flashLoan(
-      token: string,
-      amount: BigNumberish,
-      recipient: string,
-      data: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      token: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      recipient: PromiseOrValue<string>,
+      data: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    getRoleAdmin(role: BytesLike, overrides?: CallOverrides): Promise<BigNumber>;
+    getRoleAdmin(role: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    getRoleMember(role: BytesLike, index: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    getRoleMember(
+      role: PromiseOrValue<BytesLike>,
+      index: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    getRoleMemberCount(role: BytesLike, overrides?: CallOverrides): Promise<BigNumber>;
+    getRoleMemberCount(role: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<BigNumber>;
 
     grantRole(
-      role: BytesLike,
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    hasRole(role: BytesLike, account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    hasRole(
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     initWithdrawal(
-      poolToken: string,
-      poolTokenAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      poolToken: PromiseOrValue<string>,
+      poolTokenAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     initWithdrawalPermitted(
-      poolToken: string,
-      poolTokenAmount: BigNumberish,
-      deadline: BigNumberish,
-      v: BigNumberish,
-      r: BytesLike,
-      s: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      poolToken: PromiseOrValue<string>,
+      poolTokenAmount: PromiseOrValue<BigNumberish>,
+      deadline: PromiseOrValue<BigNumberish>,
+      v: PromiseOrValue<BigNumberish>,
+      r: PromiseOrValue<BytesLike>,
+      s: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     initialize(
-      initBNTPool: string,
-      initPendingWithdrawals: string,
-      initPoolMigrator: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      initBNTPool: PromiseOrValue<string>,
+      initPendingWithdrawals: PromiseOrValue<string>,
+      initPoolMigrator: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     isPaused(overrides?: CallOverrides): Promise<BigNumber>;
 
-    isPoolValid(pool: string, overrides?: CallOverrides): Promise<BigNumber>;
+    isPoolValid(pool: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    latestPoolCollection(poolType: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    latestPoolCollection(poolType: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     liquidityPools(overrides?: CallOverrides): Promise<BigNumber>;
 
     migrateLiquidity(
-      token: string,
-      provider: string,
-      amount: BigNumberish,
-      availableAmount: BigNumberish,
-      originalAmount: BigNumberish,
-      overrides?: PayableOverrides & { from?: string | Promise<string> },
+      token: PromiseOrValue<string>,
+      provider: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      availableAmount: PromiseOrValue<BigNumberish>,
+      originalAmount: PromiseOrValue<BigNumberish>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    migratePools(pools: string[], overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    migratePools(
+      pools: PromiseOrValue<string>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
-    pause(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    pause(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     paused(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -1355,26 +1551,29 @@ export interface BancorNetwork extends BaseContract {
 
     poolCollections(overrides?: CallOverrides): Promise<BigNumber>;
 
-    postUpgrade(data: BytesLike, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    postUpgrade(
+      data: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     removePoolCollection(
-      poolCollection: string,
-      newLatestPoolCollection: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      poolCollection: PromiseOrValue<string>,
+      newLatestPoolCollection: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     renounceRole(
-      role: BytesLike,
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    resume(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    resume(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     revokeRole(
-      role: BytesLike,
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     roleAdmin(overrides?: CallOverrides): Promise<BigNumber>;
@@ -1386,65 +1585,68 @@ export interface BancorNetwork extends BaseContract {
     roleNetworkFeeManager(overrides?: CallOverrides): Promise<BigNumber>;
 
     setLatestPoolCollection(
-      poolCollection: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      poolCollection: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    supportsInterface(interfaceId: BytesLike, overrides?: CallOverrides): Promise<BigNumber>;
+    supportsInterface(interfaceId: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<BigNumber>;
 
     tradeBySourceAmount(
-      sourceToken: string,
-      targetToken: string,
-      sourceAmount: BigNumberish,
-      minReturnAmount: BigNumberish,
-      deadline: BigNumberish,
-      beneficiary: string,
-      overrides?: PayableOverrides & { from?: string | Promise<string> },
+      sourceToken: PromiseOrValue<string>,
+      targetToken: PromiseOrValue<string>,
+      sourceAmount: PromiseOrValue<BigNumberish>,
+      minReturnAmount: PromiseOrValue<BigNumberish>,
+      deadline: PromiseOrValue<BigNumberish>,
+      beneficiary: PromiseOrValue<string>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     tradeBySourceAmountPermitted(
-      sourceToken: string,
-      targetToken: string,
-      sourceAmount: BigNumberish,
-      minReturnAmount: BigNumberish,
-      deadline: BigNumberish,
-      beneficiary: string,
-      v: BigNumberish,
-      r: BytesLike,
-      s: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      sourceToken: PromiseOrValue<string>,
+      targetToken: PromiseOrValue<string>,
+      sourceAmount: PromiseOrValue<BigNumberish>,
+      minReturnAmount: PromiseOrValue<BigNumberish>,
+      deadline: PromiseOrValue<BigNumberish>,
+      beneficiary: PromiseOrValue<string>,
+      v: PromiseOrValue<BigNumberish>,
+      r: PromiseOrValue<BytesLike>,
+      s: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     tradeByTargetAmount(
-      sourceToken: string,
-      targetToken: string,
-      targetAmount: BigNumberish,
-      maxSourceAmount: BigNumberish,
-      deadline: BigNumberish,
-      beneficiary: string,
-      overrides?: PayableOverrides & { from?: string | Promise<string> },
+      sourceToken: PromiseOrValue<string>,
+      targetToken: PromiseOrValue<string>,
+      targetAmount: PromiseOrValue<BigNumberish>,
+      maxSourceAmount: PromiseOrValue<BigNumberish>,
+      deadline: PromiseOrValue<BigNumberish>,
+      beneficiary: PromiseOrValue<string>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     tradeByTargetAmountPermitted(
-      sourceToken: string,
-      targetToken: string,
-      targetAmount: BigNumberish,
-      maxSourceAmount: BigNumberish,
-      deadline: BigNumberish,
-      beneficiary: string,
-      v: BigNumberish,
-      r: BytesLike,
-      s: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      sourceToken: PromiseOrValue<string>,
+      targetToken: PromiseOrValue<string>,
+      targetAmount: PromiseOrValue<BigNumberish>,
+      maxSourceAmount: PromiseOrValue<BigNumberish>,
+      deadline: PromiseOrValue<BigNumberish>,
+      beneficiary: PromiseOrValue<string>,
+      v: PromiseOrValue<BigNumberish>,
+      r: PromiseOrValue<BytesLike>,
+      s: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     version(overrides?: CallOverrides): Promise<BigNumber>;
 
-    withdraw(id: BigNumberish, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    withdraw(
+      id: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     withdrawNetworkFees(
-      recipient: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      recipient: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
   };
 
@@ -1452,131 +1654,142 @@ export interface BancorNetwork extends BaseContract {
     DEFAULT_ADMIN_ROLE(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     addPoolCollection(
-      poolCollection: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      poolCollection: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     cancelWithdrawal(
-      id: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      id: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    collectionByPool(pool: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    collectionByPool(pool: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     createPool(
-      poolType: BigNumberish,
-      token: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      poolType: PromiseOrValue<BigNumberish>,
+      token: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     createPools(
-      poolType: BigNumberish,
-      tokens: string[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      poolType: PromiseOrValue<BigNumberish>,
+      tokens: PromiseOrValue<string>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     deposit(
-      pool: string,
-      tokenAmount: BigNumberish,
-      overrides?: PayableOverrides & { from?: string | Promise<string> },
+      pool: PromiseOrValue<string>,
+      tokenAmount: PromiseOrValue<BigNumberish>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     depositFor(
-      provider: string,
-      pool: string,
-      tokenAmount: BigNumberish,
-      overrides?: PayableOverrides & { from?: string | Promise<string> },
+      provider: PromiseOrValue<string>,
+      pool: PromiseOrValue<string>,
+      tokenAmount: PromiseOrValue<BigNumberish>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     depositForPermitted(
-      provider: string,
-      pool: string,
-      tokenAmount: BigNumberish,
-      deadline: BigNumberish,
-      v: BigNumberish,
-      r: BytesLike,
-      s: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      provider: PromiseOrValue<string>,
+      pool: PromiseOrValue<string>,
+      tokenAmount: PromiseOrValue<BigNumberish>,
+      deadline: PromiseOrValue<BigNumberish>,
+      v: PromiseOrValue<BigNumberish>,
+      r: PromiseOrValue<BytesLike>,
+      s: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     depositPermitted(
-      pool: string,
-      tokenAmount: BigNumberish,
-      deadline: BigNumberish,
-      v: BigNumberish,
-      r: BytesLike,
-      s: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      pool: PromiseOrValue<string>,
+      tokenAmount: PromiseOrValue<BigNumberish>,
+      deadline: PromiseOrValue<BigNumberish>,
+      v: PromiseOrValue<BigNumberish>,
+      r: PromiseOrValue<BytesLike>,
+      s: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     flashLoan(
-      token: string,
-      amount: BigNumberish,
-      recipient: string,
-      data: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      token: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      recipient: PromiseOrValue<string>,
+      data: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    getRoleAdmin(role: BytesLike, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getRoleAdmin(role: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    getRoleMember(role: BytesLike, index: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getRoleMember(
+      role: PromiseOrValue<BytesLike>,
+      index: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
-    getRoleMemberCount(role: BytesLike, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getRoleMemberCount(role: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     grantRole(
-      role: BytesLike,
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    hasRole(role: BytesLike, account: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    hasRole(
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
     initWithdrawal(
-      poolToken: string,
-      poolTokenAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      poolToken: PromiseOrValue<string>,
+      poolTokenAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     initWithdrawalPermitted(
-      poolToken: string,
-      poolTokenAmount: BigNumberish,
-      deadline: BigNumberish,
-      v: BigNumberish,
-      r: BytesLike,
-      s: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      poolToken: PromiseOrValue<string>,
+      poolTokenAmount: PromiseOrValue<BigNumberish>,
+      deadline: PromiseOrValue<BigNumberish>,
+      v: PromiseOrValue<BigNumberish>,
+      r: PromiseOrValue<BytesLike>,
+      s: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     initialize(
-      initBNTPool: string,
-      initPendingWithdrawals: string,
-      initPoolMigrator: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      initBNTPool: PromiseOrValue<string>,
+      initPendingWithdrawals: PromiseOrValue<string>,
+      initPoolMigrator: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     isPaused(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    isPoolValid(pool: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    isPoolValid(pool: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    latestPoolCollection(poolType: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    latestPoolCollection(
+      poolType: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
     liquidityPools(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     migrateLiquidity(
-      token: string,
-      provider: string,
-      amount: BigNumberish,
-      availableAmount: BigNumberish,
-      originalAmount: BigNumberish,
-      overrides?: PayableOverrides & { from?: string | Promise<string> },
+      token: PromiseOrValue<string>,
+      provider: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      availableAmount: PromiseOrValue<BigNumberish>,
+      originalAmount: PromiseOrValue<BigNumberish>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     migratePools(
-      pools: string[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      pools: PromiseOrValue<string>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    pause(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    pause(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     paused(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
@@ -1585,28 +1798,28 @@ export interface BancorNetwork extends BaseContract {
     poolCollections(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     postUpgrade(
-      data: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      data: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     removePoolCollection(
-      poolCollection: string,
-      newLatestPoolCollection: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      poolCollection: PromiseOrValue<string>,
+      newLatestPoolCollection: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     renounceRole(
-      role: BytesLike,
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    resume(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    resume(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     revokeRole(
-      role: BytesLike,
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     roleAdmin(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -1618,68 +1831,68 @@ export interface BancorNetwork extends BaseContract {
     roleNetworkFeeManager(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     setLatestPoolCollection(
-      poolCollection: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      poolCollection: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    supportsInterface(interfaceId: BytesLike, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    supportsInterface(interfaceId: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     tradeBySourceAmount(
-      sourceToken: string,
-      targetToken: string,
-      sourceAmount: BigNumberish,
-      minReturnAmount: BigNumberish,
-      deadline: BigNumberish,
-      beneficiary: string,
-      overrides?: PayableOverrides & { from?: string | Promise<string> },
+      sourceToken: PromiseOrValue<string>,
+      targetToken: PromiseOrValue<string>,
+      sourceAmount: PromiseOrValue<BigNumberish>,
+      minReturnAmount: PromiseOrValue<BigNumberish>,
+      deadline: PromiseOrValue<BigNumberish>,
+      beneficiary: PromiseOrValue<string>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     tradeBySourceAmountPermitted(
-      sourceToken: string,
-      targetToken: string,
-      sourceAmount: BigNumberish,
-      minReturnAmount: BigNumberish,
-      deadline: BigNumberish,
-      beneficiary: string,
-      v: BigNumberish,
-      r: BytesLike,
-      s: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      sourceToken: PromiseOrValue<string>,
+      targetToken: PromiseOrValue<string>,
+      sourceAmount: PromiseOrValue<BigNumberish>,
+      minReturnAmount: PromiseOrValue<BigNumberish>,
+      deadline: PromiseOrValue<BigNumberish>,
+      beneficiary: PromiseOrValue<string>,
+      v: PromiseOrValue<BigNumberish>,
+      r: PromiseOrValue<BytesLike>,
+      s: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     tradeByTargetAmount(
-      sourceToken: string,
-      targetToken: string,
-      targetAmount: BigNumberish,
-      maxSourceAmount: BigNumberish,
-      deadline: BigNumberish,
-      beneficiary: string,
-      overrides?: PayableOverrides & { from?: string | Promise<string> },
+      sourceToken: PromiseOrValue<string>,
+      targetToken: PromiseOrValue<string>,
+      targetAmount: PromiseOrValue<BigNumberish>,
+      maxSourceAmount: PromiseOrValue<BigNumberish>,
+      deadline: PromiseOrValue<BigNumberish>,
+      beneficiary: PromiseOrValue<string>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     tradeByTargetAmountPermitted(
-      sourceToken: string,
-      targetToken: string,
-      targetAmount: BigNumberish,
-      maxSourceAmount: BigNumberish,
-      deadline: BigNumberish,
-      beneficiary: string,
-      v: BigNumberish,
-      r: BytesLike,
-      s: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      sourceToken: PromiseOrValue<string>,
+      targetToken: PromiseOrValue<string>,
+      targetAmount: PromiseOrValue<BigNumberish>,
+      maxSourceAmount: PromiseOrValue<BigNumberish>,
+      deadline: PromiseOrValue<BigNumberish>,
+      beneficiary: PromiseOrValue<string>,
+      v: PromiseOrValue<BigNumberish>,
+      r: PromiseOrValue<BytesLike>,
+      s: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     version(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     withdraw(
-      id: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      id: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     withdrawNetworkFees(
-      recipient: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      recipient: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
   };
 }

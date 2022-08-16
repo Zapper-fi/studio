@@ -14,7 +14,7 @@ import type {
 } from 'ethers';
 import type { FunctionFragment, Result } from '@ethersproject/abi';
 import type { Listener, Provider } from '@ethersproject/providers';
-import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
 export interface MakerProxyRegistryInterface extends utils.Interface {
   functions: {
@@ -26,8 +26,8 @@ export interface MakerProxyRegistryInterface extends utils.Interface {
   getFunction(nameOrSignatureOrTopic: 'build()' | 'build(address)' | 'proxies'): FunctionFragment;
 
   encodeFunctionData(functionFragment: 'build()', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'build(address)', values: [string]): string;
-  encodeFunctionData(functionFragment: 'proxies', values: [string]): string;
+  encodeFunctionData(functionFragment: 'build(address)', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'proxies', values: [PromiseOrValue<string>]): string;
 
   decodeFunctionResult(functionFragment: 'build()', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'build(address)', data: BytesLike): Result;
@@ -59,51 +59,54 @@ export interface MakerProxyRegistry extends BaseContract {
   removeListener: OnEvent<this>;
 
   functions: {
-    'build()'(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    'build()'(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     'build(address)'(
-      owner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      owner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    proxies(arg0: string, overrides?: CallOverrides): Promise<[string]>;
+    proxies(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[string]>;
   };
 
-  'build()'(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  'build()'(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   'build(address)'(
-    owner: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    owner: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  proxies(arg0: string, overrides?: CallOverrides): Promise<string>;
+  proxies(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<string>;
 
   callStatic: {
     'build()'(overrides?: CallOverrides): Promise<string>;
 
-    'build(address)'(owner: string, overrides?: CallOverrides): Promise<string>;
+    'build(address)'(owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<string>;
 
-    proxies(arg0: string, overrides?: CallOverrides): Promise<string>;
+    proxies(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<string>;
   };
 
   filters: {};
 
   estimateGas: {
-    'build()'(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    'build()'(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
-    'build(address)'(owner: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    'build(address)'(
+      owner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
-    proxies(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    proxies(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
   };
 
   populateTransaction: {
-    'build()'(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    'build()'(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     'build(address)'(
-      owner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      owner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    proxies(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    proxies(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
   };
 }

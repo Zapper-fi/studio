@@ -15,15 +15,15 @@ import type {
 } from 'ethers';
 import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
 import type { Listener, Provider } from '@ethersproject/providers';
-import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
 export declare namespace FusePoolDirectory {
   export type FusePoolStruct = {
-    name: string;
-    creator: string;
-    comptroller: string;
-    blockPosted: BigNumberish;
-    timestampPosted: BigNumberish;
+    name: PromiseOrValue<string>;
+    creator: PromiseOrValue<string>;
+    comptroller: PromiseOrValue<string>;
+    blockPosted: PromiseOrValue<BigNumberish>;
+    timestampPosted: PromiseOrValue<BigNumberish>;
   };
 
   export type FusePoolStructOutput = [string, string, string, BigNumber, BigNumber] & {
@@ -77,26 +77,40 @@ export interface RariFusePoolsDirectoryInterface extends utils.Interface {
       | 'bookmarkPool',
   ): FunctionFragment;
 
-  encodeFunctionData(functionFragment: 'deployerWhitelist', values: [string]): string;
+  encodeFunctionData(functionFragment: 'deployerWhitelist', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'enforceDeployerWhitelist', values?: undefined): string;
   encodeFunctionData(functionFragment: 'owner', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'poolExists', values: [string]): string;
-  encodeFunctionData(functionFragment: 'pools', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'poolExists', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'pools', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'renounceOwnership', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'transferOwnership', values: [string]): string;
-  encodeFunctionData(functionFragment: 'initialize', values: [boolean, string[]]): string;
-  encodeFunctionData(functionFragment: '_setDeployerWhitelistEnforcement', values: [boolean]): string;
-  encodeFunctionData(functionFragment: '_whitelistDeployers', values: [string[]]): string;
-  encodeFunctionData(functionFragment: 'registerPool', values: [string, string]): string;
+  encodeFunctionData(functionFragment: 'transferOwnership', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'initialize',
+    values: [PromiseOrValue<boolean>, PromiseOrValue<string>[]],
+  ): string;
+  encodeFunctionData(functionFragment: '_setDeployerWhitelistEnforcement', values: [PromiseOrValue<boolean>]): string;
+  encodeFunctionData(functionFragment: '_whitelistDeployers', values: [PromiseOrValue<string>[]]): string;
+  encodeFunctionData(
+    functionFragment: 'registerPool',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>],
+  ): string;
   encodeFunctionData(
     functionFragment: 'deployPool',
-    values: [string, string, boolean, BigNumberish, BigNumberish, BigNumberish, string],
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<boolean>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<string>,
+    ],
   ): string;
   encodeFunctionData(functionFragment: 'getAllPools', values?: undefined): string;
   encodeFunctionData(functionFragment: 'getPublicPools', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'getPoolsByAccount', values: [string]): string;
-  encodeFunctionData(functionFragment: 'getBookmarks', values: [string]): string;
-  encodeFunctionData(functionFragment: 'bookmarkPool', values: [string]): string;
+  encodeFunctionData(functionFragment: 'getPoolsByAccount', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'getBookmarks', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'bookmarkPool', values: [PromiseOrValue<string>]): string;
 
   decodeFunctionResult(functionFragment: 'deployerWhitelist', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'enforceDeployerWhitelist', data: BytesLike): Result;
@@ -167,16 +181,16 @@ export interface RariFusePoolsDirectory extends BaseContract {
   removeListener: OnEvent<this>;
 
   functions: {
-    deployerWhitelist(arg0: string, overrides?: CallOverrides): Promise<[boolean]>;
+    deployerWhitelist(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[boolean]>;
 
     enforceDeployerWhitelist(overrides?: CallOverrides): Promise<[boolean]>;
 
     owner(overrides?: CallOverrides): Promise<[string]>;
 
-    poolExists(arg0: string, overrides?: CallOverrides): Promise<[boolean]>;
+    poolExists(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[boolean]>;
 
     pools(
-      arg0: BigNumberish,
+      arg0: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<
       [string, string, string, BigNumber, BigNumber] & {
@@ -188,44 +202,44 @@ export interface RariFusePoolsDirectory extends BaseContract {
       }
     >;
 
-    renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     initialize(
-      _enforceDeployerWhitelist: boolean,
-      _deployerWhitelist: string[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _enforceDeployerWhitelist: PromiseOrValue<boolean>,
+      _deployerWhitelist: PromiseOrValue<string>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     _setDeployerWhitelistEnforcement(
-      _enforceDeployerWhitelist: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _enforceDeployerWhitelist: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     _whitelistDeployers(
-      deployers: string[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      deployers: PromiseOrValue<string>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     registerPool(
-      name: string,
-      comptroller: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      name: PromiseOrValue<string>,
+      comptroller: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     deployPool(
-      name: string,
-      implementation: string,
-      enforceWhitelist: boolean,
-      closeFactor: BigNumberish,
-      maxAssets: BigNumberish,
-      liquidationIncentive: BigNumberish,
-      priceOracle: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      name: PromiseOrValue<string>,
+      implementation: PromiseOrValue<string>,
+      enforceWhitelist: PromiseOrValue<boolean>,
+      closeFactor: PromiseOrValue<BigNumberish>,
+      maxAssets: PromiseOrValue<BigNumberish>,
+      liquidationIncentive: PromiseOrValue<BigNumberish>,
+      priceOracle: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     getAllPools(overrides?: CallOverrides): Promise<[FusePoolDirectory.FusePoolStructOutput[]]>;
@@ -233,28 +247,28 @@ export interface RariFusePoolsDirectory extends BaseContract {
     getPublicPools(overrides?: CallOverrides): Promise<[BigNumber[], FusePoolDirectory.FusePoolStructOutput[]]>;
 
     getPoolsByAccount(
-      account: string,
+      account: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber[], FusePoolDirectory.FusePoolStructOutput[]]>;
 
-    getBookmarks(account: string, overrides?: CallOverrides): Promise<[string[]]>;
+    getBookmarks(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[string[]]>;
 
     bookmarkPool(
-      comptroller: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      comptroller: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
   };
 
-  deployerWhitelist(arg0: string, overrides?: CallOverrides): Promise<boolean>;
+  deployerWhitelist(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
   enforceDeployerWhitelist(overrides?: CallOverrides): Promise<boolean>;
 
   owner(overrides?: CallOverrides): Promise<string>;
 
-  poolExists(arg0: string, overrides?: CallOverrides): Promise<boolean>;
+  poolExists(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
   pools(
-    arg0: BigNumberish,
+    arg0: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides,
   ): Promise<
     [string, string, string, BigNumber, BigNumber] & {
@@ -266,44 +280,44 @@ export interface RariFusePoolsDirectory extends BaseContract {
     }
   >;
 
-  renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   transferOwnership(
-    newOwner: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    newOwner: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   initialize(
-    _enforceDeployerWhitelist: boolean,
-    _deployerWhitelist: string[],
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _enforceDeployerWhitelist: PromiseOrValue<boolean>,
+    _deployerWhitelist: PromiseOrValue<string>[],
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   _setDeployerWhitelistEnforcement(
-    _enforceDeployerWhitelist: boolean,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _enforceDeployerWhitelist: PromiseOrValue<boolean>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   _whitelistDeployers(
-    deployers: string[],
-    overrides?: Overrides & { from?: string | Promise<string> },
+    deployers: PromiseOrValue<string>[],
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   registerPool(
-    name: string,
-    comptroller: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    name: PromiseOrValue<string>,
+    comptroller: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   deployPool(
-    name: string,
-    implementation: string,
-    enforceWhitelist: boolean,
-    closeFactor: BigNumberish,
-    maxAssets: BigNumberish,
-    liquidationIncentive: BigNumberish,
-    priceOracle: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    name: PromiseOrValue<string>,
+    implementation: PromiseOrValue<string>,
+    enforceWhitelist: PromiseOrValue<boolean>,
+    closeFactor: PromiseOrValue<BigNumberish>,
+    maxAssets: PromiseOrValue<BigNumberish>,
+    liquidationIncentive: PromiseOrValue<BigNumberish>,
+    priceOracle: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   getAllPools(overrides?: CallOverrides): Promise<FusePoolDirectory.FusePoolStructOutput[]>;
@@ -311,28 +325,28 @@ export interface RariFusePoolsDirectory extends BaseContract {
   getPublicPools(overrides?: CallOverrides): Promise<[BigNumber[], FusePoolDirectory.FusePoolStructOutput[]]>;
 
   getPoolsByAccount(
-    account: string,
+    account: PromiseOrValue<string>,
     overrides?: CallOverrides,
   ): Promise<[BigNumber[], FusePoolDirectory.FusePoolStructOutput[]]>;
 
-  getBookmarks(account: string, overrides?: CallOverrides): Promise<string[]>;
+  getBookmarks(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<string[]>;
 
   bookmarkPool(
-    comptroller: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    comptroller: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   callStatic: {
-    deployerWhitelist(arg0: string, overrides?: CallOverrides): Promise<boolean>;
+    deployerWhitelist(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
     enforceDeployerWhitelist(overrides?: CallOverrides): Promise<boolean>;
 
     owner(overrides?: CallOverrides): Promise<string>;
 
-    poolExists(arg0: string, overrides?: CallOverrides): Promise<boolean>;
+    poolExists(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
     pools(
-      arg0: BigNumberish,
+      arg0: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<
       [string, string, string, BigNumber, BigNumber] & {
@@ -346,28 +360,35 @@ export interface RariFusePoolsDirectory extends BaseContract {
 
     renounceOwnership(overrides?: CallOverrides): Promise<void>;
 
-    transferOwnership(newOwner: string, overrides?: CallOverrides): Promise<void>;
+    transferOwnership(newOwner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     initialize(
-      _enforceDeployerWhitelist: boolean,
-      _deployerWhitelist: string[],
+      _enforceDeployerWhitelist: PromiseOrValue<boolean>,
+      _deployerWhitelist: PromiseOrValue<string>[],
       overrides?: CallOverrides,
     ): Promise<void>;
 
-    _setDeployerWhitelistEnforcement(_enforceDeployerWhitelist: boolean, overrides?: CallOverrides): Promise<void>;
+    _setDeployerWhitelistEnforcement(
+      _enforceDeployerWhitelist: PromiseOrValue<boolean>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    _whitelistDeployers(deployers: string[], overrides?: CallOverrides): Promise<void>;
+    _whitelistDeployers(deployers: PromiseOrValue<string>[], overrides?: CallOverrides): Promise<void>;
 
-    registerPool(name: string, comptroller: string, overrides?: CallOverrides): Promise<BigNumber>;
+    registerPool(
+      name: PromiseOrValue<string>,
+      comptroller: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     deployPool(
-      name: string,
-      implementation: string,
-      enforceWhitelist: boolean,
-      closeFactor: BigNumberish,
-      maxAssets: BigNumberish,
-      liquidationIncentive: BigNumberish,
-      priceOracle: string,
+      name: PromiseOrValue<string>,
+      implementation: PromiseOrValue<string>,
+      enforceWhitelist: PromiseOrValue<boolean>,
+      closeFactor: PromiseOrValue<BigNumberish>,
+      maxAssets: PromiseOrValue<BigNumberish>,
+      liquidationIncentive: PromiseOrValue<BigNumberish>,
+      priceOracle: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber, string]>;
 
@@ -376,150 +397,156 @@ export interface RariFusePoolsDirectory extends BaseContract {
     getPublicPools(overrides?: CallOverrides): Promise<[BigNumber[], FusePoolDirectory.FusePoolStructOutput[]]>;
 
     getPoolsByAccount(
-      account: string,
+      account: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber[], FusePoolDirectory.FusePoolStructOutput[]]>;
 
-    getBookmarks(account: string, overrides?: CallOverrides): Promise<string[]>;
+    getBookmarks(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<string[]>;
 
-    bookmarkPool(comptroller: string, overrides?: CallOverrides): Promise<void>;
+    bookmarkPool(comptroller: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
   };
 
   filters: {
     'OwnershipTransferred(address,address)'(
-      previousOwner?: string | null,
-      newOwner?: string | null,
+      previousOwner?: PromiseOrValue<string> | null,
+      newOwner?: PromiseOrValue<string> | null,
     ): OwnershipTransferredEventFilter;
-    OwnershipTransferred(previousOwner?: string | null, newOwner?: string | null): OwnershipTransferredEventFilter;
+    OwnershipTransferred(
+      previousOwner?: PromiseOrValue<string> | null,
+      newOwner?: PromiseOrValue<string> | null,
+    ): OwnershipTransferredEventFilter;
 
     'PoolRegistered(uint256,tuple)'(index?: null, pool?: null): PoolRegisteredEventFilter;
     PoolRegistered(index?: null, pool?: null): PoolRegisteredEventFilter;
   };
 
   estimateGas: {
-    deployerWhitelist(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    deployerWhitelist(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     enforceDeployerWhitelist(overrides?: CallOverrides): Promise<BigNumber>;
 
     owner(overrides?: CallOverrides): Promise<BigNumber>;
 
-    poolExists(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    poolExists(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    pools(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    pools(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     initialize(
-      _enforceDeployerWhitelist: boolean,
-      _deployerWhitelist: string[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _enforceDeployerWhitelist: PromiseOrValue<boolean>,
+      _deployerWhitelist: PromiseOrValue<string>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     _setDeployerWhitelistEnforcement(
-      _enforceDeployerWhitelist: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _enforceDeployerWhitelist: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     _whitelistDeployers(
-      deployers: string[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      deployers: PromiseOrValue<string>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     registerPool(
-      name: string,
-      comptroller: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      name: PromiseOrValue<string>,
+      comptroller: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     deployPool(
-      name: string,
-      implementation: string,
-      enforceWhitelist: boolean,
-      closeFactor: BigNumberish,
-      maxAssets: BigNumberish,
-      liquidationIncentive: BigNumberish,
-      priceOracle: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      name: PromiseOrValue<string>,
+      implementation: PromiseOrValue<string>,
+      enforceWhitelist: PromiseOrValue<boolean>,
+      closeFactor: PromiseOrValue<BigNumberish>,
+      maxAssets: PromiseOrValue<BigNumberish>,
+      liquidationIncentive: PromiseOrValue<BigNumberish>,
+      priceOracle: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     getAllPools(overrides?: CallOverrides): Promise<BigNumber>;
 
     getPublicPools(overrides?: CallOverrides): Promise<BigNumber>;
 
-    getPoolsByAccount(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getPoolsByAccount(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    getBookmarks(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getBookmarks(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    bookmarkPool(comptroller: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    bookmarkPool(
+      comptroller: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
   };
 
   populateTransaction: {
-    deployerWhitelist(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    deployerWhitelist(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     enforceDeployerWhitelist(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    poolExists(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    poolExists(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    pools(arg0: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    pools(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     initialize(
-      _enforceDeployerWhitelist: boolean,
-      _deployerWhitelist: string[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _enforceDeployerWhitelist: PromiseOrValue<boolean>,
+      _deployerWhitelist: PromiseOrValue<string>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     _setDeployerWhitelistEnforcement(
-      _enforceDeployerWhitelist: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _enforceDeployerWhitelist: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     _whitelistDeployers(
-      deployers: string[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      deployers: PromiseOrValue<string>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     registerPool(
-      name: string,
-      comptroller: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      name: PromiseOrValue<string>,
+      comptroller: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     deployPool(
-      name: string,
-      implementation: string,
-      enforceWhitelist: boolean,
-      closeFactor: BigNumberish,
-      maxAssets: BigNumberish,
-      liquidationIncentive: BigNumberish,
-      priceOracle: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      name: PromiseOrValue<string>,
+      implementation: PromiseOrValue<string>,
+      enforceWhitelist: PromiseOrValue<boolean>,
+      closeFactor: PromiseOrValue<BigNumberish>,
+      maxAssets: PromiseOrValue<BigNumberish>,
+      liquidationIncentive: PromiseOrValue<BigNumberish>,
+      priceOracle: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     getAllPools(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     getPublicPools(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    getPoolsByAccount(account: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getPoolsByAccount(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    getBookmarks(account: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getBookmarks(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     bookmarkPool(
-      comptroller: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      comptroller: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
   };
 }

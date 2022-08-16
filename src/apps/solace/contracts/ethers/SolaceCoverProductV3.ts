@@ -15,7 +15,7 @@ import type {
 } from 'ethers';
 import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
 import type { Listener, Provider } from '@ethersproject/providers';
-import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
 export interface SolaceCoverProductV3Interface extends utils.Interface {
   functions: {
@@ -137,74 +137,121 @@ export interface SolaceCoverProductV3Interface extends utils.Interface {
 
   encodeFunctionData(functionFragment: 'acceptGovernance', values?: undefined): string;
   encodeFunctionData(functionFragment: 'activeCoverLimit', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'addSigner', values: [string]): string;
-  encodeFunctionData(functionFragment: 'approve', values: [string, BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'addSigner', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'approve',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
   encodeFunctionData(functionFragment: 'availableCoverCapacity', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'balanceOf', values: [string]): string;
+  encodeFunctionData(functionFragment: 'balanceOf', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'baseURI', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'cancel', values: [BigNumberish, BigNumberish, BytesLike]): string;
-  encodeFunctionData(functionFragment: 'cancelPolicies', values: [string[]]): string;
+  encodeFunctionData(
+    functionFragment: 'cancel',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>, PromiseOrValue<BytesLike>],
+  ): string;
+  encodeFunctionData(functionFragment: 'cancelPolicies', values: [PromiseOrValue<string>[]]): string;
   encodeFunctionData(functionFragment: 'chargeCycle', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'coverLimitOf', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'getApproved', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'getSigner', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'coverLimitOf', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'getApproved', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'getSigner', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'governance', values?: undefined): string;
   encodeFunctionData(functionFragment: 'governanceIsLocked', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'isApprovedForAll', values: [string, string]): string;
-  encodeFunctionData(functionFragment: 'isSigner', values: [string]): string;
+  encodeFunctionData(
+    functionFragment: 'isApprovedForAll',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>],
+  ): string;
+  encodeFunctionData(functionFragment: 'isSigner', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'latestChargedTime', values?: undefined): string;
   encodeFunctionData(functionFragment: 'lockGovernance', values?: undefined): string;
   encodeFunctionData(functionFragment: 'maxCover', values?: undefined): string;
   encodeFunctionData(functionFragment: 'maxRateDenom', values?: undefined): string;
   encodeFunctionData(functionFragment: 'maxRateNum', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'minRequiredAccountBalance', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'minScpRequired', values: [string]): string;
+  encodeFunctionData(functionFragment: 'minRequiredAccountBalance', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'minScpRequired', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'name', values?: undefined): string;
   encodeFunctionData(functionFragment: 'numSigners', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'ownerOf', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'ownerOf', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'paused', values?: undefined): string;
   encodeFunctionData(functionFragment: 'paymentManager', values?: undefined): string;
   encodeFunctionData(functionFragment: 'pendingGovernance', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'policyOf', values: [string]): string;
-  encodeFunctionData(functionFragment: 'policyStatus', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'purchase', values: [string, BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'policyOf', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'policyStatus', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(
+    functionFragment: 'purchase',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
   encodeFunctionData(
     functionFragment: 'purchaseWithNonStable',
-    values: [string, BigNumberish, string, BigNumberish, BigNumberish, BigNumberish, BytesLike],
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BytesLike>,
+    ],
   ): string;
   encodeFunctionData(
     functionFragment: 'purchaseWithStable',
-    values: [string, BigNumberish, string, BigNumberish],
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+    ],
   ): string;
   encodeFunctionData(functionFragment: 'registry', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'removeSigner', values: [string]): string;
+  encodeFunctionData(functionFragment: 'removeSigner', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'riskManager', values?: undefined): string;
   encodeFunctionData(
     functionFragment: 'safeTransferFrom(address,address,uint256)',
-    values: [string, string, BigNumberish],
+    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
   ): string;
   encodeFunctionData(
     functionFragment: 'safeTransferFrom(address,address,uint256,bytes)',
-    values: [string, string, BigNumberish, BytesLike],
+    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<BigNumberish>, PromiseOrValue<BytesLike>],
   ): string;
-  encodeFunctionData(functionFragment: 'setApprovalForAll', values: [string, boolean]): string;
-  encodeFunctionData(functionFragment: 'setBaseURI', values: [string]): string;
-  encodeFunctionData(functionFragment: 'setChargeCycle', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'setChargedTime', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'setMaxRate', values: [BigNumberish, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'setPaused', values: [boolean]): string;
-  encodeFunctionData(functionFragment: 'setPendingGovernance', values: [string]): string;
-  encodeFunctionData(functionFragment: 'setRegistry', values: [string]): string;
-  encodeFunctionData(functionFragment: 'supportsInterface', values: [BytesLike]): string;
+  encodeFunctionData(
+    functionFragment: 'setApprovalForAll',
+    values: [PromiseOrValue<string>, PromiseOrValue<boolean>],
+  ): string;
+  encodeFunctionData(functionFragment: 'setBaseURI', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'setChargeCycle', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'setChargedTime', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(
+    functionFragment: 'setMaxRate',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'setPaused', values: [PromiseOrValue<boolean>]): string;
+  encodeFunctionData(functionFragment: 'setPendingGovernance', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'setRegistry', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'supportsInterface', values: [PromiseOrValue<BytesLike>]): string;
   encodeFunctionData(functionFragment: 'symbol', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'tokenURI', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'tokenURI', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'totalSupply', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'transferFrom', values: [string, string, BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'transferFrom',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
   encodeFunctionData(
     functionFragment: 'verifyPremium',
-    values: [BigNumberish, string, BigNumberish, BytesLike],
+    values: [
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BytesLike>,
+    ],
   ): string;
-  encodeFunctionData(functionFragment: 'verifyPrice', values: [string, BigNumberish, BigNumberish, BytesLike]): string;
+  encodeFunctionData(
+    functionFragment: 'verifyPrice',
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BytesLike>,
+    ],
+  ): string;
 
   decodeFunctionResult(functionFragment: 'acceptGovernance', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'activeCoverLimit', data: BytesLike): Result;
@@ -459,58 +506,62 @@ export interface SolaceCoverProductV3 extends BaseContract {
   removeListener: OnEvent<this>;
 
   functions: {
-    acceptGovernance(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    acceptGovernance(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     activeCoverLimit(overrides?: CallOverrides): Promise<[BigNumber] & { amount: BigNumber }>;
 
     addSigner(
-      signer: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      signer: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     approve(
-      to: string,
-      tokenId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      to: PromiseOrValue<string>,
+      tokenId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     availableCoverCapacity(overrides?: CallOverrides): Promise<[BigNumber] & { capacity: BigNumber }>;
 
-    balanceOf(owner: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    balanceOf(owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     baseURI(overrides?: CallOverrides): Promise<[string]>;
 
     cancel(
-      _premium: BigNumberish,
-      _deadline: BigNumberish,
-      _signature: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _premium: PromiseOrValue<BigNumberish>,
+      _deadline: PromiseOrValue<BigNumberish>,
+      _signature: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     cancelPolicies(
-      _policyholders: string[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _policyholders: PromiseOrValue<string>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     chargeCycle(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    coverLimitOf(arg0: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber]>;
+    coverLimitOf(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    getApproved(tokenId: BigNumberish, overrides?: CallOverrides): Promise<[string]>;
+    getApproved(tokenId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[string]>;
 
-    getSigner(index: BigNumberish, overrides?: CallOverrides): Promise<[string] & { signer: string }>;
+    getSigner(index: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[string] & { signer: string }>;
 
     governance(overrides?: CallOverrides): Promise<[string]>;
 
     governanceIsLocked(overrides?: CallOverrides): Promise<[boolean]>;
 
-    isApprovedForAll(owner: string, operator: string, overrides?: CallOverrides): Promise<[boolean]>;
+    isApprovedForAll(
+      owner: PromiseOrValue<string>,
+      operator: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<[boolean]>;
 
-    isSigner(signer: string, overrides?: CallOverrides): Promise<[boolean]>;
+    isSigner(signer: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[boolean]>;
 
     latestChargedTime(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    lockGovernance(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    lockGovernance(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     maxCover(overrides?: CallOverrides): Promise<[BigNumber] & { cover: BigNumber }>;
 
@@ -519,17 +570,20 @@ export interface SolaceCoverProductV3 extends BaseContract {
     maxRateNum(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     minRequiredAccountBalance(
-      _coverLimit: BigNumberish,
+      _coverLimit: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber] & { mrab: BigNumber }>;
 
-    minScpRequired(_policyholder: string, overrides?: CallOverrides): Promise<[BigNumber] & { amount: BigNumber }>;
+    minScpRequired(
+      _policyholder: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber] & { amount: BigNumber }>;
 
     name(overrides?: CallOverrides): Promise<[string]>;
 
     numSigners(overrides?: CallOverrides): Promise<[BigNumber] & { count: BigNumber }>;
 
-    ownerOf(tokenId: BigNumberish, overrides?: CallOverrides): Promise<[string]>;
+    ownerOf(tokenId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[string]>;
 
     paused(overrides?: CallOverrides): Promise<[boolean]>;
 
@@ -537,182 +591,192 @@ export interface SolaceCoverProductV3 extends BaseContract {
 
     pendingGovernance(overrides?: CallOverrides): Promise<[string]>;
 
-    policyOf(arg0: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    policyOf(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    policyStatus(_policyID: BigNumberish, overrides?: CallOverrides): Promise<[boolean] & { status: boolean }>;
+    policyStatus(
+      _policyID: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<[boolean] & { status: boolean }>;
 
     purchase(
-      _user: string,
-      _coverLimit: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _user: PromiseOrValue<string>,
+      _coverLimit: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     purchaseWithNonStable(
-      _user: string,
-      _coverLimit: BigNumberish,
-      _token: string,
-      _amount: BigNumberish,
-      _price: BigNumberish,
-      _priceDeadline: BigNumberish,
-      _signature: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _user: PromiseOrValue<string>,
+      _coverLimit: PromiseOrValue<BigNumberish>,
+      _token: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
+      _price: PromiseOrValue<BigNumberish>,
+      _priceDeadline: PromiseOrValue<BigNumberish>,
+      _signature: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     purchaseWithStable(
-      _user: string,
-      _coverLimit: BigNumberish,
-      _token: string,
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _user: PromiseOrValue<string>,
+      _coverLimit: PromiseOrValue<BigNumberish>,
+      _token: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     registry(overrides?: CallOverrides): Promise<[string]>;
 
     removeSigner(
-      signer: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      signer: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     riskManager(overrides?: CallOverrides): Promise<[string]>;
 
     'safeTransferFrom(address,address,uint256)'(
-      from: string,
-      to: string,
-      tokenId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      tokenId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     'safeTransferFrom(address,address,uint256,bytes)'(
-      from: string,
-      to: string,
-      tokenId: BigNumberish,
-      _data: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      tokenId: PromiseOrValue<BigNumberish>,
+      _data: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setApprovalForAll(
-      operator: string,
-      approved: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      operator: PromiseOrValue<string>,
+      approved: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setBaseURI(
-      _baseURI: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _baseURI: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setChargeCycle(
-      _chargeCycle: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _chargeCycle: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setChargedTime(
-      _timestamp: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _timestamp: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setMaxRate(
-      _maxRateNum: BigNumberish,
-      _maxRateDenom: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _maxRateNum: PromiseOrValue<BigNumberish>,
+      _maxRateDenom: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setPaused(
-      _paused: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _paused: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setPendingGovernance(
-      pendingGovernance_: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      pendingGovernance_: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setRegistry(
-      _registry: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _registry: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    supportsInterface(interfaceId: BytesLike, overrides?: CallOverrides): Promise<[boolean]>;
+    supportsInterface(interfaceId: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<[boolean]>;
 
     symbol(overrides?: CallOverrides): Promise<[string]>;
 
-    tokenURI(policyID: BigNumberish, overrides?: CallOverrides): Promise<[string] & { uri: string }>;
+    tokenURI(policyID: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[string] & { uri: string }>;
 
     totalSupply(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     transferFrom(
-      from: string,
-      to: string,
-      tokenId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      tokenId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     verifyPremium(
-      premium: BigNumberish,
-      policyholder: string,
-      deadline: BigNumberish,
-      signature: BytesLike,
+      premium: PromiseOrValue<BigNumberish>,
+      policyholder: PromiseOrValue<string>,
+      deadline: PromiseOrValue<BigNumberish>,
+      signature: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides,
     ): Promise<[boolean]>;
 
     verifyPrice(
-      token: string,
-      price: BigNumberish,
-      deadline: BigNumberish,
-      signature: BytesLike,
+      token: PromiseOrValue<string>,
+      price: PromiseOrValue<BigNumberish>,
+      deadline: PromiseOrValue<BigNumberish>,
+      signature: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides,
     ): Promise<[boolean]>;
   };
 
-  acceptGovernance(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  acceptGovernance(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   activeCoverLimit(overrides?: CallOverrides): Promise<BigNumber>;
 
-  addSigner(signer: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  addSigner(
+    signer: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
+  ): Promise<ContractTransaction>;
 
   approve(
-    to: string,
-    tokenId: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    to: PromiseOrValue<string>,
+    tokenId: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   availableCoverCapacity(overrides?: CallOverrides): Promise<BigNumber>;
 
-  balanceOf(owner: string, overrides?: CallOverrides): Promise<BigNumber>;
+  balanceOf(owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   baseURI(overrides?: CallOverrides): Promise<string>;
 
   cancel(
-    _premium: BigNumberish,
-    _deadline: BigNumberish,
-    _signature: BytesLike,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _premium: PromiseOrValue<BigNumberish>,
+    _deadline: PromiseOrValue<BigNumberish>,
+    _signature: PromiseOrValue<BytesLike>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   cancelPolicies(
-    _policyholders: string[],
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _policyholders: PromiseOrValue<string>[],
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   chargeCycle(overrides?: CallOverrides): Promise<BigNumber>;
 
-  coverLimitOf(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+  coverLimitOf(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  getApproved(tokenId: BigNumberish, overrides?: CallOverrides): Promise<string>;
+  getApproved(tokenId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
 
-  getSigner(index: BigNumberish, overrides?: CallOverrides): Promise<string>;
+  getSigner(index: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
 
   governance(overrides?: CallOverrides): Promise<string>;
 
   governanceIsLocked(overrides?: CallOverrides): Promise<boolean>;
 
-  isApprovedForAll(owner: string, operator: string, overrides?: CallOverrides): Promise<boolean>;
+  isApprovedForAll(
+    owner: PromiseOrValue<string>,
+    operator: PromiseOrValue<string>,
+    overrides?: CallOverrides,
+  ): Promise<boolean>;
 
-  isSigner(signer: string, overrides?: CallOverrides): Promise<boolean>;
+  isSigner(signer: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
   latestChargedTime(overrides?: CallOverrides): Promise<BigNumber>;
 
-  lockGovernance(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  lockGovernance(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   maxCover(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -720,15 +784,15 @@ export interface SolaceCoverProductV3 extends BaseContract {
 
   maxRateNum(overrides?: CallOverrides): Promise<BigNumber>;
 
-  minRequiredAccountBalance(_coverLimit: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+  minRequiredAccountBalance(_coverLimit: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  minScpRequired(_policyholder: string, overrides?: CallOverrides): Promise<BigNumber>;
+  minScpRequired(_policyholder: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   name(overrides?: CallOverrides): Promise<string>;
 
   numSigners(overrides?: CallOverrides): Promise<BigNumber>;
 
-  ownerOf(tokenId: BigNumberish, overrides?: CallOverrides): Promise<string>;
+  ownerOf(tokenId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
 
   paused(overrides?: CallOverrides): Promise<boolean>;
 
@@ -736,129 +800,129 @@ export interface SolaceCoverProductV3 extends BaseContract {
 
   pendingGovernance(overrides?: CallOverrides): Promise<string>;
 
-  policyOf(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+  policyOf(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  policyStatus(_policyID: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+  policyStatus(_policyID: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<boolean>;
 
   purchase(
-    _user: string,
-    _coverLimit: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _user: PromiseOrValue<string>,
+    _coverLimit: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   purchaseWithNonStable(
-    _user: string,
-    _coverLimit: BigNumberish,
-    _token: string,
-    _amount: BigNumberish,
-    _price: BigNumberish,
-    _priceDeadline: BigNumberish,
-    _signature: BytesLike,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _user: PromiseOrValue<string>,
+    _coverLimit: PromiseOrValue<BigNumberish>,
+    _token: PromiseOrValue<string>,
+    _amount: PromiseOrValue<BigNumberish>,
+    _price: PromiseOrValue<BigNumberish>,
+    _priceDeadline: PromiseOrValue<BigNumberish>,
+    _signature: PromiseOrValue<BytesLike>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   purchaseWithStable(
-    _user: string,
-    _coverLimit: BigNumberish,
-    _token: string,
-    _amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _user: PromiseOrValue<string>,
+    _coverLimit: PromiseOrValue<BigNumberish>,
+    _token: PromiseOrValue<string>,
+    _amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   registry(overrides?: CallOverrides): Promise<string>;
 
   removeSigner(
-    signer: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    signer: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   riskManager(overrides?: CallOverrides): Promise<string>;
 
   'safeTransferFrom(address,address,uint256)'(
-    from: string,
-    to: string,
-    tokenId: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    from: PromiseOrValue<string>,
+    to: PromiseOrValue<string>,
+    tokenId: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   'safeTransferFrom(address,address,uint256,bytes)'(
-    from: string,
-    to: string,
-    tokenId: BigNumberish,
-    _data: BytesLike,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    from: PromiseOrValue<string>,
+    to: PromiseOrValue<string>,
+    tokenId: PromiseOrValue<BigNumberish>,
+    _data: PromiseOrValue<BytesLike>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setApprovalForAll(
-    operator: string,
-    approved: boolean,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    operator: PromiseOrValue<string>,
+    approved: PromiseOrValue<boolean>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setBaseURI(
-    _baseURI: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _baseURI: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setChargeCycle(
-    _chargeCycle: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _chargeCycle: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setChargedTime(
-    _timestamp: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _timestamp: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setMaxRate(
-    _maxRateNum: BigNumberish,
-    _maxRateDenom: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _maxRateNum: PromiseOrValue<BigNumberish>,
+    _maxRateDenom: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setPaused(
-    _paused: boolean,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _paused: PromiseOrValue<boolean>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setPendingGovernance(
-    pendingGovernance_: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    pendingGovernance_: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setRegistry(
-    _registry: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _registry: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  supportsInterface(interfaceId: BytesLike, overrides?: CallOverrides): Promise<boolean>;
+  supportsInterface(interfaceId: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<boolean>;
 
   symbol(overrides?: CallOverrides): Promise<string>;
 
-  tokenURI(policyID: BigNumberish, overrides?: CallOverrides): Promise<string>;
+  tokenURI(policyID: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
 
   totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
   transferFrom(
-    from: string,
-    to: string,
-    tokenId: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    from: PromiseOrValue<string>,
+    to: PromiseOrValue<string>,
+    tokenId: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   verifyPremium(
-    premium: BigNumberish,
-    policyholder: string,
-    deadline: BigNumberish,
-    signature: BytesLike,
+    premium: PromiseOrValue<BigNumberish>,
+    policyholder: PromiseOrValue<string>,
+    deadline: PromiseOrValue<BigNumberish>,
+    signature: PromiseOrValue<BytesLike>,
     overrides?: CallOverrides,
   ): Promise<boolean>;
 
   verifyPrice(
-    token: string,
-    price: BigNumberish,
-    deadline: BigNumberish,
-    signature: BytesLike,
+    token: PromiseOrValue<string>,
+    price: PromiseOrValue<BigNumberish>,
+    deadline: PromiseOrValue<BigNumberish>,
+    signature: PromiseOrValue<BytesLike>,
     overrides?: CallOverrides,
   ): Promise<boolean>;
 
@@ -867,40 +931,48 @@ export interface SolaceCoverProductV3 extends BaseContract {
 
     activeCoverLimit(overrides?: CallOverrides): Promise<BigNumber>;
 
-    addSigner(signer: string, overrides?: CallOverrides): Promise<void>;
+    addSigner(signer: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    approve(to: string, tokenId: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    approve(
+      to: PromiseOrValue<string>,
+      tokenId: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
     availableCoverCapacity(overrides?: CallOverrides): Promise<BigNumber>;
 
-    balanceOf(owner: string, overrides?: CallOverrides): Promise<BigNumber>;
+    balanceOf(owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     baseURI(overrides?: CallOverrides): Promise<string>;
 
     cancel(
-      _premium: BigNumberish,
-      _deadline: BigNumberish,
-      _signature: BytesLike,
+      _premium: PromiseOrValue<BigNumberish>,
+      _deadline: PromiseOrValue<BigNumberish>,
+      _signature: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
-    cancelPolicies(_policyholders: string[], overrides?: CallOverrides): Promise<void>;
+    cancelPolicies(_policyholders: PromiseOrValue<string>[], overrides?: CallOverrides): Promise<void>;
 
     chargeCycle(overrides?: CallOverrides): Promise<BigNumber>;
 
-    coverLimitOf(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    coverLimitOf(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    getApproved(tokenId: BigNumberish, overrides?: CallOverrides): Promise<string>;
+    getApproved(tokenId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
 
-    getSigner(index: BigNumberish, overrides?: CallOverrides): Promise<string>;
+    getSigner(index: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
 
     governance(overrides?: CallOverrides): Promise<string>;
 
     governanceIsLocked(overrides?: CallOverrides): Promise<boolean>;
 
-    isApprovedForAll(owner: string, operator: string, overrides?: CallOverrides): Promise<boolean>;
+    isApprovedForAll(
+      owner: PromiseOrValue<string>,
+      operator: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
 
-    isSigner(signer: string, overrides?: CallOverrides): Promise<boolean>;
+    isSigner(signer: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
     latestChargedTime(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -912,15 +984,15 @@ export interface SolaceCoverProductV3 extends BaseContract {
 
     maxRateNum(overrides?: CallOverrides): Promise<BigNumber>;
 
-    minRequiredAccountBalance(_coverLimit: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    minRequiredAccountBalance(_coverLimit: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    minScpRequired(_policyholder: string, overrides?: CallOverrides): Promise<BigNumber>;
+    minScpRequired(_policyholder: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     name(overrides?: CallOverrides): Promise<string>;
 
     numSigners(overrides?: CallOverrides): Promise<BigNumber>;
 
-    ownerOf(tokenId: BigNumberish, overrides?: CallOverrides): Promise<string>;
+    ownerOf(tokenId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
 
     paused(overrides?: CallOverrides): Promise<boolean>;
 
@@ -928,109 +1000,134 @@ export interface SolaceCoverProductV3 extends BaseContract {
 
     pendingGovernance(overrides?: CallOverrides): Promise<string>;
 
-    policyOf(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    policyOf(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    policyStatus(_policyID: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+    policyStatus(_policyID: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<boolean>;
 
-    purchase(_user: string, _coverLimit: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    purchase(
+      _user: PromiseOrValue<string>,
+      _coverLimit: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
     purchaseWithNonStable(
-      _user: string,
-      _coverLimit: BigNumberish,
-      _token: string,
-      _amount: BigNumberish,
-      _price: BigNumberish,
-      _priceDeadline: BigNumberish,
-      _signature: BytesLike,
+      _user: PromiseOrValue<string>,
+      _coverLimit: PromiseOrValue<BigNumberish>,
+      _token: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
+      _price: PromiseOrValue<BigNumberish>,
+      _priceDeadline: PromiseOrValue<BigNumberish>,
+      _signature: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     purchaseWithStable(
-      _user: string,
-      _coverLimit: BigNumberish,
-      _token: string,
-      _amount: BigNumberish,
+      _user: PromiseOrValue<string>,
+      _coverLimit: PromiseOrValue<BigNumberish>,
+      _token: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     registry(overrides?: CallOverrides): Promise<string>;
 
-    removeSigner(signer: string, overrides?: CallOverrides): Promise<void>;
+    removeSigner(signer: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     riskManager(overrides?: CallOverrides): Promise<string>;
 
     'safeTransferFrom(address,address,uint256)'(
-      from: string,
-      to: string,
-      tokenId: BigNumberish,
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      tokenId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
     'safeTransferFrom(address,address,uint256,bytes)'(
-      from: string,
-      to: string,
-      tokenId: BigNumberish,
-      _data: BytesLike,
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      tokenId: PromiseOrValue<BigNumberish>,
+      _data: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
-    setApprovalForAll(operator: string, approved: boolean, overrides?: CallOverrides): Promise<void>;
+    setApprovalForAll(
+      operator: PromiseOrValue<string>,
+      approved: PromiseOrValue<boolean>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    setBaseURI(_baseURI: string, overrides?: CallOverrides): Promise<void>;
+    setBaseURI(_baseURI: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    setChargeCycle(_chargeCycle: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    setChargeCycle(_chargeCycle: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
-    setChargedTime(_timestamp: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    setChargedTime(_timestamp: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
-    setMaxRate(_maxRateNum: BigNumberish, _maxRateDenom: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    setMaxRate(
+      _maxRateNum: PromiseOrValue<BigNumberish>,
+      _maxRateDenom: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    setPaused(_paused: boolean, overrides?: CallOverrides): Promise<void>;
+    setPaused(_paused: PromiseOrValue<boolean>, overrides?: CallOverrides): Promise<void>;
 
-    setPendingGovernance(pendingGovernance_: string, overrides?: CallOverrides): Promise<void>;
+    setPendingGovernance(pendingGovernance_: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    setRegistry(_registry: string, overrides?: CallOverrides): Promise<void>;
+    setRegistry(_registry: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    supportsInterface(interfaceId: BytesLike, overrides?: CallOverrides): Promise<boolean>;
+    supportsInterface(interfaceId: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<boolean>;
 
     symbol(overrides?: CallOverrides): Promise<string>;
 
-    tokenURI(policyID: BigNumberish, overrides?: CallOverrides): Promise<string>;
+    tokenURI(policyID: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
 
     totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
-    transferFrom(from: string, to: string, tokenId: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    transferFrom(
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      tokenId: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
     verifyPremium(
-      premium: BigNumberish,
-      policyholder: string,
-      deadline: BigNumberish,
-      signature: BytesLike,
+      premium: PromiseOrValue<BigNumberish>,
+      policyholder: PromiseOrValue<string>,
+      deadline: PromiseOrValue<BigNumberish>,
+      signature: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides,
     ): Promise<boolean>;
 
     verifyPrice(
-      token: string,
-      price: BigNumberish,
-      deadline: BigNumberish,
-      signature: BytesLike,
+      token: PromiseOrValue<string>,
+      price: PromiseOrValue<BigNumberish>,
+      deadline: PromiseOrValue<BigNumberish>,
+      signature: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides,
     ): Promise<boolean>;
   };
 
   filters: {
     'Approval(address,address,uint256)'(
-      owner?: string | null,
-      approved?: string | null,
-      tokenId?: BigNumberish | null,
+      owner?: PromiseOrValue<string> | null,
+      approved?: PromiseOrValue<string> | null,
+      tokenId?: PromiseOrValue<BigNumberish> | null,
     ): ApprovalEventFilter;
-    Approval(owner?: string | null, approved?: string | null, tokenId?: BigNumberish | null): ApprovalEventFilter;
+    Approval(
+      owner?: PromiseOrValue<string> | null,
+      approved?: PromiseOrValue<string> | null,
+      tokenId?: PromiseOrValue<BigNumberish> | null,
+    ): ApprovalEventFilter;
 
     'ApprovalForAll(address,address,bool)'(
-      owner?: string | null,
-      operator?: string | null,
+      owner?: PromiseOrValue<string> | null,
+      operator?: PromiseOrValue<string> | null,
       approved?: null,
     ): ApprovalForAllEventFilter;
-    ApprovalForAll(owner?: string | null, operator?: string | null, approved?: null): ApprovalForAllEventFilter;
+    ApprovalForAll(
+      owner?: PromiseOrValue<string> | null,
+      operator?: PromiseOrValue<string> | null,
+      approved?: null,
+    ): ApprovalForAllEventFilter;
 
     'BaseURISet(string)'(baseURI?: null): BaseURISetEventFilter;
     BaseURISet(baseURI?: null): BaseURISetEventFilter;
@@ -1081,63 +1178,74 @@ export interface SolaceCoverProductV3 extends BaseContract {
     SignerRemoved(signer?: null): SignerRemovedEventFilter;
 
     'Transfer(address,address,uint256)'(
-      from?: string | null,
-      to?: string | null,
-      tokenId?: BigNumberish | null,
+      from?: PromiseOrValue<string> | null,
+      to?: PromiseOrValue<string> | null,
+      tokenId?: PromiseOrValue<BigNumberish> | null,
     ): TransferEventFilter;
-    Transfer(from?: string | null, to?: string | null, tokenId?: BigNumberish | null): TransferEventFilter;
+    Transfer(
+      from?: PromiseOrValue<string> | null,
+      to?: PromiseOrValue<string> | null,
+      tokenId?: PromiseOrValue<BigNumberish> | null,
+    ): TransferEventFilter;
   };
 
   estimateGas: {
-    acceptGovernance(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    acceptGovernance(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     activeCoverLimit(overrides?: CallOverrides): Promise<BigNumber>;
 
-    addSigner(signer: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    addSigner(
+      signer: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     approve(
-      to: string,
-      tokenId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      to: PromiseOrValue<string>,
+      tokenId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     availableCoverCapacity(overrides?: CallOverrides): Promise<BigNumber>;
 
-    balanceOf(owner: string, overrides?: CallOverrides): Promise<BigNumber>;
+    balanceOf(owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     baseURI(overrides?: CallOverrides): Promise<BigNumber>;
 
     cancel(
-      _premium: BigNumberish,
-      _deadline: BigNumberish,
-      _signature: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _premium: PromiseOrValue<BigNumberish>,
+      _deadline: PromiseOrValue<BigNumberish>,
+      _signature: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     cancelPolicies(
-      _policyholders: string[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _policyholders: PromiseOrValue<string>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     chargeCycle(overrides?: CallOverrides): Promise<BigNumber>;
 
-    coverLimitOf(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    coverLimitOf(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    getApproved(tokenId: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    getApproved(tokenId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    getSigner(index: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    getSigner(index: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     governance(overrides?: CallOverrides): Promise<BigNumber>;
 
     governanceIsLocked(overrides?: CallOverrides): Promise<BigNumber>;
 
-    isApprovedForAll(owner: string, operator: string, overrides?: CallOverrides): Promise<BigNumber>;
+    isApprovedForAll(
+      owner: PromiseOrValue<string>,
+      operator: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    isSigner(signer: string, overrides?: CallOverrides): Promise<BigNumber>;
+    isSigner(signer: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     latestChargedTime(overrides?: CallOverrides): Promise<BigNumber>;
 
-    lockGovernance(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    lockGovernance(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     maxCover(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -1145,15 +1253,15 @@ export interface SolaceCoverProductV3 extends BaseContract {
 
     maxRateNum(overrides?: CallOverrides): Promise<BigNumber>;
 
-    minRequiredAccountBalance(_coverLimit: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    minRequiredAccountBalance(_coverLimit: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    minScpRequired(_policyholder: string, overrides?: CallOverrides): Promise<BigNumber>;
+    minScpRequired(_policyholder: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     name(overrides?: CallOverrides): Promise<BigNumber>;
 
     numSigners(overrides?: CallOverrides): Promise<BigNumber>;
 
-    ownerOf(tokenId: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    ownerOf(tokenId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     paused(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -1161,174 +1269,190 @@ export interface SolaceCoverProductV3 extends BaseContract {
 
     pendingGovernance(overrides?: CallOverrides): Promise<BigNumber>;
 
-    policyOf(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    policyOf(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    policyStatus(_policyID: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    policyStatus(_policyID: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     purchase(
-      _user: string,
-      _coverLimit: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _user: PromiseOrValue<string>,
+      _coverLimit: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     purchaseWithNonStable(
-      _user: string,
-      _coverLimit: BigNumberish,
-      _token: string,
-      _amount: BigNumberish,
-      _price: BigNumberish,
-      _priceDeadline: BigNumberish,
-      _signature: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _user: PromiseOrValue<string>,
+      _coverLimit: PromiseOrValue<BigNumberish>,
+      _token: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
+      _price: PromiseOrValue<BigNumberish>,
+      _priceDeadline: PromiseOrValue<BigNumberish>,
+      _signature: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     purchaseWithStable(
-      _user: string,
-      _coverLimit: BigNumberish,
-      _token: string,
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _user: PromiseOrValue<string>,
+      _coverLimit: PromiseOrValue<BigNumberish>,
+      _token: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     registry(overrides?: CallOverrides): Promise<BigNumber>;
 
-    removeSigner(signer: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    removeSigner(
+      signer: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     riskManager(overrides?: CallOverrides): Promise<BigNumber>;
 
     'safeTransferFrom(address,address,uint256)'(
-      from: string,
-      to: string,
-      tokenId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      tokenId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     'safeTransferFrom(address,address,uint256,bytes)'(
-      from: string,
-      to: string,
-      tokenId: BigNumberish,
-      _data: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      tokenId: PromiseOrValue<BigNumberish>,
+      _data: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setApprovalForAll(
-      operator: string,
-      approved: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      operator: PromiseOrValue<string>,
+      approved: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    setBaseURI(_baseURI: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    setBaseURI(
+      _baseURI: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     setChargeCycle(
-      _chargeCycle: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _chargeCycle: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setChargedTime(
-      _timestamp: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _timestamp: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setMaxRate(
-      _maxRateNum: BigNumberish,
-      _maxRateDenom: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _maxRateNum: PromiseOrValue<BigNumberish>,
+      _maxRateDenom: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    setPaused(_paused: boolean, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    setPaused(
+      _paused: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     setPendingGovernance(
-      pendingGovernance_: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      pendingGovernance_: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    setRegistry(_registry: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    setRegistry(
+      _registry: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
-    supportsInterface(interfaceId: BytesLike, overrides?: CallOverrides): Promise<BigNumber>;
+    supportsInterface(interfaceId: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<BigNumber>;
 
     symbol(overrides?: CallOverrides): Promise<BigNumber>;
 
-    tokenURI(policyID: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    tokenURI(policyID: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
     transferFrom(
-      from: string,
-      to: string,
-      tokenId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      tokenId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     verifyPremium(
-      premium: BigNumberish,
-      policyholder: string,
-      deadline: BigNumberish,
-      signature: BytesLike,
+      premium: PromiseOrValue<BigNumberish>,
+      policyholder: PromiseOrValue<string>,
+      deadline: PromiseOrValue<BigNumberish>,
+      signature: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     verifyPrice(
-      token: string,
-      price: BigNumberish,
-      deadline: BigNumberish,
-      signature: BytesLike,
+      token: PromiseOrValue<string>,
+      price: PromiseOrValue<BigNumberish>,
+      deadline: PromiseOrValue<BigNumberish>,
+      signature: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
   };
 
   populateTransaction: {
-    acceptGovernance(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    acceptGovernance(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     activeCoverLimit(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     addSigner(
-      signer: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      signer: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     approve(
-      to: string,
-      tokenId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      to: PromiseOrValue<string>,
+      tokenId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     availableCoverCapacity(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    balanceOf(owner: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    balanceOf(owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     baseURI(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     cancel(
-      _premium: BigNumberish,
-      _deadline: BigNumberish,
-      _signature: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _premium: PromiseOrValue<BigNumberish>,
+      _deadline: PromiseOrValue<BigNumberish>,
+      _signature: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     cancelPolicies(
-      _policyholders: string[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _policyholders: PromiseOrValue<string>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     chargeCycle(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    coverLimitOf(arg0: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    coverLimitOf(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    getApproved(tokenId: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getApproved(tokenId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    getSigner(index: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getSigner(index: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     governance(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     governanceIsLocked(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    isApprovedForAll(owner: string, operator: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    isApprovedForAll(
+      owner: PromiseOrValue<string>,
+      operator: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
-    isSigner(signer: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    isSigner(signer: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     latestChargedTime(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    lockGovernance(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    lockGovernance(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     maxCover(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
@@ -1336,15 +1460,18 @@ export interface SolaceCoverProductV3 extends BaseContract {
 
     maxRateNum(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    minRequiredAccountBalance(_coverLimit: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    minRequiredAccountBalance(
+      _coverLimit: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
-    minScpRequired(_policyholder: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    minScpRequired(_policyholder: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     name(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     numSigners(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    ownerOf(tokenId: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    ownerOf(tokenId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     paused(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
@@ -1352,129 +1479,129 @@ export interface SolaceCoverProductV3 extends BaseContract {
 
     pendingGovernance(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    policyOf(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    policyOf(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    policyStatus(_policyID: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    policyStatus(_policyID: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     purchase(
-      _user: string,
-      _coverLimit: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _user: PromiseOrValue<string>,
+      _coverLimit: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     purchaseWithNonStable(
-      _user: string,
-      _coverLimit: BigNumberish,
-      _token: string,
-      _amount: BigNumberish,
-      _price: BigNumberish,
-      _priceDeadline: BigNumberish,
-      _signature: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _user: PromiseOrValue<string>,
+      _coverLimit: PromiseOrValue<BigNumberish>,
+      _token: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
+      _price: PromiseOrValue<BigNumberish>,
+      _priceDeadline: PromiseOrValue<BigNumberish>,
+      _signature: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     purchaseWithStable(
-      _user: string,
-      _coverLimit: BigNumberish,
-      _token: string,
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _user: PromiseOrValue<string>,
+      _coverLimit: PromiseOrValue<BigNumberish>,
+      _token: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     registry(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     removeSigner(
-      signer: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      signer: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     riskManager(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     'safeTransferFrom(address,address,uint256)'(
-      from: string,
-      to: string,
-      tokenId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      tokenId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     'safeTransferFrom(address,address,uint256,bytes)'(
-      from: string,
-      to: string,
-      tokenId: BigNumberish,
-      _data: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      tokenId: PromiseOrValue<BigNumberish>,
+      _data: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setApprovalForAll(
-      operator: string,
-      approved: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      operator: PromiseOrValue<string>,
+      approved: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setBaseURI(
-      _baseURI: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _baseURI: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setChargeCycle(
-      _chargeCycle: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _chargeCycle: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setChargedTime(
-      _timestamp: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _timestamp: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setMaxRate(
-      _maxRateNum: BigNumberish,
-      _maxRateDenom: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _maxRateNum: PromiseOrValue<BigNumberish>,
+      _maxRateDenom: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setPaused(
-      _paused: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _paused: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setPendingGovernance(
-      pendingGovernance_: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      pendingGovernance_: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setRegistry(
-      _registry: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _registry: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    supportsInterface(interfaceId: BytesLike, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    supportsInterface(interfaceId: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     symbol(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    tokenURI(policyID: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    tokenURI(policyID: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     totalSupply(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     transferFrom(
-      from: string,
-      to: string,
-      tokenId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      tokenId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     verifyPremium(
-      premium: BigNumberish,
-      policyholder: string,
-      deadline: BigNumberish,
-      signature: BytesLike,
+      premium: PromiseOrValue<BigNumberish>,
+      policyholder: PromiseOrValue<string>,
+      deadline: PromiseOrValue<BigNumberish>,
+      signature: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     verifyPrice(
-      token: string,
-      price: BigNumberish,
-      deadline: BigNumberish,
-      signature: BytesLike,
+      token: PromiseOrValue<string>,
+      price: PromiseOrValue<BigNumberish>,
+      deadline: PromiseOrValue<BigNumberish>,
+      signature: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
   };

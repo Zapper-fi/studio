@@ -1,14 +1,11 @@
 import { Inject } from '@nestjs/common';
 import { BigNumber } from 'bignumber.js';
 import { gql } from 'graphql-request';
-import { sumBy } from 'lodash';
 
 import { drillBalance } from '~app-toolkit';
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
 import { presentBalanceFetcherResponse } from '~app-toolkit/helpers/presentation/balance-fetcher-response.present';
-import { RocketPoolContractFactory } from '~apps/rocket-pool';
-import { rocketMinipoolManagerAddress } from '~apps/rocket-pool/ethereum/rocket-pool.staking.contract-position-fetcher';
 import { BalanceFetcher } from '~balance/balance-fetcher.interface';
 import { Network } from '~types/network.interface';
 
@@ -36,7 +33,7 @@ const network = Network.ETHEREUM_MAINNET;
 
 @Register.BalanceFetcher(ETHEREUM_DEFINITION.id, network)
 export class EthereumEthereumBalanceFetcher implements BalanceFetcher {
-  constructor(@Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit) { }
+  constructor(@Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit) {}
 
   async getStakedBalances(address: string) {
     return this.appToolkit.helpers.contractPositionBalanceHelper.getContractPositionBalances({

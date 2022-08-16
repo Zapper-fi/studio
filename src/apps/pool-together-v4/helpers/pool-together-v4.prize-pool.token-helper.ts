@@ -8,7 +8,7 @@ import { ContractType } from '~position/contract.interface';
 import { AppTokenPosition } from '~position/position.interface';
 import { Network } from '~types/network.interface';
 
-import { PoolTogetherContractFactory } from '../contracts';
+import { PoolTogetherV4ContractFactory } from '../contracts';
 import { POOL_TOGETHER_V4_DEFINITION } from '../pool-together-v4.definition';
 
 const appId = POOL_TOGETHER_V4_DEFINITION.id;
@@ -23,7 +23,7 @@ type GetTokenMarketDataParams = {
 export class PoolTogetherV4PrizePoolTokenHelper {
   constructor(
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
-    @Inject(PoolTogetherContractFactory) private readonly contractFactory: PoolTogetherContractFactory,
+    @Inject(PoolTogetherV4ContractFactory) private readonly contractFactory: PoolTogetherV4ContractFactory,
   ) {}
 
   async getAppTokens({ network, prizePoolAddresses }: GetTokenMarketDataParams) {

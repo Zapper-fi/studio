@@ -581,6 +581,117 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "mikeshultz",
+      "name": "Mike Shultz",
+      "avatar_url": "https://avatars.githubusercontent.com/u/1048089?v=4",
+      "profile": "https://mikeshultz.com/",
+      "contributions": [
+        "code",
+        "bug"
+      ]
+    },
+    {
+      "login": "bghughes",
+      "name": "Benjamin Hughes",
+      "avatar_url": "https://avatars.githubusercontent.com/u/32072172?v=4",
+      "profile": "https://www.bghughes.com/",
+      "contributions": [
+        "code",
+        "bug"
+      ]
+    },
+    {
+      "login": "0xButterfield",
+      "name": "0xButterfield",
+      "avatar_url": "https://avatars.githubusercontent.com/u/100517047?v=4",
+      "profile": "https://github.com/0xButterfield",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "vmaark",
+      "name": "Mark",
+      "avatar_url": "https://avatars.githubusercontent.com/u/2270661?v=4",
+      "profile": "https://github.com/vmaark",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "yuval-weiss",
+      "name": "yuval-weiss",
+      "avatar_url": "https://avatars.githubusercontent.com/u/43820038?v=4",
+      "profile": "https://github.com/yuval-weiss",
+      "contributions": [
+        "bug"
+      ]
+    },
+    {
+      "login": "volt62",
+      "name": "volt62",
+      "avatar_url": "https://avatars.githubusercontent.com/u/95225490?v=4",
+      "profile": "https://github.com/volt62",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "procanzzc",
+      "name": "0xNeo",
+      "avatar_url": "https://avatars.githubusercontent.com/u/20929050?v=4",
+      "profile": "https://github.com/procanzzc",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "0xrmvdao",
+      "name": "0xR",
+      "avatar_url": "https://avatars.githubusercontent.com/u/99395193?v=4",
+      "profile": "https://github.com/0xrmvdao",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "dinngodev",
+      "name": "DINNGO Dev",
+      "avatar_url": "https://avatars.githubusercontent.com/u/44598084?v=4",
+      "profile": "https://github.com/dinngodev",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "rekt0x",
+      "name": "rekt0x",
+      "avatar_url": "https://avatars.githubusercontent.com/u/6087393?v=4",
+      "profile": "https://github.com/rekt0x",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "amikec",
+      "name": "Mickey",
+      "avatar_url": "https://avatars.githubusercontent.com/u/91593430?v=4",
+      "profile": "https://github.com/amikec",
+      "contributions": [
+        "code",
+        "bug"
+      ]
+    },
+    {
+      "login": "crypslato",
+      "name": "crypslato",
+      "avatar_url": "https://avatars.githubusercontent.com/u/77345286?v=4",
+      "profile": "https://github.com/crypslato",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7

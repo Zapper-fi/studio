@@ -15,7 +15,7 @@ import type {
 } from 'ethers';
 import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
 import type { Listener, Provider } from '@ethersproject/providers';
-import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
 export interface MmFinanceSyrupMeerkatInterface extends utils.Interface {
   functions: {
@@ -199,17 +199,23 @@ export interface MmFinanceSyrupMeerkatInterface extends utils.Interface {
   encodeFunctionData(functionFragment: 'balanceOf', values?: undefined): string;
   encodeFunctionData(functionFragment: 'boostContract', values?: undefined): string;
   encodeFunctionData(functionFragment: 'meerkatPoolPID', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'calculateOverdueFee', values: [string]): string;
-  encodeFunctionData(functionFragment: 'calculatePerformanceFee', values: [string]): string;
+  encodeFunctionData(functionFragment: 'calculateOverdueFee', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'calculatePerformanceFee', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'calculateTotalPendingMeerkatRewards', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'calculateWithdrawFee', values: [string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'deposit', values: [BigNumberish, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'freeOverdueFeeUsers', values: [string]): string;
-  encodeFunctionData(functionFragment: 'freePerformanceFeeUsers', values: [string]): string;
-  encodeFunctionData(functionFragment: 'freeWithdrawFeeUsers', values: [string]): string;
+  encodeFunctionData(
+    functionFragment: 'calculateWithdrawFee',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'deposit',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'freeOverdueFeeUsers', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'freePerformanceFeeUsers', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'freeWithdrawFeeUsers', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'getPricePerFullShare', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'inCaseTokensGetStuck', values: [string]): string;
-  encodeFunctionData(functionFragment: 'init', values: [string]): string;
+  encodeFunctionData(functionFragment: 'inCaseTokensGetStuck', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'init', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'masterchefV2', values?: undefined): string;
   encodeFunctionData(functionFragment: 'operator', values?: undefined): string;
   encodeFunctionData(functionFragment: 'overdueFee', values?: undefined): string;
@@ -219,37 +225,46 @@ export interface MmFinanceSyrupMeerkatInterface extends utils.Interface {
   encodeFunctionData(functionFragment: 'performanceFee', values?: undefined): string;
   encodeFunctionData(functionFragment: 'performanceFeeContract', values?: undefined): string;
   encodeFunctionData(functionFragment: 'renounceOwnership', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'setAdmin', values: [string]): string;
-  encodeFunctionData(functionFragment: 'setBoostContract', values: [string]): string;
-  encodeFunctionData(functionFragment: 'setBoostWeight', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'setDurationFactor', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'setDurationFactorOverdue', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'setFreePerformanceFeeUser', values: [string, boolean]): string;
-  encodeFunctionData(functionFragment: 'setMaxLockDuration', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'setOperator', values: [string]): string;
-  encodeFunctionData(functionFragment: 'setOverdueFee', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'setOverdueFeeUser', values: [string, boolean]): string;
-  encodeFunctionData(functionFragment: 'setPerformanceFee', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'setPerformanceFeeContract', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'setTreasury', values: [string]): string;
-  encodeFunctionData(functionFragment: 'setUnlockFreeDuration', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'setVMeerkatContract', values: [string]): string;
-  encodeFunctionData(functionFragment: 'setWithdrawFee', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'setWithdrawFeeContract', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'setWithdrawFeePeriod', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'setWithdrawFeeUser', values: [string, boolean]): string;
+  encodeFunctionData(functionFragment: 'setAdmin', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'setBoostContract', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'setBoostWeight', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'setDurationFactor', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'setDurationFactorOverdue', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(
+    functionFragment: 'setFreePerformanceFeeUser',
+    values: [PromiseOrValue<string>, PromiseOrValue<boolean>],
+  ): string;
+  encodeFunctionData(functionFragment: 'setMaxLockDuration', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'setOperator', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'setOverdueFee', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(
+    functionFragment: 'setOverdueFeeUser',
+    values: [PromiseOrValue<string>, PromiseOrValue<boolean>],
+  ): string;
+  encodeFunctionData(functionFragment: 'setPerformanceFee', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'setPerformanceFeeContract', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'setTreasury', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'setUnlockFreeDuration', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'setVMeerkatContract', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'setWithdrawFee', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'setWithdrawFeeContract', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'setWithdrawFeePeriod', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(
+    functionFragment: 'setWithdrawFeeUser',
+    values: [PromiseOrValue<string>, PromiseOrValue<boolean>],
+  ): string;
   encodeFunctionData(functionFragment: 'token', values?: undefined): string;
   encodeFunctionData(functionFragment: 'totalBoostDebt', values?: undefined): string;
   encodeFunctionData(functionFragment: 'totalLockedAmount', values?: undefined): string;
   encodeFunctionData(functionFragment: 'totalShares', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'transferOwnership', values: [string]): string;
+  encodeFunctionData(functionFragment: 'transferOwnership', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'treasury', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'unlock', values: [string]): string;
+  encodeFunctionData(functionFragment: 'unlock', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'unpause', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'userInfo', values: [string]): string;
-  encodeFunctionData(functionFragment: 'withdraw', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'userInfo', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'withdraw', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'withdrawAll', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'withdrawByAmount', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'withdrawByAmount', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'withdrawFee', values?: undefined): string;
   encodeFunctionData(functionFragment: 'withdrawFeeContract', values?: undefined): string;
   encodeFunctionData(functionFragment: 'withdrawFeePeriod', values?: undefined): string;
@@ -664,34 +679,41 @@ export interface MmFinanceSyrupMeerkat extends BaseContract {
 
     meerkatPoolPID(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    calculateOverdueFee(_user: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    calculateOverdueFee(_user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    calculatePerformanceFee(_user: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    calculatePerformanceFee(_user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     calculateTotalPendingMeerkatRewards(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    calculateWithdrawFee(_user: string, _shares: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber]>;
+    calculateWithdrawFee(
+      _user: PromiseOrValue<string>,
+      _shares: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber]>;
 
     deposit(
-      _amount: BigNumberish,
-      _lockDuration: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _amount: PromiseOrValue<BigNumberish>,
+      _lockDuration: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    freeOverdueFeeUsers(arg0: string, overrides?: CallOverrides): Promise<[boolean]>;
+    freeOverdueFeeUsers(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[boolean]>;
 
-    freePerformanceFeeUsers(arg0: string, overrides?: CallOverrides): Promise<[boolean]>;
+    freePerformanceFeeUsers(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[boolean]>;
 
-    freeWithdrawFeeUsers(arg0: string, overrides?: CallOverrides): Promise<[boolean]>;
+    freeWithdrawFeeUsers(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[boolean]>;
 
     getPricePerFullShare(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     inCaseTokensGetStuck(
-      _token: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _token: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    init(dummyToken: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    init(
+      dummyToken: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<ContractTransaction>;
 
     masterchefV2(overrides?: CallOverrides): Promise<[string]>;
 
@@ -701,7 +723,7 @@ export interface MmFinanceSyrupMeerkat extends BaseContract {
 
     owner(overrides?: CallOverrides): Promise<[string]>;
 
-    pause(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    pause(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     paused(overrides?: CallOverrides): Promise<[boolean]>;
 
@@ -709,101 +731,104 @@ export interface MmFinanceSyrupMeerkat extends BaseContract {
 
     performanceFeeContract(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
-    setAdmin(_admin: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    setAdmin(
+      _admin: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<ContractTransaction>;
 
     setBoostContract(
-      _boostContract: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _boostContract: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setBoostWeight(
-      _boostWeight: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _boostWeight: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setDurationFactor(
-      _durationFactor: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _durationFactor: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setDurationFactorOverdue(
-      _durationFactorOverdue: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _durationFactorOverdue: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setFreePerformanceFeeUser(
-      _user: string,
-      _free: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _user: PromiseOrValue<string>,
+      _free: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setMaxLockDuration(
-      _maxLockDuration: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _maxLockDuration: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setOperator(
-      _operator: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _operator: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setOverdueFee(
-      _overdueFee: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _overdueFee: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setOverdueFeeUser(
-      _user: string,
-      _free: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _user: PromiseOrValue<string>,
+      _free: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setPerformanceFee(
-      _performanceFee: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _performanceFee: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setPerformanceFeeContract(
-      _performanceFeeContract: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _performanceFeeContract: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setTreasury(
-      _treasury: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _treasury: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setUnlockFreeDuration(
-      _unlockFreeDuration: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _unlockFreeDuration: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setVMeerkatContract(
-      _VMeerkat: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _VMeerkat: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setWithdrawFee(
-      _withdrawFee: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _withdrawFee: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setWithdrawFeeContract(
-      _withdrawFeeContract: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _withdrawFeeContract: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setWithdrawFeePeriod(
-      _withdrawFeePeriod: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _withdrawFeePeriod: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setWithdrawFeeUser(
-      _user: string,
-      _free: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _user: PromiseOrValue<string>,
+      _free: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     token(overrides?: CallOverrides): Promise<[string]>;
@@ -815,18 +840,21 @@ export interface MmFinanceSyrupMeerkat extends BaseContract {
     totalShares(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     treasury(overrides?: CallOverrides): Promise<[string]>;
 
-    unlock(_user: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    unlock(
+      _user: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<ContractTransaction>;
 
-    unpause(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    unpause(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     userInfo(
-      arg0: string,
+      arg0: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<
       [BigNumber, BigNumber, BigNumber, BigNumber, BigNumber, BigNumber, BigNumber, boolean, BigNumber] & {
@@ -843,15 +871,15 @@ export interface MmFinanceSyrupMeerkat extends BaseContract {
     >;
 
     withdraw(
-      _shares: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _shares: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    withdrawAll(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    withdrawAll(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     withdrawByAmount(
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     withdrawFee(overrides?: CallOverrides): Promise<[BigNumber]>;
@@ -905,34 +933,41 @@ export interface MmFinanceSyrupMeerkat extends BaseContract {
 
   meerkatPoolPID(overrides?: CallOverrides): Promise<BigNumber>;
 
-  calculateOverdueFee(_user: string, overrides?: CallOverrides): Promise<BigNumber>;
+  calculateOverdueFee(_user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  calculatePerformanceFee(_user: string, overrides?: CallOverrides): Promise<BigNumber>;
+  calculatePerformanceFee(_user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   calculateTotalPendingMeerkatRewards(overrides?: CallOverrides): Promise<BigNumber>;
 
-  calculateWithdrawFee(_user: string, _shares: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+  calculateWithdrawFee(
+    _user: PromiseOrValue<string>,
+    _shares: PromiseOrValue<BigNumberish>,
+    overrides?: CallOverrides,
+  ): Promise<BigNumber>;
 
   deposit(
-    _amount: BigNumberish,
-    _lockDuration: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _amount: PromiseOrValue<BigNumberish>,
+    _lockDuration: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  freeOverdueFeeUsers(arg0: string, overrides?: CallOverrides): Promise<boolean>;
+  freeOverdueFeeUsers(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
-  freePerformanceFeeUsers(arg0: string, overrides?: CallOverrides): Promise<boolean>;
+  freePerformanceFeeUsers(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
-  freeWithdrawFeeUsers(arg0: string, overrides?: CallOverrides): Promise<boolean>;
+  freeWithdrawFeeUsers(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
   getPricePerFullShare(overrides?: CallOverrides): Promise<BigNumber>;
 
   inCaseTokensGetStuck(
-    _token: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _token: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  init(dummyToken: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  init(
+    dummyToken: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
+  ): Promise<ContractTransaction>;
 
   masterchefV2(overrides?: CallOverrides): Promise<string>;
 
@@ -942,7 +977,7 @@ export interface MmFinanceSyrupMeerkat extends BaseContract {
 
   owner(overrides?: CallOverrides): Promise<string>;
 
-  pause(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  pause(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   paused(overrides?: CallOverrides): Promise<boolean>;
 
@@ -950,101 +985,104 @@ export interface MmFinanceSyrupMeerkat extends BaseContract {
 
   performanceFeeContract(overrides?: CallOverrides): Promise<BigNumber>;
 
-  renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
-  setAdmin(_admin: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  setAdmin(
+    _admin: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
+  ): Promise<ContractTransaction>;
 
   setBoostContract(
-    _boostContract: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _boostContract: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setBoostWeight(
-    _boostWeight: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _boostWeight: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setDurationFactor(
-    _durationFactor: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _durationFactor: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setDurationFactorOverdue(
-    _durationFactorOverdue: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _durationFactorOverdue: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setFreePerformanceFeeUser(
-    _user: string,
-    _free: boolean,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _user: PromiseOrValue<string>,
+    _free: PromiseOrValue<boolean>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setMaxLockDuration(
-    _maxLockDuration: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _maxLockDuration: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setOperator(
-    _operator: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _operator: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setOverdueFee(
-    _overdueFee: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _overdueFee: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setOverdueFeeUser(
-    _user: string,
-    _free: boolean,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _user: PromiseOrValue<string>,
+    _free: PromiseOrValue<boolean>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setPerformanceFee(
-    _performanceFee: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _performanceFee: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setPerformanceFeeContract(
-    _performanceFeeContract: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _performanceFeeContract: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setTreasury(
-    _treasury: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _treasury: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setUnlockFreeDuration(
-    _unlockFreeDuration: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _unlockFreeDuration: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setVMeerkatContract(
-    _VMeerkat: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _VMeerkat: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setWithdrawFee(
-    _withdrawFee: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _withdrawFee: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setWithdrawFeeContract(
-    _withdrawFeeContract: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _withdrawFeeContract: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setWithdrawFeePeriod(
-    _withdrawFeePeriod: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _withdrawFeePeriod: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setWithdrawFeeUser(
-    _user: string,
-    _free: boolean,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _user: PromiseOrValue<string>,
+    _free: PromiseOrValue<boolean>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   token(overrides?: CallOverrides): Promise<string>;
@@ -1056,18 +1094,21 @@ export interface MmFinanceSyrupMeerkat extends BaseContract {
   totalShares(overrides?: CallOverrides): Promise<BigNumber>;
 
   transferOwnership(
-    newOwner: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    newOwner: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   treasury(overrides?: CallOverrides): Promise<string>;
 
-  unlock(_user: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  unlock(
+    _user: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
+  ): Promise<ContractTransaction>;
 
-  unpause(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  unpause(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   userInfo(
-    arg0: string,
+    arg0: PromiseOrValue<string>,
     overrides?: CallOverrides,
   ): Promise<
     [BigNumber, BigNumber, BigNumber, BigNumber, BigNumber, BigNumber, BigNumber, boolean, BigNumber] & {
@@ -1084,15 +1125,15 @@ export interface MmFinanceSyrupMeerkat extends BaseContract {
   >;
 
   withdraw(
-    _shares: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _shares: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  withdrawAll(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  withdrawAll(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   withdrawByAmount(
-    _amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   withdrawFee(overrides?: CallOverrides): Promise<BigNumber>;
@@ -1146,27 +1187,35 @@ export interface MmFinanceSyrupMeerkat extends BaseContract {
 
     meerkatPoolPID(overrides?: CallOverrides): Promise<BigNumber>;
 
-    calculateOverdueFee(_user: string, overrides?: CallOverrides): Promise<BigNumber>;
+    calculateOverdueFee(_user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    calculatePerformanceFee(_user: string, overrides?: CallOverrides): Promise<BigNumber>;
+    calculatePerformanceFee(_user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     calculateTotalPendingMeerkatRewards(overrides?: CallOverrides): Promise<BigNumber>;
 
-    calculateWithdrawFee(_user: string, _shares: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    calculateWithdrawFee(
+      _user: PromiseOrValue<string>,
+      _shares: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    deposit(_amount: BigNumberish, _lockDuration: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    deposit(
+      _amount: PromiseOrValue<BigNumberish>,
+      _lockDuration: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    freeOverdueFeeUsers(arg0: string, overrides?: CallOverrides): Promise<boolean>;
+    freeOverdueFeeUsers(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
-    freePerformanceFeeUsers(arg0: string, overrides?: CallOverrides): Promise<boolean>;
+    freePerformanceFeeUsers(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
-    freeWithdrawFeeUsers(arg0: string, overrides?: CallOverrides): Promise<boolean>;
+    freeWithdrawFeeUsers(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
     getPricePerFullShare(overrides?: CallOverrides): Promise<BigNumber>;
 
-    inCaseTokensGetStuck(_token: string, overrides?: CallOverrides): Promise<void>;
+    inCaseTokensGetStuck(_token: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    init(dummyToken: string, overrides?: CallOverrides): Promise<void>;
+    init(dummyToken: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     masterchefV2(overrides?: CallOverrides): Promise<string>;
 
@@ -1186,43 +1235,64 @@ export interface MmFinanceSyrupMeerkat extends BaseContract {
 
     renounceOwnership(overrides?: CallOverrides): Promise<void>;
 
-    setAdmin(_admin: string, overrides?: CallOverrides): Promise<void>;
+    setAdmin(_admin: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    setBoostContract(_boostContract: string, overrides?: CallOverrides): Promise<void>;
+    setBoostContract(_boostContract: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    setBoostWeight(_boostWeight: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    setBoostWeight(_boostWeight: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
-    setDurationFactor(_durationFactor: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    setDurationFactor(_durationFactor: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
-    setDurationFactorOverdue(_durationFactorOverdue: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    setDurationFactorOverdue(
+      _durationFactorOverdue: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    setFreePerformanceFeeUser(_user: string, _free: boolean, overrides?: CallOverrides): Promise<void>;
+    setFreePerformanceFeeUser(
+      _user: PromiseOrValue<string>,
+      _free: PromiseOrValue<boolean>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    setMaxLockDuration(_maxLockDuration: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    setMaxLockDuration(_maxLockDuration: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
-    setOperator(_operator: string, overrides?: CallOverrides): Promise<void>;
+    setOperator(_operator: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    setOverdueFee(_overdueFee: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    setOverdueFee(_overdueFee: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
-    setOverdueFeeUser(_user: string, _free: boolean, overrides?: CallOverrides): Promise<void>;
+    setOverdueFeeUser(
+      _user: PromiseOrValue<string>,
+      _free: PromiseOrValue<boolean>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    setPerformanceFee(_performanceFee: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    setPerformanceFee(_performanceFee: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
-    setPerformanceFeeContract(_performanceFeeContract: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    setPerformanceFeeContract(
+      _performanceFeeContract: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    setTreasury(_treasury: string, overrides?: CallOverrides): Promise<void>;
+    setTreasury(_treasury: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    setUnlockFreeDuration(_unlockFreeDuration: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    setUnlockFreeDuration(_unlockFreeDuration: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
-    setVMeerkatContract(_VMeerkat: string, overrides?: CallOverrides): Promise<void>;
+    setVMeerkatContract(_VMeerkat: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    setWithdrawFee(_withdrawFee: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    setWithdrawFee(_withdrawFee: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
-    setWithdrawFeeContract(_withdrawFeeContract: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    setWithdrawFeeContract(
+      _withdrawFeeContract: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    setWithdrawFeePeriod(_withdrawFeePeriod: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    setWithdrawFeePeriod(_withdrawFeePeriod: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
-    setWithdrawFeeUser(_user: string, _free: boolean, overrides?: CallOverrides): Promise<void>;
+    setWithdrawFeeUser(
+      _user: PromiseOrValue<string>,
+      _free: PromiseOrValue<boolean>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
     token(overrides?: CallOverrides): Promise<string>;
 
@@ -1232,16 +1302,16 @@ export interface MmFinanceSyrupMeerkat extends BaseContract {
 
     totalShares(overrides?: CallOverrides): Promise<BigNumber>;
 
-    transferOwnership(newOwner: string, overrides?: CallOverrides): Promise<void>;
+    transferOwnership(newOwner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     treasury(overrides?: CallOverrides): Promise<string>;
 
-    unlock(_user: string, overrides?: CallOverrides): Promise<void>;
+    unlock(_user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     unpause(overrides?: CallOverrides): Promise<void>;
 
     userInfo(
-      arg0: string,
+      arg0: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<
       [BigNumber, BigNumber, BigNumber, BigNumber, BigNumber, BigNumber, BigNumber, boolean, BigNumber] & {
@@ -1257,11 +1327,11 @@ export interface MmFinanceSyrupMeerkat extends BaseContract {
       }
     >;
 
-    withdraw(_shares: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    withdraw(_shares: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
     withdrawAll(overrides?: CallOverrides): Promise<void>;
 
-    withdrawByAmount(_amount: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    withdrawByAmount(_amount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
     withdrawFee(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -1272,38 +1342,41 @@ export interface MmFinanceSyrupMeerkat extends BaseContract {
 
   filters: {
     'Deposit(address,uint256,uint256,uint256,uint256)'(
-      sender?: string | null,
+      sender?: PromiseOrValue<string> | null,
       amount?: null,
       shares?: null,
       duration?: null,
       lastDepositedTime?: null,
     ): DepositEventFilter;
     Deposit(
-      sender?: string | null,
+      sender?: PromiseOrValue<string> | null,
       amount?: null,
       shares?: null,
       duration?: null,
       lastDepositedTime?: null,
     ): DepositEventFilter;
 
-    'FreeFeeUser(address,bool)'(user?: string | null, free?: boolean | null): FreeFeeUserEventFilter;
-    FreeFeeUser(user?: string | null, free?: boolean | null): FreeFeeUserEventFilter;
+    'FreeFeeUser(address,bool)'(
+      user?: PromiseOrValue<string> | null,
+      free?: PromiseOrValue<boolean> | null,
+    ): FreeFeeUserEventFilter;
+    FreeFeeUser(user?: PromiseOrValue<string> | null, free?: PromiseOrValue<boolean> | null): FreeFeeUserEventFilter;
 
-    'Harvest(address,uint256)'(sender?: string | null, amount?: null): HarvestEventFilter;
-    Harvest(sender?: string | null, amount?: null): HarvestEventFilter;
+    'Harvest(address,uint256)'(sender?: PromiseOrValue<string> | null, amount?: null): HarvestEventFilter;
+    Harvest(sender?: PromiseOrValue<string> | null, amount?: null): HarvestEventFilter;
 
     'Init()'(): InitEventFilter;
     Init(): InitEventFilter;
 
     'Lock(address,uint256,uint256,uint256,uint256)'(
-      sender?: string | null,
+      sender?: PromiseOrValue<string> | null,
       lockedAmount?: null,
       shares?: null,
       lockedDuration?: null,
       blockTimestamp?: null,
     ): LockEventFilter;
     Lock(
-      sender?: string | null,
+      sender?: PromiseOrValue<string> | null,
       lockedAmount?: null,
       shares?: null,
       lockedDuration?: null,
@@ -1359,10 +1432,13 @@ export interface MmFinanceSyrupMeerkat extends BaseContract {
     NewWithdrawFeePeriod(withdrawFeePeriod?: null): NewWithdrawFeePeriodEventFilter;
 
     'OwnershipTransferred(address,address)'(
-      previousOwner?: string | null,
-      newOwner?: string | null,
+      previousOwner?: PromiseOrValue<string> | null,
+      newOwner?: PromiseOrValue<string> | null,
     ): OwnershipTransferredEventFilter;
-    OwnershipTransferred(previousOwner?: string | null, newOwner?: string | null): OwnershipTransferredEventFilter;
+    OwnershipTransferred(
+      previousOwner?: PromiseOrValue<string> | null,
+      newOwner?: PromiseOrValue<string> | null,
+    ): OwnershipTransferredEventFilter;
 
     'Pause()'(): PauseEventFilter;
     Pause(): PauseEventFilter;
@@ -1370,8 +1446,12 @@ export interface MmFinanceSyrupMeerkat extends BaseContract {
     'Paused(address)'(account?: null): PausedEventFilter;
     Paused(account?: null): PausedEventFilter;
 
-    'Unlock(address,uint256,uint256)'(sender?: string | null, amount?: null, blockTimestamp?: null): UnlockEventFilter;
-    Unlock(sender?: string | null, amount?: null, blockTimestamp?: null): UnlockEventFilter;
+    'Unlock(address,uint256,uint256)'(
+      sender?: PromiseOrValue<string> | null,
+      amount?: null,
+      blockTimestamp?: null,
+    ): UnlockEventFilter;
+    Unlock(sender?: PromiseOrValue<string> | null, amount?: null, blockTimestamp?: null): UnlockEventFilter;
 
     'Unpause()'(): UnpauseEventFilter;
     Unpause(): UnpauseEventFilter;
@@ -1379,8 +1459,12 @@ export interface MmFinanceSyrupMeerkat extends BaseContract {
     'Unpaused(address)'(account?: null): UnpausedEventFilter;
     Unpaused(account?: null): UnpausedEventFilter;
 
-    'Withdraw(address,uint256,uint256)'(sender?: string | null, amount?: null, shares?: null): WithdrawEventFilter;
-    Withdraw(sender?: string | null, amount?: null, shares?: null): WithdrawEventFilter;
+    'Withdraw(address,uint256,uint256)'(
+      sender?: PromiseOrValue<string> | null,
+      amount?: null,
+      shares?: null,
+    ): WithdrawEventFilter;
+    Withdraw(sender?: PromiseOrValue<string> | null, amount?: null, shares?: null): WithdrawEventFilter;
   };
 
   estimateGas: {
@@ -1428,34 +1512,41 @@ export interface MmFinanceSyrupMeerkat extends BaseContract {
 
     meerkatPoolPID(overrides?: CallOverrides): Promise<BigNumber>;
 
-    calculateOverdueFee(_user: string, overrides?: CallOverrides): Promise<BigNumber>;
+    calculateOverdueFee(_user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    calculatePerformanceFee(_user: string, overrides?: CallOverrides): Promise<BigNumber>;
+    calculatePerformanceFee(_user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     calculateTotalPendingMeerkatRewards(overrides?: CallOverrides): Promise<BigNumber>;
 
-    calculateWithdrawFee(_user: string, _shares: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
-
-    deposit(
-      _amount: BigNumberish,
-      _lockDuration: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+    calculateWithdrawFee(
+      _user: PromiseOrValue<string>,
+      _shares: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
-    freeOverdueFeeUsers(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    deposit(
+      _amount: PromiseOrValue<BigNumberish>,
+      _lockDuration: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
-    freePerformanceFeeUsers(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    freeOverdueFeeUsers(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    freeWithdrawFeeUsers(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    freePerformanceFeeUsers(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
+
+    freeWithdrawFeeUsers(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     getPricePerFullShare(overrides?: CallOverrides): Promise<BigNumber>;
 
     inCaseTokensGetStuck(
-      _token: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _token: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    init(dummyToken: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    init(
+      dummyToken: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     masterchefV2(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -1465,7 +1556,7 @@ export interface MmFinanceSyrupMeerkat extends BaseContract {
 
     owner(overrides?: CallOverrides): Promise<BigNumber>;
 
-    pause(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    pause(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     paused(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -1473,95 +1564,104 @@ export interface MmFinanceSyrupMeerkat extends BaseContract {
 
     performanceFeeContract(overrides?: CallOverrides): Promise<BigNumber>;
 
-    renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
-    setAdmin(_admin: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    setAdmin(
+      _admin: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     setBoostContract(
-      _boostContract: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _boostContract: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setBoostWeight(
-      _boostWeight: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _boostWeight: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setDurationFactor(
-      _durationFactor: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _durationFactor: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setDurationFactorOverdue(
-      _durationFactorOverdue: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _durationFactorOverdue: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setFreePerformanceFeeUser(
-      _user: string,
-      _free: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _user: PromiseOrValue<string>,
+      _free: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setMaxLockDuration(
-      _maxLockDuration: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _maxLockDuration: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    setOperator(_operator: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    setOperator(
+      _operator: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     setOverdueFee(
-      _overdueFee: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _overdueFee: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setOverdueFeeUser(
-      _user: string,
-      _free: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _user: PromiseOrValue<string>,
+      _free: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setPerformanceFee(
-      _performanceFee: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _performanceFee: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setPerformanceFeeContract(
-      _performanceFeeContract: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _performanceFeeContract: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    setTreasury(_treasury: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    setTreasury(
+      _treasury: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     setUnlockFreeDuration(
-      _unlockFreeDuration: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _unlockFreeDuration: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setVMeerkatContract(
-      _VMeerkat: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _VMeerkat: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setWithdrawFee(
-      _withdrawFee: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _withdrawFee: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setWithdrawFeeContract(
-      _withdrawFeeContract: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _withdrawFeeContract: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setWithdrawFeePeriod(
-      _withdrawFeePeriod: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _withdrawFeePeriod: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setWithdrawFeeUser(
-      _user: string,
-      _free: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _user: PromiseOrValue<string>,
+      _free: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     token(overrides?: CallOverrides): Promise<BigNumber>;
@@ -1573,25 +1673,31 @@ export interface MmFinanceSyrupMeerkat extends BaseContract {
     totalShares(overrides?: CallOverrides): Promise<BigNumber>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     treasury(overrides?: CallOverrides): Promise<BigNumber>;
 
-    unlock(_user: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    unlock(
+      _user: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
-    unpause(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    unpause(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
-    userInfo(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    userInfo(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    withdraw(_shares: BigNumberish, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    withdraw(
+      _shares: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
-    withdrawAll(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    withdrawAll(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     withdrawByAmount(
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     withdrawFee(overrides?: CallOverrides): Promise<BigNumber>;
@@ -1646,40 +1752,40 @@ export interface MmFinanceSyrupMeerkat extends BaseContract {
 
     meerkatPoolPID(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    calculateOverdueFee(_user: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    calculateOverdueFee(_user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    calculatePerformanceFee(_user: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    calculatePerformanceFee(_user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     calculateTotalPendingMeerkatRewards(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     calculateWithdrawFee(
-      _user: string,
-      _shares: BigNumberish,
+      _user: PromiseOrValue<string>,
+      _shares: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     deposit(
-      _amount: BigNumberish,
-      _lockDuration: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _amount: PromiseOrValue<BigNumberish>,
+      _lockDuration: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    freeOverdueFeeUsers(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    freeOverdueFeeUsers(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    freePerformanceFeeUsers(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    freePerformanceFeeUsers(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    freeWithdrawFeeUsers(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    freeWithdrawFeeUsers(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     getPricePerFullShare(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     inCaseTokensGetStuck(
-      _token: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _token: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     init(
-      dummyToken: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      dummyToken: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     masterchefV2(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -1690,7 +1796,7 @@ export interface MmFinanceSyrupMeerkat extends BaseContract {
 
     owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    pause(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    pause(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     paused(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
@@ -1698,104 +1804,104 @@ export interface MmFinanceSyrupMeerkat extends BaseContract {
 
     performanceFeeContract(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     setAdmin(
-      _admin: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _admin: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setBoostContract(
-      _boostContract: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _boostContract: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setBoostWeight(
-      _boostWeight: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _boostWeight: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setDurationFactor(
-      _durationFactor: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _durationFactor: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setDurationFactorOverdue(
-      _durationFactorOverdue: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _durationFactorOverdue: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setFreePerformanceFeeUser(
-      _user: string,
-      _free: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _user: PromiseOrValue<string>,
+      _free: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setMaxLockDuration(
-      _maxLockDuration: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _maxLockDuration: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setOperator(
-      _operator: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _operator: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setOverdueFee(
-      _overdueFee: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _overdueFee: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setOverdueFeeUser(
-      _user: string,
-      _free: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _user: PromiseOrValue<string>,
+      _free: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setPerformanceFee(
-      _performanceFee: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _performanceFee: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setPerformanceFeeContract(
-      _performanceFeeContract: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _performanceFeeContract: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setTreasury(
-      _treasury: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _treasury: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setUnlockFreeDuration(
-      _unlockFreeDuration: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _unlockFreeDuration: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setVMeerkatContract(
-      _VMeerkat: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _VMeerkat: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setWithdrawFee(
-      _withdrawFee: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _withdrawFee: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setWithdrawFeeContract(
-      _withdrawFeeContract: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _withdrawFeeContract: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setWithdrawFeePeriod(
-      _withdrawFeePeriod: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _withdrawFeePeriod: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setWithdrawFeeUser(
-      _user: string,
-      _free: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _user: PromiseOrValue<string>,
+      _free: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     token(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -1807,28 +1913,31 @@ export interface MmFinanceSyrupMeerkat extends BaseContract {
     totalShares(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     treasury(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    unlock(_user: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
-
-    unpause(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
-
-    userInfo(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    withdraw(
-      _shares: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+    unlock(
+      _user: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    withdrawAll(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    unpause(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
+
+    userInfo(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    withdraw(
+      _shares: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<PopulatedTransaction>;
+
+    withdrawAll(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     withdrawByAmount(
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     withdrawFee(overrides?: CallOverrides): Promise<PopulatedTransaction>;

@@ -10,6 +10,7 @@ import { Network } from '~types/network.interface';
 
 import { RocketPoolContractFactory } from '../contracts';
 import { ROCKET_POOL_DEFINITION } from '../rocket-pool.definition';
+
 import {
   rocketMinipoolManagerAddress,
   rocketNodeStakingAddress,

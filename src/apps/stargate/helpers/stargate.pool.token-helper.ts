@@ -31,6 +31,12 @@ export class StargatePoolTokenHelper {
   async getPositions({ factoryAddress, network, useLocalDecimals }: StargatePoolTokenHelperParams) {
     const multicall = this.appToolkit.getMulticall(network);
     const baseTokens = await this.appToolkit.getBaseTokenPrices(network);
+    const appTokens = await this.appToolkit.getAppTokenPositions({
+      appId,
+      groupIds: [STARGATE_DEFINITION.groups.eth.id],
+      network,
+    });
+    const allTokens = [...appTokens, ...baseTokens];
 
     // Get pool addresses from Stargate factory
     const factoryContract = this.stargateContractFactory.stargateFactory({ address: factoryAddress, network });
@@ -45,7 +51,7 @@ export class StargatePoolTokenHelper {
         const [underlyingTokenAddressRaw] = await Promise.all([multicall.wrap(tokenContract).token()]);
 
         const underlyingTokenAddress = underlyingTokenAddressRaw.toLowerCase();
-        const underlyingToken = baseTokens.find(p => p.address === underlyingTokenAddress);
+        const underlyingToken = allTokens.find(p => p.address === underlyingTokenAddress);
         if (!underlyingToken) return null;
 
         const underlyingTokenContract = this.stargateContractFactory.erc20({

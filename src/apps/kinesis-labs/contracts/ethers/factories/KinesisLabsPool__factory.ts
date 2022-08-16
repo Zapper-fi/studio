@@ -48,43 +48,6 @@ const _abi = [
     anonymous: false,
     inputs: [
       {
-        indexed: true,
-        internalType: 'address',
-        name: 'receiver',
-        type: 'address',
-      },
-      {
-        indexed: false,
-        internalType: 'uint8',
-        name: 'tokenIndex',
-        type: 'uint8',
-      },
-      {
-        indexed: false,
-        internalType: 'uint256',
-        name: 'amount',
-        type: 'uint256',
-      },
-      {
-        indexed: false,
-        internalType: 'uint256',
-        name: 'amountFee',
-        type: 'uint256',
-      },
-      {
-        indexed: false,
-        internalType: 'uint256',
-        name: 'protocolFee',
-        type: 'uint256',
-      },
-    ],
-    name: 'FlashLoan',
-    type: 'event',
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
         indexed: false,
         internalType: 'uint256',
         name: 'newAdminFee',
@@ -118,38 +81,6 @@ const _abi = [
       },
     ],
     name: 'NewWithdrawFee',
-    type: 'event',
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: true,
-        internalType: 'address',
-        name: 'previousOwner',
-        type: 'address',
-      },
-      {
-        indexed: true,
-        internalType: 'address',
-        name: 'newOwner',
-        type: 'address',
-      },
-    ],
-    name: 'OwnershipTransferred',
-    type: 'event',
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: false,
-        internalType: 'address',
-        name: 'account',
-        type: 'address',
-      },
-    ],
-    name: 'Paused',
     type: 'event',
   },
   {
@@ -339,32 +270,6 @@ const _abi = [
     type: 'event',
   },
   {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: false,
-        internalType: 'address',
-        name: 'account',
-        type: 'address',
-      },
-    ],
-    name: 'Unpaused',
-    type: 'event',
-  },
-  {
-    inputs: [],
-    name: 'MAX_BPS',
-    outputs: [
-      {
-        internalType: 'uint256',
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
     inputs: [
       {
         internalType: 'uint256[]',
@@ -390,11 +295,35 @@ const _abi = [
         type: 'uint256',
       },
     ],
-    stateMutability: 'payable',
+    stateMutability: 'nonpayable',
     type: 'function',
   },
   {
     inputs: [
+      {
+        internalType: 'address',
+        name: 'user',
+        type: 'address',
+      },
+    ],
+    name: 'calculateCurrentWithdrawFee',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'address',
+        name: 'account',
+        type: 'address',
+      },
       {
         internalType: 'uint256',
         name: 'amount',
@@ -414,6 +343,11 @@ const _abi = [
   },
   {
     inputs: [
+      {
+        internalType: 'address',
+        name: 'account',
+        type: 'address',
+      },
       {
         internalType: 'uint256',
         name: 'tokenAmount',
@@ -468,6 +402,11 @@ const _abi = [
   {
     inputs: [
       {
+        internalType: 'address',
+        name: 'account',
+        type: 'address',
+      },
+      {
         internalType: 'uint256[]',
         name: 'amounts',
         type: 'uint256[]',
@@ -479,47 +418,6 @@ const _abi = [
       },
     ],
     name: 'calculateTokenAmount',
-    outputs: [
-      {
-        internalType: 'uint256',
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        internalType: 'address',
-        name: 'receiver',
-        type: 'address',
-      },
-      {
-        internalType: 'contract IERC20',
-        name: 'token',
-        type: 'address',
-      },
-      {
-        internalType: 'uint256',
-        name: 'amount',
-        type: 'uint256',
-      },
-      {
-        internalType: 'bytes',
-        name: 'params',
-        type: 'bytes',
-      },
-    ],
-    name: 'flashLoan',
-    outputs: [],
-    stateMutability: 'payable',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'flashLoanFeeBPS',
     outputs: [
       {
         internalType: 'uint256',
@@ -565,6 +463,25 @@ const _abi = [
       },
     ],
     name: 'getAdminBalance',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'address',
+        name: 'user',
+        type: 'address',
+      },
+    ],
+    name: 'getDepositTimestamp',
     outputs: [
       {
         internalType: 'uint256',
@@ -683,78 +600,14 @@ const _abi = [
         type: 'uint256',
       },
       {
-        internalType: 'address',
-        name: 'lpTokenTargetAddress',
-        type: 'address',
+        internalType: 'uint256',
+        name: '_withdrawFee',
+        type: 'uint256',
       },
     ],
     name: 'initialize',
     outputs: [],
-    stateMutability: 'payable',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'owner',
-    outputs: [
-      {
-        internalType: 'address',
-        name: '',
-        type: 'address',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'pause',
-    outputs: [],
     stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'paused',
-    outputs: [
-      {
-        internalType: 'bool',
-        name: '',
-        type: 'bool',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'protocolFeeShareBPS',
-    outputs: [
-      {
-        internalType: 'uint256',
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        internalType: 'uint256',
-        name: 'futureA',
-        type: 'uint256',
-      },
-      {
-        internalType: 'uint256',
-        name: 'futureTime',
-        type: 'uint256',
-      },
-    ],
-    name: 'rampA',
-    outputs: [],
-    stateMutability: 'payable',
     type: 'function',
   },
   {
@@ -783,7 +636,7 @@ const _abi = [
         type: 'uint256[]',
       },
     ],
-    stateMutability: 'payable',
+    stateMutability: 'nonpayable',
     type: 'function',
   },
   {
@@ -812,7 +665,7 @@ const _abi = [
         type: 'uint256',
       },
     ],
-    stateMutability: 'payable',
+    stateMutability: 'nonpayable',
     type: 'function',
   },
   {
@@ -846,65 +699,7 @@ const _abi = [
         type: 'uint256',
       },
     ],
-    stateMutability: 'payable',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'renounceOwnership',
-    outputs: [],
     stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        internalType: 'uint256',
-        name: 'newAdminFee',
-        type: 'uint256',
-      },
-    ],
-    name: 'setAdminFee',
-    outputs: [],
-    stateMutability: 'payable',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        internalType: 'uint256',
-        name: 'newFlashLoanFeeBPS',
-        type: 'uint256',
-      },
-      {
-        internalType: 'uint256',
-        name: 'newProtocolFeeShareBPS',
-        type: 'uint256',
-      },
-    ],
-    name: 'setFlashLoanFees',
-    outputs: [],
-    stateMutability: 'payable',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        internalType: 'uint256',
-        name: 'newSwapFee',
-        type: 'uint256',
-      },
-    ],
-    name: 'setSwapFee',
-    outputs: [],
-    stateMutability: 'payable',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'stopRampA',
-    outputs: [],
-    stateMutability: 'payable',
     type: 'function',
   },
   {
@@ -943,7 +738,7 @@ const _abi = [
         type: 'uint256',
       },
     ],
-    stateMutability: 'payable',
+    stateMutability: 'nonpayable',
     type: 'function',
   },
   {
@@ -981,6 +776,11 @@ const _abi = [
         type: 'uint256',
       },
       {
+        internalType: 'uint256',
+        name: 'defaultWithdrawFee',
+        type: 'uint256',
+      },
+      {
         internalType: 'contract LPToken',
         name: 'lpToken',
         type: 'address',
@@ -993,27 +793,18 @@ const _abi = [
     inputs: [
       {
         internalType: 'address',
-        name: 'newOwner',
+        name: 'recipient',
         type: 'address',
       },
+      {
+        internalType: 'uint256',
+        name: 'transferAmount',
+        type: 'uint256',
+      },
     ],
-    name: 'transferOwnership',
+    name: 'updateUserWithdrawFee',
     outputs: [],
     stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'unpause',
-    outputs: [],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'withdrawAdminFees',
-    outputs: [],
-    stateMutability: 'payable',
     type: 'function',
   },
 ];

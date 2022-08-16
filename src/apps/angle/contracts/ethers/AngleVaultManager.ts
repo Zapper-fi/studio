@@ -15,13 +15,13 @@ import type {
 } from 'ethers';
 import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
 import type { Listener, Provider } from '@ethersproject/providers';
-import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
 export type PaymentDataStruct = {
-  stablecoinAmountToGive: BigNumberish;
-  stablecoinAmountToReceive: BigNumberish;
-  collateralAmountToGive: BigNumberish;
-  collateralAmountToReceive: BigNumberish;
+  stablecoinAmountToGive: PromiseOrValue<BigNumberish>;
+  stablecoinAmountToReceive: PromiseOrValue<BigNumberish>;
+  collateralAmountToGive: PromiseOrValue<BigNumberish>;
+  collateralAmountToReceive: PromiseOrValue<BigNumberish>;
 };
 
 export type PaymentDataStructOutput = [BigNumber, BigNumber, BigNumber, BigNumber] & {
@@ -32,11 +32,11 @@ export type PaymentDataStructOutput = [BigNumber, BigNumber, BigNumber, BigNumbe
 };
 
 export type LiquidationOpportunityStruct = {
-  maxStablecoinAmountToRepay: BigNumberish;
-  maxCollateralAmountGiven: BigNumberish;
-  thresholdRepayAmount: BigNumberish;
-  discount: BigNumberish;
-  currentDebt: BigNumberish;
+  maxStablecoinAmountToRepay: PromiseOrValue<BigNumberish>;
+  maxCollateralAmountGiven: PromiseOrValue<BigNumberish>;
+  thresholdRepayAmount: PromiseOrValue<BigNumberish>;
+  discount: PromiseOrValue<BigNumberish>;
+  currentDebt: PromiseOrValue<BigNumberish>;
 };
 
 export type LiquidationOpportunityStructOutput = [BigNumber, BigNumber, BigNumber, BigNumber, BigNumber] & {
@@ -48,14 +48,14 @@ export type LiquidationOpportunityStructOutput = [BigNumber, BigNumber, BigNumbe
 };
 
 export type VaultParametersStruct = {
-  debtCeiling: BigNumberish;
-  collateralFactor: BigNumberish;
-  targetHealthFactor: BigNumberish;
-  interestRate: BigNumberish;
-  liquidationSurcharge: BigNumberish;
-  maxLiquidationDiscount: BigNumberish;
-  whitelistingActivated: boolean;
-  baseBoost: BigNumberish;
+  debtCeiling: PromiseOrValue<BigNumberish>;
+  collateralFactor: PromiseOrValue<BigNumberish>;
+  targetHealthFactor: PromiseOrValue<BigNumberish>;
+  interestRate: PromiseOrValue<BigNumberish>;
+  liquidationSurcharge: PromiseOrValue<BigNumberish>;
+  maxLiquidationDiscount: PromiseOrValue<BigNumberish>;
+  whitelistingActivated: PromiseOrValue<boolean>;
+  baseBoost: PromiseOrValue<BigNumberish>;
 };
 
 export type VaultParametersStructOutput = [
@@ -79,11 +79,11 @@ export type VaultParametersStructOutput = [
 };
 
 export type LiquidatorDataStruct = {
-  stablecoinAmountToReceive: BigNumberish;
-  collateralAmountToGive: BigNumberish;
-  badDebtFromLiquidation: BigNumberish;
-  oracleValue: BigNumberish;
-  newInterestAccumulator: BigNumberish;
+  stablecoinAmountToReceive: PromiseOrValue<BigNumberish>;
+  collateralAmountToGive: PromiseOrValue<BigNumberish>;
+  badDebtFromLiquidation: PromiseOrValue<BigNumberish>;
+  oracleValue: PromiseOrValue<BigNumberish>;
+  newInterestAccumulator: PromiseOrValue<BigNumberish>;
 };
 
 export type LiquidatorDataStructOutput = [BigNumber, BigNumber, BigNumber, BigNumber, BigNumber] & {
@@ -241,95 +241,159 @@ export interface AngleVaultManagerInterface extends utils.Interface {
   encodeFunctionData(functionFragment: 'accrueInterestToTreasury', values?: undefined): string;
   encodeFunctionData(
     functionFragment: 'angle(uint8[],bytes[],address,address)',
-    values: [BigNumberish[], BytesLike[], string, string],
+    values: [
+      PromiseOrValue<BigNumberish>[],
+      PromiseOrValue<BytesLike>[],
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+    ],
   ): string;
   encodeFunctionData(
     functionFragment: 'angle(uint8[],bytes[],address,address,address,bytes)',
-    values: [BigNumberish[], BytesLike[], string, string, string, BytesLike],
+    values: [
+      PromiseOrValue<BigNumberish>[],
+      PromiseOrValue<BytesLike>[],
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BytesLike>,
+    ],
   ): string;
-  encodeFunctionData(functionFragment: 'approve', values: [string, BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'approve',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
   encodeFunctionData(functionFragment: 'badDebt', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'balanceOf', values: [string]): string;
+  encodeFunctionData(functionFragment: 'balanceOf', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'borrowFee', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'checkLiquidation', values: [BigNumberish, string]): string;
+  encodeFunctionData(
+    functionFragment: 'checkLiquidation',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>],
+  ): string;
   encodeFunctionData(functionFragment: 'collateral', values?: undefined): string;
   encodeFunctionData(functionFragment: 'collateralFactor', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'createVault', values: [string]): string;
+  encodeFunctionData(functionFragment: 'createVault', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'debtCeiling', values?: undefined): string;
   encodeFunctionData(functionFragment: 'dust', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'getApproved', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'getControlledVaults', values: [string]): string;
+  encodeFunctionData(functionFragment: 'getApproved', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'getControlledVaults', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(
     functionFragment: 'getDebtOut',
-    values: [BigNumberish, BigNumberish, BigNumberish, BigNumberish],
+    values: [
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+    ],
   ): string;
   encodeFunctionData(functionFragment: 'getTotalDebt', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'getVaultDebt', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'getVaultDebt', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(
     functionFragment: 'initialize',
-    values: [string, string, string, VaultParametersStruct, string],
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      VaultParametersStruct,
+      PromiseOrValue<string>,
+    ],
   ): string;
   encodeFunctionData(functionFragment: 'interestAccumulator', values?: undefined): string;
   encodeFunctionData(functionFragment: 'interestRate', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'isApprovedForAll', values: [string, string]): string;
-  encodeFunctionData(functionFragment: 'isApprovedOrOwner', values: [string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'isWhitelisted', values: [string]): string;
+  encodeFunctionData(
+    functionFragment: 'isApprovedForAll',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'isApprovedOrOwner',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'isWhitelisted', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'lastInterestAccumulatorUpdated', values?: undefined): string;
   encodeFunctionData(
     functionFragment: 'liquidate(uint256[],uint256[],address,address,address,bytes)',
-    values: [BigNumberish[], BigNumberish[], string, string, string, BytesLike],
+    values: [
+      PromiseOrValue<BigNumberish>[],
+      PromiseOrValue<BigNumberish>[],
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BytesLike>,
+    ],
   ): string;
   encodeFunctionData(
     functionFragment: 'liquidate(uint256[],uint256[],address,address)',
-    values: [BigNumberish[], BigNumberish[], string, string],
+    values: [
+      PromiseOrValue<BigNumberish>[],
+      PromiseOrValue<BigNumberish>[],
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+    ],
   ): string;
   encodeFunctionData(functionFragment: 'liquidationSurcharge', values?: undefined): string;
   encodeFunctionData(functionFragment: 'maxLiquidationDiscount', values?: undefined): string;
   encodeFunctionData(functionFragment: 'name', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'nonces', values: [string]): string;
+  encodeFunctionData(functionFragment: 'nonces', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'oracle', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'ownerOf', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'ownerOf', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'paused', values?: undefined): string;
   encodeFunctionData(
     functionFragment: 'permit',
-    values: [string, string, boolean, BigNumberish, BigNumberish, BytesLike, BytesLike],
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<boolean>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BytesLike>,
+      PromiseOrValue<BytesLike>,
+    ],
   ): string;
   encodeFunctionData(functionFragment: 'repayFee', values?: undefined): string;
   encodeFunctionData(
     functionFragment: 'safeTransferFrom(address,address,uint256)',
-    values: [string, string, BigNumberish],
+    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
   ): string;
   encodeFunctionData(
     functionFragment: 'safeTransferFrom(address,address,uint256,bytes)',
-    values: [string, string, BigNumberish, BytesLike],
+    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<BigNumberish>, PromiseOrValue<BytesLike>],
   ): string;
-  encodeFunctionData(functionFragment: 'setApprovalForAll', values: [string, boolean]): string;
-  encodeFunctionData(functionFragment: 'setBaseURI', values: [string]): string;
-  encodeFunctionData(functionFragment: 'setDebtCeiling', values: [BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'setApprovalForAll',
+    values: [PromiseOrValue<string>, PromiseOrValue<boolean>],
+  ): string;
+  encodeFunctionData(functionFragment: 'setBaseURI', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'setDebtCeiling', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(
     functionFragment: 'setLiquidationBoostParameters',
-    values: [string, BigNumberish[], BigNumberish[]],
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>[], PromiseOrValue<BigNumberish>[]],
   ): string;
-  encodeFunctionData(functionFragment: 'setOracle', values: [string]): string;
-  encodeFunctionData(functionFragment: 'setTreasury', values: [string]): string;
-  encodeFunctionData(functionFragment: 'setUint64', values: [BigNumberish, BytesLike]): string;
+  encodeFunctionData(functionFragment: 'setOracle', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'setTreasury', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'setUint64',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BytesLike>],
+  ): string;
   encodeFunctionData(functionFragment: 'stablecoin', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'supportsInterface', values: [BytesLike]): string;
+  encodeFunctionData(functionFragment: 'supportsInterface', values: [PromiseOrValue<BytesLike>]): string;
   encodeFunctionData(functionFragment: 'surplus', values?: undefined): string;
   encodeFunctionData(functionFragment: 'symbol', values?: undefined): string;
   encodeFunctionData(functionFragment: 'targetHealthFactor', values?: undefined): string;
   encodeFunctionData(functionFragment: 'togglePause', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'toggleWhitelist', values: [string]): string;
-  encodeFunctionData(functionFragment: 'tokenURI', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'toggleWhitelist', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'tokenURI', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'totalNormalizedDebt', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'transferFrom', values: [string, string, BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'transferFrom',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
   encodeFunctionData(functionFragment: 'treasury', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'vaultData', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'vaultData', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'vaultIDCount', values?: undefined): string;
   encodeFunctionData(functionFragment: 'veBoostProxy', values?: undefined): string;
   encodeFunctionData(functionFragment: 'whitelistingActivated', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'xLiquidationBoost', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'yLiquidationBoost', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'xLiquidationBoost', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'yLiquidationBoost', values: [PromiseOrValue<BigNumberish>]): string;
 
   decodeFunctionResult(functionFragment: 'BASE_INTEREST', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'BASE_PARAMS', data: BytesLike): Result;
@@ -572,41 +636,41 @@ export interface AngleVaultManager extends BaseContract {
 
     HALF_BASE_INTEREST(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    accrueInterestToTreasury(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    accrueInterestToTreasury(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     'angle(uint8[],bytes[],address,address)'(
-      actions: BigNumberish[],
-      datas: BytesLike[],
-      from: string,
-      to: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      actions: PromiseOrValue<BigNumberish>[],
+      datas: PromiseOrValue<BytesLike>[],
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     'angle(uint8[],bytes[],address,address,address,bytes)'(
-      actions: BigNumberish[],
-      datas: BytesLike[],
-      from: string,
-      to: string,
-      who: string,
-      repayData: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      actions: PromiseOrValue<BigNumberish>[],
+      datas: PromiseOrValue<BytesLike>[],
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      who: PromiseOrValue<string>,
+      repayData: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     approve(
-      to: string,
-      vaultID: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      to: PromiseOrValue<string>,
+      vaultID: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     badDebt(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    balanceOf(owner: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    balanceOf(owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     borrowFee(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     checkLiquidation(
-      vaultID: BigNumberish,
-      liquidator: string,
+      vaultID: PromiseOrValue<BigNumberish>,
+      liquidator: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<
       [LiquidationOpportunityStructOutput] & {
@@ -619,67 +683,75 @@ export interface AngleVaultManager extends BaseContract {
     collateralFactor(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     createVault(
-      toVault: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      toVault: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     debtCeiling(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     dust(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    getApproved(vaultID: BigNumberish, overrides?: CallOverrides): Promise<[string]>;
+    getApproved(vaultID: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[string]>;
 
-    getControlledVaults(spender: string, overrides?: CallOverrides): Promise<[BigNumber[], BigNumber]>;
+    getControlledVaults(spender: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber[], BigNumber]>;
 
     getDebtOut(
-      vaultID: BigNumberish,
-      stablecoinAmount: BigNumberish,
-      senderBorrowFee: BigNumberish,
-      senderRepayFee: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      vaultID: PromiseOrValue<BigNumberish>,
+      stablecoinAmount: PromiseOrValue<BigNumberish>,
+      senderBorrowFee: PromiseOrValue<BigNumberish>,
+      senderRepayFee: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     getTotalDebt(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    getVaultDebt(vaultID: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber]>;
+    getVaultDebt(vaultID: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     initialize(
-      _treasury: string,
-      _collateral: string,
-      _oracle: string,
+      _treasury: PromiseOrValue<string>,
+      _collateral: PromiseOrValue<string>,
+      _oracle: PromiseOrValue<string>,
       params: VaultParametersStruct,
-      _symbol: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _symbol: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     interestAccumulator(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     interestRate(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    isApprovedForAll(owner: string, operator: string, overrides?: CallOverrides): Promise<[boolean]>;
+    isApprovedForAll(
+      owner: PromiseOrValue<string>,
+      operator: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<[boolean]>;
 
-    isApprovedOrOwner(spender: string, vaultID: BigNumberish, overrides?: CallOverrides): Promise<[boolean]>;
+    isApprovedOrOwner(
+      spender: PromiseOrValue<string>,
+      vaultID: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<[boolean]>;
 
-    isWhitelisted(arg0: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    isWhitelisted(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     lastInterestAccumulatorUpdated(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     'liquidate(uint256[],uint256[],address,address,address,bytes)'(
-      vaultIDs: BigNumberish[],
-      amounts: BigNumberish[],
-      from: string,
-      to: string,
-      who: string,
-      data: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      vaultIDs: PromiseOrValue<BigNumberish>[],
+      amounts: PromiseOrValue<BigNumberish>[],
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      who: PromiseOrValue<string>,
+      data: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     'liquidate(uint256[],uint256[],address,address)'(
-      vaultIDs: BigNumberish[],
-      amounts: BigNumberish[],
-      from: string,
-      to: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      vaultIDs: PromiseOrValue<BigNumberish>[],
+      amounts: PromiseOrValue<BigNumberish>[],
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     liquidationSurcharge(overrides?: CallOverrides): Promise<[BigNumber]>;
@@ -688,84 +760,84 @@ export interface AngleVaultManager extends BaseContract {
 
     name(overrides?: CallOverrides): Promise<[string]>;
 
-    nonces(owner: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    nonces(owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     oracle(overrides?: CallOverrides): Promise<[string]>;
 
-    ownerOf(vaultID: BigNumberish, overrides?: CallOverrides): Promise<[string]>;
+    ownerOf(vaultID: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[string]>;
 
     paused(overrides?: CallOverrides): Promise<[boolean]>;
 
     permit(
-      owner: string,
-      spender: string,
-      approved: boolean,
-      deadline: BigNumberish,
-      v: BigNumberish,
-      r: BytesLike,
-      s: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      owner: PromiseOrValue<string>,
+      spender: PromiseOrValue<string>,
+      approved: PromiseOrValue<boolean>,
+      deadline: PromiseOrValue<BigNumberish>,
+      v: PromiseOrValue<BigNumberish>,
+      r: PromiseOrValue<BytesLike>,
+      s: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     repayFee(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     'safeTransferFrom(address,address,uint256)'(
-      from: string,
-      to: string,
-      vaultID: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      vaultID: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     'safeTransferFrom(address,address,uint256,bytes)'(
-      from: string,
-      to: string,
-      vaultID: BigNumberish,
-      _data: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      vaultID: PromiseOrValue<BigNumberish>,
+      _data: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setApprovalForAll(
-      operator: string,
-      approved: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      operator: PromiseOrValue<string>,
+      approved: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setBaseURI(
-      baseURI_: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      baseURI_: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setDebtCeiling(
-      _debtCeiling: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _debtCeiling: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setLiquidationBoostParameters(
-      _veBoostProxy: string,
-      xBoost: BigNumberish[],
-      yBoost: BigNumberish[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _veBoostProxy: PromiseOrValue<string>,
+      xBoost: PromiseOrValue<BigNumberish>[],
+      yBoost: PromiseOrValue<BigNumberish>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setOracle(
-      _oracle: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _oracle: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setTreasury(
-      _treasury: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _treasury: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setUint64(
-      param: BigNumberish,
-      what: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      param: PromiseOrValue<BigNumberish>,
+      what: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     stablecoin(overrides?: CallOverrides): Promise<[string]>;
 
-    supportsInterface(interfaceId: BytesLike, overrides?: CallOverrides): Promise<[boolean]>;
+    supportsInterface(interfaceId: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<[boolean]>;
 
     surplus(overrides?: CallOverrides): Promise<[BigNumber]>;
 
@@ -773,28 +845,28 @@ export interface AngleVaultManager extends BaseContract {
 
     targetHealthFactor(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    togglePause(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    togglePause(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     toggleWhitelist(
-      target: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      target: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    tokenURI(vaultID: BigNumberish, overrides?: CallOverrides): Promise<[string]>;
+    tokenURI(vaultID: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[string]>;
 
     totalNormalizedDebt(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     transferFrom(
-      from: string,
-      to: string,
-      vaultID: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      vaultID: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     treasury(overrides?: CallOverrides): Promise<[string]>;
 
     vaultData(
-      arg0: BigNumberish,
+      arg0: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<
       [BigNumber, BigNumber] & {
@@ -809,9 +881,9 @@ export interface AngleVaultManager extends BaseContract {
 
     whitelistingActivated(overrides?: CallOverrides): Promise<[boolean]>;
 
-    xLiquidationBoost(arg0: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber]>;
+    xLiquidationBoost(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    yLiquidationBoost(arg0: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber]>;
+    yLiquidationBoost(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[BigNumber]>;
   };
 
   BASE_INTEREST(overrides?: CallOverrides): Promise<BigNumber>;
@@ -822,41 +894,41 @@ export interface AngleVaultManager extends BaseContract {
 
   HALF_BASE_INTEREST(overrides?: CallOverrides): Promise<BigNumber>;
 
-  accrueInterestToTreasury(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  accrueInterestToTreasury(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   'angle(uint8[],bytes[],address,address)'(
-    actions: BigNumberish[],
-    datas: BytesLike[],
-    from: string,
-    to: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    actions: PromiseOrValue<BigNumberish>[],
+    datas: PromiseOrValue<BytesLike>[],
+    from: PromiseOrValue<string>,
+    to: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   'angle(uint8[],bytes[],address,address,address,bytes)'(
-    actions: BigNumberish[],
-    datas: BytesLike[],
-    from: string,
-    to: string,
-    who: string,
-    repayData: BytesLike,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    actions: PromiseOrValue<BigNumberish>[],
+    datas: PromiseOrValue<BytesLike>[],
+    from: PromiseOrValue<string>,
+    to: PromiseOrValue<string>,
+    who: PromiseOrValue<string>,
+    repayData: PromiseOrValue<BytesLike>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   approve(
-    to: string,
-    vaultID: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    to: PromiseOrValue<string>,
+    vaultID: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   badDebt(overrides?: CallOverrides): Promise<BigNumber>;
 
-  balanceOf(owner: string, overrides?: CallOverrides): Promise<BigNumber>;
+  balanceOf(owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   borrowFee(overrides?: CallOverrides): Promise<BigNumber>;
 
   checkLiquidation(
-    vaultID: BigNumberish,
-    liquidator: string,
+    vaultID: PromiseOrValue<BigNumberish>,
+    liquidator: PromiseOrValue<string>,
     overrides?: CallOverrides,
   ): Promise<LiquidationOpportunityStructOutput>;
 
@@ -865,67 +937,75 @@ export interface AngleVaultManager extends BaseContract {
   collateralFactor(overrides?: CallOverrides): Promise<BigNumber>;
 
   createVault(
-    toVault: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    toVault: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   debtCeiling(overrides?: CallOverrides): Promise<BigNumber>;
 
   dust(overrides?: CallOverrides): Promise<BigNumber>;
 
-  getApproved(vaultID: BigNumberish, overrides?: CallOverrides): Promise<string>;
+  getApproved(vaultID: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
 
-  getControlledVaults(spender: string, overrides?: CallOverrides): Promise<[BigNumber[], BigNumber]>;
+  getControlledVaults(spender: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber[], BigNumber]>;
 
   getDebtOut(
-    vaultID: BigNumberish,
-    stablecoinAmount: BigNumberish,
-    senderBorrowFee: BigNumberish,
-    senderRepayFee: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    vaultID: PromiseOrValue<BigNumberish>,
+    stablecoinAmount: PromiseOrValue<BigNumberish>,
+    senderBorrowFee: PromiseOrValue<BigNumberish>,
+    senderRepayFee: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   getTotalDebt(overrides?: CallOverrides): Promise<BigNumber>;
 
-  getVaultDebt(vaultID: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+  getVaultDebt(vaultID: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
   initialize(
-    _treasury: string,
-    _collateral: string,
-    _oracle: string,
+    _treasury: PromiseOrValue<string>,
+    _collateral: PromiseOrValue<string>,
+    _oracle: PromiseOrValue<string>,
     params: VaultParametersStruct,
-    _symbol: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _symbol: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   interestAccumulator(overrides?: CallOverrides): Promise<BigNumber>;
 
   interestRate(overrides?: CallOverrides): Promise<BigNumber>;
 
-  isApprovedForAll(owner: string, operator: string, overrides?: CallOverrides): Promise<boolean>;
+  isApprovedForAll(
+    owner: PromiseOrValue<string>,
+    operator: PromiseOrValue<string>,
+    overrides?: CallOverrides,
+  ): Promise<boolean>;
 
-  isApprovedOrOwner(spender: string, vaultID: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+  isApprovedOrOwner(
+    spender: PromiseOrValue<string>,
+    vaultID: PromiseOrValue<BigNumberish>,
+    overrides?: CallOverrides,
+  ): Promise<boolean>;
 
-  isWhitelisted(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+  isWhitelisted(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   lastInterestAccumulatorUpdated(overrides?: CallOverrides): Promise<BigNumber>;
 
   'liquidate(uint256[],uint256[],address,address,address,bytes)'(
-    vaultIDs: BigNumberish[],
-    amounts: BigNumberish[],
-    from: string,
-    to: string,
-    who: string,
-    data: BytesLike,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    vaultIDs: PromiseOrValue<BigNumberish>[],
+    amounts: PromiseOrValue<BigNumberish>[],
+    from: PromiseOrValue<string>,
+    to: PromiseOrValue<string>,
+    who: PromiseOrValue<string>,
+    data: PromiseOrValue<BytesLike>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   'liquidate(uint256[],uint256[],address,address)'(
-    vaultIDs: BigNumberish[],
-    amounts: BigNumberish[],
-    from: string,
-    to: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    vaultIDs: PromiseOrValue<BigNumberish>[],
+    amounts: PromiseOrValue<BigNumberish>[],
+    from: PromiseOrValue<string>,
+    to: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   liquidationSurcharge(overrides?: CallOverrides): Promise<BigNumber>;
@@ -934,81 +1014,84 @@ export interface AngleVaultManager extends BaseContract {
 
   name(overrides?: CallOverrides): Promise<string>;
 
-  nonces(owner: string, overrides?: CallOverrides): Promise<BigNumber>;
+  nonces(owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   oracle(overrides?: CallOverrides): Promise<string>;
 
-  ownerOf(vaultID: BigNumberish, overrides?: CallOverrides): Promise<string>;
+  ownerOf(vaultID: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
 
   paused(overrides?: CallOverrides): Promise<boolean>;
 
   permit(
-    owner: string,
-    spender: string,
-    approved: boolean,
-    deadline: BigNumberish,
-    v: BigNumberish,
-    r: BytesLike,
-    s: BytesLike,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    owner: PromiseOrValue<string>,
+    spender: PromiseOrValue<string>,
+    approved: PromiseOrValue<boolean>,
+    deadline: PromiseOrValue<BigNumberish>,
+    v: PromiseOrValue<BigNumberish>,
+    r: PromiseOrValue<BytesLike>,
+    s: PromiseOrValue<BytesLike>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   repayFee(overrides?: CallOverrides): Promise<BigNumber>;
 
   'safeTransferFrom(address,address,uint256)'(
-    from: string,
-    to: string,
-    vaultID: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    from: PromiseOrValue<string>,
+    to: PromiseOrValue<string>,
+    vaultID: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   'safeTransferFrom(address,address,uint256,bytes)'(
-    from: string,
-    to: string,
-    vaultID: BigNumberish,
-    _data: BytesLike,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    from: PromiseOrValue<string>,
+    to: PromiseOrValue<string>,
+    vaultID: PromiseOrValue<BigNumberish>,
+    _data: PromiseOrValue<BytesLike>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setApprovalForAll(
-    operator: string,
-    approved: boolean,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    operator: PromiseOrValue<string>,
+    approved: PromiseOrValue<boolean>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setBaseURI(
-    baseURI_: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    baseURI_: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setDebtCeiling(
-    _debtCeiling: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _debtCeiling: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setLiquidationBoostParameters(
-    _veBoostProxy: string,
-    xBoost: BigNumberish[],
-    yBoost: BigNumberish[],
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _veBoostProxy: PromiseOrValue<string>,
+    xBoost: PromiseOrValue<BigNumberish>[],
+    yBoost: PromiseOrValue<BigNumberish>[],
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  setOracle(_oracle: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  setOracle(
+    _oracle: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
+  ): Promise<ContractTransaction>;
 
   setTreasury(
-    _treasury: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _treasury: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setUint64(
-    param: BigNumberish,
-    what: BytesLike,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    param: PromiseOrValue<BigNumberish>,
+    what: PromiseOrValue<BytesLike>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   stablecoin(overrides?: CallOverrides): Promise<string>;
 
-  supportsInterface(interfaceId: BytesLike, overrides?: CallOverrides): Promise<boolean>;
+  supportsInterface(interfaceId: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<boolean>;
 
   surplus(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -1016,28 +1099,28 @@ export interface AngleVaultManager extends BaseContract {
 
   targetHealthFactor(overrides?: CallOverrides): Promise<BigNumber>;
 
-  togglePause(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  togglePause(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   toggleWhitelist(
-    target: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    target: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  tokenURI(vaultID: BigNumberish, overrides?: CallOverrides): Promise<string>;
+  tokenURI(vaultID: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
 
   totalNormalizedDebt(overrides?: CallOverrides): Promise<BigNumber>;
 
   transferFrom(
-    from: string,
-    to: string,
-    vaultID: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    from: PromiseOrValue<string>,
+    to: PromiseOrValue<string>,
+    vaultID: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   treasury(overrides?: CallOverrides): Promise<string>;
 
   vaultData(
-    arg0: BigNumberish,
+    arg0: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides,
   ): Promise<
     [BigNumber, BigNumber] & {
@@ -1052,9 +1135,9 @@ export interface AngleVaultManager extends BaseContract {
 
   whitelistingActivated(overrides?: CallOverrides): Promise<boolean>;
 
-  xLiquidationBoost(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+  xLiquidationBoost(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  yLiquidationBoost(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+  yLiquidationBoost(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
   callStatic: {
     BASE_INTEREST(overrides?: CallOverrides): Promise<BigNumber>;
@@ -1073,34 +1156,38 @@ export interface AngleVaultManager extends BaseContract {
     >;
 
     'angle(uint8[],bytes[],address,address)'(
-      actions: BigNumberish[],
-      datas: BytesLike[],
-      from: string,
-      to: string,
+      actions: PromiseOrValue<BigNumberish>[],
+      datas: PromiseOrValue<BytesLike>[],
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<PaymentDataStructOutput>;
 
     'angle(uint8[],bytes[],address,address,address,bytes)'(
-      actions: BigNumberish[],
-      datas: BytesLike[],
-      from: string,
-      to: string,
-      who: string,
-      repayData: BytesLike,
+      actions: PromiseOrValue<BigNumberish>[],
+      datas: PromiseOrValue<BytesLike>[],
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      who: PromiseOrValue<string>,
+      repayData: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides,
     ): Promise<PaymentDataStructOutput>;
 
-    approve(to: string, vaultID: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    approve(
+      to: PromiseOrValue<string>,
+      vaultID: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
     badDebt(overrides?: CallOverrides): Promise<BigNumber>;
 
-    balanceOf(owner: string, overrides?: CallOverrides): Promise<BigNumber>;
+    balanceOf(owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     borrowFee(overrides?: CallOverrides): Promise<BigNumber>;
 
     checkLiquidation(
-      vaultID: BigNumberish,
-      liquidator: string,
+      vaultID: PromiseOrValue<BigNumberish>,
+      liquidator: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<LiquidationOpportunityStructOutput>;
 
@@ -1108,34 +1195,34 @@ export interface AngleVaultManager extends BaseContract {
 
     collateralFactor(overrides?: CallOverrides): Promise<BigNumber>;
 
-    createVault(toVault: string, overrides?: CallOverrides): Promise<BigNumber>;
+    createVault(toVault: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     debtCeiling(overrides?: CallOverrides): Promise<BigNumber>;
 
     dust(overrides?: CallOverrides): Promise<BigNumber>;
 
-    getApproved(vaultID: BigNumberish, overrides?: CallOverrides): Promise<string>;
+    getApproved(vaultID: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
 
-    getControlledVaults(spender: string, overrides?: CallOverrides): Promise<[BigNumber[], BigNumber]>;
+    getControlledVaults(spender: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber[], BigNumber]>;
 
     getDebtOut(
-      vaultID: BigNumberish,
-      stablecoinAmount: BigNumberish,
-      senderBorrowFee: BigNumberish,
-      senderRepayFee: BigNumberish,
+      vaultID: PromiseOrValue<BigNumberish>,
+      stablecoinAmount: PromiseOrValue<BigNumberish>,
+      senderBorrowFee: PromiseOrValue<BigNumberish>,
+      senderRepayFee: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
     getTotalDebt(overrides?: CallOverrides): Promise<BigNumber>;
 
-    getVaultDebt(vaultID: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    getVaultDebt(vaultID: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     initialize(
-      _treasury: string,
-      _collateral: string,
-      _oracle: string,
+      _treasury: PromiseOrValue<string>,
+      _collateral: PromiseOrValue<string>,
+      _oracle: PromiseOrValue<string>,
       params: VaultParametersStruct,
-      _symbol: string,
+      _symbol: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
@@ -1143,29 +1230,37 @@ export interface AngleVaultManager extends BaseContract {
 
     interestRate(overrides?: CallOverrides): Promise<BigNumber>;
 
-    isApprovedForAll(owner: string, operator: string, overrides?: CallOverrides): Promise<boolean>;
+    isApprovedForAll(
+      owner: PromiseOrValue<string>,
+      operator: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
 
-    isApprovedOrOwner(spender: string, vaultID: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+    isApprovedOrOwner(
+      spender: PromiseOrValue<string>,
+      vaultID: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
 
-    isWhitelisted(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    isWhitelisted(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     lastInterestAccumulatorUpdated(overrides?: CallOverrides): Promise<BigNumber>;
 
     'liquidate(uint256[],uint256[],address,address,address,bytes)'(
-      vaultIDs: BigNumberish[],
-      amounts: BigNumberish[],
-      from: string,
-      to: string,
-      who: string,
-      data: BytesLike,
+      vaultIDs: PromiseOrValue<BigNumberish>[],
+      amounts: PromiseOrValue<BigNumberish>[],
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      who: PromiseOrValue<string>,
+      data: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides,
     ): Promise<LiquidatorDataStructOutput>;
 
     'liquidate(uint256[],uint256[],address,address)'(
-      vaultIDs: BigNumberish[],
-      amounts: BigNumberish[],
-      from: string,
-      to: string,
+      vaultIDs: PromiseOrValue<BigNumberish>[],
+      amounts: PromiseOrValue<BigNumberish>[],
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<LiquidatorDataStructOutput>;
 
@@ -1175,64 +1270,72 @@ export interface AngleVaultManager extends BaseContract {
 
     name(overrides?: CallOverrides): Promise<string>;
 
-    nonces(owner: string, overrides?: CallOverrides): Promise<BigNumber>;
+    nonces(owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     oracle(overrides?: CallOverrides): Promise<string>;
 
-    ownerOf(vaultID: BigNumberish, overrides?: CallOverrides): Promise<string>;
+    ownerOf(vaultID: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
 
     paused(overrides?: CallOverrides): Promise<boolean>;
 
     permit(
-      owner: string,
-      spender: string,
-      approved: boolean,
-      deadline: BigNumberish,
-      v: BigNumberish,
-      r: BytesLike,
-      s: BytesLike,
+      owner: PromiseOrValue<string>,
+      spender: PromiseOrValue<string>,
+      approved: PromiseOrValue<boolean>,
+      deadline: PromiseOrValue<BigNumberish>,
+      v: PromiseOrValue<BigNumberish>,
+      r: PromiseOrValue<BytesLike>,
+      s: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
     repayFee(overrides?: CallOverrides): Promise<BigNumber>;
 
     'safeTransferFrom(address,address,uint256)'(
-      from: string,
-      to: string,
-      vaultID: BigNumberish,
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      vaultID: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
     'safeTransferFrom(address,address,uint256,bytes)'(
-      from: string,
-      to: string,
-      vaultID: BigNumberish,
-      _data: BytesLike,
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      vaultID: PromiseOrValue<BigNumberish>,
+      _data: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
-    setApprovalForAll(operator: string, approved: boolean, overrides?: CallOverrides): Promise<void>;
+    setApprovalForAll(
+      operator: PromiseOrValue<string>,
+      approved: PromiseOrValue<boolean>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    setBaseURI(baseURI_: string, overrides?: CallOverrides): Promise<void>;
+    setBaseURI(baseURI_: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    setDebtCeiling(_debtCeiling: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    setDebtCeiling(_debtCeiling: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
     setLiquidationBoostParameters(
-      _veBoostProxy: string,
-      xBoost: BigNumberish[],
-      yBoost: BigNumberish[],
+      _veBoostProxy: PromiseOrValue<string>,
+      xBoost: PromiseOrValue<BigNumberish>[],
+      yBoost: PromiseOrValue<BigNumberish>[],
       overrides?: CallOverrides,
     ): Promise<void>;
 
-    setOracle(_oracle: string, overrides?: CallOverrides): Promise<void>;
+    setOracle(_oracle: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    setTreasury(_treasury: string, overrides?: CallOverrides): Promise<void>;
+    setTreasury(_treasury: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    setUint64(param: BigNumberish, what: BytesLike, overrides?: CallOverrides): Promise<void>;
+    setUint64(
+      param: PromiseOrValue<BigNumberish>,
+      what: PromiseOrValue<BytesLike>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
     stablecoin(overrides?: CallOverrides): Promise<string>;
 
-    supportsInterface(interfaceId: BytesLike, overrides?: CallOverrides): Promise<boolean>;
+    supportsInterface(interfaceId: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<boolean>;
 
     surplus(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -1242,18 +1345,23 @@ export interface AngleVaultManager extends BaseContract {
 
     togglePause(overrides?: CallOverrides): Promise<void>;
 
-    toggleWhitelist(target: string, overrides?: CallOverrides): Promise<void>;
+    toggleWhitelist(target: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    tokenURI(vaultID: BigNumberish, overrides?: CallOverrides): Promise<string>;
+    tokenURI(vaultID: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
 
     totalNormalizedDebt(overrides?: CallOverrides): Promise<BigNumber>;
 
-    transferFrom(from: string, to: string, vaultID: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    transferFrom(
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      vaultID: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
     treasury(overrides?: CallOverrides): Promise<string>;
 
     vaultData(
-      arg0: BigNumberish,
+      arg0: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<
       [BigNumber, BigNumber] & {
@@ -1268,9 +1376,9 @@ export interface AngleVaultManager extends BaseContract {
 
     whitelistingActivated(overrides?: CallOverrides): Promise<boolean>;
 
-    xLiquidationBoost(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    xLiquidationBoost(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    yLiquidationBoost(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    yLiquidationBoost(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
   };
 
   filters: {
@@ -1278,18 +1386,26 @@ export interface AngleVaultManager extends BaseContract {
     AccruedToTreasury(surplusEndValue?: null, badDebtEndValue?: null): AccruedToTreasuryEventFilter;
 
     'Approval(address,address,uint256)'(
-      owner?: string | null,
-      approved?: string | null,
-      tokenId?: BigNumberish | null,
+      owner?: PromiseOrValue<string> | null,
+      approved?: PromiseOrValue<string> | null,
+      tokenId?: PromiseOrValue<BigNumberish> | null,
     ): ApprovalEventFilter;
-    Approval(owner?: string | null, approved?: string | null, tokenId?: BigNumberish | null): ApprovalEventFilter;
+    Approval(
+      owner?: PromiseOrValue<string> | null,
+      approved?: PromiseOrValue<string> | null,
+      tokenId?: PromiseOrValue<BigNumberish> | null,
+    ): ApprovalEventFilter;
 
     'ApprovalForAll(address,address,bool)'(
-      owner?: string | null,
-      operator?: string | null,
+      owner?: PromiseOrValue<string> | null,
+      operator?: PromiseOrValue<string> | null,
       approved?: null,
     ): ApprovalForAllEventFilter;
-    ApprovalForAll(owner?: string | null, operator?: string | null, approved?: null): ApprovalForAllEventFilter;
+    ApprovalForAll(
+      owner?: PromiseOrValue<string> | null,
+      operator?: PromiseOrValue<string> | null,
+      approved?: null,
+    ): ApprovalForAllEventFilter;
 
     'CollateralAmountUpdated(uint256,uint256,uint8)'(
       vaultID?: null,
@@ -1338,22 +1454,26 @@ export interface AngleVaultManager extends BaseContract {
     LiquidatedVaults(vaultIDs?: null): LiquidatedVaultsEventFilter;
 
     'LiquidationBoostParametersUpdated(address,uint256[],uint256[])'(
-      _veBoostProxy?: string | null,
+      _veBoostProxy?: PromiseOrValue<string> | null,
       xBoost?: null,
       yBoost?: null,
     ): LiquidationBoostParametersUpdatedEventFilter;
     LiquidationBoostParametersUpdated(
-      _veBoostProxy?: string | null,
+      _veBoostProxy?: PromiseOrValue<string> | null,
       xBoost?: null,
       yBoost?: null,
     ): LiquidationBoostParametersUpdatedEventFilter;
 
     'Transfer(address,address,uint256)'(
-      from?: string | null,
-      to?: string | null,
-      tokenId?: BigNumberish | null,
+      from?: PromiseOrValue<string> | null,
+      to?: PromiseOrValue<string> | null,
+      tokenId?: PromiseOrValue<BigNumberish> | null,
     ): TransferEventFilter;
-    Transfer(from?: string | null, to?: string | null, tokenId?: BigNumberish | null): TransferEventFilter;
+    Transfer(
+      from?: PromiseOrValue<string> | null,
+      to?: PromiseOrValue<string> | null,
+      tokenId?: PromiseOrValue<BigNumberish> | null,
+    ): TransferEventFilter;
   };
 
   estimateGas: {
@@ -1365,103 +1485,118 @@ export interface AngleVaultManager extends BaseContract {
 
     HALF_BASE_INTEREST(overrides?: CallOverrides): Promise<BigNumber>;
 
-    accrueInterestToTreasury(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    accrueInterestToTreasury(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     'angle(uint8[],bytes[],address,address)'(
-      actions: BigNumberish[],
-      datas: BytesLike[],
-      from: string,
-      to: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      actions: PromiseOrValue<BigNumberish>[],
+      datas: PromiseOrValue<BytesLike>[],
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     'angle(uint8[],bytes[],address,address,address,bytes)'(
-      actions: BigNumberish[],
-      datas: BytesLike[],
-      from: string,
-      to: string,
-      who: string,
-      repayData: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      actions: PromiseOrValue<BigNumberish>[],
+      datas: PromiseOrValue<BytesLike>[],
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      who: PromiseOrValue<string>,
+      repayData: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     approve(
-      to: string,
-      vaultID: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      to: PromiseOrValue<string>,
+      vaultID: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     badDebt(overrides?: CallOverrides): Promise<BigNumber>;
 
-    balanceOf(owner: string, overrides?: CallOverrides): Promise<BigNumber>;
+    balanceOf(owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     borrowFee(overrides?: CallOverrides): Promise<BigNumber>;
 
-    checkLiquidation(vaultID: BigNumberish, liquidator: string, overrides?: CallOverrides): Promise<BigNumber>;
+    checkLiquidation(
+      vaultID: PromiseOrValue<BigNumberish>,
+      liquidator: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     collateral(overrides?: CallOverrides): Promise<BigNumber>;
 
     collateralFactor(overrides?: CallOverrides): Promise<BigNumber>;
 
-    createVault(toVault: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    createVault(
+      toVault: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     debtCeiling(overrides?: CallOverrides): Promise<BigNumber>;
 
     dust(overrides?: CallOverrides): Promise<BigNumber>;
 
-    getApproved(vaultID: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    getApproved(vaultID: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    getControlledVaults(spender: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getControlledVaults(spender: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     getDebtOut(
-      vaultID: BigNumberish,
-      stablecoinAmount: BigNumberish,
-      senderBorrowFee: BigNumberish,
-      senderRepayFee: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      vaultID: PromiseOrValue<BigNumberish>,
+      stablecoinAmount: PromiseOrValue<BigNumberish>,
+      senderBorrowFee: PromiseOrValue<BigNumberish>,
+      senderRepayFee: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     getTotalDebt(overrides?: CallOverrides): Promise<BigNumber>;
 
-    getVaultDebt(vaultID: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    getVaultDebt(vaultID: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     initialize(
-      _treasury: string,
-      _collateral: string,
-      _oracle: string,
+      _treasury: PromiseOrValue<string>,
+      _collateral: PromiseOrValue<string>,
+      _oracle: PromiseOrValue<string>,
       params: VaultParametersStruct,
-      _symbol: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _symbol: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     interestAccumulator(overrides?: CallOverrides): Promise<BigNumber>;
 
     interestRate(overrides?: CallOverrides): Promise<BigNumber>;
 
-    isApprovedForAll(owner: string, operator: string, overrides?: CallOverrides): Promise<BigNumber>;
+    isApprovedForAll(
+      owner: PromiseOrValue<string>,
+      operator: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    isApprovedOrOwner(spender: string, vaultID: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    isApprovedOrOwner(
+      spender: PromiseOrValue<string>,
+      vaultID: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    isWhitelisted(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    isWhitelisted(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     lastInterestAccumulatorUpdated(overrides?: CallOverrides): Promise<BigNumber>;
 
     'liquidate(uint256[],uint256[],address,address,address,bytes)'(
-      vaultIDs: BigNumberish[],
-      amounts: BigNumberish[],
-      from: string,
-      to: string,
-      who: string,
-      data: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      vaultIDs: PromiseOrValue<BigNumberish>[],
+      amounts: PromiseOrValue<BigNumberish>[],
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      who: PromiseOrValue<string>,
+      data: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     'liquidate(uint256[],uint256[],address,address)'(
-      vaultIDs: BigNumberish[],
-      amounts: BigNumberish[],
-      from: string,
-      to: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      vaultIDs: PromiseOrValue<BigNumberish>[],
+      amounts: PromiseOrValue<BigNumberish>[],
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     liquidationSurcharge(overrides?: CallOverrides): Promise<BigNumber>;
@@ -1470,75 +1605,84 @@ export interface AngleVaultManager extends BaseContract {
 
     name(overrides?: CallOverrides): Promise<BigNumber>;
 
-    nonces(owner: string, overrides?: CallOverrides): Promise<BigNumber>;
+    nonces(owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     oracle(overrides?: CallOverrides): Promise<BigNumber>;
 
-    ownerOf(vaultID: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    ownerOf(vaultID: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     paused(overrides?: CallOverrides): Promise<BigNumber>;
 
     permit(
-      owner: string,
-      spender: string,
-      approved: boolean,
-      deadline: BigNumberish,
-      v: BigNumberish,
-      r: BytesLike,
-      s: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      owner: PromiseOrValue<string>,
+      spender: PromiseOrValue<string>,
+      approved: PromiseOrValue<boolean>,
+      deadline: PromiseOrValue<BigNumberish>,
+      v: PromiseOrValue<BigNumberish>,
+      r: PromiseOrValue<BytesLike>,
+      s: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     repayFee(overrides?: CallOverrides): Promise<BigNumber>;
 
     'safeTransferFrom(address,address,uint256)'(
-      from: string,
-      to: string,
-      vaultID: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      vaultID: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     'safeTransferFrom(address,address,uint256,bytes)'(
-      from: string,
-      to: string,
-      vaultID: BigNumberish,
-      _data: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      vaultID: PromiseOrValue<BigNumberish>,
+      _data: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setApprovalForAll(
-      operator: string,
-      approved: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      operator: PromiseOrValue<string>,
+      approved: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    setBaseURI(baseURI_: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    setBaseURI(
+      baseURI_: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     setDebtCeiling(
-      _debtCeiling: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _debtCeiling: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setLiquidationBoostParameters(
-      _veBoostProxy: string,
-      xBoost: BigNumberish[],
-      yBoost: BigNumberish[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _veBoostProxy: PromiseOrValue<string>,
+      xBoost: PromiseOrValue<BigNumberish>[],
+      yBoost: PromiseOrValue<BigNumberish>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    setOracle(_oracle: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    setOracle(
+      _oracle: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
-    setTreasury(_treasury: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    setTreasury(
+      _treasury: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     setUint64(
-      param: BigNumberish,
-      what: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      param: PromiseOrValue<BigNumberish>,
+      what: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     stablecoin(overrides?: CallOverrides): Promise<BigNumber>;
 
-    supportsInterface(interfaceId: BytesLike, overrides?: CallOverrides): Promise<BigNumber>;
+    supportsInterface(interfaceId: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<BigNumber>;
 
     surplus(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -1546,24 +1690,27 @@ export interface AngleVaultManager extends BaseContract {
 
     targetHealthFactor(overrides?: CallOverrides): Promise<BigNumber>;
 
-    togglePause(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    togglePause(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
-    toggleWhitelist(target: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    toggleWhitelist(
+      target: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
-    tokenURI(vaultID: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    tokenURI(vaultID: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     totalNormalizedDebt(overrides?: CallOverrides): Promise<BigNumber>;
 
     transferFrom(
-      from: string,
-      to: string,
-      vaultID: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      vaultID: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     treasury(overrides?: CallOverrides): Promise<BigNumber>;
 
-    vaultData(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    vaultData(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     vaultIDCount(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -1571,9 +1718,9 @@ export interface AngleVaultManager extends BaseContract {
 
     whitelistingActivated(overrides?: CallOverrides): Promise<BigNumber>;
 
-    xLiquidationBoost(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    xLiquidationBoost(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    yLiquidationBoost(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    yLiquidationBoost(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
   };
 
   populateTransaction: {
@@ -1585,43 +1732,41 @@ export interface AngleVaultManager extends BaseContract {
 
     HALF_BASE_INTEREST(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    accrueInterestToTreasury(
-      overrides?: Overrides & { from?: string | Promise<string> },
-    ): Promise<PopulatedTransaction>;
+    accrueInterestToTreasury(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     'angle(uint8[],bytes[],address,address)'(
-      actions: BigNumberish[],
-      datas: BytesLike[],
-      from: string,
-      to: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      actions: PromiseOrValue<BigNumberish>[],
+      datas: PromiseOrValue<BytesLike>[],
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     'angle(uint8[],bytes[],address,address,address,bytes)'(
-      actions: BigNumberish[],
-      datas: BytesLike[],
-      from: string,
-      to: string,
-      who: string,
-      repayData: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      actions: PromiseOrValue<BigNumberish>[],
+      datas: PromiseOrValue<BytesLike>[],
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      who: PromiseOrValue<string>,
+      repayData: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     approve(
-      to: string,
-      vaultID: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      to: PromiseOrValue<string>,
+      vaultID: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     badDebt(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    balanceOf(owner: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    balanceOf(owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     borrowFee(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     checkLiquidation(
-      vaultID: BigNumberish,
-      liquidator: string,
+      vaultID: PromiseOrValue<BigNumberish>,
+      liquidator: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
@@ -1630,67 +1775,75 @@ export interface AngleVaultManager extends BaseContract {
     collateralFactor(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     createVault(
-      toVault: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      toVault: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     debtCeiling(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     dust(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    getApproved(vaultID: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getApproved(vaultID: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    getControlledVaults(spender: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getControlledVaults(spender: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     getDebtOut(
-      vaultID: BigNumberish,
-      stablecoinAmount: BigNumberish,
-      senderBorrowFee: BigNumberish,
-      senderRepayFee: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      vaultID: PromiseOrValue<BigNumberish>,
+      stablecoinAmount: PromiseOrValue<BigNumberish>,
+      senderBorrowFee: PromiseOrValue<BigNumberish>,
+      senderRepayFee: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     getTotalDebt(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    getVaultDebt(vaultID: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getVaultDebt(vaultID: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     initialize(
-      _treasury: string,
-      _collateral: string,
-      _oracle: string,
+      _treasury: PromiseOrValue<string>,
+      _collateral: PromiseOrValue<string>,
+      _oracle: PromiseOrValue<string>,
       params: VaultParametersStruct,
-      _symbol: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _symbol: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     interestAccumulator(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     interestRate(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    isApprovedForAll(owner: string, operator: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    isApprovedForAll(
+      owner: PromiseOrValue<string>,
+      operator: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
-    isApprovedOrOwner(spender: string, vaultID: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    isApprovedOrOwner(
+      spender: PromiseOrValue<string>,
+      vaultID: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
-    isWhitelisted(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    isWhitelisted(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     lastInterestAccumulatorUpdated(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     'liquidate(uint256[],uint256[],address,address,address,bytes)'(
-      vaultIDs: BigNumberish[],
-      amounts: BigNumberish[],
-      from: string,
-      to: string,
-      who: string,
-      data: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      vaultIDs: PromiseOrValue<BigNumberish>[],
+      amounts: PromiseOrValue<BigNumberish>[],
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      who: PromiseOrValue<string>,
+      data: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     'liquidate(uint256[],uint256[],address,address)'(
-      vaultIDs: BigNumberish[],
-      amounts: BigNumberish[],
-      from: string,
-      to: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      vaultIDs: PromiseOrValue<BigNumberish>[],
+      amounts: PromiseOrValue<BigNumberish>[],
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     liquidationSurcharge(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -1699,84 +1852,84 @@ export interface AngleVaultManager extends BaseContract {
 
     name(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    nonces(owner: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    nonces(owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     oracle(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    ownerOf(vaultID: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    ownerOf(vaultID: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     paused(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     permit(
-      owner: string,
-      spender: string,
-      approved: boolean,
-      deadline: BigNumberish,
-      v: BigNumberish,
-      r: BytesLike,
-      s: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      owner: PromiseOrValue<string>,
+      spender: PromiseOrValue<string>,
+      approved: PromiseOrValue<boolean>,
+      deadline: PromiseOrValue<BigNumberish>,
+      v: PromiseOrValue<BigNumberish>,
+      r: PromiseOrValue<BytesLike>,
+      s: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     repayFee(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     'safeTransferFrom(address,address,uint256)'(
-      from: string,
-      to: string,
-      vaultID: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      vaultID: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     'safeTransferFrom(address,address,uint256,bytes)'(
-      from: string,
-      to: string,
-      vaultID: BigNumberish,
-      _data: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      vaultID: PromiseOrValue<BigNumberish>,
+      _data: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setApprovalForAll(
-      operator: string,
-      approved: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      operator: PromiseOrValue<string>,
+      approved: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setBaseURI(
-      baseURI_: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      baseURI_: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setDebtCeiling(
-      _debtCeiling: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _debtCeiling: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setLiquidationBoostParameters(
-      _veBoostProxy: string,
-      xBoost: BigNumberish[],
-      yBoost: BigNumberish[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _veBoostProxy: PromiseOrValue<string>,
+      xBoost: PromiseOrValue<BigNumberish>[],
+      yBoost: PromiseOrValue<BigNumberish>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setOracle(
-      _oracle: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _oracle: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setTreasury(
-      _treasury: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _treasury: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setUint64(
-      param: BigNumberish,
-      what: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      param: PromiseOrValue<BigNumberish>,
+      what: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     stablecoin(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    supportsInterface(interfaceId: BytesLike, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    supportsInterface(interfaceId: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     surplus(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
@@ -1784,27 +1937,27 @@ export interface AngleVaultManager extends BaseContract {
 
     targetHealthFactor(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    togglePause(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    togglePause(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     toggleWhitelist(
-      target: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      target: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    tokenURI(vaultID: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    tokenURI(vaultID: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     totalNormalizedDebt(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     transferFrom(
-      from: string,
-      to: string,
-      vaultID: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      vaultID: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     treasury(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    vaultData(arg0: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    vaultData(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     vaultIDCount(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
@@ -1812,8 +1965,8 @@ export interface AngleVaultManager extends BaseContract {
 
     whitelistingActivated(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    xLiquidationBoost(arg0: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    xLiquidationBoost(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    yLiquidationBoost(arg0: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    yLiquidationBoost(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
   };
 }

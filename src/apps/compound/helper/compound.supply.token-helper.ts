@@ -1,6 +1,6 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { BigNumberish } from 'ethers';
-import _ from 'lodash';
+import _, { compact } from 'lodash';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { ETH_ADDR_ALIAS, ZERO_ADDRESS } from '~app-toolkit/constants/address';
@@ -14,8 +14,6 @@ import { IMulticallWrapper } from '~multicall/multicall.interface';
 import { ContractType } from '~position/contract.interface';
 import { BalanceDisplayMode } from '~position/display.interface';
 import { AppTokenPosition, ExchangeableAppTokenDataProps, Token } from '~position/position.interface';
-import { AppGroupsDefinition } from '~position/position.service';
-import { BaseToken } from '~position/token.interface';
 import { Network } from '~types/network.interface';
 
 import { CompoundComptroller, CompoundContractFactory, CompoundCToken } from '../contracts';
@@ -32,8 +30,6 @@ type CompoundSupplyTokenHelperParams<T = CompoundComptroller, V = CompoundCToken
   network: Network;
   appId: string;
   groupId: string;
-  dependencies?: AppGroupsDefinition[];
-  allTokens?: (BaseToken | AppTokenPosition)[];
   comptrollerAddress: string;
   marketName?: string;
   getComptrollerContract: (opts: { address: string; network: Network }) => T;
@@ -64,8 +60,6 @@ export class CompoundSupplyTokenHelper {
     appId,
     groupId,
     exchangeable = false,
-    dependencies = [],
-    allTokens = [],
     getComptrollerContract,
     getTokenContract,
     getAllMarkets,
@@ -80,21 +74,15 @@ export class CompoundSupplyTokenHelper {
       Math.pow(1 + (blocksPerDay * Number(rate)) / Number(1e18), 365) - 1,
   }: CompoundSupplyTokenHelperParams<T, V>) {
     const multicall = this.appToolkit.getMulticall(network);
-
-    if (!allTokens.length) {
-      const baseTokens = await this.appToolkit.getBaseTokenPrices(network);
-      const appTokens = await this.appToolkit.getAppTokenPositions(...dependencies);
-      allTokens.push(...appTokens, ...baseTokens);
-    }
+    const tokenSelector = this.appToolkit.getTokenDependencySelector({ tags: { network, context: appId } });
 
     const comptrollerContract = getComptrollerContract({ network, address: comptrollerAddress });
     const marketTokenAddressesRaw = await getAllMarkets({ contract: comptrollerContract, multicall });
 
-    const tokens = await Promise.all(
+    const underlyings = await Promise.all(
       marketTokenAddressesRaw.map(async marketTokenAddressRaw => {
-        const address = marketTokenAddressRaw.toLowerCase();
-        const erc20TokenContract = this.contractFactory.erc20({ address, network });
-        const contract = getTokenContract({ address, network });
+        const marketTokenAddress = marketTokenAddressRaw.toLowerCase();
+        const contract = getTokenContract({ address: marketTokenAddress, network });
 
         const underlyingAddressRaw = await getUnderlyingAddress({ contract, multicall }).catch(err => {
           // if the underlying call failed, it's the compound-wrapped native token
@@ -103,8 +91,21 @@ export class CompoundSupplyTokenHelper {
           throw err;
         });
 
-        const underlyingAddress = underlyingAddressRaw.toLowerCase().replace(ETH_ADDR_ALIAS, ZERO_ADDRESS);
-        const underlyingToken = allTokens.find(v => v.address === underlyingAddress);
+        const underlyingTokenAddress = underlyingAddressRaw.toLowerCase().replace(ETH_ADDR_ALIAS, ZERO_ADDRESS);
+        return { underlyingTokenAddress, marketTokenAddress };
+      }),
+    );
+
+    const tokenDependencies = await tokenSelector
+      .getMany(underlyings.map(({ underlyingTokenAddress }) => ({ network, address: underlyingTokenAddress })))
+      .then(deps => compact(deps));
+
+    const tokens = await Promise.all(
+      underlyings.map(async ({ underlyingTokenAddress, marketTokenAddress }) => {
+        const erc20TokenContract = this.contractFactory.erc20({ address: marketTokenAddress, network });
+        const contract = getTokenContract({ address: marketTokenAddress, network });
+
+        const underlyingToken = tokenDependencies.find(v => v?.address === underlyingTokenAddress);
         if (!underlyingToken) return null;
 
         const [symbol, decimals, supplyRaw, rateRaw, supplyRateRaw, borrowRateRaw] = await Promise.all([
@@ -141,6 +142,7 @@ export class CompoundSupplyTokenHelper {
         const label = getDisplayLabel
           ? await getDisplayLabel({ contract, multicall, underlyingToken })
           : underlyingToken.symbol;
+        const labelDetailed = symbol;
         const secondaryLabel = buildDollarDisplayItem(underlyingToken.price);
         const tertiaryLabel = `${(supplyApy * 100).toFixed(3)}% APY`;
         const images = [getTokenImg(underlyingToken.address, network)];
@@ -152,7 +154,7 @@ export class CompoundSupplyTokenHelper {
 
         const token: AppTokenPosition<CompoundSupplyTokenDataProps> = {
           type,
-          address,
+          address: marketTokenAddress,
           network,
           appId,
           groupId,
@@ -174,6 +176,7 @@ export class CompoundSupplyTokenHelper {
 
           displayProps: {
             label,
+            labelDetailed,
             secondaryLabel,
             tertiaryLabel,
             images,

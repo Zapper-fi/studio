@@ -15,7 +15,7 @@ import type {
 } from 'ethers';
 import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
 import type { Listener, Provider } from '@ethersproject/providers';
-import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
 export interface CoslendComptrollerInterface extends utils.Interface {
   functions: {
@@ -161,86 +161,195 @@ export interface CoslendComptrollerInterface extends utils.Interface {
       | 'transferVerify',
   ): FunctionFragment;
 
-  encodeFunctionData(functionFragment: '_setBorrowPaused', values: [string, boolean]): string;
-  encodeFunctionData(functionFragment: '_setCloseFactor', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: '_setCollateralFactor', values: [string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: '_setDistributeRewardPaused', values: [boolean]): string;
-  encodeFunctionData(functionFragment: '_setDistribution', values: [string]): string;
-  encodeFunctionData(functionFragment: '_setLiquidateWhiteAddresses', values: [string[]]): string;
-  encodeFunctionData(functionFragment: '_setLiquidationIncentive', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: '_setMaintainer', values: [string]): string;
-  encodeFunctionData(functionFragment: '_setMarketBorrowCaps', values: [string[], BigNumberish[]]): string;
-  encodeFunctionData(functionFragment: '_setMarketMintCaps', values: [string[], BigNumberish[]]): string;
-  encodeFunctionData(functionFragment: '_setMaxAssets', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: '_setMintPaused', values: [string, boolean]): string;
-  encodeFunctionData(functionFragment: '_setPriceOracle', values: [string]): string;
-  encodeFunctionData(functionFragment: '_setRedeemPaused', values: [string, boolean]): string;
-  encodeFunctionData(functionFragment: '_setRepayPaused', values: [string, boolean]): string;
-  encodeFunctionData(functionFragment: '_setSeizePaused', values: [boolean]): string;
-  encodeFunctionData(functionFragment: '_setTransferPaused', values: [boolean]): string;
-  encodeFunctionData(functionFragment: '_supportMarket', values: [string]): string;
-  encodeFunctionData(functionFragment: 'accountAssets', values: [string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'allMarkets', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'borrowAllowed', values: [string, string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'borrowCaps', values: [string]): string;
+  encodeFunctionData(
+    functionFragment: '_setBorrowPaused',
+    values: [PromiseOrValue<string>, PromiseOrValue<boolean>],
+  ): string;
+  encodeFunctionData(functionFragment: '_setCloseFactor', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(
+    functionFragment: '_setCollateralFactor',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: '_setDistributeRewardPaused', values: [PromiseOrValue<boolean>]): string;
+  encodeFunctionData(functionFragment: '_setDistribution', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: '_setLiquidateWhiteAddresses', values: [PromiseOrValue<string>[]]): string;
+  encodeFunctionData(functionFragment: '_setLiquidationIncentive', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: '_setMaintainer', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: '_setMarketBorrowCaps',
+    values: [PromiseOrValue<string>[], PromiseOrValue<BigNumberish>[]],
+  ): string;
+  encodeFunctionData(
+    functionFragment: '_setMarketMintCaps',
+    values: [PromiseOrValue<string>[], PromiseOrValue<BigNumberish>[]],
+  ): string;
+  encodeFunctionData(functionFragment: '_setMaxAssets', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(
+    functionFragment: '_setMintPaused',
+    values: [PromiseOrValue<string>, PromiseOrValue<boolean>],
+  ): string;
+  encodeFunctionData(functionFragment: '_setPriceOracle', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: '_setRedeemPaused',
+    values: [PromiseOrValue<string>, PromiseOrValue<boolean>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: '_setRepayPaused',
+    values: [PromiseOrValue<string>, PromiseOrValue<boolean>],
+  ): string;
+  encodeFunctionData(functionFragment: '_setSeizePaused', values: [PromiseOrValue<boolean>]): string;
+  encodeFunctionData(functionFragment: '_setTransferPaused', values: [PromiseOrValue<boolean>]): string;
+  encodeFunctionData(functionFragment: '_supportMarket', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'accountAssets',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'allMarkets', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(
+    functionFragment: 'borrowAllowed',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'borrowCaps', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'borrowPaused', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'borrowVerify', values: [string, string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'checkMembership', values: [string, string]): string;
+  encodeFunctionData(
+    functionFragment: 'borrowVerify',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'checkMembership',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>],
+  ): string;
   encodeFunctionData(functionFragment: 'closeFactorMantissa', values?: undefined): string;
   encodeFunctionData(functionFragment: 'distributeRewardPaused', values?: undefined): string;
   encodeFunctionData(functionFragment: 'distribution', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'enterMarkets', values: [string[]]): string;
-  encodeFunctionData(functionFragment: 'exitMarket', values: [string]): string;
-  encodeFunctionData(functionFragment: 'getAccountLiquidity', values: [string]): string;
+  encodeFunctionData(functionFragment: 'enterMarkets', values: [PromiseOrValue<string>[]]): string;
+  encodeFunctionData(functionFragment: 'exitMarket', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'getAccountLiquidity', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'getAllMarkets', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'getAssetsIn', values: [string]): string;
+  encodeFunctionData(functionFragment: 'getAssetsIn', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(
     functionFragment: 'getHypotheticalAccountLiquidity',
-    values: [string, string, BigNumberish, BigNumberish],
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+    ],
   ): string;
   encodeFunctionData(functionFragment: 'initialize', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'isMarketListed', values: [string]): string;
+  encodeFunctionData(functionFragment: 'isMarketListed', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(
     functionFragment: 'liquidateBorrowAllowed',
-    values: [string, string, string, string, BigNumberish],
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+    ],
   ): string;
   encodeFunctionData(
     functionFragment: 'liquidateBorrowVerify',
-    values: [string, string, string, string, BigNumberish, BigNumberish],
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+    ],
   ): string;
-  encodeFunctionData(functionFragment: 'liquidateCalculateSeizeTokens', values: [string, string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'liquidateWhiteAddresses', values: [BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'liquidateCalculateSeizeTokens',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'liquidateWhiteAddresses', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'liquidationIncentiveMantissa', values?: undefined): string;
   encodeFunctionData(functionFragment: 'maintainer', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'marketTokenBorrowPaused', values: [string]): string;
-  encodeFunctionData(functionFragment: 'marketTokenMintPaused', values: [string]): string;
-  encodeFunctionData(functionFragment: 'marketTokenRedeemPaused', values: [string]): string;
-  encodeFunctionData(functionFragment: 'marketTokenRepayPaused', values: [string]): string;
-  encodeFunctionData(functionFragment: 'markets', values: [string]): string;
+  encodeFunctionData(functionFragment: 'marketTokenBorrowPaused', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'marketTokenMintPaused', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'marketTokenRedeemPaused', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'marketTokenRepayPaused', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'markets', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'maxAssets', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'mintAllowed', values: [string, string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'mintCaps', values: [string]): string;
+  encodeFunctionData(
+    functionFragment: 'mintAllowed',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'mintCaps', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'mintPaused', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'mintVerify', values: [string, string, BigNumberish, BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'mintVerify',
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+    ],
+  ): string;
   encodeFunctionData(functionFragment: 'oracle', values?: undefined): string;
   encodeFunctionData(functionFragment: 'owner', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'redeemAllowed', values: [string, string, BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'redeemAllowed',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
   encodeFunctionData(functionFragment: 'redeemPaused', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'redeemVerify', values: [string, string, BigNumberish, BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'redeemVerify',
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+    ],
+  ): string;
   encodeFunctionData(functionFragment: 'renounceOwnership', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'repayBorrowAllowed', values: [string, string, string, BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'repayBorrowAllowed',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
   encodeFunctionData(
     functionFragment: 'repayBorrowVerify',
-    values: [string, string, string, BigNumberish, BigNumberish],
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+    ],
   ): string;
   encodeFunctionData(functionFragment: 'repayPaused', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'seizeAllowed', values: [string, string, string, string, BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'seizeAllowed',
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+    ],
+  ): string;
   encodeFunctionData(functionFragment: 'seizePaused', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'seizeVerify', values: [string, string, string, string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'transferAllowed', values: [string, string, string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'transferOwnership', values: [string]): string;
+  encodeFunctionData(
+    functionFragment: 'seizeVerify',
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+    ],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'transferAllowed',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'transferOwnership', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'transferPaused', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'transferVerify', values: [string, string, string, BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'transferVerify',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
 
   decodeFunctionResult(functionFragment: '_setBorrowPaused', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: '_setCloseFactor', data: BytesLike): Result;
@@ -502,125 +611,133 @@ export interface CoslendComptroller extends BaseContract {
 
   functions: {
     _setBorrowPaused(
-      marketToken: string,
-      state: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      marketToken: PromiseOrValue<string>,
+      state: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     _setCloseFactor(
-      newCloseFactorMantissa: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newCloseFactorMantissa: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     _setCollateralFactor(
-      marketToken: string,
-      newCollateralFactorMantissa: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      marketToken: PromiseOrValue<string>,
+      newCollateralFactorMantissa: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     _setDistributeRewardPaused(
-      state: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      state: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     _setDistribution(
-      newDistribution: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newDistribution: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     _setLiquidateWhiteAddresses(
-      _liquidateWhiteAddresses: string[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _liquidateWhiteAddresses: PromiseOrValue<string>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     _setLiquidationIncentive(
-      newLiquidationIncentiveMantissa: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newLiquidationIncentiveMantissa: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     _setMaintainer(
-      newMaintainer: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newMaintainer: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     _setMarketBorrowCaps(
-      marketTokens: string[],
-      newBorrowCaps: BigNumberish[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      marketTokens: PromiseOrValue<string>[],
+      newBorrowCaps: PromiseOrValue<BigNumberish>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     _setMarketMintCaps(
-      marketTokens: string[],
-      newMintCaps: BigNumberish[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      marketTokens: PromiseOrValue<string>[],
+      newMintCaps: PromiseOrValue<BigNumberish>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     _setMaxAssets(
-      newMaxAssets: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newMaxAssets: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     _setMintPaused(
-      marketToken: string,
-      state: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      marketToken: PromiseOrValue<string>,
+      state: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     _setPriceOracle(
-      newOracle: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOracle: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     _setRedeemPaused(
-      marketToken: string,
-      state: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      marketToken: PromiseOrValue<string>,
+      state: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     _setRepayPaused(
-      marketToken: string,
-      state: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      marketToken: PromiseOrValue<string>,
+      state: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     _setSeizePaused(
-      state: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      state: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     _setTransferPaused(
-      state: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      state: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     _supportMarket(
-      marketToken: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      marketToken: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    accountAssets(arg0: string, arg1: BigNumberish, overrides?: CallOverrides): Promise<[string]>;
+    accountAssets(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<[string]>;
 
-    allMarkets(arg0: BigNumberish, overrides?: CallOverrides): Promise<[string]>;
+    allMarkets(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[string]>;
 
     borrowAllowed(
-      marketToken: string,
-      borrower: string,
-      borrowAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      marketToken: PromiseOrValue<string>,
+      borrower: PromiseOrValue<string>,
+      borrowAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    borrowCaps(arg0: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    borrowCaps(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     borrowPaused(overrides?: CallOverrides): Promise<[boolean]>;
 
     borrowVerify(
-      marketToken: string,
-      borrower: string,
-      borrowAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      marketToken: PromiseOrValue<string>,
+      borrower: PromiseOrValue<string>,
+      borrowAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    checkMembership(account: string, marketToken: string, overrides?: CallOverrides): Promise<[boolean]>;
+    checkMembership(
+      account: PromiseOrValue<string>,
+      marketToken: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<[boolean]>;
 
     closeFactorMantissa(overrides?: CallOverrides): Promise<[BigNumber]>;
 
@@ -629,75 +746,78 @@ export interface CoslendComptroller extends BaseContract {
     distribution(overrides?: CallOverrides): Promise<[string]>;
 
     enterMarkets(
-      marketTokens: string[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      marketTokens: PromiseOrValue<string>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     exitMarket(
-      marketTokenAddress: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      marketTokenAddress: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    getAccountLiquidity(account: string, overrides?: CallOverrides): Promise<[BigNumber, BigNumber, BigNumber]>;
-
-    getAllMarkets(overrides?: CallOverrides): Promise<[string[]]>;
-
-    getAssetsIn(account: string, overrides?: CallOverrides): Promise<[string[]]>;
-
-    getHypotheticalAccountLiquidity(
-      account: string,
-      marketTokenModify: string,
-      redeemTokens: BigNumberish,
-      borrowAmount: BigNumberish,
+    getAccountLiquidity(
+      account: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber, BigNumber, BigNumber]>;
 
-    initialize(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    getAllMarkets(overrides?: CallOverrides): Promise<[string[]]>;
 
-    isMarketListed(marketToken: string, overrides?: CallOverrides): Promise<[boolean]>;
+    getAssetsIn(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[string[]]>;
+
+    getHypotheticalAccountLiquidity(
+      account: PromiseOrValue<string>,
+      marketTokenModify: PromiseOrValue<string>,
+      redeemTokens: PromiseOrValue<BigNumberish>,
+      borrowAmount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber, BigNumber, BigNumber]>;
+
+    initialize(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
+
+    isMarketListed(marketToken: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[boolean]>;
 
     liquidateBorrowAllowed(
-      marketTokenBorrowed: string,
-      marketTokenCollateral: string,
-      liquidator: string,
-      borrower: string,
-      repayAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      marketTokenBorrowed: PromiseOrValue<string>,
+      marketTokenCollateral: PromiseOrValue<string>,
+      liquidator: PromiseOrValue<string>,
+      borrower: PromiseOrValue<string>,
+      repayAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     liquidateBorrowVerify(
-      marketTokenBorrowed: string,
-      marketTokenCollateral: string,
-      liquidator: string,
-      borrower: string,
-      repayAmount: BigNumberish,
-      seizeTokens: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      marketTokenBorrowed: PromiseOrValue<string>,
+      marketTokenCollateral: PromiseOrValue<string>,
+      liquidator: PromiseOrValue<string>,
+      borrower: PromiseOrValue<string>,
+      repayAmount: PromiseOrValue<BigNumberish>,
+      seizeTokens: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     liquidateCalculateSeizeTokens(
-      marketTokenBorrowed: string,
-      marketTokenCollateral: string,
-      actualRepayAmount: BigNumberish,
+      marketTokenBorrowed: PromiseOrValue<string>,
+      marketTokenCollateral: PromiseOrValue<string>,
+      actualRepayAmount: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber, BigNumber]>;
 
-    liquidateWhiteAddresses(arg0: BigNumberish, overrides?: CallOverrides): Promise<[string]>;
+    liquidateWhiteAddresses(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[string]>;
 
     liquidationIncentiveMantissa(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     maintainer(overrides?: CallOverrides): Promise<[string]>;
 
-    marketTokenBorrowPaused(arg0: string, overrides?: CallOverrides): Promise<[boolean]>;
+    marketTokenBorrowPaused(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[boolean]>;
 
-    marketTokenMintPaused(arg0: string, overrides?: CallOverrides): Promise<[boolean]>;
+    marketTokenMintPaused(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[boolean]>;
 
-    marketTokenRedeemPaused(arg0: string, overrides?: CallOverrides): Promise<[boolean]>;
+    marketTokenRedeemPaused(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[boolean]>;
 
-    marketTokenRepayPaused(arg0: string, overrides?: CallOverrides): Promise<[boolean]>;
+    marketTokenRepayPaused(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[boolean]>;
 
     markets(
-      arg0: string,
+      arg0: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<
       [boolean, BigNumber] & {
@@ -709,22 +829,22 @@ export interface CoslendComptroller extends BaseContract {
     maxAssets(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     mintAllowed(
-      marketToken: string,
-      minter: string,
-      mintAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      marketToken: PromiseOrValue<string>,
+      minter: PromiseOrValue<string>,
+      mintAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    mintCaps(arg0: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    mintCaps(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     mintPaused(overrides?: CallOverrides): Promise<[boolean]>;
 
     mintVerify(
-      marketToken: string,
-      minter: string,
-      mintAmount: BigNumberish,
-      mintTokens: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      marketToken: PromiseOrValue<string>,
+      minter: PromiseOrValue<string>,
+      mintAmount: PromiseOrValue<BigNumberish>,
+      mintTokens: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     oracle(overrides?: CallOverrides): Promise<[string]>;
@@ -732,207 +852,215 @@ export interface CoslendComptroller extends BaseContract {
     owner(overrides?: CallOverrides): Promise<[string]>;
 
     redeemAllowed(
-      marketToken: string,
-      redeemer: string,
-      redeemTokens: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      marketToken: PromiseOrValue<string>,
+      redeemer: PromiseOrValue<string>,
+      redeemTokens: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     redeemPaused(overrides?: CallOverrides): Promise<[boolean]>;
 
     redeemVerify(
-      marketToken: string,
-      redeemer: string,
-      redeemAmount: BigNumberish,
-      redeemTokens: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      marketToken: PromiseOrValue<string>,
+      redeemer: PromiseOrValue<string>,
+      redeemAmount: PromiseOrValue<BigNumberish>,
+      redeemTokens: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     repayBorrowAllowed(
-      marketToken: string,
-      payer: string,
-      borrower: string,
-      repayAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      marketToken: PromiseOrValue<string>,
+      payer: PromiseOrValue<string>,
+      borrower: PromiseOrValue<string>,
+      repayAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     repayBorrowVerify(
-      marketToken: string,
-      payer: string,
-      borrower: string,
-      repayAmount: BigNumberish,
-      borrowerIndex: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      marketToken: PromiseOrValue<string>,
+      payer: PromiseOrValue<string>,
+      borrower: PromiseOrValue<string>,
+      repayAmount: PromiseOrValue<BigNumberish>,
+      borrowerIndex: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     repayPaused(overrides?: CallOverrides): Promise<[boolean]>;
 
     seizeAllowed(
-      marketTokenCollateral: string,
-      marketTokenBorrowed: string,
-      liquidator: string,
-      borrower: string,
-      seizeTokens: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      marketTokenCollateral: PromiseOrValue<string>,
+      marketTokenBorrowed: PromiseOrValue<string>,
+      liquidator: PromiseOrValue<string>,
+      borrower: PromiseOrValue<string>,
+      seizeTokens: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     seizePaused(overrides?: CallOverrides): Promise<[boolean]>;
 
     seizeVerify(
-      marketTokenCollateral: string,
-      marketTokenBorrowed: string,
-      liquidator: string,
-      borrower: string,
-      seizeTokens: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      marketTokenCollateral: PromiseOrValue<string>,
+      marketTokenBorrowed: PromiseOrValue<string>,
+      liquidator: PromiseOrValue<string>,
+      borrower: PromiseOrValue<string>,
+      seizeTokens: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     transferAllowed(
-      marketToken: string,
-      src: string,
-      dst: string,
-      transferTokens: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      marketToken: PromiseOrValue<string>,
+      src: PromiseOrValue<string>,
+      dst: PromiseOrValue<string>,
+      transferTokens: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     transferPaused(overrides?: CallOverrides): Promise<[boolean]>;
 
     transferVerify(
-      marketToken: string,
-      src: string,
-      dst: string,
-      transferTokens: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      marketToken: PromiseOrValue<string>,
+      src: PromiseOrValue<string>,
+      dst: PromiseOrValue<string>,
+      transferTokens: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
   };
 
   _setBorrowPaused(
-    marketToken: string,
-    state: boolean,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    marketToken: PromiseOrValue<string>,
+    state: PromiseOrValue<boolean>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   _setCloseFactor(
-    newCloseFactorMantissa: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    newCloseFactorMantissa: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   _setCollateralFactor(
-    marketToken: string,
-    newCollateralFactorMantissa: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    marketToken: PromiseOrValue<string>,
+    newCollateralFactorMantissa: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   _setDistributeRewardPaused(
-    state: boolean,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    state: PromiseOrValue<boolean>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   _setDistribution(
-    newDistribution: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    newDistribution: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   _setLiquidateWhiteAddresses(
-    _liquidateWhiteAddresses: string[],
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _liquidateWhiteAddresses: PromiseOrValue<string>[],
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   _setLiquidationIncentive(
-    newLiquidationIncentiveMantissa: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    newLiquidationIncentiveMantissa: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   _setMaintainer(
-    newMaintainer: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    newMaintainer: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   _setMarketBorrowCaps(
-    marketTokens: string[],
-    newBorrowCaps: BigNumberish[],
-    overrides?: Overrides & { from?: string | Promise<string> },
+    marketTokens: PromiseOrValue<string>[],
+    newBorrowCaps: PromiseOrValue<BigNumberish>[],
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   _setMarketMintCaps(
-    marketTokens: string[],
-    newMintCaps: BigNumberish[],
-    overrides?: Overrides & { from?: string | Promise<string> },
+    marketTokens: PromiseOrValue<string>[],
+    newMintCaps: PromiseOrValue<BigNumberish>[],
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   _setMaxAssets(
-    newMaxAssets: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    newMaxAssets: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   _setMintPaused(
-    marketToken: string,
-    state: boolean,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    marketToken: PromiseOrValue<string>,
+    state: PromiseOrValue<boolean>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   _setPriceOracle(
-    newOracle: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    newOracle: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   _setRedeemPaused(
-    marketToken: string,
-    state: boolean,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    marketToken: PromiseOrValue<string>,
+    state: PromiseOrValue<boolean>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   _setRepayPaused(
-    marketToken: string,
-    state: boolean,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    marketToken: PromiseOrValue<string>,
+    state: PromiseOrValue<boolean>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   _setSeizePaused(
-    state: boolean,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    state: PromiseOrValue<boolean>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   _setTransferPaused(
-    state: boolean,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    state: PromiseOrValue<boolean>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   _supportMarket(
-    marketToken: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    marketToken: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  accountAssets(arg0: string, arg1: BigNumberish, overrides?: CallOverrides): Promise<string>;
+  accountAssets(
+    arg0: PromiseOrValue<string>,
+    arg1: PromiseOrValue<BigNumberish>,
+    overrides?: CallOverrides,
+  ): Promise<string>;
 
-  allMarkets(arg0: BigNumberish, overrides?: CallOverrides): Promise<string>;
+  allMarkets(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
 
   borrowAllowed(
-    marketToken: string,
-    borrower: string,
-    borrowAmount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    marketToken: PromiseOrValue<string>,
+    borrower: PromiseOrValue<string>,
+    borrowAmount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  borrowCaps(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+  borrowCaps(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   borrowPaused(overrides?: CallOverrides): Promise<boolean>;
 
   borrowVerify(
-    marketToken: string,
-    borrower: string,
-    borrowAmount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    marketToken: PromiseOrValue<string>,
+    borrower: PromiseOrValue<string>,
+    borrowAmount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  checkMembership(account: string, marketToken: string, overrides?: CallOverrides): Promise<boolean>;
+  checkMembership(
+    account: PromiseOrValue<string>,
+    marketToken: PromiseOrValue<string>,
+    overrides?: CallOverrides,
+  ): Promise<boolean>;
 
   closeFactorMantissa(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -941,75 +1069,78 @@ export interface CoslendComptroller extends BaseContract {
   distribution(overrides?: CallOverrides): Promise<string>;
 
   enterMarkets(
-    marketTokens: string[],
-    overrides?: Overrides & { from?: string | Promise<string> },
+    marketTokens: PromiseOrValue<string>[],
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   exitMarket(
-    marketTokenAddress: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    marketTokenAddress: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  getAccountLiquidity(account: string, overrides?: CallOverrides): Promise<[BigNumber, BigNumber, BigNumber]>;
-
-  getAllMarkets(overrides?: CallOverrides): Promise<string[]>;
-
-  getAssetsIn(account: string, overrides?: CallOverrides): Promise<string[]>;
-
-  getHypotheticalAccountLiquidity(
-    account: string,
-    marketTokenModify: string,
-    redeemTokens: BigNumberish,
-    borrowAmount: BigNumberish,
+  getAccountLiquidity(
+    account: PromiseOrValue<string>,
     overrides?: CallOverrides,
   ): Promise<[BigNumber, BigNumber, BigNumber]>;
 
-  initialize(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  getAllMarkets(overrides?: CallOverrides): Promise<string[]>;
 
-  isMarketListed(marketToken: string, overrides?: CallOverrides): Promise<boolean>;
+  getAssetsIn(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<string[]>;
+
+  getHypotheticalAccountLiquidity(
+    account: PromiseOrValue<string>,
+    marketTokenModify: PromiseOrValue<string>,
+    redeemTokens: PromiseOrValue<BigNumberish>,
+    borrowAmount: PromiseOrValue<BigNumberish>,
+    overrides?: CallOverrides,
+  ): Promise<[BigNumber, BigNumber, BigNumber]>;
+
+  initialize(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
+
+  isMarketListed(marketToken: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
   liquidateBorrowAllowed(
-    marketTokenBorrowed: string,
-    marketTokenCollateral: string,
-    liquidator: string,
-    borrower: string,
-    repayAmount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    marketTokenBorrowed: PromiseOrValue<string>,
+    marketTokenCollateral: PromiseOrValue<string>,
+    liquidator: PromiseOrValue<string>,
+    borrower: PromiseOrValue<string>,
+    repayAmount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   liquidateBorrowVerify(
-    marketTokenBorrowed: string,
-    marketTokenCollateral: string,
-    liquidator: string,
-    borrower: string,
-    repayAmount: BigNumberish,
-    seizeTokens: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    marketTokenBorrowed: PromiseOrValue<string>,
+    marketTokenCollateral: PromiseOrValue<string>,
+    liquidator: PromiseOrValue<string>,
+    borrower: PromiseOrValue<string>,
+    repayAmount: PromiseOrValue<BigNumberish>,
+    seizeTokens: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   liquidateCalculateSeizeTokens(
-    marketTokenBorrowed: string,
-    marketTokenCollateral: string,
-    actualRepayAmount: BigNumberish,
+    marketTokenBorrowed: PromiseOrValue<string>,
+    marketTokenCollateral: PromiseOrValue<string>,
+    actualRepayAmount: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides,
   ): Promise<[BigNumber, BigNumber]>;
 
-  liquidateWhiteAddresses(arg0: BigNumberish, overrides?: CallOverrides): Promise<string>;
+  liquidateWhiteAddresses(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
 
   liquidationIncentiveMantissa(overrides?: CallOverrides): Promise<BigNumber>;
 
   maintainer(overrides?: CallOverrides): Promise<string>;
 
-  marketTokenBorrowPaused(arg0: string, overrides?: CallOverrides): Promise<boolean>;
+  marketTokenBorrowPaused(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
-  marketTokenMintPaused(arg0: string, overrides?: CallOverrides): Promise<boolean>;
+  marketTokenMintPaused(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
-  marketTokenRedeemPaused(arg0: string, overrides?: CallOverrides): Promise<boolean>;
+  marketTokenRedeemPaused(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
-  marketTokenRepayPaused(arg0: string, overrides?: CallOverrides): Promise<boolean>;
+  marketTokenRepayPaused(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
   markets(
-    arg0: string,
+    arg0: PromiseOrValue<string>,
     overrides?: CallOverrides,
   ): Promise<
     [boolean, BigNumber] & {
@@ -1021,22 +1152,22 @@ export interface CoslendComptroller extends BaseContract {
   maxAssets(overrides?: CallOverrides): Promise<BigNumber>;
 
   mintAllowed(
-    marketToken: string,
-    minter: string,
-    mintAmount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    marketToken: PromiseOrValue<string>,
+    minter: PromiseOrValue<string>,
+    mintAmount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  mintCaps(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+  mintCaps(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   mintPaused(overrides?: CallOverrides): Promise<boolean>;
 
   mintVerify(
-    marketToken: string,
-    minter: string,
-    mintAmount: BigNumberish,
-    mintTokens: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    marketToken: PromiseOrValue<string>,
+    minter: PromiseOrValue<string>,
+    mintAmount: PromiseOrValue<BigNumberish>,
+    mintTokens: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   oracle(overrides?: CallOverrides): Promise<string>;
@@ -1044,157 +1175,191 @@ export interface CoslendComptroller extends BaseContract {
   owner(overrides?: CallOverrides): Promise<string>;
 
   redeemAllowed(
-    marketToken: string,
-    redeemer: string,
-    redeemTokens: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    marketToken: PromiseOrValue<string>,
+    redeemer: PromiseOrValue<string>,
+    redeemTokens: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   redeemPaused(overrides?: CallOverrides): Promise<boolean>;
 
   redeemVerify(
-    marketToken: string,
-    redeemer: string,
-    redeemAmount: BigNumberish,
-    redeemTokens: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    marketToken: PromiseOrValue<string>,
+    redeemer: PromiseOrValue<string>,
+    redeemAmount: PromiseOrValue<BigNumberish>,
+    redeemTokens: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   repayBorrowAllowed(
-    marketToken: string,
-    payer: string,
-    borrower: string,
-    repayAmount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    marketToken: PromiseOrValue<string>,
+    payer: PromiseOrValue<string>,
+    borrower: PromiseOrValue<string>,
+    repayAmount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   repayBorrowVerify(
-    marketToken: string,
-    payer: string,
-    borrower: string,
-    repayAmount: BigNumberish,
-    borrowerIndex: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    marketToken: PromiseOrValue<string>,
+    payer: PromiseOrValue<string>,
+    borrower: PromiseOrValue<string>,
+    repayAmount: PromiseOrValue<BigNumberish>,
+    borrowerIndex: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   repayPaused(overrides?: CallOverrides): Promise<boolean>;
 
   seizeAllowed(
-    marketTokenCollateral: string,
-    marketTokenBorrowed: string,
-    liquidator: string,
-    borrower: string,
-    seizeTokens: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    marketTokenCollateral: PromiseOrValue<string>,
+    marketTokenBorrowed: PromiseOrValue<string>,
+    liquidator: PromiseOrValue<string>,
+    borrower: PromiseOrValue<string>,
+    seizeTokens: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   seizePaused(overrides?: CallOverrides): Promise<boolean>;
 
   seizeVerify(
-    marketTokenCollateral: string,
-    marketTokenBorrowed: string,
-    liquidator: string,
-    borrower: string,
-    seizeTokens: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    marketTokenCollateral: PromiseOrValue<string>,
+    marketTokenBorrowed: PromiseOrValue<string>,
+    liquidator: PromiseOrValue<string>,
+    borrower: PromiseOrValue<string>,
+    seizeTokens: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   transferAllowed(
-    marketToken: string,
-    src: string,
-    dst: string,
-    transferTokens: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    marketToken: PromiseOrValue<string>,
+    src: PromiseOrValue<string>,
+    dst: PromiseOrValue<string>,
+    transferTokens: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   transferOwnership(
-    newOwner: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    newOwner: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   transferPaused(overrides?: CallOverrides): Promise<boolean>;
 
   transferVerify(
-    marketToken: string,
-    src: string,
-    dst: string,
-    transferTokens: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    marketToken: PromiseOrValue<string>,
+    src: PromiseOrValue<string>,
+    dst: PromiseOrValue<string>,
+    transferTokens: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   callStatic: {
-    _setBorrowPaused(marketToken: string, state: boolean, overrides?: CallOverrides): Promise<boolean>;
+    _setBorrowPaused(
+      marketToken: PromiseOrValue<string>,
+      state: PromiseOrValue<boolean>,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
 
-    _setCloseFactor(newCloseFactorMantissa: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    _setCloseFactor(
+      newCloseFactorMantissa: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     _setCollateralFactor(
-      marketToken: string,
-      newCollateralFactorMantissa: BigNumberish,
+      marketToken: PromiseOrValue<string>,
+      newCollateralFactorMantissa: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
-    _setDistributeRewardPaused(state: boolean, overrides?: CallOverrides): Promise<boolean>;
+    _setDistributeRewardPaused(state: PromiseOrValue<boolean>, overrides?: CallOverrides): Promise<boolean>;
 
-    _setDistribution(newDistribution: string, overrides?: CallOverrides): Promise<BigNumber>;
+    _setDistribution(newDistribution: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    _setLiquidateWhiteAddresses(_liquidateWhiteAddresses: string[], overrides?: CallOverrides): Promise<void>;
-
-    _setLiquidationIncentive(
-      newLiquidationIncentiveMantissa: BigNumberish,
-      overrides?: CallOverrides,
-    ): Promise<BigNumber>;
-
-    _setMaintainer(newMaintainer: string, overrides?: CallOverrides): Promise<BigNumber>;
-
-    _setMarketBorrowCaps(
-      marketTokens: string[],
-      newBorrowCaps: BigNumberish[],
+    _setLiquidateWhiteAddresses(
+      _liquidateWhiteAddresses: PromiseOrValue<string>[],
       overrides?: CallOverrides,
     ): Promise<void>;
 
-    _setMarketMintCaps(marketTokens: string[], newMintCaps: BigNumberish[], overrides?: CallOverrides): Promise<void>;
-
-    _setMaxAssets(newMaxAssets: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
-
-    _setMintPaused(marketToken: string, state: boolean, overrides?: CallOverrides): Promise<boolean>;
-
-    _setPriceOracle(newOracle: string, overrides?: CallOverrides): Promise<BigNumber>;
-
-    _setRedeemPaused(marketToken: string, state: boolean, overrides?: CallOverrides): Promise<boolean>;
-
-    _setRepayPaused(marketToken: string, state: boolean, overrides?: CallOverrides): Promise<boolean>;
-
-    _setSeizePaused(state: boolean, overrides?: CallOverrides): Promise<boolean>;
-
-    _setTransferPaused(state: boolean, overrides?: CallOverrides): Promise<boolean>;
-
-    _supportMarket(marketToken: string, overrides?: CallOverrides): Promise<BigNumber>;
-
-    accountAssets(arg0: string, arg1: BigNumberish, overrides?: CallOverrides): Promise<string>;
-
-    allMarkets(arg0: BigNumberish, overrides?: CallOverrides): Promise<string>;
-
-    borrowAllowed(
-      marketToken: string,
-      borrower: string,
-      borrowAmount: BigNumberish,
+    _setLiquidationIncentive(
+      newLiquidationIncentiveMantissa: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
-    borrowCaps(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    _setMaintainer(newMaintainer: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
+
+    _setMarketBorrowCaps(
+      marketTokens: PromiseOrValue<string>[],
+      newBorrowCaps: PromiseOrValue<BigNumberish>[],
+      overrides?: CallOverrides,
+    ): Promise<void>;
+
+    _setMarketMintCaps(
+      marketTokens: PromiseOrValue<string>[],
+      newMintCaps: PromiseOrValue<BigNumberish>[],
+      overrides?: CallOverrides,
+    ): Promise<void>;
+
+    _setMaxAssets(newMaxAssets: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
+
+    _setMintPaused(
+      marketToken: PromiseOrValue<string>,
+      state: PromiseOrValue<boolean>,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
+
+    _setPriceOracle(newOracle: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
+
+    _setRedeemPaused(
+      marketToken: PromiseOrValue<string>,
+      state: PromiseOrValue<boolean>,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
+
+    _setRepayPaused(
+      marketToken: PromiseOrValue<string>,
+      state: PromiseOrValue<boolean>,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
+
+    _setSeizePaused(state: PromiseOrValue<boolean>, overrides?: CallOverrides): Promise<boolean>;
+
+    _setTransferPaused(state: PromiseOrValue<boolean>, overrides?: CallOverrides): Promise<boolean>;
+
+    _supportMarket(marketToken: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
+
+    accountAssets(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<string>;
+
+    allMarkets(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
+
+    borrowAllowed(
+      marketToken: PromiseOrValue<string>,
+      borrower: PromiseOrValue<string>,
+      borrowAmount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
+
+    borrowCaps(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     borrowPaused(overrides?: CallOverrides): Promise<boolean>;
 
     borrowVerify(
-      marketToken: string,
-      borrower: string,
-      borrowAmount: BigNumberish,
+      marketToken: PromiseOrValue<string>,
+      borrower: PromiseOrValue<string>,
+      borrowAmount: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
-    checkMembership(account: string, marketToken: string, overrides?: CallOverrides): Promise<boolean>;
+    checkMembership(
+      account: PromiseOrValue<string>,
+      marketToken: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
 
     closeFactorMantissa(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -1202,70 +1367,73 @@ export interface CoslendComptroller extends BaseContract {
 
     distribution(overrides?: CallOverrides): Promise<string>;
 
-    enterMarkets(marketTokens: string[], overrides?: CallOverrides): Promise<BigNumber[]>;
+    enterMarkets(marketTokens: PromiseOrValue<string>[], overrides?: CallOverrides): Promise<BigNumber[]>;
 
-    exitMarket(marketTokenAddress: string, overrides?: CallOverrides): Promise<BigNumber>;
+    exitMarket(marketTokenAddress: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    getAccountLiquidity(account: string, overrides?: CallOverrides): Promise<[BigNumber, BigNumber, BigNumber]>;
+    getAccountLiquidity(
+      account: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber, BigNumber, BigNumber]>;
 
     getAllMarkets(overrides?: CallOverrides): Promise<string[]>;
 
-    getAssetsIn(account: string, overrides?: CallOverrides): Promise<string[]>;
+    getAssetsIn(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<string[]>;
 
     getHypotheticalAccountLiquidity(
-      account: string,
-      marketTokenModify: string,
-      redeemTokens: BigNumberish,
-      borrowAmount: BigNumberish,
+      account: PromiseOrValue<string>,
+      marketTokenModify: PromiseOrValue<string>,
+      redeemTokens: PromiseOrValue<BigNumberish>,
+      borrowAmount: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber, BigNumber, BigNumber]>;
 
     initialize(overrides?: CallOverrides): Promise<void>;
 
-    isMarketListed(marketToken: string, overrides?: CallOverrides): Promise<boolean>;
+    isMarketListed(marketToken: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
     liquidateBorrowAllowed(
-      marketTokenBorrowed: string,
-      marketTokenCollateral: string,
-      liquidator: string,
-      borrower: string,
-      repayAmount: BigNumberish,
+      marketTokenBorrowed: PromiseOrValue<string>,
+      marketTokenCollateral: PromiseOrValue<string>,
+      liquidator: PromiseOrValue<string>,
+      borrower: PromiseOrValue<string>,
+      repayAmount: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     liquidateBorrowVerify(
-      marketTokenBorrowed: string,
-      marketTokenCollateral: string,
-      liquidator: string,
-      borrower: string,
-      repayAmount: BigNumberish,
-      seizeTokens: BigNumberish,
+      marketTokenBorrowed: PromiseOrValue<string>,
+      marketTokenCollateral: PromiseOrValue<string>,
+      liquidator: PromiseOrValue<string>,
+      borrower: PromiseOrValue<string>,
+      repayAmount: PromiseOrValue<BigNumberish>,
+      seizeTokens: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
     liquidateCalculateSeizeTokens(
-      marketTokenBorrowed: string,
-      marketTokenCollateral: string,
-      actualRepayAmount: BigNumberish,
+      marketTokenBorrowed: PromiseOrValue<string>,
+      marketTokenCollateral: PromiseOrValue<string>,
+      actualRepayAmount: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber, BigNumber]>;
 
-    liquidateWhiteAddresses(arg0: BigNumberish, overrides?: CallOverrides): Promise<string>;
+    liquidateWhiteAddresses(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
 
     liquidationIncentiveMantissa(overrides?: CallOverrides): Promise<BigNumber>;
 
     maintainer(overrides?: CallOverrides): Promise<string>;
 
-    marketTokenBorrowPaused(arg0: string, overrides?: CallOverrides): Promise<boolean>;
+    marketTokenBorrowPaused(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
-    marketTokenMintPaused(arg0: string, overrides?: CallOverrides): Promise<boolean>;
+    marketTokenMintPaused(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
-    marketTokenRedeemPaused(arg0: string, overrides?: CallOverrides): Promise<boolean>;
+    marketTokenRedeemPaused(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
-    marketTokenRepayPaused(arg0: string, overrides?: CallOverrides): Promise<boolean>;
+    marketTokenRepayPaused(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
     markets(
-      arg0: string,
+      arg0: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<
       [boolean, BigNumber] & {
@@ -1277,21 +1445,21 @@ export interface CoslendComptroller extends BaseContract {
     maxAssets(overrides?: CallOverrides): Promise<BigNumber>;
 
     mintAllowed(
-      marketToken: string,
-      minter: string,
-      mintAmount: BigNumberish,
+      marketToken: PromiseOrValue<string>,
+      minter: PromiseOrValue<string>,
+      mintAmount: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
-    mintCaps(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    mintCaps(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     mintPaused(overrides?: CallOverrides): Promise<boolean>;
 
     mintVerify(
-      marketToken: string,
-      minter: string,
-      mintAmount: BigNumberish,
-      mintTokens: BigNumberish,
+      marketToken: PromiseOrValue<string>,
+      minter: PromiseOrValue<string>,
+      mintAmount: PromiseOrValue<BigNumberish>,
+      mintTokens: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
@@ -1300,80 +1468,80 @@ export interface CoslendComptroller extends BaseContract {
     owner(overrides?: CallOverrides): Promise<string>;
 
     redeemAllowed(
-      marketToken: string,
-      redeemer: string,
-      redeemTokens: BigNumberish,
+      marketToken: PromiseOrValue<string>,
+      redeemer: PromiseOrValue<string>,
+      redeemTokens: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     redeemPaused(overrides?: CallOverrides): Promise<boolean>;
 
     redeemVerify(
-      marketToken: string,
-      redeemer: string,
-      redeemAmount: BigNumberish,
-      redeemTokens: BigNumberish,
+      marketToken: PromiseOrValue<string>,
+      redeemer: PromiseOrValue<string>,
+      redeemAmount: PromiseOrValue<BigNumberish>,
+      redeemTokens: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
     renounceOwnership(overrides?: CallOverrides): Promise<void>;
 
     repayBorrowAllowed(
-      marketToken: string,
-      payer: string,
-      borrower: string,
-      repayAmount: BigNumberish,
+      marketToken: PromiseOrValue<string>,
+      payer: PromiseOrValue<string>,
+      borrower: PromiseOrValue<string>,
+      repayAmount: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     repayBorrowVerify(
-      marketToken: string,
-      payer: string,
-      borrower: string,
-      repayAmount: BigNumberish,
-      borrowerIndex: BigNumberish,
+      marketToken: PromiseOrValue<string>,
+      payer: PromiseOrValue<string>,
+      borrower: PromiseOrValue<string>,
+      repayAmount: PromiseOrValue<BigNumberish>,
+      borrowerIndex: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
     repayPaused(overrides?: CallOverrides): Promise<boolean>;
 
     seizeAllowed(
-      marketTokenCollateral: string,
-      marketTokenBorrowed: string,
-      liquidator: string,
-      borrower: string,
-      seizeTokens: BigNumberish,
+      marketTokenCollateral: PromiseOrValue<string>,
+      marketTokenBorrowed: PromiseOrValue<string>,
+      liquidator: PromiseOrValue<string>,
+      borrower: PromiseOrValue<string>,
+      seizeTokens: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     seizePaused(overrides?: CallOverrides): Promise<boolean>;
 
     seizeVerify(
-      marketTokenCollateral: string,
-      marketTokenBorrowed: string,
-      liquidator: string,
-      borrower: string,
-      seizeTokens: BigNumberish,
+      marketTokenCollateral: PromiseOrValue<string>,
+      marketTokenBorrowed: PromiseOrValue<string>,
+      liquidator: PromiseOrValue<string>,
+      borrower: PromiseOrValue<string>,
+      seizeTokens: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
     transferAllowed(
-      marketToken: string,
-      src: string,
-      dst: string,
-      transferTokens: BigNumberish,
+      marketToken: PromiseOrValue<string>,
+      src: PromiseOrValue<string>,
+      dst: PromiseOrValue<string>,
+      transferTokens: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
-    transferOwnership(newOwner: string, overrides?: CallOverrides): Promise<void>;
+    transferOwnership(newOwner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     transferPaused(overrides?: CallOverrides): Promise<boolean>;
 
     transferVerify(
-      marketToken: string,
-      src: string,
-      dst: string,
-      transferTokens: BigNumberish,
+      marketToken: PromiseOrValue<string>,
+      src: PromiseOrValue<string>,
+      dst: PromiseOrValue<string>,
+      transferTokens: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<void>;
   };
@@ -1397,8 +1565,11 @@ export interface CoslendComptroller extends BaseContract {
     'MarketListed(address)'(marketToken?: null): MarketListedEventFilter;
     MarketListed(marketToken?: null): MarketListedEventFilter;
 
-    'NewBorrowCap(address,uint256)'(marketToken?: string | null, newBorrowCap?: null): NewBorrowCapEventFilter;
-    NewBorrowCap(marketToken?: string | null, newBorrowCap?: null): NewBorrowCapEventFilter;
+    'NewBorrowCap(address,uint256)'(
+      marketToken?: PromiseOrValue<string> | null,
+      newBorrowCap?: null,
+    ): NewBorrowCapEventFilter;
+    NewBorrowCap(marketToken?: PromiseOrValue<string> | null, newBorrowCap?: null): NewBorrowCapEventFilter;
 
     'NewCloseFactor(uint256,uint256)'(
       oldCloseFactorMantissa?: null,
@@ -1435,131 +1606,154 @@ export interface CoslendComptroller extends BaseContract {
     'NewMaxAssets(uint256,uint256)'(oldMaxAssets?: null, newMaxAssets?: null): NewMaxAssetsEventFilter;
     NewMaxAssets(oldMaxAssets?: null, newMaxAssets?: null): NewMaxAssetsEventFilter;
 
-    'NewMintCap(address,uint256)'(marketToken?: string | null, newMintCap?: null): NewMintCapEventFilter;
-    NewMintCap(marketToken?: string | null, newMintCap?: null): NewMintCapEventFilter;
+    'NewMintCap(address,uint256)'(
+      marketToken?: PromiseOrValue<string> | null,
+      newMintCap?: null,
+    ): NewMintCapEventFilter;
+    NewMintCap(marketToken?: PromiseOrValue<string> | null, newMintCap?: null): NewMintCapEventFilter;
 
     'NewPriceOracle(address,address)'(oldPriceOracle?: null, newPriceOracle?: null): NewPriceOracleEventFilter;
     NewPriceOracle(oldPriceOracle?: null, newPriceOracle?: null): NewPriceOracleEventFilter;
 
     'OwnershipTransferred(address,address)'(
-      previousOwner?: string | null,
-      newOwner?: string | null,
+      previousOwner?: PromiseOrValue<string> | null,
+      newOwner?: PromiseOrValue<string> | null,
     ): OwnershipTransferredEventFilter;
-    OwnershipTransferred(previousOwner?: string | null, newOwner?: string | null): OwnershipTransferredEventFilter;
+    OwnershipTransferred(
+      previousOwner?: PromiseOrValue<string> | null,
+      newOwner?: PromiseOrValue<string> | null,
+    ): OwnershipTransferredEventFilter;
   };
 
   estimateGas: {
     _setBorrowPaused(
-      marketToken: string,
-      state: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      marketToken: PromiseOrValue<string>,
+      state: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     _setCloseFactor(
-      newCloseFactorMantissa: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newCloseFactorMantissa: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     _setCollateralFactor(
-      marketToken: string,
-      newCollateralFactorMantissa: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      marketToken: PromiseOrValue<string>,
+      newCollateralFactorMantissa: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     _setDistributeRewardPaused(
-      state: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      state: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     _setDistribution(
-      newDistribution: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newDistribution: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     _setLiquidateWhiteAddresses(
-      _liquidateWhiteAddresses: string[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _liquidateWhiteAddresses: PromiseOrValue<string>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     _setLiquidationIncentive(
-      newLiquidationIncentiveMantissa: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newLiquidationIncentiveMantissa: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     _setMaintainer(
-      newMaintainer: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newMaintainer: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     _setMarketBorrowCaps(
-      marketTokens: string[],
-      newBorrowCaps: BigNumberish[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      marketTokens: PromiseOrValue<string>[],
+      newBorrowCaps: PromiseOrValue<BigNumberish>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     _setMarketMintCaps(
-      marketTokens: string[],
-      newMintCaps: BigNumberish[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      marketTokens: PromiseOrValue<string>[],
+      newMintCaps: PromiseOrValue<BigNumberish>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     _setMaxAssets(
-      newMaxAssets: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newMaxAssets: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     _setMintPaused(
-      marketToken: string,
-      state: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      marketToken: PromiseOrValue<string>,
+      state: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    _setPriceOracle(newOracle: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    _setPriceOracle(
+      newOracle: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     _setRedeemPaused(
-      marketToken: string,
-      state: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      marketToken: PromiseOrValue<string>,
+      state: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     _setRepayPaused(
-      marketToken: string,
-      state: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      marketToken: PromiseOrValue<string>,
+      state: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    _setSeizePaused(state: boolean, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    _setSeizePaused(
+      state: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
-    _setTransferPaused(state: boolean, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    _setTransferPaused(
+      state: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     _supportMarket(
-      marketToken: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      marketToken: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    accountAssets(arg0: string, arg1: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    accountAssets(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    allMarkets(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    allMarkets(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     borrowAllowed(
-      marketToken: string,
-      borrower: string,
-      borrowAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      marketToken: PromiseOrValue<string>,
+      borrower: PromiseOrValue<string>,
+      borrowAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    borrowCaps(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    borrowCaps(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     borrowPaused(overrides?: CallOverrides): Promise<BigNumber>;
 
     borrowVerify(
-      marketToken: string,
-      borrower: string,
-      borrowAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      marketToken: PromiseOrValue<string>,
+      borrower: PromiseOrValue<string>,
+      borrowAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    checkMembership(account: string, marketToken: string, overrides?: CallOverrides): Promise<BigNumber>;
+    checkMembership(
+      account: PromiseOrValue<string>,
+      marketToken: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     closeFactorMantissa(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -1568,94 +1762,94 @@ export interface CoslendComptroller extends BaseContract {
     distribution(overrides?: CallOverrides): Promise<BigNumber>;
 
     enterMarkets(
-      marketTokens: string[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      marketTokens: PromiseOrValue<string>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     exitMarket(
-      marketTokenAddress: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      marketTokenAddress: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    getAccountLiquidity(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getAccountLiquidity(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     getAllMarkets(overrides?: CallOverrides): Promise<BigNumber>;
 
-    getAssetsIn(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getAssetsIn(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     getHypotheticalAccountLiquidity(
-      account: string,
-      marketTokenModify: string,
-      redeemTokens: BigNumberish,
-      borrowAmount: BigNumberish,
+      account: PromiseOrValue<string>,
+      marketTokenModify: PromiseOrValue<string>,
+      redeemTokens: PromiseOrValue<BigNumberish>,
+      borrowAmount: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
-    initialize(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    initialize(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
-    isMarketListed(marketToken: string, overrides?: CallOverrides): Promise<BigNumber>;
+    isMarketListed(marketToken: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     liquidateBorrowAllowed(
-      marketTokenBorrowed: string,
-      marketTokenCollateral: string,
-      liquidator: string,
-      borrower: string,
-      repayAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      marketTokenBorrowed: PromiseOrValue<string>,
+      marketTokenCollateral: PromiseOrValue<string>,
+      liquidator: PromiseOrValue<string>,
+      borrower: PromiseOrValue<string>,
+      repayAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     liquidateBorrowVerify(
-      marketTokenBorrowed: string,
-      marketTokenCollateral: string,
-      liquidator: string,
-      borrower: string,
-      repayAmount: BigNumberish,
-      seizeTokens: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      marketTokenBorrowed: PromiseOrValue<string>,
+      marketTokenCollateral: PromiseOrValue<string>,
+      liquidator: PromiseOrValue<string>,
+      borrower: PromiseOrValue<string>,
+      repayAmount: PromiseOrValue<BigNumberish>,
+      seizeTokens: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     liquidateCalculateSeizeTokens(
-      marketTokenBorrowed: string,
-      marketTokenCollateral: string,
-      actualRepayAmount: BigNumberish,
+      marketTokenBorrowed: PromiseOrValue<string>,
+      marketTokenCollateral: PromiseOrValue<string>,
+      actualRepayAmount: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
-    liquidateWhiteAddresses(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    liquidateWhiteAddresses(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     liquidationIncentiveMantissa(overrides?: CallOverrides): Promise<BigNumber>;
 
     maintainer(overrides?: CallOverrides): Promise<BigNumber>;
 
-    marketTokenBorrowPaused(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    marketTokenBorrowPaused(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    marketTokenMintPaused(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    marketTokenMintPaused(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    marketTokenRedeemPaused(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    marketTokenRedeemPaused(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    marketTokenRepayPaused(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    marketTokenRepayPaused(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    markets(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    markets(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     maxAssets(overrides?: CallOverrides): Promise<BigNumber>;
 
     mintAllowed(
-      marketToken: string,
-      minter: string,
-      mintAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      marketToken: PromiseOrValue<string>,
+      minter: PromiseOrValue<string>,
+      mintAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    mintCaps(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    mintCaps(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     mintPaused(overrides?: CallOverrides): Promise<BigNumber>;
 
     mintVerify(
-      marketToken: string,
-      minter: string,
-      mintAmount: BigNumberish,
-      mintTokens: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      marketToken: PromiseOrValue<string>,
+      minter: PromiseOrValue<string>,
+      mintAmount: PromiseOrValue<BigNumberish>,
+      mintTokens: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     oracle(overrides?: CallOverrides): Promise<BigNumber>;
@@ -1663,208 +1857,216 @@ export interface CoslendComptroller extends BaseContract {
     owner(overrides?: CallOverrides): Promise<BigNumber>;
 
     redeemAllowed(
-      marketToken: string,
-      redeemer: string,
-      redeemTokens: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      marketToken: PromiseOrValue<string>,
+      redeemer: PromiseOrValue<string>,
+      redeemTokens: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     redeemPaused(overrides?: CallOverrides): Promise<BigNumber>;
 
     redeemVerify(
-      marketToken: string,
-      redeemer: string,
-      redeemAmount: BigNumberish,
-      redeemTokens: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      marketToken: PromiseOrValue<string>,
+      redeemer: PromiseOrValue<string>,
+      redeemAmount: PromiseOrValue<BigNumberish>,
+      redeemTokens: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     repayBorrowAllowed(
-      marketToken: string,
-      payer: string,
-      borrower: string,
-      repayAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      marketToken: PromiseOrValue<string>,
+      payer: PromiseOrValue<string>,
+      borrower: PromiseOrValue<string>,
+      repayAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     repayBorrowVerify(
-      marketToken: string,
-      payer: string,
-      borrower: string,
-      repayAmount: BigNumberish,
-      borrowerIndex: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      marketToken: PromiseOrValue<string>,
+      payer: PromiseOrValue<string>,
+      borrower: PromiseOrValue<string>,
+      repayAmount: PromiseOrValue<BigNumberish>,
+      borrowerIndex: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     repayPaused(overrides?: CallOverrides): Promise<BigNumber>;
 
     seizeAllowed(
-      marketTokenCollateral: string,
-      marketTokenBorrowed: string,
-      liquidator: string,
-      borrower: string,
-      seizeTokens: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      marketTokenCollateral: PromiseOrValue<string>,
+      marketTokenBorrowed: PromiseOrValue<string>,
+      liquidator: PromiseOrValue<string>,
+      borrower: PromiseOrValue<string>,
+      seizeTokens: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     seizePaused(overrides?: CallOverrides): Promise<BigNumber>;
 
     seizeVerify(
-      marketTokenCollateral: string,
-      marketTokenBorrowed: string,
-      liquidator: string,
-      borrower: string,
-      seizeTokens: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      marketTokenCollateral: PromiseOrValue<string>,
+      marketTokenBorrowed: PromiseOrValue<string>,
+      liquidator: PromiseOrValue<string>,
+      borrower: PromiseOrValue<string>,
+      seizeTokens: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     transferAllowed(
-      marketToken: string,
-      src: string,
-      dst: string,
-      transferTokens: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      marketToken: PromiseOrValue<string>,
+      src: PromiseOrValue<string>,
+      dst: PromiseOrValue<string>,
+      transferTokens: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     transferPaused(overrides?: CallOverrides): Promise<BigNumber>;
 
     transferVerify(
-      marketToken: string,
-      src: string,
-      dst: string,
-      transferTokens: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      marketToken: PromiseOrValue<string>,
+      src: PromiseOrValue<string>,
+      dst: PromiseOrValue<string>,
+      transferTokens: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
   };
 
   populateTransaction: {
     _setBorrowPaused(
-      marketToken: string,
-      state: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      marketToken: PromiseOrValue<string>,
+      state: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     _setCloseFactor(
-      newCloseFactorMantissa: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newCloseFactorMantissa: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     _setCollateralFactor(
-      marketToken: string,
-      newCollateralFactorMantissa: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      marketToken: PromiseOrValue<string>,
+      newCollateralFactorMantissa: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     _setDistributeRewardPaused(
-      state: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      state: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     _setDistribution(
-      newDistribution: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newDistribution: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     _setLiquidateWhiteAddresses(
-      _liquidateWhiteAddresses: string[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _liquidateWhiteAddresses: PromiseOrValue<string>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     _setLiquidationIncentive(
-      newLiquidationIncentiveMantissa: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newLiquidationIncentiveMantissa: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     _setMaintainer(
-      newMaintainer: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newMaintainer: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     _setMarketBorrowCaps(
-      marketTokens: string[],
-      newBorrowCaps: BigNumberish[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      marketTokens: PromiseOrValue<string>[],
+      newBorrowCaps: PromiseOrValue<BigNumberish>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     _setMarketMintCaps(
-      marketTokens: string[],
-      newMintCaps: BigNumberish[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      marketTokens: PromiseOrValue<string>[],
+      newMintCaps: PromiseOrValue<BigNumberish>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     _setMaxAssets(
-      newMaxAssets: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newMaxAssets: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     _setMintPaused(
-      marketToken: string,
-      state: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      marketToken: PromiseOrValue<string>,
+      state: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     _setPriceOracle(
-      newOracle: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOracle: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     _setRedeemPaused(
-      marketToken: string,
-      state: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      marketToken: PromiseOrValue<string>,
+      state: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     _setRepayPaused(
-      marketToken: string,
-      state: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      marketToken: PromiseOrValue<string>,
+      state: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     _setSeizePaused(
-      state: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      state: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     _setTransferPaused(
-      state: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      state: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     _supportMarket(
-      marketToken: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      marketToken: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    accountAssets(arg0: string, arg1: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    accountAssets(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
-    allMarkets(arg0: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    allMarkets(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     borrowAllowed(
-      marketToken: string,
-      borrower: string,
-      borrowAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      marketToken: PromiseOrValue<string>,
+      borrower: PromiseOrValue<string>,
+      borrowAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    borrowCaps(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    borrowCaps(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     borrowPaused(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     borrowVerify(
-      marketToken: string,
-      borrower: string,
-      borrowAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      marketToken: PromiseOrValue<string>,
+      borrower: PromiseOrValue<string>,
+      borrowAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    checkMembership(account: string, marketToken: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    checkMembership(
+      account: PromiseOrValue<string>,
+      marketToken: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
     closeFactorMantissa(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
@@ -1873,94 +2075,97 @@ export interface CoslendComptroller extends BaseContract {
     distribution(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     enterMarkets(
-      marketTokens: string[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      marketTokens: PromiseOrValue<string>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     exitMarket(
-      marketTokenAddress: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      marketTokenAddress: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    getAccountLiquidity(account: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getAccountLiquidity(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     getAllMarkets(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    getAssetsIn(account: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getAssetsIn(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     getHypotheticalAccountLiquidity(
-      account: string,
-      marketTokenModify: string,
-      redeemTokens: BigNumberish,
-      borrowAmount: BigNumberish,
+      account: PromiseOrValue<string>,
+      marketTokenModify: PromiseOrValue<string>,
+      redeemTokens: PromiseOrValue<BigNumberish>,
+      borrowAmount: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
-    initialize(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    initialize(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
-    isMarketListed(marketToken: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    isMarketListed(marketToken: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     liquidateBorrowAllowed(
-      marketTokenBorrowed: string,
-      marketTokenCollateral: string,
-      liquidator: string,
-      borrower: string,
-      repayAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      marketTokenBorrowed: PromiseOrValue<string>,
+      marketTokenCollateral: PromiseOrValue<string>,
+      liquidator: PromiseOrValue<string>,
+      borrower: PromiseOrValue<string>,
+      repayAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     liquidateBorrowVerify(
-      marketTokenBorrowed: string,
-      marketTokenCollateral: string,
-      liquidator: string,
-      borrower: string,
-      repayAmount: BigNumberish,
-      seizeTokens: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      marketTokenBorrowed: PromiseOrValue<string>,
+      marketTokenCollateral: PromiseOrValue<string>,
+      liquidator: PromiseOrValue<string>,
+      borrower: PromiseOrValue<string>,
+      repayAmount: PromiseOrValue<BigNumberish>,
+      seizeTokens: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     liquidateCalculateSeizeTokens(
-      marketTokenBorrowed: string,
-      marketTokenCollateral: string,
-      actualRepayAmount: BigNumberish,
+      marketTokenBorrowed: PromiseOrValue<string>,
+      marketTokenCollateral: PromiseOrValue<string>,
+      actualRepayAmount: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
-    liquidateWhiteAddresses(arg0: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    liquidateWhiteAddresses(
+      arg0: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
     liquidationIncentiveMantissa(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     maintainer(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    marketTokenBorrowPaused(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    marketTokenBorrowPaused(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    marketTokenMintPaused(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    marketTokenMintPaused(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    marketTokenRedeemPaused(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    marketTokenRedeemPaused(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    marketTokenRepayPaused(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    marketTokenRepayPaused(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    markets(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    markets(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     maxAssets(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     mintAllowed(
-      marketToken: string,
-      minter: string,
-      mintAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      marketToken: PromiseOrValue<string>,
+      minter: PromiseOrValue<string>,
+      mintAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    mintCaps(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    mintCaps(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     mintPaused(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     mintVerify(
-      marketToken: string,
-      minter: string,
-      mintAmount: BigNumberish,
-      mintTokens: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      marketToken: PromiseOrValue<string>,
+      minter: PromiseOrValue<string>,
+      mintAmount: PromiseOrValue<BigNumberish>,
+      mintTokens: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     oracle(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -1968,84 +2173,84 @@ export interface CoslendComptroller extends BaseContract {
     owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     redeemAllowed(
-      marketToken: string,
-      redeemer: string,
-      redeemTokens: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      marketToken: PromiseOrValue<string>,
+      redeemer: PromiseOrValue<string>,
+      redeemTokens: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     redeemPaused(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     redeemVerify(
-      marketToken: string,
-      redeemer: string,
-      redeemAmount: BigNumberish,
-      redeemTokens: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      marketToken: PromiseOrValue<string>,
+      redeemer: PromiseOrValue<string>,
+      redeemAmount: PromiseOrValue<BigNumberish>,
+      redeemTokens: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     repayBorrowAllowed(
-      marketToken: string,
-      payer: string,
-      borrower: string,
-      repayAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      marketToken: PromiseOrValue<string>,
+      payer: PromiseOrValue<string>,
+      borrower: PromiseOrValue<string>,
+      repayAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     repayBorrowVerify(
-      marketToken: string,
-      payer: string,
-      borrower: string,
-      repayAmount: BigNumberish,
-      borrowerIndex: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      marketToken: PromiseOrValue<string>,
+      payer: PromiseOrValue<string>,
+      borrower: PromiseOrValue<string>,
+      repayAmount: PromiseOrValue<BigNumberish>,
+      borrowerIndex: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     repayPaused(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     seizeAllowed(
-      marketTokenCollateral: string,
-      marketTokenBorrowed: string,
-      liquidator: string,
-      borrower: string,
-      seizeTokens: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      marketTokenCollateral: PromiseOrValue<string>,
+      marketTokenBorrowed: PromiseOrValue<string>,
+      liquidator: PromiseOrValue<string>,
+      borrower: PromiseOrValue<string>,
+      seizeTokens: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     seizePaused(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     seizeVerify(
-      marketTokenCollateral: string,
-      marketTokenBorrowed: string,
-      liquidator: string,
-      borrower: string,
-      seizeTokens: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      marketTokenCollateral: PromiseOrValue<string>,
+      marketTokenBorrowed: PromiseOrValue<string>,
+      liquidator: PromiseOrValue<string>,
+      borrower: PromiseOrValue<string>,
+      seizeTokens: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     transferAllowed(
-      marketToken: string,
-      src: string,
-      dst: string,
-      transferTokens: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      marketToken: PromiseOrValue<string>,
+      src: PromiseOrValue<string>,
+      dst: PromiseOrValue<string>,
+      transferTokens: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     transferPaused(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     transferVerify(
-      marketToken: string,
-      src: string,
-      dst: string,
-      transferTokens: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      marketToken: PromiseOrValue<string>,
+      src: PromiseOrValue<string>,
+      dst: PromiseOrValue<string>,
+      transferTokens: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
   };
 }

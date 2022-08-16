@@ -18,6 +18,24 @@ export class OptimismStargateBalanceFetcher implements BalanceFetcher {
     @Inject(StargateContractFactory) private readonly contractFactory: StargateContractFactory,
   ) {}
 
+  private async getEthBalances(address: string) {
+    return this.appToolkit.helpers.tokenBalanceHelper.getTokenBalances({
+      appId: STARGATE_DEFINITION.id,
+      groupId: STARGATE_DEFINITION.groups.eth.id,
+      network,
+      address,
+    });
+  }
+
+  private async getVeBalances(address: string) {
+    return this.appToolkit.helpers.tokenBalanceHelper.getTokenBalances({
+      appId: STARGATE_DEFINITION.id,
+      groupId: STARGATE_DEFINITION.groups.ve.id,
+      network,
+      address,
+    });
+  }
+
   async getPoolTokenBalances(address: string) {
     return this.appToolkit.helpers.tokenBalanceHelper.getTokenBalances({
       address,
@@ -44,18 +62,31 @@ export class OptimismStargateBalanceFetcher implements BalanceFetcher {
       }),
       resolveClaimableTokenBalances: this.appToolkit.helpers.masterChefDefaultClaimableBalanceStrategy.build({
         resolveClaimableBalance: ({ multicall, contract, contractPosition, address }) =>
-          multicall.wrap(contract).pendingStargate(contractPosition.dataProps.poolIndex, address),
+          multicall
+            .wrap(contract)
+            .pendingStargate(contractPosition.dataProps.poolIndex, address)
+            .catch(() => 0),
       }),
     });
   }
 
   async getBalances(address: string) {
-    const [poolTokenBalances, stakedBalances] = await Promise.all([
+    const [ethTokenBalances, veTokenBalances, poolTokenBalances, stakedBalances] = await Promise.all([
+      this.getEthBalances(address),
+      this.getVeBalances(address),
       this.getPoolTokenBalances(address),
       this.getStakedBalances(address),
     ]);
 
     return presentBalanceFetcherResponse([
+      {
+        label: 'VotedEscrow',
+        assets: veTokenBalances,
+      },
+      {
+        label: 'Wrapper',
+        assets: ethTokenBalances,
+      },
       {
         label: 'Pools',
         assets: poolTokenBalances,

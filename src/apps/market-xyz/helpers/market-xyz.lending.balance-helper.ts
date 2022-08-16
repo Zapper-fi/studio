@@ -56,7 +56,7 @@ export class MarketXyzLendingBalanceHelper {
       network,
     });
 
-    const fuseLens = this.marketXyzContractFactory.poolLens({ address: fuseLensAddress, network });
+    const fuseLens = this.marketXyzContractFactory.marketXyzPoolLens({ address: fuseLensAddress, network });
     const poolsBySupplier = await fuseLens.callStatic.getPoolsBySupplierWithData(address);
     const participatedComptrollers = poolsBySupplier[1].map(p => p.comptroller.toLowerCase());
 

@@ -15,12 +15,12 @@ import type {
 } from 'ethers';
 import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
 import type { Listener, Provider } from '@ethersproject/providers';
-import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
 export declare namespace Pool {
   export type CreditObjStruct = {
-    credits: BigNumberish;
-    idealBalance: BigNumberish;
+    credits: PromiseOrValue<BigNumberish>;
+    idealBalance: PromiseOrValue<BigNumberish>;
   };
 
   export type CreditObjStructOutput = [BigNumber, BigNumber] & {
@@ -29,14 +29,14 @@ export declare namespace Pool {
   };
 
   export type ChainPathStruct = {
-    ready: boolean;
-    dstChainId: BigNumberish;
-    dstPoolId: BigNumberish;
-    weight: BigNumberish;
-    balance: BigNumberish;
-    lkb: BigNumberish;
-    credits: BigNumberish;
-    idealBalance: BigNumberish;
+    ready: PromiseOrValue<boolean>;
+    dstChainId: PromiseOrValue<BigNumberish>;
+    dstPoolId: PromiseOrValue<BigNumberish>;
+    weight: PromiseOrValue<BigNumberish>;
+    balance: PromiseOrValue<BigNumberish>;
+    lkb: PromiseOrValue<BigNumberish>;
+    credits: PromiseOrValue<BigNumberish>;
+    idealBalance: PromiseOrValue<BigNumberish>;
   };
 
   export type ChainPathStructOutput = [
@@ -60,12 +60,12 @@ export declare namespace Pool {
   };
 
   export type SwapObjStruct = {
-    amount: BigNumberish;
-    eqFee: BigNumberish;
-    eqReward: BigNumberish;
-    lpFee: BigNumberish;
-    protocolFee: BigNumberish;
-    lkbRemove: BigNumberish;
+    amount: PromiseOrValue<BigNumberish>;
+    eqFee: PromiseOrValue<BigNumberish>;
+    eqReward: PromiseOrValue<BigNumberish>;
+    lpFee: PromiseOrValue<BigNumberish>;
+    protocolFee: PromiseOrValue<BigNumberish>;
+    lkbRemove: PromiseOrValue<BigNumberish>;
   };
 
   export type SwapObjStructOutput = [BigNumber, BigNumber, BigNumber, BigNumber, BigNumber, BigNumber] & {
@@ -211,94 +211,165 @@ export interface StargatePoolInterface extends utils.Interface {
   encodeFunctionData(functionFragment: 'BP_DENOMINATOR', values?: undefined): string;
   encodeFunctionData(functionFragment: 'DOMAIN_SEPARATOR', values?: undefined): string;
   encodeFunctionData(functionFragment: 'PERMIT_TYPEHASH', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'activateChainPath', values: [BigNumberish, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'allowance', values: [string, string]): string;
-  encodeFunctionData(functionFragment: 'amountLPtoLD', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'approve', values: [string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'balanceOf', values: [string]): string;
+  encodeFunctionData(
+    functionFragment: 'activateChainPath',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'allowance', values: [PromiseOrValue<string>, PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'amountLPtoLD', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(
+    functionFragment: 'approve',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'balanceOf', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'batched', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'callDelta', values: [boolean]): string;
-  encodeFunctionData(functionFragment: 'chainPathIndexLookup', values: [BigNumberish, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'chainPaths', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'callDelta', values: [PromiseOrValue<boolean>]): string;
+  encodeFunctionData(
+    functionFragment: 'chainPathIndexLookup',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'chainPaths', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'convertRate', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'createChainPath', values: [BigNumberish, BigNumberish, BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'createChainPath',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+  ): string;
   encodeFunctionData(
     functionFragment: 'creditChainPath',
-    values: [BigNumberish, BigNumberish, Pool.CreditObjStruct],
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>, Pool.CreditObjStruct],
   ): string;
   encodeFunctionData(functionFragment: 'decimals', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'decreaseAllowance', values: [string, BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'decreaseAllowance',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
   encodeFunctionData(functionFragment: 'defaultLPMode', values?: undefined): string;
   encodeFunctionData(functionFragment: 'defaultSwapMode', values?: undefined): string;
   encodeFunctionData(functionFragment: 'deltaCredit', values?: undefined): string;
   encodeFunctionData(functionFragment: 'eqFeePool', values?: undefined): string;
   encodeFunctionData(functionFragment: 'feeLibrary', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'getChainPath', values: [BigNumberish, BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'getChainPath',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+  ): string;
   encodeFunctionData(functionFragment: 'getChainPathsLength', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'increaseAllowance', values: [string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'instantRedeemLocal', values: [string, BigNumberish, string]): string;
+  encodeFunctionData(
+    functionFragment: 'increaseAllowance',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'instantRedeemLocal',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>, PromiseOrValue<string>],
+  ): string;
   encodeFunctionData(functionFragment: 'localDecimals', values?: undefined): string;
   encodeFunctionData(functionFragment: 'lpDeltaBP', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'mint', values: [string, BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'mint', values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'mintFeeBP', values?: undefined): string;
   encodeFunctionData(functionFragment: 'mintFeeBalance', values?: undefined): string;
   encodeFunctionData(functionFragment: 'name', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'nonces', values: [string]): string;
+  encodeFunctionData(functionFragment: 'nonces', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(
     functionFragment: 'permit',
-    values: [string, string, BigNumberish, BigNumberish, BigNumberish, BytesLike, BytesLike],
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BytesLike>,
+      PromiseOrValue<BytesLike>,
+    ],
   ): string;
   encodeFunctionData(functionFragment: 'poolId', values?: undefined): string;
   encodeFunctionData(functionFragment: 'protocolFeeBalance', values?: undefined): string;
   encodeFunctionData(
     functionFragment: 'redeemLocal',
-    values: [string, BigNumberish, BigNumberish, BigNumberish, BytesLike],
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BytesLike>,
+    ],
   ): string;
   encodeFunctionData(
     functionFragment: 'redeemLocalCallback',
-    values: [BigNumberish, BigNumberish, string, BigNumberish, BigNumberish],
+    values: [
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+    ],
   ): string;
   encodeFunctionData(
     functionFragment: 'redeemLocalCheckOnRemote',
-    values: [BigNumberish, BigNumberish, BigNumberish],
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
   ): string;
   encodeFunctionData(
     functionFragment: 'redeemRemote',
-    values: [BigNumberish, BigNumberish, string, BigNumberish],
+    values: [
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+    ],
   ): string;
   encodeFunctionData(functionFragment: 'router', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'sendCredits', values: [BigNumberish, BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'sendCredits',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+  ): string;
   encodeFunctionData(
     functionFragment: 'setDeltaParam',
-    values: [boolean, BigNumberish, BigNumberish, boolean, boolean],
+    values: [
+      PromiseOrValue<boolean>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<boolean>,
+      PromiseOrValue<boolean>,
+    ],
   ): string;
-  encodeFunctionData(functionFragment: 'setFee', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'setFeeLibrary', values: [string]): string;
-  encodeFunctionData(functionFragment: 'setSwapStop', values: [boolean]): string;
+  encodeFunctionData(functionFragment: 'setFee', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'setFeeLibrary', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'setSwapStop', values: [PromiseOrValue<boolean>]): string;
   encodeFunctionData(
     functionFragment: 'setWeightForChainPath',
-    values: [BigNumberish, BigNumberish, BigNumberish],
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
   ): string;
   encodeFunctionData(functionFragment: 'sharedDecimals', values?: undefined): string;
   encodeFunctionData(functionFragment: 'stopSwap', values?: undefined): string;
   encodeFunctionData(
     functionFragment: 'swap',
-    values: [BigNumberish, BigNumberish, string, BigNumberish, BigNumberish, boolean],
+    values: [
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<boolean>,
+    ],
   ): string;
   encodeFunctionData(functionFragment: 'swapDeltaBP', values?: undefined): string;
   encodeFunctionData(
     functionFragment: 'swapRemote',
-    values: [BigNumberish, BigNumberish, string, Pool.SwapObjStruct],
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>, PromiseOrValue<string>, Pool.SwapObjStruct],
   ): string;
   encodeFunctionData(functionFragment: 'symbol', values?: undefined): string;
   encodeFunctionData(functionFragment: 'token', values?: undefined): string;
   encodeFunctionData(functionFragment: 'totalLiquidity', values?: undefined): string;
   encodeFunctionData(functionFragment: 'totalSupply', values?: undefined): string;
   encodeFunctionData(functionFragment: 'totalWeight', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'transfer', values: [string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'transferFrom', values: [string, string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'withdrawMintFeeBalance', values: [string]): string;
-  encodeFunctionData(functionFragment: 'withdrawProtocolFeeBalance', values: [string]): string;
+  encodeFunctionData(
+    functionFragment: 'transfer',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'transferFrom',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'withdrawMintFeeBalance', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'withdrawProtocolFeeBalance', values: [PromiseOrValue<string>]): string;
 
   decodeFunctionResult(functionFragment: 'BP_DENOMINATOR', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'DOMAIN_SEPARATOR', data: BytesLike): Result;
@@ -636,34 +707,42 @@ export interface StargatePool extends BaseContract {
     PERMIT_TYPEHASH(overrides?: CallOverrides): Promise<[string]>;
 
     activateChainPath(
-      _dstChainId: BigNumberish,
-      _dstPoolId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _dstChainId: PromiseOrValue<BigNumberish>,
+      _dstPoolId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    allowance(arg0: string, arg1: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    allowance(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber]>;
 
-    amountLPtoLD(_amountLP: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber]>;
+    amountLPtoLD(_amountLP: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     approve(
-      spender: string,
-      value: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      spender: PromiseOrValue<string>,
+      value: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    balanceOf(arg0: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    balanceOf(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     batched(overrides?: CallOverrides): Promise<[boolean]>;
 
     callDelta(
-      _fullMode: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _fullMode: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    chainPathIndexLookup(arg0: BigNumberish, arg1: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber]>;
+    chainPathIndexLookup(
+      arg0: PromiseOrValue<BigNumberish>,
+      arg1: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber]>;
 
     chainPaths(
-      arg0: BigNumberish,
+      arg0: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<
       [boolean, number, BigNumber, BigNumber, BigNumber, BigNumber, BigNumber, BigNumber] & {
@@ -681,25 +760,25 @@ export interface StargatePool extends BaseContract {
     convertRate(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     createChainPath(
-      _dstChainId: BigNumberish,
-      _dstPoolId: BigNumberish,
-      _weight: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _dstChainId: PromiseOrValue<BigNumberish>,
+      _dstPoolId: PromiseOrValue<BigNumberish>,
+      _weight: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     creditChainPath(
-      _dstChainId: BigNumberish,
-      _dstPoolId: BigNumberish,
+      _dstChainId: PromiseOrValue<BigNumberish>,
+      _dstPoolId: PromiseOrValue<BigNumberish>,
       _c: Pool.CreditObjStruct,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     decimals(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     decreaseAllowance(
-      spender: string,
-      subtractedValue: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      spender: PromiseOrValue<string>,
+      subtractedValue: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     defaultLPMode(overrides?: CallOverrides): Promise<[boolean]>;
@@ -713,24 +792,24 @@ export interface StargatePool extends BaseContract {
     feeLibrary(overrides?: CallOverrides): Promise<[string]>;
 
     getChainPath(
-      _dstChainId: BigNumberish,
-      _dstPoolId: BigNumberish,
+      _dstChainId: PromiseOrValue<BigNumberish>,
+      _dstPoolId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<[Pool.ChainPathStructOutput]>;
 
     getChainPathsLength(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     increaseAllowance(
-      spender: string,
-      addedValue: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      spender: PromiseOrValue<string>,
+      addedValue: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     instantRedeemLocal(
-      _from: string,
-      _amountLP: BigNumberish,
-      _to: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _from: PromiseOrValue<string>,
+      _amountLP: PromiseOrValue<BigNumberish>,
+      _to: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     localDecimals(overrides?: CallOverrides): Promise<[BigNumber]>;
@@ -738,9 +817,9 @@ export interface StargatePool extends BaseContract {
     lpDeltaBP(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     mint(
-      _to: string,
-      _amountLD: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _to: PromiseOrValue<string>,
+      _amountLD: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     mintFeeBP(overrides?: CallOverrides): Promise<[BigNumber]>;
@@ -749,17 +828,17 @@ export interface StargatePool extends BaseContract {
 
     name(overrides?: CallOverrides): Promise<[string]>;
 
-    nonces(arg0: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    nonces(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     permit(
-      owner: string,
-      spender: string,
-      value: BigNumberish,
-      deadline: BigNumberish,
-      v: BigNumberish,
-      r: BytesLike,
-      s: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      owner: PromiseOrValue<string>,
+      spender: PromiseOrValue<string>,
+      value: PromiseOrValue<BigNumberish>,
+      deadline: PromiseOrValue<BigNumberish>,
+      v: PromiseOrValue<BigNumberish>,
+      r: PromiseOrValue<BytesLike>,
+      s: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     poolId(overrides?: CallOverrides): Promise<[BigNumber]>;
@@ -767,75 +846,75 @@ export interface StargatePool extends BaseContract {
     protocolFeeBalance(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     redeemLocal(
-      _from: string,
-      _amountLP: BigNumberish,
-      _dstChainId: BigNumberish,
-      _dstPoolId: BigNumberish,
-      _to: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _from: PromiseOrValue<string>,
+      _amountLP: PromiseOrValue<BigNumberish>,
+      _dstChainId: PromiseOrValue<BigNumberish>,
+      _dstPoolId: PromiseOrValue<BigNumberish>,
+      _to: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     redeemLocalCallback(
-      _srcChainId: BigNumberish,
-      _srcPoolId: BigNumberish,
-      _to: string,
-      _amountSD: BigNumberish,
-      _amountToMintSD: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _srcChainId: PromiseOrValue<BigNumberish>,
+      _srcPoolId: PromiseOrValue<BigNumberish>,
+      _to: PromiseOrValue<string>,
+      _amountSD: PromiseOrValue<BigNumberish>,
+      _amountToMintSD: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     redeemLocalCheckOnRemote(
-      _srcChainId: BigNumberish,
-      _srcPoolId: BigNumberish,
-      _amountSD: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _srcChainId: PromiseOrValue<BigNumberish>,
+      _srcPoolId: PromiseOrValue<BigNumberish>,
+      _amountSD: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     redeemRemote(
-      _dstChainId: BigNumberish,
-      _dstPoolId: BigNumberish,
-      _from: string,
-      _amountLP: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _dstChainId: PromiseOrValue<BigNumberish>,
+      _dstPoolId: PromiseOrValue<BigNumberish>,
+      _from: PromiseOrValue<string>,
+      _amountLP: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     router(overrides?: CallOverrides): Promise<[string]>;
 
     sendCredits(
-      _dstChainId: BigNumberish,
-      _dstPoolId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _dstChainId: PromiseOrValue<BigNumberish>,
+      _dstPoolId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setDeltaParam(
-      _batched: boolean,
-      _swapDeltaBP: BigNumberish,
-      _lpDeltaBP: BigNumberish,
-      _defaultSwapMode: boolean,
-      _defaultLPMode: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _batched: PromiseOrValue<boolean>,
+      _swapDeltaBP: PromiseOrValue<BigNumberish>,
+      _lpDeltaBP: PromiseOrValue<BigNumberish>,
+      _defaultSwapMode: PromiseOrValue<boolean>,
+      _defaultLPMode: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setFee(
-      _mintFeeBP: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _mintFeeBP: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setFeeLibrary(
-      _feeLibraryAddr: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _feeLibraryAddr: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setSwapStop(
-      _swapStop: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _swapStop: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setWeightForChainPath(
-      _dstChainId: BigNumberish,
-      _dstPoolId: BigNumberish,
-      _weight: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _dstChainId: PromiseOrValue<BigNumberish>,
+      _dstPoolId: PromiseOrValue<BigNumberish>,
+      _weight: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     sharedDecimals(overrides?: CallOverrides): Promise<[BigNumber]>;
@@ -843,23 +922,23 @@ export interface StargatePool extends BaseContract {
     stopSwap(overrides?: CallOverrides): Promise<[boolean]>;
 
     swap(
-      _dstChainId: BigNumberish,
-      _dstPoolId: BigNumberish,
-      _from: string,
-      _amountLD: BigNumberish,
-      _minAmountLD: BigNumberish,
-      newLiquidity: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _dstChainId: PromiseOrValue<BigNumberish>,
+      _dstPoolId: PromiseOrValue<BigNumberish>,
+      _from: PromiseOrValue<string>,
+      _amountLD: PromiseOrValue<BigNumberish>,
+      _minAmountLD: PromiseOrValue<BigNumberish>,
+      newLiquidity: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     swapDeltaBP(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     swapRemote(
-      _srcChainId: BigNumberish,
-      _srcPoolId: BigNumberish,
-      _to: string,
+      _srcChainId: PromiseOrValue<BigNumberish>,
+      _srcPoolId: PromiseOrValue<BigNumberish>,
+      _to: PromiseOrValue<string>,
       _s: Pool.SwapObjStruct,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     symbol(overrides?: CallOverrides): Promise<[string]>;
@@ -873,26 +952,26 @@ export interface StargatePool extends BaseContract {
     totalWeight(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     transfer(
-      to: string,
-      value: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      to: PromiseOrValue<string>,
+      value: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     transferFrom(
-      from: string,
-      to: string,
-      value: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      value: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     withdrawMintFeeBalance(
-      _to: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _to: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     withdrawProtocolFeeBalance(
-      _to: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _to: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
   };
 
@@ -903,34 +982,38 @@ export interface StargatePool extends BaseContract {
   PERMIT_TYPEHASH(overrides?: CallOverrides): Promise<string>;
 
   activateChainPath(
-    _dstChainId: BigNumberish,
-    _dstPoolId: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _dstChainId: PromiseOrValue<BigNumberish>,
+    _dstPoolId: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  allowance(arg0: string, arg1: string, overrides?: CallOverrides): Promise<BigNumber>;
+  allowance(arg0: PromiseOrValue<string>, arg1: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  amountLPtoLD(_amountLP: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+  amountLPtoLD(_amountLP: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
   approve(
-    spender: string,
-    value: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    spender: PromiseOrValue<string>,
+    value: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  balanceOf(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+  balanceOf(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   batched(overrides?: CallOverrides): Promise<boolean>;
 
   callDelta(
-    _fullMode: boolean,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _fullMode: PromiseOrValue<boolean>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  chainPathIndexLookup(arg0: BigNumberish, arg1: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+  chainPathIndexLookup(
+    arg0: PromiseOrValue<BigNumberish>,
+    arg1: PromiseOrValue<BigNumberish>,
+    overrides?: CallOverrides,
+  ): Promise<BigNumber>;
 
   chainPaths(
-    arg0: BigNumberish,
+    arg0: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides,
   ): Promise<
     [boolean, number, BigNumber, BigNumber, BigNumber, BigNumber, BigNumber, BigNumber] & {
@@ -948,25 +1031,25 @@ export interface StargatePool extends BaseContract {
   convertRate(overrides?: CallOverrides): Promise<BigNumber>;
 
   createChainPath(
-    _dstChainId: BigNumberish,
-    _dstPoolId: BigNumberish,
-    _weight: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _dstChainId: PromiseOrValue<BigNumberish>,
+    _dstPoolId: PromiseOrValue<BigNumberish>,
+    _weight: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   creditChainPath(
-    _dstChainId: BigNumberish,
-    _dstPoolId: BigNumberish,
+    _dstChainId: PromiseOrValue<BigNumberish>,
+    _dstPoolId: PromiseOrValue<BigNumberish>,
     _c: Pool.CreditObjStruct,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   decimals(overrides?: CallOverrides): Promise<BigNumber>;
 
   decreaseAllowance(
-    spender: string,
-    subtractedValue: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    spender: PromiseOrValue<string>,
+    subtractedValue: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   defaultLPMode(overrides?: CallOverrides): Promise<boolean>;
@@ -980,24 +1063,24 @@ export interface StargatePool extends BaseContract {
   feeLibrary(overrides?: CallOverrides): Promise<string>;
 
   getChainPath(
-    _dstChainId: BigNumberish,
-    _dstPoolId: BigNumberish,
+    _dstChainId: PromiseOrValue<BigNumberish>,
+    _dstPoolId: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides,
   ): Promise<Pool.ChainPathStructOutput>;
 
   getChainPathsLength(overrides?: CallOverrides): Promise<BigNumber>;
 
   increaseAllowance(
-    spender: string,
-    addedValue: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    spender: PromiseOrValue<string>,
+    addedValue: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   instantRedeemLocal(
-    _from: string,
-    _amountLP: BigNumberish,
-    _to: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _from: PromiseOrValue<string>,
+    _amountLP: PromiseOrValue<BigNumberish>,
+    _to: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   localDecimals(overrides?: CallOverrides): Promise<BigNumber>;
@@ -1005,9 +1088,9 @@ export interface StargatePool extends BaseContract {
   lpDeltaBP(overrides?: CallOverrides): Promise<BigNumber>;
 
   mint(
-    _to: string,
-    _amountLD: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _to: PromiseOrValue<string>,
+    _amountLD: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   mintFeeBP(overrides?: CallOverrides): Promise<BigNumber>;
@@ -1016,17 +1099,17 @@ export interface StargatePool extends BaseContract {
 
   name(overrides?: CallOverrides): Promise<string>;
 
-  nonces(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+  nonces(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   permit(
-    owner: string,
-    spender: string,
-    value: BigNumberish,
-    deadline: BigNumberish,
-    v: BigNumberish,
-    r: BytesLike,
-    s: BytesLike,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    owner: PromiseOrValue<string>,
+    spender: PromiseOrValue<string>,
+    value: PromiseOrValue<BigNumberish>,
+    deadline: PromiseOrValue<BigNumberish>,
+    v: PromiseOrValue<BigNumberish>,
+    r: PromiseOrValue<BytesLike>,
+    s: PromiseOrValue<BytesLike>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   poolId(overrides?: CallOverrides): Promise<BigNumber>;
@@ -1034,75 +1117,75 @@ export interface StargatePool extends BaseContract {
   protocolFeeBalance(overrides?: CallOverrides): Promise<BigNumber>;
 
   redeemLocal(
-    _from: string,
-    _amountLP: BigNumberish,
-    _dstChainId: BigNumberish,
-    _dstPoolId: BigNumberish,
-    _to: BytesLike,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _from: PromiseOrValue<string>,
+    _amountLP: PromiseOrValue<BigNumberish>,
+    _dstChainId: PromiseOrValue<BigNumberish>,
+    _dstPoolId: PromiseOrValue<BigNumberish>,
+    _to: PromiseOrValue<BytesLike>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   redeemLocalCallback(
-    _srcChainId: BigNumberish,
-    _srcPoolId: BigNumberish,
-    _to: string,
-    _amountSD: BigNumberish,
-    _amountToMintSD: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _srcChainId: PromiseOrValue<BigNumberish>,
+    _srcPoolId: PromiseOrValue<BigNumberish>,
+    _to: PromiseOrValue<string>,
+    _amountSD: PromiseOrValue<BigNumberish>,
+    _amountToMintSD: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   redeemLocalCheckOnRemote(
-    _srcChainId: BigNumberish,
-    _srcPoolId: BigNumberish,
-    _amountSD: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _srcChainId: PromiseOrValue<BigNumberish>,
+    _srcPoolId: PromiseOrValue<BigNumberish>,
+    _amountSD: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   redeemRemote(
-    _dstChainId: BigNumberish,
-    _dstPoolId: BigNumberish,
-    _from: string,
-    _amountLP: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _dstChainId: PromiseOrValue<BigNumberish>,
+    _dstPoolId: PromiseOrValue<BigNumberish>,
+    _from: PromiseOrValue<string>,
+    _amountLP: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   router(overrides?: CallOverrides): Promise<string>;
 
   sendCredits(
-    _dstChainId: BigNumberish,
-    _dstPoolId: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _dstChainId: PromiseOrValue<BigNumberish>,
+    _dstPoolId: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setDeltaParam(
-    _batched: boolean,
-    _swapDeltaBP: BigNumberish,
-    _lpDeltaBP: BigNumberish,
-    _defaultSwapMode: boolean,
-    _defaultLPMode: boolean,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _batched: PromiseOrValue<boolean>,
+    _swapDeltaBP: PromiseOrValue<BigNumberish>,
+    _lpDeltaBP: PromiseOrValue<BigNumberish>,
+    _defaultSwapMode: PromiseOrValue<boolean>,
+    _defaultLPMode: PromiseOrValue<boolean>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setFee(
-    _mintFeeBP: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _mintFeeBP: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setFeeLibrary(
-    _feeLibraryAddr: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _feeLibraryAddr: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setSwapStop(
-    _swapStop: boolean,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _swapStop: PromiseOrValue<boolean>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setWeightForChainPath(
-    _dstChainId: BigNumberish,
-    _dstPoolId: BigNumberish,
-    _weight: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _dstChainId: PromiseOrValue<BigNumberish>,
+    _dstPoolId: PromiseOrValue<BigNumberish>,
+    _weight: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   sharedDecimals(overrides?: CallOverrides): Promise<BigNumber>;
@@ -1110,23 +1193,23 @@ export interface StargatePool extends BaseContract {
   stopSwap(overrides?: CallOverrides): Promise<boolean>;
 
   swap(
-    _dstChainId: BigNumberish,
-    _dstPoolId: BigNumberish,
-    _from: string,
-    _amountLD: BigNumberish,
-    _minAmountLD: BigNumberish,
-    newLiquidity: boolean,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _dstChainId: PromiseOrValue<BigNumberish>,
+    _dstPoolId: PromiseOrValue<BigNumberish>,
+    _from: PromiseOrValue<string>,
+    _amountLD: PromiseOrValue<BigNumberish>,
+    _minAmountLD: PromiseOrValue<BigNumberish>,
+    newLiquidity: PromiseOrValue<boolean>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   swapDeltaBP(overrides?: CallOverrides): Promise<BigNumber>;
 
   swapRemote(
-    _srcChainId: BigNumberish,
-    _srcPoolId: BigNumberish,
-    _to: string,
+    _srcChainId: PromiseOrValue<BigNumberish>,
+    _srcPoolId: PromiseOrValue<BigNumberish>,
+    _to: PromiseOrValue<string>,
     _s: Pool.SwapObjStruct,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   symbol(overrides?: CallOverrides): Promise<string>;
@@ -1140,26 +1223,26 @@ export interface StargatePool extends BaseContract {
   totalWeight(overrides?: CallOverrides): Promise<BigNumber>;
 
   transfer(
-    to: string,
-    value: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    to: PromiseOrValue<string>,
+    value: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   transferFrom(
-    from: string,
-    to: string,
-    value: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    from: PromiseOrValue<string>,
+    to: PromiseOrValue<string>,
+    value: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   withdrawMintFeeBalance(
-    _to: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _to: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   withdrawProtocolFeeBalance(
-    _to: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _to: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   callStatic: {
@@ -1169,24 +1252,40 @@ export interface StargatePool extends BaseContract {
 
     PERMIT_TYPEHASH(overrides?: CallOverrides): Promise<string>;
 
-    activateChainPath(_dstChainId: BigNumberish, _dstPoolId: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    activateChainPath(
+      _dstChainId: PromiseOrValue<BigNumberish>,
+      _dstPoolId: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    allowance(arg0: string, arg1: string, overrides?: CallOverrides): Promise<BigNumber>;
+    allowance(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    amountLPtoLD(_amountLP: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    amountLPtoLD(_amountLP: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    approve(spender: string, value: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+    approve(
+      spender: PromiseOrValue<string>,
+      value: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
 
-    balanceOf(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    balanceOf(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     batched(overrides?: CallOverrides): Promise<boolean>;
 
-    callDelta(_fullMode: boolean, overrides?: CallOverrides): Promise<void>;
+    callDelta(_fullMode: PromiseOrValue<boolean>, overrides?: CallOverrides): Promise<void>;
 
-    chainPathIndexLookup(arg0: BigNumberish, arg1: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    chainPathIndexLookup(
+      arg0: PromiseOrValue<BigNumberish>,
+      arg1: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     chainPaths(
-      arg0: BigNumberish,
+      arg0: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<
       [boolean, number, BigNumber, BigNumber, BigNumber, BigNumber, BigNumber, BigNumber] & {
@@ -1204,22 +1303,26 @@ export interface StargatePool extends BaseContract {
     convertRate(overrides?: CallOverrides): Promise<BigNumber>;
 
     createChainPath(
-      _dstChainId: BigNumberish,
-      _dstPoolId: BigNumberish,
-      _weight: BigNumberish,
+      _dstChainId: PromiseOrValue<BigNumberish>,
+      _dstPoolId: PromiseOrValue<BigNumberish>,
+      _weight: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
     creditChainPath(
-      _dstChainId: BigNumberish,
-      _dstPoolId: BigNumberish,
+      _dstChainId: PromiseOrValue<BigNumberish>,
+      _dstPoolId: PromiseOrValue<BigNumberish>,
       _c: Pool.CreditObjStruct,
       overrides?: CallOverrides,
     ): Promise<void>;
 
     decimals(overrides?: CallOverrides): Promise<BigNumber>;
 
-    decreaseAllowance(spender: string, subtractedValue: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+    decreaseAllowance(
+      spender: PromiseOrValue<string>,
+      subtractedValue: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
 
     defaultLPMode(overrides?: CallOverrides): Promise<boolean>;
 
@@ -1232,19 +1335,23 @@ export interface StargatePool extends BaseContract {
     feeLibrary(overrides?: CallOverrides): Promise<string>;
 
     getChainPath(
-      _dstChainId: BigNumberish,
-      _dstPoolId: BigNumberish,
+      _dstChainId: PromiseOrValue<BigNumberish>,
+      _dstPoolId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<Pool.ChainPathStructOutput>;
 
     getChainPathsLength(overrides?: CallOverrides): Promise<BigNumber>;
 
-    increaseAllowance(spender: string, addedValue: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+    increaseAllowance(
+      spender: PromiseOrValue<string>,
+      addedValue: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
 
     instantRedeemLocal(
-      _from: string,
-      _amountLP: BigNumberish,
-      _to: string,
+      _from: PromiseOrValue<string>,
+      _amountLP: PromiseOrValue<BigNumberish>,
+      _to: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
@@ -1252,7 +1359,11 @@ export interface StargatePool extends BaseContract {
 
     lpDeltaBP(overrides?: CallOverrides): Promise<BigNumber>;
 
-    mint(_to: string, _amountLD: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    mint(
+      _to: PromiseOrValue<string>,
+      _amountLD: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     mintFeeBP(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -1260,16 +1371,16 @@ export interface StargatePool extends BaseContract {
 
     name(overrides?: CallOverrides): Promise<string>;
 
-    nonces(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    nonces(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     permit(
-      owner: string,
-      spender: string,
-      value: BigNumberish,
-      deadline: BigNumberish,
-      v: BigNumberish,
-      r: BytesLike,
-      s: BytesLike,
+      owner: PromiseOrValue<string>,
+      spender: PromiseOrValue<string>,
+      value: PromiseOrValue<BigNumberish>,
+      deadline: PromiseOrValue<BigNumberish>,
+      v: PromiseOrValue<BigNumberish>,
+      r: PromiseOrValue<BytesLike>,
+      s: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
@@ -1278,65 +1389,65 @@ export interface StargatePool extends BaseContract {
     protocolFeeBalance(overrides?: CallOverrides): Promise<BigNumber>;
 
     redeemLocal(
-      _from: string,
-      _amountLP: BigNumberish,
-      _dstChainId: BigNumberish,
-      _dstPoolId: BigNumberish,
-      _to: BytesLike,
+      _from: PromiseOrValue<string>,
+      _amountLP: PromiseOrValue<BigNumberish>,
+      _dstChainId: PromiseOrValue<BigNumberish>,
+      _dstPoolId: PromiseOrValue<BigNumberish>,
+      _to: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     redeemLocalCallback(
-      _srcChainId: BigNumberish,
-      _srcPoolId: BigNumberish,
-      _to: string,
-      _amountSD: BigNumberish,
-      _amountToMintSD: BigNumberish,
+      _srcChainId: PromiseOrValue<BigNumberish>,
+      _srcPoolId: PromiseOrValue<BigNumberish>,
+      _to: PromiseOrValue<string>,
+      _amountSD: PromiseOrValue<BigNumberish>,
+      _amountToMintSD: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
     redeemLocalCheckOnRemote(
-      _srcChainId: BigNumberish,
-      _srcPoolId: BigNumberish,
-      _amountSD: BigNumberish,
+      _srcChainId: PromiseOrValue<BigNumberish>,
+      _srcPoolId: PromiseOrValue<BigNumberish>,
+      _amountSD: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber, BigNumber] & { swapAmount: BigNumber; mintAmount: BigNumber }>;
 
     redeemRemote(
-      _dstChainId: BigNumberish,
-      _dstPoolId: BigNumberish,
-      _from: string,
-      _amountLP: BigNumberish,
+      _dstChainId: PromiseOrValue<BigNumberish>,
+      _dstPoolId: PromiseOrValue<BigNumberish>,
+      _from: PromiseOrValue<string>,
+      _amountLP: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
     router(overrides?: CallOverrides): Promise<string>;
 
     sendCredits(
-      _dstChainId: BigNumberish,
-      _dstPoolId: BigNumberish,
+      _dstChainId: PromiseOrValue<BigNumberish>,
+      _dstPoolId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<Pool.CreditObjStructOutput>;
 
     setDeltaParam(
-      _batched: boolean,
-      _swapDeltaBP: BigNumberish,
-      _lpDeltaBP: BigNumberish,
-      _defaultSwapMode: boolean,
-      _defaultLPMode: boolean,
+      _batched: PromiseOrValue<boolean>,
+      _swapDeltaBP: PromiseOrValue<BigNumberish>,
+      _lpDeltaBP: PromiseOrValue<BigNumberish>,
+      _defaultSwapMode: PromiseOrValue<boolean>,
+      _defaultLPMode: PromiseOrValue<boolean>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
-    setFee(_mintFeeBP: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    setFee(_mintFeeBP: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
-    setFeeLibrary(_feeLibraryAddr: string, overrides?: CallOverrides): Promise<void>;
+    setFeeLibrary(_feeLibraryAddr: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    setSwapStop(_swapStop: boolean, overrides?: CallOverrides): Promise<void>;
+    setSwapStop(_swapStop: PromiseOrValue<boolean>, overrides?: CallOverrides): Promise<void>;
 
     setWeightForChainPath(
-      _dstChainId: BigNumberish,
-      _dstPoolId: BigNumberish,
-      _weight: BigNumberish,
+      _dstChainId: PromiseOrValue<BigNumberish>,
+      _dstPoolId: PromiseOrValue<BigNumberish>,
+      _weight: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
@@ -1345,21 +1456,21 @@ export interface StargatePool extends BaseContract {
     stopSwap(overrides?: CallOverrides): Promise<boolean>;
 
     swap(
-      _dstChainId: BigNumberish,
-      _dstPoolId: BigNumberish,
-      _from: string,
-      _amountLD: BigNumberish,
-      _minAmountLD: BigNumberish,
-      newLiquidity: boolean,
+      _dstChainId: PromiseOrValue<BigNumberish>,
+      _dstPoolId: PromiseOrValue<BigNumberish>,
+      _from: PromiseOrValue<string>,
+      _amountLD: PromiseOrValue<BigNumberish>,
+      _minAmountLD: PromiseOrValue<BigNumberish>,
+      newLiquidity: PromiseOrValue<boolean>,
       overrides?: CallOverrides,
     ): Promise<Pool.SwapObjStructOutput>;
 
     swapDeltaBP(overrides?: CallOverrides): Promise<BigNumber>;
 
     swapRemote(
-      _srcChainId: BigNumberish,
-      _srcPoolId: BigNumberish,
-      _to: string,
+      _srcChainId: PromiseOrValue<BigNumberish>,
+      _srcPoolId: PromiseOrValue<BigNumberish>,
+      _to: PromiseOrValue<string>,
       _s: Pool.SwapObjStruct,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
@@ -1374,22 +1485,35 @@ export interface StargatePool extends BaseContract {
 
     totalWeight(overrides?: CallOverrides): Promise<BigNumber>;
 
-    transfer(to: string, value: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+    transfer(
+      to: PromiseOrValue<string>,
+      value: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
 
-    transferFrom(from: string, to: string, value: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+    transferFrom(
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      value: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
 
-    withdrawMintFeeBalance(_to: string, overrides?: CallOverrides): Promise<void>;
+    withdrawMintFeeBalance(_to: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    withdrawProtocolFeeBalance(_to: string, overrides?: CallOverrides): Promise<void>;
+    withdrawProtocolFeeBalance(_to: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
   };
 
   filters: {
     'Approval(address,address,uint256)'(
-      owner?: string | null,
-      spender?: string | null,
+      owner?: PromiseOrValue<string> | null,
+      spender?: PromiseOrValue<string> | null,
       value?: null,
     ): ApprovalEventFilter;
-    Approval(owner?: string | null, spender?: string | null, value?: null): ApprovalEventFilter;
+    Approval(
+      owner?: PromiseOrValue<string> | null,
+      spender?: PromiseOrValue<string> | null,
+      value?: null,
+    ): ApprovalEventFilter;
 
     'Burn(address,uint256,uint256)'(from?: null, amountLP?: null, amountSD?: null): BurnEventFilter;
     Burn(from?: null, amountLP?: null, amountSD?: null): BurnEventFilter;
@@ -1525,8 +1649,16 @@ export interface StargatePool extends BaseContract {
     ): SwapRemoteEventFilter;
     SwapRemote(to?: null, amountSD?: null, protocolFee?: null, dstFee?: null): SwapRemoteEventFilter;
 
-    'Transfer(address,address,uint256)'(from?: string | null, to?: string | null, value?: null): TransferEventFilter;
-    Transfer(from?: string | null, to?: string | null, value?: null): TransferEventFilter;
+    'Transfer(address,address,uint256)'(
+      from?: PromiseOrValue<string> | null,
+      to?: PromiseOrValue<string> | null,
+      value?: null,
+    ): TransferEventFilter;
+    Transfer(
+      from?: PromiseOrValue<string> | null,
+      to?: PromiseOrValue<string> | null,
+      value?: null,
+    ): TransferEventFilter;
 
     'WithdrawMintFeeBalance(address,uint256)'(to?: null, amountSD?: null): WithdrawMintFeeBalanceEventFilter;
     WithdrawMintFeeBalance(to?: null, amountSD?: null): WithdrawMintFeeBalanceEventFilter;
@@ -1556,53 +1688,64 @@ export interface StargatePool extends BaseContract {
     PERMIT_TYPEHASH(overrides?: CallOverrides): Promise<BigNumber>;
 
     activateChainPath(
-      _dstChainId: BigNumberish,
-      _dstPoolId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _dstChainId: PromiseOrValue<BigNumberish>,
+      _dstPoolId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    allowance(arg0: string, arg1: string, overrides?: CallOverrides): Promise<BigNumber>;
+    allowance(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    amountLPtoLD(_amountLP: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    amountLPtoLD(_amountLP: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     approve(
-      spender: string,
-      value: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      spender: PromiseOrValue<string>,
+      value: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    balanceOf(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    balanceOf(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     batched(overrides?: CallOverrides): Promise<BigNumber>;
 
-    callDelta(_fullMode: boolean, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    callDelta(
+      _fullMode: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
-    chainPathIndexLookup(arg0: BigNumberish, arg1: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    chainPathIndexLookup(
+      arg0: PromiseOrValue<BigNumberish>,
+      arg1: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    chainPaths(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    chainPaths(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     convertRate(overrides?: CallOverrides): Promise<BigNumber>;
 
     createChainPath(
-      _dstChainId: BigNumberish,
-      _dstPoolId: BigNumberish,
-      _weight: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _dstChainId: PromiseOrValue<BigNumberish>,
+      _dstPoolId: PromiseOrValue<BigNumberish>,
+      _weight: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     creditChainPath(
-      _dstChainId: BigNumberish,
-      _dstPoolId: BigNumberish,
+      _dstChainId: PromiseOrValue<BigNumberish>,
+      _dstPoolId: PromiseOrValue<BigNumberish>,
       _c: Pool.CreditObjStruct,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     decimals(overrides?: CallOverrides): Promise<BigNumber>;
 
     decreaseAllowance(
-      spender: string,
-      subtractedValue: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      spender: PromiseOrValue<string>,
+      subtractedValue: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     defaultLPMode(overrides?: CallOverrides): Promise<BigNumber>;
@@ -1615,21 +1758,25 @@ export interface StargatePool extends BaseContract {
 
     feeLibrary(overrides?: CallOverrides): Promise<BigNumber>;
 
-    getChainPath(_dstChainId: BigNumberish, _dstPoolId: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    getChainPath(
+      _dstChainId: PromiseOrValue<BigNumberish>,
+      _dstPoolId: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     getChainPathsLength(overrides?: CallOverrides): Promise<BigNumber>;
 
     increaseAllowance(
-      spender: string,
-      addedValue: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      spender: PromiseOrValue<string>,
+      addedValue: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     instantRedeemLocal(
-      _from: string,
-      _amountLP: BigNumberish,
-      _to: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _from: PromiseOrValue<string>,
+      _amountLP: PromiseOrValue<BigNumberish>,
+      _to: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     localDecimals(overrides?: CallOverrides): Promise<BigNumber>;
@@ -1637,9 +1784,9 @@ export interface StargatePool extends BaseContract {
     lpDeltaBP(overrides?: CallOverrides): Promise<BigNumber>;
 
     mint(
-      _to: string,
-      _amountLD: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _to: PromiseOrValue<string>,
+      _amountLD: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     mintFeeBP(overrides?: CallOverrides): Promise<BigNumber>;
@@ -1648,17 +1795,17 @@ export interface StargatePool extends BaseContract {
 
     name(overrides?: CallOverrides): Promise<BigNumber>;
 
-    nonces(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    nonces(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     permit(
-      owner: string,
-      spender: string,
-      value: BigNumberish,
-      deadline: BigNumberish,
-      v: BigNumberish,
-      r: BytesLike,
-      s: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      owner: PromiseOrValue<string>,
+      spender: PromiseOrValue<string>,
+      value: PromiseOrValue<BigNumberish>,
+      deadline: PromiseOrValue<BigNumberish>,
+      v: PromiseOrValue<BigNumberish>,
+      r: PromiseOrValue<BytesLike>,
+      s: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     poolId(overrides?: CallOverrides): Promise<BigNumber>;
@@ -1666,69 +1813,75 @@ export interface StargatePool extends BaseContract {
     protocolFeeBalance(overrides?: CallOverrides): Promise<BigNumber>;
 
     redeemLocal(
-      _from: string,
-      _amountLP: BigNumberish,
-      _dstChainId: BigNumberish,
-      _dstPoolId: BigNumberish,
-      _to: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _from: PromiseOrValue<string>,
+      _amountLP: PromiseOrValue<BigNumberish>,
+      _dstChainId: PromiseOrValue<BigNumberish>,
+      _dstPoolId: PromiseOrValue<BigNumberish>,
+      _to: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     redeemLocalCallback(
-      _srcChainId: BigNumberish,
-      _srcPoolId: BigNumberish,
-      _to: string,
-      _amountSD: BigNumberish,
-      _amountToMintSD: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _srcChainId: PromiseOrValue<BigNumberish>,
+      _srcPoolId: PromiseOrValue<BigNumberish>,
+      _to: PromiseOrValue<string>,
+      _amountSD: PromiseOrValue<BigNumberish>,
+      _amountToMintSD: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     redeemLocalCheckOnRemote(
-      _srcChainId: BigNumberish,
-      _srcPoolId: BigNumberish,
-      _amountSD: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _srcChainId: PromiseOrValue<BigNumberish>,
+      _srcPoolId: PromiseOrValue<BigNumberish>,
+      _amountSD: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     redeemRemote(
-      _dstChainId: BigNumberish,
-      _dstPoolId: BigNumberish,
-      _from: string,
-      _amountLP: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _dstChainId: PromiseOrValue<BigNumberish>,
+      _dstPoolId: PromiseOrValue<BigNumberish>,
+      _from: PromiseOrValue<string>,
+      _amountLP: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     router(overrides?: CallOverrides): Promise<BigNumber>;
 
     sendCredits(
-      _dstChainId: BigNumberish,
-      _dstPoolId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _dstChainId: PromiseOrValue<BigNumberish>,
+      _dstPoolId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setDeltaParam(
-      _batched: boolean,
-      _swapDeltaBP: BigNumberish,
-      _lpDeltaBP: BigNumberish,
-      _defaultSwapMode: boolean,
-      _defaultLPMode: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _batched: PromiseOrValue<boolean>,
+      _swapDeltaBP: PromiseOrValue<BigNumberish>,
+      _lpDeltaBP: PromiseOrValue<BigNumberish>,
+      _defaultSwapMode: PromiseOrValue<boolean>,
+      _defaultLPMode: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    setFee(_mintFeeBP: BigNumberish, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    setFee(
+      _mintFeeBP: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     setFeeLibrary(
-      _feeLibraryAddr: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _feeLibraryAddr: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    setSwapStop(_swapStop: boolean, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    setSwapStop(
+      _swapStop: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     setWeightForChainPath(
-      _dstChainId: BigNumberish,
-      _dstPoolId: BigNumberish,
-      _weight: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _dstChainId: PromiseOrValue<BigNumberish>,
+      _dstPoolId: PromiseOrValue<BigNumberish>,
+      _weight: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     sharedDecimals(overrides?: CallOverrides): Promise<BigNumber>;
@@ -1736,23 +1889,23 @@ export interface StargatePool extends BaseContract {
     stopSwap(overrides?: CallOverrides): Promise<BigNumber>;
 
     swap(
-      _dstChainId: BigNumberish,
-      _dstPoolId: BigNumberish,
-      _from: string,
-      _amountLD: BigNumberish,
-      _minAmountLD: BigNumberish,
-      newLiquidity: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _dstChainId: PromiseOrValue<BigNumberish>,
+      _dstPoolId: PromiseOrValue<BigNumberish>,
+      _from: PromiseOrValue<string>,
+      _amountLD: PromiseOrValue<BigNumberish>,
+      _minAmountLD: PromiseOrValue<BigNumberish>,
+      newLiquidity: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     swapDeltaBP(overrides?: CallOverrides): Promise<BigNumber>;
 
     swapRemote(
-      _srcChainId: BigNumberish,
-      _srcPoolId: BigNumberish,
-      _to: string,
+      _srcChainId: PromiseOrValue<BigNumberish>,
+      _srcPoolId: PromiseOrValue<BigNumberish>,
+      _to: PromiseOrValue<string>,
       _s: Pool.SwapObjStruct,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     symbol(overrides?: CallOverrides): Promise<BigNumber>;
@@ -1766,26 +1919,26 @@ export interface StargatePool extends BaseContract {
     totalWeight(overrides?: CallOverrides): Promise<BigNumber>;
 
     transfer(
-      to: string,
-      value: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      to: PromiseOrValue<string>,
+      value: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     transferFrom(
-      from: string,
-      to: string,
-      value: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      value: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     withdrawMintFeeBalance(
-      _to: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _to: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     withdrawProtocolFeeBalance(
-      _to: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _to: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
   };
 
@@ -1797,60 +1950,64 @@ export interface StargatePool extends BaseContract {
     PERMIT_TYPEHASH(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     activateChainPath(
-      _dstChainId: BigNumberish,
-      _dstPoolId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _dstChainId: PromiseOrValue<BigNumberish>,
+      _dstPoolId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    allowance(arg0: string, arg1: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    allowance(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
-    amountLPtoLD(_amountLP: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    amountLPtoLD(_amountLP: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     approve(
-      spender: string,
-      value: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      spender: PromiseOrValue<string>,
+      value: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    balanceOf(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    balanceOf(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     batched(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     callDelta(
-      _fullMode: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _fullMode: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     chainPathIndexLookup(
-      arg0: BigNumberish,
-      arg1: BigNumberish,
+      arg0: PromiseOrValue<BigNumberish>,
+      arg1: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
-    chainPaths(arg0: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    chainPaths(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     convertRate(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     createChainPath(
-      _dstChainId: BigNumberish,
-      _dstPoolId: BigNumberish,
-      _weight: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _dstChainId: PromiseOrValue<BigNumberish>,
+      _dstPoolId: PromiseOrValue<BigNumberish>,
+      _weight: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     creditChainPath(
-      _dstChainId: BigNumberish,
-      _dstPoolId: BigNumberish,
+      _dstChainId: PromiseOrValue<BigNumberish>,
+      _dstPoolId: PromiseOrValue<BigNumberish>,
       _c: Pool.CreditObjStruct,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     decimals(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     decreaseAllowance(
-      spender: string,
-      subtractedValue: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      spender: PromiseOrValue<string>,
+      subtractedValue: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     defaultLPMode(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -1864,24 +2021,24 @@ export interface StargatePool extends BaseContract {
     feeLibrary(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     getChainPath(
-      _dstChainId: BigNumberish,
-      _dstPoolId: BigNumberish,
+      _dstChainId: PromiseOrValue<BigNumberish>,
+      _dstPoolId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     getChainPathsLength(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     increaseAllowance(
-      spender: string,
-      addedValue: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      spender: PromiseOrValue<string>,
+      addedValue: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     instantRedeemLocal(
-      _from: string,
-      _amountLP: BigNumberish,
-      _to: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _from: PromiseOrValue<string>,
+      _amountLP: PromiseOrValue<BigNumberish>,
+      _to: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     localDecimals(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -1889,9 +2046,9 @@ export interface StargatePool extends BaseContract {
     lpDeltaBP(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     mint(
-      _to: string,
-      _amountLD: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _to: PromiseOrValue<string>,
+      _amountLD: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     mintFeeBP(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -1900,17 +2057,17 @@ export interface StargatePool extends BaseContract {
 
     name(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    nonces(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    nonces(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     permit(
-      owner: string,
-      spender: string,
-      value: BigNumberish,
-      deadline: BigNumberish,
-      v: BigNumberish,
-      r: BytesLike,
-      s: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      owner: PromiseOrValue<string>,
+      spender: PromiseOrValue<string>,
+      value: PromiseOrValue<BigNumberish>,
+      deadline: PromiseOrValue<BigNumberish>,
+      v: PromiseOrValue<BigNumberish>,
+      r: PromiseOrValue<BytesLike>,
+      s: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     poolId(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -1918,75 +2075,75 @@ export interface StargatePool extends BaseContract {
     protocolFeeBalance(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     redeemLocal(
-      _from: string,
-      _amountLP: BigNumberish,
-      _dstChainId: BigNumberish,
-      _dstPoolId: BigNumberish,
-      _to: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _from: PromiseOrValue<string>,
+      _amountLP: PromiseOrValue<BigNumberish>,
+      _dstChainId: PromiseOrValue<BigNumberish>,
+      _dstPoolId: PromiseOrValue<BigNumberish>,
+      _to: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     redeemLocalCallback(
-      _srcChainId: BigNumberish,
-      _srcPoolId: BigNumberish,
-      _to: string,
-      _amountSD: BigNumberish,
-      _amountToMintSD: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _srcChainId: PromiseOrValue<BigNumberish>,
+      _srcPoolId: PromiseOrValue<BigNumberish>,
+      _to: PromiseOrValue<string>,
+      _amountSD: PromiseOrValue<BigNumberish>,
+      _amountToMintSD: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     redeemLocalCheckOnRemote(
-      _srcChainId: BigNumberish,
-      _srcPoolId: BigNumberish,
-      _amountSD: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _srcChainId: PromiseOrValue<BigNumberish>,
+      _srcPoolId: PromiseOrValue<BigNumberish>,
+      _amountSD: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     redeemRemote(
-      _dstChainId: BigNumberish,
-      _dstPoolId: BigNumberish,
-      _from: string,
-      _amountLP: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _dstChainId: PromiseOrValue<BigNumberish>,
+      _dstPoolId: PromiseOrValue<BigNumberish>,
+      _from: PromiseOrValue<string>,
+      _amountLP: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     router(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     sendCredits(
-      _dstChainId: BigNumberish,
-      _dstPoolId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _dstChainId: PromiseOrValue<BigNumberish>,
+      _dstPoolId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setDeltaParam(
-      _batched: boolean,
-      _swapDeltaBP: BigNumberish,
-      _lpDeltaBP: BigNumberish,
-      _defaultSwapMode: boolean,
-      _defaultLPMode: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _batched: PromiseOrValue<boolean>,
+      _swapDeltaBP: PromiseOrValue<BigNumberish>,
+      _lpDeltaBP: PromiseOrValue<BigNumberish>,
+      _defaultSwapMode: PromiseOrValue<boolean>,
+      _defaultLPMode: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setFee(
-      _mintFeeBP: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _mintFeeBP: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setFeeLibrary(
-      _feeLibraryAddr: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _feeLibraryAddr: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setSwapStop(
-      _swapStop: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _swapStop: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setWeightForChainPath(
-      _dstChainId: BigNumberish,
-      _dstPoolId: BigNumberish,
-      _weight: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _dstChainId: PromiseOrValue<BigNumberish>,
+      _dstPoolId: PromiseOrValue<BigNumberish>,
+      _weight: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     sharedDecimals(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -1994,23 +2151,23 @@ export interface StargatePool extends BaseContract {
     stopSwap(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     swap(
-      _dstChainId: BigNumberish,
-      _dstPoolId: BigNumberish,
-      _from: string,
-      _amountLD: BigNumberish,
-      _minAmountLD: BigNumberish,
-      newLiquidity: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _dstChainId: PromiseOrValue<BigNumberish>,
+      _dstPoolId: PromiseOrValue<BigNumberish>,
+      _from: PromiseOrValue<string>,
+      _amountLD: PromiseOrValue<BigNumberish>,
+      _minAmountLD: PromiseOrValue<BigNumberish>,
+      newLiquidity: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     swapDeltaBP(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     swapRemote(
-      _srcChainId: BigNumberish,
-      _srcPoolId: BigNumberish,
-      _to: string,
+      _srcChainId: PromiseOrValue<BigNumberish>,
+      _srcPoolId: PromiseOrValue<BigNumberish>,
+      _to: PromiseOrValue<string>,
       _s: Pool.SwapObjStruct,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     symbol(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -2024,26 +2181,26 @@ export interface StargatePool extends BaseContract {
     totalWeight(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     transfer(
-      to: string,
-      value: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      to: PromiseOrValue<string>,
+      value: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     transferFrom(
-      from: string,
-      to: string,
-      value: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      value: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     withdrawMintFeeBalance(
-      _to: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _to: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     withdrawProtocolFeeBalance(
-      _to: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _to: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
   };
 }

@@ -1,6 +1,6 @@
 import { CurvePoolDefinition } from '~apps/curve/curve.types';
 
-export const SADDLE_BASEPOOL_DEFINITIONS: CurvePoolDefinition[] = [
+export const SADDLE_POOL_DEFINITIONS: CurvePoolDefinition[] = [
   // Evmos Frax saddle3PoolFRAX/USDC/USDT
   {
     swapAddress: '0x21d4365834b7c61447e142ef6bcf01136cbd01c6',

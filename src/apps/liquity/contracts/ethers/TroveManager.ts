@@ -15,7 +15,7 @@ import type {
 } from 'ethers';
 import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
 import type { Listener, Provider } from '@ethersproject/providers';
-import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
 export interface TroveManagerInterface extends utils.Interface {
   functions: {
@@ -197,51 +197,66 @@ export interface TroveManagerInterface extends utils.Interface {
   encodeFunctionData(functionFragment: 'PERCENT_DIVISOR', values?: undefined): string;
   encodeFunctionData(functionFragment: 'REDEMPTION_FEE_FLOOR', values?: undefined): string;
   encodeFunctionData(functionFragment: 'SECONDS_IN_ONE_MINUTE', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'TroveOwners', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'Troves', values: [string]): string;
+  encodeFunctionData(functionFragment: 'TroveOwners', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'Troves', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: '_100pct', values?: undefined): string;
   encodeFunctionData(functionFragment: 'activePool', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'addTroveOwnerToArray', values: [string]): string;
-  encodeFunctionData(functionFragment: 'applyPendingRewards', values: [string]): string;
+  encodeFunctionData(functionFragment: 'addTroveOwnerToArray', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'applyPendingRewards', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'baseRate', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'batchLiquidateTroves', values: [string[]]): string;
+  encodeFunctionData(functionFragment: 'batchLiquidateTroves', values: [PromiseOrValue<string>[]]): string;
   encodeFunctionData(functionFragment: 'borrowerOperationsAddress', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'checkRecoveryMode', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'closeTrove', values: [string]): string;
+  encodeFunctionData(functionFragment: 'checkRecoveryMode', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'closeTrove', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'decayBaseRateFromBorrowing', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'decreaseTroveColl', values: [string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'decreaseTroveDebt', values: [string, BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'decreaseTroveColl',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'decreaseTroveDebt',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
   encodeFunctionData(functionFragment: 'defaultPool', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'getBorrowingFee', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'getBorrowingFeeWithDecay', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'getBorrowingFee', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'getBorrowingFeeWithDecay', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'getBorrowingRate', values?: undefined): string;
   encodeFunctionData(functionFragment: 'getBorrowingRateWithDecay', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'getCurrentICR', values: [string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'getEntireDebtAndColl', values: [string]): string;
+  encodeFunctionData(
+    functionFragment: 'getCurrentICR',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'getEntireDebtAndColl', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'getEntireSystemColl', values?: undefined): string;
   encodeFunctionData(functionFragment: 'getEntireSystemDebt', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'getNominalICR', values: [string]): string;
-  encodeFunctionData(functionFragment: 'getPendingETHReward', values: [string]): string;
-  encodeFunctionData(functionFragment: 'getPendingLUSDDebtReward', values: [string]): string;
-  encodeFunctionData(functionFragment: 'getRedemptionFeeWithDecay', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'getNominalICR', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'getPendingETHReward', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'getPendingLUSDDebtReward', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'getRedemptionFeeWithDecay', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'getRedemptionRate', values?: undefined): string;
   encodeFunctionData(functionFragment: 'getRedemptionRateWithDecay', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'getTCR', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'getTroveColl', values: [string]): string;
-  encodeFunctionData(functionFragment: 'getTroveDebt', values: [string]): string;
-  encodeFunctionData(functionFragment: 'getTroveFromTroveOwnersArray', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'getTCR', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'getTroveColl', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'getTroveDebt', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'getTroveFromTroveOwnersArray', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'getTroveOwnersCount', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'getTroveStake', values: [string]): string;
-  encodeFunctionData(functionFragment: 'getTroveStatus', values: [string]): string;
-  encodeFunctionData(functionFragment: 'hasPendingRewards', values: [string]): string;
-  encodeFunctionData(functionFragment: 'increaseTroveColl', values: [string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'increaseTroveDebt', values: [string, BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'getTroveStake', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'getTroveStatus', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'hasPendingRewards', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'increaseTroveColl',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'increaseTroveDebt',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
   encodeFunctionData(functionFragment: 'isOwner', values?: undefined): string;
   encodeFunctionData(functionFragment: 'lastETHError_Redistribution', values?: undefined): string;
   encodeFunctionData(functionFragment: 'lastFeeOperationTime', values?: undefined): string;
   encodeFunctionData(functionFragment: 'lastLUSDDebtError_Redistribution', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'liquidate', values: [string]): string;
-  encodeFunctionData(functionFragment: 'liquidateTroves', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'liquidate', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'liquidateTroves', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'lqtyStaking', values?: undefined): string;
   encodeFunctionData(functionFragment: 'lqtyToken', values?: undefined): string;
   encodeFunctionData(functionFragment: 'lusdToken', values?: undefined): string;
@@ -249,22 +264,45 @@ export interface TroveManagerInterface extends utils.Interface {
   encodeFunctionData(functionFragment: 'priceFeed', values?: undefined): string;
   encodeFunctionData(
     functionFragment: 'redeemCollateral',
-    values: [BigNumberish, string, string, string, BigNumberish, BigNumberish, BigNumberish],
+    values: [
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+    ],
   ): string;
-  encodeFunctionData(functionFragment: 'removeStake', values: [string]): string;
-  encodeFunctionData(functionFragment: 'rewardSnapshots', values: [string]): string;
+  encodeFunctionData(functionFragment: 'removeStake', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'rewardSnapshots', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(
     functionFragment: 'setAddresses',
-    values: [string, string, string, string, string, string, string, string, string, string, string],
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+    ],
   ): string;
-  encodeFunctionData(functionFragment: 'setTroveStatus', values: [string, BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'setTroveStatus',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
   encodeFunctionData(functionFragment: 'sortedTroves', values?: undefined): string;
   encodeFunctionData(functionFragment: 'stabilityPool', values?: undefined): string;
   encodeFunctionData(functionFragment: 'totalCollateralSnapshot', values?: undefined): string;
   encodeFunctionData(functionFragment: 'totalStakes', values?: undefined): string;
   encodeFunctionData(functionFragment: 'totalStakesSnapshot', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'updateStakeAndTotalStakes', values: [string]): string;
-  encodeFunctionData(functionFragment: 'updateTroveRewardSnapshots', values: [string]): string;
+  encodeFunctionData(functionFragment: 'updateStakeAndTotalStakes', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'updateTroveRewardSnapshots', values: [PromiseOrValue<string>]): string;
 
   decodeFunctionResult(functionFragment: 'BETA', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'BOOTSTRAP_PERIOD', data: BytesLike): Result;
@@ -630,10 +668,10 @@ export interface TroveManager extends BaseContract {
 
     SECONDS_IN_ONE_MINUTE(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    TroveOwners(arg0: BigNumberish, overrides?: CallOverrides): Promise<[string]>;
+    TroveOwners(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[string]>;
 
     Troves(
-      arg0: string,
+      arg0: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<
       [BigNumber, BigNumber, BigNumber, number, BigNumber] & {
@@ -650,61 +688,63 @@ export interface TroveManager extends BaseContract {
     activePool(overrides?: CallOverrides): Promise<[string]>;
 
     addTroveOwnerToArray(
-      _borrower: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _borrower: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     applyPendingRewards(
-      _borrower: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _borrower: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     baseRate(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     batchLiquidateTroves(
-      _troveArray: string[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _troveArray: PromiseOrValue<string>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     borrowerOperationsAddress(overrides?: CallOverrides): Promise<[string]>;
 
-    checkRecoveryMode(_price: BigNumberish, overrides?: CallOverrides): Promise<[boolean]>;
+    checkRecoveryMode(_price: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[boolean]>;
 
     closeTrove(
-      _borrower: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _borrower: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    decayBaseRateFromBorrowing(
-      overrides?: Overrides & { from?: string | Promise<string> },
-    ): Promise<ContractTransaction>;
+    decayBaseRateFromBorrowing(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     decreaseTroveColl(
-      _borrower: string,
-      _collDecrease: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _borrower: PromiseOrValue<string>,
+      _collDecrease: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     decreaseTroveDebt(
-      _borrower: string,
-      _debtDecrease: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _borrower: PromiseOrValue<string>,
+      _debtDecrease: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     defaultPool(overrides?: CallOverrides): Promise<[string]>;
 
-    getBorrowingFee(_LUSDDebt: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber]>;
+    getBorrowingFee(_LUSDDebt: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    getBorrowingFeeWithDecay(_LUSDDebt: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber]>;
+    getBorrowingFeeWithDecay(_LUSDDebt: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     getBorrowingRate(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     getBorrowingRateWithDecay(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    getCurrentICR(_borrower: string, _price: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber]>;
+    getCurrentICR(
+      _borrower: PromiseOrValue<string>,
+      _price: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber]>;
 
     getEntireDebtAndColl(
-      _borrower: string,
+      _borrower: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<
       [BigNumber, BigNumber, BigNumber, BigNumber] & {
@@ -719,44 +759,44 @@ export interface TroveManager extends BaseContract {
 
     getEntireSystemDebt(overrides?: CallOverrides): Promise<[BigNumber] & { entireSystemDebt: BigNumber }>;
 
-    getNominalICR(_borrower: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    getNominalICR(_borrower: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    getPendingETHReward(_borrower: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    getPendingETHReward(_borrower: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    getPendingLUSDDebtReward(_borrower: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    getPendingLUSDDebtReward(_borrower: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    getRedemptionFeeWithDecay(_ETHDrawn: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber]>;
+    getRedemptionFeeWithDecay(_ETHDrawn: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     getRedemptionRate(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     getRedemptionRateWithDecay(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    getTCR(_price: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber]>;
+    getTCR(_price: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    getTroveColl(_borrower: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    getTroveColl(_borrower: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    getTroveDebt(_borrower: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    getTroveDebt(_borrower: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    getTroveFromTroveOwnersArray(_index: BigNumberish, overrides?: CallOverrides): Promise<[string]>;
+    getTroveFromTroveOwnersArray(_index: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[string]>;
 
     getTroveOwnersCount(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    getTroveStake(_borrower: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    getTroveStake(_borrower: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    getTroveStatus(_borrower: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    getTroveStatus(_borrower: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    hasPendingRewards(_borrower: string, overrides?: CallOverrides): Promise<[boolean]>;
+    hasPendingRewards(_borrower: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[boolean]>;
 
     increaseTroveColl(
-      _borrower: string,
-      _collIncrease: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _borrower: PromiseOrValue<string>,
+      _collIncrease: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     increaseTroveDebt(
-      _borrower: string,
-      _debtIncrease: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _borrower: PromiseOrValue<string>,
+      _debtIncrease: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     isOwner(overrides?: CallOverrides): Promise<[boolean]>;
@@ -768,13 +808,13 @@ export interface TroveManager extends BaseContract {
     lastLUSDDebtError_Redistribution(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     liquidate(
-      _borrower: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _borrower: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     liquidateTroves(
-      _n: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _n: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     lqtyStaking(overrides?: CallOverrides): Promise<[string]>;
@@ -788,45 +828,45 @@ export interface TroveManager extends BaseContract {
     priceFeed(overrides?: CallOverrides): Promise<[string]>;
 
     redeemCollateral(
-      _LUSDamount: BigNumberish,
-      _firstRedemptionHint: string,
-      _upperPartialRedemptionHint: string,
-      _lowerPartialRedemptionHint: string,
-      _partialRedemptionHintNICR: BigNumberish,
-      _maxIterations: BigNumberish,
-      _maxFeePercentage: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _LUSDamount: PromiseOrValue<BigNumberish>,
+      _firstRedemptionHint: PromiseOrValue<string>,
+      _upperPartialRedemptionHint: PromiseOrValue<string>,
+      _lowerPartialRedemptionHint: PromiseOrValue<string>,
+      _partialRedemptionHintNICR: PromiseOrValue<BigNumberish>,
+      _maxIterations: PromiseOrValue<BigNumberish>,
+      _maxFeePercentage: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     removeStake(
-      _borrower: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _borrower: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     rewardSnapshots(
-      arg0: string,
+      arg0: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber, BigNumber] & { ETH: BigNumber; LUSDDebt: BigNumber }>;
 
     setAddresses(
-      _borrowerOperationsAddress: string,
-      _activePoolAddress: string,
-      _defaultPoolAddress: string,
-      _stabilityPoolAddress: string,
-      _gasPoolAddress: string,
-      _collSurplusPoolAddress: string,
-      _priceFeedAddress: string,
-      _lusdTokenAddress: string,
-      _sortedTrovesAddress: string,
-      _lqtyTokenAddress: string,
-      _lqtyStakingAddress: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _borrowerOperationsAddress: PromiseOrValue<string>,
+      _activePoolAddress: PromiseOrValue<string>,
+      _defaultPoolAddress: PromiseOrValue<string>,
+      _stabilityPoolAddress: PromiseOrValue<string>,
+      _gasPoolAddress: PromiseOrValue<string>,
+      _collSurplusPoolAddress: PromiseOrValue<string>,
+      _priceFeedAddress: PromiseOrValue<string>,
+      _lusdTokenAddress: PromiseOrValue<string>,
+      _sortedTrovesAddress: PromiseOrValue<string>,
+      _lqtyTokenAddress: PromiseOrValue<string>,
+      _lqtyStakingAddress: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setTroveStatus(
-      _borrower: string,
-      _num: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _borrower: PromiseOrValue<string>,
+      _num: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     sortedTroves(overrides?: CallOverrides): Promise<[string]>;
@@ -840,13 +880,13 @@ export interface TroveManager extends BaseContract {
     totalStakesSnapshot(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     updateStakeAndTotalStakes(
-      _borrower: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _borrower: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     updateTroveRewardSnapshots(
-      _borrower: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _borrower: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
   };
 
@@ -882,10 +922,10 @@ export interface TroveManager extends BaseContract {
 
   SECONDS_IN_ONE_MINUTE(overrides?: CallOverrides): Promise<BigNumber>;
 
-  TroveOwners(arg0: BigNumberish, overrides?: CallOverrides): Promise<string>;
+  TroveOwners(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
 
   Troves(
-    arg0: string,
+    arg0: PromiseOrValue<string>,
     overrides?: CallOverrides,
   ): Promise<
     [BigNumber, BigNumber, BigNumber, number, BigNumber] & {
@@ -902,59 +942,63 @@ export interface TroveManager extends BaseContract {
   activePool(overrides?: CallOverrides): Promise<string>;
 
   addTroveOwnerToArray(
-    _borrower: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _borrower: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   applyPendingRewards(
-    _borrower: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _borrower: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   baseRate(overrides?: CallOverrides): Promise<BigNumber>;
 
   batchLiquidateTroves(
-    _troveArray: string[],
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _troveArray: PromiseOrValue<string>[],
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   borrowerOperationsAddress(overrides?: CallOverrides): Promise<string>;
 
-  checkRecoveryMode(_price: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+  checkRecoveryMode(_price: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<boolean>;
 
   closeTrove(
-    _borrower: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _borrower: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  decayBaseRateFromBorrowing(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  decayBaseRateFromBorrowing(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   decreaseTroveColl(
-    _borrower: string,
-    _collDecrease: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _borrower: PromiseOrValue<string>,
+    _collDecrease: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   decreaseTroveDebt(
-    _borrower: string,
-    _debtDecrease: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _borrower: PromiseOrValue<string>,
+    _debtDecrease: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   defaultPool(overrides?: CallOverrides): Promise<string>;
 
-  getBorrowingFee(_LUSDDebt: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+  getBorrowingFee(_LUSDDebt: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  getBorrowingFeeWithDecay(_LUSDDebt: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+  getBorrowingFeeWithDecay(_LUSDDebt: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
   getBorrowingRate(overrides?: CallOverrides): Promise<BigNumber>;
 
   getBorrowingRateWithDecay(overrides?: CallOverrides): Promise<BigNumber>;
 
-  getCurrentICR(_borrower: string, _price: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+  getCurrentICR(
+    _borrower: PromiseOrValue<string>,
+    _price: PromiseOrValue<BigNumberish>,
+    overrides?: CallOverrides,
+  ): Promise<BigNumber>;
 
   getEntireDebtAndColl(
-    _borrower: string,
+    _borrower: PromiseOrValue<string>,
     overrides?: CallOverrides,
   ): Promise<
     [BigNumber, BigNumber, BigNumber, BigNumber] & {
@@ -969,44 +1013,44 @@ export interface TroveManager extends BaseContract {
 
   getEntireSystemDebt(overrides?: CallOverrides): Promise<BigNumber>;
 
-  getNominalICR(_borrower: string, overrides?: CallOverrides): Promise<BigNumber>;
+  getNominalICR(_borrower: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  getPendingETHReward(_borrower: string, overrides?: CallOverrides): Promise<BigNumber>;
+  getPendingETHReward(_borrower: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  getPendingLUSDDebtReward(_borrower: string, overrides?: CallOverrides): Promise<BigNumber>;
+  getPendingLUSDDebtReward(_borrower: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  getRedemptionFeeWithDecay(_ETHDrawn: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+  getRedemptionFeeWithDecay(_ETHDrawn: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
   getRedemptionRate(overrides?: CallOverrides): Promise<BigNumber>;
 
   getRedemptionRateWithDecay(overrides?: CallOverrides): Promise<BigNumber>;
 
-  getTCR(_price: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+  getTCR(_price: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  getTroveColl(_borrower: string, overrides?: CallOverrides): Promise<BigNumber>;
+  getTroveColl(_borrower: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  getTroveDebt(_borrower: string, overrides?: CallOverrides): Promise<BigNumber>;
+  getTroveDebt(_borrower: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  getTroveFromTroveOwnersArray(_index: BigNumberish, overrides?: CallOverrides): Promise<string>;
+  getTroveFromTroveOwnersArray(_index: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
 
   getTroveOwnersCount(overrides?: CallOverrides): Promise<BigNumber>;
 
-  getTroveStake(_borrower: string, overrides?: CallOverrides): Promise<BigNumber>;
+  getTroveStake(_borrower: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  getTroveStatus(_borrower: string, overrides?: CallOverrides): Promise<BigNumber>;
+  getTroveStatus(_borrower: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  hasPendingRewards(_borrower: string, overrides?: CallOverrides): Promise<boolean>;
+  hasPendingRewards(_borrower: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
   increaseTroveColl(
-    _borrower: string,
-    _collIncrease: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _borrower: PromiseOrValue<string>,
+    _collIncrease: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   increaseTroveDebt(
-    _borrower: string,
-    _debtIncrease: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _borrower: PromiseOrValue<string>,
+    _debtIncrease: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   isOwner(overrides?: CallOverrides): Promise<boolean>;
@@ -1018,13 +1062,13 @@ export interface TroveManager extends BaseContract {
   lastLUSDDebtError_Redistribution(overrides?: CallOverrides): Promise<BigNumber>;
 
   liquidate(
-    _borrower: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _borrower: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   liquidateTroves(
-    _n: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _n: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   lqtyStaking(overrides?: CallOverrides): Promise<string>;
@@ -1038,45 +1082,45 @@ export interface TroveManager extends BaseContract {
   priceFeed(overrides?: CallOverrides): Promise<string>;
 
   redeemCollateral(
-    _LUSDamount: BigNumberish,
-    _firstRedemptionHint: string,
-    _upperPartialRedemptionHint: string,
-    _lowerPartialRedemptionHint: string,
-    _partialRedemptionHintNICR: BigNumberish,
-    _maxIterations: BigNumberish,
-    _maxFeePercentage: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _LUSDamount: PromiseOrValue<BigNumberish>,
+    _firstRedemptionHint: PromiseOrValue<string>,
+    _upperPartialRedemptionHint: PromiseOrValue<string>,
+    _lowerPartialRedemptionHint: PromiseOrValue<string>,
+    _partialRedemptionHintNICR: PromiseOrValue<BigNumberish>,
+    _maxIterations: PromiseOrValue<BigNumberish>,
+    _maxFeePercentage: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   removeStake(
-    _borrower: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _borrower: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   rewardSnapshots(
-    arg0: string,
+    arg0: PromiseOrValue<string>,
     overrides?: CallOverrides,
   ): Promise<[BigNumber, BigNumber] & { ETH: BigNumber; LUSDDebt: BigNumber }>;
 
   setAddresses(
-    _borrowerOperationsAddress: string,
-    _activePoolAddress: string,
-    _defaultPoolAddress: string,
-    _stabilityPoolAddress: string,
-    _gasPoolAddress: string,
-    _collSurplusPoolAddress: string,
-    _priceFeedAddress: string,
-    _lusdTokenAddress: string,
-    _sortedTrovesAddress: string,
-    _lqtyTokenAddress: string,
-    _lqtyStakingAddress: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _borrowerOperationsAddress: PromiseOrValue<string>,
+    _activePoolAddress: PromiseOrValue<string>,
+    _defaultPoolAddress: PromiseOrValue<string>,
+    _stabilityPoolAddress: PromiseOrValue<string>,
+    _gasPoolAddress: PromiseOrValue<string>,
+    _collSurplusPoolAddress: PromiseOrValue<string>,
+    _priceFeedAddress: PromiseOrValue<string>,
+    _lusdTokenAddress: PromiseOrValue<string>,
+    _sortedTrovesAddress: PromiseOrValue<string>,
+    _lqtyTokenAddress: PromiseOrValue<string>,
+    _lqtyStakingAddress: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setTroveStatus(
-    _borrower: string,
-    _num: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _borrower: PromiseOrValue<string>,
+    _num: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   sortedTroves(overrides?: CallOverrides): Promise<string>;
@@ -1090,13 +1134,13 @@ export interface TroveManager extends BaseContract {
   totalStakesSnapshot(overrides?: CallOverrides): Promise<BigNumber>;
 
   updateStakeAndTotalStakes(
-    _borrower: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _borrower: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   updateTroveRewardSnapshots(
-    _borrower: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _borrower: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   callStatic: {
@@ -1132,10 +1176,10 @@ export interface TroveManager extends BaseContract {
 
     SECONDS_IN_ONE_MINUTE(overrides?: CallOverrides): Promise<BigNumber>;
 
-    TroveOwners(arg0: BigNumberish, overrides?: CallOverrides): Promise<string>;
+    TroveOwners(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
 
     Troves(
-      arg0: string,
+      arg0: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<
       [BigNumber, BigNumber, BigNumber, number, BigNumber] & {
@@ -1151,40 +1195,52 @@ export interface TroveManager extends BaseContract {
 
     activePool(overrides?: CallOverrides): Promise<string>;
 
-    addTroveOwnerToArray(_borrower: string, overrides?: CallOverrides): Promise<BigNumber>;
+    addTroveOwnerToArray(_borrower: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    applyPendingRewards(_borrower: string, overrides?: CallOverrides): Promise<void>;
+    applyPendingRewards(_borrower: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     baseRate(overrides?: CallOverrides): Promise<BigNumber>;
 
-    batchLiquidateTroves(_troveArray: string[], overrides?: CallOverrides): Promise<void>;
+    batchLiquidateTroves(_troveArray: PromiseOrValue<string>[], overrides?: CallOverrides): Promise<void>;
 
     borrowerOperationsAddress(overrides?: CallOverrides): Promise<string>;
 
-    checkRecoveryMode(_price: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+    checkRecoveryMode(_price: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<boolean>;
 
-    closeTrove(_borrower: string, overrides?: CallOverrides): Promise<void>;
+    closeTrove(_borrower: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     decayBaseRateFromBorrowing(overrides?: CallOverrides): Promise<void>;
 
-    decreaseTroveColl(_borrower: string, _collDecrease: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    decreaseTroveColl(
+      _borrower: PromiseOrValue<string>,
+      _collDecrease: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    decreaseTroveDebt(_borrower: string, _debtDecrease: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    decreaseTroveDebt(
+      _borrower: PromiseOrValue<string>,
+      _debtDecrease: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     defaultPool(overrides?: CallOverrides): Promise<string>;
 
-    getBorrowingFee(_LUSDDebt: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    getBorrowingFee(_LUSDDebt: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    getBorrowingFeeWithDecay(_LUSDDebt: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    getBorrowingFeeWithDecay(_LUSDDebt: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     getBorrowingRate(overrides?: CallOverrides): Promise<BigNumber>;
 
     getBorrowingRateWithDecay(overrides?: CallOverrides): Promise<BigNumber>;
 
-    getCurrentICR(_borrower: string, _price: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    getCurrentICR(
+      _borrower: PromiseOrValue<string>,
+      _price: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     getEntireDebtAndColl(
-      _borrower: string,
+      _borrower: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<
       [BigNumber, BigNumber, BigNumber, BigNumber] & {
@@ -1199,37 +1255,45 @@ export interface TroveManager extends BaseContract {
 
     getEntireSystemDebt(overrides?: CallOverrides): Promise<BigNumber>;
 
-    getNominalICR(_borrower: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getNominalICR(_borrower: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    getPendingETHReward(_borrower: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getPendingETHReward(_borrower: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    getPendingLUSDDebtReward(_borrower: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getPendingLUSDDebtReward(_borrower: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    getRedemptionFeeWithDecay(_ETHDrawn: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    getRedemptionFeeWithDecay(_ETHDrawn: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     getRedemptionRate(overrides?: CallOverrides): Promise<BigNumber>;
 
     getRedemptionRateWithDecay(overrides?: CallOverrides): Promise<BigNumber>;
 
-    getTCR(_price: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    getTCR(_price: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    getTroveColl(_borrower: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getTroveColl(_borrower: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    getTroveDebt(_borrower: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getTroveDebt(_borrower: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    getTroveFromTroveOwnersArray(_index: BigNumberish, overrides?: CallOverrides): Promise<string>;
+    getTroveFromTroveOwnersArray(_index: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
 
     getTroveOwnersCount(overrides?: CallOverrides): Promise<BigNumber>;
 
-    getTroveStake(_borrower: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getTroveStake(_borrower: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    getTroveStatus(_borrower: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getTroveStatus(_borrower: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    hasPendingRewards(_borrower: string, overrides?: CallOverrides): Promise<boolean>;
+    hasPendingRewards(_borrower: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
-    increaseTroveColl(_borrower: string, _collIncrease: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    increaseTroveColl(
+      _borrower: PromiseOrValue<string>,
+      _collIncrease: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    increaseTroveDebt(_borrower: string, _debtIncrease: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    increaseTroveDebt(
+      _borrower: PromiseOrValue<string>,
+      _debtIncrease: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     isOwner(overrides?: CallOverrides): Promise<boolean>;
 
@@ -1239,9 +1303,9 @@ export interface TroveManager extends BaseContract {
 
     lastLUSDDebtError_Redistribution(overrides?: CallOverrides): Promise<BigNumber>;
 
-    liquidate(_borrower: string, overrides?: CallOverrides): Promise<void>;
+    liquidate(_borrower: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    liquidateTroves(_n: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    liquidateTroves(_n: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
     lqtyStaking(overrides?: CallOverrides): Promise<string>;
 
@@ -1254,39 +1318,43 @@ export interface TroveManager extends BaseContract {
     priceFeed(overrides?: CallOverrides): Promise<string>;
 
     redeemCollateral(
-      _LUSDamount: BigNumberish,
-      _firstRedemptionHint: string,
-      _upperPartialRedemptionHint: string,
-      _lowerPartialRedemptionHint: string,
-      _partialRedemptionHintNICR: BigNumberish,
-      _maxIterations: BigNumberish,
-      _maxFeePercentage: BigNumberish,
+      _LUSDamount: PromiseOrValue<BigNumberish>,
+      _firstRedemptionHint: PromiseOrValue<string>,
+      _upperPartialRedemptionHint: PromiseOrValue<string>,
+      _lowerPartialRedemptionHint: PromiseOrValue<string>,
+      _partialRedemptionHintNICR: PromiseOrValue<BigNumberish>,
+      _maxIterations: PromiseOrValue<BigNumberish>,
+      _maxFeePercentage: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
-    removeStake(_borrower: string, overrides?: CallOverrides): Promise<void>;
+    removeStake(_borrower: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     rewardSnapshots(
-      arg0: string,
+      arg0: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber, BigNumber] & { ETH: BigNumber; LUSDDebt: BigNumber }>;
 
     setAddresses(
-      _borrowerOperationsAddress: string,
-      _activePoolAddress: string,
-      _defaultPoolAddress: string,
-      _stabilityPoolAddress: string,
-      _gasPoolAddress: string,
-      _collSurplusPoolAddress: string,
-      _priceFeedAddress: string,
-      _lusdTokenAddress: string,
-      _sortedTrovesAddress: string,
-      _lqtyTokenAddress: string,
-      _lqtyStakingAddress: string,
+      _borrowerOperationsAddress: PromiseOrValue<string>,
+      _activePoolAddress: PromiseOrValue<string>,
+      _defaultPoolAddress: PromiseOrValue<string>,
+      _stabilityPoolAddress: PromiseOrValue<string>,
+      _gasPoolAddress: PromiseOrValue<string>,
+      _collSurplusPoolAddress: PromiseOrValue<string>,
+      _priceFeedAddress: PromiseOrValue<string>,
+      _lusdTokenAddress: PromiseOrValue<string>,
+      _sortedTrovesAddress: PromiseOrValue<string>,
+      _lqtyTokenAddress: PromiseOrValue<string>,
+      _lqtyStakingAddress: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
-    setTroveStatus(_borrower: string, _num: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    setTroveStatus(
+      _borrower: PromiseOrValue<string>,
+      _num: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
     sortedTroves(overrides?: CallOverrides): Promise<string>;
 
@@ -1298,9 +1366,9 @@ export interface TroveManager extends BaseContract {
 
     totalStakesSnapshot(overrides?: CallOverrides): Promise<BigNumber>;
 
-    updateStakeAndTotalStakes(_borrower: string, overrides?: CallOverrides): Promise<BigNumber>;
+    updateStakeAndTotalStakes(_borrower: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    updateTroveRewardSnapshots(_borrower: string, overrides?: CallOverrides): Promise<void>;
+    updateTroveRewardSnapshots(_borrower: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
   };
 
   filters: {
@@ -1353,10 +1421,13 @@ export interface TroveManager extends BaseContract {
     ): LiquidationEventFilter;
 
     'OwnershipTransferred(address,address)'(
-      previousOwner?: string | null,
-      newOwner?: string | null,
+      previousOwner?: PromiseOrValue<string> | null,
+      newOwner?: PromiseOrValue<string> | null,
     ): OwnershipTransferredEventFilter;
-    OwnershipTransferred(previousOwner?: string | null, newOwner?: string | null): OwnershipTransferredEventFilter;
+    OwnershipTransferred(
+      previousOwner?: PromiseOrValue<string> | null,
+      newOwner?: PromiseOrValue<string> | null,
+    ): OwnershipTransferredEventFilter;
 
     'PriceFeedAddressChanged(address)'(_newPriceFeedAddress?: null): PriceFeedAddressChangedEventFilter;
     PriceFeedAddressChanged(_newPriceFeedAddress?: null): PriceFeedAddressChangedEventFilter;
@@ -1396,13 +1467,13 @@ export interface TroveManager extends BaseContract {
     TroveIndexUpdated(_borrower?: null, _newIndex?: null): TroveIndexUpdatedEventFilter;
 
     'TroveLiquidated(address,uint256,uint256,uint8)'(
-      _borrower?: string | null,
+      _borrower?: PromiseOrValue<string> | null,
       _debt?: null,
       _coll?: null,
       _operation?: null,
     ): TroveLiquidatedEventFilter;
     TroveLiquidated(
-      _borrower?: string | null,
+      _borrower?: PromiseOrValue<string> | null,
       _debt?: null,
       _coll?: null,
       _operation?: null,
@@ -1412,14 +1483,14 @@ export interface TroveManager extends BaseContract {
     TroveSnapshotsUpdated(_L_ETH?: null, _L_LUSDDebt?: null): TroveSnapshotsUpdatedEventFilter;
 
     'TroveUpdated(address,uint256,uint256,uint256,uint8)'(
-      _borrower?: string | null,
+      _borrower?: PromiseOrValue<string> | null,
       _debt?: null,
       _coll?: null,
       _stake?: null,
       _operation?: null,
     ): TroveUpdatedEventFilter;
     TroveUpdated(
-      _borrower?: string | null,
+      _borrower?: PromiseOrValue<string> | null,
       _debt?: null,
       _coll?: null,
       _stake?: null,
@@ -1460,107 +1531,114 @@ export interface TroveManager extends BaseContract {
 
     SECONDS_IN_ONE_MINUTE(overrides?: CallOverrides): Promise<BigNumber>;
 
-    TroveOwners(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    TroveOwners(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    Troves(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    Troves(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     _100pct(overrides?: CallOverrides): Promise<BigNumber>;
 
     activePool(overrides?: CallOverrides): Promise<BigNumber>;
 
     addTroveOwnerToArray(
-      _borrower: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _borrower: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     applyPendingRewards(
-      _borrower: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _borrower: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     baseRate(overrides?: CallOverrides): Promise<BigNumber>;
 
     batchLiquidateTroves(
-      _troveArray: string[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _troveArray: PromiseOrValue<string>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     borrowerOperationsAddress(overrides?: CallOverrides): Promise<BigNumber>;
 
-    checkRecoveryMode(_price: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    checkRecoveryMode(_price: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    closeTrove(_borrower: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    closeTrove(
+      _borrower: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
-    decayBaseRateFromBorrowing(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    decayBaseRateFromBorrowing(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     decreaseTroveColl(
-      _borrower: string,
-      _collDecrease: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _borrower: PromiseOrValue<string>,
+      _collDecrease: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     decreaseTroveDebt(
-      _borrower: string,
-      _debtDecrease: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _borrower: PromiseOrValue<string>,
+      _debtDecrease: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     defaultPool(overrides?: CallOverrides): Promise<BigNumber>;
 
-    getBorrowingFee(_LUSDDebt: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    getBorrowingFee(_LUSDDebt: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    getBorrowingFeeWithDecay(_LUSDDebt: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    getBorrowingFeeWithDecay(_LUSDDebt: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     getBorrowingRate(overrides?: CallOverrides): Promise<BigNumber>;
 
     getBorrowingRateWithDecay(overrides?: CallOverrides): Promise<BigNumber>;
 
-    getCurrentICR(_borrower: string, _price: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    getCurrentICR(
+      _borrower: PromiseOrValue<string>,
+      _price: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    getEntireDebtAndColl(_borrower: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getEntireDebtAndColl(_borrower: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     getEntireSystemColl(overrides?: CallOverrides): Promise<BigNumber>;
 
     getEntireSystemDebt(overrides?: CallOverrides): Promise<BigNumber>;
 
-    getNominalICR(_borrower: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getNominalICR(_borrower: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    getPendingETHReward(_borrower: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getPendingETHReward(_borrower: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    getPendingLUSDDebtReward(_borrower: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getPendingLUSDDebtReward(_borrower: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    getRedemptionFeeWithDecay(_ETHDrawn: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    getRedemptionFeeWithDecay(_ETHDrawn: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     getRedemptionRate(overrides?: CallOverrides): Promise<BigNumber>;
 
     getRedemptionRateWithDecay(overrides?: CallOverrides): Promise<BigNumber>;
 
-    getTCR(_price: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    getTCR(_price: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    getTroveColl(_borrower: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getTroveColl(_borrower: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    getTroveDebt(_borrower: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getTroveDebt(_borrower: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    getTroveFromTroveOwnersArray(_index: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    getTroveFromTroveOwnersArray(_index: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     getTroveOwnersCount(overrides?: CallOverrides): Promise<BigNumber>;
 
-    getTroveStake(_borrower: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getTroveStake(_borrower: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    getTroveStatus(_borrower: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getTroveStatus(_borrower: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    hasPendingRewards(_borrower: string, overrides?: CallOverrides): Promise<BigNumber>;
+    hasPendingRewards(_borrower: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     increaseTroveColl(
-      _borrower: string,
-      _collIncrease: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _borrower: PromiseOrValue<string>,
+      _collIncrease: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     increaseTroveDebt(
-      _borrower: string,
-      _debtIncrease: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _borrower: PromiseOrValue<string>,
+      _debtIncrease: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     isOwner(overrides?: CallOverrides): Promise<BigNumber>;
@@ -1571,9 +1649,15 @@ export interface TroveManager extends BaseContract {
 
     lastLUSDDebtError_Redistribution(overrides?: CallOverrides): Promise<BigNumber>;
 
-    liquidate(_borrower: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    liquidate(
+      _borrower: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
-    liquidateTroves(_n: BigNumberish, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    liquidateTroves(
+      _n: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     lqtyStaking(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -1586,39 +1670,42 @@ export interface TroveManager extends BaseContract {
     priceFeed(overrides?: CallOverrides): Promise<BigNumber>;
 
     redeemCollateral(
-      _LUSDamount: BigNumberish,
-      _firstRedemptionHint: string,
-      _upperPartialRedemptionHint: string,
-      _lowerPartialRedemptionHint: string,
-      _partialRedemptionHintNICR: BigNumberish,
-      _maxIterations: BigNumberish,
-      _maxFeePercentage: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _LUSDamount: PromiseOrValue<BigNumberish>,
+      _firstRedemptionHint: PromiseOrValue<string>,
+      _upperPartialRedemptionHint: PromiseOrValue<string>,
+      _lowerPartialRedemptionHint: PromiseOrValue<string>,
+      _partialRedemptionHintNICR: PromiseOrValue<BigNumberish>,
+      _maxIterations: PromiseOrValue<BigNumberish>,
+      _maxFeePercentage: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    removeStake(_borrower: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    removeStake(
+      _borrower: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
-    rewardSnapshots(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    rewardSnapshots(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     setAddresses(
-      _borrowerOperationsAddress: string,
-      _activePoolAddress: string,
-      _defaultPoolAddress: string,
-      _stabilityPoolAddress: string,
-      _gasPoolAddress: string,
-      _collSurplusPoolAddress: string,
-      _priceFeedAddress: string,
-      _lusdTokenAddress: string,
-      _sortedTrovesAddress: string,
-      _lqtyTokenAddress: string,
-      _lqtyStakingAddress: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _borrowerOperationsAddress: PromiseOrValue<string>,
+      _activePoolAddress: PromiseOrValue<string>,
+      _defaultPoolAddress: PromiseOrValue<string>,
+      _stabilityPoolAddress: PromiseOrValue<string>,
+      _gasPoolAddress: PromiseOrValue<string>,
+      _collSurplusPoolAddress: PromiseOrValue<string>,
+      _priceFeedAddress: PromiseOrValue<string>,
+      _lusdTokenAddress: PromiseOrValue<string>,
+      _sortedTrovesAddress: PromiseOrValue<string>,
+      _lqtyTokenAddress: PromiseOrValue<string>,
+      _lqtyStakingAddress: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setTroveStatus(
-      _borrower: string,
-      _num: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _borrower: PromiseOrValue<string>,
+      _num: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     sortedTroves(overrides?: CallOverrides): Promise<BigNumber>;
@@ -1632,13 +1719,13 @@ export interface TroveManager extends BaseContract {
     totalStakesSnapshot(overrides?: CallOverrides): Promise<BigNumber>;
 
     updateStakeAndTotalStakes(
-      _borrower: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _borrower: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     updateTroveRewardSnapshots(
-      _borrower: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _borrower: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
   };
 
@@ -1675,112 +1762,128 @@ export interface TroveManager extends BaseContract {
 
     SECONDS_IN_ONE_MINUTE(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    TroveOwners(arg0: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    TroveOwners(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    Troves(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    Troves(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     _100pct(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     activePool(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     addTroveOwnerToArray(
-      _borrower: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _borrower: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     applyPendingRewards(
-      _borrower: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _borrower: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     baseRate(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     batchLiquidateTroves(
-      _troveArray: string[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _troveArray: PromiseOrValue<string>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     borrowerOperationsAddress(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    checkRecoveryMode(_price: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    checkRecoveryMode(_price: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     closeTrove(
-      _borrower: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _borrower: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     decayBaseRateFromBorrowing(
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     decreaseTroveColl(
-      _borrower: string,
-      _collDecrease: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _borrower: PromiseOrValue<string>,
+      _collDecrease: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     decreaseTroveDebt(
-      _borrower: string,
-      _debtDecrease: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _borrower: PromiseOrValue<string>,
+      _debtDecrease: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     defaultPool(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    getBorrowingFee(_LUSDDebt: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getBorrowingFee(_LUSDDebt: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    getBorrowingFeeWithDecay(_LUSDDebt: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getBorrowingFeeWithDecay(
+      _LUSDDebt: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
     getBorrowingRate(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     getBorrowingRateWithDecay(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    getCurrentICR(_borrower: string, _price: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getCurrentICR(
+      _borrower: PromiseOrValue<string>,
+      _price: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
-    getEntireDebtAndColl(_borrower: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getEntireDebtAndColl(_borrower: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     getEntireSystemColl(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     getEntireSystemDebt(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    getNominalICR(_borrower: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getNominalICR(_borrower: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    getPendingETHReward(_borrower: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getPendingETHReward(_borrower: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    getPendingLUSDDebtReward(_borrower: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getPendingLUSDDebtReward(
+      _borrower: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
-    getRedemptionFeeWithDecay(_ETHDrawn: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getRedemptionFeeWithDecay(
+      _ETHDrawn: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
     getRedemptionRate(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     getRedemptionRateWithDecay(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    getTCR(_price: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getTCR(_price: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    getTroveColl(_borrower: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getTroveColl(_borrower: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    getTroveDebt(_borrower: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getTroveDebt(_borrower: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    getTroveFromTroveOwnersArray(_index: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getTroveFromTroveOwnersArray(
+      _index: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
     getTroveOwnersCount(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    getTroveStake(_borrower: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getTroveStake(_borrower: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    getTroveStatus(_borrower: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getTroveStatus(_borrower: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    hasPendingRewards(_borrower: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    hasPendingRewards(_borrower: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     increaseTroveColl(
-      _borrower: string,
-      _collIncrease: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _borrower: PromiseOrValue<string>,
+      _collIncrease: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     increaseTroveDebt(
-      _borrower: string,
-      _debtIncrease: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _borrower: PromiseOrValue<string>,
+      _debtIncrease: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     isOwner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -1792,13 +1895,13 @@ export interface TroveManager extends BaseContract {
     lastLUSDDebtError_Redistribution(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     liquidate(
-      _borrower: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _borrower: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     liquidateTroves(
-      _n: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _n: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     lqtyStaking(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -1812,42 +1915,42 @@ export interface TroveManager extends BaseContract {
     priceFeed(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     redeemCollateral(
-      _LUSDamount: BigNumberish,
-      _firstRedemptionHint: string,
-      _upperPartialRedemptionHint: string,
-      _lowerPartialRedemptionHint: string,
-      _partialRedemptionHintNICR: BigNumberish,
-      _maxIterations: BigNumberish,
-      _maxFeePercentage: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _LUSDamount: PromiseOrValue<BigNumberish>,
+      _firstRedemptionHint: PromiseOrValue<string>,
+      _upperPartialRedemptionHint: PromiseOrValue<string>,
+      _lowerPartialRedemptionHint: PromiseOrValue<string>,
+      _partialRedemptionHintNICR: PromiseOrValue<BigNumberish>,
+      _maxIterations: PromiseOrValue<BigNumberish>,
+      _maxFeePercentage: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     removeStake(
-      _borrower: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _borrower: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    rewardSnapshots(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    rewardSnapshots(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     setAddresses(
-      _borrowerOperationsAddress: string,
-      _activePoolAddress: string,
-      _defaultPoolAddress: string,
-      _stabilityPoolAddress: string,
-      _gasPoolAddress: string,
-      _collSurplusPoolAddress: string,
-      _priceFeedAddress: string,
-      _lusdTokenAddress: string,
-      _sortedTrovesAddress: string,
-      _lqtyTokenAddress: string,
-      _lqtyStakingAddress: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _borrowerOperationsAddress: PromiseOrValue<string>,
+      _activePoolAddress: PromiseOrValue<string>,
+      _defaultPoolAddress: PromiseOrValue<string>,
+      _stabilityPoolAddress: PromiseOrValue<string>,
+      _gasPoolAddress: PromiseOrValue<string>,
+      _collSurplusPoolAddress: PromiseOrValue<string>,
+      _priceFeedAddress: PromiseOrValue<string>,
+      _lusdTokenAddress: PromiseOrValue<string>,
+      _sortedTrovesAddress: PromiseOrValue<string>,
+      _lqtyTokenAddress: PromiseOrValue<string>,
+      _lqtyStakingAddress: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setTroveStatus(
-      _borrower: string,
-      _num: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _borrower: PromiseOrValue<string>,
+      _num: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     sortedTroves(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -1861,13 +1964,13 @@ export interface TroveManager extends BaseContract {
     totalStakesSnapshot(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     updateStakeAndTotalStakes(
-      _borrower: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _borrower: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     updateTroveRewardSnapshots(
-      _borrower: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _borrower: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
   };
 }

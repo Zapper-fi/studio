@@ -1,6 +1,6 @@
 {
   "name": "@zapper-fi/studio",
-  "version": "0.126.0",
+  "version": "0.175.0",
   "description": "Community build apps for Zapper.fi",
   "license": "MIT",
   "main": "./index.js",
@@ -24,6 +24,9 @@
   "dependencies": {
     "@golevelup/nestjs-modules": "^0.5.0",
     "@nestjs/platform-express": "8.4.2",
+    "@nestjs/schedule": "^2.1.0",
+    "@uniswap/sdk-core": "^3.0.1",
+    "@uniswap/v3-sdk": "^3.9.0",
     "bitcoin-address-validation": "^2.2.1",
     "esbuild": "^0.14.27",
     "esbuild-runner": "^2.2.1",
@@ -35,6 +38,7 @@
     "rimraf": "^3.0.2"
   },
   "devDependencies": {
+    "@alex_neo/jest-expect-message": "^1.0.5",
     "@ethersproject/abi": "^5.5.0",
     "@ethersproject/bytes": "^5.5.0",
     "@ethersproject/contracts": "^5.5.0",
@@ -47,13 +51,14 @@
     "@oclif/core": "^1",
     "@oclif/plugin-help": "^5",
     "@oclif/plugin-plugins": "^2.0.1",
-    "@typechain/ethers-v5": "^10.0.0",
+    "@typechain/ethers-v5": "^10.1.0",
     "@types/cache-manager": "^3.4.3",
     "@types/dedent": "^0.7.0",
     "@types/express": "^4.17.13",
     "@types/fs-extra": "^9.0.13",
     "@types/inquirer": "^8.2.0",
     "@types/jest": "^27.4.1",
+    "@types/jest-expect-message": "^1.0.4",
     "@types/lodash": "^4.14.180",
     "@types/murmurhash-js": "^1.0.3",
     "@types/node": "16.11.7",
@@ -98,7 +103,7 @@
     "tsc-alias": "^1.6.5",
     "tsconfig-paths": "^3.14.1",
     "type-fest": "^2.12.1",
-    "typechain": "^8.0.0",
+    "typechain": "^8.1.0",
     "typescript": "^4.6.2",
     "web3": "^1.5.1",
     "webpack": "^5.0.0"

@@ -13,709 +13,442 @@ import type {
   PopulatedTransaction,
   Signer,
   utils,
-} from "ethers";
-import type {
-  FunctionFragment,
-  Result,
-  EventFragment,
-} from "@ethersproject/abi";
-import type { Listener, Provider } from "@ethersproject/providers";
-import type {
-  TypedEventFilter,
-  TypedEvent,
-  TypedListener,
-  OnEvent,
-} from "./common";
+} from 'ethers';
+import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
+import type { Listener, Provider } from '@ethersproject/providers';
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
 export interface StakingInterface extends utils.Interface {
   functions: {
-    "AIRDROP_ROLE()": FunctionFragment;
-    "CLAIM_ROLE()": FunctionFragment;
-    "DEFAULT_ADMIN_ROLE()": FunctionFragment;
-    "FOUR_YEARS()": FunctionFragment;
-    "ONE_MONTH()": FunctionFragment;
-    "PAUSE_ROLE()": FunctionFragment;
-    "STREAM_MANAGER_ROLE()": FunctionFragment;
-    "adminDelegatecall(address,bytes)": FunctionFragment;
-    "adminPause(uint256)": FunctionFragment;
-    "adminSstore(uint256,uint256)": FunctionFragment;
-    "adminSstoreWithMask(uint256,uint256,uint256)": FunctionFragment;
-    "auroraToken()": FunctionFragment;
-    "batchClaimOnBehalfOfAnotherUser(address,uint256[])": FunctionFragment;
-    "batchClaimOnBehalfOfOtherUsers(address[],uint256[])": FunctionFragment;
-    "batchMoveRewardsToPending(uint256[])": FunctionFragment;
-    "batchWithdraw(uint256[])": FunctionFragment;
-    "cancelStreamProposal(uint256)": FunctionFragment;
-    "claimAllOnBehalfOfAnotherUser(address)": FunctionFragment;
-    "claimAllOnBehalfOfOtherUsers(address[])": FunctionFragment;
-    "claimOnBehalfOfAnotherUser(address,uint256)": FunctionFragment;
-    "createStream(uint256,uint256)": FunctionFragment;
-    "getAmountOfShares(uint256,address)": FunctionFragment;
-    "getLatestRewardPerShare(uint256)": FunctionFragment;
-    "getPending(uint256,address)": FunctionFragment;
-    "getReleaseTime(uint256,address)": FunctionFragment;
-    "getRewardPerShare(uint256)": FunctionFragment;
-    "getRewardPerShareForUser(uint256,address)": FunctionFragment;
-    "getRewardsAmount(uint256,uint256)": FunctionFragment;
-    "getRoleAdmin(bytes32)": FunctionFragment;
-    "getStream(uint256)": FunctionFragment;
-    "getStreamClaimableAmount(uint256,address)": FunctionFragment;
-    "getStreamOwnerClaimableAmount(uint256)": FunctionFragment;
-    "getStreamSchedule(uint256)": FunctionFragment;
-    "getStreamsCount()": FunctionFragment;
-    "getTotalAmountOfStakedAurora()": FunctionFragment;
-    "getTreasuryBalance(address)": FunctionFragment;
-    "getUserShares(address)": FunctionFragment;
-    "getUserTotalDeposit(address)": FunctionFragment;
-    "grantRole(bytes32,address)": FunctionFragment;
-    "hasRole(bytes32,address)": FunctionFragment;
-    "initialize(address,address,uint256[],uint256[],uint256,uint256,address,uint256,uint256)": FunctionFragment;
-    "maxWeight()": FunctionFragment;
-    "minWeight()": FunctionFragment;
-    "moveAllRewardsToPending()": FunctionFragment;
-    "moveRewardsToPending(uint256)": FunctionFragment;
-    "paused()": FunctionFragment;
-    "proposeStream(address,address,uint256,uint256,uint256,uint256[],uint256[],uint256)": FunctionFragment;
-    "releaseAuroraRewardsToStreamOwner(uint256)": FunctionFragment;
-    "removeStream(uint256,address)": FunctionFragment;
-    "renounceRole(bytes32,address)": FunctionFragment;
-    "revokeRole(bytes32,address)": FunctionFragment;
-    "rewardsSchedule(uint256,uint256,uint256)": FunctionFragment;
-    "stake(uint256)": FunctionFragment;
-    "stakeOnBehalfOfAnotherUser(address,uint256)": FunctionFragment;
-    "stakeOnBehalfOfOtherUsers(address[],uint256[],uint256)": FunctionFragment;
-    "startEndScheduleIndex(uint256,uint256,uint256)": FunctionFragment;
-    "supportsInterface(bytes4)": FunctionFragment;
-    "totalAmountOfStakedAurora()": FunctionFragment;
-    "totalAuroraShares()": FunctionFragment;
-    "totalStreamShares()": FunctionFragment;
-    "touchedAt()": FunctionFragment;
-    "treasury()": FunctionFragment;
-    "unstake(uint256)": FunctionFragment;
-    "unstakeAll()": FunctionFragment;
-    "updateTreasury(address)": FunctionFragment;
-    "upgradeTo(address)": FunctionFragment;
-    "upgradeToAndCall(address,bytes)": FunctionFragment;
-    "users(address)": FunctionFragment;
-    "withdraw(uint256)": FunctionFragment;
-    "withdrawAll()": FunctionFragment;
+    'AIRDROP_ROLE()': FunctionFragment;
+    'CLAIM_ROLE()': FunctionFragment;
+    'DEFAULT_ADMIN_ROLE()': FunctionFragment;
+    'FOUR_YEARS()': FunctionFragment;
+    'ONE_MONTH()': FunctionFragment;
+    'PAUSE_ROLE()': FunctionFragment;
+    'STREAM_MANAGER_ROLE()': FunctionFragment;
+    'adminDelegatecall(address,bytes)': FunctionFragment;
+    'adminPause(uint256)': FunctionFragment;
+    'adminSstore(uint256,uint256)': FunctionFragment;
+    'adminSstoreWithMask(uint256,uint256,uint256)': FunctionFragment;
+    'auroraToken()': FunctionFragment;
+    'batchClaimOnBehalfOfAnotherUser(address,uint256[])': FunctionFragment;
+    'batchClaimOnBehalfOfOtherUsers(address[],uint256[])': FunctionFragment;
+    'batchMoveRewardsToPending(uint256[])': FunctionFragment;
+    'batchWithdraw(uint256[])': FunctionFragment;
+    'cancelStreamProposal(uint256)': FunctionFragment;
+    'claimAllOnBehalfOfAnotherUser(address)': FunctionFragment;
+    'claimAllOnBehalfOfOtherUsers(address[])': FunctionFragment;
+    'claimOnBehalfOfAnotherUser(address,uint256)': FunctionFragment;
+    'createStream(uint256,uint256)': FunctionFragment;
+    'getAmountOfShares(uint256,address)': FunctionFragment;
+    'getLatestRewardPerShare(uint256)': FunctionFragment;
+    'getPending(uint256,address)': FunctionFragment;
+    'getReleaseTime(uint256,address)': FunctionFragment;
+    'getRewardPerShare(uint256)': FunctionFragment;
+    'getRewardPerShareForUser(uint256,address)': FunctionFragment;
+    'getRewardsAmount(uint256,uint256)': FunctionFragment;
+    'getRoleAdmin(bytes32)': FunctionFragment;
+    'getStream(uint256)': FunctionFragment;
+    'getStreamClaimableAmount(uint256,address)': FunctionFragment;
+    'getStreamOwnerClaimableAmount(uint256)': FunctionFragment;
+    'getStreamSchedule(uint256)': FunctionFragment;
+    'getStreamsCount()': FunctionFragment;
+    'getTotalAmountOfStakedAurora()': FunctionFragment;
+    'getTreasuryBalance(address)': FunctionFragment;
+    'getUserShares(address)': FunctionFragment;
+    'getUserTotalDeposit(address)': FunctionFragment;
+    'grantRole(bytes32,address)': FunctionFragment;
+    'hasRole(bytes32,address)': FunctionFragment;
+    'initialize(address,address,uint256[],uint256[],uint256,uint256,address,uint256,uint256)': FunctionFragment;
+    'maxWeight()': FunctionFragment;
+    'minWeight()': FunctionFragment;
+    'moveAllRewardsToPending()': FunctionFragment;
+    'moveRewardsToPending(uint256)': FunctionFragment;
+    'paused()': FunctionFragment;
+    'proposeStream(address,address,uint256,uint256,uint256,uint256[],uint256[],uint256)': FunctionFragment;
+    'releaseAuroraRewardsToStreamOwner(uint256)': FunctionFragment;
+    'removeStream(uint256,address)': FunctionFragment;
+    'renounceRole(bytes32,address)': FunctionFragment;
+    'revokeRole(bytes32,address)': FunctionFragment;
+    'rewardsSchedule(uint256,uint256,uint256)': FunctionFragment;
+    'stake(uint256)': FunctionFragment;
+    'stakeOnBehalfOfAnotherUser(address,uint256)': FunctionFragment;
+    'stakeOnBehalfOfOtherUsers(address[],uint256[],uint256)': FunctionFragment;
+    'startEndScheduleIndex(uint256,uint256,uint256)': FunctionFragment;
+    'supportsInterface(bytes4)': FunctionFragment;
+    'totalAmountOfStakedAurora()': FunctionFragment;
+    'totalAuroraShares()': FunctionFragment;
+    'totalStreamShares()': FunctionFragment;
+    'touchedAt()': FunctionFragment;
+    'treasury()': FunctionFragment;
+    'unstake(uint256)': FunctionFragment;
+    'unstakeAll()': FunctionFragment;
+    'updateTreasury(address)': FunctionFragment;
+    'upgradeTo(address)': FunctionFragment;
+    'upgradeToAndCall(address,bytes)': FunctionFragment;
+    'users(address)': FunctionFragment;
+    'withdraw(uint256)': FunctionFragment;
+    'withdrawAll()': FunctionFragment;
   };
 
   getFunction(
     nameOrSignatureOrTopic:
-      | "AIRDROP_ROLE"
-      | "CLAIM_ROLE"
-      | "DEFAULT_ADMIN_ROLE"
-      | "FOUR_YEARS"
-      | "ONE_MONTH"
-      | "PAUSE_ROLE"
-      | "STREAM_MANAGER_ROLE"
-      | "adminDelegatecall"
-      | "adminPause"
-      | "adminSstore"
-      | "adminSstoreWithMask"
-      | "auroraToken"
-      | "batchClaimOnBehalfOfAnotherUser"
-      | "batchClaimOnBehalfOfOtherUsers"
-      | "batchMoveRewardsToPending"
-      | "batchWithdraw"
-      | "cancelStreamProposal"
-      | "claimAllOnBehalfOfAnotherUser"
-      | "claimAllOnBehalfOfOtherUsers"
-      | "claimOnBehalfOfAnotherUser"
-      | "createStream"
-      | "getAmountOfShares"
-      | "getLatestRewardPerShare"
-      | "getPending"
-      | "getReleaseTime"
-      | "getRewardPerShare"
-      | "getRewardPerShareForUser"
-      | "getRewardsAmount"
-      | "getRoleAdmin"
-      | "getStream"
-      | "getStreamClaimableAmount"
-      | "getStreamOwnerClaimableAmount"
-      | "getStreamSchedule"
-      | "getStreamsCount"
-      | "getTotalAmountOfStakedAurora"
-      | "getTreasuryBalance"
-      | "getUserShares"
-      | "getUserTotalDeposit"
-      | "grantRole"
-      | "hasRole"
-      | "initialize"
-      | "maxWeight"
-      | "minWeight"
-      | "moveAllRewardsToPending"
-      | "moveRewardsToPending"
-      | "paused"
-      | "proposeStream"
-      | "releaseAuroraRewardsToStreamOwner"
-      | "removeStream"
-      | "renounceRole"
-      | "revokeRole"
-      | "rewardsSchedule"
-      | "stake"
-      | "stakeOnBehalfOfAnotherUser"
-      | "stakeOnBehalfOfOtherUsers"
-      | "startEndScheduleIndex"
-      | "supportsInterface"
-      | "totalAmountOfStakedAurora"
-      | "totalAuroraShares"
-      | "totalStreamShares"
-      | "touchedAt"
-      | "treasury"
-      | "unstake"
-      | "unstakeAll"
-      | "updateTreasury"
-      | "upgradeTo"
-      | "upgradeToAndCall"
-      | "users"
-      | "withdraw"
-      | "withdrawAll"
+      | 'AIRDROP_ROLE'
+      | 'CLAIM_ROLE'
+      | 'DEFAULT_ADMIN_ROLE'
+      | 'FOUR_YEARS'
+      | 'ONE_MONTH'
+      | 'PAUSE_ROLE'
+      | 'STREAM_MANAGER_ROLE'
+      | 'adminDelegatecall'
+      | 'adminPause'
+      | 'adminSstore'
+      | 'adminSstoreWithMask'
+      | 'auroraToken'
+      | 'batchClaimOnBehalfOfAnotherUser'
+      | 'batchClaimOnBehalfOfOtherUsers'
+      | 'batchMoveRewardsToPending'
+      | 'batchWithdraw'
+      | 'cancelStreamProposal'
+      | 'claimAllOnBehalfOfAnotherUser'
+      | 'claimAllOnBehalfOfOtherUsers'
+      | 'claimOnBehalfOfAnotherUser'
+      | 'createStream'
+      | 'getAmountOfShares'
+      | 'getLatestRewardPerShare'
+      | 'getPending'
+      | 'getReleaseTime'
+      | 'getRewardPerShare'
+      | 'getRewardPerShareForUser'
+      | 'getRewardsAmount'
+      | 'getRoleAdmin'
+      | 'getStream'
+      | 'getStreamClaimableAmount'
+      | 'getStreamOwnerClaimableAmount'
+      | 'getStreamSchedule'
+      | 'getStreamsCount'
+      | 'getTotalAmountOfStakedAurora'
+      | 'getTreasuryBalance'
+      | 'getUserShares'
+      | 'getUserTotalDeposit'
+      | 'grantRole'
+      | 'hasRole'
+      | 'initialize'
+      | 'maxWeight'
+      | 'minWeight'
+      | 'moveAllRewardsToPending'
+      | 'moveRewardsToPending'
+      | 'paused'
+      | 'proposeStream'
+      | 'releaseAuroraRewardsToStreamOwner'
+      | 'removeStream'
+      | 'renounceRole'
+      | 'revokeRole'
+      | 'rewardsSchedule'
+      | 'stake'
+      | 'stakeOnBehalfOfAnotherUser'
+      | 'stakeOnBehalfOfOtherUsers'
+      | 'startEndScheduleIndex'
+      | 'supportsInterface'
+      | 'totalAmountOfStakedAurora'
+      | 'totalAuroraShares'
+      | 'totalStreamShares'
+      | 'touchedAt'
+      | 'treasury'
+      | 'unstake'
+      | 'unstakeAll'
+      | 'updateTreasury'
+      | 'upgradeTo'
+      | 'upgradeToAndCall'
+      | 'users'
+      | 'withdraw'
+      | 'withdrawAll',
   ): FunctionFragment;
 
+  encodeFunctionData(functionFragment: 'AIRDROP_ROLE', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'CLAIM_ROLE', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'DEFAULT_ADMIN_ROLE', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'FOUR_YEARS', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'ONE_MONTH', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'PAUSE_ROLE', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'STREAM_MANAGER_ROLE', values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "AIRDROP_ROLE",
-    values?: undefined
+    functionFragment: 'adminDelegatecall',
+    values: [PromiseOrValue<string>, PromiseOrValue<BytesLike>],
+  ): string;
+  encodeFunctionData(functionFragment: 'adminPause', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(
+    functionFragment: 'adminSstore',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
   ): string;
   encodeFunctionData(
-    functionFragment: "CLAIM_ROLE",
-    values?: undefined
+    functionFragment: 'adminSstoreWithMask',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'auroraToken', values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: 'batchClaimOnBehalfOfAnotherUser',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>[]],
   ): string;
   encodeFunctionData(
-    functionFragment: "DEFAULT_ADMIN_ROLE",
-    values?: undefined
+    functionFragment: 'batchClaimOnBehalfOfOtherUsers',
+    values: [PromiseOrValue<string>[], PromiseOrValue<BigNumberish>[]],
+  ): string;
+  encodeFunctionData(functionFragment: 'batchMoveRewardsToPending', values: [PromiseOrValue<BigNumberish>[]]): string;
+  encodeFunctionData(functionFragment: 'batchWithdraw', values: [PromiseOrValue<BigNumberish>[]]): string;
+  encodeFunctionData(functionFragment: 'cancelStreamProposal', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'claimAllOnBehalfOfAnotherUser', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'claimAllOnBehalfOfOtherUsers', values: [PromiseOrValue<string>[]]): string;
+  encodeFunctionData(
+    functionFragment: 'claimOnBehalfOfAnotherUser',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
   ): string;
   encodeFunctionData(
-    functionFragment: "FOUR_YEARS",
-    values?: undefined
-  ): string;
-  encodeFunctionData(functionFragment: "ONE_MONTH", values?: undefined): string;
-  encodeFunctionData(
-    functionFragment: "PAUSE_ROLE",
-    values?: undefined
+    functionFragment: 'createStream',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
   ): string;
   encodeFunctionData(
-    functionFragment: "STREAM_MANAGER_ROLE",
-    values?: undefined
+    functionFragment: 'getAmountOfShares',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>],
+  ): string;
+  encodeFunctionData(functionFragment: 'getLatestRewardPerShare', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(
+    functionFragment: 'getPending',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>],
   ): string;
   encodeFunctionData(
-    functionFragment: "adminDelegatecall",
-    values: [string, BytesLike]
+    functionFragment: 'getReleaseTime',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>],
+  ): string;
+  encodeFunctionData(functionFragment: 'getRewardPerShare', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(
+    functionFragment: 'getRewardPerShareForUser',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>],
   ): string;
   encodeFunctionData(
-    functionFragment: "adminPause",
-    values: [BigNumberish]
+    functionFragment: 'getRewardsAmount',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
   ): string;
+  encodeFunctionData(functionFragment: 'getRoleAdmin', values: [PromiseOrValue<BytesLike>]): string;
+  encodeFunctionData(functionFragment: 'getStream', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(
-    functionFragment: "adminSstore",
-    values: [BigNumberish, BigNumberish]
+    functionFragment: 'getStreamClaimableAmount',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>],
   ): string;
+  encodeFunctionData(functionFragment: 'getStreamOwnerClaimableAmount', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'getStreamSchedule', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'getStreamsCount', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'getTotalAmountOfStakedAurora', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'getTreasuryBalance', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'getUserShares', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'getUserTotalDeposit', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(
-    functionFragment: "adminSstoreWithMask",
-    values: [BigNumberish, BigNumberish, BigNumberish]
+    functionFragment: 'grantRole',
+    values: [PromiseOrValue<BytesLike>, PromiseOrValue<string>],
   ): string;
+  encodeFunctionData(functionFragment: 'hasRole', values: [PromiseOrValue<BytesLike>, PromiseOrValue<string>]): string;
   encodeFunctionData(
-    functionFragment: "auroraToken",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "batchClaimOnBehalfOfAnotherUser",
-    values: [string, BigNumberish[]]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "batchClaimOnBehalfOfOtherUsers",
-    values: [string[], BigNumberish[]]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "batchMoveRewardsToPending",
-    values: [BigNumberish[]]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "batchWithdraw",
-    values: [BigNumberish[]]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "cancelStreamProposal",
-    values: [BigNumberish]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "claimAllOnBehalfOfAnotherUser",
-    values: [string]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "claimAllOnBehalfOfOtherUsers",
-    values: [string[]]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "claimOnBehalfOfAnotherUser",
-    values: [string, BigNumberish]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "createStream",
-    values: [BigNumberish, BigNumberish]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "getAmountOfShares",
-    values: [BigNumberish, string]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "getLatestRewardPerShare",
-    values: [BigNumberish]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "getPending",
-    values: [BigNumberish, string]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "getReleaseTime",
-    values: [BigNumberish, string]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "getRewardPerShare",
-    values: [BigNumberish]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "getRewardPerShareForUser",
-    values: [BigNumberish, string]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "getRewardsAmount",
-    values: [BigNumberish, BigNumberish]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "getRoleAdmin",
-    values: [BytesLike]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "getStream",
-    values: [BigNumberish]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "getStreamClaimableAmount",
-    values: [BigNumberish, string]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "getStreamOwnerClaimableAmount",
-    values: [BigNumberish]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "getStreamSchedule",
-    values: [BigNumberish]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "getStreamsCount",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "getTotalAmountOfStakedAurora",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "getTreasuryBalance",
-    values: [string]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "getUserShares",
-    values: [string]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "getUserTotalDeposit",
-    values: [string]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "grantRole",
-    values: [BytesLike, string]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "hasRole",
-    values: [BytesLike, string]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "initialize",
+    functionFragment: 'initialize',
     values: [
-      string,
-      string,
-      BigNumberish[],
-      BigNumberish[],
-      BigNumberish,
-      BigNumberish,
-      string,
-      BigNumberish,
-      BigNumberish
-    ]
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>[],
+      PromiseOrValue<BigNumberish>[],
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+    ],
   ): string;
-  encodeFunctionData(functionFragment: "maxWeight", values?: undefined): string;
-  encodeFunctionData(functionFragment: "minWeight", values?: undefined): string;
+  encodeFunctionData(functionFragment: 'maxWeight', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'minWeight', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'moveAllRewardsToPending', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'moveRewardsToPending', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'paused', values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "moveAllRewardsToPending",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "moveRewardsToPending",
-    values: [BigNumberish]
-  ): string;
-  encodeFunctionData(functionFragment: "paused", values?: undefined): string;
-  encodeFunctionData(
-    functionFragment: "proposeStream",
+    functionFragment: 'proposeStream',
     values: [
-      string,
-      string,
-      BigNumberish,
-      BigNumberish,
-      BigNumberish,
-      BigNumberish[],
-      BigNumberish[],
-      BigNumberish
-    ]
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>[],
+      PromiseOrValue<BigNumberish>[],
+      PromiseOrValue<BigNumberish>,
+    ],
   ): string;
   encodeFunctionData(
-    functionFragment: "releaseAuroraRewardsToStreamOwner",
-    values: [BigNumberish]
+    functionFragment: 'releaseAuroraRewardsToStreamOwner',
+    values: [PromiseOrValue<BigNumberish>],
   ): string;
   encodeFunctionData(
-    functionFragment: "removeStream",
-    values: [BigNumberish, string]
+    functionFragment: 'removeStream',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>],
   ): string;
   encodeFunctionData(
-    functionFragment: "renounceRole",
-    values: [BytesLike, string]
+    functionFragment: 'renounceRole',
+    values: [PromiseOrValue<BytesLike>, PromiseOrValue<string>],
   ): string;
   encodeFunctionData(
-    functionFragment: "revokeRole",
-    values: [BytesLike, string]
+    functionFragment: 'revokeRole',
+    values: [PromiseOrValue<BytesLike>, PromiseOrValue<string>],
   ): string;
   encodeFunctionData(
-    functionFragment: "rewardsSchedule",
-    values: [BigNumberish, BigNumberish, BigNumberish]
+    functionFragment: 'rewardsSchedule',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
   ): string;
-  encodeFunctionData(functionFragment: "stake", values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'stake', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(
-    functionFragment: "stakeOnBehalfOfAnotherUser",
-    values: [string, BigNumberish]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "stakeOnBehalfOfOtherUsers",
-    values: [string[], BigNumberish[], BigNumberish]
+    functionFragment: 'stakeOnBehalfOfAnotherUser',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
   ): string;
   encodeFunctionData(
-    functionFragment: "startEndScheduleIndex",
-    values: [BigNumberish, BigNumberish, BigNumberish]
+    functionFragment: 'stakeOnBehalfOfOtherUsers',
+    values: [PromiseOrValue<string>[], PromiseOrValue<BigNumberish>[], PromiseOrValue<BigNumberish>],
   ): string;
   encodeFunctionData(
-    functionFragment: "supportsInterface",
-    values: [BytesLike]
+    functionFragment: 'startEndScheduleIndex',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
   ): string;
+  encodeFunctionData(functionFragment: 'supportsInterface', values: [PromiseOrValue<BytesLike>]): string;
+  encodeFunctionData(functionFragment: 'totalAmountOfStakedAurora', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'totalAuroraShares', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'totalStreamShares', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'touchedAt', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'treasury', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'unstake', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'unstakeAll', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'updateTreasury', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'upgradeTo', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(
-    functionFragment: "totalAmountOfStakedAurora",
-    values?: undefined
+    functionFragment: 'upgradeToAndCall',
+    values: [PromiseOrValue<string>, PromiseOrValue<BytesLike>],
   ): string;
-  encodeFunctionData(
-    functionFragment: "totalAuroraShares",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "totalStreamShares",
-    values?: undefined
-  ): string;
-  encodeFunctionData(functionFragment: "touchedAt", values?: undefined): string;
-  encodeFunctionData(functionFragment: "treasury", values?: undefined): string;
-  encodeFunctionData(
-    functionFragment: "unstake",
-    values: [BigNumberish]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "unstakeAll",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "updateTreasury",
-    values: [string]
-  ): string;
-  encodeFunctionData(functionFragment: "upgradeTo", values: [string]): string;
-  encodeFunctionData(
-    functionFragment: "upgradeToAndCall",
-    values: [string, BytesLike]
-  ): string;
-  encodeFunctionData(functionFragment: "users", values: [string]): string;
-  encodeFunctionData(
-    functionFragment: "withdraw",
-    values: [BigNumberish]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "withdrawAll",
-    values?: undefined
-  ): string;
+  encodeFunctionData(functionFragment: 'users', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'withdraw', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'withdrawAll', values?: undefined): string;
 
-  decodeFunctionResult(
-    functionFragment: "AIRDROP_ROLE",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "CLAIM_ROLE", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "DEFAULT_ADMIN_ROLE",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "FOUR_YEARS", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "ONE_MONTH", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "PAUSE_ROLE", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "STREAM_MANAGER_ROLE",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "adminDelegatecall",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "adminPause", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "adminSstore",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "adminSstoreWithMask",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "auroraToken",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "batchClaimOnBehalfOfAnotherUser",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "batchClaimOnBehalfOfOtherUsers",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "batchMoveRewardsToPending",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "batchWithdraw",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "cancelStreamProposal",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "claimAllOnBehalfOfAnotherUser",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "claimAllOnBehalfOfOtherUsers",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "claimOnBehalfOfAnotherUser",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "createStream",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "getAmountOfShares",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "getLatestRewardPerShare",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "getPending", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "getReleaseTime",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "getRewardPerShare",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "getRewardPerShareForUser",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "getRewardsAmount",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "getRoleAdmin",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "getStream", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "getStreamClaimableAmount",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "getStreamOwnerClaimableAmount",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "getStreamSchedule",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "getStreamsCount",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "getTotalAmountOfStakedAurora",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "getTreasuryBalance",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "getUserShares",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "getUserTotalDeposit",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "grantRole", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "hasRole", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "initialize", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "maxWeight", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "minWeight", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "moveAllRewardsToPending",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "moveRewardsToPending",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "paused", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "proposeStream",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "releaseAuroraRewardsToStreamOwner",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "removeStream",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "renounceRole",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "revokeRole", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "rewardsSchedule",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "stake", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "stakeOnBehalfOfAnotherUser",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "stakeOnBehalfOfOtherUsers",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "startEndScheduleIndex",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "supportsInterface",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "totalAmountOfStakedAurora",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "totalAuroraShares",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "totalStreamShares",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "touchedAt", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "treasury", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "unstake", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "unstakeAll", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "updateTreasury",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "upgradeTo", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "upgradeToAndCall",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "users", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "withdraw", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "withdrawAll",
-    data: BytesLike
-  ): Result;
+  decodeFunctionResult(functionFragment: 'AIRDROP_ROLE', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'CLAIM_ROLE', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'DEFAULT_ADMIN_ROLE', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'FOUR_YEARS', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'ONE_MONTH', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'PAUSE_ROLE', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'STREAM_MANAGER_ROLE', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'adminDelegatecall', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'adminPause', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'adminSstore', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'adminSstoreWithMask', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'auroraToken', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'batchClaimOnBehalfOfAnotherUser', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'batchClaimOnBehalfOfOtherUsers', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'batchMoveRewardsToPending', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'batchWithdraw', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'cancelStreamProposal', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'claimAllOnBehalfOfAnotherUser', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'claimAllOnBehalfOfOtherUsers', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'claimOnBehalfOfAnotherUser', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'createStream', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'getAmountOfShares', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'getLatestRewardPerShare', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'getPending', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'getReleaseTime', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'getRewardPerShare', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'getRewardPerShareForUser', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'getRewardsAmount', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'getRoleAdmin', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'getStream', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'getStreamClaimableAmount', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'getStreamOwnerClaimableAmount', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'getStreamSchedule', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'getStreamsCount', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'getTotalAmountOfStakedAurora', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'getTreasuryBalance', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'getUserShares', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'getUserTotalDeposit', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'grantRole', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'hasRole', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'initialize', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'maxWeight', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'minWeight', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'moveAllRewardsToPending', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'moveRewardsToPending', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'paused', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'proposeStream', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'releaseAuroraRewardsToStreamOwner', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'removeStream', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'renounceRole', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'revokeRole', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'rewardsSchedule', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'stake', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'stakeOnBehalfOfAnotherUser', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'stakeOnBehalfOfOtherUsers', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'startEndScheduleIndex', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'supportsInterface', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'totalAmountOfStakedAurora', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'totalAuroraShares', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'totalStreamShares', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'touchedAt', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'treasury', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'unstake', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'unstakeAll', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'updateTreasury', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'upgradeTo', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'upgradeToAndCall', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'users', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'withdraw', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'withdrawAll', data: BytesLike): Result;
 
   events: {
-    "AdminChanged(address,address)": EventFragment;
-    "BeaconUpgraded(address)": EventFragment;
-    "Pending(uint256,address,uint256)": EventFragment;
-    "Released(uint256,address,uint256)": EventFragment;
-    "RoleAdminChanged(bytes32,bytes32,bytes32)": EventFragment;
-    "RoleGranted(bytes32,address,address)": EventFragment;
-    "RoleRevoked(bytes32,address,address)": EventFragment;
-    "Staked(address,uint256,uint256)": EventFragment;
-    "StreamCreated(uint256,address,address,uint256,uint256)": EventFragment;
-    "StreamOwnerRewardReleased(uint256,address,uint256)": EventFragment;
-    "StreamProposalCancelled(uint256,address,address)": EventFragment;
-    "StreamProposed(uint256,address,address,uint256,uint256)": EventFragment;
-    "StreamRemoved(uint256,address,address)": EventFragment;
-    "Unstaked(address,uint256)": EventFragment;
-    "Upgraded(address)": EventFragment;
+    'AdminChanged(address,address)': EventFragment;
+    'BeaconUpgraded(address)': EventFragment;
+    'Pending(uint256,address,uint256)': EventFragment;
+    'Released(uint256,address,uint256)': EventFragment;
+    'RoleAdminChanged(bytes32,bytes32,bytes32)': EventFragment;
+    'RoleGranted(bytes32,address,address)': EventFragment;
+    'RoleRevoked(bytes32,address,address)': EventFragment;
+    'Staked(address,uint256,uint256)': EventFragment;
+    'StreamCreated(uint256,address,address,uint256,uint256)': EventFragment;
+    'StreamOwnerRewardReleased(uint256,address,uint256)': EventFragment;
+    'StreamProposalCancelled(uint256,address,address)': EventFragment;
+    'StreamProposed(uint256,address,address,uint256,uint256)': EventFragment;
+    'StreamRemoved(uint256,address,address)': EventFragment;
+    'Unstaked(address,uint256)': EventFragment;
+    'Upgraded(address)': EventFragment;
   };
 
-  getEvent(nameOrSignatureOrTopic: "AdminChanged"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "BeaconUpgraded"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "Pending"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "Released"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "RoleAdminChanged"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "RoleGranted"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "RoleRevoked"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "Staked"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "StreamCreated"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "StreamOwnerRewardReleased"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "StreamProposalCancelled"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "StreamProposed"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "StreamRemoved"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "Unstaked"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "Upgraded"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'AdminChanged'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'BeaconUpgraded'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'Pending'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'Released'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'RoleAdminChanged'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'RoleGranted'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'RoleRevoked'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'Staked'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'StreamCreated'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'StreamOwnerRewardReleased'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'StreamProposalCancelled'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'StreamProposed'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'StreamRemoved'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'Unstaked'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'Upgraded'): EventFragment;
 }
 
 export interface AdminChangedEventObject {
   previousAdmin: string;
   newAdmin: string;
 }
-export type AdminChangedEvent = TypedEvent<
-  [string, string],
-  AdminChangedEventObject
->;
+export type AdminChangedEvent = TypedEvent<[string, string], AdminChangedEventObject>;
 
 export type AdminChangedEventFilter = TypedEventFilter<AdminChangedEvent>;
 
 export interface BeaconUpgradedEventObject {
   beacon: string;
 }
-export type BeaconUpgradedEvent = TypedEvent<
-  [string],
-  BeaconUpgradedEventObject
->;
+export type BeaconUpgradedEvent = TypedEvent<[string], BeaconUpgradedEventObject>;
 
 export type BeaconUpgradedEventFilter = TypedEventFilter<BeaconUpgradedEvent>;
 
@@ -724,10 +457,7 @@ export interface PendingEventObject {
   user: string;
   amount: BigNumber;
 }
-export type PendingEvent = TypedEvent<
-  [BigNumber, string, BigNumber],
-  PendingEventObject
->;
+export type PendingEvent = TypedEvent<[BigNumber, string, BigNumber], PendingEventObject>;
 
 export type PendingEventFilter = TypedEventFilter<PendingEvent>;
 
@@ -736,10 +466,7 @@ export interface ReleasedEventObject {
   user: string;
   amount: BigNumber;
 }
-export type ReleasedEvent = TypedEvent<
-  [BigNumber, string, BigNumber],
-  ReleasedEventObject
->;
+export type ReleasedEvent = TypedEvent<[BigNumber, string, BigNumber], ReleasedEventObject>;
 
 export type ReleasedEventFilter = TypedEventFilter<ReleasedEvent>;
 
@@ -748,23 +475,16 @@ export interface RoleAdminChangedEventObject {
   previousAdminRole: string;
   newAdminRole: string;
 }
-export type RoleAdminChangedEvent = TypedEvent<
-  [string, string, string],
-  RoleAdminChangedEventObject
->;
+export type RoleAdminChangedEvent = TypedEvent<[string, string, string], RoleAdminChangedEventObject>;
 
-export type RoleAdminChangedEventFilter =
-  TypedEventFilter<RoleAdminChangedEvent>;
+export type RoleAdminChangedEventFilter = TypedEventFilter<RoleAdminChangedEvent>;
 
 export interface RoleGrantedEventObject {
   role: string;
   account: string;
   sender: string;
 }
-export type RoleGrantedEvent = TypedEvent<
-  [string, string, string],
-  RoleGrantedEventObject
->;
+export type RoleGrantedEvent = TypedEvent<[string, string, string], RoleGrantedEventObject>;
 
 export type RoleGrantedEventFilter = TypedEventFilter<RoleGrantedEvent>;
 
@@ -773,10 +493,7 @@ export interface RoleRevokedEventObject {
   account: string;
   sender: string;
 }
-export type RoleRevokedEvent = TypedEvent<
-  [string, string, string],
-  RoleRevokedEventObject
->;
+export type RoleRevokedEvent = TypedEvent<[string, string, string], RoleRevokedEventObject>;
 
 export type RoleRevokedEventFilter = TypedEventFilter<RoleRevokedEvent>;
 
@@ -785,10 +502,7 @@ export interface StakedEventObject {
   amount: BigNumber;
   shares: BigNumber;
 }
-export type StakedEvent = TypedEvent<
-  [string, BigNumber, BigNumber],
-  StakedEventObject
->;
+export type StakedEvent = TypedEvent<[string, BigNumber, BigNumber], StakedEventObject>;
 
 export type StakedEventFilter = TypedEventFilter<StakedEvent>;
 
@@ -816,21 +530,16 @@ export type StreamOwnerRewardReleasedEvent = TypedEvent<
   StreamOwnerRewardReleasedEventObject
 >;
 
-export type StreamOwnerRewardReleasedEventFilter =
-  TypedEventFilter<StreamOwnerRewardReleasedEvent>;
+export type StreamOwnerRewardReleasedEventFilter = TypedEventFilter<StreamOwnerRewardReleasedEvent>;
 
 export interface StreamProposalCancelledEventObject {
   streamId: BigNumber;
   owner: string;
   token: string;
 }
-export type StreamProposalCancelledEvent = TypedEvent<
-  [BigNumber, string, string],
-  StreamProposalCancelledEventObject
->;
+export type StreamProposalCancelledEvent = TypedEvent<[BigNumber, string, string], StreamProposalCancelledEventObject>;
 
-export type StreamProposalCancelledEventFilter =
-  TypedEventFilter<StreamProposalCancelledEvent>;
+export type StreamProposalCancelledEventFilter = TypedEventFilter<StreamProposalCancelledEvent>;
 
 export interface StreamProposedEventObject {
   streamId: BigNumber;
@@ -851,10 +560,7 @@ export interface StreamRemovedEventObject {
   owner: string;
   token: string;
 }
-export type StreamRemovedEvent = TypedEvent<
-  [BigNumber, string, string],
-  StreamRemovedEventObject
->;
+export type StreamRemovedEvent = TypedEvent<[BigNumber, string, string], StreamRemovedEventObject>;
 
 export type StreamRemovedEventFilter = TypedEventFilter<StreamRemovedEvent>;
 
@@ -862,10 +568,7 @@ export interface UnstakedEventObject {
   user: string;
   amount: BigNumber;
 }
-export type UnstakedEvent = TypedEvent<
-  [string, BigNumber],
-  UnstakedEventObject
->;
+export type UnstakedEvent = TypedEvent<[string, BigNumber], UnstakedEventObject>;
 
 export type UnstakedEventFilter = TypedEventFilter<UnstakedEvent>;
 
@@ -886,16 +589,12 @@ export interface Staking extends BaseContract {
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,
     fromBlockOrBlockhash?: string | number | undefined,
-    toBlock?: string | number | undefined
+    toBlock?: string | number | undefined,
   ): Promise<Array<TEvent>>;
 
-  listeners<TEvent extends TypedEvent>(
-    eventFilter?: TypedEventFilter<TEvent>
-  ): Array<TypedListener<TEvent>>;
+  listeners<TEvent extends TypedEvent>(eventFilter?: TypedEventFilter<TEvent>): Array<TypedListener<TEvent>>;
   listeners(eventName?: string): Array<Listener>;
-  removeAllListeners<TEvent extends TypedEvent>(
-    eventFilter: TypedEventFilter<TEvent>
-  ): this;
+  removeAllListeners<TEvent extends TypedEvent>(eventFilter: TypedEventFilter<TEvent>): this;
   removeAllListeners(eventName?: string): this;
   off: OnEvent<this>;
   on: OnEvent<this>;
@@ -918,125 +617,119 @@ export interface Staking extends BaseContract {
     STREAM_MANAGER_ROLE(overrides?: CallOverrides): Promise<[string]>;
 
     adminDelegatecall(
-      target: string,
-      data: BytesLike,
-      overrides?: PayableOverrides & { from?: string | Promise<string> }
+      target: PromiseOrValue<string>,
+      data: PromiseOrValue<BytesLike>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     adminPause(
-      flags: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      flags: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     adminSstore(
-      key: BigNumberish,
-      value: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      key: PromiseOrValue<BigNumberish>,
+      value: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     adminSstoreWithMask(
-      key: BigNumberish,
-      value: BigNumberish,
-      mask: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      key: PromiseOrValue<BigNumberish>,
+      value: PromiseOrValue<BigNumberish>,
+      mask: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     auroraToken(overrides?: CallOverrides): Promise<[string]>;
 
     batchClaimOnBehalfOfAnotherUser(
-      account: string,
-      streamIds: BigNumberish[],
-      overrides?: Overrides & { from?: string | Promise<string> }
+      account: PromiseOrValue<string>,
+      streamIds: PromiseOrValue<BigNumberish>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     batchClaimOnBehalfOfOtherUsers(
-      accounts: string[],
-      streamIds: BigNumberish[],
-      overrides?: Overrides & { from?: string | Promise<string> }
+      accounts: PromiseOrValue<string>[],
+      streamIds: PromiseOrValue<BigNumberish>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     batchMoveRewardsToPending(
-      streamIds: BigNumberish[],
-      overrides?: Overrides & { from?: string | Promise<string> }
+      streamIds: PromiseOrValue<BigNumberish>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     batchWithdraw(
-      streamIds: BigNumberish[],
-      overrides?: Overrides & { from?: string | Promise<string> }
+      streamIds: PromiseOrValue<BigNumberish>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     cancelStreamProposal(
-      streamId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      streamId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     claimAllOnBehalfOfAnotherUser(
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     claimAllOnBehalfOfOtherUsers(
-      accounts: string[],
-      overrides?: Overrides & { from?: string | Promise<string> }
+      accounts: PromiseOrValue<string>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     claimOnBehalfOfAnotherUser(
-      account: string,
-      streamId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      account: PromiseOrValue<string>,
+      streamId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     createStream(
-      streamId: BigNumberish,
-      rewardTokenAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      streamId: PromiseOrValue<BigNumberish>,
+      rewardTokenAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     getAmountOfShares(
-      streamId: BigNumberish,
-      account: string,
-      overrides?: CallOverrides
+      streamId: PromiseOrValue<BigNumberish>,
+      account: PromiseOrValue<string>,
+      overrides?: CallOverrides,
     ): Promise<[BigNumber]>;
 
-    getLatestRewardPerShare(
-      streamId: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<[BigNumber]>;
+    getLatestRewardPerShare(streamId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     getPending(
-      streamId: BigNumberish,
-      account: string,
-      overrides?: CallOverrides
+      streamId: PromiseOrValue<BigNumberish>,
+      account: PromiseOrValue<string>,
+      overrides?: CallOverrides,
     ): Promise<[BigNumber]>;
 
     getReleaseTime(
-      streamId: BigNumberish,
-      account: string,
-      overrides?: CallOverrides
+      streamId: PromiseOrValue<BigNumberish>,
+      account: PromiseOrValue<string>,
+      overrides?: CallOverrides,
     ): Promise<[BigNumber]>;
 
-    getRewardPerShare(
-      streamId: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<[BigNumber]>;
+    getRewardPerShare(streamId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     getRewardPerShareForUser(
-      streamId: BigNumberish,
-      account: string,
-      overrides?: CallOverrides
+      streamId: PromiseOrValue<BigNumberish>,
+      account: PromiseOrValue<string>,
+      overrides?: CallOverrides,
     ): Promise<[BigNumber]>;
 
     getRewardsAmount(
-      streamId: BigNumberish,
-      lastUpdate: BigNumberish,
-      overrides?: CallOverrides
+      streamId: PromiseOrValue<BigNumberish>,
+      lastUpdate: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
     ): Promise<[BigNumber]>;
 
-    getRoleAdmin(role: BytesLike, overrides?: CallOverrides): Promise<[string]>;
+    getRoleAdmin(role: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<[string]>;
 
     getStream(
-      streamId: BigNumberish,
-      overrides?: CallOverrides
+      streamId: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
     ): Promise<
       [
         string,
@@ -1049,7 +742,7 @@ export interface Staking extends BaseContract {
         BigNumber,
         BigNumber,
         BigNumber,
-        number
+        number,
       ] & {
         streamOwner: string;
         rewardToken: string;
@@ -1066,19 +759,19 @@ export interface Staking extends BaseContract {
     >;
 
     getStreamClaimableAmount(
-      streamId: BigNumberish,
-      account: string,
-      overrides?: CallOverrides
+      streamId: PromiseOrValue<BigNumberish>,
+      account: PromiseOrValue<string>,
+      overrides?: CallOverrides,
     ): Promise<[BigNumber]>;
 
     getStreamOwnerClaimableAmount(
-      streamId: BigNumberish,
-      overrides?: CallOverrides
+      streamId: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
     ): Promise<[BigNumber]>;
 
     getStreamSchedule(
-      streamId: BigNumberish,
-      overrides?: CallOverrides
+      streamId: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
     ): Promise<
       [BigNumber[], BigNumber[]] & {
         scheduleTimes: BigNumber[];
@@ -1088,138 +781,120 @@ export interface Staking extends BaseContract {
 
     getStreamsCount(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    getTotalAmountOfStakedAurora(
-      overrides?: CallOverrides
-    ): Promise<[BigNumber]>;
+    getTotalAmountOfStakedAurora(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    getTreasuryBalance(
-      token: string,
-      overrides?: CallOverrides
-    ): Promise<[BigNumber]>;
+    getTreasuryBalance(token: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    getUserShares(
-      account: string,
-      overrides?: CallOverrides
-    ): Promise<[BigNumber]>;
+    getUserShares(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    getUserTotalDeposit(
-      account: string,
-      overrides?: CallOverrides
-    ): Promise<[BigNumber]>;
+    getUserTotalDeposit(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     grantRole(
-      role: BytesLike,
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     hasRole(
-      role: BytesLike,
-      account: string,
-      overrides?: CallOverrides
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
+      overrides?: CallOverrides,
     ): Promise<[boolean]>;
 
     initialize(
-      aurora: string,
-      streamOwner: string,
-      scheduleTimes: BigNumberish[],
-      scheduleRewards: BigNumberish[],
-      tauAuroraStream: BigNumberish,
-      _flags: BigNumberish,
-      _treasury: string,
-      _maxWeight: BigNumberish,
-      _minWeight: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      aurora: PromiseOrValue<string>,
+      streamOwner: PromiseOrValue<string>,
+      scheduleTimes: PromiseOrValue<BigNumberish>[],
+      scheduleRewards: PromiseOrValue<BigNumberish>[],
+      tauAuroraStream: PromiseOrValue<BigNumberish>,
+      _flags: PromiseOrValue<BigNumberish>,
+      _treasury: PromiseOrValue<string>,
+      _maxWeight: PromiseOrValue<BigNumberish>,
+      _minWeight: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     maxWeight(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     minWeight(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    moveAllRewardsToPending(
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<ContractTransaction>;
+    moveAllRewardsToPending(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     moveRewardsToPending(
-      streamId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      streamId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     paused(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     proposeStream(
-      streamOwner: string,
-      rewardToken: string,
-      auroraDepositAmount: BigNumberish,
-      maxDepositAmount: BigNumberish,
-      minDepositAmount: BigNumberish,
-      scheduleTimes: BigNumberish[],
-      scheduleRewards: BigNumberish[],
-      tau: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      streamOwner: PromiseOrValue<string>,
+      rewardToken: PromiseOrValue<string>,
+      auroraDepositAmount: PromiseOrValue<BigNumberish>,
+      maxDepositAmount: PromiseOrValue<BigNumberish>,
+      minDepositAmount: PromiseOrValue<BigNumberish>,
+      scheduleTimes: PromiseOrValue<BigNumberish>[],
+      scheduleRewards: PromiseOrValue<BigNumberish>[],
+      tau: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     releaseAuroraRewardsToStreamOwner(
-      streamId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      streamId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     removeStream(
-      streamId: BigNumberish,
-      streamFundReceiver: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      streamId: PromiseOrValue<BigNumberish>,
+      streamFundReceiver: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     renounceRole(
-      role: BytesLike,
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     revokeRole(
-      role: BytesLike,
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     rewardsSchedule(
-      streamId: BigNumberish,
-      start: BigNumberish,
-      end: BigNumberish,
-      overrides?: CallOverrides
+      streamId: PromiseOrValue<BigNumberish>,
+      start: PromiseOrValue<BigNumberish>,
+      end: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
     ): Promise<[BigNumber]>;
 
     stake(
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     stakeOnBehalfOfAnotherUser(
-      account: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      account: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     stakeOnBehalfOfOtherUsers(
-      accounts: string[],
-      amounts: BigNumberish[],
-      batchAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      accounts: PromiseOrValue<string>[],
+      amounts: PromiseOrValue<BigNumberish>[],
+      batchAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     startEndScheduleIndex(
-      streamId: BigNumberish,
-      start: BigNumberish,
-      end: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<
-      [BigNumber, BigNumber] & { startIndex: BigNumber; endIndex: BigNumber }
-    >;
+      streamId: PromiseOrValue<BigNumberish>,
+      start: PromiseOrValue<BigNumberish>,
+      end: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber, BigNumber] & { startIndex: BigNumber; endIndex: BigNumber }>;
 
-    supportsInterface(
-      interfaceId: BytesLike,
-      overrides?: CallOverrides
-    ): Promise<[boolean]>;
+    supportsInterface(interfaceId: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<[boolean]>;
 
     totalAmountOfStakedAurora(overrides?: CallOverrides): Promise<[BigNumber]>;
 
@@ -1232,33 +907,31 @@ export interface Staking extends BaseContract {
     treasury(overrides?: CallOverrides): Promise<[string]>;
 
     unstake(
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    unstakeAll(
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<ContractTransaction>;
+    unstakeAll(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     updateTreasury(
-      _treasury: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      _treasury: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     upgradeTo(
-      newImplementation: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      newImplementation: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     upgradeToAndCall(
-      newImplementation: string,
-      data: BytesLike,
-      overrides?: PayableOverrides & { from?: string | Promise<string> }
+      newImplementation: PromiseOrValue<string>,
+      data: PromiseOrValue<BytesLike>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     users(
-      arg0: string,
-      overrides?: CallOverrides
+      arg0: PromiseOrValue<string>,
+      overrides?: CallOverrides,
     ): Promise<
       [BigNumber, BigNumber, BigNumber] & {
         deposit: BigNumber;
@@ -1268,13 +941,11 @@ export interface Staking extends BaseContract {
     >;
 
     withdraw(
-      streamId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      streamId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    withdrawAll(
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<ContractTransaction>;
+    withdrawAll(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
   };
 
   AIRDROP_ROLE(overrides?: CallOverrides): Promise<string>;
@@ -1292,139 +963,121 @@ export interface Staking extends BaseContract {
   STREAM_MANAGER_ROLE(overrides?: CallOverrides): Promise<string>;
 
   adminDelegatecall(
-    target: string,
-    data: BytesLike,
-    overrides?: PayableOverrides & { from?: string | Promise<string> }
+    target: PromiseOrValue<string>,
+    data: PromiseOrValue<BytesLike>,
+    overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   adminPause(
-    flags: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> }
+    flags: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   adminSstore(
-    key: BigNumberish,
-    value: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> }
+    key: PromiseOrValue<BigNumberish>,
+    value: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   adminSstoreWithMask(
-    key: BigNumberish,
-    value: BigNumberish,
-    mask: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> }
+    key: PromiseOrValue<BigNumberish>,
+    value: PromiseOrValue<BigNumberish>,
+    mask: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   auroraToken(overrides?: CallOverrides): Promise<string>;
 
   batchClaimOnBehalfOfAnotherUser(
-    account: string,
-    streamIds: BigNumberish[],
-    overrides?: Overrides & { from?: string | Promise<string> }
+    account: PromiseOrValue<string>,
+    streamIds: PromiseOrValue<BigNumberish>[],
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   batchClaimOnBehalfOfOtherUsers(
-    accounts: string[],
-    streamIds: BigNumberish[],
-    overrides?: Overrides & { from?: string | Promise<string> }
+    accounts: PromiseOrValue<string>[],
+    streamIds: PromiseOrValue<BigNumberish>[],
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   batchMoveRewardsToPending(
-    streamIds: BigNumberish[],
-    overrides?: Overrides & { from?: string | Promise<string> }
+    streamIds: PromiseOrValue<BigNumberish>[],
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   batchWithdraw(
-    streamIds: BigNumberish[],
-    overrides?: Overrides & { from?: string | Promise<string> }
+    streamIds: PromiseOrValue<BigNumberish>[],
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   cancelStreamProposal(
-    streamId: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> }
+    streamId: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   claimAllOnBehalfOfAnotherUser(
-    account: string,
-    overrides?: Overrides & { from?: string | Promise<string> }
+    account: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   claimAllOnBehalfOfOtherUsers(
-    accounts: string[],
-    overrides?: Overrides & { from?: string | Promise<string> }
+    accounts: PromiseOrValue<string>[],
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   claimOnBehalfOfAnotherUser(
-    account: string,
-    streamId: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> }
+    account: PromiseOrValue<string>,
+    streamId: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   createStream(
-    streamId: BigNumberish,
-    rewardTokenAmount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> }
+    streamId: PromiseOrValue<BigNumberish>,
+    rewardTokenAmount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   getAmountOfShares(
-    streamId: BigNumberish,
-    account: string,
-    overrides?: CallOverrides
+    streamId: PromiseOrValue<BigNumberish>,
+    account: PromiseOrValue<string>,
+    overrides?: CallOverrides,
   ): Promise<BigNumber>;
 
-  getLatestRewardPerShare(
-    streamId: BigNumberish,
-    overrides?: CallOverrides
-  ): Promise<BigNumber>;
+  getLatestRewardPerShare(streamId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
   getPending(
-    streamId: BigNumberish,
-    account: string,
-    overrides?: CallOverrides
+    streamId: PromiseOrValue<BigNumberish>,
+    account: PromiseOrValue<string>,
+    overrides?: CallOverrides,
   ): Promise<BigNumber>;
 
   getReleaseTime(
-    streamId: BigNumberish,
-    account: string,
-    overrides?: CallOverrides
+    streamId: PromiseOrValue<BigNumberish>,
+    account: PromiseOrValue<string>,
+    overrides?: CallOverrides,
   ): Promise<BigNumber>;
 
-  getRewardPerShare(
-    streamId: BigNumberish,
-    overrides?: CallOverrides
-  ): Promise<BigNumber>;
+  getRewardPerShare(streamId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
   getRewardPerShareForUser(
-    streamId: BigNumberish,
-    account: string,
-    overrides?: CallOverrides
+    streamId: PromiseOrValue<BigNumberish>,
+    account: PromiseOrValue<string>,
+    overrides?: CallOverrides,
   ): Promise<BigNumber>;
 
   getRewardsAmount(
-    streamId: BigNumberish,
-    lastUpdate: BigNumberish,
-    overrides?: CallOverrides
+    streamId: PromiseOrValue<BigNumberish>,
+    lastUpdate: PromiseOrValue<BigNumberish>,
+    overrides?: CallOverrides,
   ): Promise<BigNumber>;
 
-  getRoleAdmin(role: BytesLike, overrides?: CallOverrides): Promise<string>;
+  getRoleAdmin(role: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<string>;
 
   getStream(
-    streamId: BigNumberish,
-    overrides?: CallOverrides
+    streamId: PromiseOrValue<BigNumberish>,
+    overrides?: CallOverrides,
   ): Promise<
-    [
-      string,
-      string,
-      BigNumber,
-      BigNumber,
-      BigNumber,
-      BigNumber,
-      BigNumber,
-      BigNumber,
-      BigNumber,
-      BigNumber,
-      number
-    ] & {
+    [string, string, BigNumber, BigNumber, BigNumber, BigNumber, BigNumber, BigNumber, BigNumber, BigNumber, number] & {
       streamOwner: string;
       rewardToken: string;
       auroraDepositAmount: BigNumber;
@@ -1440,19 +1093,16 @@ export interface Staking extends BaseContract {
   >;
 
   getStreamClaimableAmount(
-    streamId: BigNumberish,
-    account: string,
-    overrides?: CallOverrides
+    streamId: PromiseOrValue<BigNumberish>,
+    account: PromiseOrValue<string>,
+    overrides?: CallOverrides,
   ): Promise<BigNumber>;
 
-  getStreamOwnerClaimableAmount(
-    streamId: BigNumberish,
-    overrides?: CallOverrides
-  ): Promise<BigNumber>;
+  getStreamOwnerClaimableAmount(streamId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
   getStreamSchedule(
-    streamId: BigNumberish,
-    overrides?: CallOverrides
+    streamId: PromiseOrValue<BigNumberish>,
+    overrides?: CallOverrides,
   ): Promise<
     [BigNumber[], BigNumber[]] & {
       scheduleTimes: BigNumber[];
@@ -1464,131 +1114,118 @@ export interface Staking extends BaseContract {
 
   getTotalAmountOfStakedAurora(overrides?: CallOverrides): Promise<BigNumber>;
 
-  getTreasuryBalance(
-    token: string,
-    overrides?: CallOverrides
-  ): Promise<BigNumber>;
+  getTreasuryBalance(token: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  getUserShares(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+  getUserShares(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  getUserTotalDeposit(
-    account: string,
-    overrides?: CallOverrides
-  ): Promise<BigNumber>;
+  getUserTotalDeposit(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   grantRole(
-    role: BytesLike,
-    account: string,
-    overrides?: Overrides & { from?: string | Promise<string> }
+    role: PromiseOrValue<BytesLike>,
+    account: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   hasRole(
-    role: BytesLike,
-    account: string,
-    overrides?: CallOverrides
+    role: PromiseOrValue<BytesLike>,
+    account: PromiseOrValue<string>,
+    overrides?: CallOverrides,
   ): Promise<boolean>;
 
   initialize(
-    aurora: string,
-    streamOwner: string,
-    scheduleTimes: BigNumberish[],
-    scheduleRewards: BigNumberish[],
-    tauAuroraStream: BigNumberish,
-    _flags: BigNumberish,
-    _treasury: string,
-    _maxWeight: BigNumberish,
-    _minWeight: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> }
+    aurora: PromiseOrValue<string>,
+    streamOwner: PromiseOrValue<string>,
+    scheduleTimes: PromiseOrValue<BigNumberish>[],
+    scheduleRewards: PromiseOrValue<BigNumberish>[],
+    tauAuroraStream: PromiseOrValue<BigNumberish>,
+    _flags: PromiseOrValue<BigNumberish>,
+    _treasury: PromiseOrValue<string>,
+    _maxWeight: PromiseOrValue<BigNumberish>,
+    _minWeight: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   maxWeight(overrides?: CallOverrides): Promise<BigNumber>;
 
   minWeight(overrides?: CallOverrides): Promise<BigNumber>;
 
-  moveAllRewardsToPending(
-    overrides?: Overrides & { from?: string | Promise<string> }
-  ): Promise<ContractTransaction>;
+  moveAllRewardsToPending(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   moveRewardsToPending(
-    streamId: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> }
+    streamId: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   paused(overrides?: CallOverrides): Promise<BigNumber>;
 
   proposeStream(
-    streamOwner: string,
-    rewardToken: string,
-    auroraDepositAmount: BigNumberish,
-    maxDepositAmount: BigNumberish,
-    minDepositAmount: BigNumberish,
-    scheduleTimes: BigNumberish[],
-    scheduleRewards: BigNumberish[],
-    tau: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> }
+    streamOwner: PromiseOrValue<string>,
+    rewardToken: PromiseOrValue<string>,
+    auroraDepositAmount: PromiseOrValue<BigNumberish>,
+    maxDepositAmount: PromiseOrValue<BigNumberish>,
+    minDepositAmount: PromiseOrValue<BigNumberish>,
+    scheduleTimes: PromiseOrValue<BigNumberish>[],
+    scheduleRewards: PromiseOrValue<BigNumberish>[],
+    tau: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   releaseAuroraRewardsToStreamOwner(
-    streamId: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> }
+    streamId: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   removeStream(
-    streamId: BigNumberish,
-    streamFundReceiver: string,
-    overrides?: Overrides & { from?: string | Promise<string> }
+    streamId: PromiseOrValue<BigNumberish>,
+    streamFundReceiver: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   renounceRole(
-    role: BytesLike,
-    account: string,
-    overrides?: Overrides & { from?: string | Promise<string> }
+    role: PromiseOrValue<BytesLike>,
+    account: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   revokeRole(
-    role: BytesLike,
-    account: string,
-    overrides?: Overrides & { from?: string | Promise<string> }
+    role: PromiseOrValue<BytesLike>,
+    account: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   rewardsSchedule(
-    streamId: BigNumberish,
-    start: BigNumberish,
-    end: BigNumberish,
-    overrides?: CallOverrides
+    streamId: PromiseOrValue<BigNumberish>,
+    start: PromiseOrValue<BigNumberish>,
+    end: PromiseOrValue<BigNumberish>,
+    overrides?: CallOverrides,
   ): Promise<BigNumber>;
 
   stake(
-    amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> }
+    amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   stakeOnBehalfOfAnotherUser(
-    account: string,
-    amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> }
+    account: PromiseOrValue<string>,
+    amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   stakeOnBehalfOfOtherUsers(
-    accounts: string[],
-    amounts: BigNumberish[],
-    batchAmount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> }
+    accounts: PromiseOrValue<string>[],
+    amounts: PromiseOrValue<BigNumberish>[],
+    batchAmount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   startEndScheduleIndex(
-    streamId: BigNumberish,
-    start: BigNumberish,
-    end: BigNumberish,
-    overrides?: CallOverrides
-  ): Promise<
-    [BigNumber, BigNumber] & { startIndex: BigNumber; endIndex: BigNumber }
-  >;
+    streamId: PromiseOrValue<BigNumberish>,
+    start: PromiseOrValue<BigNumberish>,
+    end: PromiseOrValue<BigNumberish>,
+    overrides?: CallOverrides,
+  ): Promise<[BigNumber, BigNumber] & { startIndex: BigNumber; endIndex: BigNumber }>;
 
-  supportsInterface(
-    interfaceId: BytesLike,
-    overrides?: CallOverrides
-  ): Promise<boolean>;
+  supportsInterface(interfaceId: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<boolean>;
 
   totalAmountOfStakedAurora(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -1601,33 +1238,31 @@ export interface Staking extends BaseContract {
   treasury(overrides?: CallOverrides): Promise<string>;
 
   unstake(
-    amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> }
+    amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  unstakeAll(
-    overrides?: Overrides & { from?: string | Promise<string> }
-  ): Promise<ContractTransaction>;
+  unstakeAll(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   updateTreasury(
-    _treasury: string,
-    overrides?: Overrides & { from?: string | Promise<string> }
+    _treasury: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   upgradeTo(
-    newImplementation: string,
-    overrides?: Overrides & { from?: string | Promise<string> }
+    newImplementation: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   upgradeToAndCall(
-    newImplementation: string,
-    data: BytesLike,
-    overrides?: PayableOverrides & { from?: string | Promise<string> }
+    newImplementation: PromiseOrValue<string>,
+    data: PromiseOrValue<BytesLike>,
+    overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   users(
-    arg0: string,
-    overrides?: CallOverrides
+    arg0: PromiseOrValue<string>,
+    overrides?: CallOverrides,
   ): Promise<
     [BigNumber, BigNumber, BigNumber] & {
       deposit: BigNumber;
@@ -1637,13 +1272,11 @@ export interface Staking extends BaseContract {
   >;
 
   withdraw(
-    streamId: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> }
+    streamId: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  withdrawAll(
-    overrides?: Overrides & { from?: string | Promise<string> }
-  ): Promise<ContractTransaction>;
+  withdrawAll(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   callStatic: {
     AIRDROP_ROLE(overrides?: CallOverrides): Promise<string>;
@@ -1661,122 +1294,101 @@ export interface Staking extends BaseContract {
     STREAM_MANAGER_ROLE(overrides?: CallOverrides): Promise<string>;
 
     adminDelegatecall(
-      target: string,
-      data: BytesLike,
-      overrides?: CallOverrides
+      target: PromiseOrValue<string>,
+      data: PromiseOrValue<BytesLike>,
+      overrides?: CallOverrides,
     ): Promise<string>;
 
-    adminPause(flags: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    adminPause(flags: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
     adminSstore(
-      key: BigNumberish,
-      value: BigNumberish,
-      overrides?: CallOverrides
+      key: PromiseOrValue<BigNumberish>,
+      value: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
     ): Promise<void>;
 
     adminSstoreWithMask(
-      key: BigNumberish,
-      value: BigNumberish,
-      mask: BigNumberish,
-      overrides?: CallOverrides
+      key: PromiseOrValue<BigNumberish>,
+      value: PromiseOrValue<BigNumberish>,
+      mask: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
     ): Promise<void>;
 
     auroraToken(overrides?: CallOverrides): Promise<string>;
 
     batchClaimOnBehalfOfAnotherUser(
-      account: string,
-      streamIds: BigNumberish[],
-      overrides?: CallOverrides
+      account: PromiseOrValue<string>,
+      streamIds: PromiseOrValue<BigNumberish>[],
+      overrides?: CallOverrides,
     ): Promise<void>;
 
     batchClaimOnBehalfOfOtherUsers(
-      accounts: string[],
-      streamIds: BigNumberish[],
-      overrides?: CallOverrides
+      accounts: PromiseOrValue<string>[],
+      streamIds: PromiseOrValue<BigNumberish>[],
+      overrides?: CallOverrides,
     ): Promise<void>;
 
-    batchMoveRewardsToPending(
-      streamIds: BigNumberish[],
-      overrides?: CallOverrides
-    ): Promise<void>;
+    batchMoveRewardsToPending(streamIds: PromiseOrValue<BigNumberish>[], overrides?: CallOverrides): Promise<void>;
 
-    batchWithdraw(
-      streamIds: BigNumberish[],
-      overrides?: CallOverrides
-    ): Promise<void>;
+    batchWithdraw(streamIds: PromiseOrValue<BigNumberish>[], overrides?: CallOverrides): Promise<void>;
 
-    cancelStreamProposal(
-      streamId: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    cancelStreamProposal(streamId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
-    claimAllOnBehalfOfAnotherUser(
-      account: string,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    claimAllOnBehalfOfAnotherUser(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    claimAllOnBehalfOfOtherUsers(
-      accounts: string[],
-      overrides?: CallOverrides
-    ): Promise<void>;
+    claimAllOnBehalfOfOtherUsers(accounts: PromiseOrValue<string>[], overrides?: CallOverrides): Promise<void>;
 
     claimOnBehalfOfAnotherUser(
-      account: string,
-      streamId: BigNumberish,
-      overrides?: CallOverrides
+      account: PromiseOrValue<string>,
+      streamId: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
     ): Promise<void>;
 
     createStream(
-      streamId: BigNumberish,
-      rewardTokenAmount: BigNumberish,
-      overrides?: CallOverrides
+      streamId: PromiseOrValue<BigNumberish>,
+      rewardTokenAmount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
     ): Promise<void>;
 
     getAmountOfShares(
-      streamId: BigNumberish,
-      account: string,
-      overrides?: CallOverrides
+      streamId: PromiseOrValue<BigNumberish>,
+      account: PromiseOrValue<string>,
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
-    getLatestRewardPerShare(
-      streamId: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    getLatestRewardPerShare(streamId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     getPending(
-      streamId: BigNumberish,
-      account: string,
-      overrides?: CallOverrides
+      streamId: PromiseOrValue<BigNumberish>,
+      account: PromiseOrValue<string>,
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     getReleaseTime(
-      streamId: BigNumberish,
-      account: string,
-      overrides?: CallOverrides
+      streamId: PromiseOrValue<BigNumberish>,
+      account: PromiseOrValue<string>,
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
-    getRewardPerShare(
-      streamId: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    getRewardPerShare(streamId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     getRewardPerShareForUser(
-      streamId: BigNumberish,
-      account: string,
-      overrides?: CallOverrides
+      streamId: PromiseOrValue<BigNumberish>,
+      account: PromiseOrValue<string>,
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     getRewardsAmount(
-      streamId: BigNumberish,
-      lastUpdate: BigNumberish,
-      overrides?: CallOverrides
+      streamId: PromiseOrValue<BigNumberish>,
+      lastUpdate: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
-    getRoleAdmin(role: BytesLike, overrides?: CallOverrides): Promise<string>;
+    getRoleAdmin(role: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<string>;
 
     getStream(
-      streamId: BigNumberish,
-      overrides?: CallOverrides
+      streamId: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
     ): Promise<
       [
         string,
@@ -1789,7 +1401,7 @@ export interface Staking extends BaseContract {
         BigNumber,
         BigNumber,
         BigNumber,
-        number
+        number,
       ] & {
         streamOwner: string;
         rewardToken: string;
@@ -1806,19 +1418,19 @@ export interface Staking extends BaseContract {
     >;
 
     getStreamClaimableAmount(
-      streamId: BigNumberish,
-      account: string,
-      overrides?: CallOverrides
+      streamId: PromiseOrValue<BigNumberish>,
+      account: PromiseOrValue<string>,
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     getStreamOwnerClaimableAmount(
-      streamId: BigNumberish,
-      overrides?: CallOverrides
+      streamId: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     getStreamSchedule(
-      streamId: BigNumberish,
-      overrides?: CallOverrides
+      streamId: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
     ): Promise<
       [BigNumber[], BigNumber[]] & {
         scheduleTimes: BigNumber[];
@@ -1830,44 +1442,35 @@ export interface Staking extends BaseContract {
 
     getTotalAmountOfStakedAurora(overrides?: CallOverrides): Promise<BigNumber>;
 
-    getTreasuryBalance(
-      token: string,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    getTreasuryBalance(token: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    getUserShares(
-      account: string,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    getUserShares(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    getUserTotalDeposit(
-      account: string,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    getUserTotalDeposit(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     grantRole(
-      role: BytesLike,
-      account: string,
-      overrides?: CallOverrides
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
+      overrides?: CallOverrides,
     ): Promise<void>;
 
     hasRole(
-      role: BytesLike,
-      account: string,
-      overrides?: CallOverrides
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
+      overrides?: CallOverrides,
     ): Promise<boolean>;
 
     initialize(
-      aurora: string,
-      streamOwner: string,
-      scheduleTimes: BigNumberish[],
-      scheduleRewards: BigNumberish[],
-      tauAuroraStream: BigNumberish,
-      _flags: BigNumberish,
-      _treasury: string,
-      _maxWeight: BigNumberish,
-      _minWeight: BigNumberish,
-      overrides?: CallOverrides
+      aurora: PromiseOrValue<string>,
+      streamOwner: PromiseOrValue<string>,
+      scheduleTimes: PromiseOrValue<BigNumberish>[],
+      scheduleRewards: PromiseOrValue<BigNumberish>[],
+      tauAuroraStream: PromiseOrValue<BigNumberish>,
+      _flags: PromiseOrValue<BigNumberish>,
+      _treasury: PromiseOrValue<string>,
+      _maxWeight: PromiseOrValue<BigNumberish>,
+      _minWeight: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
     ): Promise<void>;
 
     maxWeight(overrides?: CallOverrides): Promise<BigNumber>;
@@ -1876,83 +1479,72 @@ export interface Staking extends BaseContract {
 
     moveAllRewardsToPending(overrides?: CallOverrides): Promise<void>;
 
-    moveRewardsToPending(
-      streamId: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    moveRewardsToPending(streamId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
     paused(overrides?: CallOverrides): Promise<BigNumber>;
 
     proposeStream(
-      streamOwner: string,
-      rewardToken: string,
-      auroraDepositAmount: BigNumberish,
-      maxDepositAmount: BigNumberish,
-      minDepositAmount: BigNumberish,
-      scheduleTimes: BigNumberish[],
-      scheduleRewards: BigNumberish[],
-      tau: BigNumberish,
-      overrides?: CallOverrides
+      streamOwner: PromiseOrValue<string>,
+      rewardToken: PromiseOrValue<string>,
+      auroraDepositAmount: PromiseOrValue<BigNumberish>,
+      maxDepositAmount: PromiseOrValue<BigNumberish>,
+      minDepositAmount: PromiseOrValue<BigNumberish>,
+      scheduleTimes: PromiseOrValue<BigNumberish>[],
+      scheduleRewards: PromiseOrValue<BigNumberish>[],
+      tau: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
     ): Promise<void>;
 
-    releaseAuroraRewardsToStreamOwner(
-      streamId: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    releaseAuroraRewardsToStreamOwner(streamId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
     removeStream(
-      streamId: BigNumberish,
-      streamFundReceiver: string,
-      overrides?: CallOverrides
+      streamId: PromiseOrValue<BigNumberish>,
+      streamFundReceiver: PromiseOrValue<string>,
+      overrides?: CallOverrides,
     ): Promise<void>;
 
     renounceRole(
-      role: BytesLike,
-      account: string,
-      overrides?: CallOverrides
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
+      overrides?: CallOverrides,
     ): Promise<void>;
 
     revokeRole(
-      role: BytesLike,
-      account: string,
-      overrides?: CallOverrides
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
+      overrides?: CallOverrides,
     ): Promise<void>;
 
     rewardsSchedule(
-      streamId: BigNumberish,
-      start: BigNumberish,
-      end: BigNumberish,
-      overrides?: CallOverrides
+      streamId: PromiseOrValue<BigNumberish>,
+      start: PromiseOrValue<BigNumberish>,
+      end: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
-    stake(amount: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    stake(amount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
     stakeOnBehalfOfAnotherUser(
-      account: string,
-      amount: BigNumberish,
-      overrides?: CallOverrides
+      account: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
     ): Promise<void>;
 
     stakeOnBehalfOfOtherUsers(
-      accounts: string[],
-      amounts: BigNumberish[],
-      batchAmount: BigNumberish,
-      overrides?: CallOverrides
+      accounts: PromiseOrValue<string>[],
+      amounts: PromiseOrValue<BigNumberish>[],
+      batchAmount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
     ): Promise<void>;
 
     startEndScheduleIndex(
-      streamId: BigNumberish,
-      start: BigNumberish,
-      end: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<
-      [BigNumber, BigNumber] & { startIndex: BigNumber; endIndex: BigNumber }
-    >;
+      streamId: PromiseOrValue<BigNumberish>,
+      start: PromiseOrValue<BigNumberish>,
+      end: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber, BigNumber] & { startIndex: BigNumber; endIndex: BigNumber }>;
 
-    supportsInterface(
-      interfaceId: BytesLike,
-      overrides?: CallOverrides
-    ): Promise<boolean>;
+    supportsInterface(interfaceId: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<boolean>;
 
     totalAmountOfStakedAurora(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -1964,26 +1556,23 @@ export interface Staking extends BaseContract {
 
     treasury(overrides?: CallOverrides): Promise<string>;
 
-    unstake(amount: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    unstake(amount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
     unstakeAll(overrides?: CallOverrides): Promise<void>;
 
-    updateTreasury(_treasury: string, overrides?: CallOverrides): Promise<void>;
+    updateTreasury(_treasury: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    upgradeTo(
-      newImplementation: string,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    upgradeTo(newImplementation: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     upgradeToAndCall(
-      newImplementation: string,
-      data: BytesLike,
-      overrides?: CallOverrides
+      newImplementation: PromiseOrValue<string>,
+      data: PromiseOrValue<BytesLike>,
+      overrides?: CallOverrides,
     ): Promise<void>;
 
     users(
-      arg0: string,
-      overrides?: CallOverrides
+      arg0: PromiseOrValue<string>,
+      overrides?: CallOverrides,
     ): Promise<
       [BigNumber, BigNumber, BigNumber] & {
         deposit: BigNumber;
@@ -1992,163 +1581,148 @@ export interface Staking extends BaseContract {
       }
     >;
 
-    withdraw(streamId: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    withdraw(streamId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
     withdrawAll(overrides?: CallOverrides): Promise<void>;
   };
 
   filters: {
-    "AdminChanged(address,address)"(
-      previousAdmin?: null,
-      newAdmin?: null
-    ): AdminChangedEventFilter;
-    AdminChanged(
-      previousAdmin?: null,
-      newAdmin?: null
-    ): AdminChangedEventFilter;
+    'AdminChanged(address,address)'(previousAdmin?: null, newAdmin?: null): AdminChangedEventFilter;
+    AdminChanged(previousAdmin?: null, newAdmin?: null): AdminChangedEventFilter;
 
-    "BeaconUpgraded(address)"(
-      beacon?: string | null
-    ): BeaconUpgradedEventFilter;
-    BeaconUpgraded(beacon?: string | null): BeaconUpgradedEventFilter;
+    'BeaconUpgraded(address)'(beacon?: PromiseOrValue<string> | null): BeaconUpgradedEventFilter;
+    BeaconUpgraded(beacon?: PromiseOrValue<string> | null): BeaconUpgradedEventFilter;
 
-    "Pending(uint256,address,uint256)"(
-      streamId?: BigNumberish | null,
-      user?: string | null,
-      amount?: null
+    'Pending(uint256,address,uint256)'(
+      streamId?: PromiseOrValue<BigNumberish> | null,
+      user?: PromiseOrValue<string> | null,
+      amount?: null,
     ): PendingEventFilter;
     Pending(
-      streamId?: BigNumberish | null,
-      user?: string | null,
-      amount?: null
+      streamId?: PromiseOrValue<BigNumberish> | null,
+      user?: PromiseOrValue<string> | null,
+      amount?: null,
     ): PendingEventFilter;
 
-    "Released(uint256,address,uint256)"(
-      streamId?: BigNumberish | null,
-      user?: string | null,
-      amount?: null
+    'Released(uint256,address,uint256)'(
+      streamId?: PromiseOrValue<BigNumberish> | null,
+      user?: PromiseOrValue<string> | null,
+      amount?: null,
     ): ReleasedEventFilter;
     Released(
-      streamId?: BigNumberish | null,
-      user?: string | null,
-      amount?: null
+      streamId?: PromiseOrValue<BigNumberish> | null,
+      user?: PromiseOrValue<string> | null,
+      amount?: null,
     ): ReleasedEventFilter;
 
-    "RoleAdminChanged(bytes32,bytes32,bytes32)"(
-      role?: BytesLike | null,
-      previousAdminRole?: BytesLike | null,
-      newAdminRole?: BytesLike | null
+    'RoleAdminChanged(bytes32,bytes32,bytes32)'(
+      role?: PromiseOrValue<BytesLike> | null,
+      previousAdminRole?: PromiseOrValue<BytesLike> | null,
+      newAdminRole?: PromiseOrValue<BytesLike> | null,
     ): RoleAdminChangedEventFilter;
     RoleAdminChanged(
-      role?: BytesLike | null,
-      previousAdminRole?: BytesLike | null,
-      newAdminRole?: BytesLike | null
+      role?: PromiseOrValue<BytesLike> | null,
+      previousAdminRole?: PromiseOrValue<BytesLike> | null,
+      newAdminRole?: PromiseOrValue<BytesLike> | null,
     ): RoleAdminChangedEventFilter;
 
-    "RoleGranted(bytes32,address,address)"(
-      role?: BytesLike | null,
-      account?: string | null,
-      sender?: string | null
+    'RoleGranted(bytes32,address,address)'(
+      role?: PromiseOrValue<BytesLike> | null,
+      account?: PromiseOrValue<string> | null,
+      sender?: PromiseOrValue<string> | null,
     ): RoleGrantedEventFilter;
     RoleGranted(
-      role?: BytesLike | null,
-      account?: string | null,
-      sender?: string | null
+      role?: PromiseOrValue<BytesLike> | null,
+      account?: PromiseOrValue<string> | null,
+      sender?: PromiseOrValue<string> | null,
     ): RoleGrantedEventFilter;
 
-    "RoleRevoked(bytes32,address,address)"(
-      role?: BytesLike | null,
-      account?: string | null,
-      sender?: string | null
+    'RoleRevoked(bytes32,address,address)'(
+      role?: PromiseOrValue<BytesLike> | null,
+      account?: PromiseOrValue<string> | null,
+      sender?: PromiseOrValue<string> | null,
     ): RoleRevokedEventFilter;
     RoleRevoked(
-      role?: BytesLike | null,
-      account?: string | null,
-      sender?: string | null
+      role?: PromiseOrValue<BytesLike> | null,
+      account?: PromiseOrValue<string> | null,
+      sender?: PromiseOrValue<string> | null,
     ): RoleRevokedEventFilter;
 
-    "Staked(address,uint256,uint256)"(
-      user?: string | null,
+    'Staked(address,uint256,uint256)'(
+      user?: PromiseOrValue<string> | null,
       amount?: null,
-      shares?: null
+      shares?: null,
     ): StakedEventFilter;
-    Staked(
-      user?: string | null,
-      amount?: null,
-      shares?: null
-    ): StakedEventFilter;
+    Staked(user?: PromiseOrValue<string> | null, amount?: null, shares?: null): StakedEventFilter;
 
-    "StreamCreated(uint256,address,address,uint256,uint256)"(
-      streamId?: BigNumberish | null,
-      owner?: string | null,
-      token?: string | null,
+    'StreamCreated(uint256,address,address,uint256,uint256)'(
+      streamId?: PromiseOrValue<BigNumberish> | null,
+      owner?: PromiseOrValue<string> | null,
+      token?: PromiseOrValue<string> | null,
       tokenAmount?: null,
-      auroraAmount?: null
+      auroraAmount?: null,
     ): StreamCreatedEventFilter;
     StreamCreated(
-      streamId?: BigNumberish | null,
-      owner?: string | null,
-      token?: string | null,
+      streamId?: PromiseOrValue<BigNumberish> | null,
+      owner?: PromiseOrValue<string> | null,
+      token?: PromiseOrValue<string> | null,
       tokenAmount?: null,
-      auroraAmount?: null
+      auroraAmount?: null,
     ): StreamCreatedEventFilter;
 
-    "StreamOwnerRewardReleased(uint256,address,uint256)"(
-      streamId?: BigNumberish | null,
-      owner?: string | null,
-      amount?: null
+    'StreamOwnerRewardReleased(uint256,address,uint256)'(
+      streamId?: PromiseOrValue<BigNumberish> | null,
+      owner?: PromiseOrValue<string> | null,
+      amount?: null,
     ): StreamOwnerRewardReleasedEventFilter;
     StreamOwnerRewardReleased(
-      streamId?: BigNumberish | null,
-      owner?: string | null,
-      amount?: null
+      streamId?: PromiseOrValue<BigNumberish> | null,
+      owner?: PromiseOrValue<string> | null,
+      amount?: null,
     ): StreamOwnerRewardReleasedEventFilter;
 
-    "StreamProposalCancelled(uint256,address,address)"(
-      streamId?: BigNumberish | null,
-      owner?: string | null,
-      token?: string | null
+    'StreamProposalCancelled(uint256,address,address)'(
+      streamId?: PromiseOrValue<BigNumberish> | null,
+      owner?: PromiseOrValue<string> | null,
+      token?: PromiseOrValue<string> | null,
     ): StreamProposalCancelledEventFilter;
     StreamProposalCancelled(
-      streamId?: BigNumberish | null,
-      owner?: string | null,
-      token?: string | null
+      streamId?: PromiseOrValue<BigNumberish> | null,
+      owner?: PromiseOrValue<string> | null,
+      token?: PromiseOrValue<string> | null,
     ): StreamProposalCancelledEventFilter;
 
-    "StreamProposed(uint256,address,address,uint256,uint256)"(
-      streamId?: BigNumberish | null,
-      owner?: string | null,
-      token?: string | null,
+    'StreamProposed(uint256,address,address,uint256,uint256)'(
+      streamId?: PromiseOrValue<BigNumberish> | null,
+      owner?: PromiseOrValue<string> | null,
+      token?: PromiseOrValue<string> | null,
       maxDepositAmount?: null,
-      auroraDepositAmount?: null
+      auroraDepositAmount?: null,
     ): StreamProposedEventFilter;
     StreamProposed(
-      streamId?: BigNumberish | null,
-      owner?: string | null,
-      token?: string | null,
+      streamId?: PromiseOrValue<BigNumberish> | null,
+      owner?: PromiseOrValue<string> | null,
+      token?: PromiseOrValue<string> | null,
       maxDepositAmount?: null,
-      auroraDepositAmount?: null
+      auroraDepositAmount?: null,
     ): StreamProposedEventFilter;
 
-    "StreamRemoved(uint256,address,address)"(
-      streamId?: BigNumberish | null,
-      owner?: string | null,
-      token?: string | null
+    'StreamRemoved(uint256,address,address)'(
+      streamId?: PromiseOrValue<BigNumberish> | null,
+      owner?: PromiseOrValue<string> | null,
+      token?: PromiseOrValue<string> | null,
     ): StreamRemovedEventFilter;
     StreamRemoved(
-      streamId?: BigNumberish | null,
-      owner?: string | null,
-      token?: string | null
+      streamId?: PromiseOrValue<BigNumberish> | null,
+      owner?: PromiseOrValue<string> | null,
+      token?: PromiseOrValue<string> | null,
     ): StreamRemovedEventFilter;
 
-    "Unstaked(address,uint256)"(
-      user?: string | null,
-      amount?: null
-    ): UnstakedEventFilter;
-    Unstaked(user?: string | null, amount?: null): UnstakedEventFilter;
+    'Unstaked(address,uint256)'(user?: PromiseOrValue<string> | null, amount?: null): UnstakedEventFilter;
+    Unstaked(user?: PromiseOrValue<string> | null, amount?: null): UnstakedEventFilter;
 
-    "Upgraded(address)"(implementation?: string | null): UpgradedEventFilter;
-    Upgraded(implementation?: string | null): UpgradedEventFilter;
+    'Upgraded(address)'(implementation?: PromiseOrValue<string> | null): UpgradedEventFilter;
+    Upgraded(implementation?: PromiseOrValue<string> | null): UpgradedEventFilter;
   };
 
   estimateGas: {
@@ -2167,276 +1741,247 @@ export interface Staking extends BaseContract {
     STREAM_MANAGER_ROLE(overrides?: CallOverrides): Promise<BigNumber>;
 
     adminDelegatecall(
-      target: string,
-      data: BytesLike,
-      overrides?: PayableOverrides & { from?: string | Promise<string> }
+      target: PromiseOrValue<string>,
+      data: PromiseOrValue<BytesLike>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     adminPause(
-      flags: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      flags: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     adminSstore(
-      key: BigNumberish,
-      value: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      key: PromiseOrValue<BigNumberish>,
+      value: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     adminSstoreWithMask(
-      key: BigNumberish,
-      value: BigNumberish,
-      mask: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      key: PromiseOrValue<BigNumberish>,
+      value: PromiseOrValue<BigNumberish>,
+      mask: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     auroraToken(overrides?: CallOverrides): Promise<BigNumber>;
 
     batchClaimOnBehalfOfAnotherUser(
-      account: string,
-      streamIds: BigNumberish[],
-      overrides?: Overrides & { from?: string | Promise<string> }
+      account: PromiseOrValue<string>,
+      streamIds: PromiseOrValue<BigNumberish>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     batchClaimOnBehalfOfOtherUsers(
-      accounts: string[],
-      streamIds: BigNumberish[],
-      overrides?: Overrides & { from?: string | Promise<string> }
+      accounts: PromiseOrValue<string>[],
+      streamIds: PromiseOrValue<BigNumberish>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     batchMoveRewardsToPending(
-      streamIds: BigNumberish[],
-      overrides?: Overrides & { from?: string | Promise<string> }
+      streamIds: PromiseOrValue<BigNumberish>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     batchWithdraw(
-      streamIds: BigNumberish[],
-      overrides?: Overrides & { from?: string | Promise<string> }
+      streamIds: PromiseOrValue<BigNumberish>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     cancelStreamProposal(
-      streamId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      streamId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     claimAllOnBehalfOfAnotherUser(
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     claimAllOnBehalfOfOtherUsers(
-      accounts: string[],
-      overrides?: Overrides & { from?: string | Promise<string> }
+      accounts: PromiseOrValue<string>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     claimOnBehalfOfAnotherUser(
-      account: string,
-      streamId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      account: PromiseOrValue<string>,
+      streamId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     createStream(
-      streamId: BigNumberish,
-      rewardTokenAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      streamId: PromiseOrValue<BigNumberish>,
+      rewardTokenAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     getAmountOfShares(
-      streamId: BigNumberish,
-      account: string,
-      overrides?: CallOverrides
+      streamId: PromiseOrValue<BigNumberish>,
+      account: PromiseOrValue<string>,
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
-    getLatestRewardPerShare(
-      streamId: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    getLatestRewardPerShare(streamId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     getPending(
-      streamId: BigNumberish,
-      account: string,
-      overrides?: CallOverrides
+      streamId: PromiseOrValue<BigNumberish>,
+      account: PromiseOrValue<string>,
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     getReleaseTime(
-      streamId: BigNumberish,
-      account: string,
-      overrides?: CallOverrides
+      streamId: PromiseOrValue<BigNumberish>,
+      account: PromiseOrValue<string>,
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
-    getRewardPerShare(
-      streamId: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    getRewardPerShare(streamId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     getRewardPerShareForUser(
-      streamId: BigNumberish,
-      account: string,
-      overrides?: CallOverrides
+      streamId: PromiseOrValue<BigNumberish>,
+      account: PromiseOrValue<string>,
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     getRewardsAmount(
-      streamId: BigNumberish,
-      lastUpdate: BigNumberish,
-      overrides?: CallOverrides
+      streamId: PromiseOrValue<BigNumberish>,
+      lastUpdate: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
-    getRoleAdmin(
-      role: BytesLike,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    getRoleAdmin(role: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    getStream(
-      streamId: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    getStream(streamId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     getStreamClaimableAmount(
-      streamId: BigNumberish,
-      account: string,
-      overrides?: CallOverrides
+      streamId: PromiseOrValue<BigNumberish>,
+      account: PromiseOrValue<string>,
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     getStreamOwnerClaimableAmount(
-      streamId: BigNumberish,
-      overrides?: CallOverrides
+      streamId: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
-    getStreamSchedule(
-      streamId: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    getStreamSchedule(streamId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     getStreamsCount(overrides?: CallOverrides): Promise<BigNumber>;
 
     getTotalAmountOfStakedAurora(overrides?: CallOverrides): Promise<BigNumber>;
 
-    getTreasuryBalance(
-      token: string,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    getTreasuryBalance(token: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    getUserShares(
-      account: string,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    getUserShares(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    getUserTotalDeposit(
-      account: string,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    getUserTotalDeposit(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     grantRole(
-      role: BytesLike,
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     hasRole(
-      role: BytesLike,
-      account: string,
-      overrides?: CallOverrides
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     initialize(
-      aurora: string,
-      streamOwner: string,
-      scheduleTimes: BigNumberish[],
-      scheduleRewards: BigNumberish[],
-      tauAuroraStream: BigNumberish,
-      _flags: BigNumberish,
-      _treasury: string,
-      _maxWeight: BigNumberish,
-      _minWeight: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      aurora: PromiseOrValue<string>,
+      streamOwner: PromiseOrValue<string>,
+      scheduleTimes: PromiseOrValue<BigNumberish>[],
+      scheduleRewards: PromiseOrValue<BigNumberish>[],
+      tauAuroraStream: PromiseOrValue<BigNumberish>,
+      _flags: PromiseOrValue<BigNumberish>,
+      _treasury: PromiseOrValue<string>,
+      _maxWeight: PromiseOrValue<BigNumberish>,
+      _minWeight: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     maxWeight(overrides?: CallOverrides): Promise<BigNumber>;
 
     minWeight(overrides?: CallOverrides): Promise<BigNumber>;
 
-    moveAllRewardsToPending(
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<BigNumber>;
+    moveAllRewardsToPending(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     moveRewardsToPending(
-      streamId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      streamId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     paused(overrides?: CallOverrides): Promise<BigNumber>;
 
     proposeStream(
-      streamOwner: string,
-      rewardToken: string,
-      auroraDepositAmount: BigNumberish,
-      maxDepositAmount: BigNumberish,
-      minDepositAmount: BigNumberish,
-      scheduleTimes: BigNumberish[],
-      scheduleRewards: BigNumberish[],
-      tau: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      streamOwner: PromiseOrValue<string>,
+      rewardToken: PromiseOrValue<string>,
+      auroraDepositAmount: PromiseOrValue<BigNumberish>,
+      maxDepositAmount: PromiseOrValue<BigNumberish>,
+      minDepositAmount: PromiseOrValue<BigNumberish>,
+      scheduleTimes: PromiseOrValue<BigNumberish>[],
+      scheduleRewards: PromiseOrValue<BigNumberish>[],
+      tau: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     releaseAuroraRewardsToStreamOwner(
-      streamId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      streamId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     removeStream(
-      streamId: BigNumberish,
-      streamFundReceiver: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      streamId: PromiseOrValue<BigNumberish>,
+      streamFundReceiver: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     renounceRole(
-      role: BytesLike,
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     revokeRole(
-      role: BytesLike,
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     rewardsSchedule(
-      streamId: BigNumberish,
-      start: BigNumberish,
-      end: BigNumberish,
-      overrides?: CallOverrides
+      streamId: PromiseOrValue<BigNumberish>,
+      start: PromiseOrValue<BigNumberish>,
+      end: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     stake(
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     stakeOnBehalfOfAnotherUser(
-      account: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      account: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     stakeOnBehalfOfOtherUsers(
-      accounts: string[],
-      amounts: BigNumberish[],
-      batchAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      accounts: PromiseOrValue<string>[],
+      amounts: PromiseOrValue<BigNumberish>[],
+      batchAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     startEndScheduleIndex(
-      streamId: BigNumberish,
-      start: BigNumberish,
-      end: BigNumberish,
-      overrides?: CallOverrides
+      streamId: PromiseOrValue<BigNumberish>,
+      start: PromiseOrValue<BigNumberish>,
+      end: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
-    supportsInterface(
-      interfaceId: BytesLike,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    supportsInterface(interfaceId: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<BigNumber>;
 
     totalAmountOfStakedAurora(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -2449,40 +1994,36 @@ export interface Staking extends BaseContract {
     treasury(overrides?: CallOverrides): Promise<BigNumber>;
 
     unstake(
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    unstakeAll(
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<BigNumber>;
+    unstakeAll(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     updateTreasury(
-      _treasury: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      _treasury: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     upgradeTo(
-      newImplementation: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      newImplementation: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     upgradeToAndCall(
-      newImplementation: string,
-      data: BytesLike,
-      overrides?: PayableOverrides & { from?: string | Promise<string> }
+      newImplementation: PromiseOrValue<string>,
+      data: PromiseOrValue<BytesLike>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    users(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    users(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     withdraw(
-      streamId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      streamId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    withdrawAll(
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<BigNumber>;
+    withdrawAll(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
   };
 
   populateTransaction: {
@@ -2490,9 +2031,7 @@ export interface Staking extends BaseContract {
 
     CLAIM_ROLE(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    DEFAULT_ADMIN_ROLE(
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    DEFAULT_ADMIN_ROLE(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     FOUR_YEARS(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
@@ -2500,287 +2039,255 @@ export interface Staking extends BaseContract {
 
     PAUSE_ROLE(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    STREAM_MANAGER_ROLE(
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    STREAM_MANAGER_ROLE(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     adminDelegatecall(
-      target: string,
-      data: BytesLike,
-      overrides?: PayableOverrides & { from?: string | Promise<string> }
+      target: PromiseOrValue<string>,
+      data: PromiseOrValue<BytesLike>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     adminPause(
-      flags: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      flags: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     adminSstore(
-      key: BigNumberish,
-      value: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      key: PromiseOrValue<BigNumberish>,
+      value: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     adminSstoreWithMask(
-      key: BigNumberish,
-      value: BigNumberish,
-      mask: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      key: PromiseOrValue<BigNumberish>,
+      value: PromiseOrValue<BigNumberish>,
+      mask: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     auroraToken(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     batchClaimOnBehalfOfAnotherUser(
-      account: string,
-      streamIds: BigNumberish[],
-      overrides?: Overrides & { from?: string | Promise<string> }
+      account: PromiseOrValue<string>,
+      streamIds: PromiseOrValue<BigNumberish>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     batchClaimOnBehalfOfOtherUsers(
-      accounts: string[],
-      streamIds: BigNumberish[],
-      overrides?: Overrides & { from?: string | Promise<string> }
+      accounts: PromiseOrValue<string>[],
+      streamIds: PromiseOrValue<BigNumberish>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     batchMoveRewardsToPending(
-      streamIds: BigNumberish[],
-      overrides?: Overrides & { from?: string | Promise<string> }
+      streamIds: PromiseOrValue<BigNumberish>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     batchWithdraw(
-      streamIds: BigNumberish[],
-      overrides?: Overrides & { from?: string | Promise<string> }
+      streamIds: PromiseOrValue<BigNumberish>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     cancelStreamProposal(
-      streamId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      streamId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     claimAllOnBehalfOfAnotherUser(
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     claimAllOnBehalfOfOtherUsers(
-      accounts: string[],
-      overrides?: Overrides & { from?: string | Promise<string> }
+      accounts: PromiseOrValue<string>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     claimOnBehalfOfAnotherUser(
-      account: string,
-      streamId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      account: PromiseOrValue<string>,
+      streamId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     createStream(
-      streamId: BigNumberish,
-      rewardTokenAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      streamId: PromiseOrValue<BigNumberish>,
+      rewardTokenAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     getAmountOfShares(
-      streamId: BigNumberish,
-      account: string,
-      overrides?: CallOverrides
+      streamId: PromiseOrValue<BigNumberish>,
+      account: PromiseOrValue<string>,
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     getLatestRewardPerShare(
-      streamId: BigNumberish,
-      overrides?: CallOverrides
+      streamId: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     getPending(
-      streamId: BigNumberish,
-      account: string,
-      overrides?: CallOverrides
+      streamId: PromiseOrValue<BigNumberish>,
+      account: PromiseOrValue<string>,
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     getReleaseTime(
-      streamId: BigNumberish,
-      account: string,
-      overrides?: CallOverrides
+      streamId: PromiseOrValue<BigNumberish>,
+      account: PromiseOrValue<string>,
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
-    getRewardPerShare(
-      streamId: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    getRewardPerShare(streamId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     getRewardPerShareForUser(
-      streamId: BigNumberish,
-      account: string,
-      overrides?: CallOverrides
+      streamId: PromiseOrValue<BigNumberish>,
+      account: PromiseOrValue<string>,
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     getRewardsAmount(
-      streamId: BigNumberish,
-      lastUpdate: BigNumberish,
-      overrides?: CallOverrides
+      streamId: PromiseOrValue<BigNumberish>,
+      lastUpdate: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
-    getRoleAdmin(
-      role: BytesLike,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    getRoleAdmin(role: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    getStream(
-      streamId: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    getStream(streamId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     getStreamClaimableAmount(
-      streamId: BigNumberish,
-      account: string,
-      overrides?: CallOverrides
+      streamId: PromiseOrValue<BigNumberish>,
+      account: PromiseOrValue<string>,
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     getStreamOwnerClaimableAmount(
-      streamId: BigNumberish,
-      overrides?: CallOverrides
+      streamId: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
-    getStreamSchedule(
-      streamId: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    getStreamSchedule(streamId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     getStreamsCount(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    getTotalAmountOfStakedAurora(
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    getTotalAmountOfStakedAurora(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    getTreasuryBalance(
-      token: string,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    getTreasuryBalance(token: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    getUserShares(
-      account: string,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    getUserShares(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    getUserTotalDeposit(
-      account: string,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    getUserTotalDeposit(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     grantRole(
-      role: BytesLike,
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     hasRole(
-      role: BytesLike,
-      account: string,
-      overrides?: CallOverrides
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     initialize(
-      aurora: string,
-      streamOwner: string,
-      scheduleTimes: BigNumberish[],
-      scheduleRewards: BigNumberish[],
-      tauAuroraStream: BigNumberish,
-      _flags: BigNumberish,
-      _treasury: string,
-      _maxWeight: BigNumberish,
-      _minWeight: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      aurora: PromiseOrValue<string>,
+      streamOwner: PromiseOrValue<string>,
+      scheduleTimes: PromiseOrValue<BigNumberish>[],
+      scheduleRewards: PromiseOrValue<BigNumberish>[],
+      tauAuroraStream: PromiseOrValue<BigNumberish>,
+      _flags: PromiseOrValue<BigNumberish>,
+      _treasury: PromiseOrValue<string>,
+      _maxWeight: PromiseOrValue<BigNumberish>,
+      _minWeight: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     maxWeight(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     minWeight(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    moveAllRewardsToPending(
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<PopulatedTransaction>;
+    moveAllRewardsToPending(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     moveRewardsToPending(
-      streamId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      streamId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     paused(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     proposeStream(
-      streamOwner: string,
-      rewardToken: string,
-      auroraDepositAmount: BigNumberish,
-      maxDepositAmount: BigNumberish,
-      minDepositAmount: BigNumberish,
-      scheduleTimes: BigNumberish[],
-      scheduleRewards: BigNumberish[],
-      tau: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      streamOwner: PromiseOrValue<string>,
+      rewardToken: PromiseOrValue<string>,
+      auroraDepositAmount: PromiseOrValue<BigNumberish>,
+      maxDepositAmount: PromiseOrValue<BigNumberish>,
+      minDepositAmount: PromiseOrValue<BigNumberish>,
+      scheduleTimes: PromiseOrValue<BigNumberish>[],
+      scheduleRewards: PromiseOrValue<BigNumberish>[],
+      tau: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     releaseAuroraRewardsToStreamOwner(
-      streamId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      streamId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     removeStream(
-      streamId: BigNumberish,
-      streamFundReceiver: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      streamId: PromiseOrValue<BigNumberish>,
+      streamFundReceiver: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     renounceRole(
-      role: BytesLike,
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     revokeRole(
-      role: BytesLike,
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     rewardsSchedule(
-      streamId: BigNumberish,
-      start: BigNumberish,
-      end: BigNumberish,
-      overrides?: CallOverrides
+      streamId: PromiseOrValue<BigNumberish>,
+      start: PromiseOrValue<BigNumberish>,
+      end: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     stake(
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     stakeOnBehalfOfAnotherUser(
-      account: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      account: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     stakeOnBehalfOfOtherUsers(
-      accounts: string[],
-      amounts: BigNumberish[],
-      batchAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      accounts: PromiseOrValue<string>[],
+      amounts: PromiseOrValue<BigNumberish>[],
+      batchAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     startEndScheduleIndex(
-      streamId: BigNumberish,
-      start: BigNumberish,
-      end: BigNumberish,
-      overrides?: CallOverrides
+      streamId: PromiseOrValue<BigNumberish>,
+      start: PromiseOrValue<BigNumberish>,
+      end: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
-    supportsInterface(
-      interfaceId: BytesLike,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    supportsInterface(interfaceId: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    totalAmountOfStakedAurora(
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    totalAmountOfStakedAurora(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     totalAuroraShares(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
@@ -2791,42 +2298,35 @@ export interface Staking extends BaseContract {
     treasury(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     unstake(
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    unstakeAll(
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<PopulatedTransaction>;
+    unstakeAll(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     updateTreasury(
-      _treasury: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      _treasury: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     upgradeTo(
-      newImplementation: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      newImplementation: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     upgradeToAndCall(
-      newImplementation: string,
-      data: BytesLike,
-      overrides?: PayableOverrides & { from?: string | Promise<string> }
+      newImplementation: PromiseOrValue<string>,
+      data: PromiseOrValue<BytesLike>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    users(
-      arg0: string,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    users(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     withdraw(
-      streamId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      streamId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    withdrawAll(
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<PopulatedTransaction>;
+    withdrawAll(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
   };
 }

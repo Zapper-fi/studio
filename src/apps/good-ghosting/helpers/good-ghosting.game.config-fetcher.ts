@@ -6,6 +6,7 @@ import { CacheOnInterval } from '~cache/cache-on-interval.decorator';
 import { NetworkId } from '../helpers/constants';
 
 import GOOD_GHOSTING_DEFINITION from '../good-ghosting.definition';
+import { NetworkId } from '../helpers/constants';
 
 import { GamesResponse, PlayerBalance, PlayerResponse, BASE_API_URL } from './constants';
 

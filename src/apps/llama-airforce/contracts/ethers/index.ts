@@ -6,5 +6,5 @@ export type { LlamaAirforceUnionVault } from './LlamaAirforceUnionVault';
 export type { LlamaAirforceUnionVaultPirex } from './LlamaAirforceUnionVaultPirex';
 export * as factories from './factories';
 export { LlamaAirforceMerkleDistributor__factory } from './factories/LlamaAirforceMerkleDistributor__factory';
-export { LlamaAirforceUnionVault__factory } from './factories/LlamaAirforceUnionVault__factory';
 export { LlamaAirforceUnionVaultPirex__factory } from './factories/LlamaAirforceUnionVaultPirex__factory';
+export { LlamaAirforceUnionVault__factory } from './factories/LlamaAirforceUnionVault__factory';
