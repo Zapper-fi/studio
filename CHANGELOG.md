@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.176.0](https://github.com/Zapper-fi/studio/compare/v0.175.0...v0.176.0) (2022-08-16)
+
+
+### Features
+
+* **apps:** Fixed Openleverage pool group on mainnet ([#1183](https://github.com/Zapper-fi/studio/issues/1183)) ([7b8d5eb](https://github.com/Zapper-fi/studio/commit/7b8d5ebc0986a5e928856a7264c4e0bae30b33ea))
+
 ## [0.175.0](https://github.com/Zapper-fi/studio/compare/v0.174.0...v0.175.0) (2022-08-16)
 
 
