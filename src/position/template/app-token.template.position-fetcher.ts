@@ -69,7 +69,7 @@ export abstract class AppTokenTemplatePositionFetcher<T extends Contract, V exte
   constructor(@Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit) {}
 
   abstract getContract(address: string): T;
-  abstract getAddresses(): Promise<string[]>;
+  abstract getAddresses(params: { multicall: IMulticallWrapper }): string[] | Promise<string[]>;
 
   // Token Props
   async getSymbol({ address, multicall }: TokenPropsStageParams<T>): Promise<string> {
@@ -151,7 +151,7 @@ export abstract class AppTokenTemplatePositionFetcher<T extends Contract, V exte
       tags: { network: this.network, context: `${this.appId}__template` },
     });
 
-    const addresses = await this.getAddresses();
+    const addresses = await this.getAddresses({ multicall });
 
     const skeletons = await Promise.all(
       addresses.map(async address => {
