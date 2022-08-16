@@ -21,7 +21,7 @@ export class EthereumStargateVeTokenFetcher extends VotingEscrowTokenFetcher<Sta
   appId = appId;
   groupId = groupId;
   network = network;
-  veTokenAddress: '0x0e42acbd23faee03249daff896b78d7e79fbd58e';
+  veTokenAddress = '0x0e42acbd23faee03249daff896b78d7e79fbd58e';
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,

@@ -21,7 +21,7 @@ export class OptimismStargateVeTokenFetcher extends VotingEscrowTokenFetcher<Sta
   appId = appId;
   groupId = groupId;
   network = network;
-  veTokenAddress: '0x43d2761ed16c89a2c4342e2b16a3c61ccf88f05b';
+  veTokenAddress = '0x43d2761ed16c89a2c4342e2b16a3c61ccf88f05b';
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,

@@ -21,7 +21,7 @@ export class AvalancheStargateVeTokenFetcher extends VotingEscrowTokenFetcher<St
   appId = appId;
   groupId = groupId;
   network = network;
-  veTokenAddress: '0xca0f57d295bbce554da2c07b005b7d6565a58fce';
+  veTokenAddress = '0xca0f57d295bbce554da2c07b005b7d6565a58fce';
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,

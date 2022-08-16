@@ -21,7 +21,7 @@ export class BinanceSmartChainStargateVeTokenFetcher extends VotingEscrowTokenFe
   appId = appId;
   groupId = groupId;
   network = network;
-  veTokenAddress: '0xd4888870c8686c748232719051b677791dbda26d';
+  veTokenAddress = '0xd4888870c8686c748232719051b677791dbda26d';
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,

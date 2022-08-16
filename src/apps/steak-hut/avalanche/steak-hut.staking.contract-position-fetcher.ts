@@ -1,11 +1,12 @@
 import { Inject } from '@nestjs/common';
-import { flatten } from 'lodash';
 
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
-import { TRADER_JOE_DEFINITION } from '~apps/trader-joe';
-import { PositionFetcher } from '~position/position-fetcher.interface';
-import { ContractPosition } from '~position/position.interface';
+import {
+  DataPropsStageParams,
+  GetTokenBalancesPerPositionParams,
+} from '~position/template/contract-position.template.position-fetcher';
+import { SingleStakingFarmDynamicTemplateContractPositionFetcher } from '~position/template/single-staking.dynamic.template.contract-position-fetcher';
 import { Network } from '~types/network.interface';
 
 import { SteakHutContractFactory, SteakHutStaking } from '../contracts';
@@ -16,40 +17,43 @@ const groupId = STEAK_HUT_DEFINITION.groups.staking.id;
 const network = Network.AVALANCHE_MAINNET;
 
 @Register.ContractPositionFetcher({ appId, groupId, network })
-export class AvalancheSteakHutStakingContractPositionFetcher implements PositionFetcher<ContractPosition> {
+export class AvalancheSteakHutStakingContractPositionFetcher extends SingleStakingFarmDynamicTemplateContractPositionFetcher<SteakHutStaking> {
+  appId = appId;
+  groupId = groupId;
+  network = network;
+
   constructor(
-    @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
-    @Inject(SteakHutContractFactory) private readonly contractFactory: SteakHutContractFactory,
-  ) {}
-
-  async getSingleStakingPosition(address: string) {
-    return this.appToolkit.helpers.singleStakingFarmContractPositionHelper.getContractPositions<SteakHutStaking>({
-      appId,
-      groupId,
-      network,
-      dependencies: [
-        { appId, groupIds: [STEAK_HUT_DEFINITION.groups.ve.id], network },
-        { appId: TRADER_JOE_DEFINITION.id, groupIds: [TRADER_JOE_DEFINITION.groups.xJoe.id], network },
-      ],
-      resolveFarmAddresses: async () => [address],
-      resolveStakedTokenAddress: async ({ multicall, contract }) => multicall.wrap(contract).inputToken(),
-      resolveFarmContract: opts => this.contractFactory.steakHutStaking(opts),
-      resolveRewardTokenAddresses: async ({ multicall, contract }) => multicall.wrap(contract).rewardToken(),
-      resolveIsActive: async ({ multicall, contract }) => multicall.wrap(contract).isRewarderEnabled(),
-      resolveRois: () => ({ dailyROI: 0, weeklyROI: 0, yearlyROI: 0 }), // TODO: calculated based on tokenPerSec
-    });
+    @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
+    @Inject(SteakHutContractFactory) protected readonly contractFactory: SteakHutContractFactory,
+  ) {
+    super(appToolkit);
   }
 
-  async getHJoePositions() {
-    return this.getSingleStakingPosition('0x4e664284b7fbd10633768d59c17d959d9cb8dee2');
+  getContract(address: string): SteakHutStaking {
+    return this.contractFactory.steakHutStaking({ address, network: this.network });
   }
 
-  async getSteakPosition() {
-    return this.getSingleStakingPosition('0x1f6866e1a684247886545503f8e6e76e328ade34');
+  getFarmAddresses() {
+    return ['0x4e664284b7fbd10633768d59c17d959d9cb8dee2', '0x1f6866e1a684247886545503f8e6e76e328ade34'];
   }
 
-  async getPositions() {
-    const positions = await Promise.all([this.getHJoePositions(), this.getSteakPosition()]);
-    return flatten(positions);
+  getStakedTokenAddress(contract: SteakHutStaking) {
+    return contract.inputToken();
+  }
+
+  getRewardTokenAddresses(contract: SteakHutStaking) {
+    return contract.rewardToken();
+  }
+
+  getRewardRates({ contract }: DataPropsStageParams<SteakHutStaking>) {
+    return contract.tokenPerSec();
+  }
+
+  getStakedTokenBalance({ address, contract }: GetTokenBalancesPerPositionParams<SteakHutStaking>) {
+    return contract.userInfo(address).then(v => v.amount);
+  }
+
+  getRewardTokenBalances({ address, contract }: GetTokenBalancesPerPositionParams<SteakHutStaking>) {
+    return contract.pendingTokens(address);
   }
 }

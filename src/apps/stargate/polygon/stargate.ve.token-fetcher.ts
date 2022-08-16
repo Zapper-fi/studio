@@ -21,7 +21,7 @@ export class PolygonStargateVeTokenFetcher extends VotingEscrowTokenFetcher<Star
   appId = appId;
   groupId = groupId;
   network = network;
-  veTokenAddress: '0x3ab2da31bbd886a7edf68a6b60d3cde657d3a15d';
+  veTokenAddress = '0x3ab2da31bbd886a7edf68a6b60d3cde657d3a15d';
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
