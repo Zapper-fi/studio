@@ -1,0 +1,132 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`App Token Fetchers (aave-v2, ethereum, stable-debt) positions should have structure 1`] = `
+Array [
+  Object {
+    "address": "0xe91d55ab2240594855abd11b3faae801fd4c4687",
+    "decimals": 6,
+    "key": "1852985196",
+    "symbol": "stableDebtUSDT",
+    "tokens": Array [
+      "0xdac17f958d2ee523a2206206994597c13d831ec7",
+    ],
+  },
+  Object {
+    "address": "0x51b039b9afe64b78758f8ef091211b5387ea717c",
+    "decimals": 8,
+    "key": "3372527711",
+    "symbol": "stableDebtWBTC",
+    "tokens": Array [
+      "0x2260fac5e5542a773aa44fbcfedf7c193bc2c599",
+    ],
+  },
+  Object {
+    "address": "0x4e977830ba4bd783c0bb7f15d3e243f73ff57121",
+    "decimals": 18,
+    "key": "2943260053",
+    "symbol": "stableDebtWETH",
+    "tokens": Array [
+      "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
+    ],
+  },
+  Object {
+    "address": "0x071b4323a24e73a5afeebe34118cd21b8faaf7c3",
+    "decimals": 18,
+    "key": "1124479991",
+    "symbol": "stableDebtZRX",
+    "tokens": Array [
+      "0xe41d2489571d322189246dafa5ebde1f4699f498",
+    ],
+  },
+  Object {
+    "address": "0x277f8676facf4daa5a6ea38ba511b7f65aa02f9f",
+    "decimals": 18,
+    "key": "2833429324",
+    "symbol": "stableDebtBAT",
+    "tokens": Array [
+      "0x0d8775f648430679a709e98d2b0cb6250d2887ef",
+    ],
+  },
+  Object {
+    "address": "0x778a13d3eeb110a4f7bb6529f99c000119a08e92",
+    "decimals": 18,
+    "key": "2261073606",
+    "symbol": "stableDebtDAI",
+    "tokens": Array [
+      "0x6b175474e89094c44da98b954eedeac495271d0f",
+    ],
+  },
+  Object {
+    "address": "0x943dcca156b5312aa24c1a08769d67fece4ac14c",
+    "decimals": 18,
+    "key": "4058481753",
+    "symbol": "stableDebtENJ",
+    "tokens": Array [
+      "0xf629cbd94d3791c9250152bd8dfbdf380e2a3b9c",
+    ],
+  },
+  Object {
+    "address": "0x9915dfb872778b2890a117da1f35f335eb06b54f",
+    "decimals": 18,
+    "key": "4123654559",
+    "symbol": "stableDebtKNC",
+    "tokens": Array [
+      "0xdd974d5c2e2928dea5f71b9825b8b646686bd200",
+    ],
+  },
+  Object {
+    "address": "0xfb4aec4cc858f2539ebd3d37f2a43eae5b15b98a",
+    "decimals": 18,
+    "key": "1172489123",
+    "symbol": "stableDebtLINK",
+    "tokens": Array [
+      "0x514910771af9ca656af840dff83e8264ecf986ca",
+    ],
+  },
+  Object {
+    "address": "0xd86c74ea2224f4b8591560652b50035e4e5c0a3b",
+    "decimals": 18,
+    "key": "3920023102",
+    "symbol": "stableDebtMANA",
+    "tokens": Array [
+      "0x0f5d2fb29fb7d3cfee444a200298f468908cc942",
+    ],
+  },
+  Object {
+    "address": "0xc01c8e4b12a89456a9fd4e4e75b72546bf53f0b5",
+    "decimals": 18,
+    "key": "2132648882",
+    "symbol": "stableDebtMKR",
+    "tokens": Array [
+      "0x9f8f72aa9304c8b593d555f12ef6589cc3a579a2",
+    ],
+  },
+  Object {
+    "address": "0x3356ec1efa75d9d150da1ec7d944d9edf73703b7",
+    "decimals": 18,
+    "key": "44210285",
+    "symbol": "stableDebtREN",
+    "tokens": Array [
+      "0x408e41876cccdc0f92210600ef50372656052a38",
+    ],
+  },
+  Object {
+    "address": "0x7f38d60d94652072b2c44a18c0e14a481ec3c0dd",
+    "decimals": 18,
+    "key": "2803811287",
+    "symbol": "stableDebtTUSD",
+    "tokens": Array [
+      "0x0000000000085d4780b73119b644ae5ecd22b376",
+    ],
+  },
+  Object {
+    "address": "0xe4922afab0bbadd8ab2a88e0c79d884ad337fca6",
+    "decimals": 6,
+    "key": "128338836",
+    "symbol": "stableDebtUSDC",
+    "tokens": Array [
+      "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+    ],
+  },
+]
+`;

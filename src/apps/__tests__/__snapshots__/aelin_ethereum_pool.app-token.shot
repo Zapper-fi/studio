@@ -1,0 +1,51 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`App Token Fetchers (aelin, ethereum, pool) positions should have structure 1`] = `
+Array [
+  Object {
+    "address": "0x925ebf152843a68be7077cb594591b9716a7eb01",
+    "decimals": 6,
+    "key": undefined,
+    "symbol": "aeP-VALUE",
+    "tokens": Array [
+      "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+    ],
+  },
+  Object {
+    "address": "0xa436affafb2627e1d8a66b9910f15cd347093435",
+    "decimals": 6,
+    "key": undefined,
+    "symbol": "aeP-0x534c444e31000000000000000000000000000000000000000000000000000000",
+    "tokens": Array [
+      "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+    ],
+  },
+  Object {
+    "address": "0xb601cecd429fe0eaf424b6d96730ac1c66937e38",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "aeP-0x504f4f4c00000000000000000000000000000000000000000000000000000000",
+    "tokens": Array [
+      "0x57ab1ec28d129707052df4df418d58a2d46d5f51",
+    ],
+  },
+  Object {
+    "address": "0xbc465ef7e2d4f37d92dda7d449b82d245d06b6a7",
+    "decimals": 6,
+    "key": undefined,
+    "symbol": "aeP-0x5344463100000000000000000000000000000000000000000000000000000000",
+    "tokens": Array [
+      "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+    ],
+  },
+  Object {
+    "address": "0xd25502dff3ea3291da50ad3b0f202db03d4eb1a6",
+    "decimals": 6,
+    "key": undefined,
+    "symbol": "aeP-0x7465737431000000000000000000000000000000000000000000000000000000",
+    "tokens": Array [
+      "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+    ],
+  },
+]
+`;

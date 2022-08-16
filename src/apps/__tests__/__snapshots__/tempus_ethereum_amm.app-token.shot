@@ -1,0 +1,56 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`App Token Fetchers (tempus, ethereum, amm) positions should have structure 1`] = `
+Array [
+  Object {
+    "address": "0x7004797ad44897f90401609c075e2f082be9d8be",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "TLPstETH",
+    "tokens": Array [
+      "0x5a5cba78ae5ebd7142d0b8c796565388ba4b5732",
+      "0x1f436309fbfb405192acdc80d5c284de45e520eb",
+    ],
+  },
+  Object {
+    "address": "0x200e41be620928351f98da8031baeb7bd401a129",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "TLPstETH",
+    "tokens": Array [
+      "0x2c4ac125044e853f0f6d66b95365cbba204ffcfd",
+      "0xffacf0b02851e440fa207ea2f9afdf7ffe0be095",
+    ],
+  },
+  Object {
+    "address": "0x30002861577da4ea6aa23966964172ad75dca9c7",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "TLPRSPT",
+    "tokens": Array [
+      "0xbaf9434c102000f3f80bbe3c4b89018fac43eb76",
+      "0x2a7b99156256bd6a75b92d5073c53c0ee574a9f6",
+    ],
+  },
+  Object {
+    "address": "0x811f4f0241a9a4583c052c08bda7f6339dbb13f7",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "tLP-EYEUC001",
+    "tokens": Array [
+      "0xb3ec7facb30b163b1375285ea7ebfeefc41920b9",
+      "0x7a00e04eaa42dca96ed63a2b4ae8461773b4ce6c",
+    ],
+  },
+  Object {
+    "address": "0x7ca043143c6e30bda28ddc7322d7951f538d75e8",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "tLP-EYEDA001",
+    "tokens": Array [
+      "0xfe932d00b9858c42108378053c11be79656116af",
+      "0x1bab1bf8fffc5cd80e2d0b597e0a96e2043b1157",
+    ],
+  },
+]
+`;

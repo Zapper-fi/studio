@@ -1,0 +1,106 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`App Token Fetchers (hakuswap, avalanche, pool) positions should have structure 1`] = `
+Array [
+  Object {
+    "address": "0xffa26cb3458023c4b78c3d10f8bef4704c2fd198",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "HAKU-LP",
+    "tokens": Array [
+      "0xa7d7079b0fead91f3e65f86e8915cb59c1a4c664",
+      "0xc7198437980c041c805a1edcba50c1ce5db95118",
+    ],
+  },
+  Object {
+    "address": "0x7943acd42c41a345841cb22bd846794a22d8682d",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "HAKU-LP",
+    "tokens": Array [
+      "0x695fa794d59106cebd40ab5f5ca19f458c723829",
+      "0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7",
+    ],
+  },
+  Object {
+    "address": "0x6075eccadfc2917d58062af55090b6bd3de258f5",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "HAKU-LP",
+    "tokens": Array [
+      "0x49d5c2bdffac6ce2bfdb6640f4f80f226bc10bab",
+      "0x50b7545627a5162f82a992c33b87adc75187b218",
+    ],
+  },
+  Object {
+    "address": "0x519de4668ea6661d1870928a3033a62dc2acc503",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "HAKU-LP",
+    "tokens": Array [
+      "0xa7d7079b0fead91f3e65f86e8915cb59c1a4c664",
+      "0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7",
+    ],
+  },
+  Object {
+    "address": "0x605cb4dcad3fd553f97fbaa72a6a0306f954282b",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "HAKU-LP",
+    "tokens": Array [
+      "0x49d5c2bdffac6ce2bfdb6640f4f80f226bc10bab",
+      "0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7",
+    ],
+  },
+  Object {
+    "address": "0x29e144ea1abac02b62be7afb877d1bbaca141295",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "HAKU-LP",
+    "tokens": Array [
+      "0x50b7545627a5162f82a992c33b87adc75187b218",
+      "0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7",
+    ],
+  },
+  Object {
+    "address": "0xeffff893f9423fdb7a5c010cef202ea5a52575a6",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "HAKU-LP",
+    "tokens": Array [
+      "0x50b7545627a5162f82a992c33b87adc75187b218",
+      "0xa7d7079b0fead91f3e65f86e8915cb59c1a4c664",
+    ],
+  },
+  Object {
+    "address": "0xff2bbf7b5e28ef283d9fb610b19f189017dc72e9",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "HAKU-LP",
+    "tokens": Array [
+      "0x5947bb275c521040051d82396192181b413227a3",
+      "0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7",
+    ],
+  },
+  Object {
+    "address": "0x1f0bc5c91518d903c0c097bde9741746b4423008",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "HAKU-LP",
+    "tokens": Array [
+      "0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7",
+      "0xc7198437980c041c805a1edcba50c1ce5db95118",
+    ],
+  },
+  Object {
+    "address": "0x6c2782d9632efd35e93d33e25ba75c118682954c",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "HAKU-LP",
+    "tokens": Array [
+      "0x49d5c2bdffac6ce2bfdb6640f4f80f226bc10bab",
+      "0xa7d7079b0fead91f3e65f86e8915cb59c1a4c664",
+    ],
+  },
+]
+`;

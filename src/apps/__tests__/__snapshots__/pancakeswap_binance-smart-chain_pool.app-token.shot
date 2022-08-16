@@ -1,0 +1,2526 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`App Token Fetchers (pancakeswap, binance-smart-chain, pool) positions should have structure 1`] = `
+Array [
+  Object {
+    "address": "0x0ed7e52944161450477ee417de9cd3a859b14fd0",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0x0e09fabb73bd3ade0a17ecc321fd13a19e81ce82",
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+    ],
+  },
+  Object {
+    "address": "0x58f876857a02d6762e0101bb5c46a8c1ed44dc16",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+      "0xe9e7cea3dedca5984780bafc599bd69add087d56",
+    ],
+  },
+  Object {
+    "address": "0x7efaef62fddcca950418312c6c91aef321375a00",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0x55d398326f99059ff775485246999027b3197955",
+      "0xe9e7cea3dedca5984780bafc599bd69add087d56",
+    ],
+  },
+  Object {
+    "address": "0x16b9a82891338f9ba80e2d6970fdda79d1eb0dae",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0x55d398326f99059ff775485246999027b3197955",
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+    ],
+  },
+  Object {
+    "address": "0x2354ef4df11afacb85a5c7f98b624072eccddbb1",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0x8ac76a51cc950d9822d68b83fe1ad97b32cd580d",
+      "0xe9e7cea3dedca5984780bafc599bd69add087d56",
+    ],
+  },
+  Object {
+    "address": "0x74e4716e431f45807dcf19f284c7aa99f18a4fbc",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0x2170ed0880ac9a755fd29b2688956bd959f933f8",
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+    ],
+  },
+  Object {
+    "address": "0xec6557348085aa57c72514d67070dc863c0a5a8c",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0x55d398326f99059ff775485246999027b3197955",
+      "0x8ac76a51cc950d9822d68b83fe1ad97b32cd580d",
+    ],
+  },
+  Object {
+    "address": "0x61eb789d75a95caa3ff50ed7e47b96c132fec082",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0x7130d2a12b9bcbfae4f2634d864a1ee1ce3ead9c",
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+    ],
+  },
+  Object {
+    "address": "0xf45cd219aef8618a92baa7ad848364a158a24f33",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0x7130d2a12b9bcbfae4f2634d864a1ee1ce3ead9c",
+      "0xe9e7cea3dedca5984780bafc599bd69add087d56",
+    ],
+  },
+  Object {
+    "address": "0xd171b26e4484402de70e3ea256be5a2630d7e88d",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0x2170ed0880ac9a755fd29b2688956bd959f933f8",
+      "0x7130d2a12b9bcbfae4f2634d864a1ee1ce3ead9c",
+    ],
+  },
+  Object {
+    "address": "0x2e28b9b74d6d99d4697e913b82b41ef1cac51c6c",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0x14016e85a25aeb13065688cafb43044c2ef86784",
+      "0xe9e7cea3dedca5984780bafc599bd69add087d56",
+    ],
+  },
+  Object {
+    "address": "0x8fa59693458289914db0097f5f366d771b7a7c3f",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0x3203c9e46ca618c8c1ce5dc67e7e9d75f5da2377",
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+    ],
+  },
+  Object {
+    "address": "0xe267018c943e77992e7e515724b07b9ce7938124",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+      "0xd40bedb44c081d2935eeba6ef5a3c8a31a1bbe13",
+    ],
+  },
+  Object {
+    "address": "0xea26b78255df2bbc31c1ebf60010d78670185bd0",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0x2170ed0880ac9a755fd29b2688956bd959f933f8",
+      "0x8ac76a51cc950d9822d68b83fe1ad97b32cd580d",
+    ],
+  },
+  Object {
+    "address": "0xb5d108578be3750209d1b3a8f45ffee8c5a75146",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0x85eac5ac2f758618dfa09bdbe0cf174e7d574d5b",
+      "0xe9e7cea3dedca5984780bafc599bd69add087d56",
+    ],
+  },
+  Object {
+    "address": "0x804678fa97d91b974ec2af3c843270886528a9e6",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0x0e09fabb73bd3ade0a17ecc321fd13a19e81ce82",
+      "0xe9e7cea3dedca5984780bafc599bd69add087d56",
+    ],
+  },
+  Object {
+    "address": "0x74fa517715c4ec65ef01d55ad5335f90dce7cc87",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0x477bc8d23c634c154061869478bce96be6045d12",
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+    ],
+  },
+  Object {
+    "address": "0x942b294e59a8c47a0f7f20df105b082710f7c305",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+      "0xd41fdb03ba84762dd66a0af1a6c8540ff1ba5dfb",
+    ],
+  },
+  Object {
+    "address": "0x824eb9fadfb377394430d2744fa7c42916de3ece",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+      "0xf8a0bf9cf54bb92f17374d9e9a321e6a111a51bd",
+    ],
+  },
+  Object {
+    "address": "0x03f18135c44c64ebfdcbad8297fe5bdafdbbdd86",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0x1d2f0da169ceb9fc7b3144628db156f3f6c60dbe",
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+    ],
+  },
+  Object {
+    "address": "0xa39af17ce4a8eb807e076805da1e2b8ea7d0755b",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0x0e09fabb73bd3ade0a17ecc321fd13a19e81ce82",
+      "0x55d398326f99059ff775485246999027b3197955",
+    ],
+  },
+  Object {
+    "address": "0x66fdb2eccfb58cf098eaa419e5efde841368e489",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0x1af3f329e8be154074d8769d1ffa4ee058b1dbc3",
+      "0xe9e7cea3dedca5984780bafc599bd69add087d56",
+    ],
+  },
+  Object {
+    "address": "0xdd5bad8f8b360d76d12fda230f8baf42fe0022cf",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0x7083609fce4d1d8dc0c979aab8c869ea2c873402",
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+    ],
+  },
+  Object {
+    "address": "0xaa2527ff1893e0d40d4a454623d362b79e8bb7f1",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+      "0xc2e9d07f66a89c44062459a47a0d2dc038e4fb16",
+    ],
+  },
+  Object {
+    "address": "0x28415ff2c35b65b9e5c7de82126b4015ab9d031f",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0x3ee2200efb3400fabb9aacf31297cbdd1d435d47",
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+    ],
+  },
+  Object {
+    "address": "0xa0ee789a8f581cb92dd9742ed0b5d54a0916976c",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0x78f5d389f5cdccfc41594abab4b0ed02f31398b3",
+      "0xe9e7cea3dedca5984780bafc599bd69add087d56",
+    ],
+  },
+  Object {
+    "address": "0x007ec643c7cc33a70c083fc305c283dd009c8b94",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0x3019bf2a2ef8040c242c9a4c5c4bd4c81678b2a1",
+      "0x8ac76a51cc950d9822d68b83fe1ad97b32cd580d",
+    ],
+  },
+  Object {
+    "address": "0x8e744ec2795c8b836689d1b4ebe1489204357dac",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0x12bb890508c125661e03b09ec06e404bc9289040",
+      "0xe9e7cea3dedca5984780bafc599bd69add087d56",
+    ],
+  },
+  Object {
+    "address": "0x014608e87af97a054c9a49f81e1473076d51d9a3",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+      "0xbf5140a22578168fd562dccf235e5d43a02ce9b1",
+    ],
+  },
+  Object {
+    "address": "0x7752e1fa9f3a2e860856458517008558deb989e3",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0x8f0528ce5ef7b51152a59745befdd91d97091d2f",
+      "0xe9e7cea3dedca5984780bafc599bd69add087d56",
+    ],
+  },
+  Object {
+    "address": "0xac109c8025f272414fd9e2faa805a583708a017f",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0xba2ae424d960c26247dd6c32edc70b295c744c43",
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+    ],
+  },
+  Object {
+    "address": "0xf3bc6fc080ffcc30d93df48bfa2aa14b869554bb",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+      "0xe0e514c71282b6f4e823703a39374cf58dc3ea4f",
+    ],
+  },
+  Object {
+    "address": "0xfdfde3af740a22648b9dd66d05698e5095940850",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0x1633b7157e7638c4d6593436111bf125ee74703f",
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+    ],
+  },
+  Object {
+    "address": "0x53a63ac301d6410915385294527f947aff616599",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0x6f9f0c4ad9af7ebd61ac5a1d4e0f2227f7b0e5f9",
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+    ],
+  },
+  Object {
+    "address": "0x7eb5d86fd78f3852a3e0e064f2842d45a3db6ea2",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+      "0xcf6bb5389c92bdda8a3747ddb454cb7a64626c63",
+    ],
+  },
+  Object {
+    "address": "0xbe6a4f74fddc88853612c50d7404e059b37692d8",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+      "0xe4cc45bb5dbda06db6183e8bf016569f40497aa5",
+    ],
+  },
+  Object {
+    "address": "0x6a445ceb72c8b1751755386c3990055ff92e14a0",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0xaef0d72a118ce24fee3cd1d43d383897d05b4e99",
+      "0xe9e7cea3dedca5984780bafc599bd69add087d56",
+    ],
+  },
+  Object {
+    "address": "0x133ee93fe93320e1182923e1a640912ede17c90c",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0x4bd17003473389a42daf6a0a729f6fdb328bbbd7",
+      "0xe9e7cea3dedca5984780bafc599bd69add087d56",
+    ],
+  },
+  Object {
+    "address": "0x92247860a03f48d5c6425c7ca35cdcfcb1013aa1",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0xaec945e04baf28b135fa7c640f624f8d90f1c3a6",
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+    ],
+  },
+  Object {
+    "address": "0x69afe59e88614501c3fdeb7480f12dba0a414032",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+      "0xe552fb52a4f19e44ef5a967632dbc320b0820639",
+    ],
+  },
+  Object {
+    "address": "0xcad7019d6d84a3294b0494aef02e73bd0f2572eb",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0xac51066d7bec65dc4589368da368b212745d63e8",
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+    ],
+  },
+  Object {
+    "address": "0x3dcb1787a95d2ea0eb7d00887704eebf0d79bb13",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0x4b0f1812e5df2a09796481ff14017e6005508003",
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+    ],
+  },
+  Object {
+    "address": "0x2ae94a6c768d59f5ddc25bd7f12c7cbe1d51dc04",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0x8b303d5bbfbbf46f1a4d9741e491e06986894e18",
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+    ],
+  },
+  Object {
+    "address": "0x062f88e2b4896e823ac78ac314468c29eec4186d",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0x23ce9e926048273ef83be0a3a8ba9cb6d45cd978",
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+    ],
+  },
+  Object {
+    "address": "0xc2d00de94795e60fb76bc37d899170996cbda436",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0x715d400f88c167884bbcc41c5fea407ed4d2f8a0",
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+    ],
+  },
+  Object {
+    "address": "0x046a9b3a9b743340ee2bc4c6ddd35543e237c6c2",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+      "0xe0f94ac5462997d2bc57287ac3a3ae4c31345d66",
+    ],
+  },
+  Object {
+    "address": "0xc13aa76aac067c86ae38028019f414d731b3d86a",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0x9678e42cebeb63f23197d726b29b1cb20d0064e5",
+      "0xe9e7cea3dedca5984780bafc599bd69add087d56",
+    ],
+  },
+  Object {
+    "address": "0xb2678c414ebc63c9cc6d1a0fc45f43e249b50fde",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0x78650b139471520656b9e7aa7a5e9276814a38e9",
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+    ],
+  },
+  Object {
+    "address": "0xb31ecb43645eb273210838e710f2692cc6b30a11",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0x232fb065d9d24c34708eedbf03724f2e95abe768",
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+    ],
+  },
+  Object {
+    "address": "0xba01662e978de7d67f8ffc937726215eb8995d17",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0x5a3010d4d8d3b5fb49f8b6e57fb9e48063f16700",
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+    ],
+  },
+  Object {
+    "address": "0x6045931e511ef7e53a4a817f971e0ca28c758809",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0xe9e7cea3dedca5984780bafc599bd69add087d56",
+      "0xf9cec8d50f6c8ad3fb6dccec577e05aa32b224fe",
+    ],
+  },
+  Object {
+    "address": "0x3c2b7b578dd2175a1c3524aa0d515106282bf108",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0x08ba0619b1e7a582e0bce5bbe9843322c954c340",
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+    ],
+  },
+  Object {
+    "address": "0x8e04b3972b5c25766c681dfd30a8a1cbf6dcc8c1",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0x0a3a21356793b49154fd3bbe91cbc2a16c0457f5",
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+    ],
+  },
+  Object {
+    "address": "0x71b01ebddd797c8e9e0b003ea2f4fd207fbf46cc",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0x4338665cbb7b2485a8855a139b75d5e34ab0db94",
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+    ],
+  },
+  Object {
+    "address": "0x0d5b9a0f4315a4bce36d1ea7d6b6d3123167afaa",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0x05ad6e30a855be07afa57e08a4f30d00810a402e",
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+    ],
+  },
+  Object {
+    "address": "0x89ee0491ce55d2f7472a97602a95426216167189",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0x4691937a7508860f876c9c0a2a617e7d9e945d4b",
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+    ],
+  },
+  Object {
+    "address": "0xd8e2f8b6db204c405543953ef6359912fe3a88d6",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0x47bead2563dcbf3bf2c9407fea4dc236faba485a",
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+    ],
+  },
+  Object {
+    "address": "0xe98ac95a1db2fcaaa9c7d4ba7ecfce4877ca2bea",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0x5f4bde007dc06b867f86ebfe4802e34a1ffeed63",
+      "0xe9e7cea3dedca5984780bafc599bd69add087d56",
+    ],
+  },
+  Object {
+    "address": "0xee90c67c9dd5de862f4eabfdd53007a2d95df5c6",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0x0bc89aa98ad94e6798ec822d0814d934ccd0c0ce",
+      "0xe9e7cea3dedca5984780bafc599bd69add087d56",
+    ],
+  },
+  Object {
+    "address": "0x88a02d94f437799f06f8c256ff07aa397e6d0016",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+      "0xbe1a001fe942f96eea22ba08783140b9dcc09d28",
+    ],
+  },
+  Object {
+    "address": "0x16afc4f2ad82986bbe2a4525601f8199ab9c832d",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0x2170ed0880ac9a755fd29b2688956bd959f933f8",
+      "0x947950bcc74888a40ffa2593c5798f11fc9124c4",
+    ],
+  },
+  Object {
+    "address": "0x1472976e0b97f5b2fc93f1fff14e2b5c4447b64f",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0x20de22029ab63cf9a7cf5feb2b737ca1ee4c82a6",
+      "0x8ac76a51cc950d9822d68b83fe1ad97b32cd580d",
+    ],
+  },
+  Object {
+    "address": "0x55cdb14855220b239cf857a03849d96736b9103f",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0xc2098a8938119a52b1f7661893c0153a6cb116d5",
+      "0xe9e7cea3dedca5984780bafc599bd69add087d56",
+    ],
+  },
+  Object {
+    "address": "0xef642c40eebbc964881dd7bd1a0b50e90441e73a",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0xb465f3cb6aba6ee375e12918387de1eac2301b05",
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+    ],
+  },
+  Object {
+    "address": "0x5ca96e8bde0bc587dac9e02422fd205b1102daa4",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0x6a0b66710567b6beb81a71f7e9466450a91a384b",
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+    ],
+  },
+  Object {
+    "address": "0x1ce76390dd210b9c9ae28373fdf79714206ecb73",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+      "0xe369fec23380f9f14ffd07a1dc4b7c1a9fdd81c9",
+    ],
+  },
+  Object {
+    "address": "0x25bfd3162360bbd8ff97b86169288b311c2a68d7",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0x734548a9e43d2d564600b1b2ed5be9c2b911c6ab",
+      "0xe9e7cea3dedca5984780bafc599bd69add087d56",
+    ],
+  },
+  Object {
+    "address": "0x3f1a9f3d9aad8bd339ed4853f345d2ef89fbfe0c",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+      "0xca3f508b8e4dd382ee878a314789373d80a5190a",
+    ],
+  },
+  Object {
+    "address": "0xffd4b200d3c77a0b691b5562d804b3bd54294e6e",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0x9f589e3eabe42ebc94a44727b3f3531c0c877809",
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+    ],
+  },
+  Object {
+    "address": "0xa63e32feefc6590bbf869070fd2e706eb7881bd2",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0x6679eb24f59dfe111864aec72b443d1da666b360",
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+    ],
+  },
+  Object {
+    "address": "0xc5768c5371568cf1114cddd52caed163a42626ed",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0x762539b45a1dcce3d36d080f74d1aed37844b878",
+      "0xe9e7cea3dedca5984780bafc599bd69add087d56",
+    ],
+  },
+  Object {
+    "address": "0xbd26e08411483c4bebba80939fa5a775bee22338",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+      "0xd44fd09d74cd13838f137b590497595d6b3feea4",
+    ],
+  },
+  Object {
+    "address": "0x009c58e79779982eb53a9941f9f4a2269d093566",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0x4c882ec256823ee773b25b414d36f92ef58a7c0c",
+      "0xe9e7cea3dedca5984780bafc599bd69add087d56",
+    ],
+  },
+  Object {
+    "address": "0x07c10ecfb0e1cf81e3e05ddb693cc114c8ebe498",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0x431e0cd023a32532bf3969cddfc002c00e98429d",
+      "0xe9e7cea3dedca5984780bafc599bd69add087d56",
+    ],
+  },
+  Object {
+    "address": "0xf01ed80d46759c0cf6a3e9c66856017d81284962",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0x7324c7c0d95cebc73eea7e85cbaac0dbdf88a05b",
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+    ],
+  },
+  Object {
+    "address": "0x1bdcebca3b93af70b58c41272aea2231754b23ca",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0xa2b726b1145a4773f68593cf171187d8ebe4d495",
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+    ],
+  },
+  Object {
+    "address": "0x1ccc3cc95c8148477afd18a552f03835be9d182a",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0x0e09fabb73bd3ade0a17ecc321fd13a19e81ce82",
+      "0xe369fec23380f9f14ffd07a1dc4b7c1a9fdd81c9",
+    ],
+  },
+  Object {
+    "address": "0xb87b857670a44356f2b70337e0f218713d2378e8",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0xe9e7cea3dedca5984780bafc599bd69add087d56",
+      "0xebd49b26169e1b52c04cfd19fcf289405df55f80",
+    ],
+  },
+  Object {
+    "address": "0x7618fdab208ae23690dadd3aa4a42a442313d24e",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0x398f7827dccbefe6990478876bbf3612d93baf05",
+      "0xe9e7cea3dedca5984780bafc599bd69add087d56",
+    ],
+  },
+  Object {
+    "address": "0x9d2296e2fe3cdbf2eb3e3e2ca8811bafa42eedff",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0x03ff0ff224f904be3118461335064bb48df47938",
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+    ],
+  },
+  Object {
+    "address": "0xe834bf723f5bdff34a5d1129f3c31ea4787bc76a",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0x8519ea49c997f50ceffa444d240fb655e89248aa",
+      "0xe9e7cea3dedca5984780bafc599bd69add087d56",
+    ],
+  },
+  Object {
+    "address": "0x486697ae24469cb1122f537924aa46e705b142aa",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0x9fd87aefe02441b123c3c32466cd9db4c578618f",
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+    ],
+  },
+  Object {
+    "address": "0x88c9bf5e334e2591c6a866d5e20683e31226be3d",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0x40c8225329bd3e28a043b029e0d07a5344d2c27c",
+      "0xe9e7cea3dedca5984780bafc599bd69add087d56",
+    ],
+  },
+  Object {
+    "address": "0x11c0b2bb4fbb430825d07507a9e24e4c32f7704d",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0x77d547256a2cd95f32f67ae0313e450ac200648d",
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+    ],
+  },
+  Object {
+    "address": "0xe6b421a4408c82381b226ab5b6f8c4b639044359",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0x2222227e22102fe3322098e4cbfe18cfebd57c95",
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+    ],
+  },
+  Object {
+    "address": "0x2a995d355d5df641e878c0f366685741fd18d004",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0x4e840aadd28da189b9906674b4afcb77c128d9ea",
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+    ],
+  },
+  Object {
+    "address": "0xb5e33fe13a821e55ed33c884589a804b1b4f6fd8",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+      "0xdb8d30b74bf098af214e862c90e647bbb1fcc58c",
+    ],
+  },
+  Object {
+    "address": "0x0a292e96abb35297786a38fdd67dc4f82689e670",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0x49f2145d6366099e13b10fbf80646c0f377ee7f6",
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+    ],
+  },
+  Object {
+    "address": "0x28bdb16b623176426305a70d8b475be73aca71f3",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0x55d398326f99059ff775485246999027b3197955",
+      "0xbc7d6b50616989655afd682fb42743507003056d",
+    ],
+  },
+  Object {
+    "address": "0xf23bad605e94de0e3b60c9718a43a94a5af43915",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0x4fa7163e153419e0e1064e418dd7a99314ed27b6",
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+    ],
+  },
+  Object {
+    "address": "0xd469f2e7d1329836733adbac6b53e09b775a6e03",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0x037838b556d9c9d654148a284682c55bb5f56ef4",
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+    ],
+  },
+  Object {
+    "address": "0x3d12e4381901a6b94438758b90881cb03f10b01e",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0x90ed8f1dc86388f14b64ba8fb4bbd23099f18240",
+      "0xe9e7cea3dedca5984780bafc599bd69add087d56",
+    ],
+  },
+  Object {
+    "address": "0x06043b346450bbcfde066ebc39fdc264fdffed74",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0xa64455a4553c9034236734faddaddbb64ace4cc7",
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+    ],
+  },
+  Object {
+    "address": "0x2bf2deb40639201c9a94c9e33b4852d9aea5fd2d",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0xacb8f52dc63bb752a51186d1c55868adbffee9c1",
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+    ],
+  },
+  Object {
+    "address": "0x6615ce60d71513aa4849269dd63821d324a23f8c",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+      "0xbcf39f0edda668c58371e519af37ca705f2bfcbd",
+    ],
+  },
+  Object {
+    "address": "0xff1e1650a13000e7524e16629db05e4d6b83a092",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0x94b69263fca20119ae817b6f783fc0f13b02ad50",
+      "0xe9e7cea3dedca5984780bafc599bd69add087d56",
+    ],
+  },
+  Object {
+    "address": "0x1ede821daade714edade648f525ada0c5fe4ee3a",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0x19e6bfc1a6e4b042fb20531244d47e252445df01",
+      "0xe9e7cea3dedca5984780bafc599bd69add087d56",
+    ],
+  },
+  Object {
+    "address": "0xbcfd0d4a37feb4dceaaefa9da28cd833e5f04e9f",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0x9573c88ae3e37508f87649f87c4dd5373c9f31e0",
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+    ],
+  },
+  Object {
+    "address": "0x936928146a21afccd30dfa84824a780572b1630b",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0x6b23c89196deb721e6fd9726e6c76e4810a464bc",
+      "0x8ac76a51cc950d9822d68b83fe1ad97b32cd580d",
+    ],
+  },
+  Object {
+    "address": "0xecf30fbecfa642012f54212a3be92eef1e48edac",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0x810ee35443639348adbbc467b33310d2ab43c168",
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+    ],
+  },
+  Object {
+    "address": "0xcdb0016d97fd0e7ec2c3b78aa4786cbd8e19c14c",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0x1796ae0b0fa4862485106a0de9b654efe301d0b2",
+      "0xe9e7cea3dedca5984780bafc599bd69add087d56",
+    ],
+  },
+  Object {
+    "address": "0x8ca3ff14a52b080c54a6d1a405eeca02959d39fe",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0x965f527d9159dce6288a2219db51fc6eef120dd1",
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+    ],
+  },
+  Object {
+    "address": "0x678edb8b268e73db57b7694c163e1dc296b6e219",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0xb2bd0749dbe21f623d9baba856d3b0f0e1bfec9c",
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+    ],
+  },
+  Object {
+    "address": "0xdc9a574b9b341d4a98ce29005b614e1e27430e74",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+      "0xc0eff7749b125444953ef89682201fb8c6a917cd",
+    ],
+  },
+  Object {
+    "address": "0xdde420cbb3794ebd8ffc3ac69f9c78e5d1411870",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0xa7f552078dcc247c2684336020c03648500c6d9f",
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+    ],
+  },
+  Object {
+    "address": "0x3d5a3e3824da092851026fcda3d8a0b7438c4573",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+      "0xd48474e7444727bf500a32d5abe01943f3a59a64",
+    ],
+  },
+  Object {
+    "address": "0xb5feae037c2330a8f298f39bce96dd6e69f4fa0e",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0xd07e82440a395f3f3551b42da9210cd1ef4f8b24",
+      "0xe9e7cea3dedca5984780bafc599bd69add087d56",
+    ],
+  },
+  Object {
+    "address": "0xc309a6d2f1537922e06f15aa2eb21caa1b2eedb6",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0x4e6415a5727ea08aae4580057187923aec331227",
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+    ],
+  },
+  Object {
+    "address": "0xbdf0aa1d1985caa357a6ac6661d838da8691c569",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0x0e09fabb73bd3ade0a17ecc321fd13a19e81ce82",
+      "0x95ee03e1e2c5c4877f9a298f1c0d6c98698fab7b",
+    ],
+  },
+  Object {
+    "address": "0x4dca4d427511bc327639b222da18fa5e334f686f",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0xbd2949f67dcdc549c6ebe98696449fa79d988a9f",
+      "0xe9e7cea3dedca5984780bafc599bd69add087d56",
+    ],
+  },
+  Object {
+    "address": "0x6db23b5360c9d2859fdcbf41c56494e7b8573649",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0x426c72701833fddbdfc06c944737c6031645c708",
+      "0xe9e7cea3dedca5984780bafc599bd69add087d56",
+    ],
+  },
+  Object {
+    "address": "0x89ebf9cd99864f6e51bd7a578965922029cab977",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0x758fb037a375f17c7e195cc634d77da4f554255b",
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+    ],
+  },
+  Object {
+    "address": "0x6483f166b9e4310a165a55fea04f867499aded06",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0x5857c96dae9cf8511b08cb07f85753c472d36ea3",
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+    ],
+  },
+  Object {
+    "address": "0x59fac9e98479fc9979ae2a0c7422af50bcbb9b26",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0x07663837218a003e66310a01596af4bf4e44623d",
+      "0xe9e7cea3dedca5984780bafc599bd69add087d56",
+    ],
+  },
+  Object {
+    "address": "0x401abd5327542c25bad057614935bfd98186a8a1",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0x1d3437e570e93581bd94b2fd8fbf202d4a65654a",
+      "0x55d398326f99059ff775485246999027b3197955",
+    ],
+  },
+  Object {
+    "address": "0xd9bccbbbdfd9d67beb5d2273102ce0762421d1e3",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0x0d8ce2a99bb6e3b7db580ed848240e4a0f9ae153",
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+    ],
+  },
+  Object {
+    "address": "0xdc7188ac11e124b1fa650b73ba88bf615ef15256",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0xe60eaf5a997dfae83739e035b005a33afdcc6df5",
+      "0xe9e7cea3dedca5984780bafc599bd69add087d56",
+    ],
+  },
+  Object {
+    "address": "0x222f93187f15f354d41ff6a7703ef7e18cdd5103",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0x2fa5daf6fe0708fbd63b1a7d1592577284f52256",
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+    ],
+  },
+  Object {
+    "address": "0x5afef8567414f29f0f927a0f2787b188624c10e2",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+      "0xc9849e6fdb743d08faee3e34dd2d1bc69ea11a51",
+    ],
+  },
+  Object {
+    "address": "0x21dd71ab78ede3033c976948f769d506e4f489ee",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+      "0xf859bf77cbe8699013d6dbc7c2b926aaf307f830",
+    ],
+  },
+  Object {
+    "address": "0xd76026a78a2a9af2f9f57fe6337eed26bfc26aed",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0x00e1656e45f18ec6747f5a8496fd39b50b38396d",
+      "0xe9e7cea3dedca5984780bafc599bd69add087d56",
+    ],
+  },
+  Object {
+    "address": "0x71e6de81381efe0aa98f56b3b43eb3727d640715",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0x0b15ddf19d47e6a86a56148fb4afffc6929bcb89",
+      "0xe9e7cea3dedca5984780bafc599bd69add087d56",
+    ],
+  },
+  Object {
+    "address": "0x0ecc84c9629317a494f12bc56aa2522475bf32e8",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0x1fc9004ec7e5722891f5f38bae7678efcb11d34d",
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+    ],
+  },
+  Object {
+    "address": "0xef7767677867552cfa699148b96a03358a9be779",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0xa2120b9e674d3fc3875f415a7df52e382f141225",
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+    ],
+  },
+  Object {
+    "address": "0x3cd338c3bb249b6b3c55799f85a589febbbff9dd",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0x85eac5ac2f758618dfa09bdbe0cf174e7d574d5b",
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+    ],
+  },
+  Object {
+    "address": "0x29b4abb0f8734ea672a0e82fa47998f710b6a07a",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0x755f34709e369d37c6fa52808ae84a32007d1155",
+      "0xe9e7cea3dedca5984780bafc599bd69add087d56",
+    ],
+  },
+  Object {
+    "address": "0x37ff7d4459ad96e0b01275e5efffe091f33c2cad",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0xa58950f05fea2277d2608748412bf9f802ea4901",
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+    ],
+  },
+  Object {
+    "address": "0xd16e57367519ead068cfcde7cf3b95a03994ace7",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0xb4404dab7c0ec48b428cf37dec7fb628bcc41b36",
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+    ],
+  },
+  Object {
+    "address": "0x92c3e2cdddb0ce886bca864151bd4d611a86e563",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0xe9e7cea3dedca5984780bafc599bd69add087d56",
+      "0xfeea0bdd3d07eb6fe305938878c0cadbfa169042",
+    ],
+  },
+  Object {
+    "address": "0x05faf555522fa3f93959f86b41a3808666093210",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0x23396cf899ca06c4472205fc903bdb4de249d6fc",
+      "0xe9e7cea3dedca5984780bafc599bd69add087d56",
+    ],
+  },
+  Object {
+    "address": "0x6da32849fc5e1c23894d9e08166912f15bdb2e95",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0x990e7154bb999faa9b2fa5ed29e822703311ea85",
+      "0xe9e7cea3dedca5984780bafc599bd69add087d56",
+    ],
+  },
+  Object {
+    "address": "0x0648ff5de80adf54aac07ece2490f50a418dde23",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0x6bff4fb161347ad7de4a625ae5aa3a1ca7077819",
+      "0xe9e7cea3dedca5984780bafc599bd69add087d56",
+    ],
+  },
+  Object {
+    "address": "0x7759283571da8c0928786a96ae601944e10461ff",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0xe9e7cea3dedca5984780bafc599bd69add087d56",
+      "0xee9801669c6138e84bd50deb500827b776777d28",
+    ],
+  },
+  Object {
+    "address": "0x8290d3ca64f712de9fb7220353daa55bf388f3a3",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+      "0xd3b71117e6c1558c1553305b44988cd944e97300",
+    ],
+  },
+  Object {
+    "address": "0xacf47cbeaab5c8a6ee99263cfe43995f89fb3206",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0xa1faa113cbe53436df28ff0aee54275c13b40975",
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+    ],
+  },
+  Object {
+    "address": "0xe8d5d81dac092ae61d097f84efe230759bf2e522",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0xacb2d47827c9813ae26de80965845d80935afd0b",
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+    ],
+  },
+  Object {
+    "address": "0xd02da76c813b9cd4516ed50442923e625f90228f",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0x04c747b40be4d535fc83d09939fb0f626f32800b",
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+    ],
+  },
+  Object {
+    "address": "0xa7a0b605343df36b748ff4b5f7578b3f2d0651ce",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0x5621b5a3f4a8008c4ccdd1b942b121c8b1944f1f",
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+    ],
+  },
+  Object {
+    "address": "0x2eebe0c34da9ba65521e98cbaa7d97496d05f489",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0x00e1656e45f18ec6747f5a8496fd39b50b38396d",
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+    ],
+  },
+  Object {
+    "address": "0x272c2cf847a49215a3a1d4bff8760e503a06f880",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+      "0xe85afccdafbe7f2b096f268e31cce3da8da2990a",
+    ],
+  },
+  Object {
+    "address": "0x8046fa66753928f35f7db23ae0188ee6743c2fba",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0x2cd1075682b0fccaadd0ca629e138e64015ba11c",
+      "0x7130d2a12b9bcbfae4f2634d864a1ee1ce3ead9c",
+    ],
+  },
+  Object {
+    "address": "0x43b95976cf0929478bc13332c9cd2d63bf060976",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0x90ed8f1dc86388f14b64ba8fb4bbd23099f18240",
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+    ],
+  },
+  Object {
+    "address": "0xc6b668548aa4a56792e8002a920d3159728121d5",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0x928e55dab735aa8260af3cedada18b5f70c72f1b",
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+    ],
+  },
+  Object {
+    "address": "0x3edb06e2d182d133864fe7c0f9b4c204bbf61d4e",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0xb6c53431608e626ac81a9776ac3e999c5556717c",
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+    ],
+  },
+  Object {
+    "address": "0x008604a38cd589680f7b8f085dc2d5b4f81151db",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+      "0xf5d8a096cccb31b9d7bce5afe812be23e3d4690d",
+    ],
+  },
+  Object {
+    "address": "0x41140a1650372fb8cb2f71e335448ab8cfc1c4f3",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0x630d98424efe0ea27fb1b3ab7741907dffeaad78",
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+    ],
+  },
+  Object {
+    "address": "0xc869a9943b702b03770b6a92d2b2d25cf3a3f571",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0x948d2a81086a075b3130bac19e4c6dee1d2e3fe8",
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+    ],
+  },
+  Object {
+    "address": "0x845d301c864d48027db73ec4394e6ddbe52cbc39",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0x50332bdca94673f33401776365b66cc4e81ac81d",
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+    ],
+  },
+  Object {
+    "address": "0xbc7ac609fa730239190a70952e64ee1dfc2530ac",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0x5a16e8ce8ca316407c6e6307095dc9540a8d62b3",
+      "0xe9e7cea3dedca5984780bafc599bd69add087d56",
+    ],
+  },
+  Object {
+    "address": "0xb7cada0f120ca46745a024e6b9fe907b2fe10cf3",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0xe9e7cea3dedca5984780bafc599bd69add087d56",
+      "0xf218184af829cf2b0019f8e6f0b2423498a36983",
+    ],
+  },
+  Object {
+    "address": "0x460b4193ec4c1a17372aa5fdcd44c520ba658646",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0xa8c2b8eec3d368c0253ad3dae65a5f2bbb89c929",
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+    ],
+  },
+  Object {
+    "address": "0xcecfc2789af72ed151589a96a59f3a1abc65c3b5",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0x4a080377f83d669d7bb83b3184a8a5e61b500608",
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+    ],
+  },
+  Object {
+    "address": "0xd39f05ab936aa201235005c47b83268f2d9833f8",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0x4be63a9b26ee89b9a3a13fd0aa1d0b2427c135f8",
+      "0xe9e7cea3dedca5984780bafc599bd69add087d56",
+    ],
+  },
+  Object {
+    "address": "0x6a97867a4b7eb7646ffb1f359ad582e9903aa1c2",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0xb86abcb37c3a4b64f74f59301aff131a1becc787",
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+    ],
+  },
+  Object {
+    "address": "0x58aed290f42963a502626774bd8fa03f33c9b71f",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0x2c717059b366714d267039af8f59125cadce6d8c",
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+    ],
+  },
+  Object {
+    "address": "0xd01bf29edca0285a004a25e325a449ba56e5926e",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0x3192ccddf1cdce4ff055ebc80f3f0231b86a7e30",
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+    ],
+  },
+  Object {
+    "address": "0x8d3ff27d2ad6a9556b7c4f82f4d602d20114bc90",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0xbbeb90cfb6fafa1f69aa130b7341089abeef5811",
+      "0xe9e7cea3dedca5984780bafc599bd69add087d56",
+    ],
+  },
+  Object {
+    "address": "0xcaa662ad41a662b81be2aea5d59ec0697628665f",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0x758d08864fb6cce3062667225ca10b8f00496cc2",
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+    ],
+  },
+  Object {
+    "address": "0xb9378a7d4f47ac8cf78b4f18ed15a875ab0c89a1",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0x4f39c3319188a723003670c3f9b9e7ef991e52f3",
+      "0xe9e7cea3dedca5984780bafc599bd69add087d56",
+    ],
+  },
+  Object {
+    "address": "0xe4077a90f8600d9599440cc6d9057785f43a6ac9",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0x5fe80d2cd054645b9419657d3d10d26391780a7b",
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+    ],
+  },
+  Object {
+    "address": "0x6d0c831254221ba121fb53fb44df289a6558867d",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0xe9e7cea3dedca5984780bafc599bd69add087d56",
+      "0xeca41281c24451168a37211f0bc2b8645af45092",
+    ],
+  },
+  Object {
+    "address": "0x168b273278f3a8d302de5e879aa30690b7e6c28f",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0xad6caeb32cd2c308980a548bd0bc5aa4306c6c18",
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+    ],
+  },
+  Object {
+    "address": "0xdaa89d335926628367b47852989bb22ee62ca5de",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0xdaacb0ab6fb34d24e8a67bfa14bf4d95d4c7af92",
+      "0xed28a457a5a76596ac48d87c0f577020f6ea1c4c",
+    ],
+  },
+  Object {
+    "address": "0x109cbffe72c02f26536ff8b92278dfd3610de656",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+      "0xed8c8aa8299c10f067496bb66f8cc7fb338a3405",
+    ],
+  },
+  Object {
+    "address": "0x3e19c18fe3458a6065d8f0844cb7eae52c9dae07",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0x25a528af62e56512a19ce8c3cab427807c28cc19",
+      "0xe9e7cea3dedca5984780bafc599bd69add087d56",
+    ],
+  },
+  Object {
+    "address": "0x70531b39e2bb4d8da59e2ce41a98eba2990f8497",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0x62823659d09f9f9d2222058878f89437425eb261",
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+    ],
+  },
+  Object {
+    "address": "0xf90baa331cfd40f094476e752bf272892170d399",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0x3fcca8648651e5b974dd6d3e50f61567779772a8",
+      "0xe9e7cea3dedca5984780bafc599bd69add087d56",
+    ],
+  },
+  Object {
+    "address": "0x1cc18962b919ef90085a8b21f8ddc95824fbad9e",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0x833f307ac507d47309fd8cdd1f835bef8d702a93",
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+    ],
+  },
+  Object {
+    "address": "0xd63b5cecb1f40d626307b92706df357709d05827",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+      "0xf21768ccbc73ea5b6fd3c687208a7c2def2d966e",
+    ],
+  },
+  Object {
+    "address": "0x02d75d7beebf6d5228a3fa5f810cedf2bea5ab1e",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0x208cfec94d2ba8b8537da7a9bb361c6baad77272",
+      "0xe9e7cea3dedca5984780bafc599bd69add087d56",
+    ],
+  },
+  Object {
+    "address": "0x6a00e41561ac36a78dba1d09091b0f00c4e53724",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0x658e64ffcf40d240a43d52ca9342140316ae44fa",
+      "0xe9e7cea3dedca5984780bafc599bd69add087d56",
+    ],
+  },
+  Object {
+    "address": "0xa9986fcbdb23c2e8b11ab40102990a08f8e58f06",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0x67ee3cb086f8a16f34bee3ca72fad36f7db929e2",
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+    ],
+  },
+  Object {
+    "address": "0x1f37d4226d23d09044b8005c127c0517bd7e94fd",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0xb59490ab09a0f526cc7305822ac65f2ab12f9723",
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+    ],
+  },
+  Object {
+    "address": "0xc74f7243766269dec5b85b0ef4af186e909c1b06",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0x4ba0057f784858a48fe351445c672ff2a3d43515",
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+    ],
+  },
+  Object {
+    "address": "0x1c640a98a0c62120b0ad23c15fff8dc1a2fb9c4d",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+      "0xe2604c9561d490624aa35e156e65e590eb749519",
+    ],
+  },
+  Object {
+    "address": "0xcd68856b6e72e99b5eeaae7d41bb4a3b484c700d",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+      "0xbf7c81fff98bbe61b40ed186e4afd6ddd01337fe",
+    ],
+  },
+  Object {
+    "address": "0xee456d906a38e10680c9d157fff143390e9681ba",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0xe9e7cea3dedca5984780bafc599bd69add087d56",
+      "0xfa40d8fc324bcdd6bbae0e086de886c571c225d4",
+    ],
+  },
+  Object {
+    "address": "0x351a295afbab020bc7eedcb7fd5a823c01a95fda",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0xe20b9e246db5a0d21bf9209e4858bc9a3ff7a034",
+      "0xe9e7cea3dedca5984780bafc599bd69add087d56",
+    ],
+  },
+  Object {
+    "address": "0x4fd6d315bef387fad2322fbc64368fc443f0886d",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0x71de20e0c4616e7fcbfdd3f875d568492cbe4739",
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+    ],
+  },
+  Object {
+    "address": "0xd6d206f59cc5a3bfa4cc10bc8ba140ac37ad1c89",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0x7961ade0a767c0e5b67dd1a1f78ba44f727642ed",
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+    ],
+  },
+  Object {
+    "address": "0x289841bfb694767bcb56fbc7b741ab4b4d97d490",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0xaa9e582e5751d703f85912903bacaddfed26484c",
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+    ],
+  },
+  Object {
+    "address": "0x4cc442220be1ce560c1f2573f8ca8f460b3e4172",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+      "0xc5e6689c9c8b02be7c49912ef19e79cf24977f03",
+    ],
+  },
+  Object {
+    "address": "0x0c3b12fca25bfa840e0553da97c532e9abd3913d",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0x5e2689412fae5c29bd575fbe1d5c1cd1e0622a8f",
+      "0xe9e7cea3dedca5984780bafc599bd69add087d56",
+    ],
+  },
+  Object {
+    "address": "0x3c2c77353e2f6ac1578807b6b2336bf3a3cbb014",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+      "0xcd40f2670cf58720b694968698a5514e924f742d",
+    ],
+  },
+  Object {
+    "address": "0x13321acff4a27f3d2bca64b8beac6e5fdaaaf12c",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0x7a9f28eb62c791422aa23ceae1da9c847cbec9b0",
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+    ],
+  },
+  Object {
+    "address": "0x58d4b61983ca0afe6e352e90719f403e24e016f4",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0x93d8d25e3c9a847a5da79f79ecac89461feca846",
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+    ],
+  },
+  Object {
+    "address": "0x141e9558f66cc21c93628400cca7d830c15c2c24",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+      "0xe69caef10a488d7af31da46c89154d025546e990",
+    ],
+  },
+  Object {
+    "address": "0x28ea5894d4dbbe90bb58ee3bab2869387d711c87",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+      "0xc53708664b99df348dd27c3ac0759d2da9c40462",
+    ],
+  },
+  Object {
+    "address": "0x81d776c90c89b8d51e9497d58338933127e2fa80",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0x5986d5c77c65e5801a5caa4fae80089f870a71da",
+      "0x7130d2a12b9bcbfae4f2634d864a1ee1ce3ead9c",
+    ],
+  },
+  Object {
+    "address": "0x8e799cb0737525ceb8a6c6ad07f748535ff6377b",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0x44754455564474a89358b2c2265883df993b12f0",
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+    ],
+  },
+  Object {
+    "address": "0x2d5db889392bc3c8b023a8631ca230a033eea1b8",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0x4cfbbdfbd5bf0814472ff35c72717bd095ada055",
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+    ],
+  },
+  Object {
+    "address": "0xd5d00b0ad40ff6d8c1a6f7e72f185b6fb3c3fd1f",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0x1d229b958d5ddfca92146585a8711aecbe56f095",
+      "0xe9e7cea3dedca5984780bafc599bd69add087d56",
+    ],
+  },
+  Object {
+    "address": "0x510b29a93ebf098f3fc24a16541aaa0114d07056",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0x37dfacfaeda801437ff648a1559d73f4c40aacb7",
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+    ],
+  },
+  Object {
+    "address": "0xc19dfd34d3ba5816df9cbdaa02d32a9f8dc6f6fc",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0x154a9f9cbd3449ad22fdae23044319d6ef2a1fab",
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+    ],
+  },
+  Object {
+    "address": "0x47c42b0a056a9c6e9c65b9ef79020af518e767a5",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0x5ac52ee5b2a633895292ff6d8a89bb9190451587",
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+    ],
+  },
+  Object {
+    "address": "0xbc7e925f9dec60fe4f50c0457609f3ca5c3f5906",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0x7859b01bbf675d67da8cd128a50d155cd881b576",
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+    ],
+  },
+  Object {
+    "address": "0x1434bb50196a0c7ea825940b1dfd8aad25d79817",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0x1ffd0b47127fdd4097e54521c9e2c7f0d66aafc5",
+      "0xe9e7cea3dedca5984780bafc599bd69add087d56",
+    ],
+  },
+  Object {
+    "address": "0x894bd57afd8efc93d9171cb585d11d0977557425",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0xaef0d72a118ce24fee3cd1d43d383897d05b4e99",
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+    ],
+  },
+  Object {
+    "address": "0x61010e6cba3b56ba47e9dfd56da682dacfe76131",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0x0f9e4d49f25de22c2202af916b681fbb3790497b",
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+    ],
+  },
+  Object {
+    "address": "0x37908620def1491dd591b5a2d16022a33cdda415",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0x2170ed0880ac9a755fd29b2688956bd959f933f8",
+      "0x52ce071bd9b1c4b00a0b92d298c512478cad67e8",
+    ],
+  },
+  Object {
+    "address": "0xa5bb44c6f5fd9b836e5a654c8abbccc96a15dee5",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0x857b222fc79e1cbbf8ca5f78cb133d1b7cf34bbd",
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+    ],
+  },
+  Object {
+    "address": "0x6a24a877bb7d07fba59397decbbaed5f92890aea",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0x84e9a6f9d240fdd33801f7135908bfa16866939a",
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+    ],
+  },
+  Object {
+    "address": "0x7b4682d2b3f8670b125af6aea8d7ed2daa43bdc1",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0xb0e1fc65c1a741b4662b813eb787d369b8614af1",
+      "0xe9e7cea3dedca5984780bafc599bd69add087d56",
+    ],
+  },
+  Object {
+    "address": "0x3578b1f9bce98d2f4d293b422d8850fdf48b1f21",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0x039cb485212f996a9dbb85a9a75d898f94d38da6",
+      "0xe9e7cea3dedca5984780bafc599bd69add087d56",
+    ],
+  },
+  Object {
+    "address": "0x41f049d990d38305504631c9835f6f856bf1ba67",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0x9f882567a62a5560d147d64871776eea72df41d3",
+      "0xe9e7cea3dedca5984780bafc599bd69add087d56",
+    ],
+  },
+  Object {
+    "address": "0x85e5889fc3ed01b4e8b56bbc717d7643294d2c31",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0x1d229b958d5ddfca92146585a8711aecbe56f095",
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+    ],
+  },
+  Object {
+    "address": "0x67efef66a55c4562144b9acfcfbc62f9e4269b3e",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0x17b7163cf1dbd286e262ddc68b553d899b93f526",
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+    ],
+  },
+  Object {
+    "address": "0xb6e34b5c65eda51bb1bd4ea5f79d385fb94b9504",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0x56b6fb708fc5732dec1afc8d8556423a2edccbd6",
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+    ],
+  },
+  Object {
+    "address": "0x5d937c3966002cbd9d32c890a59439b4b300a14d",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+      "0xe8176d414560cfe1bf82fd73b986823b89e4f545",
+    ],
+  },
+  Object {
+    "address": "0x5a58609da96469e9def3fe344bc39b00d18eb9a5",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0x1f7216fdb338247512ec99715587bb97bbf96eae",
+      "0x7130d2a12b9bcbfae4f2634d864a1ee1ce3ead9c",
+    ],
+  },
+  Object {
+    "address": "0xef5212ada83ec2cc105c409df10b8806d20e3b35",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0x5f84ce30dc3cf7909101c69086c50de191895883",
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+    ],
+  },
+  Object {
+    "address": "0x9730c791743300e9f984c9264395ce705a55da7c",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0x6f769e65c14ebd1f68817f5f1dcdb61cfa2d6f7e",
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+    ],
+  },
+  Object {
+    "address": "0x468b2dc8dc75990ee3e9dc0648965ad6294e7914",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0x0eb3a705fc54725037cc9e008bdede697f62f335",
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+    ],
+  },
+  Object {
+    "address": "0x365c3f921b2915a480308d0b1c04aef7b99c2876",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0x7ceb519718a80dd78a8545ad8e7f401de4f2faa7",
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+    ],
+  },
+  Object {
+    "address": "0xec95ff6281c3ad8e27372fa6675eb337640b8e5e",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0x7e396bfc8a2f84748701167c2d622f041a1d7a17",
+      "0xe9e7cea3dedca5984780bafc599bd69add087d56",
+    ],
+  },
+  Object {
+    "address": "0x7275278c94b5e20708380561c4af98f38ddc6374",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+      "0xc13b7a43223bb9bf4b69bd68ab20ca1b79d81c75",
+    ],
+  },
+  Object {
+    "address": "0x8f6baf368e7a4f6e2c9c995f22702d5e654a0237",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0x7af173f350d916358af3e218bdf2178494beb748",
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+    ],
+  },
+  Object {
+    "address": "0xe98585bbb2dc81854ff100a3d9d7b0f53e0dafed",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0x96dd399f9c3afda1f194182f71600f1b65946501",
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+    ],
+  },
+  Object {
+    "address": "0x853784b7bde87d858555715c0123374242db7943",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0x8cd6e29d3686d24d3c2018cee54621ea0f89313b",
+      "0xe9e7cea3dedca5984780bafc599bd69add087d56",
+    ],
+  },
+  Object {
+    "address": "0xe60b4e87645093a42fa9dcc5d0c8df6e67f1f9d2",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0x658a109c5900bc6d2357c87549b651670e5b0539",
+      "0xe9e7cea3dedca5984780bafc599bd69add087d56",
+    ],
+  },
+  Object {
+    "address": "0x0927c49a18eac4512112e7a226275e2c36f2c3db",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0x8bdd8dbcbdf0c066ca5f3286d33673aa7a553c10",
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+    ],
+  },
+  Object {
+    "address": "0xdfa808da5cfb9aba5fb3748ff85888f79174f378",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+      "0xffeecbf8d7267757c2dc3d13d730e97e15bfdf7f",
+    ],
+  },
+  Object {
+    "address": "0x946696344e7d4346b223e1cf77035a76690d6a73",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0x8595f9da7b868b1822194faed312235e43007b49",
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+    ],
+  },
+  Object {
+    "address": "0x00e53c169da54a7e11172aeedf8eb87f060f479e",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0x08ba0619b1e7a582e0bce5bbe9843322c954c340",
+      "0xe9e7cea3dedca5984780bafc599bd69add087d56",
+    ],
+  },
+  Object {
+    "address": "0x2030845ce7d4224523fd2f03ca20afe4aad1d890",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+      "0xe550a593d09fbc8dcd557b5c88cea6946a8b404a",
+    ],
+  },
+  Object {
+    "address": "0x0362ba706dfe8ed12ec1470ab171d8dcb1c72b8d",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+      "0xed28a457a5a76596ac48d87c0f577020f6ea1c4c",
+    ],
+  },
+  Object {
+    "address": "0x3747e3e107223539fd09bb730b055a1f11f78adf",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+      "0xf750a26eb0acf95556e8529e72ed530f3b60f348",
+    ],
+  },
+  Object {
+    "address": "0x029d66f9c0469450b7b4834b8ddc6a1118cec3e1",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0x9899a98b222fcb2f3dbee7df45d943093a4ff9ff",
+      "0xe9e7cea3dedca5984780bafc599bd69add087d56",
+    ],
+  },
+  Object {
+    "address": "0xf1ec67fa1881796bff63db3e1a301ce9cb787fad",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0x3fda9383a84c05ec8f7630fe10adf1fac13241cc",
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+    ],
+  },
+  Object {
+    "address": "0x0604471c532f9febad3e37190b667f44bd0894b3",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0x1613957159e9b0ac6c80e824f7eea748a32a0ae2",
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+    ],
+  },
+  Object {
+    "address": "0x04b56a5b3f45cfeafbfdcfc999c14be5434f2146",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0x95a1199eba84ac5f19546519e287d43d2f0e1b41",
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+    ],
+  },
+  Object {
+    "address": "0x2c624c9ecf16cb81ab85cc2c0b0c5e12a09afda6",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0x1d1eb8e8293222e1a29d2c0e4ce6c0acfd89aaac",
+      "0xe9e7cea3dedca5984780bafc599bd69add087d56",
+    ],
+  },
+  Object {
+    "address": "0x44ea47f2765fd5d26b7ef0222736ad6fd6f61950",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0x728c5bac3c3e370e372fc4671f9ef6916b814d8b",
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+    ],
+  },
+  Object {
+    "address": "0xf74ee1e10e097dc326a2ad004f9cc95cb71088d3",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+      "0xc7d8d35eba58a0935ff2d5a33df105dd9f071731",
+    ],
+  },
+  Object {
+    "address": "0x8853e3309a31583ea438f7704681f46f0d4d909b",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0xa1434f1fc3f437fa33f7a781e041961c0205b5da",
+      "0xe9e7cea3dedca5984780bafc599bd69add087d56",
+    ],
+  },
+  Object {
+    "address": "0x69dee989c30b5ffe40867f5fc14f00e4bce7b681",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0x8443f091997f06a61670b735ed92734f5628692f",
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+    ],
+  },
+  Object {
+    "address": "0x8271d7eafeeb8f24d7c9fe1acce2ae20611972e5",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0x9617857e191354dbea0b714d78bc59e57c411087",
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+    ],
+  },
+  Object {
+    "address": "0x3e4370204f598205998143f07ebcc486e441b456",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0xb64e638e60d154b43f660a6bf8fd8a3b249a6a21",
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+    ],
+  },
+  Object {
+    "address": "0x222c3cbb89647bf77822435bd4c234a04272a77a",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0x211ffbe424b90e25a15531ca322adf1559779e45",
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+    ],
+  },
+  Object {
+    "address": "0x4288706624e3dd839b069216eb03b8b9819c10d2",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0x190b589cf9fb8ddeabbfeae36a813ffb2a702454",
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+    ],
+  },
+  Object {
+    "address": "0x6e98beb694ff1cdb1ee130edd2b21b0298683d58",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0xdb021b1b247fe2f1fa57e0a87c748cc1e321f07f",
+      "0xe9e7cea3dedca5984780bafc599bd69add087d56",
+    ],
+  },
+  Object {
+    "address": "0x4ddd56e2f34338839bb5953515833950ea680afb",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0x0112e557d400474717056c4e6d40edd846f38351",
+      "0xe9e7cea3dedca5984780bafc599bd69add087d56",
+    ],
+  },
+  Object {
+    "address": "0x4d057f769d930eafd597b49d6fb2e1009a73a702",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0x04baf95fd4c52fd09a56d840baee0ab8d7357bf0",
+      "0xe9e7cea3dedca5984780bafc599bd69add087d56",
+    ],
+  },
+  Object {
+    "address": "0x1090c996fd1490d15dd7906322ee676a5cc3cf82",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0xabae871b7e3b67aeec6b46ae9fe1a91660aadac5",
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+    ],
+  },
+  Object {
+    "address": "0xe094c686ad6cdda57b9564457f541fbf099b948a",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0x92d7756c60dcfd4c689290e8a9f4d263b3b32241",
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+    ],
+  },
+  Object {
+    "address": "0x950fd020f8e4b8c57285ec7020b7a204348dadfa",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+      "0xe64f5cb844946c1f102bd25bbd87a5ab4ae89fbe",
+    ],
+  },
+  Object {
+    "address": "0x3e42c1f7239231e3752b507764445dd8e6a570d5",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0xe1d1f66215998786110ba0102ef558b22224c016",
+      "0xe9e7cea3dedca5984780bafc599bd69add087d56",
+    ],
+  },
+  Object {
+    "address": "0x24d3b0ed4c444a4f6882d527cbf67adc8c026582",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0x42712df5009c20fee340b245b510c0395896cf6e",
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+    ],
+  },
+  Object {
+    "address": "0xdcfbb12ded3fea12d2a078bc6324131cd14bf835",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0x8595f9da7b868b1822194faed312235e43007b49",
+      "0xe9e7cea3dedca5984780bafc599bd69add087d56",
+    ],
+  },
+  Object {
+    "address": "0xf8ca29a3bf6d34691981d3ee8d4c9cd1c437efee",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0x0e09fabb73bd3ade0a17ecc321fd13a19e81ce82",
+      "0x40c8225329bd3e28a043b029e0d07a5344d2c27c",
+    ],
+  },
+  Object {
+    "address": "0x8b2824d57eebf07f5aff5c91fa67ed7c501a9f43",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0x9fdc3ae5c814b79dca2556564047c5e7e5449c19",
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+    ],
+  },
+  Object {
+    "address": "0xaa40f1ac20aafcfee8595da606d78c503c7e70a3",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "Cake-LP",
+    "tokens": Array [
+      "0x26a5dfab467d4f58fb266648cae769503cec9580",
+      "0xe9e7cea3dedca5984780bafc599bd69add087d56",
+    ],
+  },
+]
+`;

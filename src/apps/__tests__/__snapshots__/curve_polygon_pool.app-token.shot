@@ -1,0 +1,193 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`App Token Fetchers (curve, polygon, pool) positions should have structure 1`] = `
+Array [
+  Object {
+    "address": "0xf8a57c1d3b9629b77b6726a042ca48990a84fb49",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "btcCRV",
+    "tokens": Array [
+      "0x5c2ed810328349100a66b82b78a1791b101c9d61",
+      "0xdbf31df14b66535af65aac99c32e9ea844e14501",
+    ],
+  },
+  Object {
+    "address": "0xe7a24ef0c5e95ffb0f6684b813a78f2a3ad7d171",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "am3CRV",
+    "tokens": Array [
+      "0x27f8d03b3a2196956ed754badc28d73be8830a6e",
+      "0x1a13f4ca1d028320a707d99520abfefca3998b7f",
+      "0x60d55f02a771d515e077c9c2403a1ef324885cec",
+    ],
+  },
+  Object {
+    "address": "0xad326c253a84e9805559b73a08724e11e49ca651",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "4eur-f",
+    "tokens": Array [
+      "0x4e3decbb3645551b8a19f0ea1678079fcb33fb4c",
+      "0xe2aa7db6da1dae97c5f5c6914d285fbfcc32a128",
+      "0xe111178a87a3bff0c8d18decba5798827539ae99",
+      "0x7bdf330f423ea880ff95fc41a280fd5ecfd3d09f",
+    ],
+  },
+  Object {
+    "address": "0x2ffbce9099cbed86984286a54e5932414af4b717",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "agEURjEUR-f",
+    "tokens": Array [
+      "0xe0b52e49357fd4daf2c15e02058dce6bc0057db4",
+      "0x4e3decbb3645551b8a19f0ea1678079fcb33fb4c",
+    ],
+  },
+  Object {
+    "address": "0xfba3b7bb043415035220b1c44fb4756434639392",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "AXELARUSDC-f",
+    "tokens": Array [
+      "0x750e4c4984a9e0f12978ea6742bc1c5d248f40ed",
+      "0x2791bca1f2de4661ed88a30c99a7a9449aa84174",
+    ],
+  },
+  Object {
+    "address": "0xe4ae3ee65bb687045e401827b404fee34be4ba53",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "4pool-f",
+    "tokens": Array [
+      "0x45c32fa6df82ead1e2ef74d17b76547eddfaff89",
+      "0xe6469ba6d2fd6130788e0ea9c0a0515900563b59",
+      "0x1a13f4ca1d028320a707d99520abfefca3998b7f",
+      "0x60d55f02a771d515e077c9c2403a1ef324885cec",
+    ],
+  },
+  Object {
+    "address": "0x0f110c55efe62c16d553a3d3464b77e1853d0e97",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "2eur (PAR)-f",
+    "tokens": Array [
+      "0xe2aa7db6da1dae97c5f5c6914d285fbfcc32a128",
+      "0x4e3decbb3645551b8a19f0ea1678079fcb33fb4c",
+    ],
+  },
+  Object {
+    "address": "0x2c3cc8e698890271c8141be9f6fd6243d56b39f1",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "2eur EURT-f",
+    "tokens": Array [
+      "0x7bdf330f423ea880ff95fc41a280fd5ecfd3d09f",
+      "0x4e3decbb3645551b8a19f0ea1678079fcb33fb4c",
+    ],
+  },
+  Object {
+    "address": "0x5e5a23b52cb48f5e70271be83079ca5bc9c9e9ac",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "FRAX3CRV-f3CRV-f",
+    "tokens": Array [
+      "0x45c32fa6df82ead1e2ef74d17b76547eddfaff89",
+      "0xe7a24ef0c5e95ffb0f6684b813a78f2a3ad7d171",
+    ],
+  },
+  Object {
+    "address": "0x9a30e9a76afbdf52f44b8b8bc2dc3cd941282789",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "PYD3CRV-f",
+    "tokens": Array [
+      "0x0527c8c43250279d6eb74da1078193f5316fc9a0",
+      "0xe7a24ef0c5e95ffb0f6684b813a78f2a3ad7d171",
+    ],
+  },
+  Object {
+    "address": "0x81212149b983602474fcd0943e202f38b38d7484",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "agEUR+4eur-f",
+    "tokens": Array [
+      "0xe0b52e49357fd4daf2c15e02058dce6bc0057db4",
+      "0xad326c253a84e9805559b73a08724e11e49ca651",
+    ],
+  },
+  Object {
+    "address": "0x447646e84498552e62ecf097cc305eabfff09308",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "MAI+3Pool3CRV-f",
+    "tokens": Array [
+      "0xa3fa99a148fa48d14ed51d610c367c61876997f1",
+      "0xe7a24ef0c5e95ffb0f6684b813a78f2a3ad7d171",
+    ],
+  },
+  Object {
+    "address": "0xadf577b69eeac9df325536cf1af106372f2da263",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "TUSDam3CRV3CRV-f",
+    "tokens": Array [
+      "0x2e1ad108ff1d8c782fcbbb89aad783ac49586756",
+      "0xe7a24ef0c5e95ffb0f6684b813a78f2a3ad7d171",
+    ],
+  },
+  Object {
+    "address": "0xcf5186491739aac19db943d71a9b9b759f3afabf",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "USDS+3Pool3CRV-f",
+    "tokens": Array [
+      "0x2f1b1662a895c6ba01a99dcaf56778e7d77e5609",
+      "0xe7a24ef0c5e95ffb0f6684b813a78f2a3ad7d171",
+    ],
+  },
+  Object {
+    "address": "0xdad97f7713ae9437fa9249920ec8507e5fbb23d3",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "crvUSDBTCETH",
+    "tokens": Array [
+      "0xe7a24ef0c5e95ffb0f6684b813a78f2a3ad7d171",
+      "0x5c2ed810328349100a66b82b78a1791b101c9d61",
+      "0x28424507fefb6f7f8e9d3860f56504e4e5f5f390",
+    ],
+  },
+  Object {
+    "address": "0x600743b1d8a96438bd46836fd34977a00293f6aa",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "crvEURTUSD",
+    "tokens": Array [
+      "0x7bdf330f423ea880ff95fc41a280fd5ecfd3d09f",
+      "0xe7a24ef0c5e95ffb0f6684b813a78f2a3ad7d171",
+    ],
+  },
+  Object {
+    "address": "0x8096ac61db23291252574d49f036f0f9ed8ab390",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "crvUSDBTCETH",
+    "tokens": Array [
+      "0xe7a24ef0c5e95ffb0f6684b813a78f2a3ad7d171",
+      "0x5c2ed810328349100a66b82b78a1791b101c9d61",
+      "0x28424507fefb6f7f8e9d3860f56504e4e5f5f390",
+    ],
+  },
+  Object {
+    "address": "0x7bd9757fbac089d60daff1fa6bfe3bc99b0f5735",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "crvEURSUSD",
+    "tokens": Array [
+      "0xe111178a87a3bff0c8d18decba5798827539ae99",
+      "0xe7a24ef0c5e95ffb0f6684b813a78f2a3ad7d171",
+    ],
+  },
+]
+`;

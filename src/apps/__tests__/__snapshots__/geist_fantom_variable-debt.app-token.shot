@@ -1,0 +1,87 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`App Token Fetchers (geist, fantom, variable-debt) positions should have structure 1`] = `
+Array [
+  Object {
+    "address": "0xd25aa085ef6a304c6861750f16a3fa0d03d25ddb",
+    "decimals": 18,
+    "key": "128107900",
+    "symbol": "variableDebtgDAI",
+    "tokens": Array [
+      "0x8d11ec38a3eb5e956b052f67da8bdc9bef8abf3e",
+    ],
+  },
+  Object {
+    "address": "0xbdce00a99a4b7e99f7a6af7d44724f77d471f923",
+    "decimals": 18,
+    "key": "872827618",
+    "symbol": "variableDebtgETH",
+    "tokens": Array [
+      "0x74b23882a30290451a17c44f4f05243b6b58c76d",
+    ],
+  },
+  Object {
+    "address": "0x53d01d351fa001db3c893388e43e3c630a8764f5",
+    "decimals": 18,
+    "key": "3888485486",
+    "symbol": "variableDebtgFTM",
+    "tokens": Array [
+      "0x21be370d5312f44cb42ce377bc9b8a0cef1a4c83",
+    ],
+  },
+  Object {
+    "address": "0x4318d7ad332a0fee9db6d2b9b4b021fda865abdb",
+    "decimals": 8,
+    "key": "2898958078",
+    "symbol": "variableDebtgWBTC",
+    "tokens": Array [
+      "0x321162cd933e2be498cd2267a90534a804051b11",
+    ],
+  },
+  Object {
+    "address": "0x816ed5ee0c7b011024be3fb5b6166f59a7cbe0e4",
+    "decimals": 6,
+    "key": "1484698092",
+    "symbol": "variableDebtgfUSDT",
+    "tokens": Array [
+      "0x049d68029688eabf473097a2fc38ef61633a3c7a",
+    ],
+  },
+  Object {
+    "address": "0x3eef981640064d63bb7ead4c6e3c0457e5c2934d",
+    "decimals": 6,
+    "key": "959303602",
+    "symbol": "variableDebtgUSDC",
+    "tokens": Array [
+      "0x04068da6c83afcfa0e13ba15a6696662335d5b75",
+    ],
+  },
+  Object {
+    "address": "0x811a951d15f4dd33e9aa8d6f7aff6d1433fe644a",
+    "decimals": 18,
+    "key": "3818730367",
+    "symbol": "variableDebtgCRV",
+    "tokens": Array [
+      "0x1e4f97b9f9f913c46f1632781732927b9019c68b",
+    ],
+  },
+  Object {
+    "address": "0xe6f5b2d4de014d8fa4c45b744921ffdf13f15d4a",
+    "decimals": 18,
+    "key": "1042897027",
+    "symbol": "variableDebtgMIM",
+    "tokens": Array [
+      "0x82f0b8b456c1a451378467398982d4834b6829c1",
+    ],
+  },
+  Object {
+    "address": "0xfc8f690b285a013a86b7a71c0af70bc57302e7e4",
+    "decimals": 18,
+    "key": "3853201597",
+    "symbol": "variableDebtgLINK",
+    "tokens": Array [
+      "0xb3654dc3d10ea7645f8319668e8f54d2574fbdc8",
+    ],
+  },
+]
+`;

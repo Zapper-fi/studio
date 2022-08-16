@@ -1,0 +1,15 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`App Token Fetchers (olympus, avalanche, g-ohm) positions should have structure 1`] = `
+Array [
+  Object {
+    "address": "0x321e7092a180bb43555132ec53aaa65a5bf84251",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "gOHM",
+    "tokens": Array [
+      "0x04906695d6d12cf5459975d7c3c03356e4ccd460",
+    ],
+  },
+]
+`;

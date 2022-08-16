@@ -1,0 +1,15 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`App Token Fetchers (pirex, ethereum, vault) positions should have structure 1`] = `
+Array [
+  Object {
+    "address": "0xbce0cf87f513102f22232436cca2ca49e815c3ac",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "pxCVX",
+    "tokens": Array [
+      "0x4e3fbd56cd56c3e72c1403e103b45db9da5b9d2b",
+    ],
+  },
+]
+`;

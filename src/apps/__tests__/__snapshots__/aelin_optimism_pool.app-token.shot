@@ -1,0 +1,978 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`App Token Fetchers (aelin, optimism, pool) positions should have structure 1`] = `
+Array [
+  Object {
+    "address": "0x00652ceb64cb5c3097d9bda7c12b534de67703a6",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "aeP-luck",
+    "tokens": Array [
+      "0xda10009cbd5d07dd0cecc66161fc93d7c9000da1",
+    ],
+  },
+  Object {
+    "address": "0x0517a3c16a31341d34504b4ff4cfb5b64e404741",
+    "decimals": 6,
+    "key": undefined,
+    "symbol": "aeP-Rich",
+    "tokens": Array [
+      "0x7f5c764cbc14f9669b88837ca1490cca17c31607",
+    ],
+  },
+  Object {
+    "address": "0x06aead9246c4465c1f35d0fcc20a3e3739b81927",
+    "decimals": 6,
+    "key": undefined,
+    "symbol": "aeP-otc",
+    "tokens": Array [
+      "0x7f5c764cbc14f9669b88837ca1490cca17c31607",
+    ],
+  },
+  Object {
+    "address": "0x084a47e16a4e30aebefd14de3f965a504b29c223",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "aeP-sUSD",
+    "tokens": Array [
+      "0x8c6f28f2f1a3c87f0f938b96d27520d9751ec8d9",
+    ],
+  },
+  Object {
+    "address": "0x0c7fc30dc322f9ae90694559eede0ed1524de64b",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "aeP-MATE",
+    "tokens": Array [
+      "0x8c6f28f2f1a3c87f0f938b96d27520d9751ec8d9",
+    ],
+  },
+  Object {
+    "address": "0x0ff3afa0e8adcc30871f8a829a0a3ecbc05aa195",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "aeP-zero",
+    "tokens": Array [
+      "0x4200000000000000000000000000000000000042",
+    ],
+  },
+  Object {
+    "address": "0x10d77a983e1603b0793735af708fcb1048d3dd7c",
+    "decimals": 6,
+    "key": undefined,
+    "symbol": "aeP-OPMOON",
+    "tokens": Array [
+      "0x7f5c764cbc14f9669b88837ca1490cca17c31607",
+    ],
+  },
+  Object {
+    "address": "0x19ede98bf17a897ac6cefd279211083a0fe8e5fa",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "aeP-Sn3k",
+    "tokens": Array [
+      "0x8700daec35af8ff88c16bdf0418774cb3d7599b4",
+    ],
+  },
+  Object {
+    "address": "0x1d109b8d4815deb6e7a79a60b3f1dd3269a59218",
+    "decimals": 6,
+    "key": undefined,
+    "symbol": "aeP-USDC",
+    "tokens": Array [
+      "0x7f5c764cbc14f9669b88837ca1490cca17c31607",
+    ],
+  },
+  Object {
+    "address": "0x1dd17cab82c8b36562644f76fdfc68d35fd1105d",
+    "decimals": 6,
+    "key": undefined,
+    "symbol": "aeP-xie",
+    "tokens": Array [
+      "0x7f5c764cbc14f9669b88837ca1490cca17c31607",
+    ],
+  },
+  Object {
+    "address": "0x1e9d46f9bdaccbd578d1d54cd2c11d526901141a",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "aeP-RUB",
+    "tokens": Array [
+      "0x8c6f28f2f1a3c87f0f938b96d27520d9751ec8d9",
+    ],
+  },
+  Object {
+    "address": "0x1ff7bbe96ae5ad3dd30a1522d2e98ce5be42469b",
+    "decimals": 6,
+    "key": undefined,
+    "symbol": "aeP-good",
+    "tokens": Array [
+      "0x7f5c764cbc14f9669b88837ca1490cca17c31607",
+    ],
+  },
+  Object {
+    "address": "0x20369baa917bd1867bdafc24d72458ac777c9a2c",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "aeP-KWENTA",
+    "tokens": Array [
+      "0x8c6f28f2f1a3c87f0f938b96d27520d9751ec8d9",
+    ],
+  },
+  Object {
+    "address": "0x204a51d714adecf5b87183fd712e537a8bcbd2c5",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "aeP-OP",
+    "tokens": Array [
+      "0x8c6f28f2f1a3c87f0f938b96d27520d9751ec8d9",
+    ],
+  },
+  Object {
+    "address": "0x2357cae9ffce09424d1b1d48ceb4f9c7afc29b16",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "aeP-eeth -e",
+    "tokens": Array [
+      "0x4200000000000000000000000000000000000006",
+    ],
+  },
+  Object {
+    "address": "0x235d555f55357da30af4af35f9c75949509684cf",
+    "decimals": 6,
+    "key": undefined,
+    "symbol": "aeP-USDT",
+    "tokens": Array [
+      "0x94b008aa00579c1307b0ef2c499ad98a8ce58e58",
+    ],
+  },
+  Object {
+    "address": "0x276cfd004b20d45424b386f663271ce289b903b6",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "aeP-YOA",
+    "tokens": Array [
+      "0x8c6f28f2f1a3c87f0f938b96d27520d9751ec8d9",
+    ],
+  },
+  Object {
+    "address": "0x27e7bbf763609ee6261618b2be082568361493a4",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "aeP-MAC",
+    "tokens": Array [
+      "0x4200000000000000000000000000000000000042",
+    ],
+  },
+  Object {
+    "address": "0x2b3b1259b0be38a172a3d5cd9ea4385dba0ccf4c",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "aeP-SLDN3",
+    "tokens": Array [
+      "0x8c6f28f2f1a3c87f0f938b96d27520d9751ec8d9",
+    ],
+  },
+  Object {
+    "address": "0x2c2a353e72e6a7ace86158768689666e387e66fa",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "aeP-SUSD",
+    "tokens": Array [
+      "0x8c6f28f2f1a3c87f0f938b96d27520d9751ec8d9",
+    ],
+  },
+  Object {
+    "address": "0x2fca72e126322da0df1eb31a4ce9e1f10149a373",
+    "decimals": 6,
+    "key": undefined,
+    "symbol": "aeP-0.1",
+    "tokens": Array [
+      "0x7f5c764cbc14f9669b88837ca1490cca17c31607",
+    ],
+  },
+  Object {
+    "address": "0x313e9ac2354cf6fc56c6c8d0e9b52c11100d4f8c",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "aeP-a",
+    "tokens": Array [
+      "0x8700daec35af8ff88c16bdf0418774cb3d7599b4",
+    ],
+  },
+  Object {
+    "address": "0x330c7b12937cea5af640cfe14e6c4b349bb37bad",
+    "decimals": 6,
+    "key": undefined,
+    "symbol": "aeP-8",
+    "tokens": Array [
+      "0x7f5c764cbc14f9669b88837ca1490cca17c31607",
+    ],
+  },
+  Object {
+    "address": "0x35fe87852090e0b3278268ff81be4e7c5f907556",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "aeP- DAO",
+    "tokens": Array [
+      "0xda10009cbd5d07dd0cecc66161fc93d7c9000da1",
+    ],
+  },
+  Object {
+    "address": "0x4221b21c3b9974cf72631faf2848037341657991",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "aeP-SNX",
+    "tokens": Array [
+      "0x8700daec35af8ff88c16bdf0418774cb3d7599b4",
+    ],
+  },
+  Object {
+    "address": "0x44e2b34e4ab4042652410d44f43af4c379e1bcba",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "aeP-NUKE2",
+    "tokens": Array [
+      "0x8c6f28f2f1a3c87f0f938b96d27520d9751ec8d9",
+    ],
+  },
+  Object {
+    "address": "0x4b840b936bfeebc276a8e07fd7b6184fc66f2153",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "aeP-NCL",
+    "tokens": Array [
+      "0x8c6f28f2f1a3c87f0f938b96d27520d9751ec8d9",
+    ],
+  },
+  Object {
+    "address": "0x4eafcbce779cfe075525e8e4b1708121ce79815e",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "aeP-WADU",
+    "tokens": Array [
+      "0x8c6f28f2f1a3c87f0f938b96d27520d9751ec8d9",
+    ],
+  },
+  Object {
+    "address": "0x501a7c1dc77460a06d3dc8e61aaff8d58fdc312b",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "aeP-susdc",
+    "tokens": Array [
+      "0x8c6f28f2f1a3c87f0f938b96d27520d9751ec8d9",
+    ],
+  },
+  Object {
+    "address": "0x52ad3c2fff420c23ac61caed7c6a3a64f2fdf04d",
+    "decimals": 6,
+    "key": undefined,
+    "symbol": "aeP-DeMark",
+    "tokens": Array [
+      "0x7f5c764cbc14f9669b88837ca1490cca17c31607",
+    ],
+  },
+  Object {
+    "address": "0x53b462a05ee3dba46ef9c8bcf5ec0a1db5e46ab9",
+    "decimals": 6,
+    "key": undefined,
+    "symbol": "aeP-abc",
+    "tokens": Array [
+      "0x7f5c764cbc14f9669b88837ca1490cca17c31607",
+    ],
+  },
+  Object {
+    "address": "0x53d232baa116e27e67d5c7dc62b9c3641411cc2e",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "aeP-BEAR",
+    "tokens": Array [
+      "0x8c6f28f2f1a3c87f0f938b96d27520d9751ec8d9",
+    ],
+  },
+  Object {
+    "address": "0x540695419e4130957d3d65ffd5a50a84836341d9",
+    "decimals": 6,
+    "key": undefined,
+    "symbol": "aeP-ALOHA",
+    "tokens": Array [
+      "0x7f5c764cbc14f9669b88837ca1490cca17c31607",
+    ],
+  },
+  Object {
+    "address": "0x5543c1f30e7f59f8720b466b8c16ba5cd9da61d8",
+    "decimals": 6,
+    "key": undefined,
+    "symbol": "aeP-efef",
+    "tokens": Array [
+      "0x7f5c764cbc14f9669b88837ca1490cca17c31607",
+    ],
+  },
+  Object {
+    "address": "0x55a19bc39d097446fd49409dd921ae7926ac0fc7",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "aeP-TFD_t",
+    "tokens": Array [
+      "0xda10009cbd5d07dd0cecc66161fc93d7c9000da1",
+    ],
+  },
+  Object {
+    "address": "0x59158a5e8e32f4e514e05d170068a0a4a5f19d71",
+    "decimals": 6,
+    "key": undefined,
+    "symbol": "aeP-0x616c69656e000000000000000000000000000000000000000000000000000000",
+    "tokens": Array [
+      "0x7f5c764cbc14f9669b88837ca1490cca17c31607",
+    ],
+  },
+  Object {
+    "address": "0x59c9cd220789b78bf66b022debb612497f36fdbf",
+    "decimals": 6,
+    "key": undefined,
+    "symbol": "aeP-&then",
+    "tokens": Array [
+      "0x7f5c764cbc14f9669b88837ca1490cca17c31607",
+    ],
+  },
+  Object {
+    "address": "0x60aa347f14b8931f7b8e76c5f96c879cb68b8d08",
+    "decimals": 6,
+    "key": undefined,
+    "symbol": "aeP-usdc",
+    "tokens": Array [
+      "0x7f5c764cbc14f9669b88837ca1490cca17c31607",
+    ],
+  },
+  Object {
+    "address": "0x62ffd18b2907eaf3bdd74ab206fd9f427a005fc2",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "aeP-MASK",
+    "tokens": Array [
+      "0x8700daec35af8ff88c16bdf0418774cb3d7599b4",
+    ],
+  },
+  Object {
+    "address": "0x6a87a4fb9970d8324b0ca63a779f13bafb77febb",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "aeP-solar",
+    "tokens": Array [
+      "0x8c6f28f2f1a3c87f0f938b96d27520d9751ec8d9",
+    ],
+  },
+  Object {
+    "address": "0x6b3dda0dd14df4d7107f08fcf1b17783aed73d62",
+    "decimals": 6,
+    "key": undefined,
+    "symbol": "aeP-SNA",
+    "tokens": Array [
+      "0x7f5c764cbc14f9669b88837ca1490cca17c31607",
+    ],
+  },
+  Object {
+    "address": "0x6be9eeab1c58a1558523b5e797bb733cf7d7ca4f",
+    "decimals": 6,
+    "key": undefined,
+    "symbol": "aeP-Punks",
+    "tokens": Array [
+      "0x94b008aa00579c1307b0ef2c499ad98a8ce58e58",
+    ],
+  },
+  Object {
+    "address": "0x70c80837ac670c3945eb814c9767e5183cb29d35",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "aeP-BEAN",
+    "tokens": Array [
+      "0x8c6f28f2f1a3c87f0f938b96d27520d9751ec8d9",
+    ],
+  },
+  Object {
+    "address": "0x71dacc901a16be0b49c9adcf74a800bdd0b801d7",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "aeP-MATTY",
+    "tokens": Array [
+      "0x8700daec35af8ff88c16bdf0418774cb3d7599b4",
+    ],
+  },
+  Object {
+    "address": "0x73eca3b937ab5227a7ca51e4610c81a485233ef6",
+    "decimals": 6,
+    "key": undefined,
+    "symbol": "aeP-YUKA",
+    "tokens": Array [
+      "0x94b008aa00579c1307b0ef2c499ad98a8ce58e58",
+    ],
+  },
+  Object {
+    "address": "0x73efe00649b96245eb795649d86d23bc8e4234f3",
+    "decimals": 6,
+    "key": undefined,
+    "symbol": "aeP-0x5247500000000000000000000000000000000000000000000000000000000000",
+    "tokens": Array [
+      "0x94b008aa00579c1307b0ef2c499ad98a8ce58e58",
+    ],
+  },
+  Object {
+    "address": "0x75e8e949cdd34279abc48906e2dc6cc1d16bdc4d",
+    "decimals": 6,
+    "key": undefined,
+    "symbol": "aeP-OP LP",
+    "tokens": Array [
+      "0x7f5c764cbc14f9669b88837ca1490cca17c31607",
+    ],
+  },
+  Object {
+    "address": "0x786cdd2429c38fe91054328189752965efd56361",
+    "decimals": 6,
+    "key": undefined,
+    "symbol": "aeP-&then",
+    "tokens": Array [
+      "0x7f5c764cbc14f9669b88837ca1490cca17c31607",
+    ],
+  },
+  Object {
+    "address": "0x79b7ba45df055dddd66e7395db53481742aa1235",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "aeP-TFD_t",
+    "tokens": Array [
+      "0xda10009cbd5d07dd0cecc66161fc93d7c9000da1",
+    ],
+  },
+  Object {
+    "address": "0x7deb056db8d86a159dbdbcb99099b76b3f9d0f2c",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "aeP-thai",
+    "tokens": Array [
+      "0x4200000000000000000000000000000000000006",
+    ],
+  },
+  Object {
+    "address": "0x7e135d4674406ca8f00f632be5c7a570060c0a15",
+    "decimals": 6,
+    "key": undefined,
+    "symbol": "aeP-0x2444454544000000000000000000000000000000000000000000000000000000",
+    "tokens": Array [
+      "0x7f5c764cbc14f9669b88837ca1490cca17c31607",
+    ],
+  },
+  Object {
+    "address": "0x7ef2d87e08c6ed14beafd74c1b942953e470795a",
+    "decimals": 6,
+    "key": undefined,
+    "symbol": "aeP-SLDN4",
+    "tokens": Array [
+      "0x7f5c764cbc14f9669b88837ca1490cca17c31607",
+    ],
+  },
+  Object {
+    "address": "0x80763b07d71d285acbdb82769ff381d7ee88f8ae",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "aeP-Nxy",
+    "tokens": Array [
+      "0x8c6f28f2f1a3c87f0f938b96d27520d9751ec8d9",
+    ],
+  },
+  Object {
+    "address": "0x808ed3e6ed4cd2c7df25fdbc4e40e30d6adbddcc",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "aeP-SNX",
+    "tokens": Array [
+      "0x8700daec35af8ff88c16bdf0418774cb3d7599b4",
+    ],
+  },
+  Object {
+    "address": "0x87f052f8ff8206668c1be437ad874e61ccf7bd1c",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "aeP-TEST",
+    "tokens": Array [
+      "0xda10009cbd5d07dd0cecc66161fc93d7c9000da1",
+    ],
+  },
+  Object {
+    "address": "0x8ab60972950438970c1210c37ae3d71585f18788",
+    "decimals": 6,
+    "key": undefined,
+    "symbol": "aeP-0x424952444f000000000000000000000000000000000000000000000000000000",
+    "tokens": Array [
+      "0x94b008aa00579c1307b0ef2c499ad98a8ce58e58",
+    ],
+  },
+  Object {
+    "address": "0x8ed709d6c88378094cbadd3ad5be55d1dee74e31",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "aeP-AL",
+    "tokens": Array [
+      "0x8c6f28f2f1a3c87f0f938b96d27520d9751ec8d9",
+    ],
+  },
+  Object {
+    "address": "0x95b1ac35d106879923e140c9e9581e224ee3e041",
+    "decimals": 6,
+    "key": undefined,
+    "symbol": "aeP-DGN1",
+    "tokens": Array [
+      "0x7f5c764cbc14f9669b88837ca1490cca17c31607",
+    ],
+  },
+  Object {
+    "address": "0x97fc4e0ce415ef922b08f4725a0fa197d7fdbec3",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "aeP-0x4150310000000000000000000000000000000000000000000000000000000000",
+    "tokens": Array [
+      "0x8c6f28f2f1a3c87f0f938b96d27520d9751ec8d9",
+    ],
+  },
+  Object {
+    "address": "0x998814c1723f33a1ff68d98fca484ee570717bfa",
+    "decimals": 6,
+    "key": undefined,
+    "symbol": "aeP-USDC",
+    "tokens": Array [
+      "0x7f5c764cbc14f9669b88837ca1490cca17c31607",
+    ],
+  },
+  Object {
+    "address": "0x9fd93ac7e77f090f4cd3607046c1e2d39249b1aa",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "aeP-sUSD",
+    "tokens": Array [
+      "0x8c6f28f2f1a3c87f0f938b96d27520d9751ec8d9",
+    ],
+  },
+  Object {
+    "address": "0xa123a9c179c40205c05f68df062619dccefbb4f8",
+    "decimals": 6,
+    "key": undefined,
+    "symbol": "aeP-DKZ",
+    "tokens": Array [
+      "0x94b008aa00579c1307b0ef2c499ad98a8ce58e58",
+    ],
+  },
+  Object {
+    "address": "0xa4a0d1163188eaf6ce13aada3945179bd74c5295",
+    "decimals": 6,
+    "key": undefined,
+    "symbol": "aeP-CESS",
+    "tokens": Array [
+      "0x7f5c764cbc14f9669b88837ca1490cca17c31607",
+    ],
+  },
+  Object {
+    "address": "0xa68318e0f2296fcbc09ec17051a7d074f258e37f",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "aeP-ugrsnx",
+    "tokens": Array [
+      "0x8700daec35af8ff88c16bdf0418774cb3d7599b4",
+    ],
+  },
+  Object {
+    "address": "0xa69eefcebbea66a2fc66821cbeec7683f73c18d9",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "aeP-SLDN5",
+    "tokens": Array [
+      "0xda10009cbd5d07dd0cecc66161fc93d7c9000da1",
+    ],
+  },
+  Object {
+    "address": "0xabab6d9dd92645789d52fcb5c4988b7ab8d3e4ca",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "aeP-SLDN2",
+    "tokens": Array [
+      "0x8c6f28f2f1a3c87f0f938b96d27520d9751ec8d9",
+    ],
+  },
+  Object {
+    "address": "0xac59c93336aa50df7ca362760f07410d4e9147ee",
+    "decimals": 6,
+    "key": undefined,
+    "symbol": "aeP-USDT",
+    "tokens": Array [
+      "0x94b008aa00579c1307b0ef2c499ad98a8ce58e58",
+    ],
+  },
+  Object {
+    "address": "0xadabccd58d56596bfc23d6aaa1b24df90af2e021",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "aeP-KWENTA",
+    "tokens": Array [
+      "0x8c6f28f2f1a3c87f0f938b96d27520d9751ec8d9",
+    ],
+  },
+  Object {
+    "address": "0xaea9f342c8726656fbe1f30481c78f35b13fa788",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "aeP-MV",
+    "tokens": Array [
+      "0xda10009cbd5d07dd0cecc66161fc93d7c9000da1",
+    ],
+  },
+  Object {
+    "address": "0xaeb07283ca67e22e288393f2576f66182bccfb36",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "aeP-sol",
+    "tokens": Array [
+      "0xda10009cbd5d07dd0cecc66161fc93d7c9000da1",
+    ],
+  },
+  Object {
+    "address": "0xafd94427e33b58a09eba326c14261200319ad85c",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "aeP-COCKS",
+    "tokens": Array [
+      "0x8c6f28f2f1a3c87f0f938b96d27520d9751ec8d9",
+    ],
+  },
+  Object {
+    "address": "0xb44c7f8013a365123f23a6b7d5f36f2515aeebc2",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "aeP-susd",
+    "tokens": Array [
+      "0x8c6f28f2f1a3c87f0f938b96d27520d9751ec8d9",
+    ],
+  },
+  Object {
+    "address": "0xb6397df8d441b8a7a30bca08e797bbe126c32c3e",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "aeP-a",
+    "tokens": Array [
+      "0x8c6f28f2f1a3c87f0f938b96d27520d9751ec8d9",
+    ],
+  },
+  Object {
+    "address": "0xb723b9200b625648189a908cbac71a8ef6b5eb65",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "aeP-sUSD2",
+    "tokens": Array [
+      "0x8c6f28f2f1a3c87f0f938b96d27520d9751ec8d9",
+    ],
+  },
+  Object {
+    "address": "0xb8eac8f5b62f3f260464cbed0b0fa97acff635a5",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "aeP-sUSD(2)",
+    "tokens": Array [
+      "0x8c6f28f2f1a3c87f0f938b96d27520d9751ec8d9",
+    ],
+  },
+  Object {
+    "address": "0xba7f5ab831bfcb7a9a56aab5e293cde5d06393a1",
+    "decimals": 6,
+    "key": undefined,
+    "symbol": "aeP-NUKE1",
+    "tokens": Array [
+      "0x7f5c764cbc14f9669b88837ca1490cca17c31607",
+    ],
+  },
+  Object {
+    "address": "0xbbafcd04ea6c7d89176af12451404670eb584db2",
+    "decimals": 6,
+    "key": undefined,
+    "symbol": "aeP-usdt",
+    "tokens": Array [
+      "0x94b008aa00579c1307b0ef2c499ad98a8ce58e58",
+    ],
+  },
+  Object {
+    "address": "0xbc34f8362e4ea2a4c235d155a0621189df5e6c1d",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "aeP-Bomb",
+    "tokens": Array [
+      "0x8700daec35af8ff88c16bdf0418774cb3d7599b4",
+    ],
+  },
+  Object {
+    "address": "0xbc46f53152ade0908c451c0eaec88aedeba79606",
+    "decimals": 6,
+    "key": undefined,
+    "symbol": "aeP-USDC",
+    "tokens": Array [
+      "0x7f5c764cbc14f9669b88837ca1490cca17c31607",
+    ],
+  },
+  Object {
+    "address": "0xc03e46816b5ac2060c06b33a8bca464bc356df7d",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "aeP-A",
+    "tokens": Array [
+      "0x8c6f28f2f1a3c87f0f938b96d27520d9751ec8d9",
+    ],
+  },
+  Object {
+    "address": "0xc55ab969227ee1de720348f672a7a4bfcb2f166c",
+    "decimals": 6,
+    "key": undefined,
+    "symbol": "aeP-USDC",
+    "tokens": Array [
+      "0x7f5c764cbc14f9669b88837ca1490cca17c31607",
+    ],
+  },
+  Object {
+    "address": "0xc7bbd38d1ae4a4aa4bf0d0e7b061b1bb858b0d09",
+    "decimals": 6,
+    "key": undefined,
+    "symbol": "aeP-MUSE",
+    "tokens": Array [
+      "0x7f5c764cbc14f9669b88837ca1490cca17c31607",
+    ],
+  },
+  Object {
+    "address": "0xcae9f3f20bffc1cbe54b21734dfec174634ef05a",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "aeP-DIK",
+    "tokens": Array [
+      "0x8c6f28f2f1a3c87f0f938b96d27520d9751ec8d9",
+    ],
+  },
+  Object {
+    "address": "0xd12d0c20ba6c74c1b9f4bebbcbd860a8c86f6e47",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "aeP-NCL",
+    "tokens": Array [
+      "0x8c6f28f2f1a3c87f0f938b96d27520d9751ec8d9",
+    ],
+  },
+  Object {
+    "address": "0xd2dc2928645a01fb121cb52f37acd1000bde6e27",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "aeP-upBTC",
+    "tokens": Array [
+      "0xda10009cbd5d07dd0cecc66161fc93d7c9000da1",
+    ],
+  },
+  Object {
+    "address": "0xd6d087447ccd596c04fb6ca962af32fbdc48c063",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "aeP-SNX",
+    "tokens": Array [
+      "0x8700daec35af8ff88c16bdf0418774cb3d7599b4",
+    ],
+  },
+  Object {
+    "address": "0xd768eee105af4b2f3c63ea3407a33cc6b4c58780",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "aeP-AE-sUSD",
+    "tokens": Array [
+      "0x8c6f28f2f1a3c87f0f938b96d27520d9751ec8d9",
+    ],
+  },
+  Object {
+    "address": "0xda26c397b6619015f64fbbca8177a6dbc2d21f7a",
+    "decimals": 6,
+    "key": undefined,
+    "symbol": "aeP-SLDN3",
+    "tokens": Array [
+      "0x7f5c764cbc14f9669b88837ca1490cca17c31607",
+    ],
+  },
+  Object {
+    "address": "0xdc9263a2be2ae4ad5dbbd35cc3e464ba6f10ee37",
+    "decimals": 6,
+    "key": undefined,
+    "symbol": "aeP-OWT",
+    "tokens": Array [
+      "0x7f5c764cbc14f9669b88837ca1490cca17c31607",
+    ],
+  },
+  Object {
+    "address": "0xddf85935aaa76d87b68de51da845ea53f3cf47d5",
+    "decimals": 6,
+    "key": undefined,
+    "symbol": "aeP-PPOOL",
+    "tokens": Array [
+      "0x7f5c764cbc14f9669b88837ca1490cca17c31607",
+    ],
+  },
+  Object {
+    "address": "0xde030d1d00d4a760d8eb2496a60e88cda74fb260",
+    "decimals": 6,
+    "key": undefined,
+    "symbol": "aeP-SSS",
+    "tokens": Array [
+      "0x7f5c764cbc14f9669b88837ca1490cca17c31607",
+    ],
+  },
+  Object {
+    "address": "0xdfc26e35ccec39b30e7bd78ce7b5e8f4bb6902d6",
+    "decimals": 6,
+    "key": undefined,
+    "symbol": "aeP-JENNA",
+    "tokens": Array [
+      "0x7f5c764cbc14f9669b88837ca1490cca17c31607",
+    ],
+  },
+  Object {
+    "address": "0xe009380daa262b5e80b5b4ec1116a9a42f2f3150",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "aeP-TEST",
+    "tokens": Array [
+      "0x8700daec35af8ff88c16bdf0418774cb3d7599b4",
+    ],
+  },
+  Object {
+    "address": "0xe15318446e80c19999e5a50b473dba8db5a7474d",
+    "decimals": 6,
+    "key": undefined,
+    "symbol": "aeP-USDT",
+    "tokens": Array [
+      "0x94b008aa00579c1307b0ef2c499ad98a8ce58e58",
+    ],
+  },
+  Object {
+    "address": "0xe1ba793a07c04d2cddd63f2fa822d6134a2055a1",
+    "decimals": 6,
+    "key": undefined,
+    "symbol": "aeP-$help ",
+    "tokens": Array [
+      "0x94b008aa00579c1307b0ef2c499ad98a8ce58e58",
+    ],
+  },
+  Object {
+    "address": "0xe71b4cc3c97c61ca5548d271ddb6489c4dd7340d",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "aeP-DD",
+    "tokens": Array [
+      "0xda10009cbd5d07dd0cecc66161fc93d7c9000da1",
+    ],
+  },
+  Object {
+    "address": "0xe8650990b3882b4741b626f2db7afab6be894aba",
+    "decimals": 6,
+    "key": undefined,
+    "symbol": "aeP-OP",
+    "tokens": Array [
+      "0x94b008aa00579c1307b0ef2c499ad98a8ce58e58",
+    ],
+  },
+  Object {
+    "address": "0xe8bae7784fa9f053901ee8168b62623f3ee41772",
+    "decimals": 6,
+    "key": undefined,
+    "symbol": "aeP-USDC",
+    "tokens": Array [
+      "0x7f5c764cbc14f9669b88837ca1490cca17c31607",
+    ],
+  },
+  Object {
+    "address": "0xee9146721a3d9e93d95ba536390008ac0df3c0d6",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "aeP-0x4150310000000000000000000000000000000000000000000000000000000000",
+    "tokens": Array [
+      "0x8c6f28f2f1a3c87f0f938b96d27520d9751ec8d9",
+    ],
+  },
+  Object {
+    "address": "0xeeebef3f68ace2ae3cf0bfc16032b0f603be2a0a",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "aeP-OPF",
+    "tokens": Array [
+      "0x8700daec35af8ff88c16bdf0418774cb3d7599b4",
+    ],
+  },
+  Object {
+    "address": "0xef704885876ef8845f7201d6d8f2d5d01e9bd6ed",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "aeP-SLDN6",
+    "tokens": Array [
+      "0x8c6f28f2f1a3c87f0f938b96d27520d9751ec8d9",
+    ],
+  },
+  Object {
+    "address": "0xf0f3daa3825301f02cf4b0674f72c3135c2f13bd",
+    "decimals": 6,
+    "key": undefined,
+    "symbol": "aeP-USDT",
+    "tokens": Array [
+      "0x94b008aa00579c1307b0ef2c499ad98a8ce58e58",
+    ],
+  },
+  Object {
+    "address": "0xf4a383fb9912568ad02879f59654dad27b015b53",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "aeP-op",
+    "tokens": Array [
+      "0x8c6f28f2f1a3c87f0f938b96d27520d9751ec8d9",
+    ],
+  },
+  Object {
+    "address": "0xf59dcdb8bc941ebdeb1cb3cba166bfe86303ecb7",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "aeP-FUN",
+    "tokens": Array [
+      "0x8c6f28f2f1a3c87f0f938b96d27520d9751ec8d9",
+    ],
+  },
+  Object {
+    "address": "0xf813011e7b042cd25621016a4187e452701323b7",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "aeP-sUSD",
+    "tokens": Array [
+      "0x8c6f28f2f1a3c87f0f938b96d27520d9751ec8d9",
+    ],
+  },
+  Object {
+    "address": "0xf8b46deb1af508b8e8f033236d747817497d0266",
+    "decimals": 6,
+    "key": undefined,
+    "symbol": "aeP-usdc",
+    "tokens": Array [
+      "0x7f5c764cbc14f9669b88837ca1490cca17c31607",
+    ],
+  },
+  Object {
+    "address": "0xfc4216534b74cc0a4027d826730a743ad524155b",
+    "decimals": 6,
+    "key": undefined,
+    "symbol": "aeP-EDST",
+    "tokens": Array [
+      "0x94b008aa00579c1307b0ef2c499ad98a8ce58e58",
+    ],
+  },
+  Object {
+    "address": "0xfc4cfc1d83c40849ee8bf22b41a957cf9694ad5f",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "aeP-BAD",
+    "tokens": Array [
+      "0xda10009cbd5d07dd0cecc66161fc93d7c9000da1",
+    ],
+  },
+]
+`;

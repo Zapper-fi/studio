@@ -1,0 +1,1293 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`App Token Fetchers (sushiswap-kashi, binance-smart-chain, lending) positions should have structure 1`] = `
+Array [
+  Object {
+    "address": "0x030423ede8dcccb84b33ce3c7202d389658eb8ff",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "kmETH/XRP-LINK",
+    "tokens": Array [
+      "0x1d2f0da169ceb9fc7b3144628db156f3f6c60dbe",
+    ],
+  },
+  Object {
+    "address": "0x08ce3653a7c27b7aad6db8ba690f8bb3f2c6dc92",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "kmDOGE/Cake-LINK",
+    "tokens": Array [
+      "0x0e09fabb73bd3ade0a17ecc321fd13a19e81ce82",
+    ],
+  },
+  Object {
+    "address": "0x0af5dd8d3ceb768b2bc812bd56490f53e1498573",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "kmUSDT/ADA-LINK",
+    "tokens": Array [
+      "0x3ee2200efb3400fabb9aacf31297cbdd1d435d47",
+    ],
+  },
+  Object {
+    "address": "0x0db2e145f020f446cd8845b611f34d4b00fcf68e",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "kmCREAM/XRP-LINK",
+    "tokens": Array [
+      "0x1d2f0da169ceb9fc7b3144628db156f3f6c60dbe",
+    ],
+  },
+  Object {
+    "address": "0x0dd006632968e0326876b3ce679c4b1af51617ec",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "kmLTC/BUSD-LINK",
+    "tokens": Array [
+      "0xe9e7cea3dedca5984780bafc599bd69add087d56",
+    ],
+  },
+  Object {
+    "address": "0x0f20120dc7eca2fc7eb04da380cc83941139a41e",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "kmUNI/ADA-LINK",
+    "tokens": Array [
+      "0x3ee2200efb3400fabb9aacf31297cbdd1d435d47",
+    ],
+  },
+  Object {
+    "address": "0x1344e817d67e22cdb9c19f49c8281405d01a95e6",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "kmDOT/UNI-LINK",
+    "tokens": Array [
+      "0xbf5140a22578168fd562dccf235e5d43a02ce9b1",
+    ],
+  },
+  Object {
+    "address": "0x156169d28877902905d8bd9fb5a73fb9cdb1cbdc",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "kmWBNB/BTCB-LINK",
+    "tokens": Array [
+      "0x7130d2a12b9bcbfae4f2634d864a1ee1ce3ead9c",
+    ],
+  },
+  Object {
+    "address": "0x15d01c8dbbe4ee1e2108825c85d27cf51291fd83",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "kmWBNB/WBNB-LINK",
+    "tokens": Array [
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+    ],
+  },
+  Object {
+    "address": "0x16263bed817c569c133cd9de966cd3806caf7c58",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "kmBUSD/BTCB-LINK",
+    "tokens": Array [
+      "0x7130d2a12b9bcbfae4f2634d864a1ee1ce3ead9c",
+    ],
+  },
+  Object {
+    "address": "0x1a28936cb998aef0bf125bac8297ab406761462c",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "kmYFI/USDC-LINK",
+    "tokens": Array [
+      "0x8ac76a51cc950d9822d68b83fe1ad97b32cd580d",
+    ],
+  },
+  Object {
+    "address": "0x1c7ab7b40b151a9ffa31ed24fec4a8e8269897bd",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "kmCake/DAI-LINK",
+    "tokens": Array [
+      "0x1af3f329e8be154074d8769d1ffa4ee058b1dbc3",
+    ],
+  },
+  Object {
+    "address": "0x1d8b1784fa9d28f43b9882bf42f2ab92ad6db8a4",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "kmLINK/USDT-LINK",
+    "tokens": Array [
+      "0x55d398326f99059ff775485246999027b3197955",
+    ],
+  },
+  Object {
+    "address": "0x1e581f23632f9a4159e67f3ed720593212babd76",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "kmDOT/USDT-LINK",
+    "tokens": Array [
+      "0x55d398326f99059ff775485246999027b3197955",
+    ],
+  },
+  Object {
+    "address": "0x1f9367f2f65f99263fcd23565d0af9b072c58ee2",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "kmBUSD/DAI-LINK",
+    "tokens": Array [
+      "0x1af3f329e8be154074d8769d1ffa4ee058b1dbc3",
+    ],
+  },
+  Object {
+    "address": "0x1fc56b49e2858f5a03b1a494504e3f5384df3973",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "kmWBNB/BAND-LINK",
+    "tokens": Array [
+      "0xad6caeb32cd2c308980a548bd0bc5aa4306c6c18",
+    ],
+  },
+  Object {
+    "address": "0x228777e6014e8d40d44241035d6e91bfd3981e41",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "kmADA/USDT-LINK",
+    "tokens": Array [
+      "0x55d398326f99059ff775485246999027b3197955",
+    ],
+  },
+  Object {
+    "address": "0x2c2c9a1b5e18bdac70e8b77253ebe73c50b2908f",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "kmUSDT/DAI-LINK",
+    "tokens": Array [
+      "0x1af3f329e8be154074d8769d1ffa4ee058b1dbc3",
+    ],
+  },
+  Object {
+    "address": "0x2e80386d72e65194f23182260e32b0181986fd20",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "kmXRP/BUSD-LINK",
+    "tokens": Array [
+      "0xe9e7cea3dedca5984780bafc599bd69add087d56",
+    ],
+  },
+  Object {
+    "address": "0x2f824a1315ee5a81213aa90bd74a9fe1bcb542b5",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "kmCake/USDT-LINK",
+    "tokens": Array [
+      "0x55d398326f99059ff775485246999027b3197955",
+    ],
+  },
+  Object {
+    "address": "0x2fa58f321ca71e52175d6ec7bdde74dc1e53b4c0",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "kmBUSD/LTC-LINK",
+    "tokens": Array [
+      "0x4338665cbb7b2485a8855a139b75d5e34ab0db94",
+    ],
+  },
+  Object {
+    "address": "0x300bc936c8bd19b49000172731f1a2674ccfbbfa",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "kmUNI/USDC-LINK",
+    "tokens": Array [
+      "0x8ac76a51cc950d9822d68b83fe1ad97b32cd580d",
+    ],
+  },
+  Object {
+    "address": "0x32a93d31f143d83b6bc69a2bace1521b83015025",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "kmLTC/USDT-LINK",
+    "tokens": Array [
+      "0x55d398326f99059ff775485246999027b3197955",
+    ],
+  },
+  Object {
+    "address": "0x33fbf98bff1ba83a0fadb0836c6a9218b213c2c0",
+    "decimals": 8,
+    "key": undefined,
+    "symbol": "kmWBNB/DOGE-LINK",
+    "tokens": Array [
+      "0xba2ae424d960c26247dd6c32edc70b295c744c43",
+    ],
+  },
+  Object {
+    "address": "0x3717f6a2dd6f284c7908b826f8cc0c5178110534",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "kmUSDC/DOT-LINK",
+    "tokens": Array [
+      "0x7083609fce4d1d8dc0c979aab8c869ea2c873402",
+    ],
+  },
+  Object {
+    "address": "0x3978832a9c8d5e824283b6079f8a374dabc08771",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "kmXTZ/BUSD-LINK",
+    "tokens": Array [
+      "0xe9e7cea3dedca5984780bafc599bd69add087d56",
+    ],
+  },
+  Object {
+    "address": "0x3c4c68b0b195f03cf8b3c96bc705b38a65d1faba",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "kmWBNB/XTZ-LINK",
+    "tokens": Array [
+      "0x16939ef78684453bfdfb47825f8a5f714f12623a",
+    ],
+  },
+  Object {
+    "address": "0x3c64cb3b28e977eb939f343c47828d9eb166b044",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "kmBCH/BTCB-LINK",
+    "tokens": Array [
+      "0x7130d2a12b9bcbfae4f2634d864a1ee1ce3ead9c",
+    ],
+  },
+  Object {
+    "address": "0x3d9691e5bad0237091bd73c35c64ba680d85600d",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "kmLINK/BUSD-LINK",
+    "tokens": Array [
+      "0xe9e7cea3dedca5984780bafc599bd69add087d56",
+    ],
+  },
+  Object {
+    "address": "0x42aef1b700b9961107fdcc3b2fe82a9a3df7225c",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "kmBUSD/ETH-LINK",
+    "tokens": Array [
+      "0x2170ed0880ac9a755fd29b2688956bd959f933f8",
+    ],
+  },
+  Object {
+    "address": "0x43103e9ca6878565fa624df48901c46692f69c1a",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "kmWBNB/YFI-LINK",
+    "tokens": Array [
+      "0x88f1a5ae2a3bf98aeaf342d26b30a79438c9142e",
+    ],
+  },
+  Object {
+    "address": "0x45d2d8cf3ea501380c8820e2986ded21e8fbc64e",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "kmXVS/WBNB-LINK",
+    "tokens": Array [
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+    ],
+  },
+  Object {
+    "address": "0x471fc4c8c96d071a794e56da074f409dbed527d7",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "kmEOS/BUSD-LINK",
+    "tokens": Array [
+      "0xe9e7cea3dedca5984780bafc599bd69add087d56",
+    ],
+  },
+  Object {
+    "address": "0x47f7272b4b042b2dd196e9a3e050290e0ff4e999",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "kmWBNB/BCH-LINK",
+    "tokens": Array [
+      "0x8ff795a6f4d97e7887c79bea79aba5cc76444adf",
+    ],
+  },
+  Object {
+    "address": "0x49f4fdcb6384e3666aab1237af86003036c52349",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "kmUSDC/BTCB-LINK",
+    "tokens": Array [
+      "0x7130d2a12b9bcbfae4f2634d864a1ee1ce3ead9c",
+    ],
+  },
+  Object {
+    "address": "0x4a2ef11a36b32644ac4071d8028e82239794bd15",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "kmBCH/ADA-LINK",
+    "tokens": Array [
+      "0x3ee2200efb3400fabb9aacf31297cbdd1d435d47",
+    ],
+  },
+  Object {
+    "address": "0x4a8f4ba2994e59bae2cde5f78f29079acd9bb67e",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "kmYFI/BUSD-LINK",
+    "tokens": Array [
+      "0xe9e7cea3dedca5984780bafc599bd69add087d56",
+    ],
+  },
+  Object {
+    "address": "0x4d506e67ebda6f59d324e3162625de51f8061ece",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "kmUSDC/RAMP-LINK",
+    "tokens": Array [
+      "0x8519ea49c997f50ceffa444d240fb655e89248aa",
+    ],
+  },
+  Object {
+    "address": "0x50106c711624dcd1769d1fc026d396d2e081c038",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "kmBTCB/BAND-LINK",
+    "tokens": Array [
+      "0xad6caeb32cd2c308980a548bd0bc5aa4306c6c18",
+    ],
+  },
+  Object {
+    "address": "0x5248e47493ea450029e656d7d57b2f127d3dce79",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "kmWBNB/XRP-LINK",
+    "tokens": Array [
+      "0x1d2f0da169ceb9fc7b3144628db156f3f6c60dbe",
+    ],
+  },
+  Object {
+    "address": "0x533840535eb62595b7669f716cdac75b07338a28",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "kmWBNB/Cake-LINK",
+    "tokens": Array [
+      "0x0e09fabb73bd3ade0a17ecc321fd13a19e81ce82",
+    ],
+  },
+  Object {
+    "address": "0x541252f5120281aad4927d8a6b92f3b7f5f35a0f",
+    "decimals": 8,
+    "key": undefined,
+    "symbol": "kmUSDT/DOGE-LINK",
+    "tokens": Array [
+      "0xba2ae424d960c26247dd6c32edc70b295c744c43",
+    ],
+  },
+  Object {
+    "address": "0x563dd664561d8eb16cb014f2642203b5ae180821",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "kmWBNB/LINK-LINK",
+    "tokens": Array [
+      "0xf8a0bf9cf54bb92f17374d9e9a321e6a111a51bd",
+    ],
+  },
+  Object {
+    "address": "0x57b24075aeb216d1879c16494cc5e03b5e26430f",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "kmLINK/USDC-LINK",
+    "tokens": Array [
+      "0x8ac76a51cc950d9822d68b83fe1ad97b32cd580d",
+    ],
+  },
+  Object {
+    "address": "0x58430e50d8255ccd5f63dfc97d1d66ac98438c71",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "kmBCH/WBNB-LINK",
+    "tokens": Array [
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+    ],
+  },
+  Object {
+    "address": "0x591f6fd601dad61b9565a7896977baf69aa403c2",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "kmETH/USDC-LINK",
+    "tokens": Array [
+      "0x8ac76a51cc950d9822d68b83fe1ad97b32cd580d",
+    ],
+  },
+  Object {
+    "address": "0x5a5d5e1397164152e6dca44985afb80045bd4c16",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "kmBUSD/SXP-LINK",
+    "tokens": Array [
+      "0x47bead2563dcbf3bf2c9407fea4dc236faba485a",
+    ],
+  },
+  Object {
+    "address": "0x5cbf74cb0e614b403949d523a4c62391eb86f578",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "kmADA/BUSD-LINK",
+    "tokens": Array [
+      "0xe9e7cea3dedca5984780bafc599bd69add087d56",
+    ],
+  },
+  Object {
+    "address": "0x5ccbd632367fb35343f4c17829be4b8eb24be633",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "kmBAND/ADA-LINK",
+    "tokens": Array [
+      "0x3ee2200efb3400fabb9aacf31297cbdd1d435d47",
+    ],
+  },
+  Object {
+    "address": "0x5d66b62303ec1ddec67d71eaf65dda455fcff6bd",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "kmCake/BUSD-LINK",
+    "tokens": Array [
+      "0xe9e7cea3dedca5984780bafc599bd69add087d56",
+    ],
+  },
+  Object {
+    "address": "0x5d8cb9291571344ac7fc960639c5d51d93c8b36f",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "kmBUSD/USDT-LINK",
+    "tokens": Array [
+      "0x55d398326f99059ff775485246999027b3197955",
+    ],
+  },
+  Object {
+    "address": "0x6014cd01819762cca629c4140a2ff9b3439a6ca8",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "kmBUSD/UNI-LINK",
+    "tokens": Array [
+      "0xbf5140a22578168fd562dccf235e5d43a02ce9b1",
+    ],
+  },
+  Object {
+    "address": "0x613cbfdea432de2309ae3415ba529cf938e597a8",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "kmETH/USDT-LINK",
+    "tokens": Array [
+      "0x55d398326f99059ff775485246999027b3197955",
+    ],
+  },
+  Object {
+    "address": "0x64cdb7650d7629bddf4a949746f9d111e6a81f18",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "kmCake/FIL-LINK",
+    "tokens": Array [
+      "0x0d8ce2a99bb6e3b7db580ed848240e4a0f9ae153",
+    ],
+  },
+  Object {
+    "address": "0x690d07013c2b76001ef769ed62c8589342e01b44",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "kmBUSD/LINK-LINK",
+    "tokens": Array [
+      "0xf8a0bf9cf54bb92f17374d9e9a321e6a111a51bd",
+    ],
+  },
+  Object {
+    "address": "0x6917ff9e2dac968e0e3d9ea60d122abaf1d91f12",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "kmBUSD/Cake-LINK",
+    "tokens": Array [
+      "0x0e09fabb73bd3ade0a17ecc321fd13a19e81ce82",
+    ],
+  },
+  Object {
+    "address": "0x69fc6865341ce8cde7a4f1b112663fa7c9ba2080",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "kmADA/Cake-LINK",
+    "tokens": Array [
+      "0x0e09fabb73bd3ade0a17ecc321fd13a19e81ce82",
+    ],
+  },
+  Object {
+    "address": "0x6c87958a698346b4788c6c415f7d48ff084eb940",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "kmUSDT/DOT-LINK",
+    "tokens": Array [
+      "0x7083609fce4d1d8dc0c979aab8c869ea2c873402",
+    ],
+  },
+  Object {
+    "address": "0x72077e9609f21c03441493de8bf949b4ae756211",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "kmFIL/WBNB-LINK",
+    "tokens": Array [
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+    ],
+  },
+  Object {
+    "address": "0x72da6a351018f3c4cae71b7b8209d535c093d1c5",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "kmBUSD/XTZ-LINK",
+    "tokens": Array [
+      "0x16939ef78684453bfdfb47825f8a5f714f12623a",
+    ],
+  },
+  Object {
+    "address": "0x73141ee58a41e8155a8551ca3061f4392372e08f",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "kmWBNB/ADA-LINK",
+    "tokens": Array [
+      "0x3ee2200efb3400fabb9aacf31297cbdd1d435d47",
+    ],
+  },
+  Object {
+    "address": "0x7505e54845c750eb83ea45c4210c55860e58274c",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "kmBTCB/ETH-LINK",
+    "tokens": Array [
+      "0x2170ed0880ac9a755fd29b2688956bd959f933f8",
+    ],
+  },
+  Object {
+    "address": "0x754b7e699f6a8c2be209385bcfd2dd7ac3574fd7",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "kmWBNB/USDT-LINK",
+    "tokens": Array [
+      "0x55d398326f99059ff775485246999027b3197955",
+    ],
+  },
+  Object {
+    "address": "0x78c440e1cdce653328dce4eebe54aa4987a1d443",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "kmUNI/DAI-LINK",
+    "tokens": Array [
+      "0x1af3f329e8be154074d8769d1ffa4ee058b1dbc3",
+    ],
+  },
+  Object {
+    "address": "0x7a7910efae9858c970a18248a52e66b6a32a37ec",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "kmDAI/WBNB-LINK",
+    "tokens": Array [
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+    ],
+  },
+  Object {
+    "address": "0x7d38097b9a16010c883b61a85ef5cb70a9f17c18",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "kmCREAM/BUSD-LINK",
+    "tokens": Array [
+      "0xe9e7cea3dedca5984780bafc599bd69add087d56",
+    ],
+  },
+  Object {
+    "address": "0x7d72b4e67d6f8d0c7d65c145663ba21fe6d47abf",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "kmDAI/ADA-LINK",
+    "tokens": Array [
+      "0x3ee2200efb3400fabb9aacf31297cbdd1d435d47",
+    ],
+  },
+  Object {
+    "address": "0x7e6f8dae66da56fa22003c5e1723c64a8e710b12",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "kmLINK/WBNB-LINK",
+    "tokens": Array [
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+    ],
+  },
+  Object {
+    "address": "0x7fb1b849f575de241eb5f47c4ee8ee234bc55599",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "kmDOGE/ADA-LINK",
+    "tokens": Array [
+      "0x3ee2200efb3400fabb9aacf31297cbdd1d435d47",
+    ],
+  },
+  Object {
+    "address": "0x814f08c312888bef20ecf53c43dc87b110b6b95d",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "kmVAI/Cake-LINK",
+    "tokens": Array [
+      "0x0e09fabb73bd3ade0a17ecc321fd13a19e81ce82",
+    ],
+  },
+  Object {
+    "address": "0x82871531bc86435cdf8596881427a822475b88e8",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "kmDOT/WBNB-LINK",
+    "tokens": Array [
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+    ],
+  },
+  Object {
+    "address": "0x8581a217374d41d52c87c0592f6efa68a3fc9fb7",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "kmDOT/ETH-LINK",
+    "tokens": Array [
+      "0x2170ed0880ac9a755fd29b2688956bd959f933f8",
+    ],
+  },
+  Object {
+    "address": "0x89342aabee528e70bf6cc9cb5a669f16dce7f67e",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "kmDOT/DAI-LINK",
+    "tokens": Array [
+      "0x1af3f329e8be154074d8769d1ffa4ee058b1dbc3",
+    ],
+  },
+  Object {
+    "address": "0x8b392464177a398e209283f444678fd73a430017",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "kmUSDC/WBNB-LINK",
+    "tokens": Array [
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+    ],
+  },
+  Object {
+    "address": "0x8cdad6ff25c2366e3a6925e0edbde51aab2f7f9b",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "kmXRP/XVS-LINK",
+    "tokens": Array [
+      "0xcf6bb5389c92bdda8a3747ddb454cb7a64626c63",
+    ],
+  },
+  Object {
+    "address": "0x8d35e0e3110fdd0dc09fc7a64a918ca29804ed11",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "kmBTCB/WBNB-LINK",
+    "tokens": Array [
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+    ],
+  },
+  Object {
+    "address": "0x8e7d5f01dd0b8ea1b0ba566977cc10d6caa05fe5",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "kmADA/USDC-LINK",
+    "tokens": Array [
+      "0x8ac76a51cc950d9822d68b83fe1ad97b32cd580d",
+    ],
+  },
+  Object {
+    "address": "0x8f0a4ee80171c531c41cb5de2857f88724b2e864",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "kmBUSD/DOT-LINK",
+    "tokens": Array [
+      "0x7083609fce4d1d8dc0c979aab8c869ea2c873402",
+    ],
+  },
+  Object {
+    "address": "0x8fed0a877ce48a493f32d2a769cb2ee496f9d12f",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "kmBTCB/BUSD-LINK",
+    "tokens": Array [
+      "0xe9e7cea3dedca5984780bafc599bd69add087d56",
+    ],
+  },
+  Object {
+    "address": "0x916d375f4bc497c8a5c283292aa24a3d0e119528",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "kmBUSD/YFI-LINK",
+    "tokens": Array [
+      "0x88f1a5ae2a3bf98aeaf342d26b30a79438c9142e",
+    ],
+  },
+  Object {
+    "address": "0x937587a070f132fedf76873a17317ca533c99368",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "kmUNI/USDT-LINK",
+    "tokens": Array [
+      "0x55d398326f99059ff775485246999027b3197955",
+    ],
+  },
+  Object {
+    "address": "0x9788760cb03369ac87b5b7d5181a54151f1f7347",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "kmUSDT/BUSD-LINK",
+    "tokens": Array [
+      "0xe9e7cea3dedca5984780bafc599bd69add087d56",
+    ],
+  },
+  Object {
+    "address": "0x97f01f3cb7761dc951d1504ad01fc2c941a2a8ef",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "kmBUSD/USDC-LINK",
+    "tokens": Array [
+      "0x8ac76a51cc950d9822d68b83fe1ad97b32cd580d",
+    ],
+  },
+  Object {
+    "address": "0x98edb08f207442a97e394dd0bb37b340181636aa",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "kmFIL/BUSD-LINK",
+    "tokens": Array [
+      "0xe9e7cea3dedca5984780bafc599bd69add087d56",
+    ],
+  },
+  Object {
+    "address": "0x994717ae1fd9257662d1a8fa871d5e2ec69deda9",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "kmADA/LINK-LINK",
+    "tokens": Array [
+      "0xf8a0bf9cf54bb92f17374d9e9a321e6a111a51bd",
+    ],
+  },
+  Object {
+    "address": "0x9b29d9884c0577631fe479ee2d800995296463f8",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "kmBTCB/Cake-LINK",
+    "tokens": Array [
+      "0x0e09fabb73bd3ade0a17ecc321fd13a19e81ce82",
+    ],
+  },
+  Object {
+    "address": "0x9b98e301e7c4a071865b8948998a6279a8ec112a",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "kmWBNB/DAI-LINK",
+    "tokens": Array [
+      "0x1af3f329e8be154074d8769d1ffa4ee058b1dbc3",
+    ],
+  },
+  Object {
+    "address": "0x9c66ab21bb953ca19b654088dcc3974597876d1c",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "kmBAND/BUSD-LINK",
+    "tokens": Array [
+      "0xe9e7cea3dedca5984780bafc599bd69add087d56",
+    ],
+  },
+  Object {
+    "address": "0x9d4032ba814cd49085c991e787585d4b4581417a",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "kmUSDT/BAND-LINK",
+    "tokens": Array [
+      "0xad6caeb32cd2c308980a548bd0bc5aa4306c6c18",
+    ],
+  },
+  Object {
+    "address": "0x9d90116ef98d8e72382553f0e801be70b9f4497e",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "kmETH/DAI-LINK",
+    "tokens": Array [
+      "0x1af3f329e8be154074d8769d1ffa4ee058b1dbc3",
+    ],
+  },
+  Object {
+    "address": "0x9d978e53aa8fcf333a92ca75be2116f2d229700a",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "kmBUSD/BCH-LINK",
+    "tokens": Array [
+      "0x8ff795a6f4d97e7887c79bea79aba5cc76444adf",
+    ],
+  },
+  Object {
+    "address": "0x9e26ef37f574caaf3fb75ff82f89c57b7b1d4c13",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "kmBUSD/EOS-LINK",
+    "tokens": Array [
+      "0x56b6fb708fc5732dec1afc8d8556423a2edccbd6",
+    ],
+  },
+  Object {
+    "address": "0x9fe8a186b5b96993e4c5518a517913b86fff93d7",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "kmDOT/BUSD-LINK",
+    "tokens": Array [
+      "0xe9e7cea3dedca5984780bafc599bd69add087d56",
+    ],
+  },
+  Object {
+    "address": "0xa196c89f682a6812b84baac3cfd66b9aca91aeeb",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "kmBUSD/XRP-LINK",
+    "tokens": Array [
+      "0x1d2f0da169ceb9fc7b3144628db156f3f6c60dbe",
+    ],
+  },
+  Object {
+    "address": "0xa1b7857a655087143634d837437c687843b2f5ae",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "kmADA/ETH-LINK",
+    "tokens": Array [
+      "0x2170ed0880ac9a755fd29b2688956bd959f933f8",
+    ],
+  },
+  Object {
+    "address": "0xa45f785f6aa81660cd59d9dfa18baa4e1115f49c",
+    "decimals": 8,
+    "key": undefined,
+    "symbol": "kmBUSD/DOGE-LINK",
+    "tokens": Array [
+      "0xba2ae424d960c26247dd6c32edc70b295c744c43",
+    ],
+  },
+  Object {
+    "address": "0xa771d1d52b1539bdecb7202bf4d77a47b9b2ba24",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "kmWBNB/DOT-LINK",
+    "tokens": Array [
+      "0x7083609fce4d1d8dc0c979aab8c869ea2c873402",
+    ],
+  },
+  Object {
+    "address": "0xa7769e8fb2a770f5eca94704d1f6c6b5fc6758b5",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "kmWBNB/VAI-LINK",
+    "tokens": Array [
+      "0x4bd17003473389a42daf6a0a729f6fdb328bbbd7",
+    ],
+  },
+  Object {
+    "address": "0xaf9ee63b470621920e52da06d360b65048f97fa6",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "kmCake/WBNB-LINK",
+    "tokens": Array [
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+    ],
+  },
+  Object {
+    "address": "0xafa2526f518956a1fe1ff6f3aef9a90007a64052",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "kmWBNB/BUSD-LINK",
+    "tokens": Array [
+      "0xe9e7cea3dedca5984780bafc599bd69add087d56",
+    ],
+  },
+  Object {
+    "address": "0xb127f345caf66c128f1a41ee762dbb6250cf1d7d",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "kmUNI/BUSD-LINK",
+    "tokens": Array [
+      "0xe9e7cea3dedca5984780bafc599bd69add087d56",
+    ],
+  },
+  Object {
+    "address": "0xb14b40c55892288ade4c70ad878e34c7ed8a268f",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "kmETH/BUSD-LINK",
+    "tokens": Array [
+      "0xe9e7cea3dedca5984780bafc599bd69add087d56",
+    ],
+  },
+  Object {
+    "address": "0xb597a051288c4effe34ad7778326401041669906",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "kmBUSD/VAI-LINK",
+    "tokens": Array [
+      "0x4bd17003473389a42daf6a0a729f6fdb328bbbd7",
+    ],
+  },
+  Object {
+    "address": "0xb5c743aab60fa4c80fef37bf155adab60c7c7223",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "kmADA/XRP-LINK",
+    "tokens": Array [
+      "0x1d2f0da169ceb9fc7b3144628db156f3f6c60dbe",
+    ],
+  },
+  Object {
+    "address": "0xb67a83bd409fd50ac9539d2226473524c146313b",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "kmWBNB/ETH-LINK",
+    "tokens": Array [
+      "0x2170ed0880ac9a755fd29b2688956bd959f933f8",
+    ],
+  },
+  Object {
+    "address": "0xb881983b369562bf0588bc7d744c737ccea84074",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "kmDOT/ADA-LINK",
+    "tokens": Array [
+      "0x3ee2200efb3400fabb9aacf31297cbdd1d435d47",
+    ],
+  },
+  Object {
+    "address": "0xbb50f7f14e452baae2621698e8cc95b0ac0bac61",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "kmUSDC/ETH-LINK",
+    "tokens": Array [
+      "0x2170ed0880ac9a755fd29b2688956bd959f933f8",
+    ],
+  },
+  Object {
+    "address": "0xc290307e85a1f396bc084261cd9af3d14ffafc0e",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "kmCREAM/LINK-LINK",
+    "tokens": Array [
+      "0xf8a0bf9cf54bb92f17374d9e9a321e6a111a51bd",
+    ],
+  },
+  Object {
+    "address": "0xc4ccd90f9aa29de9a78c5e29a8d3b7a74c949aab",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "kmADA/DAI-LINK",
+    "tokens": Array [
+      "0x1af3f329e8be154074d8769d1ffa4ee058b1dbc3",
+    ],
+  },
+  Object {
+    "address": "0xca28bd76e16ecd6021d2966b7a8b9317c307b3ac",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "kmBUSD/ADA-LINK",
+    "tokens": Array [
+      "0x3ee2200efb3400fabb9aacf31297cbdd1d435d47",
+    ],
+  },
+  Object {
+    "address": "0xd103b6e44b601d4152ce6bf3425df3a36d20ded4",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "kmDOT/USDC-LINK",
+    "tokens": Array [
+      "0x8ac76a51cc950d9822d68b83fe1ad97b32cd580d",
+    ],
+  },
+  Object {
+    "address": "0xd13a18528452f5d7454192bf9fdada298e39394a",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "kmBTCB/USDC-LINK",
+    "tokens": Array [
+      "0x8ac76a51cc950d9822d68b83fe1ad97b32cd580d",
+    ],
+  },
+  Object {
+    "address": "0xd14c9e06a87dd2a0945c55847b32eeb636eb1e1d",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "kmXRP/ADA-LINK",
+    "tokens": Array [
+      "0x3ee2200efb3400fabb9aacf31297cbdd1d435d47",
+    ],
+  },
+  Object {
+    "address": "0xd17eb8c61e6c453b42ef103ffb145fe73a84b697",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "kmADA/BAND-LINK",
+    "tokens": Array [
+      "0xad6caeb32cd2c308980a548bd0bc5aa4306c6c18",
+    ],
+  },
+  Object {
+    "address": "0xd285c931144cc3f7e117b0452800df895790f376",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "kmUSDC/ADA-LINK",
+    "tokens": Array [
+      "0x3ee2200efb3400fabb9aacf31297cbdd1d435d47",
+    ],
+  },
+  Object {
+    "address": "0xd3713e3aa28ea3ba8f932b1dd4d5b057862e6c6b",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "kmDOGE/BUSD-LINK",
+    "tokens": Array [
+      "0xe9e7cea3dedca5984780bafc599bd69add087d56",
+    ],
+  },
+  Object {
+    "address": "0xd6cff8b99e89f3a8cdd0611b4a89ae46f1e3dc3a",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "kmXVS/ADA-LINK",
+    "tokens": Array [
+      "0x3ee2200efb3400fabb9aacf31297cbdd1d435d47",
+    ],
+  },
+  Object {
+    "address": "0xd7ad13d6f8886541d1e92418f0eb500cbbbc83f0",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "kmCake/DOT-LINK",
+    "tokens": Array [
+      "0x7083609fce4d1d8dc0c979aab8c869ea2c873402",
+    ],
+  },
+  Object {
+    "address": "0xd7eb21bcc97566e05bf621557d786f1f38f54723",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "kmADA/WBNB-LINK",
+    "tokens": Array [
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+    ],
+  },
+  Object {
+    "address": "0xd94a848449ec6953cb8112ccd25dd5b8fd08ca2d",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "kmYFI/DAI-LINK",
+    "tokens": Array [
+      "0x1af3f329e8be154074d8769d1ffa4ee058b1dbc3",
+    ],
+  },
+  Object {
+    "address": "0xd98a51855641d496d053c05985f4c66e4a572913",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "kmDAI/BUSD-LINK",
+    "tokens": Array [
+      "0xe9e7cea3dedca5984780bafc599bd69add087d56",
+    ],
+  },
+  Object {
+    "address": "0xdb2475ca186d8035f006c026f3c4998864b70f91",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "kmBCH/BUSD-LINK",
+    "tokens": Array [
+      "0xe9e7cea3dedca5984780bafc599bd69add087d56",
+    ],
+  },
+  Object {
+    "address": "0xdbe43b02689324ffd4d78a702fed36df15fe0e05",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "kmBUSD/XVS-LINK",
+    "tokens": Array [
+      "0xcf6bb5389c92bdda8a3747ddb454cb7a64626c63",
+    ],
+  },
+  Object {
+    "address": "0xdfd429384baedf05b716f7d829f3d364489dd907",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "kmDAI/Cake-LINK",
+    "tokens": Array [
+      "0x0e09fabb73bd3ade0a17ecc321fd13a19e81ce82",
+    ],
+  },
+  Object {
+    "address": "0xe078b804cf286d303753c6d34497f23390746f72",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "kmUSDC/BUSD-LINK",
+    "tokens": Array [
+      "0xe9e7cea3dedca5984780bafc599bd69add087d56",
+    ],
+  },
+  Object {
+    "address": "0xe2c9005f03edbc11a209cfa6e37434fb301cd357",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "kmYFI/VAI-LINK",
+    "tokens": Array [
+      "0x4bd17003473389a42daf6a0a729f6fdb328bbbd7",
+    ],
+  },
+  Object {
+    "address": "0xe3557ffb1979276403ac562cf06e00f0cfed1852",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "kmWBNB/FIL-LINK",
+    "tokens": Array [
+      "0x0d8ce2a99bb6e3b7db580ed848240e4a0f9ae153",
+    ],
+  },
+  Object {
+    "address": "0xe43722bb6a98e57308a0c56be2b0853844b239a1",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "kmFIL/DOT-LINK",
+    "tokens": Array [
+      "0x7083609fce4d1d8dc0c979aab8c869ea2c873402",
+    ],
+  },
+  Object {
+    "address": "0xe6ad20580761a4b3e9ae67408a8d3c6c9263a26a",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "kmUSDT/WBNB-LINK",
+    "tokens": Array [
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+    ],
+  },
+  Object {
+    "address": "0xe9e73d71ed122c7b5c9dc3c5087645ead294a11d",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "kmWBNB/USDC-LINK",
+    "tokens": Array [
+      "0x8ac76a51cc950d9822d68b83fe1ad97b32cd580d",
+    ],
+  },
+  Object {
+    "address": "0xea3d9d00de6c14bf8507f46c46c29292bbfa8d25",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "kmBUSD/WBNB-LINK",
+    "tokens": Array [
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+    ],
+  },
+  Object {
+    "address": "0xea52f1f1d0e72b2f0de6585d87b0dcf152131e2b",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "kmBUSD/CREAM-LINK",
+    "tokens": Array [
+      "0xd4cb328a82bdf5f03eb737f37fa6b370aef3e888",
+    ],
+  },
+  Object {
+    "address": "0xecdc314c01005b96abf8ef55e669ca2ea4e53c21",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "kmETH/WBNB-LINK",
+    "tokens": Array [
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+    ],
+  },
+  Object {
+    "address": "0xed3359dccfb71919a5645c5c32b9f71267d97950",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "kmUSDT/USDC-LINK",
+    "tokens": Array [
+      "0x8ac76a51cc950d9822d68b83fe1ad97b32cd580d",
+    ],
+  },
+  Object {
+    "address": "0xee3833b38ca9c134d4517a7c580f62d5a6dce02e",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "kmUSDT/Cake-LINK",
+    "tokens": Array [
+      "0x0e09fabb73bd3ade0a17ecc321fd13a19e81ce82",
+    ],
+  },
+  Object {
+    "address": "0xf0a2cef21d73da8cb28ce341adbbe3057b9565d4",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "kmBTCB/DAI-LINK",
+    "tokens": Array [
+      "0x1af3f329e8be154074d8769d1ffa4ee058b1dbc3",
+    ],
+  },
+  Object {
+    "address": "0xf0cc4c563f3eaeb3fff2341ab2e8af7923c7d66f",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "kmVAI/BUSD-LINK",
+    "tokens": Array [
+      "0xe9e7cea3dedca5984780bafc599bd69add087d56",
+    ],
+  },
+  Object {
+    "address": "0xf23191222c56772b5ad92e46ce05aeac5c1faf19",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "kmYFI/XTZ-LINK",
+    "tokens": Array [
+      "0x16939ef78684453bfdfb47825f8a5f714f12623a",
+    ],
+  },
+  Object {
+    "address": "0xf3050277e8514f48f70b99cdd45fee7c55410db3",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "kmUSDC/Cake-LINK",
+    "tokens": Array [
+      "0x0e09fabb73bd3ade0a17ecc321fd13a19e81ce82",
+    ],
+  },
+  Object {
+    "address": "0xf843f4c648872616a3ab4165db49e8613bd421b5",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "kmCake/USDC-LINK",
+    "tokens": Array [
+      "0x8ac76a51cc950d9822d68b83fe1ad97b32cd580d",
+    ],
+  },
+  Object {
+    "address": "0xf9c8e6631819f9394a3a1ba1a745372aa8d4fcdf",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "kmCREAM/ADA-LINK",
+    "tokens": Array [
+      "0x3ee2200efb3400fabb9aacf31297cbdd1d435d47",
+    ],
+  },
+  Object {
+    "address": "0xfbb7db1690b47d2e4d44b575126d2d241fc6f390",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "kmDOGE/WBNB-LINK",
+    "tokens": Array [
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+    ],
+  },
+  Object {
+    "address": "0xff4fb5beddccc592d3516db81aafdf5cf4fa7f8a",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "kmBUSD/BAND-LINK",
+    "tokens": Array [
+      "0xad6caeb32cd2c308980a548bd0bc5aa4306c6c18",
+    ],
+  },
+]
+`;

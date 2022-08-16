@@ -1,0 +1,15 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`App Token Fetchers (umami-finance, arbitrum, compound) positions should have structure 1`] = `
+Array [
+  Object {
+    "address": "0x1922c36f3bc762ca300b4a46bb2102f84b1684ab",
+    "decimals": 9,
+    "key": undefined,
+    "symbol": "cmUMAMI",
+    "tokens": Array [
+      "0x2adabd6e8ce3e82f52d9998a7f64a90d294a92a4",
+    ],
+  },
+]
+`;

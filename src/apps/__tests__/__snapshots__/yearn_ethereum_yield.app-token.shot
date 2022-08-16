@@ -1,0 +1,87 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`App Token Fetchers (yearn, ethereum, yield) positions should have structure 1`] = `
+Array [
+  Object {
+    "address": "0x16de59092dae5ccf4a1e6439d611fd0653f0bd01",
+    "decimals": 18,
+    "key": "1897233247",
+    "symbol": "yDAI",
+    "tokens": Array [
+      "0x6b175474e89094c44da98b954eedeac495271d0f",
+    ],
+  },
+  Object {
+    "address": "0xd6ad7a6750a7593e092a9b218d66c0a814a3436e",
+    "decimals": 6,
+    "key": "821198511",
+    "symbol": "yUSDC",
+    "tokens": Array [
+      "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+    ],
+  },
+  Object {
+    "address": "0x83f798e925bcd4017eb265844fddabb448f1707d",
+    "decimals": 6,
+    "key": "61284455",
+    "symbol": "yUSDT",
+    "tokens": Array [
+      "0xdac17f958d2ee523a2206206994597c13d831ec7",
+    ],
+  },
+  Object {
+    "address": "0xf61718057901f84c4eec4339ef8f0d86d2b45600",
+    "decimals": 18,
+    "key": "1803725848",
+    "symbol": "ySUSD",
+    "tokens": Array [
+      "0x57ab1ec28d129707052df4df418d58a2d46d5f51",
+    ],
+  },
+  Object {
+    "address": "0x73a052500105205d34daf004eab301916da8190f",
+    "decimals": 18,
+    "key": "2956233419",
+    "symbol": "yTUSD",
+    "tokens": Array [
+      "0x0000000000085d4780b73119b644ae5ecd22b376",
+    ],
+  },
+  Object {
+    "address": "0xc2cb1040220768554cf699b0d863a3cd4324ce32",
+    "decimals": 18,
+    "key": "3487343345",
+    "symbol": "yDAI",
+    "tokens": Array [
+      "0x6b175474e89094c44da98b954eedeac495271d0f",
+    ],
+  },
+  Object {
+    "address": "0x26ea744e5b887e5205727f55dfbe8685e3b21951",
+    "decimals": 6,
+    "key": "693963852",
+    "symbol": "yUSDC",
+    "tokens": Array [
+      "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+    ],
+  },
+  Object {
+    "address": "0xe6354ed5bc4b393a5aad09f21c46e101e692d447",
+    "decimals": 6,
+    "key": "980487302",
+    "symbol": "yUSDT",
+    "tokens": Array [
+      "0xdac17f958d2ee523a2206206994597c13d831ec7",
+    ],
+  },
+  Object {
+    "address": "0x04bc0ab673d88ae9dbc9da2380cb6b79c4bca9ae",
+    "decimals": 18,
+    "key": "51053590",
+    "symbol": "yBUSD",
+    "tokens": Array [
+      "0x4fabb145d64652a948d72533023f6e7a623c7c53",
+    ],
+  },
+]
+`;

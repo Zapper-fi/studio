@@ -1,0 +1,15 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`App Token Fetchers (lyra-avalon, optimism, ve) positions should have structure 1`] = `
+Array [
+  Object {
+    "address": "0xde48b1b5853cc63b1d05e507414d3e02831722f8",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "stkLYRA",
+    "tokens": Array [
+      "0x50c5725949a6f0c72e6c4a641f24049a917db0cb",
+    ],
+  },
+]
+`;

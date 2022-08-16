@@ -1,0 +1,114 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`App Token Fetchers (idle, ethereum, vault) positions should have structure 1`] = `
+Array [
+  Object {
+    "address": "0x3fe7940616e5bc47b0775a0dccf6237893353bb4",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "idleDAIYield",
+    "tokens": Array [
+      "0x6b175474e89094c44da98b954eedeac495271d0f",
+    ],
+  },
+  Object {
+    "address": "0x5274891bec421b39d23760c04a6755ecb444797c",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "idleUSDCYield",
+    "tokens": Array [
+      "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+    ],
+  },
+  Object {
+    "address": "0xf34842d05a1c888ca02769a633df37177415c2f8",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "idleUSDTYield",
+    "tokens": Array [
+      "0xdac17f958d2ee523a2206206994597c13d831ec7",
+    ],
+  },
+  Object {
+    "address": "0xf52cdcd458bf455aed77751743180ec4a595fd3f",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "idleSUSDYield",
+    "tokens": Array [
+      "0x57ab1ec28d129707052df4df418d58a2d46d5f51",
+    ],
+  },
+  Object {
+    "address": "0xc278041fdd8249fe4c1aad1193876857eea3d68c",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "idleTUSDYield",
+    "tokens": Array [
+      "0x0000000000085d4780b73119b644ae5ecd22b376",
+    ],
+  },
+  Object {
+    "address": "0x8c81121b15197fa0eeaee1dc75533419dcfd3151",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "idleWBTCYield",
+    "tokens": Array [
+      "0x2260fac5e5542a773aa44fbcfedf7c193bc2c599",
+    ],
+  },
+  Object {
+    "address": "0xa14ea0e11121e6e951e87c66afe460a00bcd6a16",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "idleDAISafe",
+    "tokens": Array [
+      "0x6b175474e89094c44da98b954eedeac495271d0f",
+    ],
+  },
+  Object {
+    "address": "0x3391bc034f2935ef0e1e41619445f998b2680d35",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "idleUSDCSafe",
+    "tokens": Array [
+      "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+    ],
+  },
+  Object {
+    "address": "0x28fac5334c9f7262b3a3fe707e250e01053e07b5",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "idleUSDTSafe",
+    "tokens": Array [
+      "0xdac17f958d2ee523a2206206994597c13d831ec7",
+    ],
+  },
+  Object {
+    "address": "0xc8e6ca6e96a326dc448307a5fde90a0b21fd7f80",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "idleWETHYield",
+    "tokens": Array [
+      "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
+    ],
+  },
+  Object {
+    "address": "0x5c960a3dcc01be8a0f49c02a8cebcacf5d07fabe",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "idleRAIYield",
+    "tokens": Array [
+      "0x03ab458634910aad20ef5f1c8ee96f1d6ac54919",
+    ],
+  },
+  Object {
+    "address": "0xb2d5cb72a621493fe83c6885e4a776279be595bc",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "idleFEIYield",
+    "tokens": Array [
+      "0x956f47f50a910163d8bf957cf5846d573e7f87ca",
+    ],
+  },
+]
+`;

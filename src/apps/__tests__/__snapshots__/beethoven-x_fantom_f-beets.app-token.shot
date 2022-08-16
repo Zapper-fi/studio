@@ -1,0 +1,15 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`App Token Fetchers (beethoven-x, fantom, f-beets) positions should have structure 1`] = `
+Array [
+  Object {
+    "address": "0xfcef8a994209d6916eb2c86cdd2afd60aa6f54b1",
+    "decimals": 18,
+    "key": "2878268063",
+    "symbol": "fBEETS",
+    "tokens": Array [
+      "0xcde5a11a4acb4ee4c805352cec57e236bdbc3837",
+    ],
+  },
+]
+`;

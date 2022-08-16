@@ -1,0 +1,3 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`App Token Fetchers (impermax, arbitrum, collateral) positions should have structure 1`] = `Array []`;

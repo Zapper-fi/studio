@@ -1,0 +1,15 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`App Token Fetchers (hector-network, fantom, ws-hec) positions should have structure 1`] = `
+Array [
+  Object {
+    "address": "0x94ccf60f700146bea8ef7832820800e2dfa92eda",
+    "decimals": 18,
+    "key": "2549661940",
+    "symbol": "wsHEC",
+    "tokens": Array [
+      "0x75bdef24285013387a47775828bec90b91ca9a5f",
+    ],
+  },
+]
+`;

@@ -1,0 +1,15 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`App Token Fetchers (solace, ethereum, scp) positions should have structure 1`] = `
+Array [
+  Object {
+    "address": "0x501acee83a6f269b77c167c6701843d454e2efa0",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "SCP",
+    "tokens": Array [
+      "0x0000000000000000000000000000000000000000",
+    ],
+  },
+]
+`;

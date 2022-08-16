@@ -1,0 +1,976 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`App Token Fetchers (biswap, binance-smart-chain, pool) positions should have structure 1`] = `
+Array [
+  Object {
+    "address": "0x6216e04cd40db2c6fbed64f1b5830a98d3a91740",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "BSW-LP",
+    "tokens": Array [
+      "0x2170ed0880ac9a755fd29b2688956bd959f933f8",
+      "0x7130d2a12b9bcbfae4f2634d864a1ee1ce3ead9c",
+    ],
+  },
+  Object {
+    "address": "0x5bf6941f029424674bb93a43b79fc46bf4a67c21",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "BSW-LP",
+    "tokens": Array [
+      "0x2170ed0880ac9a755fd29b2688956bd959f933f8",
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+    ],
+  },
+  Object {
+    "address": "0xda8ceb724a06819c0a5cdb4304ea0cb27f8304cf",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "BSW-LP",
+    "tokens": Array [
+      "0x55d398326f99059ff775485246999027b3197955",
+      "0xe9e7cea3dedca5984780bafc599bd69add087d56",
+    ],
+  },
+  Object {
+    "address": "0x8840c6252e2e86e545defb6da98b2a0e26d8c1ba",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "BSW-LP",
+    "tokens": Array [
+      "0x55d398326f99059ff775485246999027b3197955",
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+    ],
+  },
+  Object {
+    "address": "0xacaac9311b0096e04dfe96b6d87dec867d3883dc",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "BSW-LP",
+    "tokens": Array [
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+      "0xe9e7cea3dedca5984780bafc599bd69add087d56",
+    ],
+  },
+  Object {
+    "address": "0xc7e9d76ba11099af3f330ff829c5f442d571e057",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "BSW-LP",
+    "tokens": Array [
+      "0x7130d2a12b9bcbfae4f2634d864a1ee1ce3ead9c",
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+    ],
+  },
+  Object {
+    "address": "0xa987f0b7098585c735cd943ee07544a84e923d1d",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "BSW-LP",
+    "tokens": Array [
+      "0x55d398326f99059ff775485246999027b3197955",
+      "0x7130d2a12b9bcbfae4f2634d864a1ee1ce3ead9c",
+    ],
+  },
+  Object {
+    "address": "0x46492b26639df0cda9b2769429845cb991591e0a",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "BSW-LP",
+    "tokens": Array [
+      "0x965f527d9159dce6288a2219db51fc6eef120dd1",
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+    ],
+  },
+  Object {
+    "address": "0x63b30de1a998e9e64fd58a21f68d323b9bcd8f85",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "BSW-LP",
+    "tokens": Array [
+      "0x2170ed0880ac9a755fd29b2688956bd959f933f8",
+      "0x55d398326f99059ff775485246999027b3197955",
+    ],
+  },
+  Object {
+    "address": "0x1483767e665b3591677fd49f724bf7430c18bf83",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "BSW-LP",
+    "tokens": Array [
+      "0x55d398326f99059ff775485246999027b3197955",
+      "0x8ac76a51cc950d9822d68b83fe1ad97b32cd580d",
+    ],
+  },
+  Object {
+    "address": "0x2b30c317cedfb554ec525f85e79538d59970beb0",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "BSW-LP",
+    "tokens": Array [
+      "0x55d398326f99059ff775485246999027b3197955",
+      "0x965f527d9159dce6288a2219db51fc6eef120dd1",
+    ],
+  },
+  Object {
+    "address": "0x06cd679121ec37b0a2fd673d4976b09d81791856",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "BSW-LP",
+    "tokens": Array [
+      "0x8ac76a51cc950d9822d68b83fe1ad97b32cd580d",
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+    ],
+  },
+  Object {
+    "address": "0xe7fbb8bd95322618e925affd84d7ec0e32dc0e57",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "BSW-LP",
+    "tokens": Array [
+      "0x7083609fce4d1d8dc0c979aab8c869ea2c873402",
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+    ],
+  },
+  Object {
+    "address": "0x16fe21c91c426e603977b1c6ecd59fc510a518c2",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "BSW-LP",
+    "tokens": Array [
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+      "0xf8a0bf9cf54bb92f17374d9e9a321e6a111a51bd",
+    ],
+  },
+  Object {
+    "address": "0x8860922eb2795ab0d57363653dd7ebf18d7c0a42",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "BSW-LP",
+    "tokens": Array [
+      "0x3ee2200efb3400fabb9aacf31297cbdd1d435d47",
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+    ],
+  },
+  Object {
+    "address": "0x153dc2ebcb551799b13d4e6ff84fc34c7aedf241",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "BSW-LP",
+    "tokens": Array [
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+      "0xbf5140a22578168fd562dccf235e5d43a02ce9b1",
+    ],
+  },
+  Object {
+    "address": "0x1ef315fa08e0e1b116d97e3dfe0af292ed8b7f02",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "BSW-LP",
+    "tokens": Array [
+      "0xba2ae424d960c26247dd6c32edc70b295c744c43",
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+    ],
+  },
+  Object {
+    "address": "0x5dc30bb8d7f02efef28f7e637d17aea13fa96906",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "BSW-LP",
+    "tokens": Array [
+      "0x1d2f0da169ceb9fc7b3144628db156f3f6c60dbe",
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+    ],
+  },
+  Object {
+    "address": "0xe0caab61ee7a12d03b268e1f6a56537ac1b61d13",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "BSW-LP",
+    "tokens": Array [
+      "0x1af3f329e8be154074d8769d1ffa4ee058b1dbc3",
+      "0x55d398326f99059ff775485246999027b3197955",
+    ],
+  },
+  Object {
+    "address": "0x3b09e13ca9189fbd6a196cfe5fbd477c885afbf3",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "BSW-LP",
+    "tokens": Array [
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+      "0xcc42724c6683b7e57334c4e856f4c9965ed682bd",
+    ],
+  },
+  Object {
+    "address": "0x52a499333a7837a72a9750849285e0bb8552de5a",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "BSW-LP",
+    "tokens": Array [
+      "0x0d8ce2a99bb6e3b7db580ed848240e4a0f9ae153",
+      "0x55d398326f99059ff775485246999027b3197955",
+    ],
+  },
+  Object {
+    "address": "0x3d94d03eb9ea2d4726886ab8ac9fc0f18355fd13",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "BSW-LP",
+    "tokens": Array [
+      "0x0e09fabb73bd3ade0a17ecc321fd13a19e81ce82",
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+    ],
+  },
+  Object {
+    "address": "0x3530f7d8d55c93d778e17cbd30bf9eb07b884f35",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "BSW-LP",
+    "tokens": Array [
+      "0x570a5d26f7765ecb712c0924e4de545b89fd43df",
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+    ],
+  },
+  Object {
+    "address": "0x1cba970a6e06d4bcc0c4717be677d1a8aa0211da",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "BSW-LP",
+    "tokens": Array [
+      "0x3d6545b08693dae087e957cb1180ee38b9e3c25e",
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+    ],
+  },
+  Object {
+    "address": "0xf1a12ec907b3d87b6de7a9a5c3820566c621f68b",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "BSW-LP",
+    "tokens": Array [
+      "0x4b0f1812e5df2a09796481ff14017e6005508003",
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+    ],
+  },
+  Object {
+    "address": "0xe0e9fdd2f0bcdbcaf55661b6fa1efc0ce181504b",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "BSW-LP",
+    "tokens": Array [
+      "0x1fa4a73a3f0133f0025378af00236f3abdee5d63",
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+    ],
+  },
+  Object {
+    "address": "0x4c2139abcaf1981d4ab0df2dfd6ee78422e0e76f",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "BSW-LP",
+    "tokens": Array [
+      "0x2170ed0880ac9a755fd29b2688956bd959f933f8",
+      "0x947950bcc74888a40ffa2593c5798f11fc9124c4",
+    ],
+  },
+  Object {
+    "address": "0x2f3899ffb9fdcf635132f7bb94c1a3a0f906cc6f",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "BSW-LP",
+    "tokens": Array [
+      "0x1ce0c2827e2ef14d5c4f29a091d735a204794041",
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+    ],
+  },
+  Object {
+    "address": "0xd822e1737b1180f72368b2a9eb2de22805b67e34",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "BSW-LP",
+    "tokens": Array [
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+      "0xce1b3e5087e8215876af976032382dd338cf8401",
+    ],
+  },
+  Object {
+    "address": "0x88d483697f8e3fc8f5674f322d3a59ce786accd5",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "BSW-LP",
+    "tokens": Array [
+      "0x965f527d9159dce6288a2219db51fc6eef120dd1",
+      "0xbb46693ebbea1ac2070e59b4d043b47e2e095f86",
+    ],
+  },
+  Object {
+    "address": "0x412b607f4cbe9cae77c6f720a701cd60fa0ebd3f",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "BSW-LP",
+    "tokens": Array [
+      "0x4338665cbb7b2485a8855a139b75d5e34ab0db94",
+      "0x55d398326f99059ff775485246999027b3197955",
+    ],
+  },
+  Object {
+    "address": "0x16da0c473214717383b7ef5cde71c723584f8ac4",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "BSW-LP",
+    "tokens": Array [
+      "0x85eac5ac2f758618dfa09bdbe0cf174e7d574d5b",
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+    ],
+  },
+  Object {
+    "address": "0xedc3f1edb8811d2ae4ad6666d77521ae817f2ef1",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "BSW-LP",
+    "tokens": Array [
+      "0x47bead2563dcbf3bf2c9407fea4dc236faba485a",
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+    ],
+  },
+  Object {
+    "address": "0x1a4f4d0d183f885d05a14a6dabfba643da39559a",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "BSW-LP",
+    "tokens": Array [
+      "0x4803ac6b79f9582f69c4fa23c72cb76dd1e46d8d",
+      "0xe9e7cea3dedca5984780bafc599bd69add087d56",
+    ],
+  },
+  Object {
+    "address": "0x5a36e9659f94f27e4526ddf6dd8f0c3b3386d7f3",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "BSW-LP",
+    "tokens": Array [
+      "0x0eb3a705fc54725037cc9e008bdede697f62f335",
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+    ],
+  },
+  Object {
+    "address": "0x7bfcd2bda87fd2312a946bd9b68f5acc6e21595a",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "BSW-LP",
+    "tokens": Array [
+      "0xad29abb318791d579433d831ed122afeaf29dcfe",
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+    ],
+  },
+  Object {
+    "address": "0x49859419c83465eeeedd7b1d30db99ce58c88ec3",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "BSW-LP",
+    "tokens": Array [
+      "0x2859e4544c4bb03966803b044a93563bd2d0dd4d",
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+    ],
+  },
+  Object {
+    "address": "0x753c734dfe05af28a732c033e26ea6d369e07662",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "BSW-LP",
+    "tokens": Array [
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+      "0xcf6bb5389c92bdda8a3747ddb454cb7a64626c63",
+    ],
+  },
+  Object {
+    "address": "0x7683f8349376f297138d3082e236f0e34af1d1c3",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "BSW-LP",
+    "tokens": Array [
+      "0x56b6fb708fc5732dec1afc8d8556423a2edccbd6",
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+    ],
+  },
+  Object {
+    "address": "0xec6158b246eed756f54505571ed29749929019dd",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "BSW-LP",
+    "tokens": Array [
+      "0x3019bf2a2ef8040c242c9a4c5c4bd4c81678b2a1",
+      "0x55d398326f99059ff775485246999027b3197955",
+    ],
+  },
+  Object {
+    "address": "0x46c2b98471144537acff010a42675de31cd56dd9",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "BSW-LP",
+    "tokens": Array [
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+      "0xbf7c81fff98bbe61b40ed186e4afd6ddd01337fe",
+    ],
+  },
+  Object {
+    "address": "0xfd9b7fd5aad32aa431fe19beb1d73013aabbe9c6",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "BSW-LP",
+    "tokens": Array [
+      "0x40c8225329bd3e28a043b029e0d07a5344d2c27c",
+      "0xe9e7cea3dedca5984780bafc599bd69add087d56",
+    ],
+  },
+  Object {
+    "address": "0x857f601df3eac2f25e25dbd2b33d94bcd6f47d1c",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "BSW-LP",
+    "tokens": Array [
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+      "0xd41fdb03ba84762dd66a0af1a6c8540ff1ba5dfb",
+    ],
+  },
+  Object {
+    "address": "0x923dd5668a0f373b714f8d230425ed7799c5d63d",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "BSW-LP",
+    "tokens": Array [
+      "0x55d398326f99059ff775485246999027b3197955",
+      "0x76a797a59ba2c17726896976b7b3747bfd1d220f",
+    ],
+  },
+  Object {
+    "address": "0xe41f46aef7594cc43fc57edf2b0fdc377900bc4e",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "BSW-LP",
+    "tokens": Array [
+      "0xb86abcb37c3a4b64f74f59301aff131a1becc787",
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+    ],
+  },
+  Object {
+    "address": "0x8410c28a6e4074a148f9205712c6b54d12f7282c",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "BSW-LP",
+    "tokens": Array [
+      "0x8f0528ce5ef7b51152a59745befdd91d97091d2f",
+      "0xe9e7cea3dedca5984780bafc599bd69add087d56",
+    ],
+  },
+  Object {
+    "address": "0xfbbd096a99e95d6808b918a5c0863ed9989ebd41",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "BSW-LP",
+    "tokens": Array [
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+      "0xf21768ccbc73ea5b6fd3c687208a7c2def2d966e",
+    ],
+  },
+  Object {
+    "address": "0xfc2b263ee88bd43ccb9982780be11b128c0bd893",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "BSW-LP",
+    "tokens": Array [
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+      "0xfb6115445bff7b52feb98650c87f44907e58f802",
+    ],
+  },
+  Object {
+    "address": "0x910de0b7075bf654dc588e3c10ded4fe1c6bbe87",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "BSW-LP",
+    "tokens": Array [
+      "0x8ff795a6f4d97e7887c79bea79aba5cc76444adf",
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+    ],
+  },
+  Object {
+    "address": "0xde5e03bc7014d65af8f9fe8f11fdb5b5b9116f7b",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "BSW-LP",
+    "tokens": Array [
+      "0x9f589e3eabe42ebc94a44727b3f3531c0c877809",
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+    ],
+  },
+  Object {
+    "address": "0xe73fe11863e4c3714eafdee832a0987b33651f27",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "BSW-LP",
+    "tokens": Array [
+      "0x03ff0ff224f904be3118461335064bb48df47938",
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+    ],
+  },
+  Object {
+    "address": "0x4c372698eaf2da2a04dfeadfe14db0635fefdb34",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "BSW-LP",
+    "tokens": Array [
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+      "0xe02df9e3e622debdd69fb838bb799e3f168902c5",
+    ],
+  },
+  Object {
+    "address": "0x53cccb1a635a1ee84fc95fcab35d7567fc7a80e7",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "BSW-LP",
+    "tokens": Array [
+      "0x16b8dba442cc9faa40d0dd53f698087546ccf096",
+      "0xe9e7cea3dedca5984780bafc599bd69add087d56",
+    ],
+  },
+  Object {
+    "address": "0xb4c88543bd95617fb61f3d031b8e8e19af33201e",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "BSW-LP",
+    "tokens": Array [
+      "0xe9e7cea3dedca5984780bafc599bd69add087d56",
+      "0xf700d4c708c2be1463e355f337603183d20e0808",
+    ],
+  },
+  Object {
+    "address": "0x4f00adeed60fcba76e58a5d067b6a4b9daf8e30f",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "BSW-LP",
+    "tokens": Array [
+      "0x7ddee176f665cd201f93eede625770e2fd911990",
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+    ],
+  },
+  Object {
+    "address": "0xc7dc9343c90be0ea2af6776efe5e19b2734f8d0d",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "BSW-LP",
+    "tokens": Array [
+      "0xa2315cc5a1e4ae3d0a491ed4fe45ebf8356feac7",
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+    ],
+  },
+  Object {
+    "address": "0xeb80530dbbdf489e7a20175ceaa80d4253062dd4",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "BSW-LP",
+    "tokens": Array [
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+      "0xca3f508b8e4dd382ee878a314789373d80a5190a",
+    ],
+  },
+  Object {
+    "address": "0xa34e97d80b76315665687e36c0e8b7f6a611685f",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "BSW-LP",
+    "tokens": Array [
+      "0xa184088a740c695e156f91f5cc086a06bb78b827",
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+    ],
+  },
+  Object {
+    "address": "0xf9fadb9222848cde36c0c06cf88776dc41937083",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "BSW-LP",
+    "tokens": Array [
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+      "0xd15c444f1199ae72795eba15e8c1db44e47abf62",
+    ],
+  },
+  Object {
+    "address": "0xc115389f942483da3805f74ef5e6462ff4b139d9",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "BSW-LP",
+    "tokens": Array [
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+      "0xe0f94ac5462997d2bc57287ac3a3ae4c31345d66",
+    ],
+  },
+  Object {
+    "address": "0x19058558bbc66c2dd97c5ca8a189d350a34e4423",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "BSW-LP",
+    "tokens": Array [
+      "0x715d400f88c167884bbcc41c5fea407ed4d2f8a0",
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+    ],
+  },
+  Object {
+    "address": "0x76e1b3b2b15a4ff61ab3e245d6b98ae808dee6e1",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "BSW-LP",
+    "tokens": Array [
+      "0x3203c9e46ca618c8c1ce5dc67e7e9d75f5da2377",
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+    ],
+  },
+  Object {
+    "address": "0x38fd42c46cb8db714034df920f6663b31bb63dde",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "BSW-LP",
+    "tokens": Array [
+      "0xaec945e04baf28b135fa7c640f624f8d90f1c3a6",
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+    ],
+  },
+  Object {
+    "address": "0x5ea2effb38a84fb95e7b7713f0c10bda99b25a9f",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "BSW-LP",
+    "tokens": Array [
+      "0xa1faa113cbe53436df28ff0aee54275c13b40975",
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+    ],
+  },
+  Object {
+    "address": "0x5d55c0f9d623ccff82d3868789d7a3cb2d56d5dd",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "BSW-LP",
+    "tokens": Array [
+      "0xaef0d72a118ce24fee3cd1d43d383897d05b4e99",
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+    ],
+  },
+  Object {
+    "address": "0x9c3d4fb14d3a021aee4fd763506b1f71d509dc90",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "BSW-LP",
+    "tokens": Array [
+      "0x12bb890508c125661e03b09ec06e404bc9289040",
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+    ],
+  },
+  Object {
+    "address": "0x5843d070f37ef8579cc3903b486de1fda80904d0",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "BSW-LP",
+    "tokens": Array [
+      "0x23ce9e926048273ef83be0a3a8ba9cb6d45cd978",
+      "0x55d398326f99059ff775485246999027b3197955",
+    ],
+  },
+  Object {
+    "address": "0x84123de7279ee0f745631b8769993c6a61e29515",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "BSW-LP",
+    "tokens": Array [
+      "0xd15c444f1199ae72795eba15e8c1db44e47abf62",
+      "0xe9e7cea3dedca5984780bafc599bd69add087d56",
+    ],
+  },
+  Object {
+    "address": "0x99e338d7524887e93e6f24582aab9ee9845e1353",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "BSW-LP",
+    "tokens": Array [
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+      "0xc7981767f644c7f8e483dabdc413e8a371b83079",
+    ],
+  },
+  Object {
+    "address": "0xb2bdc08028872309c034862bc2f76dc61267b088",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "BSW-LP",
+    "tokens": Array [
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+      "0xe4cc45bb5dbda06db6183e8bf016569f40497aa5",
+    ],
+  },
+  Object {
+    "address": "0xe01eda650632986b2e5b8167f629d7c7c759d4fd",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "BSW-LP",
+    "tokens": Array [
+      "0x5f588efaf8eb57e3837486e834fc5a4e07768d98",
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+    ],
+  },
+  Object {
+    "address": "0x3668ca2009af4c0a4a9e258ef69ead1fabbfb7da",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "BSW-LP",
+    "tokens": Array [
+      "0x8076c74c5e3f5852037f31ff0093eeb8c8add8d3",
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+    ],
+  },
+  Object {
+    "address": "0x5cb2ea1302c65e1b46d10aac0f1aba031fc3b435",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "BSW-LP",
+    "tokens": Array [
+      "0x8c851d1a123ff703bd1f9dabe631b69902df5f97",
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+    ],
+  },
+  Object {
+    "address": "0x4b0bb5eea1b204a881a978e89d86498e9478b86b",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "BSW-LP",
+    "tokens": Array [
+      "0x9789df6753b7f813a1c55ed20ecf83571dfde428",
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+    ],
+  },
+  Object {
+    "address": "0x1f9e3432a89e53da95ac85c76ccb129841166e69",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "BSW-LP",
+    "tokens": Array [
+      "0xb91ec4f9d7d12a1ac145a7ae3b78afb45856c9c8",
+      "0xe9e7cea3dedca5984780bafc599bd69add087d56",
+    ],
+  },
+  Object {
+    "address": "0xbc8f1701748b99bd9ef3456fed534c9437b59eea",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "BSW-LP",
+    "tokens": Array [
+      "0x475bfaa1848591ae0e6ab69600f48d828f61a80e",
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+    ],
+  },
+  Object {
+    "address": "0xca7172132824954667aad12600450097d04d7b29",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "BSW-LP",
+    "tokens": Array [
+      "0x8263cd1601fe73c066bf49cc09841f35348e3be0",
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+    ],
+  },
+  Object {
+    "address": "0xdde86511790a3f8ee2d06b91da89682ffff0c1dd",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "BSW-LP",
+    "tokens": Array [
+      "0xe9e7cea3dedca5984780bafc599bd69add087d56",
+      "0xeca41281c24451168a37211f0bc2b8645af45092",
+    ],
+  },
+  Object {
+    "address": "0x9e78183dd68cc81bc330caf3ef84d354a58303b5",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "BSW-LP",
+    "tokens": Array [
+      "0x23396cf899ca06c4472205fc903bdb4de249d6fc",
+      "0xe9e7cea3dedca5984780bafc599bd69add087d56",
+    ],
+  },
+  Object {
+    "address": "0x80a71d7174e622b8913c25acb327dc06f4fd372d",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "BSW-LP",
+    "tokens": Array [
+      "0x016cf83732f1468150d87dcc5bdf67730b3934d3",
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+    ],
+  },
+  Object {
+    "address": "0x950bf9c666c46e92ce2199d24bc25aad3105d4fe",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "BSW-LP",
+    "tokens": Array [
+      "0x55d398326f99059ff775485246999027b3197955",
+      "0x7a2277f34f275ded630deff758fbc818409ca36d",
+    ],
+  },
+  Object {
+    "address": "0x0e334e2e6ea7c5bcc2fa9ac7d1c3153bb283d7a2",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "BSW-LP",
+    "tokens": Array [
+      "0x7a9f28eb62c791422aa23ceae1da9c847cbec9b0",
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+    ],
+  },
+  Object {
+    "address": "0x56d8bcd36462de903a19c6b28efc9d2d11fd9ff4",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "BSW-LP",
+    "tokens": Array [
+      "0x14016e85a25aeb13065688cafb43044c2ef86784",
+      "0xe9e7cea3dedca5984780bafc599bd69add087d56",
+    ],
+  },
+  Object {
+    "address": "0xc9f7e8cb9e80fb6d734afe4b2115f2c0952d133e",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "BSW-LP",
+    "tokens": Array [
+      "0x4f745c0c7da552a348c384da1a5baeb28f2c607c",
+      "0xe9e7cea3dedca5984780bafc599bd69add087d56",
+    ],
+  },
+  Object {
+    "address": "0x34f3cc65f0e9890ff1200285529847b09040cc7b",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "BSW-LP",
+    "tokens": Array [
+      "0x3b78458981eb7260d1f781cb8be2caac7027dbe2",
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+    ],
+  },
+  Object {
+    "address": "0x96bd6eeea2ab91a4817fccec9b630721f28cda48",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "BSW-LP",
+    "tokens": Array [
+      "0x94b69263fca20119ae817b6f783fc0f13b02ad50",
+      "0xe9e7cea3dedca5984780bafc599bd69add087d56",
+    ],
+  },
+  Object {
+    "address": "0x5ff0bdc97daa341c9687344b4dd33221cfe100a7",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "BSW-LP",
+    "tokens": Array [
+      "0x6e4a971b81ca58045a2aa982eaa3d50c4ac38f42",
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+    ],
+  },
+  Object {
+    "address": "0xf842a922edb51fe7ca464823bff7fd906366ee4b",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "BSW-LP",
+    "tokens": Array [
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+      "0xd40bedb44c081d2935eeba6ef5a3c8a31a1bbe13",
+    ],
+  },
+  Object {
+    "address": "0x2b7e5bf4f8c6a9456a1580a4e3c6feb161555df0",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "BSW-LP",
+    "tokens": Array [
+      "0x4bd17003473389a42daf6a0a729f6fdb328bbbd7",
+      "0xe9e7cea3dedca5984780bafc599bd69add087d56",
+    ],
+  },
+  Object {
+    "address": "0xcc1fcabd1546bc6d9b543dc47e19e299cc5bcd4e",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "BSW-LP",
+    "tokens": Array [
+      "0x08ba0619b1e7a582e0bce5bbe9843322c954c340",
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+    ],
+  },
+  Object {
+    "address": "0x89a41a0e00e5661dfc94d725e6b2e076a07cf2fb",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "BSW-LP",
+    "tokens": Array [
+      "0xc598275452fa319d75ee5f176fd3b8384925b425",
+      "0xe9e7cea3dedca5984780bafc599bd69add087d56",
+    ],
+  },
+  Object {
+    "address": "0xeac9c32178f58634a9fbb1ed1ec9af1631a3c367",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "BSW-LP",
+    "tokens": Array [
+      "0x53e562b9b7e5e94b81f10e96ee70ad06df3d2657",
+      "0x55d398326f99059ff775485246999027b3197955",
+    ],
+  },
+  Object {
+    "address": "0x864c908e6a83e092c178ed68169198286cb45e4c",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "BSW-LP",
+    "tokens": Array [
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+      "0xc77dd3ade7b717583e0924466e4e474a5673332c",
+    ],
+  },
+  Object {
+    "address": "0x183ebd9f9cd444f654d5a46f3fe583542b8948e9",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "BSW-LP",
+    "tokens": Array [
+      "0x4a2c860cec6471b9f5f5a336eb4f38bb21683c98",
+      "0x8ac76a51cc950d9822d68b83fe1ad97b32cd580d",
+    ],
+  },
+  Object {
+    "address": "0x122d12ebccbb96c5b20e97672120d56c87f6af82",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "BSW-LP",
+    "tokens": Array [
+      "0x9fd87aefe02441b123c3c32466cd9db4c578618f",
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+    ],
+  },
+  Object {
+    "address": "0x8d54ae6a4e9247e35f4274b274906a99e9af52f1",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "BSW-LP",
+    "tokens": Array [
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+      "0xfb62ae373aca027177d1c18ee0862817f9080d08",
+    ],
+  },
+  Object {
+    "address": "0x96b0bfb491544e8c1168bab9dd3908e331a64ba5",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "BSW-LP",
+    "tokens": Array [
+      "0x3dfa90540ccdc77d543e6e61cacd5880f5c62391",
+      "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+    ],
+  },
+]
+`;

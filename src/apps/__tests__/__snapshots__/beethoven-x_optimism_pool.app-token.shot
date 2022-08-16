@@ -1,0 +1,76 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`App Token Fetchers (beethoven-x, optimism, pool) positions should have structure 1`] = `
+Array [
+  Object {
+    "address": "0x39965c9dab5448482cf7e002f583c812ceb53046",
+    "decimals": 18,
+    "key": "194775669",
+    "symbol": "BPT-ROAD",
+    "tokens": Array [
+      "0x4200000000000000000000000000000000000006",
+      "0x4200000000000000000000000000000000000042",
+      "0x7f5c764cbc14f9669b88837ca1490cca17c31607",
+    ],
+  },
+  Object {
+    "address": "0x5028497af0c9a54ea8c6d42a054c0341b9fc6168",
+    "decimals": 18,
+    "key": "2658627657",
+    "symbol": "BPT-LONG",
+    "tokens": Array [
+      "0x4200000000000000000000000000000000000006",
+      "0x68f180fcce6836688e9084f035309e29bf0a2095",
+      "0x7f5c764cbc14f9669b88837ca1490cca17c31607",
+    ],
+  },
+  Object {
+    "address": "0xd6e5824b54f64ce6f1161210bc17eebffc77e031",
+    "decimals": 18,
+    "key": "2375478600",
+    "symbol": "BPT-LOVE",
+    "tokens": Array [
+      "0x4200000000000000000000000000000000000042",
+      "0x97513e975a7fa9072c72c92d8000b0db90b163c5",
+      "0xfe8b128ba8c78aabc59d4c64cee7ff28e9379921",
+    ],
+  },
+  Object {
+    "address": "0x3dc09db8e571da76dd04e9176afc7feee0b89106",
+    "decimals": 18,
+    "key": "793906648",
+    "symbol": "BPT-FRAX-MAI",
+    "tokens": Array [
+      "0x2e3d870790dc77a83dd1d18184acc7439a53f475",
+      "0x7f5c764cbc14f9669b88837ca1490cca17c31607",
+      "0xdfa46478f9e5ea86d57387849598dbfb2e964b02",
+    ],
+  },
+  Object {
+    "address": "0x7ef99013e446ddce2486b8e04735b7019a115e6f",
+    "decimals": 18,
+    "key": "1178184138",
+    "symbol": "BPT-8TRACK",
+    "tokens": Array [
+      "0x4200000000000000000000000000000000000042",
+      "0x50c5725949a6f0c72e6c4a641f24049a917db0cb",
+      "0x7f5c764cbc14f9669b88837ca1490cca17c31607",
+      "0x8700daec35af8ff88c16bdf0418774cb3d7599b4",
+      "0x8c6f28f2f1a3c87f0f938b96d27520d9751ec8d9",
+      "0x97513e975a7fa9072c72c92d8000b0db90b163c5",
+      "0x9e1028f5f1d5ede59748ffcee5532509976840e0",
+      "0xfe8b128ba8c78aabc59d4c64cee7ff28e9379921",
+    ],
+  },
+  Object {
+    "address": "0x6a06e2a5cb13fcd54b28f3f90144e64952a3a0b4",
+    "decimals": 18,
+    "key": "2223911228",
+    "symbol": "BPT-SEXYS",
+    "tokens": Array [
+      "0x8c6f28f2f1a3c87f0f938b96d27520d9751ec8d9",
+      "0x94b008aa00579c1307b0ef2c499ad98a8ce58e58",
+    ],
+  },
+]
+`;

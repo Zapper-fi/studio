@@ -1,0 +1,96 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`App Token Fetchers (tempus, fantom, pool) positions should have structure 1`] = `
+Array [
+  Object {
+    "address": "0x9ad9b6b9de45b5cc4fd421b2ced84efabf2a7fd5",
+    "decimals": 6,
+    "key": undefined,
+    "symbol": "tCapital-FYEUC001",
+    "tokens": Array [
+      "0x04068da6c83afcfa0e13ba15a6696662335d5b75",
+    ],
+  },
+  Object {
+    "address": "0x780d7588f260e31dfe9c352fa4ec0690fcd1c807",
+    "decimals": 6,
+    "key": undefined,
+    "symbol": "tYield-FYEUC001",
+    "tokens": Array [
+      "0x04068da6c83afcfa0e13ba15a6696662335d5b75",
+    ],
+  },
+  Object {
+    "address": "0xe16bced5425aec6bd5499865512f55efd6a06366",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "tCapital-FYEDA002",
+    "tokens": Array [
+      "0x8d11ec38a3eb5e956b052f67da8bdc9bef8abf3e",
+    ],
+  },
+  Object {
+    "address": "0xb797c9d462a336b9d25f23fe50c2b33a38b5792a",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "tYield-FYEDA002",
+    "tokens": Array [
+      "0x8d11ec38a3eb5e956b052f67da8bdc9bef8abf3e",
+    ],
+  },
+  Object {
+    "address": "0x73f5e4465946d03045cdc78d6028b53a0745babb",
+    "decimals": 6,
+    "key": undefined,
+    "symbol": "tCapital-FYEUT003",
+    "tokens": Array [
+      "0x049d68029688eabf473097a2fc38ef61633a3c7a",
+    ],
+  },
+  Object {
+    "address": "0x9f6f78f2e1819c612a4ab98d73b75f2afa9ce3ad",
+    "decimals": 6,
+    "key": undefined,
+    "symbol": "tYield-FYEUT003",
+    "tokens": Array [
+      "0x049d68029688eabf473097a2fc38ef61633a3c7a",
+    ],
+  },
+  Object {
+    "address": "0xda64a2343aab13350d1f2761b2adc06ee8cc6cbc",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "tCapital-FYEWE001",
+    "tokens": Array [
+      "0x74b23882a30290451a17c44f4f05243b6b58c76d",
+    ],
+  },
+  Object {
+    "address": "0x074fc92d15b1ecdbe04dd196b10933f0fb000f8d",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "tYield-FYEWE001",
+    "tokens": Array [
+      "0x74b23882a30290451a17c44f4f05243b6b58c76d",
+    ],
+  },
+  Object {
+    "address": "0x2810ad0642ba85e09c722f2eb8203c00e8e6d199",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "tCapital-FYEYF001",
+    "tokens": Array [
+      "0x29b0da86e484e1c0029b56e817912d778ac0ec69",
+    ],
+  },
+  Object {
+    "address": "0xd2de74a2a0026a6c020c291861956b1959f663a0",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "tYield-FYEYF001",
+    "tokens": Array [
+      "0x29b0da86e484e1c0029b56e817912d778ac0ec69",
+    ],
+  },
+]
+`;

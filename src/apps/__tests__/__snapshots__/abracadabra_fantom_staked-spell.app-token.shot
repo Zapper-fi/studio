@@ -1,0 +1,15 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`App Token Fetchers (abracadabra, fantom, staked-spell) positions should have structure 1`] = `
+Array [
+  Object {
+    "address": "0xbb29d2a58d880af8aa5859e30470134deaf84f2b",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "sSPELL",
+    "tokens": Array [
+      "0x090185f2135308bad17527004364ebcc2d37e5f6",
+    ],
+  },
+]
+`;

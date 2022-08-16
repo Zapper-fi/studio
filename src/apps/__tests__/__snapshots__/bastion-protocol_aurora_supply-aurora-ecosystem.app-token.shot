@@ -1,0 +1,42 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`App Token Fetchers (bastion-protocol, aurora, supply-aurora-ecosystem) positions should have structure 1`] = `
+Array [
+  Object {
+    "address": "0x94fa9979751a74e6b133eb95aeca8565c0809bab",
+    "decimals": 8,
+    "key": undefined,
+    "symbol": "cAURORA",
+    "tokens": Array [
+      "0x8bec47865ade3b172a928df8f990bc7f2a3b9f79",
+    ],
+  },
+  Object {
+    "address": "0x8e9fb3f2cc8b08184cb5fb7bcdc61188e80c3cb0",
+    "decimals": 8,
+    "key": undefined,
+    "symbol": "cUSDC",
+    "tokens": Array [
+      "0xb12bfca5a55806aaf64e99521918a4bf0fc40802",
+    ],
+  },
+  Object {
+    "address": "0x86538ca055e7fd992a26c5604f349e2ede3ce42d",
+    "decimals": 8,
+    "key": undefined,
+    "symbol": "cTRI",
+    "tokens": Array [
+      "0xfa94348467f64d5a457f75f8bc40495d33c65abb",
+    ],
+  },
+  Object {
+    "address": "0x08ac1236ae3982ec9463efe10f0f320d9f5a9a4b",
+    "decimals": 8,
+    "key": undefined,
+    "symbol": "cBSTN",
+    "tokens": Array [
+      "0x9f1f933c660a1dc856f0e0fe058435879c5ccef0",
+    ],
+  },
+]
+`;

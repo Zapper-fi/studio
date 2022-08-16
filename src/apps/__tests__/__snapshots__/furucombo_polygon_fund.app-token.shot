@@ -1,0 +1,33 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`App Token Fetchers (furucombo, polygon, fund) positions should have structure 1`] = `
+Array [
+  Object {
+    "address": "0x4e9C1EDac1f99F2F7D5fBc16DaFf721B9FE3f2F5",
+    "decimals": 6,
+    "key": "1421046015",
+    "symbol": "FFST",
+    "tokens": Array [
+      "0x2791bca1f2de4661ed88a30c99a7a9449aa84174",
+    ],
+  },
+  Object {
+    "address": "0x39B6B8eC7eF967f063C568c6796895Bc43549542",
+    "decimals": 6,
+    "key": "3257879491",
+    "symbol": "FFST",
+    "tokens": Array [
+      "0x2791bca1f2de4661ed88a30c99a7a9449aa84174",
+    ],
+  },
+  Object {
+    "address": "0x851be227cf4035f9cD8c78Cd7D69f25FD78283C1",
+    "decimals": 6,
+    "key": "1309429128",
+    "symbol": "FFST",
+    "tokens": Array [
+      "0x2791bca1f2de4661ed88a30c99a7a9449aa84174",
+    ],
+  },
+]
+`;

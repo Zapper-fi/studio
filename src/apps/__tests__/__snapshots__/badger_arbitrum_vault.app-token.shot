@@ -1,0 +1,78 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`App Token Fetchers (badger, arbitrum, vault) positions should have structure 1`] = `
+Array [
+  Object {
+    "address": "0x0c2153e8ae4db8233c61717cdc4c75630e952561",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "bDXS",
+    "tokens": Array [
+      "0xa66b20912cbea522278f3056b4ae60d0d3ee271b",
+    ],
+  },
+  Object {
+    "address": "0xe9c12f06f8affd8719263fe4a81671453220389c",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "bDXS",
+    "tokens": Array [
+      "0x3c6bd88cdd2aecf466e22d4ed86db6b8953fdb72",
+    ],
+  },
+  Object {
+    "address": "0xfdb9e5a186fb7655ac9cd7caff3d6d4c6064cc50",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "bcrv3crypto",
+    "tokens": Array [
+      "0x8e0b8c8bb9db49a46697f3a5bb8a308e744821d2",
+    ],
+  },
+  Object {
+    "address": "0xfc13209cafe8fb3bb5fbd929ec9f11a39e8ac041",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "bSLP",
+    "tokens": Array [
+      "0x515e252b2b5c22b4b2b6df66c2ebeea871aa4d69",
+    ],
+  },
+  Object {
+    "address": "0x4591890225394bf66044347653e112621af7ddeb",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "bcrv3crypto",
+    "tokens": Array [
+      "0x8e0b8c8bb9db49a46697f3a5bb8a308e744821d2",
+    ],
+  },
+  Object {
+    "address": "0xaf9ab64f568149361ab670372b16661f4380e80b",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "bDXS",
+    "tokens": Array [
+      "0x9a17d97fb5f76f44604270448ac77d55ac40c15c",
+    ],
+  },
+  Object {
+    "address": "0xba418cddd91111f5c1d1ac2777fa8cea28d71843",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "bbtcCRV",
+    "tokens": Array [
+      "0x3e01dd8a5e1fb3481f0f589056b428fc308af0fb",
+    ],
+  },
+  Object {
+    "address": "0xe774d1fb3133b037aa17d39165b8f45f444f632d",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "bSLP",
+    "tokens": Array [
+      "0x3221022e37029923ace4235d812273c5a42c322d",
+    ],
+  },
+]
+`;

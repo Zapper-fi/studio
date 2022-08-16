@@ -1,0 +1,33 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`App Token Fetchers (impermax, polygon, collateral) positions should have structure 1`] = `
+Array [
+  Object {
+    "address": "0xbEd97787bd8AE35477cAd0A9AC84F04dD5024e3e",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "imxC",
+    "tokens": Array [
+      "0xfbae8e2d04a67c10047d83ee9b8aeffe7f6ea3f4",
+    ],
+  },
+  Object {
+    "address": "0xbe85978a9cBB8E48a4A3367314bad703F83C497E",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "imxC",
+    "tokens": Array [
+      "0xf6a637525402643b0654a54bead2cb9a83c8b498",
+    ],
+  },
+  Object {
+    "address": "0x765742f938896091901a942bDb97c142E5CACDFC",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "imxC",
+    "tokens": Array [
+      "0xb5846453b67d0b4b4ce655930cf6e4129f4416d7",
+    ],
+  },
+]
+`;

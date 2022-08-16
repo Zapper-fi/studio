@@ -1,0 +1,15 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`App Token Fetchers (trader-joe, avalanche, x-joe) positions should have structure 1`] = `
+Array [
+  Object {
+    "address": "0x57319d41f71e81f3c65f2a47ca4e001ebafd4f33",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "xJOE",
+    "tokens": Array [
+      "0x6e84a6216ea6dacc71ee8e6b0a5b7322eebc0fdd",
+    ],
+  },
+]
+`;

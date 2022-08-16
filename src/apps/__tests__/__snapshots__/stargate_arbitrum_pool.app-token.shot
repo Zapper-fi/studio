@@ -1,0 +1,24 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`App Token Fetchers (stargate, arbitrum, pool) positions should have structure 1`] = `
+Array [
+  Object {
+    "address": "0x892785f33cdee22a30aef750f285e18c18040c3e",
+    "decimals": 6,
+    "key": undefined,
+    "symbol": "S*USDC",
+    "tokens": Array [
+      "0xff970a61a04b1ca14834a43f5de4533ebddb5cc8",
+    ],
+  },
+  Object {
+    "address": "0xb6cfcf89a7b22988bfc96632ac2a9d6dab60d641",
+    "decimals": 6,
+    "key": undefined,
+    "symbol": "S*USDT",
+    "tokens": Array [
+      "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9",
+    ],
+  },
+]
+`;

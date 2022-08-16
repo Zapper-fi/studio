@@ -1,0 +1,202 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`App Token Fetchers (balancer-v2, arbitrum, pool) positions should have structure 1`] = `
+Array [
+  Object {
+    "address": "0x64541216bafffeec8ea535bb71fbc927831d0595",
+    "decimals": 18,
+    "key": "2225056943",
+    "symbol": "B-33WETH-33WBTC-33USDC",
+    "tokens": Array [
+      "0x2f2a2543b76a4166549f7aab2e75bef0aefc5b0f",
+      "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+      "0xff970a61a04b1ca14834a43f5de4533ebddb5cc8",
+    ],
+  },
+  Object {
+    "address": "0xc61ff48f94d801c1ceface0289085197b5ec44f0",
+    "decimals": 18,
+    "key": "559642642",
+    "symbol": "50VSTA-50WETH",
+    "tokens": Array [
+      "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+      "0xa684cd057951541187f288294a1e1c2646aa2d24",
+    ],
+  },
+  Object {
+    "address": "0x3a4c6d2404b5eb14915041e01f63200a82f4a343",
+    "decimals": 18,
+    "key": "2918116398",
+    "symbol": "50STG-50USDC",
+    "tokens": Array [
+      "0x6694340fc020c5e6b96567843da2df01b2ce1eb6",
+      "0xff970a61a04b1ca14834a43f5de4533ebddb5cc8",
+    ],
+  },
+  Object {
+    "address": "0xb5b77f1ad2b520df01612399258e7787af63025d",
+    "decimals": 18,
+    "key": "1949346290",
+    "symbol": "MWP",
+    "tokens": Array [
+      "0x4e352cf164e64adcbad318c3a1e222e9eba4ce42",
+      "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    ],
+  },
+  Object {
+    "address": "0x1533a3278f3f9141d5f820a184ea4b017fce2382",
+    "decimals": 18,
+    "key": "4096060728",
+    "symbol": "B-staBAL-3",
+    "tokens": Array [
+      "0xda10009cbd5d07dd0cecc66161fc93d7c9000da1",
+      "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9",
+      "0xff970a61a04b1ca14834a43f5de4533ebddb5cc8",
+    ],
+  },
+  Object {
+    "address": "0xcc65a812ce382ab909a11e434dbf75b34f1cc59d",
+    "decimals": 18,
+    "key": "2512173801",
+    "symbol": "B-60BAL-40WETH",
+    "tokens": Array [
+      "0x040d1edc9569d4bab2d15287dc5a4f10f56a56b8",
+      "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    ],
+  },
+  Object {
+    "address": "0xc2f082d33b5b8ef3a7e3de30da54efd3114512ac",
+    "decimals": 18,
+    "key": "2612734561",
+    "symbol": "B-80PICKLE-20WETH",
+    "tokens": Array [
+      "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+      "0x965772e0e9c84b6f359c8597c891108dcf1c5b1a",
+    ],
+  },
+  Object {
+    "address": "0x5a5884fc31948d59df2aeccca143de900d49e1a3",
+    "decimals": 18,
+    "key": "3589351257",
+    "symbol": "VST-USDC-USDT-DAI-BSP",
+    "tokens": Array [
+      "0x64343594ab9b56e99087bfa6f2335db24c2d1f17",
+      "0xda10009cbd5d07dd0cecc66161fc93d7c9000da1",
+      "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9",
+      "0xff970a61a04b1ca14834a43f5de4533ebddb5cc8",
+    ],
+  },
+  Object {
+    "address": "0xb28670b3e7ad27bd41fb5938136bf9e9cba90d65",
+    "decimals": 18,
+    "key": "2546271026",
+    "symbol": "B-80TCR-20WETH",
+    "tokens": Array [
+      "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+      "0xa72159fc390f0e3c6d415e658264c7c4051e9b87",
+    ],
+  },
+  Object {
+    "address": "0xb3028ca124b80cfe6e9ca57b70ef2f0ccc41ebd4",
+    "decimals": 18,
+    "key": "3254821285",
+    "symbol": "50MAGIC-50USDC",
+    "tokens": Array [
+      "0x539bde0d7dbd336b79148aa742883198bbf60342",
+      "0xff970a61a04b1ca14834a43f5de4533ebddb5cc8",
+    ],
+  },
+  Object {
+    "address": "0x651e00ffd5ecfa7f3d4f33d62ede0a97cf62ede2",
+    "decimals": 18,
+    "key": "4088262949",
+    "symbol": "B-80LINK-20WETH",
+    "tokens": Array [
+      "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+      "0xf97f4df75117a78c1a5a0dbb814af92458539fb4",
+    ],
+  },
+  Object {
+    "address": "0xb340b6b1a34019853cb05b2de6ee8ffd0b89a008",
+    "decimals": 18,
+    "key": "1707636938",
+    "symbol": "33DPX-33RDPX-33WETH",
+    "tokens": Array [
+      "0x32eb7902d4134bf98a28b963d26de779af92a212",
+      "0x6c2c06790b3e3e3c38e12ee22f8183b37a13ee55",
+      "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    ],
+  },
+  Object {
+    "address": "0x0510ccf9eb3ab03c1508d3b9769e8ee2cfd6fdcf",
+    "decimals": 18,
+    "key": "388760651",
+    "symbol": "MAI-BSP",
+    "tokens": Array [
+      "0x3f56e0c36d275367b8c502090edf38289b3dea0d",
+      "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9",
+      "0xff970a61a04b1ca14834a43f5de4533ebddb5cc8",
+    ],
+  },
+  Object {
+    "address": "0x0adeb25cb5920d4f7447af4a0428072edc2cee22",
+    "decimals": 18,
+    "key": "3038037047",
+    "symbol": "80GMX-20WETH",
+    "tokens": Array [
+      "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+      "0xfc5a1a6eb076a2c7ad06ed22c90d7e710e35ad0a",
+    ],
+  },
+  Object {
+    "address": "0x9be7de742865d021c0e8fb9d64311b2c040c1ec1",
+    "decimals": 18,
+    "key": "1059912831",
+    "symbol": "B-staBAL-2",
+    "tokens": Array [
+      "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9",
+      "0xff970a61a04b1ca14834a43f5de4533ebddb5cc8",
+    ],
+  },
+  Object {
+    "address": "0x5028b5d18b4cea374206fea55df236619a110438",
+    "decimals": 18,
+    "key": "3338157993",
+    "symbol": "50MAGIC-50WETH",
+    "tokens": Array [
+      "0x539bde0d7dbd336b79148aa742883198bbf60342",
+      "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    ],
+  },
+  Object {
+    "address": "0xa6625f741400f90d31e39a17b0d429a92e347a60",
+    "decimals": 18,
+    "key": "2114142450",
+    "symbol": "B-80COMP-20WETH",
+    "tokens": Array [
+      "0x354a6da3fcde098f8389cad84b0182725c6c91de",
+      "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    ],
+  },
+  Object {
+    "address": "0xe1230e4f97d61cf1ce935ba16920792041cc45d2",
+    "decimals": 18,
+    "key": "3079990113",
+    "symbol": "50CAP-50WETH",
+    "tokens": Array [
+      "0x031d35296154279dc1984dcd93e392b1f946737b",
+      "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    ],
+  },
+  Object {
+    "address": "0x2766e8f0ec09eeea4cd833d80fc5e27dc3e8357a",
+    "decimals": 18,
+    "key": "2947069933",
+    "symbol": "50FRAX-50MIM",
+    "tokens": Array [
+      "0x17fc002b466eec40dae837fc4be5c67993ddbd6f",
+      "0xfea7a6a0b346362bf88a9e4a88416b77a57d6c2a",
+    ],
+  },
+]
+`;

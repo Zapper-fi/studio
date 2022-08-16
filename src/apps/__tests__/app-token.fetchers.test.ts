@@ -9,7 +9,7 @@ require('jest-specific-snapshot');
 
 const testHarness = new TestHarness();
 
-describe.only('App Token Fetchers', () => {
+describe('App Token Fetchers', () => {
   beforeAll(async () => {
     await testHarness.setup();
   }, 30 * 1000);

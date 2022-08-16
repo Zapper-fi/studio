@@ -1,0 +1,22 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`App Token Fetchers (gmx, arbitrum, glp) positions should have structure 1`] = `
+Array [
+  Object {
+    "address": "0x4277f8f2c384827b5273592ff7cebd9f2c1ac258",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "GLP",
+    "tokens": Array [
+      "0x2f2a2543b76a4166549f7aab2e75bef0aefc5b0f",
+      "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+      "0xff970a61a04b1ca14834a43f5de4533ebddb5cc8",
+      "0xf97f4df75117a78c1a5a0dbb814af92458539fb4",
+      "0xfa7f8980b0f1e64a2062791cc3b0871572f1f7f0",
+      "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9",
+      "0x17fc002b466eec40dae837fc4be5c67993ddbd6f",
+      "0xda10009cbd5d07dd0cecc66161fc93d7c9000da1",
+    ],
+  },
+]
+`;

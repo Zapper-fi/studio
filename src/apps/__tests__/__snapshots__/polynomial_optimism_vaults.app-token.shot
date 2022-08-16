@@ -1,0 +1,24 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`App Token Fetchers (polynomial, optimism, vaults) positions should have structure 1`] = `
+Array [
+  Object {
+    "address": "0x4f664c082602c48559e936c17bc13db0396cf9f2",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "fx-sETH-CS",
+    "tokens": Array [
+      "0xe405de8f52ba7559f9df3c368500b6e6ae6cee49",
+    ],
+  },
+  Object {
+    "address": "0xd33d811ed08993ea56f1ecf985f665669ef88293",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "fx-sETH-PS",
+    "tokens": Array [
+      "0x8c6f28f2f1a3c87f0f938b96d27520d9751ec8d9",
+    ],
+  },
+]
+`;

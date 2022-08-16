@@ -1,0 +1,15 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`App Token Fetchers (gamma-strategies, ethereum, t-gamma) positions should have structure 1`] = `
+Array [
+  Object {
+    "address": "0x2fc6e9c1b2c07e18632efe51879415a580ad22e1",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "tGAMMA",
+    "tokens": Array [
+      "0x6bea7cfef803d1e3d5f7c0103f7ded065644e197",
+    ],
+  },
+]
+`;

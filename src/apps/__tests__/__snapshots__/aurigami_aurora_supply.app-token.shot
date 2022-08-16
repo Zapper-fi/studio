@@ -1,0 +1,105 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`App Token Fetchers (aurigami, aurora, supply) positions should have structure 1`] = `
+Array [
+  Object {
+    "address": "0x4f0d864b1abf4b701799a0b30b57a22dfeb5917b",
+    "decimals": 8,
+    "key": undefined,
+    "symbol": "auUSDC",
+    "tokens": Array [
+      "0xb12bfca5a55806aaf64e99521918a4bf0fc40802",
+    ],
+  },
+  Object {
+    "address": "0xca9511b610ba5fc7e311fdef9ce16050ee4449e9",
+    "decimals": 8,
+    "key": undefined,
+    "symbol": "auETH",
+    "tokens": Array [
+      "0x0000000000000000000000000000000000000000",
+    ],
+  },
+  Object {
+    "address": "0xcfb6b0498cb7555e7e21502e0f449bf28760adbb",
+    "decimals": 8,
+    "key": undefined,
+    "symbol": "auWBTC",
+    "tokens": Array [
+      "0xf4eb217ba2454613b15dbdea6e5f22276410e89e",
+    ],
+  },
+  Object {
+    "address": "0xad5a2437ff55ed7a8cad3b797b3ec7c5a19b1c54",
+    "decimals": 8,
+    "key": undefined,
+    "symbol": "auUSDT",
+    "tokens": Array [
+      "0x4988a896b1227218e4a686fde5eabdcabd91571f",
+    ],
+  },
+  Object {
+    "address": "0xce4166363e3a584dac84a47bcd3414b43efcdd1c",
+    "decimals": 8,
+    "key": undefined,
+    "symbol": "auDAI",
+    "tokens": Array [
+      "0xe3520349f477a5f6eb06107066048508498a291b",
+    ],
+  },
+  Object {
+    "address": "0xae4fac24dcdae0132c6d04f564dcf059616e9423",
+    "decimals": 8,
+    "key": undefined,
+    "symbol": "auWNEAR",
+    "tokens": Array [
+      "0xc42c30ac6cc15fac9bd938618bcaa1a1fae8501d",
+    ],
+  },
+  Object {
+    "address": "0x3195949f267702723bc614cae037cdc8d1e94786",
+    "decimals": 8,
+    "key": undefined,
+    "symbol": "auSTNEAR",
+    "tokens": Array [
+      "0x07f9f7f963c5cd2bbffd30ccfb964be114332e30",
+    ],
+  },
+  Object {
+    "address": "0x8888682e24dd4df7b7ff2b91fccb575737e433bf",
+    "decimals": 8,
+    "key": undefined,
+    "symbol": "auAURORA",
+    "tokens": Array [
+      "0x8bec47865ade3b172a928df8f990bc7f2a3b9f79",
+    ],
+  },
+  Object {
+    "address": "0x6ea6c03061bddce23d4ec60b6e6e880c33d24dca",
+    "decimals": 8,
+    "key": undefined,
+    "symbol": "auTRI",
+    "tokens": Array [
+      "0xfa94348467f64d5a457f75f8bc40495d33c65abb",
+    ],
+  },
+  Object {
+    "address": "0xc9011e629c9d0b8b1e4a2091e123fbb87b3a792c",
+    "decimals": 8,
+    "key": undefined,
+    "symbol": "auPLY",
+    "tokens": Array [
+      "0x09c9d464b58d96837f8d8b6f4d9fe4ad408d3a4f",
+    ],
+  },
+  Object {
+    "address": "0x5ccad065400341db391fd3a4b7f50087b678d7cc",
+    "decimals": 8,
+    "key": undefined,
+    "symbol": "auUSN",
+    "tokens": Array [
+      "0x5183e1b1091804bc2602586919e6880ac1cf2896",
+    ],
+  },
+]
+`;

@@ -1,0 +1,286 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`App Token Fetchers (vvs-finance, cronos, pool) positions should have structure 1`] = `
+Array [
+  Object {
+    "address": "0x39cc0e14795a8e6e9d02a21091b81fe0d61d82f9",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "VVS-LP",
+    "tokens": Array [
+      "0x66e428c3f67a68878562e79a0234c1f83c208770",
+      "0xc21223249ca28397b4b6541dffaecc539bff0c59",
+    ],
+  },
+  Object {
+    "address": "0xa111c17f8b8303280d3eb01bbcd61000aa7f39f9",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "VVS-LP",
+    "tokens": Array [
+      "0x5c7f8a570d578ed84e63fdfa7b1ee72deae1ae23",
+      "0xe44fd7fcb2b1581822d0c862b68222998a0c299a",
+    ],
+  },
+  Object {
+    "address": "0x8f09fff247b8fdb80461e5cf5e82dd1ae2ebd6d7",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "VVS-LP",
+    "tokens": Array [
+      "0x062e66477faf219f25d27dced647bf57c3107d52",
+      "0x5c7f8a570d578ed84e63fdfa7b1ee72deae1ae23",
+    ],
+  },
+  Object {
+    "address": "0xbf62c67ea509e86f07c8c69d0286c0636c50270b",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "VVS-LP",
+    "tokens": Array [
+      "0x2d03bece6747adc00e1a131bba1469c15fd11e03",
+      "0x5c7f8a570d578ed84e63fdfa7b1ee72deae1ae23",
+    ],
+  },
+  Object {
+    "address": "0xe61db569e231b3f5530168aa2c9d50246525b6d6",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "VVS-LP",
+    "tokens": Array [
+      "0x5c7f8a570d578ed84e63fdfa7b1ee72deae1ae23",
+      "0xc21223249ca28397b4b6541dffaecc539bff0c59",
+    ],
+  },
+  Object {
+    "address": "0x94fd83482016bcc5fca5972a3635aa6524c3f557",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "VVS-LP",
+    "tokens": Array [
+      "0x87efb3ec1576dec8ed47e58b832bedcd86ee186e",
+      "0xc21223249ca28397b4b6541dffaecc539bff0c59",
+    ],
+  },
+  Object {
+    "address": "0x4b377121d968bf7a62d51b96523d59506e7c2bf0",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "VVS-LP",
+    "tokens": Array [
+      "0x5c7f8a570d578ed84e63fdfa7b1ee72deae1ae23",
+      "0xdd73dea10abc2bff99c60882ec5b2b81bb1dc5b2",
+    ],
+  },
+  Object {
+    "address": "0xd0be1aaba78b7b4eb4c09719317529108a0d5c54",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "VVS-LP",
+    "tokens": Array [
+      "0x5c7f8a570d578ed84e63fdfa7b1ee72deae1ae23",
+      "0xebaceb7f193955b946cc5dd8f8724a80671a1f2f",
+    ],
+  },
+  Object {
+    "address": "0x814920d1b8007207db6cb5a2dd92bf0b082bdba1",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "VVS-LP",
+    "tokens": Array [
+      "0x2d03bece6747adc00e1a131bba1469c15fd11e03",
+      "0xc21223249ca28397b4b6541dffaecc539bff0c59",
+    ],
+  },
+  Object {
+    "address": "0x3d2180db9e1b909f35c398bc39ef36108c0fc8c3",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "VVS-LP",
+    "tokens": Array [
+      "0x5c7f8a570d578ed84e63fdfa7b1ee72deae1ae23",
+      "0x66e428c3f67a68878562e79a0234c1f83c208770",
+    ],
+  },
+  Object {
+    "address": "0x280acad550b2d3ba63c8cbff51b503ea41a1c61b",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "VVS-LP",
+    "tokens": Array [
+      "0x2d03bece6747adc00e1a131bba1469c15fd11e03",
+      "0x66e428c3f67a68878562e79a0234c1f83c208770",
+    ],
+  },
+  Object {
+    "address": "0xa922530960a1f94828a7e132ec1ba95717ed1eab",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "VVS-LP",
+    "tokens": Array [
+      "0x2d03bece6747adc00e1a131bba1469c15fd11e03",
+      "0xdd73dea10abc2bff99c60882ec5b2b81bb1dc5b2",
+    ],
+  },
+  Object {
+    "address": "0x9284134f3d268cdf0ef2305c9f06767e913a7ce6",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "VVS-LP",
+    "tokens": Array [
+      "0x5c7f8a570d578ed84e63fdfa7b1ee72deae1ae23",
+      "0x83b2ac8642ae46fc2823bc959ffeb3c1742c48b5",
+    ],
+  },
+  Object {
+    "address": "0xdcbe2035a7b24f7aa479bff3cca46d2f5f014b74",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "VVS-LP",
+    "tokens": Array [
+      "0x47a9d630dc5b28f75d3af3be3aaa982512cd89aa",
+      "0xc21223249ca28397b4b6541dffaecc539bff0c59",
+    ],
+  },
+  Object {
+    "address": "0x2f12d47fe49b907d7a5df8159c1ce665187f15c4",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "VVS-LP",
+    "tokens": Array [
+      "0xc21223249ca28397b4b6541dffaecc539bff0c59",
+      "0xdd73dea10abc2bff99c60882ec5b2b81bb1dc5b2",
+    ],
+  },
+  Object {
+    "address": "0x72efd454bbfeca458e909b99faacbc116880b54d",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "VVS-LP",
+    "tokens": Array [
+      "0x2d03bece6747adc00e1a131bba1469c15fd11e03",
+      "0x39bc1e38c842c60775ce37566d03b41a7a66c782",
+    ],
+  },
+  Object {
+    "address": "0x0fbab8a90cac61b481530aad3a64fe17b322c25d",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "VVS-LP",
+    "tokens": Array [
+      "0x0804702a4e749d39a35fde73d1df0b1f1d6b8347",
+      "0xc21223249ca28397b4b6541dffaecc539bff0c59",
+    ],
+  },
+  Object {
+    "address": "0x3eb9ff92e19b73235a393000c176c8bb150f1b20",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "VVS-LP",
+    "tokens": Array [
+      "0x5c7f8a570d578ed84e63fdfa7b1ee72deae1ae23",
+      "0xf2001b145b43032aaf5ee2884e456ccd805f677d",
+    ],
+  },
+  Object {
+    "address": "0x78082d9dee5fdd53df3b16292077ee2f6d31f7de",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "VVS-LP",
+    "tokens": Array [
+      "0x45c135c1cdce8d25a3b729a28659561385c52671",
+      "0x5c7f8a570d578ed84e63fdfa7b1ee72deae1ae23",
+    ],
+  },
+  Object {
+    "address": "0x542b3ba420581b69212f406e0643da75fa109b79",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "VVS-LP",
+    "tokens": Array [
+      "0x5c7f8a570d578ed84e63fdfa7b1ee72deae1ae23",
+      "0x9d3bbb0e988d9fb2d55d07fe471be2266ad9c81c",
+    ],
+  },
+  Object {
+    "address": "0xb7b49d3c3f94c32c8b3e8f065ddb8d31edd13157",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "VVS-LP",
+    "tokens": Array [
+      "0x5c7f8a570d578ed84e63fdfa7b1ee72deae1ae23",
+      "0xc4a174ccb5fb54a6721e11e0ca961e42715023f9",
+    ],
+  },
+  Object {
+    "address": "0xcb0704bc4e885384ac96f0ed22b9204c3add91ad",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "VVS-LP",
+    "tokens": Array [
+      "0x5c7f8a570d578ed84e63fdfa7b1ee72deae1ae23",
+      "0xdcc261c03cd2f33ebea404318cdc1d9f8b78e1ad",
+    ],
+  },
+  Object {
+    "address": "0x6f72a3f6db6f486b50217f6e721f4388994b1fbe",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "VVS-LP",
+    "tokens": Array [
+      "0x0804702a4e749d39a35fde73d1df0b1f1d6b8347",
+      "0x2d03bece6747adc00e1a131bba1469c15fd11e03",
+    ],
+  },
+  Object {
+    "address": "0xd9debaab797cb92c257b2988aafa92c728b124e6",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "VVS-LP",
+    "tokens": Array [
+      "0x5c7f8a570d578ed84e63fdfa7b1ee72deae1ae23",
+      "0xe727240728c1a5f95437b8b50afdd0ea4ae5f0c8",
+    ],
+  },
+  Object {
+    "address": "0x1803e360393a472bec6e1a688bdf7048d3076b1a",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "VVS-LP",
+    "tokens": Array [
+      "0x5c7f8a570d578ed84e63fdfa7b1ee72deae1ae23",
+      "0xe6801928061cdbe32ac5ad0634427e140efd05f9",
+    ],
+  },
+  Object {
+    "address": "0xd7f3d8035cd7bd5ad5e43fa4e1d4dca12e133fdd",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "VVS-LP",
+    "tokens": Array [
+      "0x00d7699b71290094ccb1a5884cd835bd65a78c17",
+      "0x2d03bece6747adc00e1a131bba1469c15fd11e03",
+    ],
+  },
+  Object {
+    "address": "0x792df67276615d6e85e36497c4514b7b102af4a9",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "VVS-LP",
+    "tokens": Array [
+      "0xc21223249ca28397b4b6541dffaecc539bff0c59",
+      "0xc74d59a548ecf7fc1754bb7810d716e9ac3e3ae5",
+    ],
+  },
+  Object {
+    "address": "0x89b330f8e31a1238b667080a0a6e4e5c4c15f7ee",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "VVS-LP",
+    "tokens": Array [
+      "0x2d03bece6747adc00e1a131bba1469c15fd11e03",
+      "0x47a9d630dc5b28f75d3af3be3aaa982512cd89aa",
+    ],
+  },
+]
+`;

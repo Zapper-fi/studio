@@ -1,0 +1,312 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`App Token Fetchers (impermax, arbitrum, lend) positions should have structure 1`] = `
+Array [
+  Object {
+    "address": "0xF4EC6DC712E78D948B5aF3BE34E4De8a93f17A23",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "imxB",
+    "tokens": Array [
+      "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    ],
+  },
+  Object {
+    "address": "0x4E7c57461a23a973C5487F0658C660aa52Dd196D",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "imxB",
+    "tokens": Array [
+      "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    ],
+  },
+  Object {
+    "address": "0x086f1f8799268d0308B81305EA9D5f5e622aAA4d",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "imxB",
+    "tokens": Array [
+      "0xff970a61a04b1ca14834a43f5de4533ebddb5cc8",
+    ],
+  },
+  Object {
+    "address": "0x908221669C081a79b13F656f0F814C2c419167f9",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "imxB",
+    "tokens": Array [
+      "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    ],
+  },
+  Object {
+    "address": "0x929c2Ad7a4b22E4968ecB6B87c9698CEb20DdB3f",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "imxB",
+    "tokens": Array [
+      "0xd4d42f0b6def4ce0383636770ef773390d85c61a",
+    ],
+  },
+  Object {
+    "address": "0x5471D65EEE567b393d7cFC0b7f132EfC74cC32f1",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "imxB",
+    "tokens": Array [
+      "0x2f2a2543b76a4166549f7aab2e75bef0aefc5b0f",
+    ],
+  },
+  Object {
+    "address": "0xB81af0eE6959d437E3A29A94C89ecD04fE76171A",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "imxB",
+    "tokens": Array [
+      "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    ],
+  },
+  Object {
+    "address": "0x0907064c89B4a717AC33caD36318Ae0161E58E9e",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "imxB",
+    "tokens": Array [
+      "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    ],
+  },
+  Object {
+    "address": "0xeb348420558B947E98C32ECa3E0C6DE85Ade0352",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "imxB",
+    "tokens": Array [
+      "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9",
+    ],
+  },
+  Object {
+    "address": "0x52778dc7916c4810E9a2682E7d1fe674b1Fd65ac",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "imxB",
+    "tokens": Array [
+      "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    ],
+  },
+  Object {
+    "address": "0xCd43695E650D8f56405fE262190483BCe774A8DE",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "imxB",
+    "tokens": Array [
+      "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    ],
+  },
+  Object {
+    "address": "0x0fA1417668190ed8916a17f8867B2bf0E54C4280",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "imxB",
+    "tokens": Array [
+      "0xfea7a6a0b346362bf88a9e4a88416b77a57d6c2a",
+    ],
+  },
+  Object {
+    "address": "0x4e3985931Aa4ce680A506f5B7302F670ec97428f",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "imxB",
+    "tokens": Array [
+      "0x3e6648c5a70a150a88bce65f4ad4d506fe15d2af",
+    ],
+  },
+  Object {
+    "address": "0x0Cf0eC28869367A4fe6B24A487991FaFF9788BF1",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "imxB",
+    "tokens": Array [
+      "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    ],
+  },
+  Object {
+    "address": "0xd1A4A9cCe9f6AF30aDe0b15F0ABD38922868852b",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "imxB",
+    "tokens": Array [
+      "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9",
+    ],
+  },
+  Object {
+    "address": "0x2B392AcA451909cb583Ea497dD7dc3eC415fd742",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "imxB",
+    "tokens": Array [
+      "0xff970a61a04b1ca14834a43f5de4533ebddb5cc8",
+    ],
+  },
+  Object {
+    "address": "0xB6c4Db04B8f99750c07FF8529dd35174F64a4674",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "imxB",
+    "tokens": Array [
+      "0x2f2a2543b76a4166549f7aab2e75bef0aefc5b0f",
+    ],
+  },
+  Object {
+    "address": "0x85726E58dDfF14b5bC7CFee7BF7EFd2B39CD31a2",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "imxB",
+    "tokens": Array [
+      "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    ],
+  },
+  Object {
+    "address": "0x638F8E35F97F30eCe93D4ceB0eCe4Ed00bF0F7F1",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "imxB",
+    "tokens": Array [
+      "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    ],
+  },
+  Object {
+    "address": "0xA63C208d2Fbb9a46E86cD783dfa859cD0b38A51f",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "imxB",
+    "tokens": Array [
+      "0xff970a61a04b1ca14834a43f5de4533ebddb5cc8",
+    ],
+  },
+  Object {
+    "address": "0xBDEB3A7CCf96096aEA9CBf4f1A55D30cc1627540",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "imxB",
+    "tokens": Array [
+      "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    ],
+  },
+  Object {
+    "address": "0x9c912D53522ccC6bf1687A5a6A2a79FeC8FFaC25",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "imxB",
+    "tokens": Array [
+      "0xde903e2712288a1da82942dddf2c20529565ac30",
+    ],
+  },
+  Object {
+    "address": "0xA290dd13CcaA4Eb195decCcF83EbC211cCF06f61",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "imxB",
+    "tokens": Array [
+      "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    ],
+  },
+  Object {
+    "address": "0x89F64D9af5Cc069C0859dCC49A5926271700Fe7D",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "imxB",
+    "tokens": Array [
+      "0xda10009cbd5d07dd0cecc66161fc93d7c9000da1",
+    ],
+  },
+  Object {
+    "address": "0xafcF39Df4c47F1DCcedF26B9c75Da6EBcfCe8840",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "imxB",
+    "tokens": Array [
+      "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    ],
+  },
+  Object {
+    "address": "0x1eBE3ccb5aDb788020AA7f7A612C9988DC3Aaf1d",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "imxB",
+    "tokens": Array [
+      "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9",
+    ],
+  },
+  Object {
+    "address": "0x6487520cbb1a8D6c09704a091A15EA09B46884b4",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "imxB",
+    "tokens": Array [
+      "0xff970a61a04b1ca14834a43f5de4533ebddb5cc8",
+    ],
+  },
+  Object {
+    "address": "0x0306a59E747692eA1F716172d4f7e0C9D31e3BB7",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "imxB",
+    "tokens": Array [
+      "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    ],
+  },
+  Object {
+    "address": "0xeeD6e942b58C5422602471873A706748e3Ed94Ea",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "imxB",
+    "tokens": Array [
+      "0xf97f4df75117a78c1a5a0dbb814af92458539fb4",
+    ],
+  },
+  Object {
+    "address": "0x5c3eAB3a2E899B722E7a400c2F724F9f923Ff062",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "imxB",
+    "tokens": Array [
+      "0x2e9a6df78e42a30712c10a9dc4b1c8656f8f2879",
+    ],
+  },
+  Object {
+    "address": "0xf2982b6A5Fd1D31493cEB4ba81cf393EEf015dAD",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "imxB",
+    "tokens": Array [
+      "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    ],
+  },
+  Object {
+    "address": "0x8CBe3495CF37ad65F5F1c63ED8713613d8E537bC",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "imxB",
+    "tokens": Array [
+      "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    ],
+  },
+  Object {
+    "address": "0x0c68CF21672F0d563eBD5F83a11cFEB514e008d0",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "imxB",
+    "tokens": Array [
+      "0x539bde0d7dbd336b79148aa742883198bbf60342",
+    ],
+  },
+  Object {
+    "address": "0x608B8DA26CF1DD94aE62bfe3798f808d65a51600",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "imxB",
+    "tokens": Array [
+      "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    ],
+  },
+]
+`;

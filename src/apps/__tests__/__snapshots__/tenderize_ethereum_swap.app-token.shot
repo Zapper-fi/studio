@@ -1,0 +1,36 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`App Token Fetchers (tenderize, ethereum, swap) positions should have structure 1`] = `
+Array [
+  Object {
+    "address": "0x531725c57f266743c06e1935a52d6ff84e547db0",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "tAUDIO-AUDIO-SWAP",
+    "tokens": Array [
+      "0xc83badbf764f957acc23bc9e9aac71c298b07243",
+      "0x18aaa7115705e8be94bffebde57af9bfc265b998",
+    ],
+  },
+  Object {
+    "address": "0xad93b1bef320fbbb9d1645dfafc7550fc254f272",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "tGRT-GRT-SWAP",
+    "tokens": Array [
+      "0xc29f5611dcd89bc5d3a19762783d3006bc2ad2ac",
+      "0xc944e90c64b2c07662a292be6244bdf05cda44a7",
+    ],
+  },
+  Object {
+    "address": "0xa4b13f5cd779a3da03a346a315b544255c862041",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "tMATIC-MATIC-SWAP",
+    "tokens": Array [
+      "0x2336c10a1d3100343fa9911a2c57b77c333599a3",
+      "0x7d1afa7b718fb893db30a3abc0cfc608aacfebb0",
+    ],
+  },
+]
+`;

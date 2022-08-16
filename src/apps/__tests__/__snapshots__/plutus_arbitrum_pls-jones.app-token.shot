@@ -1,0 +1,15 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`App Token Fetchers (plutus, arbitrum, pls-jones) positions should have structure 1`] = `
+Array [
+  Object {
+    "address": "0xe7f6c3c1f0018e4c08acc52965e5cbff99e34a44",
+    "decimals": 18,
+    "key": "2614234798",
+    "symbol": "plsJONES",
+    "tokens": Array [
+      "0xe8ee01ae5959d3231506fcdef2d5f3e85987a39c",
+    ],
+  },
+]
+`;

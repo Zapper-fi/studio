@@ -1,0 +1,15 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`App Token Fetchers (aave-safety-module, ethereum, stk-aave) positions should have structure 1`] = `
+Array [
+  Object {
+    "address": "0x4da27a545c0c5b758a6ba100e3a049001de870f5",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "stkAAVE",
+    "tokens": Array [
+      "0x7fc66500c84a76ad7e9c93437bfc5ac33e2ddae9",
+    ],
+  },
+]
+`;

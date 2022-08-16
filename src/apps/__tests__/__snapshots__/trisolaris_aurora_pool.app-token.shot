@@ -1,0 +1,266 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`App Token Fetchers (trisolaris, aurora, pool) positions should have structure 1`] = `
+Array [
+  Object {
+    "address": "0x20f8aefb5697b77e0bb835a8518be70775cda1b0",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "TLP",
+    "tokens": Array [
+      "0xb12bfca5a55806aaf64e99521918a4bf0fc40802",
+      "0xc42c30ac6cc15fac9bd938618bcaa1a1fae8501d",
+    ],
+  },
+  Object {
+    "address": "0x03b666f3488a7992b2385b12df7f35156d7b29cd",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "TLP",
+    "tokens": Array [
+      "0x4988a896b1227218e4a686fde5eabdcabd91571f",
+      "0xc42c30ac6cc15fac9bd938618bcaa1a1fae8501d",
+    ],
+  },
+  Object {
+    "address": "0x1e0e812fbcd3eb75d8562ad6f310ed94d258d008",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "TLP",
+    "tokens": Array [
+      "0x8bec47865ade3b172a928df8f990bc7f2a3b9f79",
+      "0xc42c30ac6cc15fac9bd938618bcaa1a1fae8501d",
+    ],
+  },
+  Object {
+    "address": "0xbbf3d4281f10e537d5b13ca80be22362310b2bf9",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "TLP",
+    "tokens": Array [
+      "0x9f1f933c660a1dc856f0e0fe058435879c5ccef0",
+      "0xc42c30ac6cc15fac9bd938618bcaa1a1fae8501d",
+    ],
+  },
+  Object {
+    "address": "0x47924ae4968832984f4091eec537dff5c38948a4",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "TLP",
+    "tokens": Array [
+      "0x07f9f7f963c5cd2bbffd30ccfb964be114332e30",
+      "0xc42c30ac6cc15fac9bd938618bcaa1a1fae8501d",
+    ],
+  },
+  Object {
+    "address": "0x61c9e05d1cdb1b70856c7a2c53fa9c220830633c",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "TLP",
+    "tokens": Array [
+      "0x4988a896b1227218e4a686fde5eabdcabd91571f",
+      "0xfa94348467f64d5a457f75f8bc40495d33c65abb",
+    ],
+  },
+  Object {
+    "address": "0x48887ceea1b8ad328d5254bef774be91b90faa09",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "TLP",
+    "tokens": Array [
+      "0xc42c30ac6cc15fac9bd938618bcaa1a1fae8501d",
+      "0xea62791aa682d455614eaa2a12ba3d9a2fd197af",
+    ],
+  },
+  Object {
+    "address": "0x5eec60f348cb1d661e4a5122cf4638c7db7a886e",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "TLP",
+    "tokens": Array [
+      "0x8bec47865ade3b172a928df8f990bc7f2a3b9f79",
+      "0xc9bdeed33cd01541e1eed10f90519d2c06fe3feb",
+    ],
+  },
+  Object {
+    "address": "0xd1654a7713617d41a8c9530fb9b948d00e162194",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "TLP",
+    "tokens": Array [
+      "0x8bec47865ade3b172a928df8f990bc7f2a3b9f79",
+      "0xfa94348467f64d5a457f75f8bc40495d33c65abb",
+    ],
+  },
+  Object {
+    "address": "0xbcea13f9125b0e3b66e979fedbcbf7a4afba6fd1",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "TLP",
+    "tokens": Array [
+      "0x918dbe087040a41b786f0da83190c293dae24749",
+      "0xc42c30ac6cc15fac9bd938618bcaa1a1fae8501d",
+    ],
+  },
+  Object {
+    "address": "0x6a29e635bcab8abee1491059728e3d6d11d6a114",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "TLP",
+    "tokens": Array [
+      "0x34f291934b88c7870b7a17835b926b264fc13a81",
+      "0xc42c30ac6cc15fac9bd938618bcaa1a1fae8501d",
+    ],
+  },
+  Object {
+    "address": "0xddadf88b007b95feb42ddbd110034c9a8e9746f2",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "TLP",
+    "tokens": Array [
+      "0x501ace9c35e60f03a2af4d484f49f9b1efde9f40",
+      "0xc42c30ac6cc15fac9bd938618bcaa1a1fae8501d",
+    ],
+  },
+  Object {
+    "address": "0xa36df7c571beba7b3fb89f25dfc990eac75f525a",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "TLP",
+    "tokens": Array [
+      "0x5183e1b1091804bc2602586919e6880ac1cf2896",
+      "0xc42c30ac6cc15fac9bd938618bcaa1a1fae8501d",
+    ],
+  },
+  Object {
+    "address": "0x120e713ad36ecbff171fc8b7cf19fa8b6f6ba50c",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "TLP",
+    "tokens": Array [
+      "0x07f9f7f963c5cd2bbffd30ccfb964be114332e30",
+      "0xfa94348467f64d5a457f75f8bc40495d33c65abb",
+    ],
+  },
+  Object {
+    "address": "0xa9eded3e339b9cd92bb6def5c5379d678131ff90",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "TLP",
+    "tokens": Array [
+      "0x5ce9f0b6afb36135b5ddbf11705ceb65e634a9dc",
+      "0xc42c30ac6cc15fac9bd938618bcaa1a1fae8501d",
+    ],
+  },
+  Object {
+    "address": "0x29c160d2ef4790f9a23b813e7544d99e539c28ba",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "TLP",
+    "tokens": Array [
+      "0xc42c30ac6cc15fac9bd938618bcaa1a1fae8501d",
+      "0xe4eb03598f4dcab740331fa432f4b85ff58aa97e",
+    ],
+  },
+  Object {
+    "address": "0xb419ff9221039bdca7bb92a131dd9cf7deb9b8e5",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "TLP",
+    "tokens": Array [
+      "0x7ca1c28663b76cfde424a9494555b94846205585",
+      "0x8bec47865ade3b172a928df8f990bc7f2a3b9f79",
+    ],
+  },
+  Object {
+    "address": "0x25bed9ddd30c21a698ba0654f8da0f381ca1a67b",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "TLP",
+    "tokens": Array [
+      "0x07f9f7f963c5cd2bbffd30ccfb964be114332e30",
+      "0xc21ff01229e982d7c8b8691163b0a3cb8f357453",
+    ],
+  },
+  Object {
+    "address": "0x5913f644a10d98c79f2e0b609988640187256373",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "TLP",
+    "tokens": Array [
+      "0x07f9f7f963c5cd2bbffd30ccfb964be114332e30",
+      "0x802119e4e253d5c19aa06a5d567c5a41596d6803",
+    ],
+  },
+  Object {
+    "address": "0x7b273238c6dd0453c160f305df35c350a123e505",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "TLP",
+    "tokens": Array [
+      "0x4988a896b1227218e4a686fde5eabdcabd91571f",
+      "0xc2ac78ffddf39e5cd6d83bbd70c1d67517c467ef",
+    ],
+  },
+  Object {
+    "address": "0xadaba7e2bf88bd10acb782302a568294566236dc",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "TLP",
+    "tokens": Array [
+      "0x4148d2ce7816f0ae378d98b40eb3a7211e1fcf0d",
+      "0xc42c30ac6cc15fac9bd938618bcaa1a1fae8501d",
+    ],
+  },
+  Object {
+    "address": "0x5e74d85311fe2409c341ce49ce432bb950d221de",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "TLP",
+    "tokens": Array [
+      "0x68e401b61ea53889505cc1366710f733a60c2d41",
+      "0xb12bfca5a55806aaf64e99521918a4bf0fc40802",
+    ],
+  },
+  Object {
+    "address": "0xbe753e99d0dbd12fb39edf9b884ebf3b1b09f26c",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "TLP",
+    "tokens": Array [
+      "0xc42c30ac6cc15fac9bd938618bcaa1a1fae8501d",
+      "0xdcd6d4e2b3e1d1e1e6fa8c21c8a323dcbecff970",
+    ],
+  },
+  Object {
+    "address": "0xd62f9ec4c4d323a0c111d5e78b77ea33a2aa862f",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "TLP",
+    "tokens": Array [
+      "0xa33c3b53694419824722c10d99ad7cb16ea62754",
+      "0xc42c30ac6cc15fac9bd938618bcaa1a1fae8501d",
+    ],
+  },
+  Object {
+    "address": "0xfbc4c42159a5575a772beba7e3bf91db508e127a",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "TLP",
+    "tokens": Array [
+      "0x7ca1c28663b76cfde424a9494555b94846205585",
+      "0xc42c30ac6cc15fac9bd938618bcaa1a1fae8501d",
+    ],
+  },
+  Object {
+    "address": "0xdf8cbf89ad9b7dafdd3e37acec539eecc8c47914",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "TLP",
+    "tokens": Array [
+      "0xc42c30ac6cc15fac9bd938618bcaa1a1fae8501d",
+      "0xc4bdd27c33ec7daa6fcfd8532ddb524bf4038096",
+    ],
+  },
+]
+`;

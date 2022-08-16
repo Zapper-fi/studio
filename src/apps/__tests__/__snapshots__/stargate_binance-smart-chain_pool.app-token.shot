@@ -1,0 +1,33 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`App Token Fetchers (stargate, binance-smart-chain, pool) positions should have structure 1`] = `
+Array [
+  Object {
+    "address": "0x9aa83081aa06af7208dcc7a4cb72c94d057d2cda",
+    "decimals": 6,
+    "key": undefined,
+    "symbol": "S*USDT",
+    "tokens": Array [
+      "0x55d398326f99059ff775485246999027b3197955",
+    ],
+  },
+  Object {
+    "address": "0x98a5737749490856b401db5dc27f522fc314a4e1",
+    "decimals": 6,
+    "key": undefined,
+    "symbol": "S*BUSD",
+    "tokens": Array [
+      "0xe9e7cea3dedca5984780bafc599bd69add087d56",
+    ],
+  },
+  Object {
+    "address": "0x4e145a589e4c03cbe3d28520e4bf3089834289df",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "S*USDD",
+    "tokens": Array [
+      "0xd17479997f34dd9156deef8f95a52d81d265be9c",
+    ],
+  },
+]
+`;

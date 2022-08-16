@@ -1,0 +1,78 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`App Token Fetchers (yield-protocol, arbitrum, lend) positions should have structure 1`] = `
+Array [
+  Object {
+    "address": "0x0e7727f4ee78d60f1d3aa30744b3ab6610f04170",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "FYDAI2203",
+    "tokens": Array [
+      "0xda10009cbd5d07dd0cecc66161fc93d7c9000da1",
+    ],
+  },
+  Object {
+    "address": "0xa3ecaf5c5e98c1a500f4596576dad3328a701c73",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "FYDAI2206",
+    "tokens": Array [
+      "0xda10009cbd5d07dd0cecc66161fc93d7c9000da1",
+    ],
+  },
+  Object {
+    "address": "0x4f9b5e639447456ddc784bc441f5a6fd7ce80729",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "FYDAI2209",
+    "tokens": Array [
+      "0xda10009cbd5d07dd0cecc66161fc93d7c9000da1",
+    ],
+  },
+  Object {
+    "address": "0xe8ec1a61f6c86e8d33c327fedad559c20b9a66a2",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "FYDAI2212",
+    "tokens": Array [
+      "0xda10009cbd5d07dd0cecc66161fc93d7c9000da1",
+    ],
+  },
+  Object {
+    "address": "0xa9bc738c017771a4cf01730f215e6e2b34dca9b8",
+    "decimals": 6,
+    "key": undefined,
+    "symbol": "FYUSDC2203",
+    "tokens": Array [
+      "0xff970a61a04b1ca14834a43f5de4533ebddb5cc8",
+    ],
+  },
+  Object {
+    "address": "0xc4b24ec9fb2dc32b3a545e0d873d2598031b80c5",
+    "decimals": 6,
+    "key": undefined,
+    "symbol": "FYUSDC2206",
+    "tokens": Array [
+      "0xff970a61a04b1ca14834a43f5de4533ebddb5cc8",
+    ],
+  },
+  Object {
+    "address": "0xec1b42ec9a1650238ace42fd57bc719ccc87851c",
+    "decimals": 6,
+    "key": undefined,
+    "symbol": "FYUSDC2209",
+    "tokens": Array [
+      "0xff970a61a04b1ca14834a43f5de4533ebddb5cc8",
+    ],
+  },
+  Object {
+    "address": "0xd4aea765bc2c56f09074254eb5a3f5ff9d709449",
+    "decimals": 6,
+    "key": undefined,
+    "symbol": "FYUSDC2212",
+    "tokens": Array [
+      "0xff970a61a04b1ca14834a43f5de4533ebddb5cc8",
+    ],
+  },
+]
+`;

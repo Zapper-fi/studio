@@ -52,7 +52,7 @@ export class TestHarness {
 
   async setup() {
     // If a test URL is set, use the remote
-    if (process.env.POSITION_FETCHERS_TEST_USE_PRODUCTION) {
+    if (this.useProduction) {
       this.request = supertest(this.baseUrl);
       return;
     }

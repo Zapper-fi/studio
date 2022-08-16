@@ -1,0 +1,186 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`App Token Fetchers (yearn, ethereum, v1-vault) positions should have structure 1`] = `
+Array [
+  Object {
+    "address": "0x597ad1e0c13bfe8025993d9e79c69e1c0233522e",
+    "decimals": 6,
+    "key": "1085687085",
+    "symbol": "yUSDC",
+    "tokens": Array [
+      "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+    ],
+  },
+  Object {
+    "address": "0x5dbcf33d8c2e976c6b560249878e6f1491bca25c",
+    "decimals": 18,
+    "key": "81636170",
+    "symbol": "yyDAI+yUSDC+yUSDT+yTUSD",
+    "tokens": Array [
+      "0xdf5e0e81dff6faf3a7e52ba697820c5e32d806a8",
+    ],
+  },
+  Object {
+    "address": "0x37d19d1c4e1fa9dc47bd1ea12f742a0887eda74a",
+    "decimals": 18,
+    "key": "164080959",
+    "symbol": "yTUSD",
+    "tokens": Array [
+      "0x0000000000085d4780b73119b644ae5ecd22b376",
+    ],
+  },
+  Object {
+    "address": "0xacd43e627e64355f1861cec6d3a6688b31a6f952",
+    "decimals": 18,
+    "key": "1300419548",
+    "symbol": "yDAI",
+    "tokens": Array [
+      "0x6b175474e89094c44da98b954eedeac495271d0f",
+    ],
+  },
+  Object {
+    "address": "0x2f08119c6f07c006695e079aafc638b8789faf18",
+    "decimals": 6,
+    "key": "1661011827",
+    "symbol": "yUSDT",
+    "tokens": Array [
+      "0xdac17f958d2ee523a2206206994597c13d831ec7",
+    ],
+  },
+  Object {
+    "address": "0xba2e7fed597fd0e3e70f5130bcdbbfe06bb94fe1",
+    "decimals": 18,
+    "key": "4196895541",
+    "symbol": "yYFI",
+    "tokens": Array [
+      "0x0bc529c00c6401aef6d220be8c6ea1667f6ad93e",
+    ],
+  },
+  Object {
+    "address": "0x2994529c0652d127b7842094103715ec5299bbed",
+    "decimals": 18,
+    "key": "1320014937",
+    "symbol": "yyDAI+yUSDC+yUSDT+yBUSD",
+    "tokens": Array [
+      "0x3b3ac5386837dc563660fb6a0937dfaa5924333b",
+    ],
+  },
+  Object {
+    "address": "0x7ff566e1d69deff32a7b244ae7276b9f90e9d0f6",
+    "decimals": 18,
+    "key": "2463413848",
+    "symbol": "ycrvRenWSBTC",
+    "tokens": Array [
+      "0x075b1bb99792c9e1041ba13afef80c91a1e70fb3",
+    ],
+  },
+  Object {
+    "address": "0xe1237aa7f535b0cc33fd973d66cbf830354d16c7",
+    "decimals": 18,
+    "key": "2572443158",
+    "symbol": "yWETH",
+    "tokens": Array [
+      "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
+    ],
+  },
+  Object {
+    "address": "0x9ca85572e6a3ebf24dedd195623f188735a5179f",
+    "decimals": 18,
+    "key": "4281509334",
+    "symbol": "y3Crv",
+    "tokens": Array [
+      "0x6c3f90f043a72fa612cbac8115ee7e52bde6e490",
+    ],
+  },
+  Object {
+    "address": "0x629c759d1e83efbf63d84eb3868b564d9521c129",
+    "decimals": 18,
+    "key": "2144638352",
+    "symbol": "yvcDAI+cUSDC",
+    "tokens": Array [
+      "0x845838df265dcd2c412a1dc9e959c7d08537f8a2",
+    ],
+  },
+  Object {
+    "address": "0xcc7e70a958917cce67b4b87a8c30e6297451ae98",
+    "decimals": 18,
+    "key": "3037288524",
+    "symbol": "yvgusd3CRV",
+    "tokens": Array [
+      "0xd2967f45c4f384deea880f807be904762a3dea07",
+    ],
+  },
+  Object {
+    "address": "0x98b058b2cbacf5e99bc7012df757ea7cfebd35bc",
+    "decimals": 18,
+    "key": "3306340179",
+    "symbol": "yveursCRV",
+    "tokens": Array [
+      "0x194ebd173f6cdace046c53eacce9b953f28411d1",
+    ],
+  },
+  Object {
+    "address": "0xe0db48b4f71752c4bef16de1dbd042b82976b8c7",
+    "decimals": 18,
+    "key": "3463743692",
+    "symbol": "yvmUSD",
+    "tokens": Array [
+      "0xe2f2a5c287993345a840db3b0845fbc70f5935a5",
+    ],
+  },
+  Object {
+    "address": "0xfe39ce91437c76178665d64d7a2694b0f6f17fe3",
+    "decimals": 18,
+    "key": "37055461",
+    "symbol": "yvusdn3CRV",
+    "tokens": Array [
+      "0x4f3e8f405cf5afc05d68142f3783bdfe13811522",
+    ],
+  },
+  Object {
+    "address": "0x5533ed0a3b83f70c3c4a1f69ef5546d3d4713e44",
+    "decimals": 18,
+    "key": "1477392899",
+    "symbol": "yvcrvPlain3andSUSD",
+    "tokens": Array [
+      "0xc25a3a3b969415c80451098fa907ec722572917f",
+    ],
+  },
+  Object {
+    "address": "0x8e6741b456a074f0bc45b8b82a755d4af7e965df",
+    "decimals": 18,
+    "key": "3501764275",
+    "symbol": "yvdusd3CRV",
+    "tokens": Array [
+      "0x3a664ab939fd8482048609f652f9a0b0677337b9",
+    ],
+  },
+  Object {
+    "address": "0x03403154afc09ce8e44c3b185c82c6ad5f86b9ab",
+    "decimals": 18,
+    "key": "692474849",
+    "symbol": "yva3CRV",
+    "tokens": Array [
+      "0xfd2a8fa60abd58efe3eee34dd494cd491dc14900",
+    ],
+  },
+  Object {
+    "address": "0x1b5eb1173d2bf770e50f10410c9a96f7a8eb6e75",
+    "decimals": 18,
+    "key": "3992661378",
+    "symbol": "yvusdp3CRV",
+    "tokens": Array [
+      "0x7eb40e450b9655f4b3cc4259bcc731c63ff55ae6",
+    ],
+  },
+  Object {
+    "address": "0x96ea6af74af09522fcb4c28c269c26f59a31ced6",
+    "decimals": 18,
+    "key": "2245393056",
+    "symbol": "yvlinkCRV",
+    "tokens": Array [
+      "0xcee60cfa923170e4f8204ae08b4fa6a3f5656f3a",
+    ],
+  },
+]
+`;

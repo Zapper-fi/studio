@@ -1,0 +1,78 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`App Token Fetchers (tectonic, cronos, supply) positions should have structure 1`] = `
+Array [
+  Object {
+    "address": "0xb3bbf1be947b245aef26e3b6a9d777d7703f4c8e",
+    "decimals": 8,
+    "key": undefined,
+    "symbol": "tUSDC",
+    "tokens": Array [
+      "0xc21223249ca28397b4b6541dffaecc539bff0c59",
+    ],
+  },
+  Object {
+    "address": "0x67fd498e94d95972a4a2a44acce00a000af7fe00",
+    "decimals": 8,
+    "key": undefined,
+    "symbol": "tWBTC",
+    "tokens": Array [
+      "0x062e66477faf219f25d27dced647bf57c3107d52",
+    ],
+  },
+  Object {
+    "address": "0x543f4db9bd26c9eb6ad4dd1c33522c966c625774",
+    "decimals": 8,
+    "key": undefined,
+    "symbol": "tWETH",
+    "tokens": Array [
+      "0xe44fd7fcb2b1581822d0c862b68222998a0c299a",
+    ],
+  },
+  Object {
+    "address": "0xeadf7c01da7e93fdb5f16b0aa9ee85f978e89e95",
+    "decimals": 8,
+    "key": undefined,
+    "symbol": "tCRO",
+    "tokens": Array [
+      "0x0000000000000000000000000000000000000000",
+    ],
+  },
+  Object {
+    "address": "0xe1c4c56f772686909c28c319079d41adfd6ec89b",
+    "decimals": 8,
+    "key": undefined,
+    "symbol": "tDAI",
+    "tokens": Array [
+      "0xf2001b145b43032aaf5ee2884e456ccd805f677d",
+    ],
+  },
+  Object {
+    "address": "0xa683fdfd9286eedfea81cf6da14703da683c44e5",
+    "decimals": 8,
+    "key": undefined,
+    "symbol": "tUSDT",
+    "tokens": Array [
+      "0x66e428c3f67a68878562e79a0234c1f83c208770",
+    ],
+  },
+  Object {
+    "address": "0xfe6934fdf050854749945921faa83191bccf20ad",
+    "decimals": 8,
+    "key": undefined,
+    "symbol": "tTONIC",
+    "tokens": Array [
+      "0xdd73dea10abc2bff99c60882ec5b2b81bb1dc5b2",
+    ],
+  },
+  Object {
+    "address": "0x4bd41f188f6a05f02b46bb2a1f8ba776e528f9d2",
+    "decimals": 8,
+    "key": undefined,
+    "symbol": "tTUSD",
+    "tokens": Array [
+      "0x87efb3ec1576dec8ed47e58b832bedcd86ee186e",
+    ],
+  },
+]
+`;

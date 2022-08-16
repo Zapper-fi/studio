@@ -1,0 +1,26 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`App Token Fetchers (koyo, aurora, pool) positions should have structure 1`] = `
+Array [
+  Object {
+    "address": "0xf656a89c2d3b04afc90fa7b3aafeacfc4bf428cb",
+    "decimals": 18,
+    "key": "3068660561",
+    "symbol": "K-50AURORA-50USDC",
+    "tokens": Array [
+      "0x8bec47865ade3b172a928df8f990bc7f2a3b9f79",
+      "0xb12bfca5a55806aaf64e99521918a4bf0fc40802",
+    ],
+  },
+  Object {
+    "address": "0x57c9957aebdecfc7ce2319e4a91c5996bcfe98c0",
+    "decimals": 18,
+    "key": "4061001721",
+    "symbol": "K-50USDT-50USDC",
+    "tokens": Array [
+      "0x4988a896b1227218e4a686fde5eabdcabd91571f",
+      "0xb12bfca5a55806aaf64e99521918a4bf0fc40802",
+    ],
+  },
+]
+`;

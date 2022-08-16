@@ -1,0 +1,87 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`App Token Fetchers (curve, arbitrum, pool) positions should have structure 1`] = `
+Array [
+  Object {
+    "address": "0x7f90122bf0700f9e7e1f688fe926940e8839f353",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "2CRV",
+    "tokens": Array [
+      "0xff970a61a04b1ca14834a43f5de4533ebddb5cc8",
+      "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9",
+    ],
+  },
+  Object {
+    "address": "0x3e01dd8a5e1fb3481f0f589056b428fc308af0fb",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "btcCRV",
+    "tokens": Array [
+      "0x2f2a2543b76a4166549f7aab2e75bef0aefc5b0f",
+      "0xdbf31df14b66535af65aac99c32e9ea844e14501",
+    ],
+  },
+  Object {
+    "address": "0x8e0b8c8bb9db49a46697f3a5bb8a308e744821d2",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "crv3crypto",
+    "tokens": Array [
+      "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9",
+      "0x2f2a2543b76a4166549f7aab2e75bef0aefc5b0f",
+      "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+    ],
+  },
+  Object {
+    "address": "0xc9b8a3fdecb9d5b218d02555a8baf332e5b740d5",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "FRAXBP-f",
+    "tokens": Array [
+      "0x17fc002b466eec40dae837fc4be5c67993ddbd6f",
+      "0xff970a61a04b1ca14834a43f5de4533ebddb5cc8",
+    ],
+  },
+  Object {
+    "address": "0x59bf0545fca0e5ad48e13da269facd2e8c886ba4",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "VSTFRAX-f",
+    "tokens": Array [
+      "0x64343594ab9b56e99087bfa6f2335db24c2d1f17",
+      "0x17fc002b466eec40dae837fc4be5c67993ddbd6f",
+    ],
+  },
+  Object {
+    "address": "0x30df229cefa463e991e29d42db0bae2e122b2ac7",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "MIM3CRV-f",
+    "tokens": Array [
+      "0xfea7a6a0b346362bf88a9e4a88416b77a57d6c2a",
+      "0x7f90122bf0700f9e7e1f688fe926940e8839f353",
+    ],
+  },
+  Object {
+    "address": "0xf07d553b195080f84f582e88ecdd54baa122b279",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "FRAX+2CRV3CRV-f",
+    "tokens": Array [
+      "0x17fc002b466eec40dae837fc4be5c67993ddbd6f",
+      "0x7f90122bf0700f9e7e1f688fe926940e8839f353",
+    ],
+  },
+  Object {
+    "address": "0x3dfe1324a0ee9d86337d06aeb829deb4528db9ca",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "crvEURSUSD",
+    "tokens": Array [
+      "0xd22a58f79e9481d1a88e00c343885a588b34b68b",
+      "0x7f90122bf0700f9e7e1f688fe926940e8839f353",
+    ],
+  },
+]
+`;

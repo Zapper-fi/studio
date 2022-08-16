@@ -1,0 +1,33 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`App Token Fetchers (llama-airforce, ethereum, vault) positions should have structure 1`] = `
+Array [
+  Object {
+    "address": "0x83507cc8c8b67ed48badd1f59f684d5d02884c81",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "uCRV",
+    "tokens": Array [
+      "0x62b9c7356a2dc64a1969e19c23e4f579f9810aa7",
+    ],
+  },
+  Object {
+    "address": "0xf964b0e3ffdea659c44a5a52bc0b82a24b89ce0e",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "ucvxFXSFXS-f",
+    "tokens": Array [
+      "0xf3a43307dcafa93275993862aae628fcb50dc768",
+    ],
+  },
+  Object {
+    "address": "0x8659fc767cad6005de79af65dafe4249c57927af",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "uCVX",
+    "tokens": Array [
+      "0xbce0cf87f513102f22232436cca2ca49e815c3ac",
+    ],
+  },
+]
+`;

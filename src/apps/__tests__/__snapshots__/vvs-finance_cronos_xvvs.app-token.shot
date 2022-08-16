@@ -1,0 +1,15 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`App Token Fetchers (vvs-finance, cronos, xvvs) positions should have structure 1`] = `
+Array [
+  Object {
+    "address": "0x7fe4db9063b7dd7ba55313b9c258070bed2c143a",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "xVVS",
+    "tokens": Array [
+      "0x2d03bece6747adc00e1a131bba1469c15fd11e03",
+    ],
+  },
+]
+`;

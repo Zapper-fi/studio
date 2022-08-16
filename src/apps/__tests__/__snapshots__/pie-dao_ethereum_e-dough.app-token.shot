@@ -1,0 +1,15 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`App Token Fetchers (pie-dao, ethereum, e-dough) positions should have structure 1`] = `
+Array [
+  Object {
+    "address": "0x63cbd1858bd79de1a06c3c26462db360b834912d",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "eDOUGH",
+    "tokens": Array [
+      "0xad32a8e6220741182940c5abf610bde99e737b2d",
+    ],
+  },
+]
+`;

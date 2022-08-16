@@ -1,0 +1,51 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`App Token Fetchers (bastion-protocol, aurora, supply-main-hub) positions should have structure 1`] = `
+Array [
+  Object {
+    "address": "0x4e8fe8fd314cfc09bdb0942c5adcc37431abdcd0",
+    "decimals": 8,
+    "key": undefined,
+    "symbol": "cETH",
+    "tokens": Array [
+      "0x0000000000000000000000000000000000000000",
+    ],
+  },
+  Object {
+    "address": "0x8c14ea853321028a7bb5e4fb0d0147f183d3b677",
+    "decimals": 8,
+    "key": undefined,
+    "symbol": "cNEAR",
+    "tokens": Array [
+      "0xc42c30ac6cc15fac9bd938618bcaa1a1fae8501d",
+    ],
+  },
+  Object {
+    "address": "0xe5308dc623101508952948b141fd9eabd3337d99",
+    "decimals": 8,
+    "key": undefined,
+    "symbol": "cUSDC",
+    "tokens": Array [
+      "0xb12bfca5a55806aaf64e99521918a4bf0fc40802",
+    ],
+  },
+  Object {
+    "address": "0x845e15a441cfc1871b7ac610b0e922019bad9826",
+    "decimals": 8,
+    "key": undefined,
+    "symbol": "cUSDT",
+    "tokens": Array [
+      "0x4988a896b1227218e4a686fde5eabdcabd91571f",
+    ],
+  },
+  Object {
+    "address": "0xfa786bac375d8806185555149235acdb182c033b",
+    "decimals": 8,
+    "key": undefined,
+    "symbol": "cWBTC",
+    "tokens": Array [
+      "0xf4eb217ba2454613b15dbdea6e5f22276410e89e",
+    ],
+  },
+]
+`;

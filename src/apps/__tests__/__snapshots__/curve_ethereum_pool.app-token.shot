@@ -1,0 +1,1475 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`App Token Fetchers (curve, ethereum, pool) positions should have structure 1`] = `
+Array [
+  Object {
+    "address": "0x6c3f90f043a72fa612cbac8115ee7e52bde6e490",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "3Crv",
+    "tokens": Array [
+      "0x6b175474e89094c44da98b954eedeac495271d0f",
+      "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+      "0xdac17f958d2ee523a2206206994597c13d831ec7",
+    ],
+  },
+  Object {
+    "address": "0xfd2a8fa60abd58efe3eee34dd494cd491dc14900",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "a3CRV",
+    "tokens": Array [
+      "0x028171bca77440897b824ca71d1c56cac55b68a3",
+      "0xbcca60bb61934080951369a648fb03df4f96263c",
+      "0x3ed3b47dd13ec9a98b44e6204a523e766b225811",
+    ],
+  },
+  Object {
+    "address": "0xaa17a236f2badc98ddc0cf999abb47d47fc0a6cf",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "ankrCRV",
+    "tokens": Array [
+      "0x0000000000000000000000000000000000000000",
+      "0xe95a203b1a91a908f9b9ce46459d101078c2c3cb",
+    ],
+  },
+  Object {
+    "address": "0x3b3ac5386837dc563660fb6a0937dfaa5924333b",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "yDAI+yUSDC+yUSDT+yBUSD",
+    "tokens": Array [
+      "0xc2cb1040220768554cf699b0d863a3cd4324ce32",
+      "0x26ea744e5b887e5205727f55dfbe8685e3b21951",
+      "0xe6354ed5bc4b393a5aad09f21c46e101e692d447",
+      "0x04bc0ab673d88ae9dbc9da2380cb6b79c4bca9ae",
+    ],
+  },
+  Object {
+    "address": "0x845838df265dcd2c412a1dc9e959c7d08537f8a2",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "cDAI+cUSDC",
+    "tokens": Array [
+      "0x5d3a536e4d6dbd6114cc1ead35777bab948e3643",
+      "0x39aa39c021dfbae8fac545936693ac917d5e7563",
+    ],
+  },
+  Object {
+    "address": "0x194ebd173f6cdace046c53eacce9b953f28411d1",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "eursCRV",
+    "tokens": Array [
+      "0xdb25f211ab05b1c97d595516f45794528a807ad8",
+      "0xd71ecff9342a5ced620049e616c5035f1db98620",
+    ],
+  },
+  Object {
+    "address": "0xb19059ebb43466c323583928285a49f558e572fd",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "hCRV",
+    "tokens": Array [
+      "0x0316eb71485b0ab14103307bf65a021042c6d380",
+      "0x2260fac5e5542a773aa44fbcfedf7c193bc2c599",
+    ],
+  },
+  Object {
+    "address": "0x5282a4ef67d9c33135340fb3289cc1711c13638c",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "ib3CRV",
+    "tokens": Array [
+      "0x8e595470ed749b85c6f7669de83eae304c2ec68f",
+      "0x76eb2fe28b36b3ee97f3adae0c69606eedb2a37c",
+      "0x48759f220ed983db51fa7a8c0d2aab8f3ce4166a",
+    ],
+  },
+  Object {
+    "address": "0xcee60cfa923170e4f8204ae08b4fa6a3f5656f3a",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "linkCRV",
+    "tokens": Array [
+      "0x514910771af9ca656af840dff83e8264ecf986ca",
+      "0xbbc455cb4f1b9e4bfc4b73970d360c8f032efee6",
+    ],
+  },
+  Object {
+    "address": "0x49849c98ae39fff122806c06791fa73784fb3675",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "crvRenWBTC",
+    "tokens": Array [
+      "0xeb4c2781e4eba804ce9a9803c67d0893436bb27d",
+      "0x2260fac5e5542a773aa44fbcfedf7c193bc2c599",
+    ],
+  },
+  Object {
+    "address": "0x02d341ccb60faaf662bc0554d13778015d1b285c",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "saCRV",
+    "tokens": Array [
+      "0x028171bca77440897b824ca71d1c56cac55b68a3",
+      "0x6c5024cd4f8a59110119c56f8933403a539555eb",
+    ],
+  },
+  Object {
+    "address": "0x075b1bb99792c9e1041ba13afef80c91a1e70fb3",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "crvRenWSBTC",
+    "tokens": Array [
+      "0xeb4c2781e4eba804ce9a9803c67d0893436bb27d",
+      "0x2260fac5e5542a773aa44fbcfedf7c193bc2c599",
+      "0xfe18be6b3bd88a2d2a7f928d00292e7a9963cfc6",
+    ],
+  },
+  Object {
+    "address": "0xa3d87fffce63b53e0d54faa1cc983b7eb0b74a9c",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "eCRV",
+    "tokens": Array [
+      "0x0000000000000000000000000000000000000000",
+      "0x5e74c9036fb86bd7ecdcb084a0673efc32ea31cb",
+    ],
+  },
+  Object {
+    "address": "0x06325440d014e39736583c165c2963ba99faf14e",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "steCRV",
+    "tokens": Array [
+      "0x0000000000000000000000000000000000000000",
+      "0xae7ab96520de3a18e5e111b5eaab095312d7fe84",
+    ],
+  },
+  Object {
+    "address": "0xc25a3a3b969415c80451098fa907ec722572917f",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "crvPlain3andSUSD",
+    "tokens": Array [
+      "0x6b175474e89094c44da98b954eedeac495271d0f",
+      "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+      "0xdac17f958d2ee523a2206206994597c13d831ec7",
+      "0x57ab1ec28d129707052df4df418d58a2d46d5f51",
+    ],
+  },
+  Object {
+    "address": "0x9fc689ccada600b6df723d9e47d84d76664a1f23",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "cDAI+cUSDC+USDT",
+    "tokens": Array [
+      "0x5d3a536e4d6dbd6114cc1ead35777bab948e3643",
+      "0x39aa39c021dfbae8fac545936693ac917d5e7563",
+      "0xdac17f958d2ee523a2206206994597c13d831ec7",
+    ],
+  },
+  Object {
+    "address": "0xdf5e0e81dff6faf3a7e52ba697820c5e32d806a8",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "yDAI+yUSDC+yUSDT+yTUSD",
+    "tokens": Array [
+      "0x16de59092dae5ccf4a1e6439d611fd0653f0bd01",
+      "0xd6ad7a6750a7593e092a9b218d66c0a814a3436e",
+      "0x83f798e925bcd4017eb265844fddabb448f1707d",
+      "0x73a052500105205d34daf004eab301916da8190f",
+    ],
+  },
+  Object {
+    "address": "0x53a901d48795c58f485cbb38df08fa96a24669d5",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "rCRV",
+    "tokens": Array [
+      "0x0000000000000000000000000000000000000000",
+      "0x9559aaa82d9649c7a7b220e7c461d2e74c9a3593",
+    ],
+  },
+  Object {
+    "address": "0xca3d75ac011bf5ad07a98d02f18225f9bd9a6bdf",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "crvTricrypto",
+    "tokens": Array [
+      "0xdac17f958d2ee523a2206206994597c13d831ec7",
+      "0x2260fac5e5542a773aa44fbcfedf7c193bc2c599",
+      "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
+    ],
+  },
+  Object {
+    "address": "0xfd5db7463a3ab53fd211b4af195c5bccc1a03890",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "EURT-f",
+    "tokens": Array [
+      "0xc581b735a1688071a1746c968e0798d642ede491",
+      "0xd71ecff9342a5ced620049e616c5035f1db98620",
+    ],
+  },
+  Object {
+    "address": "0x4e0915c88bc70750d68c481540f081fefaf22273",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "4CRV",
+    "tokens": Array [
+      "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+      "0xdac17f958d2ee523a2206206994597c13d831ec7",
+      "0xa693b19d2931d498c5b318df961919bb4aee87a5",
+      "0x853d955acef822db058eb8505911ed77f175b99e",
+    ],
+  },
+  Object {
+    "address": "0x3175df0976dfa876431c2e9ee6bc45b65d3473cc",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "crvFRAX",
+    "tokens": Array [
+      "0x853d955acef822db058eb8505911ed77f175b99e",
+      "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+    ],
+  },
+  Object {
+    "address": "0x8461a004b50d321cb22b7d034969ce6803911899",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "ibKRW+sKRW-f",
+    "tokens": Array [
+      "0x95dfdc8161832e4ff7816ac4b6367ce201538253",
+      "0x269895a3df4d73b077fc823dd6da1b95f72aaf9b",
+    ],
+  },
+  Object {
+    "address": "0x19b080fe1ffa0553469d20ca36219f17fcf03859",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "ibEUR+sEUR-f",
+    "tokens": Array [
+      "0x96e61422b6a9ba0e068b6c5add4ffabc6a4aae27",
+      "0xd71ecff9342a5ced620049e616c5035f1db98620",
+    ],
+  },
+  Object {
+    "address": "0x9d0464996170c6b9e75eed71c68b99ddedf279e8",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "cvxcrv-f",
+    "tokens": Array [
+      "0xd533a949740bb3306d119cc777fa900ba034cd52",
+      "0x62b9c7356a2dc64a1969e19c23e4f579f9810aa7",
+    ],
+  },
+  Object {
+    "address": "0x3cfaa1596777cad9f5004f9a0c443d912e262243",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "mEUR-f",
+    "tokens": Array [
+      "0x68037790a0229e9ce6eaa8a99ea92964106c4703",
+      "0xc581b735a1688071a1746c968e0798d642ede491",
+      "0xdb25f211ab05b1c97d595516f45794528a807ad8",
+      "0xd71ecff9342a5ced620049e616c5035f1db98620",
+    ],
+  },
+  Object {
+    "address": "0x8818a9bb44fbf33502be7c15c500d0c783b73067",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "ibJPY+sJPY-f",
+    "tokens": Array [
+      "0x5555f75e3d5278082200fb451d1b6ba946d8e13b",
+      "0xf6b1c627e95bfc3c1b4c9b825a032ff0fbf3e07d",
+    ],
+  },
+  Object {
+    "address": "0x3f1b0278a9ee595635b61817630cc19de792f506",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "ibAUD+sAUD-f",
+    "tokens": Array [
+      "0xfafdf0c4c1cb09d430bf88c75d88bb46dae09967",
+      "0xf48e200eaf9906362bb1442fca31e0835773b8b4",
+    ],
+  },
+  Object {
+    "address": "0xd6ac1cb9019137a896343da59dde6d097f710538",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "ibGBP+sGBP-f",
+    "tokens": Array [
+      "0x69681f8fde45345c3870bcd5eaf4a05a60e7d227",
+      "0x97fe22e7341a0cd8db6f6c021a24dc8f4dad855f",
+    ],
+  },
+  Object {
+    "address": "0x9c2c8910f113181783c249d8f6aa41b51cde0f0c",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "ibCHF+sCHF-f",
+    "tokens": Array [
+      "0x1cc481ce2bd2ec7bf67d1be64d4878b16078f309",
+      "0x0f83287ff768d1c1e17a42f44d644d7f22e8ee1d",
+    ],
+  },
+  Object {
+    "address": "0xc4c319e2d4d66cca4464c0c2b32c9bd23ebe784e",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "alETH+ETH-f",
+    "tokens": Array [
+      "0x0000000000000000000000000000000000000000",
+      "0x0100546f2cd4c9d97f798ffc9755e47865ff7ee6",
+    ],
+  },
+  Object {
+    "address": "0x55a8a39bc9694714e2874c1ce77aa1e599461e18",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "MIM-UST-f",
+    "tokens": Array [
+      "0x99d8a9c45b2eca8864373a26d1459e3dff1e17f3",
+      "0xa47c8bf37f92abed4a126bda807a7b7498661acd",
+    ],
+  },
+  Object {
+    "address": "0x04c90c198b2eff55716079bc06d7ccc4aa4d7512",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "bveCVX-CVX-f",
+    "tokens": Array [
+      "0x4e3fbd56cd56c3e72c1403e103b45db9da5b9d2b",
+      "0xfd05d3c7fe2924020620a8be4961bbaa747e6305",
+    ],
+  },
+  Object {
+    "address": "0xfb9a265b5a1f52d97838ec7274a0b1442efacc87",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "aETHb-f",
+    "tokens": Array [
+      "0x0000000000000000000000000000000000000000",
+      "0xd01ef7c0a5d8c432fc2d1a85c66cf2327362e5c6",
+    ],
+  },
+  Object {
+    "address": "0xbaaa1f5dba42c3389bdbc2c9d2de134f5cd0dc89",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "D3-f",
+    "tokens": Array [
+      "0x853d955acef822db058eb8505911ed77f175b99e",
+      "0x956f47f50a910163d8bf957cf5846d573e7f87ca",
+      "0xbc6da0fe9ad5f3b0d58160288917aa56653660e9",
+    ],
+  },
+  Object {
+    "address": "0x1f6bb2a7a2a84d08bb821b89e38ca651175aedd4",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "aMATICb-f",
+    "tokens": Array [
+      "0x7d1afa7b718fb893db30a3abc0cfc608aacfebb0",
+      "0x99534ef705df1fff4e4bd7bbaaf9b0dff038ebfe",
+    ],
+  },
+  Object {
+    "address": "0xb9446c4ef5ebe66268da6700d26f96273de3d571",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "3EURpool-f",
+    "tokens": Array [
+      "0x1a7e4e63778b4f12a199c062f3efdd288afcbce8",
+      "0xc581b735a1688071a1746c968e0798d642ede491",
+      "0xdb25f211ab05b1c97d595516f45794528a807ad8",
+    ],
+  },
+  Object {
+    "address": "0x06d39e95977349431e3d800d49c63b4d472e10fb",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "tWETH+WETH-f",
+    "tokens": Array [
+      "0xd3d13a578a53685b4ac36a1bab31912d2b2a2f36",
+      "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
+    ],
+  },
+  Object {
+    "address": "0xbb2dc673e1091abca3eadb622b18f6d4634b2cd9",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "JPYC+ibJPY-f",
+    "tokens": Array [
+      "0x2370f9d504c7a6e775bf6e14b3f12846b594cd53",
+      "0x5555f75e3d5278082200fb451d1b6ba946d8e13b",
+    ],
+  },
+  Object {
+    "address": "0xb37d6c07482bc11cd28a1f11f1a6ad7b66dec933",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "ag+ib-EUR-f",
+    "tokens": Array [
+      "0x96e61422b6a9ba0e068b6c5add4ffabc6a4aae27",
+      "0x1a7e4e63778b4f12a199c062f3efdd288afcbce8",
+    ],
+  },
+  Object {
+    "address": "0x9462f2b3c9beea8afc334cdb1d1382b072e494ea",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "tGAMMA-f",
+    "tokens": Array [
+      "0x2fc6e9c1b2c07e18632efe51879415a580ad22e1",
+      "0x6bea7cfef803d1e3d5f7c0103f7ded065644e197",
+    ],
+  },
+  Object {
+    "address": "0x50b0d9171160d6eb8aa39e090da51e7e078e81c4",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "tSNX-f",
+    "tokens": Array [
+      "0xeff721eae19885e17f5b80187d6527aad3ffc8de",
+      "0xc011a73ee8576fb46f5e1c5751ca3b9fe0af2a6f",
+    ],
+  },
+  Object {
+    "address": "0x447ddd4960d9fdbf6af9a790560d0af76795cb08",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "rETHwstETH-f",
+    "tokens": Array [
+      "0xae78736cd615f374d3085123a210448e74fc6393",
+      "0x7f39c581f595b53c5cb19bd0b3f8da6c935e2ca0",
+    ],
+  },
+  Object {
+    "address": "0xcaf8703f8664731ced11f63bb0570e53ab4600a9",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "tAPW-f",
+    "tokens": Array [
+      "0xdc0b02849bb8e0f126a216a2840275da829709b0",
+      "0x4104b135dbc9609fc1a9490e61369036497660c8",
+    ],
+  },
+  Object {
+    "address": "0x01fe650ef2f8e2982295489ae6adc1413bf6011f",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "tTCR-f",
+    "tokens": Array [
+      "0x15a629f0665a3eb97d7ae9a7ce7abf73aeb79415",
+      "0x9c4a4204b79dd291d6b6571c5be8bbcd0622f050",
+    ],
+  },
+  Object {
+    "address": "0xc250b22d15e43d95fbe27b12d98b6098f8493eac",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "tFOX-f",
+    "tokens": Array [
+      "0x808d3e6b23516967ceae4f17a5f9038383ed5311",
+      "0xc770eefad204b5180df6a14ee197d99d808ee52d",
+    ],
+  },
+  Object {
+    "address": "0x0437ac6109e8a366a1f4816edf312a36952db856",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "tSUSHI-f",
+    "tokens": Array [
+      "0xf49764c9c5d644ece6ae2d18ffd9f1e902629777",
+      "0x6b3595068778dd592e39a122f4f5a5cf09c90fe2",
+    ],
+  },
+  Object {
+    "address": "0x9001a452d39a8710d27ed5c2e10431c13f5fba74",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "tALCX-f",
+    "tokens": Array [
+      "0xd3b5d9a561c293fb42b446fe7e237daa9bf9aa84",
+      "0xdbdb4d16eda451d0503b854cf79d55697f90c8df",
+    ],
+  },
+  Object {
+    "address": "0x961226b64ad373275130234145b96d100dc0b655",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "tFXS-f",
+    "tokens": Array [
+      "0xadf15ec41689fc5b6dca0db7c53c9bfe7981e655",
+      "0x3432b6a60d23ca0dfca7761b7ab56459d9c964d0",
+    ],
+  },
+  Object {
+    "address": "0x828b154032950c8ff7cf8085d841723db2696056",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "STETHETH_C-f",
+    "tokens": Array [
+      "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
+      "0xae7ab96520de3a18e5e111b5eaab095312d7fe84",
+    ],
+  },
+  Object {
+    "address": "0x1977870a4c18a728c19dd4eb6542451df06e0a4b",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "ApeUSDFRAX-f",
+    "tokens": Array [
+      "0xff709449528b6fb6b88f557f7d93dece33bca78d",
+      "0x853d955acef822db058eb8505911ed77f175b99e",
+    ],
+  },
+  Object {
+    "address": "0xee98d56f60a5905cbb52348c8719b247dafe60ec",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "WOMIOMI-f",
+    "tokens": Array [
+      "0x04969cd041c0cafb6ac462bd65b536a5bdb3a670",
+      "0xed35af169af46a02ee13b9d79eb57d6d68c1749e",
+    ],
+  },
+  Object {
+    "address": "0x7e46fd8a30869aa9ed55af031067df666efe87da",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "yvecrv-f",
+    "tokens": Array [
+      "0xd533a949740bb3306d119cc777fa900ba034cd52",
+      "0xc5bddf9843308380375a611c18b50fb9341f502a",
+    ],
+  },
+  Object {
+    "address": "0x875df0ba24ccd867f8217593ee27253280772a97",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "stETHaETHb-f",
+    "tokens": Array [
+      "0xae7ab96520de3a18e5e111b5eaab095312d7fe84",
+      "0xd01ef7c0a5d8c432fc2d1a85c66cf2327362e5c6",
+    ],
+  },
+  Object {
+    "address": "0xc4ad29ba4b3c580e6d59105fff484999997675ff",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "crv3crypto",
+    "tokens": Array [
+      "0xdac17f958d2ee523a2206206994597c13d831ec7",
+      "0x2260fac5e5542a773aa44fbcfedf7c193bc2c599",
+      "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
+    ],
+  },
+  Object {
+    "address": "0x3d229e1b4faab62f621ef2f6a610961f7bd7b23b",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "crvEURSUSDC",
+    "tokens": Array [
+      "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+      "0xdb25f211ab05b1c97d595516f45794528a807ad8",
+    ],
+  },
+  Object {
+    "address": "0xed4064f376cb8d68f770fb1ff088a3d0f3ff5c4d",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "crvCRVETH",
+    "tokens": Array [
+      "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
+      "0xd533a949740bb3306d119cc777fa900ba034cd52",
+    ],
+  },
+  Object {
+    "address": "0x3a283d9c08e8b55966afb64c515f5143cf907611",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "crvCVXETH",
+    "tokens": Array [
+      "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
+      "0x4e3fbd56cd56c3e72c1403e103b45db9da5b9d2b",
+    ],
+  },
+  Object {
+    "address": "0x8282bd15dca2ea2bdf24163e8f2781b30c43a2ef",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "crvSPELLETH",
+    "tokens": Array [
+      "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
+      "0x090185f2135308bad17527004364ebcc2d37e5f6",
+    ],
+  },
+  Object {
+    "address": "0xcb08717451aae9ef950a2524e33b6dcaba60147b",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "crvTETH",
+    "tokens": Array [
+      "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
+      "0xcdf7028ceab81fa0c6971208e83fa7872994bee5",
+    ],
+  },
+  Object {
+    "address": "0x90244f43d548a4f8dfecfad91a193465b1fad6f7",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "FXSETH-f",
+    "tokens": Array [
+      "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
+      "0x3432b6a60d23ca0dfca7761b7ab56459d9c964d0",
+    ],
+  },
+  Object {
+    "address": "0x137469b55d1f15651ba46a89d0588e97dd0b6562",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "BADGERWBTC-f",
+    "tokens": Array [
+      "0x3472a5a71965499acd81997a54bba8d852c6e53d",
+      "0x2260fac5e5542a773aa44fbcfedf7c193bc2c599",
+    ],
+  },
+  Object {
+    "address": "0x29059568bb40344487d62f7450e78b8e6c74e0e5",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "YFIETH-f",
+    "tokens": Array [
+      "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
+      "0x0bc529c00c6401aef6d220be8c6ea1667f6ad93e",
+    ],
+  },
+  Object {
+    "address": "0x6085def4343a0b5d97820f131a362dae9fe59841",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "palStkAAVE-f",
+    "tokens": Array [
+      "0x7fc66500c84a76ad7e9c93437bfc5ac33e2ddae9",
+      "0x24e79e946dea5482212c38aab2d0782f04cdb0e0",
+    ],
+  },
+  Object {
+    "address": "0x4acc1bf7d6a591016641325aa6664a1cd178f002",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "DYDXETH-f",
+    "tokens": Array [
+      "0x92d6c1e31e14520e676a687f0a93788b716beff5",
+      "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
+    ],
+  },
+  Object {
+    "address": "0x6359b6d3e327c497453d4376561ee276c6933323",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "SDTETH-f",
+    "tokens": Array [
+      "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
+      "0x73968b9a57c6e53d41345fd57a6e6ae27d6cdb2f",
+    ],
+  },
+  Object {
+    "address": "0x1054ff2ffa34c055a13dcd9e0b4c0ca5b3aeceb9",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "CADCUSDC-f",
+    "tokens": Array [
+      "0xcadc0acd4b445166f12d2c07eac6e2544fbe2eef",
+      "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+    ],
+  },
+  Object {
+    "address": "0xca7c3ac4e5fb7b2ae60472c80344ea9403c6d2b1",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "RAIAGEUR-f",
+    "tokens": Array [
+      "0x03ab458634910aad20ef5f1c8ee96f1d6ac54919",
+      "0x1a7e4e63778b4f12a199c062f3efdd288afcbce8",
+    ],
+  },
+  Object {
+    "address": "0x030cafae2ece75ed411aeb53633fbed3092c3e32",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "PARUSDC-f",
+    "tokens": Array [
+      "0x68037790a0229e9ce6eaa8a99ea92964106c4703",
+      "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+    ],
+  },
+  Object {
+    "address": "0xe160364fd8407ffc8b163e278300c6c5d18ff61d",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "BTRFLYETH-f",
+    "tokens": Array [
+      "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
+      "0xc0d4ceb216b3ba9c3701b291766fdcba977cec3a",
+    ],
+  },
+  Object {
+    "address": "0xf3a43307dcafa93275993862aae628fcb50dc768",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "cvxFXSFXS-f",
+    "tokens": Array [
+      "0x3432b6a60d23ca0dfca7761b7ab56459d9c964d0",
+      "0xfeef77d3f69374f66429c91d732a244f074bdf74",
+    ],
+  },
+  Object {
+    "address": "0x3660bd168494d61ffdac21e403d0f6356cf90fd7",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "OHMETH-f",
+    "tokens": Array [
+      "0x64aa3364f17a4d01c6f1751fd97c2bd3d7e7f1d5",
+      "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
+    ],
+  },
+  Object {
+    "address": "0x2302aabe69e6e7a1b0aa23aac68fccb8a4d2b460",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "silofrax-f",
+    "tokens": Array [
+      "0x6f80310ca7f2c654691d1383149fa1a57d8ab1f8",
+      "0x853d955acef822db058eb8505911ed77f175b99e",
+    ],
+  },
+  Object {
+    "address": "0x42ec68ca5c2c80036044f3eead675447ab3a8065",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "fidu-usdc-f",
+    "tokens": Array [
+      "0x6a445e9f40e0b97c92d0b8a3366cef1d67f700bf",
+      "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+    ],
+  },
+  Object {
+    "address": "0x8682fbf0cbf312c891532ba9f1a91e44f81ad7df",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "ibEURUSDC-f",
+    "tokens": Array [
+      "0x96e61422b6a9ba0e068b6c5add4ffabc6a4aae27",
+      "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+    ],
+  },
+  Object {
+    "address": "0x54c8ecf46a81496eeb0608bd3353388b5d7a2a33",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "ibAUDUSDC-f",
+    "tokens": Array [
+      "0xfafdf0c4c1cb09d430bf88c75d88bb46dae09967",
+      "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+    ],
+  },
+  Object {
+    "address": "0x08cea8e5b4551722deb97113c139dd83c26c5398",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "ibCHFUSDC-f",
+    "tokens": Array [
+      "0x1cc481ce2bd2ec7bf67d1be64d4878b16078f309",
+      "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+    ],
+  },
+  Object {
+    "address": "0x22cf19eb64226e0e1a79c69b345b31466fd273a7",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "ibGBPUSDC-f",
+    "tokens": Array [
+      "0x69681f8fde45345c3870bcd5eaf4a05a60e7d227",
+      "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+    ],
+  },
+  Object {
+    "address": "0x127091ede112aed7bae281747771b3150bb047bb",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "ibJPYUSDC-f",
+    "tokens": Array [
+      "0x5555f75e3d5278082200fb451d1b6ba946d8e13b",
+      "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+    ],
+  },
+  Object {
+    "address": "0x80caccdbd3f07bbdb558db4a9e146d099933d677",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "ibKRWUSDC-f",
+    "tokens": Array [
+      "0x95dfdc8161832e4ff7816ac4b6367ce201538253",
+      "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+    ],
+  },
+  Object {
+    "address": "0xdf55670e27be5cde7228dd0a6849181891c9eba1",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "STGUSDC-f",
+    "tokens": Array [
+      "0xaf5191b0de278c7286d6c7cc6ab6bb8a73ba2cd6",
+      "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+    ],
+  },
+  Object {
+    "address": "0xbe4f3ad6c9458b901c81b734cb22d9eae9ad8b50",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "PALETH-f",
+    "tokens": Array [
+      "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
+      "0xab846fb6c81370327e784ae7cbb6d6a6af6ff4bf",
+    ],
+  },
+  Object {
+    "address": "0x4647b6d835f3b393c7a955df51eefcf0db961606",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "KP3RETH-f",
+    "tokens": Array [
+      "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
+      "0x1ceb5cb57c4d4e2b2433641b95dd330a33185a44",
+    ],
+  },
+  Object {
+    "address": "0x401322b9fddba8c0a8d40fbcece1d1752c12316b",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "LFTETH-f",
+    "tokens": Array [
+      "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
+      "0xb620be8a1949aa9532e6a3510132864ef9bc3f82",
+    ],
+  },
+  Object {
+    "address": "0x34ed182d0812d119c92907852d2b429f095a9b07",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "JPEGETH-f",
+    "tokens": Array [
+      "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
+      "0xe80c0cd204d654cebe8dd64a4857cab6be8345a3",
+    ],
+  },
+  Object {
+    "address": "0xf9835375f6b268743ea0a54d742aa156947f8c06",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "CNCETH-f",
+    "tokens": Array [
+      "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
+      "0x9ae380f0272e2162340a5bb646c354271c0f5cfc",
+    ],
+  },
+  Object {
+    "address": "0x4704ab1fb693ce163f7c9d3a31b3ff4eaf797714",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "FPIFRAX-f",
+    "tokens": Array [
+      "0x853d955acef822db058eb8505911ed77f175b99e",
+      "0x5ca135cb8527d76e932f34b5145575f9d8cbe08e",
+    ],
+  },
+  Object {
+    "address": "0x94f6c0201e1bfcba290345338c3c4abc1901d336",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "ETHVIRT-f",
+    "tokens": Array [
+      "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
+      "0x9416ba76e88d873050a06e5956a3ebf10386b863",
+    ],
+  },
+  Object {
+    "address": "0x1979f8296492ff9e6527eca47fc44bb30c391139",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "CXDETH-f",
+    "tokens": Array [
+      "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
+      "0x5a56da75c50aa2733f5fa9a2442aaefcbc60b2e6",
+    ],
+  },
+  Object {
+    "address": "0x70a03471b4f2dee5174ade1165742e2d3fed2e27",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "CXDUSDC-f",
+    "tokens": Array [
+      "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+      "0x5a56da75c50aa2733f5fa9a2442aaefcbc60b2e6",
+    ],
+  },
+  Object {
+    "address": "0x7ea4ad8c803653498bf6ac1d2debc04dce8fd2ad",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "TOKEETH-f",
+    "tokens": Array [
+      "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
+      "0x2e9d63788249371f1dfc918a52f8d799f4a38c94",
+    ],
+  },
+  Object {
+    "address": "0xd1dca101e8155f79db50bc51abbd4ff74bc53f25",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "ARTH+DAI-f",
+    "tokens": Array [
+      "0x8cc0f052fff7ead7f2edcccac895502e884a8a71",
+      "0x6b175474e89094c44da98b954eedeac495271d0f",
+    ],
+  },
+  Object {
+    "address": "0x2c97c40c24e2ff11c6965dc40ca77967bcec4719",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "aCRV-f",
+    "tokens": Array [
+      "0x2b95a1dcc3d405535f9ed33c219ab38e8d7e0884",
+      "0xd533a949740bb3306d119cc777fa900ba034cd52",
+    ],
+  },
+  Object {
+    "address": "0x4ce6803f108a667e53fe09a93cf91a18d9d2ad31",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "CTRETH-f",
+    "tokens": Array [
+      "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
+      "0xb3ad645db386d7f6d753b2b9c3f4b853da6890b8",
+    ],
+  },
+  Object {
+    "address": "0x7483dd57f6488b0e194a151c57df6ec85c00ace9",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "BTRFLYETH-f",
+    "tokens": Array [
+      "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
+      "0xc55126051b22ebb829d00368f4b12bde432de5da",
+    ],
+  },
+  Object {
+    "address": "0xd29f1a967441ae1a4ff2ea35ede54fe01cf6b95f",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "RAILUSD-3-f",
+    "tokens": Array [
+      "0x03ab458634910aad20ef5f1c8ee96f1d6ac54919",
+      "0x5f98805a4e8be255a32880fdec7f6728c6568ba0",
+    ],
+  },
+  Object {
+    "address": "0xb83e5af00b321d2280382b8634625826fbd75c5b",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "FXSFPIS-f",
+    "tokens": Array [
+      "0x3432b6a60d23ca0dfca7761b7ab56459d9c964d0",
+      "0xc2544a32872a91f4a553b404c6950e89de901fdb",
+    ],
+  },
+  Object {
+    "address": "0x3a664ab939fd8482048609f652f9a0b0677337b9",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "dusd3CRV",
+    "tokens": Array [
+      "0x5bc25f649fc4e26069ddf4cf4010f9f706c23831",
+      "0x6c3f90f043a72fa612cbac8115ee7e52bde6e490",
+    ],
+  },
+  Object {
+    "address": "0xd2967f45c4f384deea880f807be904762a3dea07",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "gusd3CRV",
+    "tokens": Array [
+      "0x056fd409e1d7a124bd7017459dfea2f387b6d5cd",
+      "0x6c3f90f043a72fa612cbac8115ee7e52bde6e490",
+    ],
+  },
+  Object {
+    "address": "0x5b5cfe992adac0c9d48e05854b2d91c73a003858",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "husd3CRV",
+    "tokens": Array [
+      "0xdf574c24545e5ffecb9a659c229253d4111d87e1",
+      "0x6c3f90f043a72fa612cbac8115ee7e52bde6e490",
+    ],
+  },
+  Object {
+    "address": "0x6d65b498cb23deaba52db31c93da9bffb340fb8f",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "LinkUSD3CRV",
+    "tokens": Array [
+      "0x0e2ec54fc0b509f445631bf4b91ab8168230c752",
+      "0x6c3f90f043a72fa612cbac8115ee7e52bde6e490",
+    ],
+  },
+  Object {
+    "address": "0x1aef73d49dedc4b1778d0706583995958dc862e6",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "musd3CRV",
+    "tokens": Array [
+      "0xe2f2a5c287993345a840db3b0845fbc70f5935a5",
+      "0x6c3f90f043a72fa612cbac8115ee7e52bde6e490",
+    ],
+  },
+  Object {
+    "address": "0xc2ee6b0334c261ed60c72f6054450b61b8f18e35",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "rsv3CRV",
+    "tokens": Array [
+      "0x196f4727526ea7fb1e17b2071b3d8eaa38486988",
+      "0x6c3f90f043a72fa612cbac8115ee7e52bde6e490",
+    ],
+  },
+  Object {
+    "address": "0x97e2768e8e73511ca874545dc5ff8067eb19b787",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "usdk3CRV",
+    "tokens": Array [
+      "0x1c48f86ae57291f7686349f12601910bd8d470bb",
+      "0x6c3f90f043a72fa612cbac8115ee7e52bde6e490",
+    ],
+  },
+  Object {
+    "address": "0x4f3e8f405cf5afc05d68142f3783bdfe13811522",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "usdn3CRV",
+    "tokens": Array [
+      "0x674c6ad92fd080e4004b2312b45f796a192d27a0",
+      "0x6c3f90f043a72fa612cbac8115ee7e52bde6e490",
+    ],
+  },
+  Object {
+    "address": "0x94e131324b6054c0d789b190b2dac504e4361b53",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "ust3CRV",
+    "tokens": Array [
+      "0xa47c8bf37f92abed4a126bda807a7b7498661acd",
+      "0x6c3f90f043a72fa612cbac8115ee7e52bde6e490",
+    ],
+  },
+  Object {
+    "address": "0x410e3e86ef427e30b9235497143881f717d93c2a",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "bBTC/sbtcCRV",
+    "tokens": Array [
+      "0x9be89d2a4cd102d8fecc6bf9da793be995c22541",
+      "0x075b1bb99792c9e1041ba13afef80c91a1e70fb3",
+    ],
+  },
+  Object {
+    "address": "0x2fe94ea3d5d4a175184081439753de15aef9d614",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "oBTC/sbtcCRV",
+    "tokens": Array [
+      "0x8064d9ae6cdf087b1bcd5bdf3531bd5d8c537a68",
+      "0x075b1bb99792c9e1041ba13afef80c91a1e70fb3",
+    ],
+  },
+  Object {
+    "address": "0xde5331ac4b3630f94853ff322b66407e0d6331e8",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "pBTC/sbtcCRV",
+    "tokens": Array [
+      "0x5228a22e72ccc52d415ecfd199f99d0665e7733b",
+      "0x075b1bb99792c9e1041ba13afef80c91a1e70fb3",
+    ],
+  },
+  Object {
+    "address": "0x64eda51d3ad40d56b9dfc5554e06f94e1dd786fd",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "tbtc/sbtcCrv",
+    "tokens": Array [
+      "0x8daebade922df735c38c80c7ebd708af50815faa",
+      "0x075b1bb99792c9e1041ba13afef80c91a1e70fb3",
+    ],
+  },
+  Object {
+    "address": "0xecd5e75afb02efa118af914515d6521aabd189f1",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "TUSD3CRV-f",
+    "tokens": Array [
+      "0x0000000000085d4780b73119b644ae5ecd22b376",
+      "0x6c3f90f043a72fa612cbac8115ee7e52bde6e490",
+    ],
+  },
+  Object {
+    "address": "0xed279fdd11ca84beef15af5d39bb4d4bee23f0ca",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "LUSD3CRV-f",
+    "tokens": Array [
+      "0x5f98805a4e8be255a32880fdec7f6728c6568ba0",
+      "0x6c3f90f043a72fa612cbac8115ee7e52bde6e490",
+    ],
+  },
+  Object {
+    "address": "0xd632f22692fac7611d2aa1c0d552930d43caed3b",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "FRAX3CRV-f",
+    "tokens": Array [
+      "0x853d955acef822db058eb8505911ed77f175b99e",
+      "0x6c3f90f043a72fa612cbac8115ee7e52bde6e490",
+    ],
+  },
+  Object {
+    "address": "0x4807862aa8b2bf68830e4c8dc86d0e9a998e085a",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "BUSD3CRV-f",
+    "tokens": Array [
+      "0x4fabb145d64652a948d72533023f6e7a623c7c53",
+      "0x6c3f90f043a72fa612cbac8115ee7e52bde6e490",
+    ],
+  },
+  Object {
+    "address": "0x43b4fdfd4ff969587185cdb6f0bd875c5fc83f8c",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "alUSD3CRV-f",
+    "tokens": Array [
+      "0xbc6da0fe9ad5f3b0d58160288917aa56653660e9",
+      "0x6c3f90f043a72fa612cbac8115ee7e52bde6e490",
+    ],
+  },
+  Object {
+    "address": "0x6ba5b4e438fa0aaf7c1bd179285af65d13bd3d90",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "RAI3CRV",
+    "tokens": Array [
+      "0x03ab458634910aad20ef5f1c8ee96f1d6ac54919",
+      "0x6c3f90f043a72fa612cbac8115ee7e52bde6e490",
+    ],
+  },
+  Object {
+    "address": "0x5a6a4d54456819380173272a5e8e9b9904bdf41b",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "MIM-3LP3CRV-f",
+    "tokens": Array [
+      "0x99d8a9c45b2eca8864373a26d1459e3dff1e17f3",
+      "0x6c3f90f043a72fa612cbac8115ee7e52bde6e490",
+    ],
+  },
+  Object {
+    "address": "0x87650d7bbfc3a9f10587d7778206671719d9910d",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "OUSD3CRV-f",
+    "tokens": Array [
+      "0x2a8e1e676ec238d8a992307b495b45b3feaa5e86",
+      "0x6c3f90f043a72fa612cbac8115ee7e52bde6e490",
+    ],
+  },
+  Object {
+    "address": "0x06cb22615ba53e60d67bf6c341a0fd5e718e1655",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "FEI3CRV3CRV-f",
+    "tokens": Array [
+      "0x956f47f50a910163d8bf957cf5846d573e7f87ca",
+      "0x6c3f90f043a72fa612cbac8115ee7e52bde6e490",
+    ],
+  },
+  Object {
+    "address": "0x5b3b5df2bf2b6543f78e053bd91c4bdd820929f1",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "USDM3CRV-f",
+    "tokens": Array [
+      "0x31d4eb09a216e181ec8a43ce79226a487d6f0ba9",
+      "0x6c3f90f043a72fa612cbac8115ee7e52bde6e490",
+    ],
+  },
+  Object {
+    "address": "0xaa5a67c256e27a5d80712c51971408db3370927d",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "DOLA3POOL3CRV-f",
+    "tokens": Array [
+      "0x865377367054516e17014ccded1e7d814edc9ce4",
+      "0x6c3f90f043a72fa612cbac8115ee7e52bde6e490",
+    ],
+  },
+  Object {
+    "address": "0xfa65aa60a9d45623c57d383fb4cf8fb8b854cc4d",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "tbtc2/sbtcCRV-f",
+    "tokens": Array [
+      "0x18084fba666a33d37592fa2633fd49a74dd93a88",
+      "0x075b1bb99792c9e1041ba13afef80c91a1e70fb3",
+    ],
+  },
+  Object {
+    "address": "0xbcb91e689114b9cc865ad7871845c95241df4105",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "PWRD3CRV-f",
+    "tokens": Array [
+      "0xf0a93d4994b3d98fb5e3a2f90dbc2d69073cb86b",
+      "0x6c3f90f043a72fa612cbac8115ee7e52bde6e490",
+    ],
+  },
+  Object {
+    "address": "0x6870f9b4dd5d34c7fc53d0d85d9dbd1aab339bf7",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "DEI3CRV-f",
+    "tokens": Array [
+      "0xde12c7959e1a72bbe8a5f7a1dc8f8eef9ab011b3",
+      "0x6c3f90f043a72fa612cbac8115ee7e52bde6e490",
+    ],
+  },
+  Object {
+    "address": "0xceaf7747579696a2f0bb206a14210e3c9e6fb269",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "UST_whv23CRV-f",
+    "tokens": Array [
+      "0xa693b19d2931d498c5b318df961919bb4aee87a5",
+      "0x6c3f90f043a72fa612cbac8115ee7e52bde6e490",
+    ],
+  },
+  Object {
+    "address": "0xc270b3b858c335b6ba5d5b10e2da8a09976005ad",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "pax-usdp3CRV-f",
+    "tokens": Array [
+      "0x8e870d67f660d95d5be530380d0ec0bd388289e1",
+      "0x6c3f90f043a72fa612cbac8115ee7e52bde6e490",
+    ],
+  },
+  Object {
+    "address": "0xfbdca68601f835b27790d98bbb8ec7f05fdeaa9b",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "ibbtc/sbtcCRV-f",
+    "tokens": Array [
+      "0x8751d4196027d4e6da63716fa7786b5174f04c15",
+      "0x075b1bb99792c9e1041ba13afef80c91a1e70fb3",
+    ],
+  },
+  Object {
+    "address": "0xc9467e453620f16b57a34a770c6bcebece002587",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "pbtc/sbtcCRV-f",
+    "tokens": Array [
+      "0x62199b909fb8b8cf870f97bef2ce6783493c4908",
+      "0x075b1bb99792c9e1041ba13afef80c91a1e70fb3",
+    ],
+  },
+  Object {
+    "address": "0xdb8cc7eced700a4bffde98013760ff31ff9408d8",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "FIAT+3Crv3CRV-f",
+    "tokens": Array [
+      "0x586aa273f262909eef8fa02d90ab65f5015e0516",
+      "0x6c3f90f043a72fa612cbac8115ee7e52bde6e490",
+    ],
+  },
+  Object {
+    "address": "0x8ee017541375f6bcd802ba119bddc94dad6911a1",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "PUSd-3CRV-f",
+    "tokens": Array [
+      "0x466a756e9a7401b5e2444a3fcb3c2c12fbea0a54",
+      "0x6c3f90f043a72fa612cbac8115ee7e52bde6e490",
+    ],
+  },
+  Object {
+    "address": "0xe6b5cc1b4b47305c58392ce3d359b10282fc36ea",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "USDD3CRV3CRV-f",
+    "tokens": Array [
+      "0x0c10bf8fcb7bf5412187a595ab97a3609160b5c6",
+      "0x6c3f90f043a72fa612cbac8115ee7e52bde6e490",
+    ],
+  },
+  Object {
+    "address": "0xde495223f7cd7ee0cde1addbd6836046bbdf3ad3",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "USDS3CRV3CRV-f",
+    "tokens": Array [
+      "0x45fdb1b92a649fb6a64ef1511d3ba5bf60044838",
+      "0x6c3f90f043a72fa612cbac8115ee7e52bde6e490",
+    ],
+  },
+  Object {
+    "address": "0x63594b2011a0f2616586bf3eef8096d42272f916",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "USDi-3CRV3CRV-f",
+    "tokens": Array [
+      "0x2a54ba2964c8cd459dc568853f79813a60761b58",
+      "0x6c3f90f043a72fa612cbac8115ee7e52bde6e490",
+    ],
+  },
+  Object {
+    "address": "0x4606326b4db89373f5377c316d3b0f6e55bc6a20",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "USDDFRAXBP3CRV-f",
+    "tokens": Array [
+      "0x0c10bf8fcb7bf5412187a595ab97a3609160b5c6",
+      "0x3175df0976dfa876431c2e9ee6bc45b65d3473cc",
+    ],
+  },
+  Object {
+    "address": "0xe3c190c57b5959ae62efe3b6797058b76ba2f5ef",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "SUSDFRAXBP3CRV-f",
+    "tokens": Array [
+      "0x57ab1ec28d129707052df4df418d58a2d46d5f51",
+      "0x3175df0976dfa876431c2e9ee6bc45b65d3473cc",
+    ],
+  },
+  Object {
+    "address": "0x497ce58f34605b9944e6b15ecafe6b001206fd25",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "LUSDFRAXBP3CRV-f",
+    "tokens": Array [
+      "0x5f98805a4e8be255a32880fdec7f6728c6568ba0",
+      "0x3175df0976dfa876431c2e9ee6bc45b65d3473cc",
+    ],
+  },
+  Object {
+    "address": "0x04b727c7e246ca70d496ecf52e6b6280f3c8077d",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "APEUSDBP3CRV-f",
+    "tokens": Array [
+      "0xff709449528b6fb6b88f557f7d93dece33bca78d",
+      "0x3175df0976dfa876431c2e9ee6bc45b65d3473cc",
+    ],
+  },
+  Object {
+    "address": "0x4e43151b78b5fbb16298c1161fcbf7531d5f8d93",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "GUSDFRAXBP3CRV-f",
+    "tokens": Array [
+      "0x056fd409e1d7a124bd7017459dfea2f387b6d5cd",
+      "0x3175df0976dfa876431c2e9ee6bc45b65d3473cc",
+    ],
+  },
+  Object {
+    "address": "0x8fdb0bb9365a46b145db80d0b1c5c5e979c84190",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "BUSDFRAXBP3CRV-f",
+    "tokens": Array [
+      "0x4fabb145d64652a948d72533023f6e7a623c7c53",
+      "0x3175df0976dfa876431c2e9ee6bc45b65d3473cc",
+    ],
+  },
+  Object {
+    "address": "0x33baeda08b8afacc4d3d07cf31d49fc1f1f3e893",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "TUSDFRAXBP3CRV-f",
+    "tokens": Array [
+      "0x0000000000085d4780b73119b644ae5ecd22b376",
+      "0x3175df0976dfa876431c2e9ee6bc45b65d3473cc",
+    ],
+  },
+  Object {
+    "address": "0xb30da2376f63de30b42dc055c93fa474f31330a5",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "alUSDFRAXB3CRV-f",
+    "tokens": Array [
+      "0xbc6da0fe9ad5f3b0d58160288917aa56653660e9",
+      "0x3175df0976dfa876431c2e9ee6bc45b65d3473cc",
+    ],
+  },
+  Object {
+    "address": "0xc9c32cd16bf7efb85ff14e0c8603cc90f6f2ee49",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "BEAN3CRV-f",
+    "tokens": Array [
+      "0xbea0000029ad1c77d3d5d23ba2d8893db9d1efab",
+      "0x6c3f90f043a72fa612cbac8115ee7e52bde6e490",
+    ],
+  },
+  Object {
+    "address": "0x3b6831c0077a1e44ed0a21841c3bc4dc11bce833",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "crvEURTUSD",
+    "tokens": Array [
+      "0xc581b735a1688071a1746c968e0798d642ede491",
+      "0x6c3f90f043a72fa612cbac8115ee7e52bde6e490",
+    ],
+  },
+  Object {
+    "address": "0x8484673ca7bff40f82b041916881aea15ee84834",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "crvXAUTUSD",
+    "tokens": Array [
+      "0x68749665ff8d2d112fa859aa293f07a622782f38",
+      "0x6c3f90f043a72fa612cbac8115ee7e52bde6e490",
+    ],
+  },
+  Object {
+    "address": "0x70fc957eb90e37af82acdbd12675699797745f68",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "EUROC3CRV",
+    "tokens": Array [
+      "0x1abaea1f7c830bd89acc67ec4af516284b1bc33c",
+      "0x6c3f90f043a72fa612cbac8115ee7e52bde6e490",
+    ],
+  },
+]
+`;

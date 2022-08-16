@@ -1,0 +1,1086 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`App Token Fetchers (velodrome, optimism, pool) positions should have structure 1`] = `
+Array [
+  Object {
+    "address": "0x635ef3ec6d348fe6ac5c6f6b3711dd605026abc5",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "vAMM-USDT/sETH",
+    "tokens": Array [
+      "0x94b008aa00579c1307b0ef2c499ad98a8ce58e58",
+      "0xe405de8f52ba7559f9df3c368500b6e6ae6cee49",
+    ],
+  },
+  Object {
+    "address": "0x640acc52e2466aeaffc50ee46cde04716b3b2377",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "sAMM-VELO/L2DAO",
+    "tokens": Array [
+      "0x3c8b650257cfb5f272f799f5e2b4e65093a11a05",
+      "0xd52f94df742a6f4b4c8b033369fe13a41782bf44",
+    ],
+  },
+  Object {
+    "address": "0x3eec44e94ee86ce79f34bb26dc3cdbbee18d6d17",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "vAMM-WETH/AELIN",
+    "tokens": Array [
+      "0x4200000000000000000000000000000000000006",
+      "0x61baadcf22d2565b0f471b291c475db5555e0b76",
+    ],
+  },
+  Object {
+    "address": "0xe1224c055c057cb71e41dac936ba946f6f500ed1",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "vAMM-OP/USDT",
+    "tokens": Array [
+      "0x4200000000000000000000000000000000000042",
+      "0x94b008aa00579c1307b0ef2c499ad98a8ce58e58",
+    ],
+  },
+  Object {
+    "address": "0x4c8b195d33c6f95a8262d56ede793611ee7b5aad",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "vAMM-WBTC/USDC",
+    "tokens": Array [
+      "0x68f180fcce6836688e9084f035309e29bf0a2095",
+      "0x7f5c764cbc14f9669b88837ca1490cca17c31607",
+    ],
+  },
+  Object {
+    "address": "0xd2aa6348c321d4c6ac9857face5bb4317b87c959",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "vAMM-WETH/RAI",
+    "tokens": Array [
+      "0x4200000000000000000000000000000000000006",
+      "0x7fb688ccf682d58f86d7e38e03f9d22e7705448b",
+    ],
+  },
+  Object {
+    "address": "0x79c912fef520be002c2b6e57ec4324e260f38e50",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "vAMM-WETH/USDC",
+    "tokens": Array [
+      "0x4200000000000000000000000000000000000006",
+      "0x7f5c764cbc14f9669b88837ca1490cca17c31607",
+    ],
+  },
+  Object {
+    "address": "0x0ec18d9a32d6320d7793a4c003993fef8f2b1205",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "vAMM-LYRA/sETH",
+    "tokens": Array [
+      "0x50c5725949a6f0c72e6c4a641f24049a917db0cb",
+      "0xe405de8f52ba7559f9df3c368500b6e6ae6cee49",
+    ],
+  },
+  Object {
+    "address": "0x985612ff2c9409174fedcff23d4f4761af124f88",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "vAMM-WETH/rETH",
+    "tokens": Array [
+      "0x4200000000000000000000000000000000000006",
+      "0x9bcef72be871e61ed4fbbc7630889bee758eb81d",
+    ],
+  },
+  Object {
+    "address": "0xccd38157460c050d1bc10ddf5bacd6db15e027b3",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "sAMM-VELO/LYRA",
+    "tokens": Array [
+      "0x3c8b650257cfb5f272f799f5e2b4e65093a11a05",
+      "0x50c5725949a6f0c72e6c4a641f24049a917db0cb",
+    ],
+  },
+  Object {
+    "address": "0x2b1ade186bf3c6ac846662aac05fb102a2839798",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "vAMM-BitANT/USDC",
+    "tokens": Array [
+      "0x5029c236320b8f15ef0a657054b84d90bfbeded3",
+      "0x7f5c764cbc14f9669b88837ca1490cca17c31607",
+    ],
+  },
+  Object {
+    "address": "0x4cb325b8a3f04a2fdbb839a8e11c892436a5e41e",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "vAMM-sUSD/USDT",
+    "tokens": Array [
+      "0x8c6f28f2f1a3c87f0f938b96d27520d9751ec8d9",
+      "0x94b008aa00579c1307b0ef2c499ad98a8ce58e58",
+    ],
+  },
+  Object {
+    "address": "0x03c188a43b3deea4426599f2e582aab6e76417d3",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "vAMM-WETH/WBTC",
+    "tokens": Array [
+      "0x4200000000000000000000000000000000000006",
+      "0x68f180fcce6836688e9084f035309e29bf0a2095",
+    ],
+  },
+  Object {
+    "address": "0xe8633ce5d216ebfdddf6875067dfb8397dedcaf3",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "sAMM-OP/USDC",
+    "tokens": Array [
+      "0x4200000000000000000000000000000000000042",
+      "0x7f5c764cbc14f9669b88837ca1490cca17c31607",
+    ],
+  },
+  Object {
+    "address": "0xfc77e39de40e54f820e313039207dc850e4c9e60",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "vAMM-OP/L2DAO",
+    "tokens": Array [
+      "0x4200000000000000000000000000000000000042",
+      "0xd52f94df742a6f4b4c8b033369fe13a41782bf44",
+    ],
+  },
+  Object {
+    "address": "0x6f239f5119dfe3277c888dace11ba33f5749ee07",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "vAMM-AELIN/USDC",
+    "tokens": Array [
+      "0x61baadcf22d2565b0f471b291c475db5555e0b76",
+      "0x7f5c764cbc14f9669b88837ca1490cca17c31607",
+    ],
+  },
+  Object {
+    "address": "0xcdd41009e74bd1ae4f7b2eecf892e4bc718b9302",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "vAMM-WETH/OP",
+    "tokens": Array [
+      "0x4200000000000000000000000000000000000006",
+      "0x4200000000000000000000000000000000000042",
+    ],
+  },
+  Object {
+    "address": "0xe08d427724d8a2673fe0be3a81b7db17be835b36",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "sAMM-USDC/USDT",
+    "tokens": Array [
+      "0x7f5c764cbc14f9669b88837ca1490cca17c31607",
+      "0x94b008aa00579c1307b0ef2c499ad98a8ce58e58",
+    ],
+  },
+  Object {
+    "address": "0xe47d437252fe9cb5e74396eee63360d8647df25d",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "vAMM-LYRA/sUSD",
+    "tokens": Array [
+      "0x50c5725949a6f0c72e6c4a641f24049a917db0cb",
+      "0x8c6f28f2f1a3c87f0f938b96d27520d9751ec8d9",
+    ],
+  },
+  Object {
+    "address": "0x85ff5b70de43fee34f3fa632addd9f76a0f6baa9",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "vAMM-SNX/sUSD",
+    "tokens": Array [
+      "0x8700daec35af8ff88c16bdf0418774cb3d7599b4",
+      "0x8c6f28f2f1a3c87f0f938b96d27520d9751ec8d9",
+    ],
+  },
+  Object {
+    "address": "0xb84688ee6f11135064a7dcc12ca0cd599a3e5594",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "vAMM-CRV/WETH",
+    "tokens": Array [
+      "0x0994206dfe8de6ec6920ff4d779b0d950605fb53",
+      "0x4200000000000000000000000000000000000006",
+    ],
+  },
+  Object {
+    "address": "0x61eba8151880ea81743795faf3e4042b38e8638c",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "vAMM-sUSD/sETH",
+    "tokens": Array [
+      "0x8c6f28f2f1a3c87f0f938b96d27520d9751ec8d9",
+      "0xe405de8f52ba7559f9df3c368500b6e6ae6cee49",
+    ],
+  },
+  Object {
+    "address": "0xd984fd341389f12ace5fd262baa7829fe43dd080",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "sAMM-LINK/sLINK",
+    "tokens": Array [
+      "0x350a791bfc2c21f9ed5d10980dad2e2638ffa7f6",
+      "0xc5db22719a06418028a40a9b5e9a7c02959d0d08",
+    ],
+  },
+  Object {
+    "address": "0xbf231b545c9c18a0e7b6544aa174eb27e5c7066b",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "vAMM-sUSD/sLINK",
+    "tokens": Array [
+      "0x8c6f28f2f1a3c87f0f938b96d27520d9751ec8d9",
+      "0xc5db22719a06418028a40a9b5e9a7c02959d0d08",
+    ],
+  },
+  Object {
+    "address": "0x5376d960f984ea2422b4e3cce8cfe377a46fbb2d",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "sAMM-WETH/USDT",
+    "tokens": Array [
+      "0x4200000000000000000000000000000000000006",
+      "0x94b008aa00579c1307b0ef2c499ad98a8ce58e58",
+    ],
+  },
+  Object {
+    "address": "0x335bd4ffa921160fc86ce3843f80a9941e7456c6",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "sAMM-VELO/USDC",
+    "tokens": Array [
+      "0x3c8b650257cfb5f272f799f5e2b4e65093a11a05",
+      "0x7f5c764cbc14f9669b88837ca1490cca17c31607",
+    ],
+  },
+  Object {
+    "address": "0xe41d6ffc6ca900c063463209e5684f3af6a2bd44",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "sAMM-FRAX/OP",
+    "tokens": Array [
+      "0x2e3d870790dc77a83dd1d18184acc7439a53f475",
+      "0x4200000000000000000000000000000000000042",
+    ],
+  },
+  Object {
+    "address": "0x0f53a89642c91b2d6df95828fd840877a414a381",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "vAMM-VELO/USDT",
+    "tokens": Array [
+      "0x3c8b650257cfb5f272f799f5e2b4e65093a11a05",
+      "0x94b008aa00579c1307b0ef2c499ad98a8ce58e58",
+    ],
+  },
+  Object {
+    "address": "0x986d353a3700530be4e75794830f57e657bc68cb",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "vAMM-FRAX/OP",
+    "tokens": Array [
+      "0x2e3d870790dc77a83dd1d18184acc7439a53f475",
+      "0x4200000000000000000000000000000000000042",
+    ],
+  },
+  Object {
+    "address": "0x9056eb7ca982a5dd65a584189994e6a27318067d",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "vAMM-USDC/SNX",
+    "tokens": Array [
+      "0x7f5c764cbc14f9669b88837ca1490cca17c31607",
+      "0x8700daec35af8ff88c16bdf0418774cb3d7599b4",
+    ],
+  },
+  Object {
+    "address": "0x9355292f66552ea5717b274d27eefc8254011d83",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "vAMM-THALES/USDC",
+    "tokens": Array [
+      "0x217d47011b23bb961eb6d93ca9945b7501a5bb11",
+      "0x7f5c764cbc14f9669b88837ca1490cca17c31607",
+    ],
+  },
+  Object {
+    "address": "0x587233ce63d7c1e081ce9d94d9940544758f6d01",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "vAMM-FRAX/USDC",
+    "tokens": Array [
+      "0x2e3d870790dc77a83dd1d18184acc7439a53f475",
+      "0x7f5c764cbc14f9669b88837ca1490cca17c31607",
+    ],
+  },
+  Object {
+    "address": "0xbfee76f45e02027dad81f1dcf5bcbff28ccd7ef0",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "vAMM-RAI/sUSD",
+    "tokens": Array [
+      "0x7fb688ccf682d58f86d7e38e03f9d22e7705448b",
+      "0x8c6f28f2f1a3c87f0f938b96d27520d9751ec8d9",
+    ],
+  },
+  Object {
+    "address": "0x226c48ab4986e60f216dd9bff0d784ac2f10a003",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "vAMM-WETH/sETH",
+    "tokens": Array [
+      "0x4200000000000000000000000000000000000006",
+      "0xe405de8f52ba7559f9df3c368500b6e6ae6cee49",
+    ],
+  },
+  Object {
+    "address": "0x4f7ebc19844259386dbddb7b2eb759eefc6f8353",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "sAMM-USDC/DAI",
+    "tokens": Array [
+      "0x7f5c764cbc14f9669b88837ca1490cca17c31607",
+      "0xda10009cbd5d07dd0cecc66161fc93d7c9000da1",
+    ],
+  },
+  Object {
+    "address": "0xffb6c35960b23989037c8c391facebc8a17de970",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "vAMM-WETH/SNX",
+    "tokens": Array [
+      "0x4200000000000000000000000000000000000006",
+      "0x8700daec35af8ff88c16bdf0418774cb3d7599b4",
+    ],
+  },
+  Object {
+    "address": "0x6949f7936cce56a77e30ab1526eb9720f1d98c1e",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "vAMM-USDC/sLINK",
+    "tokens": Array [
+      "0x7f5c764cbc14f9669b88837ca1490cca17c31607",
+      "0xc5db22719a06418028a40a9b5e9a7c02959d0d08",
+    ],
+  },
+  Object {
+    "address": "0x43c3f2d0aa0ebc433d654bb6ebf67f0c03f8d8d9",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "vAMM-OP/DAI",
+    "tokens": Array [
+      "0x4200000000000000000000000000000000000042",
+      "0xda10009cbd5d07dd0cecc66161fc93d7c9000da1",
+    ],
+  },
+  Object {
+    "address": "0x47029bc8f5cbe3b464004e87ef9c9419a48018cd",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "vAMM-OP/USDC",
+    "tokens": Array [
+      "0x4200000000000000000000000000000000000042",
+      "0x7f5c764cbc14f9669b88837ca1490cca17c31607",
+    ],
+  },
+  Object {
+    "address": "0x19d7dfa42303e03b3c3e3a043d17bb893fb19385",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "sAMM-sBTC/WBTC",
+    "tokens": Array [
+      "0x298b9b95708152ff6968aafd889c6586e9169f1d",
+      "0x68f180fcce6836688e9084f035309e29bf0a2095",
+    ],
+  },
+  Object {
+    "address": "0x0b4d552d8349f9a52103e2074cef80d2ffa73292",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "vAMM-OP/BitANT",
+    "tokens": Array [
+      "0x4200000000000000000000000000000000000042",
+      "0x5029c236320b8f15ef0a657054b84d90bfbeded3",
+    ],
+  },
+  Object {
+    "address": "0x1a6d1bc398fc234a218faaba63f06398e35336f9",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "sAMM-WBTC/USDC",
+    "tokens": Array [
+      "0x68f180fcce6836688e9084f035309e29bf0a2095",
+      "0x7f5c764cbc14f9669b88837ca1490cca17c31607",
+    ],
+  },
+  Object {
+    "address": "0xffd74ef185989bff8752c818a53a47fc45388f08",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "vAMM-VELO/OP",
+    "tokens": Array [
+      "0x3c8b650257cfb5f272f799f5e2b4e65093a11a05",
+      "0x4200000000000000000000000000000000000042",
+    ],
+  },
+  Object {
+    "address": "0xfb65a99210966813e98594233fbfbcf18cd013e4",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "vAMM-OP/PERP",
+    "tokens": Array [
+      "0x4200000000000000000000000000000000000042",
+      "0x9e1028f5f1d5ede59748ffcee5532509976840e0",
+    ],
+  },
+  Object {
+    "address": "0xdee1856d7b75abf4c1bdf986da4e1c6c7864d640",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "vAMM-LYRA/USDC",
+    "tokens": Array [
+      "0x50c5725949a6f0c72e6c4a641f24049a917db0cb",
+      "0x7f5c764cbc14f9669b88837ca1490cca17c31607",
+    ],
+  },
+  Object {
+    "address": "0xd62c9d8a3d4fd98b27caaefe3571782a3af0a737",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "sAMM-USDC/MAI",
+    "tokens": Array [
+      "0x7f5c764cbc14f9669b88837ca1490cca17c31607",
+      "0xdfa46478f9e5ea86d57387849598dbfb2e964b02",
+    ],
+  },
+  Object {
+    "address": "0x9c8a59934fba9af82674eff5d13a24e7c7e7a1f1",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "vAMM-USDC/PERP",
+    "tokens": Array [
+      "0x7f5c764cbc14f9669b88837ca1490cca17c31607",
+      "0x9e1028f5f1d5ede59748ffcee5532509976840e0",
+    ],
+  },
+  Object {
+    "address": "0xc8f51393fe595f3f3a3caad164d781b7f4a596dd",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "sAMM-sUSD/USDT",
+    "tokens": Array [
+      "0x8c6f28f2f1a3c87f0f938b96d27520d9751ec8d9",
+      "0x94b008aa00579c1307b0ef2c499ad98a8ce58e58",
+    ],
+  },
+  Object {
+    "address": "0xadf902b11e4ad36b227b84d856b229258b0b0465",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "sAMM-FRAX/USDC",
+    "tokens": Array [
+      "0x2e3d870790dc77a83dd1d18184acc7439a53f475",
+      "0x7f5c764cbc14f9669b88837ca1490cca17c31607",
+    ],
+  },
+  Object {
+    "address": "0x7892d498f22c9393385f4a798788126f7090d2cc",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "vAMM-STG/USDC",
+    "tokens": Array [
+      "0x296f55f8fb28e498b858d0bcda06d955b2cb3f97",
+      "0x7f5c764cbc14f9669b88837ca1490cca17c31607",
+    ],
+  },
+  Object {
+    "address": "0x66a7b4ab6148ae5c83200c35cac145218b23391c",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "vAMM-VELO/UNI",
+    "tokens": Array [
+      "0x3c8b650257cfb5f272f799f5e2b4e65093a11a05",
+      "0x6fd9d7ad17242c41f7131d257212c54a0e816691",
+    ],
+  },
+  Object {
+    "address": "0x534f3135757db41c4f705b0eac697659f68c4014",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "vAMM-WETH/DAI",
+    "tokens": Array [
+      "0x4200000000000000000000000000000000000006",
+      "0xda10009cbd5d07dd0cecc66161fc93d7c9000da1",
+    ],
+  },
+  Object {
+    "address": "0xb93c74834a6f186ac38df508a33e7783b81e2c86",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "vAMM-sBTC/sUSD",
+    "tokens": Array [
+      "0x298b9b95708152ff6968aafd889c6586e9169f1d",
+      "0x8c6f28f2f1a3c87f0f938b96d27520d9751ec8d9",
+    ],
+  },
+  Object {
+    "address": "0x8e6bf020d11e641511bd8b24ee0fab2034e224e5",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "sAMM-THALES/USDC",
+    "tokens": Array [
+      "0x217d47011b23bb961eb6d93ca9945b7501a5bb11",
+      "0x7f5c764cbc14f9669b88837ca1490cca17c31607",
+    ],
+  },
+  Object {
+    "address": "0x557949dde71e88cc2f41d33d341ff42417a35a2d",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "sAMM-VELO/OP",
+    "tokens": Array [
+      "0x3c8b650257cfb5f272f799f5e2b4e65093a11a05",
+      "0x4200000000000000000000000000000000000042",
+    ],
+  },
+  Object {
+    "address": "0x66758008b6473251f3bf4c8c383556c80f9b28a9",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "sAMM-LYRA/USDC",
+    "tokens": Array [
+      "0x50c5725949a6f0c72e6c4a641f24049a917db0cb",
+      "0x7f5c764cbc14f9669b88837ca1490cca17c31607",
+    ],
+  },
+  Object {
+    "address": "0x93fc04cd6d108588ecd844c7d60f46635037b5a3",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "vAMM-USDC/sUSD",
+    "tokens": Array [
+      "0x7f5c764cbc14f9669b88837ca1490cca17c31607",
+      "0x8c6f28f2f1a3c87f0f938b96d27520d9751ec8d9",
+    ],
+  },
+  Object {
+    "address": "0xcfcf4bb472aa2ad6c82ebef2377a20829b6356ad",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "sAMM-VELO/WETH",
+    "tokens": Array [
+      "0x3c8b650257cfb5f272f799f5e2b4e65093a11a05",
+      "0x4200000000000000000000000000000000000006",
+    ],
+  },
+  Object {
+    "address": "0xe6ec71834df170f05665a5a4ee3d1ace12650438",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "vAMM-USDC/L2DAO",
+    "tokens": Array [
+      "0x7f5c764cbc14f9669b88837ca1490cca17c31607",
+      "0xd52f94df742a6f4b4c8b033369fe13a41782bf44",
+    ],
+  },
+  Object {
+    "address": "0x0b5581d5db524eaf0006a0bafd1e8d206c70cc0d",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "vAMM-USDC/MAI",
+    "tokens": Array [
+      "0x7f5c764cbc14f9669b88837ca1490cca17c31607",
+      "0xdfa46478f9e5ea86d57387849598dbfb2e964b02",
+    ],
+  },
+  Object {
+    "address": "0xc2058aa3b3f96075cc33946bcd1963bfa660315b",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "vAMM-sUSD/DAI",
+    "tokens": Array [
+      "0x8c6f28f2f1a3c87f0f938b96d27520d9751ec8d9",
+      "0xda10009cbd5d07dd0cecc66161fc93d7c9000da1",
+    ],
+  },
+  Object {
+    "address": "0xac49498b97312a6716ef312f389b7e4d183a2a7c",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "sAMM-FRAX/sUSD",
+    "tokens": Array [
+      "0x2e3d870790dc77a83dd1d18184acc7439a53f475",
+      "0x8c6f28f2f1a3c87f0f938b96d27520d9751ec8d9",
+    ],
+  },
+  Object {
+    "address": "0x54db26639ff803622847310ab5bfae097533502d",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "sAMM-OP/sUSD",
+    "tokens": Array [
+      "0x4200000000000000000000000000000000000042",
+      "0x8c6f28f2f1a3c87f0f938b96d27520d9751ec8d9",
+    ],
+  },
+  Object {
+    "address": "0x58f98be02c4ffb675af8857013a9c0dfa5750d04",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "vAMM-WETH/sUSD",
+    "tokens": Array [
+      "0x4200000000000000000000000000000000000006",
+      "0x8c6f28f2f1a3c87f0f938b96d27520d9751ec8d9",
+    ],
+  },
+  Object {
+    "address": "0x6580c6ee0bb96651be0aa8db382b48ea7acd077d",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "vAMM-VELO/SNX",
+    "tokens": Array [
+      "0x3c8b650257cfb5f272f799f5e2b4e65093a11a05",
+      "0x8700daec35af8ff88c16bdf0418774cb3d7599b4",
+    ],
+  },
+  Object {
+    "address": "0xe8537b6ff1039cb9ed0b71713f697ddbadbb717d",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "vAMM-VELO/USDC",
+    "tokens": Array [
+      "0x3c8b650257cfb5f272f799f5e2b4e65093a11a05",
+      "0x7f5c764cbc14f9669b88837ca1490cca17c31607",
+    ],
+  },
+  Object {
+    "address": "0x3e4eccad2ebb0e2e59bf9ff9aed42c486e884451",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "sAMM-OP/L2DAO",
+    "tokens": Array [
+      "0x4200000000000000000000000000000000000042",
+      "0xd52f94df742a6f4b4c8b033369fe13a41782bf44",
+    ],
+  },
+  Object {
+    "address": "0x53e7550c06c6de1f5b05804c4c29850236eaea31",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "vAMM-VELO/KROM",
+    "tokens": Array [
+      "0x3c8b650257cfb5f272f799f5e2b4e65093a11a05",
+      "0xf98dcd95217e15e05d8638da4c91125e59590b07",
+    ],
+  },
+  Object {
+    "address": "0xb840adae1a31b52778188b9e948fc79a4bc99d44",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "sAMM-SNX/sUSD",
+    "tokens": Array [
+      "0x8700daec35af8ff88c16bdf0418774cb3d7599b4",
+      "0x8c6f28f2f1a3c87f0f938b96d27520d9751ec8d9",
+    ],
+  },
+  Object {
+    "address": "0x747ec810d42262f5725c0441d6b693774e6c079a",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "sAMM-OP/USDT",
+    "tokens": Array [
+      "0x4200000000000000000000000000000000000042",
+      "0x94b008aa00579c1307b0ef2c499ad98a8ce58e58",
+    ],
+  },
+  Object {
+    "address": "0x265013a5915cebb9344c9e259d531e55855da45d",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "sAMM-LYRA/sUSD",
+    "tokens": Array [
+      "0x50c5725949a6f0c72e6c4a641f24049a917db0cb",
+      "0x8c6f28f2f1a3c87f0f938b96d27520d9751ec8d9",
+    ],
+  },
+  Object {
+    "address": "0xd3650ab80545c31088f89fb6d16930796758f3c1",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "vAMM-OP/LYRA",
+    "tokens": Array [
+      "0x4200000000000000000000000000000000000042",
+      "0x50c5725949a6f0c72e6c4a641f24049a917db0cb",
+    ],
+  },
+  Object {
+    "address": "0xd16232ad60188b68076a235c65d692090caba155",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "sAMM-USDC/sUSD",
+    "tokens": Array [
+      "0x7f5c764cbc14f9669b88837ca1490cca17c31607",
+      "0x8c6f28f2f1a3c87f0f938b96d27520d9751ec8d9",
+    ],
+  },
+  Object {
+    "address": "0xf813538cd3b3c6195f78353507a16e46f14f1567",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "sAMM-USDC/PERP",
+    "tokens": Array [
+      "0x7f5c764cbc14f9669b88837ca1490cca17c31607",
+      "0x9e1028f5f1d5ede59748ffcee5532509976840e0",
+    ],
+  },
+  Object {
+    "address": "0xc875b07b96b53b80557354a170edd483d24c3ba0",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "vAMM-WETH/USDT",
+    "tokens": Array [
+      "0x4200000000000000000000000000000000000006",
+      "0x94b008aa00579c1307b0ef2c499ad98a8ce58e58",
+    ],
+  },
+  Object {
+    "address": "0x7caba4d27098bdaabb545e21ca5d865519492a25",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "vAMM-USDC/USDT",
+    "tokens": Array [
+      "0x7f5c764cbc14f9669b88837ca1490cca17c31607",
+      "0x94b008aa00579c1307b0ef2c499ad98a8ce58e58",
+    ],
+  },
+  Object {
+    "address": "0x48e18e3d1efa7f0e15f1b2bf01b232534c30a3ef",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "sAMM-WETH/USDC",
+    "tokens": Array [
+      "0x4200000000000000000000000000000000000006",
+      "0x7f5c764cbc14f9669b88837ca1490cca17c31607",
+    ],
+  },
+  Object {
+    "address": "0x46b8a98d72820e28465a172687af920cc167e587",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "vAMM-VELO/sUSD",
+    "tokens": Array [
+      "0x3c8b650257cfb5f272f799f5e2b4e65093a11a05",
+      "0x8c6f28f2f1a3c87f0f938b96d27520d9751ec8d9",
+    ],
+  },
+  Object {
+    "address": "0x69f795e2d9249021798645d784229e5bec2a5a25",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "sAMM-WETH/rETH",
+    "tokens": Array [
+      "0x4200000000000000000000000000000000000006",
+      "0x9bcef72be871e61ed4fbbc7630889bee758eb81d",
+    ],
+  },
+  Object {
+    "address": "0x278631efe7e7b4c2ec49927b255c2ca42be2c1b1",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "sAMM-WETH/OP",
+    "tokens": Array [
+      "0x4200000000000000000000000000000000000006",
+      "0x4200000000000000000000000000000000000042",
+    ],
+  },
+  Object {
+    "address": "0x8c1e84bb9dc26d3b2b14c191c075135b0371d31b",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "vAMM-VELO/sLINK",
+    "tokens": Array [
+      "0x3c8b650257cfb5f272f799f5e2b4e65093a11a05",
+      "0xc5db22719a06418028a40a9b5e9a7c02959d0d08",
+    ],
+  },
+  Object {
+    "address": "0x6dd153c14c9f4417c786b35ef9c870d8d3465565",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "vAMM-OP/SNX",
+    "tokens": Array [
+      "0x4200000000000000000000000000000000000042",
+      "0x8700daec35af8ff88c16bdf0418774cb3d7599b4",
+    ],
+  },
+  Object {
+    "address": "0xf548faed827a59a32df6d9834178ea1328a7de03",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "vAMM-USDT/DAI",
+    "tokens": Array [
+      "0x94b008aa00579c1307b0ef2c499ad98a8ce58e58",
+      "0xda10009cbd5d07dd0cecc66161fc93d7c9000da1",
+    ],
+  },
+  Object {
+    "address": "0xd04f675127d37bf7b009453116c17b7ef088cceb",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "vAMM-VELO/DAI",
+    "tokens": Array [
+      "0x3c8b650257cfb5f272f799f5e2b4e65093a11a05",
+      "0xda10009cbd5d07dd0cecc66161fc93d7c9000da1",
+    ],
+  },
+  Object {
+    "address": "0x9c0347719619191ac0d1d58a39d6b5d3943828c8",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "sAMM-VELO/USDT",
+    "tokens": Array [
+      "0x3c8b650257cfb5f272f799f5e2b4e65093a11a05",
+      "0x94b008aa00579c1307b0ef2c499ad98a8ce58e58",
+    ],
+  },
+  Object {
+    "address": "0x06141423dcf1a5a4c137039063ac873cdc1e363a",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "vAMM-VELO/WETH",
+    "tokens": Array [
+      "0x3c8b650257cfb5f272f799f5e2b4e65093a11a05",
+      "0x4200000000000000000000000000000000000006",
+    ],
+  },
+  Object {
+    "address": "0x19af02e5ed524c789e20394588756ee45896d1a7",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "sAMM-WETH/AELIN",
+    "tokens": Array [
+      "0x4200000000000000000000000000000000000006",
+      "0x61baadcf22d2565b0f471b291c475db5555e0b76",
+    ],
+  },
+  Object {
+    "address": "0x2cbb4db09949d8da9096afcfe3f08f2fae92d39d",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "sAMM-VELO/SNX",
+    "tokens": Array [
+      "0x3c8b650257cfb5f272f799f5e2b4e65093a11a05",
+      "0x8700daec35af8ff88c16bdf0418774cb3d7599b4",
+    ],
+  },
+  Object {
+    "address": "0xa0528293d14366adac1b86c58ee314b9adeb2843",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "vAMM-VELO/BitANT",
+    "tokens": Array [
+      "0x3c8b650257cfb5f272f799f5e2b4e65093a11a05",
+      "0x5029c236320b8f15ef0a657054b84d90bfbeded3",
+    ],
+  },
+  Object {
+    "address": "0x2d7cfb303045cfcb2195c29c92714654415e091f",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "sAMM-VELO/sETH",
+    "tokens": Array [
+      "0x3c8b650257cfb5f272f799f5e2b4e65093a11a05",
+      "0xe405de8f52ba7559f9df3c368500b6e6ae6cee49",
+    ],
+  },
+  Object {
+    "address": "0x34bb604e97604533ab9e42a756c3790910caac87",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "vAMM-WETH/LYRA",
+    "tokens": Array [
+      "0x4200000000000000000000000000000000000006",
+      "0x50c5725949a6f0c72e6c4a641f24049a917db0cb",
+    ],
+  },
+  Object {
+    "address": "0x53bea2d15efe344b054e73209455d2b6aa1c9462",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "vAMM-OP/sUSD",
+    "tokens": Array [
+      "0x4200000000000000000000000000000000000042",
+      "0x8c6f28f2f1a3c87f0f938b96d27520d9751ec8d9",
+    ],
+  },
+  Object {
+    "address": "0xc4e7cfc1db28fa7d729fdb3617b48dfdd45a4511",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "vAMM-OP/sETH",
+    "tokens": Array [
+      "0x4200000000000000000000000000000000000042",
+      "0xe405de8f52ba7559f9df3c368500b6e6ae6cee49",
+    ],
+  },
+  Object {
+    "address": "0x8ccf13e84953437429647a13e1fb597ac3cfdee4",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "vAMM-LINK/DAI",
+    "tokens": Array [
+      "0x350a791bfc2c21f9ed5d10980dad2e2638ffa7f6",
+      "0xda10009cbd5d07dd0cecc66161fc93d7c9000da1",
+    ],
+  },
+  Object {
+    "address": "0x051a9a47920a913914a9e6e961a230a2a464eeb2",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "vAMM-VELO/LYRA",
+    "tokens": Array [
+      "0x3c8b650257cfb5f272f799f5e2b4e65093a11a05",
+      "0x50c5725949a6f0c72e6c4a641f24049a917db0cb",
+    ],
+  },
+  Object {
+    "address": "0x8fbc13969b03b58e0ac50b19e4aedd4dff8554a1",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "vAMM-OP/MAI",
+    "tokens": Array [
+      "0x4200000000000000000000000000000000000042",
+      "0xdfa46478f9e5ea86d57387849598dbfb2e964b02",
+    ],
+  },
+  Object {
+    "address": "0xec24eb97cec2f0f6a2d61254990b0f163bbbfe1d",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "sAMM-sUSD/DAI",
+    "tokens": Array [
+      "0x8c6f28f2f1a3c87f0f938b96d27520d9751ec8d9",
+      "0xda10009cbd5d07dd0cecc66161fc93d7c9000da1",
+    ],
+  },
+  Object {
+    "address": "0x206c3be51e36a329b92adc126c0a3897f031cb65",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "sAMM-VELO/sUSD",
+    "tokens": Array [
+      "0x3c8b650257cfb5f272f799f5e2b4e65093a11a05",
+      "0x8c6f28f2f1a3c87f0f938b96d27520d9751ec8d9",
+    ],
+  },
+  Object {
+    "address": "0x82cdd997fd9912c99133d1f8af9d2bf9296d5518",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "sAMM-OP/sETH",
+    "tokens": Array [
+      "0x4200000000000000000000000000000000000042",
+      "0xe405de8f52ba7559f9df3c368500b6e6ae6cee49",
+    ],
+  },
+  Object {
+    "address": "0xc22a4cc48f20eb52e273fb08a5bf04879d8fc8e9",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "vAMM-CRV/sUSD",
+    "tokens": Array [
+      "0x0994206dfe8de6ec6920ff4d779b0d950605fb53",
+      "0x8c6f28f2f1a3c87f0f938b96d27520d9751ec8d9",
+    ],
+  },
+  Object {
+    "address": "0xbbec8b042b88d720bf12ef1684a280daa3bb73ea",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "vAMM-VELO/L2DAO",
+    "tokens": Array [
+      "0x3c8b650257cfb5f272f799f5e2b4e65093a11a05",
+      "0xd52f94df742a6f4b4c8b033369fe13a41782bf44",
+    ],
+  },
+  Object {
+    "address": "0x078f65c0e854ab7fa3baa2cff62a4f9cb4031382",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "vAMM-USDC/DAI",
+    "tokens": Array [
+      "0x7f5c764cbc14f9669b88837ca1490cca17c31607",
+      "0xda10009cbd5d07dd0cecc66161fc93d7c9000da1",
+    ],
+  },
+  Object {
+    "address": "0x8fa4632b0bd325e6582cb4304ca9fbcc08e74cda",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "vAMM-VELO/sETH",
+    "tokens": Array [
+      "0x3c8b650257cfb5f272f799f5e2b4e65093a11a05",
+      "0xe405de8f52ba7559f9df3c368500b6e6ae6cee49",
+    ],
+  },
+  Object {
+    "address": "0xfd7fddfc0a729ecf45fb6b12fa3b71a575e1966f",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "sAMM-WETH/sETH",
+    "tokens": Array [
+      "0x4200000000000000000000000000000000000006",
+      "0xe405de8f52ba7559f9df3c368500b6e6ae6cee49",
+    ],
+  },
+  Object {
+    "address": "0xee0d6241bfbe9b1aa39fe3df7962a85c8bcdf94f",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "vAMM-FRAX/sUSD",
+    "tokens": Array [
+      "0x2e3d870790dc77a83dd1d18184acc7439a53f475",
+      "0x8c6f28f2f1a3c87f0f938b96d27520d9751ec8d9",
+    ],
+  },
+  Object {
+    "address": "0x6299e349a574314768e5be2ffc8c96d622b253c9",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "vAMM-vAMM-VELO/UNI/DAI",
+    "tokens": Array [
+      "0x66a7b4ab6148ae5c83200c35cac145218b23391c",
+      "0xda10009cbd5d07dd0cecc66161fc93d7c9000da1",
+    ],
+  },
+  Object {
+    "address": "0x3a4f4694b4a05d12415d04753e1b7c558f544e15",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "vAMM-sAMM-VELO/USDC/VELO",
+    "tokens": Array [
+      "0x335bd4ffa921160fc86ce3843f80a9941e7456c6",
+      "0x3c8b650257cfb5f272f799f5e2b4e65093a11a05",
+    ],
+  },
+  Object {
+    "address": "0x7f496c4601ca3606283866a7c48c58e8d754dbef",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "vAMM-vAMM-WETH/WBTC/VELO",
+    "tokens": Array [
+      "0x03c188a43b3deea4426599f2e582aab6e76417d3",
+      "0x3c8b650257cfb5f272f799f5e2b4e65093a11a05",
+    ],
+  },
+]
+`;

@@ -1,0 +1,67 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`App Token Fetchers (curve, optimism, pool) positions should have structure 1`] = `
+Array [
+  Object {
+    "address": "0x1337bedc9d22ecbe766df105c9623922a27963ec",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "3CRV",
+    "tokens": Array [
+      "0xda10009cbd5d07dd0cecc66161fc93d7c9000da1",
+      "0x7f5c764cbc14f9669b88837ca1490cca17c31607",
+      "0x94b008aa00579c1307b0ef2c499ad98a8ce58e58",
+    ],
+  },
+  Object {
+    "address": "0x29a3d66b30bc4ad674a4fdaf27578b64f6afbfe7",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "FRAXBP-f",
+    "tokens": Array [
+      "0x2e3d870790dc77a83dd1d18184acc7439a53f475",
+      "0x7f5c764cbc14f9669b88837ca1490cca17c31607",
+    ],
+  },
+  Object {
+    "address": "0x7bc5728bc2b59b45a58d9a576e2ffc5f0505b35e",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "seth-f",
+    "tokens": Array [
+      "0x0000000000000000000000000000000000000000",
+      "0xe405de8f52ba7559f9df3c368500b6e6ae6cee49",
+    ],
+  },
+  Object {
+    "address": "0x9f2fe3500b1a7e285fdc337acace94c480e00130",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "sbtc-f",
+    "tokens": Array [
+      "0x298b9b95708152ff6968aafd889c6586e9169f1d",
+      "0x68f180fcce6836688e9084f035309e29bf0a2095",
+    ],
+  },
+  Object {
+    "address": "0x061b87122ed14b9526a813209c8a59a633257bab",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "sUSD3CRV-f",
+    "tokens": Array [
+      "0x8c6f28f2f1a3c87f0f938b96d27520d9751ec8d9",
+      "0x1337bedc9d22ecbe766df105c9623922a27963ec",
+    ],
+  },
+  Object {
+    "address": "0x6645237fb81fe7227aa2fa2a244d23a5ac0da1cd",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "MAI+3Pool3CRV-f",
+    "tokens": Array [
+      "0xdfa46478f9e5ea86d57387849598dbfb2e964b02",
+      "0x1337bedc9d22ecbe766df105c9623922a27963ec",
+    ],
+  },
+]
+`;

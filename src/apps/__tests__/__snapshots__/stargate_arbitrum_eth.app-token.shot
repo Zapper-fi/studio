@@ -1,0 +1,15 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`App Token Fetchers (stargate, arbitrum, eth) positions should have structure 1`] = `
+Array [
+  Object {
+    "address": "0x915a55e36a01285a14f05de6e81ed9ce89772f8e",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "S*SGETH",
+    "tokens": Array [
+      "0x0000000000000000000000000000000000000000",
+    ],
+  },
+]
+`;

@@ -1,0 +1,51 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`App Token Fetchers (keeper-dao, ethereum, v3-pool) positions should have structure 1`] = `
+Array [
+  Object {
+    "address": "0x77565202d78a6eda565c7dc737ff1d8e64fd672a",
+    "decimals": 8,
+    "key": undefined,
+    "symbol": "kBTC",
+    "tokens": Array [
+      "0xeb4c2781e4eba804ce9a9803c67d0893436bb27d",
+    ],
+  },
+  Object {
+    "address": "0x8ee17fa30d63ebd66e02205b1df2f30d60a5ca30",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "kDAI",
+    "tokens": Array [
+      "0x6b175474e89094c44da98b954eedeac495271d0f",
+    ],
+  },
+  Object {
+    "address": "0x3045312fb54f00f43d6607999e387db58ffb4cf4",
+    "decimals": 6,
+    "key": undefined,
+    "symbol": "kUSDC",
+    "tokens": Array [
+      "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+    ],
+  },
+  Object {
+    "address": "0x834cacd6425fa6c7126b028b3d1e4cda53eb7257",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "kwETH",
+    "tokens": Array [
+      "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
+    ],
+  },
+  Object {
+    "address": "0x8ac32f0a635a0896a8428a9c31fbf1ab06ecf489",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "xROOK",
+    "tokens": Array [
+      "0xfa5047c9c78b8877af97bdcb85db743fd7313d4a",
+    ],
+  },
+]
+`;

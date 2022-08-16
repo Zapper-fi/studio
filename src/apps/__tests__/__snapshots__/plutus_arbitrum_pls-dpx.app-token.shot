@@ -1,0 +1,15 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`App Token Fetchers (plutus, arbitrum, pls-dpx) positions should have structure 1`] = `
+Array [
+  Object {
+    "address": "0xf236ea74b515ef96a9898f5a4ed4aa591f253ce1",
+    "decimals": 18,
+    "key": "4217652676",
+    "symbol": "plsDPX",
+    "tokens": Array [
+      "0x6c2c06790b3e3e3c38e12ee22f8183b37a13ee55",
+    ],
+  },
+]
+`;

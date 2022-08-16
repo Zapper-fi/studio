@@ -1,0 +1,15 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`App Token Fetchers (aelin, optimism, v-aelin) positions should have structure 1`] = `
+Array [
+  Object {
+    "address": "0x780f70882ff4929d1a658a4e8ec8d4316b24748a",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "vAELIN",
+    "tokens": Array [
+      "0x61baadcf22d2565b0f471b291c475db5555e0b76",
+    ],
+  },
+]
+`;

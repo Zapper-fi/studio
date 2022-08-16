@@ -1,0 +1,519 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`App Token Fetchers (market-xyz, polygon, supply) positions should have structure 1`] = `
+Array [
+  Object {
+    "address": "0x217762fc7af17785ab4eedd15343a4d95afca942",
+    "decimals": 8,
+    "key": undefined,
+    "symbol": "fWMATIC-0",
+    "tokens": Array [
+      "0x0d500b1d8e8ef31e21c99d1db9a6444d3adf1270",
+    ],
+  },
+  Object {
+    "address": "0x1f16f39e92762833aff356474a0f97df550b8663",
+    "decimals": 8,
+    "key": undefined,
+    "symbol": "fUSDC-0",
+    "tokens": Array [
+      "0x2791bca1f2de4661ed88a30c99a7a9449aa84174",
+    ],
+  },
+  Object {
+    "address": "0xd74662c8412f1dc1fc889bf6e52d2e1980b8e9ee",
+    "decimals": 8,
+    "key": undefined,
+    "symbol": "fUSDC-1",
+    "tokens": Array [
+      "0x2791bca1f2de4661ed88a30c99a7a9449aa84174",
+    ],
+  },
+  Object {
+    "address": "0x68f0a754149a4c9f75f46e3aa56681680a812daf",
+    "decimals": 8,
+    "key": undefined,
+    "symbol": "fDAI-1",
+    "tokens": Array [
+      "0x8f3cf7ad23cd3cadbd9735aff958023239c6a063",
+    ],
+  },
+  Object {
+    "address": "0xb7903ce468a84ce1b5b0427a81b79fec6ece544b",
+    "decimals": 8,
+    "key": undefined,
+    "symbol": "fMIMATIC-1",
+    "tokens": Array [
+      "0xa3fa99a148fa48d14ed51d610c367c61876997f1",
+    ],
+  },
+  Object {
+    "address": "0xd415c5c4e372d88600b28dcf387674fece451efb",
+    "decimals": 8,
+    "key": undefined,
+    "symbol": "fUSDT-1",
+    "tokens": Array [
+      "0xc2132d05d31c914a87c6611c10748aeb04b58e8f",
+    ],
+  },
+  Object {
+    "address": "0x105ff7002d17f7e09964698af4ccd4f15b28a0ef",
+    "decimals": 8,
+    "key": undefined,
+    "symbol": "fWETH-2",
+    "tokens": Array [
+      "0x7ceb23fd6bc0add59e62ac25578270cff1b9f619",
+    ],
+  },
+  Object {
+    "address": "0x0a7a2266d6093e162d385991d4a079503f0fca91",
+    "decimals": 8,
+    "key": undefined,
+    "symbol": "fDPI-2",
+    "tokens": Array [
+      "0x85955046df4668e1dd369d2de9f3aeb98dd2a369",
+    ],
+  },
+  Object {
+    "address": "0xf458e610dcb7486b811bd5bd6ef4994e6147aef3",
+    "decimals": 8,
+    "key": undefined,
+    "symbol": "fMIMATIC-2",
+    "tokens": Array [
+      "0xa3fa99a148fa48d14ed51d610c367c61876997f1",
+    ],
+  },
+  Object {
+    "address": "0x24f7f8f89c647973cfb770a31cb6ba4abc92cf3c",
+    "decimals": 8,
+    "key": undefined,
+    "symbol": "fUSDC-2",
+    "tokens": Array [
+      "0x2791bca1f2de4661ed88a30c99a7a9449aa84174",
+    ],
+  },
+  Object {
+    "address": "0xaf6aac4d659cff21aeb256c81030c9000c53d98a",
+    "decimals": 8,
+    "key": undefined,
+    "symbol": "fWMATIC-2",
+    "tokens": Array [
+      "0x0d500b1d8e8ef31e21c99d1db9a6444d3adf1270",
+    ],
+  },
+  Object {
+    "address": "0x164835016e1590ee91eb479c4eeb1249779856aa",
+    "decimals": 8,
+    "key": undefined,
+    "symbol": "fFRAX-2",
+    "tokens": Array [
+      "0x45c32fa6df82ead1e2ef74d17b76547eddfaff89",
+    ],
+  },
+  Object {
+    "address": "0x028c30d0d31c6941fd5253ea4cfa1837557e60c4",
+    "decimals": 8,
+    "key": undefined,
+    "symbol": "fmooCurveATriCrypto3-3",
+    "tokens": Array [
+      "0x5a0801bad20b6c62d86c566ca90688a6b9ea1d3f",
+    ],
+  },
+  Object {
+    "address": "0x48a46668af76701e1f865775aebfc7fae23351d0",
+    "decimals": 8,
+    "key": undefined,
+    "symbol": "fmCAM3-3",
+    "tokens": Array [
+      "0xaa7c2879daf8034722a0977f13c343af0883e92e",
+    ],
+  },
+  Object {
+    "address": "0x43e4e9092baab501bc196f082b6e0a76bc5bcf36",
+    "decimals": 8,
+    "key": undefined,
+    "symbol": "fmCrvRen-3",
+    "tokens": Array [
+      "0x8c9d3bc4425773bd2f00c4a2ac105c5ad73c8141",
+    ],
+  },
+  Object {
+    "address": "0x478f685666c2b829b2e558f832d03bcfc7c9b416",
+    "decimals": 8,
+    "key": undefined,
+    "symbol": "fMAI-3",
+    "tokens": Array [
+      "0xa3fa99a148fa48d14ed51d610c367c61876997f1",
+    ],
+  },
+  Object {
+    "address": "0xfc9752e640e401599cd961c5f81aae5e273a5af6",
+    "decimals": 8,
+    "key": undefined,
+    "symbol": "fmQLP-MU-3",
+    "tokens": Array [
+      "0xc1a2e8274d390b67a7136708203d71bf3877f158",
+    ],
+  },
+  Object {
+    "address": "0x55a5dd56cbabe3286506e62ee9b85a2a58ebc619",
+    "decimals": 8,
+    "key": undefined,
+    "symbol": "fmooSushiMATIC-ETH-4",
+    "tokens": Array [
+      "0xc8e809a9180d637cc23daf60b41b70ca1ad5fc08",
+    ],
+  },
+  Object {
+    "address": "0x3def009178da30fe802bbb23a436b37a931e7054",
+    "decimals": 8,
+    "key": undefined,
+    "symbol": "fmooSushiUSDC-ETH-4",
+    "tokens": Array [
+      "0xe4db97a2aafbfef40d1a4ae8b709f61d6756f8e1",
+    ],
+  },
+  Object {
+    "address": "0x2728542309705a5e2098008123d9767863a2a8e9",
+    "decimals": 8,
+    "key": undefined,
+    "symbol": "fFRAX-4",
+    "tokens": Array [
+      "0x45c32fa6df82ead1e2ef74d17b76547eddfaff89",
+    ],
+  },
+  Object {
+    "address": "0x79f5d06b03ec28913d07689cae984c3a5144eda8",
+    "decimals": 8,
+    "key": undefined,
+    "symbol": "fFXS-4",
+    "tokens": Array [
+      "0x1a3acf6d19267e2d3e7f898f42803e90c9219062",
+    ],
+  },
+  Object {
+    "address": "0x535e3f59afb1de1a5694d5840224f964d53f7688",
+    "decimals": 8,
+    "key": undefined,
+    "symbol": "fsKLIMA-5",
+    "tokens": Array [
+      "0xb0c22d8d350c67420f06f48936654f567c73e8c8",
+    ],
+  },
+  Object {
+    "address": "0x5672f19cdcb068b7f49bcfc1b48e77eebc10e567",
+    "decimals": 8,
+    "key": undefined,
+    "symbol": "fBCT-5",
+    "tokens": Array [
+      "0x2f800db0fdb5223b3c3f354886d907a671414a7f",
+    ],
+  },
+  Object {
+    "address": "0x7a9c2075493dbc9e3edfc8a4c44613a372cb99bf",
+    "decimals": 8,
+    "key": undefined,
+    "symbol": "fUSDC-5",
+    "tokens": Array [
+      "0x2791bca1f2de4661ed88a30c99a7a9449aa84174",
+    ],
+  },
+  Object {
+    "address": "0x37820f50a4c541238794e4705dc44f7f4ea5d388",
+    "decimals": 8,
+    "key": undefined,
+    "symbol": "fMAI-5",
+    "tokens": Array [
+      "0xa3fa99a148fa48d14ed51d610c367c61876997f1",
+    ],
+  },
+  Object {
+    "address": "0xdc546c7cdebcef7c2123500328feee15f67f330e",
+    "decimals": 8,
+    "key": undefined,
+    "symbol": "fFRAX-5",
+    "tokens": Array [
+      "0x45c32fa6df82ead1e2ef74d17b76547eddfaff89",
+    ],
+  },
+  Object {
+    "address": "0x66cb95df6d01ce8a3f16b9bfd10a4b56e124cf1e",
+    "decimals": 8,
+    "key": undefined,
+    "symbol": "fWETH-5",
+    "tokens": Array [
+      "0x7ceb23fd6bc0add59e62ac25578270cff1b9f619",
+    ],
+  },
+  Object {
+    "address": "0x85322b01612a7c79b0779c616af07fb71fe9433a",
+    "decimals": 8,
+    "key": undefined,
+    "symbol": "fWMATIC-5",
+    "tokens": Array [
+      "0x0d500b1d8e8ef31e21c99d1db9a6444d3adf1270",
+    ],
+  },
+  Object {
+    "address": "0x6972621fb53a965f24936e3db2e19806c43eca65",
+    "decimals": 8,
+    "key": undefined,
+    "symbol": "fDAI-5",
+    "tokens": Array [
+      "0x8f3cf7ad23cd3cadbd9735aff958023239c6a063",
+    ],
+  },
+  Object {
+    "address": "0xe6099f023a72dbd5178cbe81fc276c060b158061",
+    "decimals": 8,
+    "key": undefined,
+    "symbol": "fWETH-6",
+    "tokens": Array [
+      "0x7ceb23fd6bc0add59e62ac25578270cff1b9f619",
+    ],
+  },
+  Object {
+    "address": "0xce01c4bdfb60a0dd09bfaf9ba37f6c5731d24e7e",
+    "decimals": 8,
+    "key": undefined,
+    "symbol": "fRAIDER-6",
+    "tokens": Array [
+      "0xcd7361ac3307d1c5a46b63086a90742ff44c63b3",
+    ],
+  },
+  Object {
+    "address": "0x8e4129141be6fffaa6c1e520fa407a0d022dd97e",
+    "decimals": 8,
+    "key": undefined,
+    "symbol": "fAURUM-6",
+    "tokens": Array [
+      "0x34d4ab47bee066f361fa52d792e69ac7bd05ee23",
+    ],
+  },
+  Object {
+    "address": "0x9575146e01e8a7ff5b6881b11a6d1b5aa8cd99dd",
+    "decimals": 8,
+    "key": undefined,
+    "symbol": "fUSDC-6",
+    "tokens": Array [
+      "0x2791bca1f2de4661ed88a30c99a7a9449aa84174",
+    ],
+  },
+  Object {
+    "address": "0x2547108bb6abaa82783c68537d220ce2d599de2b",
+    "decimals": 8,
+    "key": undefined,
+    "symbol": "fWMATIC-6",
+    "tokens": Array [
+      "0x0d500b1d8e8ef31e21c99d1db9a6444d3adf1270",
+    ],
+  },
+  Object {
+    "address": "0xf8ac186555cbd5104c0e8c5bacf8bb779a3869f5",
+    "decimals": 8,
+    "key": undefined,
+    "symbol": "fMAI-6",
+    "tokens": Array [
+      "0xa3fa99a148fa48d14ed51d610c367c61876997f1",
+    ],
+  },
+  Object {
+    "address": "0xeac7c60d98188cd8b99c9f044c59ea9943d1d493",
+    "decimals": 8,
+    "key": undefined,
+    "symbol": "fjJPY-7",
+    "tokens": Array [
+      "0x8343091f2499fd4b6174a46d067a920a3b851ff9",
+    ],
+  },
+  Object {
+    "address": "0xaae8796ec4e9d95d543e18d98b45c965af4d7245",
+    "decimals": 8,
+    "key": undefined,
+    "symbol": "fmooSushiJRT-WETH-7",
+    "tokens": Array [
+      "0xfde69969f4527343d78f9c9ac797ded29098b215",
+    ],
+  },
+  Object {
+    "address": "0x0fdccdaa0ac8a9c9327c161591e96df6823b6ce0",
+    "decimals": 8,
+    "key": undefined,
+    "symbol": "fMAI-7",
+    "tokens": Array [
+      "0xa3fa99a148fa48d14ed51d610c367c61876997f1",
+    ],
+  },
+  Object {
+    "address": "0xdc55282a0bbc4822b6e58d9c8bfc5ff885972a82",
+    "decimals": 8,
+    "key": undefined,
+    "symbol": "fjEUR-7",
+    "tokens": Array [
+      "0x4e3decbb3645551b8a19f0ea1678079fcb33fb4c",
+    ],
+  },
+  Object {
+    "address": "0xbb35c1c9b2be1e99e1c738c22fd0288ebe720325",
+    "decimals": 8,
+    "key": undefined,
+    "symbol": "fjGBP-7",
+    "tokens": Array [
+      "0x767058f11800fba6a682e73a6e79ec5eb74fac8c",
+    ],
+  },
+  Object {
+    "address": "0x903f13bd2828989104b33b96e4e2e4f4963fa581",
+    "decimals": 8,
+    "key": undefined,
+    "symbol": "fjCHF-7",
+    "tokens": Array [
+      "0xbd1463f02f61676d53fd183c2b19282bff93d099",
+    ],
+  },
+  Object {
+    "address": "0xf76028d7b33897403a1f4f5ee17ad498b3f3ddee",
+    "decimals": 8,
+    "key": undefined,
+    "symbol": "fjCAD-7",
+    "tokens": Array [
+      "0x8ca194a3b22077359b5732de53373d4afc11dee3",
+    ],
+  },
+  Object {
+    "address": "0x1bc7f589d6ca55d466c917899ce7f50506703a39",
+    "decimals": 8,
+    "key": undefined,
+    "symbol": "fjSGD-7",
+    "tokens": Array [
+      "0xa926db7a4cc0cb1736d5ac60495ca8eb7214b503",
+    ],
+  },
+  Object {
+    "address": "0xa2eb0ddfbbe0f0dfd27b0ba6a2b45cae494a22b5",
+    "decimals": 8,
+    "key": undefined,
+    "symbol": "fagEUR-7",
+    "tokens": Array [
+      "0xe0b52e49357fd4daf2c15e02058dce6bc0057db4",
+    ],
+  },
+  Object {
+    "address": "0x5e6d66fb148a19b04d9ffe1bbee7081a0d8bbe2e",
+    "decimals": 8,
+    "key": undefined,
+    "symbol": "fmooJarvis2eur-7",
+    "tokens": Array [
+      "0x5f1b5714f30baac4cb1ee95e1d0cf6d5694c2204",
+    ],
+  },
+  Object {
+    "address": "0x0b1e001fc67936af364d445a05d24dad75bbfb61",
+    "decimals": 8,
+    "key": undefined,
+    "symbol": "fgOHM-8",
+    "tokens": Array [
+      "0xd8ca34fd379d9ca3c6ee3b3905678320f5b45195",
+    ],
+  },
+  Object {
+    "address": "0xd3af91f21f791f29fc664cd5cd61180edc263191",
+    "decimals": 8,
+    "key": undefined,
+    "symbol": "fMAI-8",
+    "tokens": Array [
+      "0xa3fa99a148fa48d14ed51d610c367c61876997f1",
+    ],
+  },
+  Object {
+    "address": "0x03c20569c2c78cd48f491415a4cdeac02608db7e",
+    "decimals": 8,
+    "key": undefined,
+    "symbol": "fWMATIC-8",
+    "tokens": Array [
+      "0x0d500b1d8e8ef31e21c99d1db9a6444d3adf1270",
+    ],
+  },
+  Object {
+    "address": "0xb45a57c874d07fbed4e01d2aec06388e89ef4aab",
+    "decimals": 8,
+    "key": undefined,
+    "symbol": "fDAI-8",
+    "tokens": Array [
+      "0x8f3cf7ad23cd3cadbd9735aff958023239c6a063",
+    ],
+  },
+  Object {
+    "address": "0xcb99178c671761482097f32595cb79fb28a49fd8",
+    "decimals": 8,
+    "key": undefined,
+    "symbol": "fWETH-8",
+    "tokens": Array [
+      "0x7ceb23fd6bc0add59e62ac25578270cff1b9f619",
+    ],
+  },
+  Object {
+    "address": "0x2ae21c68dd67dffd53474ae0bce0ce273fb255f6",
+    "decimals": 8,
+    "key": undefined,
+    "symbol": "fUSDC-8",
+    "tokens": Array [
+      "0x2791bca1f2de4661ed88a30c99a7a9449aa84174",
+    ],
+  },
+  Object {
+    "address": "0x467d731ef83b6e4bf75dc84cc2ee5bef0e4140dc",
+    "decimals": 8,
+    "key": undefined,
+    "symbol": "fagEUR-8",
+    "tokens": Array [
+      "0xe0b52e49357fd4daf2c15e02058dce6bc0057db4",
+    ],
+  },
+  Object {
+    "address": "0x5184dfba6dc9a4b423f2b4d6060880220892b6c2",
+    "decimals": 8,
+    "key": undefined,
+    "symbol": "fmooSushiETH-gOHM-8",
+    "tokens": Array [
+      "0xf49cb3b72d170407aed7ed5b34d6e7bbe58ac917",
+    ],
+  },
+  Object {
+    "address": "0x9e3c3077574abc88496395239262a7ec2702f6c1",
+    "decimals": 8,
+    "key": undefined,
+    "symbol": "fMaticX-9",
+    "tokens": Array [
+      "0xfa68fb4628dff1028cfec22b4162fccd0d45efb6",
+    ],
+  },
+  Object {
+    "address": "0xead7c77fb39f067f9be238b8473928fa8bbabf97",
+    "decimals": 8,
+    "key": undefined,
+    "symbol": "fmooQuickMaticX-MATIC-9",
+    "tokens": Array [
+      "0xa448e9833095ad50693b025c275f48b271ade882",
+    ],
+  },
+  Object {
+    "address": "0x86e4a25c68d6b95e3cf165a8ae575eb732fd1f9b",
+    "decimals": 8,
+    "key": undefined,
+    "symbol": "fWMATIC-9",
+    "tokens": Array [
+      "0x0d500b1d8e8ef31e21c99d1db9a6444d3adf1270",
+    ],
+  },
+  Object {
+    "address": "0x788e826484650d69c2a5cbbc627dc244989bd910",
+    "decimals": 8,
+    "key": undefined,
+    "symbol": "fMAI-9",
+    "tokens": Array [
+      "0xa3fa99a148fa48d14ed51d610c367c61876997f1",
+    ],
+  },
+]
+`;

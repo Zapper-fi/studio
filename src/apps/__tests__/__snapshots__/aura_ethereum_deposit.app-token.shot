@@ -1,0 +1,249 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`App Token Fetchers (aura, ethereum, deposit) positions should have structure 1`] = `
+Array [
+  Object {
+    "address": "0xdfe7be27537c3eefa53ecfc615137ea34d93688b",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "aurastaBAL3",
+    "tokens": Array [
+      "0x06df3b2bbb68adc8b0e302443692037ed9f91b42",
+    ],
+  },
+  Object {
+    "address": "0xc0d760e31549e95e79be95c142682205fa05d08b",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "auraB-50SNX-50WETH",
+    "tokens": Array [
+      "0x072f14b85add63488ddad88f855fda4a99d6ac9b",
+    ],
+  },
+  Object {
+    "address": "0x1c2567606b9379784403cd92f2f3b8c710e23566",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "aura20WETH-80WNCG",
+    "tokens": Array [
+      "0xe8cc7e765647625b95f59c15848379d10b9ab4af",
+    ],
+  },
+  Object {
+    "address": "0x1ba9e3ec7dff02b6cfa4bbfe2180b9a3011efd39",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "aura20WBTC-80BADGER",
+    "tokens": Array [
+      "0xb460daa847c45f1c4a41cb05bfb3b51c92e41b36",
+    ],
+  },
+  Object {
+    "address": "0x42d7f0ab2f06591263c197ddf7b2a245eafcfa9e",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "auraB-50WETH-50YFI",
+    "tokens": Array [
+      "0x186084ff790c65088ba694df11758fae4943ee9e",
+    ],
+  },
+  Object {
+    "address": "0x52504a9f2200e64558cd5cce67a059a615ec9831",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "aura50DFX-50WETH",
+    "tokens": Array [
+      "0x3f7c10701b14197e2695dec6428a2ca4cf7fc3b8",
+    ],
+  },
+  Object {
+    "address": "0x243e9445d51223a0788692f44575a9ab7d6098c2",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "auraCREAM_ETH",
+    "tokens": Array [
+      "0x85370d9e3bb111391cc89f6de344e80176046183",
+    ],
+  },
+  Object {
+    "address": "0x3c2ccb34c1f76d99a7cb2b05f083a1d3dde26b52",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "auraUSDC-PAL",
+    "tokens": Array [
+      "0xa7ff759dbef9f3efdd1d59beee44b966acafe214",
+    ],
+  },
+  Object {
+    "address": "0x6cecd0224ee76e70e40046b2d4007f9b4d80c8bc",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "aura33auraBAL-33graviAURA-33WETH",
+    "tokens": Array [
+      "0x0578292cb20a443ba1cde459c985ce14ca2bdee5",
+    ],
+  },
+  Object {
+    "address": "0xd6702470d522b34655d3d11e86aa1046e843a506",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "auraFUD",
+    "tokens": Array [
+      "0x178e029173417b1f9c8bc16dcec6f697bc323746",
+    ],
+  },
+  Object {
+    "address": "0x8b2f9ad8592f821fd8f886aa477a400b23e755bb",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "aura40WBTC-40DIGG-20graviAURA",
+    "tokens": Array [
+      "0x8eb6c82c3081bbbd45dcac5afa631aac53478b7c",
+    ],
+  },
+  Object {
+    "address": "0x2478c9e0eb5e9e8899f3153718b2794a5b56f2f3",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "auraB-auraBAL-STABLE",
+    "tokens": Array [
+      "0x3dd0843a028c86e0b760b1a76929d1c5ef93a2dd",
+    ],
+  },
+  Object {
+    "address": "0x7ca8dfcba2e34ae6eab017be1552dc05ddc76edd",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "auraB-60WETH-40DAI",
+    "tokens": Array [
+      "0x0b09dea16768f0799065c475be02919503cb2a35",
+    ],
+  },
+  Object {
+    "address": "0xa665eedbc52bb3794b139221cba9129d98b9b822",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "aura50WETH-50AURA",
+    "tokens": Array [
+      "0xcfca23ca9ca720b6e98e3eb9b6aa0ffc4a5c08b9",
+    ],
+  },
+  Object {
+    "address": "0x5c95008f2b627ea551fa496b9a14c960e1253fe0",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "auraB-rETH-STABLE",
+    "tokens": Array [
+      "0x1e19cf2d73a72ef1332c882f20534b6519be0276",
+    ],
+  },
+  Object {
+    "address": "0xb82b95c8943dc5d0c81e14e00c103bff12b9643c",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "aura50COW-50WETH",
+    "tokens": Array [
+      "0xde8c195aa41c11a0c4787372defbbddaa31306d2",
+    ],
+  },
+  Object {
+    "address": "0x79d19704599be988322fa12f498a4b8d88422f65",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "aura50COW-50GNO",
+    "tokens": Array [
+      "0x92762b42a06dcdddc5b7362cfb01e631c4d44b40",
+    ],
+  },
+  Object {
+    "address": "0x1e2212c69fc7298c549c238395850f4ead83dadc",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "aura20WETH-80FDT",
+    "tokens": Array [
+      "0x2d344a84bac123660b021eebe4eb6f12ba25fe86",
+    ],
+  },
+  Object {
+    "address": "0xa128af19d6c882b38d70da357101529dc8d8712c",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "auraB-sdBAL-STABLE",
+    "tokens": Array [
+      "0x2d011adf89f0576c9b722c28269fcb5d50c2d179",
+    ],
+  },
+  Object {
+    "address": "0x6f6082f6c40ab560017f5a69454be918a2818f4a",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "aura20DAI-80TCR",
+    "tokens": Array [
+      "0x96ba9025311e2f47b840a1f68ed57a3df1ea8747",
+    ],
+  },
+  Object {
+    "address": "0x0d33d832d3280981c37ec15e4b1ebe811e09736d",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "auraB-stETH-STABLE",
+    "tokens": Array [
+      "0x32296969ef14eb0c6d29669c550d4a0449130230",
+    ],
+  },
+  Object {
+    "address": "0x3e82df78bb504c8bc8de981178e6cce81f274132",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "aurabb-a-USD",
+    "tokens": Array [
+      "0x7b50775383d3d6f0215a8f290f2c9e2eebbeceb2",
+    ],
+  },
+  Object {
+    "address": "0xc0e061f62e930edaa2cc5ff30c39187d197f367d",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "auraB-30FEI-70WETH",
+    "tokens": Array [
+      "0x90291319f1d4ea3ad4db0dd8fe9e12baf749e845",
+    ],
+  },
+  Object {
+    "address": "0x0e445beef3ce89c6748ee3214ffed34ad0ad4f30",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "auraB-50USDC-50WETH",
+    "tokens": Array [
+      "0x96646936b91d6b9d7d0c47c496afbf3d6ec7b6f8",
+    ],
+  },
+  Object {
+    "address": "0x05514051ba78c2b28baf5f465c1fa64e8d114fe3",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "auraB-50WBTC-50WETH",
+    "tokens": Array [
+      "0xa6f548df93de924d73be7d25dc02554c6bd66db5",
+    ],
+  },
+  Object {
+    "address": "0xc369c695bce62588fd6fb888e05fd1d4048ca5e4",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "auraB-80LDO-20WETH",
+    "tokens": Array [
+      "0xbf96189eee9357a95c7719f4f5047f76bde804e5",
+    ],
+  },
+  Object {
+    "address": "0xcfda81bab472e44da8e6c9b2cfa68d3fb6a64d68",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "auraB-80GNO-20WETH",
+    "tokens": Array [
+      "0xf4c0dd9b82da36c07605df83c8a416f11724d88b",
+    ],
+  },
+]
+`;

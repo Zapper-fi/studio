@@ -1,0 +1,15 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`App Token Fetchers (tenderize, arbitrum, tender) positions should have structure 1`] = `
+Array [
+  Object {
+    "address": "0xfac38532829fdd744373fdcd4708ab90fa0c4078",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "tLPT",
+    "tokens": Array [
+      "0x289ba1701c2f088cf0faf8b3705246331cb8a839",
+    ],
+  },
+]
+`;

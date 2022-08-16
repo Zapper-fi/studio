@@ -1,0 +1,312 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`App Token Fetchers (market-xyz, avalanche, supply) positions should have structure 1`] = `
+Array [
+  Object {
+    "address": "0xeac7c60d98188cd8b99c9f044c59ea9943d1d493",
+    "decimals": 8,
+    "key": undefined,
+    "symbol": "fUSDC.e-0",
+    "tokens": Array [
+      "0xa7d7079b0fead91f3e65f86e8915cb59c1a4c664",
+    ],
+  },
+  Object {
+    "address": "0x8ec3d3ebcd4257d505c5250b900b49db273292c1",
+    "decimals": 8,
+    "key": undefined,
+    "symbol": "fWAVAX-0",
+    "tokens": Array [
+      "0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7",
+    ],
+  },
+  Object {
+    "address": "0xc135135146f77107335f2bdbf898319dc8026430",
+    "decimals": 8,
+    "key": undefined,
+    "symbol": "fWETH.e-0",
+    "tokens": Array [
+      "0x49d5c2bdffac6ce2bfdb6640f4f80f226bc10bab",
+    ],
+  },
+  Object {
+    "address": "0x903f13bd2828989104b33b96e4e2e4f4963fa581",
+    "decimals": 8,
+    "key": undefined,
+    "symbol": "fSB-0",
+    "tokens": Array [
+      "0x7d1232b90d3f809a54eeaeebc639c62df8a8942f",
+    ],
+  },
+  Object {
+    "address": "0x6ade5eaf6825dfc4ec1c812e9e9240b6301b12b8",
+    "decimals": 8,
+    "key": undefined,
+    "symbol": "fMAI-0",
+    "tokens": Array [
+      "0x5c49b268c9841aff1cc3b0a418ff5c3442ee3f3b",
+    ],
+  },
+  Object {
+    "address": "0xe1d87ae311c06ee6684b5294d0290cf79e660dd2",
+    "decimals": 8,
+    "key": undefined,
+    "symbol": "fMIM-0",
+    "tokens": Array [
+      "0x130966628846bfd36ff31a822705796e8cb8c18d",
+    ],
+  },
+  Object {
+    "address": "0xfc3eafd931ebcd0d8e59bfa0beae776d7f987716",
+    "decimals": 8,
+    "key": undefined,
+    "symbol": "fPNG-1",
+    "tokens": Array [
+      "0x60781c2586d68229fde47564546784ab3faca982",
+    ],
+  },
+  Object {
+    "address": "0x0757488f2e3cfd0dd24167b047c0dd22eae1dbf0",
+    "decimals": 8,
+    "key": undefined,
+    "symbol": "fMAI-1",
+    "tokens": Array [
+      "0x5c49b268c9841aff1cc3b0a418ff5c3442ee3f3b",
+    ],
+  },
+  Object {
+    "address": "0x8edc3fb6fcdd5773216331f74afdb6a2a2e16dc9",
+    "decimals": 8,
+    "key": undefined,
+    "symbol": "fmooPangolinPNG-1",
+    "tokens": Array [
+      "0x670af270fee3bbc89e32ddd7b8ec43663a910793",
+    ],
+  },
+  Object {
+    "address": "0xb049a113b015faaefe711bd711fcf0f22047f6c3",
+    "decimals": 8,
+    "key": undefined,
+    "symbol": "fMAI-2",
+    "tokens": Array [
+      "0x5c49b268c9841aff1cc3b0a418ff5c3442ee3f3b",
+    ],
+  },
+  Object {
+    "address": "0x3c3d0c15d3a2361a89476a2043b75e87489907e2",
+    "decimals": 8,
+    "key": undefined,
+    "symbol": "fmooJoe-2",
+    "tokens": Array [
+      "0x282b11e65f0b49363d4505f91c7a44fbee6bcc0b",
+    ],
+  },
+  Object {
+    "address": "0xed41d6de5ae8cb1b68a3755cd15af8e95f1f3102",
+    "decimals": 8,
+    "key": undefined,
+    "symbol": "fmooJoeJOE-USDC.e-2",
+    "tokens": Array [
+      "0xea75ff4f580418a1430bd3ebaf26b03c096d9489",
+    ],
+  },
+  Object {
+    "address": "0x3f4f523acf811e713e7c34852b24e927d773a9e5",
+    "decimals": 8,
+    "key": undefined,
+    "symbol": "fmooJoeJOE-USDT.e-2",
+    "tokens": Array [
+      "0xd0b0b19f2dc29a17175a2afc47b29c6ddd74d3d4",
+    ],
+  },
+  Object {
+    "address": "0xb2c096c7f2bc822fc2d775b9c0e16b7ad767cb5c",
+    "decimals": 8,
+    "key": undefined,
+    "symbol": "fmooJoeJOE-AVAX-2",
+    "tokens": Array [
+      "0x3d81a269e05e6057e4df9e2d76e254e65a65eb66",
+    ],
+  },
+  Object {
+    "address": "0xf32d1627945c57b682b47b6693560f583a531b8c",
+    "decimals": 8,
+    "key": undefined,
+    "symbol": "fUSDC.e-2",
+    "tokens": Array [
+      "0xa7d7079b0fead91f3e65f86e8915cb59c1a4c664",
+    ],
+  },
+  Object {
+    "address": "0x658795ad66cb98b7b7b841996ae09d5a8000a2a2",
+    "decimals": 8,
+    "key": undefined,
+    "symbol": "fFRAX-2",
+    "tokens": Array [
+      "0xd24c2ad096400b6fbcd2ad8b24e7acbc21a1da64",
+    ],
+  },
+  Object {
+    "address": "0x848f158edb7e4af30b4f4269ed1741c2d2cc6274",
+    "decimals": 8,
+    "key": undefined,
+    "symbol": "fgOHM-3",
+    "tokens": Array [
+      "0x321e7092a180bb43555132ec53aaa65a5bf84251",
+    ],
+  },
+  Object {
+    "address": "0xc2347b3669c1fc3f72c04907d32dd0c613fa13f1",
+    "decimals": 8,
+    "key": undefined,
+    "symbol": "fMAI-3",
+    "tokens": Array [
+      "0x5c49b268c9841aff1cc3b0a418ff5c3442ee3f3b",
+    ],
+  },
+  Object {
+    "address": "0xacb696687bda7fda58a0d3c773fb26322c770fe8",
+    "decimals": 8,
+    "key": undefined,
+    "symbol": "fFRAX-3",
+    "tokens": Array [
+      "0xd24c2ad096400b6fbcd2ad8b24e7acbc21a1da64",
+    ],
+  },
+  Object {
+    "address": "0x81349ca2d98b936b5021db9b67750a35fca05f94",
+    "decimals": 8,
+    "key": undefined,
+    "symbol": "fWAVAX-3",
+    "tokens": Array [
+      "0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7",
+    ],
+  },
+  Object {
+    "address": "0x58ed27e035cb186ba397a36053331de5dfef1f70",
+    "decimals": 8,
+    "key": undefined,
+    "symbol": "fDAI.e-3",
+    "tokens": Array [
+      "0xd586e7f844cea2f87f50152665bcbc2c279d8d70",
+    ],
+  },
+  Object {
+    "address": "0x4372e600c751c4f9f11f90316865b4ccea3ff757",
+    "decimals": 8,
+    "key": undefined,
+    "symbol": "fUST-3",
+    "tokens": Array [
+      "0xb599c3590f42f8f995ecfa0f85d2980b76862fc1",
+    ],
+  },
+  Object {
+    "address": "0x687e708ca1daf85d6a751bc6b35e068401e95079",
+    "decimals": 8,
+    "key": undefined,
+    "symbol": "fMAI-4",
+    "tokens": Array [
+      "0x5c49b268c9841aff1cc3b0a418ff5c3442ee3f3b",
+    ],
+  },
+  Object {
+    "address": "0xea88eb237bae0ae26f4500146c251d25f409fa32",
+    "decimals": 8,
+    "key": undefined,
+    "symbol": "fmooAaveDAI.e-4",
+    "tokens": Array [
+      "0xaf9f33df60ca764307b17e62dde86e9f7090426c",
+    ],
+  },
+  Object {
+    "address": "0xf8ac186555cbd5104c0e8c5bacf8bb779a3869f5",
+    "decimals": 8,
+    "key": undefined,
+    "symbol": "fmooAaveUSDT.e-4",
+    "tokens": Array [
+      "0xb6767518b205ea8b312d2ef4d992a2a08c2f2416",
+    ],
+  },
+  Object {
+    "address": "0xc3537ef04ad744174a4a4a91afac4baf0cf80cb3",
+    "decimals": 8,
+    "key": undefined,
+    "symbol": "fmooAaveUSDC.e-4",
+    "tokens": Array [
+      "0xd795d70ec3c7b990ffed7a725a18be5a9579c3b9",
+    ],
+  },
+  Object {
+    "address": "0xa887302a5eb00de03edde8af29a82d86fcc5e0b5",
+    "decimals": 8,
+    "key": undefined,
+    "symbol": "fwMEMO-5",
+    "tokens": Array [
+      "0x0da67235dd5787d67955420c84ca1cecd4e5bb3b",
+    ],
+  },
+  Object {
+    "address": "0x272ec56b6625802f8fa5b0bb2ac83fcdff5f48d0",
+    "decimals": 8,
+    "key": undefined,
+    "symbol": "fMIM-5",
+    "tokens": Array [
+      "0x130966628846bfd36ff31a822705796e8cb8c18d",
+    ],
+  },
+  Object {
+    "address": "0x32762161ed1867ac55d5e16a65b105f0b365d245",
+    "decimals": 8,
+    "key": undefined,
+    "symbol": "fUSDC.e-5",
+    "tokens": Array [
+      "0xa7d7079b0fead91f3e65f86e8915cb59c1a4c664",
+    ],
+  },
+  Object {
+    "address": "0xd283ed52c58ef3f705fc7609b96d96123ef669ef",
+    "decimals": 8,
+    "key": undefined,
+    "symbol": "fWAVAX-5",
+    "tokens": Array [
+      "0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7",
+    ],
+  },
+  Object {
+    "address": "0x86e4a25c68d6b95e3cf165a8ae575eb732fd1f9b",
+    "decimals": 8,
+    "key": undefined,
+    "symbol": "fUST-6",
+    "tokens": Array [
+      "0xb599c3590f42f8f995ecfa0f85d2980b76862fc1",
+    ],
+  },
+  Object {
+    "address": "0x252d8ae917572ffe28c2d4adaa7c2b0f7b061c2c",
+    "decimals": 8,
+    "key": undefined,
+    "symbol": "fmooPangolinV2UST-AVAX-6",
+    "tokens": Array [
+      "0xdf306fbda58527729a8d5185ab8fef96bfa94c7a",
+    ],
+  },
+  Object {
+    "address": "0x49a300b19c74acbb367863adfd77bc2281d3fcb3",
+    "decimals": 8,
+    "key": undefined,
+    "symbol": "fmooPangolinV2UST-USDC-6",
+    "tokens": Array [
+      "0x6399a5e96cd627404b203ea80517c3f8f9f78fe6",
+    ],
+  },
+  Object {
+    "address": "0xd039d72ad1a764c9a609b0e47c446b31b825b785",
+    "decimals": 8,
+    "key": undefined,
+    "symbol": "fmooJoeUST-AVAX-6",
+    "tokens": Array [
+      "0xe6f6466e1ca56ab02ebb909c8228ed76534686d7",
+    ],
+  },
+]
+`;

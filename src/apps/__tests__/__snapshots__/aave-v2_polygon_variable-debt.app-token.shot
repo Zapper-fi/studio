@@ -1,0 +1,96 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`App Token Fetchers (aave-v2, polygon, variable-debt) positions should have structure 1`] = `
+Array [
+  Object {
+    "address": "0x75c4d1fb84429023170086f06e682dcbbf537b7d",
+    "decimals": 18,
+    "key": "585144274",
+    "symbol": "variableDebtmDAI",
+    "tokens": Array [
+      "0x8f3cf7ad23cd3cadbd9735aff958023239c6a063",
+    ],
+  },
+  Object {
+    "address": "0x248960a9d75edfa3de94f7193eae3161eb349a12",
+    "decimals": 6,
+    "key": "2039081869",
+    "symbol": "variableDebtmUSDC",
+    "tokens": Array [
+      "0x2791bca1f2de4661ed88a30c99a7a9449aa84174",
+    ],
+  },
+  Object {
+    "address": "0x8038857fd47108a07d1f6bf652ef1cbec279a2f3",
+    "decimals": 6,
+    "key": "3750788471",
+    "symbol": "variableDebtmUSDT",
+    "tokens": Array [
+      "0xc2132d05d31c914a87c6611c10748aeb04b58e8f",
+    ],
+  },
+  Object {
+    "address": "0xf664f50631a6f0d72ecdaa0e49b0c019fa72a8dc",
+    "decimals": 8,
+    "key": "1885072123",
+    "symbol": "variableDebtmWBTC",
+    "tokens": Array [
+      "0x1bfd67037b42cf73acf2047067bd4f2c47d9bfd6",
+    ],
+  },
+  Object {
+    "address": "0xede17e9d79fc6f9ff9250d9eefbdb88cc18038b5",
+    "decimals": 18,
+    "key": "3171731830",
+    "symbol": "variableDebtmWETH",
+    "tokens": Array [
+      "0x7ceb23fd6bc0add59e62ac25578270cff1b9f619",
+    ],
+  },
+  Object {
+    "address": "0x59e8e9100cbfcbcbadf86b9279fa61526bbb8765",
+    "decimals": 18,
+    "key": "1904713806",
+    "symbol": "variableDebtmWMATIC",
+    "tokens": Array [
+      "0x0d500b1d8e8ef31e21c99d1db9a6444d3adf1270",
+    ],
+  },
+  Object {
+    "address": "0x36e988a38542c3482013bb54ee46ac1fb1efedcd",
+    "decimals": 18,
+    "key": "2308437372",
+    "symbol": "variableDebtmGHST",
+    "tokens": Array [
+      "0x385eeac5cb85a38a9a07a70c73e0a3271cfb54a7",
+    ],
+  },
+  Object {
+    "address": "0x773e0e32e7b6a00b7ca9daa85dfba9d61b7f2574",
+    "decimals": 18,
+    "key": "163259735",
+    "symbol": "variableDebtmBAL",
+    "tokens": Array [
+      "0x9a71012b13ca4d3d0cdc72a177df3ef03b0e76a3",
+    ],
+  },
+  Object {
+    "address": "0x780bbcbcda2cdb0d2c61fd9bc68c9046b18f3229",
+    "decimals": 18,
+    "key": "2360303572",
+    "symbol": "variableDebtmCRV",
+    "tokens": Array [
+      "0x172370d5cd63279efa6d502dab29171933a610af",
+    ],
+  },
+  Object {
+    "address": "0xcc71e4a38c974e19bdbc6c0c19b63b8520b1bb09",
+    "decimals": 18,
+    "key": "4223638565",
+    "symbol": "variableDebtmLINK",
+    "tokens": Array [
+      "0x53e0bca35ec356bd5dddfebbd1fc0fd03fabad39",
+    ],
+  },
+]
+`;

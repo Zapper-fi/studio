@@ -1,0 +1,33 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`App Token Fetchers (maple, ethereum, staked-bpt) positions should have structure 1`] = `
+Array [
+  Object {
+    "address": "0x12b2bbbfab2ce6789df5659e9ac27a4a91c96c5c",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "MPLSTAKE",
+    "tokens": Array [
+      "0xc1b10e536cd611acff7a7c32a9e29ce6a02ef6ef",
+    ],
+  },
+  Object {
+    "address": "0xbb7866435b8e5d3f6c2ea8b720c8f79db6f7c1b4",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "MPLSTAKE",
+    "tokens": Array [
+      "0xc1b10e536cd611acff7a7c32a9e29ce6a02ef6ef",
+    ],
+  },
+  Object {
+    "address": "0xd9631f58f3afcd1d0e5863b31c7924a3fb79253d",
+    "decimals": 18,
+    "key": undefined,
+    "symbol": "MPLSTAKE",
+    "tokens": Array [
+      "0xc1b10e536cd611acff7a7c32a9e29ce6a02ef6ef",
+    ],
+  },
+]
+`;

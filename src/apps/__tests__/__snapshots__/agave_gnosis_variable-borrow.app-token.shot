@@ -1,0 +1,69 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`App Token Fetchers (agave, gnosis, variable-borrow) positions should have structure 1`] = `
+Array [
+  Object {
+    "address": "0xa728c8f1cf7fc4d8c6d5195945c3760c87532724",
+    "decimals": 6,
+    "key": "3622423508",
+    "symbol": "variableDebtUSDC",
+    "tokens": Array [
+      "0xddafbb505ad214d7b80b1f830fccc89b60fb7a83",
+    ],
+  },
+  Object {
+    "address": "0xec72de30c3084023f7908002a2252a606cce0b2c",
+    "decimals": 18,
+    "key": "286309959",
+    "symbol": "variableDebtWXDAI",
+    "tokens": Array [
+      "0xe91d153e0b41518a2ce8dd3d7944fa863463a97d",
+    ],
+  },
+  Object {
+    "address": "0x5b0568531322759eab69269a86448b39b47e2ae8",
+    "decimals": 18,
+    "key": "2977089832",
+    "symbol": "variableDebtLINK",
+    "tokens": Array [
+      "0xe2e73a1c69ecf83f464efce6a5be353a37ca09b2",
+    ],
+  },
+  Object {
+    "address": "0x99272c6e2baa601cea8212b8fbaa7920a9f916f0",
+    "decimals": 18,
+    "key": "2802514620",
+    "symbol": "variableDebtGNO",
+    "tokens": Array [
+      "0x9c58bacc331c9aa871afd802db6379a98e80cedb",
+    ],
+  },
+  Object {
+    "address": "0x110c5a1494f0ab6c851abb72aa2efa3da738ab72",
+    "decimals": 8,
+    "key": "1389549718",
+    "symbol": "variableDebtWBTC",
+    "tokens": Array [
+      "0x8e5bbbb09ed1ebde8674cda39a0c169401db4252",
+    ],
+  },
+  Object {
+    "address": "0x73ada33d706085d6b93350b5e6aed6178905fb8a",
+    "decimals": 18,
+    "key": "2051475627",
+    "symbol": "variableDebtWETH",
+    "tokens": Array [
+      "0x6a023ccd1ff6f2045c3309768ead9e68f978f6e1",
+    ],
+  },
+  Object {
+    "address": "0x7388cbdeb284902e1e07be616f92adb3660ed3a4",
+    "decimals": 18,
+    "key": "167939645",
+    "symbol": "variableDebtFOX",
+    "tokens": Array [
+      "0x21a42669643f45bc0e086b8fc2ed70c23d67509d",
+    ],
+  },
+]
+`;
