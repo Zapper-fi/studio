@@ -4,7 +4,7 @@
 import type { BaseContract, BigNumber, BytesLike, CallOverrides, PopulatedTransaction, Signer, utils } from 'ethers';
 import type { FunctionFragment, Result } from '@ethersproject/abi';
 import type { Listener, Provider } from '@ethersproject/providers';
-import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
 export interface RewardReaderInterface extends utils.Interface {
   functions: {
@@ -15,9 +15,18 @@ export interface RewardReaderInterface extends utils.Interface {
 
   getFunction(nameOrSignatureOrTopic: 'getDepositBalances' | 'getStakingInfo' | 'getVestingInfoV2'): FunctionFragment;
 
-  encodeFunctionData(functionFragment: 'getDepositBalances', values: [string, string[], string[]]): string;
-  encodeFunctionData(functionFragment: 'getStakingInfo', values: [string, string[]]): string;
-  encodeFunctionData(functionFragment: 'getVestingInfoV2', values: [string, string[]]): string;
+  encodeFunctionData(
+    functionFragment: 'getDepositBalances',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>[], PromiseOrValue<string>[]],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'getStakingInfo',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>[]],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'getVestingInfoV2',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>[]],
+  ): string;
 
   decodeFunctionResult(functionFragment: 'getDepositBalances', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'getStakingInfo', data: BytesLike): Result;
@@ -50,70 +59,106 @@ export interface RewardReader extends BaseContract {
 
   functions: {
     getDepositBalances(
-      _account: string,
-      _depositTokens: string[],
-      _rewardTrackers: string[],
+      _account: PromiseOrValue<string>,
+      _depositTokens: PromiseOrValue<string>[],
+      _rewardTrackers: PromiseOrValue<string>[],
       overrides?: CallOverrides,
     ): Promise<[BigNumber[]]>;
 
-    getStakingInfo(_account: string, _rewardTrackers: string[], overrides?: CallOverrides): Promise<[BigNumber[]]>;
+    getStakingInfo(
+      _account: PromiseOrValue<string>,
+      _rewardTrackers: PromiseOrValue<string>[],
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber[]]>;
 
-    getVestingInfoV2(_account: string, _vesters: string[], overrides?: CallOverrides): Promise<[BigNumber[]]>;
+    getVestingInfoV2(
+      _account: PromiseOrValue<string>,
+      _vesters: PromiseOrValue<string>[],
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber[]]>;
   };
 
   getDepositBalances(
-    _account: string,
-    _depositTokens: string[],
-    _rewardTrackers: string[],
+    _account: PromiseOrValue<string>,
+    _depositTokens: PromiseOrValue<string>[],
+    _rewardTrackers: PromiseOrValue<string>[],
     overrides?: CallOverrides,
   ): Promise<BigNumber[]>;
 
-  getStakingInfo(_account: string, _rewardTrackers: string[], overrides?: CallOverrides): Promise<BigNumber[]>;
+  getStakingInfo(
+    _account: PromiseOrValue<string>,
+    _rewardTrackers: PromiseOrValue<string>[],
+    overrides?: CallOverrides,
+  ): Promise<BigNumber[]>;
 
-  getVestingInfoV2(_account: string, _vesters: string[], overrides?: CallOverrides): Promise<BigNumber[]>;
+  getVestingInfoV2(
+    _account: PromiseOrValue<string>,
+    _vesters: PromiseOrValue<string>[],
+    overrides?: CallOverrides,
+  ): Promise<BigNumber[]>;
 
   callStatic: {
     getDepositBalances(
-      _account: string,
-      _depositTokens: string[],
-      _rewardTrackers: string[],
+      _account: PromiseOrValue<string>,
+      _depositTokens: PromiseOrValue<string>[],
+      _rewardTrackers: PromiseOrValue<string>[],
       overrides?: CallOverrides,
     ): Promise<BigNumber[]>;
 
-    getStakingInfo(_account: string, _rewardTrackers: string[], overrides?: CallOverrides): Promise<BigNumber[]>;
+    getStakingInfo(
+      _account: PromiseOrValue<string>,
+      _rewardTrackers: PromiseOrValue<string>[],
+      overrides?: CallOverrides,
+    ): Promise<BigNumber[]>;
 
-    getVestingInfoV2(_account: string, _vesters: string[], overrides?: CallOverrides): Promise<BigNumber[]>;
+    getVestingInfoV2(
+      _account: PromiseOrValue<string>,
+      _vesters: PromiseOrValue<string>[],
+      overrides?: CallOverrides,
+    ): Promise<BigNumber[]>;
   };
 
   filters: {};
 
   estimateGas: {
     getDepositBalances(
-      _account: string,
-      _depositTokens: string[],
-      _rewardTrackers: string[],
+      _account: PromiseOrValue<string>,
+      _depositTokens: PromiseOrValue<string>[],
+      _rewardTrackers: PromiseOrValue<string>[],
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
-    getStakingInfo(_account: string, _rewardTrackers: string[], overrides?: CallOverrides): Promise<BigNumber>;
+    getStakingInfo(
+      _account: PromiseOrValue<string>,
+      _rewardTrackers: PromiseOrValue<string>[],
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    getVestingInfoV2(_account: string, _vesters: string[], overrides?: CallOverrides): Promise<BigNumber>;
+    getVestingInfoV2(
+      _account: PromiseOrValue<string>,
+      _vesters: PromiseOrValue<string>[],
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
   };
 
   populateTransaction: {
     getDepositBalances(
-      _account: string,
-      _depositTokens: string[],
-      _rewardTrackers: string[],
+      _account: PromiseOrValue<string>,
+      _depositTokens: PromiseOrValue<string>[],
+      _rewardTrackers: PromiseOrValue<string>[],
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     getStakingInfo(
-      _account: string,
-      _rewardTrackers: string[],
+      _account: PromiseOrValue<string>,
+      _rewardTrackers: PromiseOrValue<string>[],
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
-    getVestingInfoV2(_account: string, _vesters: string[], overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getVestingInfoV2(
+      _account: PromiseOrValue<string>,
+      _vesters: PromiseOrValue<string>[],
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
   };
 }
