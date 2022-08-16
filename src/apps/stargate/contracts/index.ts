@@ -4,6 +4,7 @@ import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { ContractFactory } from '~contract/contracts';
 import { Network } from '~types/network.interface';
 
+import { StargateAa__factory } from './ethers';
 import { StargateChef__factory } from './ethers';
 import { StargateEth__factory } from './ethers';
 import { StargateFactory__factory } from './ethers';
@@ -19,6 +20,9 @@ export class StargateContractFactory extends ContractFactory {
     super((network: Network) => appToolkit.getNetworkProvider(network));
   }
 
+  stargateAa({ address, network }: ContractOpts) {
+    return StargateAa__factory.connect(address, this.appToolkit.getNetworkProvider(network));
+  }
   stargateChef({ address, network }: ContractOpts) {
     return StargateChef__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
@@ -36,6 +40,7 @@ export class StargateContractFactory extends ContractFactory {
   }
 }
 
+export type { StargateAa } from './ethers';
 export type { StargateChef } from './ethers';
 export type { StargateEth } from './ethers';
 export type { StargateFactory } from './ethers';
