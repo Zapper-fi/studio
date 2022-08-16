@@ -69,7 +69,11 @@ export class ArbitrumRevertFinanceBalanceFetcher implements BalanceFetcher {
           context: { multicall, baseTokens },
         });
         if (!uniV3Token) return;
-        compoundingBalances.push(getCompoundingContractPosition(network, uniV3Token));
+        const position = getCompoundingContractPosition(network, uniV3Token);
+        compoundingBalances.push({
+          key: this.appToolkit.getPositionKey(position),
+          ...position,
+        });
       }),
     );
     return compoundingBalances;
