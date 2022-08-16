@@ -4,6 +4,14 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.177.0](https://github.com/Zapper-fi/studio/compare/v0.176.1...v0.177.0) (2022-08-16)
+
+
+### Features
+
+* **rari:** Extract to Studio ([#1187](https://github.com/Zapper-fi/studio/issues/1187)) ([4d2c98f](https://github.com/Zapper-fi/studio/commit/4d2c98f63b1c850dfe015b5296972580b1ccbb6b))
+* **stargate:** added aaSTG app token ([#1148](https://github.com/Zapper-fi/studio/issues/1148)) ([b988d1d](https://github.com/Zapper-fi/studio/commit/b988d1d90cf03a6e16933ef9c9ee155f9eab9d34))
+
 ## [0.176.1](https://github.com/Zapper-fi/studio/compare/v0.176.0...v0.176.1) (2022-08-16)
 
 
