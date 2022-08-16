@@ -20,7 +20,7 @@ export const getCompoundorRewardsContractPosition = (
   network,
   appId: REVERT_FINANCE_DEFINITION.id,
   groupId: REVERT_FINANCE_DEFINITION.groups.compoundorRewards.id,
-  tokens,
+  tokens: tokens.sort((a, b) => b.balanceUSD - a.balanceUSD),
   balanceUSD: tokens.reduce((a, token) => a + token.balanceUSD, 0),
   dataProps: {},
   displayProps: {
