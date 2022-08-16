@@ -37,12 +37,12 @@ export class EthereumYearnV1VaultTokenFetcher extends YearnVaultTokenFetcher<Yea
     return this.contractFactory.yearnVault({ network: this.network, address });
   }
 
-  async getPricePerShare({ contract, appToken }: PricePerShareStageParams<YearnVault>) {
+  async getPricePerShare({ contract }: PricePerShareStageParams<YearnVault>) {
     const pricePerShareRaw = await contract.getPricePerFullShare().catch(err => {
       if (isMulticallUnderlyingError(err)) return 0;
       throw err;
     });
-    return Number(pricePerShareRaw) / 10 ** appToken.decimals;
+    return Number(pricePerShareRaw) / 10 ** 18;
   }
 
   async getDataProps(

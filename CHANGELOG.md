@@ -4,6 +4,40 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.177.0](https://github.com/Zapper-fi/studio/compare/v0.176.1...v0.177.0) (2022-08-16)
+
+
+### Features
+
+* **rari:** Extract to Studio ([#1187](https://github.com/Zapper-fi/studio/issues/1187)) ([4d2c98f](https://github.com/Zapper-fi/studio/commit/4d2c98f63b1c850dfe015b5296972580b1ccbb6b))
+* **stargate:** added aaSTG app token ([#1148](https://github.com/Zapper-fi/studio/issues/1148)) ([b988d1d](https://github.com/Zapper-fi/studio/commit/b988d1d90cf03a6e16933ef9c9ee155f9eab9d34))
+
+## [0.176.1](https://github.com/Zapper-fi/studio/compare/v0.176.0...v0.176.1) (2022-08-16)
+
+
+### Bug Fixes
+
+* **yearn:** Fix Yearn token prices ([#1185](https://github.com/Zapper-fi/studio/issues/1185)) ([569aa53](https://github.com/Zapper-fi/studio/commit/569aa53e8f02ec5ce57f1426dc12418b5e99cc30))
+
+## [0.176.0](https://github.com/Zapper-fi/studio/compare/v0.175.0...v0.176.0) (2022-08-16)
+
+
+### Features
+
+* **apps:** Fixed Openleverage pool group on mainnet ([#1183](https://github.com/Zapper-fi/studio/issues/1183)) ([7b8d5eb](https://github.com/Zapper-fi/studio/commit/7b8d5ebc0986a5e928856a7264c4e0bae30b33ea))
+
+## [0.175.0](https://github.com/Zapper-fi/studio/compare/v0.174.0...v0.175.0) (2022-08-16)
+
+
+### Features
+
+* **dopex:** Add new Dopex farms, refactor to templates ([#1178](https://github.com/Zapper-fi/studio/issues/1178)) ([db90948](https://github.com/Zapper-fi/studio/commit/db909484efd0feecafb7efa898622dfafc0a2c7a))
+
+
+### Bug Fixes
+
+* **revert-fi:** Add IDs to distinguish compounding positions on bundle page ([#1181](https://github.com/Zapper-fi/studio/issues/1181)) ([7e33042](https://github.com/Zapper-fi/studio/commit/7e3304288424e92b8918347a3481c936d3d22a7b))
+
 ## [0.174.0](https://github.com/Zapper-fi/studio/compare/v0.173.1...v0.174.0) (2022-08-15)
 
 

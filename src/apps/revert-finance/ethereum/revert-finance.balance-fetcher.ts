@@ -44,7 +44,7 @@ export class EthereumRevertFinanceBalanceFetcher implements BalanceFetcher {
     const accountRewardsBalances: Array<TokenBalance> = [];
     data.accountBalances.forEach(({ token, balance }) => {
       const existingToken = baseTokens.find(item => item.address === token)!;
-      if (!token) return [];
+      if (!existingToken) return;
       accountRewardsBalances.push({ ...existingToken, ...drillBalance(claimable(existingToken), balance) });
     });
     return [getCompoundorRewardsContractPosition(network, accountRewardsBalances)];
@@ -69,7 +69,11 @@ export class EthereumRevertFinanceBalanceFetcher implements BalanceFetcher {
           context: { multicall, baseTokens },
         });
         if (!uniV3Token) return;
-        compoundingBalances.push(getCompoundingContractPosition(network, uniV3Token));
+        const position = getCompoundingContractPosition(network, uniV3Token);
+        compoundingBalances.push({
+          key: this.appToolkit.getPositionKey(position),
+          ...position,
+        });
       }),
     );
     return compoundingBalances;
