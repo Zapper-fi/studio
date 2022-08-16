@@ -53,14 +53,14 @@ import STEAK_HUT_DEFINITION from '../steak-hut.definition';
 
 const appId = STEAK_HUT_DEFINITION.id;
 const groupId = STEAK_HUT_DEFINITION.groups.pool.id;
-const network = Network.FANTOM_OPERA_MAINNET;
+const network = Network.AVALANCHE_MAINNET;
 
 @Register.ContractPositionFetcher({ appId, groupId, network })
 export class AvalancheSteakHutPoolContractPositionFetcher extends MasterChefTemplateContractPositionFetcher<SteakHutPool> {
   appId = appId;
   groupId = groupId;
   network = network;
-  chefAddress = '0x224d8fd7ab6ad4c6eb4611ce56ef35dec2277f03';
+  chefAddress = '0xddbfbd5dc3ba0feb96cb513b689966b2176d4c09';
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,

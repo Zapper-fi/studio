@@ -6,6 +6,7 @@ import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { BLOCKS_PER_DAY } from '~app-toolkit/constants/blocks';
 import { RewardRateUnit } from '~app-toolkit/helpers/master-chef/master-chef.contract-position-helper';
 import { getImagesFromToken, getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
+import { isMulticallUnderlyingError } from '~multicall/multicall.ethers';
 import { ContractPosition, MetaType } from '~position/position.interface';
 import { isClaimable, isSupplied } from '~position/position.utils';
 import {
@@ -64,8 +65,16 @@ export abstract class MasterChefTemplateContractPositionFetcher<
   }: TokenStageParams<T, MasterChefContractPositionDataProps, MasterChefContractPositionDescriptor>) {
     const tokens: UnderlyingTokenDescriptor[] = [];
 
-    const stakedTokenAddress = await this.getStakedTokenAddress(contract, descriptor.poolIndex);
-    const rewardTokenAddress = await this.getRewardTokenAddress(contract, descriptor.poolIndex);
+    const stakedTokenAddress = await this.getStakedTokenAddress(contract, descriptor.poolIndex).catch(err => {
+      if (isMulticallUnderlyingError(err)) return null;
+      throw err;
+    });
+    const rewardTokenAddress = await this.getRewardTokenAddress(contract, descriptor.poolIndex).catch(err => {
+      if (isMulticallUnderlyingError(err)) return null;
+      throw err;
+    });
+
+    if (!stakedTokenAddress || !rewardTokenAddress) return null;
 
     tokens.push({ metaType: MetaType.SUPPLIED, address: stakedTokenAddress });
     tokens.push({ metaType: MetaType.CLAIMABLE, address: rewardTokenAddress });

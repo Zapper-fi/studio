@@ -21,7 +21,7 @@ export class ArbitrumStargateVeTokenFetcher extends VotingEscrowTokenFetcher<Sta
   appId = appId;
   groupId = groupId;
   network = network;
-  veTokenAddress: '0xfbd849e6007f9bc3cc2d6eb159c045b8dc660268';
+  veTokenAddress = '0xfbd849e6007f9bc3cc2d6eb159c045b8dc660268';
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
