@@ -35,7 +35,7 @@ const query = gql`
 `;
 
 @Register.TokenPositionFetcher({ appId, groupId, network })
-export class BinanceSmartChainOpenleveragePoolTokenFetcher extends AppTokenTemplatePositionFetcher<OpenleverageLpool> {
+export class EthereumOpenleveragePoolTokenFetcher extends AppTokenTemplatePositionFetcher<OpenleverageLpool> {
     appId = OPENLEVERAGE_DEFINITION.id;
     groupId = OPENLEVERAGE_DEFINITION.groups.pool.id;
     network = Network.ETHEREUM_MAINNET;
