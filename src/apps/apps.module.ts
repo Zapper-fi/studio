@@ -86,29 +86,21 @@ export class AppsModule {
     return Array.from(dependencies);
   }
 
-  static async resolveAppModules() {
-    // Find all apps available to be registered
+  static async resolveAppModules(_enabledAppIds: string[]) {
+    // Determine set of available app IDs
     const allAppIds = readdirSync(__dirname, { withFileTypes: true })
       .filter(dirent => dirent.isDirectory() && dirent.name !== '__tests__')
       .map(dirent => dirent.name);
 
-    // If we're in prod, or if there is no enabled apps subset configured, enable everything
-    const loadAllApps = process.env.NODE_ENV === 'production';
-    if (loadAllApps) {
-      const appModules = await this.resolveModulesByAppIds(allAppIds);
-      return this.externalizeAppModuleDependencies(appModules);
-    }
-
-    // Otherwise, load a subset of the apps
-    const configuredAppIds = compact((process.env.ENABLED_APPS ?? '').split(','));
-    if (!configuredAppIds.length) {
+    // Exit early if no app IDs are enabled
+    if (!_enabledAppIds.length) {
       const message = chalk`{red No apps have been configured! Set {yellow ENABLED_APPS} in your {yellow .env} file, then restart. Example: {yellow ENABLED_APPS=synthetix,uniswap-v2}}`;
       this.logger.error(message);
       process.exit(1);
     }
 
     // Resolve enabled app modules and their dependencies
-    const enabledAppIds = intersection(configuredAppIds, allAppIds);
+    const enabledAppIds = intersection(_enabledAppIds, allAppIds);
     const enabledAppIdsAndDependencies = await this.resolveDependencies(enabledAppIds);
     const enabledApps = await this.resolveModulesByAppIds(enabledAppIdsAndDependencies);
 
@@ -134,10 +126,10 @@ export class AppsModule {
     return this.externalizeAppModuleDependencies(enabledAppHelpers);
   }
 
-  static async registerAsync(opts: { appToolkitModule: Type }): Promise<DynamicModule> {
-    const { appToolkitModule } = opts;
+  static async registerAsync(opts: { appToolkitModule: Type; enabledAppIds: string[] }): Promise<DynamicModule> {
+    const { appToolkitModule, enabledAppIds } = opts;
 
-    const appModules = await this.resolveAppModules();
+    const appModules = await this.resolveAppModules(enabledAppIds);
     const appHelperModules = await this.resolveAppHelperModules();
     // eslint-disable-next-line no-console
     console.log(chalk.yellow(`Enabled app modules: ${appModules.map(v => v.name).join(',')}`));

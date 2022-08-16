@@ -11,7 +11,10 @@ import { StatsModule } from '~stats/stats.module';
 
 @Module({
   imports: [
-    AppsModule.registerAsync({ appToolkitModule: AppToolkitModule }),
+    AppsModule.registerAsync({
+      appToolkitModule: AppToolkitModule,
+      enabledAppIds: (process.env.ENABLED_APPS ?? '')?.split(','),
+    }),
     CacheModule,
     SchedulerModule,
     AppToolkitModule,

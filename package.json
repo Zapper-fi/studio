@@ -19,6 +19,8 @@
     "studio": "node ./scripts/run-cli.js",
     "test": "jest --runInBand --forceExit --verbose",
     "test:integration": "jest --runInBand --forceExit --config jest.integration.config.js",
+    "test:e2e": "POSITION_FETCHERS_TEST_CHANGED_ONLY=true jest --runInBand --forceExit --config jest.e2e.config.js",
+    "test:e2e:prod": "POSITION_FETCHERS_TEST_USE_PRODUCTION=true jest --runInBand --forceExit --config jest.e2e.config.js",
     "test:watch": "jest --watch --verbose"
   },
   "dependencies": {
