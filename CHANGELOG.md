@@ -4,6 +4,18 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.175.0](https://github.com/Zapper-fi/studio/compare/v0.174.0...v0.175.0) (2022-08-16)
+
+
+### Features
+
+* **dopex:** Add new Dopex farms, refactor to templates ([#1178](https://github.com/Zapper-fi/studio/issues/1178)) ([db90948](https://github.com/Zapper-fi/studio/commit/db909484efd0feecafb7efa898622dfafc0a2c7a))
+
+
+### Bug Fixes
+
+* **revert-fi:** Add IDs to distinguish compounding positions on bundle page ([#1181](https://github.com/Zapper-fi/studio/issues/1181)) ([7e33042](https://github.com/Zapper-fi/studio/commit/7e3304288424e92b8918347a3481c936d3d22a7b))
+
 ## [0.174.0](https://github.com/Zapper-fi/studio/compare/v0.173.1...v0.174.0) (2022-08-15)
 
 
