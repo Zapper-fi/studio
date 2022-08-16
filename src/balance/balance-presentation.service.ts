@@ -63,7 +63,7 @@ export class BalancePresentationService {
         return Promise.all(
           // For each computed label group, run the meta resolve if exists
           Object.entries(balancesByGroupLabel).map(async ([computedGroupLabel, balances]) => {
-            const groupMetaResolver = groupMetaResolvers?.get(computedGroupLabel);
+            const groupMetaResolver = groupMetaResolvers?.get(groupLabel);
             if (!groupMetaResolver) return { label: computedGroupLabel, assets: balances };
             else {
               const meta = await groupMetaResolver(balances);

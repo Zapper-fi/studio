@@ -3,18 +3,17 @@ import { DiscoveryService, MetadataScanner, Reflector } from '@nestjs/core';
 
 import { BALANCE_PRESENTER_APP, BALANCE_PRESENTER_NETWORK } from '~app-toolkit/decorators/balance-presenter.decorator';
 import { BALANCE_PRESENTER_GROUP_LABEL } from '~app-toolkit/decorators/group-meta.decorator';
-import { Balance, GroupMeta } from '~position/template/balance-presenter.template';
 import { Network } from '~types/network.interface';
 import { buildRegistry } from '~utils/build-registry';
 
-import { BalancePresenter } from './balance-presenter.interface';
+import { BalancePresenter, GroupMeta, ReadonlyBalances } from './balance-presenter.interface';
 
 @Injectable()
 export class BalancePresenterRegistry implements OnModuleInit {
   private registry = new Map<Network, Map<string, BalancePresenter>>();
   private groupMetaResolverRegistry = new Map<
     Network,
-    Map<string, Map<string, (balances: Balance[]) => Promise<GroupMeta>>>
+    Map<string, Map<string, (balances: ReadonlyBalances) => Promise<GroupMeta>>>
   >();
 
   constructor(
@@ -48,7 +47,7 @@ export class BalancePresenterRegistry implements OnModuleInit {
     if (!this.groupMetaResolverRegistry.get(ctx.network)?.get(ctx.appId))
       this.groupMetaResolverRegistry.get(ctx.network)?.set(ctx.appId, new Map());
 
-    this.groupMetaResolverRegistry.get(ctx.network)?.get(ctx.appId)?.set(ctx.appId, methodRef);
+    this.groupMetaResolverRegistry.get(ctx.network)?.get(ctx.appId)?.set(groupLabel, methodRef);
   }
 
   get(appId: string, network: Network) {
