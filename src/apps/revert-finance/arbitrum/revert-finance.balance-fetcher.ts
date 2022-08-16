@@ -44,7 +44,7 @@ export class ArbitrumRevertFinanceBalanceFetcher implements BalanceFetcher {
     const accountRewardsBalances: Array<TokenBalance> = [];
     data.accountBalances.forEach(({ token, balance }) => {
       const existingToken = baseTokens.find(item => item.address === token)!;
-      if (!token) return [];
+      if (!existingToken) return;
       accountRewardsBalances.push({ ...existingToken, ...drillBalance(claimable(existingToken), balance) });
     });
     return [getCompoundorRewardsContractPosition(network, accountRewardsBalances)];
