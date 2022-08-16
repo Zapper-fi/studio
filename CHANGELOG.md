@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.176.1](https://github.com/Zapper-fi/studio/compare/v0.176.0...v0.176.1) (2022-08-16)
+
+
+### Bug Fixes
+
+* **yearn:** Fix Yearn token prices ([#1185](https://github.com/Zapper-fi/studio/issues/1185)) ([569aa53](https://github.com/Zapper-fi/studio/commit/569aa53e8f02ec5ce57f1426dc12418b5e99cc30))
+
 ## [0.176.0](https://github.com/Zapper-fi/studio/compare/v0.175.0...v0.176.0) (2022-08-16)
 
 
