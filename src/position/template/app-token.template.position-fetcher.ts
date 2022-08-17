@@ -9,7 +9,6 @@ import {
   buildPercentageDisplayItem,
 } from '~app-toolkit/helpers/presentation/display-item.present';
 import { getImagesFromToken } from '~app-toolkit/helpers/presentation/image.present';
-import { Erc20 } from '~contract/contracts';
 import { IMulticallWrapper } from '~multicall';
 import { ContractType } from '~position/contract.interface';
 import { DefaultDataProps, DisplayProps, StatsItem } from '~position/display.interface';
@@ -65,24 +64,29 @@ export abstract class AppTokenTemplatePositionFetcher<T extends Contract, V exte
   abstract appId: string;
   abstract groupId: string;
   abstract network: Network;
+  groupLabel?: string;
+
   minLiquidity = 1000;
 
   constructor(@Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit) {}
 
   abstract getContract(address: string): T;
-  abstract getAddresses(): Promise<string[]>;
+  abstract getAddresses(params: { multicall: IMulticallWrapper }): string[] | Promise<string[]>;
 
   // Token Props
-  async getSymbol({ contract }: TokenPropsStageParams<T>): Promise<string> {
-    return (contract as unknown as Erc20).symbol();
+  async getSymbol({ address, multicall }: TokenPropsStageParams<T>): Promise<string> {
+    const erc20 = this.appToolkit.globalContracts.erc20({ address, network: this.network });
+    return multicall.wrap(erc20).symbol();
   }
 
-  async getDecimals({ contract }: TokenPropsStageParams<T>): Promise<number> {
-    return (contract as unknown as Erc20).decimals();
+  async getDecimals({ address, multicall }: TokenPropsStageParams<T>): Promise<number> {
+    const erc20 = this.appToolkit.globalContracts.erc20({ address, network: this.network });
+    return multicall.wrap(erc20).decimals();
   }
 
-  async getSupply({ contract }: TokenPropsStageParams<T>): Promise<BigNumberish> {
-    return (contract as unknown as Erc20).totalSupply();
+  async getSupply({ address, multicall }: TokenPropsStageParams<T>): Promise<BigNumberish> {
+    const erc20 = this.appToolkit.globalContracts.erc20({ address, network: this.network });
+    return multicall.wrap(erc20).totalSupply();
   }
 
   // Price Properties
@@ -149,7 +153,7 @@ export abstract class AppTokenTemplatePositionFetcher<T extends Contract, V exte
       tags: { network: this.network, context: `${this.appId}__template` },
     });
 
-    const addresses = await this.getAddresses();
+    const addresses = await this.getAddresses({ multicall });
 
     const skeletons = await Promise.all(
       addresses.map(async address => {
@@ -203,6 +207,7 @@ export abstract class AppTokenTemplatePositionFetcher<T extends Contract, V exte
             appId: this.appId,
             groupId: this.groupId,
             network: this.network,
+            groupLabel: this.groupLabel,
             address,
             symbol,
             decimals,

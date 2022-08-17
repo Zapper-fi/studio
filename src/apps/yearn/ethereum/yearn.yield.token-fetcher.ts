@@ -58,7 +58,6 @@ export class EthereumYearnYieldTokenFetcher extends AppTokenTemplatePositionFetc
 
   async getPricePerShare({
     contract,
-    appToken,
   }: PricePerShareStageParams<YearnVault, YearnYieldTokenDataProps>): Promise<number> {
     return contract
       .getPricePerFullShare()
@@ -66,7 +65,7 @@ export class EthereumYearnYieldTokenFetcher extends AppTokenTemplatePositionFetc
         if (isMulticallUnderlyingError(err)) return 0;
         throw err;
       })
-      .then(pps => Number(pps) / 10 ** appToken.decimals);
+      .then(pps => Number(pps) / 10 ** 18);
   }
 
   async getDataProps(

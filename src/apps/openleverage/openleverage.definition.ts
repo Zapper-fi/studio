@@ -5,7 +5,7 @@ import { Network } from '~types/network.interface';
 
 export const OPENLEVERAGE_DEFINITION = appDefinition({
   id: 'openleverage',
-  name: 'Openleverage',
+  name: 'OpenLeverage',
   description:
     'A permissionless lending and margin trading protocol with aggregated DEX liquidity, enabling traders to go long or short with any pairs on DEXs efficiently and securely.',
   url: 'https://openleverage.finance/',
