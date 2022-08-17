@@ -6,7 +6,6 @@ import { CacheOnInterval } from '~cache/cache-on-interval.decorator';
 import { NetworkId, getGameVersionType, RewardType, transformRewardArrayToObject } from '../helpers/constants';
 
 import GOOD_GHOSTING_DEFINITION from '../good-ghosting.definition';
-import { NetworkId } from '../helpers/constants';
 
 import { GamesResponse, PlayerBalance, PlayerResponse, BASE_API_URL } from './constants';
 
@@ -52,7 +51,7 @@ export class GoodGhostingGameConfigFetcherHelper {
       const isPolygonGame = NetworkId.PolygonMainnet === networkId;
       const isCeloGame = NetworkId.CeloMainnet === networkId;
 
-      if (isV2Game) {
+      if (isV2Game && rewards) {
         rewards.map(reward => {
           rewardTokens[reward.type] = reward.address;
           rewardTokens[RewardType.Deposit] = depositTokenAddress;
@@ -118,9 +117,16 @@ export class GoodGhostingGameConfigFetcherHelper {
 
       if (rewards) {
         const playerRewards = transformRewardArrayToObject(rewards);
+        playerRewardAmount = String(0);
+        playerIncentiveAmount = String(0);
 
-        playerIncentiveAmount = playerRewards[RewardType.Incentive] ? playerRewards[RewardType.Incentive].balance : 0;
-        playerRewardAmount = playerRewards[RewardType.Reward] ? playerRewards[RewardType.Reward].balance : 0;
+        if (playerRewards[RewardType.Incentive]) {
+          playerIncentiveAmount = playerRewards[RewardType.Incentive].balance;
+        }
+
+        if (playerRewards[RewardType.Reward]) {
+          playerRewardAmount = playerRewards[RewardType.Reward].balance;
+        }
       }
 
       balances[gameId] = {

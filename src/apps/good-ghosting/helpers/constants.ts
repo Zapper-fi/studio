@@ -20,7 +20,7 @@ enum ContractVersions {
   v003 = '0.0.3',
 }
 
-type Reward = {
+type RewardBalance = {
   tokenId: string;
   address: string;
   type: string;
@@ -28,8 +28,14 @@ type Reward = {
   convertedBalance: string;
 };
 
-export const transformRewardArrayToObject = (rewards: Reward[]) => {
-  const playerReward: Record<string, Reward> = {};
+type Reward = {
+  tokenId: string;
+  address: string;
+  type: string;
+};
+
+export const transformRewardArrayToObject = (rewards: RewardBalance[]) => {
+  const playerReward: Record<string, RewardBalance> = {};
   rewards.map(reward => {
     const { type } = reward;
     playerReward[type] = reward;
@@ -55,6 +61,7 @@ export type PlayerResponse = {
   pooltotalEarningsConverted: string;
   isWinner: boolean;
   poolAPY: string;
+  rewards?: RewardBalance[];
 };
 
 export type PlayerBalance = {
@@ -97,6 +104,7 @@ export type GamesResponse = Record<
     currentSegment: string;
     earlyWithdrawalFee: string;
     performanceFee: string;
+    rewards?: Reward[];
   }
 >;
 
