@@ -15,6 +15,18 @@ export const CURVE_DEFINITION = appDefinition({
     telegram: 'https://t.me/curvefi',
   },
   groups: {
+    childLiquidityGauge: {
+      id: 'child-liquidity-gauge',
+      type: GroupType.POSITION,
+      label: 'Gauge',
+    },
+
+    rewardsOnlyGauge: {
+      id: 'rewards-only-gauge',
+      type: GroupType.POSITION,
+      label: 'Gauge (Legacy)',
+    },
+
     gauge: {
       id: 'gauge',
       type: GroupType.POSITION,
