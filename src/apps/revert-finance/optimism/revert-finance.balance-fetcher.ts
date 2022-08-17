@@ -63,16 +63,12 @@ export class OptimismRevertFinanceBalanceFetcher implements BalanceFetcher {
     const baseTokens = await this.appToolkit.getBaseTokenPrices(network);
     await Promise.all(
       data.tokens.map(async ({ id }) => {
-        let uniV3Token = await this.uniswapV3LiquidityTokenHelper.getLiquidityToken({
+        const uniV3Token = await this.uniswapV3LiquidityTokenHelper.getLiquidityToken({
           positionId: id,
           network,
           context: { multicall, baseTokens },
         });
         if (!uniV3Token) return;
-        uniV3Token = {
-          ...uniV3Token,
-          key: this.appToolkit.getPositionKey(uniV3Token),
-        };
         const position = getCompoundingContractPosition(network, uniV3Token);
         compoundingBalances.push({
           key: this.appToolkit.getPositionKey(position, ['compoundingPositionId']),
