@@ -20,7 +20,7 @@ export const getCompoundorRewardsContractPosition = (
   network,
   appId: REVERT_FINANCE_DEFINITION.id,
   groupId: REVERT_FINANCE_DEFINITION.groups.compoundorRewards.id,
-  tokens,
+  tokens: tokens.sort((a, b) => b.balanceUSD - a.balanceUSD),
   balanceUSD: tokens.reduce((a, token) => a + token.balanceUSD, 0),
   dataProps: {},
   displayProps: {
@@ -41,7 +41,9 @@ export const getCompoundingContractPosition = (
   groupId: REVERT_FINANCE_DEFINITION.groups.compoundingPositions.id,
   tokens: [{ ...uniV3Lp, ...drillBalance(uniV3Lp, '1') }],
   balanceUSD: drillBalance(uniV3Lp, '1').balanceUSD,
-  dataProps: {},
+  dataProps: {
+    compoundingPositionId: uniV3Lp.dataProps.id,
+  },
   displayProps: {
     label: `Compounding ${uniV3Lp.displayProps.label}`,
     images: [getTokenImg(uniV3Lp.address, network)],
