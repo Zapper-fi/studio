@@ -7,6 +7,7 @@ import { NetworkProviderModule } from '~network-provider/network-provider.module
 import { PositionModule } from '~position/position.module';
 
 import { BalanceFetcherRegistry } from './balance-fetcher.registry';
+import { BalancePresentationService } from './balance-presentation.service';
 import { BalancePresenterRegistry } from './balance-presenter.registry';
 import { BalanceController } from './balance.controller';
 import { BalanceService } from './balance.service';
@@ -18,11 +19,12 @@ import { DefaultTokenBalanceFetcherFactory } from './default.token-balance-fetch
   imports: [DiscoveryModule, PositionModule, NetworkProviderModule, AppModule, AppToolkitModule],
   providers: [
     BalanceFetcherRegistry,
+    BalancePresentationService,
     BalancePresenterRegistry,
     BalanceService,
-    DefaultTokenBalanceFetcherFactory,
-    DefaultContractPositionBalanceFetcherFactory,
     DefaultBalancePresenterFactory,
+    DefaultContractPositionBalanceFetcherFactory,
+    DefaultTokenBalanceFetcherFactory,
   ],
   controllers: [BalanceController],
 })

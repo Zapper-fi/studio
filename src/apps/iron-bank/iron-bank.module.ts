@@ -5,6 +5,9 @@ import { CompoundAppModule } from '~apps/compound';
 import { AvalancheIronBankBalanceFetcher } from './avalanche/iron-bank.balance-fetcher';
 import { AvalancheIronBankBorrowContractPositionFetcher } from './avalanche/iron-bank.borrow.contract-position-fetcher';
 import { AvalancheIronBankSupplyTokenFetcher } from './avalanche/iron-bank.supply.token-fetcher';
+import { OptimismIronBankBalanceFetcher } from './optimism/iron-bank.balance-fetcher';
+import { OptimismIronBankBorrowContractPositionFetcher } from './optimism/iron-bank.borrow.contract-position-fetcher';
+import { OptimismIronBankSupplyTokenFetcher } from './optimism/iron-bank.supply.token-fetcher';
 import { IronBankContractFactory } from './contracts';
 import { EthereumIronBankBalanceFetcher } from './ethereum/iron-bank.balance-fetcher';
 import { EthereumIronBankBorrowContractPositionFetcher } from './ethereum/iron-bank.borrow.contract-position-fetcher';
@@ -29,6 +32,9 @@ import { IronBankAppDefinition, IRON_BANK_DEFINITION } from './iron-bank.definit
     AvalancheIronBankBalanceFetcher,
     AvalancheIronBankSupplyTokenFetcher,
     AvalancheIronBankBorrowContractPositionFetcher,
+    OptimismIronBankBalanceFetcher,
+    OptimismIronBankSupplyTokenFetcher,
+    OptimismIronBankBorrowContractPositionFetcher,
     IronBankContractFactory,
   ],
 })

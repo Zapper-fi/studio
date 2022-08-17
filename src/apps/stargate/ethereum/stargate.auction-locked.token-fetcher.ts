@@ -1,30 +1,30 @@
 import { Inject } from '@nestjs/common';
 
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
-import { ZERO_ADDRESS } from '~app-toolkit/constants/address';
 import { Register } from '~app-toolkit/decorators';
 import {
   AppTokenTemplatePositionFetcher,
   DataPropsStageParams,
+  UnderlyingTokensStageParams,
 } from '~position/template/app-token.template.position-fetcher';
 import { Network } from '~types/network.interface';
 
-import { StargateContractFactory, StargateEth } from '../contracts';
+import { StargateAa, StargateContractFactory } from '../contracts';
 import { STARGATE_DEFINITION } from '../stargate.definition';
 
 const appId = STARGATE_DEFINITION.id;
-const groupId = STARGATE_DEFINITION.groups.eth.id;
+const groupId = STARGATE_DEFINITION.groups.auctionLocked.id;
 const network = Network.ETHEREUM_MAINNET;
 
-type StargateEthAppTokenDataProps = {
+type StargateAuctionLockedAppTokenDataProps = {
   liquidity: number;
   reserve: number;
 };
 
 @Register.TokenPositionFetcher({ appId, groupId, network })
-export class EthereumStargateEthTokenFetcher extends AppTokenTemplatePositionFetcher<
-  StargateEth,
-  StargateEthAppTokenDataProps
+export class EthereumStargateAuctionLockedTokenFetcher extends AppTokenTemplatePositionFetcher<
+  StargateAa,
+  StargateAuctionLockedAppTokenDataProps
 > {
   appId = appId;
   groupId = groupId;
@@ -37,21 +37,19 @@ export class EthereumStargateEthTokenFetcher extends AppTokenTemplatePositionFet
     super(appToolkit);
   }
 
-  getContract(address: string): StargateEth {
-    return this.contractFactory.stargateEth({ address, network: this.network });
+  getContract(address: string): StargateAa {
+    return this.contractFactory.stargateAa({ address, network: this.network });
   }
 
   getAddresses() {
-    return ['0x72e2f4830b9e45d52f80ac08cb2bec0fef72ed9c'];
+    return ['0x4dfcad285ef39fed84e77edf1b7dbc442565e55e'];
   }
 
-  async getUnderlyingTokenAddresses() {
-    return [ZERO_ADDRESS];
+  getUnderlyingTokenAddresses({ contract }: UnderlyingTokensStageParams<StargateAa>) {
+    return contract.stargateToken();
   }
 
-  async getDataProps({
-    appToken,
-  }: DataPropsStageParams<StargateEth, StargateEthAppTokenDataProps>): Promise<StargateEthAppTokenDataProps> {
+  async getDataProps({ appToken }: DataPropsStageParams<StargateAa, StargateAuctionLockedAppTokenDataProps>) {
     const reserve = appToken.supply; // 1:1
     const liquidity = appToken.supply * appToken.price;
     return { reserve, liquidity };
