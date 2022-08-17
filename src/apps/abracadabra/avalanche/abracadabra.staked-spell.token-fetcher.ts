@@ -10,7 +10,7 @@ const groupId = ABRACADABRA_DEFINITION.groups.stakedSpell.id;
 const network = Network.AVALANCHE_MAINNET;
 
 @Register.TokenPositionFetcher({ appId, groupId, network })
-export class AvalancheAbracadabraStakedSpellAppTokenFetcher extends AppTokenTemplatePositionFetcher<Erc20> {
+export class AvalancheAbracadabraStakedSpellTokenFetcher extends AppTokenTemplatePositionFetcher<Erc20> {
   appId = appId;
   groupId = groupId;
   network = network;

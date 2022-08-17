@@ -10,7 +10,7 @@ const groupId = ABRACADABRA_DEFINITION.groups.stakedSpell.id;
 const network = Network.FANTOM_OPERA_MAINNET;
 
 @Register.TokenPositionFetcher({ appId, groupId, network })
-export class FantomAbracadabraStakedSpellAppTokenFetcher extends AppTokenTemplatePositionFetcher<Erc20> {
+export class FantomAbracadabraStakedSpellTokenFetcher extends AppTokenTemplatePositionFetcher<Erc20> {
   appId = appId;
   groupId = groupId;
   network = network;

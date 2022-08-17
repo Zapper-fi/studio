@@ -10,7 +10,7 @@ const groupId = ABRACADABRA_DEFINITION.groups.stakedSpell.id;
 const network = Network.ARBITRUM_MAINNET;
 
 @Register.TokenPositionFetcher({ appId, groupId, network })
-export class ArbitrumAbracadabraStakedSpellAppTokenFetcher extends AppTokenTemplatePositionFetcher<Erc20> {
+export class ArbitrumAbracadabraStakedSpellTokenFetcher extends AppTokenTemplatePositionFetcher<Erc20> {
   appId = appId;
   groupId = groupId;
   network = network;
