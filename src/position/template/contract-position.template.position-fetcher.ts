@@ -85,15 +85,15 @@ export abstract class ContractPositionTemplatePositionFetcher<
 
   abstract getDescriptors(params: { multicall: IMulticallWrapper }): Promise<R[]>;
   abstract getContract(address: string): T;
-  abstract getLabel(params: DisplayPropsStageParams<T, V>): Promise<string>;
+  abstract getLabel(params: DisplayPropsStageParams<T, V, R>): Promise<string>;
 
   // Tokens
-  async getTokenDescriptors(_params: TokenStageParams<T, R>): Promise<UnderlyingTokenDescriptor[] | null> {
+  async getTokenDescriptors(_params: TokenStageParams<T, V, R>): Promise<UnderlyingTokenDescriptor[] | null> {
     return [];
   }
 
   // Data Properties
-  async getDataProps(_params: DataPropsStageParams<T, V>): Promise<V> {
+  async getDataProps(_params: DataPropsStageParams<T, V, R>): Promise<V> {
     return {} as V;
   }
 
