@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.181.0](https://github.com/Zapper-fi/studio/compare/v0.180.0...v0.181.0) (2022-08-18)
+
+
+### Features
+
+* **badger:** Fix claimable DIGG amount ([#1208](https://github.com/Zapper-fi/studio/issues/1208)) ([3813eb3](https://github.com/Zapper-fi/studio/commit/3813eb301f26763d7b2499e99256a7241a083983))
+
 ## [0.180.0](https://github.com/Zapper-fi/studio/compare/v0.179.0...v0.180.0) (2022-08-18)
 
 
