@@ -1,7 +1,12 @@
 import { BaseToken } from '~position/token.interface';
 import { Network } from '~types/network.interface';
 
-export type BaseTokenPrice = BaseToken & { hide: boolean; canExchange: boolean; dailyVolume: number | null };
+export type BaseTokenPrice = BaseToken & {
+  name: string;
+  hide: boolean;
+  canExchange: boolean;
+  dailyVolume: number | null;
+};
 
 export type Filters = { exchangeable?: boolean; hidden?: boolean };
 export type LoggingTags = { appId?: string; network?: Network };
