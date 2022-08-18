@@ -65,6 +65,7 @@ export abstract class AppTokenTemplatePositionFetcher<T extends Contract, V exte
   abstract groupId: string;
   abstract network: Network;
   groupLabel?: string;
+  fromNetwork?: Network;
 
   minLiquidity = 1000;
 
@@ -175,7 +176,7 @@ export abstract class AppTokenTemplatePositionFetcher<T extends Contract, V exte
     for (const skeletonsSubset of [base, meta]) {
       const underlyingTokenRequests = skeletons
         .flatMap(v => v.underlyingTokenAddresses)
-        .map(v => ({ network: this.network, address: v }));
+        .map(v => ({ network: this.fromNetwork ?? this.network, address: v }));
       const tokenDependencies = await tokenLoader
         .getMany(underlyingTokenRequests)
         .then(tokenDeps => compact(tokenDeps));

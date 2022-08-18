@@ -4,10 +4,7 @@
 
 import { Contract, Signer, utils } from 'ethers';
 import type { Provider } from '@ethersproject/providers';
-import type {
-  AbracadabraCouldronTokenContract,
-  AbracadabraCouldronTokenContractInterface,
-} from '../AbracadabraCouldronTokenContract';
+import type { AbracadabraCauldron, AbracadabraCauldronInterface } from '../AbracadabraCauldron';
 
 const _abi = [
   {
@@ -696,12 +693,12 @@ const _abi = [
   },
 ];
 
-export class AbracadabraCouldronTokenContract__factory {
+export class AbracadabraCauldron__factory {
   static readonly abi = _abi;
-  static createInterface(): AbracadabraCouldronTokenContractInterface {
-    return new utils.Interface(_abi) as AbracadabraCouldronTokenContractInterface;
+  static createInterface(): AbracadabraCauldronInterface {
+    return new utils.Interface(_abi) as AbracadabraCauldronInterface;
   }
-  static connect(address: string, signerOrProvider: Signer | Provider): AbracadabraCouldronTokenContract {
-    return new Contract(address, _abi, signerOrProvider) as AbracadabraCouldronTokenContract;
+  static connect(address: string, signerOrProvider: Signer | Provider): AbracadabraCauldron {
+    return new Contract(address, _abi, signerOrProvider) as AbracadabraCauldron;
   }
 }
