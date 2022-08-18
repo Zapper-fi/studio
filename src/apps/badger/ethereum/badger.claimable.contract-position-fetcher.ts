@@ -9,7 +9,7 @@ import { BadgerContractFactory } from '../contracts';
 import {
   BadgerClaimableContractPositionFetcher,
   BadgerClaimableDescriptor,
-} from '../helpers/badger.claimable.contract-position.helper';
+} from '../helpers/badger.claimable.contract-position-fetcher';
 import { BadgerClaimableRewardsResolver } from '../helpers/badger.claimable.rewards-resolver';
 
 const appId = BADGER_DEFINITION.id;
