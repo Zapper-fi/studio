@@ -4,6 +4,25 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.178.0](https://github.com/Zapper-fi/studio/compare/v0.177.0...v0.178.0) (2022-08-18)
+
+
+### Features
+
+* **abracadabra:** Migrate to templates ([#1201](https://github.com/Zapper-fi/studio/issues/1201)) ([5737693](https://github.com/Zapper-fi/studio/commit/5737693e80244b9a4a65f3601983b616ffb68397))
+* **good-ghosting:** Add support for v2 games ([#1195](https://github.com/Zapper-fi/studio/issues/1195)) ([9a2a21b](https://github.com/Zapper-fi/studio/commit/9a2a21b5e79057f114de0c7156176ce444f1d1f3))
+* **iron-bank:** Add Optimism support ([#1196](https://github.com/Zapper-fi/studio/issues/1196)) ([7113e42](https://github.com/Zapper-fi/studio/commit/7113e42b2adffe2ee5df484281680488bd3938d3))
+* **liquity:** Move to templates ([#1197](https://github.com/Zapper-fi/studio/issues/1197)) ([7b6b672](https://github.com/Zapper-fi/studio/commit/7b6b672af30d9554e45a721bbe312b75dc9c37a7))
+* **steakhut:** Migrate to templates ([#1192](https://github.com/Zapper-fi/studio/issues/1192)) ([f0104d7](https://github.com/Zapper-fi/studio/commit/f0104d7070b191255aba5a1b52ac1432fda058a4))
+* **template:** PoC for product meta resolvers ([#1180](https://github.com/Zapper-fi/studio/issues/1180)) ([2daacde](https://github.com/Zapper-fi/studio/commit/2daacde43662ae221abc82232fdcc9cf5eac8cdf))
+* **votium:** Use template pattern ([#1198](https://github.com/Zapper-fi/studio/issues/1198)) ([c98a1d0](https://github.com/Zapper-fi/studio/commit/c98a1d0b54260880f1a2b9e1cca1a0bcc5ec7e28))
+
+
+### Bug Fixes
+
+* **hakuswap:** some hakuswap pools aren't using decimals ([#1199](https://github.com/Zapper-fi/studio/issues/1199)) ([ce3b608](https://github.com/Zapper-fi/studio/commit/ce3b608055f84a57123b6c3fb552d14b3229fd99))
+* **revert-fi:** Add IDs to NFTs LPs, and keys ([#1194](https://github.com/Zapper-fi/studio/issues/1194)) ([b789127](https://github.com/Zapper-fi/studio/commit/b789127e95220701ea4d7fe040cb95b013ef41df))
+
 ## [0.177.0](https://github.com/Zapper-fi/studio/compare/v0.176.1...v0.177.0) (2022-08-16)
 
 
