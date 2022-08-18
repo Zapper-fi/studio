@@ -229,7 +229,9 @@ export abstract class ContractPositionTemplatePositionFetcher<
       contractPositions.map(async contractPosition => {
         const contract = multicall.wrap(this.getContract(contractPosition.address));
         const balancesRaw = await this.getTokenBalancesPerPosition({ address, contract, contractPosition, multicall });
-        const tokens = contractPosition.tokens.map((cp, idx) => drillBalance(cp, balancesRaw[idx]?.toString() ?? '0'));
+        const tokens = contractPosition.tokens.map((cp, idx) =>
+          drillBalance(cp, balancesRaw[idx]?.toString() ?? '0', { isDebt: cp.metaType === MetaType.BORROWED }),
+        );
         const balanceUSD = sumBy(tokens, t => t.balanceUSD);
 
         const balance: ContractPositionBalance<V> = { ...contractPosition, tokens, balanceUSD };
