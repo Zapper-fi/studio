@@ -7,6 +7,45 @@ export enum NetworkId {
   CeloAlfajores = '44787',
 }
 
+export enum RewardType {
+  Reward = 'reward',
+  Incentive = 'incentive',
+  Deposit = 'deposit',
+}
+
+enum ContractVersions {
+  V200 = '2.0.0',
+  V001 = '0.0.1',
+  v002 = '0.0.2',
+  v003 = '0.0.3',
+}
+
+type RewardBalance = {
+  tokenId: string;
+  address: string;
+  type: string;
+  balance: string;
+  convertedBalance: string;
+};
+
+type Reward = {
+  tokenId: string;
+  address: string;
+  type: string;
+};
+
+export const transformRewardArrayToObject = (rewards: RewardBalance[]) => {
+  const playerReward: Record<string, RewardBalance> = {};
+  rewards.map(reward => {
+    const { type } = reward;
+    playerReward[type] = reward;
+  });
+
+  return playerReward;
+};
+
+export const getGameVersionType = (contractVersion: string) => contractVersion === ContractVersions.V200;
+
 export type PlayerResponse = {
   gameId: string;
   playerId: string;
@@ -22,6 +61,7 @@ export type PlayerResponse = {
   pooltotalEarningsConverted: string;
   isWinner: boolean;
   poolAPY: string;
+  rewards?: RewardBalance[];
 };
 
 export type PlayerBalance = {
@@ -64,6 +104,7 @@ export type GamesResponse = Record<
     currentSegment: string;
     earlyWithdrawalFee: string;
     performanceFee: string;
+    rewards?: Reward[];
   }
 >;
 
