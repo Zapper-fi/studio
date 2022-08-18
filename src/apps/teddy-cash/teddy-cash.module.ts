@@ -5,6 +5,7 @@ import { LiquityAppModule } from '~apps/liquity';
 import { AvalancheTeddyCashFarmContractPositionFetcher } from './avalanche/teddy-cash.farm.contract-position-fetcher';
 import { AvalancheTeddyCashStabilityPoolContractPositionFetcher } from './avalanche/teddy-cash.stability-pool.contract-position-fetcher';
 import { AvalancheTeddyCashTroveContractPositionFetcher } from './avalanche/teddy-cash.trove.contract-position-fetcher';
+import { TeddyCashContractFactory } from './contracts';
 import TEDDY_CASH_DEFINITION, { TeddyCashAppDefinition } from './teddy-cash.definition';
 
 @Register.AppModule({
@@ -12,6 +13,7 @@ import TEDDY_CASH_DEFINITION, { TeddyCashAppDefinition } from './teddy-cash.defi
   imports: [LiquityAppModule],
   providers: [
     TeddyCashAppDefinition,
+    TeddyCashContractFactory,
     AvalancheTeddyCashFarmContractPositionFetcher,
     AvalancheTeddyCashStabilityPoolContractPositionFetcher,
     AvalancheTeddyCashTroveContractPositionFetcher,
