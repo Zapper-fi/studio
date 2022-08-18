@@ -13,8 +13,6 @@ import { MetavaultTradeContractFactory } from '../contracts';
 import { METAVAULT_TRADE_DEFINITION } from '../metavault-trade.definition';
 
 const appId = METAVAULT_TRADE_DEFINITION.id;
-const LINK_TOKEN = '0x53e0bca35ec356bd5dddfebbd1fc0fd03fabad39'; // Bridged Link Token
-const WHITE_LISTED_LINK_TOKEN = '0xb0897686c545045afc77cf20ec7a532e3120e0f1'; // Native Link Token
 
 type GetMetavaultTradeMvlpTokenParams = {
   network: Network;
@@ -54,7 +52,6 @@ export class MetavaultTradeMvlpTokenHelper {
     const mcVault = multicall.wrap(vaultContract);
     const numTokens = await mcVault.allWhitelistedTokensLength();
     const tokenAddressesRaw = await Promise.all(range(0, Number(numTokens)).map(i => mcVault.allWhitelistedTokens(i)));
-    const BASE_TOKEN_LINK = baseTokens.find(t2 => t2.address === LINK_TOKEN);
     const tokensRaw = tokenAddressesRaw.map(t1 => baseTokens.find(t2 => t2.address === t1.toLowerCase()));
     const tokensUnfiltered = _.compact(tokensRaw);
     const tokens = tokensUnfiltered.filter(x => !blockedTokenAddresses.includes(x.address));
@@ -67,21 +64,6 @@ export class MetavaultTradeMvlpTokenHelper {
         return Number(reserveRaw) / 10 ** token.decimals;
       }),
     );
-    // Add Native Link Token
-    const linkContract = this.contractFactory.erc20({
-      address: WHITE_LISTED_LINK_TOKEN,
-      network: Network.POLYGON_MAINNET,
-    });
-
-    const linkReserveRaw = await multicall.wrap(linkContract).balanceOf(vaultAddress);
-    const linkReserve = Number(linkReserveRaw) / 10 ** 18;
-
-    // Add LINK token to manipulate later
-    if (BASE_TOKEN_LINK) {
-      tokens.push(BASE_TOKEN_LINK);
-      // Add LINK reserve
-      reserves.push(linkReserve);
-    }
 
     // Liquidity
     const liquidity = tokens.reduce((acc, t, i) => acc + reserves[i] * t.price, 0);
