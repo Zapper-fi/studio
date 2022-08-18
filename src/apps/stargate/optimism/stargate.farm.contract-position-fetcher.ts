@@ -3,6 +3,7 @@ import { BigNumberish } from 'ethers';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
+import { isMulticallUnderlyingError } from '~multicall/multicall.ethers';
 import { MasterChefTemplateContractPositionFetcher } from '~position/template/master-chef.template.contract-position-fetcher';
 import { Network } from '~types/network.interface';
 
@@ -60,6 +61,10 @@ export class OptimismStargateFarmContractPositionFetcher extends MasterChefTempl
   }
 
   async getRewardTokenBalance(address: string, contract: StargateChef, poolIndex: number): Promise<BigNumberish> {
-    return contract.pendingStargate(poolIndex, address);
+    // Optimism Stargate Farm in Emergency Withdraw Mode
+    return contract.pendingStargate(poolIndex, address).catch(err => {
+      if (isMulticallUnderlyingError(err)) return '0';
+      throw err;
+    });
   }
 }
