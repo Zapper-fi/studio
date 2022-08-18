@@ -7,14 +7,14 @@ import { Network } from '~types/network.interface';
 import { BADGER_DEFINITION } from '../badger.definition';
 import { BadgerContractFactory, BadgerSett } from '../contracts';
 import { BadgerVaultTokenDefinitionsResolver } from '../helpers/badger.vault.token-definition-resolver';
-import { BadgerVaultTokenHelper } from '../helpers/badger.vault.token-helper';
+import { BadgerVaultTokenFetcher } from '../helpers/badger.vault.token-fetcher';
 
 const appId = BADGER_DEFINITION.id;
 const groupId = BADGER_DEFINITION.groups.vault.id;
 const network = Network.ARBITRUM_MAINNET;
 
 @Register.TokenPositionFetcher({ appId, groupId, network })
-export class ArbitrumBadgerVaultTokenFetcher extends BadgerVaultTokenHelper<BadgerSett> {
+export class ArbitrumBadgerVaultTokenFetcher extends BadgerVaultTokenFetcher<BadgerSett> {
   appId = appId;
   groupId = groupId;
   network = network;
