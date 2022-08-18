@@ -27,7 +27,7 @@ export const ABRACADABRA_DEFINITION = appDefinition({
     mSpell: {
       id: 'm-spell',
       type: GroupType.POSITION,
-      label: 'mSpell',
+      label: 'mSPELL',
     },
 
     cauldron: {
