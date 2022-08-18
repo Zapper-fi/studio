@@ -28,7 +28,7 @@ export abstract class BadgerClaimableContractPositionFetcher extends ContractPos
   DefaultDataProps,
   BadgerClaimableDescriptor
 > {
-  abstract diggTokenAddress: string;
+  diggTokenAddress: string;
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
