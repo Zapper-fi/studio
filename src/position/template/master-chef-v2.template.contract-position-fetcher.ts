@@ -38,6 +38,7 @@ export abstract class MasterChefV2TemplateContractPositionFetcher<
   ) {
     const { multicall, descriptor, contract } = params;
     const tokenDescriptors = await super.getTokenDescriptors(params);
+    if (!tokenDescriptors) return null; // break early if it failed to resolve the primary supplied and claimable
 
     const extraRewarderAddress = await this.getExtraRewarder(contract, descriptor.poolIndex);
     if (extraRewarderAddress === ZERO_ADDRESS) return tokenDescriptors;

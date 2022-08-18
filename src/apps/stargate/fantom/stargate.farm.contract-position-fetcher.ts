@@ -1,9 +1,9 @@
 import { Inject } from '@nestjs/common';
+import { BigNumberish } from 'ethers';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
-import { PositionFetcher } from '~position/position-fetcher.interface';
-import { ContractPosition } from '~position/position.interface';
+import { MasterChefTemplateContractPositionFetcher } from '~position/template/master-chef.template.contract-position-fetcher';
 import { Network } from '~types/network.interface';
 
 import { StargateChef, StargateContractFactory } from '../contracts';
@@ -14,36 +14,52 @@ const groupId = STARGATE_DEFINITION.groups.farm.id;
 const network = Network.FANTOM_OPERA_MAINNET;
 
 @Register.ContractPositionFetcher({ appId, groupId, network })
-export class FantomStargateFarmContractPositionFetcher implements PositionFetcher<ContractPosition> {
-  constructor(
-    @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
-    @Inject(StargateContractFactory) private readonly contractFactory: StargateContractFactory,
-  ) {}
+export class FantomStargateFarmContractPositionFetcher extends MasterChefTemplateContractPositionFetcher<StargateChef> {
+  appId = appId;
+  groupId = groupId;
+  network = network;
+  chefAddress = '0x224d8fd7ab6ad4c6eb4611ce56ef35dec2277f03';
 
-  async getPositions() {
-    return this.appToolkit.helpers.masterChefContractPositionHelper.getContractPositions<StargateChef>({
-      address: '0x224d8fd7ab6ad4c6eb4611ce56ef35dec2277f03',
-      appId,
-      groupId,
-      network,
-      dependencies: [{ appId: STARGATE_DEFINITION.id, groupIds: [STARGATE_DEFINITION.groups.pool.id], network }],
-      resolveContract: ({ address, network }) => this.contractFactory.stargateChef({ address, network }),
-      resolvePoolLength: ({ multicall, contract }) => multicall.wrap(contract).poolLength(),
-      resolveDepositTokenAddress: ({ poolIndex, contract, multicall }) =>
-        multicall
-          .wrap(contract)
-          .poolInfo(poolIndex)
-          .then(v => v.lpToken),
-      resolveRewardTokenAddresses: ({ multicall, contract }) => multicall.wrap(contract).stargate(),
-      resolveRewardRate: this.appToolkit.helpers.masterChefDefaultRewardsPerBlockStrategy.build({
-        resolvePoolAllocPoints: async ({ poolIndex, contract, multicall }) =>
-          multicall
-            .wrap(contract)
-            .poolInfo(poolIndex)
-            .then(v => v.allocPoint),
-        resolveTotalAllocPoints: ({ multicall, contract }) => multicall.wrap(contract).totalAllocPoint(),
-        resolveTotalRewardRate: ({ multicall, contract }) => multicall.wrap(contract).stargatePerBlock(),
-      }),
-    });
+  constructor(
+    @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
+    @Inject(StargateContractFactory) protected readonly contractFactory: StargateContractFactory,
+  ) {
+    super(appToolkit);
+  }
+
+  getContract(address: string): StargateChef {
+    return this.contractFactory.stargateChef({ address, network: this.network });
+  }
+
+  async getPoolLength(contract: StargateChef): Promise<BigNumberish> {
+    return contract.poolLength();
+  }
+
+  async getStakedTokenAddress(contract: StargateChef, poolIndex: number): Promise<string> {
+    return contract.poolInfo(poolIndex).then(v => v.lpToken);
+  }
+
+  async getRewardTokenAddress(contract: StargateChef): Promise<string> {
+    return contract.stargate();
+  }
+
+  async getTotalAllocPoints(contract: StargateChef): Promise<BigNumberish> {
+    return contract.totalAllocPoint();
+  }
+
+  async getTotalRewardRate(contract: StargateChef): Promise<BigNumberish> {
+    return contract.stargatePerBlock();
+  }
+
+  async getPoolAllocPoints(contract: StargateChef, poolIndex: number): Promise<BigNumberish> {
+    return contract.poolInfo(poolIndex).then(v => v.allocPoint);
+  }
+
+  async getStakedTokenBalance(address: string, contract: StargateChef, poolIndex: number): Promise<BigNumberish> {
+    return contract.userInfo(poolIndex, address).then(v => v.amount);
+  }
+
+  async getRewardTokenBalance(address: string, contract: StargateChef, poolIndex: number): Promise<BigNumberish> {
+    return contract.pendingStargate(poolIndex, address);
   }
 }

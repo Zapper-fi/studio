@@ -4,6 +4,62 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.177.0](https://github.com/Zapper-fi/studio/compare/v0.176.1...v0.177.0) (2022-08-16)
+
+
+### Features
+
+* **rari:** Extract to Studio ([#1187](https://github.com/Zapper-fi/studio/issues/1187)) ([4d2c98f](https://github.com/Zapper-fi/studio/commit/4d2c98f63b1c850dfe015b5296972580b1ccbb6b))
+* **stargate:** added aaSTG app token ([#1148](https://github.com/Zapper-fi/studio/issues/1148)) ([b988d1d](https://github.com/Zapper-fi/studio/commit/b988d1d90cf03a6e16933ef9c9ee155f9eab9d34))
+
+## [0.176.1](https://github.com/Zapper-fi/studio/compare/v0.176.0...v0.176.1) (2022-08-16)
+
+
+### Bug Fixes
+
+* **yearn:** Fix Yearn token prices ([#1185](https://github.com/Zapper-fi/studio/issues/1185)) ([569aa53](https://github.com/Zapper-fi/studio/commit/569aa53e8f02ec5ce57f1426dc12418b5e99cc30))
+
+## [0.176.0](https://github.com/Zapper-fi/studio/compare/v0.175.0...v0.176.0) (2022-08-16)
+
+
+### Features
+
+* **apps:** Fixed Openleverage pool group on mainnet ([#1183](https://github.com/Zapper-fi/studio/issues/1183)) ([7b8d5eb](https://github.com/Zapper-fi/studio/commit/7b8d5ebc0986a5e928856a7264c4e0bae30b33ea))
+
+## [0.175.0](https://github.com/Zapper-fi/studio/compare/v0.174.0...v0.175.0) (2022-08-16)
+
+
+### Features
+
+* **dopex:** Add new Dopex farms, refactor to templates ([#1178](https://github.com/Zapper-fi/studio/issues/1178)) ([db90948](https://github.com/Zapper-fi/studio/commit/db909484efd0feecafb7efa898622dfafc0a2c7a))
+
+
+### Bug Fixes
+
+* **revert-fi:** Add IDs to distinguish compounding positions on bundle page ([#1181](https://github.com/Zapper-fi/studio/issues/1181)) ([7e33042](https://github.com/Zapper-fi/studio/commit/7e3304288424e92b8918347a3481c936d3d22a7b))
+
+## [0.174.0](https://github.com/Zapper-fi/studio/compare/v0.173.1...v0.174.0) (2022-08-15)
+
+
+### Features
+
+* **apps:** Add key to template fetcher ([#1175](https://github.com/Zapper-fi/studio/issues/1175)) ([a428f57](https://github.com/Zapper-fi/studio/commit/a428f57485761a34ced7d71849d460896b912b66))
+
+
+### Bug Fixes
+
+* **polynomial:** Fix incorrect comment ([#1164](https://github.com/Zapper-fi/studio/issues/1164)) ([2f7d079](https://github.com/Zapper-fi/studio/commit/2f7d079aa3d36c495b1af97f5e137ccd95167260))
+* **revert-fi:** Consolidate rewards display ([#1171](https://github.com/Zapper-fi/studio/issues/1171)) ([839b071](https://github.com/Zapper-fi/studio/commit/839b071bb0c9facaede1b3c9bd635e99a7993a6d))
+* **revert-fi:** organize compounding positions as ContractPositions ([#1167](https://github.com/Zapper-fi/studio/issues/1167)) ([65e087b](https://github.com/Zapper-fi/studio/commit/65e087bbeec0f2a3e8ceb9660538d30b52e88e36))
+* **synthetix:** Enable SNX to be exchangeable on optimism ([#1176](https://github.com/Zapper-fi/studio/issues/1176)) ([fd07cfa](https://github.com/Zapper-fi/studio/commit/fd07cfa32fb97a523980c8698f8f24b9d5bcbd69))
+
+## [0.173.1](https://github.com/Zapper-fi/studio/compare/v0.173.0...v0.173.1) (2022-08-15)
+
+
+### Bug Fixes
+
+* **metavault-trade:** Display naming fixes. Positions list added. ([#1172](https://github.com/Zapper-fi/studio/issues/1172)) ([3a57c52](https://github.com/Zapper-fi/studio/commit/3a57c524386c8d2a7468954129435414c1001811))
+
 ## [0.173.0](https://github.com/Zapper-fi/studio/compare/v0.172.0...v0.173.0) (2022-08-12)
 
 

@@ -1,53 +1,52 @@
 import { getAddress } from 'ethers/lib/utils';
 
 import { drillBalance } from '~app-toolkit';
-import { buildDollarDisplayItem } from '~app-toolkit/helpers/presentation/display-item.present';
-import { getTokenImg } from '~app-toolkit/helpers/presentation/image.present';
+import { getAppImg, getTokenImg } from '~app-toolkit/helpers/presentation/image.present';
 import { ContractType } from '~position/contract.interface';
-import { ContractPositionBalance } from '~position/position-balance.interface';
-import { claimable } from '~position/position.utils';
-import { BaseToken } from '~position/token.interface';
+import { ContractPositionBalance, TokenBalance } from '~position/position-balance.interface';
+import { AppTokenPosition } from '~position/position.interface';
 import { Network } from '~types';
 
 import REVERT_FINANCE_DEFINITION from '../revert-finance.definition';
 
 const CompoundorContractAddress = getAddress('0x5411894842e610c4d0f6ed4c232da689400f94a1');
 
-export const getCompoundorContractPosition = (
+export const getCompoundorRewardsContractPosition = (
   network: Network,
-  existingToken: BaseToken,
-  balanceRaw: string,
-): ContractPositionBalance => {
-  const balance = [drillBalance(claimable(existingToken), balanceRaw)];
-  const dataProps = {};
-  const displayProps = {
-    label: `Claimable ${existingToken.symbol}`,
-    secondaryLabel: buildDollarDisplayItem(existingToken.price),
-    images: [getTokenImg(existingToken.address, network)],
+  tokens: Array<TokenBalance>,
+): ContractPositionBalance => ({
+  type: ContractType.POSITION,
+  address: CompoundorContractAddress,
+  network,
+  appId: REVERT_FINANCE_DEFINITION.id,
+  groupId: REVERT_FINANCE_DEFINITION.groups.compoundorRewards.id,
+  tokens: tokens.sort((a, b) => b.balanceUSD - a.balanceUSD),
+  balanceUSD: tokens.reduce((a, token) => a + token.balanceUSD, 0),
+  dataProps: {},
+  displayProps: {
+    label: `Compoundor claimable fees`,
+    images: [getAppImg(REVERT_FINANCE_DEFINITION.id)],
     statsItems: [],
-  };
+  },
+});
 
-  return {
-    type: ContractType.POSITION,
-    address: CompoundorContractAddress,
-    network,
-    appId: REVERT_FINANCE_DEFINITION.id,
-    groupId: REVERT_FINANCE_DEFINITION.groups.compoundorRewards.id,
-    tokens: balance,
-    balanceUSD: balance[0].balanceUSD,
-    dataProps,
-    displayProps,
-  };
-};
-
-// export const getCompoundingContractPosition = (network: Network, uniV3Lp: AppTokenPosition): TokenBalance => ({
-//   ...uniV3Lp,
-//   network,
-//   type: ContractType.APP_TOKEN,
-//   appId: REVERT_FINANCE_DEFINITION.id,
-//   groupId: REVERT_FINANCE_DEFINITION.groups.compoundorRewards.id,
-//   tokens: [...uniV3Lp.tokens],
-//   balanceUSD: uniV3Lp.balanceUSD,
-//   dataProps: uniV3Lp.dataProps,
-//   displayProps: uniV3Lp.displayProps,
-// });
+export const getCompoundingContractPosition = (
+  network: Network,
+  uniV3Lp: AppTokenPosition,
+): ContractPositionBalance => ({
+  address: CompoundorContractAddress,
+  type: ContractType.POSITION,
+  network,
+  appId: REVERT_FINANCE_DEFINITION.id,
+  groupId: REVERT_FINANCE_DEFINITION.groups.compoundingPositions.id,
+  tokens: [{ ...uniV3Lp, ...drillBalance(uniV3Lp, '1') }],
+  balanceUSD: drillBalance(uniV3Lp, '1').balanceUSD,
+  dataProps: {
+    compoundingPositionId: uniV3Lp.dataProps.id,
+  },
+  displayProps: {
+    label: `Compounding ${uniV3Lp.displayProps.label}`,
+    images: [getTokenImg(uniV3Lp.address, network)],
+    statsItems: [],
+  },
+});

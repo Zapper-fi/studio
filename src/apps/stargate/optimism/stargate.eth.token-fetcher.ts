@@ -3,8 +3,10 @@ import { Inject } from '@nestjs/common';
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { ZERO_ADDRESS } from '~app-toolkit/constants/address';
 import { Register } from '~app-toolkit/decorators';
-import { PositionFetcher } from '~position/position-fetcher.interface';
-import { AppTokenPosition } from '~position/position.interface';
+import {
+  AppTokenTemplatePositionFetcher,
+  DataPropsStageParams,
+} from '~position/template/app-token.template.position-fetcher';
 import { Network } from '~types/network.interface';
 
 import { StargateContractFactory, StargateEth } from '../contracts';
@@ -14,25 +16,44 @@ const appId = STARGATE_DEFINITION.id;
 const groupId = STARGATE_DEFINITION.groups.eth.id;
 const network = Network.OPTIMISM_MAINNET;
 
-const address = '0xd22363e3762ca7339569f3d33eade20127d5f98c'.toLowerCase();
+type StargateEthAppTokenDataProps = {
+  liquidity: number;
+  reserve: number;
+};
 
 @Register.TokenPositionFetcher({ appId, groupId, network })
-export class OptimismStargateEthTokenFetcher implements PositionFetcher<AppTokenPosition> {
-  constructor(
-    @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
-    @Inject(StargateContractFactory) private readonly contractFactory: StargateContractFactory,
-  ) {}
+export class OptimismStargateEthTokenFetcher extends AppTokenTemplatePositionFetcher<
+  StargateEth,
+  StargateEthAppTokenDataProps
+> {
+  appId = appId;
+  groupId = groupId;
+  network = network;
 
-  async getPositions() {
-    return await this.appToolkit.helpers.vaultTokenHelper.getTokens<StargateEth>({
-      appId,
-      groupId,
-      network,
-      resolveVaultAddresses: () => [address],
-      resolveContract: ({ address, network }) => this.contractFactory.stargateEth({ address, network }),
-      resolveUnderlyingTokenAddress: () => ZERO_ADDRESS,
-      resolveReserve: ({ multicall, contract }) => multicall.wrap(contract).totalSupply().then(Number),
-      resolvePricePerShare: () => 1,
-    });
+  constructor(
+    @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
+    @Inject(StargateContractFactory) protected readonly contractFactory: StargateContractFactory,
+  ) {
+    super(appToolkit);
+  }
+
+  getContract(address: string): StargateEth {
+    return this.contractFactory.stargateEth({ address, network: this.network });
+  }
+
+  getAddresses() {
+    return ['0xd22363e3762ca7339569f3d33eade20127d5f98c'];
+  }
+
+  async getUnderlyingTokenAddresses() {
+    return [ZERO_ADDRESS];
+  }
+
+  async getDataProps({
+    appToken,
+  }: DataPropsStageParams<StargateEth, StargateEthAppTokenDataProps>): Promise<StargateEthAppTokenDataProps> {
+    const reserve = appToken.supply; // 1:1
+    const liquidity = appToken.supply * appToken.price;
+    return { reserve, liquidity };
   }
 }

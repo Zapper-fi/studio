@@ -12,6 +12,7 @@ import { Network } from '~types/network.interface';
 
 import { TokenBalanceResponse } from './balance-fetcher.interface';
 import { BalanceFetcherRegistry } from './balance-fetcher.registry';
+import { BalancePresentationService } from './balance-presentation.service';
 import { BalancePresenterRegistry } from './balance-presenter.registry';
 import { DefaultBalancePresenterFactory } from './default.balance-presenter.factory';
 import { DefaultContractPositionBalanceFetcherFactory } from './default.contract-position-balance-fetcher.factory';
@@ -37,6 +38,9 @@ export class BalanceService {
     private readonly defaultTokenBalanceFetcherFactory: DefaultTokenBalanceFetcherFactory,
     @Inject(DefaultContractPositionBalanceFetcherFactory)
     private readonly defaultContractPositionBalanceFetcherFactory: DefaultContractPositionBalanceFetcherFactory,
+
+    @Inject(BalancePresentationService)
+    private readonly balancePresentationService: BalancePresentationService,
   ) {
     this.contractFactory = new ContractFactory((network: Network) => this.networkProviderService.getProvider(network));
   }
@@ -64,6 +68,7 @@ export class BalanceService {
       network,
       appId,
     });
+
     const positionGroupIds = this.positionFetcherRegistry.getGroupIdsForApp({
       type: ContractType.POSITION,
       network,
@@ -108,12 +113,14 @@ export class BalanceService {
           ),
         ]);
 
-        const presenter =
-          this.balancePresenterRegistry.get(appId, network) ??
-          this.defaultBalancePresenterFactory.build({ appId, network });
         const preprocessed = [...tokenBalances.flat(), ...contractPositionBalances.flat()];
-        const balances = await presenter.present(address, preprocessed);
-        return [address, balances];
+        const presentedBalances = await this.balancePresentationService.present({
+          appId,
+          network,
+          address,
+          balances: preprocessed,
+        });
+        return [address, presentedBalances];
       }),
     );
 

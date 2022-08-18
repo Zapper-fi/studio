@@ -22,6 +22,7 @@ export interface AbstractPosition<T = DefaultDataProps> extends Contract {
   tokens: WithMetaType<Token>[];
   dataProps: T;
   displayProps: DisplayProps;
+  groupLabel?: string;
   key?: string;
 }
 
