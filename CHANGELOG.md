@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.182.0](https://github.com/Zapper-fi/studio/compare/v0.181.0...v0.182.0) (2022-08-18)
+
+
+### Features
+
+* **stargate:** Fix failing balances ([5a388de](https://github.com/Zapper-fi/studio/commit/5a388defc1044cc42d64a97c5fde63011d3d32df))
+
 ## [0.181.0](https://github.com/Zapper-fi/studio/compare/v0.180.0...v0.181.0) (2022-08-18)
 
 
