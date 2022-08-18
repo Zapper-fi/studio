@@ -2,11 +2,12 @@
 /* tslint:disable */
 /* eslint-disable */
 export { DopexDpxSsov__factory } from './DopexDpxSsov__factory';
+export { DopexDualRewardStaking__factory } from './DopexDualRewardStaking__factory';
 export { DopexEthSsov__factory } from './DopexEthSsov__factory';
 export { DopexGOhmSsov__factory } from './DopexGOhmSsov__factory';
 export { DopexGmxSsov__factory } from './DopexGmxSsov__factory';
 export { DopexRdpxSsov__factory } from './DopexRdpxSsov__factory';
 export { DopexRewardDistribution__factory } from './DopexRewardDistribution__factory';
-export { DopexStaking__factory } from './DopexStaking__factory';
+export { DopexSingleRewardStaking__factory } from './DopexSingleRewardStaking__factory';
 export { DopexVotingEscrow__factory } from './DopexVotingEscrow__factory';
 export { DopexVotingEscrowRewards__factory } from './DopexVotingEscrowRewards__factory';

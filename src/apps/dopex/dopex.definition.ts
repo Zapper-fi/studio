@@ -10,13 +10,59 @@ export const DOPEX_DEFINITION = appDefinition({
   url: 'https://dopex.io/',
 
   groups: {
-    farm: { id: 'farm', type: GroupType.POSITION, label: 'Staking', groupLabel: 'Farms' },
-    dpxSsov: { id: 'dpx-ssov', type: GroupType.POSITION, label: 'SSOVs' },
-    rdpxSsov: { id: 'rdpx-ssov', type: GroupType.POSITION, label: 'SSOVs' },
-    ethSsov: { id: 'eth-ssov', type: GroupType.POSITION, label: 'SSOVs' },
-    gohmSsov: { id: 'gohm-ssov', type: GroupType.POSITION, label: 'SSOVs' },
-    gmxSsov: { id: 'gmx-ssov', type: GroupType.POSITION, label: 'SSOVs' },
-    votingEscrow: { id: 'voting-escrow', type: GroupType.POSITION, label: 'Voting Escrow' },
+    farm: {
+      id: 'farm',
+      type: GroupType.POSITION,
+      label: 'Staking',
+    },
+
+    lpFarm: {
+      id: 'lp-farm',
+      type: GroupType.POSITION,
+      label: 'LP Staking',
+    },
+
+    dpxSsov: {
+      id: 'dpx-ssov',
+      type: GroupType.POSITION,
+      label: 'SSOVs',
+    },
+
+    rdpxSsov: {
+      id: 'rdpx-ssov',
+      type: GroupType.POSITION,
+      label: 'SSOVs',
+    },
+
+    ethSsov: {
+      id: 'eth-ssov',
+      type: GroupType.POSITION,
+      label: 'SSOVs',
+    },
+
+    gohmSsov: {
+      id: 'gohm-ssov',
+      type: GroupType.POSITION,
+      label: 'SSOVs',
+    },
+
+    gmxSsov: {
+      id: 'gmx-ssov',
+      type: GroupType.POSITION,
+      label: 'SSOVs',
+    },
+
+    votingEscrow: {
+      id: 'voting-escrow',
+      type: GroupType.POSITION,
+      label: 'Voting Escrow',
+    },
+
+    votingEscrowRewards: {
+      id: 'voting-escrow-rewards',
+      type: GroupType.POSITION,
+      label: 'Voting Escrow Rewards',
+    },
   },
   links: {
     twitter: 'https://twitter.com/dopex_io',

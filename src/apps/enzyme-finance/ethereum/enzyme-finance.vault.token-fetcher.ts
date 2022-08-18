@@ -43,9 +43,9 @@ const network = Network.ETHEREUM_MAINNET;
 
 @Register.TokenPositionFetcher({ appId, groupId, network })
 export class EthereumEnzymeFinanceVaultTokenFetcher extends AppTokenTemplatePositionFetcher<EnzymeFinanceVault> {
-  appId = ENZYME_FINANCE_DEFINITION.id;
-  groupId = ENZYME_FINANCE_DEFINITION.groups.vault.id;
-  network = Network.ETHEREUM_MAINNET;
+  appId = appId;
+  groupId = groupId;
+  network = network;
 
   constructor(
     @Inject(EnzymeFinanceContractFactory) private readonly contractFactory: EnzymeFinanceContractFactory,

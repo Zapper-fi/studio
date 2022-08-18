@@ -92,6 +92,7 @@ export class UniswapV3LiquidityTokenHelper {
     const decimals = 0;
 
     const dataProps = {
+      id: positionId,
       rangeStart: range[0],
       rangeEnd: range[1],
     };
@@ -102,7 +103,7 @@ export class UniswapV3LiquidityTokenHelper {
       statsItems: [{ label: 'Liquidity', value: buildDollarDisplayItem(Number(liquidity)) }],
     };
 
-    const token: AppTokenPosition<UniswapV3LiquidityTokenDataProps> = {
+    let token: AppTokenPosition<UniswapV3LiquidityTokenDataProps> = {
       address: tokenAddress,
       type: ContractType.APP_TOKEN,
       appId: 'uniswap-v3',
@@ -117,7 +118,10 @@ export class UniswapV3LiquidityTokenHelper {
       dataProps,
       displayProps,
     };
-
+    token = {
+      ...token,
+      key: this.appToolkit.getPositionKey(token, ['id']),
+    };
     return token;
   }
 }
