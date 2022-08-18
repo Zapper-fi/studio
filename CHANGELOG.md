@@ -4,6 +4,14 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.179.0](https://github.com/Zapper-fi/studio/compare/v0.178.0...v0.179.0) (2022-08-18)
+
+
+### Features
+
+* **position-presenter:** Add registry ([#1203](https://github.com/Zapper-fi/studio/issues/1203)) ([51a6fe5](https://github.com/Zapper-fi/studio/commit/51a6fe5a524c5c7c231cf82e9f8a32e9e9168b03))
+* **teddy-cash:** Fix broken dependency ([d968bbf](https://github.com/Zapper-fi/studio/commit/d968bbfa27c69e309e21e2a53534ca739a70f171))
+
 ## [0.178.0](https://github.com/Zapper-fi/studio/compare/v0.177.0...v0.178.0) (2022-08-18)
 
 
