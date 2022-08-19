@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.183.1](https://github.com/Zapper-fi/studio/compare/v0.183.0...v0.183.1) (2022-08-19)
+
+
+### Bug Fixes
+
+* **metavault-trade:** Re-branded assets added for MVLP and esMVX tokens ([#1202](https://github.com/Zapper-fi/studio/issues/1202)) ([e440fd6](https://github.com/Zapper-fi/studio/commit/e440fd6b11535fede99fc2f7be3346748ac4c1a3))
+
 ## [0.183.0](https://github.com/Zapper-fi/studio/compare/v0.182.0...v0.183.0) (2022-08-19)
 
 
