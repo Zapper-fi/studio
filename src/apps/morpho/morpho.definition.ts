@@ -10,13 +10,8 @@ export const MORPHO_DEFINITION = appDefinition({
   url: 'https://app.morpho.xyz',
 
   groups: {
-    morphoCompoundSupply: {
-      id: 'morpho-compound-supply',
-      type: GroupType.TOKEN,
-      label: 'Lending',
-    },
-    morphoCompoundBorrow: {
-      id: 'morpho-compound-borrow',
+    morphoCompound: {
+      id: 'morpho-compound',
       type: GroupType.POSITION,
       label: 'Lending',
     },

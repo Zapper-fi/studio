@@ -11,7 +11,7 @@ import {
 import { getTokenImg } from '~app-toolkit/helpers/presentation/image.present';
 import { MorphoContractFactory } from '~apps/morpho';
 import { MorphoCompoundLens } from '~apps/morpho/contracts';
-import { MorphoCompoundSupplyContractPositionDataProps } from '~apps/morpho/ethereum/morpho.morpho-compound-supply.contract-position-fetcher';
+import { MorphoCompoundContractPositionDataProps } from '~apps/morpho/ethereum/morpho.morpho-compound.contract-position-fetcher';
 import { MorphoMarketsHelper } from '~apps/morpho/helpers/morpho.markets-helper';
 import { MorphoRateHelper } from '~apps/morpho/helpers/morpho.rate-helper';
 import { IMulticallWrapper } from '~multicall';
@@ -20,7 +20,7 @@ import { BalanceDisplayMode } from '~position/display.interface';
 import { ContractPosition } from '~position/position.interface';
 import { Network } from '~types';
 
-export interface MorphoCompoundSupplyContractPositionHelperParams {
+export interface MorphoCompoundContractPositionHelperParams {
   network: Network;
   appId: string;
   groupId: string;
@@ -32,15 +32,15 @@ export interface BuildContractPositionProps {
   lens: MorphoCompoundLens;
 }
 
-export interface IMorphoCompoundSupplyContractPositionHelper<T> {
-  getMarkets: (params: MorphoCompoundSupplyContractPositionHelperParams) => Promise<ContractPosition<T>[]>;
+export interface IMorphoCompoundContractPositionHelper<T> {
+  getMarkets: (params: MorphoCompoundContractPositionHelperParams) => Promise<ContractPosition<T>[]>;
 }
 @Injectable()
-export class MorphoCompoundSupplyContractPositionHelper
-  implements IMorphoCompoundSupplyContractPositionHelper<MorphoCompoundSupplyContractPositionDataProps>
+export class MorphoCompoundContractPositionHelper
+  implements IMorphoCompoundContractPositionHelper<MorphoCompoundContractPositionDataProps>
 {
   baseContractPosition: Pick<
-    ContractPosition<MorphoCompoundSupplyContractPositionDataProps>,
+    ContractPosition<MorphoCompoundContractPositionDataProps>,
     'type' | 'network' | 'appId' | 'groupId'
   > = {
     type: ContractType.POSITION,
@@ -55,7 +55,7 @@ export class MorphoCompoundSupplyContractPositionHelper
     @Inject(MorphoMarketsHelper) private readonly marketsHelper: MorphoMarketsHelper,
   ) {}
 
-  async getMarkets({ network, appId, groupId }: MorphoCompoundSupplyContractPositionHelperParams) {
+  async getMarkets({ network, appId, groupId }: MorphoCompoundContractPositionHelperParams) {
     const multicall = this.appToolkit.getMulticall(network);
     const lens = multicall.wrap(
       this.morphoContractFactory.morphoCompoundLens({
@@ -80,13 +80,14 @@ export class MorphoCompoundSupplyContractPositionHelper
     const underlyingDependency = this.marketsHelper.underlyings[market];
     const cToken = multicall.wrap(this.morphoContractFactory.compoundCToken({ address: market, network }));
 
-    const [supplyRateRaw, borrowRateRaw, totalMarketSupplyRaw, poolLiquidityRaw] = await Promise.all([
-      lens.getAverageSupplyRatePerBlock(market),
-      lens.getAverageBorrowRatePerBlock(market),
-      lens.getTotalMarketSupply(market),
-      // lens.getTotalMarketBorrow(market),
-      cToken.getCash(),
-    ]);
+    const [supplyRateRaw, borrowRateRaw, totalMarketSupplyRaw, totalMarketBorrowRaw, poolLiquidityRaw] =
+      await Promise.all([
+        lens.getAverageSupplyRatePerBlock(market),
+        lens.getAverageBorrowRatePerBlock(market),
+        lens.getTotalMarketSupply(market),
+        lens.getTotalMarketBorrow(market),
+        cToken.getCash(),
+      ]);
     const supplyApy = this.rateHelper.rateToAPY({
       network,
       rate: supplyRateRaw.avgSupplyRatePerBlock,
@@ -100,7 +101,11 @@ export class MorphoCompoundSupplyContractPositionHelper
     const totalSupply = totalMarketSupplyRaw.p2pSupplyAmount.add(totalMarketSupplyRaw.poolSupplyAmount);
     const supply = +formatUnits(totalSupply, underlyingDependency.decimals);
     const supplyUsd = supply * price;
-    const contractPosition: ContractPosition<MorphoCompoundSupplyContractPositionDataProps> = {
+
+    const totalBorrow = totalMarketBorrowRaw.p2pBorrowAmount.add(totalMarketBorrowRaw.poolBorrowAmount);
+    const borrow = +formatUnits(totalBorrow, underlyingDependency.decimals);
+    const borrowUsd = borrow * price;
+    const contractPosition: ContractPosition<MorphoCompoundContractPositionDataProps> = {
       ...this.baseContractPosition,
       address: market,
       tokens: [underlyingDependency],
@@ -111,6 +116,7 @@ export class MorphoCompoundSupplyContractPositionHelper
         p2pDisabled: underlyingDependency.p2pDisabled,
       },
       displayProps: {
+        appName: 'Morpho Compound',
         label: underlyingDependency.symbol,
         labelDetailed: underlyingDependency.symbol,
         secondaryLabel: buildDollarDisplayItem(underlyingDependency.price),
@@ -119,8 +125,11 @@ export class MorphoCompoundSupplyContractPositionHelper
         statsItems: [
           { label: 'Supply APY', value: buildPercentageDisplayItem(supplyApy * 100) },
           { label: 'Total Supply', value: buildNumberDisplayItem(supply) },
-          { label: 'Total USD', value: buildDollarDisplayItem(supplyUsd) },
+          { label: 'Total Supply USD', value: buildDollarDisplayItem(supplyUsd) },
           { label: 'Price', value: buildDollarDisplayItem(price) },
+          { label: 'Borrow APY', value: buildPercentageDisplayItem(borrowApy * 100) },
+          { label: 'Total Borrow', value: buildNumberDisplayItem(borrow) },
+          { label: 'Total Borrow USD', value: buildDollarDisplayItem(borrowUsd) },
         ],
         balanceDisplayMode: BalanceDisplayMode.UNDERLYING,
       },
