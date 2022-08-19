@@ -19,7 +19,7 @@ export type BadgerVaultTokenDataProps = {
   liquidity: number;
 };
 
-export abstract class BadgerVaultTokenHelper<T extends Contract> extends AppTokenTemplatePositionFetcher<
+export abstract class BadgerVaultTokenFetcher<T extends Contract> extends AppTokenTemplatePositionFetcher<
   T,
   BadgerVaultTokenDataProps
 > {

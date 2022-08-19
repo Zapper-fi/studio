@@ -4,6 +4,57 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.184.0](https://github.com/Zapper-fi/studio/compare/v0.183.1...v0.184.0) (2022-08-19)
+
+
+### Features
+
+* **template:** Fix secondary label ([48aa55c](https://github.com/Zapper-fi/studio/commit/48aa55cbc414775fecbc05e0fe39e5d4f6bc01d5))
+* **template:** Fix secondary label ([91935e2](https://github.com/Zapper-fi/studio/commit/91935e22192b76b2759f115a790cc3b7e7834cda))
+
+## [0.183.1](https://github.com/Zapper-fi/studio/compare/v0.183.0...v0.183.1) (2022-08-19)
+
+
+### Bug Fixes
+
+* **metavault-trade:** Re-branded assets added for MVLP and esMVX tokens ([#1202](https://github.com/Zapper-fi/studio/issues/1202)) ([e440fd6](https://github.com/Zapper-fi/studio/commit/e440fd6b11535fede99fc2f7be3346748ac4c1a3))
+
+## [0.183.0](https://github.com/Zapper-fi/studio/compare/v0.182.0...v0.183.0) (2022-08-19)
+
+
+### Features
+
+* **positions:** Add name to NFT collection type ([dfe93e4](https://github.com/Zapper-fi/studio/commit/dfe93e49c82fd173acdb42aabaf953eab746315f))
+
+## [0.182.0](https://github.com/Zapper-fi/studio/compare/v0.181.0...v0.182.0) (2022-08-18)
+
+
+### Features
+
+* **stargate:** Fix failing balances ([5a388de](https://github.com/Zapper-fi/studio/commit/5a388defc1044cc42d64a97c5fde63011d3d32df))
+
+## [0.181.0](https://github.com/Zapper-fi/studio/compare/v0.180.0...v0.181.0) (2022-08-18)
+
+
+### Features
+
+* **badger:** Fix claimable DIGG amount ([#1208](https://github.com/Zapper-fi/studio/issues/1208)) ([3813eb3](https://github.com/Zapper-fi/studio/commit/3813eb301f26763d7b2499e99256a7241a083983))
+
+## [0.180.0](https://github.com/Zapper-fi/studio/compare/v0.179.0...v0.180.0) (2022-08-18)
+
+
+### Features
+
+* **token:** add name property to BaseTokenPrice ([#1206](https://github.com/Zapper-fi/studio/issues/1206)) ([d67e4a7](https://github.com/Zapper-fi/studio/commit/d67e4a7da932956af558899303bbfb82800c7a85))
+
+## [0.179.0](https://github.com/Zapper-fi/studio/compare/v0.178.0...v0.179.0) (2022-08-18)
+
+
+### Features
+
+* **position-presenter:** Add registry ([#1203](https://github.com/Zapper-fi/studio/issues/1203)) ([51a6fe5](https://github.com/Zapper-fi/studio/commit/51a6fe5a524c5c7c231cf82e9f8a32e9e9168b03))
+* **teddy-cash:** Fix broken dependency ([d968bbf](https://github.com/Zapper-fi/studio/commit/d968bbfa27c69e309e21e2a53534ca739a70f171))
+
 ## [0.178.0](https://github.com/Zapper-fi/studio/compare/v0.177.0...v0.178.0) (2022-08-18)
 
 

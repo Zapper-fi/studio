@@ -1,16 +1,11 @@
-import { Inject } from '@nestjs/common';
-
-import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
 import { Network } from '~types/network.interface';
 
 import { BADGER_DEFINITION } from '../badger.definition';
-import { BadgerContractFactory } from '../contracts';
 import {
   BadgerClaimableContractPositionFetcher,
   BadgerClaimableDescriptor,
-} from '../helpers/badger.claimable.contract-position.helper';
-import { BadgerClaimableRewardsResolver } from '../helpers/badger.claimable.rewards-resolver';
+} from '../helpers/badger.claimable.contract-position-fetcher';
 
 const appId = BADGER_DEFINITION.id;
 const groupId = BADGER_DEFINITION.groups.claimable.id;
@@ -21,16 +16,6 @@ export class PolygonBadgerClaimableContractPositionFetcher extends BadgerClaimab
   appId = appId;
   groupId = groupId;
   network = network;
-  // No DIGG token yet on arb
-  diggTokenAddress = '';
-
-  constructor(
-    @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(BadgerContractFactory) protected readonly contractFactory: BadgerContractFactory,
-    @Inject(BadgerClaimableRewardsResolver) protected badgerClaimableRewardsResolver: BadgerClaimableRewardsResolver,
-  ) {
-    super(appToolkit, contractFactory, badgerClaimableRewardsResolver);
-  }
 
   async getDescriptors(): Promise<BadgerClaimableDescriptor[]> {
     return [

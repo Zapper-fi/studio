@@ -195,7 +195,7 @@ export abstract class ContractPositionTemplatePositionFetcher<
         const displayProps = {
           label: await this.getLabel(displayPropsStageParams),
           labelDetailed: await this.getLabelDetailed(displayPropsStageParams),
-          secondarylabel: await this.getSecondaryLabel(displayPropsStageParams),
+          secondaryLabel: await this.getSecondaryLabel(displayPropsStageParams),
           tertiaryLabel: await this.getTertiaryLabel(displayPropsStageParams),
           images: await this.getImages(displayPropsStageParams),
           statsItems: await this.getStatsItems(displayPropsStageParams),
