@@ -25,12 +25,24 @@ export class EthereumIdleBalanceFetcher implements BalanceFetcher {
     @Inject(IdleContractFactory) private readonly idleContractFactory: IdleContractFactory,
   ) {}
 
+
+  private async getPytBalances(address: string) {
+    const multicall = this.appToolkit.getMulticall(network);
+    const baseTokens = await this.appToolkit.getBaseTokenPrices(network);
+
+    const appTokens = await this.appToolkit.getAppTokenPositions({
+      appId: [IDLE_DEFINITION.id],
+      groupIds: [IDLE_DEFINITION.groups.pyt.id],
+      network,
+    });
+  };
+
   private async getVaultBalances(address: string) {
     const multicall = this.appToolkit.getMulticall(network);
     const baseTokens = await this.appToolkit.getBaseTokenPrices(network);
 
     const appTokens = await this.appToolkit.getAppTokenPositions({
-      appId,
+      appId: [IDLE_DEFINITION.id],
       groupIds: [IDLE_DEFINITION.groups.vault.id],
       network,
     });
@@ -88,12 +100,19 @@ export class EthereumIdleBalanceFetcher implements BalanceFetcher {
   }
 
   async getBalances(address: string) {
-    const [vaultBalances] = await Promise.all([this.getVaultBalances(address)]);
+    const [vaultBalances,pytBalances] = await Promise.all([
+      this.getVaultBalances(address),
+      this.getPytBalances(address),
+    ]);  
 
     return presentBalanceFetcherResponse([
       {
-        label: 'Vaults',
+        label: 'Best Yield',
         assets: vaultBalances,
+      },
+      {
+        label: 'Perpetual Yield Tranche',
+        assets: pytBalances,
       },
     ]);
   }

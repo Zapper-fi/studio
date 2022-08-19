@@ -12,383 +12,674 @@ import type {
   PopulatedTransaction,
   Signer,
   utils,
-} from 'ethers';
-import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
-import type { Listener, Provider } from '@ethersproject/providers';
-import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
+} from "ethers";
+import type {
+  FunctionFragment,
+  Result,
+  EventFragment,
+} from "@ethersproject/abi";
+import type { Listener, Provider } from "@ethersproject/providers";
+import type {
+  TypedEventFilter,
+  TypedEvent,
+  TypedListener,
+  OnEvent,
+  PromiseOrValue,
+} from "./common";
 
 export interface IdleTokenInterface extends utils.Interface {
   functions: {
-    'COMP()': FunctionFragment;
-    'IDLE()': FunctionFragment;
-    '_init(address,address,address)': FunctionFragment;
-    'addPauser(address)': FunctionFragment;
-    'allAvailableTokens(uint256)': FunctionFragment;
-    'allowance(address,address)': FunctionFragment;
-    'approve(address,uint256)': FunctionFragment;
-    'balanceOf(address)': FunctionFragment;
-    'decimals()': FunctionFragment;
-    'decreaseAllowance(address,uint256)': FunctionFragment;
-    'fee()': FunctionFragment;
-    'feeAddress()': FunctionFragment;
-    'flashFee(address,uint256)': FunctionFragment;
-    'flashLoan(address,address,uint256,bytes)': FunctionFragment;
-    'flashLoanFee()': FunctionFragment;
-    'getAPRs()': FunctionFragment;
-    'getAllAvailableTokens()': FunctionFragment;
-    'getAllocations()': FunctionFragment;
-    'getAvgAPR()': FunctionFragment;
-    'getGovTokens()': FunctionFragment;
-    'getGovTokensAmounts(address)': FunctionFragment;
-    'getProtocolTokenToGov(address)': FunctionFragment;
-    'govTokens(uint256)': FunctionFragment;
-    'govTokensIndexes(address)': FunctionFragment;
-    'govTokensLastBalances(address)': FunctionFragment;
-    'gst2()': FunctionFragment;
-    'idleController()': FunctionFragment;
-    'increaseAllowance(address,uint256)': FunctionFragment;
-    'initialize(string,string,uint8)': FunctionFragment;
-    'initialize()': FunctionFragment;
-    'initialize(address)': FunctionFragment;
-    'isOwner()': FunctionFragment;
-    'isPauser(address)': FunctionFragment;
-    'isRiskAdjusted()': FunctionFragment;
-    'lastAllocations(uint256)': FunctionFragment;
-    'lastITokenPrice()': FunctionFragment;
-    'maxFlashLoan(address)': FunctionFragment;
-    'maxUnlentPerc()': FunctionFragment;
-    'mintIdleToken(uint256,bool,address)': FunctionFragment;
-    'name()': FunctionFragment;
-    'oracle()': FunctionFragment;
-    'owner()': FunctionFragment;
-    'pause()': FunctionFragment;
-    'paused()': FunctionFragment;
-    'protocolWrappers(address)': FunctionFragment;
-    'rebalance()': FunctionFragment;
-    'rebalancer()': FunctionFragment;
-    'redeemIdleToken(uint256)': FunctionFragment;
-    'redeemIdleTokenSkipGov(uint256,bool[])': FunctionFragment;
-    'redeemInterestBearingTokens(uint256)': FunctionFragment;
-    'renounceOwnership()': FunctionFragment;
-    'renouncePauser()': FunctionFragment;
-    'setAToken(address)': FunctionFragment;
-    'setAllAvailableTokensAndWrappers(address[],address[],address[],address[])': FunctionFragment;
-    'setAllocations(uint256[])': FunctionFragment;
-    'setCToken(address)': FunctionFragment;
-    'setFee(uint256)': FunctionFragment;
-    'setFeeAddress(address)': FunctionFragment;
-    'setFlashLoanFee(uint256)': FunctionFragment;
-    'setMaxUnlentPerc(uint256)': FunctionFragment;
-    'setOracleAddress(address)': FunctionFragment;
-    'setRebalancer(address)': FunctionFragment;
-    'stkAAVE()': FunctionFragment;
-    'symbol()': FunctionFragment;
-    'token()': FunctionFragment;
-    'tokenHelper()': FunctionFragment;
-    'tokenPrice()': FunctionFragment;
-    'tokenPriceWithFee(address)': FunctionFragment;
-    'totalSupply()': FunctionFragment;
-    'transfer(address,uint256)': FunctionFragment;
-    'transferFrom(address,address,uint256)': FunctionFragment;
-    'transferOwnership(address)': FunctionFragment;
-    'unpause()': FunctionFragment;
-    'userAvgPrices(address)': FunctionFragment;
-    'usersGovTokensIndexes(address,address)': FunctionFragment;
+    "COMP()": FunctionFragment;
+    "IDLE()": FunctionFragment;
+    "_init(address,address,address)": FunctionFragment;
+    "addPauser(address)": FunctionFragment;
+    "allAvailableTokens(uint256)": FunctionFragment;
+    "allowance(address,address)": FunctionFragment;
+    "approve(address,uint256)": FunctionFragment;
+    "balanceOf(address)": FunctionFragment;
+    "decimals()": FunctionFragment;
+    "decreaseAllowance(address,uint256)": FunctionFragment;
+    "fee()": FunctionFragment;
+    "feeAddress()": FunctionFragment;
+    "flashFee(address,uint256)": FunctionFragment;
+    "flashLoan(address,address,uint256,bytes)": FunctionFragment;
+    "flashLoanFee()": FunctionFragment;
+    "getAPRs()": FunctionFragment;
+    "getAllAvailableTokens()": FunctionFragment;
+    "getAllocations()": FunctionFragment;
+    "getAvgAPR()": FunctionFragment;
+    "getGovTokens()": FunctionFragment;
+    "getGovTokensAmounts(address)": FunctionFragment;
+    "getProtocolTokenToGov(address)": FunctionFragment;
+    "govTokens(uint256)": FunctionFragment;
+    "govTokensIndexes(address)": FunctionFragment;
+    "govTokensLastBalances(address)": FunctionFragment;
+    "gst2()": FunctionFragment;
+    "idleController()": FunctionFragment;
+    "increaseAllowance(address,uint256)": FunctionFragment;
+    "initialize(string,string,uint8)": FunctionFragment;
+    "initialize()": FunctionFragment;
+    "initialize(address)": FunctionFragment;
+    "isOwner()": FunctionFragment;
+    "isPauser(address)": FunctionFragment;
+    "isRiskAdjusted()": FunctionFragment;
+    "lastAllocations(uint256)": FunctionFragment;
+    "lastITokenPrice()": FunctionFragment;
+    "maxFlashLoan(address)": FunctionFragment;
+    "maxUnlentPerc()": FunctionFragment;
+    "mintIdleToken(uint256,bool,address)": FunctionFragment;
+    "name()": FunctionFragment;
+    "oracle()": FunctionFragment;
+    "owner()": FunctionFragment;
+    "pause()": FunctionFragment;
+    "paused()": FunctionFragment;
+    "protocolWrappers(address)": FunctionFragment;
+    "rebalance()": FunctionFragment;
+    "rebalancer()": FunctionFragment;
+    "redeemIdleToken(uint256)": FunctionFragment;
+    "redeemIdleTokenSkipGov(uint256,bool[])": FunctionFragment;
+    "redeemInterestBearingTokens(uint256)": FunctionFragment;
+    "renounceOwnership()": FunctionFragment;
+    "renouncePauser()": FunctionFragment;
+    "setAToken(address)": FunctionFragment;
+    "setAllAvailableTokensAndWrappers(address[],address[],address[],address[])": FunctionFragment;
+    "setAllocations(uint256[])": FunctionFragment;
+    "setCToken(address)": FunctionFragment;
+    "setFee(uint256)": FunctionFragment;
+    "setFeeAddress(address)": FunctionFragment;
+    "setFlashLoanFee(uint256)": FunctionFragment;
+    "setMaxUnlentPerc(uint256)": FunctionFragment;
+    "setOracleAddress(address)": FunctionFragment;
+    "setRebalancer(address)": FunctionFragment;
+    "stkAAVE()": FunctionFragment;
+    "symbol()": FunctionFragment;
+    "token()": FunctionFragment;
+    "tokenHelper()": FunctionFragment;
+    "tokenPrice()": FunctionFragment;
+    "tokenPriceWithFee(address)": FunctionFragment;
+    "totalSupply()": FunctionFragment;
+    "transfer(address,uint256)": FunctionFragment;
+    "transferFrom(address,address,uint256)": FunctionFragment;
+    "transferOwnership(address)": FunctionFragment;
+    "unpause()": FunctionFragment;
+    "userAvgPrices(address)": FunctionFragment;
+    "usersGovTokensIndexes(address,address)": FunctionFragment;
   };
 
   getFunction(
     nameOrSignatureOrTopic:
-      | 'COMP'
-      | 'IDLE'
-      | '_init'
-      | 'addPauser'
-      | 'allAvailableTokens'
-      | 'allowance'
-      | 'approve'
-      | 'balanceOf'
-      | 'decimals'
-      | 'decreaseAllowance'
-      | 'fee'
-      | 'feeAddress'
-      | 'flashFee'
-      | 'flashLoan'
-      | 'flashLoanFee'
-      | 'getAPRs'
-      | 'getAllAvailableTokens'
-      | 'getAllocations'
-      | 'getAvgAPR'
-      | 'getGovTokens'
-      | 'getGovTokensAmounts'
-      | 'getProtocolTokenToGov'
-      | 'govTokens'
-      | 'govTokensIndexes'
-      | 'govTokensLastBalances'
-      | 'gst2'
-      | 'idleController'
-      | 'increaseAllowance'
-      | 'initialize(string,string,uint8)'
-      | 'initialize()'
-      | 'initialize(address)'
-      | 'isOwner'
-      | 'isPauser'
-      | 'isRiskAdjusted'
-      | 'lastAllocations'
-      | 'lastITokenPrice'
-      | 'maxFlashLoan'
-      | 'maxUnlentPerc'
-      | 'mintIdleToken'
-      | 'name'
-      | 'oracle'
-      | 'owner'
-      | 'pause'
-      | 'paused'
-      | 'protocolWrappers'
-      | 'rebalance'
-      | 'rebalancer'
-      | 'redeemIdleToken'
-      | 'redeemIdleTokenSkipGov'
-      | 'redeemInterestBearingTokens'
-      | 'renounceOwnership'
-      | 'renouncePauser'
-      | 'setAToken'
-      | 'setAllAvailableTokensAndWrappers'
-      | 'setAllocations'
-      | 'setCToken'
-      | 'setFee'
-      | 'setFeeAddress'
-      | 'setFlashLoanFee'
-      | 'setMaxUnlentPerc'
-      | 'setOracleAddress'
-      | 'setRebalancer'
-      | 'stkAAVE'
-      | 'symbol'
-      | 'token'
-      | 'tokenHelper'
-      | 'tokenPrice'
-      | 'tokenPriceWithFee'
-      | 'totalSupply'
-      | 'transfer'
-      | 'transferFrom'
-      | 'transferOwnership'
-      | 'unpause'
-      | 'userAvgPrices'
-      | 'usersGovTokensIndexes',
+      | "COMP"
+      | "IDLE"
+      | "_init"
+      | "addPauser"
+      | "allAvailableTokens"
+      | "allowance"
+      | "approve"
+      | "balanceOf"
+      | "decimals"
+      | "decreaseAllowance"
+      | "fee"
+      | "feeAddress"
+      | "flashFee"
+      | "flashLoan"
+      | "flashLoanFee"
+      | "getAPRs"
+      | "getAllAvailableTokens"
+      | "getAllocations"
+      | "getAvgAPR"
+      | "getGovTokens"
+      | "getGovTokensAmounts"
+      | "getProtocolTokenToGov"
+      | "govTokens"
+      | "govTokensIndexes"
+      | "govTokensLastBalances"
+      | "gst2"
+      | "idleController"
+      | "increaseAllowance"
+      | "initialize(string,string,uint8)"
+      | "initialize()"
+      | "initialize(address)"
+      | "isOwner"
+      | "isPauser"
+      | "isRiskAdjusted"
+      | "lastAllocations"
+      | "lastITokenPrice"
+      | "maxFlashLoan"
+      | "maxUnlentPerc"
+      | "mintIdleToken"
+      | "name"
+      | "oracle"
+      | "owner"
+      | "pause"
+      | "paused"
+      | "protocolWrappers"
+      | "rebalance"
+      | "rebalancer"
+      | "redeemIdleToken"
+      | "redeemIdleTokenSkipGov"
+      | "redeemInterestBearingTokens"
+      | "renounceOwnership"
+      | "renouncePauser"
+      | "setAToken"
+      | "setAllAvailableTokensAndWrappers"
+      | "setAllocations"
+      | "setCToken"
+      | "setFee"
+      | "setFeeAddress"
+      | "setFlashLoanFee"
+      | "setMaxUnlentPerc"
+      | "setOracleAddress"
+      | "setRebalancer"
+      | "stkAAVE"
+      | "symbol"
+      | "token"
+      | "tokenHelper"
+      | "tokenPrice"
+      | "tokenPriceWithFee"
+      | "totalSupply"
+      | "transfer"
+      | "transferFrom"
+      | "transferOwnership"
+      | "unpause"
+      | "userAvgPrices"
+      | "usersGovTokensIndexes"
   ): FunctionFragment;
 
-  encodeFunctionData(functionFragment: 'COMP', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'IDLE', values?: undefined): string;
+  encodeFunctionData(functionFragment: "COMP", values?: undefined): string;
+  encodeFunctionData(functionFragment: "IDLE", values?: undefined): string;
   encodeFunctionData(
-    functionFragment: '_init',
-    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<string>],
-  ): string;
-  encodeFunctionData(functionFragment: 'addPauser', values: [PromiseOrValue<string>]): string;
-  encodeFunctionData(functionFragment: 'allAvailableTokens', values: [PromiseOrValue<BigNumberish>]): string;
-  encodeFunctionData(functionFragment: 'allowance', values: [PromiseOrValue<string>, PromiseOrValue<string>]): string;
-  encodeFunctionData(
-    functionFragment: 'approve',
-    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
-  ): string;
-  encodeFunctionData(functionFragment: 'balanceOf', values: [PromiseOrValue<string>]): string;
-  encodeFunctionData(functionFragment: 'decimals', values?: undefined): string;
-  encodeFunctionData(
-    functionFragment: 'decreaseAllowance',
-    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
-  ): string;
-  encodeFunctionData(functionFragment: 'fee', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'feeAddress', values?: undefined): string;
-  encodeFunctionData(
-    functionFragment: 'flashFee',
-    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+    functionFragment: "_init",
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>
+    ]
   ): string;
   encodeFunctionData(
-    functionFragment: 'flashLoan',
-    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<BigNumberish>, PromiseOrValue<BytesLike>],
-  ): string;
-  encodeFunctionData(functionFragment: 'flashLoanFee', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'getAPRs', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'getAllAvailableTokens', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'getAllocations', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'getAvgAPR', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'getGovTokens', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'getGovTokensAmounts', values: [PromiseOrValue<string>]): string;
-  encodeFunctionData(functionFragment: 'getProtocolTokenToGov', values: [PromiseOrValue<string>]): string;
-  encodeFunctionData(functionFragment: 'govTokens', values: [PromiseOrValue<BigNumberish>]): string;
-  encodeFunctionData(functionFragment: 'govTokensIndexes', values: [PromiseOrValue<string>]): string;
-  encodeFunctionData(functionFragment: 'govTokensLastBalances', values: [PromiseOrValue<string>]): string;
-  encodeFunctionData(functionFragment: 'gst2', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'idleController', values?: undefined): string;
-  encodeFunctionData(
-    functionFragment: 'increaseAllowance',
-    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+    functionFragment: "addPauser",
+    values: [PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
-    functionFragment: 'initialize(string,string,uint8)',
-    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
-  ): string;
-  encodeFunctionData(functionFragment: 'initialize()', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'initialize(address)', values: [PromiseOrValue<string>]): string;
-  encodeFunctionData(functionFragment: 'isOwner', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'isPauser', values: [PromiseOrValue<string>]): string;
-  encodeFunctionData(functionFragment: 'isRiskAdjusted', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'lastAllocations', values: [PromiseOrValue<BigNumberish>]): string;
-  encodeFunctionData(functionFragment: 'lastITokenPrice', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'maxFlashLoan', values: [PromiseOrValue<string>]): string;
-  encodeFunctionData(functionFragment: 'maxUnlentPerc', values?: undefined): string;
-  encodeFunctionData(
-    functionFragment: 'mintIdleToken',
-    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<boolean>, PromiseOrValue<string>],
-  ): string;
-  encodeFunctionData(functionFragment: 'name', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'oracle', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'owner', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'pause', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'paused', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'protocolWrappers', values: [PromiseOrValue<string>]): string;
-  encodeFunctionData(functionFragment: 'rebalance', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'rebalancer', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'redeemIdleToken', values: [PromiseOrValue<BigNumberish>]): string;
-  encodeFunctionData(
-    functionFragment: 'redeemIdleTokenSkipGov',
-    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<boolean>[]],
-  ): string;
-  encodeFunctionData(functionFragment: 'redeemInterestBearingTokens', values: [PromiseOrValue<BigNumberish>]): string;
-  encodeFunctionData(functionFragment: 'renounceOwnership', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'renouncePauser', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'setAToken', values: [PromiseOrValue<string>]): string;
-  encodeFunctionData(
-    functionFragment: 'setAllAvailableTokensAndWrappers',
-    values: [PromiseOrValue<string>[], PromiseOrValue<string>[], PromiseOrValue<string>[], PromiseOrValue<string>[]],
-  ): string;
-  encodeFunctionData(functionFragment: 'setAllocations', values: [PromiseOrValue<BigNumberish>[]]): string;
-  encodeFunctionData(functionFragment: 'setCToken', values: [PromiseOrValue<string>]): string;
-  encodeFunctionData(functionFragment: 'setFee', values: [PromiseOrValue<BigNumberish>]): string;
-  encodeFunctionData(functionFragment: 'setFeeAddress', values: [PromiseOrValue<string>]): string;
-  encodeFunctionData(functionFragment: 'setFlashLoanFee', values: [PromiseOrValue<BigNumberish>]): string;
-  encodeFunctionData(functionFragment: 'setMaxUnlentPerc', values: [PromiseOrValue<BigNumberish>]): string;
-  encodeFunctionData(functionFragment: 'setOracleAddress', values: [PromiseOrValue<string>]): string;
-  encodeFunctionData(functionFragment: 'setRebalancer', values: [PromiseOrValue<string>]): string;
-  encodeFunctionData(functionFragment: 'stkAAVE', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'symbol', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'token', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'tokenHelper', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'tokenPrice', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'tokenPriceWithFee', values: [PromiseOrValue<string>]): string;
-  encodeFunctionData(functionFragment: 'totalSupply', values?: undefined): string;
-  encodeFunctionData(
-    functionFragment: 'transfer',
-    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+    functionFragment: "allAvailableTokens",
+    values: [PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
-    functionFragment: 'transferFrom',
-    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+    functionFragment: "allowance",
+    values: [PromiseOrValue<string>, PromiseOrValue<string>]
   ): string;
-  encodeFunctionData(functionFragment: 'transferOwnership', values: [PromiseOrValue<string>]): string;
-  encodeFunctionData(functionFragment: 'unpause', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'userAvgPrices', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(
-    functionFragment: 'usersGovTokensIndexes',
-    values: [PromiseOrValue<string>, PromiseOrValue<string>],
+    functionFragment: "approve",
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "balanceOf",
+    values: [PromiseOrValue<string>]
+  ): string;
+  encodeFunctionData(functionFragment: "decimals", values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: "decreaseAllowance",
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
+  ): string;
+  encodeFunctionData(functionFragment: "fee", values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: "feeAddress",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "flashFee",
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "flashLoan",
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BytesLike>
+    ]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "flashLoanFee",
+    values?: undefined
+  ): string;
+  encodeFunctionData(functionFragment: "getAPRs", values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: "getAllAvailableTokens",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "getAllocations",
+    values?: undefined
+  ): string;
+  encodeFunctionData(functionFragment: "getAvgAPR", values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: "getGovTokens",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "getGovTokensAmounts",
+    values: [PromiseOrValue<string>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "getProtocolTokenToGov",
+    values: [PromiseOrValue<string>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "govTokens",
+    values: [PromiseOrValue<BigNumberish>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "govTokensIndexes",
+    values: [PromiseOrValue<string>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "govTokensLastBalances",
+    values: [PromiseOrValue<string>]
+  ): string;
+  encodeFunctionData(functionFragment: "gst2", values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: "idleController",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "increaseAllowance",
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "initialize(string,string,uint8)",
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>
+    ]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "initialize()",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "initialize(address)",
+    values: [PromiseOrValue<string>]
+  ): string;
+  encodeFunctionData(functionFragment: "isOwner", values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: "isPauser",
+    values: [PromiseOrValue<string>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "isRiskAdjusted",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "lastAllocations",
+    values: [PromiseOrValue<BigNumberish>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "lastITokenPrice",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "maxFlashLoan",
+    values: [PromiseOrValue<string>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "maxUnlentPerc",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "mintIdleToken",
+    values: [
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<boolean>,
+      PromiseOrValue<string>
+    ]
+  ): string;
+  encodeFunctionData(functionFragment: "name", values?: undefined): string;
+  encodeFunctionData(functionFragment: "oracle", values?: undefined): string;
+  encodeFunctionData(functionFragment: "owner", values?: undefined): string;
+  encodeFunctionData(functionFragment: "pause", values?: undefined): string;
+  encodeFunctionData(functionFragment: "paused", values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: "protocolWrappers",
+    values: [PromiseOrValue<string>]
+  ): string;
+  encodeFunctionData(functionFragment: "rebalance", values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: "rebalancer",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "redeemIdleToken",
+    values: [PromiseOrValue<BigNumberish>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "redeemIdleTokenSkipGov",
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<boolean>[]]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "redeemInterestBearingTokens",
+    values: [PromiseOrValue<BigNumberish>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "renounceOwnership",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "renouncePauser",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "setAToken",
+    values: [PromiseOrValue<string>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "setAllAvailableTokensAndWrappers",
+    values: [
+      PromiseOrValue<string>[],
+      PromiseOrValue<string>[],
+      PromiseOrValue<string>[],
+      PromiseOrValue<string>[]
+    ]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "setAllocations",
+    values: [PromiseOrValue<BigNumberish>[]]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "setCToken",
+    values: [PromiseOrValue<string>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "setFee",
+    values: [PromiseOrValue<BigNumberish>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "setFeeAddress",
+    values: [PromiseOrValue<string>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "setFlashLoanFee",
+    values: [PromiseOrValue<BigNumberish>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "setMaxUnlentPerc",
+    values: [PromiseOrValue<BigNumberish>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "setOracleAddress",
+    values: [PromiseOrValue<string>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "setRebalancer",
+    values: [PromiseOrValue<string>]
+  ): string;
+  encodeFunctionData(functionFragment: "stkAAVE", values?: undefined): string;
+  encodeFunctionData(functionFragment: "symbol", values?: undefined): string;
+  encodeFunctionData(functionFragment: "token", values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: "tokenHelper",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "tokenPrice",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "tokenPriceWithFee",
+    values: [PromiseOrValue<string>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "totalSupply",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "transfer",
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "transferFrom",
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>
+    ]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "transferOwnership",
+    values: [PromiseOrValue<string>]
+  ): string;
+  encodeFunctionData(functionFragment: "unpause", values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: "userAvgPrices",
+    values: [PromiseOrValue<string>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "usersGovTokensIndexes",
+    values: [PromiseOrValue<string>, PromiseOrValue<string>]
   ): string;
 
-  decodeFunctionResult(functionFragment: 'COMP', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'IDLE', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: '_init', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'addPauser', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'allAvailableTokens', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'allowance', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'approve', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'balanceOf', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'decimals', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'decreaseAllowance', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'fee', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'feeAddress', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'flashFee', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'flashLoan', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'flashLoanFee', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'getAPRs', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'getAllAvailableTokens', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'getAllocations', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'getAvgAPR', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'getGovTokens', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'getGovTokensAmounts', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'getProtocolTokenToGov', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'govTokens', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'govTokensIndexes', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'govTokensLastBalances', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'gst2', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'idleController', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'increaseAllowance', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'initialize(string,string,uint8)', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'initialize()', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'initialize(address)', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'isOwner', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'isPauser', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'isRiskAdjusted', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'lastAllocations', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'lastITokenPrice', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'maxFlashLoan', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'maxUnlentPerc', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'mintIdleToken', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'name', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'oracle', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'owner', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'pause', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'paused', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'protocolWrappers', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'rebalance', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'rebalancer', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'redeemIdleToken', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'redeemIdleTokenSkipGov', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'redeemInterestBearingTokens', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'renounceOwnership', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'renouncePauser', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'setAToken', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'setAllAvailableTokensAndWrappers', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'setAllocations', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'setCToken', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'setFee', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'setFeeAddress', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'setFlashLoanFee', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'setMaxUnlentPerc', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'setOracleAddress', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'setRebalancer', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'stkAAVE', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'symbol', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'token', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'tokenHelper', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'tokenPrice', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'tokenPriceWithFee', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'totalSupply', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'transfer', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'transferFrom', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'transferOwnership', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'unpause', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'userAvgPrices', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'usersGovTokensIndexes', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "COMP", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "IDLE", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "_init", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "addPauser", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "allAvailableTokens",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(functionFragment: "allowance", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "approve", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "balanceOf", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "decimals", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "decreaseAllowance",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(functionFragment: "fee", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "feeAddress", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "flashFee", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "flashLoan", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "flashLoanFee",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(functionFragment: "getAPRs", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "getAllAvailableTokens",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "getAllocations",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(functionFragment: "getAvgAPR", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "getGovTokens",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "getGovTokensAmounts",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "getProtocolTokenToGov",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(functionFragment: "govTokens", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "govTokensIndexes",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "govTokensLastBalances",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(functionFragment: "gst2", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "idleController",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "increaseAllowance",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "initialize(string,string,uint8)",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "initialize()",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "initialize(address)",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(functionFragment: "isOwner", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "isPauser", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "isRiskAdjusted",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "lastAllocations",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "lastITokenPrice",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "maxFlashLoan",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "maxUnlentPerc",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "mintIdleToken",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(functionFragment: "name", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "oracle", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "owner", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "pause", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "paused", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "protocolWrappers",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(functionFragment: "rebalance", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "rebalancer", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "redeemIdleToken",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "redeemIdleTokenSkipGov",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "redeemInterestBearingTokens",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "renounceOwnership",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "renouncePauser",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(functionFragment: "setAToken", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "setAllAvailableTokensAndWrappers",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "setAllocations",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(functionFragment: "setCToken", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "setFee", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "setFeeAddress",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "setFlashLoanFee",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "setMaxUnlentPerc",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "setOracleAddress",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "setRebalancer",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(functionFragment: "stkAAVE", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "symbol", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "token", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "tokenHelper",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(functionFragment: "tokenPrice", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "tokenPriceWithFee",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "totalSupply",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(functionFragment: "transfer", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "transferFrom",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "transferOwnership",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(functionFragment: "unpause", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "userAvgPrices",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "usersGovTokensIndexes",
+    data: BytesLike
+  ): Result;
 
   events: {
-    'Approval(address,address,uint256)': EventFragment;
-    'FlashLoan(address,address,uint256,uint256)': EventFragment;
-    'OwnershipTransferred(address,address)': EventFragment;
-    'Paused(address)': EventFragment;
-    'PauserAdded(address)': EventFragment;
-    'PauserRemoved(address)': EventFragment;
-    'Rebalance(address,uint256)': EventFragment;
-    'Referral(uint256,address)': EventFragment;
-    'Transfer(address,address,uint256)': EventFragment;
-    'Unpaused(address)': EventFragment;
+    "Approval(address,address,uint256)": EventFragment;
+    "FlashLoan(address,address,uint256,uint256)": EventFragment;
+    "OwnershipTransferred(address,address)": EventFragment;
+    "Paused(address)": EventFragment;
+    "PauserAdded(address)": EventFragment;
+    "PauserRemoved(address)": EventFragment;
+    "Rebalance(address,uint256)": EventFragment;
+    "Referral(uint256,address)": EventFragment;
+    "Transfer(address,address,uint256)": EventFragment;
+    "Unpaused(address)": EventFragment;
   };
 
-  getEvent(nameOrSignatureOrTopic: 'Approval'): EventFragment;
-  getEvent(nameOrSignatureOrTopic: 'FlashLoan'): EventFragment;
-  getEvent(nameOrSignatureOrTopic: 'OwnershipTransferred'): EventFragment;
-  getEvent(nameOrSignatureOrTopic: 'Paused'): EventFragment;
-  getEvent(nameOrSignatureOrTopic: 'PauserAdded'): EventFragment;
-  getEvent(nameOrSignatureOrTopic: 'PauserRemoved'): EventFragment;
-  getEvent(nameOrSignatureOrTopic: 'Rebalance'): EventFragment;
-  getEvent(nameOrSignatureOrTopic: 'Referral'): EventFragment;
-  getEvent(nameOrSignatureOrTopic: 'Transfer'): EventFragment;
-  getEvent(nameOrSignatureOrTopic: 'Unpaused'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "Approval"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "FlashLoan"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "OwnershipTransferred"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "Paused"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "PauserAdded"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "PauserRemoved"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "Rebalance"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "Referral"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "Transfer"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "Unpaused"): EventFragment;
 }
 
 export interface ApprovalEventObject {
@@ -396,7 +687,10 @@ export interface ApprovalEventObject {
   spender: string;
   value: BigNumber;
 }
-export type ApprovalEvent = TypedEvent<[string, string, BigNumber], ApprovalEventObject>;
+export type ApprovalEvent = TypedEvent<
+  [string, string, BigNumber],
+  ApprovalEventObject
+>;
 
 export type ApprovalEventFilter = TypedEventFilter<ApprovalEvent>;
 
@@ -406,7 +700,10 @@ export interface FlashLoanEventObject {
   amount: BigNumber;
   premium: BigNumber;
 }
-export type FlashLoanEvent = TypedEvent<[string, string, BigNumber, BigNumber], FlashLoanEventObject>;
+export type FlashLoanEvent = TypedEvent<
+  [string, string, BigNumber, BigNumber],
+  FlashLoanEventObject
+>;
 
 export type FlashLoanEventFilter = TypedEventFilter<FlashLoanEvent>;
 
@@ -414,9 +711,13 @@ export interface OwnershipTransferredEventObject {
   previousOwner: string;
   newOwner: string;
 }
-export type OwnershipTransferredEvent = TypedEvent<[string, string], OwnershipTransferredEventObject>;
+export type OwnershipTransferredEvent = TypedEvent<
+  [string, string],
+  OwnershipTransferredEventObject
+>;
 
-export type OwnershipTransferredEventFilter = TypedEventFilter<OwnershipTransferredEvent>;
+export type OwnershipTransferredEventFilter =
+  TypedEventFilter<OwnershipTransferredEvent>;
 
 export interface PausedEventObject {
   account: string;
@@ -443,7 +744,10 @@ export interface RebalanceEventObject {
   _rebalancer: string;
   _amount: BigNumber;
 }
-export type RebalanceEvent = TypedEvent<[string, BigNumber], RebalanceEventObject>;
+export type RebalanceEvent = TypedEvent<
+  [string, BigNumber],
+  RebalanceEventObject
+>;
 
 export type RebalanceEventFilter = TypedEventFilter<RebalanceEvent>;
 
@@ -451,7 +755,10 @@ export interface ReferralEventObject {
   _amount: BigNumber;
   _ref: string;
 }
-export type ReferralEvent = TypedEvent<[BigNumber, string], ReferralEventObject>;
+export type ReferralEvent = TypedEvent<
+  [BigNumber, string],
+  ReferralEventObject
+>;
 
 export type ReferralEventFilter = TypedEventFilter<ReferralEvent>;
 
@@ -460,7 +767,10 @@ export interface TransferEventObject {
   to: string;
   value: BigNumber;
 }
-export type TransferEvent = TypedEvent<[string, string, BigNumber], TransferEventObject>;
+export type TransferEvent = TypedEvent<
+  [string, string, BigNumber],
+  TransferEventObject
+>;
 
 export type TransferEventFilter = TypedEventFilter<TransferEvent>;
 
@@ -481,12 +791,16 @@ export interface IdleToken extends BaseContract {
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,
     fromBlockOrBlockhash?: string | number | undefined,
-    toBlock?: string | number | undefined,
+    toBlock?: string | number | undefined
   ): Promise<Array<TEvent>>;
 
-  listeners<TEvent extends TypedEvent>(eventFilter?: TypedEventFilter<TEvent>): Array<TypedListener<TEvent>>;
+  listeners<TEvent extends TypedEvent>(
+    eventFilter?: TypedEventFilter<TEvent>
+  ): Array<TypedListener<TEvent>>;
   listeners(eventName?: string): Array<Listener>;
-  removeAllListeners<TEvent extends TypedEvent>(eventFilter: TypedEventFilter<TEvent>): this;
+  removeAllListeners<TEvent extends TypedEvent>(
+    eventFilter: TypedEventFilter<TEvent>
+  ): this;
   removeAllListeners(eventName?: string): this;
   off: OnEvent<this>;
   on: OnEvent<this>;
@@ -502,36 +816,42 @@ export interface IdleToken extends BaseContract {
       _tokenHelper: PromiseOrValue<string>,
       _aToken: PromiseOrValue<string>,
       _newOracle: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
     addPauser(
       account: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
-    allAvailableTokens(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[string]>;
+    allAvailableTokens(
+      arg0: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<[string]>;
 
     allowance(
       owner: PromiseOrValue<string>,
       spender: PromiseOrValue<string>,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<[BigNumber]>;
 
     approve(
       spender: PromiseOrValue<string>,
       amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
-    balanceOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
+    balanceOf(
+      account: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<[BigNumber]>;
 
     decimals(overrides?: CallOverrides): Promise<[number]>;
 
     decreaseAllowance(
       spender: PromiseOrValue<string>,
       subtractedValue: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
     fee(overrides?: CallOverrides): Promise<[BigNumber]>;
@@ -541,7 +861,7 @@ export interface IdleToken extends BaseContract {
     flashFee(
       _token: PromiseOrValue<string>,
       _amount: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<[BigNumber]>;
 
     flashLoan(
@@ -549,7 +869,7 @@ export interface IdleToken extends BaseContract {
       _token: PromiseOrValue<string>,
       _amount: PromiseOrValue<BigNumberish>,
       _params: PromiseOrValue<BytesLike>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
     flashLoanFee(overrides?: CallOverrides): Promise<[BigNumber]>;
@@ -566,16 +886,28 @@ export interface IdleToken extends BaseContract {
 
     getGovTokensAmounts(
       _usr: PromiseOrValue<string>,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<[BigNumber[]] & { _amounts: BigNumber[] }>;
 
-    getProtocolTokenToGov(_protocolToken: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[string]>;
+    getProtocolTokenToGov(
+      _protocolToken: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<[string]>;
 
-    govTokens(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[string]>;
+    govTokens(
+      arg0: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<[string]>;
 
-    govTokensIndexes(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
+    govTokensIndexes(
+      arg0: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<[BigNumber]>;
 
-    govTokensLastBalances(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
+    govTokensLastBalances(
+      arg0: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<[BigNumber]>;
 
     gst2(overrides?: CallOverrides): Promise<[string]>;
 
@@ -584,34 +916,45 @@ export interface IdleToken extends BaseContract {
     increaseAllowance(
       spender: PromiseOrValue<string>,
       addedValue: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
-    'initialize(string,string,uint8)'(
+    "initialize(string,string,uint8)"(
       name: PromiseOrValue<string>,
       symbol: PromiseOrValue<string>,
       decimals: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
-    'initialize()'(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
+    "initialize()"(
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
 
-    'initialize(address)'(
+    "initialize(address)"(
       sender: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
     isOwner(overrides?: CallOverrides): Promise<[boolean]>;
 
-    isPauser(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[boolean]>;
+    isPauser(
+      account: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<[boolean]>;
 
     isRiskAdjusted(overrides?: CallOverrides): Promise<[boolean]>;
 
-    lastAllocations(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[BigNumber]>;
+    lastAllocations(
+      arg0: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<[BigNumber]>;
 
     lastITokenPrice(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    maxFlashLoan(_token: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
+    maxFlashLoan(
+      _token: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<[BigNumber]>;
 
     maxUnlentPerc(overrides?: CallOverrides): Promise<[BigNumber]>;
 
@@ -619,7 +962,7 @@ export interface IdleToken extends BaseContract {
       _amount: PromiseOrValue<BigNumberish>,
       arg1: PromiseOrValue<boolean>,
       _referral: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
     name(overrides?: CallOverrides): Promise<[string]>;
@@ -628,39 +971,50 @@ export interface IdleToken extends BaseContract {
 
     owner(overrides?: CallOverrides): Promise<[string]>;
 
-    pause(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
+    pause(
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
 
     paused(overrides?: CallOverrides): Promise<[boolean]>;
 
-    protocolWrappers(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[string]>;
+    protocolWrappers(
+      arg0: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<[string]>;
 
-    rebalance(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
+    rebalance(
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
 
     rebalancer(overrides?: CallOverrides): Promise<[string]>;
 
     redeemIdleToken(
       _amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
     redeemIdleTokenSkipGov(
       _amount: PromiseOrValue<BigNumberish>,
       _skipGovTokenRedeem: PromiseOrValue<boolean>[],
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
     redeemInterestBearingTokens(
       _amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
-    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
+    renounceOwnership(
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
 
-    renouncePauser(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
+    renouncePauser(
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
 
     setAToken(
       _aToken: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
     setAllAvailableTokensAndWrappers(
@@ -668,47 +1022,47 @@ export interface IdleToken extends BaseContract {
       wrappers: PromiseOrValue<string>[],
       _newGovTokens: PromiseOrValue<string>[],
       _newGovTokensEqualLen: PromiseOrValue<string>[],
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
     setAllocations(
       _allocations: PromiseOrValue<BigNumberish>[],
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
     setCToken(
       _cToken: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
     setFee(
       _fee: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
     setFeeAddress(
       _feeAddress: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
     setFlashLoanFee(
       _flashFee: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
     setMaxUnlentPerc(
       _perc: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
     setOracleAddress(
       _oracle: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
     setRebalancer(
       _rebalancer: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
     stkAAVE(overrides?: CallOverrides): Promise<[string]>;
@@ -723,7 +1077,7 @@ export interface IdleToken extends BaseContract {
 
     tokenPriceWithFee(
       user: PromiseOrValue<string>,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<[BigNumber] & { priceWFee: BigNumber }>;
 
     totalSupply(overrides?: CallOverrides): Promise<[BigNumber]>;
@@ -731,29 +1085,34 @@ export interface IdleToken extends BaseContract {
     transfer(
       recipient: PromiseOrValue<string>,
       amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
     transferFrom(
       sender: PromiseOrValue<string>,
       recipient: PromiseOrValue<string>,
       amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
     transferOwnership(
       newOwner: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
-    unpause(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
+    unpause(
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
 
-    userAvgPrices(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
+    userAvgPrices(
+      arg0: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<[BigNumber]>;
 
     usersGovTokensIndexes(
       arg0: PromiseOrValue<string>,
       arg1: PromiseOrValue<string>,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<[BigNumber]>;
   };
 
@@ -765,36 +1124,42 @@ export interface IdleToken extends BaseContract {
     _tokenHelper: PromiseOrValue<string>,
     _aToken: PromiseOrValue<string>,
     _newOracle: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> },
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   addPauser(
     account: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> },
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
-  allAvailableTokens(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
+  allAvailableTokens(
+    arg0: PromiseOrValue<BigNumberish>,
+    overrides?: CallOverrides
+  ): Promise<string>;
 
   allowance(
     owner: PromiseOrValue<string>,
     spender: PromiseOrValue<string>,
-    overrides?: CallOverrides,
+    overrides?: CallOverrides
   ): Promise<BigNumber>;
 
   approve(
     spender: PromiseOrValue<string>,
     amount: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> },
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
-  balanceOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
+  balanceOf(
+    account: PromiseOrValue<string>,
+    overrides?: CallOverrides
+  ): Promise<BigNumber>;
 
   decimals(overrides?: CallOverrides): Promise<number>;
 
   decreaseAllowance(
     spender: PromiseOrValue<string>,
     subtractedValue: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> },
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   fee(overrides?: CallOverrides): Promise<BigNumber>;
@@ -804,7 +1169,7 @@ export interface IdleToken extends BaseContract {
   flashFee(
     _token: PromiseOrValue<string>,
     _amount: PromiseOrValue<BigNumberish>,
-    overrides?: CallOverrides,
+    overrides?: CallOverrides
   ): Promise<BigNumber>;
 
   flashLoan(
@@ -812,7 +1177,7 @@ export interface IdleToken extends BaseContract {
     _token: PromiseOrValue<string>,
     _amount: PromiseOrValue<BigNumberish>,
     _params: PromiseOrValue<BytesLike>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> },
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   flashLoanFee(overrides?: CallOverrides): Promise<BigNumber>;
@@ -827,15 +1192,30 @@ export interface IdleToken extends BaseContract {
 
   getGovTokens(overrides?: CallOverrides): Promise<string[]>;
 
-  getGovTokensAmounts(_usr: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber[]>;
+  getGovTokensAmounts(
+    _usr: PromiseOrValue<string>,
+    overrides?: CallOverrides
+  ): Promise<BigNumber[]>;
 
-  getProtocolTokenToGov(_protocolToken: PromiseOrValue<string>, overrides?: CallOverrides): Promise<string>;
+  getProtocolTokenToGov(
+    _protocolToken: PromiseOrValue<string>,
+    overrides?: CallOverrides
+  ): Promise<string>;
 
-  govTokens(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
+  govTokens(
+    arg0: PromiseOrValue<BigNumberish>,
+    overrides?: CallOverrides
+  ): Promise<string>;
 
-  govTokensIndexes(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
+  govTokensIndexes(
+    arg0: PromiseOrValue<string>,
+    overrides?: CallOverrides
+  ): Promise<BigNumber>;
 
-  govTokensLastBalances(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
+  govTokensLastBalances(
+    arg0: PromiseOrValue<string>,
+    overrides?: CallOverrides
+  ): Promise<BigNumber>;
 
   gst2(overrides?: CallOverrides): Promise<string>;
 
@@ -844,34 +1224,45 @@ export interface IdleToken extends BaseContract {
   increaseAllowance(
     spender: PromiseOrValue<string>,
     addedValue: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> },
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
-  'initialize(string,string,uint8)'(
+  "initialize(string,string,uint8)"(
     name: PromiseOrValue<string>,
     symbol: PromiseOrValue<string>,
     decimals: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> },
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
-  'initialize()'(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
+  "initialize()"(
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
 
-  'initialize(address)'(
+  "initialize(address)"(
     sender: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> },
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   isOwner(overrides?: CallOverrides): Promise<boolean>;
 
-  isPauser(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
+  isPauser(
+    account: PromiseOrValue<string>,
+    overrides?: CallOverrides
+  ): Promise<boolean>;
 
   isRiskAdjusted(overrides?: CallOverrides): Promise<boolean>;
 
-  lastAllocations(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
+  lastAllocations(
+    arg0: PromiseOrValue<BigNumberish>,
+    overrides?: CallOverrides
+  ): Promise<BigNumber>;
 
   lastITokenPrice(overrides?: CallOverrides): Promise<BigNumber>;
 
-  maxFlashLoan(_token: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
+  maxFlashLoan(
+    _token: PromiseOrValue<string>,
+    overrides?: CallOverrides
+  ): Promise<BigNumber>;
 
   maxUnlentPerc(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -879,7 +1270,7 @@ export interface IdleToken extends BaseContract {
     _amount: PromiseOrValue<BigNumberish>,
     arg1: PromiseOrValue<boolean>,
     _referral: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> },
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   name(overrides?: CallOverrides): Promise<string>;
@@ -888,39 +1279,50 @@ export interface IdleToken extends BaseContract {
 
   owner(overrides?: CallOverrides): Promise<string>;
 
-  pause(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
+  pause(
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
 
   paused(overrides?: CallOverrides): Promise<boolean>;
 
-  protocolWrappers(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<string>;
+  protocolWrappers(
+    arg0: PromiseOrValue<string>,
+    overrides?: CallOverrides
+  ): Promise<string>;
 
-  rebalance(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
+  rebalance(
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
 
   rebalancer(overrides?: CallOverrides): Promise<string>;
 
   redeemIdleToken(
     _amount: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> },
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   redeemIdleTokenSkipGov(
     _amount: PromiseOrValue<BigNumberish>,
     _skipGovTokenRedeem: PromiseOrValue<boolean>[],
-    overrides?: Overrides & { from?: PromiseOrValue<string> },
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   redeemInterestBearingTokens(
     _amount: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> },
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
-  renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
+  renounceOwnership(
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
 
-  renouncePauser(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
+  renouncePauser(
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
 
   setAToken(
     _aToken: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> },
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   setAllAvailableTokensAndWrappers(
@@ -928,47 +1330,47 @@ export interface IdleToken extends BaseContract {
     wrappers: PromiseOrValue<string>[],
     _newGovTokens: PromiseOrValue<string>[],
     _newGovTokensEqualLen: PromiseOrValue<string>[],
-    overrides?: Overrides & { from?: PromiseOrValue<string> },
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   setAllocations(
     _allocations: PromiseOrValue<BigNumberish>[],
-    overrides?: Overrides & { from?: PromiseOrValue<string> },
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   setCToken(
     _cToken: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> },
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   setFee(
     _fee: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> },
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   setFeeAddress(
     _feeAddress: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> },
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   setFlashLoanFee(
     _flashFee: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> },
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   setMaxUnlentPerc(
     _perc: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> },
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   setOracleAddress(
     _oracle: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> },
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   setRebalancer(
     _rebalancer: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> },
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   stkAAVE(overrides?: CallOverrides): Promise<string>;
@@ -981,36 +1383,44 @@ export interface IdleToken extends BaseContract {
 
   tokenPrice(overrides?: CallOverrides): Promise<BigNumber>;
 
-  tokenPriceWithFee(user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
+  tokenPriceWithFee(
+    user: PromiseOrValue<string>,
+    overrides?: CallOverrides
+  ): Promise<BigNumber>;
 
   totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
   transfer(
     recipient: PromiseOrValue<string>,
     amount: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> },
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   transferFrom(
     sender: PromiseOrValue<string>,
     recipient: PromiseOrValue<string>,
     amount: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> },
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   transferOwnership(
     newOwner: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> },
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
-  unpause(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
+  unpause(
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
 
-  userAvgPrices(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
+  userAvgPrices(
+    arg0: PromiseOrValue<string>,
+    overrides?: CallOverrides
+  ): Promise<BigNumber>;
 
   usersGovTokensIndexes(
     arg0: PromiseOrValue<string>,
     arg1: PromiseOrValue<string>,
-    overrides?: CallOverrides,
+    overrides?: CallOverrides
   ): Promise<BigNumber>;
 
   callStatic: {
@@ -1022,33 +1432,42 @@ export interface IdleToken extends BaseContract {
       _tokenHelper: PromiseOrValue<string>,
       _aToken: PromiseOrValue<string>,
       _newOracle: PromiseOrValue<string>,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<void>;
 
-    addPauser(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
+    addPauser(
+      account: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<void>;
 
-    allAvailableTokens(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
+    allAvailableTokens(
+      arg0: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<string>;
 
     allowance(
       owner: PromiseOrValue<string>,
       spender: PromiseOrValue<string>,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     approve(
       spender: PromiseOrValue<string>,
       amount: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<boolean>;
 
-    balanceOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
+    balanceOf(
+      account: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
 
     decimals(overrides?: CallOverrides): Promise<number>;
 
     decreaseAllowance(
       spender: PromiseOrValue<string>,
       subtractedValue: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<boolean>;
 
     fee(overrides?: CallOverrides): Promise<BigNumber>;
@@ -1058,7 +1477,7 @@ export interface IdleToken extends BaseContract {
     flashFee(
       _token: PromiseOrValue<string>,
       _amount: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     flashLoan(
@@ -1066,7 +1485,7 @@ export interface IdleToken extends BaseContract {
       _token: PromiseOrValue<string>,
       _amount: PromiseOrValue<BigNumberish>,
       _params: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<boolean>;
 
     flashLoanFee(overrides?: CallOverrides): Promise<BigNumber>;
@@ -1081,15 +1500,30 @@ export interface IdleToken extends BaseContract {
 
     getGovTokens(overrides?: CallOverrides): Promise<string[]>;
 
-    getGovTokensAmounts(_usr: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber[]>;
+    getGovTokensAmounts(
+      _usr: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber[]>;
 
-    getProtocolTokenToGov(_protocolToken: PromiseOrValue<string>, overrides?: CallOverrides): Promise<string>;
+    getProtocolTokenToGov(
+      _protocolToken: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<string>;
 
-    govTokens(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
+    govTokens(
+      arg0: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<string>;
 
-    govTokensIndexes(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
+    govTokensIndexes(
+      arg0: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
 
-    govTokensLastBalances(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
+    govTokensLastBalances(
+      arg0: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
 
     gst2(overrides?: CallOverrides): Promise<string>;
 
@@ -1098,31 +1532,43 @@ export interface IdleToken extends BaseContract {
     increaseAllowance(
       spender: PromiseOrValue<string>,
       addedValue: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<boolean>;
 
-    'initialize(string,string,uint8)'(
+    "initialize(string,string,uint8)"(
       name: PromiseOrValue<string>,
       symbol: PromiseOrValue<string>,
       decimals: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<void>;
 
-    'initialize()'(overrides?: CallOverrides): Promise<void>;
+    "initialize()"(overrides?: CallOverrides): Promise<void>;
 
-    'initialize(address)'(sender: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
+    "initialize(address)"(
+      sender: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<void>;
 
     isOwner(overrides?: CallOverrides): Promise<boolean>;
 
-    isPauser(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
+    isPauser(
+      account: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<boolean>;
 
     isRiskAdjusted(overrides?: CallOverrides): Promise<boolean>;
 
-    lastAllocations(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
+    lastAllocations(
+      arg0: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
 
     lastITokenPrice(overrides?: CallOverrides): Promise<BigNumber>;
 
-    maxFlashLoan(_token: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
+    maxFlashLoan(
+      _token: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
 
     maxUnlentPerc(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -1130,7 +1576,7 @@ export interface IdleToken extends BaseContract {
       _amount: PromiseOrValue<BigNumberish>,
       arg1: PromiseOrValue<boolean>,
       _referral: PromiseOrValue<string>,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     name(overrides?: CallOverrides): Promise<string>;
@@ -1143,51 +1589,87 @@ export interface IdleToken extends BaseContract {
 
     paused(overrides?: CallOverrides): Promise<boolean>;
 
-    protocolWrappers(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<string>;
+    protocolWrappers(
+      arg0: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<string>;
 
     rebalance(overrides?: CallOverrides): Promise<boolean>;
 
     rebalancer(overrides?: CallOverrides): Promise<string>;
 
-    redeemIdleToken(_amount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
+    redeemIdleToken(
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
 
     redeemIdleTokenSkipGov(
       _amount: PromiseOrValue<BigNumberish>,
       _skipGovTokenRedeem: PromiseOrValue<boolean>[],
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    redeemInterestBearingTokens(_amount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
+    redeemInterestBearingTokens(
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<void>;
 
     renounceOwnership(overrides?: CallOverrides): Promise<void>;
 
     renouncePauser(overrides?: CallOverrides): Promise<void>;
 
-    setAToken(_aToken: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
+    setAToken(
+      _aToken: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<void>;
 
     setAllAvailableTokensAndWrappers(
       protocolTokens: PromiseOrValue<string>[],
       wrappers: PromiseOrValue<string>[],
       _newGovTokens: PromiseOrValue<string>[],
       _newGovTokensEqualLen: PromiseOrValue<string>[],
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<void>;
 
-    setAllocations(_allocations: PromiseOrValue<BigNumberish>[], overrides?: CallOverrides): Promise<void>;
+    setAllocations(
+      _allocations: PromiseOrValue<BigNumberish>[],
+      overrides?: CallOverrides
+    ): Promise<void>;
 
-    setCToken(_cToken: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
+    setCToken(
+      _cToken: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<void>;
 
-    setFee(_fee: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
+    setFee(
+      _fee: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<void>;
 
-    setFeeAddress(_feeAddress: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
+    setFeeAddress(
+      _feeAddress: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<void>;
 
-    setFlashLoanFee(_flashFee: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
+    setFlashLoanFee(
+      _flashFee: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<void>;
 
-    setMaxUnlentPerc(_perc: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
+    setMaxUnlentPerc(
+      _perc: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<void>;
 
-    setOracleAddress(_oracle: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
+    setOracleAddress(
+      _oracle: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<void>;
 
-    setRebalancer(_rebalancer: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
+    setRebalancer(
+      _rebalancer: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<void>;
 
     stkAAVE(overrides?: CallOverrides): Promise<string>;
 
@@ -1199,97 +1681,120 @@ export interface IdleToken extends BaseContract {
 
     tokenPrice(overrides?: CallOverrides): Promise<BigNumber>;
 
-    tokenPriceWithFee(user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
+    tokenPriceWithFee(
+      user: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
 
     totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
     transfer(
       recipient: PromiseOrValue<string>,
       amount: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<boolean>;
 
     transferFrom(
       sender: PromiseOrValue<string>,
       recipient: PromiseOrValue<string>,
       amount: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<boolean>;
 
-    transferOwnership(newOwner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
+    transferOwnership(
+      newOwner: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<void>;
 
     unpause(overrides?: CallOverrides): Promise<void>;
 
-    userAvgPrices(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
+    userAvgPrices(
+      arg0: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
 
     usersGovTokensIndexes(
       arg0: PromiseOrValue<string>,
       arg1: PromiseOrValue<string>,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<BigNumber>;
   };
 
   filters: {
-    'Approval(address,address,uint256)'(
+    "Approval(address,address,uint256)"(
       owner?: PromiseOrValue<string> | null,
       spender?: PromiseOrValue<string> | null,
-      value?: null,
+      value?: null
     ): ApprovalEventFilter;
     Approval(
       owner?: PromiseOrValue<string> | null,
       spender?: PromiseOrValue<string> | null,
-      value?: null,
+      value?: null
     ): ApprovalEventFilter;
 
-    'FlashLoan(address,address,uint256,uint256)'(
+    "FlashLoan(address,address,uint256,uint256)"(
       target?: PromiseOrValue<string> | null,
       initiator?: PromiseOrValue<string> | null,
       amount?: null,
-      premium?: null,
+      premium?: null
     ): FlashLoanEventFilter;
     FlashLoan(
       target?: PromiseOrValue<string> | null,
       initiator?: PromiseOrValue<string> | null,
       amount?: null,
-      premium?: null,
+      premium?: null
     ): FlashLoanEventFilter;
 
-    'OwnershipTransferred(address,address)'(
+    "OwnershipTransferred(address,address)"(
       previousOwner?: PromiseOrValue<string> | null,
-      newOwner?: PromiseOrValue<string> | null,
+      newOwner?: PromiseOrValue<string> | null
     ): OwnershipTransferredEventFilter;
     OwnershipTransferred(
       previousOwner?: PromiseOrValue<string> | null,
-      newOwner?: PromiseOrValue<string> | null,
+      newOwner?: PromiseOrValue<string> | null
     ): OwnershipTransferredEventFilter;
 
-    'Paused(address)'(account?: null): PausedEventFilter;
+    "Paused(address)"(account?: null): PausedEventFilter;
     Paused(account?: null): PausedEventFilter;
 
-    'PauserAdded(address)'(account?: PromiseOrValue<string> | null): PauserAddedEventFilter;
-    PauserAdded(account?: PromiseOrValue<string> | null): PauserAddedEventFilter;
+    "PauserAdded(address)"(
+      account?: PromiseOrValue<string> | null
+    ): PauserAddedEventFilter;
+    PauserAdded(
+      account?: PromiseOrValue<string> | null
+    ): PauserAddedEventFilter;
 
-    'PauserRemoved(address)'(account?: PromiseOrValue<string> | null): PauserRemovedEventFilter;
-    PauserRemoved(account?: PromiseOrValue<string> | null): PauserRemovedEventFilter;
+    "PauserRemoved(address)"(
+      account?: PromiseOrValue<string> | null
+    ): PauserRemovedEventFilter;
+    PauserRemoved(
+      account?: PromiseOrValue<string> | null
+    ): PauserRemovedEventFilter;
 
-    'Rebalance(address,uint256)'(_rebalancer?: null, _amount?: null): RebalanceEventFilter;
+    "Rebalance(address,uint256)"(
+      _rebalancer?: null,
+      _amount?: null
+    ): RebalanceEventFilter;
     Rebalance(_rebalancer?: null, _amount?: null): RebalanceEventFilter;
 
-    'Referral(uint256,address)'(_amount?: null, _ref?: null): ReferralEventFilter;
+    "Referral(uint256,address)"(
+      _amount?: null,
+      _ref?: null
+    ): ReferralEventFilter;
     Referral(_amount?: null, _ref?: null): ReferralEventFilter;
 
-    'Transfer(address,address,uint256)'(
+    "Transfer(address,address,uint256)"(
       from?: PromiseOrValue<string> | null,
       to?: PromiseOrValue<string> | null,
-      value?: null,
+      value?: null
     ): TransferEventFilter;
     Transfer(
       from?: PromiseOrValue<string> | null,
       to?: PromiseOrValue<string> | null,
-      value?: null,
+      value?: null
     ): TransferEventFilter;
 
-    'Unpaused(address)'(account?: null): UnpausedEventFilter;
+    "Unpaused(address)"(account?: null): UnpausedEventFilter;
     Unpaused(account?: null): UnpausedEventFilter;
   };
 
@@ -1302,36 +1807,42 @@ export interface IdleToken extends BaseContract {
       _tokenHelper: PromiseOrValue<string>,
       _aToken: PromiseOrValue<string>,
       _newOracle: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
     addPauser(
       account: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
-    allAvailableTokens(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
+    allAvailableTokens(
+      arg0: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
 
     allowance(
       owner: PromiseOrValue<string>,
       spender: PromiseOrValue<string>,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     approve(
       spender: PromiseOrValue<string>,
       amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
-    balanceOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
+    balanceOf(
+      account: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
 
     decimals(overrides?: CallOverrides): Promise<BigNumber>;
 
     decreaseAllowance(
       spender: PromiseOrValue<string>,
       subtractedValue: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
     fee(overrides?: CallOverrides): Promise<BigNumber>;
@@ -1341,7 +1852,7 @@ export interface IdleToken extends BaseContract {
     flashFee(
       _token: PromiseOrValue<string>,
       _amount: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     flashLoan(
@@ -1349,7 +1860,7 @@ export interface IdleToken extends BaseContract {
       _token: PromiseOrValue<string>,
       _amount: PromiseOrValue<BigNumberish>,
       _params: PromiseOrValue<BytesLike>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
     flashLoanFee(overrides?: CallOverrides): Promise<BigNumber>;
@@ -1364,15 +1875,30 @@ export interface IdleToken extends BaseContract {
 
     getGovTokens(overrides?: CallOverrides): Promise<BigNumber>;
 
-    getGovTokensAmounts(_usr: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
+    getGovTokensAmounts(
+      _usr: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
 
-    getProtocolTokenToGov(_protocolToken: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
+    getProtocolTokenToGov(
+      _protocolToken: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
 
-    govTokens(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
+    govTokens(
+      arg0: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
 
-    govTokensIndexes(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
+    govTokensIndexes(
+      arg0: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
 
-    govTokensLastBalances(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
+    govTokensLastBalances(
+      arg0: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
 
     gst2(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -1381,34 +1907,45 @@ export interface IdleToken extends BaseContract {
     increaseAllowance(
       spender: PromiseOrValue<string>,
       addedValue: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
-    'initialize(string,string,uint8)'(
+    "initialize(string,string,uint8)"(
       name: PromiseOrValue<string>,
       symbol: PromiseOrValue<string>,
       decimals: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
-    'initialize()'(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
+    "initialize()"(
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
 
-    'initialize(address)'(
+    "initialize(address)"(
       sender: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
     isOwner(overrides?: CallOverrides): Promise<BigNumber>;
 
-    isPauser(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
+    isPauser(
+      account: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
 
     isRiskAdjusted(overrides?: CallOverrides): Promise<BigNumber>;
 
-    lastAllocations(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
+    lastAllocations(
+      arg0: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
 
     lastITokenPrice(overrides?: CallOverrides): Promise<BigNumber>;
 
-    maxFlashLoan(_token: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
+    maxFlashLoan(
+      _token: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
 
     maxUnlentPerc(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -1416,7 +1953,7 @@ export interface IdleToken extends BaseContract {
       _amount: PromiseOrValue<BigNumberish>,
       arg1: PromiseOrValue<boolean>,
       _referral: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
     name(overrides?: CallOverrides): Promise<BigNumber>;
@@ -1425,39 +1962,50 @@ export interface IdleToken extends BaseContract {
 
     owner(overrides?: CallOverrides): Promise<BigNumber>;
 
-    pause(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
+    pause(
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
 
     paused(overrides?: CallOverrides): Promise<BigNumber>;
 
-    protocolWrappers(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
+    protocolWrappers(
+      arg0: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
 
-    rebalance(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
+    rebalance(
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
 
     rebalancer(overrides?: CallOverrides): Promise<BigNumber>;
 
     redeemIdleToken(
       _amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
     redeemIdleTokenSkipGov(
       _amount: PromiseOrValue<BigNumberish>,
       _skipGovTokenRedeem: PromiseOrValue<boolean>[],
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
     redeemInterestBearingTokens(
       _amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
-    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
+    renounceOwnership(
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
 
-    renouncePauser(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
+    renouncePauser(
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
 
     setAToken(
       _aToken: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
     setAllAvailableTokensAndWrappers(
@@ -1465,47 +2013,47 @@ export interface IdleToken extends BaseContract {
       wrappers: PromiseOrValue<string>[],
       _newGovTokens: PromiseOrValue<string>[],
       _newGovTokensEqualLen: PromiseOrValue<string>[],
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
     setAllocations(
       _allocations: PromiseOrValue<BigNumberish>[],
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
     setCToken(
       _cToken: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
     setFee(
       _fee: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
     setFeeAddress(
       _feeAddress: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
     setFlashLoanFee(
       _flashFee: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
     setMaxUnlentPerc(
       _perc: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
     setOracleAddress(
       _oracle: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
     setRebalancer(
       _rebalancer: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
     stkAAVE(overrides?: CallOverrides): Promise<BigNumber>;
@@ -1518,36 +2066,44 @@ export interface IdleToken extends BaseContract {
 
     tokenPrice(overrides?: CallOverrides): Promise<BigNumber>;
 
-    tokenPriceWithFee(user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
+    tokenPriceWithFee(
+      user: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
 
     totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
     transfer(
       recipient: PromiseOrValue<string>,
       amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
     transferFrom(
       sender: PromiseOrValue<string>,
       recipient: PromiseOrValue<string>,
       amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
     transferOwnership(
       newOwner: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
-    unpause(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
+    unpause(
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
 
-    userAvgPrices(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
+    userAvgPrices(
+      arg0: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
 
     usersGovTokensIndexes(
       arg0: PromiseOrValue<string>,
       arg1: PromiseOrValue<string>,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<BigNumber>;
   };
 
@@ -1560,36 +2116,42 @@ export interface IdleToken extends BaseContract {
       _tokenHelper: PromiseOrValue<string>,
       _aToken: PromiseOrValue<string>,
       _newOracle: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     addPauser(
       account: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
-    allAvailableTokens(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    allAvailableTokens(
+      arg0: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
 
     allowance(
       owner: PromiseOrValue<string>,
       spender: PromiseOrValue<string>,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     approve(
       spender: PromiseOrValue<string>,
       amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
-    balanceOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    balanceOf(
+      account: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
 
     decimals(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     decreaseAllowance(
       spender: PromiseOrValue<string>,
       subtractedValue: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     fee(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -1599,7 +2161,7 @@ export interface IdleToken extends BaseContract {
     flashFee(
       _token: PromiseOrValue<string>,
       _amount: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     flashLoan(
@@ -1607,14 +2169,16 @@ export interface IdleToken extends BaseContract {
       _token: PromiseOrValue<string>,
       _amount: PromiseOrValue<BigNumberish>,
       _params: PromiseOrValue<BytesLike>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     flashLoanFee(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     getAPRs(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    getAllAvailableTokens(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getAllAvailableTokens(
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
 
     getAllocations(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
@@ -1622,18 +2186,30 @@ export interface IdleToken extends BaseContract {
 
     getGovTokens(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    getGovTokensAmounts(_usr: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getGovTokensAmounts(
+      _usr: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
 
     getProtocolTokenToGov(
       _protocolToken: PromiseOrValue<string>,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
-    govTokens(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    govTokens(
+      arg0: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
 
-    govTokensIndexes(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    govTokensIndexes(
+      arg0: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
 
-    govTokensLastBalances(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    govTokensLastBalances(
+      arg0: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
 
     gst2(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
@@ -1642,34 +2218,45 @@ export interface IdleToken extends BaseContract {
     increaseAllowance(
       spender: PromiseOrValue<string>,
       addedValue: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
-    'initialize(string,string,uint8)'(
+    "initialize(string,string,uint8)"(
       name: PromiseOrValue<string>,
       symbol: PromiseOrValue<string>,
       decimals: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
-    'initialize()'(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
+    "initialize()"(
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
 
-    'initialize(address)'(
+    "initialize(address)"(
       sender: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     isOwner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    isPauser(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    isPauser(
+      account: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
 
     isRiskAdjusted(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    lastAllocations(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    lastAllocations(
+      arg0: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
 
     lastITokenPrice(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    maxFlashLoan(_token: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    maxFlashLoan(
+      _token: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
 
     maxUnlentPerc(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
@@ -1677,7 +2264,7 @@ export interface IdleToken extends BaseContract {
       _amount: PromiseOrValue<BigNumberish>,
       arg1: PromiseOrValue<boolean>,
       _referral: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     name(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -1686,39 +2273,50 @@ export interface IdleToken extends BaseContract {
 
     owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    pause(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
+    pause(
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
 
     paused(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    protocolWrappers(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    protocolWrappers(
+      arg0: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
 
-    rebalance(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
+    rebalance(
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
 
     rebalancer(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     redeemIdleToken(
       _amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     redeemIdleTokenSkipGov(
       _amount: PromiseOrValue<BigNumberish>,
       _skipGovTokenRedeem: PromiseOrValue<boolean>[],
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     redeemInterestBearingTokens(
       _amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
-    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
+    renounceOwnership(
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
 
-    renouncePauser(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
+    renouncePauser(
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
 
     setAToken(
       _aToken: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     setAllAvailableTokensAndWrappers(
@@ -1726,47 +2324,47 @@ export interface IdleToken extends BaseContract {
       wrappers: PromiseOrValue<string>[],
       _newGovTokens: PromiseOrValue<string>[],
       _newGovTokensEqualLen: PromiseOrValue<string>[],
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     setAllocations(
       _allocations: PromiseOrValue<BigNumberish>[],
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     setCToken(
       _cToken: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     setFee(
       _fee: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     setFeeAddress(
       _feeAddress: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     setFlashLoanFee(
       _flashFee: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     setMaxUnlentPerc(
       _perc: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     setOracleAddress(
       _oracle: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     setRebalancer(
       _rebalancer: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     stkAAVE(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -1779,36 +2377,44 @@ export interface IdleToken extends BaseContract {
 
     tokenPrice(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    tokenPriceWithFee(user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    tokenPriceWithFee(
+      user: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
 
     totalSupply(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     transfer(
       recipient: PromiseOrValue<string>,
       amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     transferFrom(
       sender: PromiseOrValue<string>,
       recipient: PromiseOrValue<string>,
       amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     transferOwnership(
       newOwner: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
-    unpause(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
+    unpause(
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
 
-    userAvgPrices(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    userAvgPrices(
+      arg0: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
 
     usersGovTokensIndexes(
       arg0: PromiseOrValue<string>,
       arg1: PromiseOrValue<string>,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
   };
 }
