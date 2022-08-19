@@ -28,7 +28,7 @@ export const MORPHO_DEFINITION = appDefinition({
     [Network.ETHEREUM_MAINNET]: [AppAction.VIEW],
   },
 
-  primaryColor: '#0074ff',
+  primaryColor: '#14183D',
 });
 
 @Register.AppDefinition(MORPHO_DEFINITION.id)
