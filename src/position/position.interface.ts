@@ -51,6 +51,7 @@ export interface NonFungibleToken extends AbstractToken {
   }[];
   collection?: {
     id: string;
+    name: string;
     floorPrice: number;
     floorPriceUSD: number;
     img: string;
