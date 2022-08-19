@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.183.0](https://github.com/Zapper-fi/studio/compare/v0.182.0...v0.183.0) (2022-08-19)
+
+
+### Features
+
+* **positions:** Add name to NFT collection type ([dfe93e4](https://github.com/Zapper-fi/studio/commit/dfe93e49c82fd173acdb42aabaf953eab746315f))
+
 ## [0.182.0](https://github.com/Zapper-fi/studio/compare/v0.181.0...v0.182.0) (2022-08-18)
 
 
