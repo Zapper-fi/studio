@@ -282,7 +282,6 @@ const _abi = [
       },
     ],
     outputs: [],
-    gas: 401588,
   },
   {
     stateMutability: 'view',
@@ -295,7 +294,6 @@ const _abi = [
         type: 'uint256',
       },
     ],
-    gas: 318,
   },
   {
     stateMutability: 'nonpayable',
@@ -317,7 +315,6 @@ const _abi = [
         type: 'bool',
       },
     ],
-    gas: 77977,
   },
   {
     stateMutability: 'nonpayable',
@@ -343,7 +340,6 @@ const _abi = [
         type: 'bool',
       },
     ],
-    gas: 115912,
   },
   {
     stateMutability: 'nonpayable',
@@ -365,7 +361,6 @@ const _abi = [
         type: 'bool',
       },
     ],
-    gas: 37851,
   },
   {
     stateMutability: 'view',
@@ -378,7 +373,6 @@ const _abi = [
         type: 'uint256[2]',
       },
     ],
-    gas: 4707,
   },
   {
     stateMutability: 'view',
@@ -391,7 +385,6 @@ const _abi = [
         type: 'uint256',
       },
     ],
-    gas: 468,
   },
   {
     stateMutability: 'view',
@@ -404,7 +397,6 @@ const _abi = [
         type: 'uint256',
       },
     ],
-    gas: 10764,
   },
   {
     stateMutability: 'view',
@@ -417,7 +409,6 @@ const _abi = [
         type: 'uint256',
       },
     ],
-    gas: 10726,
   },
   {
     stateMutability: 'view',
@@ -430,7 +421,6 @@ const _abi = [
         type: 'uint256',
       },
     ],
-    gas: 842281,
   },
   {
     stateMutability: 'view',
@@ -452,7 +442,6 @@ const _abi = [
         type: 'uint256',
       },
     ],
-    gas: 1668445,
   },
   {
     stateMutability: 'nonpayable',
@@ -524,7 +513,6 @@ const _abi = [
         type: 'uint256',
       },
     ],
-    gas: 2110507,
   },
   {
     stateMutability: 'nonpayable',
@@ -795,7 +783,6 @@ const _abi = [
       },
     ],
     outputs: [],
-    gas: 162101,
   },
   {
     stateMutability: 'nonpayable',
@@ -803,7 +790,6 @@ const _abi = [
     name: 'stop_ramp_A',
     inputs: [],
     outputs: [],
-    gas: 157565,
   },
   {
     stateMutability: 'view',
@@ -821,7 +807,6 @@ const _abi = [
         type: 'uint256',
       },
     ],
-    gas: 7740,
   },
   {
     stateMutability: 'nonpayable',
@@ -829,7 +814,6 @@ const _abi = [
     name: 'withdraw_admin_fees',
     inputs: [],
     outputs: [],
-    gas: 24046,
   },
   {
     stateMutability: 'view',
@@ -847,7 +831,6 @@ const _abi = [
         type: 'address',
       },
     ],
-    gas: 3093,
   },
   {
     stateMutability: 'view',
@@ -865,7 +848,6 @@ const _abi = [
         type: 'uint256',
       },
     ],
-    gas: 3123,
   },
   {
     stateMutability: 'view',
@@ -878,7 +860,6 @@ const _abi = [
         type: 'uint256',
       },
     ],
-    gas: 3108,
   },
   {
     stateMutability: 'view',
@@ -891,7 +872,6 @@ const _abi = [
         type: 'uint256',
       },
     ],
-    gas: 3138,
   },
   {
     stateMutability: 'view',
@@ -904,7 +884,6 @@ const _abi = [
         type: 'uint256',
       },
     ],
-    gas: 3168,
   },
   {
     stateMutability: 'view',
@@ -917,7 +896,6 @@ const _abi = [
         type: 'uint256',
       },
     ],
-    gas: 3198,
   },
   {
     stateMutability: 'view',
@@ -930,7 +908,6 @@ const _abi = [
         type: 'uint256',
       },
     ],
-    gas: 3228,
   },
   {
     stateMutability: 'view',
@@ -943,7 +920,6 @@ const _abi = [
         type: 'string',
       },
     ],
-    gas: 13488,
   },
   {
     stateMutability: 'view',
@@ -956,7 +932,6 @@ const _abi = [
         type: 'string',
       },
     ],
-    gas: 11241,
   },
   {
     stateMutability: 'view',
@@ -974,7 +949,6 @@ const _abi = [
         type: 'uint256',
       },
     ],
-    gas: 3533,
   },
   {
     stateMutability: 'view',
@@ -996,7 +970,6 @@ const _abi = [
         type: 'uint256',
       },
     ],
-    gas: 3778,
   },
   {
     stateMutability: 'view',
@@ -1009,7 +982,6 @@ const _abi = [
         type: 'uint256',
       },
     ],
-    gas: 3378,
   },
 ];
 

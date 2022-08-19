@@ -83,24 +83,21 @@
       { "name": "_veBoost_proxy", "type": "address" },
       { "name": "_distributor", "type": "address" }
     ],
-    "outputs": [],
-    "gas": 548461
+    "outputs": []
   },
   {
     "stateMutability": "view",
     "type": "function",
     "name": "decimals",
     "inputs": [],
-    "outputs": [{ "name": "", "type": "uint256" }],
-    "gas": 2418
+    "outputs": [{ "name": "", "type": "uint256" }]
   },
   {
     "stateMutability": "nonpayable",
     "type": "function",
     "name": "user_checkpoint",
     "inputs": [{ "name": "addr", "type": "address" }],
-    "outputs": [{ "name": "", "type": "bool" }],
-    "gas": 3493693
+    "outputs": [{ "name": "", "type": "bool" }]
   },
   {
     "stateMutability": "view",
@@ -110,8 +107,7 @@
       { "name": "_addr", "type": "address" },
       { "name": "_token", "type": "address" }
     ],
-    "outputs": [{ "name": "", "type": "uint256" }],
-    "gas": 2976
+    "outputs": [{ "name": "", "type": "uint256" }]
   },
   {
     "stateMutability": "view",
@@ -121,16 +117,14 @@
       { "name": "_user", "type": "address" },
       { "name": "_reward_token", "type": "address" }
     ],
-    "outputs": [{ "name": "", "type": "uint256" }],
-    "gas": 26704
+    "outputs": [{ "name": "", "type": "uint256" }]
   },
   {
     "stateMutability": "nonpayable",
     "type": "function",
     "name": "set_rewards_receiver",
     "inputs": [{ "name": "_receiver", "type": "address" }],
-    "outputs": [],
-    "gas": 35613
+    "outputs": []
   },
   { "stateMutability": "nonpayable", "type": "function", "name": "claim_rewards", "inputs": [], "outputs": [] },
   {
@@ -158,16 +152,14 @@
       { "name": "_addr", "type": "address" },
       { "name": "_receiver", "type": "address" }
     ],
-    "outputs": [],
-    "gas": 3464244
+    "outputs": []
   },
   {
     "stateMutability": "nonpayable",
     "type": "function",
     "name": "kick",
     "inputs": [{ "name": "addr", "type": "address" }],
-    "outputs": [],
-    "gas": 3514487
+    "outputs": []
   },
   {
     "stateMutability": "nonpayable",
@@ -222,8 +214,7 @@
       { "name": "_to", "type": "address" },
       { "name": "_value", "type": "uint256" }
     ],
-    "outputs": [{ "name": "", "type": "bool" }],
-    "gas": 14116366
+    "outputs": [{ "name": "", "type": "bool" }]
   },
   {
     "stateMutability": "nonpayable",
@@ -234,8 +225,7 @@
       { "name": "_to", "type": "address" },
       { "name": "_value", "type": "uint256" }
     ],
-    "outputs": [{ "name": "", "type": "bool" }],
-    "gas": 14154316
+    "outputs": [{ "name": "", "type": "bool" }]
   },
   {
     "stateMutability": "nonpayable",
@@ -245,8 +235,7 @@
       { "name": "_spender", "type": "address" },
       { "name": "_value", "type": "uint256" }
     ],
-    "outputs": [{ "name": "", "type": "bool" }],
-    "gas": 39421
+    "outputs": [{ "name": "", "type": "bool" }]
   },
   {
     "stateMutability": "nonpayable",
@@ -256,8 +245,7 @@
       { "name": "_spender", "type": "address" },
       { "name": "_added_value", "type": "uint256" }
     ],
-    "outputs": [{ "name": "", "type": "bool" }],
-    "gas": 41965
+    "outputs": [{ "name": "", "type": "bool" }]
   },
   {
     "stateMutability": "nonpayable",
@@ -267,8 +255,7 @@
       { "name": "_spender", "type": "address" },
       { "name": "_subtracted_value", "type": "uint256" }
     ],
-    "outputs": [{ "name": "", "type": "bool" }],
-    "gas": 41989
+    "outputs": [{ "name": "", "type": "bool" }]
   },
   {
     "stateMutability": "nonpayable",
@@ -278,8 +265,7 @@
       { "name": "_reward_token", "type": "address" },
       { "name": "_distributor", "type": "address" }
     ],
-    "outputs": [],
-    "gas": 113003
+    "outputs": []
   },
   {
     "stateMutability": "nonpayable",
@@ -289,16 +275,14 @@
       { "name": "_reward_token", "type": "address" },
       { "name": "_distributor", "type": "address" }
     ],
-    "outputs": [],
-    "gas": 40753
+    "outputs": []
   },
   {
     "stateMutability": "nonpayable",
     "type": "function",
     "name": "set_claimer",
     "inputs": [{ "name": "_claimer", "type": "address" }],
-    "outputs": [],
-    "gas": 38182
+    "outputs": []
   },
   {
     "stateMutability": "nonpayable",
@@ -308,80 +292,70 @@
       { "name": "_reward_token", "type": "address" },
       { "name": "_amount", "type": "uint256" }
     ],
-    "outputs": [],
-    "gas": 3585430
+    "outputs": []
   },
   {
     "stateMutability": "nonpayable",
     "type": "function",
     "name": "commit_transfer_ownership",
     "inputs": [{ "name": "addr", "type": "address" }],
-    "outputs": [],
-    "gas": 40142
+    "outputs": []
   },
   {
     "stateMutability": "nonpayable",
     "type": "function",
     "name": "accept_transfer_ownership",
     "inputs": [],
-    "outputs": [],
-    "gas": 39990
+    "outputs": []
   },
   {
     "stateMutability": "view",
     "type": "function",
     "name": "SDT",
     "inputs": [],
-    "outputs": [{ "name": "", "type": "address" }],
-    "gas": 3048
+    "outputs": [{ "name": "", "type": "address" }]
   },
   {
     "stateMutability": "view",
     "type": "function",
     "name": "voting_escrow",
     "inputs": [],
-    "outputs": [{ "name": "", "type": "address" }],
-    "gas": 3078
+    "outputs": [{ "name": "", "type": "address" }]
   },
   {
     "stateMutability": "view",
     "type": "function",
     "name": "veBoost_proxy",
     "inputs": [],
-    "outputs": [{ "name": "", "type": "address" }],
-    "gas": 3108
+    "outputs": [{ "name": "", "type": "address" }]
   },
   {
     "stateMutability": "view",
     "type": "function",
     "name": "staking_token",
     "inputs": [],
-    "outputs": [{ "name": "", "type": "address" }],
-    "gas": 3138
+    "outputs": [{ "name": "", "type": "address" }]
   },
   {
     "stateMutability": "view",
     "type": "function",
     "name": "decimal_staking_token",
     "inputs": [],
-    "outputs": [{ "name": "", "type": "uint256" }],
-    "gas": 3168
+    "outputs": [{ "name": "", "type": "uint256" }]
   },
   {
     "stateMutability": "view",
     "type": "function",
     "name": "balanceOf",
     "inputs": [{ "name": "arg0", "type": "address" }],
-    "outputs": [{ "name": "", "type": "uint256" }],
-    "gas": 3413
+    "outputs": [{ "name": "", "type": "uint256" }]
   },
   {
     "stateMutability": "view",
     "type": "function",
     "name": "totalSupply",
     "inputs": [],
-    "outputs": [{ "name": "", "type": "uint256" }],
-    "gas": 3228
+    "outputs": [{ "name": "", "type": "uint256" }]
   },
   {
     "stateMutability": "view",
@@ -391,64 +365,56 @@
       { "name": "arg0", "type": "address" },
       { "name": "arg1", "type": "address" }
     ],
-    "outputs": [{ "name": "", "type": "uint256" }],
-    "gas": 3688
+    "outputs": [{ "name": "", "type": "uint256" }]
   },
   {
     "stateMutability": "view",
     "type": "function",
     "name": "name",
     "inputs": [],
-    "outputs": [{ "name": "", "type": "string" }],
-    "gas": 13518
+    "outputs": [{ "name": "", "type": "string" }]
   },
   {
     "stateMutability": "view",
     "type": "function",
     "name": "symbol",
     "inputs": [],
-    "outputs": [{ "name": "", "type": "string" }],
-    "gas": 11271
+    "outputs": [{ "name": "", "type": "string" }]
   },
   {
     "stateMutability": "view",
     "type": "function",
     "name": "working_balances",
     "inputs": [{ "name": "arg0", "type": "address" }],
-    "outputs": [{ "name": "", "type": "uint256" }],
-    "gas": 3563
+    "outputs": [{ "name": "", "type": "uint256" }]
   },
   {
     "stateMutability": "view",
     "type": "function",
     "name": "working_supply",
     "inputs": [],
-    "outputs": [{ "name": "", "type": "uint256" }],
-    "gas": 3378
+    "outputs": [{ "name": "", "type": "uint256" }]
   },
   {
     "stateMutability": "view",
     "type": "function",
     "name": "integrate_checkpoint_of",
     "inputs": [{ "name": "arg0", "type": "address" }],
-    "outputs": [{ "name": "", "type": "uint256" }],
-    "gas": 3623
+    "outputs": [{ "name": "", "type": "uint256" }]
   },
   {
     "stateMutability": "view",
     "type": "function",
     "name": "reward_count",
     "inputs": [],
-    "outputs": [{ "name": "", "type": "uint256" }],
-    "gas": 3438
+    "outputs": [{ "name": "", "type": "uint256" }]
   },
   {
     "stateMutability": "view",
     "type": "function",
     "name": "reward_tokens",
     "inputs": [{ "name": "arg0", "type": "uint256" }],
-    "outputs": [{ "name": "", "type": "address" }],
-    "gas": 3513
+    "outputs": [{ "name": "", "type": "address" }]
   },
   {
     "stateMutability": "view",
@@ -462,16 +428,14 @@
       { "name": "rate", "type": "uint256" },
       { "name": "last_update", "type": "uint256" },
       { "name": "integral", "type": "uint256" }
-    ],
-    "gas": 14943
+    ]
   },
   {
     "stateMutability": "view",
     "type": "function",
     "name": "rewards_receiver",
     "inputs": [{ "name": "arg0", "type": "address" }],
-    "outputs": [{ "name": "", "type": "address" }],
-    "gas": 3743
+    "outputs": [{ "name": "", "type": "address" }]
   },
   {
     "stateMutability": "view",
@@ -481,39 +445,34 @@
       { "name": "arg0", "type": "address" },
       { "name": "arg1", "type": "address" }
     ],
-    "outputs": [{ "name": "", "type": "uint256" }],
-    "gas": 3988
+    "outputs": [{ "name": "", "type": "uint256" }]
   },
   {
     "stateMutability": "view",
     "type": "function",
     "name": "admin",
     "inputs": [],
-    "outputs": [{ "name": "", "type": "address" }],
-    "gas": 3588
+    "outputs": [{ "name": "", "type": "address" }]
   },
   {
     "stateMutability": "view",
     "type": "function",
     "name": "future_admin",
     "inputs": [],
-    "outputs": [{ "name": "", "type": "address" }],
-    "gas": 3618
+    "outputs": [{ "name": "", "type": "address" }]
   },
   {
     "stateMutability": "view",
     "type": "function",
     "name": "claimer",
     "inputs": [],
-    "outputs": [{ "name": "", "type": "address" }],
-    "gas": 3648
+    "outputs": [{ "name": "", "type": "address" }]
   },
   {
     "stateMutability": "view",
     "type": "function",
     "name": "initialized",
     "inputs": [],
-    "outputs": [{ "name": "", "type": "bool" }],
-    "gas": 3678
+    "outputs": [{ "name": "", "type": "bool" }]
   }
 ]
