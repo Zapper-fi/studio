@@ -4,8 +4,8 @@ import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { ContractFactory } from '~contract/contracts';
 import { Network } from '~types/network.interface';
 
-import { Hub__factory } from './ethers';
-import { PermissionManager__factory } from './ethers';
+import { MeanFinanceHub__factory } from './ethers';
+import { MeanFinancePermissionManager__factory } from './ethers';
 
 // eslint-disable-next-line
 type ContractOpts = { address: string; network: Network };
@@ -16,13 +16,13 @@ export class MeanFinanceContractFactory extends ContractFactory {
     super((network: Network) => appToolkit.getNetworkProvider(network));
   }
 
-  hub({ address, network }: ContractOpts) {
-    return Hub__factory.connect(address, this.appToolkit.getNetworkProvider(network));
+  meanFinanceHub({ address, network }: ContractOpts) {
+    return MeanFinanceHub__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
-  permissionManager({ address, network }: ContractOpts) {
-    return PermissionManager__factory.connect(address, this.appToolkit.getNetworkProvider(network));
+  meanFinancePermissionManager({ address, network }: ContractOpts) {
+    return MeanFinancePermissionManager__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
 }
 
-export type { Hub } from './ethers';
-export type { PermissionManager } from './ethers';
+export type { MeanFinanceHub } from './ethers';
+export type { MeanFinancePermissionManager } from './ethers';

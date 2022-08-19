@@ -15,7 +15,7 @@ import type {
 } from 'ethers';
 import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
 import type { Listener, Provider } from '@ethersproject/providers';
-import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
 export interface TraderJoeStableStakingInterface extends utils.Interface {
   functions: {
@@ -75,28 +75,34 @@ export interface TraderJoeStableStakingInterface extends utils.Interface {
 
   encodeFunctionData(functionFragment: 'ACC_REWARD_PER_SHARE_PRECISION', values?: undefined): string;
   encodeFunctionData(functionFragment: 'DEPOSIT_FEE_PERCENT_PRECISION', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'accRewardPerShare', values: [string]): string;
-  encodeFunctionData(functionFragment: 'addRewardToken', values: [string]): string;
-  encodeFunctionData(functionFragment: 'deposit', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'accRewardPerShare', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'addRewardToken', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'deposit', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'depositFeePercent', values?: undefined): string;
   encodeFunctionData(functionFragment: 'emergencyWithdraw', values?: undefined): string;
   encodeFunctionData(functionFragment: 'feeCollector', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'getUserInfo', values: [string, string]): string;
-  encodeFunctionData(functionFragment: 'initialize', values: [string, string, string, BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'getUserInfo', values: [PromiseOrValue<string>, PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'initialize',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
   encodeFunctionData(functionFragment: 'internalJoeBalance', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'isRewardToken', values: [string]): string;
+  encodeFunctionData(functionFragment: 'isRewardToken', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'joe', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'lastRewardBalance', values: [string]): string;
+  encodeFunctionData(functionFragment: 'lastRewardBalance', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'owner', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'pendingReward', values: [string, string]): string;
-  encodeFunctionData(functionFragment: 'removeRewardToken', values: [string]): string;
+  encodeFunctionData(
+    functionFragment: 'pendingReward',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>],
+  ): string;
+  encodeFunctionData(functionFragment: 'removeRewardToken', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'renounceOwnership', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'rewardTokens', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'rewardTokens', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'rewardTokensLength', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'setDepositFeePercent', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'transferOwnership', values: [string]): string;
-  encodeFunctionData(functionFragment: 'updateReward', values: [string]): string;
-  encodeFunctionData(functionFragment: 'withdraw', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'setDepositFeePercent', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'transferOwnership', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'updateReward', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'withdraw', values: [PromiseOrValue<BigNumberish>]): string;
 
   decodeFunctionResult(functionFragment: 'ACC_REWARD_PER_SHARE_PRECISION', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'DEPOSIT_FEE_PERCENT_PRECISION', data: BytesLike): Result;
@@ -235,75 +241,83 @@ export interface TraderJoeStableStaking extends BaseContract {
 
     DEPOSIT_FEE_PERCENT_PRECISION(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    accRewardPerShare(arg0: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    accRewardPerShare(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     addRewardToken(
-      _rewardToken: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _rewardToken: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     deposit(
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     depositFeePercent(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    emergencyWithdraw(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    emergencyWithdraw(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     feeCollector(overrides?: CallOverrides): Promise<[string]>;
 
-    getUserInfo(_user: string, _rewardToken: string, overrides?: CallOverrides): Promise<[BigNumber, BigNumber]>;
+    getUserInfo(
+      _user: PromiseOrValue<string>,
+      _rewardToken: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber, BigNumber]>;
 
     initialize(
-      _rewardToken: string,
-      _joe: string,
-      _feeCollector: string,
-      _depositFeePercent: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _rewardToken: PromiseOrValue<string>,
+      _joe: PromiseOrValue<string>,
+      _feeCollector: PromiseOrValue<string>,
+      _depositFeePercent: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     internalJoeBalance(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    isRewardToken(arg0: string, overrides?: CallOverrides): Promise<[boolean]>;
+    isRewardToken(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[boolean]>;
 
     joe(overrides?: CallOverrides): Promise<[string]>;
 
-    lastRewardBalance(arg0: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    lastRewardBalance(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     owner(overrides?: CallOverrides): Promise<[string]>;
 
-    pendingReward(_user: string, _token: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    pendingReward(
+      _user: PromiseOrValue<string>,
+      _token: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber]>;
 
     removeRewardToken(
-      _rewardToken: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _rewardToken: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
-    rewardTokens(arg0: BigNumberish, overrides?: CallOverrides): Promise<[string]>;
+    rewardTokens(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[string]>;
 
     rewardTokensLength(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     setDepositFeePercent(
-      _depositFeePercent: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _depositFeePercent: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     updateReward(
-      _token: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _token: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     withdraw(
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
   };
 
@@ -311,75 +325,83 @@ export interface TraderJoeStableStaking extends BaseContract {
 
   DEPOSIT_FEE_PERCENT_PRECISION(overrides?: CallOverrides): Promise<BigNumber>;
 
-  accRewardPerShare(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+  accRewardPerShare(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   addRewardToken(
-    _rewardToken: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _rewardToken: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   deposit(
-    _amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   depositFeePercent(overrides?: CallOverrides): Promise<BigNumber>;
 
-  emergencyWithdraw(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  emergencyWithdraw(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   feeCollector(overrides?: CallOverrides): Promise<string>;
 
-  getUserInfo(_user: string, _rewardToken: string, overrides?: CallOverrides): Promise<[BigNumber, BigNumber]>;
+  getUserInfo(
+    _user: PromiseOrValue<string>,
+    _rewardToken: PromiseOrValue<string>,
+    overrides?: CallOverrides,
+  ): Promise<[BigNumber, BigNumber]>;
 
   initialize(
-    _rewardToken: string,
-    _joe: string,
-    _feeCollector: string,
-    _depositFeePercent: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _rewardToken: PromiseOrValue<string>,
+    _joe: PromiseOrValue<string>,
+    _feeCollector: PromiseOrValue<string>,
+    _depositFeePercent: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   internalJoeBalance(overrides?: CallOverrides): Promise<BigNumber>;
 
-  isRewardToken(arg0: string, overrides?: CallOverrides): Promise<boolean>;
+  isRewardToken(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
   joe(overrides?: CallOverrides): Promise<string>;
 
-  lastRewardBalance(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+  lastRewardBalance(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   owner(overrides?: CallOverrides): Promise<string>;
 
-  pendingReward(_user: string, _token: string, overrides?: CallOverrides): Promise<BigNumber>;
+  pendingReward(
+    _user: PromiseOrValue<string>,
+    _token: PromiseOrValue<string>,
+    overrides?: CallOverrides,
+  ): Promise<BigNumber>;
 
   removeRewardToken(
-    _rewardToken: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _rewardToken: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
-  rewardTokens(arg0: BigNumberish, overrides?: CallOverrides): Promise<string>;
+  rewardTokens(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
 
   rewardTokensLength(overrides?: CallOverrides): Promise<BigNumber>;
 
   setDepositFeePercent(
-    _depositFeePercent: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _depositFeePercent: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   transferOwnership(
-    newOwner: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    newOwner: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   updateReward(
-    _token: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _token: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   withdraw(
-    _amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   callStatic: {
@@ -387,11 +409,11 @@ export interface TraderJoeStableStaking extends BaseContract {
 
     DEPOSIT_FEE_PERCENT_PRECISION(overrides?: CallOverrides): Promise<BigNumber>;
 
-    accRewardPerShare(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    accRewardPerShare(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    addRewardToken(_rewardToken: string, overrides?: CallOverrides): Promise<void>;
+    addRewardToken(_rewardToken: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    deposit(_amount: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    deposit(_amount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
     depositFeePercent(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -399,67 +421,89 @@ export interface TraderJoeStableStaking extends BaseContract {
 
     feeCollector(overrides?: CallOverrides): Promise<string>;
 
-    getUserInfo(_user: string, _rewardToken: string, overrides?: CallOverrides): Promise<[BigNumber, BigNumber]>;
+    getUserInfo(
+      _user: PromiseOrValue<string>,
+      _rewardToken: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber, BigNumber]>;
 
     initialize(
-      _rewardToken: string,
-      _joe: string,
-      _feeCollector: string,
-      _depositFeePercent: BigNumberish,
+      _rewardToken: PromiseOrValue<string>,
+      _joe: PromiseOrValue<string>,
+      _feeCollector: PromiseOrValue<string>,
+      _depositFeePercent: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
     internalJoeBalance(overrides?: CallOverrides): Promise<BigNumber>;
 
-    isRewardToken(arg0: string, overrides?: CallOverrides): Promise<boolean>;
+    isRewardToken(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
     joe(overrides?: CallOverrides): Promise<string>;
 
-    lastRewardBalance(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    lastRewardBalance(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     owner(overrides?: CallOverrides): Promise<string>;
 
-    pendingReward(_user: string, _token: string, overrides?: CallOverrides): Promise<BigNumber>;
+    pendingReward(
+      _user: PromiseOrValue<string>,
+      _token: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    removeRewardToken(_rewardToken: string, overrides?: CallOverrides): Promise<void>;
+    removeRewardToken(_rewardToken: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     renounceOwnership(overrides?: CallOverrides): Promise<void>;
 
-    rewardTokens(arg0: BigNumberish, overrides?: CallOverrides): Promise<string>;
+    rewardTokens(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
 
     rewardTokensLength(overrides?: CallOverrides): Promise<BigNumber>;
 
-    setDepositFeePercent(_depositFeePercent: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    setDepositFeePercent(_depositFeePercent: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
-    transferOwnership(newOwner: string, overrides?: CallOverrides): Promise<void>;
+    transferOwnership(newOwner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    updateReward(_token: string, overrides?: CallOverrides): Promise<void>;
+    updateReward(_token: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    withdraw(_amount: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    withdraw(_amount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
   };
 
   filters: {
     'ClaimReward(address,address,uint256)'(
-      user?: string | null,
-      rewardToken?: string | null,
+      user?: PromiseOrValue<string> | null,
+      rewardToken?: PromiseOrValue<string> | null,
       amount?: null,
     ): ClaimRewardEventFilter;
-    ClaimReward(user?: string | null, rewardToken?: string | null, amount?: null): ClaimRewardEventFilter;
+    ClaimReward(
+      user?: PromiseOrValue<string> | null,
+      rewardToken?: PromiseOrValue<string> | null,
+      amount?: null,
+    ): ClaimRewardEventFilter;
 
-    'Deposit(address,uint256,uint256)'(user?: string | null, amount?: null, fee?: null): DepositEventFilter;
-    Deposit(user?: string | null, amount?: null, fee?: null): DepositEventFilter;
+    'Deposit(address,uint256,uint256)'(
+      user?: PromiseOrValue<string> | null,
+      amount?: null,
+      fee?: null,
+    ): DepositEventFilter;
+    Deposit(user?: PromiseOrValue<string> | null, amount?: null, fee?: null): DepositEventFilter;
 
     'DepositFeeChanged(uint256,uint256)'(newFee?: null, oldFee?: null): DepositFeeChangedEventFilter;
     DepositFeeChanged(newFee?: null, oldFee?: null): DepositFeeChangedEventFilter;
 
-    'EmergencyWithdraw(address,uint256)'(user?: string | null, amount?: null): EmergencyWithdrawEventFilter;
-    EmergencyWithdraw(user?: string | null, amount?: null): EmergencyWithdrawEventFilter;
+    'EmergencyWithdraw(address,uint256)'(
+      user?: PromiseOrValue<string> | null,
+      amount?: null,
+    ): EmergencyWithdrawEventFilter;
+    EmergencyWithdraw(user?: PromiseOrValue<string> | null, amount?: null): EmergencyWithdrawEventFilter;
 
     'OwnershipTransferred(address,address)'(
-      previousOwner?: string | null,
-      newOwner?: string | null,
+      previousOwner?: PromiseOrValue<string> | null,
+      newOwner?: PromiseOrValue<string> | null,
     ): OwnershipTransferredEventFilter;
-    OwnershipTransferred(previousOwner?: string | null, newOwner?: string | null): OwnershipTransferredEventFilter;
+    OwnershipTransferred(
+      previousOwner?: PromiseOrValue<string> | null,
+      newOwner?: PromiseOrValue<string> | null,
+    ): OwnershipTransferredEventFilter;
 
     'RewardTokenAdded(address)'(token?: null): RewardTokenAddedEventFilter;
     RewardTokenAdded(token?: null): RewardTokenAddedEventFilter;
@@ -467,8 +511,8 @@ export interface TraderJoeStableStaking extends BaseContract {
     'RewardTokenRemoved(address)'(token?: null): RewardTokenRemovedEventFilter;
     RewardTokenRemoved(token?: null): RewardTokenRemovedEventFilter;
 
-    'Withdraw(address,uint256)'(user?: string | null, amount?: null): WithdrawEventFilter;
-    Withdraw(user?: string | null, amount?: null): WithdrawEventFilter;
+    'Withdraw(address,uint256)'(user?: PromiseOrValue<string> | null, amount?: null): WithdrawEventFilter;
+    Withdraw(user?: PromiseOrValue<string> | null, amount?: null): WithdrawEventFilter;
   };
 
   estimateGas: {
@@ -476,67 +520,84 @@ export interface TraderJoeStableStaking extends BaseContract {
 
     DEPOSIT_FEE_PERCENT_PRECISION(overrides?: CallOverrides): Promise<BigNumber>;
 
-    accRewardPerShare(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    accRewardPerShare(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     addRewardToken(
-      _rewardToken: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _rewardToken: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    deposit(_amount: BigNumberish, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    deposit(
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     depositFeePercent(overrides?: CallOverrides): Promise<BigNumber>;
 
-    emergencyWithdraw(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    emergencyWithdraw(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     feeCollector(overrides?: CallOverrides): Promise<BigNumber>;
 
-    getUserInfo(_user: string, _rewardToken: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getUserInfo(
+      _user: PromiseOrValue<string>,
+      _rewardToken: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     initialize(
-      _rewardToken: string,
-      _joe: string,
-      _feeCollector: string,
-      _depositFeePercent: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _rewardToken: PromiseOrValue<string>,
+      _joe: PromiseOrValue<string>,
+      _feeCollector: PromiseOrValue<string>,
+      _depositFeePercent: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     internalJoeBalance(overrides?: CallOverrides): Promise<BigNumber>;
 
-    isRewardToken(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    isRewardToken(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     joe(overrides?: CallOverrides): Promise<BigNumber>;
 
-    lastRewardBalance(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    lastRewardBalance(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     owner(overrides?: CallOverrides): Promise<BigNumber>;
 
-    pendingReward(_user: string, _token: string, overrides?: CallOverrides): Promise<BigNumber>;
-
-    removeRewardToken(
-      _rewardToken: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+    pendingReward(
+      _user: PromiseOrValue<string>,
+      _token: PromiseOrValue<string>,
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
-    renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    removeRewardToken(
+      _rewardToken: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
-    rewardTokens(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
+
+    rewardTokens(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     rewardTokensLength(overrides?: CallOverrides): Promise<BigNumber>;
 
     setDepositFeePercent(
-      _depositFeePercent: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _depositFeePercent: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    updateReward(_token: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    updateReward(
+      _token: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
-    withdraw(_amount: BigNumberish, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    withdraw(
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
   };
 
   populateTransaction: {
@@ -544,75 +605,83 @@ export interface TraderJoeStableStaking extends BaseContract {
 
     DEPOSIT_FEE_PERCENT_PRECISION(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    accRewardPerShare(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    accRewardPerShare(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     addRewardToken(
-      _rewardToken: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _rewardToken: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     deposit(
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     depositFeePercent(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    emergencyWithdraw(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    emergencyWithdraw(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     feeCollector(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    getUserInfo(_user: string, _rewardToken: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getUserInfo(
+      _user: PromiseOrValue<string>,
+      _rewardToken: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
     initialize(
-      _rewardToken: string,
-      _joe: string,
-      _feeCollector: string,
-      _depositFeePercent: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _rewardToken: PromiseOrValue<string>,
+      _joe: PromiseOrValue<string>,
+      _feeCollector: PromiseOrValue<string>,
+      _depositFeePercent: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     internalJoeBalance(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    isRewardToken(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    isRewardToken(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     joe(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    lastRewardBalance(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    lastRewardBalance(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    pendingReward(_user: string, _token: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    removeRewardToken(
-      _rewardToken: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+    pendingReward(
+      _user: PromiseOrValue<string>,
+      _token: PromiseOrValue<string>,
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
-    renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    removeRewardToken(
+      _rewardToken: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<PopulatedTransaction>;
 
-    rewardTokens(arg0: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
+
+    rewardTokens(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     rewardTokensLength(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     setDepositFeePercent(
-      _depositFeePercent: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _depositFeePercent: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     updateReward(
-      _token: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _token: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     withdraw(
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
   };
 }

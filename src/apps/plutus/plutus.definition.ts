@@ -10,40 +10,72 @@ export const PLUTUS_DEFINITION = appDefinition({
     'Plutus is a governance aggregator with the goal of amassing governance power in the Dopex/Jones ecosystem through the capture of veDPX and veJONES',
   url: 'https://plutusdao.io/',
   groups: {
-    ve: {
-      id: 've',
+    plsDpx: {
+      id: 'pls-dpx',
       type: GroupType.TOKEN,
-      label: 'veTokens',
-      groupLabel: 'Farms',
+      label: 'plsDPX',
     },
+
+    plsJones: {
+      id: 'pls-jones',
+      type: GroupType.TOKEN,
+      label: 'plsJONES',
+    },
+
     lock: {
       id: 'lock',
       type: GroupType.POSITION,
       label: 'Locked PLS',
-      groupLabel: 'Farms',
     },
-    jones: {
-      id: 'jones',
+
+    farmPlsDpxLp: {
+      id: 'farm-pls-dpx-lp',
       type: GroupType.POSITION,
-      label: 'Staked PlsJones',
-      groupLabel: 'Farms',
+      label: 'plsDPX LP Farm',
     },
-    dpx: {
-      id: 'dpx',
+
+    farmPlsDpx: {
+      id: 'farm-pls-dpx',
       type: GroupType.POSITION,
-      label: 'Staked PlsDPX',
-      groupLabel: 'Farms',
+      label: 'plsDPX Farm',
     },
-    stake: {
-      id: 'stake',
+
+    farmPlsDpxV2: {
+      id: 'farm-pls-dpx-v2',
       type: GroupType.POSITION,
-      label: 'Staked PLS',
-      groupLabel: 'Farms',
+      label: 'plsDPX Farm V2',
+    },
+
+    farmPlsJonesLp: {
+      id: 'farm-pls-jones-lp',
+      type: GroupType.POSITION,
+      label: 'plsJONES LP Farm',
+    },
+
+    farmPlsJones: {
+      id: 'farm-pls-jones',
+      type: GroupType.POSITION,
+      label: 'plsJONES Farm',
+    },
+
+    farmPls: {
+      id: 'farm-pls',
+      type: GroupType.POSITION,
+      label: 'PLS Farm',
+    },
+
+    tgeClaimable: {
+      id: 'tge-claimable',
+      type: GroupType.POSITION,
+      label: 'Private TGE Allocation',
     },
   },
   tags: [AppTag.ASSET_MANAGEMENT, AppTag.FARMING],
   keywords: [],
-  links: {},
+  links: {
+    discord: 'https://discord.com/invite/plutusdao',
+    twitter: 'https://twitter.com/PlutusDAO_io',
+  },
 
   supportedNetworks: {
     [Network.ARBITRUM_MAINNET]: [AppAction.VIEW],

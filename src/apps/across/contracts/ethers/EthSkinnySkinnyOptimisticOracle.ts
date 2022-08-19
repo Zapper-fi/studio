@@ -15,21 +15,21 @@ import type {
 } from 'ethers';
 import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
 import type { Listener, Provider } from '@ethersproject/providers';
-import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
 export declare namespace SkinnyOptimisticOracleInterface {
   export type RequestStruct = {
-    proposer: string;
-    disputer: string;
-    currency: string;
-    settled: boolean;
-    proposedPrice: BigNumberish;
-    resolvedPrice: BigNumberish;
-    expirationTime: BigNumberish;
-    reward: BigNumberish;
-    finalFee: BigNumberish;
-    bond: BigNumberish;
-    customLiveness: BigNumberish;
+    proposer: PromiseOrValue<string>;
+    disputer: PromiseOrValue<string>;
+    currency: PromiseOrValue<string>;
+    settled: PromiseOrValue<boolean>;
+    proposedPrice: PromiseOrValue<BigNumberish>;
+    resolvedPrice: PromiseOrValue<BigNumberish>;
+    expirationTime: PromiseOrValue<BigNumberish>;
+    reward: PromiseOrValue<BigNumberish>;
+    finalFee: PromiseOrValue<BigNumberish>;
+    bond: PromiseOrValue<BigNumberish>;
+    customLiveness: PromiseOrValue<BigNumberish>;
   };
 
   export type RequestStructOutput = [
@@ -105,63 +105,112 @@ export interface EthSkinnySkinnyOptimisticOracleInterface extends utils.Interfac
   encodeFunctionData(functionFragment: 'defaultLiveness', values?: undefined): string;
   encodeFunctionData(
     functionFragment: 'disputePrice',
-    values: [string, BytesLike, BigNumberish, BytesLike, SkinnyOptimisticOracleInterface.RequestStruct],
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<BytesLike>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BytesLike>,
+      SkinnyOptimisticOracleInterface.RequestStruct,
+    ],
   ): string;
   encodeFunctionData(
     functionFragment: 'disputePriceFor',
-    values: [BytesLike, BigNumberish, BytesLike, SkinnyOptimisticOracleInterface.RequestStruct, string, string],
+    values: [
+      PromiseOrValue<BytesLike>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BytesLike>,
+      SkinnyOptimisticOracleInterface.RequestStruct,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+    ],
   ): string;
   encodeFunctionData(functionFragment: 'finder', values?: undefined): string;
   encodeFunctionData(functionFragment: 'getCurrentTime', values?: undefined): string;
   encodeFunctionData(
     functionFragment: 'getState',
-    values: [string, BytesLike, BigNumberish, BytesLike, SkinnyOptimisticOracleInterface.RequestStruct],
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<BytesLike>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BytesLike>,
+      SkinnyOptimisticOracleInterface.RequestStruct,
+    ],
   ): string;
   encodeFunctionData(
     functionFragment: 'hasPrice',
-    values: [string, BytesLike, BigNumberish, BytesLike, SkinnyOptimisticOracleInterface.RequestStruct],
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<BytesLike>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BytesLike>,
+      SkinnyOptimisticOracleInterface.RequestStruct,
+    ],
   ): string;
   encodeFunctionData(
     functionFragment: 'proposePrice',
-    values: [string, BytesLike, BigNumberish, BytesLike, SkinnyOptimisticOracleInterface.RequestStruct, BigNumberish],
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<BytesLike>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BytesLike>,
+      SkinnyOptimisticOracleInterface.RequestStruct,
+      PromiseOrValue<BigNumberish>,
+    ],
   ): string;
   encodeFunctionData(
     functionFragment: 'proposePriceFor',
     values: [
-      string,
-      BytesLike,
-      BigNumberish,
-      BytesLike,
+      PromiseOrValue<string>,
+      PromiseOrValue<BytesLike>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BytesLike>,
       SkinnyOptimisticOracleInterface.RequestStruct,
-      string,
-      BigNumberish,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
     ],
   ): string;
   encodeFunctionData(
     functionFragment: 'requestAndProposePriceFor',
     values: [
-      BytesLike,
-      BigNumberish,
-      BytesLike,
-      string,
-      BigNumberish,
-      BigNumberish,
-      BigNumberish,
-      string,
-      BigNumberish,
+      PromiseOrValue<BytesLike>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BytesLike>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
     ],
   ): string;
   encodeFunctionData(
     functionFragment: 'requestPrice',
-    values: [BytesLike, BigNumberish, BytesLike, string, BigNumberish, BigNumberish, BigNumberish],
+    values: [
+      PromiseOrValue<BytesLike>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BytesLike>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+    ],
   ): string;
-  encodeFunctionData(functionFragment: 'requests', values: [BytesLike]): string;
-  encodeFunctionData(functionFragment: 'setCurrentTime', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'requests', values: [PromiseOrValue<BytesLike>]): string;
+  encodeFunctionData(functionFragment: 'setCurrentTime', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(
     functionFragment: 'settle',
-    values: [string, BytesLike, BigNumberish, BytesLike, SkinnyOptimisticOracleInterface.RequestStruct],
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<BytesLike>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BytesLike>,
+      SkinnyOptimisticOracleInterface.RequestStruct,
+    ],
   ): string;
-  encodeFunctionData(functionFragment: 'stampAncillaryData', values: [BytesLike, string]): string;
+  encodeFunctionData(
+    functionFragment: 'stampAncillaryData',
+    values: [PromiseOrValue<BytesLike>, PromiseOrValue<string>],
+  ): string;
   encodeFunctionData(functionFragment: 'timerAddress', values?: undefined): string;
 
   decodeFunctionResult(functionFragment: 'ancillaryBytesLimit', data: BytesLike): Result;
@@ -279,22 +328,22 @@ export interface EthSkinnySkinnyOptimisticOracle extends BaseContract {
     defaultLiveness(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     disputePrice(
-      requester: string,
-      identifier: BytesLike,
-      timestamp: BigNumberish,
-      ancillaryData: BytesLike,
+      requester: PromiseOrValue<string>,
+      identifier: PromiseOrValue<BytesLike>,
+      timestamp: PromiseOrValue<BigNumberish>,
+      ancillaryData: PromiseOrValue<BytesLike>,
       request: SkinnyOptimisticOracleInterface.RequestStruct,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     disputePriceFor(
-      identifier: BytesLike,
-      timestamp: BigNumberish,
-      ancillaryData: BytesLike,
+      identifier: PromiseOrValue<BytesLike>,
+      timestamp: PromiseOrValue<BigNumberish>,
+      ancillaryData: PromiseOrValue<BytesLike>,
       request: SkinnyOptimisticOracleInterface.RequestStruct,
-      disputer: string,
-      requester: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      disputer: PromiseOrValue<string>,
+      requester: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     finder(overrides?: CallOverrides): Promise<[string]>;
@@ -302,85 +351,89 @@ export interface EthSkinnySkinnyOptimisticOracle extends BaseContract {
     getCurrentTime(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     getState(
-      requester: string,
-      identifier: BytesLike,
-      timestamp: BigNumberish,
-      ancillaryData: BytesLike,
+      requester: PromiseOrValue<string>,
+      identifier: PromiseOrValue<BytesLike>,
+      timestamp: PromiseOrValue<BigNumberish>,
+      ancillaryData: PromiseOrValue<BytesLike>,
       request: SkinnyOptimisticOracleInterface.RequestStruct,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     hasPrice(
-      requester: string,
-      identifier: BytesLike,
-      timestamp: BigNumberish,
-      ancillaryData: BytesLike,
+      requester: PromiseOrValue<string>,
+      identifier: PromiseOrValue<BytesLike>,
+      timestamp: PromiseOrValue<BigNumberish>,
+      ancillaryData: PromiseOrValue<BytesLike>,
       request: SkinnyOptimisticOracleInterface.RequestStruct,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     proposePrice(
-      requester: string,
-      identifier: BytesLike,
-      timestamp: BigNumberish,
-      ancillaryData: BytesLike,
+      requester: PromiseOrValue<string>,
+      identifier: PromiseOrValue<BytesLike>,
+      timestamp: PromiseOrValue<BigNumberish>,
+      ancillaryData: PromiseOrValue<BytesLike>,
       request: SkinnyOptimisticOracleInterface.RequestStruct,
-      proposedPrice: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      proposedPrice: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     proposePriceFor(
-      requester: string,
-      identifier: BytesLike,
-      timestamp: BigNumberish,
-      ancillaryData: BytesLike,
+      requester: PromiseOrValue<string>,
+      identifier: PromiseOrValue<BytesLike>,
+      timestamp: PromiseOrValue<BigNumberish>,
+      ancillaryData: PromiseOrValue<BytesLike>,
       request: SkinnyOptimisticOracleInterface.RequestStruct,
-      proposer: string,
-      proposedPrice: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      proposer: PromiseOrValue<string>,
+      proposedPrice: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     requestAndProposePriceFor(
-      identifier: BytesLike,
-      timestamp: BigNumberish,
-      ancillaryData: BytesLike,
-      currency: string,
-      reward: BigNumberish,
-      bond: BigNumberish,
-      customLiveness: BigNumberish,
-      proposer: string,
-      proposedPrice: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      identifier: PromiseOrValue<BytesLike>,
+      timestamp: PromiseOrValue<BigNumberish>,
+      ancillaryData: PromiseOrValue<BytesLike>,
+      currency: PromiseOrValue<string>,
+      reward: PromiseOrValue<BigNumberish>,
+      bond: PromiseOrValue<BigNumberish>,
+      customLiveness: PromiseOrValue<BigNumberish>,
+      proposer: PromiseOrValue<string>,
+      proposedPrice: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     requestPrice(
-      identifier: BytesLike,
-      timestamp: BigNumberish,
-      ancillaryData: BytesLike,
-      currency: string,
-      reward: BigNumberish,
-      bond: BigNumberish,
-      customLiveness: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      identifier: PromiseOrValue<BytesLike>,
+      timestamp: PromiseOrValue<BigNumberish>,
+      ancillaryData: PromiseOrValue<BytesLike>,
+      currency: PromiseOrValue<string>,
+      reward: PromiseOrValue<BigNumberish>,
+      bond: PromiseOrValue<BigNumberish>,
+      customLiveness: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    requests(arg0: BytesLike, overrides?: CallOverrides): Promise<[string]>;
+    requests(arg0: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<[string]>;
 
     setCurrentTime(
-      time: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      time: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     settle(
-      requester: string,
-      identifier: BytesLike,
-      timestamp: BigNumberish,
-      ancillaryData: BytesLike,
+      requester: PromiseOrValue<string>,
+      identifier: PromiseOrValue<BytesLike>,
+      timestamp: PromiseOrValue<BigNumberish>,
+      ancillaryData: PromiseOrValue<BytesLike>,
       request: SkinnyOptimisticOracleInterface.RequestStruct,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    stampAncillaryData(ancillaryData: BytesLike, requester: string, overrides?: CallOverrides): Promise<[string]>;
+    stampAncillaryData(
+      ancillaryData: PromiseOrValue<BytesLike>,
+      requester: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<[string]>;
 
     timerAddress(overrides?: CallOverrides): Promise<[string]>;
   };
@@ -390,22 +443,22 @@ export interface EthSkinnySkinnyOptimisticOracle extends BaseContract {
   defaultLiveness(overrides?: CallOverrides): Promise<BigNumber>;
 
   disputePrice(
-    requester: string,
-    identifier: BytesLike,
-    timestamp: BigNumberish,
-    ancillaryData: BytesLike,
+    requester: PromiseOrValue<string>,
+    identifier: PromiseOrValue<BytesLike>,
+    timestamp: PromiseOrValue<BigNumberish>,
+    ancillaryData: PromiseOrValue<BytesLike>,
     request: SkinnyOptimisticOracleInterface.RequestStruct,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   disputePriceFor(
-    identifier: BytesLike,
-    timestamp: BigNumberish,
-    ancillaryData: BytesLike,
+    identifier: PromiseOrValue<BytesLike>,
+    timestamp: PromiseOrValue<BigNumberish>,
+    ancillaryData: PromiseOrValue<BytesLike>,
     request: SkinnyOptimisticOracleInterface.RequestStruct,
-    disputer: string,
-    requester: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    disputer: PromiseOrValue<string>,
+    requester: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   finder(overrides?: CallOverrides): Promise<string>;
@@ -413,85 +466,89 @@ export interface EthSkinnySkinnyOptimisticOracle extends BaseContract {
   getCurrentTime(overrides?: CallOverrides): Promise<BigNumber>;
 
   getState(
-    requester: string,
-    identifier: BytesLike,
-    timestamp: BigNumberish,
-    ancillaryData: BytesLike,
+    requester: PromiseOrValue<string>,
+    identifier: PromiseOrValue<BytesLike>,
+    timestamp: PromiseOrValue<BigNumberish>,
+    ancillaryData: PromiseOrValue<BytesLike>,
     request: SkinnyOptimisticOracleInterface.RequestStruct,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   hasPrice(
-    requester: string,
-    identifier: BytesLike,
-    timestamp: BigNumberish,
-    ancillaryData: BytesLike,
+    requester: PromiseOrValue<string>,
+    identifier: PromiseOrValue<BytesLike>,
+    timestamp: PromiseOrValue<BigNumberish>,
+    ancillaryData: PromiseOrValue<BytesLike>,
     request: SkinnyOptimisticOracleInterface.RequestStruct,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   proposePrice(
-    requester: string,
-    identifier: BytesLike,
-    timestamp: BigNumberish,
-    ancillaryData: BytesLike,
+    requester: PromiseOrValue<string>,
+    identifier: PromiseOrValue<BytesLike>,
+    timestamp: PromiseOrValue<BigNumberish>,
+    ancillaryData: PromiseOrValue<BytesLike>,
     request: SkinnyOptimisticOracleInterface.RequestStruct,
-    proposedPrice: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    proposedPrice: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   proposePriceFor(
-    requester: string,
-    identifier: BytesLike,
-    timestamp: BigNumberish,
-    ancillaryData: BytesLike,
+    requester: PromiseOrValue<string>,
+    identifier: PromiseOrValue<BytesLike>,
+    timestamp: PromiseOrValue<BigNumberish>,
+    ancillaryData: PromiseOrValue<BytesLike>,
     request: SkinnyOptimisticOracleInterface.RequestStruct,
-    proposer: string,
-    proposedPrice: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    proposer: PromiseOrValue<string>,
+    proposedPrice: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   requestAndProposePriceFor(
-    identifier: BytesLike,
-    timestamp: BigNumberish,
-    ancillaryData: BytesLike,
-    currency: string,
-    reward: BigNumberish,
-    bond: BigNumberish,
-    customLiveness: BigNumberish,
-    proposer: string,
-    proposedPrice: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    identifier: PromiseOrValue<BytesLike>,
+    timestamp: PromiseOrValue<BigNumberish>,
+    ancillaryData: PromiseOrValue<BytesLike>,
+    currency: PromiseOrValue<string>,
+    reward: PromiseOrValue<BigNumberish>,
+    bond: PromiseOrValue<BigNumberish>,
+    customLiveness: PromiseOrValue<BigNumberish>,
+    proposer: PromiseOrValue<string>,
+    proposedPrice: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   requestPrice(
-    identifier: BytesLike,
-    timestamp: BigNumberish,
-    ancillaryData: BytesLike,
-    currency: string,
-    reward: BigNumberish,
-    bond: BigNumberish,
-    customLiveness: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    identifier: PromiseOrValue<BytesLike>,
+    timestamp: PromiseOrValue<BigNumberish>,
+    ancillaryData: PromiseOrValue<BytesLike>,
+    currency: PromiseOrValue<string>,
+    reward: PromiseOrValue<BigNumberish>,
+    bond: PromiseOrValue<BigNumberish>,
+    customLiveness: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  requests(arg0: BytesLike, overrides?: CallOverrides): Promise<string>;
+  requests(arg0: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<string>;
 
   setCurrentTime(
-    time: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    time: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   settle(
-    requester: string,
-    identifier: BytesLike,
-    timestamp: BigNumberish,
-    ancillaryData: BytesLike,
+    requester: PromiseOrValue<string>,
+    identifier: PromiseOrValue<BytesLike>,
+    timestamp: PromiseOrValue<BigNumberish>,
+    ancillaryData: PromiseOrValue<BytesLike>,
     request: SkinnyOptimisticOracleInterface.RequestStruct,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  stampAncillaryData(ancillaryData: BytesLike, requester: string, overrides?: CallOverrides): Promise<string>;
+  stampAncillaryData(
+    ancillaryData: PromiseOrValue<BytesLike>,
+    requester: PromiseOrValue<string>,
+    overrides?: CallOverrides,
+  ): Promise<string>;
 
   timerAddress(overrides?: CallOverrides): Promise<string>;
 
@@ -501,21 +558,21 @@ export interface EthSkinnySkinnyOptimisticOracle extends BaseContract {
     defaultLiveness(overrides?: CallOverrides): Promise<BigNumber>;
 
     disputePrice(
-      requester: string,
-      identifier: BytesLike,
-      timestamp: BigNumberish,
-      ancillaryData: BytesLike,
+      requester: PromiseOrValue<string>,
+      identifier: PromiseOrValue<BytesLike>,
+      timestamp: PromiseOrValue<BigNumberish>,
+      ancillaryData: PromiseOrValue<BytesLike>,
       request: SkinnyOptimisticOracleInterface.RequestStruct,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     disputePriceFor(
-      identifier: BytesLike,
-      timestamp: BigNumberish,
-      ancillaryData: BytesLike,
+      identifier: PromiseOrValue<BytesLike>,
+      timestamp: PromiseOrValue<BigNumberish>,
+      ancillaryData: PromiseOrValue<BytesLike>,
       request: SkinnyOptimisticOracleInterface.RequestStruct,
-      disputer: string,
-      requester: string,
+      disputer: PromiseOrValue<string>,
+      requester: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
@@ -524,142 +581,146 @@ export interface EthSkinnySkinnyOptimisticOracle extends BaseContract {
     getCurrentTime(overrides?: CallOverrides): Promise<BigNumber>;
 
     getState(
-      requester: string,
-      identifier: BytesLike,
-      timestamp: BigNumberish,
-      ancillaryData: BytesLike,
+      requester: PromiseOrValue<string>,
+      identifier: PromiseOrValue<BytesLike>,
+      timestamp: PromiseOrValue<BigNumberish>,
+      ancillaryData: PromiseOrValue<BytesLike>,
       request: SkinnyOptimisticOracleInterface.RequestStruct,
       overrides?: CallOverrides,
     ): Promise<number>;
 
     hasPrice(
-      requester: string,
-      identifier: BytesLike,
-      timestamp: BigNumberish,
-      ancillaryData: BytesLike,
+      requester: PromiseOrValue<string>,
+      identifier: PromiseOrValue<BytesLike>,
+      timestamp: PromiseOrValue<BigNumberish>,
+      ancillaryData: PromiseOrValue<BytesLike>,
       request: SkinnyOptimisticOracleInterface.RequestStruct,
       overrides?: CallOverrides,
     ): Promise<boolean>;
 
     proposePrice(
-      requester: string,
-      identifier: BytesLike,
-      timestamp: BigNumberish,
-      ancillaryData: BytesLike,
+      requester: PromiseOrValue<string>,
+      identifier: PromiseOrValue<BytesLike>,
+      timestamp: PromiseOrValue<BigNumberish>,
+      ancillaryData: PromiseOrValue<BytesLike>,
       request: SkinnyOptimisticOracleInterface.RequestStruct,
-      proposedPrice: BigNumberish,
+      proposedPrice: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     proposePriceFor(
-      requester: string,
-      identifier: BytesLike,
-      timestamp: BigNumberish,
-      ancillaryData: BytesLike,
+      requester: PromiseOrValue<string>,
+      identifier: PromiseOrValue<BytesLike>,
+      timestamp: PromiseOrValue<BigNumberish>,
+      ancillaryData: PromiseOrValue<BytesLike>,
       request: SkinnyOptimisticOracleInterface.RequestStruct,
-      proposer: string,
-      proposedPrice: BigNumberish,
+      proposer: PromiseOrValue<string>,
+      proposedPrice: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     requestAndProposePriceFor(
-      identifier: BytesLike,
-      timestamp: BigNumberish,
-      ancillaryData: BytesLike,
-      currency: string,
-      reward: BigNumberish,
-      bond: BigNumberish,
-      customLiveness: BigNumberish,
-      proposer: string,
-      proposedPrice: BigNumberish,
+      identifier: PromiseOrValue<BytesLike>,
+      timestamp: PromiseOrValue<BigNumberish>,
+      ancillaryData: PromiseOrValue<BytesLike>,
+      currency: PromiseOrValue<string>,
+      reward: PromiseOrValue<BigNumberish>,
+      bond: PromiseOrValue<BigNumberish>,
+      customLiveness: PromiseOrValue<BigNumberish>,
+      proposer: PromiseOrValue<string>,
+      proposedPrice: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     requestPrice(
-      identifier: BytesLike,
-      timestamp: BigNumberish,
-      ancillaryData: BytesLike,
-      currency: string,
-      reward: BigNumberish,
-      bond: BigNumberish,
-      customLiveness: BigNumberish,
+      identifier: PromiseOrValue<BytesLike>,
+      timestamp: PromiseOrValue<BigNumberish>,
+      ancillaryData: PromiseOrValue<BytesLike>,
+      currency: PromiseOrValue<string>,
+      reward: PromiseOrValue<BigNumberish>,
+      bond: PromiseOrValue<BigNumberish>,
+      customLiveness: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
-    requests(arg0: BytesLike, overrides?: CallOverrides): Promise<string>;
+    requests(arg0: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<string>;
 
-    setCurrentTime(time: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    setCurrentTime(time: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
     settle(
-      requester: string,
-      identifier: BytesLike,
-      timestamp: BigNumberish,
-      ancillaryData: BytesLike,
+      requester: PromiseOrValue<string>,
+      identifier: PromiseOrValue<BytesLike>,
+      timestamp: PromiseOrValue<BigNumberish>,
+      ancillaryData: PromiseOrValue<BytesLike>,
       request: SkinnyOptimisticOracleInterface.RequestStruct,
       overrides?: CallOverrides,
     ): Promise<[BigNumber, BigNumber] & { payout: BigNumber; resolvedPrice: BigNumber }>;
 
-    stampAncillaryData(ancillaryData: BytesLike, requester: string, overrides?: CallOverrides): Promise<string>;
+    stampAncillaryData(
+      ancillaryData: PromiseOrValue<BytesLike>,
+      requester: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<string>;
 
     timerAddress(overrides?: CallOverrides): Promise<string>;
   };
 
   filters: {
     'DisputePrice(address,bytes32,uint32,bytes,tuple)'(
-      requester?: string | null,
-      identifier?: BytesLike | null,
+      requester?: PromiseOrValue<string> | null,
+      identifier?: PromiseOrValue<BytesLike> | null,
       timestamp?: null,
       ancillaryData?: null,
       request?: null,
     ): DisputePriceEventFilter;
     DisputePrice(
-      requester?: string | null,
-      identifier?: BytesLike | null,
+      requester?: PromiseOrValue<string> | null,
+      identifier?: PromiseOrValue<BytesLike> | null,
       timestamp?: null,
       ancillaryData?: null,
       request?: null,
     ): DisputePriceEventFilter;
 
     'ProposePrice(address,bytes32,uint32,bytes,tuple)'(
-      requester?: string | null,
-      identifier?: BytesLike | null,
+      requester?: PromiseOrValue<string> | null,
+      identifier?: PromiseOrValue<BytesLike> | null,
       timestamp?: null,
       ancillaryData?: null,
       request?: null,
     ): ProposePriceEventFilter;
     ProposePrice(
-      requester?: string | null,
-      identifier?: BytesLike | null,
+      requester?: PromiseOrValue<string> | null,
+      identifier?: PromiseOrValue<BytesLike> | null,
       timestamp?: null,
       ancillaryData?: null,
       request?: null,
     ): ProposePriceEventFilter;
 
     'RequestPrice(address,bytes32,uint32,bytes,tuple)'(
-      requester?: string | null,
-      identifier?: BytesLike | null,
+      requester?: PromiseOrValue<string> | null,
+      identifier?: PromiseOrValue<BytesLike> | null,
       timestamp?: null,
       ancillaryData?: null,
       request?: null,
     ): RequestPriceEventFilter;
     RequestPrice(
-      requester?: string | null,
-      identifier?: BytesLike | null,
+      requester?: PromiseOrValue<string> | null,
+      identifier?: PromiseOrValue<BytesLike> | null,
       timestamp?: null,
       ancillaryData?: null,
       request?: null,
     ): RequestPriceEventFilter;
 
     'Settle(address,bytes32,uint32,bytes,tuple)'(
-      requester?: string | null,
-      identifier?: BytesLike | null,
+      requester?: PromiseOrValue<string> | null,
+      identifier?: PromiseOrValue<BytesLike> | null,
       timestamp?: null,
       ancillaryData?: null,
       request?: null,
     ): SettleEventFilter;
     Settle(
-      requester?: string | null,
-      identifier?: BytesLike | null,
+      requester?: PromiseOrValue<string> | null,
+      identifier?: PromiseOrValue<BytesLike> | null,
       timestamp?: null,
       ancillaryData?: null,
       request?: null,
@@ -672,22 +733,22 @@ export interface EthSkinnySkinnyOptimisticOracle extends BaseContract {
     defaultLiveness(overrides?: CallOverrides): Promise<BigNumber>;
 
     disputePrice(
-      requester: string,
-      identifier: BytesLike,
-      timestamp: BigNumberish,
-      ancillaryData: BytesLike,
+      requester: PromiseOrValue<string>,
+      identifier: PromiseOrValue<BytesLike>,
+      timestamp: PromiseOrValue<BigNumberish>,
+      ancillaryData: PromiseOrValue<BytesLike>,
       request: SkinnyOptimisticOracleInterface.RequestStruct,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     disputePriceFor(
-      identifier: BytesLike,
-      timestamp: BigNumberish,
-      ancillaryData: BytesLike,
+      identifier: PromiseOrValue<BytesLike>,
+      timestamp: PromiseOrValue<BigNumberish>,
+      ancillaryData: PromiseOrValue<BytesLike>,
       request: SkinnyOptimisticOracleInterface.RequestStruct,
-      disputer: string,
-      requester: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      disputer: PromiseOrValue<string>,
+      requester: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     finder(overrides?: CallOverrides): Promise<BigNumber>;
@@ -695,82 +756,89 @@ export interface EthSkinnySkinnyOptimisticOracle extends BaseContract {
     getCurrentTime(overrides?: CallOverrides): Promise<BigNumber>;
 
     getState(
-      requester: string,
-      identifier: BytesLike,
-      timestamp: BigNumberish,
-      ancillaryData: BytesLike,
+      requester: PromiseOrValue<string>,
+      identifier: PromiseOrValue<BytesLike>,
+      timestamp: PromiseOrValue<BigNumberish>,
+      ancillaryData: PromiseOrValue<BytesLike>,
       request: SkinnyOptimisticOracleInterface.RequestStruct,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     hasPrice(
-      requester: string,
-      identifier: BytesLike,
-      timestamp: BigNumberish,
-      ancillaryData: BytesLike,
+      requester: PromiseOrValue<string>,
+      identifier: PromiseOrValue<BytesLike>,
+      timestamp: PromiseOrValue<BigNumberish>,
+      ancillaryData: PromiseOrValue<BytesLike>,
       request: SkinnyOptimisticOracleInterface.RequestStruct,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     proposePrice(
-      requester: string,
-      identifier: BytesLike,
-      timestamp: BigNumberish,
-      ancillaryData: BytesLike,
+      requester: PromiseOrValue<string>,
+      identifier: PromiseOrValue<BytesLike>,
+      timestamp: PromiseOrValue<BigNumberish>,
+      ancillaryData: PromiseOrValue<BytesLike>,
       request: SkinnyOptimisticOracleInterface.RequestStruct,
-      proposedPrice: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      proposedPrice: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     proposePriceFor(
-      requester: string,
-      identifier: BytesLike,
-      timestamp: BigNumberish,
-      ancillaryData: BytesLike,
+      requester: PromiseOrValue<string>,
+      identifier: PromiseOrValue<BytesLike>,
+      timestamp: PromiseOrValue<BigNumberish>,
+      ancillaryData: PromiseOrValue<BytesLike>,
       request: SkinnyOptimisticOracleInterface.RequestStruct,
-      proposer: string,
-      proposedPrice: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      proposer: PromiseOrValue<string>,
+      proposedPrice: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     requestAndProposePriceFor(
-      identifier: BytesLike,
-      timestamp: BigNumberish,
-      ancillaryData: BytesLike,
-      currency: string,
-      reward: BigNumberish,
-      bond: BigNumberish,
-      customLiveness: BigNumberish,
-      proposer: string,
-      proposedPrice: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      identifier: PromiseOrValue<BytesLike>,
+      timestamp: PromiseOrValue<BigNumberish>,
+      ancillaryData: PromiseOrValue<BytesLike>,
+      currency: PromiseOrValue<string>,
+      reward: PromiseOrValue<BigNumberish>,
+      bond: PromiseOrValue<BigNumberish>,
+      customLiveness: PromiseOrValue<BigNumberish>,
+      proposer: PromiseOrValue<string>,
+      proposedPrice: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     requestPrice(
-      identifier: BytesLike,
-      timestamp: BigNumberish,
-      ancillaryData: BytesLike,
-      currency: string,
-      reward: BigNumberish,
-      bond: BigNumberish,
-      customLiveness: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      identifier: PromiseOrValue<BytesLike>,
+      timestamp: PromiseOrValue<BigNumberish>,
+      ancillaryData: PromiseOrValue<BytesLike>,
+      currency: PromiseOrValue<string>,
+      reward: PromiseOrValue<BigNumberish>,
+      bond: PromiseOrValue<BigNumberish>,
+      customLiveness: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    requests(arg0: BytesLike, overrides?: CallOverrides): Promise<BigNumber>;
+    requests(arg0: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    setCurrentTime(time: BigNumberish, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    setCurrentTime(
+      time: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     settle(
-      requester: string,
-      identifier: BytesLike,
-      timestamp: BigNumberish,
-      ancillaryData: BytesLike,
+      requester: PromiseOrValue<string>,
+      identifier: PromiseOrValue<BytesLike>,
+      timestamp: PromiseOrValue<BigNumberish>,
+      ancillaryData: PromiseOrValue<BytesLike>,
       request: SkinnyOptimisticOracleInterface.RequestStruct,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    stampAncillaryData(ancillaryData: BytesLike, requester: string, overrides?: CallOverrides): Promise<BigNumber>;
+    stampAncillaryData(
+      ancillaryData: PromiseOrValue<BytesLike>,
+      requester: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     timerAddress(overrides?: CallOverrides): Promise<BigNumber>;
   };
@@ -781,22 +849,22 @@ export interface EthSkinnySkinnyOptimisticOracle extends BaseContract {
     defaultLiveness(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     disputePrice(
-      requester: string,
-      identifier: BytesLike,
-      timestamp: BigNumberish,
-      ancillaryData: BytesLike,
+      requester: PromiseOrValue<string>,
+      identifier: PromiseOrValue<BytesLike>,
+      timestamp: PromiseOrValue<BigNumberish>,
+      ancillaryData: PromiseOrValue<BytesLike>,
       request: SkinnyOptimisticOracleInterface.RequestStruct,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     disputePriceFor(
-      identifier: BytesLike,
-      timestamp: BigNumberish,
-      ancillaryData: BytesLike,
+      identifier: PromiseOrValue<BytesLike>,
+      timestamp: PromiseOrValue<BigNumberish>,
+      ancillaryData: PromiseOrValue<BytesLike>,
       request: SkinnyOptimisticOracleInterface.RequestStruct,
-      disputer: string,
-      requester: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      disputer: PromiseOrValue<string>,
+      requester: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     finder(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -804,87 +872,87 @@ export interface EthSkinnySkinnyOptimisticOracle extends BaseContract {
     getCurrentTime(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     getState(
-      requester: string,
-      identifier: BytesLike,
-      timestamp: BigNumberish,
-      ancillaryData: BytesLike,
+      requester: PromiseOrValue<string>,
+      identifier: PromiseOrValue<BytesLike>,
+      timestamp: PromiseOrValue<BigNumberish>,
+      ancillaryData: PromiseOrValue<BytesLike>,
       request: SkinnyOptimisticOracleInterface.RequestStruct,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     hasPrice(
-      requester: string,
-      identifier: BytesLike,
-      timestamp: BigNumberish,
-      ancillaryData: BytesLike,
+      requester: PromiseOrValue<string>,
+      identifier: PromiseOrValue<BytesLike>,
+      timestamp: PromiseOrValue<BigNumberish>,
+      ancillaryData: PromiseOrValue<BytesLike>,
       request: SkinnyOptimisticOracleInterface.RequestStruct,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     proposePrice(
-      requester: string,
-      identifier: BytesLike,
-      timestamp: BigNumberish,
-      ancillaryData: BytesLike,
+      requester: PromiseOrValue<string>,
+      identifier: PromiseOrValue<BytesLike>,
+      timestamp: PromiseOrValue<BigNumberish>,
+      ancillaryData: PromiseOrValue<BytesLike>,
       request: SkinnyOptimisticOracleInterface.RequestStruct,
-      proposedPrice: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      proposedPrice: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     proposePriceFor(
-      requester: string,
-      identifier: BytesLike,
-      timestamp: BigNumberish,
-      ancillaryData: BytesLike,
+      requester: PromiseOrValue<string>,
+      identifier: PromiseOrValue<BytesLike>,
+      timestamp: PromiseOrValue<BigNumberish>,
+      ancillaryData: PromiseOrValue<BytesLike>,
       request: SkinnyOptimisticOracleInterface.RequestStruct,
-      proposer: string,
-      proposedPrice: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      proposer: PromiseOrValue<string>,
+      proposedPrice: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     requestAndProposePriceFor(
-      identifier: BytesLike,
-      timestamp: BigNumberish,
-      ancillaryData: BytesLike,
-      currency: string,
-      reward: BigNumberish,
-      bond: BigNumberish,
-      customLiveness: BigNumberish,
-      proposer: string,
-      proposedPrice: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      identifier: PromiseOrValue<BytesLike>,
+      timestamp: PromiseOrValue<BigNumberish>,
+      ancillaryData: PromiseOrValue<BytesLike>,
+      currency: PromiseOrValue<string>,
+      reward: PromiseOrValue<BigNumberish>,
+      bond: PromiseOrValue<BigNumberish>,
+      customLiveness: PromiseOrValue<BigNumberish>,
+      proposer: PromiseOrValue<string>,
+      proposedPrice: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     requestPrice(
-      identifier: BytesLike,
-      timestamp: BigNumberish,
-      ancillaryData: BytesLike,
-      currency: string,
-      reward: BigNumberish,
-      bond: BigNumberish,
-      customLiveness: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      identifier: PromiseOrValue<BytesLike>,
+      timestamp: PromiseOrValue<BigNumberish>,
+      ancillaryData: PromiseOrValue<BytesLike>,
+      currency: PromiseOrValue<string>,
+      reward: PromiseOrValue<BigNumberish>,
+      bond: PromiseOrValue<BigNumberish>,
+      customLiveness: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    requests(arg0: BytesLike, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    requests(arg0: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     setCurrentTime(
-      time: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      time: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     settle(
-      requester: string,
-      identifier: BytesLike,
-      timestamp: BigNumberish,
-      ancillaryData: BytesLike,
+      requester: PromiseOrValue<string>,
+      identifier: PromiseOrValue<BytesLike>,
+      timestamp: PromiseOrValue<BigNumberish>,
+      ancillaryData: PromiseOrValue<BytesLike>,
       request: SkinnyOptimisticOracleInterface.RequestStruct,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     stampAncillaryData(
-      ancillaryData: BytesLike,
-      requester: string,
+      ancillaryData: PromiseOrValue<BytesLike>,
+      requester: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 

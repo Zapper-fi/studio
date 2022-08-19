@@ -15,7 +15,7 @@ import type {
 } from 'ethers';
 import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
 import type { Listener, Provider } from '@ethersproject/providers';
-import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
 export interface WMasterChefInterface extends utils.Interface {
   functions: {
@@ -87,43 +87,85 @@ export interface WMasterChefInterface extends utils.Interface {
       | 'uri',
   ): FunctionFragment;
 
-  encodeFunctionData(functionFragment: 'balanceOf', values: [string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'balanceOfBatch', values: [string[], BigNumberish[]]): string;
-  encodeFunctionData(functionFragment: 'burn', values: [BigNumberish, BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'balanceOf',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'balanceOfBatch',
+    values: [PromiseOrValue<string>[], PromiseOrValue<BigNumberish>[]],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'burn',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+  ): string;
   encodeFunctionData(functionFragment: 'chef', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'collSizeToLpBalance', values: [BigNumberish, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'decodeId', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'dedicatedWorkers', values: [string]): string;
+  encodeFunctionData(
+    functionFragment: 'collSizeToLpBalance',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'decodeId', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'dedicatedWorkers', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'dexHelper', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'encodeId', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'exists', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'encodeId', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'exists', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'getDexHelper', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'getTokenByPid', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'getUnderlyingToken', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'harvestReward', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'initialize', values: [string, string]): string;
-  encodeFunctionData(functionFragment: 'isApprovedForAll', values: [string, string]): string;
-  encodeFunctionData(functionFragment: 'lpBalanceToCollSize', values: [BigNumberish, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'mint', values: [BigNumberish, BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'getTokenByPid', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'getUnderlyingToken', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'harvestReward', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'initialize', values: [PromiseOrValue<string>, PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'isApprovedForAll',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'lpBalanceToCollSize',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'mint',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+  ): string;
   encodeFunctionData(functionFragment: 'owner', values?: undefined): string;
   encodeFunctionData(functionFragment: 'renounceOwnership', values?: undefined): string;
   encodeFunctionData(functionFragment: 'rewardToken', values?: undefined): string;
   encodeFunctionData(
     functionFragment: 'safeBatchTransferFrom',
-    values: [string, string, BigNumberish[], BigNumberish[], BytesLike],
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>[],
+      PromiseOrValue<BigNumberish>[],
+      PromiseOrValue<BytesLike>,
+    ],
   ): string;
   encodeFunctionData(
     functionFragment: 'safeTransferFrom',
-    values: [string, string, BigNumberish, BigNumberish, BytesLike],
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BytesLike>,
+    ],
   ): string;
-  encodeFunctionData(functionFragment: 'setApprovalForAll', values: [string, boolean]): string;
-  encodeFunctionData(functionFragment: 'setDedicatedWorkers', values: [string[], boolean]): string;
-  encodeFunctionData(functionFragment: 'setDexHelper', values: [string]): string;
-  encodeFunctionData(functionFragment: 'stake', values: [BigNumberish, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'supportsInterface', values: [BytesLike]): string;
-  encodeFunctionData(functionFragment: 'totalSupply', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'transferOwnership', values: [string]): string;
-  encodeFunctionData(functionFragment: 'uri', values: [BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'setApprovalForAll',
+    values: [PromiseOrValue<string>, PromiseOrValue<boolean>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'setDedicatedWorkers',
+    values: [PromiseOrValue<string>[], PromiseOrValue<boolean>],
+  ): string;
+  encodeFunctionData(functionFragment: 'setDexHelper', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'stake',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'supportsInterface', values: [PromiseOrValue<BytesLike>]): string;
+  encodeFunctionData(functionFragment: 'totalSupply', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'transferOwnership', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'uri', values: [PromiseOrValue<BigNumberish>]): string;
 
   decodeFunctionResult(functionFragment: 'balanceOf', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'balanceOfBatch', data: BytesLike): Result;
@@ -297,269 +339,333 @@ export interface WMasterChef extends BaseContract {
   removeListener: OnEvent<this>;
 
   functions: {
-    balanceOf(account: string, id: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber]>;
+    balanceOf(
+      account: PromiseOrValue<string>,
+      id: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber]>;
 
-    balanceOfBatch(accounts: string[], ids: BigNumberish[], overrides?: CallOverrides): Promise<[BigNumber[]]>;
+    balanceOfBatch(
+      accounts: PromiseOrValue<string>[],
+      ids: PromiseOrValue<BigNumberish>[],
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber[]]>;
 
     burn(
-      id: BigNumberish,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      id: PromiseOrValue<BigNumberish>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     chef(overrides?: CallOverrides): Promise<[string]>;
 
     collSizeToLpBalance(
-      collId: BigNumberish,
-      collSize: BigNumberish,
+      collId: PromiseOrValue<BigNumberish>,
+      collSize: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber] & { balance: BigNumber }>;
 
-    decodeId(id: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber] & { pid: BigNumber }>;
+    decodeId(id: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[BigNumber] & { pid: BigNumber }>;
 
-    dedicatedWorkers(arg0: string, overrides?: CallOverrides): Promise<[boolean]>;
+    dedicatedWorkers(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[boolean]>;
 
     dexHelper(overrides?: CallOverrides): Promise<[string]>;
 
-    encodeId(pid: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber] & { id: BigNumber }>;
+    encodeId(pid: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[BigNumber] & { id: BigNumber }>;
 
-    exists(id: BigNumberish, overrides?: CallOverrides): Promise<[boolean]>;
+    exists(id: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[boolean]>;
 
     getDexHelper(overrides?: CallOverrides): Promise<[string]>;
 
-    getTokenByPid(pid: BigNumberish, overrides?: CallOverrides): Promise<[string]>;
+    getTokenByPid(pid: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[string]>;
 
-    getUnderlyingToken(id: BigNumberish, overrides?: CallOverrides): Promise<[string]>;
+    getUnderlyingToken(id: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[string]>;
 
     harvestReward(
-      pid: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      pid: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     initialize(
-      _chef: string,
-      _rewardToken: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _chef: PromiseOrValue<string>,
+      _rewardToken: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    isApprovedForAll(account: string, operator: string, overrides?: CallOverrides): Promise<[boolean]>;
+    isApprovedForAll(
+      account: PromiseOrValue<string>,
+      operator: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<[boolean]>;
 
     lpBalanceToCollSize(
-      collId: BigNumberish,
-      balance: BigNumberish,
+      collId: PromiseOrValue<BigNumberish>,
+      balance: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber] & { collSize: BigNumber }>;
 
     mint(
-      pid: BigNumberish,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      pid: PromiseOrValue<BigNumberish>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     owner(overrides?: CallOverrides): Promise<[string]>;
 
-    renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     rewardToken(overrides?: CallOverrides): Promise<[string]>;
 
     safeBatchTransferFrom(
-      from: string,
-      to: string,
-      ids: BigNumberish[],
-      amounts: BigNumberish[],
-      data: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      ids: PromiseOrValue<BigNumberish>[],
+      amounts: PromiseOrValue<BigNumberish>[],
+      data: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     safeTransferFrom(
-      from: string,
-      to: string,
-      id: BigNumberish,
-      amount: BigNumberish,
-      data: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      id: PromiseOrValue<BigNumberish>,
+      amount: PromiseOrValue<BigNumberish>,
+      data: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setApprovalForAll(
-      operator: string,
-      approved: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      operator: PromiseOrValue<string>,
+      approved: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setDedicatedWorkers(
-      workers: string[],
-      ok: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      workers: PromiseOrValue<string>[],
+      ok: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setDexHelper(
-      helper: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      helper: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     stake(
-      pid: BigNumberish,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      pid: PromiseOrValue<BigNumberish>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    supportsInterface(interfaceId: BytesLike, overrides?: CallOverrides): Promise<[boolean]>;
+    supportsInterface(interfaceId: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<[boolean]>;
 
-    totalSupply(id: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber]>;
+    totalSupply(id: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    uri(arg0: BigNumberish, overrides?: CallOverrides): Promise<[string]>;
+    uri(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[string]>;
   };
 
-  balanceOf(account: string, id: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+  balanceOf(
+    account: PromiseOrValue<string>,
+    id: PromiseOrValue<BigNumberish>,
+    overrides?: CallOverrides,
+  ): Promise<BigNumber>;
 
-  balanceOfBatch(accounts: string[], ids: BigNumberish[], overrides?: CallOverrides): Promise<BigNumber[]>;
+  balanceOfBatch(
+    accounts: PromiseOrValue<string>[],
+    ids: PromiseOrValue<BigNumberish>[],
+    overrides?: CallOverrides,
+  ): Promise<BigNumber[]>;
 
   burn(
-    id: BigNumberish,
-    amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    id: PromiseOrValue<BigNumberish>,
+    amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   chef(overrides?: CallOverrides): Promise<string>;
 
-  collSizeToLpBalance(collId: BigNumberish, collSize: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+  collSizeToLpBalance(
+    collId: PromiseOrValue<BigNumberish>,
+    collSize: PromiseOrValue<BigNumberish>,
+    overrides?: CallOverrides,
+  ): Promise<BigNumber>;
 
-  decodeId(id: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+  decodeId(id: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  dedicatedWorkers(arg0: string, overrides?: CallOverrides): Promise<boolean>;
+  dedicatedWorkers(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
   dexHelper(overrides?: CallOverrides): Promise<string>;
 
-  encodeId(pid: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+  encodeId(pid: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  exists(id: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+  exists(id: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<boolean>;
 
   getDexHelper(overrides?: CallOverrides): Promise<string>;
 
-  getTokenByPid(pid: BigNumberish, overrides?: CallOverrides): Promise<string>;
+  getTokenByPid(pid: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
 
-  getUnderlyingToken(id: BigNumberish, overrides?: CallOverrides): Promise<string>;
+  getUnderlyingToken(id: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
 
   harvestReward(
-    pid: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    pid: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   initialize(
-    _chef: string,
-    _rewardToken: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _chef: PromiseOrValue<string>,
+    _rewardToken: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  isApprovedForAll(account: string, operator: string, overrides?: CallOverrides): Promise<boolean>;
+  isApprovedForAll(
+    account: PromiseOrValue<string>,
+    operator: PromiseOrValue<string>,
+    overrides?: CallOverrides,
+  ): Promise<boolean>;
 
-  lpBalanceToCollSize(collId: BigNumberish, balance: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+  lpBalanceToCollSize(
+    collId: PromiseOrValue<BigNumberish>,
+    balance: PromiseOrValue<BigNumberish>,
+    overrides?: CallOverrides,
+  ): Promise<BigNumber>;
 
   mint(
-    pid: BigNumberish,
-    amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    pid: PromiseOrValue<BigNumberish>,
+    amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   owner(overrides?: CallOverrides): Promise<string>;
 
-  renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   rewardToken(overrides?: CallOverrides): Promise<string>;
 
   safeBatchTransferFrom(
-    from: string,
-    to: string,
-    ids: BigNumberish[],
-    amounts: BigNumberish[],
-    data: BytesLike,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    from: PromiseOrValue<string>,
+    to: PromiseOrValue<string>,
+    ids: PromiseOrValue<BigNumberish>[],
+    amounts: PromiseOrValue<BigNumberish>[],
+    data: PromiseOrValue<BytesLike>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   safeTransferFrom(
-    from: string,
-    to: string,
-    id: BigNumberish,
-    amount: BigNumberish,
-    data: BytesLike,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    from: PromiseOrValue<string>,
+    to: PromiseOrValue<string>,
+    id: PromiseOrValue<BigNumberish>,
+    amount: PromiseOrValue<BigNumberish>,
+    data: PromiseOrValue<BytesLike>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setApprovalForAll(
-    operator: string,
-    approved: boolean,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    operator: PromiseOrValue<string>,
+    approved: PromiseOrValue<boolean>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setDedicatedWorkers(
-    workers: string[],
-    ok: boolean,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    workers: PromiseOrValue<string>[],
+    ok: PromiseOrValue<boolean>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setDexHelper(
-    helper: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    helper: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   stake(
-    pid: BigNumberish,
-    amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    pid: PromiseOrValue<BigNumberish>,
+    amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  supportsInterface(interfaceId: BytesLike, overrides?: CallOverrides): Promise<boolean>;
+  supportsInterface(interfaceId: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<boolean>;
 
-  totalSupply(id: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+  totalSupply(id: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
   transferOwnership(
-    newOwner: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    newOwner: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  uri(arg0: BigNumberish, overrides?: CallOverrides): Promise<string>;
+  uri(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
 
   callStatic: {
-    balanceOf(account: string, id: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    balanceOf(
+      account: PromiseOrValue<string>,
+      id: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    balanceOfBatch(accounts: string[], ids: BigNumberish[], overrides?: CallOverrides): Promise<BigNumber[]>;
+    balanceOfBatch(
+      accounts: PromiseOrValue<string>[],
+      ids: PromiseOrValue<BigNumberish>[],
+      overrides?: CallOverrides,
+    ): Promise<BigNumber[]>;
 
-    burn(id: BigNumberish, amount: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    burn(
+      id: PromiseOrValue<BigNumberish>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     chef(overrides?: CallOverrides): Promise<string>;
 
-    collSizeToLpBalance(collId: BigNumberish, collSize: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    collSizeToLpBalance(
+      collId: PromiseOrValue<BigNumberish>,
+      collSize: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    decodeId(id: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    decodeId(id: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    dedicatedWorkers(arg0: string, overrides?: CallOverrides): Promise<boolean>;
+    dedicatedWorkers(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
     dexHelper(overrides?: CallOverrides): Promise<string>;
 
-    encodeId(pid: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    encodeId(pid: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    exists(id: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+    exists(id: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<boolean>;
 
     getDexHelper(overrides?: CallOverrides): Promise<string>;
 
-    getTokenByPid(pid: BigNumberish, overrides?: CallOverrides): Promise<string>;
+    getTokenByPid(pid: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
 
-    getUnderlyingToken(id: BigNumberish, overrides?: CallOverrides): Promise<string>;
+    getUnderlyingToken(id: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
 
-    harvestReward(pid: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    harvestReward(pid: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
-    initialize(_chef: string, _rewardToken: string, overrides?: CallOverrides): Promise<void>;
+    initialize(
+      _chef: PromiseOrValue<string>,
+      _rewardToken: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    isApprovedForAll(account: string, operator: string, overrides?: CallOverrides): Promise<boolean>;
+    isApprovedForAll(
+      account: PromiseOrValue<string>,
+      operator: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
 
-    lpBalanceToCollSize(collId: BigNumberish, balance: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    lpBalanceToCollSize(
+      collId: PromiseOrValue<BigNumberish>,
+      balance: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    mint(pid: BigNumberish, amount: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    mint(
+      pid: PromiseOrValue<BigNumberish>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     owner(overrides?: CallOverrides): Promise<string>;
 
@@ -568,324 +674,389 @@ export interface WMasterChef extends BaseContract {
     rewardToken(overrides?: CallOverrides): Promise<string>;
 
     safeBatchTransferFrom(
-      from: string,
-      to: string,
-      ids: BigNumberish[],
-      amounts: BigNumberish[],
-      data: BytesLike,
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      ids: PromiseOrValue<BigNumberish>[],
+      amounts: PromiseOrValue<BigNumberish>[],
+      data: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
     safeTransferFrom(
-      from: string,
-      to: string,
-      id: BigNumberish,
-      amount: BigNumberish,
-      data: BytesLike,
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      id: PromiseOrValue<BigNumberish>,
+      amount: PromiseOrValue<BigNumberish>,
+      data: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
-    setApprovalForAll(operator: string, approved: boolean, overrides?: CallOverrides): Promise<void>;
+    setApprovalForAll(
+      operator: PromiseOrValue<string>,
+      approved: PromiseOrValue<boolean>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    setDedicatedWorkers(workers: string[], ok: boolean, overrides?: CallOverrides): Promise<void>;
+    setDedicatedWorkers(
+      workers: PromiseOrValue<string>[],
+      ok: PromiseOrValue<boolean>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    setDexHelper(helper: string, overrides?: CallOverrides): Promise<void>;
+    setDexHelper(helper: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    stake(pid: BigNumberish, amount: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    stake(
+      pid: PromiseOrValue<BigNumberish>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    supportsInterface(interfaceId: BytesLike, overrides?: CallOverrides): Promise<boolean>;
+    supportsInterface(interfaceId: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<boolean>;
 
-    totalSupply(id: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    totalSupply(id: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    transferOwnership(newOwner: string, overrides?: CallOverrides): Promise<void>;
+    transferOwnership(newOwner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    uri(arg0: BigNumberish, overrides?: CallOverrides): Promise<string>;
+    uri(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
   };
 
   filters: {
     'ApprovalForAll(address,address,bool)'(
-      account?: string | null,
-      operator?: string | null,
+      account?: PromiseOrValue<string> | null,
+      operator?: PromiseOrValue<string> | null,
       approved?: null,
     ): ApprovalForAllEventFilter;
-    ApprovalForAll(account?: string | null, operator?: string | null, approved?: null): ApprovalForAllEventFilter;
+    ApprovalForAll(
+      account?: PromiseOrValue<string> | null,
+      operator?: PromiseOrValue<string> | null,
+      approved?: null,
+    ): ApprovalForAllEventFilter;
 
-    'Burn(uint256,uint256,uint256)'(pid?: BigNumberish | null, collAmount?: null, lpAmount?: null): BurnEventFilter;
-    Burn(pid?: BigNumberish | null, collAmount?: null, lpAmount?: null): BurnEventFilter;
+    'Burn(uint256,uint256,uint256)'(
+      pid?: PromiseOrValue<BigNumberish> | null,
+      collAmount?: null,
+      lpAmount?: null,
+    ): BurnEventFilter;
+    Burn(pid?: PromiseOrValue<BigNumberish> | null, collAmount?: null, lpAmount?: null): BurnEventFilter;
 
-    'Harvest(uint256,uint256)'(pid?: BigNumberish | null, rewardAmount?: null): HarvestEventFilter;
-    Harvest(pid?: BigNumberish | null, rewardAmount?: null): HarvestEventFilter;
+    'Harvest(uint256,uint256)'(pid?: PromiseOrValue<BigNumberish> | null, rewardAmount?: null): HarvestEventFilter;
+    Harvest(pid?: PromiseOrValue<BigNumberish> | null, rewardAmount?: null): HarvestEventFilter;
 
-    'Mint(uint256,uint256,uint256)'(pid?: BigNumberish | null, collAmount?: null, lpAmount?: null): MintEventFilter;
-    Mint(pid?: BigNumberish | null, collAmount?: null, lpAmount?: null): MintEventFilter;
+    'Mint(uint256,uint256,uint256)'(
+      pid?: PromiseOrValue<BigNumberish> | null,
+      collAmount?: null,
+      lpAmount?: null,
+    ): MintEventFilter;
+    Mint(pid?: PromiseOrValue<BigNumberish> | null, collAmount?: null, lpAmount?: null): MintEventFilter;
 
     'OwnershipTransferred(address,address)'(
-      previousOwner?: string | null,
-      newOwner?: string | null,
+      previousOwner?: PromiseOrValue<string> | null,
+      newOwner?: PromiseOrValue<string> | null,
     ): OwnershipTransferredEventFilter;
-    OwnershipTransferred(previousOwner?: string | null, newOwner?: string | null): OwnershipTransferredEventFilter;
+    OwnershipTransferred(
+      previousOwner?: PromiseOrValue<string> | null,
+      newOwner?: PromiseOrValue<string> | null,
+    ): OwnershipTransferredEventFilter;
 
     'SetWorkers(address,bool)'(workers?: null, ok?: null): SetWorkersEventFilter;
     SetWorkers(workers?: null, ok?: null): SetWorkersEventFilter;
 
-    'Stake(uint256,uint256)'(pid?: BigNumberish | null, lpAmount?: null): StakeEventFilter;
-    Stake(pid?: BigNumberish | null, lpAmount?: null): StakeEventFilter;
+    'Stake(uint256,uint256)'(pid?: PromiseOrValue<BigNumberish> | null, lpAmount?: null): StakeEventFilter;
+    Stake(pid?: PromiseOrValue<BigNumberish> | null, lpAmount?: null): StakeEventFilter;
 
     'TransferBatch(address,address,address,uint256[],uint256[])'(
-      operator?: string | null,
-      from?: string | null,
-      to?: string | null,
+      operator?: PromiseOrValue<string> | null,
+      from?: PromiseOrValue<string> | null,
+      to?: PromiseOrValue<string> | null,
       ids?: null,
       values?: null,
     ): TransferBatchEventFilter;
     TransferBatch(
-      operator?: string | null,
-      from?: string | null,
-      to?: string | null,
+      operator?: PromiseOrValue<string> | null,
+      from?: PromiseOrValue<string> | null,
+      to?: PromiseOrValue<string> | null,
       ids?: null,
       values?: null,
     ): TransferBatchEventFilter;
 
     'TransferSingle(address,address,address,uint256,uint256)'(
-      operator?: string | null,
-      from?: string | null,
-      to?: string | null,
+      operator?: PromiseOrValue<string> | null,
+      from?: PromiseOrValue<string> | null,
+      to?: PromiseOrValue<string> | null,
       id?: null,
       value?: null,
     ): TransferSingleEventFilter;
     TransferSingle(
-      operator?: string | null,
-      from?: string | null,
-      to?: string | null,
+      operator?: PromiseOrValue<string> | null,
+      from?: PromiseOrValue<string> | null,
+      to?: PromiseOrValue<string> | null,
       id?: null,
       value?: null,
     ): TransferSingleEventFilter;
 
-    'URI(string,uint256)'(value?: null, id?: BigNumberish | null): URIEventFilter;
-    URI(value?: null, id?: BigNumberish | null): URIEventFilter;
+    'URI(string,uint256)'(value?: null, id?: PromiseOrValue<BigNumberish> | null): URIEventFilter;
+    URI(value?: null, id?: PromiseOrValue<BigNumberish> | null): URIEventFilter;
   };
 
   estimateGas: {
-    balanceOf(account: string, id: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    balanceOf(
+      account: PromiseOrValue<string>,
+      id: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    balanceOfBatch(accounts: string[], ids: BigNumberish[], overrides?: CallOverrides): Promise<BigNumber>;
+    balanceOfBatch(
+      accounts: PromiseOrValue<string>[],
+      ids: PromiseOrValue<BigNumberish>[],
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     burn(
-      id: BigNumberish,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      id: PromiseOrValue<BigNumberish>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     chef(overrides?: CallOverrides): Promise<BigNumber>;
 
-    collSizeToLpBalance(collId: BigNumberish, collSize: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    collSizeToLpBalance(
+      collId: PromiseOrValue<BigNumberish>,
+      collSize: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    decodeId(id: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    decodeId(id: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    dedicatedWorkers(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    dedicatedWorkers(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     dexHelper(overrides?: CallOverrides): Promise<BigNumber>;
 
-    encodeId(pid: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    encodeId(pid: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    exists(id: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    exists(id: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     getDexHelper(overrides?: CallOverrides): Promise<BigNumber>;
 
-    getTokenByPid(pid: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    getTokenByPid(pid: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    getUnderlyingToken(id: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    getUnderlyingToken(id: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    harvestReward(pid: BigNumberish, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
-
-    initialize(
-      _chef: string,
-      _rewardToken: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+    harvestReward(
+      pid: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    isApprovedForAll(account: string, operator: string, overrides?: CallOverrides): Promise<BigNumber>;
+    initialize(
+      _chef: PromiseOrValue<string>,
+      _rewardToken: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
-    lpBalanceToCollSize(collId: BigNumberish, balance: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    isApprovedForAll(
+      account: PromiseOrValue<string>,
+      operator: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
+
+    lpBalanceToCollSize(
+      collId: PromiseOrValue<BigNumberish>,
+      balance: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     mint(
-      pid: BigNumberish,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      pid: PromiseOrValue<BigNumberish>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     owner(overrides?: CallOverrides): Promise<BigNumber>;
 
-    renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     rewardToken(overrides?: CallOverrides): Promise<BigNumber>;
 
     safeBatchTransferFrom(
-      from: string,
-      to: string,
-      ids: BigNumberish[],
-      amounts: BigNumberish[],
-      data: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      ids: PromiseOrValue<BigNumberish>[],
+      amounts: PromiseOrValue<BigNumberish>[],
+      data: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     safeTransferFrom(
-      from: string,
-      to: string,
-      id: BigNumberish,
-      amount: BigNumberish,
-      data: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      id: PromiseOrValue<BigNumberish>,
+      amount: PromiseOrValue<BigNumberish>,
+      data: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setApprovalForAll(
-      operator: string,
-      approved: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      operator: PromiseOrValue<string>,
+      approved: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setDedicatedWorkers(
-      workers: string[],
-      ok: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      workers: PromiseOrValue<string>[],
+      ok: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    setDexHelper(helper: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    setDexHelper(
+      helper: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     stake(
-      pid: BigNumberish,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      pid: PromiseOrValue<BigNumberish>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    supportsInterface(interfaceId: BytesLike, overrides?: CallOverrides): Promise<BigNumber>;
+    supportsInterface(interfaceId: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    totalSupply(id: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    totalSupply(id: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    uri(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    uri(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
   };
 
   populateTransaction: {
-    balanceOf(account: string, id: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    balanceOf(
+      account: PromiseOrValue<string>,
+      id: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
-    balanceOfBatch(accounts: string[], ids: BigNumberish[], overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    balanceOfBatch(
+      accounts: PromiseOrValue<string>[],
+      ids: PromiseOrValue<BigNumberish>[],
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
     burn(
-      id: BigNumberish,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      id: PromiseOrValue<BigNumberish>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     chef(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     collSizeToLpBalance(
-      collId: BigNumberish,
-      collSize: BigNumberish,
+      collId: PromiseOrValue<BigNumberish>,
+      collSize: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
-    decodeId(id: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    decodeId(id: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    dedicatedWorkers(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    dedicatedWorkers(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     dexHelper(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    encodeId(pid: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    encodeId(pid: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    exists(id: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    exists(id: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     getDexHelper(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    getTokenByPid(pid: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getTokenByPid(pid: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    getUnderlyingToken(id: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getUnderlyingToken(id: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     harvestReward(
-      pid: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      pid: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     initialize(
-      _chef: string,
-      _rewardToken: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _chef: PromiseOrValue<string>,
+      _rewardToken: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    isApprovedForAll(account: string, operator: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    isApprovedForAll(
+      account: PromiseOrValue<string>,
+      operator: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
     lpBalanceToCollSize(
-      collId: BigNumberish,
-      balance: BigNumberish,
+      collId: PromiseOrValue<BigNumberish>,
+      balance: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     mint(
-      pid: BigNumberish,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      pid: PromiseOrValue<BigNumberish>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     rewardToken(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     safeBatchTransferFrom(
-      from: string,
-      to: string,
-      ids: BigNumberish[],
-      amounts: BigNumberish[],
-      data: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      ids: PromiseOrValue<BigNumberish>[],
+      amounts: PromiseOrValue<BigNumberish>[],
+      data: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     safeTransferFrom(
-      from: string,
-      to: string,
-      id: BigNumberish,
-      amount: BigNumberish,
-      data: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      id: PromiseOrValue<BigNumberish>,
+      amount: PromiseOrValue<BigNumberish>,
+      data: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setApprovalForAll(
-      operator: string,
-      approved: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      operator: PromiseOrValue<string>,
+      approved: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setDedicatedWorkers(
-      workers: string[],
-      ok: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      workers: PromiseOrValue<string>[],
+      ok: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setDexHelper(
-      helper: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      helper: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     stake(
-      pid: BigNumberish,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      pid: PromiseOrValue<BigNumberish>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    supportsInterface(interfaceId: BytesLike, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    supportsInterface(interfaceId: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    totalSupply(id: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    totalSupply(id: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    uri(arg0: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    uri(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
   };
 }

@@ -16,7 +16,7 @@ import type {
 } from 'ethers';
 import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
 import type { Listener, Provider } from '@ethersproject/providers';
-import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
 export interface SingleVaultInterface extends utils.Interface {
   functions: {
@@ -98,45 +98,70 @@ export interface SingleVaultInterface extends utils.Interface {
       | 'withdrawReserve',
   ): FunctionFragment;
 
-  encodeFunctionData(functionFragment: 'allowance', values: [string, string]): string;
-  encodeFunctionData(functionFragment: 'approve', values: [string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'balanceOf', values: [string]): string;
+  encodeFunctionData(functionFragment: 'allowance', values: [PromiseOrValue<string>, PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'approve',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'balanceOf', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'bank', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'borrow', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'borrow', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'config', values?: undefined): string;
   encodeFunctionData(functionFragment: 'currentDebtVal', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'debtShareToVal', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'debtShareToVal', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'debtToken', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'debtValToShare', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'debtValToShare', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'decimals', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'decreaseAllowance', values: [string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'deposit', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'increaseAllowance', values: [string, BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'decreaseAllowance',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'deposit', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(
+    functionFragment: 'increaseAllowance',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
   encodeFunctionData(
     functionFragment: 'initialize',
-    values: [string, string, string, string, BigNumberish, string],
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<string>,
+    ],
   ): string;
   encodeFunctionData(functionFragment: 'lastAccrueBlockTime', values?: undefined): string;
   encodeFunctionData(functionFragment: 'name', values?: undefined): string;
   encodeFunctionData(functionFragment: 'owner', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'pendingInterest', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'reduceReserve', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'pendingInterest', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'reduceReserve', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'renounceOwnership', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'repay', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'repay', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'reservePool', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'setBank', values: [string]): string;
+  encodeFunctionData(functionFragment: 'setBank', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'symbol', values?: undefined): string;
   encodeFunctionData(functionFragment: 'token', values?: undefined): string;
   encodeFunctionData(functionFragment: 'totalSupply', values?: undefined): string;
   encodeFunctionData(functionFragment: 'totalToken', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'transfer', values: [string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'transferFrom', values: [string, string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'transferOwnership', values: [string]): string;
-  encodeFunctionData(functionFragment: 'updateConfig', values: [string]): string;
+  encodeFunctionData(
+    functionFragment: 'transfer',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'transferFrom',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'transferOwnership', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'updateConfig', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'vaultDebtShare', values?: undefined): string;
   encodeFunctionData(functionFragment: 'vaultDebtVal', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'withdraw', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'withdrawReserve', values: [string, BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'withdraw', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(
+    functionFragment: 'withdrawReserve',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
 
   decodeFunctionResult(functionFragment: 'allowance', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'approve', data: BytesLike): Result;
@@ -271,60 +296,64 @@ export interface SingleVault extends BaseContract {
   removeListener: OnEvent<this>;
 
   functions: {
-    allowance(owner: string, spender: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    allowance(
+      owner: PromiseOrValue<string>,
+      spender: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber]>;
 
     approve(
-      spender: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      spender: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    balanceOf(account: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    balanceOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     bank(overrides?: CallOverrides): Promise<[string]>;
 
     borrow(
-      debtVal: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      debtVal: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     config(overrides?: CallOverrides): Promise<[string]>;
 
-    currentDebtVal(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    currentDebtVal(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
-    debtShareToVal(debtShare: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber]>;
+    debtShareToVal(debtShare: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     debtToken(overrides?: CallOverrides): Promise<[string]>;
 
-    debtValToShare(debtVal: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber]>;
+    debtValToShare(debtVal: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     decimals(overrides?: CallOverrides): Promise<[number]>;
 
     decreaseAllowance(
-      spender: string,
-      subtractedValue: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      spender: PromiseOrValue<string>,
+      subtractedValue: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     deposit(
-      amountToken: BigNumberish,
-      overrides?: PayableOverrides & { from?: string | Promise<string> },
+      amountToken: PromiseOrValue<BigNumberish>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     increaseAllowance(
-      spender: string,
-      addedValue: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      spender: PromiseOrValue<string>,
+      addedValue: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     initialize(
-      _config: string,
-      _token: string,
-      _name: string,
-      _symbol: string,
-      _decimals: BigNumberish,
-      _debtToken: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _config: PromiseOrValue<string>,
+      _token: PromiseOrValue<string>,
+      _name: PromiseOrValue<string>,
+      _symbol: PromiseOrValue<string>,
+      _decimals: PromiseOrValue<BigNumberish>,
+      _debtToken: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     lastAccrueBlockTime(overrides?: CallOverrides): Promise<[BigNumber]>;
@@ -333,23 +362,26 @@ export interface SingleVault extends BaseContract {
 
     owner(overrides?: CallOverrides): Promise<[string]>;
 
-    pendingInterest(value: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber]>;
+    pendingInterest(value: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     reduceReserve(
-      value: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      value: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     repay(
-      debtVal: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      debtVal: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     reservePool(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    setBank(_bank: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    setBank(
+      _bank: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<ContractTransaction>;
 
     symbol(overrides?: CallOverrides): Promise<[string]>;
 
@@ -360,26 +392,26 @@ export interface SingleVault extends BaseContract {
     totalToken(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     transfer(
-      recipient: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      recipient: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     transferFrom(
-      sender: string,
-      recipient: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      sender: PromiseOrValue<string>,
+      recipient: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     updateConfig(
-      _config: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _config: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     vaultDebtShare(overrides?: CallOverrides): Promise<[BigNumber]>;
@@ -387,71 +419,75 @@ export interface SingleVault extends BaseContract {
     vaultDebtVal(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     withdraw(
-      share: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      share: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     withdrawReserve(
-      to: string,
-      value: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      to: PromiseOrValue<string>,
+      value: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
   };
 
-  allowance(owner: string, spender: string, overrides?: CallOverrides): Promise<BigNumber>;
+  allowance(
+    owner: PromiseOrValue<string>,
+    spender: PromiseOrValue<string>,
+    overrides?: CallOverrides,
+  ): Promise<BigNumber>;
 
   approve(
-    spender: string,
-    amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    spender: PromiseOrValue<string>,
+    amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  balanceOf(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+  balanceOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   bank(overrides?: CallOverrides): Promise<string>;
 
   borrow(
-    debtVal: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    debtVal: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   config(overrides?: CallOverrides): Promise<string>;
 
-  currentDebtVal(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  currentDebtVal(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
-  debtShareToVal(debtShare: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+  debtShareToVal(debtShare: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
   debtToken(overrides?: CallOverrides): Promise<string>;
 
-  debtValToShare(debtVal: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+  debtValToShare(debtVal: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
   decimals(overrides?: CallOverrides): Promise<number>;
 
   decreaseAllowance(
-    spender: string,
-    subtractedValue: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    spender: PromiseOrValue<string>,
+    subtractedValue: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   deposit(
-    amountToken: BigNumberish,
-    overrides?: PayableOverrides & { from?: string | Promise<string> },
+    amountToken: PromiseOrValue<BigNumberish>,
+    overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   increaseAllowance(
-    spender: string,
-    addedValue: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    spender: PromiseOrValue<string>,
+    addedValue: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   initialize(
-    _config: string,
-    _token: string,
-    _name: string,
-    _symbol: string,
-    _decimals: BigNumberish,
-    _debtToken: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _config: PromiseOrValue<string>,
+    _token: PromiseOrValue<string>,
+    _name: PromiseOrValue<string>,
+    _symbol: PromiseOrValue<string>,
+    _decimals: PromiseOrValue<BigNumberish>,
+    _debtToken: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   lastAccrueBlockTime(overrides?: CallOverrides): Promise<BigNumber>;
@@ -460,23 +496,26 @@ export interface SingleVault extends BaseContract {
 
   owner(overrides?: CallOverrides): Promise<string>;
 
-  pendingInterest(value: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+  pendingInterest(value: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
   reduceReserve(
-    value: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    value: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   repay(
-    debtVal: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    debtVal: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   reservePool(overrides?: CallOverrides): Promise<BigNumber>;
 
-  setBank(_bank: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  setBank(
+    _bank: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
+  ): Promise<ContractTransaction>;
 
   symbol(overrides?: CallOverrides): Promise<string>;
 
@@ -487,26 +526,26 @@ export interface SingleVault extends BaseContract {
   totalToken(overrides?: CallOverrides): Promise<BigNumber>;
 
   transfer(
-    recipient: string,
-    amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    recipient: PromiseOrValue<string>,
+    amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   transferFrom(
-    sender: string,
-    recipient: string,
-    amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    sender: PromiseOrValue<string>,
+    recipient: PromiseOrValue<string>,
+    amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   transferOwnership(
-    newOwner: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    newOwner: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   updateConfig(
-    _config: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _config: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   vaultDebtShare(overrides?: CallOverrides): Promise<BigNumber>;
@@ -514,52 +553,68 @@ export interface SingleVault extends BaseContract {
   vaultDebtVal(overrides?: CallOverrides): Promise<BigNumber>;
 
   withdraw(
-    share: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    share: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   withdrawReserve(
-    to: string,
-    value: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    to: PromiseOrValue<string>,
+    value: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   callStatic: {
-    allowance(owner: string, spender: string, overrides?: CallOverrides): Promise<BigNumber>;
+    allowance(
+      owner: PromiseOrValue<string>,
+      spender: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    approve(spender: string, amount: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+    approve(
+      spender: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
 
-    balanceOf(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    balanceOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     bank(overrides?: CallOverrides): Promise<string>;
 
-    borrow(debtVal: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    borrow(debtVal: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     config(overrides?: CallOverrides): Promise<string>;
 
     currentDebtVal(overrides?: CallOverrides): Promise<BigNumber>;
 
-    debtShareToVal(debtShare: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    debtShareToVal(debtShare: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     debtToken(overrides?: CallOverrides): Promise<string>;
 
-    debtValToShare(debtVal: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    debtValToShare(debtVal: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     decimals(overrides?: CallOverrides): Promise<number>;
 
-    decreaseAllowance(spender: string, subtractedValue: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+    decreaseAllowance(
+      spender: PromiseOrValue<string>,
+      subtractedValue: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
 
-    deposit(amountToken: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    deposit(amountToken: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
-    increaseAllowance(spender: string, addedValue: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+    increaseAllowance(
+      spender: PromiseOrValue<string>,
+      addedValue: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
 
     initialize(
-      _config: string,
-      _token: string,
-      _name: string,
-      _symbol: string,
-      _decimals: BigNumberish,
-      _debtToken: string,
+      _config: PromiseOrValue<string>,
+      _token: PromiseOrValue<string>,
+      _name: PromiseOrValue<string>,
+      _symbol: PromiseOrValue<string>,
+      _decimals: PromiseOrValue<BigNumberish>,
+      _debtToken: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
@@ -569,17 +624,17 @@ export interface SingleVault extends BaseContract {
 
     owner(overrides?: CallOverrides): Promise<string>;
 
-    pendingInterest(value: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    pendingInterest(value: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    reduceReserve(value: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    reduceReserve(value: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
     renounceOwnership(overrides?: CallOverrides): Promise<void>;
 
-    repay(debtVal: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    repay(debtVal: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     reservePool(overrides?: CallOverrides): Promise<BigNumber>;
 
-    setBank(_bank: string, overrides?: CallOverrides): Promise<void>;
+    setBank(_bank: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     symbol(overrides?: CallOverrides): Promise<string>;
 
@@ -589,30 +644,47 @@ export interface SingleVault extends BaseContract {
 
     totalToken(overrides?: CallOverrides): Promise<BigNumber>;
 
-    transfer(recipient: string, amount: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+    transfer(
+      recipient: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
 
-    transferFrom(sender: string, recipient: string, amount: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+    transferFrom(
+      sender: PromiseOrValue<string>,
+      recipient: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
 
-    transferOwnership(newOwner: string, overrides?: CallOverrides): Promise<void>;
+    transferOwnership(newOwner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    updateConfig(_config: string, overrides?: CallOverrides): Promise<void>;
+    updateConfig(_config: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     vaultDebtShare(overrides?: CallOverrides): Promise<BigNumber>;
 
     vaultDebtVal(overrides?: CallOverrides): Promise<BigNumber>;
 
-    withdraw(share: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    withdraw(share: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
-    withdrawReserve(to: string, value: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    withdrawReserve(
+      to: PromiseOrValue<string>,
+      value: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
   };
 
   filters: {
     'Approval(address,address,uint256)'(
-      owner?: string | null,
-      spender?: string | null,
+      owner?: PromiseOrValue<string> | null,
+      spender?: PromiseOrValue<string> | null,
       value?: null,
     ): ApprovalEventFilter;
-    Approval(owner?: string | null, spender?: string | null, value?: null): ApprovalEventFilter;
+    Approval(
+      owner?: PromiseOrValue<string> | null,
+      spender?: PromiseOrValue<string> | null,
+      value?: null,
+    ): ApprovalEventFilter;
 
     'Borrow(uint256)'(debtVal?: null): BorrowEventFilter;
     Borrow(debtVal?: null): BorrowEventFilter;
@@ -621,73 +693,91 @@ export interface SingleVault extends BaseContract {
     Deposit(amountToken?: null): DepositEventFilter;
 
     'OwnershipTransferred(address,address)'(
-      previousOwner?: string | null,
-      newOwner?: string | null,
+      previousOwner?: PromiseOrValue<string> | null,
+      newOwner?: PromiseOrValue<string> | null,
     ): OwnershipTransferredEventFilter;
-    OwnershipTransferred(previousOwner?: string | null, newOwner?: string | null): OwnershipTransferredEventFilter;
+    OwnershipTransferred(
+      previousOwner?: PromiseOrValue<string> | null,
+      newOwner?: PromiseOrValue<string> | null,
+    ): OwnershipTransferredEventFilter;
 
     'Repay(uint256)'(debtVal?: null): RepayEventFilter;
     Repay(debtVal?: null): RepayEventFilter;
 
-    'Transfer(address,address,uint256)'(from?: string | null, to?: string | null, value?: null): TransferEventFilter;
-    Transfer(from?: string | null, to?: string | null, value?: null): TransferEventFilter;
+    'Transfer(address,address,uint256)'(
+      from?: PromiseOrValue<string> | null,
+      to?: PromiseOrValue<string> | null,
+      value?: null,
+    ): TransferEventFilter;
+    Transfer(
+      from?: PromiseOrValue<string> | null,
+      to?: PromiseOrValue<string> | null,
+      value?: null,
+    ): TransferEventFilter;
 
     'Withdraw(uint256)'(amountToken?: null): WithdrawEventFilter;
     Withdraw(amountToken?: null): WithdrawEventFilter;
   };
 
   estimateGas: {
-    allowance(owner: string, spender: string, overrides?: CallOverrides): Promise<BigNumber>;
-
-    approve(
-      spender: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+    allowance(
+      owner: PromiseOrValue<string>,
+      spender: PromiseOrValue<string>,
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
-    balanceOf(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    approve(
+      spender: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
+
+    balanceOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     bank(overrides?: CallOverrides): Promise<BigNumber>;
 
-    borrow(debtVal: BigNumberish, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    borrow(
+      debtVal: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     config(overrides?: CallOverrides): Promise<BigNumber>;
 
-    currentDebtVal(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    currentDebtVal(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
-    debtShareToVal(debtShare: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    debtShareToVal(debtShare: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     debtToken(overrides?: CallOverrides): Promise<BigNumber>;
 
-    debtValToShare(debtVal: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    debtValToShare(debtVal: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     decimals(overrides?: CallOverrides): Promise<BigNumber>;
 
     decreaseAllowance(
-      spender: string,
-      subtractedValue: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      spender: PromiseOrValue<string>,
+      subtractedValue: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     deposit(
-      amountToken: BigNumberish,
-      overrides?: PayableOverrides & { from?: string | Promise<string> },
+      amountToken: PromiseOrValue<BigNumberish>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     increaseAllowance(
-      spender: string,
-      addedValue: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      spender: PromiseOrValue<string>,
+      addedValue: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     initialize(
-      _config: string,
-      _token: string,
-      _name: string,
-      _symbol: string,
-      _decimals: BigNumberish,
-      _debtToken: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _config: PromiseOrValue<string>,
+      _token: PromiseOrValue<string>,
+      _name: PromiseOrValue<string>,
+      _symbol: PromiseOrValue<string>,
+      _decimals: PromiseOrValue<BigNumberish>,
+      _debtToken: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     lastAccrueBlockTime(overrides?: CallOverrides): Promise<BigNumber>;
@@ -696,17 +786,26 @@ export interface SingleVault extends BaseContract {
 
     owner(overrides?: CallOverrides): Promise<BigNumber>;
 
-    pendingInterest(value: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    pendingInterest(value: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    reduceReserve(value: BigNumberish, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    reduceReserve(
+      value: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
-    renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
-    repay(debtVal: BigNumberish, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    repay(
+      debtVal: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     reservePool(overrides?: CallOverrides): Promise<BigNumber>;
 
-    setBank(_bank: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    setBank(
+      _bank: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     symbol(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -717,93 +816,103 @@ export interface SingleVault extends BaseContract {
     totalToken(overrides?: CallOverrides): Promise<BigNumber>;
 
     transfer(
-      recipient: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      recipient: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     transferFrom(
-      sender: string,
-      recipient: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      sender: PromiseOrValue<string>,
+      recipient: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    updateConfig(_config: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    updateConfig(
+      _config: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     vaultDebtShare(overrides?: CallOverrides): Promise<BigNumber>;
 
     vaultDebtVal(overrides?: CallOverrides): Promise<BigNumber>;
 
-    withdraw(share: BigNumberish, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    withdraw(
+      share: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     withdrawReserve(
-      to: string,
-      value: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      to: PromiseOrValue<string>,
+      value: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
   };
 
   populateTransaction: {
-    allowance(owner: string, spender: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    approve(
-      spender: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+    allowance(
+      owner: PromiseOrValue<string>,
+      spender: PromiseOrValue<string>,
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
-    balanceOf(account: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    approve(
+      spender: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<PopulatedTransaction>;
+
+    balanceOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     bank(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     borrow(
-      debtVal: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      debtVal: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     config(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    currentDebtVal(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    currentDebtVal(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
-    debtShareToVal(debtShare: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    debtShareToVal(debtShare: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     debtToken(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    debtValToShare(debtVal: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    debtValToShare(debtVal: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     decimals(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     decreaseAllowance(
-      spender: string,
-      subtractedValue: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      spender: PromiseOrValue<string>,
+      subtractedValue: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     deposit(
-      amountToken: BigNumberish,
-      overrides?: PayableOverrides & { from?: string | Promise<string> },
+      amountToken: PromiseOrValue<BigNumberish>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     increaseAllowance(
-      spender: string,
-      addedValue: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      spender: PromiseOrValue<string>,
+      addedValue: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     initialize(
-      _config: string,
-      _token: string,
-      _name: string,
-      _symbol: string,
-      _decimals: BigNumberish,
-      _debtToken: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _config: PromiseOrValue<string>,
+      _token: PromiseOrValue<string>,
+      _name: PromiseOrValue<string>,
+      _symbol: PromiseOrValue<string>,
+      _decimals: PromiseOrValue<BigNumberish>,
+      _debtToken: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     lastAccrueBlockTime(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -812,23 +921,26 @@ export interface SingleVault extends BaseContract {
 
     owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    pendingInterest(value: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    pendingInterest(value: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     reduceReserve(
-      value: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      value: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     repay(
-      debtVal: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      debtVal: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     reservePool(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    setBank(_bank: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    setBank(
+      _bank: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<PopulatedTransaction>;
 
     symbol(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
@@ -839,26 +951,26 @@ export interface SingleVault extends BaseContract {
     totalToken(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     transfer(
-      recipient: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      recipient: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     transferFrom(
-      sender: string,
-      recipient: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      sender: PromiseOrValue<string>,
+      recipient: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     updateConfig(
-      _config: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _config: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     vaultDebtShare(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -866,14 +978,14 @@ export interface SingleVault extends BaseContract {
     vaultDebtVal(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     withdraw(
-      share: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      share: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     withdrawReserve(
-      to: string,
-      value: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      to: PromiseOrValue<string>,
+      value: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
   };
 }

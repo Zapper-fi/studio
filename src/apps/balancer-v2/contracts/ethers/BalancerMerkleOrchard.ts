@@ -15,15 +15,15 @@ import type {
 } from 'ethers';
 import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
 import type { Listener, Provider } from '@ethersproject/providers';
-import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
 export declare namespace MerkleOrchard {
   export type ClaimStruct = {
-    distributionId: BigNumberish;
-    balance: BigNumberish;
-    distributor: string;
-    tokenIndex: BigNumberish;
-    merkleProof: BytesLike[];
+    distributionId: PromiseOrValue<BigNumberish>;
+    balance: PromiseOrValue<BigNumberish>;
+    distributor: PromiseOrValue<string>;
+    tokenIndex: PromiseOrValue<BigNumberish>;
+    merkleProof: PromiseOrValue<BytesLike>[];
   };
 
   export type ClaimStructOutput = [BigNumber, BigNumber, string, BigNumber, string[]] & {
@@ -65,28 +65,58 @@ export interface BalancerMerkleOrchardInterface extends utils.Interface {
 
   encodeFunctionData(
     functionFragment: 'claimDistributions',
-    values: [string, MerkleOrchard.ClaimStruct[], string[]],
+    values: [PromiseOrValue<string>, MerkleOrchard.ClaimStruct[], PromiseOrValue<string>[]],
   ): string;
   encodeFunctionData(
     functionFragment: 'claimDistributionsToInternalBalance',
-    values: [string, MerkleOrchard.ClaimStruct[], string[]],
+    values: [PromiseOrValue<string>, MerkleOrchard.ClaimStruct[], PromiseOrValue<string>[]],
   ): string;
   encodeFunctionData(
     functionFragment: 'claimDistributionsWithCallback',
-    values: [string, MerkleOrchard.ClaimStruct[], string[], string, BytesLike],
+    values: [
+      PromiseOrValue<string>,
+      MerkleOrchard.ClaimStruct[],
+      PromiseOrValue<string>[],
+      PromiseOrValue<string>,
+      PromiseOrValue<BytesLike>,
+    ],
   ): string;
   encodeFunctionData(
     functionFragment: 'createDistribution',
-    values: [string, BytesLike, BigNumberish, BigNumberish],
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<BytesLike>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+    ],
   ): string;
-  encodeFunctionData(functionFragment: 'getDistributionRoot', values: [string, string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'getNextDistributionId', values: [string, string]): string;
-  encodeFunctionData(functionFragment: 'getRemainingBalance', values: [string, string]): string;
+  encodeFunctionData(
+    functionFragment: 'getDistributionRoot',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'getNextDistributionId',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'getRemainingBalance',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>],
+  ): string;
   encodeFunctionData(functionFragment: 'getVault', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'isClaimed', values: [string, string, BigNumberish, string]): string;
+  encodeFunctionData(
+    functionFragment: 'isClaimed',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<BigNumberish>, PromiseOrValue<string>],
+  ): string;
   encodeFunctionData(
     functionFragment: 'verifyClaim',
-    values: [string, string, BigNumberish, string, BigNumberish, BytesLike[]],
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BytesLike>[],
+    ],
   ): string;
 
   decodeFunctionResult(functionFragment: 'claimDistributions', data: BytesLike): Result;
@@ -162,223 +192,247 @@ export interface BalancerMerkleOrchard extends BaseContract {
 
   functions: {
     claimDistributions(
-      claimer: string,
+      claimer: PromiseOrValue<string>,
       claims: MerkleOrchard.ClaimStruct[],
-      tokens: string[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      tokens: PromiseOrValue<string>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     claimDistributionsToInternalBalance(
-      claimer: string,
+      claimer: PromiseOrValue<string>,
       claims: MerkleOrchard.ClaimStruct[],
-      tokens: string[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      tokens: PromiseOrValue<string>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     claimDistributionsWithCallback(
-      claimer: string,
+      claimer: PromiseOrValue<string>,
       claims: MerkleOrchard.ClaimStruct[],
-      tokens: string[],
-      callbackContract: string,
-      callbackData: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      tokens: PromiseOrValue<string>[],
+      callbackContract: PromiseOrValue<string>,
+      callbackData: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     createDistribution(
-      token: string,
-      merkleRoot: BytesLike,
-      amount: BigNumberish,
-      distributionId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      token: PromiseOrValue<string>,
+      merkleRoot: PromiseOrValue<BytesLike>,
+      amount: PromiseOrValue<BigNumberish>,
+      distributionId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     getDistributionRoot(
-      token: string,
-      distributor: string,
-      distributionId: BigNumberish,
+      token: PromiseOrValue<string>,
+      distributor: PromiseOrValue<string>,
+      distributionId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<[string]>;
 
-    getNextDistributionId(token: string, distributor: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    getNextDistributionId(
+      token: PromiseOrValue<string>,
+      distributor: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber]>;
 
-    getRemainingBalance(token: string, distributor: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    getRemainingBalance(
+      token: PromiseOrValue<string>,
+      distributor: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber]>;
 
     getVault(overrides?: CallOverrides): Promise<[string]>;
 
     isClaimed(
-      token: string,
-      distributor: string,
-      distributionId: BigNumberish,
-      claimer: string,
+      token: PromiseOrValue<string>,
+      distributor: PromiseOrValue<string>,
+      distributionId: PromiseOrValue<BigNumberish>,
+      claimer: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<[boolean]>;
 
     verifyClaim(
-      token: string,
-      distributor: string,
-      distributionId: BigNumberish,
-      claimer: string,
-      claimedBalance: BigNumberish,
-      merkleProof: BytesLike[],
+      token: PromiseOrValue<string>,
+      distributor: PromiseOrValue<string>,
+      distributionId: PromiseOrValue<BigNumberish>,
+      claimer: PromiseOrValue<string>,
+      claimedBalance: PromiseOrValue<BigNumberish>,
+      merkleProof: PromiseOrValue<BytesLike>[],
       overrides?: CallOverrides,
     ): Promise<[boolean]>;
   };
 
   claimDistributions(
-    claimer: string,
+    claimer: PromiseOrValue<string>,
     claims: MerkleOrchard.ClaimStruct[],
-    tokens: string[],
-    overrides?: Overrides & { from?: string | Promise<string> },
+    tokens: PromiseOrValue<string>[],
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   claimDistributionsToInternalBalance(
-    claimer: string,
+    claimer: PromiseOrValue<string>,
     claims: MerkleOrchard.ClaimStruct[],
-    tokens: string[],
-    overrides?: Overrides & { from?: string | Promise<string> },
+    tokens: PromiseOrValue<string>[],
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   claimDistributionsWithCallback(
-    claimer: string,
+    claimer: PromiseOrValue<string>,
     claims: MerkleOrchard.ClaimStruct[],
-    tokens: string[],
-    callbackContract: string,
-    callbackData: BytesLike,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    tokens: PromiseOrValue<string>[],
+    callbackContract: PromiseOrValue<string>,
+    callbackData: PromiseOrValue<BytesLike>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   createDistribution(
-    token: string,
-    merkleRoot: BytesLike,
-    amount: BigNumberish,
-    distributionId: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    token: PromiseOrValue<string>,
+    merkleRoot: PromiseOrValue<BytesLike>,
+    amount: PromiseOrValue<BigNumberish>,
+    distributionId: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   getDistributionRoot(
-    token: string,
-    distributor: string,
-    distributionId: BigNumberish,
+    token: PromiseOrValue<string>,
+    distributor: PromiseOrValue<string>,
+    distributionId: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides,
   ): Promise<string>;
 
-  getNextDistributionId(token: string, distributor: string, overrides?: CallOverrides): Promise<BigNumber>;
+  getNextDistributionId(
+    token: PromiseOrValue<string>,
+    distributor: PromiseOrValue<string>,
+    overrides?: CallOverrides,
+  ): Promise<BigNumber>;
 
-  getRemainingBalance(token: string, distributor: string, overrides?: CallOverrides): Promise<BigNumber>;
+  getRemainingBalance(
+    token: PromiseOrValue<string>,
+    distributor: PromiseOrValue<string>,
+    overrides?: CallOverrides,
+  ): Promise<BigNumber>;
 
   getVault(overrides?: CallOverrides): Promise<string>;
 
   isClaimed(
-    token: string,
-    distributor: string,
-    distributionId: BigNumberish,
-    claimer: string,
+    token: PromiseOrValue<string>,
+    distributor: PromiseOrValue<string>,
+    distributionId: PromiseOrValue<BigNumberish>,
+    claimer: PromiseOrValue<string>,
     overrides?: CallOverrides,
   ): Promise<boolean>;
 
   verifyClaim(
-    token: string,
-    distributor: string,
-    distributionId: BigNumberish,
-    claimer: string,
-    claimedBalance: BigNumberish,
-    merkleProof: BytesLike[],
+    token: PromiseOrValue<string>,
+    distributor: PromiseOrValue<string>,
+    distributionId: PromiseOrValue<BigNumberish>,
+    claimer: PromiseOrValue<string>,
+    claimedBalance: PromiseOrValue<BigNumberish>,
+    merkleProof: PromiseOrValue<BytesLike>[],
     overrides?: CallOverrides,
   ): Promise<boolean>;
 
   callStatic: {
     claimDistributions(
-      claimer: string,
+      claimer: PromiseOrValue<string>,
       claims: MerkleOrchard.ClaimStruct[],
-      tokens: string[],
+      tokens: PromiseOrValue<string>[],
       overrides?: CallOverrides,
     ): Promise<void>;
 
     claimDistributionsToInternalBalance(
-      claimer: string,
+      claimer: PromiseOrValue<string>,
       claims: MerkleOrchard.ClaimStruct[],
-      tokens: string[],
+      tokens: PromiseOrValue<string>[],
       overrides?: CallOverrides,
     ): Promise<void>;
 
     claimDistributionsWithCallback(
-      claimer: string,
+      claimer: PromiseOrValue<string>,
       claims: MerkleOrchard.ClaimStruct[],
-      tokens: string[],
-      callbackContract: string,
-      callbackData: BytesLike,
+      tokens: PromiseOrValue<string>[],
+      callbackContract: PromiseOrValue<string>,
+      callbackData: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
     createDistribution(
-      token: string,
-      merkleRoot: BytesLike,
-      amount: BigNumberish,
-      distributionId: BigNumberish,
+      token: PromiseOrValue<string>,
+      merkleRoot: PromiseOrValue<BytesLike>,
+      amount: PromiseOrValue<BigNumberish>,
+      distributionId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
     getDistributionRoot(
-      token: string,
-      distributor: string,
-      distributionId: BigNumberish,
+      token: PromiseOrValue<string>,
+      distributor: PromiseOrValue<string>,
+      distributionId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<string>;
 
-    getNextDistributionId(token: string, distributor: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getNextDistributionId(
+      token: PromiseOrValue<string>,
+      distributor: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    getRemainingBalance(token: string, distributor: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getRemainingBalance(
+      token: PromiseOrValue<string>,
+      distributor: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     getVault(overrides?: CallOverrides): Promise<string>;
 
     isClaimed(
-      token: string,
-      distributor: string,
-      distributionId: BigNumberish,
-      claimer: string,
+      token: PromiseOrValue<string>,
+      distributor: PromiseOrValue<string>,
+      distributionId: PromiseOrValue<BigNumberish>,
+      claimer: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<boolean>;
 
     verifyClaim(
-      token: string,
-      distributor: string,
-      distributionId: BigNumberish,
-      claimer: string,
-      claimedBalance: BigNumberish,
-      merkleProof: BytesLike[],
+      token: PromiseOrValue<string>,
+      distributor: PromiseOrValue<string>,
+      distributionId: PromiseOrValue<BigNumberish>,
+      claimer: PromiseOrValue<string>,
+      claimedBalance: PromiseOrValue<BigNumberish>,
+      merkleProof: PromiseOrValue<BytesLike>[],
       overrides?: CallOverrides,
     ): Promise<boolean>;
   };
 
   filters: {
     'DistributionAdded(address,address,uint256,bytes32,uint256)'(
-      distributor?: string | null,
-      token?: string | null,
+      distributor?: PromiseOrValue<string> | null,
+      token?: PromiseOrValue<string> | null,
       distributionId?: null,
       merkleRoot?: null,
       amount?: null,
     ): DistributionAddedEventFilter;
     DistributionAdded(
-      distributor?: string | null,
-      token?: string | null,
+      distributor?: PromiseOrValue<string> | null,
+      token?: PromiseOrValue<string> | null,
       distributionId?: null,
       merkleRoot?: null,
       amount?: null,
     ): DistributionAddedEventFilter;
 
     'DistributionClaimed(address,address,uint256,address,address,uint256)'(
-      distributor?: string | null,
-      token?: string | null,
+      distributor?: PromiseOrValue<string> | null,
+      token?: PromiseOrValue<string> | null,
       distributionId?: null,
-      claimer?: string | null,
+      claimer?: PromiseOrValue<string> | null,
       recipient?: null,
       amount?: null,
     ): DistributionClaimedEventFilter;
     DistributionClaimed(
-      distributor?: string | null,
-      token?: string | null,
+      distributor?: PromiseOrValue<string> | null,
+      token?: PromiseOrValue<string> | null,
       distributionId?: null,
-      claimer?: string | null,
+      claimer?: PromiseOrValue<string> | null,
       recipient?: null,
       amount?: null,
     ): DistributionClaimedEventFilter;
@@ -386,128 +440,144 @@ export interface BalancerMerkleOrchard extends BaseContract {
 
   estimateGas: {
     claimDistributions(
-      claimer: string,
+      claimer: PromiseOrValue<string>,
       claims: MerkleOrchard.ClaimStruct[],
-      tokens: string[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      tokens: PromiseOrValue<string>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     claimDistributionsToInternalBalance(
-      claimer: string,
+      claimer: PromiseOrValue<string>,
       claims: MerkleOrchard.ClaimStruct[],
-      tokens: string[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      tokens: PromiseOrValue<string>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     claimDistributionsWithCallback(
-      claimer: string,
+      claimer: PromiseOrValue<string>,
       claims: MerkleOrchard.ClaimStruct[],
-      tokens: string[],
-      callbackContract: string,
-      callbackData: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      tokens: PromiseOrValue<string>[],
+      callbackContract: PromiseOrValue<string>,
+      callbackData: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     createDistribution(
-      token: string,
-      merkleRoot: BytesLike,
-      amount: BigNumberish,
-      distributionId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      token: PromiseOrValue<string>,
+      merkleRoot: PromiseOrValue<BytesLike>,
+      amount: PromiseOrValue<BigNumberish>,
+      distributionId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     getDistributionRoot(
-      token: string,
-      distributor: string,
-      distributionId: BigNumberish,
+      token: PromiseOrValue<string>,
+      distributor: PromiseOrValue<string>,
+      distributionId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
-    getNextDistributionId(token: string, distributor: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getNextDistributionId(
+      token: PromiseOrValue<string>,
+      distributor: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    getRemainingBalance(token: string, distributor: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getRemainingBalance(
+      token: PromiseOrValue<string>,
+      distributor: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     getVault(overrides?: CallOverrides): Promise<BigNumber>;
 
     isClaimed(
-      token: string,
-      distributor: string,
-      distributionId: BigNumberish,
-      claimer: string,
+      token: PromiseOrValue<string>,
+      distributor: PromiseOrValue<string>,
+      distributionId: PromiseOrValue<BigNumberish>,
+      claimer: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     verifyClaim(
-      token: string,
-      distributor: string,
-      distributionId: BigNumberish,
-      claimer: string,
-      claimedBalance: BigNumberish,
-      merkleProof: BytesLike[],
+      token: PromiseOrValue<string>,
+      distributor: PromiseOrValue<string>,
+      distributionId: PromiseOrValue<BigNumberish>,
+      claimer: PromiseOrValue<string>,
+      claimedBalance: PromiseOrValue<BigNumberish>,
+      merkleProof: PromiseOrValue<BytesLike>[],
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
   };
 
   populateTransaction: {
     claimDistributions(
-      claimer: string,
+      claimer: PromiseOrValue<string>,
       claims: MerkleOrchard.ClaimStruct[],
-      tokens: string[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      tokens: PromiseOrValue<string>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     claimDistributionsToInternalBalance(
-      claimer: string,
+      claimer: PromiseOrValue<string>,
       claims: MerkleOrchard.ClaimStruct[],
-      tokens: string[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      tokens: PromiseOrValue<string>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     claimDistributionsWithCallback(
-      claimer: string,
+      claimer: PromiseOrValue<string>,
       claims: MerkleOrchard.ClaimStruct[],
-      tokens: string[],
-      callbackContract: string,
-      callbackData: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      tokens: PromiseOrValue<string>[],
+      callbackContract: PromiseOrValue<string>,
+      callbackData: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     createDistribution(
-      token: string,
-      merkleRoot: BytesLike,
-      amount: BigNumberish,
-      distributionId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      token: PromiseOrValue<string>,
+      merkleRoot: PromiseOrValue<BytesLike>,
+      amount: PromiseOrValue<BigNumberish>,
+      distributionId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     getDistributionRoot(
-      token: string,
-      distributor: string,
-      distributionId: BigNumberish,
+      token: PromiseOrValue<string>,
+      distributor: PromiseOrValue<string>,
+      distributionId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
-    getNextDistributionId(token: string, distributor: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getNextDistributionId(
+      token: PromiseOrValue<string>,
+      distributor: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
-    getRemainingBalance(token: string, distributor: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getRemainingBalance(
+      token: PromiseOrValue<string>,
+      distributor: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
     getVault(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     isClaimed(
-      token: string,
-      distributor: string,
-      distributionId: BigNumberish,
-      claimer: string,
+      token: PromiseOrValue<string>,
+      distributor: PromiseOrValue<string>,
+      distributionId: PromiseOrValue<BigNumberish>,
+      claimer: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     verifyClaim(
-      token: string,
-      distributor: string,
-      distributionId: BigNumberish,
-      claimer: string,
-      claimedBalance: BigNumberish,
-      merkleProof: BytesLike[],
+      token: PromiseOrValue<string>,
+      distributor: PromiseOrValue<string>,
+      distributionId: PromiseOrValue<BigNumberish>,
+      claimer: PromiseOrValue<string>,
+      claimedBalance: PromiseOrValue<BigNumberish>,
+      merkleProof: PromiseOrValue<BytesLike>[],
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
   };

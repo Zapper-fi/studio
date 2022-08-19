@@ -18,7 +18,7 @@
 </div>
 
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-50-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-73-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 ## Description
@@ -72,7 +72,6 @@ pnpm studio create-group [app-id]
 pnpm studio create-token-fetcher [app-id]
 pnpm studio create-contract-position-fetcher [app-id]
 pnpm studio create-balance-fetcher [app-id]
-pnpm studio create-tvl-fetcher [app-id]
 ```
 
 ## Clearing the cache
@@ -163,7 +162,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href="https://github.com/melenxyz"><img src="https://avatars.githubusercontent.com/u/59291854?v=4?s=64" width="64px;" alt=""/><br /><sub><b>Mélen</b></sub></a><br /><a href="https://github.com/Zapper-fi/studio/commits?author=melenxyz" title="Code">💻</a></td>
     <td align="center"><a href="https://github.com/pwele"><img src="https://avatars.githubusercontent.com/u/1527361?v=4?s=64" width="64px;" alt=""/><br /><sub><b>Papa Sougou Wele</b></sub></a><br /><a href="https://github.com/Zapper-fi/studio/commits?author=pwele" title="Code">💻</a> <a href="#question-pwele" title="Answering Questions">💬</a> <a href="#maintenance-pwele" title="Maintenance">🚧</a></td>
     <td align="center"><a href="https://ca.linkedin.com/in/alexandresobolevski"><img src="https://avatars.githubusercontent.com/u/13302110?v=4?s=64" width="64px;" alt=""/><br /><sub><b>Alexandre Sobolevski</b></sub></a><br /><a href="https://github.com/Zapper-fi/studio/commits?author=alexandresobolevski" title="Code">💻</a> <a href="#question-alexandresobolevski" title="Answering Questions">💬</a> <a href="#maintenance-alexandresobolevski" title="Maintenance">🚧</a></td>
-    <td align="center"><a href="https://github.com/farhaan-ali"><img src="https://avatars.githubusercontent.com/u/59924029?v=4?s=64" width="64px;" alt=""/><br /><sub><b>Farhaan</b></sub></a><br /><a href="https://github.com/Zapper-fi/studio/commits?author=farhaan-ali" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/0xfarhaan"><img src="https://avatars.githubusercontent.com/u/59924029?v=4?s=64" width="64px;" alt=""/><br /><sub><b>Farhaan</b></sub></a><br /><a href="https://github.com/Zapper-fi/studio/commits?author=0xfarhaan" title="Code">💻</a></td>
     <td align="center"><a href="https://github.com/tonzgao"><img src="https://avatars.githubusercontent.com/u/2408377?v=4?s=64" width="64px;" alt=""/><br /><sub><b>tonzgao</b></sub></a><br /><a href="https://github.com/Zapper-fi/studio/commits?author=tonzgao" title="Code">💻</a></td>
     <td align="center"><a href="https://github.com/LeifuChen"><img src="https://avatars.githubusercontent.com/u/4819006?v=4?s=64" width="64px;" alt=""/><br /><sub><b>leifu</b></sub></a><br /><a href="https://github.com/Zapper-fi/studio/commits?author=LeifuChen" title="Code">💻</a></td>
     <td align="center"><a href="https://github.com/dominikpre"><img src="https://avatars.githubusercontent.com/u/58030116?v=4?s=64" width="64px;" alt=""/><br /><sub><b>Dominik Prediger</b></sub></a><br /><a href="https://github.com/Zapper-fi/studio/commits?author=dominikpre" title="Code">💻</a> <a href="https://github.com/Zapper-fi/studio/issues?q=author%3Adominikpre" title="Bug reports">🐛</a></td>
@@ -206,6 +205,35 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
   </tr>
   <tr>
     <td align="center"><a href="https://www.singlefinance.io/"><img src="https://avatars.githubusercontent.com/u/92788245?v=4?s=64" width="64px;" alt=""/><br /><sub><b>Single Finance Lab</b></sub></a><br /><a href="https://github.com/Zapper-fi/studio/commits?author=singlefinance" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/FiboApe"><img src="https://avatars.githubusercontent.com/u/94012134?v=4?s=64" width="64px;" alt=""/><br /><sub><b>FiboApe</b></sub></a><br /><a href="https://github.com/Zapper-fi/studio/commits?author=FiboApe" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/teddav"><img src="https://avatars.githubusercontent.com/u/9486739?v=4?s=64" width="64px;" alt=""/><br /><sub><b>David</b></sub></a><br /><a href="https://github.com/Zapper-fi/studio/commits?author=teddav" title="Code">💻</a> <a href="https://github.com/Zapper-fi/studio/issues?q=author%3Ateddav" title="Bug reports">🐛</a></td>
+    <td align="center"><a href="https://github.com/0xAlunara"><img src="https://avatars.githubusercontent.com/u/88008691?v=4?s=64" width="64px;" alt=""/><br /><sub><b>0xAlunara</b></sub></a><br /><a href="https://github.com/Zapper-fi/studio/commits?author=0xAlunara" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/jn-lp"><img src="https://avatars.githubusercontent.com/u/21959994?v=4?s=64" width="64px;" alt=""/><br /><sub><b>Eugene Lepeico</b></sub></a><br /><a href="https://github.com/Zapper-fi/studio/commits?author=jn-lp" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/FredCoen"><img src="https://avatars.githubusercontent.com/u/43670554?v=4?s=64" width="64px;" alt=""/><br /><sub><b>FredCoen</b></sub></a><br /><a href="https://github.com/Zapper-fi/studio/commits?author=FredCoen" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/VaporwaveFinance"><img src="https://avatars.githubusercontent.com/u/95114728?v=4?s=64" width="64px;" alt=""/><br /><sub><b>VaporwaveFinance</b></sub></a><br /><a href="https://github.com/Zapper-fi/studio/commits?author=VaporwaveFinance" title="Code">💻</a></td>
+  </tr>
+  <tr>
+    <td align="center"><a href="https://github.com/peezebit"><img src="https://avatars.githubusercontent.com/u/79215347?v=4?s=64" width="64px;" alt=""/><br /><sub><b>peezebit</b></sub></a><br /><a href="https://github.com/Zapper-fi/studio/commits?author=peezebit" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/perpetuum7"><img src="https://avatars.githubusercontent.com/u/101750119?v=4?s=64" width="64px;" alt=""/><br /><sub><b>p7m</b></sub></a><br /><a href="https://github.com/Zapper-fi/studio/commits?author=perpetuum7" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/0xoats"><img src="https://avatars.githubusercontent.com/u/106729827?v=4?s=64" width="64px;" alt=""/><br /><sub><b>0xoats</b></sub></a><br /><a href="https://github.com/Zapper-fi/studio/issues?q=author%3A0xoats" title="Bug reports">🐛</a></td>
+    <td align="center"><a href="https://github.com/croc12344"><img src="https://avatars.githubusercontent.com/u/94607810?v=4?s=64" width="64px;" alt=""/><br /><sub><b>croc12344</b></sub></a><br /><a href="https://github.com/Zapper-fi/studio/commits?author=croc12344" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/peteriscan"><img src="https://avatars.githubusercontent.com/u/104527020?v=4?s=64" width="64px;" alt=""/><br /><sub><b>peteris</b></sub></a><br /><a href="https://github.com/Zapper-fi/studio/commits?author=peteriscan" title="Code">💻</a></td>
+    <td align="center"><a href="https://mikeshultz.com/"><img src="https://avatars.githubusercontent.com/u/1048089?v=4?s=64" width="64px;" alt=""/><br /><sub><b>Mike Shultz</b></sub></a><br /><a href="https://github.com/Zapper-fi/studio/commits?author=mikeshultz" title="Code">💻</a> <a href="https://github.com/Zapper-fi/studio/issues?q=author%3Amikeshultz" title="Bug reports">🐛</a></td>
+    <td align="center"><a href="https://www.bghughes.com/"><img src="https://avatars.githubusercontent.com/u/32072172?v=4?s=64" width="64px;" alt=""/><br /><sub><b>Benjamin Hughes</b></sub></a><br /><a href="https://github.com/Zapper-fi/studio/commits?author=bghughes" title="Code">💻</a> <a href="https://github.com/Zapper-fi/studio/issues?q=author%3Abghughes" title="Bug reports">🐛</a></td>
+  </tr>
+  <tr>
+    <td align="center"><a href="https://github.com/0xButterfield"><img src="https://avatars.githubusercontent.com/u/100517047?v=4?s=64" width="64px;" alt=""/><br /><sub><b>0xButterfield</b></sub></a><br /><a href="https://github.com/Zapper-fi/studio/commits?author=0xButterfield" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/vmaark"><img src="https://avatars.githubusercontent.com/u/2270661?v=4?s=64" width="64px;" alt=""/><br /><sub><b>Mark</b></sub></a><br /><a href="https://github.com/Zapper-fi/studio/commits?author=vmaark" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/yuval-weiss"><img src="https://avatars.githubusercontent.com/u/43820038?v=4?s=64" width="64px;" alt=""/><br /><sub><b>yuval-weiss</b></sub></a><br /><a href="https://github.com/Zapper-fi/studio/issues?q=author%3Ayuval-weiss" title="Bug reports">🐛</a></td>
+    <td align="center"><a href="https://github.com/volt62"><img src="https://avatars.githubusercontent.com/u/95225490?v=4?s=64" width="64px;" alt=""/><br /><sub><b>volt62</b></sub></a><br /><a href="https://github.com/Zapper-fi/studio/commits?author=volt62" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/procanzzc"><img src="https://avatars.githubusercontent.com/u/20929050?v=4?s=64" width="64px;" alt=""/><br /><sub><b>0xNeo</b></sub></a><br /><a href="https://github.com/Zapper-fi/studio/commits?author=procanzzc" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/0xrmvdao"><img src="https://avatars.githubusercontent.com/u/99395193?v=4?s=64" width="64px;" alt=""/><br /><sub><b>0xR</b></sub></a><br /><a href="https://github.com/Zapper-fi/studio/commits?author=0xrmvdao" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/dinngodev"><img src="https://avatars.githubusercontent.com/u/44598084?v=4?s=64" width="64px;" alt=""/><br /><sub><b>DINNGO Dev</b></sub></a><br /><a href="https://github.com/Zapper-fi/studio/commits?author=dinngodev" title="Code">💻</a></td>
+  </tr>
+  <tr>
+    <td align="center"><a href="https://github.com/rekt0x"><img src="https://avatars.githubusercontent.com/u/6087393?v=4?s=64" width="64px;" alt=""/><br /><sub><b>rekt0x</b></sub></a><br /><a href="https://github.com/Zapper-fi/studio/commits?author=rekt0x" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/amikec"><img src="https://avatars.githubusercontent.com/u/91593430?v=4?s=64" width="64px;" alt=""/><br /><sub><b>Mickey</b></sub></a><br /><a href="https://github.com/Zapper-fi/studio/commits?author=amikec" title="Code">💻</a> <a href="https://github.com/Zapper-fi/studio/issues?q=author%3Aamikec" title="Bug reports">🐛</a></td>
+    <td align="center"><a href="https://github.com/crypslato"><img src="https://avatars.githubusercontent.com/u/77345286?v=4?s=64" width="64px;" alt=""/><br /><sub><b>crypslato</b></sub></a><br /><a href="https://github.com/Zapper-fi/studio/commits?author=crypslato" title="Code">💻</a></td>
   </tr>
 </table>
 

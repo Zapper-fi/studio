@@ -16,7 +16,7 @@ const appId = UNISWAP_V2_DEFINITION.id;
 const groupId = UNISWAP_V2_DEFINITION.groups.pool.id;
 const network = Network.ETHEREUM_MAINNET;
 
-@Register.TokenPositionFetcher({ appId, groupId, network, options: { includeInTvl: true } })
+@Register.TokenPositionFetcher({ appId, groupId, network })
 export class EthereumUniswapV2PoolTokenFetcher implements PositionFetcher<AppTokenPosition> {
   constructor(
     @Inject(UniswapV2ContractFactory)
@@ -43,7 +43,6 @@ export class EthereumUniswapV2PoolTokenFetcher implements PositionFetcher<AppTok
         '0x6adb2e268de2aa1abf6578e4a8119b960e02928f',
       ],
       blockedPools: ['0x9cbfb60a09a9a33a10312da0f39977cbdb7fde23'], // Uniswap V2: SAITAMA - has a transfer fee (not supported by our zap)
-      appTokenDependencies: [{ appId: 'alpha-v1', groupIds: ['lending'], network }],
       resolveFactoryContract: ({ address, network }) =>
         this.uniswapV2ContractFactory.uniswapFactory({ address, network }),
       resolvePoolContract: ({ address, network }) => this.uniswapV2ContractFactory.uniswapPair({ address, network }),

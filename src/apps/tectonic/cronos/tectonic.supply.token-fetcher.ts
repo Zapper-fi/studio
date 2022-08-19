@@ -13,7 +13,7 @@ const appId = TECTONIC_DEFINITION.id;
 const groupId = TECTONIC_DEFINITION.groups.supply.id;
 const network = Network.CRONOS_MAINNET;
 
-@Register.TokenPositionFetcher({ appId, groupId, network, options: { includeInTvl: true } })
+@Register.TokenPositionFetcher({ appId, groupId, network })
 export class CronosTectonicSupplyTokenFetcher implements PositionFetcher<AppTokenPosition> {
   constructor(
     @Inject(TectonicContractFactory) private readonly tectonicContractFactory: TectonicContractFactory,
@@ -36,7 +36,6 @@ export class CronosTectonicSupplyTokenFetcher implements PositionFetcher<AppToke
       getSupplyRate: ({ contract }) => contract.supplyRatePerBlock(),
       getBorrowRate: ({ contract }) => contract.borrowRatePerBlock(),
       getTotalSupply: ({ contract }) => contract.totalSupply(),
-      getTotalBorrow: ({ contract }) => contract.callStatic.totalBorrowsCurrent(),
       getUnderlyingAddress: ({ contract }) => contract.underlying(),
       getExchangeRateMantissa: ({ underlyingTokenDecimals }) => underlyingTokenDecimals + 10,
     });

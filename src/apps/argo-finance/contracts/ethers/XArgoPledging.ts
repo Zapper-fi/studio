@@ -16,10 +16,13 @@ import type {
 } from 'ethers';
 import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
 import type { Listener, Provider } from '@ethersproject/providers';
-import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
 export declare namespace XArgoPledging {
-  export type RewardDataStruct = { token: string; amount: BigNumberish };
+  export type RewardDataStruct = {
+    token: PromiseOrValue<string>;
+    amount: PromiseOrValue<BigNumberish>;
+  };
 
   export type RewardDataStructOutput = [string, BigNumber] & {
     token: string;
@@ -141,54 +144,87 @@ export interface XArgoPledgingInterface extends utils.Interface {
 
   encodeFunctionData(functionFragment: 'admin', values?: undefined): string;
   encodeFunctionData(functionFragment: 'implementation', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'upgradeTo', values: [string]): string;
-  encodeFunctionData(functionFragment: 'upgradeToAndCall', values: [string, BytesLike]): string;
+  encodeFunctionData(functionFragment: 'upgradeTo', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'upgradeToAndCall',
+    values: [PromiseOrValue<string>, PromiseOrValue<BytesLike>],
+  ): string;
   encodeFunctionData(functionFragment: 'DEFAULT_ADMIN_ROLE', values?: undefined): string;
-  encodeFunctionData(functionFragment: '__xArgoPledging_init', values: [string, string]): string;
-  encodeFunctionData(functionFragment: '_balances', values: [string]): string;
-  encodeFunctionData(functionFragment: 'addReward', values: [string, string]): string;
-  encodeFunctionData(functionFragment: 'approveRewardDistributor', values: [string, string, boolean]): string;
+  encodeFunctionData(
+    functionFragment: '__xArgoPledging_init',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>],
+  ): string;
+  encodeFunctionData(functionFragment: '_balances', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'addReward', values: [PromiseOrValue<string>, PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'approveRewardDistributor',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<boolean>],
+  ): string;
   encodeFunctionData(functionFragment: 'bonusEndBlock', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'claimableRewards', values: [string]): string;
+  encodeFunctionData(functionFragment: 'claimableRewards', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'emergencyWithdraw', values?: undefined): string;
   encodeFunctionData(functionFragment: 'getReward', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'getRewardForDuration', values: [string]): string;
-  encodeFunctionData(functionFragment: 'getRoleAdmin', values: [BytesLike]): string;
+  encodeFunctionData(functionFragment: 'getRewardForDuration', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'getRoleAdmin', values: [PromiseOrValue<BytesLike>]): string;
   encodeFunctionData(functionFragment: 'getUserMaxMorale', values?: undefined): string;
   encodeFunctionData(functionFragment: 'getUserMorale', values?: undefined): string;
   encodeFunctionData(functionFragment: 'getUserxArgoPledged', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'grantRole', values: [BytesLike, string]): string;
-  encodeFunctionData(functionFragment: 'hasRole', values: [BytesLike, string]): string;
-  encodeFunctionData(functionFragment: 'lastTimeRewardApplicable', values: [string]): string;
-  encodeFunctionData(functionFragment: 'modifyEmissions', values: [BigNumberish, BigNumberish, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'notifyRewardAmount', values: [string, BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'grantRole',
+    values: [PromiseOrValue<BytesLike>, PromiseOrValue<string>],
+  ): string;
+  encodeFunctionData(functionFragment: 'hasRole', values: [PromiseOrValue<BytesLike>, PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'lastTimeRewardApplicable', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'modifyEmissions',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'notifyRewardAmount',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
   encodeFunctionData(functionFragment: 'paused', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'pendingReward', values: [string]): string;
-  encodeFunctionData(functionFragment: 'pledge', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'pendingReward', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'pledge', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'poolInfo', values?: undefined): string;
   encodeFunctionData(functionFragment: 'rateMRLE', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'renounceRole', values: [BytesLike, string]): string;
-  encodeFunctionData(functionFragment: 'revokeRole', values: [BytesLike, string]): string;
-  encodeFunctionData(functionFragment: 'rewardData', values: [string]): string;
-  encodeFunctionData(functionFragment: 'rewardDistributors', values: [string, string]): string;
+  encodeFunctionData(
+    functionFragment: 'renounceRole',
+    values: [PromiseOrValue<BytesLike>, PromiseOrValue<string>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'revokeRole',
+    values: [PromiseOrValue<BytesLike>, PromiseOrValue<string>],
+  ): string;
+  encodeFunctionData(functionFragment: 'rewardData', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'rewardDistributors',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>],
+  ): string;
   encodeFunctionData(functionFragment: 'rewardPerBlock', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'rewardPerToken', values: [string]): string;
-  encodeFunctionData(functionFragment: 'rewardTokens', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'rewards', values: [string, string]): string;
+  encodeFunctionData(functionFragment: 'rewardPerToken', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'rewardTokens', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'rewards', values: [PromiseOrValue<string>, PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'rewardsDuration', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'setMORALERate', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'setMORALEStartTime', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'setMORALERate', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'setMORALEStartTime', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'stakingToken', values?: undefined): string;
   encodeFunctionData(functionFragment: 'startBlock', values?: undefined): string;
   encodeFunctionData(functionFragment: 'startTimeMRLE', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'supportsInterface', values: [BytesLike]): string;
+  encodeFunctionData(functionFragment: 'supportsInterface', values: [PromiseOrValue<BytesLike>]): string;
   encodeFunctionData(functionFragment: 'totalSupply', values?: undefined): string;
   encodeFunctionData(functionFragment: 'totalxARGO', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'unpledge', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'unpledge', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'updatePool', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'userInfo', values: [string]): string;
-  encodeFunctionData(functionFragment: 'userMRLE', values: [string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'userRewardPerTokenPaid', values: [string, string]): string;
+  encodeFunctionData(functionFragment: 'userInfo', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'userMRLE',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'userRewardPerTokenPaid',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>],
+  ): string;
   encodeFunctionData(functionFragment: 'wCRO', values?: undefined): string;
   encodeFunctionData(functionFragment: 'xARGO', values?: undefined): string;
 
@@ -403,48 +439,48 @@ export interface XArgoPledging extends BaseContract {
   removeListener: OnEvent<this>;
 
   functions: {
-    admin(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    admin(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
-    implementation(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    implementation(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     upgradeTo(
-      newImplementation: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newImplementation: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     upgradeToAndCall(
-      newImplementation: string,
-      data: BytesLike,
-      overrides?: PayableOverrides & { from?: string | Promise<string> },
+      newImplementation: PromiseOrValue<string>,
+      data: PromiseOrValue<BytesLike>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     DEFAULT_ADMIN_ROLE(overrides?: CallOverrides): Promise<[string]>;
 
     __xArgoPledging_init(
-      _admin: string,
-      _stakingToken: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _admin: PromiseOrValue<string>,
+      _stakingToken: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    _balances(arg0: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    _balances(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     addReward(
-      _rewardsToken: string,
-      _distributor: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _rewardsToken: PromiseOrValue<string>,
+      _distributor: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     approveRewardDistributor(
-      _rewardsToken: string,
-      _distributor: string,
-      _approved: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _rewardsToken: PromiseOrValue<string>,
+      _distributor: PromiseOrValue<string>,
+      _approved: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     bonusEndBlock(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     claimableRewards(
-      account: string,
+      account: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<
       [XArgoPledging.RewardDataStructOutput[]] & {
@@ -452,13 +488,13 @@ export interface XArgoPledging extends BaseContract {
       }
     >;
 
-    emergencyWithdraw(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    emergencyWithdraw(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
-    getReward(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    getReward(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
-    getRewardForDuration(_rewardsToken: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    getRewardForDuration(_rewardsToken: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    getRoleAdmin(role: BytesLike, overrides?: CallOverrides): Promise<[string]>;
+    getRoleAdmin(role: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<[string]>;
 
     getUserMaxMorale(overrides?: CallOverrides): Promise<[BigNumber]>;
 
@@ -467,35 +503,39 @@ export interface XArgoPledging extends BaseContract {
     getUserxArgoPledged(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     grantRole(
-      role: BytesLike,
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    hasRole(role: BytesLike, account: string, overrides?: CallOverrides): Promise<[boolean]>;
+    hasRole(
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<[boolean]>;
 
-    lastTimeRewardApplicable(_rewardsToken: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    lastTimeRewardApplicable(_rewardsToken: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     modifyEmissions(
-      _rewardPerBlock: BigNumberish,
-      _startBlock: BigNumberish,
-      _endBlock: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _rewardPerBlock: PromiseOrValue<BigNumberish>,
+      _startBlock: PromiseOrValue<BigNumberish>,
+      _endBlock: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     notifyRewardAmount(
-      _rewardsToken: string,
-      reward: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _rewardsToken: PromiseOrValue<string>,
+      reward: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     paused(overrides?: CallOverrides): Promise<[boolean]>;
 
-    pendingReward(_user: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    pendingReward(_user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     pledge(
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     poolInfo(overrides?: CallOverrides): Promise<
@@ -508,19 +548,19 @@ export interface XArgoPledging extends BaseContract {
     rateMRLE(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     renounceRole(
-      role: BytesLike,
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     revokeRole(
-      role: BytesLike,
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     rewardData(
-      arg0: string,
+      arg0: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<
       [BigNumber, BigNumber, BigNumber, BigNumber] & {
@@ -531,26 +571,34 @@ export interface XArgoPledging extends BaseContract {
       }
     >;
 
-    rewardDistributors(arg0: string, arg1: string, overrides?: CallOverrides): Promise<[boolean]>;
+    rewardDistributors(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<[boolean]>;
 
     rewardPerBlock(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    rewardPerToken(_rewardsToken: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    rewardPerToken(_rewardsToken: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    rewardTokens(arg0: BigNumberish, overrides?: CallOverrides): Promise<[string]>;
+    rewardTokens(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[string]>;
 
-    rewards(arg0: string, arg1: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    rewards(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber]>;
 
     rewardsDuration(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     setMORALERate(
-      _rate: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _rate: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setMORALEStartTime(
-      _startTime: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _startTime: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     stakingToken(overrides?: CallOverrides): Promise<[string]>;
@@ -559,27 +607,27 @@ export interface XArgoPledging extends BaseContract {
 
     startTimeMRLE(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    supportsInterface(interfaceId: BytesLike, overrides?: CallOverrides): Promise<[boolean]>;
+    supportsInterface(interfaceId: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<[boolean]>;
 
     totalSupply(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     totalxARGO(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     unpledge(
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    updatePool(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    updatePool(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     userInfo(
-      arg0: string,
+      arg0: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber, BigNumber] & { amount: BigNumber; rewardDebt: BigNumber }>;
 
     userMRLE(
-      arg0: string,
-      arg1: BigNumberish,
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<
       [BigNumber, BigNumber, BigNumber] & {
@@ -589,62 +637,69 @@ export interface XArgoPledging extends BaseContract {
       }
     >;
 
-    userRewardPerTokenPaid(arg0: string, arg1: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    userRewardPerTokenPaid(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber]>;
 
     wCRO(overrides?: CallOverrides): Promise<[string]>;
 
     xARGO(overrides?: CallOverrides): Promise<[string]>;
   };
 
-  admin(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  admin(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
-  implementation(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  implementation(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   upgradeTo(
-    newImplementation: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    newImplementation: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   upgradeToAndCall(
-    newImplementation: string,
-    data: BytesLike,
-    overrides?: PayableOverrides & { from?: string | Promise<string> },
+    newImplementation: PromiseOrValue<string>,
+    data: PromiseOrValue<BytesLike>,
+    overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   DEFAULT_ADMIN_ROLE(overrides?: CallOverrides): Promise<string>;
 
   __xArgoPledging_init(
-    _admin: string,
-    _stakingToken: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _admin: PromiseOrValue<string>,
+    _stakingToken: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  _balances(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+  _balances(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   addReward(
-    _rewardsToken: string,
-    _distributor: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _rewardsToken: PromiseOrValue<string>,
+    _distributor: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   approveRewardDistributor(
-    _rewardsToken: string,
-    _distributor: string,
-    _approved: boolean,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _rewardsToken: PromiseOrValue<string>,
+    _distributor: PromiseOrValue<string>,
+    _approved: PromiseOrValue<boolean>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   bonusEndBlock(overrides?: CallOverrides): Promise<BigNumber>;
 
-  claimableRewards(account: string, overrides?: CallOverrides): Promise<XArgoPledging.RewardDataStructOutput[]>;
+  claimableRewards(
+    account: PromiseOrValue<string>,
+    overrides?: CallOverrides,
+  ): Promise<XArgoPledging.RewardDataStructOutput[]>;
 
-  emergencyWithdraw(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  emergencyWithdraw(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
-  getReward(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  getReward(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
-  getRewardForDuration(_rewardsToken: string, overrides?: CallOverrides): Promise<BigNumber>;
+  getRewardForDuration(_rewardsToken: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  getRoleAdmin(role: BytesLike, overrides?: CallOverrides): Promise<string>;
+  getRoleAdmin(role: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<string>;
 
   getUserMaxMorale(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -653,35 +708,39 @@ export interface XArgoPledging extends BaseContract {
   getUserxArgoPledged(overrides?: CallOverrides): Promise<BigNumber>;
 
   grantRole(
-    role: BytesLike,
-    account: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    role: PromiseOrValue<BytesLike>,
+    account: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  hasRole(role: BytesLike, account: string, overrides?: CallOverrides): Promise<boolean>;
+  hasRole(
+    role: PromiseOrValue<BytesLike>,
+    account: PromiseOrValue<string>,
+    overrides?: CallOverrides,
+  ): Promise<boolean>;
 
-  lastTimeRewardApplicable(_rewardsToken: string, overrides?: CallOverrides): Promise<BigNumber>;
+  lastTimeRewardApplicable(_rewardsToken: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   modifyEmissions(
-    _rewardPerBlock: BigNumberish,
-    _startBlock: BigNumberish,
-    _endBlock: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _rewardPerBlock: PromiseOrValue<BigNumberish>,
+    _startBlock: PromiseOrValue<BigNumberish>,
+    _endBlock: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   notifyRewardAmount(
-    _rewardsToken: string,
-    reward: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _rewardsToken: PromiseOrValue<string>,
+    reward: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   paused(overrides?: CallOverrides): Promise<boolean>;
 
-  pendingReward(_user: string, overrides?: CallOverrides): Promise<BigNumber>;
+  pendingReward(_user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   pledge(
-    _amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   poolInfo(overrides?: CallOverrides): Promise<
@@ -694,19 +753,19 @@ export interface XArgoPledging extends BaseContract {
   rateMRLE(overrides?: CallOverrides): Promise<BigNumber>;
 
   renounceRole(
-    role: BytesLike,
-    account: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    role: PromiseOrValue<BytesLike>,
+    account: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   revokeRole(
-    role: BytesLike,
-    account: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    role: PromiseOrValue<BytesLike>,
+    account: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   rewardData(
-    arg0: string,
+    arg0: PromiseOrValue<string>,
     overrides?: CallOverrides,
   ): Promise<
     [BigNumber, BigNumber, BigNumber, BigNumber] & {
@@ -717,26 +776,30 @@ export interface XArgoPledging extends BaseContract {
     }
   >;
 
-  rewardDistributors(arg0: string, arg1: string, overrides?: CallOverrides): Promise<boolean>;
+  rewardDistributors(
+    arg0: PromiseOrValue<string>,
+    arg1: PromiseOrValue<string>,
+    overrides?: CallOverrides,
+  ): Promise<boolean>;
 
   rewardPerBlock(overrides?: CallOverrides): Promise<BigNumber>;
 
-  rewardPerToken(_rewardsToken: string, overrides?: CallOverrides): Promise<BigNumber>;
+  rewardPerToken(_rewardsToken: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  rewardTokens(arg0: BigNumberish, overrides?: CallOverrides): Promise<string>;
+  rewardTokens(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
 
-  rewards(arg0: string, arg1: string, overrides?: CallOverrides): Promise<BigNumber>;
+  rewards(arg0: PromiseOrValue<string>, arg1: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   rewardsDuration(overrides?: CallOverrides): Promise<BigNumber>;
 
   setMORALERate(
-    _rate: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _rate: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setMORALEStartTime(
-    _startTime: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _startTime: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   stakingToken(overrides?: CallOverrides): Promise<string>;
@@ -745,27 +808,27 @@ export interface XArgoPledging extends BaseContract {
 
   startTimeMRLE(overrides?: CallOverrides): Promise<BigNumber>;
 
-  supportsInterface(interfaceId: BytesLike, overrides?: CallOverrides): Promise<boolean>;
+  supportsInterface(interfaceId: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<boolean>;
 
   totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
   totalxARGO(overrides?: CallOverrides): Promise<BigNumber>;
 
   unpledge(
-    _amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  updatePool(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  updatePool(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   userInfo(
-    arg0: string,
+    arg0: PromiseOrValue<string>,
     overrides?: CallOverrides,
   ): Promise<[BigNumber, BigNumber] & { amount: BigNumber; rewardDebt: BigNumber }>;
 
   userMRLE(
-    arg0: string,
-    arg1: BigNumberish,
+    arg0: PromiseOrValue<string>,
+    arg1: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides,
   ): Promise<
     [BigNumber, BigNumber, BigNumber] & {
@@ -775,7 +838,11 @@ export interface XArgoPledging extends BaseContract {
     }
   >;
 
-  userRewardPerTokenPaid(arg0: string, arg1: string, overrides?: CallOverrides): Promise<BigNumber>;
+  userRewardPerTokenPaid(
+    arg0: PromiseOrValue<string>,
+    arg1: PromiseOrValue<string>,
+    overrides?: CallOverrides,
+  ): Promise<BigNumber>;
 
   wCRO(overrides?: CallOverrides): Promise<string>;
 
@@ -786,36 +853,51 @@ export interface XArgoPledging extends BaseContract {
 
     implementation(overrides?: CallOverrides): Promise<string>;
 
-    upgradeTo(newImplementation: string, overrides?: CallOverrides): Promise<void>;
+    upgradeTo(newImplementation: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    upgradeToAndCall(newImplementation: string, data: BytesLike, overrides?: CallOverrides): Promise<void>;
+    upgradeToAndCall(
+      newImplementation: PromiseOrValue<string>,
+      data: PromiseOrValue<BytesLike>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
     DEFAULT_ADMIN_ROLE(overrides?: CallOverrides): Promise<string>;
 
-    __xArgoPledging_init(_admin: string, _stakingToken: string, overrides?: CallOverrides): Promise<void>;
+    __xArgoPledging_init(
+      _admin: PromiseOrValue<string>,
+      _stakingToken: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    _balances(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    _balances(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    addReward(_rewardsToken: string, _distributor: string, overrides?: CallOverrides): Promise<void>;
+    addReward(
+      _rewardsToken: PromiseOrValue<string>,
+      _distributor: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
     approveRewardDistributor(
-      _rewardsToken: string,
-      _distributor: string,
-      _approved: boolean,
+      _rewardsToken: PromiseOrValue<string>,
+      _distributor: PromiseOrValue<string>,
+      _approved: PromiseOrValue<boolean>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
     bonusEndBlock(overrides?: CallOverrides): Promise<BigNumber>;
 
-    claimableRewards(account: string, overrides?: CallOverrides): Promise<XArgoPledging.RewardDataStructOutput[]>;
+    claimableRewards(
+      account: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<XArgoPledging.RewardDataStructOutput[]>;
 
     emergencyWithdraw(overrides?: CallOverrides): Promise<void>;
 
     getReward(overrides?: CallOverrides): Promise<void>;
 
-    getRewardForDuration(_rewardsToken: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getRewardForDuration(_rewardsToken: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    getRoleAdmin(role: BytesLike, overrides?: CallOverrides): Promise<string>;
+    getRoleAdmin(role: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<string>;
 
     getUserMaxMorale(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -823,26 +905,38 @@ export interface XArgoPledging extends BaseContract {
 
     getUserxArgoPledged(overrides?: CallOverrides): Promise<BigNumber>;
 
-    grantRole(role: BytesLike, account: string, overrides?: CallOverrides): Promise<void>;
+    grantRole(
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    hasRole(role: BytesLike, account: string, overrides?: CallOverrides): Promise<boolean>;
-
-    lastTimeRewardApplicable(_rewardsToken: string, overrides?: CallOverrides): Promise<BigNumber>;
-
-    modifyEmissions(
-      _rewardPerBlock: BigNumberish,
-      _startBlock: BigNumberish,
-      _endBlock: BigNumberish,
+    hasRole(
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<boolean>;
 
-    notifyRewardAmount(_rewardsToken: string, reward: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    lastTimeRewardApplicable(_rewardsToken: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
+
+    modifyEmissions(
+      _rewardPerBlock: PromiseOrValue<BigNumberish>,
+      _startBlock: PromiseOrValue<BigNumberish>,
+      _endBlock: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
+
+    notifyRewardAmount(
+      _rewardsToken: PromiseOrValue<string>,
+      reward: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
     paused(overrides?: CallOverrides): Promise<boolean>;
 
-    pendingReward(_user: string, overrides?: CallOverrides): Promise<BigNumber>;
+    pendingReward(_user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    pledge(_amount: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    pledge(_amount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
     poolInfo(overrides?: CallOverrides): Promise<
       [BigNumber, BigNumber] & {
@@ -853,12 +947,20 @@ export interface XArgoPledging extends BaseContract {
 
     rateMRLE(overrides?: CallOverrides): Promise<BigNumber>;
 
-    renounceRole(role: BytesLike, account: string, overrides?: CallOverrides): Promise<void>;
+    renounceRole(
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    revokeRole(role: BytesLike, account: string, overrides?: CallOverrides): Promise<void>;
+    revokeRole(
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
     rewardData(
-      arg0: string,
+      arg0: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<
       [BigNumber, BigNumber, BigNumber, BigNumber] & {
@@ -869,21 +971,25 @@ export interface XArgoPledging extends BaseContract {
       }
     >;
 
-    rewardDistributors(arg0: string, arg1: string, overrides?: CallOverrides): Promise<boolean>;
+    rewardDistributors(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
 
     rewardPerBlock(overrides?: CallOverrides): Promise<BigNumber>;
 
-    rewardPerToken(_rewardsToken: string, overrides?: CallOverrides): Promise<BigNumber>;
+    rewardPerToken(_rewardsToken: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    rewardTokens(arg0: BigNumberish, overrides?: CallOverrides): Promise<string>;
+    rewardTokens(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
 
-    rewards(arg0: string, arg1: string, overrides?: CallOverrides): Promise<BigNumber>;
+    rewards(arg0: PromiseOrValue<string>, arg1: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     rewardsDuration(overrides?: CallOverrides): Promise<BigNumber>;
 
-    setMORALERate(_rate: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    setMORALERate(_rate: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    setMORALEStartTime(_startTime: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    setMORALEStartTime(_startTime: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     stakingToken(overrides?: CallOverrides): Promise<string>;
 
@@ -891,24 +997,24 @@ export interface XArgoPledging extends BaseContract {
 
     startTimeMRLE(overrides?: CallOverrides): Promise<BigNumber>;
 
-    supportsInterface(interfaceId: BytesLike, overrides?: CallOverrides): Promise<boolean>;
+    supportsInterface(interfaceId: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<boolean>;
 
     totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
     totalxARGO(overrides?: CallOverrides): Promise<BigNumber>;
 
-    unpledge(_amount: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    unpledge(_amount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
     updatePool(overrides?: CallOverrides): Promise<void>;
 
     userInfo(
-      arg0: string,
+      arg0: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber, BigNumber] & { amount: BigNumber; rewardDebt: BigNumber }>;
 
     userMRLE(
-      arg0: string,
-      arg1: BigNumberish,
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<
       [BigNumber, BigNumber, BigNumber] & {
@@ -918,7 +1024,11 @@ export interface XArgoPledging extends BaseContract {
       }
     >;
 
-    userRewardPerTokenPaid(arg0: string, arg1: string, overrides?: CallOverrides): Promise<BigNumber>;
+    userRewardPerTokenPaid(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     wCRO(overrides?: CallOverrides): Promise<string>;
 
@@ -926,14 +1036,17 @@ export interface XArgoPledging extends BaseContract {
   };
 
   filters: {
-    'Upgraded(address)'(implementation?: string | null): UpgradedEventFilter;
-    Upgraded(implementation?: string | null): UpgradedEventFilter;
+    'Upgraded(address)'(implementation?: PromiseOrValue<string> | null): UpgradedEventFilter;
+    Upgraded(implementation?: PromiseOrValue<string> | null): UpgradedEventFilter;
 
-    'Deposit(address,uint256)'(user?: string | null, amount?: null): DepositEventFilter;
-    Deposit(user?: string | null, amount?: null): DepositEventFilter;
+    'Deposit(address,uint256)'(user?: PromiseOrValue<string> | null, amount?: null): DepositEventFilter;
+    Deposit(user?: PromiseOrValue<string> | null, amount?: null): DepositEventFilter;
 
-    'EmergencyWithdraw(address,uint256)'(user?: string | null, amount?: null): EmergencyWithdrawEventFilter;
-    EmergencyWithdraw(user?: string | null, amount?: null): EmergencyWithdrawEventFilter;
+    'EmergencyWithdraw(address,uint256)'(
+      user?: PromiseOrValue<string> | null,
+      amount?: null,
+    ): EmergencyWithdrawEventFilter;
+    EmergencyWithdraw(user?: PromiseOrValue<string> | null, amount?: null): EmergencyWithdrawEventFilter;
 
     'Paused(address)'(account?: null): PausedEventFilter;
     Paused(account?: null): PausedEventFilter;
@@ -942,100 +1055,112 @@ export interface XArgoPledging extends BaseContract {
     RewardAdded(reward?: null): RewardAddedEventFilter;
 
     'RewardPaid(address,address,uint256)'(
-      user?: string | null,
-      rewardsToken?: string | null,
+      user?: PromiseOrValue<string> | null,
+      rewardsToken?: PromiseOrValue<string> | null,
       reward?: null,
     ): RewardPaidEventFilter;
-    RewardPaid(user?: string | null, rewardsToken?: string | null, reward?: null): RewardPaidEventFilter;
+    RewardPaid(
+      user?: PromiseOrValue<string> | null,
+      rewardsToken?: PromiseOrValue<string> | null,
+      reward?: null,
+    ): RewardPaidEventFilter;
 
     'RoleAdminChanged(bytes32,bytes32,bytes32)'(
-      role?: BytesLike | null,
-      previousAdminRole?: BytesLike | null,
-      newAdminRole?: BytesLike | null,
+      role?: PromiseOrValue<BytesLike> | null,
+      previousAdminRole?: PromiseOrValue<BytesLike> | null,
+      newAdminRole?: PromiseOrValue<BytesLike> | null,
     ): RoleAdminChangedEventFilter;
     RoleAdminChanged(
-      role?: BytesLike | null,
-      previousAdminRole?: BytesLike | null,
-      newAdminRole?: BytesLike | null,
+      role?: PromiseOrValue<BytesLike> | null,
+      previousAdminRole?: PromiseOrValue<BytesLike> | null,
+      newAdminRole?: PromiseOrValue<BytesLike> | null,
     ): RoleAdminChangedEventFilter;
 
     'RoleGranted(bytes32,address,address)'(
-      role?: BytesLike | null,
-      account?: string | null,
-      sender?: string | null,
+      role?: PromiseOrValue<BytesLike> | null,
+      account?: PromiseOrValue<string> | null,
+      sender?: PromiseOrValue<string> | null,
     ): RoleGrantedEventFilter;
-    RoleGranted(role?: BytesLike | null, account?: string | null, sender?: string | null): RoleGrantedEventFilter;
+    RoleGranted(
+      role?: PromiseOrValue<BytesLike> | null,
+      account?: PromiseOrValue<string> | null,
+      sender?: PromiseOrValue<string> | null,
+    ): RoleGrantedEventFilter;
 
     'RoleRevoked(bytes32,address,address)'(
-      role?: BytesLike | null,
-      account?: string | null,
-      sender?: string | null,
+      role?: PromiseOrValue<BytesLike> | null,
+      account?: PromiseOrValue<string> | null,
+      sender?: PromiseOrValue<string> | null,
     ): RoleRevokedEventFilter;
-    RoleRevoked(role?: BytesLike | null, account?: string | null, sender?: string | null): RoleRevokedEventFilter;
+    RoleRevoked(
+      role?: PromiseOrValue<BytesLike> | null,
+      account?: PromiseOrValue<string> | null,
+      sender?: PromiseOrValue<string> | null,
+    ): RoleRevokedEventFilter;
 
-    'Staked(address,uint256)'(user?: string | null, amount?: null): StakedEventFilter;
-    Staked(user?: string | null, amount?: null): StakedEventFilter;
+    'Staked(address,uint256)'(user?: PromiseOrValue<string> | null, amount?: null): StakedEventFilter;
+    Staked(user?: PromiseOrValue<string> | null, amount?: null): StakedEventFilter;
 
     'Unpaused(address)'(account?: null): UnpausedEventFilter;
     Unpaused(account?: null): UnpausedEventFilter;
 
-    'Withdraw(address,uint256)'(user?: string | null, amount?: null): WithdrawEventFilter;
-    Withdraw(user?: string | null, amount?: null): WithdrawEventFilter;
+    'Withdraw(address,uint256)'(user?: PromiseOrValue<string> | null, amount?: null): WithdrawEventFilter;
+    Withdraw(user?: PromiseOrValue<string> | null, amount?: null): WithdrawEventFilter;
 
-    'Withdrawn(address,uint256)'(user?: string | null, amount?: null): WithdrawnEventFilter;
-    Withdrawn(user?: string | null, amount?: null): WithdrawnEventFilter;
+    'Withdrawn(address,uint256)'(user?: PromiseOrValue<string> | null, amount?: null): WithdrawnEventFilter;
+    Withdrawn(user?: PromiseOrValue<string> | null, amount?: null): WithdrawnEventFilter;
   };
 
   estimateGas: {
-    admin(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    admin(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
-    implementation(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    implementation(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     upgradeTo(
-      newImplementation: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newImplementation: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     upgradeToAndCall(
-      newImplementation: string,
-      data: BytesLike,
-      overrides?: PayableOverrides & { from?: string | Promise<string> },
+      newImplementation: PromiseOrValue<string>,
+      data: PromiseOrValue<BytesLike>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     DEFAULT_ADMIN_ROLE(overrides?: CallOverrides): Promise<BigNumber>;
 
     __xArgoPledging_init(
-      _admin: string,
-      _stakingToken: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _admin: PromiseOrValue<string>,
+      _stakingToken: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    _balances(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    _balances(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     addReward(
-      _rewardsToken: string,
-      _distributor: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _rewardsToken: PromiseOrValue<string>,
+      _distributor: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     approveRewardDistributor(
-      _rewardsToken: string,
-      _distributor: string,
-      _approved: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _rewardsToken: PromiseOrValue<string>,
+      _distributor: PromiseOrValue<string>,
+      _approved: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     bonusEndBlock(overrides?: CallOverrides): Promise<BigNumber>;
 
-    claimableRewards(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    claimableRewards(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    emergencyWithdraw(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    emergencyWithdraw(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
-    getReward(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    getReward(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
-    getRewardForDuration(_rewardsToken: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getRewardForDuration(_rewardsToken: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    getRoleAdmin(role: BytesLike, overrides?: CallOverrides): Promise<BigNumber>;
+    getRoleAdmin(role: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<BigNumber>;
 
     getUserMaxMorale(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -1044,69 +1169,83 @@ export interface XArgoPledging extends BaseContract {
     getUserxArgoPledged(overrides?: CallOverrides): Promise<BigNumber>;
 
     grantRole(
-      role: BytesLike,
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    hasRole(role: BytesLike, account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    hasRole(
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    lastTimeRewardApplicable(_rewardsToken: string, overrides?: CallOverrides): Promise<BigNumber>;
+    lastTimeRewardApplicable(_rewardsToken: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     modifyEmissions(
-      _rewardPerBlock: BigNumberish,
-      _startBlock: BigNumberish,
-      _endBlock: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _rewardPerBlock: PromiseOrValue<BigNumberish>,
+      _startBlock: PromiseOrValue<BigNumberish>,
+      _endBlock: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     notifyRewardAmount(
-      _rewardsToken: string,
-      reward: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _rewardsToken: PromiseOrValue<string>,
+      reward: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     paused(overrides?: CallOverrides): Promise<BigNumber>;
 
-    pendingReward(_user: string, overrides?: CallOverrides): Promise<BigNumber>;
+    pendingReward(_user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    pledge(_amount: BigNumberish, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    pledge(
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     poolInfo(overrides?: CallOverrides): Promise<BigNumber>;
 
     rateMRLE(overrides?: CallOverrides): Promise<BigNumber>;
 
     renounceRole(
-      role: BytesLike,
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     revokeRole(
-      role: BytesLike,
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    rewardData(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    rewardData(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    rewardDistributors(arg0: string, arg1: string, overrides?: CallOverrides): Promise<BigNumber>;
+    rewardDistributors(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     rewardPerBlock(overrides?: CallOverrides): Promise<BigNumber>;
 
-    rewardPerToken(_rewardsToken: string, overrides?: CallOverrides): Promise<BigNumber>;
+    rewardPerToken(_rewardsToken: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    rewardTokens(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    rewardTokens(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    rewards(arg0: string, arg1: string, overrides?: CallOverrides): Promise<BigNumber>;
+    rewards(arg0: PromiseOrValue<string>, arg1: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     rewardsDuration(overrides?: CallOverrides): Promise<BigNumber>;
 
-    setMORALERate(_rate: BigNumberish, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    setMORALERate(
+      _rate: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     setMORALEStartTime(
-      _startTime: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _startTime: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     stakingToken(overrides?: CallOverrides): Promise<BigNumber>;
@@ -1115,21 +1254,32 @@ export interface XArgoPledging extends BaseContract {
 
     startTimeMRLE(overrides?: CallOverrides): Promise<BigNumber>;
 
-    supportsInterface(interfaceId: BytesLike, overrides?: CallOverrides): Promise<BigNumber>;
+    supportsInterface(interfaceId: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<BigNumber>;
 
     totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
     totalxARGO(overrides?: CallOverrides): Promise<BigNumber>;
 
-    unpledge(_amount: BigNumberish, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    unpledge(
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
-    updatePool(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    updatePool(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
-    userInfo(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    userInfo(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    userMRLE(arg0: string, arg1: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    userMRLE(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    userRewardPerTokenPaid(arg0: string, arg1: string, overrides?: CallOverrides): Promise<BigNumber>;
+    userRewardPerTokenPaid(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     wCRO(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -1137,55 +1287,58 @@ export interface XArgoPledging extends BaseContract {
   };
 
   populateTransaction: {
-    admin(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    admin(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
-    implementation(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    implementation(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     upgradeTo(
-      newImplementation: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newImplementation: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     upgradeToAndCall(
-      newImplementation: string,
-      data: BytesLike,
-      overrides?: PayableOverrides & { from?: string | Promise<string> },
+      newImplementation: PromiseOrValue<string>,
+      data: PromiseOrValue<BytesLike>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     DEFAULT_ADMIN_ROLE(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     __xArgoPledging_init(
-      _admin: string,
-      _stakingToken: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _admin: PromiseOrValue<string>,
+      _stakingToken: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    _balances(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    _balances(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     addReward(
-      _rewardsToken: string,
-      _distributor: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _rewardsToken: PromiseOrValue<string>,
+      _distributor: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     approveRewardDistributor(
-      _rewardsToken: string,
-      _distributor: string,
-      _approved: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _rewardsToken: PromiseOrValue<string>,
+      _distributor: PromiseOrValue<string>,
+      _approved: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     bonusEndBlock(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    claimableRewards(account: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    claimableRewards(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    emergencyWithdraw(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    emergencyWithdraw(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
-    getReward(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    getReward(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
-    getRewardForDuration(_rewardsToken: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getRewardForDuration(
+      _rewardsToken: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
-    getRoleAdmin(role: BytesLike, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getRoleAdmin(role: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     getUserMaxMorale(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
@@ -1194,35 +1347,42 @@ export interface XArgoPledging extends BaseContract {
     getUserxArgoPledged(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     grantRole(
-      role: BytesLike,
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    hasRole(role: BytesLike, account: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    hasRole(
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
-    lastTimeRewardApplicable(_rewardsToken: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    lastTimeRewardApplicable(
+      _rewardsToken: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
     modifyEmissions(
-      _rewardPerBlock: BigNumberish,
-      _startBlock: BigNumberish,
-      _endBlock: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _rewardPerBlock: PromiseOrValue<BigNumberish>,
+      _startBlock: PromiseOrValue<BigNumberish>,
+      _endBlock: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     notifyRewardAmount(
-      _rewardsToken: string,
-      reward: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _rewardsToken: PromiseOrValue<string>,
+      reward: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     paused(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    pendingReward(_user: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    pendingReward(_user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     pledge(
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     poolInfo(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -1230,39 +1390,47 @@ export interface XArgoPledging extends BaseContract {
     rateMRLE(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     renounceRole(
-      role: BytesLike,
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     revokeRole(
-      role: BytesLike,
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    rewardData(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    rewardData(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    rewardDistributors(arg0: string, arg1: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    rewardDistributors(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
     rewardPerBlock(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    rewardPerToken(_rewardsToken: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    rewardPerToken(_rewardsToken: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    rewardTokens(arg0: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    rewardTokens(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    rewards(arg0: string, arg1: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    rewards(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
     rewardsDuration(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     setMORALERate(
-      _rate: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _rate: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setMORALEStartTime(
-      _startTime: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _startTime: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     stakingToken(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -1271,24 +1439,32 @@ export interface XArgoPledging extends BaseContract {
 
     startTimeMRLE(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    supportsInterface(interfaceId: BytesLike, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    supportsInterface(interfaceId: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     totalSupply(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     totalxARGO(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     unpledge(
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    updatePool(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    updatePool(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
-    userInfo(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    userInfo(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    userMRLE(arg0: string, arg1: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    userMRLE(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
-    userRewardPerTokenPaid(arg0: string, arg1: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    userRewardPerTokenPaid(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
     wCRO(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 

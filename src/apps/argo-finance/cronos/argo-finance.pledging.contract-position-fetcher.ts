@@ -22,24 +22,27 @@ const network = Network.CRONOS_MAINNET;
 export class CronosArgoFinancePledgingContractPositionFetcher implements PositionFetcher<ContractPosition> {
   constructor(@Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit) {}
 
-  async getVePosition(address: string) {
+  async getPositions() {
     const multicall = this.appToolkit.getMulticall(network);
     const baseTokens = await this.appToolkit.getBaseTokenPrices(network);
-    const contractTokens = await this.appToolkit.getAppTokenPositions({
+    const appTokens = await this.appToolkit.getAppTokenPositions({
       appId,
       groupIds: [ARGO_FINANCE_DEFINITION.groups.xArgo.id],
-      network
+      network,
     });
-    const baseToken = contractTokens.find(t => t.symbol === 'xARGO')!;
-    const croToken = baseTokens.find(t => t.symbol === 'WCRO')!;
-    const veToken = multicall.wrap(this.appToolkit.globalContracts.erc20({ address, network }));
+
+    const xArgoToken = appTokens.find(t => t.symbol === 'xARGO');
+    const croToken = baseTokens.find(t => t.symbol === 'WCRO');
+    if (!xArgoToken || !croToken) return [];
+
+    const veToken = multicall.wrap(this.appToolkit.globalContracts.erc20({ address: ADDRESSES.xargo, network }));
     const [supplyRaw, decimals] = await Promise.all([veToken.totalSupply(), veToken.decimals()]);
     const supply = Number(supplyRaw) / 10 ** decimals;
     const pricePerShare = 1; // Note: Consult liquidity pools for peg once set up
-    const price = baseToken.price * pricePerShare;
+    const price = xArgoToken.price * pricePerShare;
     const liquidity = supply * price;
 
-    const tokens = [supplied(baseToken), claimable(baseToken), claimable(croToken)];
+    const tokens = [supplied(xArgoToken), claimable(xArgoToken), claimable(croToken)];
     const position: ContractPosition = {
       type: ContractType.POSITION,
       appId,
@@ -51,14 +54,10 @@ export class CronosArgoFinancePledgingContractPositionFetcher implements Positio
       displayProps: {
         label: 'xARGO Pledging',
         secondaryLabel: buildDollarDisplayItem(price),
-        images: getImagesFromToken(baseToken),
+        images: getImagesFromToken(xArgoToken),
       },
     };
-    return position;
-  }
 
-  async getPositions() {
-    const [argo] = await Promise.all([this.getVePosition(ADDRESSES.xargo)]);
-    return [argo];
+    return [position];
   }
 }

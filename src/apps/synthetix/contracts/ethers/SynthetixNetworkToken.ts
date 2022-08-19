@@ -15,7 +15,7 @@ import type {
 } from 'ethers';
 import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
 import type { Listener, Provider } from '@ethersproject/providers';
-import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
 export interface SynthetixNetworkTokenInterface extends utils.Interface {
   functions: {
@@ -160,78 +160,123 @@ export interface SynthetixNetworkTokenInterface extends utils.Interface {
   ): FunctionFragment;
 
   encodeFunctionData(functionFragment: 'resolver', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'maxIssuableSynths', values: [string]): string;
+  encodeFunctionData(functionFragment: 'maxIssuableSynths', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'name', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'approve', values: [string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'removeSynth', values: [BytesLike]): string;
-  encodeFunctionData(functionFragment: 'remainingIssuableSynths', values: [string]): string;
+  encodeFunctionData(
+    functionFragment: 'approve',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'removeSynth', values: [PromiseOrValue<BytesLike>]): string;
+  encodeFunctionData(functionFragment: 'remainingIssuableSynths', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'mint', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'setIntegrationProxy', values: [string]): string;
-  encodeFunctionData(functionFragment: 'nominateNewOwner', values: [string]): string;
-  encodeFunctionData(functionFragment: 'synthsByAddress', values: [string]): string;
+  encodeFunctionData(functionFragment: 'setIntegrationProxy', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'nominateNewOwner', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'synthsByAddress', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'initiationTime', values?: undefined): string;
   encodeFunctionData(functionFragment: 'totalSupply', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'isWaitingPeriod', values: [BytesLike]): string;
-  encodeFunctionData(functionFragment: 'setSelfDestructBeneficiary', values: [string]): string;
-  encodeFunctionData(functionFragment: 'transferFrom', values: [string, string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'burnSynths', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'burnSynthsToTargetOnBehalf', values: [string]): string;
+  encodeFunctionData(functionFragment: 'isWaitingPeriod', values: [PromiseOrValue<BytesLike>]): string;
+  encodeFunctionData(functionFragment: 'setSelfDestructBeneficiary', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'transferFrom',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'burnSynths', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'burnSynthsToTargetOnBehalf', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'decimals', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'issueMaxSynthsOnBehalf', values: [string]): string;
-  encodeFunctionData(functionFragment: 'synths', values: [BytesLike]): string;
+  encodeFunctionData(functionFragment: 'issueMaxSynthsOnBehalf', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'synths', values: [PromiseOrValue<BytesLike>]): string;
   encodeFunctionData(functionFragment: 'terminateSelfDestruct', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'setResolverAndSyncCache', values: [string]): string;
+  encodeFunctionData(functionFragment: 'setResolverAndSyncCache', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'nominatedOwner', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'debtBalanceOfAndTotalDebt', values: [string, BytesLike]): string;
-  encodeFunctionData(functionFragment: 'isResolverCached', values: [string]): string;
-  encodeFunctionData(functionFragment: 'transferableSynthetix', values: [string]): string;
+  encodeFunctionData(
+    functionFragment: 'debtBalanceOfAndTotalDebt',
+    values: [PromiseOrValue<string>, PromiseOrValue<BytesLike>],
+  ): string;
+  encodeFunctionData(functionFragment: 'isResolverCached', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'transferableSynthetix', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(
     functionFragment: 'emitSynthExchange',
-    values: [string, BytesLike, BigNumberish, BytesLike, BigNumberish, string],
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<BytesLike>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BytesLike>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<string>,
+    ],
   ): string;
-  encodeFunctionData(functionFragment: 'emitExchangeRebate', values: [string, BytesLike, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'balanceOf', values: [string]): string;
+  encodeFunctionData(
+    functionFragment: 'emitExchangeRebate',
+    values: [PromiseOrValue<string>, PromiseOrValue<BytesLike>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'balanceOf', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'availableCurrencyKeys', values?: undefined): string;
   encodeFunctionData(functionFragment: 'acceptOwnership', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'availableSynths', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'totalIssuedSynths', values: [BytesLike]): string;
-  encodeFunctionData(functionFragment: 'addSynth', values: [string]): string;
-  encodeFunctionData(functionFragment: 'issueSynths', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'availableSynths', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'totalIssuedSynths', values: [PromiseOrValue<BytesLike>]): string;
+  encodeFunctionData(functionFragment: 'addSynth', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'issueSynths', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'owner', values?: undefined): string;
   encodeFunctionData(functionFragment: 'symbol', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'setProxy', values: [string]): string;
+  encodeFunctionData(functionFragment: 'setProxy', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'burnSynthsToTarget', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'settle', values: [BytesLike]): string;
+  encodeFunctionData(functionFragment: 'settle', values: [PromiseOrValue<BytesLike>]): string;
   encodeFunctionData(functionFragment: 'selfDestruct', values?: undefined): string;
   encodeFunctionData(functionFragment: 'integrationProxy', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'setTokenState', values: [string]): string;
-  encodeFunctionData(functionFragment: 'collateralisationRatio', values: [string]): string;
+  encodeFunctionData(functionFragment: 'setTokenState', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'collateralisationRatio', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'SELFDESTRUCT_DELAY', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'collateral', values: [string]): string;
-  encodeFunctionData(functionFragment: 'transfer', values: [string, BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'collateral', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'transfer',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
   encodeFunctionData(functionFragment: 'getResolverAddressesRequired', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'emitExchangeReclaim', values: [string, BytesLike, BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'emitExchangeReclaim',
+    values: [PromiseOrValue<string>, PromiseOrValue<BytesLike>, PromiseOrValue<BigNumberish>],
+  ): string;
   encodeFunctionData(functionFragment: 'issueMaxSynths', values?: undefined): string;
   encodeFunctionData(functionFragment: 'selfDestructInitiated', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'setMessageSender', values: [string]): string;
+  encodeFunctionData(functionFragment: 'setMessageSender', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'initiateSelfDestruct', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'burnSynthsOnBehalf', values: [string, BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'burnSynthsOnBehalf',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
   encodeFunctionData(functionFragment: 'selfDestructBeneficiary', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'resolverAddressesRequired', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'resolverAddressesRequired', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(
     functionFragment: 'exchangeOnBehalf',
-    values: [string, BytesLike, BigNumberish, BytesLike],
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<BytesLike>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BytesLike>,
+    ],
   ): string;
-  encodeFunctionData(functionFragment: 'debtBalanceOf', values: [string, BytesLike]): string;
-  encodeFunctionData(functionFragment: 'totalIssuedSynthsExcludeEtherCollateral', values: [BytesLike]): string;
+  encodeFunctionData(
+    functionFragment: 'debtBalanceOf',
+    values: [PromiseOrValue<string>, PromiseOrValue<BytesLike>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'totalIssuedSynthsExcludeEtherCollateral',
+    values: [PromiseOrValue<BytesLike>],
+  ): string;
   encodeFunctionData(functionFragment: 'messageSender', values?: undefined): string;
   encodeFunctionData(functionFragment: 'availableSynthCount', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'allowance', values: [string, string]): string;
+  encodeFunctionData(functionFragment: 'allowance', values: [PromiseOrValue<string>, PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'MAX_ADDRESSES_FROM_RESOLVER', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'issueSynthsOnBehalf', values: [string, BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'issueSynthsOnBehalf',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
   encodeFunctionData(functionFragment: 'tokenState', values?: undefined): string;
   encodeFunctionData(functionFragment: 'proxy', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'exchange', values: [BytesLike, BigNumberish, BytesLike]): string;
+  encodeFunctionData(
+    functionFragment: 'exchange',
+    values: [PromiseOrValue<BytesLike>, PromiseOrValue<BigNumberish>, PromiseOrValue<BytesLike>],
+  ): string;
 
   decodeFunctionResult(functionFragment: 'resolver', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'maxIssuableSynths', data: BytesLike): Result;
@@ -463,23 +508,23 @@ export interface SynthetixNetworkToken extends BaseContract {
   functions: {
     resolver(overrides?: CallOverrides): Promise<[string]>;
 
-    maxIssuableSynths(_issuer: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    maxIssuableSynths(_issuer: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     name(overrides?: CallOverrides): Promise<[string]>;
 
     approve(
-      spender: string,
-      value: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      spender: PromiseOrValue<string>,
+      value: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     removeSynth(
-      currencyKey: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      currencyKey: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     remainingIssuableSynths(
-      _issuer: string,
+      _issuer: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<
       [BigNumber, BigNumber, BigNumber] & {
@@ -489,69 +534,69 @@ export interface SynthetixNetworkToken extends BaseContract {
       }
     >;
 
-    mint(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    mint(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     setIntegrationProxy(
-      _integrationProxy: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _integrationProxy: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     nominateNewOwner(
-      _owner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _owner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    synthsByAddress(arg0: string, overrides?: CallOverrides): Promise<[string]>;
+    synthsByAddress(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[string]>;
 
     initiationTime(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     totalSupply(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    isWaitingPeriod(currencyKey: BytesLike, overrides?: CallOverrides): Promise<[boolean]>;
+    isWaitingPeriod(currencyKey: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<[boolean]>;
 
     setSelfDestructBeneficiary(
-      _beneficiary: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _beneficiary: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     transferFrom(
-      from: string,
-      to: string,
-      value: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      value: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     burnSynths(
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     burnSynthsToTargetOnBehalf(
-      burnForAddress: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      burnForAddress: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     decimals(overrides?: CallOverrides): Promise<[number]>;
 
     issueMaxSynthsOnBehalf(
-      issueForAddress: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      issueForAddress: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    synths(arg0: BytesLike, overrides?: CallOverrides): Promise<[string]>;
+    synths(arg0: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<[string]>;
 
-    terminateSelfDestruct(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    terminateSelfDestruct(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     setResolverAndSyncCache(
-      _resolver: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _resolver: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     nominatedOwner(overrides?: CallOverrides): Promise<[string]>;
 
     debtBalanceOfAndTotalDebt(
-      _issuer: string,
-      currencyKey: BytesLike,
+      _issuer: PromiseOrValue<string>,
+      currencyKey: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides,
     ): Promise<
       [BigNumber, BigNumber] & {
@@ -560,132 +605,149 @@ export interface SynthetixNetworkToken extends BaseContract {
       }
     >;
 
-    isResolverCached(_resolver: string, overrides?: CallOverrides): Promise<[boolean]>;
+    isResolverCached(_resolver: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[boolean]>;
 
-    transferableSynthetix(account: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    transferableSynthetix(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     emitSynthExchange(
-      account: string,
-      fromCurrencyKey: BytesLike,
-      fromAmount: BigNumberish,
-      toCurrencyKey: BytesLike,
-      toAmount: BigNumberish,
-      toAddress: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      account: PromiseOrValue<string>,
+      fromCurrencyKey: PromiseOrValue<BytesLike>,
+      fromAmount: PromiseOrValue<BigNumberish>,
+      toCurrencyKey: PromiseOrValue<BytesLike>,
+      toAmount: PromiseOrValue<BigNumberish>,
+      toAddress: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     emitExchangeRebate(
-      account: string,
-      currencyKey: BytesLike,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      account: PromiseOrValue<string>,
+      currencyKey: PromiseOrValue<BytesLike>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    balanceOf(account: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    balanceOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     availableCurrencyKeys(overrides?: CallOverrides): Promise<[string[]]>;
 
-    acceptOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    acceptOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
-    availableSynths(arg0: BigNumberish, overrides?: CallOverrides): Promise<[string]>;
+    availableSynths(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[string]>;
 
-    totalIssuedSynths(currencyKey: BytesLike, overrides?: CallOverrides): Promise<[BigNumber]>;
+    totalIssuedSynths(currencyKey: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    addSynth(synth: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    addSynth(
+      synth: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<ContractTransaction>;
 
     issueSynths(
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     owner(overrides?: CallOverrides): Promise<[string]>;
 
     symbol(overrides?: CallOverrides): Promise<[string]>;
 
-    setProxy(_proxy: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
-
-    burnSynthsToTarget(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
-
-    settle(
-      currencyKey: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+    setProxy(
+      _proxy: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    selfDestruct(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    burnSynthsToTarget(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
+
+    settle(
+      currencyKey: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<ContractTransaction>;
+
+    selfDestruct(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     integrationProxy(overrides?: CallOverrides): Promise<[string]>;
 
     setTokenState(
-      _tokenState: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _tokenState: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    collateralisationRatio(_issuer: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    collateralisationRatio(_issuer: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     SELFDESTRUCT_DELAY(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    collateral(account: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    collateral(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     transfer(
-      to: string,
-      value: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      to: PromiseOrValue<string>,
+      value: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     getResolverAddressesRequired(overrides?: CallOverrides): Promise<[string[]] & { addressesRequired: string[] }>;
 
     emitExchangeReclaim(
-      account: string,
-      currencyKey: BytesLike,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      account: PromiseOrValue<string>,
+      currencyKey: PromiseOrValue<BytesLike>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    issueMaxSynths(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    issueMaxSynths(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     selfDestructInitiated(overrides?: CallOverrides): Promise<[boolean]>;
 
     setMessageSender(
-      sender: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      sender: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    initiateSelfDestruct(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    initiateSelfDestruct(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     burnSynthsOnBehalf(
-      burnForAddress: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      burnForAddress: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     selfDestructBeneficiary(overrides?: CallOverrides): Promise<[string]>;
 
-    resolverAddressesRequired(arg0: BigNumberish, overrides?: CallOverrides): Promise<[string]>;
+    resolverAddressesRequired(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[string]>;
 
     exchangeOnBehalf(
-      exchangeForAddress: string,
-      sourceCurrencyKey: BytesLike,
-      sourceAmount: BigNumberish,
-      destinationCurrencyKey: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      exchangeForAddress: PromiseOrValue<string>,
+      sourceCurrencyKey: PromiseOrValue<BytesLike>,
+      sourceAmount: PromiseOrValue<BigNumberish>,
+      destinationCurrencyKey: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    debtBalanceOf(_issuer: string, currencyKey: BytesLike, overrides?: CallOverrides): Promise<[BigNumber]>;
+    debtBalanceOf(
+      _issuer: PromiseOrValue<string>,
+      currencyKey: PromiseOrValue<BytesLike>,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber]>;
 
-    totalIssuedSynthsExcludeEtherCollateral(currencyKey: BytesLike, overrides?: CallOverrides): Promise<[BigNumber]>;
+    totalIssuedSynthsExcludeEtherCollateral(
+      currencyKey: PromiseOrValue<BytesLike>,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber]>;
 
     messageSender(overrides?: CallOverrides): Promise<[string]>;
 
     availableSynthCount(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    allowance(owner: string, spender: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    allowance(
+      owner: PromiseOrValue<string>,
+      spender: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber]>;
 
     MAX_ADDRESSES_FROM_RESOLVER(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     issueSynthsOnBehalf(
-      issueForAddress: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      issueForAddress: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     tokenState(overrides?: CallOverrides): Promise<[string]>;
@@ -693,32 +755,32 @@ export interface SynthetixNetworkToken extends BaseContract {
     proxy(overrides?: CallOverrides): Promise<[string]>;
 
     exchange(
-      sourceCurrencyKey: BytesLike,
-      sourceAmount: BigNumberish,
-      destinationCurrencyKey: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      sourceCurrencyKey: PromiseOrValue<BytesLike>,
+      sourceAmount: PromiseOrValue<BigNumberish>,
+      destinationCurrencyKey: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
   };
 
   resolver(overrides?: CallOverrides): Promise<string>;
 
-  maxIssuableSynths(_issuer: string, overrides?: CallOverrides): Promise<BigNumber>;
+  maxIssuableSynths(_issuer: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   name(overrides?: CallOverrides): Promise<string>;
 
   approve(
-    spender: string,
-    value: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    spender: PromiseOrValue<string>,
+    value: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   removeSynth(
-    currencyKey: BytesLike,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    currencyKey: PromiseOrValue<BytesLike>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   remainingIssuableSynths(
-    _issuer: string,
+    _issuer: PromiseOrValue<string>,
     overrides?: CallOverrides,
   ): Promise<
     [BigNumber, BigNumber, BigNumber] & {
@@ -728,69 +790,69 @@ export interface SynthetixNetworkToken extends BaseContract {
     }
   >;
 
-  mint(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  mint(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   setIntegrationProxy(
-    _integrationProxy: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _integrationProxy: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   nominateNewOwner(
-    _owner: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _owner: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  synthsByAddress(arg0: string, overrides?: CallOverrides): Promise<string>;
+  synthsByAddress(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<string>;
 
   initiationTime(overrides?: CallOverrides): Promise<BigNumber>;
 
   totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
-  isWaitingPeriod(currencyKey: BytesLike, overrides?: CallOverrides): Promise<boolean>;
+  isWaitingPeriod(currencyKey: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<boolean>;
 
   setSelfDestructBeneficiary(
-    _beneficiary: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _beneficiary: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   transferFrom(
-    from: string,
-    to: string,
-    value: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    from: PromiseOrValue<string>,
+    to: PromiseOrValue<string>,
+    value: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   burnSynths(
-    amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   burnSynthsToTargetOnBehalf(
-    burnForAddress: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    burnForAddress: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   decimals(overrides?: CallOverrides): Promise<number>;
 
   issueMaxSynthsOnBehalf(
-    issueForAddress: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    issueForAddress: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  synths(arg0: BytesLike, overrides?: CallOverrides): Promise<string>;
+  synths(arg0: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<string>;
 
-  terminateSelfDestruct(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  terminateSelfDestruct(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   setResolverAndSyncCache(
-    _resolver: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _resolver: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   nominatedOwner(overrides?: CallOverrides): Promise<string>;
 
   debtBalanceOfAndTotalDebt(
-    _issuer: string,
-    currencyKey: BytesLike,
+    _issuer: PromiseOrValue<string>,
+    currencyKey: PromiseOrValue<BytesLike>,
     overrides?: CallOverrides,
   ): Promise<
     [BigNumber, BigNumber] & {
@@ -799,132 +861,149 @@ export interface SynthetixNetworkToken extends BaseContract {
     }
   >;
 
-  isResolverCached(_resolver: string, overrides?: CallOverrides): Promise<boolean>;
+  isResolverCached(_resolver: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
-  transferableSynthetix(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+  transferableSynthetix(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   emitSynthExchange(
-    account: string,
-    fromCurrencyKey: BytesLike,
-    fromAmount: BigNumberish,
-    toCurrencyKey: BytesLike,
-    toAmount: BigNumberish,
-    toAddress: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    account: PromiseOrValue<string>,
+    fromCurrencyKey: PromiseOrValue<BytesLike>,
+    fromAmount: PromiseOrValue<BigNumberish>,
+    toCurrencyKey: PromiseOrValue<BytesLike>,
+    toAmount: PromiseOrValue<BigNumberish>,
+    toAddress: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   emitExchangeRebate(
-    account: string,
-    currencyKey: BytesLike,
-    amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    account: PromiseOrValue<string>,
+    currencyKey: PromiseOrValue<BytesLike>,
+    amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  balanceOf(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+  balanceOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   availableCurrencyKeys(overrides?: CallOverrides): Promise<string[]>;
 
-  acceptOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  acceptOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
-  availableSynths(arg0: BigNumberish, overrides?: CallOverrides): Promise<string>;
+  availableSynths(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
 
-  totalIssuedSynths(currencyKey: BytesLike, overrides?: CallOverrides): Promise<BigNumber>;
+  totalIssuedSynths(currencyKey: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  addSynth(synth: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  addSynth(
+    synth: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
+  ): Promise<ContractTransaction>;
 
   issueSynths(
-    amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   owner(overrides?: CallOverrides): Promise<string>;
 
   symbol(overrides?: CallOverrides): Promise<string>;
 
-  setProxy(_proxy: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
-
-  burnSynthsToTarget(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
-
-  settle(
-    currencyKey: BytesLike,
-    overrides?: Overrides & { from?: string | Promise<string> },
+  setProxy(
+    _proxy: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  selfDestruct(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  burnSynthsToTarget(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
+
+  settle(
+    currencyKey: PromiseOrValue<BytesLike>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
+  ): Promise<ContractTransaction>;
+
+  selfDestruct(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   integrationProxy(overrides?: CallOverrides): Promise<string>;
 
   setTokenState(
-    _tokenState: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _tokenState: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  collateralisationRatio(_issuer: string, overrides?: CallOverrides): Promise<BigNumber>;
+  collateralisationRatio(_issuer: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   SELFDESTRUCT_DELAY(overrides?: CallOverrides): Promise<BigNumber>;
 
-  collateral(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+  collateral(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   transfer(
-    to: string,
-    value: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    to: PromiseOrValue<string>,
+    value: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   getResolverAddressesRequired(overrides?: CallOverrides): Promise<string[]>;
 
   emitExchangeReclaim(
-    account: string,
-    currencyKey: BytesLike,
-    amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    account: PromiseOrValue<string>,
+    currencyKey: PromiseOrValue<BytesLike>,
+    amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  issueMaxSynths(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  issueMaxSynths(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   selfDestructInitiated(overrides?: CallOverrides): Promise<boolean>;
 
   setMessageSender(
-    sender: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    sender: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  initiateSelfDestruct(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  initiateSelfDestruct(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   burnSynthsOnBehalf(
-    burnForAddress: string,
-    amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    burnForAddress: PromiseOrValue<string>,
+    amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   selfDestructBeneficiary(overrides?: CallOverrides): Promise<string>;
 
-  resolverAddressesRequired(arg0: BigNumberish, overrides?: CallOverrides): Promise<string>;
+  resolverAddressesRequired(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
 
   exchangeOnBehalf(
-    exchangeForAddress: string,
-    sourceCurrencyKey: BytesLike,
-    sourceAmount: BigNumberish,
-    destinationCurrencyKey: BytesLike,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    exchangeForAddress: PromiseOrValue<string>,
+    sourceCurrencyKey: PromiseOrValue<BytesLike>,
+    sourceAmount: PromiseOrValue<BigNumberish>,
+    destinationCurrencyKey: PromiseOrValue<BytesLike>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  debtBalanceOf(_issuer: string, currencyKey: BytesLike, overrides?: CallOverrides): Promise<BigNumber>;
+  debtBalanceOf(
+    _issuer: PromiseOrValue<string>,
+    currencyKey: PromiseOrValue<BytesLike>,
+    overrides?: CallOverrides,
+  ): Promise<BigNumber>;
 
-  totalIssuedSynthsExcludeEtherCollateral(currencyKey: BytesLike, overrides?: CallOverrides): Promise<BigNumber>;
+  totalIssuedSynthsExcludeEtherCollateral(
+    currencyKey: PromiseOrValue<BytesLike>,
+    overrides?: CallOverrides,
+  ): Promise<BigNumber>;
 
   messageSender(overrides?: CallOverrides): Promise<string>;
 
   availableSynthCount(overrides?: CallOverrides): Promise<BigNumber>;
 
-  allowance(owner: string, spender: string, overrides?: CallOverrides): Promise<BigNumber>;
+  allowance(
+    owner: PromiseOrValue<string>,
+    spender: PromiseOrValue<string>,
+    overrides?: CallOverrides,
+  ): Promise<BigNumber>;
 
   MAX_ADDRESSES_FROM_RESOLVER(overrides?: CallOverrides): Promise<BigNumber>;
 
   issueSynthsOnBehalf(
-    issueForAddress: string,
-    amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    issueForAddress: PromiseOrValue<string>,
+    amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   tokenState(overrides?: CallOverrides): Promise<string>;
@@ -932,25 +1011,29 @@ export interface SynthetixNetworkToken extends BaseContract {
   proxy(overrides?: CallOverrides): Promise<string>;
 
   exchange(
-    sourceCurrencyKey: BytesLike,
-    sourceAmount: BigNumberish,
-    destinationCurrencyKey: BytesLike,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    sourceCurrencyKey: PromiseOrValue<BytesLike>,
+    sourceAmount: PromiseOrValue<BigNumberish>,
+    destinationCurrencyKey: PromiseOrValue<BytesLike>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   callStatic: {
     resolver(overrides?: CallOverrides): Promise<string>;
 
-    maxIssuableSynths(_issuer: string, overrides?: CallOverrides): Promise<BigNumber>;
+    maxIssuableSynths(_issuer: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     name(overrides?: CallOverrides): Promise<string>;
 
-    approve(spender: string, value: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+    approve(
+      spender: PromiseOrValue<string>,
+      value: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
 
-    removeSynth(currencyKey: BytesLike, overrides?: CallOverrides): Promise<void>;
+    removeSynth(currencyKey: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<void>;
 
     remainingIssuableSynths(
-      _issuer: string,
+      _issuer: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<
       [BigNumber, BigNumber, BigNumber] & {
@@ -962,41 +1045,46 @@ export interface SynthetixNetworkToken extends BaseContract {
 
     mint(overrides?: CallOverrides): Promise<boolean>;
 
-    setIntegrationProxy(_integrationProxy: string, overrides?: CallOverrides): Promise<void>;
+    setIntegrationProxy(_integrationProxy: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    nominateNewOwner(_owner: string, overrides?: CallOverrides): Promise<void>;
+    nominateNewOwner(_owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    synthsByAddress(arg0: string, overrides?: CallOverrides): Promise<string>;
+    synthsByAddress(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<string>;
 
     initiationTime(overrides?: CallOverrides): Promise<BigNumber>;
 
     totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
-    isWaitingPeriod(currencyKey: BytesLike, overrides?: CallOverrides): Promise<boolean>;
+    isWaitingPeriod(currencyKey: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<boolean>;
 
-    setSelfDestructBeneficiary(_beneficiary: string, overrides?: CallOverrides): Promise<void>;
+    setSelfDestructBeneficiary(_beneficiary: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    transferFrom(from: string, to: string, value: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+    transferFrom(
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      value: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
 
-    burnSynths(amount: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    burnSynths(amount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
-    burnSynthsToTargetOnBehalf(burnForAddress: string, overrides?: CallOverrides): Promise<void>;
+    burnSynthsToTargetOnBehalf(burnForAddress: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     decimals(overrides?: CallOverrides): Promise<number>;
 
-    issueMaxSynthsOnBehalf(issueForAddress: string, overrides?: CallOverrides): Promise<void>;
+    issueMaxSynthsOnBehalf(issueForAddress: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    synths(arg0: BytesLike, overrides?: CallOverrides): Promise<string>;
+    synths(arg0: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<string>;
 
     terminateSelfDestruct(overrides?: CallOverrides): Promise<void>;
 
-    setResolverAndSyncCache(_resolver: string, overrides?: CallOverrides): Promise<void>;
+    setResolverAndSyncCache(_resolver: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     nominatedOwner(overrides?: CallOverrides): Promise<string>;
 
     debtBalanceOfAndTotalDebt(
-      _issuer: string,
-      currencyKey: BytesLike,
+      _issuer: PromiseOrValue<string>,
+      currencyKey: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides,
     ): Promise<
       [BigNumber, BigNumber] & {
@@ -1005,51 +1093,51 @@ export interface SynthetixNetworkToken extends BaseContract {
       }
     >;
 
-    isResolverCached(_resolver: string, overrides?: CallOverrides): Promise<boolean>;
+    isResolverCached(_resolver: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
-    transferableSynthetix(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    transferableSynthetix(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     emitSynthExchange(
-      account: string,
-      fromCurrencyKey: BytesLike,
-      fromAmount: BigNumberish,
-      toCurrencyKey: BytesLike,
-      toAmount: BigNumberish,
-      toAddress: string,
+      account: PromiseOrValue<string>,
+      fromCurrencyKey: PromiseOrValue<BytesLike>,
+      fromAmount: PromiseOrValue<BigNumberish>,
+      toCurrencyKey: PromiseOrValue<BytesLike>,
+      toAmount: PromiseOrValue<BigNumberish>,
+      toAddress: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
     emitExchangeRebate(
-      account: string,
-      currencyKey: BytesLike,
-      amount: BigNumberish,
+      account: PromiseOrValue<string>,
+      currencyKey: PromiseOrValue<BytesLike>,
+      amount: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
-    balanceOf(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    balanceOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     availableCurrencyKeys(overrides?: CallOverrides): Promise<string[]>;
 
     acceptOwnership(overrides?: CallOverrides): Promise<void>;
 
-    availableSynths(arg0: BigNumberish, overrides?: CallOverrides): Promise<string>;
+    availableSynths(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
 
-    totalIssuedSynths(currencyKey: BytesLike, overrides?: CallOverrides): Promise<BigNumber>;
+    totalIssuedSynths(currencyKey: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    addSynth(synth: string, overrides?: CallOverrides): Promise<void>;
+    addSynth(synth: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    issueSynths(amount: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    issueSynths(amount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
     owner(overrides?: CallOverrides): Promise<string>;
 
     symbol(overrides?: CallOverrides): Promise<string>;
 
-    setProxy(_proxy: string, overrides?: CallOverrides): Promise<void>;
+    setProxy(_proxy: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     burnSynthsToTarget(overrides?: CallOverrides): Promise<void>;
 
     settle(
-      currencyKey: BytesLike,
+      currencyKey: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides,
     ): Promise<
       [BigNumber, BigNumber, BigNumber] & {
@@ -1063,22 +1151,26 @@ export interface SynthetixNetworkToken extends BaseContract {
 
     integrationProxy(overrides?: CallOverrides): Promise<string>;
 
-    setTokenState(_tokenState: string, overrides?: CallOverrides): Promise<void>;
+    setTokenState(_tokenState: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    collateralisationRatio(_issuer: string, overrides?: CallOverrides): Promise<BigNumber>;
+    collateralisationRatio(_issuer: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     SELFDESTRUCT_DELAY(overrides?: CallOverrides): Promise<BigNumber>;
 
-    collateral(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    collateral(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    transfer(to: string, value: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+    transfer(
+      to: PromiseOrValue<string>,
+      value: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
 
     getResolverAddressesRequired(overrides?: CallOverrides): Promise<string[]>;
 
     emitExchangeReclaim(
-      account: string,
-      currencyKey: BytesLike,
-      amount: BigNumberish,
+      account: PromiseOrValue<string>,
+      currencyKey: PromiseOrValue<BytesLike>,
+      amount: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
@@ -1086,53 +1178,72 @@ export interface SynthetixNetworkToken extends BaseContract {
 
     selfDestructInitiated(overrides?: CallOverrides): Promise<boolean>;
 
-    setMessageSender(sender: string, overrides?: CallOverrides): Promise<void>;
+    setMessageSender(sender: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     initiateSelfDestruct(overrides?: CallOverrides): Promise<void>;
 
-    burnSynthsOnBehalf(burnForAddress: string, amount: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    burnSynthsOnBehalf(
+      burnForAddress: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
     selfDestructBeneficiary(overrides?: CallOverrides): Promise<string>;
 
-    resolverAddressesRequired(arg0: BigNumberish, overrides?: CallOverrides): Promise<string>;
+    resolverAddressesRequired(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
 
     exchangeOnBehalf(
-      exchangeForAddress: string,
-      sourceCurrencyKey: BytesLike,
-      sourceAmount: BigNumberish,
-      destinationCurrencyKey: BytesLike,
+      exchangeForAddress: PromiseOrValue<string>,
+      sourceCurrencyKey: PromiseOrValue<BytesLike>,
+      sourceAmount: PromiseOrValue<BigNumberish>,
+      destinationCurrencyKey: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
-    debtBalanceOf(_issuer: string, currencyKey: BytesLike, overrides?: CallOverrides): Promise<BigNumber>;
+    debtBalanceOf(
+      _issuer: PromiseOrValue<string>,
+      currencyKey: PromiseOrValue<BytesLike>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    totalIssuedSynthsExcludeEtherCollateral(currencyKey: BytesLike, overrides?: CallOverrides): Promise<BigNumber>;
+    totalIssuedSynthsExcludeEtherCollateral(
+      currencyKey: PromiseOrValue<BytesLike>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     messageSender(overrides?: CallOverrides): Promise<string>;
 
     availableSynthCount(overrides?: CallOverrides): Promise<BigNumber>;
 
-    allowance(owner: string, spender: string, overrides?: CallOverrides): Promise<BigNumber>;
+    allowance(
+      owner: PromiseOrValue<string>,
+      spender: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     MAX_ADDRESSES_FROM_RESOLVER(overrides?: CallOverrides): Promise<BigNumber>;
 
-    issueSynthsOnBehalf(issueForAddress: string, amount: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    issueSynthsOnBehalf(
+      issueForAddress: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
     tokenState(overrides?: CallOverrides): Promise<string>;
 
     proxy(overrides?: CallOverrides): Promise<string>;
 
     exchange(
-      sourceCurrencyKey: BytesLike,
-      sourceAmount: BigNumberish,
-      destinationCurrencyKey: BytesLike,
+      sourceCurrencyKey: PromiseOrValue<BytesLike>,
+      sourceAmount: PromiseOrValue<BigNumberish>,
+      destinationCurrencyKey: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
   };
 
   filters: {
     'SynthExchange(address,bytes32,uint256,bytes32,uint256,address)'(
-      account?: string | null,
+      account?: PromiseOrValue<string> | null,
       fromCurrencyKey?: null,
       fromAmount?: null,
       toCurrencyKey?: null,
@@ -1140,7 +1251,7 @@ export interface SynthetixNetworkToken extends BaseContract {
       toAddress?: null,
     ): SynthExchangeEventFilter;
     SynthExchange(
-      account?: string | null,
+      account?: PromiseOrValue<string> | null,
       fromCurrencyKey?: null,
       fromAmount?: null,
       toCurrencyKey?: null,
@@ -1149,28 +1260,48 @@ export interface SynthetixNetworkToken extends BaseContract {
     ): SynthExchangeEventFilter;
 
     'ExchangeReclaim(address,bytes32,uint256)'(
-      account?: string | null,
+      account?: PromiseOrValue<string> | null,
       currencyKey?: null,
       amount?: null,
     ): ExchangeReclaimEventFilter;
-    ExchangeReclaim(account?: string | null, currencyKey?: null, amount?: null): ExchangeReclaimEventFilter;
+    ExchangeReclaim(
+      account?: PromiseOrValue<string> | null,
+      currencyKey?: null,
+      amount?: null,
+    ): ExchangeReclaimEventFilter;
 
     'ExchangeRebate(address,bytes32,uint256)'(
-      account?: string | null,
+      account?: PromiseOrValue<string> | null,
       currencyKey?: null,
       amount?: null,
     ): ExchangeRebateEventFilter;
-    ExchangeRebate(account?: string | null, currencyKey?: null, amount?: null): ExchangeRebateEventFilter;
+    ExchangeRebate(
+      account?: PromiseOrValue<string> | null,
+      currencyKey?: null,
+      amount?: null,
+    ): ExchangeRebateEventFilter;
 
-    'Transfer(address,address,uint256)'(from?: string | null, to?: string | null, value?: null): TransferEventFilter;
-    Transfer(from?: string | null, to?: string | null, value?: null): TransferEventFilter;
+    'Transfer(address,address,uint256)'(
+      from?: PromiseOrValue<string> | null,
+      to?: PromiseOrValue<string> | null,
+      value?: null,
+    ): TransferEventFilter;
+    Transfer(
+      from?: PromiseOrValue<string> | null,
+      to?: PromiseOrValue<string> | null,
+      value?: null,
+    ): TransferEventFilter;
 
     'Approval(address,address,uint256)'(
-      owner?: string | null,
-      spender?: string | null,
+      owner?: PromiseOrValue<string> | null,
+      spender?: PromiseOrValue<string> | null,
       value?: null,
     ): ApprovalEventFilter;
-    Approval(owner?: string | null, spender?: string | null, value?: null): ApprovalEventFilter;
+    Approval(
+      owner?: PromiseOrValue<string> | null,
+      spender?: PromiseOrValue<string> | null,
+      value?: null,
+    ): ApprovalEventFilter;
 
     'TokenStateUpdated(address)'(newTokenState?: null): TokenStateUpdatedEventFilter;
     TokenStateUpdated(newTokenState?: null): TokenStateUpdatedEventFilter;
@@ -1200,193 +1331,232 @@ export interface SynthetixNetworkToken extends BaseContract {
   estimateGas: {
     resolver(overrides?: CallOverrides): Promise<BigNumber>;
 
-    maxIssuableSynths(_issuer: string, overrides?: CallOverrides): Promise<BigNumber>;
+    maxIssuableSynths(_issuer: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     name(overrides?: CallOverrides): Promise<BigNumber>;
 
     approve(
-      spender: string,
-      value: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      spender: PromiseOrValue<string>,
+      value: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     removeSynth(
-      currencyKey: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      currencyKey: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    remainingIssuableSynths(_issuer: string, overrides?: CallOverrides): Promise<BigNumber>;
+    remainingIssuableSynths(_issuer: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    mint(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    mint(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     setIntegrationProxy(
-      _integrationProxy: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _integrationProxy: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    nominateNewOwner(_owner: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    nominateNewOwner(
+      _owner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
-    synthsByAddress(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    synthsByAddress(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     initiationTime(overrides?: CallOverrides): Promise<BigNumber>;
 
     totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
-    isWaitingPeriod(currencyKey: BytesLike, overrides?: CallOverrides): Promise<BigNumber>;
+    isWaitingPeriod(currencyKey: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<BigNumber>;
 
     setSelfDestructBeneficiary(
-      _beneficiary: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _beneficiary: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     transferFrom(
-      from: string,
-      to: string,
-      value: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      value: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    burnSynths(amount: BigNumberish, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    burnSynths(
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     burnSynthsToTargetOnBehalf(
-      burnForAddress: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      burnForAddress: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     decimals(overrides?: CallOverrides): Promise<BigNumber>;
 
     issueMaxSynthsOnBehalf(
-      issueForAddress: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      issueForAddress: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    synths(arg0: BytesLike, overrides?: CallOverrides): Promise<BigNumber>;
+    synths(arg0: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    terminateSelfDestruct(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    terminateSelfDestruct(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     setResolverAndSyncCache(
-      _resolver: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _resolver: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     nominatedOwner(overrides?: CallOverrides): Promise<BigNumber>;
 
-    debtBalanceOfAndTotalDebt(_issuer: string, currencyKey: BytesLike, overrides?: CallOverrides): Promise<BigNumber>;
+    debtBalanceOfAndTotalDebt(
+      _issuer: PromiseOrValue<string>,
+      currencyKey: PromiseOrValue<BytesLike>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    isResolverCached(_resolver: string, overrides?: CallOverrides): Promise<BigNumber>;
+    isResolverCached(_resolver: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    transferableSynthetix(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    transferableSynthetix(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     emitSynthExchange(
-      account: string,
-      fromCurrencyKey: BytesLike,
-      fromAmount: BigNumberish,
-      toCurrencyKey: BytesLike,
-      toAmount: BigNumberish,
-      toAddress: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      account: PromiseOrValue<string>,
+      fromCurrencyKey: PromiseOrValue<BytesLike>,
+      fromAmount: PromiseOrValue<BigNumberish>,
+      toCurrencyKey: PromiseOrValue<BytesLike>,
+      toAmount: PromiseOrValue<BigNumberish>,
+      toAddress: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     emitExchangeRebate(
-      account: string,
-      currencyKey: BytesLike,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      account: PromiseOrValue<string>,
+      currencyKey: PromiseOrValue<BytesLike>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    balanceOf(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    balanceOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     availableCurrencyKeys(overrides?: CallOverrides): Promise<BigNumber>;
 
-    acceptOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    acceptOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
-    availableSynths(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    availableSynths(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    totalIssuedSynths(currencyKey: BytesLike, overrides?: CallOverrides): Promise<BigNumber>;
+    totalIssuedSynths(currencyKey: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    addSynth(synth: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    addSynth(
+      synth: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
-    issueSynths(amount: BigNumberish, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    issueSynths(
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     owner(overrides?: CallOverrides): Promise<BigNumber>;
 
     symbol(overrides?: CallOverrides): Promise<BigNumber>;
 
-    setProxy(_proxy: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    setProxy(
+      _proxy: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
-    burnSynthsToTarget(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    burnSynthsToTarget(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
-    settle(currencyKey: BytesLike, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    settle(
+      currencyKey: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
-    selfDestruct(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    selfDestruct(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     integrationProxy(overrides?: CallOverrides): Promise<BigNumber>;
 
-    setTokenState(_tokenState: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    setTokenState(
+      _tokenState: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
-    collateralisationRatio(_issuer: string, overrides?: CallOverrides): Promise<BigNumber>;
+    collateralisationRatio(_issuer: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     SELFDESTRUCT_DELAY(overrides?: CallOverrides): Promise<BigNumber>;
 
-    collateral(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    collateral(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     transfer(
-      to: string,
-      value: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      to: PromiseOrValue<string>,
+      value: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     getResolverAddressesRequired(overrides?: CallOverrides): Promise<BigNumber>;
 
     emitExchangeReclaim(
-      account: string,
-      currencyKey: BytesLike,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      account: PromiseOrValue<string>,
+      currencyKey: PromiseOrValue<BytesLike>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    issueMaxSynths(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    issueMaxSynths(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     selfDestructInitiated(overrides?: CallOverrides): Promise<BigNumber>;
 
-    setMessageSender(sender: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    setMessageSender(
+      sender: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
-    initiateSelfDestruct(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    initiateSelfDestruct(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     burnSynthsOnBehalf(
-      burnForAddress: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      burnForAddress: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     selfDestructBeneficiary(overrides?: CallOverrides): Promise<BigNumber>;
 
-    resolverAddressesRequired(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    resolverAddressesRequired(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     exchangeOnBehalf(
-      exchangeForAddress: string,
-      sourceCurrencyKey: BytesLike,
-      sourceAmount: BigNumberish,
-      destinationCurrencyKey: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      exchangeForAddress: PromiseOrValue<string>,
+      sourceCurrencyKey: PromiseOrValue<BytesLike>,
+      sourceAmount: PromiseOrValue<BigNumberish>,
+      destinationCurrencyKey: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    debtBalanceOf(_issuer: string, currencyKey: BytesLike, overrides?: CallOverrides): Promise<BigNumber>;
+    debtBalanceOf(
+      _issuer: PromiseOrValue<string>,
+      currencyKey: PromiseOrValue<BytesLike>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    totalIssuedSynthsExcludeEtherCollateral(currencyKey: BytesLike, overrides?: CallOverrides): Promise<BigNumber>;
+    totalIssuedSynthsExcludeEtherCollateral(
+      currencyKey: PromiseOrValue<BytesLike>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     messageSender(overrides?: CallOverrides): Promise<BigNumber>;
 
     availableSynthCount(overrides?: CallOverrides): Promise<BigNumber>;
 
-    allowance(owner: string, spender: string, overrides?: CallOverrides): Promise<BigNumber>;
+    allowance(
+      owner: PromiseOrValue<string>,
+      spender: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     MAX_ADDRESSES_FROM_RESOLVER(overrides?: CallOverrides): Promise<BigNumber>;
 
     issueSynthsOnBehalf(
-      issueForAddress: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      issueForAddress: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     tokenState(overrides?: CallOverrides): Promise<BigNumber>;
@@ -1394,135 +1564,138 @@ export interface SynthetixNetworkToken extends BaseContract {
     proxy(overrides?: CallOverrides): Promise<BigNumber>;
 
     exchange(
-      sourceCurrencyKey: BytesLike,
-      sourceAmount: BigNumberish,
-      destinationCurrencyKey: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      sourceCurrencyKey: PromiseOrValue<BytesLike>,
+      sourceAmount: PromiseOrValue<BigNumberish>,
+      destinationCurrencyKey: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
   };
 
   populateTransaction: {
     resolver(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    maxIssuableSynths(_issuer: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    maxIssuableSynths(_issuer: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     name(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     approve(
-      spender: string,
-      value: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      spender: PromiseOrValue<string>,
+      value: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     removeSynth(
-      currencyKey: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      currencyKey: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    remainingIssuableSynths(_issuer: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    remainingIssuableSynths(_issuer: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    mint(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    mint(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     setIntegrationProxy(
-      _integrationProxy: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _integrationProxy: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     nominateNewOwner(
-      _owner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _owner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    synthsByAddress(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    synthsByAddress(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     initiationTime(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     totalSupply(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    isWaitingPeriod(currencyKey: BytesLike, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    isWaitingPeriod(currencyKey: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     setSelfDestructBeneficiary(
-      _beneficiary: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _beneficiary: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     transferFrom(
-      from: string,
-      to: string,
-      value: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      value: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     burnSynths(
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     burnSynthsToTargetOnBehalf(
-      burnForAddress: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      burnForAddress: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     decimals(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     issueMaxSynthsOnBehalf(
-      issueForAddress: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      issueForAddress: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    synths(arg0: BytesLike, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    synths(arg0: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    terminateSelfDestruct(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    terminateSelfDestruct(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     setResolverAndSyncCache(
-      _resolver: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _resolver: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     nominatedOwner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     debtBalanceOfAndTotalDebt(
-      _issuer: string,
-      currencyKey: BytesLike,
+      _issuer: PromiseOrValue<string>,
+      currencyKey: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
-    isResolverCached(_resolver: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    isResolverCached(_resolver: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    transferableSynthetix(account: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    transferableSynthetix(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     emitSynthExchange(
-      account: string,
-      fromCurrencyKey: BytesLike,
-      fromAmount: BigNumberish,
-      toCurrencyKey: BytesLike,
-      toAmount: BigNumberish,
-      toAddress: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      account: PromiseOrValue<string>,
+      fromCurrencyKey: PromiseOrValue<BytesLike>,
+      fromAmount: PromiseOrValue<BigNumberish>,
+      toCurrencyKey: PromiseOrValue<BytesLike>,
+      toAmount: PromiseOrValue<BigNumberish>,
+      toAddress: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     emitExchangeRebate(
-      account: string,
-      currencyKey: BytesLike,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      account: PromiseOrValue<string>,
+      currencyKey: PromiseOrValue<BytesLike>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    balanceOf(account: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    balanceOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     availableCurrencyKeys(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    acceptOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    acceptOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
-    availableSynths(arg0: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    availableSynths(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    totalIssuedSynths(currencyKey: BytesLike, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    totalIssuedSynths(currencyKey: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    addSynth(synth: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    addSynth(
+      synth: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<PopulatedTransaction>;
 
     issueSynths(
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -1530,80 +1703,87 @@ export interface SynthetixNetworkToken extends BaseContract {
     symbol(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     setProxy(
-      _proxy: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _proxy: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    burnSynthsToTarget(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    burnSynthsToTarget(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     settle(
-      currencyKey: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      currencyKey: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    selfDestruct(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    selfDestruct(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     integrationProxy(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     setTokenState(
-      _tokenState: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _tokenState: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    collateralisationRatio(_issuer: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    collateralisationRatio(_issuer: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     SELFDESTRUCT_DELAY(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    collateral(account: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    collateral(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     transfer(
-      to: string,
-      value: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      to: PromiseOrValue<string>,
+      value: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     getResolverAddressesRequired(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     emitExchangeReclaim(
-      account: string,
-      currencyKey: BytesLike,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      account: PromiseOrValue<string>,
+      currencyKey: PromiseOrValue<BytesLike>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    issueMaxSynths(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    issueMaxSynths(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     selfDestructInitiated(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     setMessageSender(
-      sender: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      sender: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    initiateSelfDestruct(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    initiateSelfDestruct(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     burnSynthsOnBehalf(
-      burnForAddress: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      burnForAddress: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     selfDestructBeneficiary(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    resolverAddressesRequired(arg0: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    exchangeOnBehalf(
-      exchangeForAddress: string,
-      sourceCurrencyKey: BytesLike,
-      sourceAmount: BigNumberish,
-      destinationCurrencyKey: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+    resolverAddressesRequired(
+      arg0: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
-    debtBalanceOf(_issuer: string, currencyKey: BytesLike, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    exchangeOnBehalf(
+      exchangeForAddress: PromiseOrValue<string>,
+      sourceCurrencyKey: PromiseOrValue<BytesLike>,
+      sourceAmount: PromiseOrValue<BigNumberish>,
+      destinationCurrencyKey: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<PopulatedTransaction>;
+
+    debtBalanceOf(
+      _issuer: PromiseOrValue<string>,
+      currencyKey: PromiseOrValue<BytesLike>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
     totalIssuedSynthsExcludeEtherCollateral(
-      currencyKey: BytesLike,
+      currencyKey: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
@@ -1611,14 +1791,18 @@ export interface SynthetixNetworkToken extends BaseContract {
 
     availableSynthCount(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    allowance(owner: string, spender: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    allowance(
+      owner: PromiseOrValue<string>,
+      spender: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
     MAX_ADDRESSES_FROM_RESOLVER(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     issueSynthsOnBehalf(
-      issueForAddress: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      issueForAddress: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     tokenState(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -1626,10 +1810,10 @@ export interface SynthetixNetworkToken extends BaseContract {
     proxy(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     exchange(
-      sourceCurrencyKey: BytesLike,
-      sourceAmount: BigNumberish,
-      destinationCurrencyKey: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      sourceCurrencyKey: PromiseOrValue<BytesLike>,
+      sourceAmount: PromiseOrValue<BigNumberish>,
+      destinationCurrencyKey: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
   };
 }

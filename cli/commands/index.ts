@@ -6,7 +6,6 @@ import CreateBalanceFetcher from './create-balance-fetcher';
 import CreateContractPositionFetcher from './create-contract-position-fetcher';
 import CreateGroup from './create-group';
 import CreateTokenFetcher from './create-token-fetcher';
-import CreateTvlFetcher from './create-tvl-fetcher';
 import GenerateContractFactory from './generate-contract-factory';
 import SetNetworkProvider from './set-network-provider';
 
@@ -22,7 +21,6 @@ export const commands: Record<string, typeof Command> = {
   'create-token-fetcher': CreateTokenFetcher,
   'create-balance-fetcher': CreateBalanceFetcher,
   'create-contract-position-fetcher': CreateContractPositionFetcher,
-  'create-tvl-fetcher': CreateTvlFetcher,
   'clear-cache': ClearCache,
   'set-network-provider': SetNetworkProvider,
 };

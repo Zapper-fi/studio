@@ -1,12 +1,11 @@
 import { Inject, Injectable } from '@nestjs/common';
 
 import { drillBalance } from '~app-toolkit';
+import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { ContractFactory } from '~contract';
-import { MulticallService } from '~multicall/multicall.service';
 import { NetworkProviderService } from '~network-provider/network-provider.service';
 import { PositionBalanceFetcher } from '~position/position-balance-fetcher.interface';
 import { AppTokenPositionBalance } from '~position/position-balance.interface';
-import { PositionService } from '~position/position.service';
 import { Network } from '~types';
 
 type BuildTokenBalanceFetcherParams = {
@@ -20,8 +19,7 @@ export class DefaultTokenBalanceFetcherFactory {
   private readonly contractFactory: ContractFactory;
 
   constructor(
-    @Inject(PositionService) private readonly positionService: PositionService,
-    @Inject(MulticallService) private readonly multicallService: MulticallService,
+    @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
     @Inject(NetworkProviderService) private readonly networkProviderService: NetworkProviderService,
   ) {
     this.contractFactory = new ContractFactory((network: Network) => this.networkProviderService.getProvider(network));
@@ -29,15 +27,11 @@ export class DefaultTokenBalanceFetcherFactory {
 
   build({ appId, groupId, network }: BuildTokenBalanceFetcherParams) {
     const klass = class DefaultTokenBalanceFetcher implements PositionBalanceFetcher<AppTokenPositionBalance> {
-      constructor(
-        readonly positionService: PositionService,
-        readonly multicallService: MulticallService,
-        readonly contractFactory: ContractFactory,
-      ) {}
+      constructor(readonly appToolkit: IAppToolkit, readonly contractFactory: ContractFactory) {}
 
       async getBalances(address: string) {
-        const multicall = this.multicallService.getMulticall(network);
-        const tokens = await this.positionService.getAppTokenPositions({ network, appId, groupIds: [groupId] });
+        const multicall = this.appToolkit.getMulticall(network);
+        const tokens = await this.appToolkit.getAppTokenPositions({ network, appId, groupIds: [groupId] });
 
         const tokenBalances = Promise.all(
           tokens.map(async token => {
@@ -52,7 +46,7 @@ export class DefaultTokenBalanceFetcherFactory {
       }
     };
 
-    const instance = new klass(this.positionService, this.multicallService, this.contractFactory);
+    const instance = new klass(this.appToolkit, this.contractFactory);
     return instance;
   }
 }

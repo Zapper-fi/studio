@@ -16,7 +16,7 @@ import type {
 } from 'ethers';
 import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
 import type { Listener, Provider } from '@ethersproject/providers';
-import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
 export interface EaseRcaShieldInterface extends utils.Interface {
   functions: {
@@ -116,68 +116,134 @@ export interface EaseRcaShieldInterface extends utils.Interface {
       | 'withdrawalDelay',
   ): FunctionFragment;
 
-  encodeFunctionData(functionFragment: 'allowance', values: [string, string]): string;
+  encodeFunctionData(functionFragment: 'allowance', values: [PromiseOrValue<string>, PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'amtForSale', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'approve', values: [string, BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'approve',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
   encodeFunctionData(functionFragment: 'apr', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'balanceOf', values: [string]): string;
+  encodeFunctionData(functionFragment: 'balanceOf', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'controller', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'controllerUpdate', values: [BigNumberish, BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'controllerUpdate',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+  ): string;
   encodeFunctionData(functionFragment: 'cumLiqForClaims', values?: undefined): string;
   encodeFunctionData(functionFragment: 'decimals', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'decreaseAllowance', values: [string, BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'decreaseAllowance',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
   encodeFunctionData(functionFragment: 'discount', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'getExtraForSale', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'getExtraForSale', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'governor', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'increaseAllowance', values: [string, BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'increaseAllowance',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
   encodeFunctionData(
     functionFragment: 'initialize',
-    values: [BigNumberish, BigNumberish, string, BigNumberish],
+    values: [
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+    ],
   ): string;
   encodeFunctionData(functionFragment: 'isGov', values?: undefined): string;
   encodeFunctionData(
     functionFragment: 'mintTo',
-    values: [string, string, BigNumberish, BigNumberish, BigNumberish, BytesLike, BytesLike, BigNumberish, BytesLike[]],
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BytesLike>,
+      PromiseOrValue<BytesLike>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BytesLike>[],
+    ],
   ): string;
   encodeFunctionData(functionFragment: 'name', values?: undefined): string;
   encodeFunctionData(functionFragment: 'pendingWithdrawal', values?: undefined): string;
   encodeFunctionData(functionFragment: 'percentReserved', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'proofOfLoss', values: [string]): string;
+  encodeFunctionData(functionFragment: 'proofOfLoss', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(
     functionFragment: 'purchaseRca',
-    values: [string, BigNumberish, BigNumberish, BytesLike[], BigNumberish, BytesLike[]],
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BytesLike>[],
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BytesLike>[],
+    ],
   ): string;
   encodeFunctionData(
     functionFragment: 'purchaseU',
-    values: [string, BigNumberish, BigNumberish, BytesLike[], BigNumberish, BytesLike[]],
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BytesLike>[],
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BytesLike>[],
+    ],
   ): string;
-  encodeFunctionData(functionFragment: 'rcaValue', values: [BigNumberish, BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'rcaValue',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+  ): string;
   encodeFunctionData(functionFragment: 'receiveOwnership', values?: undefined): string;
   encodeFunctionData(
     functionFragment: 'redeemFinalize',
-    values: [string, BytesLike, BigNumberish, BytesLike[], BigNumberish, BytesLike[]],
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<BytesLike>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BytesLike>[],
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BytesLike>[],
+    ],
   ): string;
   encodeFunctionData(
     functionFragment: 'redeemRequest',
-    values: [BigNumberish, BigNumberish, BytesLike[], BigNumberish, BytesLike[]],
+    values: [
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BytesLike>[],
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BytesLike>[],
+    ],
   ): string;
-  encodeFunctionData(functionFragment: 'setApr', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'setController', values: [string]): string;
-  encodeFunctionData(functionFragment: 'setDiscount', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'setLiqForClaims', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'setPercentReserved', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'setTreasury', values: [string]): string;
-  encodeFunctionData(functionFragment: 'setWithdrawalDelay', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'setApr', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'setController', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'setDiscount', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'setLiqForClaims', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'setPercentReserved', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'setTreasury', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'setWithdrawalDelay', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'symbol', values?: undefined): string;
   encodeFunctionData(functionFragment: 'totalSupply', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'transfer', values: [string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'transferFrom', values: [string, string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'transferOwnership', values: [string]): string;
+  encodeFunctionData(
+    functionFragment: 'transfer',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'transferFrom',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'transferOwnership', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'treasury', values?: undefined): string;
   encodeFunctionData(functionFragment: 'uBalance', values?: undefined): string;
   encodeFunctionData(functionFragment: 'uToken', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'uValue', values: [BigNumberish, BigNumberish, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'withdrawRequests', values: [string]): string;
+  encodeFunctionData(
+    functionFragment: 'uValue',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'withdrawRequests', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'withdrawalDelay', values?: undefined): string;
 
   decodeFunctionResult(functionFragment: 'allowance', data: BytesLike): Result;
@@ -372,26 +438,30 @@ export interface EaseRcaShield extends BaseContract {
   removeListener: OnEvent<this>;
 
   functions: {
-    allowance(owner: string, spender: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    allowance(
+      owner: PromiseOrValue<string>,
+      spender: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber]>;
 
     amtForSale(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     approve(
-      spender: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      spender: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     apr(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    balanceOf(account: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    balanceOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     controller(overrides?: CallOverrides): Promise<[string]>;
 
     controllerUpdate(
-      _newApr: BigNumberish,
-      _aprUpdate: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _newApr: PromiseOrValue<BigNumberish>,
+      _aprUpdate: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     cumLiqForClaims(overrides?: CallOverrides): Promise<[BigNumber]>;
@@ -399,47 +469,47 @@ export interface EaseRcaShield extends BaseContract {
     decimals(overrides?: CallOverrides): Promise<[number]>;
 
     decreaseAllowance(
-      spender: string,
-      subtractedValue: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      spender: PromiseOrValue<string>,
+      subtractedValue: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     discount(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     getExtraForSale(
-      _newCumLiqForClaims: BigNumberish,
+      _newCumLiqForClaims: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber] & { extraForSale: BigNumber }>;
 
     governor(overrides?: CallOverrides): Promise<[string]>;
 
     increaseAllowance(
-      spender: string,
-      addedValue: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      spender: PromiseOrValue<string>,
+      addedValue: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     initialize(
-      _apr: BigNumberish,
-      _discount: BigNumberish,
-      _treasury: string,
-      _withdrawalDelay: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _apr: PromiseOrValue<BigNumberish>,
+      _discount: PromiseOrValue<BigNumberish>,
+      _treasury: PromiseOrValue<string>,
+      _withdrawalDelay: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     isGov(overrides?: CallOverrides): Promise<[boolean]>;
 
     mintTo(
-      _user: string,
-      _referrer: string,
-      _uAmount: BigNumberish,
-      _expiry: BigNumberish,
-      _v: BigNumberish,
-      _r: BytesLike,
-      _s: BytesLike,
-      _newCumLiqForClaims: BigNumberish,
-      _liqForClaimsProof: BytesLike[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _user: PromiseOrValue<string>,
+      _referrer: PromiseOrValue<string>,
+      _uAmount: PromiseOrValue<BigNumberish>,
+      _expiry: PromiseOrValue<BigNumberish>,
+      _v: PromiseOrValue<BigNumberish>,
+      _r: PromiseOrValue<BytesLike>,
+      _s: PromiseOrValue<BytesLike>,
+      _newCumLiqForClaims: PromiseOrValue<BigNumberish>,
+      _liqForClaimsProof: PromiseOrValue<BytesLike>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     name(overrides?: CallOverrides): Promise<[string]>;
@@ -449,90 +519,90 @@ export interface EaseRcaShield extends BaseContract {
     percentReserved(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     proofOfLoss(
-      _coverAddress: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _coverAddress: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     purchaseRca(
-      _user: string,
-      _uAmount: BigNumberish,
-      _uEthPrice: BigNumberish,
-      _priceProof: BytesLike[],
-      _newCumLiqForClaims: BigNumberish,
-      _liqForClaimsProof: BytesLike[],
-      overrides?: PayableOverrides & { from?: string | Promise<string> },
+      _user: PromiseOrValue<string>,
+      _uAmount: PromiseOrValue<BigNumberish>,
+      _uEthPrice: PromiseOrValue<BigNumberish>,
+      _priceProof: PromiseOrValue<BytesLike>[],
+      _newCumLiqForClaims: PromiseOrValue<BigNumberish>,
+      _liqForClaimsProof: PromiseOrValue<BytesLike>[],
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     purchaseU(
-      _user: string,
-      _uAmount: BigNumberish,
-      _uEthPrice: BigNumberish,
-      _priceProof: BytesLike[],
-      _newCumLiqForClaims: BigNumberish,
-      _liqForClaimsProof: BytesLike[],
-      overrides?: PayableOverrides & { from?: string | Promise<string> },
+      _user: PromiseOrValue<string>,
+      _uAmount: PromiseOrValue<BigNumberish>,
+      _uEthPrice: PromiseOrValue<BigNumberish>,
+      _priceProof: PromiseOrValue<BytesLike>[],
+      _newCumLiqForClaims: PromiseOrValue<BigNumberish>,
+      _liqForClaimsProof: PromiseOrValue<BytesLike>[],
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     rcaValue(
-      _uAmount: BigNumberish,
-      _cumLiqForClaims: BigNumberish,
+      _uAmount: PromiseOrValue<BigNumberish>,
+      _cumLiqForClaims: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber] & { rcaAmount: BigNumber }>;
 
-    receiveOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    receiveOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     redeemFinalize(
-      _to: string,
-      _routerData: BytesLike,
-      _newCumLiqForClaims: BigNumberish,
-      _liqForClaimsProof: BytesLike[],
-      _newPercentReserved: BigNumberish,
-      _percentReservedProof: BytesLike[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _to: PromiseOrValue<string>,
+      _routerData: PromiseOrValue<BytesLike>,
+      _newCumLiqForClaims: PromiseOrValue<BigNumberish>,
+      _liqForClaimsProof: PromiseOrValue<BytesLike>[],
+      _newPercentReserved: PromiseOrValue<BigNumberish>,
+      _percentReservedProof: PromiseOrValue<BytesLike>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     redeemRequest(
-      _rcaAmount: BigNumberish,
-      _newCumLiqForClaims: BigNumberish,
-      _liqForClaimsProof: BytesLike[],
-      _newPercentReserved: BigNumberish,
-      _percentReservedProof: BytesLike[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _rcaAmount: PromiseOrValue<BigNumberish>,
+      _newCumLiqForClaims: PromiseOrValue<BigNumberish>,
+      _liqForClaimsProof: PromiseOrValue<BytesLike>[],
+      _newPercentReserved: PromiseOrValue<BigNumberish>,
+      _percentReservedProof: PromiseOrValue<BytesLike>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setApr(
-      _newApr: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _newApr: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setController(
-      _newController: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _newController: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setDiscount(
-      _newDiscount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _newDiscount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setLiqForClaims(
-      _newCumLiqForClaims: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _newCumLiqForClaims: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setPercentReserved(
-      _newPercentReserved: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _newPercentReserved: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setTreasury(
-      _newTreasury: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _newTreasury: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setWithdrawalDelay(
-      _newWithdrawalDelay: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _newWithdrawalDelay: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     symbol(overrides?: CallOverrides): Promise<[string]>;
@@ -540,21 +610,21 @@ export interface EaseRcaShield extends BaseContract {
     totalSupply(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     transfer(
-      to: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      to: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     transferFrom(
-      from: string,
-      to: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     transferOwnership(
-      newGovernor: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newGovernor: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     treasury(overrides?: CallOverrides): Promise<[string]>;
@@ -564,14 +634,14 @@ export interface EaseRcaShield extends BaseContract {
     uToken(overrides?: CallOverrides): Promise<[string]>;
 
     uValue(
-      _rcaAmount: BigNumberish,
-      _cumLiqForClaims: BigNumberish,
-      _percentReserved: BigNumberish,
+      _rcaAmount: PromiseOrValue<BigNumberish>,
+      _cumLiqForClaims: PromiseOrValue<BigNumberish>,
+      _percentReserved: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber] & { uAmount: BigNumber }>;
 
     withdrawRequests(
-      arg0: string,
+      arg0: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<
       [BigNumber, BigNumber, number] & {
@@ -584,26 +654,30 @@ export interface EaseRcaShield extends BaseContract {
     withdrawalDelay(overrides?: CallOverrides): Promise<[BigNumber]>;
   };
 
-  allowance(owner: string, spender: string, overrides?: CallOverrides): Promise<BigNumber>;
+  allowance(
+    owner: PromiseOrValue<string>,
+    spender: PromiseOrValue<string>,
+    overrides?: CallOverrides,
+  ): Promise<BigNumber>;
 
   amtForSale(overrides?: CallOverrides): Promise<BigNumber>;
 
   approve(
-    spender: string,
-    amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    spender: PromiseOrValue<string>,
+    amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   apr(overrides?: CallOverrides): Promise<BigNumber>;
 
-  balanceOf(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+  balanceOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   controller(overrides?: CallOverrides): Promise<string>;
 
   controllerUpdate(
-    _newApr: BigNumberish,
-    _aprUpdate: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _newApr: PromiseOrValue<BigNumberish>,
+    _aprUpdate: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   cumLiqForClaims(overrides?: CallOverrides): Promise<BigNumber>;
@@ -611,44 +685,44 @@ export interface EaseRcaShield extends BaseContract {
   decimals(overrides?: CallOverrides): Promise<number>;
 
   decreaseAllowance(
-    spender: string,
-    subtractedValue: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    spender: PromiseOrValue<string>,
+    subtractedValue: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   discount(overrides?: CallOverrides): Promise<BigNumber>;
 
-  getExtraForSale(_newCumLiqForClaims: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+  getExtraForSale(_newCumLiqForClaims: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
   governor(overrides?: CallOverrides): Promise<string>;
 
   increaseAllowance(
-    spender: string,
-    addedValue: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    spender: PromiseOrValue<string>,
+    addedValue: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   initialize(
-    _apr: BigNumberish,
-    _discount: BigNumberish,
-    _treasury: string,
-    _withdrawalDelay: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _apr: PromiseOrValue<BigNumberish>,
+    _discount: PromiseOrValue<BigNumberish>,
+    _treasury: PromiseOrValue<string>,
+    _withdrawalDelay: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   isGov(overrides?: CallOverrides): Promise<boolean>;
 
   mintTo(
-    _user: string,
-    _referrer: string,
-    _uAmount: BigNumberish,
-    _expiry: BigNumberish,
-    _v: BigNumberish,
-    _r: BytesLike,
-    _s: BytesLike,
-    _newCumLiqForClaims: BigNumberish,
-    _liqForClaimsProof: BytesLike[],
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _user: PromiseOrValue<string>,
+    _referrer: PromiseOrValue<string>,
+    _uAmount: PromiseOrValue<BigNumberish>,
+    _expiry: PromiseOrValue<BigNumberish>,
+    _v: PromiseOrValue<BigNumberish>,
+    _r: PromiseOrValue<BytesLike>,
+    _s: PromiseOrValue<BytesLike>,
+    _newCumLiqForClaims: PromiseOrValue<BigNumberish>,
+    _liqForClaimsProof: PromiseOrValue<BytesLike>[],
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   name(overrides?: CallOverrides): Promise<string>;
@@ -658,86 +732,90 @@ export interface EaseRcaShield extends BaseContract {
   percentReserved(overrides?: CallOverrides): Promise<BigNumber>;
 
   proofOfLoss(
-    _coverAddress: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _coverAddress: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   purchaseRca(
-    _user: string,
-    _uAmount: BigNumberish,
-    _uEthPrice: BigNumberish,
-    _priceProof: BytesLike[],
-    _newCumLiqForClaims: BigNumberish,
-    _liqForClaimsProof: BytesLike[],
-    overrides?: PayableOverrides & { from?: string | Promise<string> },
+    _user: PromiseOrValue<string>,
+    _uAmount: PromiseOrValue<BigNumberish>,
+    _uEthPrice: PromiseOrValue<BigNumberish>,
+    _priceProof: PromiseOrValue<BytesLike>[],
+    _newCumLiqForClaims: PromiseOrValue<BigNumberish>,
+    _liqForClaimsProof: PromiseOrValue<BytesLike>[],
+    overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   purchaseU(
-    _user: string,
-    _uAmount: BigNumberish,
-    _uEthPrice: BigNumberish,
-    _priceProof: BytesLike[],
-    _newCumLiqForClaims: BigNumberish,
-    _liqForClaimsProof: BytesLike[],
-    overrides?: PayableOverrides & { from?: string | Promise<string> },
+    _user: PromiseOrValue<string>,
+    _uAmount: PromiseOrValue<BigNumberish>,
+    _uEthPrice: PromiseOrValue<BigNumberish>,
+    _priceProof: PromiseOrValue<BytesLike>[],
+    _newCumLiqForClaims: PromiseOrValue<BigNumberish>,
+    _liqForClaimsProof: PromiseOrValue<BytesLike>[],
+    overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  rcaValue(_uAmount: BigNumberish, _cumLiqForClaims: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+  rcaValue(
+    _uAmount: PromiseOrValue<BigNumberish>,
+    _cumLiqForClaims: PromiseOrValue<BigNumberish>,
+    overrides?: CallOverrides,
+  ): Promise<BigNumber>;
 
-  receiveOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  receiveOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   redeemFinalize(
-    _to: string,
-    _routerData: BytesLike,
-    _newCumLiqForClaims: BigNumberish,
-    _liqForClaimsProof: BytesLike[],
-    _newPercentReserved: BigNumberish,
-    _percentReservedProof: BytesLike[],
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _to: PromiseOrValue<string>,
+    _routerData: PromiseOrValue<BytesLike>,
+    _newCumLiqForClaims: PromiseOrValue<BigNumberish>,
+    _liqForClaimsProof: PromiseOrValue<BytesLike>[],
+    _newPercentReserved: PromiseOrValue<BigNumberish>,
+    _percentReservedProof: PromiseOrValue<BytesLike>[],
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   redeemRequest(
-    _rcaAmount: BigNumberish,
-    _newCumLiqForClaims: BigNumberish,
-    _liqForClaimsProof: BytesLike[],
-    _newPercentReserved: BigNumberish,
-    _percentReservedProof: BytesLike[],
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _rcaAmount: PromiseOrValue<BigNumberish>,
+    _newCumLiqForClaims: PromiseOrValue<BigNumberish>,
+    _liqForClaimsProof: PromiseOrValue<BytesLike>[],
+    _newPercentReserved: PromiseOrValue<BigNumberish>,
+    _percentReservedProof: PromiseOrValue<BytesLike>[],
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setApr(
-    _newApr: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _newApr: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setController(
-    _newController: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _newController: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setDiscount(
-    _newDiscount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _newDiscount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setLiqForClaims(
-    _newCumLiqForClaims: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _newCumLiqForClaims: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setPercentReserved(
-    _newPercentReserved: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _newPercentReserved: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setTreasury(
-    _newTreasury: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _newTreasury: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setWithdrawalDelay(
-    _newWithdrawalDelay: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _newWithdrawalDelay: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   symbol(overrides?: CallOverrides): Promise<string>;
@@ -745,21 +823,21 @@ export interface EaseRcaShield extends BaseContract {
   totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
   transfer(
-    to: string,
-    amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    to: PromiseOrValue<string>,
+    amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   transferFrom(
-    from: string,
-    to: string,
-    amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    from: PromiseOrValue<string>,
+    to: PromiseOrValue<string>,
+    amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   transferOwnership(
-    newGovernor: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    newGovernor: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   treasury(overrides?: CallOverrides): Promise<string>;
@@ -769,14 +847,14 @@ export interface EaseRcaShield extends BaseContract {
   uToken(overrides?: CallOverrides): Promise<string>;
 
   uValue(
-    _rcaAmount: BigNumberish,
-    _cumLiqForClaims: BigNumberish,
-    _percentReserved: BigNumberish,
+    _rcaAmount: PromiseOrValue<BigNumberish>,
+    _cumLiqForClaims: PromiseOrValue<BigNumberish>,
+    _percentReserved: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides,
   ): Promise<BigNumber>;
 
   withdrawRequests(
-    arg0: string,
+    arg0: PromiseOrValue<string>,
     overrides?: CallOverrides,
   ): Promise<
     [BigNumber, BigNumber, number] & {
@@ -789,54 +867,74 @@ export interface EaseRcaShield extends BaseContract {
   withdrawalDelay(overrides?: CallOverrides): Promise<BigNumber>;
 
   callStatic: {
-    allowance(owner: string, spender: string, overrides?: CallOverrides): Promise<BigNumber>;
+    allowance(
+      owner: PromiseOrValue<string>,
+      spender: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     amtForSale(overrides?: CallOverrides): Promise<BigNumber>;
 
-    approve(spender: string, amount: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+    approve(
+      spender: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
 
     apr(overrides?: CallOverrides): Promise<BigNumber>;
 
-    balanceOf(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    balanceOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     controller(overrides?: CallOverrides): Promise<string>;
 
-    controllerUpdate(_newApr: BigNumberish, _aprUpdate: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    controllerUpdate(
+      _newApr: PromiseOrValue<BigNumberish>,
+      _aprUpdate: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
     cumLiqForClaims(overrides?: CallOverrides): Promise<BigNumber>;
 
     decimals(overrides?: CallOverrides): Promise<number>;
 
-    decreaseAllowance(spender: string, subtractedValue: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+    decreaseAllowance(
+      spender: PromiseOrValue<string>,
+      subtractedValue: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
 
     discount(overrides?: CallOverrides): Promise<BigNumber>;
 
-    getExtraForSale(_newCumLiqForClaims: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    getExtraForSale(_newCumLiqForClaims: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     governor(overrides?: CallOverrides): Promise<string>;
 
-    increaseAllowance(spender: string, addedValue: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+    increaseAllowance(
+      spender: PromiseOrValue<string>,
+      addedValue: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
 
     initialize(
-      _apr: BigNumberish,
-      _discount: BigNumberish,
-      _treasury: string,
-      _withdrawalDelay: BigNumberish,
+      _apr: PromiseOrValue<BigNumberish>,
+      _discount: PromiseOrValue<BigNumberish>,
+      _treasury: PromiseOrValue<string>,
+      _withdrawalDelay: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
     isGov(overrides?: CallOverrides): Promise<boolean>;
 
     mintTo(
-      _user: string,
-      _referrer: string,
-      _uAmount: BigNumberish,
-      _expiry: BigNumberish,
-      _v: BigNumberish,
-      _r: BytesLike,
-      _s: BytesLike,
-      _newCumLiqForClaims: BigNumberish,
-      _liqForClaimsProof: BytesLike[],
+      _user: PromiseOrValue<string>,
+      _referrer: PromiseOrValue<string>,
+      _uAmount: PromiseOrValue<BigNumberish>,
+      _expiry: PromiseOrValue<BigNumberish>,
+      _v: PromiseOrValue<BigNumberish>,
+      _r: PromiseOrValue<BytesLike>,
+      _s: PromiseOrValue<BytesLike>,
+      _newCumLiqForClaims: PromiseOrValue<BigNumberish>,
+      _liqForClaimsProof: PromiseOrValue<BytesLike>[],
       overrides?: CallOverrides,
     ): Promise<void>;
 
@@ -846,74 +944,87 @@ export interface EaseRcaShield extends BaseContract {
 
     percentReserved(overrides?: CallOverrides): Promise<BigNumber>;
 
-    proofOfLoss(_coverAddress: string, overrides?: CallOverrides): Promise<void>;
+    proofOfLoss(_coverAddress: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     purchaseRca(
-      _user: string,
-      _uAmount: BigNumberish,
-      _uEthPrice: BigNumberish,
-      _priceProof: BytesLike[],
-      _newCumLiqForClaims: BigNumberish,
-      _liqForClaimsProof: BytesLike[],
+      _user: PromiseOrValue<string>,
+      _uAmount: PromiseOrValue<BigNumberish>,
+      _uEthPrice: PromiseOrValue<BigNumberish>,
+      _priceProof: PromiseOrValue<BytesLike>[],
+      _newCumLiqForClaims: PromiseOrValue<BigNumberish>,
+      _liqForClaimsProof: PromiseOrValue<BytesLike>[],
       overrides?: CallOverrides,
     ): Promise<void>;
 
     purchaseU(
-      _user: string,
-      _uAmount: BigNumberish,
-      _uEthPrice: BigNumberish,
-      _priceProof: BytesLike[],
-      _newCumLiqForClaims: BigNumberish,
-      _liqForClaimsProof: BytesLike[],
+      _user: PromiseOrValue<string>,
+      _uAmount: PromiseOrValue<BigNumberish>,
+      _uEthPrice: PromiseOrValue<BigNumberish>,
+      _priceProof: PromiseOrValue<BytesLike>[],
+      _newCumLiqForClaims: PromiseOrValue<BigNumberish>,
+      _liqForClaimsProof: PromiseOrValue<BytesLike>[],
       overrides?: CallOverrides,
     ): Promise<void>;
 
-    rcaValue(_uAmount: BigNumberish, _cumLiqForClaims: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    rcaValue(
+      _uAmount: PromiseOrValue<BigNumberish>,
+      _cumLiqForClaims: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     receiveOwnership(overrides?: CallOverrides): Promise<void>;
 
     redeemFinalize(
-      _to: string,
-      _routerData: BytesLike,
-      _newCumLiqForClaims: BigNumberish,
-      _liqForClaimsProof: BytesLike[],
-      _newPercentReserved: BigNumberish,
-      _percentReservedProof: BytesLike[],
+      _to: PromiseOrValue<string>,
+      _routerData: PromiseOrValue<BytesLike>,
+      _newCumLiqForClaims: PromiseOrValue<BigNumberish>,
+      _liqForClaimsProof: PromiseOrValue<BytesLike>[],
+      _newPercentReserved: PromiseOrValue<BigNumberish>,
+      _percentReservedProof: PromiseOrValue<BytesLike>[],
       overrides?: CallOverrides,
     ): Promise<void>;
 
     redeemRequest(
-      _rcaAmount: BigNumberish,
-      _newCumLiqForClaims: BigNumberish,
-      _liqForClaimsProof: BytesLike[],
-      _newPercentReserved: BigNumberish,
-      _percentReservedProof: BytesLike[],
+      _rcaAmount: PromiseOrValue<BigNumberish>,
+      _newCumLiqForClaims: PromiseOrValue<BigNumberish>,
+      _liqForClaimsProof: PromiseOrValue<BytesLike>[],
+      _newPercentReserved: PromiseOrValue<BigNumberish>,
+      _percentReservedProof: PromiseOrValue<BytesLike>[],
       overrides?: CallOverrides,
     ): Promise<void>;
 
-    setApr(_newApr: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    setApr(_newApr: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
-    setController(_newController: string, overrides?: CallOverrides): Promise<void>;
+    setController(_newController: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    setDiscount(_newDiscount: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    setDiscount(_newDiscount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
-    setLiqForClaims(_newCumLiqForClaims: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    setLiqForClaims(_newCumLiqForClaims: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
-    setPercentReserved(_newPercentReserved: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    setPercentReserved(_newPercentReserved: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
-    setTreasury(_newTreasury: string, overrides?: CallOverrides): Promise<void>;
+    setTreasury(_newTreasury: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    setWithdrawalDelay(_newWithdrawalDelay: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    setWithdrawalDelay(_newWithdrawalDelay: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
     symbol(overrides?: CallOverrides): Promise<string>;
 
     totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
-    transfer(to: string, amount: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+    transfer(
+      to: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
 
-    transferFrom(from: string, to: string, amount: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+    transferFrom(
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
 
-    transferOwnership(newGovernor: string, overrides?: CallOverrides): Promise<void>;
+    transferOwnership(newGovernor: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     treasury(overrides?: CallOverrides): Promise<string>;
 
@@ -922,14 +1033,14 @@ export interface EaseRcaShield extends BaseContract {
     uToken(overrides?: CallOverrides): Promise<string>;
 
     uValue(
-      _rcaAmount: BigNumberish,
-      _cumLiqForClaims: BigNumberish,
-      _percentReserved: BigNumberish,
+      _rcaAmount: PromiseOrValue<BigNumberish>,
+      _cumLiqForClaims: PromiseOrValue<BigNumberish>,
+      _percentReserved: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     withdrawRequests(
-      arg0: string,
+      arg0: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<
       [BigNumber, BigNumber, number] & {
@@ -944,46 +1055,53 @@ export interface EaseRcaShield extends BaseContract {
 
   filters: {
     'Approval(address,address,uint256)'(
-      owner?: string | null,
-      spender?: string | null,
+      owner?: PromiseOrValue<string> | null,
+      spender?: PromiseOrValue<string> | null,
       value?: null,
     ): ApprovalEventFilter;
-    Approval(owner?: string | null, spender?: string | null, value?: null): ApprovalEventFilter;
+    Approval(
+      owner?: PromiseOrValue<string> | null,
+      spender?: PromiseOrValue<string> | null,
+      value?: null,
+    ): ApprovalEventFilter;
 
     'Mint(address,address,address,uint256,uint256,uint256)'(
-      sender?: string | null,
-      to?: string | null,
-      referrer?: string | null,
+      sender?: PromiseOrValue<string> | null,
+      to?: PromiseOrValue<string> | null,
+      referrer?: PromiseOrValue<string> | null,
       uAmount?: null,
       rcaAmount?: null,
       timestamp?: null,
     ): MintEventFilter;
     Mint(
-      sender?: string | null,
-      to?: string | null,
-      referrer?: string | null,
+      sender?: PromiseOrValue<string> | null,
+      to?: PromiseOrValue<string> | null,
+      referrer?: PromiseOrValue<string> | null,
       uAmount?: null,
       rcaAmount?: null,
       timestamp?: null,
     ): MintEventFilter;
 
     'OwnershipTransferred(address,address)'(
-      previousGovernor?: string | null,
-      newGovernor?: string | null,
+      previousGovernor?: PromiseOrValue<string> | null,
+      newGovernor?: PromiseOrValue<string> | null,
     ): OwnershipTransferredEventFilter;
     OwnershipTransferred(
-      previousGovernor?: string | null,
-      newGovernor?: string | null,
+      previousGovernor?: PromiseOrValue<string> | null,
+      newGovernor?: PromiseOrValue<string> | null,
     ): OwnershipTransferredEventFilter;
 
     'PendingOwnershipTransfer(address,address)'(
-      from?: string | null,
-      to?: string | null,
+      from?: PromiseOrValue<string> | null,
+      to?: PromiseOrValue<string> | null,
     ): PendingOwnershipTransferEventFilter;
-    PendingOwnershipTransfer(from?: string | null, to?: string | null): PendingOwnershipTransferEventFilter;
+    PendingOwnershipTransfer(
+      from?: PromiseOrValue<string> | null,
+      to?: PromiseOrValue<string> | null,
+    ): PendingOwnershipTransferEventFilter;
 
     'PurchaseRca(address,uint256,uint256,uint256,uint256,uint256)'(
-      to?: string | null,
+      to?: PromiseOrValue<string> | null,
       uAmount?: null,
       rcaAmount?: null,
       ethAmount?: null,
@@ -991,7 +1109,7 @@ export interface EaseRcaShield extends BaseContract {
       timestamp?: null,
     ): PurchaseRcaEventFilter;
     PurchaseRca(
-      to?: string | null,
+      to?: PromiseOrValue<string> | null,
       uAmount?: null,
       rcaAmount?: null,
       ethAmount?: null,
@@ -1000,14 +1118,14 @@ export interface EaseRcaShield extends BaseContract {
     ): PurchaseRcaEventFilter;
 
     'PurchaseU(address,uint256,uint256,uint256,uint256)'(
-      to?: string | null,
+      to?: PromiseOrValue<string> | null,
       uAmount?: null,
       ethAmount?: null,
       price?: null,
       timestamp?: null,
     ): PurchaseUEventFilter;
     PurchaseU(
-      to?: string | null,
+      to?: PromiseOrValue<string> | null,
       uAmount?: null,
       ethAmount?: null,
       price?: null,
@@ -1015,60 +1133,72 @@ export interface EaseRcaShield extends BaseContract {
     ): PurchaseUEventFilter;
 
     'RedeemFinalize(address,address,uint256,uint256,uint256)'(
-      user?: string | null,
-      to?: string | null,
+      user?: PromiseOrValue<string> | null,
+      to?: PromiseOrValue<string> | null,
       uAmount?: null,
       rcaAmount?: null,
       timestamp?: null,
     ): RedeemFinalizeEventFilter;
     RedeemFinalize(
-      user?: string | null,
-      to?: string | null,
+      user?: PromiseOrValue<string> | null,
+      to?: PromiseOrValue<string> | null,
       uAmount?: null,
       rcaAmount?: null,
       timestamp?: null,
     ): RedeemFinalizeEventFilter;
 
     'RedeemRequest(address,uint256,uint256,uint256,uint256)'(
-      user?: string | null,
+      user?: PromiseOrValue<string> | null,
       uAmount?: null,
       rcaAmount?: null,
       endTime?: null,
       timestamp?: null,
     ): RedeemRequestEventFilter;
     RedeemRequest(
-      user?: string | null,
+      user?: PromiseOrValue<string> | null,
       uAmount?: null,
       rcaAmount?: null,
       endTime?: null,
       timestamp?: null,
     ): RedeemRequestEventFilter;
 
-    'Transfer(address,address,uint256)'(from?: string | null, to?: string | null, value?: null): TransferEventFilter;
-    Transfer(from?: string | null, to?: string | null, value?: null): TransferEventFilter;
+    'Transfer(address,address,uint256)'(
+      from?: PromiseOrValue<string> | null,
+      to?: PromiseOrValue<string> | null,
+      value?: null,
+    ): TransferEventFilter;
+    Transfer(
+      from?: PromiseOrValue<string> | null,
+      to?: PromiseOrValue<string> | null,
+      value?: null,
+    ): TransferEventFilter;
   };
 
   estimateGas: {
-    allowance(owner: string, spender: string, overrides?: CallOverrides): Promise<BigNumber>;
+    allowance(
+      owner: PromiseOrValue<string>,
+      spender: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     amtForSale(overrides?: CallOverrides): Promise<BigNumber>;
 
     approve(
-      spender: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      spender: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     apr(overrides?: CallOverrides): Promise<BigNumber>;
 
-    balanceOf(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    balanceOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     controller(overrides?: CallOverrides): Promise<BigNumber>;
 
     controllerUpdate(
-      _newApr: BigNumberish,
-      _aprUpdate: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _newApr: PromiseOrValue<BigNumberish>,
+      _aprUpdate: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     cumLiqForClaims(overrides?: CallOverrides): Promise<BigNumber>;
@@ -1076,44 +1206,44 @@ export interface EaseRcaShield extends BaseContract {
     decimals(overrides?: CallOverrides): Promise<BigNumber>;
 
     decreaseAllowance(
-      spender: string,
-      subtractedValue: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      spender: PromiseOrValue<string>,
+      subtractedValue: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     discount(overrides?: CallOverrides): Promise<BigNumber>;
 
-    getExtraForSale(_newCumLiqForClaims: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    getExtraForSale(_newCumLiqForClaims: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     governor(overrides?: CallOverrides): Promise<BigNumber>;
 
     increaseAllowance(
-      spender: string,
-      addedValue: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      spender: PromiseOrValue<string>,
+      addedValue: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     initialize(
-      _apr: BigNumberish,
-      _discount: BigNumberish,
-      _treasury: string,
-      _withdrawalDelay: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _apr: PromiseOrValue<BigNumberish>,
+      _discount: PromiseOrValue<BigNumberish>,
+      _treasury: PromiseOrValue<string>,
+      _withdrawalDelay: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     isGov(overrides?: CallOverrides): Promise<BigNumber>;
 
     mintTo(
-      _user: string,
-      _referrer: string,
-      _uAmount: BigNumberish,
-      _expiry: BigNumberish,
-      _v: BigNumberish,
-      _r: BytesLike,
-      _s: BytesLike,
-      _newCumLiqForClaims: BigNumberish,
-      _liqForClaimsProof: BytesLike[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _user: PromiseOrValue<string>,
+      _referrer: PromiseOrValue<string>,
+      _uAmount: PromiseOrValue<BigNumberish>,
+      _expiry: PromiseOrValue<BigNumberish>,
+      _v: PromiseOrValue<BigNumberish>,
+      _r: PromiseOrValue<BytesLike>,
+      _s: PromiseOrValue<BytesLike>,
+      _newCumLiqForClaims: PromiseOrValue<BigNumberish>,
+      _liqForClaimsProof: PromiseOrValue<BytesLike>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     name(overrides?: CallOverrides): Promise<BigNumber>;
@@ -1122,78 +1252,91 @@ export interface EaseRcaShield extends BaseContract {
 
     percentReserved(overrides?: CallOverrides): Promise<BigNumber>;
 
-    proofOfLoss(_coverAddress: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    proofOfLoss(
+      _coverAddress: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     purchaseRca(
-      _user: string,
-      _uAmount: BigNumberish,
-      _uEthPrice: BigNumberish,
-      _priceProof: BytesLike[],
-      _newCumLiqForClaims: BigNumberish,
-      _liqForClaimsProof: BytesLike[],
-      overrides?: PayableOverrides & { from?: string | Promise<string> },
+      _user: PromiseOrValue<string>,
+      _uAmount: PromiseOrValue<BigNumberish>,
+      _uEthPrice: PromiseOrValue<BigNumberish>,
+      _priceProof: PromiseOrValue<BytesLike>[],
+      _newCumLiqForClaims: PromiseOrValue<BigNumberish>,
+      _liqForClaimsProof: PromiseOrValue<BytesLike>[],
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     purchaseU(
-      _user: string,
-      _uAmount: BigNumberish,
-      _uEthPrice: BigNumberish,
-      _priceProof: BytesLike[],
-      _newCumLiqForClaims: BigNumberish,
-      _liqForClaimsProof: BytesLike[],
-      overrides?: PayableOverrides & { from?: string | Promise<string> },
+      _user: PromiseOrValue<string>,
+      _uAmount: PromiseOrValue<BigNumberish>,
+      _uEthPrice: PromiseOrValue<BigNumberish>,
+      _priceProof: PromiseOrValue<BytesLike>[],
+      _newCumLiqForClaims: PromiseOrValue<BigNumberish>,
+      _liqForClaimsProof: PromiseOrValue<BytesLike>[],
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    rcaValue(_uAmount: BigNumberish, _cumLiqForClaims: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    rcaValue(
+      _uAmount: PromiseOrValue<BigNumberish>,
+      _cumLiqForClaims: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    receiveOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    receiveOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     redeemFinalize(
-      _to: string,
-      _routerData: BytesLike,
-      _newCumLiqForClaims: BigNumberish,
-      _liqForClaimsProof: BytesLike[],
-      _newPercentReserved: BigNumberish,
-      _percentReservedProof: BytesLike[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _to: PromiseOrValue<string>,
+      _routerData: PromiseOrValue<BytesLike>,
+      _newCumLiqForClaims: PromiseOrValue<BigNumberish>,
+      _liqForClaimsProof: PromiseOrValue<BytesLike>[],
+      _newPercentReserved: PromiseOrValue<BigNumberish>,
+      _percentReservedProof: PromiseOrValue<BytesLike>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     redeemRequest(
-      _rcaAmount: BigNumberish,
-      _newCumLiqForClaims: BigNumberish,
-      _liqForClaimsProof: BytesLike[],
-      _newPercentReserved: BigNumberish,
-      _percentReservedProof: BytesLike[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _rcaAmount: PromiseOrValue<BigNumberish>,
+      _newCumLiqForClaims: PromiseOrValue<BigNumberish>,
+      _liqForClaimsProof: PromiseOrValue<BytesLike>[],
+      _newPercentReserved: PromiseOrValue<BigNumberish>,
+      _percentReservedProof: PromiseOrValue<BytesLike>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    setApr(_newApr: BigNumberish, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    setApr(
+      _newApr: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     setController(
-      _newController: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _newController: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setDiscount(
-      _newDiscount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _newDiscount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setLiqForClaims(
-      _newCumLiqForClaims: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _newCumLiqForClaims: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setPercentReserved(
-      _newPercentReserved: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _newPercentReserved: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    setTreasury(_newTreasury: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    setTreasury(
+      _newTreasury: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     setWithdrawalDelay(
-      _newWithdrawalDelay: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _newWithdrawalDelay: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     symbol(overrides?: CallOverrides): Promise<BigNumber>;
@@ -1201,21 +1344,21 @@ export interface EaseRcaShield extends BaseContract {
     totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
     transfer(
-      to: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      to: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     transferFrom(
-      from: string,
-      to: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     transferOwnership(
-      newGovernor: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newGovernor: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     treasury(overrides?: CallOverrides): Promise<BigNumber>;
@@ -1225,38 +1368,42 @@ export interface EaseRcaShield extends BaseContract {
     uToken(overrides?: CallOverrides): Promise<BigNumber>;
 
     uValue(
-      _rcaAmount: BigNumberish,
-      _cumLiqForClaims: BigNumberish,
-      _percentReserved: BigNumberish,
+      _rcaAmount: PromiseOrValue<BigNumberish>,
+      _cumLiqForClaims: PromiseOrValue<BigNumberish>,
+      _percentReserved: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
-    withdrawRequests(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    withdrawRequests(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     withdrawalDelay(overrides?: CallOverrides): Promise<BigNumber>;
   };
 
   populateTransaction: {
-    allowance(owner: string, spender: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    allowance(
+      owner: PromiseOrValue<string>,
+      spender: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
     amtForSale(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     approve(
-      spender: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      spender: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     apr(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    balanceOf(account: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    balanceOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     controller(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     controllerUpdate(
-      _newApr: BigNumberish,
-      _aprUpdate: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _newApr: PromiseOrValue<BigNumberish>,
+      _aprUpdate: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     cumLiqForClaims(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -1264,44 +1411,47 @@ export interface EaseRcaShield extends BaseContract {
     decimals(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     decreaseAllowance(
-      spender: string,
-      subtractedValue: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      spender: PromiseOrValue<string>,
+      subtractedValue: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     discount(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    getExtraForSale(_newCumLiqForClaims: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getExtraForSale(
+      _newCumLiqForClaims: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
     governor(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     increaseAllowance(
-      spender: string,
-      addedValue: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      spender: PromiseOrValue<string>,
+      addedValue: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     initialize(
-      _apr: BigNumberish,
-      _discount: BigNumberish,
-      _treasury: string,
-      _withdrawalDelay: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _apr: PromiseOrValue<BigNumberish>,
+      _discount: PromiseOrValue<BigNumberish>,
+      _treasury: PromiseOrValue<string>,
+      _withdrawalDelay: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     isGov(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     mintTo(
-      _user: string,
-      _referrer: string,
-      _uAmount: BigNumberish,
-      _expiry: BigNumberish,
-      _v: BigNumberish,
-      _r: BytesLike,
-      _s: BytesLike,
-      _newCumLiqForClaims: BigNumberish,
-      _liqForClaimsProof: BytesLike[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _user: PromiseOrValue<string>,
+      _referrer: PromiseOrValue<string>,
+      _uAmount: PromiseOrValue<BigNumberish>,
+      _expiry: PromiseOrValue<BigNumberish>,
+      _v: PromiseOrValue<BigNumberish>,
+      _r: PromiseOrValue<BytesLike>,
+      _s: PromiseOrValue<BytesLike>,
+      _newCumLiqForClaims: PromiseOrValue<BigNumberish>,
+      _liqForClaimsProof: PromiseOrValue<BytesLike>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     name(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -1311,90 +1461,90 @@ export interface EaseRcaShield extends BaseContract {
     percentReserved(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     proofOfLoss(
-      _coverAddress: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _coverAddress: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     purchaseRca(
-      _user: string,
-      _uAmount: BigNumberish,
-      _uEthPrice: BigNumberish,
-      _priceProof: BytesLike[],
-      _newCumLiqForClaims: BigNumberish,
-      _liqForClaimsProof: BytesLike[],
-      overrides?: PayableOverrides & { from?: string | Promise<string> },
+      _user: PromiseOrValue<string>,
+      _uAmount: PromiseOrValue<BigNumberish>,
+      _uEthPrice: PromiseOrValue<BigNumberish>,
+      _priceProof: PromiseOrValue<BytesLike>[],
+      _newCumLiqForClaims: PromiseOrValue<BigNumberish>,
+      _liqForClaimsProof: PromiseOrValue<BytesLike>[],
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     purchaseU(
-      _user: string,
-      _uAmount: BigNumberish,
-      _uEthPrice: BigNumberish,
-      _priceProof: BytesLike[],
-      _newCumLiqForClaims: BigNumberish,
-      _liqForClaimsProof: BytesLike[],
-      overrides?: PayableOverrides & { from?: string | Promise<string> },
+      _user: PromiseOrValue<string>,
+      _uAmount: PromiseOrValue<BigNumberish>,
+      _uEthPrice: PromiseOrValue<BigNumberish>,
+      _priceProof: PromiseOrValue<BytesLike>[],
+      _newCumLiqForClaims: PromiseOrValue<BigNumberish>,
+      _liqForClaimsProof: PromiseOrValue<BytesLike>[],
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     rcaValue(
-      _uAmount: BigNumberish,
-      _cumLiqForClaims: BigNumberish,
+      _uAmount: PromiseOrValue<BigNumberish>,
+      _cumLiqForClaims: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
-    receiveOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    receiveOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     redeemFinalize(
-      _to: string,
-      _routerData: BytesLike,
-      _newCumLiqForClaims: BigNumberish,
-      _liqForClaimsProof: BytesLike[],
-      _newPercentReserved: BigNumberish,
-      _percentReservedProof: BytesLike[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _to: PromiseOrValue<string>,
+      _routerData: PromiseOrValue<BytesLike>,
+      _newCumLiqForClaims: PromiseOrValue<BigNumberish>,
+      _liqForClaimsProof: PromiseOrValue<BytesLike>[],
+      _newPercentReserved: PromiseOrValue<BigNumberish>,
+      _percentReservedProof: PromiseOrValue<BytesLike>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     redeemRequest(
-      _rcaAmount: BigNumberish,
-      _newCumLiqForClaims: BigNumberish,
-      _liqForClaimsProof: BytesLike[],
-      _newPercentReserved: BigNumberish,
-      _percentReservedProof: BytesLike[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _rcaAmount: PromiseOrValue<BigNumberish>,
+      _newCumLiqForClaims: PromiseOrValue<BigNumberish>,
+      _liqForClaimsProof: PromiseOrValue<BytesLike>[],
+      _newPercentReserved: PromiseOrValue<BigNumberish>,
+      _percentReservedProof: PromiseOrValue<BytesLike>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setApr(
-      _newApr: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _newApr: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setController(
-      _newController: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _newController: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setDiscount(
-      _newDiscount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _newDiscount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setLiqForClaims(
-      _newCumLiqForClaims: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _newCumLiqForClaims: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setPercentReserved(
-      _newPercentReserved: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _newPercentReserved: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setTreasury(
-      _newTreasury: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _newTreasury: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setWithdrawalDelay(
-      _newWithdrawalDelay: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _newWithdrawalDelay: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     symbol(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -1402,21 +1552,21 @@ export interface EaseRcaShield extends BaseContract {
     totalSupply(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     transfer(
-      to: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      to: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     transferFrom(
-      from: string,
-      to: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     transferOwnership(
-      newGovernor: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newGovernor: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     treasury(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -1426,13 +1576,13 @@ export interface EaseRcaShield extends BaseContract {
     uToken(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     uValue(
-      _rcaAmount: BigNumberish,
-      _cumLiqForClaims: BigNumberish,
-      _percentReserved: BigNumberish,
+      _rcaAmount: PromiseOrValue<BigNumberish>,
+      _cumLiqForClaims: PromiseOrValue<BigNumberish>,
+      _percentReserved: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
-    withdrawRequests(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    withdrawRequests(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     withdrawalDelay(overrides?: CallOverrides): Promise<PopulatedTransaction>;
   };

@@ -15,15 +15,15 @@ import type {
 } from 'ethers';
 import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
 import type { Listener, Provider } from '@ethersproject/providers';
-import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
 export declare namespace CommunalFarm {
   export type LockedStakeStruct = {
-    kek_id: BytesLike;
-    start_timestamp: BigNumberish;
-    liquidity: BigNumberish;
-    ending_timestamp: BigNumberish;
-    lock_multiplier: BigNumberish;
+    kek_id: PromiseOrValue<BytesLike>;
+    start_timestamp: PromiseOrValue<BigNumberish>;
+    liquidity: PromiseOrValue<BigNumberish>;
+    ending_timestamp: PromiseOrValue<BigNumberish>;
+    lock_multiplier: PromiseOrValue<BigNumberish>;
   };
 
   export type LockedStakeStructOutput = [string, BigNumber, BigNumber, BigNumber, BigNumber] & {
@@ -142,46 +142,61 @@ export interface SaddleCommunalFarmInterface extends utils.Interface {
   ): FunctionFragment;
 
   encodeFunctionData(functionFragment: 'acceptOwnership', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'calcCurCombinedWeight', values: [string]): string;
-  encodeFunctionData(functionFragment: 'changeTokenManager', values: [string, string]): string;
-  encodeFunctionData(functionFragment: 'combinedWeightOf', values: [string]): string;
-  encodeFunctionData(functionFragment: 'earned', values: [string]): string;
+  encodeFunctionData(functionFragment: 'calcCurCombinedWeight', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'changeTokenManager',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>],
+  ): string;
+  encodeFunctionData(functionFragment: 'combinedWeightOf', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'earned', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'getAllRewardTokens', values?: undefined): string;
   encodeFunctionData(functionFragment: 'getReward', values?: undefined): string;
   encodeFunctionData(functionFragment: 'getRewardForDuration', values?: undefined): string;
   encodeFunctionData(functionFragment: 'getRewardSymbols', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'greylist', values: [string]): string;
-  encodeFunctionData(functionFragment: 'greylistAddress', values: [string]): string;
+  encodeFunctionData(functionFragment: 'greylist', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'greylistAddress', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'initializeDefault', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'isTokenManagerFor', values: [string, string]): string;
+  encodeFunctionData(
+    functionFragment: 'isTokenManagerFor',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>],
+  ): string;
   encodeFunctionData(functionFragment: 'lastUpdateTime', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'lockMultiplier', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'lockMultiplier', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'lock_max_multiplier', values?: undefined): string;
   encodeFunctionData(functionFragment: 'lock_time_for_max_multiplier', values?: undefined): string;
   encodeFunctionData(functionFragment: 'lock_time_min', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'lockedLiquidityOf', values: [string]): string;
-  encodeFunctionData(functionFragment: 'lockedStakesOf', values: [string]): string;
-  encodeFunctionData(functionFragment: 'nominateNewOwner', values: [string]): string;
+  encodeFunctionData(functionFragment: 'lockedLiquidityOf', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'lockedStakesOf', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'nominateNewOwner', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'nominatedOwner', values?: undefined): string;
   encodeFunctionData(functionFragment: 'owner', values?: undefined): string;
   encodeFunctionData(functionFragment: 'periodFinish', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'recoverERC20', values: [string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'rewardManagers', values: [string]): string;
-  encodeFunctionData(functionFragment: 'rewardRates', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'rewardSymbols', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'rewardTokenAddrToIdx', values: [string]): string;
-  encodeFunctionData(functionFragment: 'rewardTokens', values: [BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'recoverERC20',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'rewardManagers', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'rewardRates', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'rewardSymbols', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'rewardTokenAddrToIdx', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'rewardTokens', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'rewardsCollectionPaused', values?: undefined): string;
   encodeFunctionData(functionFragment: 'rewardsDuration', values?: undefined): string;
   encodeFunctionData(functionFragment: 'rewardsPerToken', values?: undefined): string;
   encodeFunctionData(
     functionFragment: 'setLockedStakeTimeForMinAndMaxMultiplier',
-    values: [BigNumberish, BigNumberish],
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
   ): string;
-  encodeFunctionData(functionFragment: 'setMultipliers', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'setRewardRate', values: [string, BigNumberish, boolean]): string;
-  encodeFunctionData(functionFragment: 'setRewardsDuration', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'stakeLocked', values: [BigNumberish, BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'setMultipliers', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(
+    functionFragment: 'setRewardRate',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>, PromiseOrValue<boolean>],
+  ): string;
+  encodeFunctionData(functionFragment: 'setRewardsDuration', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(
+    functionFragment: 'stakeLocked',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+  ): string;
   encodeFunctionData(functionFragment: 'stakesUnlocked', values?: undefined): string;
   encodeFunctionData(functionFragment: 'stakingPaused', values?: undefined): string;
   encodeFunctionData(functionFragment: 'sync', values?: undefined): string;
@@ -191,7 +206,7 @@ export interface SaddleCommunalFarmInterface extends utils.Interface {
   encodeFunctionData(functionFragment: 'totalCombinedWeight', values?: undefined): string;
   encodeFunctionData(functionFragment: 'totalLiquidityLocked', values?: undefined): string;
   encodeFunctionData(functionFragment: 'unlockStakes', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'withdrawLocked', values: [BytesLike]): string;
+  encodeFunctionData(functionFragment: 'withdrawLocked', values: [PromiseOrValue<BytesLike>]): string;
   encodeFunctionData(functionFragment: 'withdrawalsPaused', values?: undefined): string;
 
   decodeFunctionResult(functionFragment: 'acceptOwnership', data: BytesLike): Result;
@@ -391,10 +406,10 @@ export interface SaddleCommunalFarm extends BaseContract {
   removeListener: OnEvent<this>;
 
   functions: {
-    acceptOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    acceptOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     calcCurCombinedWeight(
-      account: string,
+      account: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<
       [BigNumber, BigNumber] & {
@@ -404,37 +419,44 @@ export interface SaddleCommunalFarm extends BaseContract {
     >;
 
     changeTokenManager(
-      reward_token_address: string,
-      new_manager_address: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      reward_token_address: PromiseOrValue<string>,
+      new_manager_address: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    combinedWeightOf(account: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    combinedWeightOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    earned(account: string, overrides?: CallOverrides): Promise<[BigNumber[]] & { new_earned: BigNumber[] }>;
+    earned(
+      account: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber[]] & { new_earned: BigNumber[] }>;
 
     getAllRewardTokens(overrides?: CallOverrides): Promise<[string[]]>;
 
-    getReward(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    getReward(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     getRewardForDuration(overrides?: CallOverrides): Promise<[BigNumber[]] & { rewards_per_duration_arr: BigNumber[] }>;
 
     getRewardSymbols(overrides?: CallOverrides): Promise<[string[]]>;
 
-    greylist(arg0: string, overrides?: CallOverrides): Promise<[boolean]>;
+    greylist(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[boolean]>;
 
     greylistAddress(
-      _address: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _address: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    initializeDefault(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    initializeDefault(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
-    isTokenManagerFor(caller_addr: string, reward_token_addr: string, overrides?: CallOverrides): Promise<[boolean]>;
+    isTokenManagerFor(
+      caller_addr: PromiseOrValue<string>,
+      reward_token_addr: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<[boolean]>;
 
     lastUpdateTime(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    lockMultiplier(secs: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber]>;
+    lockMultiplier(secs: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     lock_max_multiplier(overrides?: CallOverrides): Promise<[BigNumber]>;
 
@@ -442,13 +464,16 @@ export interface SaddleCommunalFarm extends BaseContract {
 
     lock_time_min(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    lockedLiquidityOf(account: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    lockedLiquidityOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    lockedStakesOf(account: string, overrides?: CallOverrides): Promise<[CommunalFarm.LockedStakeStructOutput[]]>;
+    lockedStakesOf(
+      account: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<[CommunalFarm.LockedStakeStructOutput[]]>;
 
     nominateNewOwner(
-      _owner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _owner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     nominatedOwner(overrides?: CallOverrides): Promise<[string]>;
@@ -458,20 +483,20 @@ export interface SaddleCommunalFarm extends BaseContract {
     periodFinish(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     recoverERC20(
-      tokenAddress: string,
-      tokenAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      tokenAddress: PromiseOrValue<string>,
+      tokenAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    rewardManagers(arg0: string, overrides?: CallOverrides): Promise<[string]>;
+    rewardManagers(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[string]>;
 
-    rewardRates(arg0: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber]>;
+    rewardRates(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    rewardSymbols(arg0: BigNumberish, overrides?: CallOverrides): Promise<[string]>;
+    rewardSymbols(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[string]>;
 
-    rewardTokenAddrToIdx(arg0: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    rewardTokenAddrToIdx(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    rewardTokens(arg0: BigNumberish, overrides?: CallOverrides): Promise<[string]>;
+    rewardTokens(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[string]>;
 
     rewardsCollectionPaused(overrides?: CallOverrides): Promise<[boolean]>;
 
@@ -480,64 +505,64 @@ export interface SaddleCommunalFarm extends BaseContract {
     rewardsPerToken(overrides?: CallOverrides): Promise<[BigNumber[]] & { newRewardsPerTokenStored: BigNumber[] }>;
 
     setLockedStakeTimeForMinAndMaxMultiplier(
-      _lock_time_for_max_multiplier: BigNumberish,
-      _lock_time_min: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _lock_time_for_max_multiplier: PromiseOrValue<BigNumberish>,
+      _lock_time_min: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setMultipliers(
-      _lock_max_multiplier: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _lock_max_multiplier: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setRewardRate(
-      reward_token_address: string,
-      new_rate: BigNumberish,
-      sync_too: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      reward_token_address: PromiseOrValue<string>,
+      new_rate: PromiseOrValue<BigNumberish>,
+      sync_too: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setRewardsDuration(
-      _rewardsDuration: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _rewardsDuration: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     stakeLocked(
-      liquidity: BigNumberish,
-      secs: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      liquidity: PromiseOrValue<BigNumberish>,
+      secs: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     stakesUnlocked(overrides?: CallOverrides): Promise<[boolean]>;
 
     stakingPaused(overrides?: CallOverrides): Promise<[boolean]>;
 
-    sync(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    sync(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
-    toggleRewardsCollection(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    toggleRewardsCollection(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
-    toggleStaking(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    toggleStaking(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
-    toggleWithdrawals(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    toggleWithdrawals(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     totalCombinedWeight(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     totalLiquidityLocked(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    unlockStakes(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    unlockStakes(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     withdrawLocked(
-      kek_id: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      kek_id: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     withdrawalsPaused(overrides?: CallOverrides): Promise<[boolean]>;
   };
 
-  acceptOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  acceptOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   calcCurCombinedWeight(
-    account: string,
+    account: PromiseOrValue<string>,
     overrides?: CallOverrides,
   ): Promise<
     [BigNumber, BigNumber] & {
@@ -547,37 +572,41 @@ export interface SaddleCommunalFarm extends BaseContract {
   >;
 
   changeTokenManager(
-    reward_token_address: string,
-    new_manager_address: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    reward_token_address: PromiseOrValue<string>,
+    new_manager_address: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  combinedWeightOf(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+  combinedWeightOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  earned(account: string, overrides?: CallOverrides): Promise<BigNumber[]>;
+  earned(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber[]>;
 
   getAllRewardTokens(overrides?: CallOverrides): Promise<string[]>;
 
-  getReward(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  getReward(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   getRewardForDuration(overrides?: CallOverrides): Promise<BigNumber[]>;
 
   getRewardSymbols(overrides?: CallOverrides): Promise<string[]>;
 
-  greylist(arg0: string, overrides?: CallOverrides): Promise<boolean>;
+  greylist(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
   greylistAddress(
-    _address: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _address: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  initializeDefault(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  initializeDefault(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
-  isTokenManagerFor(caller_addr: string, reward_token_addr: string, overrides?: CallOverrides): Promise<boolean>;
+  isTokenManagerFor(
+    caller_addr: PromiseOrValue<string>,
+    reward_token_addr: PromiseOrValue<string>,
+    overrides?: CallOverrides,
+  ): Promise<boolean>;
 
   lastUpdateTime(overrides?: CallOverrides): Promise<BigNumber>;
 
-  lockMultiplier(secs: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+  lockMultiplier(secs: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
   lock_max_multiplier(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -585,13 +614,16 @@ export interface SaddleCommunalFarm extends BaseContract {
 
   lock_time_min(overrides?: CallOverrides): Promise<BigNumber>;
 
-  lockedLiquidityOf(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+  lockedLiquidityOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  lockedStakesOf(account: string, overrides?: CallOverrides): Promise<CommunalFarm.LockedStakeStructOutput[]>;
+  lockedStakesOf(
+    account: PromiseOrValue<string>,
+    overrides?: CallOverrides,
+  ): Promise<CommunalFarm.LockedStakeStructOutput[]>;
 
   nominateNewOwner(
-    _owner: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _owner: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   nominatedOwner(overrides?: CallOverrides): Promise<string>;
@@ -601,20 +633,20 @@ export interface SaddleCommunalFarm extends BaseContract {
   periodFinish(overrides?: CallOverrides): Promise<BigNumber>;
 
   recoverERC20(
-    tokenAddress: string,
-    tokenAmount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    tokenAddress: PromiseOrValue<string>,
+    tokenAmount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  rewardManagers(arg0: string, overrides?: CallOverrides): Promise<string>;
+  rewardManagers(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<string>;
 
-  rewardRates(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+  rewardRates(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  rewardSymbols(arg0: BigNumberish, overrides?: CallOverrides): Promise<string>;
+  rewardSymbols(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
 
-  rewardTokenAddrToIdx(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+  rewardTokenAddrToIdx(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  rewardTokens(arg0: BigNumberish, overrides?: CallOverrides): Promise<string>;
+  rewardTokens(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
 
   rewardsCollectionPaused(overrides?: CallOverrides): Promise<boolean>;
 
@@ -623,55 +655,55 @@ export interface SaddleCommunalFarm extends BaseContract {
   rewardsPerToken(overrides?: CallOverrides): Promise<BigNumber[]>;
 
   setLockedStakeTimeForMinAndMaxMultiplier(
-    _lock_time_for_max_multiplier: BigNumberish,
-    _lock_time_min: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _lock_time_for_max_multiplier: PromiseOrValue<BigNumberish>,
+    _lock_time_min: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setMultipliers(
-    _lock_max_multiplier: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _lock_max_multiplier: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setRewardRate(
-    reward_token_address: string,
-    new_rate: BigNumberish,
-    sync_too: boolean,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    reward_token_address: PromiseOrValue<string>,
+    new_rate: PromiseOrValue<BigNumberish>,
+    sync_too: PromiseOrValue<boolean>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setRewardsDuration(
-    _rewardsDuration: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _rewardsDuration: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   stakeLocked(
-    liquidity: BigNumberish,
-    secs: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    liquidity: PromiseOrValue<BigNumberish>,
+    secs: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   stakesUnlocked(overrides?: CallOverrides): Promise<boolean>;
 
   stakingPaused(overrides?: CallOverrides): Promise<boolean>;
 
-  sync(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  sync(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
-  toggleRewardsCollection(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  toggleRewardsCollection(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
-  toggleStaking(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  toggleStaking(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
-  toggleWithdrawals(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  toggleWithdrawals(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   totalCombinedWeight(overrides?: CallOverrides): Promise<BigNumber>;
 
   totalLiquidityLocked(overrides?: CallOverrides): Promise<BigNumber>;
 
-  unlockStakes(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  unlockStakes(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   withdrawLocked(
-    kek_id: BytesLike,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    kek_id: PromiseOrValue<BytesLike>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   withdrawalsPaused(overrides?: CallOverrides): Promise<boolean>;
@@ -680,7 +712,7 @@ export interface SaddleCommunalFarm extends BaseContract {
     acceptOwnership(overrides?: CallOverrides): Promise<void>;
 
     calcCurCombinedWeight(
-      account: string,
+      account: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<
       [BigNumber, BigNumber] & {
@@ -690,14 +722,14 @@ export interface SaddleCommunalFarm extends BaseContract {
     >;
 
     changeTokenManager(
-      reward_token_address: string,
-      new_manager_address: string,
+      reward_token_address: PromiseOrValue<string>,
+      new_manager_address: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
-    combinedWeightOf(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    combinedWeightOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    earned(account: string, overrides?: CallOverrides): Promise<BigNumber[]>;
+    earned(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber[]>;
 
     getAllRewardTokens(overrides?: CallOverrides): Promise<string[]>;
 
@@ -707,17 +739,21 @@ export interface SaddleCommunalFarm extends BaseContract {
 
     getRewardSymbols(overrides?: CallOverrides): Promise<string[]>;
 
-    greylist(arg0: string, overrides?: CallOverrides): Promise<boolean>;
+    greylist(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
-    greylistAddress(_address: string, overrides?: CallOverrides): Promise<void>;
+    greylistAddress(_address: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     initializeDefault(overrides?: CallOverrides): Promise<void>;
 
-    isTokenManagerFor(caller_addr: string, reward_token_addr: string, overrides?: CallOverrides): Promise<boolean>;
+    isTokenManagerFor(
+      caller_addr: PromiseOrValue<string>,
+      reward_token_addr: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
 
     lastUpdateTime(overrides?: CallOverrides): Promise<BigNumber>;
 
-    lockMultiplier(secs: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    lockMultiplier(secs: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     lock_max_multiplier(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -725,11 +761,14 @@ export interface SaddleCommunalFarm extends BaseContract {
 
     lock_time_min(overrides?: CallOverrides): Promise<BigNumber>;
 
-    lockedLiquidityOf(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    lockedLiquidityOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    lockedStakesOf(account: string, overrides?: CallOverrides): Promise<CommunalFarm.LockedStakeStructOutput[]>;
+    lockedStakesOf(
+      account: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<CommunalFarm.LockedStakeStructOutput[]>;
 
-    nominateNewOwner(_owner: string, overrides?: CallOverrides): Promise<void>;
+    nominateNewOwner(_owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     nominatedOwner(overrides?: CallOverrides): Promise<string>;
 
@@ -737,17 +776,21 @@ export interface SaddleCommunalFarm extends BaseContract {
 
     periodFinish(overrides?: CallOverrides): Promise<BigNumber>;
 
-    recoverERC20(tokenAddress: string, tokenAmount: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    recoverERC20(
+      tokenAddress: PromiseOrValue<string>,
+      tokenAmount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    rewardManagers(arg0: string, overrides?: CallOverrides): Promise<string>;
+    rewardManagers(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<string>;
 
-    rewardRates(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    rewardRates(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    rewardSymbols(arg0: BigNumberish, overrides?: CallOverrides): Promise<string>;
+    rewardSymbols(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
 
-    rewardTokenAddrToIdx(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    rewardTokenAddrToIdx(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    rewardTokens(arg0: BigNumberish, overrides?: CallOverrides): Promise<string>;
+    rewardTokens(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
 
     rewardsCollectionPaused(overrides?: CallOverrides): Promise<boolean>;
 
@@ -756,23 +799,27 @@ export interface SaddleCommunalFarm extends BaseContract {
     rewardsPerToken(overrides?: CallOverrides): Promise<BigNumber[]>;
 
     setLockedStakeTimeForMinAndMaxMultiplier(
-      _lock_time_for_max_multiplier: BigNumberish,
-      _lock_time_min: BigNumberish,
+      _lock_time_for_max_multiplier: PromiseOrValue<BigNumberish>,
+      _lock_time_min: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
-    setMultipliers(_lock_max_multiplier: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    setMultipliers(_lock_max_multiplier: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
     setRewardRate(
-      reward_token_address: string,
-      new_rate: BigNumberish,
-      sync_too: boolean,
+      reward_token_address: PromiseOrValue<string>,
+      new_rate: PromiseOrValue<BigNumberish>,
+      sync_too: PromiseOrValue<boolean>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
-    setRewardsDuration(_rewardsDuration: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    setRewardsDuration(_rewardsDuration: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
-    stakeLocked(liquidity: BigNumberish, secs: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    stakeLocked(
+      liquidity: PromiseOrValue<BigNumberish>,
+      secs: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
     stakesUnlocked(overrides?: CallOverrides): Promise<boolean>;
 
@@ -792,7 +839,7 @@ export interface SaddleCommunalFarm extends BaseContract {
 
     unlockStakes(overrides?: CallOverrides): Promise<void>;
 
-    withdrawLocked(kek_id: BytesLike, overrides?: CallOverrides): Promise<void>;
+    withdrawLocked(kek_id: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<void>;
 
     withdrawalsPaused(overrides?: CallOverrides): Promise<boolean>;
   };
@@ -820,13 +867,13 @@ export interface SaddleCommunalFarm extends BaseContract {
     Recovered(destination_address?: null, token?: null, amount?: null): RecoveredEventFilter;
 
     'RewardPaid(address,uint256,address,address)'(
-      user?: string | null,
+      user?: PromiseOrValue<string> | null,
       reward?: null,
       token_address?: null,
       destination_address?: null,
     ): RewardPaidEventFilter;
     RewardPaid(
-      user?: string | null,
+      user?: PromiseOrValue<string> | null,
       reward?: null,
       token_address?: null,
       destination_address?: null,
@@ -839,14 +886,14 @@ export interface SaddleCommunalFarm extends BaseContract {
     RewardsPeriodRenewed(token?: null): RewardsPeriodRenewedEventFilter;
 
     'StakeLocked(address,uint256,uint256,bytes32,address)'(
-      user?: string | null,
+      user?: PromiseOrValue<string> | null,
       amount?: null,
       secs?: null,
       kek_id?: null,
       source_address?: null,
     ): StakeLockedEventFilter;
     StakeLocked(
-      user?: string | null,
+      user?: PromiseOrValue<string> | null,
       amount?: null,
       secs?: null,
       kek_id?: null,
@@ -854,13 +901,13 @@ export interface SaddleCommunalFarm extends BaseContract {
     ): StakeLockedEventFilter;
 
     'WithdrawLocked(address,uint256,bytes32,address)'(
-      user?: string | null,
+      user?: PromiseOrValue<string> | null,
       amount?: null,
       kek_id?: null,
       destination_address?: null,
     ): WithdrawLockedEventFilter;
     WithdrawLocked(
-      user?: string | null,
+      user?: PromiseOrValue<string> | null,
       amount?: null,
       kek_id?: null,
       destination_address?: null,
@@ -868,39 +915,46 @@ export interface SaddleCommunalFarm extends BaseContract {
   };
 
   estimateGas: {
-    acceptOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    acceptOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
-    calcCurCombinedWeight(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    calcCurCombinedWeight(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     changeTokenManager(
-      reward_token_address: string,
-      new_manager_address: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      reward_token_address: PromiseOrValue<string>,
+      new_manager_address: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    combinedWeightOf(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    combinedWeightOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    earned(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    earned(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     getAllRewardTokens(overrides?: CallOverrides): Promise<BigNumber>;
 
-    getReward(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    getReward(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     getRewardForDuration(overrides?: CallOverrides): Promise<BigNumber>;
 
     getRewardSymbols(overrides?: CallOverrides): Promise<BigNumber>;
 
-    greylist(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    greylist(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    greylistAddress(_address: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    greylistAddress(
+      _address: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
-    initializeDefault(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    initializeDefault(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
-    isTokenManagerFor(caller_addr: string, reward_token_addr: string, overrides?: CallOverrides): Promise<BigNumber>;
+    isTokenManagerFor(
+      caller_addr: PromiseOrValue<string>,
+      reward_token_addr: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     lastUpdateTime(overrides?: CallOverrides): Promise<BigNumber>;
 
-    lockMultiplier(secs: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    lockMultiplier(secs: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     lock_max_multiplier(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -908,11 +962,14 @@ export interface SaddleCommunalFarm extends BaseContract {
 
     lock_time_min(overrides?: CallOverrides): Promise<BigNumber>;
 
-    lockedLiquidityOf(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    lockedLiquidityOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    lockedStakesOf(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    lockedStakesOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    nominateNewOwner(_owner: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    nominateNewOwner(
+      _owner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     nominatedOwner(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -921,20 +978,20 @@ export interface SaddleCommunalFarm extends BaseContract {
     periodFinish(overrides?: CallOverrides): Promise<BigNumber>;
 
     recoverERC20(
-      tokenAddress: string,
-      tokenAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      tokenAddress: PromiseOrValue<string>,
+      tokenAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    rewardManagers(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    rewardManagers(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    rewardRates(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    rewardRates(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    rewardSymbols(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    rewardSymbols(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    rewardTokenAddrToIdx(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    rewardTokenAddrToIdx(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    rewardTokens(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    rewardTokens(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     rewardsCollectionPaused(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -943,98 +1000,101 @@ export interface SaddleCommunalFarm extends BaseContract {
     rewardsPerToken(overrides?: CallOverrides): Promise<BigNumber>;
 
     setLockedStakeTimeForMinAndMaxMultiplier(
-      _lock_time_for_max_multiplier: BigNumberish,
-      _lock_time_min: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _lock_time_for_max_multiplier: PromiseOrValue<BigNumberish>,
+      _lock_time_min: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setMultipliers(
-      _lock_max_multiplier: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _lock_max_multiplier: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setRewardRate(
-      reward_token_address: string,
-      new_rate: BigNumberish,
-      sync_too: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      reward_token_address: PromiseOrValue<string>,
+      new_rate: PromiseOrValue<BigNumberish>,
+      sync_too: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setRewardsDuration(
-      _rewardsDuration: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _rewardsDuration: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     stakeLocked(
-      liquidity: BigNumberish,
-      secs: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      liquidity: PromiseOrValue<BigNumberish>,
+      secs: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     stakesUnlocked(overrides?: CallOverrides): Promise<BigNumber>;
 
     stakingPaused(overrides?: CallOverrides): Promise<BigNumber>;
 
-    sync(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    sync(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
-    toggleRewardsCollection(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    toggleRewardsCollection(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
-    toggleStaking(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    toggleStaking(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
-    toggleWithdrawals(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    toggleWithdrawals(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     totalCombinedWeight(overrides?: CallOverrides): Promise<BigNumber>;
 
     totalLiquidityLocked(overrides?: CallOverrides): Promise<BigNumber>;
 
-    unlockStakes(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    unlockStakes(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
-    withdrawLocked(kek_id: BytesLike, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    withdrawLocked(
+      kek_id: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     withdrawalsPaused(overrides?: CallOverrides): Promise<BigNumber>;
   };
 
   populateTransaction: {
-    acceptOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    acceptOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
-    calcCurCombinedWeight(account: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    calcCurCombinedWeight(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     changeTokenManager(
-      reward_token_address: string,
-      new_manager_address: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      reward_token_address: PromiseOrValue<string>,
+      new_manager_address: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    combinedWeightOf(account: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    combinedWeightOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    earned(account: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    earned(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     getAllRewardTokens(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    getReward(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    getReward(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     getRewardForDuration(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     getRewardSymbols(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    greylist(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    greylist(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     greylistAddress(
-      _address: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _address: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    initializeDefault(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    initializeDefault(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     isTokenManagerFor(
-      caller_addr: string,
-      reward_token_addr: string,
+      caller_addr: PromiseOrValue<string>,
+      reward_token_addr: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     lastUpdateTime(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    lockMultiplier(secs: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    lockMultiplier(secs: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     lock_max_multiplier(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
@@ -1042,13 +1102,13 @@ export interface SaddleCommunalFarm extends BaseContract {
 
     lock_time_min(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    lockedLiquidityOf(account: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    lockedLiquidityOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    lockedStakesOf(account: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    lockedStakesOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     nominateNewOwner(
-      _owner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _owner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     nominatedOwner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -1058,20 +1118,20 @@ export interface SaddleCommunalFarm extends BaseContract {
     periodFinish(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     recoverERC20(
-      tokenAddress: string,
-      tokenAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      tokenAddress: PromiseOrValue<string>,
+      tokenAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    rewardManagers(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    rewardManagers(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    rewardRates(arg0: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    rewardRates(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    rewardSymbols(arg0: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    rewardSymbols(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    rewardTokenAddrToIdx(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    rewardTokenAddrToIdx(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    rewardTokens(arg0: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    rewardTokens(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     rewardsCollectionPaused(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
@@ -1080,55 +1140,55 @@ export interface SaddleCommunalFarm extends BaseContract {
     rewardsPerToken(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     setLockedStakeTimeForMinAndMaxMultiplier(
-      _lock_time_for_max_multiplier: BigNumberish,
-      _lock_time_min: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _lock_time_for_max_multiplier: PromiseOrValue<BigNumberish>,
+      _lock_time_min: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setMultipliers(
-      _lock_max_multiplier: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _lock_max_multiplier: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setRewardRate(
-      reward_token_address: string,
-      new_rate: BigNumberish,
-      sync_too: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      reward_token_address: PromiseOrValue<string>,
+      new_rate: PromiseOrValue<BigNumberish>,
+      sync_too: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setRewardsDuration(
-      _rewardsDuration: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _rewardsDuration: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     stakeLocked(
-      liquidity: BigNumberish,
-      secs: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      liquidity: PromiseOrValue<BigNumberish>,
+      secs: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     stakesUnlocked(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     stakingPaused(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    sync(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    sync(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
-    toggleRewardsCollection(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    toggleRewardsCollection(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
-    toggleStaking(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    toggleStaking(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
-    toggleWithdrawals(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    toggleWithdrawals(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     totalCombinedWeight(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     totalLiquidityLocked(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    unlockStakes(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    unlockStakes(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     withdrawLocked(
-      kek_id: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      kek_id: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     withdrawalsPaused(overrides?: CallOverrides): Promise<PopulatedTransaction>;

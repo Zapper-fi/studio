@@ -15,7 +15,7 @@ import type {
 } from 'ethers';
 import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
 import type { Listener, Provider } from '@ethersproject/providers';
-import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
 export interface PenguinVaultInterface extends utils.Interface {
   functions: {
@@ -197,46 +197,75 @@ export interface PenguinVaultInterface extends utils.Interface {
   encodeFunctionData(functionFragment: 'POOL_CREATOR_FEE_BIPS_LOCAL', values?: undefined): string;
   encodeFunctionData(functionFragment: 'USE_GLOBAL_PEFI_VARIABLES', values?: undefined): string;
   encodeFunctionData(functionFragment: 'VERSION_HASH', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'allowance', values: [string, string]): string;
+  encodeFunctionData(functionFragment: 'allowance', values: [PromiseOrValue<string>, PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'alternateAddress', values?: undefined): string;
   encodeFunctionData(functionFragment: 'alternateAddressLocal', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'approve', values: [string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'balanceOf', values: [string]): string;
+  encodeFunctionData(
+    functionFragment: 'approve',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'balanceOf', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'checkReward', values?: undefined): string;
   encodeFunctionData(functionFragment: 'claimXPEFI', values?: undefined): string;
   encodeFunctionData(functionFragment: 'decimals', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'deposit', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'depositFor', values: [string, BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'deposit', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(
+    functionFragment: 'depositFor',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
   encodeFunctionData(functionFragment: 'depositToken', values?: undefined): string;
   encodeFunctionData(
     functionFragment: 'depositWithPermit',
-    values: [BigNumberish, BigNumberish, BigNumberish, BytesLike, BytesLike],
+    values: [
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BytesLike>,
+      PromiseOrValue<BytesLike>,
+    ],
   ): string;
   encodeFunctionData(functionFragment: 'devAddress', values?: undefined): string;
   encodeFunctionData(functionFragment: 'devAddressLocal', values?: undefined): string;
   encodeFunctionData(functionFragment: 'estimateDeployedBalance', values?: undefined): string;
   encodeFunctionData(functionFragment: 'estimateReinvestReward', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'getDepositTokensForShares', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'getDepositTokensForShares', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'getDomainSeparator', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'getSharesForDepositTokens', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'impromptuTokenAggregation', values: [BigNumberish, boolean]): string;
+  encodeFunctionData(functionFragment: 'getSharesForDepositTokens', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(
+    functionFragment: 'impromptuTokenAggregation',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<boolean>],
+  ): string;
   encodeFunctionData(functionFragment: 'name', values?: undefined): string;
   encodeFunctionData(functionFragment: 'nestAddress', values?: undefined): string;
   encodeFunctionData(functionFragment: 'nestAddressLocal', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'nonces', values: [string]): string;
+  encodeFunctionData(functionFragment: 'nonces', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'owner', values?: undefined): string;
   encodeFunctionData(functionFragment: 'pefiGlobalVariableContract', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'pendingXPefi', values: [string]): string;
+  encodeFunctionData(functionFragment: 'pendingXPefi', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(
     functionFragment: 'permit',
-    values: [string, string, BigNumberish, BigNumberish, BigNumberish, BytesLike, BytesLike],
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BytesLike>,
+      PromiseOrValue<BytesLike>,
+    ],
   ): string;
   encodeFunctionData(functionFragment: 'poolCreatorAddress', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'recoverAVAX', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'recoverERC20', values: [string, BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'recoverAVAX', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(
+    functionFragment: 'recoverERC20',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
   encodeFunctionData(functionFragment: 'reinvest', values?: undefined): string;
   encodeFunctionData(functionFragment: 'renounceOwnership', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'revokeAllowance', values: [string, string]): string;
+  encodeFunctionData(
+    functionFragment: 'revokeAllowance',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>],
+  ): string;
   encodeFunctionData(functionFragment: 'rewardToken', values?: undefined): string;
   encodeFunctionData(functionFragment: 'router', values?: undefined): string;
   encodeFunctionData(functionFragment: 'setAllowances', values?: undefined): string;
@@ -246,24 +275,38 @@ export interface PenguinVaultInterface extends utils.Interface {
   encodeFunctionData(functionFragment: 'token1', values?: undefined): string;
   encodeFunctionData(functionFragment: 'totalDeposits', values?: undefined): string;
   encodeFunctionData(functionFragment: 'totalSupply', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'transfer', values: [string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'transferFrom', values: [string, string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'transferOwnership', values: [string]): string;
-  encodeFunctionData(functionFragment: 'updateAlternateAddress', values: [string]): string;
-  encodeFunctionData(functionFragment: 'updateDepositsEnabled', values: [boolean]): string;
-  encodeFunctionData(functionFragment: 'updateDevAddress', values: [string]): string;
+  encodeFunctionData(
+    functionFragment: 'transfer',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'transferFrom',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'transferOwnership', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'updateAlternateAddress', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'updateDepositsEnabled', values: [PromiseOrValue<boolean>]): string;
+  encodeFunctionData(functionFragment: 'updateDevAddress', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(
     functionFragment: 'updateFeeStructure',
-    values: [BigNumberish, BigNumberish, BigNumberish, BigNumberish],
+    values: [
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+    ],
   ): string;
-  encodeFunctionData(functionFragment: 'updateMaxTokensToDepositWithoutReinvest', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'updateMinTokensToReinvest', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'updateNestAddress', values: [string]): string;
-  encodeFunctionData(functionFragment: 'updateNestStakingBips', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'updatePoolCreatorAddress', values: [string]): string;
-  encodeFunctionData(functionFragment: 'updateUseGlobalVariables', values: [boolean]): string;
-  encodeFunctionData(functionFragment: 'withdraw', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'xPefiDebt', values: [string]): string;
+  encodeFunctionData(
+    functionFragment: 'updateMaxTokensToDepositWithoutReinvest',
+    values: [PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'updateMinTokensToReinvest', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'updateNestAddress', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'updateNestStakingBips', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'updatePoolCreatorAddress', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'updateUseGlobalVariables', values: [PromiseOrValue<boolean>]): string;
+  encodeFunctionData(functionFragment: 'withdraw', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'xPefiDebt', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'xPefiPerShare', values?: undefined): string;
 
   decodeFunctionResult(functionFragment: 'ALTERNATE_FEE_BIPS', data: BytesLike): Result;
@@ -606,46 +649,50 @@ export interface PenguinVault extends BaseContract {
 
     VERSION_HASH(overrides?: CallOverrides): Promise<[string]>;
 
-    allowance(account: string, spender: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    allowance(
+      account: PromiseOrValue<string>,
+      spender: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber]>;
 
     alternateAddress(overrides?: CallOverrides): Promise<[string]>;
 
     alternateAddressLocal(overrides?: CallOverrides): Promise<[string]>;
 
     approve(
-      spender: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      spender: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    balanceOf(account: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    balanceOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     checkReward(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    claimXPEFI(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    claimXPEFI(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     decimals(overrides?: CallOverrides): Promise<[number]>;
 
     deposit(
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     depositFor(
-      account: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      account: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     depositToken(overrides?: CallOverrides): Promise<[string]>;
 
     depositWithPermit(
-      amount: BigNumberish,
-      deadline: BigNumberish,
-      v: BigNumberish,
-      r: BytesLike,
-      s: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      amount: PromiseOrValue<BigNumberish>,
+      deadline: PromiseOrValue<BigNumberish>,
+      v: PromiseOrValue<BigNumberish>,
+      r: PromiseOrValue<BytesLike>,
+      s: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     devAddress(overrides?: CallOverrides): Promise<[string]>;
@@ -656,16 +703,16 @@ export interface PenguinVault extends BaseContract {
 
     estimateReinvestReward(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    getDepositTokensForShares(amount: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber]>;
+    getDepositTokensForShares(amount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     getDomainSeparator(overrides?: CallOverrides): Promise<[string]>;
 
-    getSharesForDepositTokens(amount: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber]>;
+    getSharesForDepositTokens(amount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     impromptuTokenAggregation(
-      minReturnAmountAccepted: BigNumberish,
-      disableDeposits: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      minReturnAmountAccepted: PromiseOrValue<BigNumberish>,
+      disableDeposits: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     name(overrides?: CallOverrides): Promise<[string]>;
@@ -674,53 +721,53 @@ export interface PenguinVault extends BaseContract {
 
     nestAddressLocal(overrides?: CallOverrides): Promise<[string]>;
 
-    nonces(arg0: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    nonces(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     owner(overrides?: CallOverrides): Promise<[string]>;
 
     pefiGlobalVariableContract(overrides?: CallOverrides): Promise<[string]>;
 
-    pendingXPefi(user: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    pendingXPefi(user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     permit(
-      owner: string,
-      spender: string,
-      value: BigNumberish,
-      deadline: BigNumberish,
-      v: BigNumberish,
-      r: BytesLike,
-      s: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      owner: PromiseOrValue<string>,
+      spender: PromiseOrValue<string>,
+      value: PromiseOrValue<BigNumberish>,
+      deadline: PromiseOrValue<BigNumberish>,
+      v: PromiseOrValue<BigNumberish>,
+      r: PromiseOrValue<BytesLike>,
+      s: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     poolCreatorAddress(overrides?: CallOverrides): Promise<[string]>;
 
     recoverAVAX(
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     recoverERC20(
-      tokenAddress: string,
-      tokenAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      tokenAddress: PromiseOrValue<string>,
+      tokenAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    reinvest(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    reinvest(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
-    renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     revokeAllowance(
-      token: string,
-      spender: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      token: PromiseOrValue<string>,
+      spender: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     rewardToken(overrides?: CallOverrides): Promise<[string]>;
 
     router(overrides?: CallOverrides): Promise<[string]>;
 
-    setAllowances(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    setAllowances(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     stakingContract(overrides?: CallOverrides): Promise<[string]>;
 
@@ -735,82 +782,82 @@ export interface PenguinVault extends BaseContract {
     totalSupply(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     transfer(
-      dst: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      dst: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     transferFrom(
-      src: string,
-      dst: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      src: PromiseOrValue<string>,
+      dst: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     updateAlternateAddress(
-      newValue: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newValue: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     updateDepositsEnabled(
-      newValue: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newValue: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     updateDevAddress(
-      newValue: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newValue: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     updateFeeStructure(
-      newPOOL_CREATOR_FEE_BIPS: BigNumberish,
-      newNEST_FEE_BIPS: BigNumberish,
-      newDEV_FEE_BIPS: BigNumberish,
-      newALTERNATE_FEE_BIPS: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newPOOL_CREATOR_FEE_BIPS: PromiseOrValue<BigNumberish>,
+      newNEST_FEE_BIPS: PromiseOrValue<BigNumberish>,
+      newDEV_FEE_BIPS: PromiseOrValue<BigNumberish>,
+      newALTERNATE_FEE_BIPS: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     updateMaxTokensToDepositWithoutReinvest(
-      newValue: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newValue: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     updateMinTokensToReinvest(
-      newValue: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newValue: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     updateNestAddress(
-      newValue: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newValue: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     updateNestStakingBips(
-      newNEST_STAKING_BIPS: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newNEST_STAKING_BIPS: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     updatePoolCreatorAddress(
-      newValue: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newValue: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     updateUseGlobalVariables(
-      newValue: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newValue: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     withdraw(
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    xPefiDebt(arg0: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    xPefiDebt(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     xPefiPerShare(overrides?: CallOverrides): Promise<[BigNumber]>;
   };
@@ -851,46 +898,50 @@ export interface PenguinVault extends BaseContract {
 
   VERSION_HASH(overrides?: CallOverrides): Promise<string>;
 
-  allowance(account: string, spender: string, overrides?: CallOverrides): Promise<BigNumber>;
+  allowance(
+    account: PromiseOrValue<string>,
+    spender: PromiseOrValue<string>,
+    overrides?: CallOverrides,
+  ): Promise<BigNumber>;
 
   alternateAddress(overrides?: CallOverrides): Promise<string>;
 
   alternateAddressLocal(overrides?: CallOverrides): Promise<string>;
 
   approve(
-    spender: string,
-    amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    spender: PromiseOrValue<string>,
+    amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  balanceOf(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+  balanceOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   checkReward(overrides?: CallOverrides): Promise<BigNumber>;
 
-  claimXPEFI(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  claimXPEFI(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   decimals(overrides?: CallOverrides): Promise<number>;
 
   deposit(
-    amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   depositFor(
-    account: string,
-    amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    account: PromiseOrValue<string>,
+    amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   depositToken(overrides?: CallOverrides): Promise<string>;
 
   depositWithPermit(
-    amount: BigNumberish,
-    deadline: BigNumberish,
-    v: BigNumberish,
-    r: BytesLike,
-    s: BytesLike,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    amount: PromiseOrValue<BigNumberish>,
+    deadline: PromiseOrValue<BigNumberish>,
+    v: PromiseOrValue<BigNumberish>,
+    r: PromiseOrValue<BytesLike>,
+    s: PromiseOrValue<BytesLike>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   devAddress(overrides?: CallOverrides): Promise<string>;
@@ -901,16 +952,16 @@ export interface PenguinVault extends BaseContract {
 
   estimateReinvestReward(overrides?: CallOverrides): Promise<BigNumber>;
 
-  getDepositTokensForShares(amount: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+  getDepositTokensForShares(amount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
   getDomainSeparator(overrides?: CallOverrides): Promise<string>;
 
-  getSharesForDepositTokens(amount: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+  getSharesForDepositTokens(amount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
   impromptuTokenAggregation(
-    minReturnAmountAccepted: BigNumberish,
-    disableDeposits: boolean,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    minReturnAmountAccepted: PromiseOrValue<BigNumberish>,
+    disableDeposits: PromiseOrValue<boolean>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   name(overrides?: CallOverrides): Promise<string>;
@@ -919,53 +970,53 @@ export interface PenguinVault extends BaseContract {
 
   nestAddressLocal(overrides?: CallOverrides): Promise<string>;
 
-  nonces(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+  nonces(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   owner(overrides?: CallOverrides): Promise<string>;
 
   pefiGlobalVariableContract(overrides?: CallOverrides): Promise<string>;
 
-  pendingXPefi(user: string, overrides?: CallOverrides): Promise<BigNumber>;
+  pendingXPefi(user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   permit(
-    owner: string,
-    spender: string,
-    value: BigNumberish,
-    deadline: BigNumberish,
-    v: BigNumberish,
-    r: BytesLike,
-    s: BytesLike,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    owner: PromiseOrValue<string>,
+    spender: PromiseOrValue<string>,
+    value: PromiseOrValue<BigNumberish>,
+    deadline: PromiseOrValue<BigNumberish>,
+    v: PromiseOrValue<BigNumberish>,
+    r: PromiseOrValue<BytesLike>,
+    s: PromiseOrValue<BytesLike>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   poolCreatorAddress(overrides?: CallOverrides): Promise<string>;
 
   recoverAVAX(
-    amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   recoverERC20(
-    tokenAddress: string,
-    tokenAmount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    tokenAddress: PromiseOrValue<string>,
+    tokenAmount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  reinvest(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  reinvest(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
-  renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   revokeAllowance(
-    token: string,
-    spender: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    token: PromiseOrValue<string>,
+    spender: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   rewardToken(overrides?: CallOverrides): Promise<string>;
 
   router(overrides?: CallOverrides): Promise<string>;
 
-  setAllowances(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  setAllowances(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   stakingContract(overrides?: CallOverrides): Promise<string>;
 
@@ -980,82 +1031,82 @@ export interface PenguinVault extends BaseContract {
   totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
   transfer(
-    dst: string,
-    amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    dst: PromiseOrValue<string>,
+    amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   transferFrom(
-    src: string,
-    dst: string,
-    amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    src: PromiseOrValue<string>,
+    dst: PromiseOrValue<string>,
+    amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   transferOwnership(
-    newOwner: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    newOwner: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   updateAlternateAddress(
-    newValue: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    newValue: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   updateDepositsEnabled(
-    newValue: boolean,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    newValue: PromiseOrValue<boolean>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   updateDevAddress(
-    newValue: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    newValue: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   updateFeeStructure(
-    newPOOL_CREATOR_FEE_BIPS: BigNumberish,
-    newNEST_FEE_BIPS: BigNumberish,
-    newDEV_FEE_BIPS: BigNumberish,
-    newALTERNATE_FEE_BIPS: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    newPOOL_CREATOR_FEE_BIPS: PromiseOrValue<BigNumberish>,
+    newNEST_FEE_BIPS: PromiseOrValue<BigNumberish>,
+    newDEV_FEE_BIPS: PromiseOrValue<BigNumberish>,
+    newALTERNATE_FEE_BIPS: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   updateMaxTokensToDepositWithoutReinvest(
-    newValue: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    newValue: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   updateMinTokensToReinvest(
-    newValue: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    newValue: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   updateNestAddress(
-    newValue: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    newValue: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   updateNestStakingBips(
-    newNEST_STAKING_BIPS: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    newNEST_STAKING_BIPS: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   updatePoolCreatorAddress(
-    newValue: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    newValue: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   updateUseGlobalVariables(
-    newValue: boolean,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    newValue: PromiseOrValue<boolean>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   withdraw(
-    amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  xPefiDebt(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+  xPefiDebt(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   xPefiPerShare(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -1096,15 +1147,23 @@ export interface PenguinVault extends BaseContract {
 
     VERSION_HASH(overrides?: CallOverrides): Promise<string>;
 
-    allowance(account: string, spender: string, overrides?: CallOverrides): Promise<BigNumber>;
+    allowance(
+      account: PromiseOrValue<string>,
+      spender: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     alternateAddress(overrides?: CallOverrides): Promise<string>;
 
     alternateAddressLocal(overrides?: CallOverrides): Promise<string>;
 
-    approve(spender: string, amount: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+    approve(
+      spender: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
 
-    balanceOf(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    balanceOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     checkReward(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -1112,18 +1171,22 @@ export interface PenguinVault extends BaseContract {
 
     decimals(overrides?: CallOverrides): Promise<number>;
 
-    deposit(amount: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    deposit(amount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
-    depositFor(account: string, amount: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    depositFor(
+      account: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
     depositToken(overrides?: CallOverrides): Promise<string>;
 
     depositWithPermit(
-      amount: BigNumberish,
-      deadline: BigNumberish,
-      v: BigNumberish,
-      r: BytesLike,
-      s: BytesLike,
+      amount: PromiseOrValue<BigNumberish>,
+      deadline: PromiseOrValue<BigNumberish>,
+      v: PromiseOrValue<BigNumberish>,
+      r: PromiseOrValue<BytesLike>,
+      s: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
@@ -1135,15 +1198,15 @@ export interface PenguinVault extends BaseContract {
 
     estimateReinvestReward(overrides?: CallOverrides): Promise<BigNumber>;
 
-    getDepositTokensForShares(amount: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    getDepositTokensForShares(amount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     getDomainSeparator(overrides?: CallOverrides): Promise<string>;
 
-    getSharesForDepositTokens(amount: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    getSharesForDepositTokens(amount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     impromptuTokenAggregation(
-      minReturnAmountAccepted: BigNumberish,
-      disableDeposits: boolean,
+      minReturnAmountAccepted: PromiseOrValue<BigNumberish>,
+      disableDeposits: PromiseOrValue<boolean>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
@@ -1153,36 +1216,44 @@ export interface PenguinVault extends BaseContract {
 
     nestAddressLocal(overrides?: CallOverrides): Promise<string>;
 
-    nonces(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    nonces(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     owner(overrides?: CallOverrides): Promise<string>;
 
     pefiGlobalVariableContract(overrides?: CallOverrides): Promise<string>;
 
-    pendingXPefi(user: string, overrides?: CallOverrides): Promise<BigNumber>;
+    pendingXPefi(user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     permit(
-      owner: string,
-      spender: string,
-      value: BigNumberish,
-      deadline: BigNumberish,
-      v: BigNumberish,
-      r: BytesLike,
-      s: BytesLike,
+      owner: PromiseOrValue<string>,
+      spender: PromiseOrValue<string>,
+      value: PromiseOrValue<BigNumberish>,
+      deadline: PromiseOrValue<BigNumberish>,
+      v: PromiseOrValue<BigNumberish>,
+      r: PromiseOrValue<BytesLike>,
+      s: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
     poolCreatorAddress(overrides?: CallOverrides): Promise<string>;
 
-    recoverAVAX(amount: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    recoverAVAX(amount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
-    recoverERC20(tokenAddress: string, tokenAmount: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    recoverERC20(
+      tokenAddress: PromiseOrValue<string>,
+      tokenAmount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
     reinvest(overrides?: CallOverrides): Promise<void>;
 
     renounceOwnership(overrides?: CallOverrides): Promise<void>;
 
-    revokeAllowance(token: string, spender: string, overrides?: CallOverrides): Promise<void>;
+    revokeAllowance(
+      token: PromiseOrValue<string>,
+      spender: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
     rewardToken(overrides?: CallOverrides): Promise<string>;
 
@@ -1202,58 +1273,74 @@ export interface PenguinVault extends BaseContract {
 
     totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
-    transfer(dst: string, amount: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+    transfer(
+      dst: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
 
-    transferFrom(src: string, dst: string, amount: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+    transferFrom(
+      src: PromiseOrValue<string>,
+      dst: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
 
-    transferOwnership(newOwner: string, overrides?: CallOverrides): Promise<void>;
+    transferOwnership(newOwner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    updateAlternateAddress(newValue: string, overrides?: CallOverrides): Promise<void>;
+    updateAlternateAddress(newValue: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    updateDepositsEnabled(newValue: boolean, overrides?: CallOverrides): Promise<void>;
+    updateDepositsEnabled(newValue: PromiseOrValue<boolean>, overrides?: CallOverrides): Promise<void>;
 
-    updateDevAddress(newValue: string, overrides?: CallOverrides): Promise<void>;
+    updateDevAddress(newValue: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     updateFeeStructure(
-      newPOOL_CREATOR_FEE_BIPS: BigNumberish,
-      newNEST_FEE_BIPS: BigNumberish,
-      newDEV_FEE_BIPS: BigNumberish,
-      newALTERNATE_FEE_BIPS: BigNumberish,
+      newPOOL_CREATOR_FEE_BIPS: PromiseOrValue<BigNumberish>,
+      newNEST_FEE_BIPS: PromiseOrValue<BigNumberish>,
+      newDEV_FEE_BIPS: PromiseOrValue<BigNumberish>,
+      newALTERNATE_FEE_BIPS: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
-    updateMaxTokensToDepositWithoutReinvest(newValue: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    updateMaxTokensToDepositWithoutReinvest(
+      newValue: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    updateMinTokensToReinvest(newValue: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    updateMinTokensToReinvest(newValue: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
-    updateNestAddress(newValue: string, overrides?: CallOverrides): Promise<void>;
+    updateNestAddress(newValue: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    updateNestStakingBips(newNEST_STAKING_BIPS: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    updateNestStakingBips(newNEST_STAKING_BIPS: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
-    updatePoolCreatorAddress(newValue: string, overrides?: CallOverrides): Promise<void>;
+    updatePoolCreatorAddress(newValue: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    updateUseGlobalVariables(newValue: boolean, overrides?: CallOverrides): Promise<void>;
+    updateUseGlobalVariables(newValue: PromiseOrValue<boolean>, overrides?: CallOverrides): Promise<void>;
 
-    withdraw(amount: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    withdraw(amount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
-    xPefiDebt(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    xPefiDebt(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     xPefiPerShare(overrides?: CallOverrides): Promise<BigNumber>;
   };
 
   filters: {
     'Approval(address,address,uint256)'(
-      owner?: string | null,
-      spender?: string | null,
+      owner?: PromiseOrValue<string> | null,
+      spender?: PromiseOrValue<string> | null,
       value?: null,
     ): ApprovalEventFilter;
-    Approval(owner?: string | null, spender?: string | null, value?: null): ApprovalEventFilter;
+    Approval(
+      owner?: PromiseOrValue<string> | null,
+      spender?: PromiseOrValue<string> | null,
+      value?: null,
+    ): ApprovalEventFilter;
 
-    'ClaimedxPEFI(address,uint256)'(account?: string | null, amount?: null): ClaimedxPEFIEventFilter;
-    ClaimedxPEFI(account?: string | null, amount?: null): ClaimedxPEFIEventFilter;
+    'ClaimedxPEFI(address,uint256)'(account?: PromiseOrValue<string> | null, amount?: null): ClaimedxPEFIEventFilter;
+    ClaimedxPEFI(account?: PromiseOrValue<string> | null, amount?: null): ClaimedxPEFIEventFilter;
 
-    'Deposit(address,uint256)'(account?: string | null, amount?: null): DepositEventFilter;
-    Deposit(account?: string | null, amount?: null): DepositEventFilter;
+    'Deposit(address,uint256)'(account?: PromiseOrValue<string> | null, amount?: null): DepositEventFilter;
+    Deposit(account?: PromiseOrValue<string> | null, amount?: null): DepositEventFilter;
 
     'DepositsEnabled(bool)'(newValue?: null): DepositsEnabledEventFilter;
     DepositsEnabled(newValue?: null): DepositsEnabledEventFilter;
@@ -1278,10 +1365,13 @@ export interface PenguinVault extends BaseContract {
     NestStakingBipsChanged(oldNEST_STAKING_BIPS?: null, newNEST_STAKING_BIPS?: null): NestStakingBipsChangedEventFilter;
 
     'OwnershipTransferred(address,address)'(
-      previousOwner?: string | null,
-      newOwner?: string | null,
+      previousOwner?: PromiseOrValue<string> | null,
+      newOwner?: PromiseOrValue<string> | null,
     ): OwnershipTransferredEventFilter;
-    OwnershipTransferred(previousOwner?: string | null, newOwner?: string | null): OwnershipTransferredEventFilter;
+    OwnershipTransferred(
+      previousOwner?: PromiseOrValue<string> | null,
+      newOwner?: PromiseOrValue<string> | null,
+    ): OwnershipTransferredEventFilter;
 
     'Recovered(address,uint256)'(token?: null, amount?: null): RecoveredEventFilter;
     Recovered(token?: null, amount?: null): RecoveredEventFilter;
@@ -1292,8 +1382,16 @@ export interface PenguinVault extends BaseContract {
     'StakedPEFI(uint256)'(amountPefiSentToNest?: null): StakedPEFIEventFilter;
     StakedPEFI(amountPefiSentToNest?: null): StakedPEFIEventFilter;
 
-    'Transfer(address,address,uint256)'(from?: string | null, to?: string | null, value?: null): TransferEventFilter;
-    Transfer(from?: string | null, to?: string | null, value?: null): TransferEventFilter;
+    'Transfer(address,address,uint256)'(
+      from?: PromiseOrValue<string> | null,
+      to?: PromiseOrValue<string> | null,
+      value?: null,
+    ): TransferEventFilter;
+    Transfer(
+      from?: PromiseOrValue<string> | null,
+      to?: PromiseOrValue<string> | null,
+      value?: null,
+    ): TransferEventFilter;
 
     'UpdateAlternateAddress(address,address)'(oldValue?: null, newValue?: null): UpdateAlternateAddressEventFilter;
     UpdateAlternateAddress(oldValue?: null, newValue?: null): UpdateAlternateAddressEventFilter;
@@ -1325,8 +1423,8 @@ export interface PenguinVault extends BaseContract {
     'UseGlobalVariablesUpdated(bool)'(newValue?: null): UseGlobalVariablesUpdatedEventFilter;
     UseGlobalVariablesUpdated(newValue?: null): UseGlobalVariablesUpdatedEventFilter;
 
-    'Withdraw(address,uint256)'(account?: string | null, amount?: null): WithdrawEventFilter;
-    Withdraw(account?: string | null, amount?: null): WithdrawEventFilter;
+    'Withdraw(address,uint256)'(account?: PromiseOrValue<string> | null, amount?: null): WithdrawEventFilter;
+    Withdraw(account?: PromiseOrValue<string> | null, amount?: null): WithdrawEventFilter;
   };
 
   estimateGas: {
@@ -1366,43 +1464,50 @@ export interface PenguinVault extends BaseContract {
 
     VERSION_HASH(overrides?: CallOverrides): Promise<BigNumber>;
 
-    allowance(account: string, spender: string, overrides?: CallOverrides): Promise<BigNumber>;
+    allowance(
+      account: PromiseOrValue<string>,
+      spender: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     alternateAddress(overrides?: CallOverrides): Promise<BigNumber>;
 
     alternateAddressLocal(overrides?: CallOverrides): Promise<BigNumber>;
 
     approve(
-      spender: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      spender: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    balanceOf(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    balanceOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     checkReward(overrides?: CallOverrides): Promise<BigNumber>;
 
-    claimXPEFI(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    claimXPEFI(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     decimals(overrides?: CallOverrides): Promise<BigNumber>;
 
-    deposit(amount: BigNumberish, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    deposit(
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     depositFor(
-      account: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      account: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     depositToken(overrides?: CallOverrides): Promise<BigNumber>;
 
     depositWithPermit(
-      amount: BigNumberish,
-      deadline: BigNumberish,
-      v: BigNumberish,
-      r: BytesLike,
-      s: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      amount: PromiseOrValue<BigNumberish>,
+      deadline: PromiseOrValue<BigNumberish>,
+      v: PromiseOrValue<BigNumberish>,
+      r: PromiseOrValue<BytesLike>,
+      s: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     devAddress(overrides?: CallOverrides): Promise<BigNumber>;
@@ -1413,16 +1518,16 @@ export interface PenguinVault extends BaseContract {
 
     estimateReinvestReward(overrides?: CallOverrides): Promise<BigNumber>;
 
-    getDepositTokensForShares(amount: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    getDepositTokensForShares(amount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     getDomainSeparator(overrides?: CallOverrides): Promise<BigNumber>;
 
-    getSharesForDepositTokens(amount: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    getSharesForDepositTokens(amount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     impromptuTokenAggregation(
-      minReturnAmountAccepted: BigNumberish,
-      disableDeposits: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      minReturnAmountAccepted: PromiseOrValue<BigNumberish>,
+      disableDeposits: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     name(overrides?: CallOverrides): Promise<BigNumber>;
@@ -1431,50 +1536,53 @@ export interface PenguinVault extends BaseContract {
 
     nestAddressLocal(overrides?: CallOverrides): Promise<BigNumber>;
 
-    nonces(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    nonces(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     owner(overrides?: CallOverrides): Promise<BigNumber>;
 
     pefiGlobalVariableContract(overrides?: CallOverrides): Promise<BigNumber>;
 
-    pendingXPefi(user: string, overrides?: CallOverrides): Promise<BigNumber>;
+    pendingXPefi(user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     permit(
-      owner: string,
-      spender: string,
-      value: BigNumberish,
-      deadline: BigNumberish,
-      v: BigNumberish,
-      r: BytesLike,
-      s: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      owner: PromiseOrValue<string>,
+      spender: PromiseOrValue<string>,
+      value: PromiseOrValue<BigNumberish>,
+      deadline: PromiseOrValue<BigNumberish>,
+      v: PromiseOrValue<BigNumberish>,
+      r: PromiseOrValue<BytesLike>,
+      s: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     poolCreatorAddress(overrides?: CallOverrides): Promise<BigNumber>;
 
-    recoverAVAX(amount: BigNumberish, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
-
-    recoverERC20(
-      tokenAddress: string,
-      tokenAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+    recoverAVAX(
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    reinvest(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    recoverERC20(
+      tokenAddress: PromiseOrValue<string>,
+      tokenAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
-    renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    reinvest(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
+
+    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     revokeAllowance(
-      token: string,
-      spender: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      token: PromiseOrValue<string>,
+      spender: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     rewardToken(overrides?: CallOverrides): Promise<BigNumber>;
 
     router(overrides?: CallOverrides): Promise<BigNumber>;
 
-    setAllowances(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    setAllowances(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     stakingContract(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -1489,76 +1597,82 @@ export interface PenguinVault extends BaseContract {
     totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
     transfer(
-      dst: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      dst: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     transferFrom(
-      src: string,
-      dst: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      src: PromiseOrValue<string>,
+      dst: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     updateAlternateAddress(
-      newValue: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newValue: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     updateDepositsEnabled(
-      newValue: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newValue: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    updateDevAddress(newValue: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    updateDevAddress(
+      newValue: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     updateFeeStructure(
-      newPOOL_CREATOR_FEE_BIPS: BigNumberish,
-      newNEST_FEE_BIPS: BigNumberish,
-      newDEV_FEE_BIPS: BigNumberish,
-      newALTERNATE_FEE_BIPS: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newPOOL_CREATOR_FEE_BIPS: PromiseOrValue<BigNumberish>,
+      newNEST_FEE_BIPS: PromiseOrValue<BigNumberish>,
+      newDEV_FEE_BIPS: PromiseOrValue<BigNumberish>,
+      newALTERNATE_FEE_BIPS: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     updateMaxTokensToDepositWithoutReinvest(
-      newValue: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newValue: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     updateMinTokensToReinvest(
-      newValue: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newValue: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     updateNestAddress(
-      newValue: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newValue: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     updateNestStakingBips(
-      newNEST_STAKING_BIPS: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newNEST_STAKING_BIPS: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     updatePoolCreatorAddress(
-      newValue: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newValue: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     updateUseGlobalVariables(
-      newValue: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newValue: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    withdraw(amount: BigNumberish, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    withdraw(
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
-    xPefiDebt(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    xPefiDebt(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     xPefiPerShare(overrides?: CallOverrides): Promise<BigNumber>;
   };
@@ -1600,46 +1714,50 @@ export interface PenguinVault extends BaseContract {
 
     VERSION_HASH(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    allowance(account: string, spender: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    allowance(
+      account: PromiseOrValue<string>,
+      spender: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
     alternateAddress(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     alternateAddressLocal(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     approve(
-      spender: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      spender: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    balanceOf(account: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    balanceOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     checkReward(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    claimXPEFI(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    claimXPEFI(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     decimals(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     deposit(
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     depositFor(
-      account: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      account: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     depositToken(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     depositWithPermit(
-      amount: BigNumberish,
-      deadline: BigNumberish,
-      v: BigNumberish,
-      r: BytesLike,
-      s: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      amount: PromiseOrValue<BigNumberish>,
+      deadline: PromiseOrValue<BigNumberish>,
+      v: PromiseOrValue<BigNumberish>,
+      r: PromiseOrValue<BytesLike>,
+      s: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     devAddress(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -1650,16 +1768,22 @@ export interface PenguinVault extends BaseContract {
 
     estimateReinvestReward(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    getDepositTokensForShares(amount: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getDepositTokensForShares(
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
     getDomainSeparator(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    getSharesForDepositTokens(amount: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getSharesForDepositTokens(
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
     impromptuTokenAggregation(
-      minReturnAmountAccepted: BigNumberish,
-      disableDeposits: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      minReturnAmountAccepted: PromiseOrValue<BigNumberish>,
+      disableDeposits: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     name(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -1668,53 +1792,53 @@ export interface PenguinVault extends BaseContract {
 
     nestAddressLocal(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    nonces(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    nonces(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     pefiGlobalVariableContract(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    pendingXPefi(user: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    pendingXPefi(user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     permit(
-      owner: string,
-      spender: string,
-      value: BigNumberish,
-      deadline: BigNumberish,
-      v: BigNumberish,
-      r: BytesLike,
-      s: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      owner: PromiseOrValue<string>,
+      spender: PromiseOrValue<string>,
+      value: PromiseOrValue<BigNumberish>,
+      deadline: PromiseOrValue<BigNumberish>,
+      v: PromiseOrValue<BigNumberish>,
+      r: PromiseOrValue<BytesLike>,
+      s: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     poolCreatorAddress(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     recoverAVAX(
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     recoverERC20(
-      tokenAddress: string,
-      tokenAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      tokenAddress: PromiseOrValue<string>,
+      tokenAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    reinvest(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    reinvest(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
-    renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     revokeAllowance(
-      token: string,
-      spender: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      token: PromiseOrValue<string>,
+      spender: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     rewardToken(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     router(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    setAllowances(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    setAllowances(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     stakingContract(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
@@ -1729,82 +1853,82 @@ export interface PenguinVault extends BaseContract {
     totalSupply(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     transfer(
-      dst: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      dst: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     transferFrom(
-      src: string,
-      dst: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      src: PromiseOrValue<string>,
+      dst: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     updateAlternateAddress(
-      newValue: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newValue: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     updateDepositsEnabled(
-      newValue: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newValue: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     updateDevAddress(
-      newValue: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newValue: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     updateFeeStructure(
-      newPOOL_CREATOR_FEE_BIPS: BigNumberish,
-      newNEST_FEE_BIPS: BigNumberish,
-      newDEV_FEE_BIPS: BigNumberish,
-      newALTERNATE_FEE_BIPS: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newPOOL_CREATOR_FEE_BIPS: PromiseOrValue<BigNumberish>,
+      newNEST_FEE_BIPS: PromiseOrValue<BigNumberish>,
+      newDEV_FEE_BIPS: PromiseOrValue<BigNumberish>,
+      newALTERNATE_FEE_BIPS: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     updateMaxTokensToDepositWithoutReinvest(
-      newValue: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newValue: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     updateMinTokensToReinvest(
-      newValue: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newValue: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     updateNestAddress(
-      newValue: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newValue: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     updateNestStakingBips(
-      newNEST_STAKING_BIPS: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newNEST_STAKING_BIPS: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     updatePoolCreatorAddress(
-      newValue: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newValue: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     updateUseGlobalVariables(
-      newValue: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newValue: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     withdraw(
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    xPefiDebt(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    xPefiDebt(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     xPefiPerShare(overrides?: CallOverrides): Promise<PopulatedTransaction>;
   };

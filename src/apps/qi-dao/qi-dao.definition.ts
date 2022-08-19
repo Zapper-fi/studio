@@ -27,6 +27,8 @@ export const QI_DAO_DEFINITION = appDefinition({
     [Network.FANTOM_OPERA_MAINNET]: [AppAction.VIEW],
     [Network.POLYGON_MAINNET]: [AppAction.VIEW],
     [Network.GNOSIS_MAINNET]: [AppAction.VIEW],
+    [Network.ARBITRUM_MAINNET]: [AppAction.VIEW],
+    [Network.OPTIMISM_MAINNET]: [AppAction.VIEW],
   },
 });
 

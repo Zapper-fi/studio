@@ -2,7 +2,6 @@ import { Inject, Injectable } from '@nestjs/common';
 import { BigNumber } from 'ethers';
 
 import { CurvePoolTokenHelper } from '~apps/curve';
-import { Erc20 } from '~contract/contracts';
 import { Network } from '~types/network.interface';
 
 import { TempusContractFactory, TempusAmm } from '../contracts';
@@ -25,20 +24,16 @@ export class TempusAmmTokenFetcher {
     const data = await getTempusData(network);
     if (!data) return [];
 
-    return await this.curvePoolTokenHelper.getTokens<TempusAmm, Erc20>({
+    return await this.curvePoolTokenHelper.getTokens<TempusAmm>({
       network,
       appId,
       groupId,
-      appTokenDependencies: [{ appId, groupIds: [TEMPUS_DEFINITION.groups.pool.id], network }],
-      resolvePoolDefinitions: async () =>
-        data.tempusPools.map(pool => ({
-          swapAddress: pool.ammAddress.toLowerCase(),
-          tokenAddress: pool.ammAddress.toLowerCase(),
-        })),
-      resolvePoolContract: ({ network, definition }) =>
-        this.contractFactory.tempusAmm({ network, address: definition.swapAddress }),
-      resolvePoolTokenContract: ({ network, definition }) =>
-        this.contractFactory.erc20({ network, address: definition.tokenAddress }),
+      dependencies: [{ appId, groupIds: [TEMPUS_DEFINITION.groups.pool.id], network }],
+      poolDefinitions: data.tempusPools.map(pool => ({
+        swapAddress: pool.ammAddress.toLowerCase(),
+        tokenAddress: pool.ammAddress.toLowerCase(),
+      })),
+      resolvePoolContract: ({ network, address }) => this.contractFactory.tempusAmm({ network, address }),
       resolvePoolCoinAddresses: async ({ poolContract }) => {
         const pool = data.tempusPools.find(
           pool => pool.ammAddress.toLowerCase() === poolContract.address.toLowerCase(),
@@ -55,8 +50,6 @@ export class TempusAmmTokenFetcher {
           .wrap(poolContract)
           .getSwapFeePercentage()
           .then(result => BigNumber.from(Number(result) / 1e8)), // Convert 1e18 percentage to curve 1e8
-      resolvePoolTokenSymbol: ({ multicall, poolTokenContract }) => multicall.wrap(poolTokenContract).symbol(),
-      resolvePoolTokenSupply: ({ multicall, poolTokenContract }) => multicall.wrap(poolTokenContract).totalSupply(),
       resolvePoolTokenPrice: async ({ tokens, reserves, supply }) => {
         const [principalToken, yieldToken] = tokens;
         const [sizePrincipal, sizeYield] = reserves;

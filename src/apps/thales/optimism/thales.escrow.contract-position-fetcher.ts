@@ -24,7 +24,7 @@ const network = Network.OPTIMISM_MAINNET;
 
 const farmDefinitions = [
   {
-    address: '0xa25816b9605009aa446d4d597F0AA46FD828f056',
+    address: '0xa25816b9605009aa446d4d597f0aa46fd828f056',
     stakedTokenAddress: '0x217d47011b23bb961eb6d93ca9945b7501a5bb11',
     rewardTokenAddress: '0x217d47011b23bb961eb6d93ca9945b7501a5bb11',
   },

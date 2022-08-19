@@ -12,7 +12,7 @@ const appId = SYNTHETIX_DEFINITION.id;
 const groupId = SYNTHETIX_DEFINITION.groups.synth.id;
 const network = Network.OPTIMISM_MAINNET;
 
-@Register.TokenPositionFetcher({ appId, groupId, network, options: { includeInTvl: true } })
+@Register.TokenPositionFetcher({ appId, groupId, network })
 export class OptimismSynthetixSynthTokenFetcher implements PositionFetcher<AppTokenPosition> {
   constructor(@Inject(SynthetixSynthTokenHelper) private readonly tokenHelper: SynthetixSynthTokenHelper) {}
 
@@ -20,6 +20,7 @@ export class OptimismSynthetixSynthTokenFetcher implements PositionFetcher<AppTo
     return this.tokenHelper.getTokens({
       network,
       resolverAddress: '0x95a6a3f44a70172e7d50a9e28c85dfd712756b8c',
+      exchangeable: true,
     });
   }
 }

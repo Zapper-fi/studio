@@ -14,7 +14,7 @@ import type {
 } from 'ethers';
 import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
 import type { Listener, Provider } from '@ethersproject/providers';
-import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
 export interface BalancerChildChainGaugeFactoryInterface extends utils.Interface {
   functions: {
@@ -42,15 +42,15 @@ export interface BalancerChildChainGaugeFactoryInterface extends utils.Interface
       | 'isStreamerFromFactory',
   ): FunctionFragment;
 
-  encodeFunctionData(functionFragment: 'create', values: [string]): string;
+  encodeFunctionData(functionFragment: 'create', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'getChildChainStreamerImplementation', values?: undefined): string;
   encodeFunctionData(functionFragment: 'getGaugeImplementation', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'getGaugePool', values: [string]): string;
-  encodeFunctionData(functionFragment: 'getGaugeStreamer', values: [string]): string;
-  encodeFunctionData(functionFragment: 'getPoolGauge', values: [string]): string;
-  encodeFunctionData(functionFragment: 'getPoolStreamer', values: [string]): string;
-  encodeFunctionData(functionFragment: 'isGaugeFromFactory', values: [string]): string;
-  encodeFunctionData(functionFragment: 'isStreamerFromFactory', values: [string]): string;
+  encodeFunctionData(functionFragment: 'getGaugePool', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'getGaugeStreamer', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'getPoolGauge', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'getPoolStreamer', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'isGaugeFromFactory', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'isStreamerFromFactory', values: [PromiseOrValue<string>]): string;
 
   decodeFunctionResult(functionFragment: 'create', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'getChildChainStreamerImplementation', data: BytesLike): Result;
@@ -101,113 +101,122 @@ export interface BalancerChildChainGaugeFactory extends BaseContract {
   removeListener: OnEvent<this>;
 
   functions: {
-    create(pool: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    create(
+      pool: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<ContractTransaction>;
 
     getChildChainStreamerImplementation(overrides?: CallOverrides): Promise<[string]>;
 
     getGaugeImplementation(overrides?: CallOverrides): Promise<[string]>;
 
-    getGaugePool(gauge: string, overrides?: CallOverrides): Promise<[string]>;
+    getGaugePool(gauge: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[string]>;
 
-    getGaugeStreamer(gauge: string, overrides?: CallOverrides): Promise<[string]>;
+    getGaugeStreamer(gauge: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[string]>;
 
-    getPoolGauge(pool: string, overrides?: CallOverrides): Promise<[string]>;
+    getPoolGauge(pool: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[string]>;
 
-    getPoolStreamer(pool: string, overrides?: CallOverrides): Promise<[string]>;
+    getPoolStreamer(pool: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[string]>;
 
-    isGaugeFromFactory(gauge: string, overrides?: CallOverrides): Promise<[boolean]>;
+    isGaugeFromFactory(gauge: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[boolean]>;
 
-    isStreamerFromFactory(streamer: string, overrides?: CallOverrides): Promise<[boolean]>;
+    isStreamerFromFactory(streamer: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[boolean]>;
   };
 
-  create(pool: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  create(
+    pool: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
+  ): Promise<ContractTransaction>;
 
   getChildChainStreamerImplementation(overrides?: CallOverrides): Promise<string>;
 
   getGaugeImplementation(overrides?: CallOverrides): Promise<string>;
 
-  getGaugePool(gauge: string, overrides?: CallOverrides): Promise<string>;
+  getGaugePool(gauge: PromiseOrValue<string>, overrides?: CallOverrides): Promise<string>;
 
-  getGaugeStreamer(gauge: string, overrides?: CallOverrides): Promise<string>;
+  getGaugeStreamer(gauge: PromiseOrValue<string>, overrides?: CallOverrides): Promise<string>;
 
-  getPoolGauge(pool: string, overrides?: CallOverrides): Promise<string>;
+  getPoolGauge(pool: PromiseOrValue<string>, overrides?: CallOverrides): Promise<string>;
 
-  getPoolStreamer(pool: string, overrides?: CallOverrides): Promise<string>;
+  getPoolStreamer(pool: PromiseOrValue<string>, overrides?: CallOverrides): Promise<string>;
 
-  isGaugeFromFactory(gauge: string, overrides?: CallOverrides): Promise<boolean>;
+  isGaugeFromFactory(gauge: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
-  isStreamerFromFactory(streamer: string, overrides?: CallOverrides): Promise<boolean>;
+  isStreamerFromFactory(streamer: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
   callStatic: {
-    create(pool: string, overrides?: CallOverrides): Promise<string>;
+    create(pool: PromiseOrValue<string>, overrides?: CallOverrides): Promise<string>;
 
     getChildChainStreamerImplementation(overrides?: CallOverrides): Promise<string>;
 
     getGaugeImplementation(overrides?: CallOverrides): Promise<string>;
 
-    getGaugePool(gauge: string, overrides?: CallOverrides): Promise<string>;
+    getGaugePool(gauge: PromiseOrValue<string>, overrides?: CallOverrides): Promise<string>;
 
-    getGaugeStreamer(gauge: string, overrides?: CallOverrides): Promise<string>;
+    getGaugeStreamer(gauge: PromiseOrValue<string>, overrides?: CallOverrides): Promise<string>;
 
-    getPoolGauge(pool: string, overrides?: CallOverrides): Promise<string>;
+    getPoolGauge(pool: PromiseOrValue<string>, overrides?: CallOverrides): Promise<string>;
 
-    getPoolStreamer(pool: string, overrides?: CallOverrides): Promise<string>;
+    getPoolStreamer(pool: PromiseOrValue<string>, overrides?: CallOverrides): Promise<string>;
 
-    isGaugeFromFactory(gauge: string, overrides?: CallOverrides): Promise<boolean>;
+    isGaugeFromFactory(gauge: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
-    isStreamerFromFactory(streamer: string, overrides?: CallOverrides): Promise<boolean>;
+    isStreamerFromFactory(streamer: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
   };
 
   filters: {
     'RewardsOnlyGaugeCreated(address,address,address)'(
-      gauge?: string | null,
-      pool?: string | null,
+      gauge?: PromiseOrValue<string> | null,
+      pool?: PromiseOrValue<string> | null,
       streamer?: null,
     ): RewardsOnlyGaugeCreatedEventFilter;
     RewardsOnlyGaugeCreated(
-      gauge?: string | null,
-      pool?: string | null,
+      gauge?: PromiseOrValue<string> | null,
+      pool?: PromiseOrValue<string> | null,
       streamer?: null,
     ): RewardsOnlyGaugeCreatedEventFilter;
   };
 
   estimateGas: {
-    create(pool: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    create(pool: PromiseOrValue<string>, overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     getChildChainStreamerImplementation(overrides?: CallOverrides): Promise<BigNumber>;
 
     getGaugeImplementation(overrides?: CallOverrides): Promise<BigNumber>;
 
-    getGaugePool(gauge: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getGaugePool(gauge: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    getGaugeStreamer(gauge: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getGaugeStreamer(gauge: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    getPoolGauge(pool: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getPoolGauge(pool: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    getPoolStreamer(pool: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getPoolStreamer(pool: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    isGaugeFromFactory(gauge: string, overrides?: CallOverrides): Promise<BigNumber>;
+    isGaugeFromFactory(gauge: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    isStreamerFromFactory(streamer: string, overrides?: CallOverrides): Promise<BigNumber>;
+    isStreamerFromFactory(streamer: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
   };
 
   populateTransaction: {
-    create(pool: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    create(
+      pool: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<PopulatedTransaction>;
 
     getChildChainStreamerImplementation(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     getGaugeImplementation(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    getGaugePool(gauge: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getGaugePool(gauge: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    getGaugeStreamer(gauge: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getGaugeStreamer(gauge: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    getPoolGauge(pool: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getPoolGauge(pool: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    getPoolStreamer(pool: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getPoolStreamer(pool: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    isGaugeFromFactory(gauge: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    isGaugeFromFactory(gauge: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    isStreamerFromFactory(streamer: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    isStreamerFromFactory(streamer: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
   };
 }

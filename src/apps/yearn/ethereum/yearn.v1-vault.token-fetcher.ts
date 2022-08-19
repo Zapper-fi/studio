@@ -1,31 +1,62 @@
 import { Inject } from '@nestjs/common';
 
+import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
-import { CURVE_DEFINITION } from '~apps/curve';
-import { PositionFetcher } from '~position/position-fetcher.interface';
-import { AppTokenPosition } from '~position/position.interface';
+import { isMulticallUnderlyingError } from '~multicall/multicall.ethers';
+import { DataPropsStageParams, PricePerShareStageParams } from '~position/template/app-token.template.position-fetcher';
 import { Network } from '~types/network.interface';
 
-import { YearnV1VaultTokenHelper } from '../helpers/yearn.v1-vault.token-helper';
+import { YearnContractFactory, YearnVault } from '../contracts';
+import { YearnVaultTokenDefinitionsResolver } from '../helpers/yearn.vault.token-definitions-resolver';
+import { YearnVaultTokenDataProps, YearnVaultTokenFetcher } from '../helpers/yearn.vault.token-fetcher';
 import { YEARN_DEFINITION } from '../yearn.definition';
 
 const appId = YEARN_DEFINITION.id;
 const groupId = YEARN_DEFINITION.groups.v1Vault.id;
 const network = Network.ETHEREUM_MAINNET;
 
-@Register.TokenPositionFetcher({ appId, groupId, network, options: { includeInTvl: true } })
-export class EthereumYearnV1VaultTokenFetcher implements PositionFetcher<AppTokenPosition> {
-  constructor(@Inject(YearnV1VaultTokenHelper) private readonly yearnVaultTokenHelper: YearnV1VaultTokenHelper) {}
+@Register.TokenPositionFetcher({ appId, groupId, network })
+export class EthereumYearnV1VaultTokenFetcher extends YearnVaultTokenFetcher<YearnVault> {
+  appId = appId;
+  groupId = groupId;
+  network = network;
 
-  async getPositions() {
-    return this.yearnVaultTokenHelper.getTokens({
-      network,
-      dependencies: [
-        // @TODO: Move over Aave V1
-        { appId: 'aave-v1', groupIds: ['supply'], network },
-        { appId: CURVE_DEFINITION.id, groupIds: [CURVE_DEFINITION.groups.pool.id], network },
-      ],
-      vaultsToIgnore: ['0xc5bddf9843308380375a611c18b50fb9341f502a'],
+  vaultType = 'v1' as const;
+  vaultsToIgnore = ['0xc5bddf9843308380375a611c18b50fb9341f502a'];
+
+  constructor(
+    @Inject(YearnContractFactory) private readonly contractFactory: YearnContractFactory,
+    @Inject(YearnVaultTokenDefinitionsResolver)
+    tokenDefinitionsResolver: YearnVaultTokenDefinitionsResolver,
+    @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
+  ) {
+    super(appToolkit, tokenDefinitionsResolver);
+  }
+
+  getContract(address: string): YearnVault {
+    return this.contractFactory.yearnVault({ network: this.network, address });
+  }
+
+  async getPricePerShare({ contract }: PricePerShareStageParams<YearnVault>) {
+    const pricePerShareRaw = await contract.getPricePerFullShare().catch(err => {
+      if (isMulticallUnderlyingError(err)) return 0;
+      throw err;
     });
+    return Number(pricePerShareRaw) / 10 ** 18;
+  }
+
+  async getDataProps(
+    opts: DataPropsStageParams<YearnVault, YearnVaultTokenDataProps>,
+  ): Promise<YearnVaultTokenDataProps> {
+    const { appToken } = opts;
+    const vault = await this.selectVault(appToken.address);
+    if (!vault) throw new Error('Cannot find specified vault');
+
+    const liquidity = appToken.price * appToken.supply;
+    const apy = vault.apy?.net_apy;
+    const isBlocked = true; // all v1 vaults are considered as blocked
+    const reserve = appToken.pricePerShare[0] * appToken.supply;
+
+    return { liquidity, apy, isBlocked, reserve };
   }
 }

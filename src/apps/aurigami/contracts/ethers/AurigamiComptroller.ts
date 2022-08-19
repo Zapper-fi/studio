@@ -15,7 +15,7 @@ import type {
 } from 'ethers';
 import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
 import type { Listener, Provider } from '@ethersproject/providers';
-import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
 export interface AurigamiComptrollerInterface extends utils.Interface {
   functions: {
@@ -183,99 +183,199 @@ export interface AurigamiComptrollerInterface extends utils.Interface {
       | 'transferGuardianPaused',
   ): FunctionFragment;
 
-  encodeFunctionData(functionFragment: '_become', values: [string]): string;
+  encodeFunctionData(functionFragment: '_become', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: '_borrowGuardianPaused', values?: undefined): string;
-  encodeFunctionData(functionFragment: '_grantPly', values: [string, BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: '_grantPly',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
   encodeFunctionData(functionFragment: '_mintGuardianPaused', values?: undefined): string;
-  encodeFunctionData(functionFragment: '_setBorrowCapGuardian', values: [string]): string;
-  encodeFunctionData(functionFragment: '_setBorrowPaused', values: [string, boolean]): string;
-  encodeFunctionData(functionFragment: '_setCloseFactor', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: '_setCollateralFactor', values: [string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: '_setLiquidationIncentive', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: '_setMarketBorrowCaps', values: [string[], BigNumberish[]]): string;
-  encodeFunctionData(functionFragment: '_setMarketMintCaps', values: [string[], BigNumberish[]]): string;
-  encodeFunctionData(functionFragment: '_setMaxAssets', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: '_setMintCapGuardian', values: [string]): string;
-  encodeFunctionData(functionFragment: '_setMintPaused', values: [string, boolean]): string;
-  encodeFunctionData(functionFragment: '_setPauseGuardian', values: [string]): string;
-  encodeFunctionData(functionFragment: '_setPriceOracle', values: [string]): string;
+  encodeFunctionData(functionFragment: '_setBorrowCapGuardian', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: '_setBorrowPaused',
+    values: [PromiseOrValue<string>, PromiseOrValue<boolean>],
+  ): string;
+  encodeFunctionData(functionFragment: '_setCloseFactor', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(
+    functionFragment: '_setCollateralFactor',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: '_setLiquidationIncentive', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(
+    functionFragment: '_setMarketBorrowCaps',
+    values: [PromiseOrValue<string>[], PromiseOrValue<BigNumberish>[]],
+  ): string;
+  encodeFunctionData(
+    functionFragment: '_setMarketMintCaps',
+    values: [PromiseOrValue<string>[], PromiseOrValue<BigNumberish>[]],
+  ): string;
+  encodeFunctionData(functionFragment: '_setMaxAssets', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: '_setMintCapGuardian', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: '_setMintPaused',
+    values: [PromiseOrValue<string>, PromiseOrValue<boolean>],
+  ): string;
+  encodeFunctionData(functionFragment: '_setPauseGuardian', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: '_setPriceOracle', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(
     functionFragment: '_setRewardSpeeds',
-    values: [BigNumberish, string[], BigNumberish[], boolean[]],
+    values: [
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<string>[],
+      PromiseOrValue<BigNumberish>[],
+      PromiseOrValue<boolean>[],
+    ],
   ): string;
-  encodeFunctionData(functionFragment: '_setSeizePaused', values: [boolean]): string;
-  encodeFunctionData(functionFragment: '_setTransferPaused', values: [boolean]): string;
-  encodeFunctionData(functionFragment: '_supportMarket', values: [string]): string;
-  encodeFunctionData(functionFragment: 'accountAssets', values: [string, BigNumberish]): string;
+  encodeFunctionData(functionFragment: '_setSeizePaused', values: [PromiseOrValue<boolean>]): string;
+  encodeFunctionData(functionFragment: '_setTransferPaused', values: [PromiseOrValue<boolean>]): string;
+  encodeFunctionData(functionFragment: '_supportMarket', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'accountAssets',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
   encodeFunctionData(functionFragment: 'admin', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'allMarkets', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'allMarkets', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'aurora', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'borrowAllowed', values: [string, string, BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'borrowAllowed',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
   encodeFunctionData(functionFragment: 'borrowCapGuardian', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'borrowCaps', values: [string]): string;
-  encodeFunctionData(functionFragment: 'borrowGuardianPaused', values: [string]): string;
-  encodeFunctionData(functionFragment: 'checkMembership', values: [string, string]): string;
-  encodeFunctionData(functionFragment: 'claimReward(uint8,address)', values: [BigNumberish, string]): string;
+  encodeFunctionData(functionFragment: 'borrowCaps', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'borrowGuardianPaused', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'checkMembership',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'claimReward(uint8,address)',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>],
+  ): string;
   encodeFunctionData(
     functionFragment: 'claimReward(uint8,address,address[])',
-    values: [BigNumberish, string, string[]],
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>, PromiseOrValue<string>[]],
   ): string;
   encodeFunctionData(
     functionFragment: 'claimReward(uint8,address[],address[],bool,bool)',
-    values: [BigNumberish, string[], string[], boolean, boolean],
+    values: [
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<string>[],
+      PromiseOrValue<string>[],
+      PromiseOrValue<boolean>,
+      PromiseOrValue<boolean>,
+    ],
   ): string;
   encodeFunctionData(functionFragment: 'closeFactorMantissa', values?: undefined): string;
   encodeFunctionData(functionFragment: 'comptrollerImplementation', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'enterMarkets', values: [string[]]): string;
-  encodeFunctionData(functionFragment: 'exitMarket', values: [string]): string;
-  encodeFunctionData(functionFragment: 'getAccountLiquidity', values: [string]): string;
+  encodeFunctionData(functionFragment: 'enterMarkets', values: [PromiseOrValue<string>[]]): string;
+  encodeFunctionData(functionFragment: 'exitMarket', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'getAccountLiquidity', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'getAllMarkets', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'getAssetsIn', values: [string]): string;
+  encodeFunctionData(functionFragment: 'getAssetsIn', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(
     functionFragment: 'getHypotheticalAccountLiquidity',
-    values: [string, string, BigNumberish, BigNumberish],
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+    ],
   ): string;
   encodeFunctionData(functionFragment: 'initialIndexConstant', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'isAllowedToClaimReward', values: [string, string]): string;
+  encodeFunctionData(
+    functionFragment: 'isAllowedToClaimReward',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>],
+  ): string;
   encodeFunctionData(functionFragment: 'isComptroller', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'isWhitelisted', values: [string]): string;
+  encodeFunctionData(functionFragment: 'isWhitelisted', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(
     functionFragment: 'liquidateBorrowAllowed',
-    values: [string, string, string, string, BigNumberish],
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+    ],
   ): string;
-  encodeFunctionData(functionFragment: 'liquidateCalculateSeizeTokens', values: [string, string, BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'liquidateCalculateSeizeTokens',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
   encodeFunctionData(functionFragment: 'liquidationIncentiveMantissa', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'markets', values: [string]): string;
+  encodeFunctionData(functionFragment: 'markets', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'maxAssets', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'mintAllowed', values: [string, string, BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'mintAllowed',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
   encodeFunctionData(functionFragment: 'mintCapGuardian', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'mintCaps', values: [string]): string;
-  encodeFunctionData(functionFragment: 'mintGuardianPaused', values: [string]): string;
+  encodeFunctionData(functionFragment: 'mintCaps', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'mintGuardianPaused', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'oracle', values?: undefined): string;
   encodeFunctionData(functionFragment: 'pauseGuardian', values?: undefined): string;
   encodeFunctionData(functionFragment: 'pendingAdmin', values?: undefined): string;
   encodeFunctionData(functionFragment: 'pendingComptrollerImplementation', values?: undefined): string;
   encodeFunctionData(functionFragment: 'ply', values?: undefined): string;
   encodeFunctionData(functionFragment: 'pulp', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'redeemAllowed', values: [string, string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'repayBorrowAllowed', values: [string, string, string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'rewardAccrued', values: [BigNumberish, string]): string;
+  encodeFunctionData(
+    functionFragment: 'redeemAllowed',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'repayBorrowAllowed',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'rewardAccrued',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>],
+  ): string;
   encodeFunctionData(functionFragment: 'rewardAurora', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'rewardBorrowState', values: [BigNumberish, string]): string;
-  encodeFunctionData(functionFragment: 'rewardBorrowerIndex', values: [BigNumberish, string, string]): string;
+  encodeFunctionData(
+    functionFragment: 'rewardBorrowState',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'rewardBorrowerIndex',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>, PromiseOrValue<string>],
+  ): string;
   encodeFunctionData(functionFragment: 'rewardClaimStart', values?: undefined): string;
   encodeFunctionData(functionFragment: 'rewardPly', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'rewardRate', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'rewardSpeeds', values: [BigNumberish, string, boolean]): string;
-  encodeFunctionData(functionFragment: 'rewardSupplierIndex', values: [BigNumberish, string, string]): string;
-  encodeFunctionData(functionFragment: 'rewardSupplyState', values: [BigNumberish, string]): string;
-  encodeFunctionData(functionFragment: 'seizeAllowed', values: [string, string, string, string, BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'rewardRate', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(
+    functionFragment: 'rewardSpeeds',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>, PromiseOrValue<boolean>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'rewardSupplierIndex',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>, PromiseOrValue<string>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'rewardSupplyState',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'seizeAllowed',
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+    ],
+  ): string;
   encodeFunctionData(functionFragment: 'seizeGuardianPaused', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'setLockAddress', values: [string]): string;
-  encodeFunctionData(functionFragment: 'setRewardClaimStart', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'setTokens', values: [string, string]): string;
-  encodeFunctionData(functionFragment: 'setWhitelisted', values: [string, boolean]): string;
-  encodeFunctionData(functionFragment: 'transferAllowed', values: [string, string, string, BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'setLockAddress', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'setRewardClaimStart', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'setTokens', values: [PromiseOrValue<string>, PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'setWhitelisted',
+    values: [PromiseOrValue<string>, PromiseOrValue<boolean>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'transferAllowed',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
   encodeFunctionData(functionFragment: 'transferGuardianPaused', values?: undefined): string;
 
   decodeFunctionResult(functionFragment: '_become', data: BytesLike): Result;
@@ -591,151 +691,159 @@ export interface AurigamiComptroller extends BaseContract {
 
   functions: {
     _become(
-      unitroller: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      unitroller: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     _borrowGuardianPaused(overrides?: CallOverrides): Promise<[boolean]>;
 
     _grantPly(
-      recipient: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      recipient: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     _mintGuardianPaused(overrides?: CallOverrides): Promise<[boolean]>;
 
     _setBorrowCapGuardian(
-      newBorrowCapGuardian: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newBorrowCapGuardian: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     _setBorrowPaused(
-      auToken: string,
-      state: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      auToken: PromiseOrValue<string>,
+      state: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     _setCloseFactor(
-      newCloseFactorMantissa: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newCloseFactorMantissa: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     _setCollateralFactor(
-      auToken: string,
-      newCollateralFactorMantissa: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      auToken: PromiseOrValue<string>,
+      newCollateralFactorMantissa: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     _setLiquidationIncentive(
-      newLiquidationIncentiveMantissa: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newLiquidationIncentiveMantissa: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     _setMarketBorrowCaps(
-      auTokens: string[],
-      newBorrowCaps: BigNumberish[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      auTokens: PromiseOrValue<string>[],
+      newBorrowCaps: PromiseOrValue<BigNumberish>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     _setMarketMintCaps(
-      auTokens: string[],
-      newMintCaps: BigNumberish[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      auTokens: PromiseOrValue<string>[],
+      newMintCaps: PromiseOrValue<BigNumberish>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     _setMaxAssets(
-      _maxAssets: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _maxAssets: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     _setMintCapGuardian(
-      newMintCapGuardian: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newMintCapGuardian: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     _setMintPaused(
-      auToken: string,
-      state: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      auToken: PromiseOrValue<string>,
+      state: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     _setPauseGuardian(
-      newPauseGuardian: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newPauseGuardian: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     _setPriceOracle(
-      newOracle: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOracle: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     _setRewardSpeeds(
-      rewardType: BigNumberish,
-      auTokens: string[],
-      rewardSpeeds: BigNumberish[],
-      isSupply: boolean[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      rewardType: PromiseOrValue<BigNumberish>,
+      auTokens: PromiseOrValue<string>[],
+      rewardSpeeds: PromiseOrValue<BigNumberish>[],
+      isSupply: PromiseOrValue<boolean>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     _setSeizePaused(
-      state: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      state: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     _setTransferPaused(
-      state: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      state: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     _supportMarket(
-      auToken: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      auToken: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    accountAssets(arg0: string, arg1: BigNumberish, overrides?: CallOverrides): Promise<[string]>;
+    accountAssets(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<[string]>;
 
     admin(overrides?: CallOverrides): Promise<[string]>;
 
-    allMarkets(arg0: BigNumberish, overrides?: CallOverrides): Promise<[string]>;
+    allMarkets(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[string]>;
 
     aurora(overrides?: CallOverrides): Promise<[string]>;
 
     borrowAllowed(
-      auToken: string,
-      borrower: string,
-      borrowAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      auToken: PromiseOrValue<string>,
+      borrower: PromiseOrValue<string>,
+      borrowAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     borrowCapGuardian(overrides?: CallOverrides): Promise<[string]>;
 
-    borrowCaps(arg0: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    borrowCaps(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    borrowGuardianPaused(arg0: string, overrides?: CallOverrides): Promise<[boolean]>;
+    borrowGuardianPaused(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[boolean]>;
 
-    checkMembership(account: string, auToken: string, overrides?: CallOverrides): Promise<[boolean]>;
+    checkMembership(
+      account: PromiseOrValue<string>,
+      auToken: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<[boolean]>;
 
     'claimReward(uint8,address)'(
-      rewardType: BigNumberish,
-      holder: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      rewardType: PromiseOrValue<BigNumberish>,
+      holder: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     'claimReward(uint8,address,address[])'(
-      rewardType: BigNumberish,
-      holder: string,
-      auTokens: string[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      rewardType: PromiseOrValue<BigNumberish>,
+      holder: PromiseOrValue<string>,
+      auTokens: PromiseOrValue<string>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     'claimReward(uint8,address[],address[],bool,bool)'(
-      rewardType: BigNumberish,
-      holders: string[],
-      auTokens: string[],
-      borrowers: boolean,
-      suppliers: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      rewardType: PromiseOrValue<BigNumberish>,
+      holders: PromiseOrValue<string>[],
+      auTokens: PromiseOrValue<string>[],
+      borrowers: PromiseOrValue<boolean>,
+      suppliers: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     closeFactorMantissa(overrides?: CallOverrides): Promise<[BigNumber]>;
@@ -743,57 +851,64 @@ export interface AurigamiComptroller extends BaseContract {
     comptrollerImplementation(overrides?: CallOverrides): Promise<[string]>;
 
     enterMarkets(
-      auTokens: string[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      auTokens: PromiseOrValue<string>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     exitMarket(
-      auTokenAddress: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      auTokenAddress: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    getAccountLiquidity(account: string, overrides?: CallOverrides): Promise<[BigNumber, BigNumber]>;
+    getAccountLiquidity(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber, BigNumber]>;
 
     getAllMarkets(overrides?: CallOverrides): Promise<[string[]]>;
 
-    getAssetsIn(account: string, overrides?: CallOverrides): Promise<[string[]] & { assetsIn: string[] }>;
+    getAssetsIn(
+      account: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<[string[]] & { assetsIn: string[] }>;
 
     getHypotheticalAccountLiquidity(
-      account: string,
-      auTokenModify: string,
-      redeemTokens: BigNumberish,
-      borrowAmount: BigNumberish,
+      account: PromiseOrValue<string>,
+      auTokenModify: PromiseOrValue<string>,
+      redeemTokens: PromiseOrValue<BigNumberish>,
+      borrowAmount: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber, BigNumber]>;
 
     initialIndexConstant(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    isAllowedToClaimReward(user: string, claimer: string, overrides?: CallOverrides): Promise<[boolean]>;
+    isAllowedToClaimReward(
+      user: PromiseOrValue<string>,
+      claimer: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<[boolean]>;
 
     isComptroller(overrides?: CallOverrides): Promise<[boolean]>;
 
-    isWhitelisted(arg0: string, overrides?: CallOverrides): Promise<[boolean]>;
+    isWhitelisted(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[boolean]>;
 
     liquidateBorrowAllowed(
-      auTokenBorrowed: string,
-      auTokenCollateral: string,
-      liquidator: string,
-      borrower: string,
-      repayAmount: BigNumberish,
+      auTokenBorrowed: PromiseOrValue<string>,
+      auTokenCollateral: PromiseOrValue<string>,
+      liquidator: PromiseOrValue<string>,
+      borrower: PromiseOrValue<string>,
+      repayAmount: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<[void]>;
 
     liquidateCalculateSeizeTokens(
-      auTokenBorrowed: string,
-      auTokenCollateral: string,
-      actualRepayAmount: BigNumberish,
+      auTokenBorrowed: PromiseOrValue<string>,
+      auTokenCollateral: PromiseOrValue<string>,
+      actualRepayAmount: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber]>;
 
     liquidationIncentiveMantissa(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     markets(
-      arg0: string,
+      arg0: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<
       [boolean, BigNumber, boolean] & {
@@ -806,17 +921,17 @@ export interface AurigamiComptroller extends BaseContract {
     maxAssets(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     mintAllowed(
-      auToken: string,
-      minter: string,
-      mintAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      auToken: PromiseOrValue<string>,
+      minter: PromiseOrValue<string>,
+      mintAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     mintCapGuardian(overrides?: CallOverrides): Promise<[string]>;
 
-    mintCaps(arg0: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    mintCaps(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    mintGuardianPaused(arg0: string, overrides?: CallOverrides): Promise<[boolean]>;
+    mintGuardianPaused(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[boolean]>;
 
     oracle(overrides?: CallOverrides): Promise<[string]>;
 
@@ -831,34 +946,38 @@ export interface AurigamiComptroller extends BaseContract {
     pulp(overrides?: CallOverrides): Promise<[string]>;
 
     redeemAllowed(
-      auToken: string,
-      redeemer: string,
-      redeemTokens: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      auToken: PromiseOrValue<string>,
+      redeemer: PromiseOrValue<string>,
+      redeemTokens: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     repayBorrowAllowed(
-      auToken: string,
-      payer: string,
-      borrower: string,
-      repayAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      auToken: PromiseOrValue<string>,
+      payer: PromiseOrValue<string>,
+      borrower: PromiseOrValue<string>,
+      repayAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    rewardAccrued(arg0: BigNumberish, arg1: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    rewardAccrued(
+      arg0: PromiseOrValue<BigNumberish>,
+      arg1: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber]>;
 
     rewardAurora(overrides?: CallOverrides): Promise<[number]>;
 
     rewardBorrowState(
-      arg0: BigNumberish,
-      arg1: string,
+      arg0: PromiseOrValue<BigNumberish>,
+      arg1: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber, number] & { index: BigNumber; timestamp: number }>;
 
     rewardBorrowerIndex(
-      arg0: BigNumberish,
-      arg1: string,
-      arg2: string,
+      arg0: PromiseOrValue<BigNumberish>,
+      arg1: PromiseOrValue<string>,
+      arg2: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber]>;
 
@@ -866,213 +985,226 @@ export interface AurigamiComptroller extends BaseContract {
 
     rewardPly(overrides?: CallOverrides): Promise<[number]>;
 
-    rewardRate(arg0: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber]>;
+    rewardRate(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    rewardSpeeds(arg0: BigNumberish, arg1: string, arg2: boolean, overrides?: CallOverrides): Promise<[BigNumber]>;
+    rewardSpeeds(
+      arg0: PromiseOrValue<BigNumberish>,
+      arg1: PromiseOrValue<string>,
+      arg2: PromiseOrValue<boolean>,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber]>;
 
     rewardSupplierIndex(
-      arg0: BigNumberish,
-      arg1: string,
-      arg2: string,
+      arg0: PromiseOrValue<BigNumberish>,
+      arg1: PromiseOrValue<string>,
+      arg2: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber]>;
 
     rewardSupplyState(
-      arg0: BigNumberish,
-      arg1: string,
+      arg0: PromiseOrValue<BigNumberish>,
+      arg1: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber, number] & { index: BigNumber; timestamp: number }>;
 
     seizeAllowed(
-      auTokenCollateral: string,
-      auTokenBorrowed: string,
-      liquidator: string,
-      borrower: string,
-      seizeTokens: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      auTokenCollateral: PromiseOrValue<string>,
+      auTokenBorrowed: PromiseOrValue<string>,
+      liquidator: PromiseOrValue<string>,
+      borrower: PromiseOrValue<string>,
+      seizeTokens: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     seizeGuardianPaused(overrides?: CallOverrides): Promise<[boolean]>;
 
     setLockAddress(
-      newPulp: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newPulp: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setRewardClaimStart(
-      newRewardClaimStart: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newRewardClaimStart: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setTokens(
-      newPly: string,
-      newAurora: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newPly: PromiseOrValue<string>,
+      newAurora: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setWhitelisted(
-      addr: string,
-      whitelisted: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      addr: PromiseOrValue<string>,
+      whitelisted: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     transferAllowed(
-      auToken: string,
-      src: string,
-      dst: string,
-      transferTokens: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      auToken: PromiseOrValue<string>,
+      src: PromiseOrValue<string>,
+      dst: PromiseOrValue<string>,
+      transferTokens: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     transferGuardianPaused(overrides?: CallOverrides): Promise<[boolean]>;
   };
 
   _become(
-    unitroller: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    unitroller: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   _borrowGuardianPaused(overrides?: CallOverrides): Promise<boolean>;
 
   _grantPly(
-    recipient: string,
-    amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    recipient: PromiseOrValue<string>,
+    amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   _mintGuardianPaused(overrides?: CallOverrides): Promise<boolean>;
 
   _setBorrowCapGuardian(
-    newBorrowCapGuardian: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    newBorrowCapGuardian: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   _setBorrowPaused(
-    auToken: string,
-    state: boolean,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    auToken: PromiseOrValue<string>,
+    state: PromiseOrValue<boolean>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   _setCloseFactor(
-    newCloseFactorMantissa: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    newCloseFactorMantissa: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   _setCollateralFactor(
-    auToken: string,
-    newCollateralFactorMantissa: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    auToken: PromiseOrValue<string>,
+    newCollateralFactorMantissa: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   _setLiquidationIncentive(
-    newLiquidationIncentiveMantissa: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    newLiquidationIncentiveMantissa: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   _setMarketBorrowCaps(
-    auTokens: string[],
-    newBorrowCaps: BigNumberish[],
-    overrides?: Overrides & { from?: string | Promise<string> },
+    auTokens: PromiseOrValue<string>[],
+    newBorrowCaps: PromiseOrValue<BigNumberish>[],
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   _setMarketMintCaps(
-    auTokens: string[],
-    newMintCaps: BigNumberish[],
-    overrides?: Overrides & { from?: string | Promise<string> },
+    auTokens: PromiseOrValue<string>[],
+    newMintCaps: PromiseOrValue<BigNumberish>[],
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   _setMaxAssets(
-    _maxAssets: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _maxAssets: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   _setMintCapGuardian(
-    newMintCapGuardian: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    newMintCapGuardian: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   _setMintPaused(
-    auToken: string,
-    state: boolean,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    auToken: PromiseOrValue<string>,
+    state: PromiseOrValue<boolean>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   _setPauseGuardian(
-    newPauseGuardian: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    newPauseGuardian: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   _setPriceOracle(
-    newOracle: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    newOracle: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   _setRewardSpeeds(
-    rewardType: BigNumberish,
-    auTokens: string[],
-    rewardSpeeds: BigNumberish[],
-    isSupply: boolean[],
-    overrides?: Overrides & { from?: string | Promise<string> },
+    rewardType: PromiseOrValue<BigNumberish>,
+    auTokens: PromiseOrValue<string>[],
+    rewardSpeeds: PromiseOrValue<BigNumberish>[],
+    isSupply: PromiseOrValue<boolean>[],
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   _setSeizePaused(
-    state: boolean,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    state: PromiseOrValue<boolean>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   _setTransferPaused(
-    state: boolean,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    state: PromiseOrValue<boolean>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   _supportMarket(
-    auToken: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    auToken: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  accountAssets(arg0: string, arg1: BigNumberish, overrides?: CallOverrides): Promise<string>;
+  accountAssets(
+    arg0: PromiseOrValue<string>,
+    arg1: PromiseOrValue<BigNumberish>,
+    overrides?: CallOverrides,
+  ): Promise<string>;
 
   admin(overrides?: CallOverrides): Promise<string>;
 
-  allMarkets(arg0: BigNumberish, overrides?: CallOverrides): Promise<string>;
+  allMarkets(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
 
   aurora(overrides?: CallOverrides): Promise<string>;
 
   borrowAllowed(
-    auToken: string,
-    borrower: string,
-    borrowAmount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    auToken: PromiseOrValue<string>,
+    borrower: PromiseOrValue<string>,
+    borrowAmount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   borrowCapGuardian(overrides?: CallOverrides): Promise<string>;
 
-  borrowCaps(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+  borrowCaps(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  borrowGuardianPaused(arg0: string, overrides?: CallOverrides): Promise<boolean>;
+  borrowGuardianPaused(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
-  checkMembership(account: string, auToken: string, overrides?: CallOverrides): Promise<boolean>;
+  checkMembership(
+    account: PromiseOrValue<string>,
+    auToken: PromiseOrValue<string>,
+    overrides?: CallOverrides,
+  ): Promise<boolean>;
 
   'claimReward(uint8,address)'(
-    rewardType: BigNumberish,
-    holder: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    rewardType: PromiseOrValue<BigNumberish>,
+    holder: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   'claimReward(uint8,address,address[])'(
-    rewardType: BigNumberish,
-    holder: string,
-    auTokens: string[],
-    overrides?: Overrides & { from?: string | Promise<string> },
+    rewardType: PromiseOrValue<BigNumberish>,
+    holder: PromiseOrValue<string>,
+    auTokens: PromiseOrValue<string>[],
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   'claimReward(uint8,address[],address[],bool,bool)'(
-    rewardType: BigNumberish,
-    holders: string[],
-    auTokens: string[],
-    borrowers: boolean,
-    suppliers: boolean,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    rewardType: PromiseOrValue<BigNumberish>,
+    holders: PromiseOrValue<string>[],
+    auTokens: PromiseOrValue<string>[],
+    borrowers: PromiseOrValue<boolean>,
+    suppliers: PromiseOrValue<boolean>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   closeFactorMantissa(overrides?: CallOverrides): Promise<BigNumber>;
@@ -1080,57 +1212,61 @@ export interface AurigamiComptroller extends BaseContract {
   comptrollerImplementation(overrides?: CallOverrides): Promise<string>;
 
   enterMarkets(
-    auTokens: string[],
-    overrides?: Overrides & { from?: string | Promise<string> },
+    auTokens: PromiseOrValue<string>[],
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   exitMarket(
-    auTokenAddress: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    auTokenAddress: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  getAccountLiquidity(account: string, overrides?: CallOverrides): Promise<[BigNumber, BigNumber]>;
+  getAccountLiquidity(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber, BigNumber]>;
 
   getAllMarkets(overrides?: CallOverrides): Promise<string[]>;
 
-  getAssetsIn(account: string, overrides?: CallOverrides): Promise<string[]>;
+  getAssetsIn(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<string[]>;
 
   getHypotheticalAccountLiquidity(
-    account: string,
-    auTokenModify: string,
-    redeemTokens: BigNumberish,
-    borrowAmount: BigNumberish,
+    account: PromiseOrValue<string>,
+    auTokenModify: PromiseOrValue<string>,
+    redeemTokens: PromiseOrValue<BigNumberish>,
+    borrowAmount: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides,
   ): Promise<[BigNumber, BigNumber]>;
 
   initialIndexConstant(overrides?: CallOverrides): Promise<BigNumber>;
 
-  isAllowedToClaimReward(user: string, claimer: string, overrides?: CallOverrides): Promise<boolean>;
+  isAllowedToClaimReward(
+    user: PromiseOrValue<string>,
+    claimer: PromiseOrValue<string>,
+    overrides?: CallOverrides,
+  ): Promise<boolean>;
 
   isComptroller(overrides?: CallOverrides): Promise<boolean>;
 
-  isWhitelisted(arg0: string, overrides?: CallOverrides): Promise<boolean>;
+  isWhitelisted(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
   liquidateBorrowAllowed(
-    auTokenBorrowed: string,
-    auTokenCollateral: string,
-    liquidator: string,
-    borrower: string,
-    repayAmount: BigNumberish,
+    auTokenBorrowed: PromiseOrValue<string>,
+    auTokenCollateral: PromiseOrValue<string>,
+    liquidator: PromiseOrValue<string>,
+    borrower: PromiseOrValue<string>,
+    repayAmount: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides,
   ): Promise<void>;
 
   liquidateCalculateSeizeTokens(
-    auTokenBorrowed: string,
-    auTokenCollateral: string,
-    actualRepayAmount: BigNumberish,
+    auTokenBorrowed: PromiseOrValue<string>,
+    auTokenCollateral: PromiseOrValue<string>,
+    actualRepayAmount: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides,
   ): Promise<BigNumber>;
 
   liquidationIncentiveMantissa(overrides?: CallOverrides): Promise<BigNumber>;
 
   markets(
-    arg0: string,
+    arg0: PromiseOrValue<string>,
     overrides?: CallOverrides,
   ): Promise<
     [boolean, BigNumber, boolean] & {
@@ -1143,17 +1279,17 @@ export interface AurigamiComptroller extends BaseContract {
   maxAssets(overrides?: CallOverrides): Promise<BigNumber>;
 
   mintAllowed(
-    auToken: string,
-    minter: string,
-    mintAmount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    auToken: PromiseOrValue<string>,
+    minter: PromiseOrValue<string>,
+    mintAmount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   mintCapGuardian(overrides?: CallOverrides): Promise<string>;
 
-  mintCaps(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+  mintCaps(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  mintGuardianPaused(arg0: string, overrides?: CallOverrides): Promise<boolean>;
+  mintGuardianPaused(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
   oracle(overrides?: CallOverrides): Promise<string>;
 
@@ -1168,180 +1304,234 @@ export interface AurigamiComptroller extends BaseContract {
   pulp(overrides?: CallOverrides): Promise<string>;
 
   redeemAllowed(
-    auToken: string,
-    redeemer: string,
-    redeemTokens: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    auToken: PromiseOrValue<string>,
+    redeemer: PromiseOrValue<string>,
+    redeemTokens: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   repayBorrowAllowed(
-    auToken: string,
-    payer: string,
-    borrower: string,
-    repayAmount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    auToken: PromiseOrValue<string>,
+    payer: PromiseOrValue<string>,
+    borrower: PromiseOrValue<string>,
+    repayAmount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  rewardAccrued(arg0: BigNumberish, arg1: string, overrides?: CallOverrides): Promise<BigNumber>;
+  rewardAccrued(
+    arg0: PromiseOrValue<BigNumberish>,
+    arg1: PromiseOrValue<string>,
+    overrides?: CallOverrides,
+  ): Promise<BigNumber>;
 
   rewardAurora(overrides?: CallOverrides): Promise<number>;
 
   rewardBorrowState(
-    arg0: BigNumberish,
-    arg1: string,
+    arg0: PromiseOrValue<BigNumberish>,
+    arg1: PromiseOrValue<string>,
     overrides?: CallOverrides,
   ): Promise<[BigNumber, number] & { index: BigNumber; timestamp: number }>;
 
-  rewardBorrowerIndex(arg0: BigNumberish, arg1: string, arg2: string, overrides?: CallOverrides): Promise<BigNumber>;
+  rewardBorrowerIndex(
+    arg0: PromiseOrValue<BigNumberish>,
+    arg1: PromiseOrValue<string>,
+    arg2: PromiseOrValue<string>,
+    overrides?: CallOverrides,
+  ): Promise<BigNumber>;
 
   rewardClaimStart(overrides?: CallOverrides): Promise<number>;
 
   rewardPly(overrides?: CallOverrides): Promise<number>;
 
-  rewardRate(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+  rewardRate(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  rewardSpeeds(arg0: BigNumberish, arg1: string, arg2: boolean, overrides?: CallOverrides): Promise<BigNumber>;
+  rewardSpeeds(
+    arg0: PromiseOrValue<BigNumberish>,
+    arg1: PromiseOrValue<string>,
+    arg2: PromiseOrValue<boolean>,
+    overrides?: CallOverrides,
+  ): Promise<BigNumber>;
 
-  rewardSupplierIndex(arg0: BigNumberish, arg1: string, arg2: string, overrides?: CallOverrides): Promise<BigNumber>;
+  rewardSupplierIndex(
+    arg0: PromiseOrValue<BigNumberish>,
+    arg1: PromiseOrValue<string>,
+    arg2: PromiseOrValue<string>,
+    overrides?: CallOverrides,
+  ): Promise<BigNumber>;
 
   rewardSupplyState(
-    arg0: BigNumberish,
-    arg1: string,
+    arg0: PromiseOrValue<BigNumberish>,
+    arg1: PromiseOrValue<string>,
     overrides?: CallOverrides,
   ): Promise<[BigNumber, number] & { index: BigNumber; timestamp: number }>;
 
   seizeAllowed(
-    auTokenCollateral: string,
-    auTokenBorrowed: string,
-    liquidator: string,
-    borrower: string,
-    seizeTokens: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    auTokenCollateral: PromiseOrValue<string>,
+    auTokenBorrowed: PromiseOrValue<string>,
+    liquidator: PromiseOrValue<string>,
+    borrower: PromiseOrValue<string>,
+    seizeTokens: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   seizeGuardianPaused(overrides?: CallOverrides): Promise<boolean>;
 
   setLockAddress(
-    newPulp: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    newPulp: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setRewardClaimStart(
-    newRewardClaimStart: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    newRewardClaimStart: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setTokens(
-    newPly: string,
-    newAurora: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    newPly: PromiseOrValue<string>,
+    newAurora: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setWhitelisted(
-    addr: string,
-    whitelisted: boolean,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    addr: PromiseOrValue<string>,
+    whitelisted: PromiseOrValue<boolean>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   transferAllowed(
-    auToken: string,
-    src: string,
-    dst: string,
-    transferTokens: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    auToken: PromiseOrValue<string>,
+    src: PromiseOrValue<string>,
+    dst: PromiseOrValue<string>,
+    transferTokens: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   transferGuardianPaused(overrides?: CallOverrides): Promise<boolean>;
 
   callStatic: {
-    _become(unitroller: string, overrides?: CallOverrides): Promise<void>;
+    _become(unitroller: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     _borrowGuardianPaused(overrides?: CallOverrides): Promise<boolean>;
 
-    _grantPly(recipient: string, amount: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    _grantPly(
+      recipient: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
     _mintGuardianPaused(overrides?: CallOverrides): Promise<boolean>;
 
-    _setBorrowCapGuardian(newBorrowCapGuardian: string, overrides?: CallOverrides): Promise<void>;
+    _setBorrowCapGuardian(newBorrowCapGuardian: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    _setBorrowPaused(auToken: string, state: boolean, overrides?: CallOverrides): Promise<boolean>;
+    _setBorrowPaused(
+      auToken: PromiseOrValue<string>,
+      state: PromiseOrValue<boolean>,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
 
-    _setCloseFactor(newCloseFactorMantissa: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    _setCloseFactor(newCloseFactorMantissa: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
     _setCollateralFactor(
-      auToken: string,
-      newCollateralFactorMantissa: BigNumberish,
+      auToken: PromiseOrValue<string>,
+      newCollateralFactorMantissa: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
-    _setLiquidationIncentive(newLiquidationIncentiveMantissa: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    _setLiquidationIncentive(
+      newLiquidationIncentiveMantissa: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    _setMarketBorrowCaps(auTokens: string[], newBorrowCaps: BigNumberish[], overrides?: CallOverrides): Promise<void>;
+    _setMarketBorrowCaps(
+      auTokens: PromiseOrValue<string>[],
+      newBorrowCaps: PromiseOrValue<BigNumberish>[],
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    _setMarketMintCaps(auTokens: string[], newMintCaps: BigNumberish[], overrides?: CallOverrides): Promise<void>;
+    _setMarketMintCaps(
+      auTokens: PromiseOrValue<string>[],
+      newMintCaps: PromiseOrValue<BigNumberish>[],
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    _setMaxAssets(_maxAssets: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    _setMaxAssets(_maxAssets: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
-    _setMintCapGuardian(newMintCapGuardian: string, overrides?: CallOverrides): Promise<void>;
+    _setMintCapGuardian(newMintCapGuardian: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    _setMintPaused(auToken: string, state: boolean, overrides?: CallOverrides): Promise<boolean>;
+    _setMintPaused(
+      auToken: PromiseOrValue<string>,
+      state: PromiseOrValue<boolean>,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
 
-    _setPauseGuardian(newPauseGuardian: string, overrides?: CallOverrides): Promise<void>;
+    _setPauseGuardian(newPauseGuardian: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    _setPriceOracle(newOracle: string, overrides?: CallOverrides): Promise<void>;
+    _setPriceOracle(newOracle: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     _setRewardSpeeds(
-      rewardType: BigNumberish,
-      auTokens: string[],
-      rewardSpeeds: BigNumberish[],
-      isSupply: boolean[],
+      rewardType: PromiseOrValue<BigNumberish>,
+      auTokens: PromiseOrValue<string>[],
+      rewardSpeeds: PromiseOrValue<BigNumberish>[],
+      isSupply: PromiseOrValue<boolean>[],
       overrides?: CallOverrides,
     ): Promise<void>;
 
-    _setSeizePaused(state: boolean, overrides?: CallOverrides): Promise<boolean>;
+    _setSeizePaused(state: PromiseOrValue<boolean>, overrides?: CallOverrides): Promise<boolean>;
 
-    _setTransferPaused(state: boolean, overrides?: CallOverrides): Promise<boolean>;
+    _setTransferPaused(state: PromiseOrValue<boolean>, overrides?: CallOverrides): Promise<boolean>;
 
-    _supportMarket(auToken: string, overrides?: CallOverrides): Promise<void>;
+    _supportMarket(auToken: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    accountAssets(arg0: string, arg1: BigNumberish, overrides?: CallOverrides): Promise<string>;
+    accountAssets(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<string>;
 
     admin(overrides?: CallOverrides): Promise<string>;
 
-    allMarkets(arg0: BigNumberish, overrides?: CallOverrides): Promise<string>;
+    allMarkets(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
 
     aurora(overrides?: CallOverrides): Promise<string>;
 
     borrowAllowed(
-      auToken: string,
-      borrower: string,
-      borrowAmount: BigNumberish,
+      auToken: PromiseOrValue<string>,
+      borrower: PromiseOrValue<string>,
+      borrowAmount: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
     borrowCapGuardian(overrides?: CallOverrides): Promise<string>;
 
-    borrowCaps(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    borrowCaps(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    borrowGuardianPaused(arg0: string, overrides?: CallOverrides): Promise<boolean>;
+    borrowGuardianPaused(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
-    checkMembership(account: string, auToken: string, overrides?: CallOverrides): Promise<boolean>;
+    checkMembership(
+      account: PromiseOrValue<string>,
+      auToken: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
 
-    'claimReward(uint8,address)'(rewardType: BigNumberish, holder: string, overrides?: CallOverrides): Promise<void>;
+    'claimReward(uint8,address)'(
+      rewardType: PromiseOrValue<BigNumberish>,
+      holder: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
     'claimReward(uint8,address,address[])'(
-      rewardType: BigNumberish,
-      holder: string,
-      auTokens: string[],
+      rewardType: PromiseOrValue<BigNumberish>,
+      holder: PromiseOrValue<string>,
+      auTokens: PromiseOrValue<string>[],
       overrides?: CallOverrides,
     ): Promise<void>;
 
     'claimReward(uint8,address[],address[],bool,bool)'(
-      rewardType: BigNumberish,
-      holders: string[],
-      auTokens: string[],
-      borrowers: boolean,
-      suppliers: boolean,
+      rewardType: PromiseOrValue<BigNumberish>,
+      holders: PromiseOrValue<string>[],
+      auTokens: PromiseOrValue<string>[],
+      borrowers: PromiseOrValue<boolean>,
+      suppliers: PromiseOrValue<boolean>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
@@ -1349,52 +1539,56 @@ export interface AurigamiComptroller extends BaseContract {
 
     comptrollerImplementation(overrides?: CallOverrides): Promise<string>;
 
-    enterMarkets(auTokens: string[], overrides?: CallOverrides): Promise<void>;
+    enterMarkets(auTokens: PromiseOrValue<string>[], overrides?: CallOverrides): Promise<void>;
 
-    exitMarket(auTokenAddress: string, overrides?: CallOverrides): Promise<void>;
+    exitMarket(auTokenAddress: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    getAccountLiquidity(account: string, overrides?: CallOverrides): Promise<[BigNumber, BigNumber]>;
+    getAccountLiquidity(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber, BigNumber]>;
 
     getAllMarkets(overrides?: CallOverrides): Promise<string[]>;
 
-    getAssetsIn(account: string, overrides?: CallOverrides): Promise<string[]>;
+    getAssetsIn(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<string[]>;
 
     getHypotheticalAccountLiquidity(
-      account: string,
-      auTokenModify: string,
-      redeemTokens: BigNumberish,
-      borrowAmount: BigNumberish,
+      account: PromiseOrValue<string>,
+      auTokenModify: PromiseOrValue<string>,
+      redeemTokens: PromiseOrValue<BigNumberish>,
+      borrowAmount: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber, BigNumber]>;
 
     initialIndexConstant(overrides?: CallOverrides): Promise<BigNumber>;
 
-    isAllowedToClaimReward(user: string, claimer: string, overrides?: CallOverrides): Promise<boolean>;
+    isAllowedToClaimReward(
+      user: PromiseOrValue<string>,
+      claimer: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
 
     isComptroller(overrides?: CallOverrides): Promise<boolean>;
 
-    isWhitelisted(arg0: string, overrides?: CallOverrides): Promise<boolean>;
+    isWhitelisted(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
     liquidateBorrowAllowed(
-      auTokenBorrowed: string,
-      auTokenCollateral: string,
-      liquidator: string,
-      borrower: string,
-      repayAmount: BigNumberish,
+      auTokenBorrowed: PromiseOrValue<string>,
+      auTokenCollateral: PromiseOrValue<string>,
+      liquidator: PromiseOrValue<string>,
+      borrower: PromiseOrValue<string>,
+      repayAmount: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
     liquidateCalculateSeizeTokens(
-      auTokenBorrowed: string,
-      auTokenCollateral: string,
-      actualRepayAmount: BigNumberish,
+      auTokenBorrowed: PromiseOrValue<string>,
+      auTokenCollateral: PromiseOrValue<string>,
+      actualRepayAmount: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     liquidationIncentiveMantissa(overrides?: CallOverrides): Promise<BigNumber>;
 
     markets(
-      arg0: string,
+      arg0: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<
       [boolean, BigNumber, boolean] & {
@@ -1406,13 +1600,18 @@ export interface AurigamiComptroller extends BaseContract {
 
     maxAssets(overrides?: CallOverrides): Promise<BigNumber>;
 
-    mintAllowed(auToken: string, minter: string, mintAmount: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    mintAllowed(
+      auToken: PromiseOrValue<string>,
+      minter: PromiseOrValue<string>,
+      mintAmount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
     mintCapGuardian(overrides?: CallOverrides): Promise<string>;
 
-    mintCaps(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    mintCaps(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    mintGuardianPaused(arg0: string, overrides?: CallOverrides): Promise<boolean>;
+    mintGuardianPaused(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
     oracle(overrides?: CallOverrides): Promise<string>;
 
@@ -1427,72 +1626,99 @@ export interface AurigamiComptroller extends BaseContract {
     pulp(overrides?: CallOverrides): Promise<string>;
 
     redeemAllowed(
-      auToken: string,
-      redeemer: string,
-      redeemTokens: BigNumberish,
+      auToken: PromiseOrValue<string>,
+      redeemer: PromiseOrValue<string>,
+      redeemTokens: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
     repayBorrowAllowed(
-      auToken: string,
-      payer: string,
-      borrower: string,
-      repayAmount: BigNumberish,
+      auToken: PromiseOrValue<string>,
+      payer: PromiseOrValue<string>,
+      borrower: PromiseOrValue<string>,
+      repayAmount: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
-    rewardAccrued(arg0: BigNumberish, arg1: string, overrides?: CallOverrides): Promise<BigNumber>;
+    rewardAccrued(
+      arg0: PromiseOrValue<BigNumberish>,
+      arg1: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     rewardAurora(overrides?: CallOverrides): Promise<number>;
 
     rewardBorrowState(
-      arg0: BigNumberish,
-      arg1: string,
+      arg0: PromiseOrValue<BigNumberish>,
+      arg1: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber, number] & { index: BigNumber; timestamp: number }>;
 
-    rewardBorrowerIndex(arg0: BigNumberish, arg1: string, arg2: string, overrides?: CallOverrides): Promise<BigNumber>;
+    rewardBorrowerIndex(
+      arg0: PromiseOrValue<BigNumberish>,
+      arg1: PromiseOrValue<string>,
+      arg2: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     rewardClaimStart(overrides?: CallOverrides): Promise<number>;
 
     rewardPly(overrides?: CallOverrides): Promise<number>;
 
-    rewardRate(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    rewardRate(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    rewardSpeeds(arg0: BigNumberish, arg1: string, arg2: boolean, overrides?: CallOverrides): Promise<BigNumber>;
+    rewardSpeeds(
+      arg0: PromiseOrValue<BigNumberish>,
+      arg1: PromiseOrValue<string>,
+      arg2: PromiseOrValue<boolean>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    rewardSupplierIndex(arg0: BigNumberish, arg1: string, arg2: string, overrides?: CallOverrides): Promise<BigNumber>;
+    rewardSupplierIndex(
+      arg0: PromiseOrValue<BigNumberish>,
+      arg1: PromiseOrValue<string>,
+      arg2: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     rewardSupplyState(
-      arg0: BigNumberish,
-      arg1: string,
+      arg0: PromiseOrValue<BigNumberish>,
+      arg1: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber, number] & { index: BigNumber; timestamp: number }>;
 
     seizeAllowed(
-      auTokenCollateral: string,
-      auTokenBorrowed: string,
-      liquidator: string,
-      borrower: string,
-      seizeTokens: BigNumberish,
+      auTokenCollateral: PromiseOrValue<string>,
+      auTokenBorrowed: PromiseOrValue<string>,
+      liquidator: PromiseOrValue<string>,
+      borrower: PromiseOrValue<string>,
+      seizeTokens: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
     seizeGuardianPaused(overrides?: CallOverrides): Promise<boolean>;
 
-    setLockAddress(newPulp: string, overrides?: CallOverrides): Promise<void>;
+    setLockAddress(newPulp: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    setRewardClaimStart(newRewardClaimStart: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    setRewardClaimStart(newRewardClaimStart: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
-    setTokens(newPly: string, newAurora: string, overrides?: CallOverrides): Promise<void>;
+    setTokens(
+      newPly: PromiseOrValue<string>,
+      newAurora: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    setWhitelisted(addr: string, whitelisted: boolean, overrides?: CallOverrides): Promise<void>;
+    setWhitelisted(
+      addr: PromiseOrValue<string>,
+      whitelisted: PromiseOrValue<boolean>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
     transferAllowed(
-      auToken: string,
-      src: string,
-      dst: string,
-      transferTokens: BigNumberish,
+      auToken: PromiseOrValue<string>,
+      src: PromiseOrValue<string>,
+      dst: PromiseOrValue<string>,
+      transferTokens: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
@@ -1504,37 +1730,40 @@ export interface AurigamiComptroller extends BaseContract {
     ActionPaused(action?: null, pauseState?: null): ActionPausedEventFilter;
 
     'ContributorPlySpeedUpdated(address,uint256)'(
-      contributor?: string | null,
+      contributor?: PromiseOrValue<string> | null,
       newSpeed?: null,
     ): ContributorPlySpeedUpdatedEventFilter;
-    ContributorPlySpeedUpdated(contributor?: string | null, newSpeed?: null): ContributorPlySpeedUpdatedEventFilter;
+    ContributorPlySpeedUpdated(
+      contributor?: PromiseOrValue<string> | null,
+      newSpeed?: null,
+    ): ContributorPlySpeedUpdatedEventFilter;
 
     'DistributedBorrowerReward(uint8,address,address,uint256,uint256)'(
-      tokenType?: BigNumberish | null,
-      auToken?: string | null,
-      borrower?: string | null,
+      tokenType?: PromiseOrValue<BigNumberish> | null,
+      auToken?: PromiseOrValue<string> | null,
+      borrower?: PromiseOrValue<string> | null,
       plyDelta?: null,
       plyBorrowIndex?: null,
     ): DistributedBorrowerRewardEventFilter;
     DistributedBorrowerReward(
-      tokenType?: BigNumberish | null,
-      auToken?: string | null,
-      borrower?: string | null,
+      tokenType?: PromiseOrValue<BigNumberish> | null,
+      auToken?: PromiseOrValue<string> | null,
+      borrower?: PromiseOrValue<string> | null,
       plyDelta?: null,
       plyBorrowIndex?: null,
     ): DistributedBorrowerRewardEventFilter;
 
     'DistributedSupplierReward(uint8,address,address,uint256,uint256)'(
-      tokenType?: BigNumberish | null,
-      auToken?: string | null,
-      borrower?: string | null,
+      tokenType?: PromiseOrValue<BigNumberish> | null,
+      auToken?: PromiseOrValue<string> | null,
+      borrower?: PromiseOrValue<string> | null,
       plyDelta?: null,
       plyBorrowIndex?: null,
     ): DistributedSupplierRewardEventFilter;
     DistributedSupplierReward(
-      tokenType?: BigNumberish | null,
-      auToken?: string | null,
-      borrower?: string | null,
+      tokenType?: PromiseOrValue<BigNumberish> | null,
+      auToken?: PromiseOrValue<string> | null,
+      borrower?: PromiseOrValue<string> | null,
       plyDelta?: null,
       plyBorrowIndex?: null,
     ): DistributedSupplierRewardEventFilter;
@@ -1548,8 +1777,11 @@ export interface AurigamiComptroller extends BaseContract {
     'MarketListed(address)'(auToken?: null): MarketListedEventFilter;
     MarketListed(auToken?: null): MarketListedEventFilter;
 
-    'NewBorrowCap(address,uint256)'(auToken?: string | null, newBorrowCap?: null): NewBorrowCapEventFilter;
-    NewBorrowCap(auToken?: string | null, newBorrowCap?: null): NewBorrowCapEventFilter;
+    'NewBorrowCap(address,uint256)'(
+      auToken?: PromiseOrValue<string> | null,
+      newBorrowCap?: null,
+    ): NewBorrowCapEventFilter;
+    NewBorrowCap(auToken?: PromiseOrValue<string> | null, newBorrowCap?: null): NewBorrowCapEventFilter;
 
     'NewBorrowCapGuardian(address,address)'(
       oldBorrowCapGuardian?: null,
@@ -1583,8 +1815,8 @@ export interface AurigamiComptroller extends BaseContract {
       newLiquidationIncentiveMantissa?: null,
     ): NewLiquidationIncentiveEventFilter;
 
-    'NewMintCap(address,uint256)'(auToken?: string | null, newMintCap?: null): NewMintCapEventFilter;
-    NewMintCap(auToken?: string | null, newMintCap?: null): NewMintCapEventFilter;
+    'NewMintCap(address,uint256)'(auToken?: PromiseOrValue<string> | null, newMintCap?: null): NewMintCapEventFilter;
+    NewMintCap(auToken?: PromiseOrValue<string> | null, newMintCap?: null): NewMintCapEventFilter;
 
     'NewMintCapGuardian(address,address)'(
       oldMintCapGuardian?: null,
@@ -1603,214 +1835,252 @@ export interface AurigamiComptroller extends BaseContract {
 
     'SpeedUpdated(uint8,address,bool,uint256)'(
       tokenType?: null,
-      auToken?: string | null,
+      auToken?: PromiseOrValue<string> | null,
       isSupply?: null,
       newSpeed?: null,
     ): SpeedUpdatedEventFilter;
-    SpeedUpdated(tokenType?: null, auToken?: string | null, isSupply?: null, newSpeed?: null): SpeedUpdatedEventFilter;
+    SpeedUpdated(
+      tokenType?: null,
+      auToken?: PromiseOrValue<string> | null,
+      isSupply?: null,
+      newSpeed?: null,
+    ): SpeedUpdatedEventFilter;
 
     'WhitelistStatusChanged(address,bool)'(addr?: null, newStatus?: null): WhitelistStatusChangedEventFilter;
     WhitelistStatusChanged(addr?: null, newStatus?: null): WhitelistStatusChangedEventFilter;
   };
 
   estimateGas: {
-    _become(unitroller: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    _become(
+      unitroller: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     _borrowGuardianPaused(overrides?: CallOverrides): Promise<BigNumber>;
 
     _grantPly(
-      recipient: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      recipient: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     _mintGuardianPaused(overrides?: CallOverrides): Promise<BigNumber>;
 
     _setBorrowCapGuardian(
-      newBorrowCapGuardian: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newBorrowCapGuardian: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     _setBorrowPaused(
-      auToken: string,
-      state: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      auToken: PromiseOrValue<string>,
+      state: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     _setCloseFactor(
-      newCloseFactorMantissa: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newCloseFactorMantissa: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     _setCollateralFactor(
-      auToken: string,
-      newCollateralFactorMantissa: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      auToken: PromiseOrValue<string>,
+      newCollateralFactorMantissa: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     _setLiquidationIncentive(
-      newLiquidationIncentiveMantissa: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newLiquidationIncentiveMantissa: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     _setMarketBorrowCaps(
-      auTokens: string[],
-      newBorrowCaps: BigNumberish[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      auTokens: PromiseOrValue<string>[],
+      newBorrowCaps: PromiseOrValue<BigNumberish>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     _setMarketMintCaps(
-      auTokens: string[],
-      newMintCaps: BigNumberish[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      auTokens: PromiseOrValue<string>[],
+      newMintCaps: PromiseOrValue<BigNumberish>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     _setMaxAssets(
-      _maxAssets: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _maxAssets: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     _setMintCapGuardian(
-      newMintCapGuardian: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newMintCapGuardian: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     _setMintPaused(
-      auToken: string,
-      state: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      auToken: PromiseOrValue<string>,
+      state: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     _setPauseGuardian(
-      newPauseGuardian: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newPauseGuardian: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    _setPriceOracle(newOracle: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    _setPriceOracle(
+      newOracle: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     _setRewardSpeeds(
-      rewardType: BigNumberish,
-      auTokens: string[],
-      rewardSpeeds: BigNumberish[],
-      isSupply: boolean[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      rewardType: PromiseOrValue<BigNumberish>,
+      auTokens: PromiseOrValue<string>[],
+      rewardSpeeds: PromiseOrValue<BigNumberish>[],
+      isSupply: PromiseOrValue<boolean>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    _setSeizePaused(state: boolean, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    _setSeizePaused(
+      state: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
-    _setTransferPaused(state: boolean, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    _setTransferPaused(
+      state: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
-    _supportMarket(auToken: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    _supportMarket(
+      auToken: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
-    accountAssets(arg0: string, arg1: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    accountAssets(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     admin(overrides?: CallOverrides): Promise<BigNumber>;
 
-    allMarkets(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    allMarkets(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     aurora(overrides?: CallOverrides): Promise<BigNumber>;
 
     borrowAllowed(
-      auToken: string,
-      borrower: string,
-      borrowAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      auToken: PromiseOrValue<string>,
+      borrower: PromiseOrValue<string>,
+      borrowAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     borrowCapGuardian(overrides?: CallOverrides): Promise<BigNumber>;
 
-    borrowCaps(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    borrowCaps(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    borrowGuardianPaused(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    borrowGuardianPaused(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    checkMembership(account: string, auToken: string, overrides?: CallOverrides): Promise<BigNumber>;
+    checkMembership(
+      account: PromiseOrValue<string>,
+      auToken: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     'claimReward(uint8,address)'(
-      rewardType: BigNumberish,
-      holder: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      rewardType: PromiseOrValue<BigNumberish>,
+      holder: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     'claimReward(uint8,address,address[])'(
-      rewardType: BigNumberish,
-      holder: string,
-      auTokens: string[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      rewardType: PromiseOrValue<BigNumberish>,
+      holder: PromiseOrValue<string>,
+      auTokens: PromiseOrValue<string>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     'claimReward(uint8,address[],address[],bool,bool)'(
-      rewardType: BigNumberish,
-      holders: string[],
-      auTokens: string[],
-      borrowers: boolean,
-      suppliers: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      rewardType: PromiseOrValue<BigNumberish>,
+      holders: PromiseOrValue<string>[],
+      auTokens: PromiseOrValue<string>[],
+      borrowers: PromiseOrValue<boolean>,
+      suppliers: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     closeFactorMantissa(overrides?: CallOverrides): Promise<BigNumber>;
 
     comptrollerImplementation(overrides?: CallOverrides): Promise<BigNumber>;
 
-    enterMarkets(auTokens: string[], overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    enterMarkets(
+      auTokens: PromiseOrValue<string>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
-    exitMarket(auTokenAddress: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    exitMarket(
+      auTokenAddress: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
-    getAccountLiquidity(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getAccountLiquidity(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     getAllMarkets(overrides?: CallOverrides): Promise<BigNumber>;
 
-    getAssetsIn(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getAssetsIn(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     getHypotheticalAccountLiquidity(
-      account: string,
-      auTokenModify: string,
-      redeemTokens: BigNumberish,
-      borrowAmount: BigNumberish,
+      account: PromiseOrValue<string>,
+      auTokenModify: PromiseOrValue<string>,
+      redeemTokens: PromiseOrValue<BigNumberish>,
+      borrowAmount: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     initialIndexConstant(overrides?: CallOverrides): Promise<BigNumber>;
 
-    isAllowedToClaimReward(user: string, claimer: string, overrides?: CallOverrides): Promise<BigNumber>;
+    isAllowedToClaimReward(
+      user: PromiseOrValue<string>,
+      claimer: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     isComptroller(overrides?: CallOverrides): Promise<BigNumber>;
 
-    isWhitelisted(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    isWhitelisted(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     liquidateBorrowAllowed(
-      auTokenBorrowed: string,
-      auTokenCollateral: string,
-      liquidator: string,
-      borrower: string,
-      repayAmount: BigNumberish,
+      auTokenBorrowed: PromiseOrValue<string>,
+      auTokenCollateral: PromiseOrValue<string>,
+      liquidator: PromiseOrValue<string>,
+      borrower: PromiseOrValue<string>,
+      repayAmount: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     liquidateCalculateSeizeTokens(
-      auTokenBorrowed: string,
-      auTokenCollateral: string,
-      actualRepayAmount: BigNumberish,
+      auTokenBorrowed: PromiseOrValue<string>,
+      auTokenCollateral: PromiseOrValue<string>,
+      actualRepayAmount: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     liquidationIncentiveMantissa(overrides?: CallOverrides): Promise<BigNumber>;
 
-    markets(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    markets(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     maxAssets(overrides?: CallOverrides): Promise<BigNumber>;
 
     mintAllowed(
-      auToken: string,
-      minter: string,
-      mintAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      auToken: PromiseOrValue<string>,
+      minter: PromiseOrValue<string>,
+      mintAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     mintCapGuardian(overrides?: CallOverrides): Promise<BigNumber>;
 
-    mintCaps(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    mintCaps(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    mintGuardianPaused(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    mintGuardianPaused(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     oracle(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -1825,76 +2095,106 @@ export interface AurigamiComptroller extends BaseContract {
     pulp(overrides?: CallOverrides): Promise<BigNumber>;
 
     redeemAllowed(
-      auToken: string,
-      redeemer: string,
-      redeemTokens: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      auToken: PromiseOrValue<string>,
+      redeemer: PromiseOrValue<string>,
+      redeemTokens: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     repayBorrowAllowed(
-      auToken: string,
-      payer: string,
-      borrower: string,
-      repayAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      auToken: PromiseOrValue<string>,
+      payer: PromiseOrValue<string>,
+      borrower: PromiseOrValue<string>,
+      repayAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    rewardAccrued(arg0: BigNumberish, arg1: string, overrides?: CallOverrides): Promise<BigNumber>;
+    rewardAccrued(
+      arg0: PromiseOrValue<BigNumberish>,
+      arg1: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     rewardAurora(overrides?: CallOverrides): Promise<BigNumber>;
 
-    rewardBorrowState(arg0: BigNumberish, arg1: string, overrides?: CallOverrides): Promise<BigNumber>;
+    rewardBorrowState(
+      arg0: PromiseOrValue<BigNumberish>,
+      arg1: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    rewardBorrowerIndex(arg0: BigNumberish, arg1: string, arg2: string, overrides?: CallOverrides): Promise<BigNumber>;
+    rewardBorrowerIndex(
+      arg0: PromiseOrValue<BigNumberish>,
+      arg1: PromiseOrValue<string>,
+      arg2: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     rewardClaimStart(overrides?: CallOverrides): Promise<BigNumber>;
 
     rewardPly(overrides?: CallOverrides): Promise<BigNumber>;
 
-    rewardRate(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    rewardRate(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    rewardSpeeds(arg0: BigNumberish, arg1: string, arg2: boolean, overrides?: CallOverrides): Promise<BigNumber>;
+    rewardSpeeds(
+      arg0: PromiseOrValue<BigNumberish>,
+      arg1: PromiseOrValue<string>,
+      arg2: PromiseOrValue<boolean>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    rewardSupplierIndex(arg0: BigNumberish, arg1: string, arg2: string, overrides?: CallOverrides): Promise<BigNumber>;
+    rewardSupplierIndex(
+      arg0: PromiseOrValue<BigNumberish>,
+      arg1: PromiseOrValue<string>,
+      arg2: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    rewardSupplyState(arg0: BigNumberish, arg1: string, overrides?: CallOverrides): Promise<BigNumber>;
+    rewardSupplyState(
+      arg0: PromiseOrValue<BigNumberish>,
+      arg1: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     seizeAllowed(
-      auTokenCollateral: string,
-      auTokenBorrowed: string,
-      liquidator: string,
-      borrower: string,
-      seizeTokens: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      auTokenCollateral: PromiseOrValue<string>,
+      auTokenBorrowed: PromiseOrValue<string>,
+      liquidator: PromiseOrValue<string>,
+      borrower: PromiseOrValue<string>,
+      seizeTokens: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     seizeGuardianPaused(overrides?: CallOverrides): Promise<BigNumber>;
 
-    setLockAddress(newPulp: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    setLockAddress(
+      newPulp: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     setRewardClaimStart(
-      newRewardClaimStart: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newRewardClaimStart: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setTokens(
-      newPly: string,
-      newAurora: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newPly: PromiseOrValue<string>,
+      newAurora: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setWhitelisted(
-      addr: string,
-      whitelisted: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      addr: PromiseOrValue<string>,
+      whitelisted: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     transferAllowed(
-      auToken: string,
-      src: string,
-      dst: string,
-      transferTokens: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      auToken: PromiseOrValue<string>,
+      src: PromiseOrValue<string>,
+      dst: PromiseOrValue<string>,
+      transferTokens: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     transferGuardianPaused(overrides?: CallOverrides): Promise<BigNumber>;
@@ -1902,151 +2202,159 @@ export interface AurigamiComptroller extends BaseContract {
 
   populateTransaction: {
     _become(
-      unitroller: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      unitroller: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     _borrowGuardianPaused(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     _grantPly(
-      recipient: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      recipient: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     _mintGuardianPaused(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     _setBorrowCapGuardian(
-      newBorrowCapGuardian: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newBorrowCapGuardian: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     _setBorrowPaused(
-      auToken: string,
-      state: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      auToken: PromiseOrValue<string>,
+      state: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     _setCloseFactor(
-      newCloseFactorMantissa: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newCloseFactorMantissa: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     _setCollateralFactor(
-      auToken: string,
-      newCollateralFactorMantissa: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      auToken: PromiseOrValue<string>,
+      newCollateralFactorMantissa: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     _setLiquidationIncentive(
-      newLiquidationIncentiveMantissa: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newLiquidationIncentiveMantissa: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     _setMarketBorrowCaps(
-      auTokens: string[],
-      newBorrowCaps: BigNumberish[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      auTokens: PromiseOrValue<string>[],
+      newBorrowCaps: PromiseOrValue<BigNumberish>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     _setMarketMintCaps(
-      auTokens: string[],
-      newMintCaps: BigNumberish[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      auTokens: PromiseOrValue<string>[],
+      newMintCaps: PromiseOrValue<BigNumberish>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     _setMaxAssets(
-      _maxAssets: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _maxAssets: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     _setMintCapGuardian(
-      newMintCapGuardian: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newMintCapGuardian: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     _setMintPaused(
-      auToken: string,
-      state: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      auToken: PromiseOrValue<string>,
+      state: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     _setPauseGuardian(
-      newPauseGuardian: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newPauseGuardian: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     _setPriceOracle(
-      newOracle: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOracle: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     _setRewardSpeeds(
-      rewardType: BigNumberish,
-      auTokens: string[],
-      rewardSpeeds: BigNumberish[],
-      isSupply: boolean[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      rewardType: PromiseOrValue<BigNumberish>,
+      auTokens: PromiseOrValue<string>[],
+      rewardSpeeds: PromiseOrValue<BigNumberish>[],
+      isSupply: PromiseOrValue<boolean>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     _setSeizePaused(
-      state: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      state: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     _setTransferPaused(
-      state: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      state: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     _supportMarket(
-      auToken: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      auToken: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    accountAssets(arg0: string, arg1: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    accountAssets(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
     admin(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    allMarkets(arg0: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    allMarkets(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     aurora(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     borrowAllowed(
-      auToken: string,
-      borrower: string,
-      borrowAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      auToken: PromiseOrValue<string>,
+      borrower: PromiseOrValue<string>,
+      borrowAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     borrowCapGuardian(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    borrowCaps(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    borrowCaps(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    borrowGuardianPaused(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    borrowGuardianPaused(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    checkMembership(account: string, auToken: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    checkMembership(
+      account: PromiseOrValue<string>,
+      auToken: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
     'claimReward(uint8,address)'(
-      rewardType: BigNumberish,
-      holder: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      rewardType: PromiseOrValue<BigNumberish>,
+      holder: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     'claimReward(uint8,address,address[])'(
-      rewardType: BigNumberish,
-      holder: string,
-      auTokens: string[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      rewardType: PromiseOrValue<BigNumberish>,
+      holder: PromiseOrValue<string>,
+      auTokens: PromiseOrValue<string>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     'claimReward(uint8,address[],address[],bool,bool)'(
-      rewardType: BigNumberish,
-      holders: string[],
-      auTokens: string[],
-      borrowers: boolean,
-      suppliers: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      rewardType: PromiseOrValue<BigNumberish>,
+      holders: PromiseOrValue<string>[],
+      auTokens: PromiseOrValue<string>[],
+      borrowers: PromiseOrValue<boolean>,
+      suppliers: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     closeFactorMantissa(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -2054,71 +2362,75 @@ export interface AurigamiComptroller extends BaseContract {
     comptrollerImplementation(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     enterMarkets(
-      auTokens: string[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      auTokens: PromiseOrValue<string>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     exitMarket(
-      auTokenAddress: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      auTokenAddress: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    getAccountLiquidity(account: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getAccountLiquidity(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     getAllMarkets(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    getAssetsIn(account: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getAssetsIn(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     getHypotheticalAccountLiquidity(
-      account: string,
-      auTokenModify: string,
-      redeemTokens: BigNumberish,
-      borrowAmount: BigNumberish,
+      account: PromiseOrValue<string>,
+      auTokenModify: PromiseOrValue<string>,
+      redeemTokens: PromiseOrValue<BigNumberish>,
+      borrowAmount: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     initialIndexConstant(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    isAllowedToClaimReward(user: string, claimer: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    isAllowedToClaimReward(
+      user: PromiseOrValue<string>,
+      claimer: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
     isComptroller(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    isWhitelisted(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    isWhitelisted(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     liquidateBorrowAllowed(
-      auTokenBorrowed: string,
-      auTokenCollateral: string,
-      liquidator: string,
-      borrower: string,
-      repayAmount: BigNumberish,
+      auTokenBorrowed: PromiseOrValue<string>,
+      auTokenCollateral: PromiseOrValue<string>,
+      liquidator: PromiseOrValue<string>,
+      borrower: PromiseOrValue<string>,
+      repayAmount: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     liquidateCalculateSeizeTokens(
-      auTokenBorrowed: string,
-      auTokenCollateral: string,
-      actualRepayAmount: BigNumberish,
+      auTokenBorrowed: PromiseOrValue<string>,
+      auTokenCollateral: PromiseOrValue<string>,
+      actualRepayAmount: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     liquidationIncentiveMantissa(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    markets(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    markets(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     maxAssets(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     mintAllowed(
-      auToken: string,
-      minter: string,
-      mintAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      auToken: PromiseOrValue<string>,
+      minter: PromiseOrValue<string>,
+      mintAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     mintCapGuardian(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    mintCaps(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    mintCaps(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    mintGuardianPaused(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    mintGuardianPaused(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     oracle(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
@@ -2133,30 +2445,38 @@ export interface AurigamiComptroller extends BaseContract {
     pulp(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     redeemAllowed(
-      auToken: string,
-      redeemer: string,
-      redeemTokens: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      auToken: PromiseOrValue<string>,
+      redeemer: PromiseOrValue<string>,
+      redeemTokens: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     repayBorrowAllowed(
-      auToken: string,
-      payer: string,
-      borrower: string,
-      repayAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      auToken: PromiseOrValue<string>,
+      payer: PromiseOrValue<string>,
+      borrower: PromiseOrValue<string>,
+      repayAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    rewardAccrued(arg0: BigNumberish, arg1: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    rewardAccrued(
+      arg0: PromiseOrValue<BigNumberish>,
+      arg1: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
     rewardAurora(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    rewardBorrowState(arg0: BigNumberish, arg1: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    rewardBorrowState(
+      arg0: PromiseOrValue<BigNumberish>,
+      arg1: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
     rewardBorrowerIndex(
-      arg0: BigNumberish,
-      arg1: string,
-      arg2: string,
+      arg0: PromiseOrValue<BigNumberish>,
+      arg1: PromiseOrValue<string>,
+      arg2: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
@@ -2164,63 +2484,67 @@ export interface AurigamiComptroller extends BaseContract {
 
     rewardPly(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    rewardRate(arg0: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    rewardRate(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     rewardSpeeds(
-      arg0: BigNumberish,
-      arg1: string,
-      arg2: boolean,
+      arg0: PromiseOrValue<BigNumberish>,
+      arg1: PromiseOrValue<string>,
+      arg2: PromiseOrValue<boolean>,
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     rewardSupplierIndex(
-      arg0: BigNumberish,
-      arg1: string,
-      arg2: string,
+      arg0: PromiseOrValue<BigNumberish>,
+      arg1: PromiseOrValue<string>,
+      arg2: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
-    rewardSupplyState(arg0: BigNumberish, arg1: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    rewardSupplyState(
+      arg0: PromiseOrValue<BigNumberish>,
+      arg1: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
     seizeAllowed(
-      auTokenCollateral: string,
-      auTokenBorrowed: string,
-      liquidator: string,
-      borrower: string,
-      seizeTokens: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      auTokenCollateral: PromiseOrValue<string>,
+      auTokenBorrowed: PromiseOrValue<string>,
+      liquidator: PromiseOrValue<string>,
+      borrower: PromiseOrValue<string>,
+      seizeTokens: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     seizeGuardianPaused(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     setLockAddress(
-      newPulp: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newPulp: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setRewardClaimStart(
-      newRewardClaimStart: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newRewardClaimStart: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setTokens(
-      newPly: string,
-      newAurora: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newPly: PromiseOrValue<string>,
+      newAurora: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setWhitelisted(
-      addr: string,
-      whitelisted: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      addr: PromiseOrValue<string>,
+      whitelisted: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     transferAllowed(
-      auToken: string,
-      src: string,
-      dst: string,
-      transferTokens: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      auToken: PromiseOrValue<string>,
+      src: PromiseOrValue<string>,
+      dst: PromiseOrValue<string>,
+      transferTokens: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     transferGuardianPaused(overrides?: CallOverrides): Promise<PopulatedTransaction>;

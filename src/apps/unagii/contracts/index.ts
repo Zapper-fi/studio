@@ -6,6 +6,7 @@ import { Network } from '~types/network.interface';
 
 import { UnagiiV2Vault__factory } from './ethers';
 
+// eslint-disable-next-line
 type ContractOpts = { address: string; network: Network };
 
 @Injectable()

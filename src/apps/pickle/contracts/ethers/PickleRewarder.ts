@@ -15,13 +15,13 @@ import type {
 } from 'ethers';
 import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
 import type { Listener, Provider } from '@ethersproject/providers';
-import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
 export declare namespace PickleRewarder {
   export type PoolInfoStruct = {
-    accPicklePerShare: BigNumberish;
-    lastRewardTime: BigNumberish;
-    allocPoint: BigNumberish;
+    accPicklePerShare: PromiseOrValue<BigNumberish>;
+    lastRewardTime: PromiseOrValue<BigNumberish>;
+    allocPoint: PromiseOrValue<BigNumberish>;
   };
 
   export type PoolInfoStructOutput = [BigNumber, BigNumber, BigNumber] & {
@@ -73,26 +73,50 @@ export interface PickleRewarderInterface extends utils.Interface {
       | 'userInfo',
   ): FunctionFragment;
 
-  encodeFunctionData(functionFragment: 'add', values: [BigNumberish, BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'add',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+  ): string;
   encodeFunctionData(functionFragment: 'claimOwnership', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'massUpdatePools', values: [BigNumberish[]]): string;
+  encodeFunctionData(functionFragment: 'massUpdatePools', values: [PromiseOrValue<BigNumberish>[]]): string;
   encodeFunctionData(
     functionFragment: 'onPickleReward',
-    values: [BigNumberish, string, string, BigNumberish, BigNumberish],
+    values: [
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+    ],
   ): string;
   encodeFunctionData(functionFragment: 'owner', values?: undefined): string;
   encodeFunctionData(functionFragment: 'pendingOwner', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'pendingToken', values: [BigNumberish, string]): string;
-  encodeFunctionData(functionFragment: 'pendingTokens', values: [BigNumberish, string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'poolIds', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'poolInfo', values: [BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'pendingToken',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'pendingTokens',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'poolIds', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'poolInfo', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'poolLength', values?: undefined): string;
   encodeFunctionData(functionFragment: 'rewardPerSecond', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'set', values: [BigNumberish, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'setRewardPerSecond', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'transferOwnership', values: [string, boolean, boolean]): string;
-  encodeFunctionData(functionFragment: 'updatePool', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'userInfo', values: [BigNumberish, string]): string;
+  encodeFunctionData(
+    functionFragment: 'set',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'setRewardPerSecond', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(
+    functionFragment: 'transferOwnership',
+    values: [PromiseOrValue<string>, PromiseOrValue<boolean>, PromiseOrValue<boolean>],
+  ): string;
+  encodeFunctionData(functionFragment: 'updatePool', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(
+    functionFragment: 'userInfo',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>],
+  ): string;
 
   decodeFunctionResult(functionFragment: 'add', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'claimOwnership', data: BytesLike): Result;
@@ -211,25 +235,25 @@ export interface PickleRewarder extends BaseContract {
 
   functions: {
     add(
-      allocPoint: BigNumberish,
-      _pid: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      allocPoint: PromiseOrValue<BigNumberish>,
+      _pid: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    claimOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    claimOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     massUpdatePools(
-      pids: BigNumberish[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      pids: PromiseOrValue<BigNumberish>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     onPickleReward(
-      pid: BigNumberish,
-      _user: string,
-      to: string,
-      arg3: BigNumberish,
-      lpToken: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      pid: PromiseOrValue<BigNumberish>,
+      _user: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      arg3: PromiseOrValue<BigNumberish>,
+      lpToken: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     owner(overrides?: CallOverrides): Promise<[string]>;
@@ -237,15 +261,15 @@ export interface PickleRewarder extends BaseContract {
     pendingOwner(overrides?: CallOverrides): Promise<[string]>;
 
     pendingToken(
-      _pid: BigNumberish,
-      _user: string,
+      _pid: PromiseOrValue<BigNumberish>,
+      _user: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber] & { pending: BigNumber }>;
 
     pendingTokens(
-      pid: BigNumberish,
-      user: string,
-      arg2: BigNumberish,
+      pid: PromiseOrValue<BigNumberish>,
+      user: PromiseOrValue<string>,
+      arg2: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<
       [string[], BigNumber[]] & {
@@ -254,10 +278,10 @@ export interface PickleRewarder extends BaseContract {
       }
     >;
 
-    poolIds(arg0: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber]>;
+    poolIds(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     poolInfo(
-      arg0: BigNumberish,
+      arg0: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<
       [BigNumber, BigNumber, BigNumber] & {
@@ -272,67 +296,71 @@ export interface PickleRewarder extends BaseContract {
     rewardPerSecond(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     set(
-      _pid: BigNumberish,
-      _allocPoint: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _pid: PromiseOrValue<BigNumberish>,
+      _allocPoint: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setRewardPerSecond(
-      _rewardPerSecond: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _rewardPerSecond: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     transferOwnership(
-      newOwner: string,
-      direct: boolean,
-      renounce: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      direct: PromiseOrValue<boolean>,
+      renounce: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     updatePool(
-      pid: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      pid: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     userInfo(
-      arg0: BigNumberish,
-      arg1: string,
+      arg0: PromiseOrValue<BigNumberish>,
+      arg1: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber, BigNumber] & { amount: BigNumber; rewardDebt: BigNumber }>;
   };
 
   add(
-    allocPoint: BigNumberish,
-    _pid: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    allocPoint: PromiseOrValue<BigNumberish>,
+    _pid: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  claimOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  claimOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   massUpdatePools(
-    pids: BigNumberish[],
-    overrides?: Overrides & { from?: string | Promise<string> },
+    pids: PromiseOrValue<BigNumberish>[],
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   onPickleReward(
-    pid: BigNumberish,
-    _user: string,
-    to: string,
-    arg3: BigNumberish,
-    lpToken: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    pid: PromiseOrValue<BigNumberish>,
+    _user: PromiseOrValue<string>,
+    to: PromiseOrValue<string>,
+    arg3: PromiseOrValue<BigNumberish>,
+    lpToken: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   owner(overrides?: CallOverrides): Promise<string>;
 
   pendingOwner(overrides?: CallOverrides): Promise<string>;
 
-  pendingToken(_pid: BigNumberish, _user: string, overrides?: CallOverrides): Promise<BigNumber>;
+  pendingToken(
+    _pid: PromiseOrValue<BigNumberish>,
+    _user: PromiseOrValue<string>,
+    overrides?: CallOverrides,
+  ): Promise<BigNumber>;
 
   pendingTokens(
-    pid: BigNumberish,
-    user: string,
-    arg2: BigNumberish,
+    pid: PromiseOrValue<BigNumberish>,
+    user: PromiseOrValue<string>,
+    arg2: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides,
   ): Promise<
     [string[], BigNumber[]] & {
@@ -341,10 +369,10 @@ export interface PickleRewarder extends BaseContract {
     }
   >;
 
-  poolIds(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+  poolIds(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
   poolInfo(
-    arg0: BigNumberish,
+    arg0: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides,
   ): Promise<
     [BigNumber, BigNumber, BigNumber] & {
@@ -359,47 +387,51 @@ export interface PickleRewarder extends BaseContract {
   rewardPerSecond(overrides?: CallOverrides): Promise<BigNumber>;
 
   set(
-    _pid: BigNumberish,
-    _allocPoint: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _pid: PromiseOrValue<BigNumberish>,
+    _allocPoint: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setRewardPerSecond(
-    _rewardPerSecond: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _rewardPerSecond: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   transferOwnership(
-    newOwner: string,
-    direct: boolean,
-    renounce: boolean,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    newOwner: PromiseOrValue<string>,
+    direct: PromiseOrValue<boolean>,
+    renounce: PromiseOrValue<boolean>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   updatePool(
-    pid: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    pid: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   userInfo(
-    arg0: BigNumberish,
-    arg1: string,
+    arg0: PromiseOrValue<BigNumberish>,
+    arg1: PromiseOrValue<string>,
     overrides?: CallOverrides,
   ): Promise<[BigNumber, BigNumber] & { amount: BigNumber; rewardDebt: BigNumber }>;
 
   callStatic: {
-    add(allocPoint: BigNumberish, _pid: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    add(
+      allocPoint: PromiseOrValue<BigNumberish>,
+      _pid: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
     claimOwnership(overrides?: CallOverrides): Promise<void>;
 
-    massUpdatePools(pids: BigNumberish[], overrides?: CallOverrides): Promise<void>;
+    massUpdatePools(pids: PromiseOrValue<BigNumberish>[], overrides?: CallOverrides): Promise<void>;
 
     onPickleReward(
-      pid: BigNumberish,
-      _user: string,
-      to: string,
-      arg3: BigNumberish,
-      lpToken: BigNumberish,
+      pid: PromiseOrValue<BigNumberish>,
+      _user: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      arg3: PromiseOrValue<BigNumberish>,
+      lpToken: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
@@ -407,12 +439,16 @@ export interface PickleRewarder extends BaseContract {
 
     pendingOwner(overrides?: CallOverrides): Promise<string>;
 
-    pendingToken(_pid: BigNumberish, _user: string, overrides?: CallOverrides): Promise<BigNumber>;
+    pendingToken(
+      _pid: PromiseOrValue<BigNumberish>,
+      _user: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     pendingTokens(
-      pid: BigNumberish,
-      user: string,
-      arg2: BigNumberish,
+      pid: PromiseOrValue<BigNumberish>,
+      user: PromiseOrValue<string>,
+      arg2: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<
       [string[], BigNumber[]] & {
@@ -421,10 +457,10 @@ export interface PickleRewarder extends BaseContract {
       }
     >;
 
-    poolIds(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    poolIds(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     poolInfo(
-      arg0: BigNumberish,
+      arg0: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<
       [BigNumber, BigNumber, BigNumber] & {
@@ -438,17 +474,29 @@ export interface PickleRewarder extends BaseContract {
 
     rewardPerSecond(overrides?: CallOverrides): Promise<BigNumber>;
 
-    set(_pid: BigNumberish, _allocPoint: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    set(
+      _pid: PromiseOrValue<BigNumberish>,
+      _allocPoint: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    setRewardPerSecond(_rewardPerSecond: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    setRewardPerSecond(_rewardPerSecond: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
-    transferOwnership(newOwner: string, direct: boolean, renounce: boolean, overrides?: CallOverrides): Promise<void>;
+    transferOwnership(
+      newOwner: PromiseOrValue<string>,
+      direct: PromiseOrValue<boolean>,
+      renounce: PromiseOrValue<boolean>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    updatePool(pid: BigNumberish, overrides?: CallOverrides): Promise<PickleRewarder.PoolInfoStructOutput>;
+    updatePool(
+      pid: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<PickleRewarder.PoolInfoStructOutput>;
 
     userInfo(
-      arg0: BigNumberish,
-      arg1: string,
+      arg0: PromiseOrValue<BigNumberish>,
+      arg1: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber, BigNumber] & { amount: BigNumber; rewardDebt: BigNumber }>;
   };
@@ -458,176 +506,206 @@ export interface PickleRewarder extends BaseContract {
     LogInit(): LogInitEventFilter;
 
     'LogOnReward(address,uint256,uint256,address)'(
-      user?: string | null,
-      pid?: BigNumberish | null,
+      user?: PromiseOrValue<string> | null,
+      pid?: PromiseOrValue<BigNumberish> | null,
       amount?: null,
-      to?: string | null,
+      to?: PromiseOrValue<string> | null,
     ): LogOnRewardEventFilter;
     LogOnReward(
-      user?: string | null,
-      pid?: BigNumberish | null,
+      user?: PromiseOrValue<string> | null,
+      pid?: PromiseOrValue<BigNumberish> | null,
       amount?: null,
-      to?: string | null,
+      to?: PromiseOrValue<string> | null,
     ): LogOnRewardEventFilter;
 
-    'LogPoolAddition(uint256,uint256)'(pid?: BigNumberish | null, allocPoint?: null): LogPoolAdditionEventFilter;
-    LogPoolAddition(pid?: BigNumberish | null, allocPoint?: null): LogPoolAdditionEventFilter;
+    'LogPoolAddition(uint256,uint256)'(
+      pid?: PromiseOrValue<BigNumberish> | null,
+      allocPoint?: null,
+    ): LogPoolAdditionEventFilter;
+    LogPoolAddition(pid?: PromiseOrValue<BigNumberish> | null, allocPoint?: null): LogPoolAdditionEventFilter;
 
     'LogRewardPerSecond(uint256)'(rewardPerSecond?: null): LogRewardPerSecondEventFilter;
     LogRewardPerSecond(rewardPerSecond?: null): LogRewardPerSecondEventFilter;
 
-    'LogSetPool(uint256,uint256)'(pid?: BigNumberish | null, allocPoint?: null): LogSetPoolEventFilter;
-    LogSetPool(pid?: BigNumberish | null, allocPoint?: null): LogSetPoolEventFilter;
+    'LogSetPool(uint256,uint256)'(pid?: PromiseOrValue<BigNumberish> | null, allocPoint?: null): LogSetPoolEventFilter;
+    LogSetPool(pid?: PromiseOrValue<BigNumberish> | null, allocPoint?: null): LogSetPoolEventFilter;
 
     'LogUpdatePool(uint256,uint64,uint256,uint256)'(
-      pid?: BigNumberish | null,
+      pid?: PromiseOrValue<BigNumberish> | null,
       lastRewardTime?: null,
       lpSupply?: null,
       accPicklePerShare?: null,
     ): LogUpdatePoolEventFilter;
     LogUpdatePool(
-      pid?: BigNumberish | null,
+      pid?: PromiseOrValue<BigNumberish> | null,
       lastRewardTime?: null,
       lpSupply?: null,
       accPicklePerShare?: null,
     ): LogUpdatePoolEventFilter;
 
     'OwnershipTransferred(address,address)'(
-      previousOwner?: string | null,
-      newOwner?: string | null,
+      previousOwner?: PromiseOrValue<string> | null,
+      newOwner?: PromiseOrValue<string> | null,
     ): OwnershipTransferredEventFilter;
-    OwnershipTransferred(previousOwner?: string | null, newOwner?: string | null): OwnershipTransferredEventFilter;
+    OwnershipTransferred(
+      previousOwner?: PromiseOrValue<string> | null,
+      newOwner?: PromiseOrValue<string> | null,
+    ): OwnershipTransferredEventFilter;
   };
 
   estimateGas: {
     add(
-      allocPoint: BigNumberish,
-      _pid: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      allocPoint: PromiseOrValue<BigNumberish>,
+      _pid: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    claimOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    claimOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     massUpdatePools(
-      pids: BigNumberish[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      pids: PromiseOrValue<BigNumberish>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     onPickleReward(
-      pid: BigNumberish,
-      _user: string,
-      to: string,
-      arg3: BigNumberish,
-      lpToken: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      pid: PromiseOrValue<BigNumberish>,
+      _user: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      arg3: PromiseOrValue<BigNumberish>,
+      lpToken: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     owner(overrides?: CallOverrides): Promise<BigNumber>;
 
     pendingOwner(overrides?: CallOverrides): Promise<BigNumber>;
 
-    pendingToken(_pid: BigNumberish, _user: string, overrides?: CallOverrides): Promise<BigNumber>;
+    pendingToken(
+      _pid: PromiseOrValue<BigNumberish>,
+      _user: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    pendingTokens(pid: BigNumberish, user: string, arg2: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    pendingTokens(
+      pid: PromiseOrValue<BigNumberish>,
+      user: PromiseOrValue<string>,
+      arg2: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    poolIds(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    poolIds(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    poolInfo(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    poolInfo(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     poolLength(overrides?: CallOverrides): Promise<BigNumber>;
 
     rewardPerSecond(overrides?: CallOverrides): Promise<BigNumber>;
 
     set(
-      _pid: BigNumberish,
-      _allocPoint: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _pid: PromiseOrValue<BigNumberish>,
+      _allocPoint: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setRewardPerSecond(
-      _rewardPerSecond: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _rewardPerSecond: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     transferOwnership(
-      newOwner: string,
-      direct: boolean,
-      renounce: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      direct: PromiseOrValue<boolean>,
+      renounce: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    updatePool(pid: BigNumberish, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    updatePool(
+      pid: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
-    userInfo(arg0: BigNumberish, arg1: string, overrides?: CallOverrides): Promise<BigNumber>;
+    userInfo(
+      arg0: PromiseOrValue<BigNumberish>,
+      arg1: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
   };
 
   populateTransaction: {
     add(
-      allocPoint: BigNumberish,
-      _pid: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      allocPoint: PromiseOrValue<BigNumberish>,
+      _pid: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    claimOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    claimOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     massUpdatePools(
-      pids: BigNumberish[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      pids: PromiseOrValue<BigNumberish>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     onPickleReward(
-      pid: BigNumberish,
-      _user: string,
-      to: string,
-      arg3: BigNumberish,
-      lpToken: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      pid: PromiseOrValue<BigNumberish>,
+      _user: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      arg3: PromiseOrValue<BigNumberish>,
+      lpToken: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     pendingOwner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    pendingToken(_pid: BigNumberish, _user: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    pendingTokens(
-      pid: BigNumberish,
-      user: string,
-      arg2: BigNumberish,
+    pendingToken(
+      _pid: PromiseOrValue<BigNumberish>,
+      _user: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
-    poolIds(arg0: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    pendingTokens(
+      pid: PromiseOrValue<BigNumberish>,
+      user: PromiseOrValue<string>,
+      arg2: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
-    poolInfo(arg0: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    poolIds(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    poolInfo(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     poolLength(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     rewardPerSecond(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     set(
-      _pid: BigNumberish,
-      _allocPoint: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _pid: PromiseOrValue<BigNumberish>,
+      _allocPoint: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setRewardPerSecond(
-      _rewardPerSecond: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _rewardPerSecond: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     transferOwnership(
-      newOwner: string,
-      direct: boolean,
-      renounce: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      direct: PromiseOrValue<boolean>,
+      renounce: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     updatePool(
-      pid: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      pid: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    userInfo(arg0: BigNumberish, arg1: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    userInfo(
+      arg0: PromiseOrValue<BigNumberish>,
+      arg1: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
   };
 }

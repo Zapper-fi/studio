@@ -15,7 +15,7 @@ import type {
 } from 'ethers';
 import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
 import type { Listener, Provider } from '@ethersproject/providers';
-import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
 export interface PenguinChefInterface extends utils.Interface {
   functions: {
@@ -78,31 +78,62 @@ export interface PenguinChefInterface extends utils.Interface {
   ): FunctionFragment;
 
   encodeFunctionData(functionFragment: 'BONUS_MULTIPLIER', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'add', values: [BigNumberish, string, BigNumberish, boolean]): string;
-  encodeFunctionData(functionFragment: 'deposit', values: [BigNumberish, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'dev', values: [string]): string;
+  encodeFunctionData(
+    functionFragment: 'add',
+    values: [
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<boolean>,
+    ],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'deposit',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'dev', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'devaddr', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'emergencyWithdraw', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'emergencyWithdraw', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'feeAddress', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'getMultiplier', values: [BigNumberish, BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'getMultiplier',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+  ): string;
   encodeFunctionData(functionFragment: 'massUpdatePools', values?: undefined): string;
   encodeFunctionData(functionFragment: 'owner', values?: undefined): string;
   encodeFunctionData(functionFragment: 'pefi', values?: undefined): string;
   encodeFunctionData(functionFragment: 'pefiPerBlock', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'pendingPEFI', values: [BigNumberish, string]): string;
-  encodeFunctionData(functionFragment: 'poolExistence', values: [string]): string;
-  encodeFunctionData(functionFragment: 'poolInfo', values: [BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'pendingPEFI',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>],
+  ): string;
+  encodeFunctionData(functionFragment: 'poolExistence', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'poolInfo', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'poolLength', values?: undefined): string;
   encodeFunctionData(functionFragment: 'renounceOwnership', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'set', values: [BigNumberish, BigNumberish, BigNumberish, boolean]): string;
-  encodeFunctionData(functionFragment: 'setFeeAddress', values: [string]): string;
+  encodeFunctionData(
+    functionFragment: 'set',
+    values: [
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<boolean>,
+    ],
+  ): string;
+  encodeFunctionData(functionFragment: 'setFeeAddress', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'startBlock', values?: undefined): string;
   encodeFunctionData(functionFragment: 'totalAllocPoint', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'transferOwnership', values: [string]): string;
-  encodeFunctionData(functionFragment: 'updateEmissionRate', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'updatePool', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'userInfo', values: [BigNumberish, string]): string;
-  encodeFunctionData(functionFragment: 'withdraw', values: [BigNumberish, BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'transferOwnership', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'updateEmissionRate', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'updatePool', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(
+    functionFragment: 'userInfo',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'withdraw',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+  ): string;
 
   decodeFunctionResult(functionFragment: 'BONUS_MULTIPLIER', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'add', data: BytesLike): Result;
@@ -235,33 +266,40 @@ export interface PenguinChef extends BaseContract {
     BONUS_MULTIPLIER(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     add(
-      _allocPoint: BigNumberish,
-      _lpToken: string,
-      _withdrawFeeBP: BigNumberish,
-      _withUpdate: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _allocPoint: PromiseOrValue<BigNumberish>,
+      _lpToken: PromiseOrValue<string>,
+      _withdrawFeeBP: PromiseOrValue<BigNumberish>,
+      _withUpdate: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     deposit(
-      _pid: BigNumberish,
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _pid: PromiseOrValue<BigNumberish>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    dev(_devaddr: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    dev(
+      _devaddr: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<ContractTransaction>;
 
     devaddr(overrides?: CallOverrides): Promise<[string]>;
 
     emergencyWithdraw(
-      _pid: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _pid: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     feeAddress(overrides?: CallOverrides): Promise<[string]>;
 
-    getMultiplier(_from: BigNumberish, _to: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber]>;
+    getMultiplier(
+      _from: PromiseOrValue<BigNumberish>,
+      _to: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber]>;
 
-    massUpdatePools(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    massUpdatePools(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     owner(overrides?: CallOverrides): Promise<[string]>;
 
@@ -269,12 +307,16 @@ export interface PenguinChef extends BaseContract {
 
     pefiPerBlock(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    pendingPEFI(_pid: BigNumberish, _user: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    pendingPEFI(
+      _pid: PromiseOrValue<BigNumberish>,
+      _user: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber]>;
 
-    poolExistence(arg0: string, overrides?: CallOverrides): Promise<[boolean]>;
+    poolExistence(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[boolean]>;
 
     poolInfo(
-      arg0: BigNumberish,
+      arg0: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<
       [string, BigNumber, BigNumber, BigNumber, number] & {
@@ -288,19 +330,19 @@ export interface PenguinChef extends BaseContract {
 
     poolLength(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     set(
-      _pid: BigNumberish,
-      _allocPoint: BigNumberish,
-      _withdrawFeeBP: BigNumberish,
-      _withUpdate: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _pid: PromiseOrValue<BigNumberish>,
+      _allocPoint: PromiseOrValue<BigNumberish>,
+      _withdrawFeeBP: PromiseOrValue<BigNumberish>,
+      _withUpdate: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setFeeAddress(
-      _feeAddress: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _feeAddress: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     startBlock(overrides?: CallOverrides): Promise<[BigNumber]>;
@@ -308,63 +350,70 @@ export interface PenguinChef extends BaseContract {
     totalAllocPoint(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     updateEmissionRate(
-      _pefiPerBlock: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _pefiPerBlock: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     updatePool(
-      _pid: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _pid: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     userInfo(
-      arg0: BigNumberish,
-      arg1: string,
+      arg0: PromiseOrValue<BigNumberish>,
+      arg1: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber, BigNumber] & { amount: BigNumber; rewardDebt: BigNumber }>;
 
     withdraw(
-      _pid: BigNumberish,
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _pid: PromiseOrValue<BigNumberish>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
   };
 
   BONUS_MULTIPLIER(overrides?: CallOverrides): Promise<BigNumber>;
 
   add(
-    _allocPoint: BigNumberish,
-    _lpToken: string,
-    _withdrawFeeBP: BigNumberish,
-    _withUpdate: boolean,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _allocPoint: PromiseOrValue<BigNumberish>,
+    _lpToken: PromiseOrValue<string>,
+    _withdrawFeeBP: PromiseOrValue<BigNumberish>,
+    _withUpdate: PromiseOrValue<boolean>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   deposit(
-    _pid: BigNumberish,
-    _amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _pid: PromiseOrValue<BigNumberish>,
+    _amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  dev(_devaddr: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  dev(
+    _devaddr: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
+  ): Promise<ContractTransaction>;
 
   devaddr(overrides?: CallOverrides): Promise<string>;
 
   emergencyWithdraw(
-    _pid: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _pid: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   feeAddress(overrides?: CallOverrides): Promise<string>;
 
-  getMultiplier(_from: BigNumberish, _to: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+  getMultiplier(
+    _from: PromiseOrValue<BigNumberish>,
+    _to: PromiseOrValue<BigNumberish>,
+    overrides?: CallOverrides,
+  ): Promise<BigNumber>;
 
-  massUpdatePools(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  massUpdatePools(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   owner(overrides?: CallOverrides): Promise<string>;
 
@@ -372,12 +421,16 @@ export interface PenguinChef extends BaseContract {
 
   pefiPerBlock(overrides?: CallOverrides): Promise<BigNumber>;
 
-  pendingPEFI(_pid: BigNumberish, _user: string, overrides?: CallOverrides): Promise<BigNumber>;
+  pendingPEFI(
+    _pid: PromiseOrValue<BigNumberish>,
+    _user: PromiseOrValue<string>,
+    overrides?: CallOverrides,
+  ): Promise<BigNumber>;
 
-  poolExistence(arg0: string, overrides?: CallOverrides): Promise<boolean>;
+  poolExistence(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
   poolInfo(
-    arg0: BigNumberish,
+    arg0: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides,
   ): Promise<
     [string, BigNumber, BigNumber, BigNumber, number] & {
@@ -391,19 +444,19 @@ export interface PenguinChef extends BaseContract {
 
   poolLength(overrides?: CallOverrides): Promise<BigNumber>;
 
-  renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   set(
-    _pid: BigNumberish,
-    _allocPoint: BigNumberish,
-    _withdrawFeeBP: BigNumberish,
-    _withUpdate: boolean,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _pid: PromiseOrValue<BigNumberish>,
+    _allocPoint: PromiseOrValue<BigNumberish>,
+    _withdrawFeeBP: PromiseOrValue<BigNumberish>,
+    _withUpdate: PromiseOrValue<boolean>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setFeeAddress(
-    _feeAddress: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _feeAddress: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   startBlock(overrides?: CallOverrides): Promise<BigNumber>;
@@ -411,54 +464,62 @@ export interface PenguinChef extends BaseContract {
   totalAllocPoint(overrides?: CallOverrides): Promise<BigNumber>;
 
   transferOwnership(
-    newOwner: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    newOwner: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   updateEmissionRate(
-    _pefiPerBlock: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _pefiPerBlock: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   updatePool(
-    _pid: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _pid: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   userInfo(
-    arg0: BigNumberish,
-    arg1: string,
+    arg0: PromiseOrValue<BigNumberish>,
+    arg1: PromiseOrValue<string>,
     overrides?: CallOverrides,
   ): Promise<[BigNumber, BigNumber] & { amount: BigNumber; rewardDebt: BigNumber }>;
 
   withdraw(
-    _pid: BigNumberish,
-    _amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _pid: PromiseOrValue<BigNumberish>,
+    _amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   callStatic: {
     BONUS_MULTIPLIER(overrides?: CallOverrides): Promise<BigNumber>;
 
     add(
-      _allocPoint: BigNumberish,
-      _lpToken: string,
-      _withdrawFeeBP: BigNumberish,
-      _withUpdate: boolean,
+      _allocPoint: PromiseOrValue<BigNumberish>,
+      _lpToken: PromiseOrValue<string>,
+      _withdrawFeeBP: PromiseOrValue<BigNumberish>,
+      _withUpdate: PromiseOrValue<boolean>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
-    deposit(_pid: BigNumberish, _amount: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    deposit(
+      _pid: PromiseOrValue<BigNumberish>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    dev(_devaddr: string, overrides?: CallOverrides): Promise<void>;
+    dev(_devaddr: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     devaddr(overrides?: CallOverrides): Promise<string>;
 
-    emergencyWithdraw(_pid: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    emergencyWithdraw(_pid: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
     feeAddress(overrides?: CallOverrides): Promise<string>;
 
-    getMultiplier(_from: BigNumberish, _to: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    getMultiplier(
+      _from: PromiseOrValue<BigNumberish>,
+      _to: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     massUpdatePools(overrides?: CallOverrides): Promise<void>;
 
@@ -468,12 +529,16 @@ export interface PenguinChef extends BaseContract {
 
     pefiPerBlock(overrides?: CallOverrides): Promise<BigNumber>;
 
-    pendingPEFI(_pid: BigNumberish, _user: string, overrides?: CallOverrides): Promise<BigNumber>;
+    pendingPEFI(
+      _pid: PromiseOrValue<BigNumberish>,
+      _user: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    poolExistence(arg0: string, overrides?: CallOverrides): Promise<boolean>;
+    poolExistence(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
     poolInfo(
-      arg0: BigNumberish,
+      arg0: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<
       [string, BigNumber, BigNumber, BigNumber, number] & {
@@ -490,103 +555,144 @@ export interface PenguinChef extends BaseContract {
     renounceOwnership(overrides?: CallOverrides): Promise<void>;
 
     set(
-      _pid: BigNumberish,
-      _allocPoint: BigNumberish,
-      _withdrawFeeBP: BigNumberish,
-      _withUpdate: boolean,
+      _pid: PromiseOrValue<BigNumberish>,
+      _allocPoint: PromiseOrValue<BigNumberish>,
+      _withdrawFeeBP: PromiseOrValue<BigNumberish>,
+      _withUpdate: PromiseOrValue<boolean>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
-    setFeeAddress(_feeAddress: string, overrides?: CallOverrides): Promise<void>;
+    setFeeAddress(_feeAddress: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     startBlock(overrides?: CallOverrides): Promise<BigNumber>;
 
     totalAllocPoint(overrides?: CallOverrides): Promise<BigNumber>;
 
-    transferOwnership(newOwner: string, overrides?: CallOverrides): Promise<void>;
+    transferOwnership(newOwner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    updateEmissionRate(_pefiPerBlock: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    updateEmissionRate(_pefiPerBlock: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
-    updatePool(_pid: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    updatePool(_pid: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
     userInfo(
-      arg0: BigNumberish,
-      arg1: string,
+      arg0: PromiseOrValue<BigNumberish>,
+      arg1: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber, BigNumber] & { amount: BigNumber; rewardDebt: BigNumber }>;
 
-    withdraw(_pid: BigNumberish, _amount: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    withdraw(
+      _pid: PromiseOrValue<BigNumberish>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
   };
 
   filters: {
     'Deposit(address,uint256,uint256)'(
-      user?: string | null,
-      pid?: BigNumberish | null,
+      user?: PromiseOrValue<string> | null,
+      pid?: PromiseOrValue<BigNumberish> | null,
       amount?: null,
     ): DepositEventFilter;
-    Deposit(user?: string | null, pid?: BigNumberish | null, amount?: null): DepositEventFilter;
+    Deposit(
+      user?: PromiseOrValue<string> | null,
+      pid?: PromiseOrValue<BigNumberish> | null,
+      amount?: null,
+    ): DepositEventFilter;
 
     'EmergencyWithdraw(address,uint256,uint256)'(
-      user?: string | null,
-      pid?: BigNumberish | null,
+      user?: PromiseOrValue<string> | null,
+      pid?: PromiseOrValue<BigNumberish> | null,
       amount?: null,
     ): EmergencyWithdrawEventFilter;
-    EmergencyWithdraw(user?: string | null, pid?: BigNumberish | null, amount?: null): EmergencyWithdrawEventFilter;
+    EmergencyWithdraw(
+      user?: PromiseOrValue<string> | null,
+      pid?: PromiseOrValue<BigNumberish> | null,
+      amount?: null,
+    ): EmergencyWithdrawEventFilter;
 
     'OwnershipTransferred(address,address)'(
-      previousOwner?: string | null,
-      newOwner?: string | null,
+      previousOwner?: PromiseOrValue<string> | null,
+      newOwner?: PromiseOrValue<string> | null,
     ): OwnershipTransferredEventFilter;
-    OwnershipTransferred(previousOwner?: string | null, newOwner?: string | null): OwnershipTransferredEventFilter;
+    OwnershipTransferred(
+      previousOwner?: PromiseOrValue<string> | null,
+      newOwner?: PromiseOrValue<string> | null,
+    ): OwnershipTransferredEventFilter;
 
-    'SetDevAddress(address,address)'(user?: string | null, newAddress?: string | null): SetDevAddressEventFilter;
-    SetDevAddress(user?: string | null, newAddress?: string | null): SetDevAddressEventFilter;
+    'SetDevAddress(address,address)'(
+      user?: PromiseOrValue<string> | null,
+      newAddress?: PromiseOrValue<string> | null,
+    ): SetDevAddressEventFilter;
+    SetDevAddress(
+      user?: PromiseOrValue<string> | null,
+      newAddress?: PromiseOrValue<string> | null,
+    ): SetDevAddressEventFilter;
 
-    'SetFeeAddress(address,address)'(user?: string | null, newAddress?: string | null): SetFeeAddressEventFilter;
-    SetFeeAddress(user?: string | null, newAddress?: string | null): SetFeeAddressEventFilter;
+    'SetFeeAddress(address,address)'(
+      user?: PromiseOrValue<string> | null,
+      newAddress?: PromiseOrValue<string> | null,
+    ): SetFeeAddressEventFilter;
+    SetFeeAddress(
+      user?: PromiseOrValue<string> | null,
+      newAddress?: PromiseOrValue<string> | null,
+    ): SetFeeAddressEventFilter;
 
-    'UpdateEmissionRate(address,uint256)'(user?: string | null, pefiPerBlock?: null): UpdateEmissionRateEventFilter;
-    UpdateEmissionRate(user?: string | null, pefiPerBlock?: null): UpdateEmissionRateEventFilter;
+    'UpdateEmissionRate(address,uint256)'(
+      user?: PromiseOrValue<string> | null,
+      pefiPerBlock?: null,
+    ): UpdateEmissionRateEventFilter;
+    UpdateEmissionRate(user?: PromiseOrValue<string> | null, pefiPerBlock?: null): UpdateEmissionRateEventFilter;
 
     'Withdraw(address,uint256,uint256)'(
-      user?: string | null,
-      pid?: BigNumberish | null,
+      user?: PromiseOrValue<string> | null,
+      pid?: PromiseOrValue<BigNumberish> | null,
       amount?: null,
     ): WithdrawEventFilter;
-    Withdraw(user?: string | null, pid?: BigNumberish | null, amount?: null): WithdrawEventFilter;
+    Withdraw(
+      user?: PromiseOrValue<string> | null,
+      pid?: PromiseOrValue<BigNumberish> | null,
+      amount?: null,
+    ): WithdrawEventFilter;
   };
 
   estimateGas: {
     BONUS_MULTIPLIER(overrides?: CallOverrides): Promise<BigNumber>;
 
     add(
-      _allocPoint: BigNumberish,
-      _lpToken: string,
-      _withdrawFeeBP: BigNumberish,
-      _withUpdate: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _allocPoint: PromiseOrValue<BigNumberish>,
+      _lpToken: PromiseOrValue<string>,
+      _withdrawFeeBP: PromiseOrValue<BigNumberish>,
+      _withUpdate: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     deposit(
-      _pid: BigNumberish,
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _pid: PromiseOrValue<BigNumberish>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    dev(_devaddr: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    dev(
+      _devaddr: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     devaddr(overrides?: CallOverrides): Promise<BigNumber>;
 
     emergencyWithdraw(
-      _pid: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _pid: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     feeAddress(overrides?: CallOverrides): Promise<BigNumber>;
 
-    getMultiplier(_from: BigNumberish, _to: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    getMultiplier(
+      _from: PromiseOrValue<BigNumberish>,
+      _to: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    massUpdatePools(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    massUpdatePools(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     owner(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -594,48 +700,62 @@ export interface PenguinChef extends BaseContract {
 
     pefiPerBlock(overrides?: CallOverrides): Promise<BigNumber>;
 
-    pendingPEFI(_pid: BigNumberish, _user: string, overrides?: CallOverrides): Promise<BigNumber>;
+    pendingPEFI(
+      _pid: PromiseOrValue<BigNumberish>,
+      _user: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    poolExistence(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    poolExistence(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    poolInfo(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    poolInfo(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     poolLength(overrides?: CallOverrides): Promise<BigNumber>;
 
-    renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     set(
-      _pid: BigNumberish,
-      _allocPoint: BigNumberish,
-      _withdrawFeeBP: BigNumberish,
-      _withUpdate: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _pid: PromiseOrValue<BigNumberish>,
+      _allocPoint: PromiseOrValue<BigNumberish>,
+      _withdrawFeeBP: PromiseOrValue<BigNumberish>,
+      _withUpdate: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    setFeeAddress(_feeAddress: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    setFeeAddress(
+      _feeAddress: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     startBlock(overrides?: CallOverrides): Promise<BigNumber>;
 
     totalAllocPoint(overrides?: CallOverrides): Promise<BigNumber>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     updateEmissionRate(
-      _pefiPerBlock: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _pefiPerBlock: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    updatePool(_pid: BigNumberish, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    updatePool(
+      _pid: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
-    userInfo(arg0: BigNumberish, arg1: string, overrides?: CallOverrides): Promise<BigNumber>;
+    userInfo(
+      arg0: PromiseOrValue<BigNumberish>,
+      arg1: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     withdraw(
-      _pid: BigNumberish,
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _pid: PromiseOrValue<BigNumberish>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
   };
 
@@ -643,33 +763,40 @@ export interface PenguinChef extends BaseContract {
     BONUS_MULTIPLIER(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     add(
-      _allocPoint: BigNumberish,
-      _lpToken: string,
-      _withdrawFeeBP: BigNumberish,
-      _withUpdate: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _allocPoint: PromiseOrValue<BigNumberish>,
+      _lpToken: PromiseOrValue<string>,
+      _withdrawFeeBP: PromiseOrValue<BigNumberish>,
+      _withUpdate: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     deposit(
-      _pid: BigNumberish,
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _pid: PromiseOrValue<BigNumberish>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    dev(_devaddr: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    dev(
+      _devaddr: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<PopulatedTransaction>;
 
     devaddr(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     emergencyWithdraw(
-      _pid: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _pid: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     feeAddress(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    getMultiplier(_from: BigNumberish, _to: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getMultiplier(
+      _from: PromiseOrValue<BigNumberish>,
+      _to: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
-    massUpdatePools(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    massUpdatePools(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
@@ -677,27 +804,31 @@ export interface PenguinChef extends BaseContract {
 
     pefiPerBlock(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    pendingPEFI(_pid: BigNumberish, _user: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    pendingPEFI(
+      _pid: PromiseOrValue<BigNumberish>,
+      _user: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
-    poolExistence(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    poolExistence(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    poolInfo(arg0: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    poolInfo(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     poolLength(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     set(
-      _pid: BigNumberish,
-      _allocPoint: BigNumberish,
-      _withdrawFeeBP: BigNumberish,
-      _withUpdate: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _pid: PromiseOrValue<BigNumberish>,
+      _allocPoint: PromiseOrValue<BigNumberish>,
+      _withdrawFeeBP: PromiseOrValue<BigNumberish>,
+      _withUpdate: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setFeeAddress(
-      _feeAddress: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _feeAddress: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     startBlock(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -705,26 +836,30 @@ export interface PenguinChef extends BaseContract {
     totalAllocPoint(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     updateEmissionRate(
-      _pefiPerBlock: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _pefiPerBlock: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     updatePool(
-      _pid: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _pid: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    userInfo(arg0: BigNumberish, arg1: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    userInfo(
+      arg0: PromiseOrValue<BigNumberish>,
+      arg1: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
     withdraw(
-      _pid: BigNumberish,
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _pid: PromiseOrValue<BigNumberish>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
   };
 }

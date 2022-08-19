@@ -4,18 +4,22 @@ import { TokenBalanceHelper } from '~app-toolkit';
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
 import { presentBalanceFetcherResponse } from '~app-toolkit/helpers/presentation/balance-fetcher-response.present';
-import {
-  CurveVotingEscrow,
-  CurveVotingEscrowContractPositionBalanceHelper,
-  CurveVotingEscrowReward,
-} from '~apps/curve';
+import { CurveVotingEscrowContractPositionBalanceHelper } from '~apps/curve';
 import { BalanceFetcher } from '~balance/balance-fetcher.interface';
 import { Network } from '~types/network.interface';
 
-import { PickleContractFactory, PickleJarMasterchef, PickleJarSingleRewardStaking } from '../contracts';
+import {
+  PickleContractFactory,
+  PickleJarMasterchef,
+  PickleJarSingleRewardStaking,
+  PickleVotingEscrow,
+  PickleVotingEscrowReward,
+} from '../contracts';
 import { PICKLE_DEFINITION } from '../pickle.definition';
 
-@Register.BalanceFetcher(PICKLE_DEFINITION.id, Network.ETHEREUM_MAINNET)
+const network = Network.ETHEREUM_MAINNET;
+
+@Register.BalanceFetcher(PICKLE_DEFINITION.id, network)
 export class EthereumPickleBalanceFetcher implements BalanceFetcher {
   constructor(
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
@@ -28,7 +32,7 @@ export class EthereumPickleBalanceFetcher implements BalanceFetcher {
 
   private async getJarBalances(address: string) {
     return await this.tokenBalanceHelper.getTokenBalances({
-      network: Network.ETHEREUM_MAINNET,
+      network,
       appId: PICKLE_DEFINITION.id,
       groupId: PICKLE_DEFINITION.groups.jar.id,
       address,
@@ -36,15 +40,17 @@ export class EthereumPickleBalanceFetcher implements BalanceFetcher {
   }
 
   private async getVotingEscrowBalances(address: string) {
-    return this.curveVotingEscrowContractPositionBalanceHelper.getBalances<CurveVotingEscrow, CurveVotingEscrowReward>({
+    return this.curveVotingEscrowContractPositionBalanceHelper.getBalances<
+      PickleVotingEscrow,
+      PickleVotingEscrowReward
+    >({
       address,
       appId: PICKLE_DEFINITION.id,
       groupId: PICKLE_DEFINITION.groups.votingEscrow.id,
-      network: Network.ETHEREUM_MAINNET,
-      resolveContract: ({ contractFactory, address, network }) =>
-        contractFactory.curveVotingEscrow({ network, address }),
-      resolveRewardContract: ({ contractFactory, address, network }) =>
-        contractFactory.curveVotingEscrowReward({ network, address }),
+      network,
+      resolveContract: ({ address, network }) => this.pickleContractFactory.pickleVotingEscrow({ network, address }),
+      resolveRewardContract: ({ address, network }) =>
+        this.pickleContractFactory.pickleVotingEscrowReward({ network, address }),
       resolveLockedTokenBalance: ({ contract, multicall }) =>
         multicall
           .wrap(contract)
@@ -55,8 +61,6 @@ export class EthereumPickleBalanceFetcher implements BalanceFetcher {
   }
 
   private async getFarmBalances(address: string) {
-    const network = Network.ETHEREUM_MAINNET;
-
     return this.appToolkit.helpers.masterChefContractPositionBalanceHelper.getBalances<PickleJarMasterchef>({
       address,
       appId: PICKLE_DEFINITION.id,
@@ -82,7 +86,6 @@ export class EthereumPickleBalanceFetcher implements BalanceFetcher {
   }
 
   private async getSingleStakingBalances(address: string) {
-    const network = Network.ETHEREUM_MAINNET;
     return this.appToolkit.helpers.singleStakingContractPositionBalanceHelper.getBalances<PickleJarSingleRewardStaking>(
       {
         address,

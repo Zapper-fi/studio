@@ -9,7 +9,7 @@ import { OlympusBridgeTokenHelper } from '../helpers/olympus.bridge-token-helper
 import { OLYMPUS_DEFINITION } from '../olympus.definition';
 
 const ETHEREUM_GOVERNANCE_OHM = '0x0ab87046fbb341d058f17cbc4c1133f25a20a52f';
-const GOVERNANCE_OHM = '0xd8cA34fd379d9ca3C6Ee3b3905678320F5b45195';
+const GOVERNANCE_OHM = '0xd8ca34fd379d9ca3c6ee3b3905678320f5b45195';
 
 @Register.TokenPositionFetcher({
   appId: OLYMPUS_DEFINITION.id,

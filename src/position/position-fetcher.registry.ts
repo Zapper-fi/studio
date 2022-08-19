@@ -1,5 +1,5 @@
-import { Inject, OnModuleInit } from '@nestjs/common';
-import { DiscoveryService, Reflector } from '@nestjs/core';
+import { Inject, OnApplicationBootstrap } from '@nestjs/common';
+import { DiscoveryService } from '@nestjs/core';
 import { compact } from 'lodash';
 
 import { CACHE_ON_INTERVAL_KEY, CACHE_ON_INTERVAL_TIMEOUT } from '~cache/cache-on-interval.decorator';
@@ -27,7 +27,7 @@ export const buildAppPositionsCacheKey = (opts: {
   groupId: string;
 }) => `apps-v3:${opts.type}:${opts.network}:${opts.appId}:${opts.groupId}`;
 
-export class PositionFetcherRegistry implements OnModuleInit {
+export class PositionFetcherRegistry implements OnApplicationBootstrap {
   private registry: Registry<
     [ContractType, Network, string, string],
     { fetcher: PositionFetcher<Position>; options: PositionOptions }
@@ -36,10 +36,9 @@ export class PositionFetcherRegistry implements OnModuleInit {
   constructor(
     @Inject(DiscoveryService) private readonly discoveryService: DiscoveryService,
     @Inject(CacheOnIntervalService) private readonly cacheOnIntervalService: CacheOnIntervalService,
-    @Inject(Reflector) private readonly reflector: Reflector,
   ) {}
 
-  onModuleInit() {
+  onApplicationBootstrap() {
     const wrappers = this.discoveryService.getProviders();
 
     wrappers
@@ -115,7 +114,7 @@ export class PositionFetcherRegistry implements OnModuleInit {
     const groupIds = types.map(type => {
       const groupIds = this.getGroupIdsForApp({ type, network, appId });
       const tvlEnabledGroupIds = groupIds.filter(
-        groupId => this.getOptions({ type, appId, groupId, network }).includeInTvl,
+        groupId => !this.getOptions({ type, appId, groupId, network }).excludeFromTvl,
       );
       return { type, groupIds: compact(tvlEnabledGroupIds) };
     });

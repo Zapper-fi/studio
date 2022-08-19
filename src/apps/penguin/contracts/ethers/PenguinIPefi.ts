@@ -15,7 +15,7 @@ import type {
 } from 'ethers';
 import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
 import type { Listener, Provider } from '@ethersproject/providers';
-import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
 export interface PenguinIPefiInterface extends utils.Interface {
   functions: {
@@ -154,40 +154,62 @@ export interface PenguinIPefiInterface extends utils.Interface {
   encodeFunctionData(functionFragment: 'MAX_BIPS', values?: undefined): string;
   encodeFunctionData(functionFragment: 'MAX_PAPER_HANDS_PENALTY', values?: undefined): string;
   encodeFunctionData(functionFragment: 'SECONDS_PER_DAY', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'allowance', values: [string, string]): string;
-  encodeFunctionData(functionFragment: 'approve', values: [string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'balanceOf', values: [string]): string;
-  encodeFunctionData(functionFragment: 'checkpoints', values: [string, BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'allowance', values: [PromiseOrValue<string>, PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'approve',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'balanceOf', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'checkpoints',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
   encodeFunctionData(functionFragment: 'currentExchangeRate', values?: undefined): string;
   encodeFunctionData(functionFragment: 'decimals', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'decreaseAllowance', values: [string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'delegate', values: [string]): string;
+  encodeFunctionData(
+    functionFragment: 'decreaseAllowance',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'delegate', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(
     functionFragment: 'delegateBySig',
-    values: [string, BigNumberish, BigNumberish, BigNumberish, BytesLike, BytesLike],
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BytesLike>,
+      PromiseOrValue<BytesLike>,
+    ],
   ): string;
-  encodeFunctionData(functionFragment: 'delegates', values: [string]): string;
-  encodeFunctionData(functionFragment: 'deposits', values: [string]): string;
-  encodeFunctionData(functionFragment: 'enter', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'delegates', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'deposits', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'enter', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'fundsCollectedByPHP', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'getCurrentVotes', values: [string]): string;
-  encodeFunctionData(functionFragment: 'getExchangeRateHistory', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'getCurrentVotes', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'getExchangeRateHistory', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'getLatestStoredExchangeRate', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'getPriorVotes', values: [string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'historicExchangeRates', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'historicTimestamps', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'increaseAllowance', values: [string, BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'getPriorVotes',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'historicExchangeRates', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'historicTimestamps', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(
+    functionFragment: 'increaseAllowance',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
   encodeFunctionData(functionFragment: 'isLuckyPenguinEnabled', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'leave', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'leave', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'luckyPenguin', values?: undefined): string;
   encodeFunctionData(functionFragment: 'luckyPenguinCount', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'luckyPenguinEarnings', values: [string]): string;
+  encodeFunctionData(functionFragment: 'luckyPenguinEarnings', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'luckyPenguinInterval', values?: undefined): string;
   encodeFunctionData(functionFragment: 'luckyPenguinMinimumDeposit', values?: undefined): string;
   encodeFunctionData(functionFragment: 'luckyPenguinRewardBP', values?: undefined): string;
   encodeFunctionData(functionFragment: 'name', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'nonces', values: [string]): string;
-  encodeFunctionData(functionFragment: 'numCheckpoints', values: [string]): string;
+  encodeFunctionData(functionFragment: 'nonces', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'numCheckpoints', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'numStoredExchangeRates', values?: undefined): string;
   encodeFunctionData(functionFragment: 'owner', values?: undefined): string;
   encodeFunctionData(functionFragment: 'paperHandsPenalty', values?: undefined): string;
@@ -199,21 +221,27 @@ export interface PenguinIPefiInterface extends utils.Interface {
   encodeFunctionData(functionFragment: 'rollingStartTimestamp', values?: undefined): string;
   encodeFunctionData(functionFragment: 'rollingStartTotalDeposits', values?: undefined): string;
   encodeFunctionData(functionFragment: 'rollingStartTotalWithdrawals', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'setLuckyPenguinEnabled', values: [boolean]): string;
-  encodeFunctionData(functionFragment: 'setLuckyPenguinInterval', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'setLuckyPenguinMinimumDeposit', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'setLuckyPenguinRewardBP', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'setPaperHandsPenalty', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'setLuckyPenguinEnabled', values: [PromiseOrValue<boolean>]): string;
+  encodeFunctionData(functionFragment: 'setLuckyPenguinInterval', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'setLuckyPenguinMinimumDeposit', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'setLuckyPenguinRewardBP', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'setPaperHandsPenalty', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'symbol', values?: undefined): string;
   encodeFunctionData(functionFragment: 'timeSinceLastDailyUpdate', values?: undefined): string;
   encodeFunctionData(functionFragment: 'totalDeposits', values?: undefined): string;
   encodeFunctionData(functionFragment: 'totalSupply', values?: undefined): string;
   encodeFunctionData(functionFragment: 'totalWithdrawals', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'transfer', values: [string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'transferFrom', values: [string, string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'transferOwnership', values: [string]): string;
-  encodeFunctionData(functionFragment: 'userProfits', values: [string]): string;
-  encodeFunctionData(functionFragment: 'withdrawals', values: [string]): string;
+  encodeFunctionData(
+    functionFragment: 'transfer',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'transferFrom',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'transferOwnership', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'userProfits', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'withdrawals', values: [PromiseOrValue<string>]): string;
 
   decodeFunctionResult(functionFragment: 'DELEGATION_TYPEHASH', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'DOMAIN_TYPEHASH', data: BytesLike): Result;
@@ -430,19 +458,23 @@ export interface PenguinIPefi extends BaseContract {
 
     SECONDS_PER_DAY(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    allowance(owner: string, spender: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    allowance(
+      owner: PromiseOrValue<string>,
+      spender: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber]>;
 
     approve(
-      spender: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      spender: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    balanceOf(account: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    balanceOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     checkpoints(
-      arg0: string,
-      arg1: BigNumberish,
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<[number, BigNumber] & { fromBlock: number; votes: BigNumber }>;
 
@@ -451,67 +483,74 @@ export interface PenguinIPefi extends BaseContract {
     decimals(overrides?: CallOverrides): Promise<[number]>;
 
     decreaseAllowance(
-      spender: string,
-      subtractedValue: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      spender: PromiseOrValue<string>,
+      subtractedValue: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     delegate(
-      delegatee: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      delegatee: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     delegateBySig(
-      delegatee: string,
-      nonce: BigNumberish,
-      expiry: BigNumberish,
-      v: BigNumberish,
-      r: BytesLike,
-      s: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      delegatee: PromiseOrValue<string>,
+      nonce: PromiseOrValue<BigNumberish>,
+      expiry: PromiseOrValue<BigNumberish>,
+      v: PromiseOrValue<BigNumberish>,
+      r: PromiseOrValue<BytesLike>,
+      s: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    delegates(delegator: string, overrides?: CallOverrides): Promise<[string]>;
+    delegates(delegator: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[string]>;
 
-    deposits(arg0: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    deposits(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     enter(
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     fundsCollectedByPHP(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    getCurrentVotes(account: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    getCurrentVotes(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    getExchangeRateHistory(amount: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber[], BigNumber[]]>;
+    getExchangeRateHistory(
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber[], BigNumber[]]>;
 
     getLatestStoredExchangeRate(overrides?: CallOverrides): Promise<[BigNumber, BigNumber]>;
 
-    getPriorVotes(account: string, blockNumber: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber]>;
+    getPriorVotes(
+      account: PromiseOrValue<string>,
+      blockNumber: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber]>;
 
-    historicExchangeRates(arg0: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber]>;
+    historicExchangeRates(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    historicTimestamps(arg0: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber]>;
+    historicTimestamps(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     increaseAllowance(
-      spender: string,
-      addedValue: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      spender: PromiseOrValue<string>,
+      addedValue: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     isLuckyPenguinEnabled(overrides?: CallOverrides): Promise<[boolean]>;
 
     leave(
-      _share: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _share: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     luckyPenguin(overrides?: CallOverrides): Promise<[string]>;
 
     luckyPenguinCount(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    luckyPenguinEarnings(arg0: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    luckyPenguinEarnings(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     luckyPenguinInterval(overrides?: CallOverrides): Promise<[BigNumber]>;
 
@@ -521,9 +560,9 @@ export interface PenguinIPefi extends BaseContract {
 
     name(overrides?: CallOverrides): Promise<[string]>;
 
-    nonces(arg0: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    nonces(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    numCheckpoints(arg0: string, overrides?: CallOverrides): Promise<[number]>;
+    numCheckpoints(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[number]>;
 
     numStoredExchangeRates(overrides?: CallOverrides): Promise<[BigNumber]>;
 
@@ -535,7 +574,7 @@ export interface PenguinIPefi extends BaseContract {
 
     pefiBalance(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     rewardsReceived(overrides?: CallOverrides): Promise<[BigNumber]>;
 
@@ -548,28 +587,28 @@ export interface PenguinIPefi extends BaseContract {
     rollingStartTotalWithdrawals(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     setLuckyPenguinEnabled(
-      _luckyPenguinEnabled: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _luckyPenguinEnabled: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setLuckyPenguinInterval(
-      _luckyPenguinInterval: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _luckyPenguinInterval: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setLuckyPenguinMinimumDeposit(
-      _luckyPenguinMinimumDeposit: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _luckyPenguinMinimumDeposit: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setLuckyPenguinRewardBP(
-      _luckyPenguinRewardBP: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _luckyPenguinRewardBP: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setPaperHandsPenalty(
-      _paperHandsPenalty: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _paperHandsPenalty: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     symbol(overrides?: CallOverrides): Promise<[string]>;
@@ -583,26 +622,26 @@ export interface PenguinIPefi extends BaseContract {
     totalWithdrawals(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     transfer(
-      recipient: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      recipient: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     transferFrom(
-      sender: string,
-      recipient: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      sender: PromiseOrValue<string>,
+      recipient: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    userProfits(penguinAddress: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    userProfits(penguinAddress: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    withdrawals(arg0: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    withdrawals(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
   };
 
   DELEGATION_TYPEHASH(overrides?: CallOverrides): Promise<string>;
@@ -615,19 +654,23 @@ export interface PenguinIPefi extends BaseContract {
 
   SECONDS_PER_DAY(overrides?: CallOverrides): Promise<BigNumber>;
 
-  allowance(owner: string, spender: string, overrides?: CallOverrides): Promise<BigNumber>;
+  allowance(
+    owner: PromiseOrValue<string>,
+    spender: PromiseOrValue<string>,
+    overrides?: CallOverrides,
+  ): Promise<BigNumber>;
 
   approve(
-    spender: string,
-    amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    spender: PromiseOrValue<string>,
+    amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  balanceOf(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+  balanceOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   checkpoints(
-    arg0: string,
-    arg1: BigNumberish,
+    arg0: PromiseOrValue<string>,
+    arg1: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides,
   ): Promise<[number, BigNumber] & { fromBlock: number; votes: BigNumber }>;
 
@@ -636,67 +679,74 @@ export interface PenguinIPefi extends BaseContract {
   decimals(overrides?: CallOverrides): Promise<number>;
 
   decreaseAllowance(
-    spender: string,
-    subtractedValue: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    spender: PromiseOrValue<string>,
+    subtractedValue: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   delegate(
-    delegatee: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    delegatee: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   delegateBySig(
-    delegatee: string,
-    nonce: BigNumberish,
-    expiry: BigNumberish,
-    v: BigNumberish,
-    r: BytesLike,
-    s: BytesLike,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    delegatee: PromiseOrValue<string>,
+    nonce: PromiseOrValue<BigNumberish>,
+    expiry: PromiseOrValue<BigNumberish>,
+    v: PromiseOrValue<BigNumberish>,
+    r: PromiseOrValue<BytesLike>,
+    s: PromiseOrValue<BytesLike>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  delegates(delegator: string, overrides?: CallOverrides): Promise<string>;
+  delegates(delegator: PromiseOrValue<string>, overrides?: CallOverrides): Promise<string>;
 
-  deposits(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+  deposits(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   enter(
-    _amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   fundsCollectedByPHP(overrides?: CallOverrides): Promise<BigNumber>;
 
-  getCurrentVotes(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+  getCurrentVotes(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  getExchangeRateHistory(amount: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber[], BigNumber[]]>;
+  getExchangeRateHistory(
+    amount: PromiseOrValue<BigNumberish>,
+    overrides?: CallOverrides,
+  ): Promise<[BigNumber[], BigNumber[]]>;
 
   getLatestStoredExchangeRate(overrides?: CallOverrides): Promise<[BigNumber, BigNumber]>;
 
-  getPriorVotes(account: string, blockNumber: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+  getPriorVotes(
+    account: PromiseOrValue<string>,
+    blockNumber: PromiseOrValue<BigNumberish>,
+    overrides?: CallOverrides,
+  ): Promise<BigNumber>;
 
-  historicExchangeRates(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+  historicExchangeRates(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  historicTimestamps(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+  historicTimestamps(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
   increaseAllowance(
-    spender: string,
-    addedValue: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    spender: PromiseOrValue<string>,
+    addedValue: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   isLuckyPenguinEnabled(overrides?: CallOverrides): Promise<boolean>;
 
   leave(
-    _share: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _share: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   luckyPenguin(overrides?: CallOverrides): Promise<string>;
 
   luckyPenguinCount(overrides?: CallOverrides): Promise<BigNumber>;
 
-  luckyPenguinEarnings(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+  luckyPenguinEarnings(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   luckyPenguinInterval(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -706,9 +756,9 @@ export interface PenguinIPefi extends BaseContract {
 
   name(overrides?: CallOverrides): Promise<string>;
 
-  nonces(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+  nonces(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  numCheckpoints(arg0: string, overrides?: CallOverrides): Promise<number>;
+  numCheckpoints(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<number>;
 
   numStoredExchangeRates(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -720,7 +770,7 @@ export interface PenguinIPefi extends BaseContract {
 
   pefiBalance(overrides?: CallOverrides): Promise<BigNumber>;
 
-  renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   rewardsReceived(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -733,28 +783,28 @@ export interface PenguinIPefi extends BaseContract {
   rollingStartTotalWithdrawals(overrides?: CallOverrides): Promise<BigNumber>;
 
   setLuckyPenguinEnabled(
-    _luckyPenguinEnabled: boolean,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _luckyPenguinEnabled: PromiseOrValue<boolean>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setLuckyPenguinInterval(
-    _luckyPenguinInterval: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _luckyPenguinInterval: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setLuckyPenguinMinimumDeposit(
-    _luckyPenguinMinimumDeposit: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _luckyPenguinMinimumDeposit: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setLuckyPenguinRewardBP(
-    _luckyPenguinRewardBP: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _luckyPenguinRewardBP: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setPaperHandsPenalty(
-    _paperHandsPenalty: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _paperHandsPenalty: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   symbol(overrides?: CallOverrides): Promise<string>;
@@ -768,26 +818,26 @@ export interface PenguinIPefi extends BaseContract {
   totalWithdrawals(overrides?: CallOverrides): Promise<BigNumber>;
 
   transfer(
-    recipient: string,
-    amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    recipient: PromiseOrValue<string>,
+    amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   transferFrom(
-    sender: string,
-    recipient: string,
-    amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    sender: PromiseOrValue<string>,
+    recipient: PromiseOrValue<string>,
+    amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   transferOwnership(
-    newOwner: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    newOwner: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  userProfits(penguinAddress: string, overrides?: CallOverrides): Promise<BigNumber>;
+  userProfits(penguinAddress: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  withdrawals(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+  withdrawals(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   callStatic: {
     DELEGATION_TYPEHASH(overrides?: CallOverrides): Promise<string>;
@@ -800,15 +850,23 @@ export interface PenguinIPefi extends BaseContract {
 
     SECONDS_PER_DAY(overrides?: CallOverrides): Promise<BigNumber>;
 
-    allowance(owner: string, spender: string, overrides?: CallOverrides): Promise<BigNumber>;
+    allowance(
+      owner: PromiseOrValue<string>,
+      spender: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    approve(spender: string, amount: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+    approve(
+      spender: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
 
-    balanceOf(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    balanceOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     checkpoints(
-      arg0: string,
-      arg1: BigNumberish,
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<[number, BigNumber] & { fromBlock: number; votes: BigNumber }>;
 
@@ -816,51 +874,66 @@ export interface PenguinIPefi extends BaseContract {
 
     decimals(overrides?: CallOverrides): Promise<number>;
 
-    decreaseAllowance(spender: string, subtractedValue: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+    decreaseAllowance(
+      spender: PromiseOrValue<string>,
+      subtractedValue: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
 
-    delegate(delegatee: string, overrides?: CallOverrides): Promise<void>;
+    delegate(delegatee: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     delegateBySig(
-      delegatee: string,
-      nonce: BigNumberish,
-      expiry: BigNumberish,
-      v: BigNumberish,
-      r: BytesLike,
-      s: BytesLike,
+      delegatee: PromiseOrValue<string>,
+      nonce: PromiseOrValue<BigNumberish>,
+      expiry: PromiseOrValue<BigNumberish>,
+      v: PromiseOrValue<BigNumberish>,
+      r: PromiseOrValue<BytesLike>,
+      s: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
-    delegates(delegator: string, overrides?: CallOverrides): Promise<string>;
+    delegates(delegator: PromiseOrValue<string>, overrides?: CallOverrides): Promise<string>;
 
-    deposits(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    deposits(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    enter(_amount: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    enter(_amount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
     fundsCollectedByPHP(overrides?: CallOverrides): Promise<BigNumber>;
 
-    getCurrentVotes(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getCurrentVotes(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    getExchangeRateHistory(amount: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber[], BigNumber[]]>;
+    getExchangeRateHistory(
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber[], BigNumber[]]>;
 
     getLatestStoredExchangeRate(overrides?: CallOverrides): Promise<[BigNumber, BigNumber]>;
 
-    getPriorVotes(account: string, blockNumber: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    getPriorVotes(
+      account: PromiseOrValue<string>,
+      blockNumber: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    historicExchangeRates(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    historicExchangeRates(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    historicTimestamps(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    historicTimestamps(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    increaseAllowance(spender: string, addedValue: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+    increaseAllowance(
+      spender: PromiseOrValue<string>,
+      addedValue: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
 
     isLuckyPenguinEnabled(overrides?: CallOverrides): Promise<boolean>;
 
-    leave(_share: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    leave(_share: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
     luckyPenguin(overrides?: CallOverrides): Promise<string>;
 
     luckyPenguinCount(overrides?: CallOverrides): Promise<BigNumber>;
 
-    luckyPenguinEarnings(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    luckyPenguinEarnings(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     luckyPenguinInterval(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -870,9 +943,9 @@ export interface PenguinIPefi extends BaseContract {
 
     name(overrides?: CallOverrides): Promise<string>;
 
-    nonces(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    nonces(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    numCheckpoints(arg0: string, overrides?: CallOverrides): Promise<number>;
+    numCheckpoints(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<number>;
 
     numStoredExchangeRates(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -896,15 +969,24 @@ export interface PenguinIPefi extends BaseContract {
 
     rollingStartTotalWithdrawals(overrides?: CallOverrides): Promise<BigNumber>;
 
-    setLuckyPenguinEnabled(_luckyPenguinEnabled: boolean, overrides?: CallOverrides): Promise<void>;
+    setLuckyPenguinEnabled(_luckyPenguinEnabled: PromiseOrValue<boolean>, overrides?: CallOverrides): Promise<void>;
 
-    setLuckyPenguinInterval(_luckyPenguinInterval: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    setLuckyPenguinInterval(
+      _luckyPenguinInterval: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    setLuckyPenguinMinimumDeposit(_luckyPenguinMinimumDeposit: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    setLuckyPenguinMinimumDeposit(
+      _luckyPenguinMinimumDeposit: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    setLuckyPenguinRewardBP(_luckyPenguinRewardBP: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    setLuckyPenguinRewardBP(
+      _luckyPenguinRewardBP: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    setPaperHandsPenalty(_paperHandsPenalty: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    setPaperHandsPenalty(_paperHandsPenalty: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
     symbol(overrides?: CallOverrides): Promise<string>;
 
@@ -916,82 +998,119 @@ export interface PenguinIPefi extends BaseContract {
 
     totalWithdrawals(overrides?: CallOverrides): Promise<BigNumber>;
 
-    transfer(recipient: string, amount: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+    transfer(
+      recipient: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
 
-    transferFrom(sender: string, recipient: string, amount: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+    transferFrom(
+      sender: PromiseOrValue<string>,
+      recipient: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
 
-    transferOwnership(newOwner: string, overrides?: CallOverrides): Promise<void>;
+    transferOwnership(newOwner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    userProfits(penguinAddress: string, overrides?: CallOverrides): Promise<BigNumber>;
+    userProfits(penguinAddress: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    withdrawals(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    withdrawals(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
   };
 
   filters: {
     'Approval(address,address,uint256)'(
-      owner?: string | null,
-      spender?: string | null,
+      owner?: PromiseOrValue<string> | null,
+      spender?: PromiseOrValue<string> | null,
       value?: null,
     ): ApprovalEventFilter;
-    Approval(owner?: string | null, spender?: string | null, value?: null): ApprovalEventFilter;
+    Approval(
+      owner?: PromiseOrValue<string> | null,
+      spender?: PromiseOrValue<string> | null,
+      value?: null,
+    ): ApprovalEventFilter;
 
     'DailyRewardsReceived(uint256,uint256)'(
-      timestamp?: BigNumberish | null,
+      timestamp?: PromiseOrValue<BigNumberish> | null,
       amountPefi?: null,
     ): DailyRewardsReceivedEventFilter;
-    DailyRewardsReceived(timestamp?: BigNumberish | null, amountPefi?: null): DailyRewardsReceivedEventFilter;
+    DailyRewardsReceived(
+      timestamp?: PromiseOrValue<BigNumberish> | null,
+      amountPefi?: null,
+    ): DailyRewardsReceivedEventFilter;
 
     'DelegateChanged(address,address,address)'(
-      delegator?: string | null,
-      fromDelegate?: string | null,
-      toDelegate?: string | null,
+      delegator?: PromiseOrValue<string> | null,
+      fromDelegate?: PromiseOrValue<string> | null,
+      toDelegate?: PromiseOrValue<string> | null,
     ): DelegateChangedEventFilter;
     DelegateChanged(
-      delegator?: string | null,
-      fromDelegate?: string | null,
-      toDelegate?: string | null,
+      delegator?: PromiseOrValue<string> | null,
+      fromDelegate?: PromiseOrValue<string> | null,
+      toDelegate?: PromiseOrValue<string> | null,
     ): DelegateChangedEventFilter;
 
     'DelegateVotesChanged(address,uint256,uint256)'(
-      delegate?: string | null,
+      delegate?: PromiseOrValue<string> | null,
       previousBalance?: null,
       newBalance?: null,
     ): DelegateVotesChangedEventFilter;
     DelegateVotesChanged(
-      delegate?: string | null,
+      delegate?: PromiseOrValue<string> | null,
       previousBalance?: null,
       newBalance?: null,
     ): DelegateVotesChangedEventFilter;
 
-    'Enter(address,uint256)'(penguin?: string | null, amount?: null): EnterEventFilter;
-    Enter(penguin?: string | null, amount?: null): EnterEventFilter;
+    'Enter(address,uint256)'(penguin?: PromiseOrValue<string> | null, amount?: null): EnterEventFilter;
+    Enter(penguin?: PromiseOrValue<string> | null, amount?: null): EnterEventFilter;
 
-    'Leave(address,uint256,uint256)'(penguin?: string | null, amount?: null, shares?: null): LeaveEventFilter;
-    Leave(penguin?: string | null, amount?: null, shares?: null): LeaveEventFilter;
+    'Leave(address,uint256,uint256)'(
+      penguin?: PromiseOrValue<string> | null,
+      amount?: null,
+      shares?: null,
+    ): LeaveEventFilter;
+    Leave(penguin?: PromiseOrValue<string> | null, amount?: null, shares?: null): LeaveEventFilter;
 
     'LuckyPenguinDistribution(address,uint256)'(
-      luckyPenguin?: string | null,
+      luckyPenguin?: PromiseOrValue<string> | null,
       amountPefi?: null,
     ): LuckyPenguinDistributionEventFilter;
-    LuckyPenguinDistribution(luckyPenguin?: string | null, amountPefi?: null): LuckyPenguinDistributionEventFilter;
+    LuckyPenguinDistribution(
+      luckyPenguin?: PromiseOrValue<string> | null,
+      amountPefi?: null,
+    ): LuckyPenguinDistributionEventFilter;
 
     'NewLuckyPenguin(address,address)'(
-      previousLuckyPenguin?: string | null,
-      newLuckyPenguin?: string | null,
+      previousLuckyPenguin?: PromiseOrValue<string> | null,
+      newLuckyPenguin?: PromiseOrValue<string> | null,
     ): NewLuckyPenguinEventFilter;
-    NewLuckyPenguin(previousLuckyPenguin?: string | null, newLuckyPenguin?: string | null): NewLuckyPenguinEventFilter;
+    NewLuckyPenguin(
+      previousLuckyPenguin?: PromiseOrValue<string> | null,
+      newLuckyPenguin?: PromiseOrValue<string> | null,
+    ): NewLuckyPenguinEventFilter;
 
     'OwnershipTransferred(address,address)'(
-      previousOwner?: string | null,
-      newOwner?: string | null,
+      previousOwner?: PromiseOrValue<string> | null,
+      newOwner?: PromiseOrValue<string> | null,
     ): OwnershipTransferredEventFilter;
-    OwnershipTransferred(previousOwner?: string | null, newOwner?: string | null): OwnershipTransferredEventFilter;
+    OwnershipTransferred(
+      previousOwner?: PromiseOrValue<string> | null,
+      newOwner?: PromiseOrValue<string> | null,
+    ): OwnershipTransferredEventFilter;
 
     'PaperHandsPenaltySet(uint256)'(newPaperHandsPenalty?: null): PaperHandsPenaltySetEventFilter;
     PaperHandsPenaltySet(newPaperHandsPenalty?: null): PaperHandsPenaltySetEventFilter;
 
-    'Transfer(address,address,uint256)'(from?: string | null, to?: string | null, value?: null): TransferEventFilter;
-    Transfer(from?: string | null, to?: string | null, value?: null): TransferEventFilter;
+    'Transfer(address,address,uint256)'(
+      from?: PromiseOrValue<string> | null,
+      to?: PromiseOrValue<string> | null,
+      value?: null,
+    ): TransferEventFilter;
+    Transfer(
+      from?: PromiseOrValue<string> | null,
+      to?: PromiseOrValue<string> | null,
+      value?: null,
+    ): TransferEventFilter;
   };
 
   estimateGas: {
@@ -1005,75 +1124,96 @@ export interface PenguinIPefi extends BaseContract {
 
     SECONDS_PER_DAY(overrides?: CallOverrides): Promise<BigNumber>;
 
-    allowance(owner: string, spender: string, overrides?: CallOverrides): Promise<BigNumber>;
-
-    approve(
-      spender: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+    allowance(
+      owner: PromiseOrValue<string>,
+      spender: PromiseOrValue<string>,
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
-    balanceOf(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    approve(
+      spender: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
-    checkpoints(arg0: string, arg1: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    balanceOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
+
+    checkpoints(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     currentExchangeRate(overrides?: CallOverrides): Promise<BigNumber>;
 
     decimals(overrides?: CallOverrides): Promise<BigNumber>;
 
     decreaseAllowance(
-      spender: string,
-      subtractedValue: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      spender: PromiseOrValue<string>,
+      subtractedValue: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    delegate(delegatee: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    delegate(
+      delegatee: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     delegateBySig(
-      delegatee: string,
-      nonce: BigNumberish,
-      expiry: BigNumberish,
-      v: BigNumberish,
-      r: BytesLike,
-      s: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      delegatee: PromiseOrValue<string>,
+      nonce: PromiseOrValue<BigNumberish>,
+      expiry: PromiseOrValue<BigNumberish>,
+      v: PromiseOrValue<BigNumberish>,
+      r: PromiseOrValue<BytesLike>,
+      s: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    delegates(delegator: string, overrides?: CallOverrides): Promise<BigNumber>;
+    delegates(delegator: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    deposits(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    deposits(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    enter(_amount: BigNumberish, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    enter(
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     fundsCollectedByPHP(overrides?: CallOverrides): Promise<BigNumber>;
 
-    getCurrentVotes(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getCurrentVotes(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    getExchangeRateHistory(amount: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    getExchangeRateHistory(amount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     getLatestStoredExchangeRate(overrides?: CallOverrides): Promise<BigNumber>;
 
-    getPriorVotes(account: string, blockNumber: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    getPriorVotes(
+      account: PromiseOrValue<string>,
+      blockNumber: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    historicExchangeRates(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    historicExchangeRates(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    historicTimestamps(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    historicTimestamps(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     increaseAllowance(
-      spender: string,
-      addedValue: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      spender: PromiseOrValue<string>,
+      addedValue: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     isLuckyPenguinEnabled(overrides?: CallOverrides): Promise<BigNumber>;
 
-    leave(_share: BigNumberish, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    leave(
+      _share: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     luckyPenguin(overrides?: CallOverrides): Promise<BigNumber>;
 
     luckyPenguinCount(overrides?: CallOverrides): Promise<BigNumber>;
 
-    luckyPenguinEarnings(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    luckyPenguinEarnings(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     luckyPenguinInterval(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -1083,9 +1223,9 @@ export interface PenguinIPefi extends BaseContract {
 
     name(overrides?: CallOverrides): Promise<BigNumber>;
 
-    nonces(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    nonces(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    numCheckpoints(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    numCheckpoints(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     numStoredExchangeRates(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -1097,7 +1237,7 @@ export interface PenguinIPefi extends BaseContract {
 
     pefiBalance(overrides?: CallOverrides): Promise<BigNumber>;
 
-    renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     rewardsReceived(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -1110,28 +1250,28 @@ export interface PenguinIPefi extends BaseContract {
     rollingStartTotalWithdrawals(overrides?: CallOverrides): Promise<BigNumber>;
 
     setLuckyPenguinEnabled(
-      _luckyPenguinEnabled: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _luckyPenguinEnabled: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setLuckyPenguinInterval(
-      _luckyPenguinInterval: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _luckyPenguinInterval: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setLuckyPenguinMinimumDeposit(
-      _luckyPenguinMinimumDeposit: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _luckyPenguinMinimumDeposit: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setLuckyPenguinRewardBP(
-      _luckyPenguinRewardBP: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _luckyPenguinRewardBP: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setPaperHandsPenalty(
-      _paperHandsPenalty: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _paperHandsPenalty: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     symbol(overrides?: CallOverrides): Promise<BigNumber>;
@@ -1145,26 +1285,26 @@ export interface PenguinIPefi extends BaseContract {
     totalWithdrawals(overrides?: CallOverrides): Promise<BigNumber>;
 
     transfer(
-      recipient: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      recipient: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     transferFrom(
-      sender: string,
-      recipient: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      sender: PromiseOrValue<string>,
+      recipient: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    userProfits(penguinAddress: string, overrides?: CallOverrides): Promise<BigNumber>;
+    userProfits(penguinAddress: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    withdrawals(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    withdrawals(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
   };
 
   populateTransaction: {
@@ -1178,84 +1318,99 @@ export interface PenguinIPefi extends BaseContract {
 
     SECONDS_PER_DAY(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    allowance(owner: string, spender: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    approve(
-      spender: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+    allowance(
+      owner: PromiseOrValue<string>,
+      spender: PromiseOrValue<string>,
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
-    balanceOf(account: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    approve(
+      spender: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<PopulatedTransaction>;
 
-    checkpoints(arg0: string, arg1: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    balanceOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    checkpoints(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
     currentExchangeRate(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     decimals(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     decreaseAllowance(
-      spender: string,
-      subtractedValue: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      spender: PromiseOrValue<string>,
+      subtractedValue: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     delegate(
-      delegatee: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      delegatee: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     delegateBySig(
-      delegatee: string,
-      nonce: BigNumberish,
-      expiry: BigNumberish,
-      v: BigNumberish,
-      r: BytesLike,
-      s: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      delegatee: PromiseOrValue<string>,
+      nonce: PromiseOrValue<BigNumberish>,
+      expiry: PromiseOrValue<BigNumberish>,
+      v: PromiseOrValue<BigNumberish>,
+      r: PromiseOrValue<BytesLike>,
+      s: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    delegates(delegator: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    delegates(delegator: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    deposits(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    deposits(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     enter(
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     fundsCollectedByPHP(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    getCurrentVotes(account: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getCurrentVotes(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    getExchangeRateHistory(amount: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getExchangeRateHistory(
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
     getLatestStoredExchangeRate(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    getPriorVotes(account: string, blockNumber: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getPriorVotes(
+      account: PromiseOrValue<string>,
+      blockNumber: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
-    historicExchangeRates(arg0: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    historicExchangeRates(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    historicTimestamps(arg0: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    historicTimestamps(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     increaseAllowance(
-      spender: string,
-      addedValue: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      spender: PromiseOrValue<string>,
+      addedValue: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     isLuckyPenguinEnabled(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     leave(
-      _share: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _share: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     luckyPenguin(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     luckyPenguinCount(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    luckyPenguinEarnings(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    luckyPenguinEarnings(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     luckyPenguinInterval(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
@@ -1265,9 +1420,9 @@ export interface PenguinIPefi extends BaseContract {
 
     name(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    nonces(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    nonces(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    numCheckpoints(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    numCheckpoints(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     numStoredExchangeRates(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
@@ -1279,7 +1434,7 @@ export interface PenguinIPefi extends BaseContract {
 
     pefiBalance(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     rewardsReceived(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
@@ -1292,28 +1447,28 @@ export interface PenguinIPefi extends BaseContract {
     rollingStartTotalWithdrawals(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     setLuckyPenguinEnabled(
-      _luckyPenguinEnabled: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _luckyPenguinEnabled: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setLuckyPenguinInterval(
-      _luckyPenguinInterval: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _luckyPenguinInterval: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setLuckyPenguinMinimumDeposit(
-      _luckyPenguinMinimumDeposit: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _luckyPenguinMinimumDeposit: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setLuckyPenguinRewardBP(
-      _luckyPenguinRewardBP: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _luckyPenguinRewardBP: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setPaperHandsPenalty(
-      _paperHandsPenalty: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _paperHandsPenalty: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     symbol(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -1327,25 +1482,25 @@ export interface PenguinIPefi extends BaseContract {
     totalWithdrawals(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     transfer(
-      recipient: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      recipient: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     transferFrom(
-      sender: string,
-      recipient: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      sender: PromiseOrValue<string>,
+      recipient: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    userProfits(penguinAddress: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    userProfits(penguinAddress: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    withdrawals(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    withdrawals(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
   };
 }

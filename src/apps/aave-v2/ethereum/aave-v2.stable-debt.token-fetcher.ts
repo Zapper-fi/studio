@@ -1,33 +1,37 @@
-import { Inject } from '@nestjs/common';
-
 import { Register } from '~app-toolkit/decorators';
-import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
-import { PositionFetcher } from '~position/position-fetcher.interface';
-import { AppTokenPosition } from '~position/position.interface';
+import { DisplayPropsStageParams } from '~position/template/app-token.template.position-fetcher';
 import { Network } from '~types/network.interface';
 
 import { AAVE_V2_DEFINITION } from '../aave-v2.definition';
-import { AaveV2LendingTokenHelper } from '../helpers/aave-v2.lending.token-helper';
+import { AaveV2AToken } from '../contracts/ethers/AaveV2AToken';
+import {
+  AaveV2ReserveApyData,
+  AaveV2ReserveTokenAddressesData,
+  AaveV2LendingTemplateTokenFetcher,
+  AaveV2LendingTokenDataProps,
+} from '../helpers/aave-v2.lending.template.token-fetcher';
 
 const appId = AAVE_V2_DEFINITION.id;
 const groupId = AAVE_V2_DEFINITION.groups.stableDebt.id;
 const network = Network.ETHEREUM_MAINNET;
 
-@Register.TokenPositionFetcher({ appId, groupId, network, options: { includeInTvl: true } })
-export class EthereumAaveV2StableDebtTokenFetcher implements PositionFetcher<AppTokenPosition> {
-  constructor(@Inject(AaveV2LendingTokenHelper) private readonly aaveV2LendingTokenHelper: AaveV2LendingTokenHelper) {}
+@Register.TokenPositionFetcher({ appId, groupId, network })
+export class EthereumAaveV2StableDebtTokenFetcher extends AaveV2LendingTemplateTokenFetcher {
+  appId = AAVE_V2_DEFINITION.id;
+  groupId = AAVE_V2_DEFINITION.groups.stableDebt.id;
+  network = Network.ETHEREUM_MAINNET;
+  providerAddress = '0x057835ad21a177dbdd3090bb1cae03eacf78fc6d';
+  isDebt = true;
 
-  async getPositions() {
-    return await this.aaveV2LendingTokenHelper.getTokens({
-      appId,
-      groupId,
-      network,
-      isDebt: true,
-      protocolDataProviderAddress: '0x057835ad21a177dbdd3090bb1cae03eacf78fc6d',
-      resolveTokenAddress: ({ reserveTokenAddressesData }) => reserveTokenAddressesData.stableDebtTokenAddress,
-      resolveLendingRate: ({ reserveData }) => reserveData.stableBorrowRate,
-      resolveLabel: ({ reserveToken }) => getLabelFromToken(reserveToken),
-      resolveApyLabel: ({ apy }) => `${(apy * 100).toFixed(3)}% APR (stable)`,
-    });
+  getTokenAddress(reserveTokenAddressesData: AaveV2ReserveTokenAddressesData): string {
+    return reserveTokenAddressesData.stableDebtTokenAddress;
+  }
+
+  getApy(reserveApyData: AaveV2ReserveApyData): number {
+    return reserveApyData.stableBorrowApy;
+  }
+
+  async getTertiaryLabel({ appToken }: DisplayPropsStageParams<AaveV2AToken, AaveV2LendingTokenDataProps>) {
+    return `${(appToken.dataProps.apy * 100).toFixed(3)}% APR (stable)`;
   }
 }

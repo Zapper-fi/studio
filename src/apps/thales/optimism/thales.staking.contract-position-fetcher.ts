@@ -24,9 +24,9 @@ export type ThalesStakingContractPositionDataProps = {
 
 const farmDefinitions = [
   {
-    address: '0xC392133eEa695603B51a5d5de73655d571c2CE51'.toLowerCase(),
-    stakedTokenAddress: '0x217d47011b23bb961eb6d93ca9945b7501a5bb11'.toLowerCase(),
-    rewardTokenAddress: '0x217d47011b23bb961eb6d93ca9945b7501a5bb11'.toLowerCase(),
+    address: '0xc392133eea695603b51a5d5de73655d571c2ce51',
+    stakedTokenAddress: '0x217d47011b23bb961eb6d93ca9945b7501a5bb11',
+    rewardTokenAddress: '0x217d47011b23bb961eb6d93ca9945b7501a5bb11',
   },
 ];
 

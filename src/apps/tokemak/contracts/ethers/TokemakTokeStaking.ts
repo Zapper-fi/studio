@@ -15,17 +15,17 @@ import type {
 } from 'ethers';
 import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
 import type { Listener, Provider } from '@ethersproject/providers';
-import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
 export declare namespace IStaking {
   export type StakingScheduleStruct = {
-    cliff: BigNumberish;
-    duration: BigNumberish;
-    interval: BigNumberish;
-    setup: boolean;
-    isActive: boolean;
-    hardStart: BigNumberish;
-    isPublic: boolean;
+    cliff: PromiseOrValue<BigNumberish>;
+    duration: PromiseOrValue<BigNumberish>;
+    interval: PromiseOrValue<BigNumberish>;
+    setup: PromiseOrValue<boolean>;
+    isActive: PromiseOrValue<boolean>;
+    hardStart: PromiseOrValue<BigNumberish>;
+    isPublic: PromiseOrValue<boolean>;
   };
 
   export type StakingScheduleStructOutput = [BigNumber, BigNumber, BigNumber, boolean, boolean, BigNumber, boolean] & {
@@ -40,7 +40,7 @@ export declare namespace IStaking {
 
   export type StakingScheduleInfoStruct = {
     schedule: IStaking.StakingScheduleStruct;
-    index: BigNumberish;
+    index: PromiseOrValue<BigNumberish>;
   };
 
   export type StakingScheduleInfoStructOutput = [IStaking.StakingScheduleStructOutput, BigNumber] & {
@@ -49,11 +49,11 @@ export declare namespace IStaking {
   };
 
   export type StakingDetailsStruct = {
-    initial: BigNumberish;
-    withdrawn: BigNumberish;
-    slashed: BigNumberish;
-    started: BigNumberish;
-    scheduleIx: BigNumberish;
+    initial: PromiseOrValue<BigNumberish>;
+    withdrawn: PromiseOrValue<BigNumberish>;
+    slashed: PromiseOrValue<BigNumberish>;
+    started: PromiseOrValue<BigNumberish>;
+    scheduleIx: PromiseOrValue<BigNumberish>;
   };
 
   export type StakingDetailsStructOutput = [BigNumber, BigNumber, BigNumber, BigNumber, BigNumber] & {
@@ -160,50 +160,109 @@ export interface TokemakTokeStakingInterface extends utils.Interface {
   ): FunctionFragment;
 
   encodeFunctionData(functionFragment: '_eventSend', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'addSchedule', values: [IStaking.StakingScheduleStruct, string]): string;
-  encodeFunctionData(functionFragment: 'availableForWithdrawal', values: [string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'balanceOf', values: [string]): string;
+  encodeFunctionData(
+    functionFragment: 'addSchedule',
+    values: [IStaking.StakingScheduleStruct, PromiseOrValue<string>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'availableForWithdrawal',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'balanceOf', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'delegateFunction', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'deposit(uint256)', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'deposit(uint256,uint256)', values: [BigNumberish, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'depositFor', values: [string, BigNumberish, BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'deposit(uint256)', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(
+    functionFragment: 'deposit(uint256,uint256)',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'depositFor',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+  ): string;
   encodeFunctionData(
     functionFragment: 'depositWithSchedule',
-    values: [string, BigNumberish, IStaking.StakingScheduleStruct, string],
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      IStaking.StakingScheduleStruct,
+      PromiseOrValue<string>,
+    ],
   ): string;
   encodeFunctionData(functionFragment: 'destinations', values?: undefined): string;
   encodeFunctionData(functionFragment: 'getSchedules', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'getStakes', values: [string]): string;
-  encodeFunctionData(functionFragment: 'initialize', values: [string, string, string, string]): string;
+  encodeFunctionData(functionFragment: 'getStakes', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'initialize',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<string>],
+  ): string;
   encodeFunctionData(functionFragment: 'manager', values?: undefined): string;
   encodeFunctionData(functionFragment: 'nextScheduleIndex', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'notionalAddresses', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'notionalAddresses', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'owner', values?: undefined): string;
   encodeFunctionData(functionFragment: 'pause', values?: undefined): string;
   encodeFunctionData(functionFragment: 'paused', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'permissionedDepositors', values: [string]): string;
+  encodeFunctionData(functionFragment: 'permissionedDepositors', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'renounceOwnership', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'requestWithdrawal', values: [BigNumberish, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'requestedWithdrawals', values: [string]): string;
-  encodeFunctionData(functionFragment: 'schedules', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'setDestinations', values: [string, string]): string;
-  encodeFunctionData(functionFragment: 'setEventSend', values: [boolean]): string;
-  encodeFunctionData(functionFragment: 'setNotionalAddresses', values: [BigNumberish[], string[]]): string;
-  encodeFunctionData(functionFragment: 'setPermissionedDepositor', values: [string, boolean]): string;
-  encodeFunctionData(functionFragment: 'setScheduleStatus', values: [BigNumberish, boolean]): string;
-  encodeFunctionData(functionFragment: 'setUserSchedules', values: [string, BigNumberish[]]): string;
-  encodeFunctionData(functionFragment: 'slash', values: [string[], BigNumberish[], BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'requestWithdrawal',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'requestedWithdrawals', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'schedules', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(
+    functionFragment: 'setDestinations',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>],
+  ): string;
+  encodeFunctionData(functionFragment: 'setEventSend', values: [PromiseOrValue<boolean>]): string;
+  encodeFunctionData(
+    functionFragment: 'setNotionalAddresses',
+    values: [PromiseOrValue<BigNumberish>[], PromiseOrValue<string>[]],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'setPermissionedDepositor',
+    values: [PromiseOrValue<string>, PromiseOrValue<boolean>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'setScheduleStatus',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<boolean>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'setUserSchedules',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>[]],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'slash',
+    values: [PromiseOrValue<string>[], PromiseOrValue<BigNumberish>[], PromiseOrValue<BigNumberish>],
+  ): string;
   encodeFunctionData(functionFragment: 'tokeToken', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'transferOwnership', values: [string]): string;
+  encodeFunctionData(functionFragment: 'transferOwnership', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'treasury', values?: undefined): string;
   encodeFunctionData(functionFragment: 'unpause', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'unvested', values: [string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'userStakingSchedules', values: [string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'userStakings', values: [string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'vested', values: [string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'withdraw(uint256)', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'withdraw(uint256,uint256)', values: [BigNumberish, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'withdrawalRequestsByIndex', values: [string, BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'unvested',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'userStakingSchedules',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'userStakings',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'vested',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'withdraw(uint256)', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(
+    functionFragment: 'withdraw(uint256,uint256)',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'withdrawalRequestsByIndex',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
   encodeFunctionData(functionFragment: 'withheldLiquidity', values?: undefined): string;
 
   decodeFunctionResult(functionFragment: '_eventSend', data: BytesLike): Result;
@@ -525,44 +584,44 @@ export interface TokemakTokeStaking extends BaseContract {
 
     addSchedule(
       schedule: IStaking.StakingScheduleStruct,
-      notional: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      notional: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     availableForWithdrawal(
-      account: string,
-      scheduleIndex: BigNumberish,
+      account: PromiseOrValue<string>,
+      scheduleIndex: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber]>;
 
-    balanceOf(account: string, overrides?: CallOverrides): Promise<[BigNumber] & { value: BigNumber }>;
+    balanceOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber] & { value: BigNumber }>;
 
     delegateFunction(overrides?: CallOverrides): Promise<[string]>;
 
     'deposit(uint256)'(
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     'deposit(uint256,uint256)'(
-      amount: BigNumberish,
-      scheduleIndex: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      amount: PromiseOrValue<BigNumberish>,
+      scheduleIndex: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     depositFor(
-      account: string,
-      amount: BigNumberish,
-      scheduleIndex: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      account: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      scheduleIndex: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     depositWithSchedule(
-      account: string,
-      amount: BigNumberish,
+      account: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
       schedule: IStaking.StakingScheduleStruct,
-      notional: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      notional: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     destinations(
@@ -576,7 +635,7 @@ export interface TokemakTokeStaking extends BaseContract {
     >;
 
     getStakes(
-      account: string,
+      account: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<
       [IStaking.StakingDetailsStructOutput[]] & {
@@ -585,42 +644,42 @@ export interface TokemakTokeStaking extends BaseContract {
     >;
 
     initialize(
-      _tokeToken: string,
-      _manager: string,
-      _treasury: string,
-      _scheduleZeroNotional: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _tokeToken: PromiseOrValue<string>,
+      _manager: PromiseOrValue<string>,
+      _treasury: PromiseOrValue<string>,
+      _scheduleZeroNotional: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     manager(overrides?: CallOverrides): Promise<[string]>;
 
     nextScheduleIndex(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    notionalAddresses(arg0: BigNumberish, overrides?: CallOverrides): Promise<[string]>;
+    notionalAddresses(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[string]>;
 
     owner(overrides?: CallOverrides): Promise<[string]>;
 
-    pause(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    pause(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     paused(overrides?: CallOverrides): Promise<[boolean]>;
 
-    permissionedDepositors(arg0: string, overrides?: CallOverrides): Promise<[boolean]>;
+    permissionedDepositors(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[boolean]>;
 
-    renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     requestWithdrawal(
-      amount: BigNumberish,
-      scheduleIdx: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      amount: PromiseOrValue<BigNumberish>,
+      scheduleIdx: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     requestedWithdrawals(
-      arg0: string,
+      arg0: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber, BigNumber] & { minCycleIndex: BigNumber; amount: BigNumber }>;
 
     schedules(
-      arg0: BigNumberish,
+      arg0: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<
       [BigNumber, BigNumber, BigNumber, boolean, boolean, BigNumber, boolean] & {
@@ -635,69 +694,73 @@ export interface TokemakTokeStaking extends BaseContract {
     >;
 
     setDestinations(
-      _fxStateSender: string,
-      _destinationOnL2: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _fxStateSender: PromiseOrValue<string>,
+      _destinationOnL2: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setEventSend(
-      _eventSendSet: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _eventSendSet: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setNotionalAddresses(
-      scheduleIdxArr: BigNumberish[],
-      addresses: string[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      scheduleIdxArr: PromiseOrValue<BigNumberish>[],
+      addresses: PromiseOrValue<string>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setPermissionedDepositor(
-      account: string,
-      canDeposit: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      account: PromiseOrValue<string>,
+      canDeposit: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setScheduleStatus(
-      scheduleId: BigNumberish,
-      activeBool: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      scheduleId: PromiseOrValue<BigNumberish>,
+      activeBool: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setUserSchedules(
-      account: string,
-      userSchedulesIdxs: BigNumberish[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      account: PromiseOrValue<string>,
+      userSchedulesIdxs: PromiseOrValue<BigNumberish>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     slash(
-      accounts: string[],
-      amounts: BigNumberish[],
-      scheduleIndex: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      accounts: PromiseOrValue<string>[],
+      amounts: PromiseOrValue<BigNumberish>[],
+      scheduleIndex: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     tokeToken(overrides?: CallOverrides): Promise<[string]>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     treasury(overrides?: CallOverrides): Promise<[string]>;
 
-    unpause(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    unpause(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     unvested(
-      account: string,
-      scheduleIndex: BigNumberish,
+      account: PromiseOrValue<string>,
+      scheduleIndex: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber] & { value: BigNumber }>;
 
-    userStakingSchedules(arg0: string, arg1: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber]>;
+    userStakingSchedules(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber]>;
 
     userStakings(
-      arg0: string,
-      arg1: BigNumberish,
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<
       [BigNumber, BigNumber, BigNumber, BigNumber, BigNumber] & {
@@ -710,25 +773,25 @@ export interface TokemakTokeStaking extends BaseContract {
     >;
 
     vested(
-      account: string,
-      scheduleIndex: BigNumberish,
+      account: PromiseOrValue<string>,
+      scheduleIndex: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber] & { value: BigNumber }>;
 
     'withdraw(uint256)'(
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     'withdraw(uint256,uint256)'(
-      amount: BigNumberish,
-      scheduleIdx: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      amount: PromiseOrValue<BigNumberish>,
+      scheduleIdx: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     withdrawalRequestsByIndex(
-      arg0: string,
-      arg1: BigNumberish,
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber, BigNumber] & { minCycleIndex: BigNumber; amount: BigNumber }>;
 
@@ -739,40 +802,44 @@ export interface TokemakTokeStaking extends BaseContract {
 
   addSchedule(
     schedule: IStaking.StakingScheduleStruct,
-    notional: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    notional: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  availableForWithdrawal(account: string, scheduleIndex: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+  availableForWithdrawal(
+    account: PromiseOrValue<string>,
+    scheduleIndex: PromiseOrValue<BigNumberish>,
+    overrides?: CallOverrides,
+  ): Promise<BigNumber>;
 
-  balanceOf(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+  balanceOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   delegateFunction(overrides?: CallOverrides): Promise<string>;
 
   'deposit(uint256)'(
-    amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   'deposit(uint256,uint256)'(
-    amount: BigNumberish,
-    scheduleIndex: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    amount: PromiseOrValue<BigNumberish>,
+    scheduleIndex: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   depositFor(
-    account: string,
-    amount: BigNumberish,
-    scheduleIndex: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    account: PromiseOrValue<string>,
+    amount: PromiseOrValue<BigNumberish>,
+    scheduleIndex: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   depositWithSchedule(
-    account: string,
-    amount: BigNumberish,
+    account: PromiseOrValue<string>,
+    amount: PromiseOrValue<BigNumberish>,
     schedule: IStaking.StakingScheduleStruct,
-    notional: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    notional: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   destinations(
@@ -781,45 +848,45 @@ export interface TokemakTokeStaking extends BaseContract {
 
   getSchedules(overrides?: CallOverrides): Promise<IStaking.StakingScheduleInfoStructOutput[]>;
 
-  getStakes(account: string, overrides?: CallOverrides): Promise<IStaking.StakingDetailsStructOutput[]>;
+  getStakes(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<IStaking.StakingDetailsStructOutput[]>;
 
   initialize(
-    _tokeToken: string,
-    _manager: string,
-    _treasury: string,
-    _scheduleZeroNotional: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _tokeToken: PromiseOrValue<string>,
+    _manager: PromiseOrValue<string>,
+    _treasury: PromiseOrValue<string>,
+    _scheduleZeroNotional: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   manager(overrides?: CallOverrides): Promise<string>;
 
   nextScheduleIndex(overrides?: CallOverrides): Promise<BigNumber>;
 
-  notionalAddresses(arg0: BigNumberish, overrides?: CallOverrides): Promise<string>;
+  notionalAddresses(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
 
   owner(overrides?: CallOverrides): Promise<string>;
 
-  pause(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  pause(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   paused(overrides?: CallOverrides): Promise<boolean>;
 
-  permissionedDepositors(arg0: string, overrides?: CallOverrides): Promise<boolean>;
+  permissionedDepositors(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
-  renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   requestWithdrawal(
-    amount: BigNumberish,
-    scheduleIdx: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    amount: PromiseOrValue<BigNumberish>,
+    scheduleIdx: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   requestedWithdrawals(
-    arg0: string,
+    arg0: PromiseOrValue<string>,
     overrides?: CallOverrides,
   ): Promise<[BigNumber, BigNumber] & { minCycleIndex: BigNumber; amount: BigNumber }>;
 
   schedules(
-    arg0: BigNumberish,
+    arg0: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides,
   ): Promise<
     [BigNumber, BigNumber, BigNumber, boolean, boolean, BigNumber, boolean] & {
@@ -834,65 +901,73 @@ export interface TokemakTokeStaking extends BaseContract {
   >;
 
   setDestinations(
-    _fxStateSender: string,
-    _destinationOnL2: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _fxStateSender: PromiseOrValue<string>,
+    _destinationOnL2: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setEventSend(
-    _eventSendSet: boolean,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _eventSendSet: PromiseOrValue<boolean>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setNotionalAddresses(
-    scheduleIdxArr: BigNumberish[],
-    addresses: string[],
-    overrides?: Overrides & { from?: string | Promise<string> },
+    scheduleIdxArr: PromiseOrValue<BigNumberish>[],
+    addresses: PromiseOrValue<string>[],
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setPermissionedDepositor(
-    account: string,
-    canDeposit: boolean,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    account: PromiseOrValue<string>,
+    canDeposit: PromiseOrValue<boolean>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setScheduleStatus(
-    scheduleId: BigNumberish,
-    activeBool: boolean,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    scheduleId: PromiseOrValue<BigNumberish>,
+    activeBool: PromiseOrValue<boolean>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setUserSchedules(
-    account: string,
-    userSchedulesIdxs: BigNumberish[],
-    overrides?: Overrides & { from?: string | Promise<string> },
+    account: PromiseOrValue<string>,
+    userSchedulesIdxs: PromiseOrValue<BigNumberish>[],
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   slash(
-    accounts: string[],
-    amounts: BigNumberish[],
-    scheduleIndex: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    accounts: PromiseOrValue<string>[],
+    amounts: PromiseOrValue<BigNumberish>[],
+    scheduleIndex: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   tokeToken(overrides?: CallOverrides): Promise<string>;
 
   transferOwnership(
-    newOwner: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    newOwner: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   treasury(overrides?: CallOverrides): Promise<string>;
 
-  unpause(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  unpause(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
-  unvested(account: string, scheduleIndex: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+  unvested(
+    account: PromiseOrValue<string>,
+    scheduleIndex: PromiseOrValue<BigNumberish>,
+    overrides?: CallOverrides,
+  ): Promise<BigNumber>;
 
-  userStakingSchedules(arg0: string, arg1: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+  userStakingSchedules(
+    arg0: PromiseOrValue<string>,
+    arg1: PromiseOrValue<BigNumberish>,
+    overrides?: CallOverrides,
+  ): Promise<BigNumber>;
 
   userStakings(
-    arg0: string,
-    arg1: BigNumberish,
+    arg0: PromiseOrValue<string>,
+    arg1: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides,
   ): Promise<
     [BigNumber, BigNumber, BigNumber, BigNumber, BigNumber] & {
@@ -904,22 +979,26 @@ export interface TokemakTokeStaking extends BaseContract {
     }
   >;
 
-  vested(account: string, scheduleIndex: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+  vested(
+    account: PromiseOrValue<string>,
+    scheduleIndex: PromiseOrValue<BigNumberish>,
+    overrides?: CallOverrides,
+  ): Promise<BigNumber>;
 
   'withdraw(uint256)'(
-    amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   'withdraw(uint256,uint256)'(
-    amount: BigNumberish,
-    scheduleIdx: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    amount: PromiseOrValue<BigNumberish>,
+    scheduleIdx: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   withdrawalRequestsByIndex(
-    arg0: string,
-    arg1: BigNumberish,
+    arg0: PromiseOrValue<string>,
+    arg1: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides,
   ): Promise<[BigNumber, BigNumber] & { minCycleIndex: BigNumber; amount: BigNumber }>;
 
@@ -928,34 +1007,42 @@ export interface TokemakTokeStaking extends BaseContract {
   callStatic: {
     _eventSend(overrides?: CallOverrides): Promise<boolean>;
 
-    addSchedule(schedule: IStaking.StakingScheduleStruct, notional: string, overrides?: CallOverrides): Promise<void>;
+    addSchedule(
+      schedule: IStaking.StakingScheduleStruct,
+      notional: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    availableForWithdrawal(account: string, scheduleIndex: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    availableForWithdrawal(
+      account: PromiseOrValue<string>,
+      scheduleIndex: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    balanceOf(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    balanceOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     delegateFunction(overrides?: CallOverrides): Promise<string>;
 
-    'deposit(uint256)'(amount: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    'deposit(uint256)'(amount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
     'deposit(uint256,uint256)'(
-      amount: BigNumberish,
-      scheduleIndex: BigNumberish,
+      amount: PromiseOrValue<BigNumberish>,
+      scheduleIndex: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
     depositFor(
-      account: string,
-      amount: BigNumberish,
-      scheduleIndex: BigNumberish,
+      account: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      scheduleIndex: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
     depositWithSchedule(
-      account: string,
-      amount: BigNumberish,
+      account: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
       schedule: IStaking.StakingScheduleStruct,
-      notional: string,
+      notional: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
@@ -965,13 +1052,16 @@ export interface TokemakTokeStaking extends BaseContract {
 
     getSchedules(overrides?: CallOverrides): Promise<IStaking.StakingScheduleInfoStructOutput[]>;
 
-    getStakes(account: string, overrides?: CallOverrides): Promise<IStaking.StakingDetailsStructOutput[]>;
+    getStakes(
+      account: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<IStaking.StakingDetailsStructOutput[]>;
 
     initialize(
-      _tokeToken: string,
-      _manager: string,
-      _treasury: string,
-      _scheduleZeroNotional: string,
+      _tokeToken: PromiseOrValue<string>,
+      _manager: PromiseOrValue<string>,
+      _treasury: PromiseOrValue<string>,
+      _scheduleZeroNotional: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
@@ -979,7 +1069,7 @@ export interface TokemakTokeStaking extends BaseContract {
 
     nextScheduleIndex(overrides?: CallOverrides): Promise<BigNumber>;
 
-    notionalAddresses(arg0: BigNumberish, overrides?: CallOverrides): Promise<string>;
+    notionalAddresses(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
 
     owner(overrides?: CallOverrides): Promise<string>;
 
@@ -987,19 +1077,23 @@ export interface TokemakTokeStaking extends BaseContract {
 
     paused(overrides?: CallOverrides): Promise<boolean>;
 
-    permissionedDepositors(arg0: string, overrides?: CallOverrides): Promise<boolean>;
+    permissionedDepositors(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
     renounceOwnership(overrides?: CallOverrides): Promise<void>;
 
-    requestWithdrawal(amount: BigNumberish, scheduleIdx: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    requestWithdrawal(
+      amount: PromiseOrValue<BigNumberish>,
+      scheduleIdx: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
     requestedWithdrawals(
-      arg0: string,
+      arg0: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber, BigNumber] & { minCycleIndex: BigNumber; amount: BigNumber }>;
 
     schedules(
-      arg0: BigNumberish,
+      arg0: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<
       [BigNumber, BigNumber, BigNumber, boolean, boolean, BigNumber, boolean] & {
@@ -1013,40 +1107,68 @@ export interface TokemakTokeStaking extends BaseContract {
       }
     >;
 
-    setDestinations(_fxStateSender: string, _destinationOnL2: string, overrides?: CallOverrides): Promise<void>;
+    setDestinations(
+      _fxStateSender: PromiseOrValue<string>,
+      _destinationOnL2: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    setEventSend(_eventSendSet: boolean, overrides?: CallOverrides): Promise<void>;
+    setEventSend(_eventSendSet: PromiseOrValue<boolean>, overrides?: CallOverrides): Promise<void>;
 
-    setNotionalAddresses(scheduleIdxArr: BigNumberish[], addresses: string[], overrides?: CallOverrides): Promise<void>;
+    setNotionalAddresses(
+      scheduleIdxArr: PromiseOrValue<BigNumberish>[],
+      addresses: PromiseOrValue<string>[],
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    setPermissionedDepositor(account: string, canDeposit: boolean, overrides?: CallOverrides): Promise<void>;
+    setPermissionedDepositor(
+      account: PromiseOrValue<string>,
+      canDeposit: PromiseOrValue<boolean>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    setScheduleStatus(scheduleId: BigNumberish, activeBool: boolean, overrides?: CallOverrides): Promise<void>;
+    setScheduleStatus(
+      scheduleId: PromiseOrValue<BigNumberish>,
+      activeBool: PromiseOrValue<boolean>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    setUserSchedules(account: string, userSchedulesIdxs: BigNumberish[], overrides?: CallOverrides): Promise<void>;
+    setUserSchedules(
+      account: PromiseOrValue<string>,
+      userSchedulesIdxs: PromiseOrValue<BigNumberish>[],
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
     slash(
-      accounts: string[],
-      amounts: BigNumberish[],
-      scheduleIndex: BigNumberish,
+      accounts: PromiseOrValue<string>[],
+      amounts: PromiseOrValue<BigNumberish>[],
+      scheduleIndex: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
     tokeToken(overrides?: CallOverrides): Promise<string>;
 
-    transferOwnership(newOwner: string, overrides?: CallOverrides): Promise<void>;
+    transferOwnership(newOwner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     treasury(overrides?: CallOverrides): Promise<string>;
 
     unpause(overrides?: CallOverrides): Promise<void>;
 
-    unvested(account: string, scheduleIndex: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    unvested(
+      account: PromiseOrValue<string>,
+      scheduleIndex: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    userStakingSchedules(arg0: string, arg1: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    userStakingSchedules(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     userStakings(
-      arg0: string,
-      arg1: BigNumberish,
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<
       [BigNumber, BigNumber, BigNumber, BigNumber, BigNumber] & {
@@ -1058,19 +1180,23 @@ export interface TokemakTokeStaking extends BaseContract {
       }
     >;
 
-    vested(account: string, scheduleIndex: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    vested(
+      account: PromiseOrValue<string>,
+      scheduleIndex: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    'withdraw(uint256)'(amount: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    'withdraw(uint256)'(amount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
     'withdraw(uint256,uint256)'(
-      amount: BigNumberish,
-      scheduleIdx: BigNumberish,
+      amount: PromiseOrValue<BigNumberish>,
+      scheduleIdx: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
     withdrawalRequestsByIndex(
-      arg0: string,
-      arg1: BigNumberish,
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber, BigNumber] & { minCycleIndex: BigNumber; amount: BigNumber }>;
 
@@ -1091,10 +1217,13 @@ export interface TokemakTokeStaking extends BaseContract {
     NotionalAddressesSet(scheduleIdxs?: null, addresses?: null): NotionalAddressesSetEventFilter;
 
     'OwnershipTransferred(address,address)'(
-      previousOwner?: string | null,
-      newOwner?: string | null,
+      previousOwner?: PromiseOrValue<string> | null,
+      newOwner?: PromiseOrValue<string> | null,
     ): OwnershipTransferredEventFilter;
-    OwnershipTransferred(previousOwner?: string | null, newOwner?: string | null): OwnershipTransferredEventFilter;
+    OwnershipTransferred(
+      previousOwner?: PromiseOrValue<string> | null,
+      newOwner?: PromiseOrValue<string> | null,
+    ): OwnershipTransferredEventFilter;
 
     'Paused(address)'(account?: null): PausedEventFilter;
     Paused(account?: null): PausedEventFilter;
@@ -1224,155 +1353,179 @@ export interface TokemakTokeStaking extends BaseContract {
 
     addSchedule(
       schedule: IStaking.StakingScheduleStruct,
-      notional: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      notional: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    availableForWithdrawal(account: string, scheduleIndex: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    availableForWithdrawal(
+      account: PromiseOrValue<string>,
+      scheduleIndex: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    balanceOf(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    balanceOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     delegateFunction(overrides?: CallOverrides): Promise<BigNumber>;
 
     'deposit(uint256)'(
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     'deposit(uint256,uint256)'(
-      amount: BigNumberish,
-      scheduleIndex: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      amount: PromiseOrValue<BigNumberish>,
+      scheduleIndex: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     depositFor(
-      account: string,
-      amount: BigNumberish,
-      scheduleIndex: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      account: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      scheduleIndex: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     depositWithSchedule(
-      account: string,
-      amount: BigNumberish,
+      account: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
       schedule: IStaking.StakingScheduleStruct,
-      notional: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      notional: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     destinations(overrides?: CallOverrides): Promise<BigNumber>;
 
     getSchedules(overrides?: CallOverrides): Promise<BigNumber>;
 
-    getStakes(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getStakes(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     initialize(
-      _tokeToken: string,
-      _manager: string,
-      _treasury: string,
-      _scheduleZeroNotional: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _tokeToken: PromiseOrValue<string>,
+      _manager: PromiseOrValue<string>,
+      _treasury: PromiseOrValue<string>,
+      _scheduleZeroNotional: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     manager(overrides?: CallOverrides): Promise<BigNumber>;
 
     nextScheduleIndex(overrides?: CallOverrides): Promise<BigNumber>;
 
-    notionalAddresses(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    notionalAddresses(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     owner(overrides?: CallOverrides): Promise<BigNumber>;
 
-    pause(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    pause(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     paused(overrides?: CallOverrides): Promise<BigNumber>;
 
-    permissionedDepositors(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    permissionedDepositors(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     requestWithdrawal(
-      amount: BigNumberish,
-      scheduleIdx: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      amount: PromiseOrValue<BigNumberish>,
+      scheduleIdx: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    requestedWithdrawals(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    requestedWithdrawals(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    schedules(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    schedules(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     setDestinations(
-      _fxStateSender: string,
-      _destinationOnL2: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _fxStateSender: PromiseOrValue<string>,
+      _destinationOnL2: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setEventSend(
-      _eventSendSet: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _eventSendSet: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setNotionalAddresses(
-      scheduleIdxArr: BigNumberish[],
-      addresses: string[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      scheduleIdxArr: PromiseOrValue<BigNumberish>[],
+      addresses: PromiseOrValue<string>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setPermissionedDepositor(
-      account: string,
-      canDeposit: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      account: PromiseOrValue<string>,
+      canDeposit: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setScheduleStatus(
-      scheduleId: BigNumberish,
-      activeBool: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      scheduleId: PromiseOrValue<BigNumberish>,
+      activeBool: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setUserSchedules(
-      account: string,
-      userSchedulesIdxs: BigNumberish[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      account: PromiseOrValue<string>,
+      userSchedulesIdxs: PromiseOrValue<BigNumberish>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     slash(
-      accounts: string[],
-      amounts: BigNumberish[],
-      scheduleIndex: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      accounts: PromiseOrValue<string>[],
+      amounts: PromiseOrValue<BigNumberish>[],
+      scheduleIndex: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     tokeToken(overrides?: CallOverrides): Promise<BigNumber>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     treasury(overrides?: CallOverrides): Promise<BigNumber>;
 
-    unpause(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    unpause(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
-    unvested(account: string, scheduleIndex: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    unvested(
+      account: PromiseOrValue<string>,
+      scheduleIndex: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    userStakingSchedules(arg0: string, arg1: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    userStakingSchedules(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    userStakings(arg0: string, arg1: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    userStakings(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    vested(account: string, scheduleIndex: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    vested(
+      account: PromiseOrValue<string>,
+      scheduleIndex: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     'withdraw(uint256)'(
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     'withdraw(uint256,uint256)'(
-      amount: BigNumberish,
-      scheduleIdx: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      amount: PromiseOrValue<BigNumberish>,
+      scheduleIdx: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    withdrawalRequestsByIndex(arg0: string, arg1: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    withdrawalRequestsByIndex(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     withheldLiquidity(overrides?: CallOverrides): Promise<BigNumber>;
   };
@@ -1382,161 +1535,177 @@ export interface TokemakTokeStaking extends BaseContract {
 
     addSchedule(
       schedule: IStaking.StakingScheduleStruct,
-      notional: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      notional: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     availableForWithdrawal(
-      account: string,
-      scheduleIndex: BigNumberish,
+      account: PromiseOrValue<string>,
+      scheduleIndex: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
-    balanceOf(account: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    balanceOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     delegateFunction(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     'deposit(uint256)'(
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     'deposit(uint256,uint256)'(
-      amount: BigNumberish,
-      scheduleIndex: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      amount: PromiseOrValue<BigNumberish>,
+      scheduleIndex: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     depositFor(
-      account: string,
-      amount: BigNumberish,
-      scheduleIndex: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      account: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      scheduleIndex: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     depositWithSchedule(
-      account: string,
-      amount: BigNumberish,
+      account: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
       schedule: IStaking.StakingScheduleStruct,
-      notional: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      notional: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     destinations(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     getSchedules(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    getStakes(account: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getStakes(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     initialize(
-      _tokeToken: string,
-      _manager: string,
-      _treasury: string,
-      _scheduleZeroNotional: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _tokeToken: PromiseOrValue<string>,
+      _manager: PromiseOrValue<string>,
+      _treasury: PromiseOrValue<string>,
+      _scheduleZeroNotional: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     manager(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     nextScheduleIndex(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    notionalAddresses(arg0: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    notionalAddresses(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    pause(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    pause(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     paused(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    permissionedDepositors(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    permissionedDepositors(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     requestWithdrawal(
-      amount: BigNumberish,
-      scheduleIdx: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      amount: PromiseOrValue<BigNumberish>,
+      scheduleIdx: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    requestedWithdrawals(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    requestedWithdrawals(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    schedules(arg0: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    schedules(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     setDestinations(
-      _fxStateSender: string,
-      _destinationOnL2: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _fxStateSender: PromiseOrValue<string>,
+      _destinationOnL2: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setEventSend(
-      _eventSendSet: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _eventSendSet: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setNotionalAddresses(
-      scheduleIdxArr: BigNumberish[],
-      addresses: string[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      scheduleIdxArr: PromiseOrValue<BigNumberish>[],
+      addresses: PromiseOrValue<string>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setPermissionedDepositor(
-      account: string,
-      canDeposit: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      account: PromiseOrValue<string>,
+      canDeposit: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setScheduleStatus(
-      scheduleId: BigNumberish,
-      activeBool: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      scheduleId: PromiseOrValue<BigNumberish>,
+      activeBool: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setUserSchedules(
-      account: string,
-      userSchedulesIdxs: BigNumberish[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      account: PromiseOrValue<string>,
+      userSchedulesIdxs: PromiseOrValue<BigNumberish>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     slash(
-      accounts: string[],
-      amounts: BigNumberish[],
-      scheduleIndex: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      accounts: PromiseOrValue<string>[],
+      amounts: PromiseOrValue<BigNumberish>[],
+      scheduleIndex: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     tokeToken(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     treasury(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    unpause(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    unpause(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
-    unvested(account: string, scheduleIndex: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    unvested(
+      account: PromiseOrValue<string>,
+      scheduleIndex: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
-    userStakingSchedules(arg0: string, arg1: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    userStakingSchedules(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
-    userStakings(arg0: string, arg1: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    userStakings(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
-    vested(account: string, scheduleIndex: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    vested(
+      account: PromiseOrValue<string>,
+      scheduleIndex: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
     'withdraw(uint256)'(
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     'withdraw(uint256,uint256)'(
-      amount: BigNumberish,
-      scheduleIdx: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      amount: PromiseOrValue<BigNumberish>,
+      scheduleIdx: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     withdrawalRequestsByIndex(
-      arg0: string,
-      arg1: BigNumberish,
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 

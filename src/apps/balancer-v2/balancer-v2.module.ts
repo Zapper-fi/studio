@@ -1,57 +1,45 @@
 import { Register } from '~app-toolkit/decorators';
 import { AbstractApp } from '~app/app.dynamic-module';
-import { CurveAppModule } from '~apps/curve';
 
-import { ArbitrumBalancerV2BalanceFetcher } from './arbitrum/balancer-v2.balance-fetcher';
+import { ArbitrumBalancerV2ClaimableContractPositionFetcher } from './arbitrum/balancer-v2.claimable.contract-position-fetcher';
+import { ArbitrumBalancerV2FarmContractPositionFetcher } from './arbitrum/balancer-v2.farm.contract-position-fetcher';
 import { ArbitrumBalancerV2PoolTokenFetcher } from './arbitrum/balancer-v2.pool.token-fetcher';
-import { ArbitrumBalancerV2StakedfContractPositionFetcher } from './arbitrum/balancer-v2.staked.contract-position-fetcher';
-import BALANCER_V2_DEFINITION, { BalancerV2AppDefinition } from './balancer-v2.definition';
+import { BalancerV2AppDefinition, BALANCER_V2_DEFINITION } from './balancer-v2.definition';
+import { BalancerV2ClaimableCacheManager } from './common/balancer-v2.claimable.cache-manager';
+import { BalancerV2SpotPriceHelper } from './common/balancer-v2.spot-price.helper';
 import { BalancerV2ContractFactory } from './contracts';
-import { EthereumBalancerV2BalanceFetcher } from './ethereum/balancer-v2.balance-fetcher';
+import { EthereumBalancerV2ClaimableContractPositionFetcher } from './ethereum/balancer-v2.claimable.contract-position-fetcher';
+import { EthereumBalancerV2FarmContractPositionFetcher } from './ethereum/balancer-v2.farm.contract-position-fetcher';
 import { EthereumBalancerV2PoolTokenFetcher } from './ethereum/balancer-v2.pool.token-fetcher';
-import { EthereumBalancerV2StakedfContractPositionFetcher } from './ethereum/balancer-v2.staked.contract-position-fetcher';
 import { EthereumBalancerV2VotingEscrowContractPositionFetcher } from './ethereum/balancer-v2.voting-escrow.contract-position-fetcher';
-import { BalancerV2CacheManager } from './helpers/balancer-v2.cache-manager';
-import { BalancerV2ClaimableContractPositionBalanceHelper } from './helpers/balancer-v2.claimable.contract-position-balance-helper';
-import { BalancerV2EventsPoolTokenDataStrategy } from './helpers/balancer-v2.events.pool-token-address-strategy';
-import { BalancerV2GaugeAddressesGetter } from './helpers/balancer-v2.gauge-addresses-getter';
-import { BalancerV2PoolTokensHelper } from './helpers/balancer-v2.pool.token-helper';
-import { BalancerV2GaugeRewardTokenStrategy } from './helpers/balancer-v2.reward-token-strategy';
-import { BalancerV2SpotPriceHelper } from './helpers/balancer-v2.spot-price.helper';
-import { BalancerV2TheGraphPoolTokenDataStrategy } from './helpers/balancer-v2.the-graph.pool-token-address-strategy';
-import { PolygonBalancerV2BalanceFetcher } from './polygon/balancer-v2.balance-fetcher';
+import { EthereumBalancerV2WrappedAaveTokenFetcher } from './ethereum/balancer-v2.wrapped-aave.token-fetcher';
+import { PolygonBalancerV2ClaimableContractPositionFetcher } from './polygon/balancer-v2.claimable.contract-position-fetcher';
+import { PolygonBalancerV2FarmContractPositionFetcher } from './polygon/balancer-v2.farm.contract-position-fetcher';
 import { PolygonBalancerV2PoolTokenFetcher } from './polygon/balancer-v2.pool.token-fetcher';
-import { PolygonBalancerV2StakedfContractPositionFetcher } from './polygon/balancer-v2.staked.contract-position-fetcher';
 
 @Register.AppModule({
   appId: BALANCER_V2_DEFINITION.id,
-  imports: [CurveAppModule],
   providers: [
     BalancerV2AppDefinition,
     BalancerV2ContractFactory,
     // Arbitrum
-    ArbitrumBalancerV2BalanceFetcher,
     ArbitrumBalancerV2PoolTokenFetcher,
-    ArbitrumBalancerV2StakedfContractPositionFetcher,
+    ArbitrumBalancerV2FarmContractPositionFetcher,
+    ArbitrumBalancerV2ClaimableContractPositionFetcher,
     // Ethereum
-    EthereumBalancerV2BalanceFetcher,
+    EthereumBalancerV2ClaimableContractPositionFetcher,
     EthereumBalancerV2PoolTokenFetcher,
     EthereumBalancerV2VotingEscrowContractPositionFetcher,
-    EthereumBalancerV2StakedfContractPositionFetcher,
+    EthereumBalancerV2FarmContractPositionFetcher,
+    EthereumBalancerV2WrappedAaveTokenFetcher,
     // Polygon
-    PolygonBalancerV2BalanceFetcher,
     PolygonBalancerV2PoolTokenFetcher,
-    PolygonBalancerV2StakedfContractPositionFetcher,
+    PolygonBalancerV2FarmContractPositionFetcher,
+    PolygonBalancerV2ClaimableContractPositionFetcher,
     // Helpers
-    BalancerV2CacheManager,
-    BalancerV2PoolTokensHelper,
+    BalancerV2ClaimableCacheManager,
     BalancerV2SpotPriceHelper,
-    BalancerV2TheGraphPoolTokenDataStrategy,
-    BalancerV2ClaimableContractPositionBalanceHelper,
-    BalancerV2EventsPoolTokenDataStrategy,
-    BalancerV2GaugeAddressesGetter,
-    BalancerV2GaugeRewardTokenStrategy,
   ],
-  exports: [BalancerV2SpotPriceHelper, BalancerV2PoolTokensHelper, BalancerV2ContractFactory],
+  exports: [BalancerV2SpotPriceHelper, BalancerV2ContractFactory],
 })
 export class BalancerV2AppModule extends AbstractApp() {}

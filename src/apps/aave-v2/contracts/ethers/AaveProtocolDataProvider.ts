@@ -4,10 +4,13 @@
 import type { BaseContract, BigNumber, BytesLike, CallOverrides, PopulatedTransaction, Signer, utils } from 'ethers';
 import type { FunctionFragment, Result } from '@ethersproject/abi';
 import type { Listener, Provider } from '@ethersproject/providers';
-import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
 export declare namespace AaveProtocolDataProvider {
-  export type TokenDataStruct = { symbol: string; tokenAddress: string };
+  export type TokenDataStruct = {
+    symbol: PromiseOrValue<string>;
+    tokenAddress: PromiseOrValue<string>;
+  };
 
   export type TokenDataStructOutput = [string, string] & {
     symbol: string;
@@ -40,10 +43,13 @@ export interface AaveProtocolDataProviderInterface extends utils.Interface {
   encodeFunctionData(functionFragment: 'ADDRESSES_PROVIDER', values?: undefined): string;
   encodeFunctionData(functionFragment: 'getAllATokens', values?: undefined): string;
   encodeFunctionData(functionFragment: 'getAllReservesTokens', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'getReserveConfigurationData', values: [string]): string;
-  encodeFunctionData(functionFragment: 'getReserveData', values: [string]): string;
-  encodeFunctionData(functionFragment: 'getReserveTokensAddresses', values: [string]): string;
-  encodeFunctionData(functionFragment: 'getUserReserveData', values: [string, string]): string;
+  encodeFunctionData(functionFragment: 'getReserveConfigurationData', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'getReserveData', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'getReserveTokensAddresses', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'getUserReserveData',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>],
+  ): string;
 
   decodeFunctionResult(functionFragment: 'ADDRESSES_PROVIDER', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'getAllATokens', data: BytesLike): Result;
@@ -86,7 +92,7 @@ export interface AaveProtocolDataProvider extends BaseContract {
     getAllReservesTokens(overrides?: CallOverrides): Promise<[AaveProtocolDataProvider.TokenDataStructOutput[]]>;
 
     getReserveConfigurationData(
-      asset: string,
+      asset: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<
       [BigNumber, BigNumber, BigNumber, BigNumber, BigNumber, boolean, boolean, boolean, boolean, boolean] & {
@@ -104,7 +110,7 @@ export interface AaveProtocolDataProvider extends BaseContract {
     >;
 
     getReserveData(
-      asset: string,
+      asset: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<
       [BigNumber, BigNumber, BigNumber, BigNumber, BigNumber, BigNumber, BigNumber, BigNumber, BigNumber, number] & {
@@ -122,7 +128,7 @@ export interface AaveProtocolDataProvider extends BaseContract {
     >;
 
     getReserveTokensAddresses(
-      asset: string,
+      asset: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<
       [string, string, string] & {
@@ -133,8 +139,8 @@ export interface AaveProtocolDataProvider extends BaseContract {
     >;
 
     getUserReserveData(
-      asset: string,
-      user: string,
+      asset: PromiseOrValue<string>,
+      user: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<
       [BigNumber, BigNumber, BigNumber, BigNumber, BigNumber, BigNumber, BigNumber, number, boolean] & {
@@ -158,7 +164,7 @@ export interface AaveProtocolDataProvider extends BaseContract {
   getAllReservesTokens(overrides?: CallOverrides): Promise<AaveProtocolDataProvider.TokenDataStructOutput[]>;
 
   getReserveConfigurationData(
-    asset: string,
+    asset: PromiseOrValue<string>,
     overrides?: CallOverrides,
   ): Promise<
     [BigNumber, BigNumber, BigNumber, BigNumber, BigNumber, boolean, boolean, boolean, boolean, boolean] & {
@@ -176,7 +182,7 @@ export interface AaveProtocolDataProvider extends BaseContract {
   >;
 
   getReserveData(
-    asset: string,
+    asset: PromiseOrValue<string>,
     overrides?: CallOverrides,
   ): Promise<
     [BigNumber, BigNumber, BigNumber, BigNumber, BigNumber, BigNumber, BigNumber, BigNumber, BigNumber, number] & {
@@ -194,7 +200,7 @@ export interface AaveProtocolDataProvider extends BaseContract {
   >;
 
   getReserveTokensAddresses(
-    asset: string,
+    asset: PromiseOrValue<string>,
     overrides?: CallOverrides,
   ): Promise<
     [string, string, string] & {
@@ -205,8 +211,8 @@ export interface AaveProtocolDataProvider extends BaseContract {
   >;
 
   getUserReserveData(
-    asset: string,
-    user: string,
+    asset: PromiseOrValue<string>,
+    user: PromiseOrValue<string>,
     overrides?: CallOverrides,
   ): Promise<
     [BigNumber, BigNumber, BigNumber, BigNumber, BigNumber, BigNumber, BigNumber, number, boolean] & {
@@ -230,7 +236,7 @@ export interface AaveProtocolDataProvider extends BaseContract {
     getAllReservesTokens(overrides?: CallOverrides): Promise<AaveProtocolDataProvider.TokenDataStructOutput[]>;
 
     getReserveConfigurationData(
-      asset: string,
+      asset: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<
       [BigNumber, BigNumber, BigNumber, BigNumber, BigNumber, boolean, boolean, boolean, boolean, boolean] & {
@@ -248,7 +254,7 @@ export interface AaveProtocolDataProvider extends BaseContract {
     >;
 
     getReserveData(
-      asset: string,
+      asset: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<
       [BigNumber, BigNumber, BigNumber, BigNumber, BigNumber, BigNumber, BigNumber, BigNumber, BigNumber, number] & {
@@ -266,7 +272,7 @@ export interface AaveProtocolDataProvider extends BaseContract {
     >;
 
     getReserveTokensAddresses(
-      asset: string,
+      asset: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<
       [string, string, string] & {
@@ -277,8 +283,8 @@ export interface AaveProtocolDataProvider extends BaseContract {
     >;
 
     getUserReserveData(
-      asset: string,
-      user: string,
+      asset: PromiseOrValue<string>,
+      user: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<
       [BigNumber, BigNumber, BigNumber, BigNumber, BigNumber, BigNumber, BigNumber, number, boolean] & {
@@ -304,13 +310,17 @@ export interface AaveProtocolDataProvider extends BaseContract {
 
     getAllReservesTokens(overrides?: CallOverrides): Promise<BigNumber>;
 
-    getReserveConfigurationData(asset: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getReserveConfigurationData(asset: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    getReserveData(asset: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getReserveData(asset: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    getReserveTokensAddresses(asset: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getReserveTokensAddresses(asset: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    getUserReserveData(asset: string, user: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getUserReserveData(
+      asset: PromiseOrValue<string>,
+      user: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
   };
 
   populateTransaction: {
@@ -320,12 +330,19 @@ export interface AaveProtocolDataProvider extends BaseContract {
 
     getAllReservesTokens(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    getReserveConfigurationData(asset: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getReserveConfigurationData(
+      asset: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
-    getReserveData(asset: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getReserveData(asset: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    getReserveTokensAddresses(asset: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getReserveTokensAddresses(asset: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    getUserReserveData(asset: string, user: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getUserReserveData(
+      asset: PromiseOrValue<string>,
+      user: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
   };
 }

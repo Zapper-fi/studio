@@ -15,7 +15,7 @@ import type {
 } from 'ethers';
 import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
 import type { Listener, Provider } from '@ethersproject/providers';
-import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
 export interface BntPoolInterface extends utils.Interface {
   functions: {
@@ -106,34 +106,61 @@ export interface BntPoolInterface extends utils.Interface {
   ): FunctionFragment;
 
   encodeFunctionData(functionFragment: 'DEFAULT_ADMIN_ROLE', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'availableFunding', values: [string]): string;
-  encodeFunctionData(functionFragment: 'burn', values: [string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'burnFromVault', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'currentPoolFunding', values: [string]): string;
+  encodeFunctionData(functionFragment: 'availableFunding', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'burn', values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'burnFromVault', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'currentPoolFunding', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(
     functionFragment: 'depositFor',
-    values: [BytesLike, string, BigNumberish, boolean, BigNumberish],
+    values: [
+      PromiseOrValue<BytesLike>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<boolean>,
+      PromiseOrValue<BigNumberish>,
+    ],
   ): string;
-  encodeFunctionData(functionFragment: 'getRoleAdmin', values: [BytesLike]): string;
-  encodeFunctionData(functionFragment: 'getRoleMember', values: [BytesLike, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'getRoleMemberCount', values: [BytesLike]): string;
-  encodeFunctionData(functionFragment: 'grantRole', values: [BytesLike, string]): string;
-  encodeFunctionData(functionFragment: 'hasRole', values: [BytesLike, string]): string;
+  encodeFunctionData(functionFragment: 'getRoleAdmin', values: [PromiseOrValue<BytesLike>]): string;
+  encodeFunctionData(
+    functionFragment: 'getRoleMember',
+    values: [PromiseOrValue<BytesLike>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'getRoleMemberCount', values: [PromiseOrValue<BytesLike>]): string;
+  encodeFunctionData(
+    functionFragment: 'grantRole',
+    values: [PromiseOrValue<BytesLike>, PromiseOrValue<string>],
+  ): string;
+  encodeFunctionData(functionFragment: 'hasRole', values: [PromiseOrValue<BytesLike>, PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'initialize', values?: undefined): string;
   encodeFunctionData(functionFragment: 'isPaused', values?: undefined): string;
   encodeFunctionData(functionFragment: 'isPayable', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'mint', values: [string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'onFeesCollected', values: [string, BigNumberish, boolean]): string;
+  encodeFunctionData(functionFragment: 'mint', values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(
+    functionFragment: 'onFeesCollected',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>, PromiseOrValue<boolean>],
+  ): string;
   encodeFunctionData(functionFragment: 'pause', values?: undefined): string;
   encodeFunctionData(functionFragment: 'paused', values?: undefined): string;
   encodeFunctionData(functionFragment: 'poolToken', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'poolTokenAmountToBurn', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'poolTokenToUnderlying', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'postUpgrade', values: [BytesLike]): string;
-  encodeFunctionData(functionFragment: 'renounceFunding', values: [BytesLike, string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'renounceRole', values: [BytesLike, string]): string;
-  encodeFunctionData(functionFragment: 'requestFunding', values: [BytesLike, string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'revokeRole', values: [BytesLike, string]): string;
+  encodeFunctionData(functionFragment: 'poolTokenAmountToBurn', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'poolTokenToUnderlying', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'postUpgrade', values: [PromiseOrValue<BytesLike>]): string;
+  encodeFunctionData(
+    functionFragment: 'renounceFunding',
+    values: [PromiseOrValue<BytesLike>, PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'renounceRole',
+    values: [PromiseOrValue<BytesLike>, PromiseOrValue<string>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'requestFunding',
+    values: [PromiseOrValue<BytesLike>, PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'revokeRole',
+    values: [PromiseOrValue<BytesLike>, PromiseOrValue<string>],
+  ): string;
   encodeFunctionData(functionFragment: 'roleAdmin', values?: undefined): string;
   encodeFunctionData(functionFragment: 'roleAssetManager', values?: undefined): string;
   encodeFunctionData(functionFragment: 'roleBNTManager', values?: undefined): string;
@@ -141,13 +168,19 @@ export interface BntPoolInterface extends utils.Interface {
   encodeFunctionData(functionFragment: 'roleFundingManager', values?: undefined): string;
   encodeFunctionData(functionFragment: 'roleVaultManager', values?: undefined): string;
   encodeFunctionData(functionFragment: 'stakedBalance', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'supportsInterface', values: [BytesLike]): string;
-  encodeFunctionData(functionFragment: 'underlyingToPoolToken', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'supportsInterface', values: [PromiseOrValue<BytesLike>]): string;
+  encodeFunctionData(functionFragment: 'underlyingToPoolToken', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'unpause', values?: undefined): string;
   encodeFunctionData(functionFragment: 'version', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'withdraw', values: [BytesLike, string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'withdrawFunds', values: [string, string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'withdrawalAmount', values: [BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'withdraw',
+    values: [PromiseOrValue<BytesLike>, PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'withdrawFunds',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'withdrawalAmount', values: [PromiseOrValue<BigNumberish>]): string;
 
   decodeFunctionResult(functionFragment: 'DEFAULT_ADMIN_ROLE', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'availableFunding', data: BytesLike): Result;
@@ -366,102 +399,116 @@ export interface BntPool extends BaseContract {
   functions: {
     DEFAULT_ADMIN_ROLE(overrides?: CallOverrides): Promise<[string]>;
 
-    availableFunding(pool: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    availableFunding(pool: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     burn(
-      token: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      token: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     burnFromVault(
-      bntAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      bntAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    currentPoolFunding(pool: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    currentPoolFunding(pool: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     depositFor(
-      contextId: BytesLike,
-      provider: string,
-      bntAmount: BigNumberish,
-      isMigrating: boolean,
-      originalVBNTAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      contextId: PromiseOrValue<BytesLike>,
+      provider: PromiseOrValue<string>,
+      bntAmount: PromiseOrValue<BigNumberish>,
+      isMigrating: PromiseOrValue<boolean>,
+      originalVBNTAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    getRoleAdmin(role: BytesLike, overrides?: CallOverrides): Promise<[string]>;
+    getRoleAdmin(role: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<[string]>;
 
-    getRoleMember(role: BytesLike, index: BigNumberish, overrides?: CallOverrides): Promise<[string]>;
+    getRoleMember(
+      role: PromiseOrValue<BytesLike>,
+      index: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<[string]>;
 
-    getRoleMemberCount(role: BytesLike, overrides?: CallOverrides): Promise<[BigNumber]>;
+    getRoleMemberCount(role: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     grantRole(
-      role: BytesLike,
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    hasRole(role: BytesLike, account: string, overrides?: CallOverrides): Promise<[boolean]>;
+    hasRole(
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<[boolean]>;
 
-    initialize(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    initialize(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     isPaused(overrides?: CallOverrides): Promise<[boolean]>;
 
     isPayable(overrides?: CallOverrides): Promise<[boolean]>;
 
     mint(
-      recipient: string,
-      bntAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      recipient: PromiseOrValue<string>,
+      bntAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     onFeesCollected(
-      pool: string,
-      feeAmount: BigNumberish,
-      isTradeFee: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      pool: PromiseOrValue<string>,
+      feeAmount: PromiseOrValue<BigNumberish>,
+      isTradeFee: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    pause(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    pause(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     paused(overrides?: CallOverrides): Promise<[boolean]>;
 
     poolToken(overrides?: CallOverrides): Promise<[string]>;
 
-    poolTokenAmountToBurn(bntAmountToDistribute: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber]>;
+    poolTokenAmountToBurn(
+      bntAmountToDistribute: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber]>;
 
-    poolTokenToUnderlying(poolTokenAmount: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber]>;
+    poolTokenToUnderlying(
+      poolTokenAmount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber]>;
 
     postUpgrade(
-      data: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      data: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     renounceFunding(
-      contextId: BytesLike,
-      pool: string,
-      bntAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      contextId: PromiseOrValue<BytesLike>,
+      pool: PromiseOrValue<string>,
+      bntAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     renounceRole(
-      role: BytesLike,
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     requestFunding(
-      contextId: BytesLike,
-      pool: string,
-      bntAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      contextId: PromiseOrValue<BytesLike>,
+      pool: PromiseOrValue<string>,
+      bntAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     revokeRole(
-      role: BytesLike,
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     roleAdmin(overrides?: CallOverrides): Promise<[string]>;
@@ -478,129 +525,140 @@ export interface BntPool extends BaseContract {
 
     stakedBalance(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    supportsInterface(interfaceId: BytesLike, overrides?: CallOverrides): Promise<[boolean]>;
+    supportsInterface(interfaceId: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<[boolean]>;
 
-    underlyingToPoolToken(bntAmount: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber]>;
+    underlyingToPoolToken(bntAmount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    unpause(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    unpause(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     version(overrides?: CallOverrides): Promise<[number]>;
 
     withdraw(
-      contextId: BytesLike,
-      provider: string,
-      poolTokenAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      contextId: PromiseOrValue<BytesLike>,
+      provider: PromiseOrValue<string>,
+      poolTokenAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     withdrawFunds(
-      token: string,
-      target: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      token: PromiseOrValue<string>,
+      target: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    withdrawalAmount(poolTokenAmount: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber]>;
+    withdrawalAmount(poolTokenAmount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[BigNumber]>;
   };
 
   DEFAULT_ADMIN_ROLE(overrides?: CallOverrides): Promise<string>;
 
-  availableFunding(pool: string, overrides?: CallOverrides): Promise<BigNumber>;
+  availableFunding(pool: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   burn(
-    token: string,
-    amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    token: PromiseOrValue<string>,
+    amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   burnFromVault(
-    bntAmount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    bntAmount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  currentPoolFunding(pool: string, overrides?: CallOverrides): Promise<BigNumber>;
+  currentPoolFunding(pool: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   depositFor(
-    contextId: BytesLike,
-    provider: string,
-    bntAmount: BigNumberish,
-    isMigrating: boolean,
-    originalVBNTAmount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    contextId: PromiseOrValue<BytesLike>,
+    provider: PromiseOrValue<string>,
+    bntAmount: PromiseOrValue<BigNumberish>,
+    isMigrating: PromiseOrValue<boolean>,
+    originalVBNTAmount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  getRoleAdmin(role: BytesLike, overrides?: CallOverrides): Promise<string>;
+  getRoleAdmin(role: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<string>;
 
-  getRoleMember(role: BytesLike, index: BigNumberish, overrides?: CallOverrides): Promise<string>;
+  getRoleMember(
+    role: PromiseOrValue<BytesLike>,
+    index: PromiseOrValue<BigNumberish>,
+    overrides?: CallOverrides,
+  ): Promise<string>;
 
-  getRoleMemberCount(role: BytesLike, overrides?: CallOverrides): Promise<BigNumber>;
+  getRoleMemberCount(role: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<BigNumber>;
 
   grantRole(
-    role: BytesLike,
-    account: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    role: PromiseOrValue<BytesLike>,
+    account: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  hasRole(role: BytesLike, account: string, overrides?: CallOverrides): Promise<boolean>;
+  hasRole(
+    role: PromiseOrValue<BytesLike>,
+    account: PromiseOrValue<string>,
+    overrides?: CallOverrides,
+  ): Promise<boolean>;
 
-  initialize(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  initialize(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   isPaused(overrides?: CallOverrides): Promise<boolean>;
 
   isPayable(overrides?: CallOverrides): Promise<boolean>;
 
   mint(
-    recipient: string,
-    bntAmount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    recipient: PromiseOrValue<string>,
+    bntAmount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   onFeesCollected(
-    pool: string,
-    feeAmount: BigNumberish,
-    isTradeFee: boolean,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    pool: PromiseOrValue<string>,
+    feeAmount: PromiseOrValue<BigNumberish>,
+    isTradeFee: PromiseOrValue<boolean>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  pause(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  pause(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   paused(overrides?: CallOverrides): Promise<boolean>;
 
   poolToken(overrides?: CallOverrides): Promise<string>;
 
-  poolTokenAmountToBurn(bntAmountToDistribute: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+  poolTokenAmountToBurn(
+    bntAmountToDistribute: PromiseOrValue<BigNumberish>,
+    overrides?: CallOverrides,
+  ): Promise<BigNumber>;
 
-  poolTokenToUnderlying(poolTokenAmount: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+  poolTokenToUnderlying(poolTokenAmount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
   postUpgrade(
-    data: BytesLike,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    data: PromiseOrValue<BytesLike>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   renounceFunding(
-    contextId: BytesLike,
-    pool: string,
-    bntAmount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    contextId: PromiseOrValue<BytesLike>,
+    pool: PromiseOrValue<string>,
+    bntAmount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   renounceRole(
-    role: BytesLike,
-    account: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    role: PromiseOrValue<BytesLike>,
+    account: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   requestFunding(
-    contextId: BytesLike,
-    pool: string,
-    bntAmount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    contextId: PromiseOrValue<BytesLike>,
+    pool: PromiseOrValue<string>,
+    bntAmount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   revokeRole(
-    role: BytesLike,
-    account: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    role: PromiseOrValue<BytesLike>,
+    account: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   roleAdmin(overrides?: CallOverrides): Promise<string>;
@@ -617,59 +675,71 @@ export interface BntPool extends BaseContract {
 
   stakedBalance(overrides?: CallOverrides): Promise<BigNumber>;
 
-  supportsInterface(interfaceId: BytesLike, overrides?: CallOverrides): Promise<boolean>;
+  supportsInterface(interfaceId: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<boolean>;
 
-  underlyingToPoolToken(bntAmount: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+  underlyingToPoolToken(bntAmount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  unpause(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  unpause(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   version(overrides?: CallOverrides): Promise<number>;
 
   withdraw(
-    contextId: BytesLike,
-    provider: string,
-    poolTokenAmount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    contextId: PromiseOrValue<BytesLike>,
+    provider: PromiseOrValue<string>,
+    poolTokenAmount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   withdrawFunds(
-    token: string,
-    target: string,
-    amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    token: PromiseOrValue<string>,
+    target: PromiseOrValue<string>,
+    amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  withdrawalAmount(poolTokenAmount: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+  withdrawalAmount(poolTokenAmount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
   callStatic: {
     DEFAULT_ADMIN_ROLE(overrides?: CallOverrides): Promise<string>;
 
-    availableFunding(pool: string, overrides?: CallOverrides): Promise<BigNumber>;
+    availableFunding(pool: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    burn(token: string, amount: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    burn(token: PromiseOrValue<string>, amount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
-    burnFromVault(bntAmount: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    burnFromVault(bntAmount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
-    currentPoolFunding(pool: string, overrides?: CallOverrides): Promise<BigNumber>;
+    currentPoolFunding(pool: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     depositFor(
-      contextId: BytesLike,
-      provider: string,
-      bntAmount: BigNumberish,
-      isMigrating: boolean,
-      originalVBNTAmount: BigNumberish,
+      contextId: PromiseOrValue<BytesLike>,
+      provider: PromiseOrValue<string>,
+      bntAmount: PromiseOrValue<BigNumberish>,
+      isMigrating: PromiseOrValue<boolean>,
+      originalVBNTAmount: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
-    getRoleAdmin(role: BytesLike, overrides?: CallOverrides): Promise<string>;
+    getRoleAdmin(role: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<string>;
 
-    getRoleMember(role: BytesLike, index: BigNumberish, overrides?: CallOverrides): Promise<string>;
+    getRoleMember(
+      role: PromiseOrValue<BytesLike>,
+      index: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<string>;
 
-    getRoleMemberCount(role: BytesLike, overrides?: CallOverrides): Promise<BigNumber>;
+    getRoleMemberCount(role: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    grantRole(role: BytesLike, account: string, overrides?: CallOverrides): Promise<void>;
+    grantRole(
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    hasRole(role: BytesLike, account: string, overrides?: CallOverrides): Promise<boolean>;
+    hasRole(
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
 
     initialize(overrides?: CallOverrides): Promise<void>;
 
@@ -677,12 +747,16 @@ export interface BntPool extends BaseContract {
 
     isPayable(overrides?: CallOverrides): Promise<boolean>;
 
-    mint(recipient: string, bntAmount: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    mint(
+      recipient: PromiseOrValue<string>,
+      bntAmount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
     onFeesCollected(
-      pool: string,
-      feeAmount: BigNumberish,
-      isTradeFee: boolean,
+      pool: PromiseOrValue<string>,
+      feeAmount: PromiseOrValue<BigNumberish>,
+      isTradeFee: PromiseOrValue<boolean>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
@@ -692,29 +766,40 @@ export interface BntPool extends BaseContract {
 
     poolToken(overrides?: CallOverrides): Promise<string>;
 
-    poolTokenAmountToBurn(bntAmountToDistribute: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    poolTokenAmountToBurn(
+      bntAmountToDistribute: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    poolTokenToUnderlying(poolTokenAmount: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    poolTokenToUnderlying(poolTokenAmount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    postUpgrade(data: BytesLike, overrides?: CallOverrides): Promise<void>;
+    postUpgrade(data: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<void>;
 
     renounceFunding(
-      contextId: BytesLike,
-      pool: string,
-      bntAmount: BigNumberish,
+      contextId: PromiseOrValue<BytesLike>,
+      pool: PromiseOrValue<string>,
+      bntAmount: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
-    renounceRole(role: BytesLike, account: string, overrides?: CallOverrides): Promise<void>;
+    renounceRole(
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
     requestFunding(
-      contextId: BytesLike,
-      pool: string,
-      bntAmount: BigNumberish,
+      contextId: PromiseOrValue<BytesLike>,
+      pool: PromiseOrValue<string>,
+      bntAmount: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
-    revokeRole(role: BytesLike, account: string, overrides?: CallOverrides): Promise<void>;
+    revokeRole(
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
     roleAdmin(overrides?: CallOverrides): Promise<string>;
 
@@ -730,70 +815,79 @@ export interface BntPool extends BaseContract {
 
     stakedBalance(overrides?: CallOverrides): Promise<BigNumber>;
 
-    supportsInterface(interfaceId: BytesLike, overrides?: CallOverrides): Promise<boolean>;
+    supportsInterface(interfaceId: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<boolean>;
 
-    underlyingToPoolToken(bntAmount: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    underlyingToPoolToken(bntAmount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     unpause(overrides?: CallOverrides): Promise<void>;
 
     version(overrides?: CallOverrides): Promise<number>;
 
     withdraw(
-      contextId: BytesLike,
-      provider: string,
-      poolTokenAmount: BigNumberish,
+      contextId: PromiseOrValue<BytesLike>,
+      provider: PromiseOrValue<string>,
+      poolTokenAmount: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
-    withdrawFunds(token: string, target: string, amount: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    withdrawFunds(
+      token: PromiseOrValue<string>,
+      target: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    withdrawalAmount(poolTokenAmount: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    withdrawalAmount(poolTokenAmount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
   };
 
   filters: {
     'FundingRenounced(bytes32,address,uint256,uint256)'(
-      contextId?: BytesLike | null,
-      pool?: string | null,
+      contextId?: PromiseOrValue<BytesLike> | null,
+      pool?: PromiseOrValue<string> | null,
       bntAmount?: null,
       poolTokenAmount?: null,
     ): FundingRenouncedEventFilter;
     FundingRenounced(
-      contextId?: BytesLike | null,
-      pool?: string | null,
+      contextId?: PromiseOrValue<BytesLike> | null,
+      pool?: PromiseOrValue<string> | null,
       bntAmount?: null,
       poolTokenAmount?: null,
     ): FundingRenouncedEventFilter;
 
     'FundingRequested(bytes32,address,uint256,uint256)'(
-      contextId?: BytesLike | null,
-      pool?: string | null,
+      contextId?: PromiseOrValue<BytesLike> | null,
+      pool?: PromiseOrValue<string> | null,
       bntAmount?: null,
       poolTokenAmount?: null,
     ): FundingRequestedEventFilter;
     FundingRequested(
-      contextId?: BytesLike | null,
-      pool?: string | null,
+      contextId?: PromiseOrValue<BytesLike> | null,
+      pool?: PromiseOrValue<string> | null,
       bntAmount?: null,
       poolTokenAmount?: null,
     ): FundingRequestedEventFilter;
 
     'FundsBurned(address,address,uint256)'(
-      token?: string | null,
-      caller?: string | null,
+      token?: PromiseOrValue<string> | null,
+      caller?: PromiseOrValue<string> | null,
       amount?: null,
     ): FundsBurnedEventFilter;
-    FundsBurned(token?: string | null, caller?: string | null, amount?: null): FundsBurnedEventFilter;
+    FundsBurned(
+      token?: PromiseOrValue<string> | null,
+      caller?: PromiseOrValue<string> | null,
+      amount?: null,
+    ): FundsBurnedEventFilter;
 
     'FundsWithdrawn(address,address,address,uint256)'(
-      token?: string | null,
-      caller?: string | null,
-      target?: string | null,
+      token?: PromiseOrValue<string> | null,
+      caller?: PromiseOrValue<string> | null,
+      target?: PromiseOrValue<string> | null,
       amount?: null,
     ): FundsWithdrawnEventFilter;
     FundsWithdrawn(
-      token?: string | null,
-      caller?: string | null,
-      target?: string | null,
+      token?: PromiseOrValue<string> | null,
+      caller?: PromiseOrValue<string> | null,
+      target?: PromiseOrValue<string> | null,
       amount?: null,
     ): FundsWithdrawnEventFilter;
 
@@ -801,56 +895,64 @@ export interface BntPool extends BaseContract {
     Paused(account?: null): PausedEventFilter;
 
     'RoleAdminChanged(bytes32,bytes32,bytes32)'(
-      role?: BytesLike | null,
-      previousAdminRole?: BytesLike | null,
-      newAdminRole?: BytesLike | null,
+      role?: PromiseOrValue<BytesLike> | null,
+      previousAdminRole?: PromiseOrValue<BytesLike> | null,
+      newAdminRole?: PromiseOrValue<BytesLike> | null,
     ): RoleAdminChangedEventFilter;
     RoleAdminChanged(
-      role?: BytesLike | null,
-      previousAdminRole?: BytesLike | null,
-      newAdminRole?: BytesLike | null,
+      role?: PromiseOrValue<BytesLike> | null,
+      previousAdminRole?: PromiseOrValue<BytesLike> | null,
+      newAdminRole?: PromiseOrValue<BytesLike> | null,
     ): RoleAdminChangedEventFilter;
 
     'RoleGranted(bytes32,address,address)'(
-      role?: BytesLike | null,
-      account?: string | null,
-      sender?: string | null,
+      role?: PromiseOrValue<BytesLike> | null,
+      account?: PromiseOrValue<string> | null,
+      sender?: PromiseOrValue<string> | null,
     ): RoleGrantedEventFilter;
-    RoleGranted(role?: BytesLike | null, account?: string | null, sender?: string | null): RoleGrantedEventFilter;
+    RoleGranted(
+      role?: PromiseOrValue<BytesLike> | null,
+      account?: PromiseOrValue<string> | null,
+      sender?: PromiseOrValue<string> | null,
+    ): RoleGrantedEventFilter;
 
     'RoleRevoked(bytes32,address,address)'(
-      role?: BytesLike | null,
-      account?: string | null,
-      sender?: string | null,
+      role?: PromiseOrValue<BytesLike> | null,
+      account?: PromiseOrValue<string> | null,
+      sender?: PromiseOrValue<string> | null,
     ): RoleRevokedEventFilter;
-    RoleRevoked(role?: BytesLike | null, account?: string | null, sender?: string | null): RoleRevokedEventFilter;
+    RoleRevoked(
+      role?: PromiseOrValue<BytesLike> | null,
+      account?: PromiseOrValue<string> | null,
+      sender?: PromiseOrValue<string> | null,
+    ): RoleRevokedEventFilter;
 
     'TokensDeposited(bytes32,address,uint256,uint256,uint256)'(
-      contextId?: BytesLike | null,
-      provider?: string | null,
+      contextId?: PromiseOrValue<BytesLike> | null,
+      provider?: PromiseOrValue<string> | null,
       bntAmount?: null,
       poolTokenAmount?: null,
       vbntAmount?: null,
     ): TokensDepositedEventFilter;
     TokensDeposited(
-      contextId?: BytesLike | null,
-      provider?: string | null,
+      contextId?: PromiseOrValue<BytesLike> | null,
+      provider?: PromiseOrValue<string> | null,
       bntAmount?: null,
       poolTokenAmount?: null,
       vbntAmount?: null,
     ): TokensDepositedEventFilter;
 
     'TokensWithdrawn(bytes32,address,uint256,uint256,uint256,uint256)'(
-      contextId?: BytesLike | null,
-      provider?: string | null,
+      contextId?: PromiseOrValue<BytesLike> | null,
+      provider?: PromiseOrValue<string> | null,
       bntAmount?: null,
       poolTokenAmount?: null,
       vbntAmount?: null,
       withdrawalFeeAmount?: null,
     ): TokensWithdrawnEventFilter;
     TokensWithdrawn(
-      contextId?: BytesLike | null,
-      provider?: string | null,
+      contextId?: PromiseOrValue<BytesLike> | null,
+      provider?: PromiseOrValue<string> | null,
       bntAmount?: null,
       poolTokenAmount?: null,
       vbntAmount?: null,
@@ -858,13 +960,13 @@ export interface BntPool extends BaseContract {
     ): TokensWithdrawnEventFilter;
 
     'TotalLiquidityUpdated(bytes32,uint256,uint256,uint256)'(
-      contextId?: BytesLike | null,
+      contextId?: PromiseOrValue<BytesLike> | null,
       liquidity?: null,
       stakedBalance?: null,
       poolTokenSupply?: null,
     ): TotalLiquidityUpdatedEventFilter;
     TotalLiquidityUpdated(
-      contextId?: BytesLike | null,
+      contextId?: PromiseOrValue<BytesLike> | null,
       liquidity?: null,
       stakedBalance?: null,
       poolTokenSupply?: null,
@@ -877,99 +979,113 @@ export interface BntPool extends BaseContract {
   estimateGas: {
     DEFAULT_ADMIN_ROLE(overrides?: CallOverrides): Promise<BigNumber>;
 
-    availableFunding(pool: string, overrides?: CallOverrides): Promise<BigNumber>;
+    availableFunding(pool: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     burn(
-      token: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      token: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     burnFromVault(
-      bntAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      bntAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    currentPoolFunding(pool: string, overrides?: CallOverrides): Promise<BigNumber>;
+    currentPoolFunding(pool: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     depositFor(
-      contextId: BytesLike,
-      provider: string,
-      bntAmount: BigNumberish,
-      isMigrating: boolean,
-      originalVBNTAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      contextId: PromiseOrValue<BytesLike>,
+      provider: PromiseOrValue<string>,
+      bntAmount: PromiseOrValue<BigNumberish>,
+      isMigrating: PromiseOrValue<boolean>,
+      originalVBNTAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    getRoleAdmin(role: BytesLike, overrides?: CallOverrides): Promise<BigNumber>;
+    getRoleAdmin(role: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    getRoleMember(role: BytesLike, index: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    getRoleMember(
+      role: PromiseOrValue<BytesLike>,
+      index: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    getRoleMemberCount(role: BytesLike, overrides?: CallOverrides): Promise<BigNumber>;
+    getRoleMemberCount(role: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<BigNumber>;
 
     grantRole(
-      role: BytesLike,
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    hasRole(role: BytesLike, account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    hasRole(
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    initialize(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    initialize(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     isPaused(overrides?: CallOverrides): Promise<BigNumber>;
 
     isPayable(overrides?: CallOverrides): Promise<BigNumber>;
 
     mint(
-      recipient: string,
-      bntAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      recipient: PromiseOrValue<string>,
+      bntAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     onFeesCollected(
-      pool: string,
-      feeAmount: BigNumberish,
-      isTradeFee: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      pool: PromiseOrValue<string>,
+      feeAmount: PromiseOrValue<BigNumberish>,
+      isTradeFee: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    pause(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    pause(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     paused(overrides?: CallOverrides): Promise<BigNumber>;
 
     poolToken(overrides?: CallOverrides): Promise<BigNumber>;
 
-    poolTokenAmountToBurn(bntAmountToDistribute: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    poolTokenAmountToBurn(
+      bntAmountToDistribute: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    poolTokenToUnderlying(poolTokenAmount: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    poolTokenToUnderlying(poolTokenAmount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    postUpgrade(data: BytesLike, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    postUpgrade(
+      data: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     renounceFunding(
-      contextId: BytesLike,
-      pool: string,
-      bntAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      contextId: PromiseOrValue<BytesLike>,
+      pool: PromiseOrValue<string>,
+      bntAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     renounceRole(
-      role: BytesLike,
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     requestFunding(
-      contextId: BytesLike,
-      pool: string,
-      bntAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      contextId: PromiseOrValue<BytesLike>,
+      pool: PromiseOrValue<string>,
+      bntAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     revokeRole(
-      role: BytesLike,
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     roleAdmin(overrides?: CallOverrides): Promise<BigNumber>;
@@ -986,133 +1102,144 @@ export interface BntPool extends BaseContract {
 
     stakedBalance(overrides?: CallOverrides): Promise<BigNumber>;
 
-    supportsInterface(interfaceId: BytesLike, overrides?: CallOverrides): Promise<BigNumber>;
+    supportsInterface(interfaceId: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    underlyingToPoolToken(bntAmount: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    underlyingToPoolToken(bntAmount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    unpause(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    unpause(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     version(overrides?: CallOverrides): Promise<BigNumber>;
 
     withdraw(
-      contextId: BytesLike,
-      provider: string,
-      poolTokenAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      contextId: PromiseOrValue<BytesLike>,
+      provider: PromiseOrValue<string>,
+      poolTokenAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     withdrawFunds(
-      token: string,
-      target: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      token: PromiseOrValue<string>,
+      target: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    withdrawalAmount(poolTokenAmount: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    withdrawalAmount(poolTokenAmount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
   };
 
   populateTransaction: {
     DEFAULT_ADMIN_ROLE(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    availableFunding(pool: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    availableFunding(pool: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     burn(
-      token: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      token: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     burnFromVault(
-      bntAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      bntAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    currentPoolFunding(pool: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    currentPoolFunding(pool: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     depositFor(
-      contextId: BytesLike,
-      provider: string,
-      bntAmount: BigNumberish,
-      isMigrating: boolean,
-      originalVBNTAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      contextId: PromiseOrValue<BytesLike>,
+      provider: PromiseOrValue<string>,
+      bntAmount: PromiseOrValue<BigNumberish>,
+      isMigrating: PromiseOrValue<boolean>,
+      originalVBNTAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    getRoleAdmin(role: BytesLike, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getRoleAdmin(role: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    getRoleMember(role: BytesLike, index: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getRoleMember(
+      role: PromiseOrValue<BytesLike>,
+      index: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
-    getRoleMemberCount(role: BytesLike, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getRoleMemberCount(role: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     grantRole(
-      role: BytesLike,
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    hasRole(role: BytesLike, account: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    hasRole(
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
-    initialize(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    initialize(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     isPaused(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     isPayable(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     mint(
-      recipient: string,
-      bntAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      recipient: PromiseOrValue<string>,
+      bntAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     onFeesCollected(
-      pool: string,
-      feeAmount: BigNumberish,
-      isTradeFee: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      pool: PromiseOrValue<string>,
+      feeAmount: PromiseOrValue<BigNumberish>,
+      isTradeFee: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    pause(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    pause(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     paused(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     poolToken(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     poolTokenAmountToBurn(
-      bntAmountToDistribute: BigNumberish,
+      bntAmountToDistribute: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
-    poolTokenToUnderlying(poolTokenAmount: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    poolTokenToUnderlying(
+      poolTokenAmount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
     postUpgrade(
-      data: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      data: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     renounceFunding(
-      contextId: BytesLike,
-      pool: string,
-      bntAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      contextId: PromiseOrValue<BytesLike>,
+      pool: PromiseOrValue<string>,
+      bntAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     renounceRole(
-      role: BytesLike,
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     requestFunding(
-      contextId: BytesLike,
-      pool: string,
-      bntAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      contextId: PromiseOrValue<BytesLike>,
+      pool: PromiseOrValue<string>,
+      bntAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     revokeRole(
-      role: BytesLike,
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     roleAdmin(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -1129,28 +1256,34 @@ export interface BntPool extends BaseContract {
 
     stakedBalance(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    supportsInterface(interfaceId: BytesLike, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    supportsInterface(interfaceId: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    underlyingToPoolToken(bntAmount: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    underlyingToPoolToken(
+      bntAmount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
-    unpause(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    unpause(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     version(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     withdraw(
-      contextId: BytesLike,
-      provider: string,
-      poolTokenAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      contextId: PromiseOrValue<BytesLike>,
+      provider: PromiseOrValue<string>,
+      poolTokenAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     withdrawFunds(
-      token: string,
-      target: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      token: PromiseOrValue<string>,
+      target: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    withdrawalAmount(poolTokenAmount: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    withdrawalAmount(
+      poolTokenAmount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
   };
 }

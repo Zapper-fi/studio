@@ -163,15 +163,17 @@ export class UniswapV2TheGraphPoolTokenBalanceHelper {
         const volume = 0;
         const volumeChangePercentage = 0;
         const isBlocked = false;
+        const ratio = reservePercentages.map(p => `${Math.round(p * 100)}%`).join(' / ');
 
         // Display Props
         const label = `${tokens[0].symbol} / ${tokens[1].symbol}`;
-        const secondaryLabel = reservePercentages.map(p => `${Math.round(p * 100)}%`).join(' / ');
+        const secondaryLabel = ratio;
         const images = [getTokenImg(tokens[0].address, network), getTokenImg(tokens[1].address, network)];
         const statsItems = [
           { label: 'Liquidity', value: buildDollarDisplayItem(liquidity) },
           { label: 'Volume', value: buildDollarDisplayItem(volume) },
           { label: 'Fee', value: buildPercentageDisplayItem(fee) },
+          { label: 'Ratio', value: ratio },
         ];
 
         const poolToken: AppTokenPosition<UniswapV2PoolTokenDataProps> = {

@@ -16,7 +16,7 @@ const appId = LIDO_DEFINITION.id;
 const groupId = LIDO_DEFINITION.groups.wsteth.id;
 const network = Network.ETHEREUM_MAINNET;
 
-@Register.TokenPositionFetcher({ appId, groupId, network })
+@Register.TokenPositionFetcher({ appId, groupId, network, options: { excludeFromTvl: true } })
 export class EthereumLidoWstethTokenFetcher implements PositionFetcher<AppTokenPosition> {
   constructor(
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
