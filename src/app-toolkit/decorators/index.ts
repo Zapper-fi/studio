@@ -5,7 +5,7 @@ import { PositionFetcher } from '~position/position-fetcher.decorator';
 
 import { BalanceFetcher } from './balance-fetcher.decorator';
 import { BalancePresenter } from './balance-presenter.decorator';
-import { GroupMeta } from './group-meta.decorator';
+import { BalanceProductMeta } from './balance-product-meta.decorator';
 
 export const Register = {
   AppDefinition,
@@ -16,5 +16,5 @@ export const Register = {
   TokenPositionFetcher: PositionFetcher(ContractType.APP_TOKEN),
   ContractPositionBalanceFetcher: PositionBalanceFetcher(ContractType.POSITION),
   TokenPositionBalanceFetcher: PositionBalanceFetcher(ContractType.APP_TOKEN),
-  GroupMeta: GroupMeta,
+  BalanceProductMeta,
 };
