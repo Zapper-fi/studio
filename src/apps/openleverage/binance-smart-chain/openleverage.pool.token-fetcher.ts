@@ -1,4 +1,5 @@
 import { Inject } from '@nestjs/common';
+import Axios from 'axios';
 import { gql } from 'graphql-request';
 
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
@@ -19,6 +20,7 @@ import { OPENLEVERAGE_DEFINITION } from '../openleverage.definition';
 const appId = OPENLEVERAGE_DEFINITION.id;
 const groupId = OPENLEVERAGE_DEFINITION.groups.pool.id;
 const network = Network.BINANCE_SMART_CHAIN_MAINNET;
+const poolDetailMap = {};
 
 type OpenLeveragePoolsResponse = {
   pools: {
@@ -26,16 +28,28 @@ type OpenLeveragePoolsResponse = {
   }[];
 };
 
+type OpenLeverageDataProps = {
+  apy: number;
+  liquidity: number;
+};
+
 const query = gql`
   query fetchPools {
     pools(first: 1000) {
       id
+      marketId
+    	token0 {
+    	  id
+    	}
+    	token1 {
+    	  id
+    	}
     }
   }
 `;
 
 @Register.TokenPositionFetcher({ appId, groupId, network })
-export class BinanceSmartChainOpenleveragePoolTokenFetcher extends AppTokenTemplatePositionFetcher<OpenleverageLpool> {
+export class BinanceSmartChainOpenleveragePoolTokenFetcher extends AppTokenTemplatePositionFetcher<OpenleverageLpool, OpenLeverageDataProps> {
   appId = OPENLEVERAGE_DEFINITION.id;
   groupId = OPENLEVERAGE_DEFINITION.groups.pool.id;
   network = Network.BINANCE_SMART_CHAIN_MAINNET;
@@ -66,12 +80,23 @@ export class BinanceSmartChainOpenleveragePoolTokenFetcher extends AppTokenTempl
     return Number(exchangeRateCurrent) / 10 ** 18;
   }
 
-  async getDataProps({ appToken }: DataPropsStageParams<OpenleverageLpool>) {
+  async getDataProps({ appToken }: DataPropsStageParams<OpenleverageLpool, OpenLeverageDataProps>) {
     const liquidity = appToken.supply * appToken.price;
-    return { liquidity };
+    if (Object.keys(poolDetailMap).length == 0) {
+      const endpoint = `https://bnb.openleverage.finance/api/info/pool/apy`;
+      const { data } = await Axios.get(endpoint);
+      data?.forEach(pool => {
+        poolDetailMap[pool.poolAddr] = {
+          lendingYieldY: pool.lendingYieldY,
+          token1Symbol: pool.token1Symbol
+        };
+      });
+    }
+    const apy = poolDetailMap[appToken.address].lendingYieldY || 0;
+    return { liquidity, apy };
   }
 
   async getLabel({ appToken }: DisplayPropsStageParams<OpenleverageLpool>) {
-    return getLabelFromToken(appToken.tokens[0]);
+    return getLabelFromToken(appToken.tokens[0]) + "/" + poolDetailMap[appToken.address].token1Symbol;
   }
 }
