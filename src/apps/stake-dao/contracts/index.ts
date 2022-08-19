@@ -5,6 +5,7 @@ import { ContractFactory } from '~contract/contracts';
 import { Network } from '~types/network.interface';
 
 import { StakeDaoCurvePool__factory } from './ethers';
+import { StakeDaoGauge__factory } from './ethers';
 
 // eslint-disable-next-line
 type ContractOpts = { address: string; network: Network };
@@ -18,6 +19,10 @@ export class StakeDaoContractFactory extends ContractFactory {
   stakeDaoCurvePool({ address, network }: ContractOpts) {
     return StakeDaoCurvePool__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
+  stakeDaoGauge({ address, network }: ContractOpts) {
+    return StakeDaoGauge__factory.connect(address, this.appToolkit.getNetworkProvider(network));
+  }
 }
 
 export type { StakeDaoCurvePool } from './ethers';
+export type { StakeDaoGauge } from './ethers';

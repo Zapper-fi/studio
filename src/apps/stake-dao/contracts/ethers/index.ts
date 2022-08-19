@@ -2,5 +2,7 @@
 /* tslint:disable */
 /* eslint-disable */
 export type { StakeDaoCurvePool } from './StakeDaoCurvePool';
+export type { StakeDaoGauge } from './StakeDaoGauge';
 export * as factories from './factories';
 export { StakeDaoCurvePool__factory } from './factories/StakeDaoCurvePool__factory';
+export { StakeDaoGauge__factory } from './factories/StakeDaoGauge__factory';

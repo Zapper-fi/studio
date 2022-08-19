@@ -23,6 +23,12 @@ export const STAKE_DAO_DEFINITION = appDefinition({
       type: GroupType.TOKEN,
       label: 'Lockers',
     },
+
+    gauge: {
+      id: 'gauge',
+      type: GroupType.POSITION,
+      label: 'Gauges',
+    },
   },
 
   supportedNetworks: {
