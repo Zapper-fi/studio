@@ -1,6 +1,5 @@
 import { Inject } from '@nestjs/common';
 
-import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
 import {
   IMorphoCompoundContractPositionHelper,
@@ -11,7 +10,6 @@ import { PositionFetcher } from '~position/position-fetcher.interface';
 import { ContractPosition } from '~position/position.interface';
 import { Network } from '~types/network.interface';
 
-import { MorphoContractFactory } from '../contracts';
 import { MORPHO_DEFINITION } from '../morpho.definition';
 
 const appId = MORPHO_DEFINITION.id;
@@ -28,8 +26,6 @@ export interface MorphoCompoundContractPositionDataProps extends DefaultDataProp
 @Register.ContractPositionFetcher({ appId, groupId, network })
 export class EthereumMorphoCompoundSupplyContractPositionFetcher implements PositionFetcher<ContractPosition> {
   constructor(
-    @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
-    @Inject(MorphoContractFactory) private readonly morphoContractFactory: MorphoContractFactory,
     @Inject(MorphoCompoundContractPositionHelper)
     private readonly positionHelper: IMorphoCompoundContractPositionHelper<MorphoCompoundContractPositionDataProps>,
   ) {}
