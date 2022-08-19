@@ -17,7 +17,7 @@ export class DefaultPositionPresenterFactory {
     const klass = class DefaultPositionPresenter {
       constructor(readonly positionFetcherTemplateRegistry: PositionFetcherTemplateRegistry) {}
 
-      buildDefaultPositionGroupsGroups(): PositionGroup[] {
+      getBalanceProductGroups(): PositionGroup[] {
         const templates = this.positionFetcherTemplateRegistry.getTemplatesForApp(appId, network);
 
         const groups = templates.map(template => ({
@@ -30,10 +30,6 @@ export class DefaultPositionPresenterFactory {
           label,
           groupIds: uniq(groups.flatMap(({ groupIds }) => groupIds)),
         }));
-      }
-
-      getBalanceProductGroups(): PositionGroup[] {
-        return this.buildDefaultPositionGroupsGroups();
       }
 
       async presentBalances(balances: PositionBalance[], _positionGroups?: PositionGroup[]) {
