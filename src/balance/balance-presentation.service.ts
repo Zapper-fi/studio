@@ -34,13 +34,13 @@ export class BalancePresentationService {
     balances: (AppTokenPositionBalance | ContractPositionBalance)[],
     positionGroup: PositionGroup,
   ) {
-    const getDynamicSelector = (label: string) => {
+    const getDynamicLabel = (label: string) => {
       const matches = label.match(/{{(.*)}}/);
       if (!matches) return null;
       return matches[1].trim();
     };
 
-    const dynamicLabel = getDynamicSelector(positionGroup.selector);
+    const dynamicLabel = getDynamicLabel(positionGroup.label);
     if (!dynamicLabel)
       return { [positionGroup.label]: balances.filter(({ groupId }) => positionGroup.groupIds.includes(groupId)) };
     else {
@@ -62,20 +62,24 @@ export class BalancePresentationService {
     const defaultPresenter = this.defaultPositionPresenterFactory.build({ appId, network });
     if (!customPresenter) return defaultPresenter.presentBalances(balances);
 
+    const filteredBalances = balances.filter(
+      ({ groupId }) => !customPresenter.excludedGroupIdsFromBalances.includes(groupId),
+    );
+
     // When balance product meta resolvers, use default presenter with position groups from either the custom or default presenter
-    const positionGroups = customPresenter.getBalanceProductGroups() ?? defaultPresenter.getBalanceProductGroups();
+    const positionGroups = customPresenter.positionGroups ?? defaultPresenter.getBalanceProductGroups();
     const balanceProductMetaResolvers = this.positionPresenterRegistry.getBalanceProductMetaResolvers(appId, network);
-    if (!balanceProductMetaResolvers) return defaultPresenter.presentBalances(balances, positionGroups);
+    if (!balanceProductMetaResolvers) return defaultPresenter.presentBalances(filteredBalances, positionGroups);
 
     // Try to resolve balance product metas, grouping balances by group selector specified in the custom presenter
     const presentedBalances = await Promise.all(
       positionGroups.map(positionGroup => {
-        const groupedBalances = this.groupBalancesByPositionGroup(balances, positionGroup);
+        const groupedBalances = this.groupBalancesByPositionGroup(filteredBalances, positionGroup);
 
         return Promise.all(
           // For each computed label group, run the meta resolve if exists
           Object.entries(groupedBalances).map(async ([computedGroupLabel, balances]) => {
-            const groupMetaResolver = balanceProductMetaResolvers?.get(positionGroup.selector);
+            const groupMetaResolver = balanceProductMetaResolvers?.get(positionGroup.label);
             if (!groupMetaResolver) return { label: computedGroupLabel, assets: balances };
             else {
               const meta = await groupMetaResolver(balances);

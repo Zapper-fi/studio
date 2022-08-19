@@ -1,9 +1,10 @@
 import { Inject, Injectable } from '@nestjs/common';
+import { groupBy, map, uniq } from 'lodash';
 
 import { presentBalanceFetcherResponse } from '~app-toolkit/helpers/presentation/balance-fetcher-response.present';
 import { PositionBalance } from '~position/position-balance.interface';
 import { PositionFetcherTemplateRegistry } from '~position/position-fetcher.template-registry';
-import { PositionGroup, PositionPresenter } from '~position/template/position-presenter.template';
+import { PositionGroup } from '~position/template/position-presenter.template';
 import { Network } from '~types';
 
 @Injectable()
@@ -13,24 +14,25 @@ export class DefaultPositionPresenterFactory {
   ) {}
 
   build({ appId, network }: { appId: string; network: Network }) {
-    const klass = class DefaultPositionPresenter implements PositionPresenter {
+    const klass = class DefaultPositionPresenter {
       constructor(readonly positionFetcherTemplateRegistry: PositionFetcherTemplateRegistry) {}
 
-      buildDefaultPositionGroupsGroups() {
+      buildDefaultPositionGroupsGroups(): PositionGroup[] {
         const templates = this.positionFetcherTemplateRegistry.getTemplatesForApp(appId, network);
 
-        return templates.map(template => ({
-          selector: template.groupId,
-          label: template.groupLabel ?? '',
+        const groups = templates.map(template => ({
+          label: template.groupLabel,
           groupIds: [template.groupId],
+        }));
+
+        const groupedByLabel = groupBy(groups, group => group.label);
+        return map(groupedByLabel, (groups, label) => ({
+          label,
+          groupIds: uniq(groups.flatMap(({ groupIds }) => groupIds)),
         }));
       }
 
-      getExplorePresentation() {
-        return null;
-      }
-
-      getBalanceProductGroups() {
+      getBalanceProductGroups(): PositionGroup[] {
         return this.buildDefaultPositionGroupsGroups();
       }
 
