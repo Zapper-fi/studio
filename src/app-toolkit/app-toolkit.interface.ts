@@ -8,10 +8,6 @@ import { IMulticallWrapper } from '~multicall/multicall.interface';
 import { DefaultDataProps } from '~position/display.interface';
 import { AppTokenPosition, ContractPosition, NonFungibleToken } from '~position/position.interface';
 import { AppGroupsDefinition } from '~position/position.service';
-import {
-  CreateTokenDependencySelectorOptions,
-  TokenDependencySelector,
-} from '~position/selectors/token-dependency-selector.interface';
 import { BaseToken } from '~position/token.interface';
 import { Network } from '~types/network.interface';
 
@@ -39,8 +35,6 @@ export interface IAppToolkit {
   getBaseTokenPrice(opts: { network: Network; address: string }): Promise<BaseToken | null>;
 
   // Positions
-
-  getTokenDependencySelector(opts?: CreateTokenDependencySelectorOptions): TokenDependencySelector;
 
   getAppTokenPositions<T = DefaultDataProps>(
     ...appTokenDefinition: AppGroupsDefinition[]

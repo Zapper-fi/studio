@@ -13,6 +13,7 @@ import { BalanceController } from './balance.controller';
 import { BalanceService } from './balance.service';
 import { DefaultBalancePresenterFactory } from './default.balance-presenter.factory';
 import { DefaultContractPositionBalanceFetcherFactory } from './default.contract-position-balance-fetcher.factory';
+import { DefaultPositionPresenterFactory } from './default.position-presenter.factory';
 import { DefaultTokenBalanceFetcherFactory } from './default.token-balance-fetcher.factory';
 
 @Module({
@@ -24,6 +25,7 @@ import { DefaultTokenBalanceFetcherFactory } from './default.token-balance-fetch
     BalanceService,
     DefaultBalancePresenterFactory,
     DefaultContractPositionBalanceFetcherFactory,
+    DefaultPositionPresenterFactory,
     DefaultTokenBalanceFetcherFactory,
   ],
   controllers: [BalanceController],

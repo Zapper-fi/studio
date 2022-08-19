@@ -1,7 +1,6 @@
 import { Inject } from '@nestjs/common';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
-import { Register } from '~app-toolkit/decorators';
 import { isMulticallUnderlyingError } from '~multicall/multicall.ethers';
 import { DataPropsStageParams, PricePerShareStageParams } from '~position/template/app-token.template.position-fetcher';
 import { Network } from '~types/network.interface';
@@ -15,11 +14,11 @@ const appId = YEARN_DEFINITION.id;
 const groupId = YEARN_DEFINITION.groups.v1Vault.id;
 const network = Network.ETHEREUM_MAINNET;
 
-@Register.TokenPositionFetcher({ appId, groupId, network })
 export class EthereumYearnV1VaultTokenFetcher extends YearnVaultTokenFetcher<YearnVault> {
   appId = appId;
   groupId = groupId;
   network = network;
+  groupLabel = 'V1 Vaults';
 
   vaultType = 'v1' as const;
   vaultsToIgnore = ['0xc5bddf9843308380375a611c18b50fb9341f502a'];

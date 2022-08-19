@@ -1,7 +1,6 @@
 import { Inject } from '@nestjs/common';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
-import { Register } from '~app-toolkit/decorators';
 import { isMulticallUnderlyingError } from '~multicall/multicall.ethers';
 import {
   AppTokenTemplatePositionFetcher,
@@ -25,7 +24,6 @@ const appId = YEARN_DEFINITION.id;
 const groupId = YEARN_DEFINITION.groups.yield.id;
 const network = Network.ETHEREUM_MAINNET;
 
-@Register.TokenPositionFetcher({ appId, groupId, network })
 export class EthereumYearnYieldTokenFetcher extends AppTokenTemplatePositionFetcher<
   YearnVault,
   YearnYieldTokenDataProps
@@ -33,6 +31,7 @@ export class EthereumYearnYieldTokenFetcher extends AppTokenTemplatePositionFetc
   appId = appId;
   groupId = groupId;
   network = network;
+  groupLabel = 'Yield';
 
   constructor(
     @Inject(APP_TOOLKIT) appToolkit: IAppToolkit,

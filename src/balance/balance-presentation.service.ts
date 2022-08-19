@@ -3,12 +3,14 @@ import { get, groupBy } from 'lodash';
 
 import { presentBalanceFetcherResponse } from '~app-toolkit/helpers/presentation/balance-fetcher-response.present';
 import { AppTokenPositionBalance, ContractPositionBalance } from '~position/position-balance.interface';
-import { PositionFetcherRegistry } from '~position/position-fetcher.registry';
+import { PositionPresenterRegistry } from '~position/position-presenter.registry';
+import { PositionGroup } from '~position/template/position-presenter.template';
 import { Network } from '~types';
 
 import { TokenBalanceResponse } from './balance-fetcher.interface';
 import { BalancePresenterRegistry } from './balance-presenter.registry';
 import { DefaultBalancePresenterFactory } from './default.balance-presenter.factory';
+import { DefaultPositionPresenterFactory } from './default.position-presenter.factory';
 
 export type PresentParams = {
   appId: string;
@@ -20,50 +22,60 @@ export type PresentParams = {
 @Injectable()
 export class BalancePresentationService {
   constructor(
-    @Inject(PositionFetcherRegistry) private readonly positionFetcherRegistry: PositionFetcherRegistry,
+    @Inject(PositionPresenterRegistry) private readonly positionPresenterRegistry: PositionPresenterRegistry,
     @Inject(BalancePresenterRegistry) private readonly balancePresenterRegistry: BalancePresenterRegistry,
     @Inject(DefaultBalancePresenterFactory)
     private readonly defaultBalancePresenterFactory: DefaultBalancePresenterFactory,
+    @Inject(DefaultPositionPresenterFactory)
+    private readonly defaultPositionPresenterFactory: DefaultPositionPresenterFactory,
   ) {}
 
-  private groupBalancesByGroupLabel(
+  private groupBalancesByPositionGroup(
     balances: (AppTokenPositionBalance | ContractPositionBalance)[],
-    groupLabel: string,
+    positionGroup: PositionGroup,
   ) {
-    const getDynamicLabel = (label: string) => {
+    const getDynamicSelector = (label: string) => {
       const matches = label.match(/{{(.*)}}/);
       if (!matches) return null;
       return matches[1].trim();
     };
 
-    const dynamicLabel = getDynamicLabel(groupLabel);
-    if (!dynamicLabel) return { [groupLabel]: balances };
+    const dynamicLabel = getDynamicSelector(positionGroup.selector);
+    if (!dynamicLabel)
+      return { [positionGroup.label]: balances.filter(({ groupId }) => positionGroup.groupIds.includes(groupId)) };
     else {
       return groupBy(balances, balance => get(balance, dynamicLabel));
     }
   }
 
-  private async groupMetaProcessor(
-    appId: string,
-    network: Network,
-    balances: (AppTokenPositionBalance | ContractPositionBalance)[],
-  ) {
-    const groupMetaResolvers = this.balancePresenterRegistry.getMetaResolvers(appId, network);
-    const hasMissingGroupLabel = balances.some(({ groupLabel }) => !groupLabel);
-    if (hasMissingGroupLabel) return null;
+  async present({ appId, address, network, balances }: PresentParams): Promise<TokenBalanceResponse> {
+    const presenter =
+      this.balancePresenterRegistry.get(appId, network) ??
+      this.defaultBalancePresenterFactory.build({ appId, network });
 
-    // Group balances by group label specified in the template `this.groupLabel`
-    const groupedBalances = groupBy(balances, balance => balance.groupLabel);
+    return presenter.present(address, balances);
+  }
 
+  async presentTemplates({ appId, network, balances }: PresentParams): Promise<TokenBalanceResponse> {
+    // Use default presenter when no custom presenter
+    const customPresenter = this.positionPresenterRegistry.get(appId, network);
+    const defaultPresenter = this.defaultPositionPresenterFactory.build({ appId, network });
+    if (!customPresenter) return defaultPresenter.presentBalances(balances);
+
+    // When balance product meta resolvers, use default presenter with position groups from either the custom or default presenter
+    const positionGroups = customPresenter.getBalanceProductGroups() ?? defaultPresenter.getBalanceProductGroups();
+    const balanceProductMetaResolvers = this.positionPresenterRegistry.getBalanceProductMetaResolvers(appId, network);
+    if (!balanceProductMetaResolvers) return defaultPresenter.presentBalances(balances, positionGroups);
+
+    // Try to resolve balance product metas, grouping balances by group selector specified in the custom presenter
     const presentedBalances = await Promise.all(
-      Object.entries(groupedBalances).map(async ([groupLabel, balances]) => {
-        // For each group label, compute group label (might be using a selector), and group by the results
-        const balancesByGroupLabel = this.groupBalancesByGroupLabel(balances, groupLabel);
+      positionGroups.map(positionGroup => {
+        const groupedBalances = this.groupBalancesByPositionGroup(balances, positionGroup);
 
         return Promise.all(
           // For each computed label group, run the meta resolve if exists
-          Object.entries(balancesByGroupLabel).map(async ([computedGroupLabel, balances]) => {
-            const groupMetaResolver = groupMetaResolvers?.get(groupLabel);
+          Object.entries(groupedBalances).map(async ([computedGroupLabel, balances]) => {
+            const groupMetaResolver = balanceProductMetaResolvers?.get(positionGroup.selector);
             if (!groupMetaResolver) return { label: computedGroupLabel, assets: balances };
             else {
               const meta = await groupMetaResolver(balances);
@@ -75,15 +87,5 @@ export class BalancePresentationService {
     );
 
     return presentBalanceFetcherResponse(presentedBalances.flat());
-  }
-
-  async present({ appId, address, network, balances }: PresentParams): Promise<TokenBalanceResponse> {
-    const presenter =
-      this.balancePresenterRegistry.get(appId, network) ??
-      this.defaultBalancePresenterFactory.build({ appId, network });
-
-    let presentedBalances: TokenBalanceResponse | null = await this.groupMetaProcessor(appId, network, balances);
-    presentedBalances ??= await presenter.present(address, balances);
-    return presentedBalances;
   }
 }

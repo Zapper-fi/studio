@@ -1,7 +1,6 @@
 import { Inject } from '@nestjs/common';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
-import { Register } from '~app-toolkit/decorators';
 import { isMulticallUnderlyingError } from '~multicall/multicall.ethers';
 import { DataPropsStageParams, PricePerShareStageParams } from '~position/template/app-token.template.position-fetcher';
 import { Network } from '~types/network.interface';
@@ -15,7 +14,6 @@ const appId = YEARN_DEFINITION.id;
 const groupId = YEARN_DEFINITION.groups.v2Vault.id;
 const network = Network.ARBITRUM_MAINNET;
 
-@Register.TokenPositionFetcher({ appId, groupId, network })
 export class ArbitrumYearnV2VaultTokenFetcher extends YearnVaultTokenFetcher<YearnVaultV2> {
   appId = appId;
   groupId = groupId;
