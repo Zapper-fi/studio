@@ -1,6 +1,7 @@
 import { Inject } from '@nestjs/common';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
+import { Register } from '~app-toolkit/decorators';
 import { SynthetixContractFactory, SynthetixRewards } from '~apps/synthetix';
 import {
   DataPropsStageParams,
@@ -18,11 +19,11 @@ const appId = YEARN_DEFINITION.id;
 const groupId = YEARN_DEFINITION.groups.governance.id;
 const network = Network.ETHEREUM_MAINNET;
 
+@Register.ContractPositionFetcher({ appId, groupId, network })
 export class EthereumYearnGovernanceContractPositionFetcher extends SingleStakingFarmTemplateContractPositionFetcher<SynthetixRewards> {
   appId = appId;
   groupId = groupId;
   network = network;
-  groupLabel = 'Governance Staking';
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
