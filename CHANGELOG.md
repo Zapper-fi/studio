@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.185.0](https://github.com/Zapper-fi/studio/compare/v0.184.0...v0.185.0) (2022-08-19)
+
+
+### Features
+
+* **stake-dao:** Add StakeDAO lockers ([#1214](https://github.com/Zapper-fi/studio/issues/1214)) ([df7fac9](https://github.com/Zapper-fi/studio/commit/df7fac90f7ff1632fb8bbc97178ae21c9fc68c9b))
+
 ## [0.184.0](https://github.com/Zapper-fi/studio/compare/v0.183.1...v0.184.0) (2022-08-19)
 
 
