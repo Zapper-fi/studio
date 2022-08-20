@@ -6,7 +6,8 @@ import { Network } from '~types/network.interface';
 export const MORPHO_DEFINITION = appDefinition({
   id: 'morpho',
   name: 'Morpho',
-  description: 'TODO',
+  description:
+    'Morpho is an on-chain peer-to-peer layer on top of lending pools. Rates are seamlessly improved for borrowers and lenders while preserving the same guarantees.',
   url: 'https://app.morpho.xyz',
 
   groups: {
