@@ -9,6 +9,7 @@ import { isClaimable } from '~position/position.utils';
 import {
   DataPropsStageParams,
   GetTokenBalancesPerPositionParams,
+  TokenStageParams,
 } from '~position/template/contract-position.template.position-fetcher';
 import {
   SingleStakingFarmDataProps,
@@ -53,11 +54,11 @@ export abstract class BalancerV2FarmContractPositionFetcher extends SingleStakin
     return gaugesResponse.liquidityGauges.map(({ id }) => id.toLowerCase());
   }
 
-  async getStakedTokenAddress(contract: BalancerGauge) {
+  async getStakedTokenAddress({ contract }: TokenStageParams<BalancerGauge, SingleStakingFarmDataProps>) {
     return contract.lp_token();
   }
 
-  async getRewardTokenAddresses(contract: BalancerGauge) {
+  async getRewardTokenAddresses({ contract }: TokenStageParams<BalancerGauge, SingleStakingFarmDataProps>) {
     const rewardTokenAddresses = await Promise.all(range(0, 4).map(async i => contract.reward_tokens(i)));
     return rewardTokenAddresses.map(v => v.toLowerCase()).filter(v => v !== ZERO_ADDRESS);
   }
