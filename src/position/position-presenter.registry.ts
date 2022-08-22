@@ -12,7 +12,7 @@ export class PositionPresenterRegistry implements OnModuleInit {
   private registry = new Map<Network, Map<string, PositionPresenterTemplate>>();
   private balanceProductMetaResolverRegistry = new Map<
     Network,
-    Map<string, Map<string, (balances: ReadonlyBalances) => Promise<GroupMeta>>>
+    Map<string, Map<string, (address: string, balances: ReadonlyBalances) => Promise<GroupMeta>>>
   >();
 
   constructor(
@@ -48,7 +48,10 @@ export class PositionPresenterRegistry implements OnModuleInit {
     if (!this.balanceProductMetaResolverRegistry.get(network)?.get(appId))
       this.balanceProductMetaResolverRegistry.get(network)?.set(appId, new Map());
 
-    this.balanceProductMetaResolverRegistry.get(network)?.get(appId)?.set(groupSelector, methodRef);
+    this.balanceProductMetaResolverRegistry
+      .get(network)
+      ?.get(appId)
+      ?.set(groupSelector, (...args) => methodRef.apply(instance, args));
   }
 
   get(appId: string, network: Network) {
