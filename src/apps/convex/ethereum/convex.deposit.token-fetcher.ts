@@ -32,6 +32,7 @@ export class EthereumConvexDepositTokenFetcher extends AppTokenTemplatePositionF
   appId = appId;
   groupId = groupId;
   network = network;
+  groupLabel = 'Liqudity Pool Staking';
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,

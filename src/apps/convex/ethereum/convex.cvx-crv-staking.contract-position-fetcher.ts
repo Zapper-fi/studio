@@ -13,6 +13,7 @@ export class EthereumConvexCvxCrvStakingContractPositionFetcher extends ConvexFa
   appId = appId;
   groupId = groupId;
   network = network;
+  groupLabel = 'cvxCRV Staking';
 
   getFarmAddresses() {
     return ['0x3fe65692bfcd0e6cf84cb1e7d24108e434a7587e'];

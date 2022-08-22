@@ -32,6 +32,7 @@ export class EthereumConvexAbracadabraClaimableContractPositionFetcher extends C
   appId = appId;
   groupId = groupId;
   network = network;
+  groupLabel = 'Abracadabra Rewards';
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
