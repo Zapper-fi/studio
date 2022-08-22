@@ -10,13 +10,13 @@ export const VVS_FINANCE_DEFINITION = appDefinition({
   url: 'https://vvs.finance/',
 
   groups: {
-    pool: { id: 'pool', type: GroupType.TOKEN, label: 'Pools', groupLabel: 'Pools' },
-    farm: { id: 'farm', type: GroupType.POSITION, label: 'Farm', groupLabel: 'Farms' },
-    farmV2: { id: 'farm-v2', type: GroupType.POSITION, label: 'Farm V2', groupLabel: 'Farms' },
-    autoVvsMine: { id: 'auto-vvs-mine', type: GroupType.POSITION, label: 'Auto VVS Mine', groupLabel: 'Mines' },
-    mine: { id: 'mine', type: GroupType.POSITION, label: 'Mine', groupLabel: 'Mines' },
-    xvvs: { id: 'xvvs', type: GroupType.TOKEN, label: 'xVVS', groupLabel: 'xVVS' },
-    xvvsVault: { id: 'xvvs-vault', type: GroupType.TOKEN, label: 'xVVS Vault', groupLabel: 'xVVS' },
+    pool: { id: 'pool', type: GroupType.TOKEN, label: 'Pools' },
+    farm: { id: 'farm', type: GroupType.POSITION, label: 'Farm' },
+    farmV2: { id: 'farm-v2', type: GroupType.POSITION, label: 'Farm V2' },
+    autoVvsMine: { id: 'auto-vvs-mine', type: GroupType.POSITION, label: 'Auto VVS Mine' },
+    mine: { id: 'mine', type: GroupType.POSITION, label: 'Mine' },
+    xvvs: { id: 'xvvs', type: GroupType.TOKEN, label: 'xVVS' },
+    xvvsVault: { id: 'xvvs-vault', type: GroupType.TOKEN, label: 'xVVS Vault' },
   },
 
   tags: [AppTag.DECENTRALIZED_EXCHANGE, AppTag.FARMING, AppTag.LIQUIDITY_POOL, AppTag.LIQUID_STAKING],

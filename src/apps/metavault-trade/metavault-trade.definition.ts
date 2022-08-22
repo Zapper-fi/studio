@@ -21,7 +21,6 @@ export const METAVAULT_TRADE_DEFINITION = appDefinition({
       id: 'es-mvx',
       type: GroupType.TOKEN,
       label: 'esMVX',
-      groupLabel: 'Escrow',
       isHiddenFromExplore: true,
     },
 
@@ -29,21 +28,18 @@ export const METAVAULT_TRADE_DEFINITION = appDefinition({
       id: 'mvlp',
       type: GroupType.TOKEN,
       label: 'MVLP',
-      groupLabel: 'Liquidity',
     },
 
     farm: {
       id: 'farm',
       type: GroupType.POSITION,
       label: 'Farms',
-      groupLabel: 'Farms',
     },
 
     option: {
       id: 'option',
       type: GroupType.POSITION,
       label: 'Options',
-      groupLabel: 'Options',
     },
   },
 
