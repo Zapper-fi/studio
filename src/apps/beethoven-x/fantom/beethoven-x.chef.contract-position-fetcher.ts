@@ -13,5 +13,6 @@ export class FantomBeethovenXChefContractPositionFetcher extends BeethovenXChefC
   appId = BEETHOVEN_X_DEFINITION.id;
   groupId = BEETHOVEN_X_DEFINITION.groups.chef.id;
   network = Network.FANTOM_OPERA_MAINNET;
+  groupLabel = 'Chef Farms';
   chefAddress = '0x8166994d9ebbe5829ec86bd81258149b87facfd3';
 }

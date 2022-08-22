@@ -13,5 +13,6 @@ export class FantomAbracadabraMspellContractPositionFetcher extends AbracadabraM
   appId = appId;
   groupId = groupId;
   network = network;
+  groupLabel = 'mSPELL';
   mSpellAddress = '0xa668762fb20bcd7148db1bdb402ec06eb6dad569';
 }

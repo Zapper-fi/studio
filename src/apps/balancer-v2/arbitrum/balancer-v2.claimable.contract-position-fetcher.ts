@@ -13,4 +13,5 @@ export class ArbitrumBalancerV2ClaimableContractPositionFetcher extends Balancer
   appId = BALANCER_V2_DEFINITION.id;
   groupId = BALANCER_V2_DEFINITION.groups.claimable.id;
   network = Network.ARBITRUM_MAINNET;
+  groupLabel = 'Claimable';
 }

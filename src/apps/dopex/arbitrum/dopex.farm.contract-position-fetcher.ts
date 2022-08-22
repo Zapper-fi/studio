@@ -36,6 +36,7 @@ export class ArbitrumDopexFarmContractPositionFetcher extends SingleStakingFarmT
   appId = appId;
   groupId = groupId;
   network = network;
+  groupLabel = 'Staking';
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,

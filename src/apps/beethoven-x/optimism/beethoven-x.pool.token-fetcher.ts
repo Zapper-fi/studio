@@ -15,4 +15,5 @@ export class OptimismBeethovenXPoolTokenFetcher extends BeethovenXPoolTokenFetch
   appId = BEETHOVEN_X_DEFINITION.id;
   groupId = BEETHOVEN_X_DEFINITION.groups.pool.id;
   network = Network.OPTIMISM_MAINNET;
+  groupLabel = 'Pools';
 }

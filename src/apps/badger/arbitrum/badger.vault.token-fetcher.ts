@@ -18,6 +18,7 @@ export class ArbitrumBadgerVaultTokenFetcher extends BadgerVaultTokenFetcher<Bad
   appId = appId;
   groupId = groupId;
   network = network;
+  groupLabel = 'Vaults';
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,

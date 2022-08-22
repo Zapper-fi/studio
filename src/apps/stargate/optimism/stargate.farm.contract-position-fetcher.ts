@@ -19,6 +19,7 @@ export class OptimismStargateFarmContractPositionFetcher extends MasterChefTempl
   appId = appId;
   groupId = groupId;
   network = network;
+  groupLabel = 'Farms';
   chefAddress = '0x4a364f8c717caad9a442737eb7b8a55cc6cf18d8';
 
   constructor(

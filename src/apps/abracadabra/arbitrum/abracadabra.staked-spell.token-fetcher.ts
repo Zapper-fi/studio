@@ -14,6 +14,7 @@ export class ArbitrumAbracadabraStakedSpellTokenFetcher extends AppTokenTemplate
   appId = appId;
   groupId = groupId;
   network = network;
+  groupLabel = 'Staked SPELL';
   fromNetwork = Network.ETHEREUM_MAINNET;
 
   getContract(address: string) {

@@ -33,6 +33,7 @@ export class EthereumConvexCvxStakingContractPositionFetcher extends SingleStaki
   appId = appId;
   groupId = groupId;
   network = network;
+  groupLabel = 'CVX Staking';
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,

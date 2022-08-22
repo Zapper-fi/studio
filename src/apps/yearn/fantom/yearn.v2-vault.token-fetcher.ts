@@ -20,6 +20,7 @@ export class FantomYearnV2VaultTokenFetcher extends YearnVaultTokenFetcher<Yearn
   appId = appId;
   groupId = groupId;
   network = network;
+  groupLabel = 'Vaults';
 
   vaultType = 'v2' as const;
   vaultsToIgnore = [];

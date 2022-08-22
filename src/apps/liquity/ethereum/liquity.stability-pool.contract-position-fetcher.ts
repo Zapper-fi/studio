@@ -25,6 +25,7 @@ export class EthereumLiquityStabilityPoolContractPositionFetcher extends Contrac
   appId = appId;
   groupId = groupId;
   network = network;
+  groupLabel = 'Stability Pool';
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,

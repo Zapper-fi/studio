@@ -21,6 +21,7 @@ export class OptimismStargateVeTokenFetcher extends VotingEscrowTokenFetcher<Sta
   appId = appId;
   groupId = groupId;
   network = network;
+  groupLabel = 'VotedEscrow';
   veTokenAddress = '0x43d2761ed16c89a2c4342e2b16a3c61ccf88f05b';
 
   constructor(

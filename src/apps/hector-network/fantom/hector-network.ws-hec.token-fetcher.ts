@@ -32,6 +32,7 @@ export class FantomHectorNetworkWsHecTokenFetcher extends AppTokenTemplatePositi
   appId = appId;
   groupId = groupId;
   network = network;
+  groupLabel = 'Wrapped sHEC V2';
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,

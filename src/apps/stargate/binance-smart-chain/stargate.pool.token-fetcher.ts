@@ -13,6 +13,7 @@ export class BinanceSmartChainStargatePoolTokenFetcher extends StargatePoolToken
   appId = appId;
   groupId = groupId;
   network = network;
+  groupLabel = 'Pool';
   factoryAddress = '0xe7ec689f432f29383f217e36e680b5c855051f25';
   useLocalDecimals = true;
 }

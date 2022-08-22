@@ -16,6 +16,7 @@ export class PolygonBadgerClaimableContractPositionFetcher extends BadgerClaimab
   appId = appId;
   groupId = groupId;
   network = network;
+  groupLabel = 'Rewards';
 
   async getDescriptors(): Promise<BadgerClaimableDescriptor[]> {
     return [

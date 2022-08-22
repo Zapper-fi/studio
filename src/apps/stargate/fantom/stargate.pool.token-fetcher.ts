@@ -13,6 +13,7 @@ export class FantomStargatePoolTokenFetcher extends StargatePoolTokenFetcher {
   appId = appId;
   groupId = groupId;
   network = network;
+  groupLabel = 'Pool';
   factoryAddress = '0x9d1b1669c73b033dfe47ae5a0164ab96df25b944';
   useLocalDecimals = false;
 }

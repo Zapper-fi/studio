@@ -49,9 +49,9 @@ import { PolygonAaveV2VariableDebtTokenFetcher } from './polygon/aave-v2.variabl
     PolygonAaveV2VariableDebtTokenFetcher,
   ],
   exports: [
-    AaveV2ContractFactory,
     AaveV2ClaimableBalanceHelper,
     AaveV2ClaimableContractPositionHelper,
+    AaveV2ContractFactory,
     AaveV2HealthFactorMetaHelper,
     AaveV2LendingBalanceHelper,
   ],

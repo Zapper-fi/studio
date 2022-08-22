@@ -13,6 +13,7 @@ export class OptimismStargatePoolTokenFetcher extends StargatePoolTokenFetcher {
   appId = appId;
   groupId = groupId;
   network = network;
+  groupLabel = 'Pool';
   factoryAddress = '0xe3b53af74a4bf62ae5511055290838050bf764df';
   useLocalDecimals = false;
 }

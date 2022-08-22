@@ -18,6 +18,7 @@ export class BinanceSmartChainStargateFarmContractPositionFetcher extends Master
   appId = appId;
   groupId = groupId;
   network = network;
+  groupLabel = 'Farms';
   chefAddress = '0x3052a0f6ab15b4ae1df39962d5ddefaca86dab47';
 
   constructor(

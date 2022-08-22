@@ -24,6 +24,7 @@ export class FantomHectorNetworkBondContractPositionFetcher extends ContractPosi
   appId = HECTOR_NETWORK_DEFINITION.id;
   groupId = HECTOR_NETWORK_DEFINITION.groups.bond.id;
   network = Network.FANTOM_OPERA_MAINNET;
+  groupLabel = 'Bonds';
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,

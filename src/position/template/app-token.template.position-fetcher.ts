@@ -65,7 +65,7 @@ export abstract class AppTokenTemplatePositionFetcher<T extends Contract, V exte
   abstract appId: string;
   abstract groupId: string;
   abstract network: Network;
-  groupLabel?: string;
+  abstract groupLabel: string;
   fromNetwork?: Network;
 
   minLiquidity = 1000;
@@ -209,7 +209,6 @@ export abstract class AppTokenTemplatePositionFetcher<T extends Contract, V exte
             appId: this.appId,
             groupId: this.groupId,
             network: this.network,
-            groupLabel: this.groupLabel,
             address,
             symbol,
             decimals,
