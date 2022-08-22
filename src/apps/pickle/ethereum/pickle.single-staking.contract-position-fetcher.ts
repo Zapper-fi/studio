@@ -24,9 +24,9 @@ const network = Network.ETHEREUM_MAINNET;
 
 @Register.ContractPositionFetcher({ appId, groupId, network })
 export class EthereumPickleSingleRewardPositionFetcher extends SingleStakingFarmTemplateContractPositionFetcher<PickleJarSingleRewardStaking> {
-  appId: string;
-  groupId: string;
-  network: Network;
+  appId = appId;
+  groupId = groupId;
+  network = network;
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,

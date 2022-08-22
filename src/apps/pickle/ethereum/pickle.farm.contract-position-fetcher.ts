@@ -16,9 +16,9 @@ const network = Network.ETHEREUM_MAINNET;
 
 @Register.ContractPositionFetcher({ appId, groupId, network })
 export class EthereumPickleFarmContractPositionFetcher extends MasterChefTemplateContractPositionFetcher<PickleJarMasterchef> {
-  appId = PICKLE_DEFINITION.id;
-  groupId = PICKLE_DEFINITION.groups.masterchefV2Farm.id;
-  network = Network.ETHEREUM_MAINNET;
+  appId = appId;
+  groupId = groupId;
+  network = network;
   chefAddress = '0xbd17b1ce622d73bd438b9e658aca5996dc394b0d';
   rewardRateUnit = RewardRateUnit.BLOCK;
 

@@ -12,6 +12,7 @@ import {
 } from '~position/template/app-token.template.position-fetcher';
 
 import { PickleContractFactory, PickleJar } from '../contracts';
+
 import { PickleApiJarRegistry } from './pickle.api.jar-registry';
 
 export type PickleJarDataProps = {
