@@ -33,6 +33,7 @@ export type TokenPropsStageParams<T> = {
 
 export type UnderlyingTokensStageParams<T> = {
   address: string;
+  index: number;
   contract: T;
   multicall: IMulticallWrapper;
 };
@@ -157,9 +158,9 @@ export abstract class AppTokenTemplatePositionFetcher<T extends Contract, V exte
     const addresses = await this.getAddresses({ multicall });
 
     const skeletons = await Promise.all(
-      addresses.map(async address => {
+      addresses.map(async (address, index) => {
         const contract = multicall.wrap(this.getContract(address));
-        const underlyingTokenAddresses = await this.getUnderlyingTokenAddresses({ address, contract, multicall })
+        const underlyingTokenAddresses = await this.getUnderlyingTokenAddresses({ address, index, contract, multicall })
           .then(v => (Array.isArray(v) ? v : [v]))
           .then(v => v.map(t => t.toLowerCase()));
 
