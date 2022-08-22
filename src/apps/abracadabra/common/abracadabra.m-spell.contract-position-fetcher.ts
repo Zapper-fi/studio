@@ -1,7 +1,10 @@
 import { Inject } from '@nestjs/common';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
-import { GetTokenBalancesPerPositionParams } from '~position/template/contract-position.template.position-fetcher';
+import {
+  GetTokenBalancesPerPositionParams,
+  TokenStageParams,
+} from '~position/template/contract-position.template.position-fetcher';
 import {
   SingleStakingFarmDataProps,
   SingleStakingFarmDynamicTemplateContractPositionFetcher,
@@ -27,11 +30,11 @@ export abstract class AbracadabraMspellContractPositionFetcher extends SingleSta
     return [this.mSpellAddress];
   }
 
-  async getStakedTokenAddress(contract: AbracadabraMspell) {
+  async getStakedTokenAddress({ contract }: TokenStageParams<AbracadabraMspell, SingleStakingFarmDataProps>) {
     return contract.spell();
   }
 
-  async getRewardTokenAddresses(contract: AbracadabraMspell) {
+  async getRewardTokenAddresses({ contract }: TokenStageParams<AbracadabraMspell, SingleStakingFarmDataProps>) {
     return contract.mim();
   }
 

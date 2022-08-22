@@ -5,8 +5,12 @@ import { Register } from '~app-toolkit/decorators';
 import {
   DataPropsStageParams,
   GetTokenBalancesPerPositionParams,
+  TokenStageParams,
 } from '~position/template/contract-position.template.position-fetcher';
-import { SingleStakingFarmDynamicTemplateContractPositionFetcher } from '~position/template/single-staking.dynamic.template.contract-position-fetcher';
+import {
+  SingleStakingFarmDataProps,
+  SingleStakingFarmDynamicTemplateContractPositionFetcher,
+} from '~position/template/single-staking.dynamic.template.contract-position-fetcher';
 import { Network } from '~types/network.interface';
 
 import { SteakHutContractFactory, SteakHutStaking } from '../contracts';
@@ -37,11 +41,11 @@ export class AvalancheSteakHutStakingContractPositionFetcher extends SingleStaki
     return ['0x4e664284b7fbd10633768d59c17d959d9cb8dee2', '0x1f6866e1a684247886545503f8e6e76e328ade34'];
   }
 
-  getStakedTokenAddress(contract: SteakHutStaking) {
+  async getStakedTokenAddress({ contract }: TokenStageParams<SteakHutStaking, SingleStakingFarmDataProps>) {
     return contract.inputToken();
   }
 
-  getRewardTokenAddresses(contract: SteakHutStaking) {
+  async getRewardTokenAddresses({ contract }: TokenStageParams<SteakHutStaking, SingleStakingFarmDataProps>) {
     return contract.rewardToken();
   }
 
