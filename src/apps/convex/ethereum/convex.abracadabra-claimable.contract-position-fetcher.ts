@@ -2,9 +2,9 @@ import { Inject } from '@nestjs/common';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
-import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
+import { getImagesFromToken, getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { MetaType } from '~position/position.interface';
-import { isSupplied } from '~position/position.utils';
+import { isClaimable, isSupplied } from '~position/position.utils';
 import {
   ContractPositionTemplatePositionFetcher,
   DefaultContractPositionDescriptor,
@@ -63,6 +63,10 @@ export class EthereumConvexAbracadabraClaimableContractPositionFetcher extends C
   async getLabel({ contractPosition }: DisplayPropsStageParams<ConvexAbracadabraWrapper>) {
     const convexToken = contractPosition.tokens.find(isSupplied)!;
     return `Claimable Rewards for Abracadabra ${getLabelFromToken(convexToken)} Cauldron`;
+  }
+
+  async getImages({ contractPosition }: DisplayPropsStageParams<ConvexAbracadabraWrapper>) {
+    return contractPosition.tokens.filter(isClaimable).flatMap(v => getImagesFromToken(v));
   }
 
   async getTokenBalancesPerPosition({

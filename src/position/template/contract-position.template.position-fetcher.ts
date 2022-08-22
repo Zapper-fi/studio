@@ -139,8 +139,10 @@ export abstract class ContractPositionTemplatePositionFetcher<
     });
 
     const descriptors = await this.getDescriptors({ multicall });
+
     const skeletons = await Promise.all(
       descriptors.map(async descriptor => {
+        const address = descriptor.address.toLowerCase();
         const contract = multicall.wrap(this.getContract(descriptor.address));
         const maybeTokenDescriptors = await this.getTokenDescriptors({ contract, descriptor, multicall });
         if (!maybeTokenDescriptors) return null;
@@ -150,7 +152,7 @@ export abstract class ContractPositionTemplatePositionFetcher<
           : [maybeTokenDescriptors];
         const tokenDescriptors = tokenDescriptorsArr.map(t => ({ ...t, address: t.address.toLowerCase() }));
 
-        return { address: descriptor.address, descriptor, tokenDescriptors };
+        return { address, descriptor, tokenDescriptors };
       }),
     );
 

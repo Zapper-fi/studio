@@ -55,6 +55,13 @@ export const CONVEX_DEFINITION = appDefinition({
       isHiddenFromExplore: true,
     },
 
+    booster: {
+      id: 'booster',
+      type: GroupType.POSITION,
+      label: 'Booster',
+      isHiddenFromExplore: true,
+    },
+
     abracadabraClaimable: {
       id: 'abracadabra-claimable',
       type: GroupType.POSITION,

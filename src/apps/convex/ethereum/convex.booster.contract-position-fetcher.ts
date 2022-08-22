@@ -11,7 +11,7 @@ import { CONVEX_DEFINITION } from '../convex.definition';
 export const CONVEX_BOOSTERS = ['0xf403c135812408bfbe8713b5a23a04b3d48aae31'];
 
 const appId = CONVEX_DEFINITION.id;
-const groupId = CONVEX_DEFINITION.groups.depositor.id;
+const groupId = CONVEX_DEFINITION.groups.booster.id;
 const network = Network.ETHEREUM_MAINNET;
 
 @Register.ContractPositionFetcher({ appId, groupId, network, options: { excludeFromTvl: true } })
