@@ -15,21 +15,18 @@ export const AGAVE_DEFINITION = appDefinition({
       id: 'deposit',
       type: GroupType.TOKEN,
       label: 'Lending',
-      groupLabel: 'Deposit',
     },
 
     stableBorrow: {
       id: 'stable-borrow',
       type: GroupType.TOKEN,
       label: 'Lending',
-      groupLabel: 'Borrow',
     },
 
     variableBorrow: {
       id: 'variable-borrow',
       type: GroupType.TOKEN,
       label: 'Lending',
-      groupLabel: 'Borrow',
     },
 
     claimable: {

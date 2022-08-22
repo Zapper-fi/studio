@@ -13,14 +13,12 @@ export const AURIGAMI_DEFINITION = appDefinition({
       id: 'supply',
       type: GroupType.TOKEN,
       label: 'Lending',
-      groupLabel: 'Supply',
     },
 
     borrow: {
       id: 'borrow',
       type: GroupType.POSITION,
       label: 'Lending',
-      groupLabel: 'Borrow',
     },
 
     claimable: {

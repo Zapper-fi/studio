@@ -14,7 +14,6 @@ export const PENGUIN_DEFINITION = appDefinition({
       id: 'vault',
       type: GroupType.TOKEN,
       label: 'Compounder Vaults',
-      groupLabel: 'Farms',
     },
     vaultClaimable: {
       id: 'vault',

@@ -17,7 +17,6 @@ export const CONVEX_DEFINITION = appDefinition({
       id: 'deposit',
       type: GroupType.TOKEN,
       label: 'Liqudity Pool Staking',
-      groupLabel: 'Pools',
       isHiddenFromExplore: true,
     },
 
@@ -25,21 +24,18 @@ export const CONVEX_DEFINITION = appDefinition({
       id: 'cvx-staking',
       type: GroupType.POSITION,
       label: 'CVX Staking',
-      groupLabel: 'Farms',
     },
 
     cvxCrvStaking: {
       id: 'cvx-crv-staking',
       type: GroupType.POSITION,
       label: 'cvxCRV Staking',
-      groupLabel: 'Farms',
     },
 
     lpFarm: {
       id: 'lp-farm',
       type: GroupType.POSITION,
       label: 'Liqudity Pool Staking',
-      groupLabel: 'Pools',
     },
 
     votingEscrow: {
