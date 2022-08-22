@@ -31,6 +31,7 @@ export class EthereumClearpoolPoolTokenFetcher extends AppTokenTemplatePositionF
   appId = CLEARPOOL_DEFINITION.id;
   groupId = CLEARPOOL_DEFINITION.groups.pool.id;
   network = Network.ETHEREUM_MAINNET;
+  groupLabel = 'Pool';
 
   constructor(
     @Inject(APP_TOOLKIT) protected appToolkit: IAppToolkit,

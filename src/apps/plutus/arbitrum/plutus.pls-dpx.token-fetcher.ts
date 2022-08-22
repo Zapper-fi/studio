@@ -18,6 +18,7 @@ export class ArbitrumPlutusPlsDpxTokenFetcher extends AppTokenTemplatePositionFe
   appId = PLUTUS_DEFINITION.id;
   groupId = PLUTUS_DEFINITION.groups.plsDpx.id;
   network = Network.ARBITRUM_MAINNET;
+  groupLabel = 'plsDPX';
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,

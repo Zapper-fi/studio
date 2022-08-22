@@ -13,6 +13,7 @@ export class AvalancheAbracadabraCauldronContractPositionFetcher extends Abracad
   appId = appId;
   groupId = groupId;
   network = network;
+  groupLabel = 'Cauldrons';
   cauldrons = [
     '0x3cfed0439ab822530b1ffbd19536d897ef30d2a2', // AVAX
     '0x56984f04d2d04b2f63403f0ebedd3487716ba49d', // wMEMO (deprecated)

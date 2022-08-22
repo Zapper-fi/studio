@@ -56,6 +56,7 @@ export class EthereumRariFundTokenFetcher extends AppTokenTemplatePositionFetche
   appId = appId;
   groupId = groupId;
   network = network;
+  groupLabel = 'Funds';
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,

@@ -21,6 +21,7 @@ export class FantomStargateVeTokenFetcher extends VotingEscrowTokenFetcher<Starg
   appId = appId;
   groupId = groupId;
   network = network;
+  groupLabel = 'VotedEscrow';
   veTokenAddress = '0x933421675cdc8c280e5f21f0e061e77849293dba';
 
   constructor(

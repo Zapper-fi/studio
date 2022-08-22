@@ -18,6 +18,7 @@ export class EthereumStargateFarmContractPositionFetcher extends MasterChefTempl
   appId = appId;
   groupId = groupId;
   network = network;
+  groupLabel = 'Farms';
   chefAddress = '0xb0d502e938ed5f4df2e681fe6e419ff29631d62b';
 
   constructor(

@@ -13,6 +13,7 @@ export class EthereumBalancerV2PoolTokenFetcher extends BalancerV2PoolTokenFetch
   appId = BALANCER_V2_DEFINITION.id;
   groupId = BALANCER_V2_DEFINITION.groups.pool.id;
   network = Network.ETHEREUM_MAINNET;
+  groupLabel = 'Pools';
   subgraphUrl = 'https://api.thegraph.com/subgraphs/name/balancer-labs/balancer-v2';
   vaultAddress = '0xba12222222228d8ba445958a75a0704d566bf2c8';
 }

@@ -41,6 +41,7 @@ export class PolygonSuperfluidVaultTokenFetcher extends AppTokenTemplatePosition
   appId = SUPERFLUID_DEFINITION.id;
   groupId = SUPERFLUID_DEFINITION.groups.vault.id;
   network = Network.POLYGON_MAINNET;
+  groupLabel = 'Vaults';
 
   readonly brokenAddresses = [
     '0x263026e7e53dbfdce5ae55ade22493f828922965',

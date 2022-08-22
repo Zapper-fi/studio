@@ -56,6 +56,7 @@ export class PolygonFurucomboFundTokenFetcher extends AppTokenTemplatePositionFe
   appId = appId;
   groupId = groupId;
   network = network;
+  groupLabel = 'Furucombo Funds';
   furucomboFundMap: Record<string, FurucomboFund> = {};
 
   constructor(

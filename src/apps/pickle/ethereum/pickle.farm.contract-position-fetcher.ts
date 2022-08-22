@@ -19,6 +19,7 @@ export class EthereumPickleFarmContractPositionFetcher extends MasterChefTemplat
   appId = PICKLE_DEFINITION.id;
   groupId = PICKLE_DEFINITION.groups.masterchefV2Farm.id;
   network = Network.ETHEREUM_MAINNET;
+  groupLabel = 'Farms';
   chefAddress = '0xbd17b1ce622d73bd438b9e658aca5996dc394b0d';
   rewardRateUnit = RewardRateUnit.BLOCK;
 

@@ -13,5 +13,6 @@ export class EthereumBalancerV2FarmContractPositionFetcher extends BalancerV2Far
   appId = BALANCER_V2_DEFINITION.id;
   groupId = BALANCER_V2_DEFINITION.groups.farm.id;
   network = Network.ETHEREUM_MAINNET;
+  groupLabel = 'Staked';
   subgraphUrl = 'https://api.thegraph.com/subgraphs/name/balancer-labs/balancer-gauges';
 }

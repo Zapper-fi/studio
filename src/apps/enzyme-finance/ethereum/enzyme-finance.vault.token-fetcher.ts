@@ -46,6 +46,7 @@ export class EthereumEnzymeFinanceVaultTokenFetcher extends AppTokenTemplatePosi
   appId = appId;
   groupId = groupId;
   network = network;
+  groupLabel = 'Vaults';
 
   constructor(
     @Inject(EnzymeFinanceContractFactory) private readonly contractFactory: EnzymeFinanceContractFactory,

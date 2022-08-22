@@ -13,5 +13,6 @@ export class ArbitrumAbracadabraFarmContractPositionFetcher extends AbracadabraF
   appId = appId;
   groupId = groupId;
   network = network;
+  groupLabel = 'Farms';
   chefAddress = '0x839de324a1ab773f76a53900d70ac1b913d2b387';
 }

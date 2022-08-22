@@ -18,6 +18,7 @@ export class ArbitrumPlutusPlsJonesTokenFetcher extends AppTokenTemplatePosition
   appId = PLUTUS_DEFINITION.id;
   groupId = PLUTUS_DEFINITION.groups.plsJones.id;
   network = Network.ARBITRUM_MAINNET;
+  groupLabel = 'plsJONES';
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,

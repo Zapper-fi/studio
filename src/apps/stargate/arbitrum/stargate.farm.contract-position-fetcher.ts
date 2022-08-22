@@ -18,6 +18,7 @@ export class ArbitrumStargateFarmContractPositionFetcher extends MasterChefTempl
   appId = appId;
   groupId = groupId;
   network = network;
+  groupLabel = 'Farms';
   chefAddress = '0xea8dfee1898a7e0a59f7527f076106d7e44c2176';
 
   constructor(

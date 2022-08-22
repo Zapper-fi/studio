@@ -20,6 +20,7 @@ export class EthereumSturdySupplyTokenFetcher extends AaveAmmLendingTemplateToke
   appId = STURDY_DEFINITION.id;
   groupId = STURDY_DEFINITION.groups.supply.id;
   network = Network.ETHEREUM_MAINNET;
+  groupLabel = 'Lending';
   providerAddress = '0xa422ca380bd70eef876292839222159e41aaee17';
   isDebt = false;
 

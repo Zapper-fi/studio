@@ -30,6 +30,7 @@ export class EthereumAbracadabraStakedSpellTokenFetcher extends AppTokenTemplate
   appId = appId;
   groupId = groupId;
   network = network;
+  groupLabel = 'Staked SPELL';
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,

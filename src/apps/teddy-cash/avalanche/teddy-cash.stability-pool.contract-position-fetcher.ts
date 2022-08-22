@@ -26,6 +26,7 @@ export class AvalancheTeddyCashStabilityPoolContractPositionFetcher extends Cont
   appId = appId;
   groupId = groupId;
   network = network;
+  groupLabel = 'Stability Pool';
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,

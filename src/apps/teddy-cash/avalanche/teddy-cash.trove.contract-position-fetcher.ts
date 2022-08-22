@@ -25,6 +25,7 @@ export class AvalancheTeddyCashTroveContractPositionFetcher extends ContractPosi
   appId = appId;
   groupId = groupId;
   network = network;
+  groupLabel = 'Farms';
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,

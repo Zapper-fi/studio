@@ -30,6 +30,7 @@ export class EthereumStakeDaoGaugeContractPositionFetcher extends SingleStakingF
   appId = appId;
   groupId = groupId;
   network = network;
+  groupLabel = 'Gauges';
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,

@@ -39,6 +39,7 @@ export class BinanceSmartChainOpenleveragePoolTokenFetcher extends AppTokenTempl
   appId = OPENLEVERAGE_DEFINITION.id;
   groupId = OPENLEVERAGE_DEFINITION.groups.pool.id;
   network = Network.BINANCE_SMART_CHAIN_MAINNET;
+  groupLabel = 'Pools';
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,

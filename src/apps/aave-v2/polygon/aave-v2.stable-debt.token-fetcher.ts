@@ -20,6 +20,7 @@ export class PolygonAaveV2StableDebtTokenFetcher extends AaveV2LendingTemplateTo
   appId = AAVE_V2_DEFINITION.id;
   groupId = AAVE_V2_DEFINITION.groups.stableDebt.id;
   network = Network.POLYGON_MAINNET;
+  groupLabel = 'Lending';
   providerAddress = '0x7551b5d2763519d4e37e8b81929d336de671d46d';
   isDebt = true;
 

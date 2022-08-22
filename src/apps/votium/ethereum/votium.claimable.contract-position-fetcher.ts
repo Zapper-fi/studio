@@ -22,6 +22,7 @@ export class EthereumVotiumClaimableContractPositionFetcher extends MerkleTempla
   appId = appId;
   groupId = groupId;
   network = network;
+  groupLabel = 'Claimable';
   merkleAddress = '0x378ba9b73309be80bf4c2c027aad799766a7ed5a';
 
   constructor(
