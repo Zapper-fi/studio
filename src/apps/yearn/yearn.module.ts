@@ -21,9 +21,9 @@ import { YearnAppDefinition, YEARN_DEFINITION } from './yearn.definition';
     // Helpers
     YearnVaultTokenDefinitionsResolver,
     // Ethereum
+    EthereumYearnGovernanceContractPositionFetcher,
     EthereumYearnV1VaultTokenFetcher,
     EthereumYearnV2VaultTokenFetcher,
-    EthereumYearnGovernanceContractPositionFetcher,
     EthereumYearnYieldTokenFetcher,
     // Fantom
     FantomYearnV2VaultTokenFetcher,
