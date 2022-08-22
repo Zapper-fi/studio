@@ -25,6 +25,7 @@ export class ArbitrumDopexVotingEscrowContractPositionFetcher extends ContractPo
   appId = appId;
   groupId = groupId;
   network = network;
+  groupLabel = 'Voting Escrow';
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,

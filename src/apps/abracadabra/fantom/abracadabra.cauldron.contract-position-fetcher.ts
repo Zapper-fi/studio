@@ -13,6 +13,7 @@ export class FantomAbracadabraCauldronContractPositionFetcher extends Abracadabr
   appId = appId;
   groupId = groupId;
   network = network;
+  groupLabel = 'Cauldrons';
   cauldrons = [
     '0x8e45af6743422e488afacdad842ce75a09eaed34', // wFTM
     '0xd4357d43545f793101b592bacab89943dc89d11b', // wFTM

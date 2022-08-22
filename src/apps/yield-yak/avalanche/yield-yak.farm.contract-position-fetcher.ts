@@ -20,6 +20,7 @@ export class AvalancheYieldyakFarmContractPositionFetcher extends MasterChefTemp
   appId = appId;
   groupId = groupId;
   network = network;
+  groupLabel = 'Farms';
   chefAddress = '0x0cf605484a512d3f3435fed77ab5ddc0525daf5f';
   rewardRateUnit = RewardRateUnit.BLOCK;
 

@@ -30,6 +30,7 @@ export class FantomHectorNetworkSHecV2TokenFetcher extends AppTokenTemplatePosit
   appId = appId;
   groupId = groupId;
   network = network;
+  groupLabel = 'Staked HEC V2';
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,

@@ -23,6 +23,7 @@ export class ArbitrumPickleFarmContractPositionFetcher extends MasterChefV2Templ
   appId = appId;
   groupId = groupId;
   network = network;
+  groupLabel = 'Farms';
   chefAddress = '0x7ecc7163469f37b777d7b8f45a667314030ace24';
   rewardRateUnit = RewardRateUnit.SECOND;
 

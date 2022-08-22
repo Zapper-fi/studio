@@ -33,6 +33,7 @@ export class EthereumRariGovernanceContractPositionFetcher extends SingleStaking
   appId = appId;
   groupId = groupId;
   network = network;
+  groupLabel = 'Governance';
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,

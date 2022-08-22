@@ -29,6 +29,7 @@ export class EthereumStargateEthTokenFetcher extends AppTokenTemplatePositionFet
   appId = appId;
   groupId = groupId;
   network = network;
+  groupLabel = 'Wrapped';
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,

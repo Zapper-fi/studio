@@ -16,6 +16,7 @@ export class ArbitrumBadgerClaimableContractPositionFetcher extends BadgerClaima
   appId = appId;
   groupId = groupId;
   network = network;
+  groupLabel = 'Rewards';
 
   async getDescriptors(): Promise<BadgerClaimableDescriptor[]> {
     return [

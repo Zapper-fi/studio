@@ -9,7 +9,7 @@ export const YIELD_YAK_DEFINITION = appDefinition({
   description: `Earn more yield. Tools for defi users on $AVAX. Use at your own risk.`,
   url: 'https://yieldyak.com/',
   groups: {
-    farm: { id: 'farm', type: GroupType.POSITION, label: 'Farms', groupLabel: 'Farms' },
+    farm: { id: 'farm', type: GroupType.POSITION, label: 'Farms' },
     vault: { id: 'vault', type: GroupType.TOKEN, label: 'Vaults' },
   },
   links: {

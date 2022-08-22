@@ -44,6 +44,7 @@ export class EthereumSablierStreamContractPositionFetcher extends ContractPositi
   appId = SABLIER_DEFINITION.id;
   groupId = SABLIER_DEFINITION.groups.stream.id;
   network = Network.ETHEREUM_MAINNET;
+  groupLabel = 'Streams';
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,

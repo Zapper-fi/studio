@@ -25,6 +25,7 @@ export class EthereumBalancerV2VotingEscrowContractPositionFetcher extends Contr
   appId = BALANCER_V2_DEFINITION.id;
   groupId = BALANCER_V2_DEFINITION.groups.votingEscrow.id;
   network = Network.ETHEREUM_MAINNET;
+  groupLabel = 'Voting Escrow';
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,

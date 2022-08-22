@@ -49,6 +49,7 @@ export class EthereumStakeDaoLockerTokenFetcher extends AppTokenTemplatePosition
   appId = appId;
   groupId = groupId;
   network = network;
+  groupLabel = 'Lockers';
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,

@@ -20,6 +20,7 @@ export class EthereumBalancerV2WrappedAaveTokenFetcher extends AppTokenTemplateP
   appId = BALANCER_V2_DEFINITION.id;
   groupId = BALANCER_V2_DEFINITION.groups.wrappedAave.id;
   network = Network.ETHEREUM_MAINNET;
+  groupLabel = 'Wrapped Aave';
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,

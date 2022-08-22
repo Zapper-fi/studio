@@ -23,6 +23,7 @@ export class PolygonPickleFarmContractPositionFetcher extends MasterChefV2Templa
   appId = appId;
   groupId = groupId;
   network = network;
+  groupLabel = 'Farms';
   chefAddress = '0x20b2a3fc7b13ca0ccf7af81a68a14cb3116e8749';
   rewardRateUnit = RewardRateUnit.SECOND;
 

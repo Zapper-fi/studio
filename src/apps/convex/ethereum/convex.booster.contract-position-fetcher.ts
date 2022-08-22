@@ -19,6 +19,7 @@ export class EthereumConvexBoosterContractPositionFetcher extends ContractPositi
   appId = appId;
   groupId = groupId;
   network = network;
+  groupLabel = 'Booster';
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,

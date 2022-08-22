@@ -26,6 +26,7 @@ export class EthereumConvexVotingEscrowContractPositionFetcher extends ContractP
   appId = appId;
   groupId = groupId;
   network = network;
+  groupLabel = 'Vote Locked CVX';
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,

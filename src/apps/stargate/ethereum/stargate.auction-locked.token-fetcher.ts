@@ -29,6 +29,7 @@ export class EthereumStargateAuctionLockedTokenFetcher extends AppTokenTemplateP
   appId = appId;
   groupId = groupId;
   network = network;
+  groupLabel = 'Auction Locked';
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,

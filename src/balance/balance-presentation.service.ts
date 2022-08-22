@@ -56,7 +56,7 @@ export class BalancePresentationService {
     return presenter.present(address, balances);
   }
 
-  async presentTemplates({ appId, network, balances }: PresentParams): Promise<TokenBalanceResponse> {
+  async presentTemplates({ address, appId, network, balances }: PresentParams): Promise<TokenBalanceResponse> {
     // Use default presenter when no custom presenter
     const customPresenter = this.positionPresenterRegistry.get(appId, network);
     const defaultPresenter = this.defaultPositionPresenterFactory.build({ appId, network });
@@ -82,7 +82,7 @@ export class BalancePresentationService {
             const groupMetaResolver = balanceProductMetaResolvers?.get(positionGroup.label);
             if (!groupMetaResolver) return { label: computedGroupLabel, assets: balances };
             else {
-              const meta = await groupMetaResolver(balances);
+              const meta = await groupMetaResolver(address, balances);
               return { label: computedGroupLabel, assets: balances, meta };
             }
           }),

@@ -15,7 +15,6 @@ export const IDLE_DEFINITION = appDefinition({
       id: 'vault',
       type: GroupType.TOKEN,
       label: 'Idle',
-      groupLabel: 'Farms',
     },
   },
 
