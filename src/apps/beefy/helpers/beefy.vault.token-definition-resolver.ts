@@ -1,6 +1,5 @@
 import { Injectable } from '@nestjs/common';
 import Axios from 'axios';
-import { values } from 'lodash';
 
 import { Cache } from '~cache/cache.decorator';
 import { Network } from '~types/network.interface';
@@ -15,6 +14,7 @@ type BeefyMarketResponse = {
   earnedTokenAddress: string;
   earnContractAddress: string;
   network: string;
+  status: string;
 };
 
 const NETWORK_NAME: Partial<Record<Network, string>> = {
@@ -31,7 +31,7 @@ const NETWORK_NAME: Partial<Record<Network, string>> = {
 @Injectable()
 export class BeefyVaultTokenDefinitionsResolver {
   @Cache({
-    key: network => `studio:beefy:${network}:vault-data`,
+    key: _network => `studio:beefy:${_network}:vault-data`,
     ttl: 5 * 60, // 60 minutes
   })
   private async getVaultDefinitionsData(_network: Network) {
@@ -50,15 +50,19 @@ export class BeefyVaultTokenDefinitionsResolver {
   }
 
   async getVaultDefinitions(network: Network) {
-    const definitionsData = await this.getVaultDefinitionsData(network);
+    const definitionsDataRaw = await this.getVaultDefinitionsData(network);
+    const definitionsData = definitionsDataRaw.filter(x => x.status != 'paused' && x.tokenAddress);
 
-    const vaultDefinitions = values(definitionsData).map(t => ({
-      address: t.earnContractAddress.toLowerCase(),
-      underlyingAddress: t.tokenAddress.toLowerCase(),
-      id: t.id,
-      marketName: t.name,
-      symbol: t.token,
-    }));
+    const vaultDefinitions = definitionsData.map(t => {
+      return {
+        address: t.earnContractAddress.toLowerCase(),
+        underlyingAddress: t.tokenAddress.toLowerCase(),
+        id: t.id,
+        marketName: t.name,
+        symbol: t.token,
+      };
+    });
+
     return vaultDefinitions;
   }
 
