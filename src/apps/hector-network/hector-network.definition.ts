@@ -39,6 +39,18 @@ export const HECTOR_NETWORK_DEFINITION = appDefinition({
       type: GroupType.POSITION,
       label: 'Bonds',
     },
+
+    ftmBond: {
+      id: 'ftm-bond',
+      type: GroupType.POSITION,
+      label: 'FTM Bonds',
+    },
+
+    bscBond: {
+      id: 'bsc-bond',
+      type: GroupType.POSITION,
+      label: 'BSC Bonds',
+    },
   },
   links: {
     twitter: 'https://twitter.com/Hector_Network',
@@ -49,6 +61,7 @@ export const HECTOR_NETWORK_DEFINITION = appDefinition({
   },
   supportedNetworks: {
     [Network.FANTOM_OPERA_MAINNET]: [AppAction.VIEW],
+    [Network.BINANCE_SMART_CHAIN_MAINNET]: [AppAction.VIEW],
   },
 });
 
