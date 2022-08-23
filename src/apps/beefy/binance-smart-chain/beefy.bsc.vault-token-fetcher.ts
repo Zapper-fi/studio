@@ -1,39 +1,34 @@
 import { Inject } from '@nestjs/common';
 
+import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
-import { BISWAP_DEFINITION } from '~apps/biswap';
-import { PANCAKESWAP_DEFINITION } from '~apps/pancakeswap';
-import { STARGATE_DEFINITION } from '~apps/stargate/stargate.definition';
-import { PositionFetcher } from '~position/position-fetcher.interface';
-import { AppTokenPosition } from '~position/position.interface';
 import { Network } from '~types/network.interface';
 
 import { BEEFY_DEFINITION } from '../beefy.definition';
-import { BeefyVaultTokensHelper } from '../helpers/beefy.vault-token-fetcher-helper';
+import { BeefyContractFactory, BeefyVaultToken } from '../contracts';
+import { BeefyVaultTokenFetcher } from '../helpers/beefy.vault-token-fetcher';
+import { BeefyVaultTokenDefinitionsResolver } from '../helpers/beefy.vault.token-definition-resolver';
 
 const appId = BEEFY_DEFINITION.id;
 const groupId = BEEFY_DEFINITION.groups.vault.id;
 const network = Network.BINANCE_SMART_CHAIN_MAINNET;
 
 @Register.TokenPositionFetcher({ appId, groupId, network })
-export class BinanceSmartChainBeefyVaultTokenFetcher implements PositionFetcher<AppTokenPosition> {
-  constructor(@Inject(BeefyVaultTokensHelper) private readonly beefyVaultTokensHelper: BeefyVaultTokensHelper) {}
+export class BinanceSmartChainBeefyVaultTokenFetcher extends BeefyVaultTokenFetcher<BeefyVaultToken> {
+  appId = appId;
+  groupId = groupId;
+  network = network;
+  groupLabel = 'Vaults';
 
-  getPositions() {
-    return this.beefyVaultTokensHelper.getTokenMarketData({
-      network,
-      dependencies: [
-        { appId: PANCAKESWAP_DEFINITION.id, groupIds: [PANCAKESWAP_DEFINITION.groups.pool.id], network },
-        { appId: 'apeswap', groupIds: ['pool'], network },
-        { appId: 'venus', groupIds: ['supply'], network },
-        {
-          appId: 'belt',
-          groupIds: ['pool', 'vault'],
-          network,
-        },
-        { appId: STARGATE_DEFINITION.id, groupIds: [STARGATE_DEFINITION.groups.pool.id], network },
-        { appId: BISWAP_DEFINITION.id, groupIds: [BISWAP_DEFINITION.groups.pool.id], network },
-      ],
-    });
+  constructor(
+    @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
+    @Inject(BeefyContractFactory) protected readonly contractFactory: BeefyContractFactory,
+    @Inject(BeefyVaultTokenDefinitionsResolver) tokenDefinitionsResolver: BeefyVaultTokenDefinitionsResolver,
+  ) {
+    super(appToolkit, tokenDefinitionsResolver, contractFactory);
+  }
+
+  getContract(address: string): BeefyVaultToken {
+    return this.contractFactory.beefyVaultToken({ network: this.network, address });
   }
 }
