@@ -156,7 +156,8 @@ export abstract class AppTokenTemplatePositionFetcher<T extends Contract, V exte
       tags: { network: this.network, context: `${this.appId}__template` },
     });
 
-    const addresses = await this.getAddresses({ multicall });
+    const addressesRaw = await this.getAddresses({ multicall });
+    const addresses = addressesRaw.map(x => x.toLowerCase());
 
     const maybeSkeletons = await Promise.all(
       addresses.map(async (address, index) => {
