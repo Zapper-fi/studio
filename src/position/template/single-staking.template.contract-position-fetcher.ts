@@ -46,13 +46,24 @@ export abstract class SingleStakingFarmTemplateContractPositionFetcher<
   ): Promise<BigNumberish | BigNumberish[]>;
 
   async getDescriptors() {
-    return this.getFarmDefinitions();
+    return this.getFarmDefinitions().then(x =>
+      x.map(p => {
+        return {
+          address: p.address.toLowerCase(),
+          reserveAddress: p.reserveAddress?.toLowerCase(),
+          stakedTokenAddress: p.stakedTokenAddress.toLowerCase(),
+          rewardTokenAddresses: p.rewardTokenAddresses.map(x => x.toLowerCase()),
+        };
+      }),
+    );
   }
 
   async getTokenDescriptors({ descriptor }: TokenStageParams<T, V, SingleStakingFarmDefinition>) {
     const tokens: UnderlyingTokenDescriptor[] = [];
     tokens.push({ metaType: MetaType.SUPPLIED, address: descriptor.stakedTokenAddress });
-    tokens.push(...descriptor.rewardTokenAddresses.map(v => ({ metaType: MetaType.CLAIMABLE, address: v })));
+    tokens.push(
+      ...descriptor.rewardTokenAddresses.map(v => ({ metaType: MetaType.CLAIMABLE, address: v.toLowerCase() })),
+    );
     return tokens;
   }
 

@@ -56,7 +56,7 @@ export abstract class MasterChefTemplateContractPositionFetcher<
   async getDescriptors() {
     const contract = this.getContract(this.chefAddress);
     const poolLength = await this.getPoolLength(contract);
-    return range(0, Number(poolLength)).map(poolIndex => ({ address: this.chefAddress, poolIndex }));
+    return range(0, Number(poolLength)).map(poolIndex => ({ address: this.chefAddress.toLowerCase(), poolIndex }));
   }
 
   async getTokenDescriptors({
@@ -76,8 +76,8 @@ export abstract class MasterChefTemplateContractPositionFetcher<
 
     if (!stakedTokenAddress || !rewardTokenAddress) return null;
 
-    tokens.push({ metaType: MetaType.SUPPLIED, address: stakedTokenAddress });
-    tokens.push({ metaType: MetaType.CLAIMABLE, address: rewardTokenAddress });
+    tokens.push({ metaType: MetaType.SUPPLIED, address: stakedTokenAddress.toLowerCase() });
+    tokens.push({ metaType: MetaType.CLAIMABLE, address: rewardTokenAddress.toLowerCase() });
     return tokens;
   }
 

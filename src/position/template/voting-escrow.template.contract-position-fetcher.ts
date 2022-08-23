@@ -16,11 +16,13 @@ export abstract class VotingEscrowTokenFetcher<T extends Contract> extends Contr
   abstract getEscrowedTokenBalance(params: GetTokenBalancesPerPositionParams<T>): Promise<BigNumberish>;
 
   async getDescriptors() {
-    return [{ address: this.veTokenAddress }];
+    return [{ address: this.veTokenAddress.toLowerCase() }];
   }
 
   async getTokenDescriptors(params: TokenStageParams<T>) {
-    return [{ metaType: MetaType.SUPPLIED, address: await this.getEscrowedTokenAddress(params) }];
+    return [
+      { metaType: MetaType.SUPPLIED, address: await this.getEscrowedTokenAddress(params).then(x => x.toLowerCase()) },
+    ];
   }
 
   async getLabel({ contractPosition }: DisplayPropsStageParams<T>) {

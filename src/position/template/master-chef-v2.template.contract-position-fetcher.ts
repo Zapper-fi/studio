@@ -45,7 +45,7 @@ export abstract class MasterChefV2TemplateContractPositionFetcher<
 
     const rewarderContract = multicall.wrap(this.getExtraRewarderContract(extraRewarderAddress));
     const extraRewardTokenAddress = await this.getExtraRewardTokenAddress(rewarderContract, descriptor.poolIndex);
-    tokenDescriptors.push({ metaType: MetaType.CLAIMABLE, address: extraRewardTokenAddress });
+    tokenDescriptors.push({ metaType: MetaType.CLAIMABLE, address: extraRewardTokenAddress.toLowerCase() });
 
     return tokenDescriptors;
   }

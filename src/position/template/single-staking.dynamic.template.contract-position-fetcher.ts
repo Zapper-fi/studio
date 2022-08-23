@@ -42,7 +42,7 @@ export abstract class SingleStakingFarmDynamicTemplateContractPositionFetcher<
 
   async getDescriptors() {
     const farmAddresses = await this.getFarmAddresses();
-    return farmAddresses.map(address => ({ address }));
+    return farmAddresses.map(address => ({ address: address.toLowerCase() }));
   }
 
   async getTokenDescriptors(params: TokenStageParams<T, V>) {

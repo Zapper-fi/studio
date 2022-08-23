@@ -28,12 +28,12 @@ export abstract class MerkleTemplateContractPositionFetcher<
   abstract getRewardTokenAddresses(): Promise<string[]>;
 
   async getDescriptors() {
-    const rewardTokenAddresses = await this.getRewardTokenAddresses();
+    const rewardTokenAddresses = await this.getRewardTokenAddresses().then(x => x.map(r => r.toLowerCase()));
     return rewardTokenAddresses.map(rewardTokenAddress => ({ address: this.merkleAddress, rewardTokenAddress }));
   }
 
   async getTokenDescriptors({ descriptor }: TokenStageParams<T, DefaultDataProps, MerkleContractPositionDescriptor>) {
-    return [{ metaType: MetaType.CLAIMABLE, address: descriptor.rewardTokenAddress }];
+    return [{ metaType: MetaType.CLAIMABLE, address: descriptor.rewardTokenAddress.toLowerCase() }];
   }
 
   async getLabel({ contractPosition }: DisplayPropsStageParams<T>) {
