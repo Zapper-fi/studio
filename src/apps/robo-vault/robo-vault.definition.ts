@@ -19,7 +19,10 @@ export const ROBO_VAULT_DEFINITION = appDefinition({
 
   tags: [AppTag.YIELD_AGGREGATOR],
   keywords: [],
-  links: {},
+  links: {
+    twitter: 'https://twitter.com/robo_vault',
+    discord: 'https://discord.com/invite/PqTQn5zM56',
+  },
 
   supportedNetworks: {
     [Network.POLYGON_MAINNET]: [AppAction.VIEW],
