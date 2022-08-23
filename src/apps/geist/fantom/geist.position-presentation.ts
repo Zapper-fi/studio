@@ -4,16 +4,15 @@ import { AaveV2ContractFactory } from '~apps/aave-v2';
 import { AaveV2PositionPresenter } from '~apps/aave-v2/common/aave-v2.position-presenter';
 import { Network } from '~types';
 
-import { AAVE_AMM_DEFINITION } from '../aave-amm.definition';
+import { GEIST_DEFINITION } from '../geist.definition';
 
 @Injectable()
-export class EthereumAaveAmmPositionPresenter extends AaveV2PositionPresenter {
+export class FantomGeistPositionPresenter extends AaveV2PositionPresenter {
   constructor(@Inject(AaveV2ContractFactory) contractFactory: AaveV2ContractFactory) {
     super(contractFactory);
   }
 
-  appId = AAVE_AMM_DEFINITION.id;
-  network = Network.ETHEREUM_MAINNET;
-  lendingPoolAddress = '0x7d2768de32b0b80b7a3454c06bdac94a69ddc7a9';
-  explorePresentationConfig = undefined;
+  appId = GEIST_DEFINITION.id;
+  network = Network.FANTOM_OPERA_MAINNET;
+  lendingPoolAddress = '0x9fad24f572045c7869117160a571b2e50b10d068';
 }

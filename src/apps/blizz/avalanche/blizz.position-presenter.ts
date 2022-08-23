@@ -4,16 +4,15 @@ import { AaveV2ContractFactory } from '~apps/aave-v2';
 import { AaveV2PositionPresenter } from '~apps/aave-v2/common/aave-v2.position-presenter';
 import { Network } from '~types';
 
-import { AAVE_AMM_DEFINITION } from '../aave-amm.definition';
+import { BLIZZ_DEFINITION } from '../blizz.definition';
 
 @Injectable()
-export class EthereumAaveAmmPositionPresenter extends AaveV2PositionPresenter {
+export class AvalancheBlizzPositionPresenter extends AaveV2PositionPresenter {
   constructor(@Inject(AaveV2ContractFactory) contractFactory: AaveV2ContractFactory) {
     super(contractFactory);
   }
 
-  appId = AAVE_AMM_DEFINITION.id;
-  network = Network.ETHEREUM_MAINNET;
-  lendingPoolAddress = '0x7d2768de32b0b80b7a3454c06bdac94a69ddc7a9';
-  explorePresentationConfig = undefined;
+  appId = BLIZZ_DEFINITION.id;
+  network = Network.AVALANCHE_MAINNET;
+  lendingPoolAddress = '0x70bbe4a294878a14cb3cdd9315f5eb490e346163';
 }
