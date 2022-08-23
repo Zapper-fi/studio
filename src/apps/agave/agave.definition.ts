@@ -32,7 +32,7 @@ export const AGAVE_DEFINITION = appDefinition({
     claimable: {
       id: 'claimable',
       type: GroupType.POSITION,
-      label: 'Reward',
+      label: 'Rewards',
       isHiddenFromExplore: true,
     },
   },
