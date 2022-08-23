@@ -39,6 +39,7 @@ export class EthereumOpenleveragePoolTokenFetcher extends AppTokenTemplatePositi
   appId = OPENLEVERAGE_DEFINITION.id;
   groupId = OPENLEVERAGE_DEFINITION.groups.pool.id;
   network = Network.ETHEREUM_MAINNET;
+  groupLabel = 'Pools';
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,

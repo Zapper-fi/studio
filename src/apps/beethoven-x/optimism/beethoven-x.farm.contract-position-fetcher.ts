@@ -13,5 +13,6 @@ export class OptimismBeethovenXFarmContractPositionFetcher extends BeethovenXFar
   appId = BEETHOVEN_X_DEFINITION.id;
   groupId = BEETHOVEN_X_DEFINITION.groups.farm.id;
   network = Network.OPTIMISM_MAINNET;
+  groupLabel = 'Farms';
   subgraphUrl = 'https://backend-optimism.beets-ftm-node.com/';
 }

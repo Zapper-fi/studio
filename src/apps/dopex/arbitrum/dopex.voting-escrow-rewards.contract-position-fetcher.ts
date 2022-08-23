@@ -25,6 +25,7 @@ export class ArbitrumDopexVotingEscrowRewardsContractPositionFetcher extends Con
   appId = appId;
   groupId = groupId;
   network = network;
+  groupLabel = 'Voting Escrow Rewards';
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,

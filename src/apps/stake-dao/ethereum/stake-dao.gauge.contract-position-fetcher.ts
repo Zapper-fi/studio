@@ -9,6 +9,7 @@ import { isClaimable } from '~position/position.utils';
 import {
   DataPropsStageParams,
   GetTokenBalancesPerPositionParams,
+  TokenStageParams,
 } from '~position/template/contract-position.template.position-fetcher';
 import {
   SingleStakingFarmDataProps,
@@ -30,6 +31,7 @@ export class EthereumStakeDaoGaugeContractPositionFetcher extends SingleStakingF
   appId = appId;
   groupId = groupId;
   network = network;
+  groupLabel = 'Gauges';
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
@@ -46,11 +48,11 @@ export class EthereumStakeDaoGaugeContractPositionFetcher extends SingleStakingF
     return LOCKERS.map(v => v.gaugeAddress);
   }
 
-  async getStakedTokenAddress(contract: StakeDaoGauge) {
+  async getStakedTokenAddress({ contract }: TokenStageParams<StakeDaoGauge, SingleStakingFarmDataProps>) {
     return contract.staking_token();
   }
 
-  async getRewardTokenAddresses(contract: StakeDaoGauge) {
+  async getRewardTokenAddresses({ contract }: TokenStageParams<StakeDaoGauge, SingleStakingFarmDataProps>) {
     const rewardTokenAddresses = await Promise.all(range(0, 4).map(async i => contract.reward_tokens(i)));
     return rewardTokenAddresses.map(v => v.toLowerCase()).filter(v => v !== ZERO_ADDRESS);
   }

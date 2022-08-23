@@ -33,6 +33,7 @@ export class EthereumYearnYieldTokenFetcher extends AppTokenTemplatePositionFetc
   appId = appId;
   groupId = groupId;
   network = network;
+  groupLabel = 'Yield Tokens';
 
   constructor(
     @Inject(APP_TOOLKIT) appToolkit: IAppToolkit,

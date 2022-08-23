@@ -24,21 +24,18 @@ export const GEIST_DEFINITION = appDefinition({
       id: 'supply',
       type: GroupType.TOKEN,
       label: 'Lending',
-      groupLabel: 'Supply',
     },
 
     stableDebt: {
       id: 'stable-debt',
       type: GroupType.TOKEN,
       label: 'Lending',
-      groupLabel: 'Borrow',
     },
 
     variableDebt: {
       id: 'variable-debt',
       type: GroupType.TOKEN,
       label: 'Lending',
-      groupLabel: 'Borrow',
     },
   },
   presentationConfig: {

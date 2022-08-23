@@ -13,5 +13,6 @@ export class PolygonBalancerV2FarmContractPositionFetcher extends BalancerV2Farm
   appId = BALANCER_V2_DEFINITION.id;
   groupId = BALANCER_V2_DEFINITION.groups.farm.id;
   network = Network.POLYGON_MAINNET;
+  groupLabel = 'Staked';
   subgraphUrl = 'https://api.thegraph.com/subgraphs/name/balancer-labs/balancer-gauges-polygon';
 }

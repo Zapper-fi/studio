@@ -13,5 +13,6 @@ export class ArbitrumAbracadabraMspellContractPositionFetcher extends Abracadabr
   appId = appId;
   groupId = groupId;
   network = network;
+  groupLabel = 'mSPELL';
   mSpellAddress = '0x1df188958a8674b5177f77667b8d173c3cdd9e51';
 }

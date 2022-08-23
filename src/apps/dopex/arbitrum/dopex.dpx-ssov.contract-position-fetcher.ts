@@ -17,6 +17,7 @@ export class ArbitrumDopexDpxSsovContractPositionFetcher extends DopexSsovContra
   appId = appId;
   groupId = groupId;
   network = network;
+  groupLabel = 'SSOVs';
 
   getContract(address: string): DopexDpxSsov {
     return this.contractFactory.dopexDpxSsov({ address, network: this.network });

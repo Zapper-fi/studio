@@ -13,5 +13,6 @@ export class EthereumAbracadabraMspellContractPositionFetcher extends Abracadabr
   appId = appId;
   groupId = groupId;
   network = network;
+  groupLabel = 'mSPELL';
   mSpellAddress = '0xbd2fbaf2dc95bd78cf1cd3c5235b33d1165e6797';
 }

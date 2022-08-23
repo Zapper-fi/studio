@@ -8,7 +8,6 @@ import { ContractFactory } from '~contract';
 import { MulticallService } from '~multicall/multicall.service';
 import { NetworkProviderService } from '~network-provider/network-provider.service';
 import { DefaultDataProps } from '~position/display.interface';
-import { PositionFetcherTemplateRegistry } from '~position/position-fetcher.template-registry';
 import { PositionKeyService } from '~position/position-key.service';
 import { AppTokenPosition, ContractPosition, NonFungibleToken } from '~position/position.interface';
 import { AppGroupsDefinition, PositionService } from '~position/position.service';
@@ -30,7 +29,6 @@ export class AppToolkit implements IAppToolkit {
     @Inject(AppService) private readonly appService: AppService,
     @Inject(NetworkProviderService) private readonly networkProviderService: NetworkProviderService,
     @Inject(PositionService) private readonly positionService: PositionService,
-    @Inject(PositionFetcherTemplateRegistry)
     @Inject(PositionKeyService)
     private readonly positionKeyService: PositionKeyService,
     @Inject(PriceSelectorService) private readonly priceSelectorService: PriceSelectorService,

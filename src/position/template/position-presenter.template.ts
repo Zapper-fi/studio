@@ -1,6 +1,3 @@
-import { Inject } from '@nestjs/common';
-
-import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { PresentationConfig } from '~app/app.interface';
 import { MetadataItemWithLabel } from '~balance/balance-fetcher.interface';
 import { ContractPositionBalance, TokenBalance } from '~position/position-balance.interface';
@@ -12,11 +9,6 @@ export interface PositionPresenter {
 }
 
 export abstract class PositionPresenterTemplate implements PositionPresenter {
-  constructor(
-    @Inject(APP_TOOLKIT)
-    protected readonly appToolkit: IAppToolkit,
-  ) {}
-
   abstract network: Network;
   abstract appId: string;
 

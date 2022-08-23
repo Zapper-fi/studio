@@ -10,7 +10,9 @@ import {
   TokenStageParams,
 } from '~position/template/contract-position.template.position-fetcher';
 
-export abstract class VotingEscrowTokenFetcher<T extends Contract> extends ContractPositionTemplatePositionFetcher<T> {
+export abstract class VotingEscrowTemplateContractPositionFetcher<
+  T extends Contract,
+> extends ContractPositionTemplatePositionFetcher<T> {
   abstract veTokenAddress: string;
   abstract getEscrowedTokenAddress(params: TokenStageParams<T>): Promise<string>;
   abstract getEscrowedTokenBalance(params: GetTokenBalancesPerPositionParams<T>): Promise<BigNumberish>;

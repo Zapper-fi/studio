@@ -14,7 +14,6 @@ export const GMX_DEFINITION = appDefinition({
       id: 'es-gmx',
       type: GroupType.TOKEN,
       label: 'esGMX',
-      groupLabel: 'Escrow',
       isHiddenFromExplore: true,
     },
 
@@ -22,21 +21,18 @@ export const GMX_DEFINITION = appDefinition({
       id: 'glp',
       type: GroupType.TOKEN,
       label: 'GLP',
-      groupLabel: 'Liquidity',
     },
 
     farm: {
       id: 'farm',
       type: GroupType.POSITION,
       label: 'Farms',
-      groupLabel: 'Farms',
     },
 
     option: {
       id: 'option',
       type: GroupType.POSITION,
       label: 'Options',
-      groupLabel: 'Options',
     },
   },
   tags: [AppTag.MARGIN_TRADING],

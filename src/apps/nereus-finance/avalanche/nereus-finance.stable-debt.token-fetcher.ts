@@ -20,6 +20,7 @@ export class AvalancheNereusFinanceStableDebtTokenFetcher extends AaveV2LendingT
   appId = NEREUS_FINANCE_DEFINITION.id;
   groupId = NEREUS_FINANCE_DEFINITION.groups.stableDebt.id;
   network = Network.AVALANCHE_MAINNET;
+  groupLabel = 'Lending';
   providerAddress = '0xec090929fbc1b285fc9b3c8ebb92fbc62f01d804';
   isDebt = true;
 

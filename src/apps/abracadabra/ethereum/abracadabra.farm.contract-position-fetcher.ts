@@ -13,5 +13,6 @@ export class EthereumAbracadabraFarmContractPositionFetcher extends AbracadabraF
   appId = appId;
   groupId = groupId;
   network = network;
+  groupLabel = 'Farms';
   chefAddress = '0xf43480afe9863da4acbd4419a47d9cc7d25a647f';
 }

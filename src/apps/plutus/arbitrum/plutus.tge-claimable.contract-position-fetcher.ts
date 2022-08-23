@@ -24,6 +24,7 @@ export class ArbitrumPlutusTgeClaimableContractPositionFetcher extends ContractP
   appId = PLUTUS_DEFINITION.id;
   groupId = PLUTUS_DEFINITION.groups.tgeClaimable.id;
   network = Network.ARBITRUM_MAINNET;
+  groupLabel = 'Private TGE Allocation';
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,

@@ -13,6 +13,7 @@ export class ArbitrumStargatePoolTokenFetcher extends StargatePoolTokenFetcher {
   appId = appId;
   groupId = groupId;
   network = network;
+  groupLabel = 'Pool';
   factoryAddress = '0x55bdb4164d28fbaf0898e0ef14a589ac09ac9970';
   useLocalDecimals = false;
 }

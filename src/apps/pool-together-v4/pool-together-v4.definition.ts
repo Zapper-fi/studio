@@ -16,7 +16,7 @@ export const POOL_TOGETHER_V4_DEFINITION = appDefinition({
     medium: 'https://medium.com/pooltogether',
   },
   groups: {
-    ticket: { id: 'ticket', type: GroupType.TOKEN, label: 'PoolTogether', groupLabel: 'Deposit' },
+    ticket: { id: 'ticket', type: GroupType.TOKEN, label: 'PoolTogether' },
     claimable: { id: 'claimable', type: GroupType.TOKEN, label: 'Rewards', isHiddenFromExplore: true },
   },
   tags: [AppTag.LOTTERY],

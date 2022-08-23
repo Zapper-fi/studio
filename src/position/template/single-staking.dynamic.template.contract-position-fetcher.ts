@@ -30,8 +30,8 @@ export abstract class SingleStakingFarmDynamicTemplateContractPositionFetcher<
   }
 
   abstract getFarmAddresses(): string[] | Promise<string[]>;
-  abstract getStakedTokenAddress(contract: T): Promise<string>;
-  abstract getRewardTokenAddresses(contract: T): Promise<string | string[]>;
+  abstract getStakedTokenAddress(params: TokenStageParams<T, V>): Promise<string>;
+  abstract getRewardTokenAddresses(params: TokenStageParams<T, V>): Promise<string | string[]>;
   abstract getRewardRates(params: DataPropsStageParams<T, V>): Promise<BigNumberish | BigNumberish[]>;
   abstract getStakedTokenBalance(
     params: GetTokenBalancesPerPositionParams<T, SingleStakingFarmDataProps>,
@@ -45,9 +45,9 @@ export abstract class SingleStakingFarmDynamicTemplateContractPositionFetcher<
     return farmAddresses.map(address => ({ address }));
   }
 
-  async getTokenDescriptors({ contract }: TokenStageParams<T, V>) {
-    const stakedTokenAddress = await this.getStakedTokenAddress(contract);
-    const rewardTokenAddresses = await this.getRewardTokenAddresses(contract).then(v => (isArray(v) ? v : [v]));
+  async getTokenDescriptors(params: TokenStageParams<T, V>) {
+    const stakedTokenAddress = await this.getStakedTokenAddress(params);
+    const rewardTokenAddresses = await this.getRewardTokenAddresses(params).then(v => (isArray(v) ? v : [v]));
 
     const tokens: UnderlyingTokenDescriptor[] = [];
     tokens.push({ metaType: MetaType.SUPPLIED, address: stakedTokenAddress.toLowerCase() });

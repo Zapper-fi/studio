@@ -20,6 +20,7 @@ export class AvalancheAaveV2StableDebtTokenFetcher extends AaveV2LendingTemplate
   appId = AAVE_V2_DEFINITION.id;
   groupId = AAVE_V2_DEFINITION.groups.stableDebt.id;
   network = Network.AVALANCHE_MAINNET;
+  groupLabel = 'Lending';
   providerAddress = '0x65285e9dfab318f57051ab2b139cccf232945451';
   isDebt = true;
 
