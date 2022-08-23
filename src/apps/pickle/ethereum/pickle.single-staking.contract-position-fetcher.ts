@@ -27,6 +27,7 @@ export class EthereumPickleSingleRewardPositionFetcher extends SingleStakingFarm
   appId = appId;
   groupId = groupId;
   network = network;
+  groupLabel = 'Farms';
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,

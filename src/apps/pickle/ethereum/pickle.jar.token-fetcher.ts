@@ -13,4 +13,5 @@ export class EthereumPickleJarTokenFetcher extends PickleJarTokenFetcher {
   appId = appId;
   groupId = groupId;
   network = network;
+  groupLabel = 'Jars';
 }

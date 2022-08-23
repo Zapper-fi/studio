@@ -13,4 +13,5 @@ export class ArbitrumPickleJarTokenFetcher extends PickleJarTokenFetcher {
   appId = appId;
   groupId = groupId;
   network = network;
+  groupLabel = 'Jars';
 }
