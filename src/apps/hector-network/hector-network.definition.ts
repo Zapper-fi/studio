@@ -28,6 +28,18 @@ export const HECTOR_NETWORK_DEFINITION = appDefinition({
       label: 'Wrapped sHEC V2',
     },
 
+    hec: {
+      id: 'hec',
+      type: GroupType.TOKEN,
+      label: 'Hector Network',
+    },
+
+    tor: {
+      id: 'tor',
+      type: GroupType.TOKEN,
+      label: 'TOR',
+    },
+
     bond: {
       id: 'bond',
       type: GroupType.POSITION,
