@@ -1,4 +1,5 @@
 import { Register } from '~app-toolkit/decorators';
+import { AbstractApp } from '~app/app.dynamic-module';
 
 import { BottoAppDefinition, BOTTO_DEFINITION } from './botto.definition';
 import { BottoContractFactory } from './contracts';
@@ -14,4 +15,4 @@ import { EthereumBottoGovernanceContractPositionFetcher } from './ethereum/botto
     EthereumBottoGovernanceContractPositionFetcher,
   ],
 })
-export class BottoAppModule {}
+export class BottoAppModule extends AbstractApp() {}
