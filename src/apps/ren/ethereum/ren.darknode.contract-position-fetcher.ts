@@ -48,7 +48,7 @@ export class EthereumRenDarknodeContractPositionFetcher extends ContractPosition
 
   async getTokenDescriptors() {
     const { assets } = await this.apiClient.getDarknodeAssets();
-    const claimable = [ZERO_ADDRESS, '0x59adcf176ed2f6788a41b8ea4c4904518e62b6a4', ...assets.map(v => v.tokenAddress)];
+    const claimable = [ZERO_ADDRESS, ...assets.map(v => v.tokenAddress)];
 
     return [
       { address: '0x408e41876cccdc0f92210600ef50372656052a38', metaType: MetaType.SUPPLIED },
