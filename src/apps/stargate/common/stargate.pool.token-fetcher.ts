@@ -3,14 +3,14 @@ import BigNumber from 'bignumber.js';
 import { range } from 'lodash';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
-import { IMulticallWrapper } from '~multicall';
 import { DefaultDataProps } from '~position/display.interface';
+import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import {
-  AppTokenTemplatePositionFetcher,
-  UnderlyingTokensStageParams,
-  PricePerShareStageParams,
-  DataPropsStageParams,
-} from '~position/template/app-token.template.position-fetcher';
+  GetAddressesStageParams,
+  GetDataPropsStageParams,
+  GetPricePerShareStageParams,
+  GetUnderlyingTokensStageParams,
+} from '~position/template/app-token.template.types';
 
 import { StargatePool, StargateContractFactory } from '../contracts';
 
@@ -37,7 +37,7 @@ export abstract class StargatePoolTokenFetcher extends AppTokenTemplatePositionF
     return this.contractFactory.stargatePool({ address, network: this.network });
   }
 
-  async getAddresses({ multicall }: { multicall: IMulticallWrapper }) {
+  async getAddresses({ multicall }: GetAddressesStageParams) {
     const factory = this.contractFactory.stargateFactory({
       address: this.factoryAddress,
       network: this.network,
@@ -47,11 +47,11 @@ export abstract class StargatePoolTokenFetcher extends AppTokenTemplatePositionF
     return Promise.all(range(0, Number(numPools)).map(pid => multicall.wrap(factory).allPools(pid)));
   }
 
-  async getUnderlyingTokenAddresses({ contract }: UnderlyingTokensStageParams<StargatePool>) {
+  async getUnderlyingTokenAddresses({ contract }: GetUnderlyingTokensStageParams<StargatePool>) {
     return contract.token();
   }
 
-  async getPricePerShare({ appToken, contract }: PricePerShareStageParams<StargatePool, DefaultDataProps>) {
+  async getPricePerShare({ appToken, contract }: GetPricePerShareStageParams<StargatePool, DefaultDataProps>) {
     const lpAmount = new BigNumber(10 ** appToken.tokens[0].decimals).toFixed(0);
     const [convertRate, localDecimalsRaw, pricePerShareRaw] = await Promise.all([
       contract.convertRate(),
@@ -69,7 +69,7 @@ export abstract class StargatePoolTokenFetcher extends AppTokenTemplatePositionF
   async getDataProps({
     appToken,
     multicall,
-  }: DataPropsStageParams<StargatePool, StargatePoolTokenDataProps>): Promise<StargatePoolTokenDataProps> {
+  }: GetDataPropsStageParams<StargatePool, StargatePoolTokenDataProps>): Promise<StargatePoolTokenDataProps> {
     const underlyingToken = appToken.tokens[0]!;
     const underlying = this.contractFactory.erc20(underlyingToken);
     const reserveRaw = await multicall.wrap(underlying).balanceOf(appToken.address);

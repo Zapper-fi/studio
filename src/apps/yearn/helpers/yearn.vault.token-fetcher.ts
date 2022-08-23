@@ -2,10 +2,8 @@ import { Inject } from '@nestjs/common';
 import { Contract } from 'ethers';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
-import {
-  AppTokenTemplatePositionFetcher,
-  UnderlyingTokensStageParams,
-} from '~position/template/app-token.template.position-fetcher';
+import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
+import { GetUnderlyingTokensStageParams } from '~position/template/app-token.template.types';
 
 import { YearnVaultTokenDefinitionsResolver } from '../helpers/yearn.vault.token-definitions-resolver';
 
@@ -49,7 +47,7 @@ export abstract class YearnVaultTokenFetcher<T extends Contract> extends AppToke
     return vaultDefinitions.map(({ address }) => address.toLowerCase());
   }
 
-  async getUnderlyingTokenAddresses({ contract }: UnderlyingTokensStageParams<T>): Promise<string[]> {
+  async getUnderlyingTokenAddresses({ contract }: GetUnderlyingTokensStageParams<T>): Promise<string[]> {
     const vault = await this.selectVault(contract.address.toLowerCase());
     if (!vault) throw new Error('Cannot find specified vault');
 

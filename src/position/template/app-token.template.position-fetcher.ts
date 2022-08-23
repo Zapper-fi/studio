@@ -15,123 +15,113 @@ import { DefaultDataProps, DisplayProps, StatsItem } from '~position/display.int
 import { AppTokenPositionBalance } from '~position/position-balance.interface';
 import { PositionFetcher } from '~position/position-fetcher.interface';
 import { AppTokenPosition } from '~position/position.interface';
-import { TokenDependencySelector } from '~position/selectors/token-dependency-selector.interface';
 import { Network } from '~types/network.interface';
 
-export type StageParams<T extends Contract, V, K extends keyof AppTokenPosition> = {
-  tokenLoader: TokenDependencySelector;
-  multicall: IMulticallWrapper;
-  contract: T;
-  appToken: Omit<AppTokenPosition<V>, K>;
-};
+import {
+  DefaultAppTokenDefinition,
+  GetAddressesStageParams,
+  GetDataPropsStageParams,
+  GetDefinitionStageParams,
+  GetDisplayPropsStageParams,
+  GetPricePerShareStageParams,
+  GetPriceStageParams,
+  GetTokenPropsStageParams,
+  GetUnderlyingTokensStageParams,
+} from './app-token.template.types';
 
-export type TokenPropsStageParams<T> = {
-  address: string;
-  contract: T;
-  multicall: IMulticallWrapper;
-};
-
-export type UnderlyingTokensStageParams<T> = {
-  address: string;
-  index: number;
-  contract: T;
-  multicall: IMulticallWrapper;
-};
-
-export type PricePerShareStageParams<T extends Contract, V extends DefaultDataProps = DefaultDataProps> = StageParams<
-  T,
-  V,
-  'pricePerShare' | 'price' | 'dataProps' | 'displayProps'
->;
-export type PriceStageParams<T extends Contract, V extends DefaultDataProps = DefaultDataProps> = StageParams<
-  T,
-  V,
-  'price' | 'dataProps' | 'displayProps'
->;
-export type DataPropsStageParams<T extends Contract, V extends DefaultDataProps = DefaultDataProps> = StageParams<
-  T,
-  V,
-  'dataProps' | 'displayProps'
->;
-export type DisplayPropsStageParams<T extends Contract, V extends DefaultDataProps = DefaultDataProps> = StageParams<
-  T,
-  V,
-  'displayProps'
->;
-
-export abstract class AppTokenTemplatePositionFetcher<T extends Contract, V extends DefaultDataProps = DefaultDataProps>
-  implements PositionFetcher<AppTokenPosition<V>>
+export abstract class AppTokenTemplatePositionFetcher<
+  T extends Contract,
+  V extends DefaultDataProps = DefaultDataProps,
+  R extends DefaultAppTokenDefinition = DefaultAppTokenDefinition,
+> implements PositionFetcher<AppTokenPosition<V>>
 {
   abstract appId: string;
   abstract groupId: string;
   abstract network: Network;
   abstract groupLabel: string;
-  fromNetwork?: Network;
 
+  fromNetwork?: Network;
   minLiquidity = 1000;
 
   constructor(@Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit) {}
 
-  abstract getContract(address: string): T;
-  abstract getAddresses(params: { multicall: IMulticallWrapper }): string[] | Promise<string[]>;
+  // 1. (Optional) Get token definitions (i.e.: token addresses and additional context)
+  async getDefinitions(_params: GetDefinitionStageParams): Promise<R[]> {
+    return [];
+  }
 
-  // Token Props
-  async getSymbol({ address, multicall }: TokenPropsStageParams<T>): Promise<string> {
+  // 2. Get token addresses
+  abstract getAddresses(params: GetAddressesStageParams): string[] | Promise<string[]>;
+
+  // 3. Get token contract instance
+  abstract getContract(address: string): T;
+
+  // 4. Get underlying token addresses
+  async getUnderlyingTokenAddresses(_params: GetUnderlyingTokensStageParams<T, R>): Promise<string | string[]> {
+    return [];
+  }
+
+  // 5A. Get symbol (ERC20 standard)
+  async getSymbol({ address, multicall }: GetTokenPropsStageParams<T, R>): Promise<string> {
     const erc20 = this.appToolkit.globalContracts.erc20({ address, network: this.network });
     return multicall.wrap(erc20).symbol();
   }
 
-  async getDecimals({ address, multicall }: TokenPropsStageParams<T>): Promise<number> {
+  // 5B. Get decimals (ERC20 standard)
+  async getDecimals({ address, multicall }: GetTokenPropsStageParams<T, R>): Promise<number> {
     const erc20 = this.appToolkit.globalContracts.erc20({ address, network: this.network });
     return multicall.wrap(erc20).decimals();
   }
 
-  async getSupply({ address, multicall }: TokenPropsStageParams<T>): Promise<BigNumberish> {
+  // 5C. Get supply (ERC20 standard)
+  async getSupply({ address, multicall }: GetTokenPropsStageParams<T, R>): Promise<BigNumberish> {
     const erc20 = this.appToolkit.globalContracts.erc20({ address, network: this.network });
     return multicall.wrap(erc20).totalSupply();
   }
 
-  // Price Properties
-  async getUnderlyingTokenAddresses(_params: UnderlyingTokensStageParams<T>): Promise<string | string[]> {
-    return [];
-  }
-
-  async getPricePerShare(_params: PricePerShareStageParams<T, V>): Promise<number | number[]> {
+  // 6. Get price per share (ratio between token and underlying token)
+  async getPricePerShare(_params: GetPricePerShareStageParams<T, V, R>): Promise<number | number[]> {
     return 1;
   }
 
-  async getPrice({ appToken }: PriceStageParams<T, V>): Promise<number> {
+  async getPrice({ appToken }: GetPriceStageParams<T, V, R>): Promise<number> {
     return sum(appToken.tokens.map((v, i) => v.price * appToken.pricePerShare[i]));
   }
 
   // Data Properties
-  async getDataProps(_params: DataPropsStageParams<T, V>): Promise<V> {
+  async getDataProps(_params: GetDataPropsStageParams<T, V, R>): Promise<V> {
     return {} as V;
   }
 
   // Display Properties
-  async getLabel({ appToken }: DisplayPropsStageParams<T, V>): Promise<DisplayProps['label']> {
+  async getLabel({ appToken }: GetDisplayPropsStageParams<T, V, R>): Promise<DisplayProps['label']> {
     return appToken.symbol;
   }
 
-  async getLabelDetailed(_params: DisplayPropsStageParams<T, V>): Promise<DisplayProps['labelDetailed']> {
+  async getLabelDetailed(_params: GetDisplayPropsStageParams<T, V, R>): Promise<DisplayProps['labelDetailed']> {
     return undefined;
   }
 
-  async getSecondaryLabel({ appToken }: DisplayPropsStageParams<T, V>): Promise<DisplayProps['secondaryLabel']> {
+  async getSecondaryLabel({ appToken }: GetDisplayPropsStageParams<T, V, R>): Promise<DisplayProps['secondaryLabel']> {
     return buildDollarDisplayItem(appToken.price);
   }
 
-  async getTertiaryLabel({ appToken }: DisplayPropsStageParams<T, V>): Promise<DisplayProps['tertiaryLabel']> {
+  async getTertiaryLabel({ appToken }: GetDisplayPropsStageParams<T, V, R>): Promise<DisplayProps['tertiaryLabel']> {
     if (typeof appToken.dataProps.apy === 'number') return `${appToken.dataProps.apy.toFixed(3)}% APY`;
     return undefined;
   }
 
-  async getImages({ appToken }: DisplayPropsStageParams<T, V>): Promise<DisplayProps['images']> {
+  async getImages({ appToken }: GetDisplayPropsStageParams<T, V, R>): Promise<DisplayProps['images']> {
     return appToken.tokens.flatMap(v => getImagesFromToken(v));
   }
 
-  async getStatsItems({ appToken }: DisplayPropsStageParams<T, V>): Promise<DisplayProps['statsItems']> {
+  async getBalanceDisplayMode(
+    _params: GetDisplayPropsStageParams<T, V, R>,
+  ): Promise<DisplayProps['balanceDisplayMode']> {
+    return undefined;
+  }
+
+  async getStatsItems({ appToken }: GetDisplayPropsStageParams<T, V, R>): Promise<DisplayProps['statsItems']> {
     const statsItems: StatsItem[] = [];
 
     // Standardized Fields
@@ -155,16 +145,20 @@ export abstract class AppTokenTemplatePositionFetcher<T extends Contract, V exte
       tags: { network: this.network, context: `${this.appId}__template` },
     });
 
-    const addresses = await this.getAddresses({ multicall });
+    const definitions = await this.getDefinitions({ multicall });
+    const addresses = await this.getAddresses({ multicall, definitions });
 
     const skeletons = await Promise.all(
-      addresses.map(async (address, index) => {
+      addresses.map(async address => {
+        const definition = definitions.find(v => v.address === address) ?? ({ address } as R);
         const contract = multicall.wrap(this.getContract(address));
-        const underlyingTokenAddresses = await this.getUnderlyingTokenAddresses({ address, index, contract, multicall })
+        const context = { address, definition, contract, multicall, tokenLoader };
+
+        const underlyingTokenAddresses = await this.getUnderlyingTokenAddresses(context)
           .then(v => (Array.isArray(v) ? v : [v]))
           .then(v => v.map(t => t.toLowerCase()));
 
-        return { address, underlyingTokenAddresses };
+        return { address, definition, underlyingTokenAddresses };
       }),
     );
 
@@ -184,27 +178,29 @@ export abstract class AppTokenTemplatePositionFetcher<T extends Contract, V exte
       const allTokens = [...currentTokens, ...tokenDependencies];
 
       const skeletonsWithResolvedTokens = await Promise.all(
-        skeletonsSubset.map(async ({ address, underlyingTokenAddresses }) => {
+        skeletonsSubset.map(async ({ address, definition, underlyingTokenAddresses }) => {
           const maybeTokens = underlyingTokenAddresses.map(v => allTokens.find(t => t.address === v));
           const tokens = compact(maybeTokens);
 
           if (maybeTokens.length !== tokens.length) return null;
-          return { address, tokens };
+          return { address, definition, tokens };
         }),
       );
 
       const tokens = await Promise.all(
-        compact(skeletonsWithResolvedTokens).map(async ({ address, tokens }) => {
+        compact(skeletonsWithResolvedTokens).map(async ({ address, definition, tokens }) => {
           const contract = multicall.wrap(this.getContract(address));
+          const baseContext = { address, contract, multicall, tokenLoader, definition };
+
           const [symbol, decimals, totalSupplyRaw] = await Promise.all([
-            this.getSymbol({ address, contract, multicall }),
-            this.getDecimals({ address, contract, multicall }),
-            this.getSupply({ address, contract, multicall }),
+            this.getSymbol(baseContext),
+            this.getDecimals(baseContext),
+            this.getSupply(baseContext),
           ]);
 
           const supply = Number(totalSupplyRaw) / 10 ** decimals;
 
-          const fragment: PricePerShareStageParams<T, V>['appToken'] = {
+          const baseFragment: GetPricePerShareStageParams<T, V, R>['appToken'] = {
             type: ContractType.APP_TOKEN,
             appId: this.appId,
             groupId: this.groupId,
@@ -217,22 +213,22 @@ export abstract class AppTokenTemplatePositionFetcher<T extends Contract, V exte
           };
 
           // Resolve price per share stage
-          const pricePerShareStageParams = { appToken: fragment, contract, multicall, tokenLoader };
-          const pricePerShare = await this.getPricePerShare(pricePerShareStageParams).then(v => (isArray(v) ? v : [v]));
+          const pricePerShareContext = { ...baseContext, appToken: baseFragment };
+          const pricePerShare = await this.getPricePerShare(pricePerShareContext).then(v => (isArray(v) ? v : [v]));
 
           // Resolve Price Stage
-          const priceStageFragment = { ...pricePerShareStageParams.appToken, pricePerShare };
-          const priceStageParams = { appToken: priceStageFragment, contract, multicall, tokenLoader };
-          const price = await this.getPrice(priceStageParams);
+          const priceStageFragment = { ...baseFragment, pricePerShare };
+          const priceContext = { ...baseContext, appToken: priceStageFragment };
+          const price = await this.getPrice(priceContext);
 
           // Resolve Data Props Stage
-          const dataPropsStageFragment = { ...priceStageParams.appToken, price };
-          const dataPropsStageParams = { appToken: dataPropsStageFragment, contract, multicall, tokenLoader };
+          const dataPropsStageFragment = { ...priceStageFragment, price };
+          const dataPropsStageParams = { ...baseContext, appToken: dataPropsStageFragment };
           const dataProps = await this.getDataProps(dataPropsStageParams);
 
           // Resolve Display Props Stage
-          const displayPropsStageFragment = { ...dataPropsStageParams.appToken, dataProps };
-          const displayPropsStageParams = { appToken: displayPropsStageFragment, contract, multicall, tokenLoader };
+          const displayPropsStageFragment = { ...dataPropsStageFragment, dataProps };
+          const displayPropsStageParams = { ...baseContext, appToken: displayPropsStageFragment };
           const displayProps = {
             label: await this.getLabel(displayPropsStageParams),
             labelDetailed: await this.getLabelDetailed(displayPropsStageParams),
@@ -240,6 +236,7 @@ export abstract class AppTokenTemplatePositionFetcher<T extends Contract, V exte
             tertiaryLabel: await this.getTertiaryLabel(displayPropsStageParams),
             images: await this.getImages(displayPropsStageParams),
             statsItems: await this.getStatsItems(displayPropsStageParams),
+            balanceDisplayMode: await this.getBalanceDisplayMode(displayPropsStageParams),
           };
 
           const appToken = { ...displayPropsStageFragment, displayProps };

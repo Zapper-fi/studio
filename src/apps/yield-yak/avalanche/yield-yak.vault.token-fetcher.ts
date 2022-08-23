@@ -4,12 +4,12 @@ import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
 import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { DefaultDataProps } from '~position/display.interface';
+import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import {
-  AppTokenTemplatePositionFetcher,
-  DataPropsStageParams,
-  DisplayPropsStageParams,
-  UnderlyingTokensStageParams,
-} from '~position/template/app-token.template.position-fetcher';
+  GetUnderlyingTokensStageParams,
+  GetDisplayPropsStageParams,
+  GetDataPropsStageParams,
+} from '~position/template/app-token.template.types';
 import { Network } from '~types/network.interface';
 
 import { YieldYakContractFactory, YieldYakVault } from '../contracts';
@@ -54,18 +54,18 @@ export class AvalancheYieldyakVaultTokenFetcher extends AppTokenTemplatePosition
     return vaultDefinitions.map(address => address.id.toLowerCase());
   }
 
-  async getUnderlyingTokenAddresses({ contract }: UnderlyingTokensStageParams<YieldYakVault>) {
+  async getUnderlyingTokenAddresses({ contract }: GetUnderlyingTokensStageParams<YieldYakVault>) {
     const vault = await this.selectVault(contract.address.toLowerCase());
     if (!vault) throw new Error('Cannot find specified vault');
 
     return [vault.depositToken.id.toLowerCase()];
   }
 
-  async getLabel({ appToken }: DisplayPropsStageParams<YieldYakVault, DefaultDataProps>): Promise<string> {
+  async getLabel({ appToken }: GetDisplayPropsStageParams<YieldYakVault, DefaultDataProps>): Promise<string> {
     return appToken.tokens.map(v => getLabelFromToken(v)).join(' / ');
   }
 
-  async getDataProps(opts: DataPropsStageParams<YieldYakVault, DefaultDataProps>): Promise<DefaultDataProps> {
+  async getDataProps(opts: GetDataPropsStageParams<YieldYakVault, DefaultDataProps>): Promise<DefaultDataProps> {
     const { appToken } = opts;
     const liquidity = appToken.price * appToken.supply;
 

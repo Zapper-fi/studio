@@ -2,11 +2,11 @@ import { Inject } from '@nestjs/common';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
+import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import {
-  AppTokenTemplatePositionFetcher,
-  PricePerShareStageParams,
-  UnderlyingTokensStageParams,
-} from '~position/template/app-token.template.position-fetcher';
+  GetPricePerShareStageParams,
+  GetUnderlyingTokensStageParams,
+} from '~position/template/app-token.template.types';
 import { Network } from '~types/network.interface';
 
 import { BEETHOVEN_X_DEFINITION } from '../beethoven-x.definition';
@@ -39,11 +39,11 @@ export class FantomBeethovenXFBeetsTokenFetcher extends AppTokenTemplatePosition
     return this.contractFactory.beethovenXBeetsBar({ address, network: this.network });
   }
 
-  async getUnderlyingTokenAddresses({ contract }: UnderlyingTokensStageParams<BeethovenXBeetsBar>) {
+  async getUnderlyingTokenAddresses({ contract }: GetUnderlyingTokensStageParams<BeethovenXBeetsBar>) {
     return contract.vestingToken();
   }
 
-  async getPricePerShare({ appToken, multicall }: PricePerShareStageParams<BeethovenXBeetsBar>) {
+  async getPricePerShare({ appToken, multicall }: GetPricePerShareStageParams<BeethovenXBeetsBar>) {
     const underlying = appToken.tokens[0];
     const underlyingTokenContract = this.contractFactory.erc20({ address: underlying.address, network: this.network });
     const reserveRaw = await multicall.wrap(underlyingTokenContract).balanceOf(appToken.address);

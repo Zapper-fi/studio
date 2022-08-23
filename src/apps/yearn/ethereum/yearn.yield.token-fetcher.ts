@@ -3,12 +3,12 @@ import { Inject } from '@nestjs/common';
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
 import { isMulticallUnderlyingError } from '~multicall/multicall.ethers';
+import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import {
-  AppTokenTemplatePositionFetcher,
-  DataPropsStageParams,
-  PricePerShareStageParams,
-  UnderlyingTokensStageParams,
-} from '~position/template/app-token.template.position-fetcher';
+  GetUnderlyingTokensStageParams,
+  GetPricePerShareStageParams,
+  GetDataPropsStageParams,
+} from '~position/template/app-token.template.types';
 import { Network } from '~types/network.interface';
 
 import { YearnContractFactory, YearnVault } from '../contracts';
@@ -51,7 +51,7 @@ export class EthereumYearnYieldTokenFetcher extends AppTokenTemplatePositionFetc
     return Y_TOKENS.map(yToken => yToken.address);
   }
 
-  async getUnderlyingTokenAddresses({ contract }: UnderlyingTokensStageParams<YearnVault>): Promise<string[]> {
+  async getUnderlyingTokenAddresses({ contract }: GetUnderlyingTokensStageParams<YearnVault>): Promise<string[]> {
     const match = Y_TOKENS.find(yToken => yToken.address === contract.address.toLowerCase());
     if (!match) throw new Error('Cannot find specified Y token');
     return [match.underlyingAddress];
@@ -59,7 +59,7 @@ export class EthereumYearnYieldTokenFetcher extends AppTokenTemplatePositionFetc
 
   async getPricePerShare({
     contract,
-  }: PricePerShareStageParams<YearnVault, YearnYieldTokenDataProps>): Promise<number> {
+  }: GetPricePerShareStageParams<YearnVault, YearnYieldTokenDataProps>): Promise<number> {
     return contract
       .getPricePerFullShare()
       .catch(err => {
@@ -70,7 +70,7 @@ export class EthereumYearnYieldTokenFetcher extends AppTokenTemplatePositionFetc
   }
 
   async getDataProps(
-    opts: DataPropsStageParams<YearnVault, YearnYieldTokenDataProps>,
+    opts: GetDataPropsStageParams<YearnVault, YearnYieldTokenDataProps>,
   ): Promise<YearnYieldTokenDataProps> {
     const { appToken } = opts;
     const reserve = appToken.supply * appToken.pricePerShare[0];

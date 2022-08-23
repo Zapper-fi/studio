@@ -2,13 +2,12 @@ import { Inject } from '@nestjs/common';
 
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
-import { DisplayProps } from '~position/display.interface';
+import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import {
-  AppTokenTemplatePositionFetcher,
-  DisplayPropsStageParams,
-  DataPropsStageParams,
-  UnderlyingTokensStageParams,
-} from '~position/template/app-token.template.position-fetcher';
+  GetDataPropsStageParams,
+  GetDisplayPropsStageParams,
+  GetUnderlyingTokensStageParams,
+} from '~position/template/app-token.template.types';
 import { Network } from '~types/network.interface';
 
 import { HectorNetworkContractFactory, HectorNetworkStaked } from '../contracts';
@@ -47,18 +46,16 @@ export class FantomHectorNetworkSHecV2TokenFetcher extends AppTokenTemplatePosit
     return ['0x75bdef24285013387a47775828bec90b91ca9a5f'];
   }
 
-  async getUnderlyingTokenAddresses(_params: UnderlyingTokensStageParams<HectorNetworkStaked>) {
+  async getUnderlyingTokenAddresses(_params: GetUnderlyingTokensStageParams<HectorNetworkStaked>) {
     return '0x5c4fdfc5233f935f20d2adba572f770c2e377ab0';
   }
 
-  async getDataProps({ appToken }: DataPropsStageParams<HectorNetworkStaked, HectorNetworkSHecV2DataProps>) {
+  async getDataProps({ appToken }: GetDataPropsStageParams<HectorNetworkStaked, HectorNetworkSHecV2DataProps>) {
     const liquidity = appToken.supply * appToken.price;
     return { liquidity };
   }
 
-  async getLabel(
-    _params: DisplayPropsStageParams<HectorNetworkStaked, HectorNetworkSHecV2DataProps>,
-  ): Promise<DisplayProps['label']> {
+  async getLabel(_params: GetDisplayPropsStageParams<HectorNetworkStaked, HectorNetworkSHecV2DataProps>) {
     return 'Staked HEC V2';
   }
 }

@@ -2,10 +2,8 @@ import { Inject } from '@nestjs/common';
 
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
-import {
-  AppTokenTemplatePositionFetcher,
-  UnderlyingTokensStageParams,
-} from '~position/template/app-token.template.position-fetcher';
+import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
+import { GetUnderlyingTokensStageParams } from '~position/template/app-token.template.types';
 import { Network } from '~types/network.interface';
 
 import { SteakHutContractFactory, SteakHutHjoe } from '../contracts';
@@ -37,7 +35,7 @@ export class AvalancheSteakHutVeTokenFetcher extends AppTokenTemplatePositionFet
     return ['0xe7250b05bd8dee615ecc681eda1196add5156f2b'];
   }
 
-  getUnderlyingTokenAddresses({ contract }: UnderlyingTokensStageParams<SteakHutHjoe>) {
+  getUnderlyingTokenAddresses({ contract }: GetUnderlyingTokensStageParams<SteakHutHjoe>) {
     return contract.JOE();
   }
 }

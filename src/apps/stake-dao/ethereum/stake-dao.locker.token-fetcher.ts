@@ -4,11 +4,11 @@ import BigNumber from 'bignumber.js';
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
 import { Erc20 } from '~contract/contracts';
+import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import {
-  AppTokenTemplatePositionFetcher,
-  PricePerShareStageParams,
-  UnderlyingTokensStageParams,
-} from '~position/template/app-token.template.position-fetcher';
+  GetUnderlyingTokensStageParams,
+  GetPricePerShareStageParams,
+} from '~position/template/app-token.template.types';
 import { Network } from '~types';
 
 import { StakeDaoContractFactory } from '../contracts';
@@ -66,11 +66,11 @@ export class EthereumStakeDaoLockerTokenFetcher extends AppTokenTemplatePosition
     return LOCKERS.map(v => v.tokenAddress);
   }
 
-  async getUnderlyingTokenAddresses({ address }: UnderlyingTokensStageParams<Erc20>): Promise<string | string[]> {
+  async getUnderlyingTokenAddresses({ address }: GetUnderlyingTokensStageParams<Erc20>): Promise<string | string[]> {
     return LOCKERS.find(v => v.tokenAddress == address)!.underlyingTokenAddress;
   }
 
-  async getPricePerShare({ appToken, multicall }: PricePerShareStageParams<Erc20>) {
+  async getPricePerShare({ appToken, multicall }: GetPricePerShareStageParams<Erc20>) {
     // Lockers are minted 1:1; if an exchange market exists in Curve, use it to derive the price
     const locker = LOCKERS.find(v => v.tokenAddress == appToken.address)!;
     if (!locker.poolAddress) return 1;

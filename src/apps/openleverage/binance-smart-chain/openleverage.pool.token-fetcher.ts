@@ -4,13 +4,13 @@ import { gql } from 'graphql-request';
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
 import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
+import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import {
-  AppTokenTemplatePositionFetcher,
-  DataPropsStageParams,
-  DisplayPropsStageParams,
-  PricePerShareStageParams,
-  UnderlyingTokensStageParams,
-} from '~position/template/app-token.template.position-fetcher';
+  GetUnderlyingTokensStageParams,
+  GetPricePerShareStageParams,
+  GetDataPropsStageParams,
+  GetDisplayPropsStageParams,
+} from '~position/template/app-token.template.types';
 import { Network } from '~types/network.interface';
 
 import { OpenleverageContractFactory, OpenleverageLpool } from '../contracts';
@@ -58,21 +58,21 @@ export class BinanceSmartChainOpenleveragePoolTokenFetcher extends AppTokenTempl
     return this.contractFactory.openleverageLpool({ address, network });
   }
 
-  getUnderlyingTokenAddresses({ contract }: UnderlyingTokensStageParams<OpenleverageLpool>) {
+  getUnderlyingTokenAddresses({ contract }: GetUnderlyingTokensStageParams<OpenleverageLpool>) {
     return contract.underlying();
   }
 
-  async getPricePerShare({ contract }: PricePerShareStageParams<OpenleverageLpool>) {
+  async getPricePerShare({ contract }: GetPricePerShareStageParams<OpenleverageLpool>) {
     const exchangeRateCurrent = await contract.exchangeRateStored();
     return Number(exchangeRateCurrent) / 10 ** 18;
   }
 
-  async getDataProps({ appToken }: DataPropsStageParams<OpenleverageLpool>) {
+  async getDataProps({ appToken }: GetDataPropsStageParams<OpenleverageLpool>) {
     const liquidity = appToken.supply * appToken.price;
     return { liquidity };
   }
 
-  async getLabel({ appToken }: DisplayPropsStageParams<OpenleverageLpool>) {
+  async getLabel({ appToken }: GetDisplayPropsStageParams<OpenleverageLpool>) {
     return getLabelFromToken(appToken.tokens[0]);
   }
 }

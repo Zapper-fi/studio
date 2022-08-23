@@ -2,11 +2,8 @@ import { Inject } from '@nestjs/common';
 
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
-import {
-  AppTokenTemplatePositionFetcher,
-  DataPropsStageParams,
-  UnderlyingTokensStageParams,
-} from '~position/template/app-token.template.position-fetcher';
+import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
+import { GetUnderlyingTokensStageParams, GetDataPropsStageParams } from '~position/template/app-token.template.types';
 import { Network } from '~types/network.interface';
 
 import { StargateAa, StargateContractFactory } from '../contracts';
@@ -46,11 +43,11 @@ export class EthereumStargateAuctionLockedTokenFetcher extends AppTokenTemplateP
     return ['0x4dfcad285ef39fed84e77edf1b7dbc442565e55e'];
   }
 
-  getUnderlyingTokenAddresses({ contract }: UnderlyingTokensStageParams<StargateAa>) {
+  getUnderlyingTokenAddresses({ contract }: GetUnderlyingTokensStageParams<StargateAa>) {
     return contract.stargateToken();
   }
 
-  async getDataProps({ appToken }: DataPropsStageParams<StargateAa, StargateAuctionLockedAppTokenDataProps>) {
+  async getDataProps({ appToken }: GetDataPropsStageParams<StargateAa, StargateAuctionLockedAppTokenDataProps>) {
     const reserve = appToken.supply; // 1:1
     const liquidity = appToken.supply * appToken.price;
     return { reserve, liquidity };
