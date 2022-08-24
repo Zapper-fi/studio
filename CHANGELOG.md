@@ -4,6 +4,52 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.188.0](https://github.com/Zapper-fi/studio/compare/v0.187.0...v0.188.0) (2022-08-24)
+
+
+### Features
+
+* **rhino-fi:** Fix missing contract factory import ([f79aa4e](https://github.com/Zapper-fi/studio/commit/f79aa4e6ff432fe064dd651303add573c78f4519))
+
+
+### Bug Fixes
+
+* **app-token-template:** lowercase app-token addresses in the template ([#1245](https://github.com/Zapper-fi/studio/issues/1245)) ([2f40637](https://github.com/Zapper-fi/studio/commit/2f406373f3010143c95ccc75c3ccba52d24daf74))
+* **beefy:** fix beefy vault token resolver keys ([#1242](https://github.com/Zapper-fi/studio/issues/1242)) ([69d2f40](https://github.com/Zapper-fi/studio/commit/69d2f407e866e0ece31dc0ddffadf856b8b3bdf9))
+
+## [0.187.0](https://github.com/Zapper-fi/studio/compare/v0.186.0...v0.187.0) (2022-08-23)
+
+
+### Features
+
+* **pickle:** Migrate Pickle entirely to templates ([#1229](https://github.com/Zapper-fi/studio/issues/1229)) ([12640d1](https://github.com/Zapper-fi/studio/commit/12640d10bc1dae95d024785a4e04b73bb8839eef))
+* **robo-vault:** Add RoboVault ([#1232](https://github.com/Zapper-fi/studio/issues/1232)) ([25047f3](https://github.com/Zapper-fi/studio/commit/25047f34aeeb4eb0e4da3882d043bbf66081e307))
+* **robo-vault:** Migrate to templates ([#1243](https://github.com/Zapper-fi/studio/issues/1243)) ([7a7b03c](https://github.com/Zapper-fi/studio/commit/7a7b03c4f806e468d5bfa1bce2d887479214dbfd))
+* **tectonic:** add xtonic vault fetcher ([#1231](https://github.com/Zapper-fi/studio/issues/1231)) ([c5d9794](https://github.com/Zapper-fi/studio/commit/c5d97949cd9886bf1c17a0fc162cf75d9d653d5d))
+
+## [0.186.0](https://github.com/Zapper-fi/studio/compare/v0.185.0...v0.186.0) (2022-08-23)
+
+
+### Features
+
+* **botto:** Extract to Studio and use templates ([#1235](https://github.com/Zapper-fi/studio/issues/1235)) ([8559377](https://github.com/Zapper-fi/studio/commit/8559377f17d43e25e728cbf740fd45bdceb75899))
+* **convex:** Extract Convex to Studio using templates ([#1226](https://github.com/Zapper-fi/studio/issues/1226)) ([74b9f15](https://github.com/Zapper-fi/studio/commit/74b9f15667d3e5d8ea3216359f47ee68425314e6))
+* **position-presenter:** Add concept of position presenter ([#1220](https://github.com/Zapper-fi/studio/issues/1220)) ([ce5e530](https://github.com/Zapper-fi/studio/commit/ce5e530fb4d03b000f38423a50e3a1dc4857e194))
+* **ren:** Extract to Studio and templates ([#1240](https://github.com/Zapper-fi/studio/issues/1240)) ([1b2a798](https://github.com/Zapper-fi/studio/commit/1b2a79872397fefd058cda70d547f2ce50fa7e66))
+
+
+### Bug Fixes
+
+* **aave-amm:** Use template for everything ([#1230](https://github.com/Zapper-fi/studio/issues/1230)) ([17e1112](https://github.com/Zapper-fi/studio/commit/17e11122fd02f4b9dce2554894acb43794069bcf))
+* **aave-v2:** Apply template position presenter for Aave V2 forks ([#1237](https://github.com/Zapper-fi/studio/issues/1237)) ([07c6f88](https://github.com/Zapper-fi/studio/commit/07c6f881238c0739933d4b15c1984cfa62818d31))
+* **agave:** Use template for claimable position ([#1239](https://github.com/Zapper-fi/studio/issues/1239)) ([5267d53](https://github.com/Zapper-fi/studio/commit/5267d539d01058e996475a77365380a432747652))
+* **app-toolkit:** Remove double injection error ([c6fe187](https://github.com/Zapper-fi/studio/commit/c6fe187deb034e0ee00844648aabf6e8fbc451fd))
+* **apps:** removed unnecessary images in apps asset folders ([#1223](https://github.com/Zapper-fi/studio/issues/1223)) ([17795fb](https://github.com/Zapper-fi/studio/commit/17795fb22666518d0447e92526427ee5f45f7162))
+* **definitions:** Remove `groupLabel` from app definitions ([#1228](https://github.com/Zapper-fi/studio/issues/1228)) ([b7fa512](https://github.com/Zapper-fi/studio/commit/b7fa51251b1a31c92f5abd8ee65b6380c4851f66))
+* **looks-rare:** fix looks-rare logo ([#1222](https://github.com/Zapper-fi/studio/issues/1222)) ([ce5bf2c](https://github.com/Zapper-fi/studio/commit/ce5bf2c7ba13d519b7d4e445426d0acec4dae745))
+* **polynomial:** Add new call quote vault ([#1234](https://github.com/Zapper-fi/studio/issues/1234)) ([b27358a](https://github.com/Zapper-fi/studio/commit/b27358aa7927e58c4ddfc4991fe8ffe77879f68b))
+* **templates:** Add group labels everywhere *sigh* ([#1227](https://github.com/Zapper-fi/studio/issues/1227)) ([e482a65](https://github.com/Zapper-fi/studio/commit/e482a65716895c12f534119d3a9879b4b944ffea))
+
 ## [0.185.0](https://github.com/Zapper-fi/studio/compare/v0.184.0...v0.185.0) (2022-08-19)
 
 

@@ -10,6 +10,7 @@ import {
 } from '~app-toolkit/helpers/presentation/display-item.present';
 import { getImagesFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { IMulticallWrapper } from '~multicall';
+import { isMulticallUnderlyingError } from '~multicall/multicall.ethers';
 import { ContractType } from '~position/contract.interface';
 import { DefaultDataProps, DisplayProps, StatsItem } from '~position/display.interface';
 import { AppTokenPositionBalance } from '~position/position-balance.interface';
@@ -155,19 +156,26 @@ export abstract class AppTokenTemplatePositionFetcher<T extends Contract, V exte
       tags: { network: this.network, context: `${this.appId}__template` },
     });
 
-    const addresses = await this.getAddresses({ multicall });
+    const addressesRaw = await this.getAddresses({ multicall });
+    const addresses = addressesRaw.map(x => x.toLowerCase());
 
-    const skeletons = await Promise.all(
+    const maybeSkeletons = await Promise.all(
       addresses.map(async (address, index) => {
         const contract = multicall.wrap(this.getContract(address));
         const underlyingTokenAddresses = await this.getUnderlyingTokenAddresses({ address, index, contract, multicall })
           .then(v => (Array.isArray(v) ? v : [v]))
-          .then(v => v.map(t => t.toLowerCase()));
+          .then(v => v.map(t => t.toLowerCase()))
+          .catch(err => {
+            if (isMulticallUnderlyingError(err)) return null;
+            throw err;
+          });
 
+        if (!underlyingTokenAddresses) return null;
         return { address, underlyingTokenAddresses };
       }),
     );
 
+    const skeletons = compact(maybeSkeletons);
     const [base, meta] = partition(skeletons, t => {
       const tokenAddresses = skeletons.map(v => v.address);
       return intersection(t.underlyingTokenAddresses, tokenAddresses).length === 0;
