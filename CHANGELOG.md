@@ -4,6 +4,28 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.188.1](https://github.com/Zapper-fi/studio/compare/v0.188.0...v0.188.1) (2022-08-24)
+
+
+### Bug Fixes
+
+* **aave-forks:** Remove blizz, use template for Geist ([#1250](https://github.com/Zapper-fi/studio/issues/1250)) ([0f35141](https://github.com/Zapper-fi/studio/commit/0f35141eca30fd2c44cc4f64978ac02f38f7f8f3))
+* **beefy:** Fix abstractions ([#1248](https://github.com/Zapper-fi/studio/issues/1248)) ([d79e6ec](https://github.com/Zapper-fi/studio/commit/d79e6ec1e8f0b8a986804b310608524d2d18da18))
+* **tectonic:** update balance fetcher for xTONIC ([#1246](https://github.com/Zapper-fi/studio/issues/1246)) ([16592f4](https://github.com/Zapper-fi/studio/commit/16592f4f921831cbebb4f2168bb8eba660816b1e))
+
+## [0.188.0](https://github.com/Zapper-fi/studio/compare/v0.187.0...v0.188.0) (2022-08-24)
+
+
+### Features
+
+* **rhino-fi:** Fix missing contract factory import ([f79aa4e](https://github.com/Zapper-fi/studio/commit/f79aa4e6ff432fe064dd651303add573c78f4519))
+
+
+### Bug Fixes
+
+* **app-token-template:** lowercase app-token addresses in the template ([#1245](https://github.com/Zapper-fi/studio/issues/1245)) ([2f40637](https://github.com/Zapper-fi/studio/commit/2f406373f3010143c95ccc75c3ccba52d24daf74))
+* **beefy:** fix beefy vault token resolver keys ([#1242](https://github.com/Zapper-fi/studio/issues/1242)) ([69d2f40](https://github.com/Zapper-fi/studio/commit/69d2f407e866e0ece31dc0ddffadf856b8b3bdf9))
+
 ## [0.187.0](https://github.com/Zapper-fi/studio/compare/v0.186.0...v0.187.0) (2022-08-23)
 
 

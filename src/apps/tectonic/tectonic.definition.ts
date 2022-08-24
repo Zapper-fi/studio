@@ -33,7 +33,7 @@ export const TECTONIC_DEFINITION = appDefinition({
     xtonic: {
       id: 'xtonic',
       type: GroupType.TOKEN,
-      label: 'xTonic',
+      label: 'xTONIC',
     },
   },
 

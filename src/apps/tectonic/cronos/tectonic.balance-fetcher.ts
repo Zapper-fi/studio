@@ -1,5 +1,6 @@
 import { Inject } from '@nestjs/common';
 
+import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
 import { presentBalanceFetcherResponse } from '~app-toolkit/helpers/presentation/balance-fetcher-response.present';
 import { CompoundLendingMetaHelper } from '~apps/compound';
@@ -18,6 +19,7 @@ const network = Network.CRONOS_MAINNET;
 @Register.BalanceFetcher(appId, network)
 export class CronosTectonicBalanceFetcher implements BalanceFetcher {
   constructor(
+    @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
     @Inject(TectonicBorrowBalanceHelper)
     private readonly tectonicBorrowBalanceHelper: TectonicBorrowBalanceHelper,
     @Inject(TectonicSupplyBalanceHelper)
@@ -64,17 +66,31 @@ export class CronosTectonicBalanceFetcher implements BalanceFetcher {
     });
   }
 
+  private async getXtonicBalances(address: string) {
+    return this.appToolkit.helpers.tokenBalanceHelper.getTokenBalances({
+      address,
+      appId,
+      network,
+      groupId: TECTONIC_DEFINITION.groups.xtonic.id,
+    });
+  }
+
   async getBalances(address: string) {
-    const [supplyBalances, borrowBalances, claimableBalances] = await Promise.all([
+    const [supplyBalances, borrowBalances, claimableBalances, getXtonicBalances] = await Promise.all([
       this.getSupplyBalances(address),
       this.getBorrowBalances(address),
       this.getClaimableBalances(address),
+      this.getXtonicBalances(address),
     ]);
 
     const meta = this.lendingMetaHelper.getMeta({ balances: [...supplyBalances, ...borrowBalances] });
     const claimableProduct = { label: 'Claimable', assets: claimableBalances };
     const lendingProduct = { label: 'Lending', assets: [...supplyBalances, ...borrowBalances], meta };
 
-    return presentBalanceFetcherResponse([lendingProduct, claimableProduct]);
+    return presentBalanceFetcherResponse([
+      lendingProduct,
+      claimableProduct,
+      { label: 'xTONIC', assets: getXtonicBalances },
+    ]);
   }
 }
