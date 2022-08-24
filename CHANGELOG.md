@@ -4,6 +4,18 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.190.0](https://github.com/Zapper-fi/studio/compare/v0.189.0...v0.190.0) (2022-08-24)
+
+
+### Features
+
+* **apps:** Fixed Openleverage pool label and add APY ([#1225](https://github.com/Zapper-fi/studio/issues/1225)) ([aedf436](https://github.com/Zapper-fi/studio/commit/aedf43626d2b02aafa2767a51db027fd14da4996))
+
+
+### Bug Fixes
+
+* **openleverage:** Fix linting ([a59b979](https://github.com/Zapper-fi/studio/commit/a59b979009e1d2047b342e2f1c8b52bd1e0cfe27))
+
 ## [0.189.0](https://github.com/Zapper-fi/studio/compare/v0.188.1...v0.189.0) (2022-08-24)
 
 
