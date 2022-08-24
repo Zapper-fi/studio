@@ -4,6 +4,16 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.187.0](https://github.com/Zapper-fi/studio/compare/v0.186.0...v0.187.0) (2022-08-23)
+
+
+### Features
+
+* **pickle:** Migrate Pickle entirely to templates ([#1229](https://github.com/Zapper-fi/studio/issues/1229)) ([12640d1](https://github.com/Zapper-fi/studio/commit/12640d10bc1dae95d024785a4e04b73bb8839eef))
+* **robo-vault:** Add RoboVault ([#1232](https://github.com/Zapper-fi/studio/issues/1232)) ([25047f3](https://github.com/Zapper-fi/studio/commit/25047f34aeeb4eb0e4da3882d043bbf66081e307))
+* **robo-vault:** Migrate to templates ([#1243](https://github.com/Zapper-fi/studio/issues/1243)) ([7a7b03c](https://github.com/Zapper-fi/studio/commit/7a7b03c4f806e468d5bfa1bce2d887479214dbfd))
+* **tectonic:** add xtonic vault fetcher ([#1231](https://github.com/Zapper-fi/studio/issues/1231)) ([c5d9794](https://github.com/Zapper-fi/studio/commit/c5d97949cd9886bf1c17a0fc162cf75d9d653d5d))
+
 ## [0.186.0](https://github.com/Zapper-fi/studio/compare/v0.185.0...v0.186.0) (2022-08-23)
 
 
