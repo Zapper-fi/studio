@@ -1,6 +1,6 @@
 import { Register } from '~app-toolkit/decorators';
 import { AbstractApp } from '~app/app.dynamic-module';
-import { AaveV2AppModule } from '~apps/aave-v2';
+import { AaveV2ContractFactory, AaveV2HealthFactorMetaHelper, AaveV2LendingBalanceHelper } from '~apps/aave-v2';
 
 import { AaveAmmAppDefinition, AAVE_AMM_DEFINITION } from './aave-amm.definition';
 import { AaveAmmContractFactory } from './contracts';
@@ -12,10 +12,12 @@ import { EthereumAaveAmmVariableDebtTokenFetcher } from './ethereum/aave-amm.var
 
 @Register.AppModule({
   appId: AAVE_AMM_DEFINITION.id,
-  imports: [AaveV2AppModule],
   providers: [
     AaveAmmAppDefinition,
     AaveAmmContractFactory,
+    AaveV2ContractFactory,
+    AaveV2LendingBalanceHelper,
+    AaveV2HealthFactorMetaHelper,
     EthereumAaveAmmBalanceFetcher,
     EthereumAaveAmmPositionPresenter,
     EthereumAaveAmmStableDebtTokenFetcher,

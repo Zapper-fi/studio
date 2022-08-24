@@ -1,6 +1,6 @@
 import { Register } from '~app-toolkit/decorators';
 import { AbstractApp } from '~app/app.dynamic-module';
-import { AaveV2AppModule } from '~apps/aave-v2';
+import { AaveV2ContractFactory, AaveV2HealthFactorMetaHelper, AaveV2LendingBalanceHelper } from '~apps/aave-v2';
 
 import { AgaveAppDefinition, AGAVE_DEFINITION } from './agave.definition';
 import { AgaveContractFactory } from './contracts';
@@ -13,10 +13,12 @@ import { GnosisAgaveVariableBorrowTokenFetcher } from './gnosis/agave.variable-b
 
 @Register.AppModule({
   appId: AGAVE_DEFINITION.id,
-  imports: [AaveV2AppModule],
   providers: [
     AgaveAppDefinition,
     AgaveContractFactory,
+    AaveV2ContractFactory,
+    AaveV2LendingBalanceHelper,
+    AaveV2HealthFactorMetaHelper,
     GnosisAgaveBalanceFetcher,
     GnosisAgaveClaimableContractPositionFetcher,
     GnosisAgaveDepositTokenFetcher,

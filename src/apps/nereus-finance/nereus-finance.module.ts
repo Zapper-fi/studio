@@ -1,6 +1,6 @@
 import { Register } from '~app-toolkit/decorators';
 import { AbstractApp } from '~app/app.dynamic-module';
-import { AaveV2AppModule } from '~apps/aave-v2/aave-v2.module';
+import { AaveV2ContractFactory } from '~apps/aave-v2';
 
 import { AvalancheNereusFinanceBalanceFetcher } from './avalanche/nereus-finance.balance-fetcher';
 import { AvalancheNereusFinancePositionPresenter } from './avalanche/nereus-finance.position-presenter';
@@ -12,8 +12,8 @@ import { NereusFinanceAppDefinition, NEREUS_FINANCE_DEFINITION } from './nereus-
 
 @Register.AppModule({
   appId: NEREUS_FINANCE_DEFINITION.id,
-  imports: [AaveV2AppModule],
   providers: [
+    AaveV2ContractFactory,
     AvalancheNereusFinanceBalanceFetcher,
     AvalancheNereusFinancePositionPresenter,
     AvalancheNereusFinanceStableDebtTokenFetcher,
