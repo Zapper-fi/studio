@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.191.0](https://github.com/Zapper-fi/studio/compare/v0.190.0...v0.191.0) (2022-08-24)
+
+
+### Features
+
+* **aave-v2:** Remove module deps ([238fc84](https://github.com/Zapper-fi/studio/commit/238fc842ff56356d339fd81ea0a8294754af9ca5))
+
 ## [0.190.0](https://github.com/Zapper-fi/studio/compare/v0.189.0...v0.190.0) (2022-08-24)
 
 
