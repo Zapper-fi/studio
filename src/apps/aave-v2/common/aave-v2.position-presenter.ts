@@ -1,3 +1,5 @@
+import { Inject } from '@nestjs/common';
+
 import { Register } from '~app-toolkit/decorators';
 import { PresentationConfig } from '~app/app.interface';
 import { AaveV2ContractFactory } from '~apps/aave-v2';
@@ -6,7 +8,7 @@ import { PositionPresenterTemplate, ReadonlyBalances } from '~position/template/
 export abstract class AaveV2PositionPresenter extends PositionPresenterTemplate {
   abstract lendingPoolAddress: string;
 
-  constructor(protected readonly aaveV2ContractFactory: AaveV2ContractFactory) {
+  constructor(@Inject(AaveV2ContractFactory) protected readonly aaveV2ContractFactory: AaveV2ContractFactory) {
     super();
   }
 
