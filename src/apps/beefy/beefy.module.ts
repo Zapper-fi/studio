@@ -9,7 +9,7 @@ import { BeefyContractFactory } from './contracts';
 import { FantomBeefyVaultTokenFetcher } from './fantom/beefy.fantom.vault-token-fetcher';
 import { BeefyVaultTokenDefinitionsResolver } from './helpers/beefy.vault.token-definition-resolver';
 import { OptimismBeefyVaultTokenFetcher } from './optimism/beefy.optimism.vault-token-fetcher';
-import { PolygonBeefyVaultTokenFetcher } from './polygon/beefy.vault.token-fetcher';
+import { PolygonBeefyVaultTokenFetcher } from './polygon/beefy.polygon.token-fetcher';
 
 @Register.AppModule({
   appId: BEEFY_DEFINITION.id,

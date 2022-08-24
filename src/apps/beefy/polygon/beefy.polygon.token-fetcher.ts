@@ -6,10 +6,10 @@ import { BeefyVaultTokenFetcher } from '../helpers/beefy.vault-token-fetcher';
 
 const appId = BEEFY_DEFINITION.id;
 const groupId = BEEFY_DEFINITION.groups.vault.id;
-const network = Network.AVALANCHE_MAINNET;
+const network = Network.POLYGON_MAINNET;
 
 @Register.TokenPositionFetcher({ appId, groupId, network })
-export class AvalancheBeefyVaultTokenFetcher extends BeefyVaultTokenFetcher {
+export class PolygonBeefyVaultTokenFetcher extends BeefyVaultTokenFetcher {
   appId = appId;
   groupId = groupId;
   network = network;
