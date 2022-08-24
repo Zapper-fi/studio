@@ -4,6 +4,19 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.188.0](https://github.com/Zapper-fi/studio/compare/v0.187.0...v0.188.0) (2022-08-24)
+
+
+### Features
+
+* **rhino-fi:** Fix missing contract factory import ([f79aa4e](https://github.com/Zapper-fi/studio/commit/f79aa4e6ff432fe064dd651303add573c78f4519))
+
+
+### Bug Fixes
+
+* **app-token-template:** lowercase app-token addresses in the template ([#1245](https://github.com/Zapper-fi/studio/issues/1245)) ([2f40637](https://github.com/Zapper-fi/studio/commit/2f406373f3010143c95ccc75c3ccba52d24daf74))
+* **beefy:** fix beefy vault token resolver keys ([#1242](https://github.com/Zapper-fi/studio/issues/1242)) ([69d2f40](https://github.com/Zapper-fi/studio/commit/69d2f407e866e0ece31dc0ddffadf856b8b3bdf9))
+
 ## [0.187.0](https://github.com/Zapper-fi/studio/compare/v0.186.0...v0.187.0) (2022-08-23)
 
 
