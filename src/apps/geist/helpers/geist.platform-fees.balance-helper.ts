@@ -68,7 +68,7 @@ export class GeistPlatformFeesBalanceHelper {
       type: ContractType.POSITION,
       address: lockAddress,
       appId: GEIST_DEFINITION.id,
-      groupId: GEIST_DEFINITION.groups.claimable.id,
+      groupId: GEIST_DEFINITION.groups.platformFees.id,
       network,
       tokens,
       balanceUSD,

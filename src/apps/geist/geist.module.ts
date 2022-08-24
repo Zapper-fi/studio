@@ -4,6 +4,8 @@ import { AaveV2AppModule } from '~apps/aave-v2/aave-v2.module';
 
 import { GeistContractFactory } from './contracts';
 import { FantomGeistBalanceFetcher } from './fantom/geist.balance-fetcher';
+import { FantomGeistIncentivesPositionFetcher } from './fantom/geist.incentives.contract-position-fetcher';
+import { FantomGeistPlatformFeesPositionFetcher } from './fantom/geist.platform-fees.contract-position-fetcher';
 import { FantomGeistPositionPresenter } from './fantom/geist.position-presentation';
 import { FantomGeistStableDebtTokenFetcher } from './fantom/geist.stable-debt.token-fetcher';
 import { FantomGeistSupplyTokenFetcher } from './fantom/geist.supply.token-fetcher';
@@ -17,6 +19,8 @@ import { GeistPlatformFeesBalanceHelper } from './helpers/geist.platform-fees.ba
   imports: [AaveV2AppModule],
   providers: [
     FantomGeistBalanceFetcher,
+    FantomGeistIncentivesPositionFetcher,
+    FantomGeistPlatformFeesPositionFetcher,
     FantomGeistPositionPresenter,
     FantomGeistStableDebtTokenFetcher,
     FantomGeistSupplyTokenFetcher,

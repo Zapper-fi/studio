@@ -55,7 +55,7 @@ export class GeistIncentivesBalanceHelper {
       address: incentivesAddress,
       network,
       appId: GEIST_DEFINITION.id,
-      groupId: GEIST_DEFINITION.groups.claimable.id,
+      groupId: GEIST_DEFINITION.groups.incentives.id,
       tokens,
       balanceUSD,
       dataProps: {},
