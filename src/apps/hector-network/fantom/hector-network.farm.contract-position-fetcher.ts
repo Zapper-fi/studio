@@ -32,29 +32,49 @@ export class FantomHectorNetworkFarmContractPositionFetcher implements PositionF
   async getPositions() {
     const farmDefinitions = [
       {
-        address: '0x24699312cb27c26cfc669459d670559e5e44ee60',
+        address: '0x24699312cb27c26cfc669459d670559e5e44ee60', // TOR + DAI + USDC: CurveLP
         stakedTokenAddress: '0x74e23df9110aa9ea0b6ff2faee01e740ca1c642e', // TOR
         rewardTokenAddress: '0x21be370d5312f44cb42ce377bc9b8a0cef1a4c83', // WFTM
       },
       {
-        address: '0x24699312cb27c26cfc669459d670559e5e44ee60',
+        address: '0x24699312cb27c26cfc669459d670559e5e44ee60', // TOR + DAI + USDC: CurveLP
         stakedTokenAddress: '0x8d11ec38a3eb5e956b052f67da8bdc9bef8abf3e', // DAI
         rewardTokenAddress: '0x21be370d5312f44cb42ce377bc9b8a0cef1a4c83', // WFTM
       },
       {
-        address: '0x24699312cb27c26cfc669459d670559e5e44ee60',
+        address: '0x24699312cb27c26cfc669459d670559e5e44ee60', // TOR + DAI + USDC: CurveLP
         stakedTokenAddress: '0x04068da6c83afcfa0e13ba15a6696662335d5b75', // USDC
         rewardTokenAddress: '0x21be370d5312f44cb42ce377bc9b8a0cef1a4c83', // WFTM
+      },
+      {
+        address: '0x41d88635029c4402bf9914782ae55c412f8f2142', // FTM + TOR: SpookyLP
+        stakedTokenAddress: '0x21be370d5312f44cb42ce377bc9b8a0cef1a4c83', // WFTM
+        rewardTokenAddress: '0x841fad6eae12c286d1fd18d1d525dffa75c7effe', // BOO
+      },
+      {
+        address: '0x41d88635029c4402bf9914782ae55c412f8f2142', // FTM + TOR: SpookyLP
+        stakedTokenAddress: '0x74e23df9110aa9ea0b6ff2faee01e740ca1c642e', // TOR
+        rewardTokenAddress: '0x841fad6eae12c286d1fd18d1d525dffa75c7effe', // BOO
+      },
+      {
+        address: '0x0bfe6f893a6bc443b575ddf361a30f39aa03e59c', // FTM + wsHEC: SpookyLP
+        stakedTokenAddress: '0x21be370d5312f44cb42ce377bc9b8a0cef1a4c83', // WFTM
+        rewardTokenAddress: '0x841fad6eae12c286d1fd18d1d525dffa75c7effe', // BOO
+      },
+      {
+        address: '0x0bfe6f893a6bc443b575ddf361a30f39aa03e59c', // FTM + wsHEC: SpookyLP
+        stakedTokenAddress: '0x94ccf60f700146bea8ef7832820800e2dfa92eda', // wsHEC
+        rewardTokenAddress: '0x841fad6eae12c286d1fd18d1d525dffa75c7effe', // BOO
       },
     ];
 
     const baseTokens = await this.appToolkit.getBaseTokenPrices(network);
-    // const appTokens = await this.appToolkit.getAppTokenPositions({
-    //   appId: 'hector-network',
-    //   groupIds: ['hec'],
-    //   network,
-    // });
-    const allTokens = [...baseTokens];
+    const appTokens = await this.appToolkit.getAppTokenPositions({
+      appId: 'hector-network',
+      groupIds: ['ws-hec'],
+      network,
+    });
+    const allTokens = [...appTokens, ...baseTokens];
     const multicall = this.appToolkit.getMulticall(network);
 
     const tokens = await Promise.all(
