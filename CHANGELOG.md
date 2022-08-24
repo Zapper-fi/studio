@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.192.0](https://github.com/Zapper-fi/studio/compare/v0.191.0...v0.192.0) (2022-08-24)
+
+
+### Features
+
+* **aave-v2:** Revert to module imports, fix circular dependency because of index file ([1ef5fcf](https://github.com/Zapper-fi/studio/commit/1ef5fcfdb43b06817bbd3baa4b77e4c9fd8d108d))
+
 ## [0.191.0](https://github.com/Zapper-fi/studio/compare/v0.190.0...v0.191.0) (2022-08-24)
 
 
