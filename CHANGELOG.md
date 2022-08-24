@@ -4,6 +4,15 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.188.1](https://github.com/Zapper-fi/studio/compare/v0.188.0...v0.188.1) (2022-08-24)
+
+
+### Bug Fixes
+
+* **aave-forks:** Remove blizz, use template for Geist ([#1250](https://github.com/Zapper-fi/studio/issues/1250)) ([0f35141](https://github.com/Zapper-fi/studio/commit/0f35141eca30fd2c44cc4f64978ac02f38f7f8f3))
+* **beefy:** Fix abstractions ([#1248](https://github.com/Zapper-fi/studio/issues/1248)) ([d79e6ec](https://github.com/Zapper-fi/studio/commit/d79e6ec1e8f0b8a986804b310608524d2d18da18))
+* **tectonic:** update balance fetcher for xTONIC ([#1246](https://github.com/Zapper-fi/studio/issues/1246)) ([16592f4](https://github.com/Zapper-fi/studio/commit/16592f4f921831cbebb4f2168bb8eba660816b1e))
+
 ## [0.188.0](https://github.com/Zapper-fi/studio/compare/v0.187.0...v0.188.0) (2022-08-24)
 
 
