@@ -15,6 +15,7 @@ import { Network } from '~types/network.interface';
 
 import { OpenleverageContractFactory, OpenleverageLpool } from '../contracts';
 import { OPENLEVERAGE_DEFINITION } from '../openleverage.definition';
+import { OpenleveragePoolAPYHelper } from '../helpers/openleverage-pool.apy-helper';
 
 const appId = OPENLEVERAGE_DEFINITION.id;
 const groupId = OPENLEVERAGE_DEFINITION.groups.pool.id;
@@ -26,6 +27,11 @@ type OpenLeveragePoolsResponse = {
   }[];
 };
 
+type OpenLeverageDataProps = {
+  apy: number;
+  liquidity: number;
+};
+
 const query = gql`
   query fetchPools {
     pools(first: 1000) {
@@ -35,7 +41,7 @@ const query = gql`
 `;
 
 @Register.TokenPositionFetcher({ appId, groupId, network })
-export class BinanceSmartChainOpenleveragePoolTokenFetcher extends AppTokenTemplatePositionFetcher<OpenleverageLpool> {
+export class BinanceSmartChainOpenleveragePoolTokenFetcher extends AppTokenTemplatePositionFetcher<OpenleverageLpool, OpenLeverageDataProps> {
   appId = OPENLEVERAGE_DEFINITION.id;
   groupId = OPENLEVERAGE_DEFINITION.groups.pool.id;
   network = Network.BINANCE_SMART_CHAIN_MAINNET;
@@ -43,7 +49,9 @@ export class BinanceSmartChainOpenleveragePoolTokenFetcher extends AppTokenTempl
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(OpenleverageContractFactory) protected readonly contractFactory: OpenleverageContractFactory,
+    @Inject(OpenleveragePoolAPYHelper)
+    private readonly openleveragePoolAPYHelper: OpenleveragePoolAPYHelper,
+    @Inject(OpenleverageContractFactory) protected readonly contractFactory: OpenleverageContractFactory
   ) {
     super(appToolkit);
   }
@@ -67,12 +75,15 @@ export class BinanceSmartChainOpenleveragePoolTokenFetcher extends AppTokenTempl
     return Number(exchangeRateCurrent) / 10 ** 18;
   }
 
-  async getDataProps({ appToken }: DataPropsStageParams<OpenleverageLpool>) {
+  async getDataProps({ appToken }: DataPropsStageParams<OpenleverageLpool, OpenLeverageDataProps>) {
     const liquidity = appToken.supply * appToken.price;
-    return { liquidity };
+    const poolDetailMap = await this.openleveragePoolAPYHelper.getApy();
+    const apy = poolDetailMap[appToken.address]?.lendingYieldY || 0;
+    return { liquidity, apy };
   }
 
   async getLabel({ appToken }: DisplayPropsStageParams<OpenleverageLpool>) {
-    return getLabelFromToken(appToken.tokens[0]);
+    const poolDetailMap = await this.openleveragePoolAPYHelper.getApy();
+    return getLabelFromToken(appToken.tokens[0]) + "/" + poolDetailMap[appToken.address]?.token1Symbol;
   }
 }
