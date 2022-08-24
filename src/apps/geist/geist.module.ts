@@ -1,6 +1,6 @@
 import { Register } from '~app-toolkit/decorators';
 import { AbstractApp } from '~app/app.dynamic-module';
-import { AaveV2ContractFactory, AaveV2HealthFactorMetaHelper, AaveV2LendingBalanceHelper } from '~apps/aave-v2';
+import { AaveV2AppModule } from '~apps/aave-v2/aave-v2.module';
 
 import { GeistContractFactory } from './contracts';
 import { FantomGeistBalanceFetcher } from './fantom/geist.balance-fetcher';
@@ -16,10 +16,8 @@ import { GeistPlatformFeesBalanceHelper } from './helpers/geist.platform-fees.ba
 
 @Register.AppModule({
   appId: GEIST_DEFINITION.id,
+  imports: [AaveV2AppModule],
   providers: [
-    AaveV2ContractFactory,
-    AaveV2LendingBalanceHelper,
-    AaveV2HealthFactorMetaHelper,
     FantomGeistBalanceFetcher,
     FantomGeistIncentivesPositionFetcher,
     FantomGeistPlatformFeesPositionFetcher,
