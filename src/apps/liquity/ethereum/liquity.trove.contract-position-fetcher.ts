@@ -25,6 +25,7 @@ export class EthereumLiquityTroveContractPositionFetcher extends ContractPositio
   appId = appId;
   groupId = groupId;
   network = network;
+  groupLabel = 'Trove';
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,

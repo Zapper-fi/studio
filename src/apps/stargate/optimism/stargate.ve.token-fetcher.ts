@@ -6,7 +6,7 @@ import {
   GetTokenBalancesPerPositionParams,
   TokenStageParams,
 } from '~position/template/contract-position.template.position-fetcher';
-import { VotingEscrowTokenFetcher } from '~position/template/voting-escrow.template.contract-position-fetcher';
+import { VotingEscrowTemplateContractPositionFetcher } from '~position/template/voting-escrow.template.contract-position-fetcher';
 import { Network } from '~types/network.interface';
 
 import { StargateContractFactory, StargateVe } from '../contracts';
@@ -17,10 +17,11 @@ const groupId = STARGATE_DEFINITION.groups.ve.id;
 const network = Network.OPTIMISM_MAINNET;
 
 @Register.TokenPositionFetcher({ appId, groupId, network })
-export class OptimismStargateVeTokenFetcher extends VotingEscrowTokenFetcher<StargateVe> {
+export class OptimismStargateVeTokenFetcher extends VotingEscrowTemplateContractPositionFetcher<StargateVe> {
   appId = appId;
   groupId = groupId;
   network = network;
+  groupLabel = 'VotedEscrow';
   veTokenAddress = '0x43d2761ed16c89a2c4342e2b16a3c61ccf88f05b';
 
   constructor(

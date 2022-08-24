@@ -20,7 +20,6 @@ export const POOL_TOGETHER_V3_DEFINITION = appDefinition({
       id: 'ticket',
       type: GroupType.TOKEN,
       label: 'Prize Pools',
-      groupLabel: 'Deposit',
       isHiddenFromExplore: true,
     },
     claimable: { id: 'claimable', type: GroupType.TOKEN, label: 'Rewards', isHiddenFromExplore: true },

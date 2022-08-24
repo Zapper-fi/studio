@@ -20,6 +20,7 @@ export class ArbitrumYearnV2VaultTokenFetcher extends YearnVaultTokenFetcher<Yea
   appId = appId;
   groupId = groupId;
   network = network;
+  groupLabel = 'Vaults';
 
   vaultType = 'v2' as const;
   vaultsToIgnore = [];

@@ -20,6 +20,7 @@ export class FantomSturdyStableDebtTokenFetcher extends AaveAmmLendingTemplateTo
   appId = STURDY_DEFINITION.id;
   groupId = STURDY_DEFINITION.groups.stableDebt.id;
   network = Network.FANTOM_OPERA_MAINNET;
+  groupLabel = 'Lending';
   providerAddress = '0x7ff2520cd7b76e8c49b5db51505b842d665f3e9a';
   isDebt = true;
 

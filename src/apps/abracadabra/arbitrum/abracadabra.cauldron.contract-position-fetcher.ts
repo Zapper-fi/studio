@@ -13,6 +13,7 @@ export class ArbitrumAbracadabraCauldronContractPositionFetcher extends Abracada
   appId = appId;
   groupId = groupId;
   network = network;
+  groupLabel = 'Cauldrons';
   cauldrons = [
     '0xc89958b03a55b5de2221acb25b58b89a000215e6', // ETH
   ];

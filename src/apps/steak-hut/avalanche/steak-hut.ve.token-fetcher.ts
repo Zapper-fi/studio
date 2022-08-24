@@ -20,6 +20,7 @@ export class AvalancheSteakHutVeTokenFetcher extends AppTokenTemplatePositionFet
   appId = appId;
   groupId = groupId;
   network = network;
+  groupLabel = 'VotedEscrow';
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,

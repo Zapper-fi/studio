@@ -20,6 +20,7 @@ export class EthereumAaveAmmSupplyTokenFetcher extends AaveAmmLendingTemplateTok
   appId = AAVE_AMM_DEFINITION.id;
   groupId = AAVE_AMM_DEFINITION.groups.supply.id;
   network = Network.ETHEREUM_MAINNET;
+  groupLabel = 'Lending';
   providerAddress = '0x7937d4799803fbbe595ed57278bc4ca21f3bffcb';
   isDebt = false;
 

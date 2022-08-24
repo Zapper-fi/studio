@@ -22,6 +22,7 @@ export class FantomBeethovenXFBeetsTokenFetcher extends AppTokenTemplatePosition
   appId = BEETHOVEN_X_DEFINITION.id;
   groupId = BEETHOVEN_X_DEFINITION.groups.fBeets.id;
   network = Network.FANTOM_OPERA_MAINNET;
+  groupLabel = 'Staking';
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,

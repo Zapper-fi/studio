@@ -9,6 +9,7 @@ import { isClaimable } from '~position/position.utils';
 import {
   DataPropsStageParams,
   GetTokenBalancesPerPositionParams,
+  TokenStageParams,
 } from '~position/template/contract-position.template.position-fetcher';
 import {
   SingleStakingFarmDataProps,
@@ -54,11 +55,11 @@ export abstract class BeethovenXFarmContractPositionFetcher extends SingleStakin
     return gaugesResponse.gauges.map(({ id }) => id.toLowerCase());
   }
 
-  async getStakedTokenAddress(contract: BeethovenXGauge) {
+  async getStakedTokenAddress({ contract }: TokenStageParams<BeethovenXGauge, SingleStakingFarmDataProps>) {
     return contract.lp_token();
   }
 
-  async getRewardTokenAddresses(contract: BeethovenXGauge) {
+  async getRewardTokenAddresses({ contract }: TokenStageParams<BeethovenXGauge, SingleStakingFarmDataProps>) {
     const rewardTokenAddresses = await Promise.all(range(0, 4).map(async i => contract.reward_tokens(i)));
     return rewardTokenAddresses.map(v => v.toLowerCase()).filter(v => v !== ZERO_ADDRESS);
   }

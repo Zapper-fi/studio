@@ -25,6 +25,7 @@ export class ArbitrumPlutusFarmPlsJonesContractPositionFetcher extends SingleSta
   appId = PLUTUS_DEFINITION.id;
   groupId = PLUTUS_DEFINITION.groups.farmPlsJones.id;
   network = Network.ARBITRUM_MAINNET;
+  groupLabel = 'plsJONES Farm';
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,

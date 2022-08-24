@@ -78,7 +78,7 @@ export abstract class ContractPositionTemplatePositionFetcher<
   abstract appId: string;
   abstract groupId: string;
   abstract network: Network;
-  groupLabel?: string;
+  abstract groupLabel: string;
   dependencies: AppGroupsDefinition[] = [];
 
   constructor(@Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit) {}
@@ -139,8 +139,10 @@ export abstract class ContractPositionTemplatePositionFetcher<
     });
 
     const descriptors = await this.getDescriptors({ multicall });
+
     const skeletons = await Promise.all(
       descriptors.map(async descriptor => {
+        const address = descriptor.address.toLowerCase();
         const contract = multicall.wrap(this.getContract(descriptor.address));
         const maybeTokenDescriptors = await this.getTokenDescriptors({ contract, descriptor, multicall });
         if (!maybeTokenDescriptors) return null;
@@ -150,7 +152,7 @@ export abstract class ContractPositionTemplatePositionFetcher<
           : [maybeTokenDescriptors];
         const tokenDescriptors = tokenDescriptorsArr.map(t => ({ ...t, address: t.address.toLowerCase() }));
 
-        return { address: descriptor.address, descriptor, tokenDescriptors };
+        return { address, descriptor, tokenDescriptors };
       }),
     );
 
@@ -181,7 +183,6 @@ export abstract class ContractPositionTemplatePositionFetcher<
           appId: this.appId,
           groupId: this.groupId,
           network: this.network,
-          groupLabel: this.groupLabel,
           address,
           tokens,
         };
@@ -195,7 +196,7 @@ export abstract class ContractPositionTemplatePositionFetcher<
         const displayProps = {
           label: await this.getLabel(displayPropsStageParams),
           labelDetailed: await this.getLabelDetailed(displayPropsStageParams),
-          secondarylabel: await this.getSecondaryLabel(displayPropsStageParams),
+          secondaryLabel: await this.getSecondaryLabel(displayPropsStageParams),
           tertiaryLabel: await this.getTertiaryLabel(displayPropsStageParams),
           images: await this.getImages(displayPropsStageParams),
           statsItems: await this.getStatsItems(displayPropsStageParams),

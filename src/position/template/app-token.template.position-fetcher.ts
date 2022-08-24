@@ -10,6 +10,7 @@ import {
 } from '~app-toolkit/helpers/presentation/display-item.present';
 import { getImagesFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { IMulticallWrapper } from '~multicall';
+import { isMulticallUnderlyingError } from '~multicall/multicall.ethers';
 import { ContractType } from '~position/contract.interface';
 import { DefaultDataProps, DisplayProps, StatsItem } from '~position/display.interface';
 import { AppTokenPositionBalance } from '~position/position-balance.interface';
@@ -33,6 +34,7 @@ export type TokenPropsStageParams<T> = {
 
 export type UnderlyingTokensStageParams<T> = {
   address: string;
+  index: number;
   contract: T;
   multicall: IMulticallWrapper;
 };
@@ -64,7 +66,7 @@ export abstract class AppTokenTemplatePositionFetcher<T extends Contract, V exte
   abstract appId: string;
   abstract groupId: string;
   abstract network: Network;
-  groupLabel?: string;
+  abstract groupLabel: string;
   fromNetwork?: Network;
 
   minLiquidity = 1000;
@@ -156,17 +158,23 @@ export abstract class AppTokenTemplatePositionFetcher<T extends Contract, V exte
 
     const addresses = await this.getAddresses({ multicall });
 
-    const skeletons = await Promise.all(
-      addresses.map(async address => {
+    const maybeSkeletons = await Promise.all(
+      addresses.map(async (address, index) => {
         const contract = multicall.wrap(this.getContract(address));
-        const underlyingTokenAddresses = await this.getUnderlyingTokenAddresses({ address, contract, multicall })
+        const underlyingTokenAddresses = await this.getUnderlyingTokenAddresses({ address, index, contract, multicall })
           .then(v => (Array.isArray(v) ? v : [v]))
-          .then(v => v.map(t => t.toLowerCase()));
+          .then(v => v.map(t => t.toLowerCase()))
+          .catch(err => {
+            if (isMulticallUnderlyingError(err)) return null;
+            throw err;
+          });
 
+        if (!underlyingTokenAddresses) return null;
         return { address, underlyingTokenAddresses };
       }),
     );
 
+    const skeletons = compact(maybeSkeletons);
     const [base, meta] = partition(skeletons, t => {
       const tokenAddresses = skeletons.map(v => v.address);
       return intersection(t.underlyingTokenAddresses, tokenAddresses).length === 0;
@@ -208,7 +216,6 @@ export abstract class AppTokenTemplatePositionFetcher<T extends Contract, V exte
             appId: this.appId,
             groupId: this.groupId,
             network: this.network,
-            groupLabel: this.groupLabel,
             address,
             symbol,
             decimals,
@@ -236,7 +243,7 @@ export abstract class AppTokenTemplatePositionFetcher<T extends Contract, V exte
           const displayProps = {
             label: await this.getLabel(displayPropsStageParams),
             labelDetailed: await this.getLabelDetailed(displayPropsStageParams),
-            secondarylabel: await this.getSecondaryLabel(displayPropsStageParams),
+            secondaryLabel: await this.getSecondaryLabel(displayPropsStageParams),
             tertiaryLabel: await this.getTertiaryLabel(displayPropsStageParams),
             images: await this.getImages(displayPropsStageParams),
             statsItems: await this.getStatsItems(displayPropsStageParams),

@@ -15,7 +15,6 @@ export const PHUTURE_DEFINITION = appDefinition({
       id: 'index',
       type: GroupType.TOKEN,
       label: 'Index',
-      groupLabel: 'Indexes',
     },
   },
   supportedNetworks: {

@@ -13,6 +13,7 @@ export class PolygonStargatePoolTokenFetcher extends StargatePoolTokenFetcher {
   appId = appId;
   groupId = groupId;
   network = network;
+  groupLabel = 'Pool';
   factoryAddress = '0x808d7c71ad2ba3fa531b068a2417c63106bc0949';
   useLocalDecimals = false;
 }

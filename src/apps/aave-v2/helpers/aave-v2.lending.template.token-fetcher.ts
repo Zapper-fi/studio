@@ -1,7 +1,9 @@
 import { Inject } from '@nestjs/common';
 
+import { drillBalance } from '~app-toolkit';
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
+import { AppTokenPositionBalance } from '~position/position-balance.interface';
 import {
   AppTokenTemplatePositionFetcher,
   DataPropsStageParams,
@@ -147,5 +149,24 @@ export abstract class AaveV2LendingTemplateTokenFetcher extends AppTokenTemplate
     appToken,
   }: DisplayPropsStageParams<AaveV2AToken, AaveV2LendingTokenDataProps>): Promise<string> {
     return appToken.symbol;
+  }
+
+  async getBalances(address: string): Promise<AppTokenPositionBalance<AaveV2LendingTokenDataProps>[]> {
+    const multicall = this.appToolkit.getMulticall(this.network);
+    const appTokens = await this.appToolkit.getAppTokenPositions<AaveV2LendingTokenDataProps>({
+      appId: this.appId,
+      network: this.network,
+      groupIds: [this.groupId],
+    });
+
+    const balances = await Promise.all(
+      appTokens.map(async appToken => {
+        const balanceRaw = await this.getBalancePerToken({ multicall, address, appToken });
+        const tokenBalance = drillBalance(appToken, balanceRaw.toString(), { isDebt: this.isDebt });
+        return tokenBalance;
+      }),
+    );
+
+    return balances as AppTokenPositionBalance<AaveV2LendingTokenDataProps>[];
   }
 }

@@ -41,11 +41,13 @@ const query = gql`
 `;
 
 @Register.TokenPositionFetcher({ appId, groupId, network })
-export class EthereumOpenleveragePoolTokenFetcher extends AppTokenTemplatePositionFetcher<OpenleverageLpool, OpenLeverageDataProps> {
-    appId = OPENLEVERAGE_DEFINITION.id;
-    groupId = OPENLEVERAGE_DEFINITION.groups.pool.id;
-    network = Network.ETHEREUM_MAINNET;
-    groupLabel = 'Pools';
+
+
+export class EthereumOpenleveragePoolTokenFetcher extends AppTokenTemplatePositionFetcher<OpenleverageLpool> {
+  appId = OPENLEVERAGE_DEFINITION.id;
+  groupId = OPENLEVERAGE_DEFINITION.groups.pool.id;
+  network = Network.ETHEREUM_MAINNET;
+  groupLabel = 'Pools';
 
     constructor(
         @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,

@@ -13,5 +13,6 @@ export class AvalancheAbracadabraMspellContractPositionFetcher extends Abracadab
   appId = appId;
   groupId = groupId;
   network = network;
+  groupLabel = 'mSPELL';
   mSpellAddress = '0xbd84472b31d947314fdfa2ea42460a2727f955af';
 }

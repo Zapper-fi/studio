@@ -33,7 +33,6 @@ export const BALANCER_V2_DEFINITION = appDefinition({
       id: 'farm',
       type: GroupType.POSITION,
       label: 'Staked',
-      groupLabel: 'Farms',
     },
 
     votingEscrow: {

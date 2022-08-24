@@ -13,5 +13,6 @@ export class AvalancheAbracadabraFarmContractPositionFetcher extends Abracadabra
   appId = appId;
   groupId = groupId;
   network = network;
+  groupLabel = 'Farms';
   chefAddress = '0x06408571e0ad5e8f52ead01450bde74e5074dc74';
 }

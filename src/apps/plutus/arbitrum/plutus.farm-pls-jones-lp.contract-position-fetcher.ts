@@ -25,6 +25,7 @@ export class ArbitrumPlutusFarmPlsJonesLpContractPositionFetcher extends SingleS
   appId = PLUTUS_DEFINITION.id;
   groupId = PLUTUS_DEFINITION.groups.farmPlsJonesLp.id;
   network = Network.ARBITRUM_MAINNET;
+  groupLabel = 'plsJONES LP Farm';
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,

@@ -30,6 +30,7 @@ export class EthereumLiquityStakingContractPositionFetcher extends SingleStaking
   appId = appId;
   groupId = groupId;
   network = network;
+  groupLabel = 'Staked';
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,

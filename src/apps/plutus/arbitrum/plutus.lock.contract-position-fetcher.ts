@@ -59,6 +59,7 @@ export class ArbitrumPlutusLockContractPositionFetcher extends SingleStakingFarm
   appId = PLUTUS_DEFINITION.id;
   groupId = PLUTUS_DEFINITION.groups.lock.id;
   network = Network.ARBITRUM_MAINNET;
+  groupLabel = 'Locked PLS';
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,

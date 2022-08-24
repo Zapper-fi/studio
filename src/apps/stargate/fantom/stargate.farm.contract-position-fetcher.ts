@@ -18,6 +18,7 @@ export class FantomStargateFarmContractPositionFetcher extends MasterChefTemplat
   appId = appId;
   groupId = groupId;
   network = network;
+  groupLabel = 'Farms';
   chefAddress = '0x224d8fd7ab6ad4c6eb4611ce56ef35dec2277f03';
 
   constructor(

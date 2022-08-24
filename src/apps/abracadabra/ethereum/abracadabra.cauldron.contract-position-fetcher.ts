@@ -13,6 +13,7 @@ export class EthereumAbracadabraCauldronContractPositionFetcher extends Abracada
   appId = appId;
   groupId = groupId;
   network = network;
+  groupLabel = 'Cauldrons';
   cauldrons = [
     '0xc1879bf24917ebe531fbaa20b0d05da027b592ce', // AGLD
     '0x7b7473a76d6ae86ce19f7352a1e89f6c9dc39020', // ALCX

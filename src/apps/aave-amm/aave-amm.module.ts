@@ -5,6 +5,7 @@ import { AaveV2AppModule } from '~apps/aave-v2';
 import { AaveAmmAppDefinition, AAVE_AMM_DEFINITION } from './aave-amm.definition';
 import { AaveAmmContractFactory } from './contracts';
 import { EthereumAaveAmmBalanceFetcher } from './ethereum/aave-amm.balance-fetcher';
+import { EthereumAaveAmmPositionPresenter } from './ethereum/aave-amm.position-presenter';
 import { EthereumAaveAmmStableDebtTokenFetcher } from './ethereum/aave-amm.stable-debt.token-fetcher';
 import { EthereumAaveAmmSupplyTokenFetcher } from './ethereum/aave-amm.supply.token-fetcher';
 import { EthereumAaveAmmVariableDebtTokenFetcher } from './ethereum/aave-amm.variable-debt.token-fetcher';
@@ -16,6 +17,7 @@ import { EthereumAaveAmmVariableDebtTokenFetcher } from './ethereum/aave-amm.var
     AaveAmmAppDefinition,
     AaveAmmContractFactory,
     EthereumAaveAmmBalanceFetcher,
+    EthereumAaveAmmPositionPresenter,
     EthereumAaveAmmStableDebtTokenFetcher,
     EthereumAaveAmmSupplyTokenFetcher,
     EthereumAaveAmmVariableDebtTokenFetcher,

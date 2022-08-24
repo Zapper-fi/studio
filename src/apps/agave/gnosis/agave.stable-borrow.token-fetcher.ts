@@ -20,6 +20,7 @@ export class GnosisAgaveStableBorrowTokenFetcher extends AaveV2LendingTemplateTo
   appId = AGAVE_DEFINITION.id;
   groupId = AGAVE_DEFINITION.groups.stableBorrow.id;
   network = Network.GNOSIS_MAINNET;
+  groupLabel = 'Lending';
   providerAddress = '0x24dcbd376db23e4771375092344f5cbea3541fc0';
   isDebt = true;
 
