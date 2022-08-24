@@ -34,12 +34,6 @@ export const HECTOR_NETWORK_DEFINITION = appDefinition({
       label: 'Hector Network',
     },
 
-    tor: {
-      id: 'tor',
-      type: GroupType.TOKEN,
-      label: 'TOR',
-    },
-
     bond: {
       id: 'bond',
       type: GroupType.POSITION,
@@ -62,6 +56,12 @@ export const HECTOR_NETWORK_DEFINITION = appDefinition({
       id: 'bsc-bond',
       type: GroupType.POSITION,
       label: 'BSC Bonds',
+    },
+
+    farm: {
+      id: 'farm',
+      type: GroupType.POSITION,
+      label: 'Farms',
     },
   },
   links: {

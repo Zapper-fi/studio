@@ -5,10 +5,10 @@ import { OlympusAppModule } from '~apps/olympus';
 import { BinanceSmartChainHectorNetworkBscBondContractPositionBalanceFetcher } from './binance-smart-chain/hector-network.bsc-bond.contract-position-balance-fetcher';
 import { BinanceSmartChainHectorNetworkBscBondContractPositionFetcher } from './binance-smart-chain/hector-network.bsc-bond.contract-position-fetcher';
 import { BinanceSmartChainHectorNetworkHecTokenFetcher } from './binance-smart-chain/hector-network.hec.token-fetcher';
-import { BinanceSmartChainHectorNetworkTorTokenFetcher } from './binance-smart-chain/hector-network.tor.token-fetcher';
 import { HectorNetworkContractFactory } from './contracts';
 import { FantomHectorNetworkBondContractPositionBalanceFetcher } from './fantom/hector-network.bond.contract-position-balance-fetcher';
 import { FantomHectorNetworkBondContractPositionFetcher } from './fantom/hector-network.bond.contract-position-fetcher';
+import { FantomHectorNetworkFarmContractPositionFetcher } from './fantom/hector-network.farm.contract-position-fetcher';
 import { FantomHectorNetworkFtmBondContractPositionBalanceFetcher } from './fantom/hector-network.ftm-bond.contract-position-balance-fetcher';
 import { FantomHectorNetworkFtmBondContractPositionFetcher } from './fantom/hector-network.ftm-bond.contract-position-fetcher';
 import { FantomHectorNetworkHecTokenFetcher } from './fantom/hector-network.hec.token-fetcher';
@@ -16,7 +16,6 @@ import { FantomHectorNetworkSHecV1TokenFetcher } from './fantom/hector-network.s
 import { FantomHectorNetworkSHecV2TokenFetcher } from './fantom/hector-network.s-hec-v2.token-fetcher';
 import { FantomHectorNetworkStakeBondContractPositionBalanceFetcher } from './fantom/hector-network.stake-bond.contract-position-balance-fetcher';
 import { FantomHectorNetworkStakeBondContractPositionFetcher } from './fantom/hector-network.stake-bond.contract-position-fetcher';
-import { FantomHectorNetworkTorTokenFetcher } from './fantom/hector-network.tor.token-fetcher';
 import { FantomHectorNetworkWsHecTokenFetcher } from './fantom/hector-network.ws-hec.token-fetcher';
 import { HectorNetworkAppDefinition, HECTOR_NETWORK_DEFINITION } from './hector-network.definition';
 
@@ -27,9 +26,9 @@ import { HectorNetworkAppDefinition, HECTOR_NETWORK_DEFINITION } from './hector-
     BinanceSmartChainHectorNetworkBscBondContractPositionBalanceFetcher,
     BinanceSmartChainHectorNetworkBscBondContractPositionFetcher,
     BinanceSmartChainHectorNetworkHecTokenFetcher,
-    BinanceSmartChainHectorNetworkTorTokenFetcher,
     FantomHectorNetworkBondContractPositionBalanceFetcher,
     FantomHectorNetworkBondContractPositionFetcher,
+    FantomHectorNetworkFarmContractPositionFetcher,
     FantomHectorNetworkFtmBondContractPositionBalanceFetcher,
     FantomHectorNetworkFtmBondContractPositionFetcher,
     FantomHectorNetworkHecTokenFetcher,
@@ -37,7 +36,6 @@ import { HectorNetworkAppDefinition, HECTOR_NETWORK_DEFINITION } from './hector-
     FantomHectorNetworkSHecV2TokenFetcher,
     FantomHectorNetworkStakeBondContractPositionBalanceFetcher,
     FantomHectorNetworkStakeBondContractPositionFetcher,
-    FantomHectorNetworkTorTokenFetcher,
     FantomHectorNetworkWsHecTokenFetcher,
     HectorNetworkAppDefinition,
     HectorNetworkContractFactory,

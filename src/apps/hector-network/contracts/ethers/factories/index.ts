@@ -6,3 +6,4 @@ export { HectorNetworkBscBondDepository__factory } from './HectorNetworkBscBondD
 export { HectorNetworkFtmBondDepository__factory } from './HectorNetworkFtmBondDepository__factory';
 export { HectorNetworkStakeBondDepository__factory } from './HectorNetworkStakeBondDepository__factory';
 export { HectorNetworkStaked__factory } from './HectorNetworkStaked__factory';
+export { HectorNetworkToken__factory } from './HectorNetworkToken__factory';
