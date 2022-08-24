@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.189.0](https://github.com/Zapper-fi/studio/compare/v0.188.1...v0.189.0) (2022-08-24)
+
+
+### Features
+
+* **aave-v2:** Remove unnecessary constructors in derived classes ([#1251](https://github.com/Zapper-fi/studio/issues/1251)) ([76d502c](https://github.com/Zapper-fi/studio/commit/76d502ca05c59e5511b47cc55bf7c43f1d079126))
+
 ## [0.188.1](https://github.com/Zapper-fi/studio/compare/v0.188.0...v0.188.1) (2022-08-24)
 
 
