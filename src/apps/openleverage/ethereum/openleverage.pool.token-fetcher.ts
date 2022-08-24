@@ -1,6 +1,5 @@
 import { Inject } from '@nestjs/common';
 import { gql } from 'graphql-request';
-import Axios from 'axios';
 
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
@@ -16,16 +15,21 @@ import { Network } from '~types/network.interface';
 
 import { OpenleverageContractFactory, OpenleverageLpool } from '../contracts';
 import { OPENLEVERAGE_DEFINITION } from '../openleverage.definition';
+import { OpenleveragePoolAPYHelper } from '../helpers/openleverage-pool.apy-helper';
 
 const appId = OPENLEVERAGE_DEFINITION.id;
 const groupId = OPENLEVERAGE_DEFINITION.groups.pool.id;
 const network = Network.ETHEREUM_MAINNET;
-const poolDetailMap = {};
 
 type OpenLeveragePoolsResponse = {
     pools: {
         id: string;
     }[];
+};
+
+type OpenLeverageDataProps = {
+    apy: number;
+    liquidity: number;
 };
 
 const query = gql`
@@ -37,14 +41,16 @@ const query = gql`
 `;
 
 @Register.TokenPositionFetcher({ appId, groupId, network })
-export class EthereumOpenleveragePoolTokenFetcher extends AppTokenTemplatePositionFetcher<OpenleverageLpool> {
+export class EthereumOpenleveragePoolTokenFetcher extends AppTokenTemplatePositionFetcher<OpenleverageLpool, OpenLeverageDataProps> {
     appId = OPENLEVERAGE_DEFINITION.id;
     groupId = OPENLEVERAGE_DEFINITION.groups.pool.id;
     network = Network.ETHEREUM_MAINNET;
 
     constructor(
         @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-        @Inject(OpenleverageContractFactory) protected readonly contractFactory: OpenleverageContractFactory,
+        @Inject(OpenleveragePoolAPYHelper)
+        private readonly openleveragePoolAPYHelper: OpenleveragePoolAPYHelper,
+        @Inject(OpenleverageContractFactory) protected readonly contractFactory: OpenleverageContractFactory
     ) {
         super(appToolkit);
     }
@@ -68,23 +74,15 @@ export class EthereumOpenleveragePoolTokenFetcher extends AppTokenTemplatePositi
         return Number(exchangeRateCurrent) / 10 ** 18;
     }
 
-    async getDataProps({ appToken }: DataPropsStageParams<OpenleverageLpool>) {
+    async getDataProps({ appToken }: DataPropsStageParams<OpenleverageLpool, OpenLeverageDataProps>) {
         const liquidity = appToken.supply * appToken.price;
-        if (Object.keys(poolDetailMap).length == 0) {
-            const endpoint = `https://eth.openleverage.finance/api/info/pool/apy`;
-            const { data } = await Axios.get(endpoint);
-            data?.forEach(pool => {
-                poolDetailMap[pool.poolAddr] = {
-                    lendingYieldY: pool.lendingYieldY,
-                    token1Symbol: pool.token1Symbol
-                };
-            });
-        }
-        const apy = poolDetailMap[appToken.address].lendingYieldY || 0;
+        const poolDetailMap = await this.openleveragePoolAPYHelper.getApy();
+        const apy = poolDetailMap[appToken.address]?.lendingYieldY || 0;
         return { liquidity, apy };
     }
 
     async getLabel({ appToken }: DisplayPropsStageParams<OpenleverageLpool>) {
-        return getLabelFromToken(appToken.tokens[0]) + "/" + poolDetailMap[appToken.address].token1Symbol;
+        const poolDetailMap = await this.openleveragePoolAPYHelper.getApy();
+        return getLabelFromToken(appToken.tokens[0]) + "/" + poolDetailMap[appToken.address]?.token1Symbol;
     }
 }

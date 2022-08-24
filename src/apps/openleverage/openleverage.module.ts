@@ -5,6 +5,7 @@ import { BinanceSmartChainOpenleveragePoolTokenFetcher } from './binance-smart-c
 import { OpenleverageContractFactory } from './contracts';
 import { EthereumOpenleveragePoolTokenFetcher } from './ethereum/openleverage.pool.token-fetcher';
 import { OpenleverageAppDefinition, OPENLEVERAGE_DEFINITION } from './openleverage.definition';
+import { OpenleveragePoolAPYHelper } from './helpers/openleverage-pool.apy-helper';
 
 @Register.AppModule({
   appId: OPENLEVERAGE_DEFINITION.id,
@@ -13,6 +14,7 @@ import { OpenleverageAppDefinition, OPENLEVERAGE_DEFINITION } from './openlevera
     BinanceSmartChainOpenleveragePoolTokenFetcher,
     OpenleverageAppDefinition,
     OpenleverageContractFactory,
+    OpenleveragePoolAPYHelper
   ],
 })
-export class OpenleverageAppModule extends AbstractApp() {}
+export class OpenleverageAppModule extends AbstractApp() { }
