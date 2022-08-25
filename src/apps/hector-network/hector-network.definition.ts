@@ -46,18 +46,6 @@ export const HECTOR_NETWORK_DEFINITION = appDefinition({
       label: 'Bonds',
     },
 
-    ftmBond: {
-      id: 'ftm-bond',
-      type: GroupType.POSITION,
-      label: 'FTM Bonds',
-    },
-
-    bscBond: {
-      id: 'bsc-bond',
-      type: GroupType.POSITION,
-      label: 'BSC Bonds',
-    },
-
     farm: {
       id: 'farm',
       type: GroupType.POSITION,
