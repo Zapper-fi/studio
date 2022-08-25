@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.193.1](https://github.com/Zapper-fi/studio/compare/v0.193.0...v0.193.1) (2022-08-25)
+
+
+### Bug Fixes
+
+* **stargate:** fix aaSTG pricePerShare ([#1264](https://github.com/Zapper-fi/studio/issues/1264)) ([7cc3fec](https://github.com/Zapper-fi/studio/commit/7cc3fecadb71ccd1ca5ab662390cca88c6ffd418))
+
 ## [0.193.0](https://github.com/Zapper-fi/studio/compare/v0.192.0...v0.193.0) (2022-08-25)
 
 
