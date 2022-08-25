@@ -6,6 +6,7 @@ export type { HectorNetworkBscBondDepository } from './HectorNetworkBscBondDepos
 export type { HectorNetworkFtmBondDepository } from './HectorNetworkFtmBondDepository';
 export type { HectorNetworkStakeBondDepository } from './HectorNetworkStakeBondDepository';
 export type { HectorNetworkStaked } from './HectorNetworkStaked';
+export type { HectorNetworkStakingRewards } from './HectorNetworkStakingRewards';
 export type { HectorNetworkToken } from './HectorNetworkToken';
 export * as factories from './factories';
 export { HectorNetworkBondDepository__factory } from './factories/HectorNetworkBondDepository__factory';
@@ -13,4 +14,5 @@ export { HectorNetworkBscBondDepository__factory } from './factories/HectorNetwo
 export { HectorNetworkFtmBondDepository__factory } from './factories/HectorNetworkFtmBondDepository__factory';
 export { HectorNetworkStakeBondDepository__factory } from './factories/HectorNetworkStakeBondDepository__factory';
 export { HectorNetworkStaked__factory } from './factories/HectorNetworkStaked__factory';
+export { HectorNetworkStakingRewards__factory } from './factories/HectorNetworkStakingRewards__factory';
 export { HectorNetworkToken__factory } from './factories/HectorNetworkToken__factory';

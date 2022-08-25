@@ -13,18 +13,18 @@ import {
 } from '~position/template/contract-position.template.position-fetcher';
 import { Network } from '~types';
 
-import { HectorNetworkFtmBondDepository, HectorNetworkContractFactory } from '../contracts';
+import { HectorNetworkBscBondDepository, HectorNetworkContractFactory } from '../contracts';
 import { HECTOR_NETWORK_DEFINITION } from '../hector-network.definition';
 
 const appId = HECTOR_NETWORK_DEFINITION.id;
-const groupId = HECTOR_NETWORK_DEFINITION.groups.ftmBond.id;
-const network = Network.FANTOM_OPERA_MAINNET;
+const groupId = HECTOR_NETWORK_DEFINITION.groups.bond.id;
+const network = Network.BINANCE_SMART_CHAIN_MAINNET;
 
 @Register.ContractPositionFetcher({ appId, groupId, network })
-export class FantomHectorNetworkFtmBondContractPositionFetcher extends ContractPositionTemplatePositionFetcher<HectorNetworkFtmBondDepository> {
-  appId = HECTOR_NETWORK_DEFINITION.id;
-  groupId = HECTOR_NETWORK_DEFINITION.groups.ftmBond.id;
-  network = Network.FANTOM_OPERA_MAINNET;
+export class BinanceSmartChainHectorNetworkBondContractPositionFetcher extends ContractPositionTemplatePositionFetcher<HectorNetworkBscBondDepository> {
+  appId = appId;
+  groupId = groupId;
+  network = network;
   groupLabel = 'Bonds';
 
   constructor(
@@ -36,17 +36,17 @@ export class FantomHectorNetworkFtmBondContractPositionFetcher extends ContractP
 
   async getDescriptors() {
     return [
-      { address: '0xdd62c045d9a873f1206a5291dcf0ea9fc2aa8ddf' },
-      { address: '0x4441f551001ab0785f1006929aa86d0c846f30cc' },
-      { address: '0x312ade5a805e5f3975bbdbb9feb5ef4d1e15eb8f' },
+      { address: '0xf28390501753275d12f750c759baf7365368499f' },
+      { address: '0x23b9bf624f6fa56cad401586f477c32f3a41d852' },
+      { address: '0x4f4271cd7a7ebd5ca908effaf35c06a208c8c2b2' },
     ];
   }
 
   getContract(address: string) {
-    return this.contractFactory.hectorNetworkFtmBondDepository({ address, network: this.network });
+    return this.contractFactory.hectorNetworkBscBondDepository({ address, network: this.network });
   }
 
-  async getTokenDescriptors({ contract }: TokenStageParams<HectorNetworkFtmBondDepository>) {
+  async getTokenDescriptors({ contract }: TokenStageParams<HectorNetworkBscBondDepository>) {
     const [principle, claimable] = await Promise.all([contract.principle(), contract.HEC()]);
 
     return [
@@ -56,11 +56,11 @@ export class FantomHectorNetworkFtmBondContractPositionFetcher extends ContractP
     ];
   }
 
-  async getLabel({ contractPosition }: DisplayPropsStageParams<HectorNetworkFtmBondDepository>) {
+  async getLabel({ contractPosition }: DisplayPropsStageParams<HectorNetworkBscBondDepository>) {
     return `${getLabelFromToken(contractPosition.tokens[2])} Bond`;
   }
 
-  async getImages({ contractPosition }: DisplayPropsStageParams<HectorNetworkFtmBondDepository>) {
+  async getImages({ contractPosition }: DisplayPropsStageParams<HectorNetworkBscBondDepository>) {
     return getImagesFromToken(contractPosition.tokens[2]);
   }
 
@@ -68,7 +68,7 @@ export class FantomHectorNetworkFtmBondContractPositionFetcher extends ContractP
     address,
     contract,
     multicall,
-  }: GetTokenBalancesPerPositionParams<HectorNetworkFtmBondDepository>) {
+  }: GetTokenBalancesPerPositionParams<HectorNetworkBscBondDepository>) {
     const count = await multicall.wrap(contract).depositCounts(address);
     const depositIds = await Promise.all(
       Array(count.toNumber()).map((_, i) => multicall.wrap(contract).ownedDeposits(address, i)),

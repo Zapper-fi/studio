@@ -9,6 +9,7 @@ import { HectorNetworkBscBondDepository__factory } from './ethers';
 import { HectorNetworkFtmBondDepository__factory } from './ethers';
 import { HectorNetworkStakeBondDepository__factory } from './ethers';
 import { HectorNetworkStaked__factory } from './ethers';
+import { HectorNetworkStakingRewards__factory } from './ethers';
 import { HectorNetworkToken__factory } from './ethers';
 
 // eslint-disable-next-line
@@ -35,6 +36,9 @@ export class HectorNetworkContractFactory extends ContractFactory {
   hectorNetworkStaked({ address, network }: ContractOpts) {
     return HectorNetworkStaked__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
+  hectorNetworkStakingRewards({ address, network }: ContractOpts) {
+    return HectorNetworkStakingRewards__factory.connect(address, this.appToolkit.getNetworkProvider(network));
+  }
   hectorNetworkToken({ address, network }: ContractOpts) {
     return HectorNetworkToken__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
@@ -45,4 +49,5 @@ export type { HectorNetworkBscBondDepository } from './ethers';
 export type { HectorNetworkFtmBondDepository } from './ethers';
 export type { HectorNetworkStakeBondDepository } from './ethers';
 export type { HectorNetworkStaked } from './ethers';
+export type { HectorNetworkStakingRewards } from './ethers';
 export type { HectorNetworkToken } from './ethers';
