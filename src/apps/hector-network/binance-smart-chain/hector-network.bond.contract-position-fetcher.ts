@@ -5,12 +5,12 @@ import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
 import { getImagesFromToken, getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { MetaType } from '~position/position.interface';
+import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
 import {
-  ContractPositionTemplatePositionFetcher,
-  DisplayPropsStageParams,
-  GetTokenBalancesPerPositionParams,
-  TokenStageParams,
-} from '~position/template/contract-position.template.position-fetcher';
+  GetDisplayPropsParams,
+  GetTokenBalancesParams,
+  GetTokenDefinitionsParams,
+} from '~position/template/contract-position.template.types';
 import { Network } from '~types';
 
 import { HectorNetworkBscBondDepository, HectorNetworkContractFactory } from '../contracts';
@@ -34,7 +34,7 @@ export class BinanceSmartChainHectorNetworkBondContractPositionFetcher extends C
     super(appToolkit);
   }
 
-  async getDescriptors() {
+  async getDefinitions() {
     return [
       { address: '0xf28390501753275d12f750c759baf7365368499f' },
       { address: '0x23b9bf624f6fa56cad401586f477c32f3a41d852' },
@@ -46,7 +46,7 @@ export class BinanceSmartChainHectorNetworkBondContractPositionFetcher extends C
     return this.contractFactory.hectorNetworkBscBondDepository({ address, network: this.network });
   }
 
-  async getTokenDescriptors({ contract }: TokenStageParams<HectorNetworkBscBondDepository>) {
+  async getTokenDefinitions({ contract }: GetTokenDefinitionsParams<HectorNetworkBscBondDepository>) {
     const [principle, claimable] = await Promise.all([contract.principle(), contract.HEC()]);
 
     return [
@@ -56,11 +56,11 @@ export class BinanceSmartChainHectorNetworkBondContractPositionFetcher extends C
     ];
   }
 
-  async getLabel({ contractPosition }: DisplayPropsStageParams<HectorNetworkBscBondDepository>) {
+  async getLabel({ contractPosition }: GetDisplayPropsParams<HectorNetworkBscBondDepository>) {
     return `${getLabelFromToken(contractPosition.tokens[2])} Bond`;
   }
 
-  async getImages({ contractPosition }: DisplayPropsStageParams<HectorNetworkBscBondDepository>) {
+  async getImages({ contractPosition }: GetDisplayPropsParams<HectorNetworkBscBondDepository>) {
     return getImagesFromToken(contractPosition.tokens[2]);
   }
 
@@ -68,7 +68,7 @@ export class BinanceSmartChainHectorNetworkBondContractPositionFetcher extends C
     address,
     contract,
     multicall,
-  }: GetTokenBalancesPerPositionParams<HectorNetworkBscBondDepository>) {
+  }: GetTokenBalancesParams<HectorNetworkBscBondDepository>) {
     const count = await multicall.wrap(contract).depositCounts(address);
     const depositIds = await Promise.all(
       Array(count.toNumber()).map((_, i) => multicall.wrap(contract).ownedDeposits(address, i)),

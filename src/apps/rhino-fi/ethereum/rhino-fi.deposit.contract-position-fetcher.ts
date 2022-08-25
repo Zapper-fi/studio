@@ -10,11 +10,8 @@ import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.prese
 import { DefaultDataProps } from '~position/display.interface';
 import { ContractPositionBalance } from '~position/position-balance.interface';
 import { MetaType } from '~position/position.interface';
-import {
-  ContractPositionTemplatePositionFetcher,
-  DisplayPropsStageParams,
-  TokenStageParams,
-} from '~position/template/contract-position.template.position-fetcher';
+import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
+import { GetDisplayPropsParams, GetTokenDefinitionsParams } from '~position/template/contract-position.template.types';
 import { Network } from '~types/network.interface';
 
 import { RhinoFiApiClient } from '../common/rhino-fi.api-client';
@@ -26,7 +23,7 @@ const appId = RHINO_FI_DEFINITION.id;
 const groupId = RHINO_FI_DEFINITION.groups.deposit.id;
 const network = Network.ETHEREUM_MAINNET;
 
-type RhinoFiDepositDescriptor = {
+type RhinoFiDepositDefinition = {
   address: string;
   tokenAddress: string;
 };
@@ -35,7 +32,7 @@ type RhinoFiDepositDescriptor = {
 export class EthereumRhinoFiDepositContractPositionFetcher extends ContractPositionTemplatePositionFetcher<
   RhinoFiStarkEx,
   DefaultDataProps,
-  RhinoFiDepositDescriptor
+  RhinoFiDepositDefinition
 > {
   appId = appId;
   groupId = groupId;
@@ -55,7 +52,7 @@ export class EthereumRhinoFiDepositContractPositionFetcher extends ContractPosit
     return this.contractFactory.rhinoFiStarkEx({ address, network: this.network });
   }
 
-  async getDescriptors() {
+  async getDefinitions() {
     const supportedTokens = await this.cacheManager.getCachedSupportedTokens();
     return supportedTokens.map(supportedToken => ({
       address: '0xed9d63a96c27f87b07115b56b2e3572827f21646',
@@ -63,18 +60,16 @@ export class EthereumRhinoFiDepositContractPositionFetcher extends ContractPosit
     }));
   }
 
-  async getTokenDescriptors({
-    descriptor,
-  }: TokenStageParams<RhinoFiStarkEx, DefaultDataProps, RhinoFiDepositDescriptor>) {
+  async getTokenDefinitions({ definition }: GetTokenDefinitionsParams<RhinoFiStarkEx, RhinoFiDepositDefinition>) {
     return [
-      { metaType: MetaType.SUPPLIED, address: descriptor.tokenAddress },
-      { metaType: MetaType.LOCKED, address: descriptor.tokenAddress },
+      { metaType: MetaType.SUPPLIED, address: definition.tokenAddress },
+      { metaType: MetaType.LOCKED, address: definition.tokenAddress },
     ];
   }
 
   async getLabel({
     contractPosition,
-  }: DisplayPropsStageParams<RhinoFiStarkEx, DefaultDataProps, RhinoFiDepositDescriptor>): Promise<string> {
+  }: GetDisplayPropsParams<RhinoFiStarkEx, DefaultDataProps, RhinoFiDepositDefinition>): Promise<string> {
     return `${getLabelFromToken(contractPosition.tokens[0])} Rhino-Fi Deposit`;
   }
 

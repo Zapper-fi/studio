@@ -1,5 +1,4 @@
 import { Inject } from '@nestjs/common';
-import { BigNumberish } from 'ethers';
 import { compact, range } from 'lodash';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
@@ -9,12 +8,12 @@ import { getTokenImg } from '~app-toolkit/helpers/presentation/image.present';
 import { isMulticallUnderlyingError } from '~multicall/multicall.ethers';
 import { DisplayProps } from '~position/display.interface';
 import { MetaType } from '~position/position.interface';
+import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
 import {
-  ContractPositionTemplatePositionFetcher,
-  DisplayPropsStageParams,
-  GetTokenBalancesPerPositionParams,
-  TokenStageParams,
-} from '~position/template/contract-position.template.position-fetcher';
+  GetDisplayPropsParams,
+  GetTokenBalancesParams,
+  GetTokenDefinitionsParams,
+} from '~position/template/contract-position.template.types';
 import { Network } from '~types/network.interface';
 
 import { GeistContractFactory, GeistStaking } from '../contracts';
@@ -40,7 +39,7 @@ export class FantomGeistPlatformFeesPositionFetcher extends ContractPositionTemp
     super(appToolkit);
   }
 
-  async getDescriptors() {
+  async getDefinitions() {
     const geistStakingAddress = '0x49c93a95dbcc9a6a4d8f77e59c038ce5020e82f8';
     return [{ address: geistStakingAddress }];
   }
@@ -49,7 +48,7 @@ export class FantomGeistPlatformFeesPositionFetcher extends ContractPositionTemp
     return this.contractFactory.geistStaking({ address, network: this.network });
   }
 
-  async getTokenDescriptors({ contract }: TokenStageParams<GeistStaking>) {
+  async getTokenDefinitions({ contract }: GetTokenDefinitionsParams<GeistStaking>) {
     const rewardTokenAddresses = await Promise.all(
       range(50).map(idx =>
         contract.rewardTokens(idx).catch(e => {
@@ -71,7 +70,7 @@ export class FantomGeistPlatformFeesPositionFetcher extends ContractPositionTemp
     return 'GEIST Locking';
   }
 
-  async getSecondaryLabel(params: DisplayPropsStageParams<GeistStaking>): Promise<DisplayProps['secondaryLabel']> {
+  async getSecondaryLabel(params: GetDisplayPropsParams<GeistStaking>): Promise<DisplayProps['secondaryLabel']> {
     const rewardToken = params.contractPosition.tokens[0];
     return buildDollarDisplayItem(rewardToken.price);
   }
@@ -80,11 +79,7 @@ export class FantomGeistPlatformFeesPositionFetcher extends ContractPositionTemp
     return [getTokenImg(this.geistTokenAddress, this.network)];
   }
 
-  async getTokenBalancesPerPosition({
-    address,
-    contract,
-    contractPosition,
-  }: GetTokenBalancesPerPositionParams<GeistStaking>): Promise<BigNumberish[]> {
+  async getTokenBalancesPerPosition({ address, contract, contractPosition }: GetTokenBalancesParams<GeistStaking>) {
     const [lockedBalancesData, withdrawableDataRaw, unlockedBalanceRaw, platformFeesPlatformFees] = await Promise.all([
       contract.lockedBalances(address),
       contract.withdrawableBalance(address),

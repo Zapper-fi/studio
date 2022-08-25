@@ -7,10 +7,10 @@ import { ZERO_ADDRESS } from '~app-toolkit/constants/address';
 import { Register } from '~app-toolkit/decorators';
 import { isClaimable } from '~position/position.utils';
 import {
-  DataPropsStageParams,
-  GetTokenBalancesPerPositionParams,
-  TokenStageParams,
-} from '~position/template/contract-position.template.position-fetcher';
+  GetDataPropsParams,
+  GetTokenBalancesParams,
+  GetTokenDefinitionsParams,
+} from '~position/template/contract-position.template.types';
 import {
   SingleStakingFarmDataProps,
   SingleStakingFarmDynamicTemplateContractPositionFetcher,
@@ -48,19 +48,16 @@ export class EthereumStakeDaoGaugeContractPositionFetcher extends SingleStakingF
     return LOCKERS.map(v => v.gaugeAddress);
   }
 
-  async getStakedTokenAddress({ contract }: TokenStageParams<StakeDaoGauge, SingleStakingFarmDataProps>) {
+  async getStakedTokenAddress({ contract }: GetTokenDefinitionsParams<StakeDaoGauge>) {
     return contract.staking_token();
   }
 
-  async getRewardTokenAddresses({ contract }: TokenStageParams<StakeDaoGauge, SingleStakingFarmDataProps>) {
+  async getRewardTokenAddresses({ contract }: GetTokenDefinitionsParams<StakeDaoGauge>) {
     const rewardTokenAddresses = await Promise.all(range(0, 4).map(async i => contract.reward_tokens(i)));
     return rewardTokenAddresses.map(v => v.toLowerCase()).filter(v => v !== ZERO_ADDRESS);
   }
 
-  async getRewardRates({
-    contract,
-    contractPosition,
-  }: DataPropsStageParams<StakeDaoGauge, SingleStakingFarmDataProps>) {
+  async getRewardRates({ contract, contractPosition }: GetDataPropsParams<StakeDaoGauge, SingleStakingFarmDataProps>) {
     const claimableTokens = contractPosition.tokens.filter(isClaimable);
     const rewardData = await Promise.all(claimableTokens.map(ct => contract.reward_data(ct.address)));
     return rewardData.map(v => v.rate);
@@ -69,7 +66,7 @@ export class EthereumStakeDaoGaugeContractPositionFetcher extends SingleStakingF
   getStakedTokenBalance({
     address,
     contract,
-  }: GetTokenBalancesPerPositionParams<StakeDaoGauge, SingleStakingFarmDataProps>): Promise<BigNumberish> {
+  }: GetTokenBalancesParams<StakeDaoGauge, SingleStakingFarmDataProps>): Promise<BigNumberish> {
     return contract.balanceOf(address);
   }
 
@@ -77,7 +74,7 @@ export class EthereumStakeDaoGaugeContractPositionFetcher extends SingleStakingF
     address,
     contractPosition,
     contract,
-  }: GetTokenBalancesPerPositionParams<StakeDaoGauge, SingleStakingFarmDataProps>) {
+  }: GetTokenBalancesParams<StakeDaoGauge, SingleStakingFarmDataProps>) {
     const rewardTokens = contractPosition.tokens.filter(isClaimable);
     return Promise.all(rewardTokens.map(v => contract.claimable_reward(address, v.address)));
   }

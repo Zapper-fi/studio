@@ -2,10 +2,7 @@ import { Inject } from '@nestjs/common';
 
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
-import {
-  DataPropsStageParams,
-  GetTokenBalancesPerPositionParams,
-} from '~position/template/contract-position.template.position-fetcher';
+import { GetDataPropsParams, GetTokenBalancesParams } from '~position/template/contract-position.template.types';
 import {
   SingleStakingFarmDefinition,
   SingleStakingFarmTemplateContractPositionFetcher,
@@ -51,15 +48,15 @@ export class FantomHectorNetworkFarmContractPositionFetcher extends SingleStakin
     return FARMS;
   }
 
-  getRewardRates({ contract }: DataPropsStageParams<HectorNetworkStakingRewards>) {
+  getRewardRates({ contract }: GetDataPropsParams<HectorNetworkStakingRewards>) {
     return contract.rewardRate();
   }
 
-  getStakedTokenBalance({ address, contract }: GetTokenBalancesPerPositionParams<HectorNetworkStakingRewards>) {
+  getStakedTokenBalance({ address, contract }: GetTokenBalancesParams<HectorNetworkStakingRewards>) {
     return contract.balanceOf(address);
   }
 
-  getRewardTokenBalances({ address, contract }: GetTokenBalancesPerPositionParams<HectorNetworkStakingRewards>) {
+  getRewardTokenBalances({ address, contract }: GetTokenBalancesParams<HectorNetworkStakingRewards>) {
     return contract.earned(address);
   }
 }
