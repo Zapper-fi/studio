@@ -3,10 +3,8 @@ import { Inject } from '@nestjs/common';
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { ZERO_ADDRESS } from '~app-toolkit/constants/address';
 import { Register } from '~app-toolkit/decorators';
-import {
-  AppTokenTemplatePositionFetcher,
-  DataPropsStageParams,
-} from '~position/template/app-token.template.position-fetcher';
+import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
+import { GetDataPropsParams } from '~position/template/app-token.template.types';
 import { Network } from '~types/network.interface';
 
 import { StargateContractFactory, StargateEth } from '../contracts';
@@ -52,7 +50,7 @@ export class ArbitrumStargateEthTokenFetcher extends AppTokenTemplatePositionFet
 
   async getDataProps({
     appToken,
-  }: DataPropsStageParams<StargateEth, StargateEthAppTokenDataProps>): Promise<StargateEthAppTokenDataProps> {
+  }: GetDataPropsParams<StargateEth, StargateEthAppTokenDataProps>): Promise<StargateEthAppTokenDataProps> {
     const reserve = appToken.supply; // 1:1
     const liquidity = appToken.supply * appToken.price;
     return { reserve, liquidity };

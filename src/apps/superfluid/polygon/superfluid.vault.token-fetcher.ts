@@ -4,11 +4,8 @@ import { gql } from 'graphql-request';
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
 import { DefaultDataProps } from '~position/display.interface';
-import {
-  AppTokenTemplatePositionFetcher,
-  DataPropsStageParams,
-  UnderlyingTokensStageParams,
-} from '~position/template/app-token.template.position-fetcher';
+import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
+import { GetUnderlyingTokensParams, GetDataPropsParams } from '~position/template/app-token.template.types';
 import { Network } from '~types/network.interface';
 
 import { SuperfluidContractFactory, VaultToken } from '../contracts';
@@ -71,11 +68,11 @@ export class PolygonSuperfluidVaultTokenFetcher extends AppTokenTemplatePosition
     return tokenData.tokens?.filter(x => !this.brokenAddresses.includes(x.id)).map(v => v.id) ?? [];
   }
 
-  async getUnderlyingTokenAddresses({ contract }: UnderlyingTokensStageParams<VaultToken>) {
+  async getUnderlyingTokenAddresses({ contract }: GetUnderlyingTokensParams<VaultToken>) {
     return await contract.getUnderlyingToken();
   }
 
-  async getDataProps(opts: DataPropsStageParams<VaultToken, DefaultDataProps>): Promise<DefaultDataProps> {
+  async getDataProps(opts: GetDataPropsParams<VaultToken, DefaultDataProps>): Promise<DefaultDataProps> {
     const { appToken } = opts;
     const liquidity = appToken.price * appToken.supply;
 
