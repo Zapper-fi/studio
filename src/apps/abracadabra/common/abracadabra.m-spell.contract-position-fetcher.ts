@@ -1,10 +1,7 @@
 import { Inject } from '@nestjs/common';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
-import {
-  GetTokenBalancesPerPositionParams,
-  TokenStageParams,
-} from '~position/template/contract-position.template.position-fetcher';
+import { GetTokenBalancesParams, GetTokenDefinitionsParams } from '~position/template/contract-position.template.types';
 import {
   SingleStakingFarmDataProps,
   SingleStakingFarmDynamicTemplateContractPositionFetcher,
@@ -30,11 +27,11 @@ export abstract class AbracadabraMspellContractPositionFetcher extends SingleSta
     return [this.mSpellAddress];
   }
 
-  async getStakedTokenAddress({ contract }: TokenStageParams<AbracadabraMspell, SingleStakingFarmDataProps>) {
+  async getStakedTokenAddress({ contract }: GetTokenDefinitionsParams<AbracadabraMspell>) {
     return contract.spell();
   }
 
-  async getRewardTokenAddresses({ contract }: TokenStageParams<AbracadabraMspell, SingleStakingFarmDataProps>) {
+  async getRewardTokenAddresses({ contract }: GetTokenDefinitionsParams<AbracadabraMspell>) {
     return contract.mim();
   }
 
@@ -42,17 +39,11 @@ export abstract class AbracadabraMspellContractPositionFetcher extends SingleSta
     return [0];
   }
 
-  getStakedTokenBalance({
-    address,
-    contract,
-  }: GetTokenBalancesPerPositionParams<AbracadabraMspell, SingleStakingFarmDataProps>) {
+  getStakedTokenBalance({ address, contract }: GetTokenBalancesParams<AbracadabraMspell, SingleStakingFarmDataProps>) {
     return contract.userInfo(address).then(v => v.amount);
   }
 
-  getRewardTokenBalances({
-    address,
-    contract,
-  }: GetTokenBalancesPerPositionParams<AbracadabraMspell, SingleStakingFarmDataProps>) {
+  getRewardTokenBalances({ address, contract }: GetTokenBalancesParams<AbracadabraMspell, SingleStakingFarmDataProps>) {
     return contract.pendingReward(address);
   }
 }

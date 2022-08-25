@@ -7,10 +7,10 @@ import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { ZERO_ADDRESS } from '~app-toolkit/constants/address';
 import { isClaimable } from '~position/position.utils';
 import {
-  DataPropsStageParams,
-  GetTokenBalancesPerPositionParams,
-  TokenStageParams,
-} from '~position/template/contract-position.template.position-fetcher';
+  GetDataPropsParams,
+  GetTokenBalancesParams,
+  GetTokenDefinitionsParams,
+} from '~position/template/contract-position.template.types';
 import {
   SingleStakingFarmDataProps,
   SingleStakingFarmDynamicTemplateContractPositionFetcher,
@@ -54,19 +54,16 @@ export abstract class BalancerV2FarmContractPositionFetcher extends SingleStakin
     return gaugesResponse.liquidityGauges.map(({ id }) => id.toLowerCase());
   }
 
-  async getStakedTokenAddress({ contract }: TokenStageParams<BalancerGauge, SingleStakingFarmDataProps>) {
+  async getStakedTokenAddress({ contract }: GetTokenDefinitionsParams<BalancerGauge>) {
     return contract.lp_token();
   }
 
-  async getRewardTokenAddresses({ contract }: TokenStageParams<BalancerGauge, SingleStakingFarmDataProps>) {
+  async getRewardTokenAddresses({ contract }: GetTokenDefinitionsParams<BalancerGauge>) {
     const rewardTokenAddresses = await Promise.all(range(0, 4).map(async i => contract.reward_tokens(i)));
     return rewardTokenAddresses.map(v => v.toLowerCase()).filter(v => v !== ZERO_ADDRESS);
   }
 
-  async getRewardRates({
-    contract,
-    contractPosition,
-  }: DataPropsStageParams<BalancerGauge, SingleStakingFarmDataProps>) {
+  async getRewardRates({ contract, contractPosition }: GetDataPropsParams<BalancerGauge, SingleStakingFarmDataProps>) {
     const claimableTokens = contractPosition.tokens.filter(isClaimable);
     const rewardData = await Promise.all(claimableTokens.map(ct => contract.reward_data(ct.address)));
     return rewardData.map(v => v.rate);
@@ -75,7 +72,7 @@ export abstract class BalancerV2FarmContractPositionFetcher extends SingleStakin
   getStakedTokenBalance({
     address,
     contract,
-  }: GetTokenBalancesPerPositionParams<BalancerGauge, SingleStakingFarmDataProps>): Promise<BigNumberish> {
+  }: GetTokenBalancesParams<BalancerGauge, SingleStakingFarmDataProps>): Promise<BigNumberish> {
     return contract.balanceOf(address);
   }
 
@@ -83,7 +80,7 @@ export abstract class BalancerV2FarmContractPositionFetcher extends SingleStakin
     address,
     contractPosition,
     contract,
-  }: GetTokenBalancesPerPositionParams<BalancerGauge, SingleStakingFarmDataProps>) {
+  }: GetTokenBalancesParams<BalancerGauge, SingleStakingFarmDataProps>) {
     const rewardTokens = contractPosition.tokens.filter(isClaimable);
     return Promise.all(rewardTokens.map(v => contract.claimable_reward(address, v.address)));
   }

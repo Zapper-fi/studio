@@ -9,14 +9,14 @@ import { getImagesFromToken, getLabelFromToken } from '~app-toolkit/helpers/pres
 import { isMulticallUnderlyingError } from '~multicall/multicall.ethers';
 import { ContractPosition, MetaType } from '~position/position.interface';
 import { isClaimable, isSupplied } from '~position/position.utils';
+import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
 import {
-  ContractPositionTemplatePositionFetcher,
-  DataPropsStageParams,
-  DisplayPropsStageParams,
-  GetTokenBalancesPerPositionParams,
-  TokenStageParams,
-  UnderlyingTokenDescriptor,
-} from '~position/template/contract-position.template.position-fetcher';
+  GetTokenDefinitionsParams,
+  UnderlyingTokenDefinition,
+  GetDataPropsParams,
+  GetDisplayPropsParams,
+  GetTokenBalancesParams,
+} from '~position/template/contract-position.template.types';
 
 export type MasterChefContractPositionDataProps = {
   poolIndex: number;
@@ -25,7 +25,7 @@ export type MasterChefContractPositionDataProps = {
   apy: number;
 };
 
-export type MasterChefContractPositionDescriptor = {
+export type MasterChefContractPositionDefinition = {
   address: string;
   poolIndex: number;
 };
@@ -33,7 +33,7 @@ export type MasterChefContractPositionDescriptor = {
 export abstract class MasterChefTemplateContractPositionFetcher<
   T extends Contract,
   V extends MasterChefContractPositionDataProps = MasterChefContractPositionDataProps,
-> extends ContractPositionTemplatePositionFetcher<T, V, MasterChefContractPositionDescriptor> {
+> extends ContractPositionTemplatePositionFetcher<T, V, MasterChefContractPositionDefinition> {
   constructor(@Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit) {
     super(appToolkit);
   }
@@ -53,41 +53,41 @@ export abstract class MasterChefTemplateContractPositionFetcher<
   abstract getStakedTokenBalance(address: string, contract: T, poolIndex: number): Promise<BigNumberish>;
   abstract getRewardTokenBalance(address: string, contract: T, poolIndex: number): Promise<BigNumberish>;
 
-  async getDescriptors() {
+  async getDefinitions() {
     const contract = this.getContract(this.chefAddress);
     const poolLength = await this.getPoolLength(contract);
     return range(0, Number(poolLength)).map(poolIndex => ({ address: this.chefAddress, poolIndex }));
   }
 
-  async getTokenDescriptors({
+  async getTokenDefinitions({
     contract,
-    descriptor,
-  }: TokenStageParams<T, MasterChefContractPositionDataProps, MasterChefContractPositionDescriptor>) {
-    const tokens: UnderlyingTokenDescriptor[] = [];
+    definition,
+  }: GetTokenDefinitionsParams<T, MasterChefContractPositionDefinition>) {
+    const tokenDefinitions: UnderlyingTokenDefinition[] = [];
 
-    const stakedTokenAddress = await this.getStakedTokenAddress(contract, descriptor.poolIndex).catch(err => {
+    const stakedTokenAddress = await this.getStakedTokenAddress(contract, definition.poolIndex).catch(err => {
       if (isMulticallUnderlyingError(err)) return null;
       throw err;
     });
-    const rewardTokenAddress = await this.getRewardTokenAddress(contract, descriptor.poolIndex).catch(err => {
+    const rewardTokenAddress = await this.getRewardTokenAddress(contract, definition.poolIndex).catch(err => {
       if (isMulticallUnderlyingError(err)) return null;
       throw err;
     });
 
     if (!stakedTokenAddress || !rewardTokenAddress) return null;
 
-    tokens.push({ metaType: MetaType.SUPPLIED, address: stakedTokenAddress });
-    tokens.push({ metaType: MetaType.CLAIMABLE, address: rewardTokenAddress });
-    return tokens;
+    tokenDefinitions.push({ metaType: MetaType.SUPPLIED, address: stakedTokenAddress });
+    tokenDefinitions.push({ metaType: MetaType.CLAIMABLE, address: rewardTokenAddress });
+    return tokenDefinitions;
   }
 
   async getDataProps({
     contract,
     contractPosition,
-    descriptor,
+    definition,
     multicall,
-  }: DataPropsStageParams<T, V, MasterChefContractPositionDescriptor>): Promise<V> {
-    const poolIndex = descriptor.poolIndex;
+  }: GetDataPropsParams<T, V, MasterChefContractPositionDefinition>): Promise<V> {
+    const poolIndex = definition.poolIndex;
     const stakedToken = contractPosition.tokens.find(isSupplied)!;
     const rewardToken = contractPosition.tokens.filter(isClaimable)[0];
 
@@ -117,12 +117,12 @@ export abstract class MasterChefTemplateContractPositionFetcher<
     return { poolIndex, liquidity, apy, isActive } as V;
   }
 
-  async getLabel({ contractPosition }: DisplayPropsStageParams<T>) {
+  async getLabel({ contractPosition }: GetDisplayPropsParams<T>) {
     const stakedToken = contractPosition.tokens.find(isSupplied)!;
     return getLabelFromToken(stakedToken);
   }
 
-  async getImages({ contractPosition }: DisplayPropsStageParams<T, V>) {
+  async getImages({ contractPosition }: GetDisplayPropsParams<T, V>) {
     return contractPosition.tokens.filter(isSupplied).flatMap(v => getImagesFromToken(v));
   }
 
@@ -134,7 +134,7 @@ export abstract class MasterChefTemplateContractPositionFetcher<
     address,
     contractPosition,
     contract,
-  }: GetTokenBalancesPerPositionParams<T, MasterChefContractPositionDataProps>) {
+  }: GetTokenBalancesParams<T, MasterChefContractPositionDataProps>) {
     const tokenBalances: BigNumberish[] = [];
     const poolIndex = contractPosition.dataProps.poolIndex;
 

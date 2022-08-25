@@ -2,10 +2,7 @@ import { Inject } from '@nestjs/common';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
-import {
-  DataPropsStageParams,
-  GetTokenBalancesPerPositionParams,
-} from '~position/template/contract-position.template.position-fetcher';
+import { GetDataPropsParams, GetTokenBalancesParams } from '~position/template/contract-position.template.types';
 import {
   SingleStakingFarmDefinition,
   SingleStakingFarmTemplateContractPositionFetcher,
@@ -50,15 +47,15 @@ export class EthereumRariFarmContractPositionFetcher extends SingleStakingFarmTe
     return FARMS;
   }
 
-  async getRewardRates(_params: DataPropsStageParams<RariUniswapTokenDistributor>) {
+  async getRewardRates(_params: GetDataPropsParams<RariUniswapTokenDistributor>) {
     return [0];
   }
 
-  getStakedTokenBalance({ contract, address }: GetTokenBalancesPerPositionParams<RariUniswapTokenDistributor>) {
+  getStakedTokenBalance({ contract, address }: GetTokenBalancesParams<RariUniswapTokenDistributor>) {
     return contract.stakingBalances(address);
   }
 
-  getRewardTokenBalances({ contract, address }: GetTokenBalancesPerPositionParams<RariUniswapTokenDistributor>) {
+  getRewardTokenBalances({ contract, address }: GetTokenBalancesParams<RariUniswapTokenDistributor>) {
     return contract.getUnclaimedRgt(address);
   }
 }

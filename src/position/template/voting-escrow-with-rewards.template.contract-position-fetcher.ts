@@ -3,12 +3,13 @@ import { BigNumberish, Contract } from 'ethers';
 import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { MetaType } from '~position/position.interface';
 import { isSupplied } from '~position/position.utils';
+import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
+
 import {
-  ContractPositionTemplatePositionFetcher,
-  DisplayPropsStageParams,
-  GetTokenBalancesPerPositionParams,
-  TokenStageParams,
-} from '~position/template/contract-position.template.position-fetcher';
+  GetDisplayPropsParams,
+  GetTokenBalancesParams,
+  GetTokenDefinitionsParams,
+} from './contract-position.template.types';
 
 export abstract class VotingEscrowWithRewardsTemplateContractPositionFetcher<
   T extends Contract,
@@ -27,11 +28,11 @@ export abstract class VotingEscrowWithRewardsTemplateContractPositionFetcher<
     return this.getEscrowContract(address);
   }
 
-  async getDescriptors() {
+  async getDefinitions() {
     return [{ address: this.veTokenAddress }];
   }
 
-  async getTokenDescriptors({ multicall }: TokenStageParams<T>) {
+  async getTokenDefinitions({ multicall }: GetTokenDefinitionsParams<T>) {
     const escrow = multicall.wrap(this.getEscrowContract(this.veTokenAddress));
     const reward = multicall.wrap(this.getRewardContract(this.rewardAddress));
 
@@ -41,12 +42,12 @@ export abstract class VotingEscrowWithRewardsTemplateContractPositionFetcher<
     ];
   }
 
-  async getLabel({ contractPosition }: DisplayPropsStageParams<T>) {
+  async getLabel({ contractPosition }: GetDisplayPropsParams<T>) {
     const suppliedToken = contractPosition.tokens.find(isSupplied)!;
     return `Voting Escrow ${getLabelFromToken(suppliedToken)}`;
   }
 
-  async getTokenBalancesPerPosition({ address, multicall }: GetTokenBalancesPerPositionParams<T>) {
+  async getTokenBalancesPerPosition({ address, multicall }: GetTokenBalancesParams<T>) {
     const escrow = multicall.wrap(this.getEscrowContract(this.veTokenAddress));
     const reward = multicall.wrap(this.getRewardContract(this.rewardAddress));
     return [await this.getEscrowedTokenBalance(address, escrow), await this.getRewardTokenBalance(address, reward)];

@@ -4,10 +4,7 @@ import { range } from 'lodash';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
-import {
-  DisplayPropsStageParams,
-  GetTokenBalancesPerPositionParams,
-} from '~position/template/contract-position.template.position-fetcher';
+import { GetDisplayPropsParams, GetTokenBalancesParams } from '~position/template/contract-position.template.types';
 import {
   SingleStakingFarmDefinition,
   SingleStakingFarmTemplateContractPositionFetcher,
@@ -80,21 +77,16 @@ export class ArbitrumPlutusLockContractPositionFetcher extends SingleStakingFarm
     return [0, 0];
   }
 
-  async getLabel({ contractPosition }: DisplayPropsStageParams<PlutusLock>) {
+  async getLabel({ contractPosition }: GetDisplayPropsParams<PlutusLock>) {
     const lockDuration = PLUTUS_LOCKS.find(v => v.address === contractPosition.address)!.lockDuration;
     return `PLS ${lockDuration} Month Lock`;
   }
 
-  async getStakedTokenBalance({ contract, address }: GetTokenBalancesPerPositionParams<PlutusLock>) {
+  async getStakedTokenBalance({ contract, address }: GetTokenBalancesParams<PlutusLock>) {
     return contract.stakedDetails(address).then(details => details.amount);
   }
 
-  async getRewardTokenBalances({
-    contractPosition,
-    contract,
-    address,
-    multicall,
-  }: GetTokenBalancesPerPositionParams<PlutusLock>) {
+  async getRewardTokenBalances({ contractPosition, contract, address, multicall }: GetTokenBalancesParams<PlutusLock>) {
     const rewardsAddress = PLUTUS_LOCKS.find(v => v.address === contractPosition.address)!.rewardsDistributor;
     const rewardsContract = this.contractFactory.plutusEpochStakingRewardsRolling({
       address: rewardsAddress,

@@ -4,7 +4,7 @@ import Axios from 'axios';
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
 import { isClaimable } from '~position/position.utils';
-import { GetTokenBalancesPerPositionParams } from '~position/template/contract-position.template.position-fetcher';
+import { GetTokenBalancesParams } from '~position/template/contract-position.template.types';
 import { MerkleTemplateContractPositionFetcher } from '~position/template/merkle.template.contract-position-fetcher';
 import { Network } from '~types/network.interface';
 
@@ -47,7 +47,7 @@ export class EthereumVotiumClaimableContractPositionFetcher extends MerkleTempla
     address,
     contractPosition,
     contract,
-  }: GetTokenBalancesPerPositionParams<VotiumMultiMerkle>) {
+  }: GetTokenBalancesParams<VotiumMultiMerkle>) {
     const rewardToken = contractPosition.tokens.find(isClaimable)!;
     const rewardsData = await this.merkleCache.getClaim(rewardToken.address, address);
     if (!rewardsData?.index) return [0];

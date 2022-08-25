@@ -5,12 +5,12 @@ import { ZERO_ADDRESS } from '~app-toolkit/constants/address';
 import { Register } from '~app-toolkit/decorators';
 import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { MetaType } from '~position/position.interface';
+import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
 import {
-  ContractPositionTemplatePositionFetcher,
-  DefaultContractPositionDescriptor,
-  DisplayPropsStageParams,
-  GetTokenBalancesPerPositionParams,
-} from '~position/template/contract-position.template.position-fetcher';
+  DefaultContractPositionDefinition,
+  GetDisplayPropsParams,
+  GetTokenBalancesParams,
+} from '~position/template/contract-position.template.types';
 import { Network } from '~types';
 
 import { LiquityContractFactory, StabilityPool } from '../contracts';
@@ -38,11 +38,11 @@ export class EthereumLiquityStabilityPoolContractPositionFetcher extends Contrac
     return this.contractFactory.stabilityPool({ address, network: this.network });
   }
 
-  async getDescriptors(): Promise<DefaultContractPositionDescriptor[]> {
+  async getDefinitions(): Promise<DefaultContractPositionDefinition[]> {
     return [{ address: '0x66017d22b0f8556afdd19fc67041899eb65a21bb' }];
   }
 
-  async getTokenDescriptors() {
+  async getTokenDefinitions() {
     return [
       { metaType: MetaType.SUPPLIED, address: '0x5f98805a4e8be255a32880fdec7f6728c6568ba0' }, // LUSD
       { metaType: MetaType.CLAIMABLE, address: ZERO_ADDRESS }, // ETH
@@ -50,11 +50,11 @@ export class EthereumLiquityStabilityPoolContractPositionFetcher extends Contrac
     ];
   }
 
-  async getLabel({ contractPosition }: DisplayPropsStageParams<StabilityPool>): Promise<string> {
+  async getLabel({ contractPosition }: GetDisplayPropsParams<StabilityPool>): Promise<string> {
     return `${getLabelFromToken(contractPosition.tokens[0])} Stability Pool`;
   }
 
-  getTokenBalancesPerPosition({ address, contract }: GetTokenBalancesPerPositionParams<StabilityPool>) {
+  getTokenBalancesPerPosition({ address, contract }: GetTokenBalancesParams<StabilityPool>) {
     return Promise.all([
       contract.getCompoundedLUSDDeposit(address),
       contract.getDepositorETHGain(address),

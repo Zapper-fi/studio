@@ -4,12 +4,12 @@ import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
 import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { MetaType } from '~position/position.interface';
+import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
 import {
-  ContractPositionTemplatePositionFetcher,
-  DisplayPropsStageParams,
-  GetTokenBalancesPerPositionParams,
-  TokenStageParams,
-} from '~position/template/contract-position.template.position-fetcher';
+  GetDisplayPropsParams,
+  GetTokenBalancesParams,
+  GetTokenDefinitionsParams,
+} from '~position/template/contract-position.template.types';
 import { Network } from '~types';
 
 import { PlutusContractFactory, PlutusPrivateTgeVester } from '../contracts';
@@ -37,19 +37,19 @@ export class ArbitrumPlutusTgeClaimableContractPositionFetcher extends ContractP
     return this.contractFactory.plutusPrivateTgeVester({ address, network: this.network });
   }
 
-  async getDescriptors() {
+  async getDefinitions() {
     return [{ address: '0x04b724389dd28ffc9a3a91ab4149a77530282f04' }];
   }
 
-  async getTokenDescriptors(_params: TokenStageParams<PlutusPrivateTgeVester>) {
+  async getTokenDefinitions(_params: GetTokenDefinitionsParams<PlutusPrivateTgeVester>) {
     return [{ metaType: MetaType.CLAIMABLE, address: '0x51318b7d00db7acc4026c88c3952b66278b6a67f' }];
   }
 
-  async getLabel({ contractPosition }: DisplayPropsStageParams<PlutusPrivateTgeVester>) {
+  async getLabel({ contractPosition }: GetDisplayPropsParams<PlutusPrivateTgeVester>) {
     return `Claimable ${getLabelFromToken(contractPosition.tokens[0])}`;
   }
 
-  async getTokenBalancesPerPosition({ address, contract }: GetTokenBalancesPerPositionParams<PlutusPrivateTgeVester>) {
+  async getTokenBalancesPerPosition({ address, contract }: GetTokenBalancesParams<PlutusPrivateTgeVester>) {
     const pendingClaims = await contract.pendingClaims(address);
     return [pendingClaims._claimable];
   }

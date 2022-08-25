@@ -2,10 +2,7 @@ import { Inject } from '@nestjs/common';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
-import {
-  DataPropsStageParams,
-  GetTokenBalancesPerPositionParams,
-} from '~position/template/contract-position.template.position-fetcher';
+import { GetDataPropsParams, GetTokenBalancesParams } from '~position/template/contract-position.template.types';
 import {
   SingleStakingFarmDataProps,
   SingleStakingFarmDefinition,
@@ -50,15 +47,15 @@ export class ArbitrumPlutusFarmPlsContractPositionFetcher extends SingleStakingF
     ];
   }
 
-  async getRewardRates({ contract }: DataPropsStageParams<PlutusFarmPls, SingleStakingFarmDataProps>) {
+  async getRewardRates({ contract }: GetDataPropsParams<PlutusFarmPls, SingleStakingFarmDataProps>) {
     return contract.plsPerSecond();
   }
 
-  async getStakedTokenBalance({ contract, address }: GetTokenBalancesPerPositionParams<PlutusFarmPls>) {
+  async getStakedTokenBalance({ contract, address }: GetTokenBalancesParams<PlutusFarmPls>) {
     return contract.userInfo(0, address).then(v => v.amount);
   }
 
-  async getRewardTokenBalances({ contract, address }: GetTokenBalancesPerPositionParams<PlutusFarmPls>) {
+  async getRewardTokenBalances({ contract, address }: GetTokenBalancesParams<PlutusFarmPls>) {
     return contract.pendingPls(0, address);
   }
 }

@@ -2,7 +2,7 @@ import { Inject } from '@nestjs/common';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
-import { GetTokenBalancesPerPositionParams } from '~position/template/contract-position.template.position-fetcher';
+import { GetTokenBalancesParams } from '~position/template/contract-position.template.types';
 import { SingleStakingFarmDataProps } from '~position/template/single-staking.dynamic.template.contract-position-fetcher';
 import { SingleStakingFarmTemplateContractPositionFetcher } from '~position/template/single-staking.template.contract-position-fetcher';
 import { Network } from '~types';
@@ -49,7 +49,7 @@ export class EthereumBottoGovernanceContractPositionFetcher extends SingleStakin
   async getStakedTokenBalance({
     address,
     contract,
-  }: GetTokenBalancesPerPositionParams<BottoGovernance, SingleStakingFarmDataProps>) {
+  }: GetTokenBalancesParams<BottoGovernance, SingleStakingFarmDataProps>) {
     return contract.userStakes(address);
   }
 
