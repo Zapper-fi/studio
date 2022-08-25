@@ -3,7 +3,13 @@ import { BigNumberish } from 'ethers';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
-import { GetTokenDefinitionsParams, GetTokenBalancesParams } from '~position/template/contract-position.template.types';
+import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
+import { isSupplied } from '~position/position.utils';
+import {
+  GetTokenDefinitionsParams,
+  GetTokenBalancesParams,
+  GetDisplayPropsParams,
+} from '~position/template/contract-position.template.types';
 import { VotingEscrowTemplateContractPositionFetcher } from '~position/template/voting-escrow.template.contract-position-fetcher';
 import { Network } from '~types/network.interface';
 
@@ -44,5 +50,10 @@ export class EthereumRedactedCartelRevenueLockContractPositionFetcher extends Vo
     contract,
   }: GetTokenBalancesParams<RedactedRevenueLock>): Promise<BigNumberish> {
     return (await contract.lockedBalances(address)).locked;
+  }
+
+  async getLabel({ contractPosition }: GetDisplayPropsParams<RedactedRevenueLock>) {
+    const suppliedToken = contractPosition.tokens.find(isSupplied)!;
+    return `Revenue Lock ${getLabelFromToken(suppliedToken)}`;
   }
 }
