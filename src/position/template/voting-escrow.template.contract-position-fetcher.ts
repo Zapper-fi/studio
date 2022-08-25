@@ -15,8 +15,13 @@ export abstract class VotingEscrowTemplateContractPositionFetcher<
   T extends Contract,
 > extends ContractPositionTemplatePositionFetcher<T> {
   abstract veTokenAddress: string;
+  abstract getEscrowContract(address: string): T;
   abstract getEscrowedTokenAddress(params: GetTokenDefinitionsParams<T>): Promise<string>;
   abstract getEscrowedTokenBalance(params: GetTokenBalancesParams<T>): Promise<BigNumberish>;
+
+  getContract(address: string): T {
+    return this.getEscrowContract(address);
+  }
 
   async getDefinitions() {
     return [{ address: this.veTokenAddress }];
