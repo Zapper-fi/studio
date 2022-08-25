@@ -3,7 +3,7 @@ import { Inject } from '@nestjs/common';
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
 import { isMulticallUnderlyingError } from '~multicall/multicall.ethers';
-import { GetDataPropsStageParams, GetPricePerShareStageParams } from '~position/template/app-token.template.types';
+import { GetDataPropsParams, GetPricePerShareParams } from '~position/template/app-token.template.types';
 import { Network } from '~types/network.interface';
 
 import { YearnContractFactory, YearnVault } from '../contracts';
@@ -38,7 +38,7 @@ export class EthereumYearnV1VaultTokenFetcher extends YearnVaultTokenFetcher<Yea
     return this.contractFactory.yearnVault({ network: this.network, address });
   }
 
-  async getPricePerShare({ contract }: GetPricePerShareStageParams<YearnVault>) {
+  async getPricePerShare({ contract }: GetPricePerShareParams<YearnVault>) {
     const pricePerShareRaw = await contract.getPricePerFullShare().catch(err => {
       if (isMulticallUnderlyingError(err)) return 0;
       throw err;
@@ -47,7 +47,7 @@ export class EthereumYearnV1VaultTokenFetcher extends YearnVaultTokenFetcher<Yea
   }
 
   async getDataProps(
-    opts: GetDataPropsStageParams<YearnVault, YearnVaultTokenDataProps>,
+    opts: GetDataPropsParams<YearnVault, YearnVaultTokenDataProps>,
   ): Promise<YearnVaultTokenDataProps> {
     const { appToken } = opts;
     const vault = await this.selectVault(appToken.address);

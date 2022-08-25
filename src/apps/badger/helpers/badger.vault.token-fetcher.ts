@@ -4,10 +4,10 @@ import { Contract } from 'ethers';
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import {
-  GetDataPropsStageParams,
-  GetPricePerShareStageParams,
-  GetPriceStageParams,
-  GetUnderlyingTokensStageParams,
+  GetDataPropsParams,
+  GetPricePerShareParams,
+  GetPriceParams,
+  GetUnderlyingTokensParams,
 } from '~position/template/app-token.template.types';
 
 import { BadgerContractFactory } from '../contracts';
@@ -45,18 +45,14 @@ export abstract class BadgerVaultTokenFetcher<T extends Contract> extends AppTok
     return vaultDefinitions.map(({ address }) => address.toLowerCase());
   }
 
-  async getUnderlyingTokenAddresses({ contract }: GetUnderlyingTokensStageParams<T>): Promise<string[]> {
+  async getUnderlyingTokenAddresses({ contract }: GetUnderlyingTokensParams<T>): Promise<string[]> {
     const vault = await this.selectVault(contract.address.toLowerCase());
     if (!vault) throw new Error('Cannot find specified vault');
 
     return [vault.underlyingAddress.toLowerCase()];
   }
 
-  async getPricePerShare({
-    contract,
-    appToken,
-    multicall,
-  }: GetPricePerShareStageParams<T>): Promise<number | number[]> {
+  async getPricePerShare({ contract, appToken, multicall }: GetPricePerShareParams<T>): Promise<number | number[]> {
     const yVaultContract = this.contractFactory.badgerYearnVault({ address: contract.address, network: this.network });
     const decimals = appToken.decimals;
 
@@ -68,7 +64,7 @@ export abstract class BadgerVaultTokenFetcher<T extends Contract> extends AppTok
     return Number(ratioRaw) / 10 ** decimals;
   }
 
-  async getPrice({ appToken, contract, multicall }: GetPriceStageParams<T>): Promise<number> {
+  async getPrice({ appToken, contract, multicall }: GetPriceParams<T>): Promise<number> {
     const reserve = Number(appToken.pricePerShare) * appToken.supply;
     const liquidity = reserve * appToken.tokens[0].price;
 
@@ -83,7 +79,7 @@ export abstract class BadgerVaultTokenFetcher<T extends Contract> extends AppTok
     return price;
   }
 
-  async getDataProps(opts: GetDataPropsStageParams<T, BadgerVaultTokenDataProps>) {
+  async getDataProps(opts: GetDataPropsParams<T, BadgerVaultTokenDataProps>) {
     const { appToken } = opts;
     const reserve = Number(appToken.pricePerShare) * appToken.supply;
     const liquidity = reserve * appToken.tokens[0].price;

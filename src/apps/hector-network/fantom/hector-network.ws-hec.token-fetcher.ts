@@ -6,10 +6,10 @@ import { Erc20 } from '~contract/contracts';
 import { DisplayProps } from '~position/display.interface';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import {
-  GetUnderlyingTokensStageParams,
-  GetPricePerShareStageParams,
-  GetDataPropsStageParams,
-  GetDisplayPropsStageParams,
+  GetUnderlyingTokensParams,
+  GetPricePerShareParams,
+  GetDataPropsParams,
+  GetDisplayPropsParams,
 } from '~position/template/app-token.template.types';
 import { Network } from '~types/network.interface';
 
@@ -49,11 +49,11 @@ export class FantomHectorNetworkWsHecTokenFetcher extends AppTokenTemplatePositi
     return ['0x94ccf60f700146bea8ef7832820800e2dfa92eda'];
   }
 
-  async getUnderlyingTokenAddresses(_params: GetUnderlyingTokensStageParams<Erc20>) {
+  async getUnderlyingTokenAddresses(_params: GetUnderlyingTokensParams<Erc20>) {
     return '0x75bdef24285013387a47775828bec90b91ca9a5f';
   }
 
-  async getPricePerShare({ appToken, multicall }: GetPricePerShareStageParams<Erc20, HectorNetworkWsHecDataProps>) {
+  async getPricePerShare({ appToken, multicall }: GetPricePerShareParams<Erc20, HectorNetworkWsHecDataProps>) {
     const underlyingToken = appToken.tokens[0];
     const underlyingTokenContract = multicall.wrap(this.contractFactory.erc20(underlyingToken));
     const reserveRaw = await underlyingTokenContract.balanceOf(appToken.address);
@@ -61,14 +61,12 @@ export class FantomHectorNetworkWsHecTokenFetcher extends AppTokenTemplatePositi
     return reserve / appToken.supply;
   }
 
-  async getDataProps({ appToken }: GetDataPropsStageParams<Erc20, HectorNetworkWsHecDataProps>) {
+  async getDataProps({ appToken }: GetDataPropsParams<Erc20, HectorNetworkWsHecDataProps>) {
     const liquidity = appToken.supply * appToken.price;
     return { liquidity };
   }
 
-  async getLabel(
-    _params: GetDisplayPropsStageParams<Erc20, HectorNetworkWsHecDataProps>,
-  ): Promise<DisplayProps['label']> {
+  async getLabel(_params: GetDisplayPropsParams<Erc20, HectorNetworkWsHecDataProps>): Promise<DisplayProps['label']> {
     return 'Wrapped sHEC';
   }
 }

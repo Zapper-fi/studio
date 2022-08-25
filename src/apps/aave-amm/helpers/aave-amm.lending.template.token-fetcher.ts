@@ -11,9 +11,9 @@ import {
 import { AppTokenPositionBalance } from '~position/position-balance.interface';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import {
-  GetDataPropsStageParams,
-  GetDisplayPropsStageParams,
-  GetUnderlyingTokensStageParams,
+  GetDataPropsParams,
+  GetDisplayPropsParams,
+  GetUnderlyingTokensParams,
 } from '~position/template/app-token.template.types';
 
 import { AaveAmmContractFactory } from '../contracts';
@@ -63,14 +63,14 @@ export abstract class AaveAmmLendingTemplateTokenFetcher extends AppTokenTemplat
     );
   }
 
-  async getUnderlyingTokenAddresses({ contract }: GetUnderlyingTokensStageParams<AaveAmmAToken>) {
+  async getUnderlyingTokenAddresses({ contract }: GetUnderlyingTokensParams<AaveAmmAToken>) {
     return contract.UNDERLYING_ASSET_ADDRESS();
   }
 
   async getReserveApy({
     appToken,
     multicall,
-  }: GetDataPropsStageParams<AaveAmmAToken, AaveV2LendingTokenDataProps>): Promise<number> {
+  }: GetDataPropsParams<AaveAmmAToken, AaveV2LendingTokenDataProps>): Promise<number> {
     const pool = multicall.wrap(
       this.contractFactory.aaveAmmLendingPool({
         network: this.network,
@@ -90,7 +90,7 @@ export abstract class AaveAmmLendingTemplateTokenFetcher extends AppTokenTemplat
   async getReserveConfigurationData({
     appToken,
     multicall,
-  }: GetDataPropsStageParams<AaveAmmAToken, AaveV2LendingTokenDataProps>) {
+  }: GetDataPropsParams<AaveAmmAToken, AaveV2LendingTokenDataProps>) {
     const pool = multicall.wrap(
       this.contractFactory.aaveAmmLendingPool({
         network: this.network,
@@ -107,7 +107,7 @@ export abstract class AaveAmmLendingTemplateTokenFetcher extends AppTokenTemplat
     return { liquidationThreshold, enabledAsCollateral };
   }
 
-  async getDataProps(opts: GetDataPropsStageParams<AaveAmmAToken, AaveV2LendingTokenDataProps>) {
+  async getDataProps(opts: GetDataPropsParams<AaveAmmAToken, AaveV2LendingTokenDataProps>) {
     const reserveConfigData = await this.getReserveConfigurationData(opts);
     const apy = await this.getReserveApy(opts);
 
@@ -118,15 +118,13 @@ export abstract class AaveAmmLendingTemplateTokenFetcher extends AppTokenTemplat
     return { liquidity, isActive, apy, ...reserveConfigData };
   }
 
-  async getLabel({
-    appToken,
-  }: GetDisplayPropsStageParams<AaveAmmAToken, AaveV2LendingTokenDataProps>): Promise<string> {
+  async getLabel({ appToken }: GetDisplayPropsParams<AaveAmmAToken, AaveV2LendingTokenDataProps>): Promise<string> {
     return getLabelFromToken(appToken.tokens[0]);
   }
 
   async getLabelDetailed({
     appToken,
-  }: GetDisplayPropsStageParams<AaveAmmAToken, AaveV2LendingTokenDataProps>): Promise<string> {
+  }: GetDisplayPropsParams<AaveAmmAToken, AaveV2LendingTokenDataProps>): Promise<string> {
     return appToken.symbol;
   }
 

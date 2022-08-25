@@ -8,10 +8,10 @@ import { Register } from '~app-toolkit/decorators';
 import { DefaultDataProps } from '~position/display.interface';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import {
-  GetDataPropsStageParams,
-  GetDisplayPropsStageParams,
-  GetPriceStageParams,
-  GetUnderlyingTokensStageParams,
+  GetDataPropsParams,
+  GetDisplayPropsParams,
+  GetPriceParams,
+  GetUnderlyingTokensParams,
 } from '~position/template/app-token.template.types';
 import { Network } from '~types/network.interface';
 
@@ -67,15 +67,15 @@ export class EthereumEnzymeFinanceVaultTokenFetcher extends AppTokenTemplatePosi
 
   async getLabel({
     contract,
-  }: GetDisplayPropsStageParams<EnzymeFinanceVault, EnzymeFinanceVaultTokenDataProps>): Promise<string> {
+  }: GetDisplayPropsParams<EnzymeFinanceVault, EnzymeFinanceVaultTokenDataProps>): Promise<string> {
     return contract.name();
   }
 
-  async getUnderlyingTokenAddresses({ contract }: GetUnderlyingTokensStageParams<EnzymeFinanceVault>) {
+  async getUnderlyingTokenAddresses({ contract }: GetUnderlyingTokensParams<EnzymeFinanceVault>) {
     return (await contract.getTrackedAssets()).map(x => x.toLowerCase());
   }
 
-  async getPrice({ appToken, multicall }: GetPriceStageParams<EnzymeFinanceVault, DefaultDataProps>): Promise<number> {
+  async getPrice({ appToken, multicall }: GetPriceParams<EnzymeFinanceVault, DefaultDataProps>): Promise<number> {
     const totalAssetUnderManagement = _.sum(
       await Promise.all(
         appToken.tokens.map(async token => {
@@ -92,7 +92,7 @@ export class EthereumEnzymeFinanceVaultTokenFetcher extends AppTokenTemplatePosi
       : 0;
   }
 
-  async getDataProps(opts: GetDataPropsStageParams<EnzymeFinanceVault, DefaultDataProps>): Promise<DefaultDataProps> {
+  async getDataProps(opts: GetDataPropsParams<EnzymeFinanceVault, DefaultDataProps>): Promise<DefaultDataProps> {
     const { appToken } = opts;
     const liquidity = appToken.price * appToken.supply;
     const isActive = appToken.supply > 0 ? true : false;

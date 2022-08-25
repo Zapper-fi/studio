@@ -8,11 +8,11 @@ export type DefaultAppTokenDefinition = {
 };
 
 // PHASE 1: List addresses and definitions
-export type GetDefinitionStageParams = {
+export type GetDefinitionsParams = {
   multicall: IMulticallWrapper;
 };
 
-export type GetAddressesStageParams = {
+export type GetAddressesParams = {
   multicall: IMulticallWrapper;
 };
 
@@ -25,37 +25,40 @@ type PositionBuilderContext<T, R = DefaultAppTokenDefinition> = {
   contract: T;
 };
 
-type PartialAppToken<V, K extends keyof AppTokenPosition> = Omit<AppTokenPosition<V>, K>;
-
-export type GetUnderlyingTokensStageParams<T, R = DefaultAppTokenDefinition> = PositionBuilderContext<T, R>;
-
-export type GetTokenPropsStageParams<T, R = DefaultAppTokenDefinition> = PositionBuilderContext<T, R>;
-
-export type GetPricePerShareStageParams<
+type PositionBuilderContextWithAppToken<
   T,
   V = DefaultDataProps,
   R = DefaultAppTokenDefinition,
+  K extends keyof AppTokenPosition = keyof AppTokenPosition,
 > = PositionBuilderContext<T, R> & {
-  appToken: PartialAppToken<V, 'pricePerShare' | 'price' | 'dataProps' | 'displayProps'>;
+  appToken: Omit<AppTokenPosition<V>, K>;
 };
 
-export type GetPriceStageParams<T, V = DefaultDataProps, R = DefaultAppTokenDefinition> = PositionBuilderContext<
-  T,
-  R
-> & {
-  appToken: PartialAppToken<V, 'price' | 'dataProps' | 'displayProps'>;
-};
+export type GetUnderlyingTokensParams<T, R = DefaultAppTokenDefinition> = PositionBuilderContext<T, R>;
 
-export type GetDataPropsStageParams<T, V = DefaultDataProps, R = DefaultAppTokenDefinition> = PositionBuilderContext<
-  T,
-  R
-> & {
-  appToken: PartialAppToken<V, 'dataProps' | 'displayProps'>;
-};
+export type GetTokenPropsParams<T, R = DefaultAppTokenDefinition> = PositionBuilderContext<T, R>;
 
-export type GetDisplayPropsStageParams<T, V = DefaultDataProps, R = DefaultAppTokenDefinition> = PositionBuilderContext<
+export type GetPricePerShareParams<
   T,
-  R
-> & {
-  appToken: PartialAppToken<V, 'displayProps'>;
-};
+  V = DefaultDataProps,
+  R = DefaultAppTokenDefinition,
+> = PositionBuilderContextWithAppToken<T, V, R, 'pricePerShare' | 'price' | 'dataProps' | 'displayProps'>;
+
+export type GetPriceParams<T, V = DefaultDataProps, R = DefaultAppTokenDefinition> = PositionBuilderContextWithAppToken<
+  T,
+  V,
+  R,
+  'price' | 'dataProps' | 'displayProps'
+>;
+
+export type GetDataPropsParams<
+  T,
+  V = DefaultDataProps,
+  R = DefaultAppTokenDefinition,
+> = PositionBuilderContextWithAppToken<T, V, R, 'dataProps' | 'displayProps'>;
+
+export type GetDisplayPropsParams<
+  T,
+  V = DefaultDataProps,
+  R = DefaultAppTokenDefinition,
+> = PositionBuilderContextWithAppToken<T, V, R, 'displayProps'>;

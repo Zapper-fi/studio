@@ -6,11 +6,11 @@ import { Register } from '~app-toolkit/decorators';
 import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import {
-  GetAddressesStageParams,
-  GetDataPropsStageParams,
-  GetDefinitionStageParams,
-  GetDisplayPropsStageParams,
-  GetUnderlyingTokensStageParams,
+  GetAddressesParams,
+  GetDataPropsParams,
+  GetDefinitionsParams,
+  GetDisplayPropsParams,
+  GetUnderlyingTokensParams,
 } from '~position/template/app-token.template.types';
 import { Network } from '~types/network.interface';
 
@@ -52,7 +52,7 @@ export class EthereumConvexDepositTokenFetcher extends AppTokenTemplatePositionF
     return this.contractFactory.convexDepositToken({ address, network: this.network });
   }
 
-  async getDefinitions({ multicall }: GetDefinitionStageParams): Promise<ConvexDepositTokenDefinition[]> {
+  async getDefinitions({ multicall }: GetDefinitionsParams): Promise<ConvexDepositTokenDefinition[]> {
     const boosterContractAddress = '0xf403c135812408bfbe8713b5a23a04b3d48aae31';
     const depositContract = this.contractFactory.convexBooster({ address: boosterContractAddress, network });
     const numOfPools = await multicall.wrap(depositContract).poolLength();
@@ -67,25 +67,25 @@ export class EthereumConvexDepositTokenFetcher extends AppTokenTemplatePositionF
     return definitions;
   }
 
-  async getAddresses({ definitions }: GetAddressesStageParams) {
+  async getAddresses({ definitions }: GetAddressesParams) {
     return definitions.map(v => v.address);
   }
 
   async getUnderlyingTokenAddresses({
     definition,
-  }: GetUnderlyingTokensStageParams<ConvexDepositToken, ConvexDepositTokenDefinition>) {
+  }: GetUnderlyingTokensParams<ConvexDepositToken, ConvexDepositTokenDefinition>) {
     const boosterContractAddress = '0xf403c135812408bfbe8713b5a23a04b3d48aae31';
     const depositContract = this.contractFactory.convexBooster({ address: boosterContractAddress, network });
     const poolInfo = await depositContract.poolInfo(definition.poolIndex);
     return poolInfo.lptoken;
   }
 
-  async getDataProps({ appToken }: GetDataPropsStageParams<ConvexDepositToken, ConvexDepositTokenDataProps>) {
+  async getDataProps({ appToken }: GetDataPropsParams<ConvexDepositToken, ConvexDepositTokenDataProps>) {
     const liquidity = appToken.price * appToken.supply;
     return { liquidity };
   }
 
-  async getLabel({ appToken }: GetDisplayPropsStageParams<ConvexDepositToken, ConvexDepositTokenDataProps>) {
+  async getLabel({ appToken }: GetDisplayPropsParams<ConvexDepositToken, ConvexDepositTokenDataProps>) {
     return getLabelFromToken(appToken.tokens[0]!);
   }
 }

@@ -1,5 +1,5 @@
 import { Register } from '~app-toolkit/decorators';
-import { GetDisplayPropsStageParams } from '~position/template/app-token.template.types';
+import { GetDisplayPropsParams } from '~position/template/app-token.template.types';
 import { Network } from '~types/network.interface';
 
 import { AAVE_V2_DEFINITION } from '../aave-v2.definition';
@@ -32,7 +32,7 @@ export class EthereumAaveV2StableDebtTokenFetcher extends AaveV2LendingTemplateT
     return reserveApyData.stableBorrowApy;
   }
 
-  async getTertiaryLabel({ appToken }: GetDisplayPropsStageParams<AaveV2AToken, AaveV2LendingTokenDataProps>) {
+  async getTertiaryLabel({ appToken }: GetDisplayPropsParams<AaveV2AToken, AaveV2LendingTokenDataProps>) {
     return `${(appToken.dataProps.apy * 100).toFixed(3)}% APR (stable)`;
   }
 }

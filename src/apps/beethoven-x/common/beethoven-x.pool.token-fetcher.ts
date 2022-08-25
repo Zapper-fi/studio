@@ -2,7 +2,7 @@ import { gql } from 'graphql-request';
 
 import { BalancerV2PoolTokenFetcher } from '~apps/balancer-v2/common/balancer-v2.pool.token-fetcher';
 import { BalancerPool } from '~apps/balancer-v2/contracts';
-import { GetDisplayPropsStageParams } from '~position/template/app-token.template.types';
+import { GetDisplayPropsParams } from '~position/template/app-token.template.types';
 
 type GetPoolsResponse = {
   pools: {
@@ -31,7 +31,7 @@ export abstract class BeethovenXPoolTokenFetcher extends BalancerV2PoolTokenFetc
     return poolsResponse.pools.filter(v => Number(v.totalLiquidity) > 10_000).map(v => v.address);
   }
 
-  async getLabel({ contract }: GetDisplayPropsStageParams<BalancerPool>) {
+  async getLabel({ contract }: GetDisplayPropsParams<BalancerPool>) {
     return contract.name();
   }
 }

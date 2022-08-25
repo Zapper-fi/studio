@@ -5,10 +5,10 @@ import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import {
-  GetDataPropsStageParams,
-  GetDisplayPropsStageParams,
-  GetPricePerShareStageParams,
-  GetUnderlyingTokensStageParams,
+  GetDataPropsParams,
+  GetDisplayPropsParams,
+  GetPricePerShareParams,
+  GetUnderlyingTokensParams,
 } from '~position/template/app-token.template.types';
 import { Network, NETWORK_IDS } from '~types';
 
@@ -50,23 +50,23 @@ export class EthereumClearpoolPoolTokenFetcher extends AppTokenTemplatePositionF
     return this.clearpoolContractFactory.clearpoolPool({ address, network });
   }
 
-  getUnderlyingTokenAddresses({ contract }: GetUnderlyingTokensStageParams<ClearpoolPool>) {
+  getUnderlyingTokenAddresses({ contract }: GetUnderlyingTokensParams<ClearpoolPool>) {
     return contract.currency();
   }
 
   getPricePerShare({
     contract,
-  }: GetPricePerShareStageParams<ClearpoolPool, ClearpoolPoolTokenDataProps>): Promise<number | number[]> {
+  }: GetPricePerShareParams<ClearpoolPool, ClearpoolPoolTokenDataProps>): Promise<number | number[]> {
     return contract.getCurrentExchangeRate().then(v => Number(v) / 10 ** 18);
   }
 
-  async getDataProps({ contract }: GetDataPropsStageParams<ClearpoolPool, ClearpoolPoolTokenDataProps>) {
+  async getDataProps({ contract }: GetDataPropsParams<ClearpoolPool, ClearpoolPoolTokenDataProps>) {
     const poolSizeRaw = await contract.poolSize();
     const liquidity = Number(poolSizeRaw) / 10 ** 6;
     return { liquidity };
   }
 
-  getLabel({ contract }: GetDisplayPropsStageParams<ClearpoolPool, ClearpoolPoolTokenDataProps>) {
+  getLabel({ contract }: GetDisplayPropsParams<ClearpoolPool, ClearpoolPoolTokenDataProps>) {
     return contract.name();
   }
 }

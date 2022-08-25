@@ -6,9 +6,9 @@ import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.prese
 import { DefaultDataProps } from '~position/display.interface';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import {
-  GetUnderlyingTokensStageParams,
-  GetDisplayPropsStageParams,
-  GetDataPropsStageParams,
+  GetUnderlyingTokensParams,
+  GetDisplayPropsParams,
+  GetDataPropsParams,
 } from '~position/template/app-token.template.types';
 import { Network } from '~types/network.interface';
 
@@ -54,18 +54,18 @@ export class AvalancheYieldyakVaultTokenFetcher extends AppTokenTemplatePosition
     return vaultDefinitions.map(address => address.id.toLowerCase());
   }
 
-  async getUnderlyingTokenAddresses({ contract }: GetUnderlyingTokensStageParams<YieldYakVault>) {
+  async getUnderlyingTokenAddresses({ contract }: GetUnderlyingTokensParams<YieldYakVault>) {
     const vault = await this.selectVault(contract.address.toLowerCase());
     if (!vault) throw new Error('Cannot find specified vault');
 
     return [vault.depositToken.id.toLowerCase()];
   }
 
-  async getLabel({ appToken }: GetDisplayPropsStageParams<YieldYakVault, DefaultDataProps>): Promise<string> {
+  async getLabel({ appToken }: GetDisplayPropsParams<YieldYakVault, DefaultDataProps>): Promise<string> {
     return appToken.tokens.map(v => getLabelFromToken(v)).join(' / ');
   }
 
-  async getDataProps(opts: GetDataPropsStageParams<YieldYakVault, DefaultDataProps>): Promise<DefaultDataProps> {
+  async getDataProps(opts: GetDataPropsParams<YieldYakVault, DefaultDataProps>): Promise<DefaultDataProps> {
     const { appToken } = opts;
     const liquidity = appToken.price * appToken.supply;
 

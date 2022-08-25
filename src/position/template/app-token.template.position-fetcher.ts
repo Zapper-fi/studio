@@ -20,14 +20,14 @@ import { Network } from '~types/network.interface';
 
 import {
   DefaultAppTokenDefinition,
-  GetAddressesStageParams,
-  GetDataPropsStageParams,
-  GetDefinitionStageParams,
-  GetDisplayPropsStageParams,
-  GetPricePerShareStageParams,
-  GetPriceStageParams,
-  GetTokenPropsStageParams,
-  GetUnderlyingTokensStageParams,
+  GetAddressesParams,
+  GetDataPropsParams,
+  GetDefinitionsParams,
+  GetDisplayPropsParams,
+  GetPricePerShareParams,
+  GetPriceParams,
+  GetTokenPropsParams,
+  GetUnderlyingTokensParams,
 } from './app-token.template.types';
 
 export abstract class AppTokenTemplatePositionFetcher<
@@ -47,10 +47,10 @@ export abstract class AppTokenTemplatePositionFetcher<
   constructor(@Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit) {}
 
   // 1. Get token addresses
-  abstract getAddresses(params: GetAddressesStageParams): string[] | Promise<string[]>;
+  abstract getAddresses(params: GetAddressesParams): string[] | Promise<string[]>;
 
   // 2. (Optional) Get token definitions (i.e.: token addresses and additional context)
-  async getDefinitions(params: GetDefinitionStageParams): Promise<R[]> {
+  async getDefinitions(params: GetDefinitionsParams): Promise<R[]> {
     const addresses = await this.getAddresses(params);
     return addresses.map(address => ({ address } as R));
   }
@@ -59,71 +59,69 @@ export abstract class AppTokenTemplatePositionFetcher<
   abstract getContract(address: string): T;
 
   // 4. Get underlying token addresses
-  async getUnderlyingTokenAddresses(_params: GetUnderlyingTokensStageParams<T, R>): Promise<string | string[]> {
+  async getUnderlyingTokenAddresses(_params: GetUnderlyingTokensParams<T, R>): Promise<string | string[]> {
     return [];
   }
 
   // 5A. Get symbol (ERC20 standard)
-  async getSymbol({ address, multicall }: GetTokenPropsStageParams<T, R>): Promise<string> {
+  async getSymbol({ address, multicall }: GetTokenPropsParams<T, R>): Promise<string> {
     const erc20 = this.appToolkit.globalContracts.erc20({ address, network: this.network });
     return multicall.wrap(erc20).symbol();
   }
 
   // 5B. Get decimals (ERC20 standard)
-  async getDecimals({ address, multicall }: GetTokenPropsStageParams<T, R>): Promise<number> {
+  async getDecimals({ address, multicall }: GetTokenPropsParams<T, R>): Promise<number> {
     const erc20 = this.appToolkit.globalContracts.erc20({ address, network: this.network });
     return multicall.wrap(erc20).decimals();
   }
 
   // 5C. Get supply (ERC20 standard)
-  async getSupply({ address, multicall }: GetTokenPropsStageParams<T, R>): Promise<BigNumberish> {
+  async getSupply({ address, multicall }: GetTokenPropsParams<T, R>): Promise<BigNumberish> {
     const erc20 = this.appToolkit.globalContracts.erc20({ address, network: this.network });
     return multicall.wrap(erc20).totalSupply();
   }
 
   // 6. Get price per share (ratio between token and underlying token)
-  async getPricePerShare(_params: GetPricePerShareStageParams<T, V, R>): Promise<number | number[]> {
+  async getPricePerShare(_params: GetPricePerShareParams<T, V, R>): Promise<number | number[]> {
     return 1;
   }
 
-  async getPrice({ appToken }: GetPriceStageParams<T, V, R>): Promise<number> {
+  async getPrice({ appToken }: GetPriceParams<T, V, R>): Promise<number> {
     return sum(appToken.tokens.map((v, i) => v.price * appToken.pricePerShare[i]));
   }
 
   // Data Properties
-  async getDataProps(_params: GetDataPropsStageParams<T, V, R>): Promise<V> {
+  async getDataProps(_params: GetDataPropsParams<T, V, R>): Promise<V> {
     return {} as V;
   }
 
   // Display Properties
-  async getLabel({ appToken }: GetDisplayPropsStageParams<T, V, R>): Promise<DisplayProps['label']> {
+  async getLabel({ appToken }: GetDisplayPropsParams<T, V, R>): Promise<DisplayProps['label']> {
     return appToken.symbol;
   }
 
-  async getLabelDetailed(_params: GetDisplayPropsStageParams<T, V, R>): Promise<DisplayProps['labelDetailed']> {
+  async getLabelDetailed(_params: GetDisplayPropsParams<T, V, R>): Promise<DisplayProps['labelDetailed']> {
     return undefined;
   }
 
-  async getSecondaryLabel({ appToken }: GetDisplayPropsStageParams<T, V, R>): Promise<DisplayProps['secondaryLabel']> {
+  async getSecondaryLabel({ appToken }: GetDisplayPropsParams<T, V, R>): Promise<DisplayProps['secondaryLabel']> {
     return buildDollarDisplayItem(appToken.price);
   }
 
-  async getTertiaryLabel({ appToken }: GetDisplayPropsStageParams<T, V, R>): Promise<DisplayProps['tertiaryLabel']> {
+  async getTertiaryLabel({ appToken }: GetDisplayPropsParams<T, V, R>): Promise<DisplayProps['tertiaryLabel']> {
     if (typeof appToken.dataProps.apy === 'number') return `${appToken.dataProps.apy.toFixed(3)}% APY`;
     return undefined;
   }
 
-  async getImages({ appToken }: GetDisplayPropsStageParams<T, V, R>): Promise<DisplayProps['images']> {
+  async getImages({ appToken }: GetDisplayPropsParams<T, V, R>): Promise<DisplayProps['images']> {
     return appToken.tokens.flatMap(v => getImagesFromToken(v));
   }
 
-  async getBalanceDisplayMode(
-    _params: GetDisplayPropsStageParams<T, V, R>,
-  ): Promise<DisplayProps['balanceDisplayMode']> {
+  async getBalanceDisplayMode(_params: GetDisplayPropsParams<T, V, R>): Promise<DisplayProps['balanceDisplayMode']> {
     return undefined;
   }
 
-  async getStatsItems({ appToken }: GetDisplayPropsStageParams<T, V, R>): Promise<DisplayProps['statsItems']> {
+  async getStatsItems({ appToken }: GetDisplayPropsParams<T, V, R>): Promise<DisplayProps['statsItems']> {
     const statsItems: StatsItem[] = [];
 
     // Standardized Fields
@@ -211,7 +209,7 @@ export abstract class AppTokenTemplatePositionFetcher<
 
           const supply = Number(totalSupplyRaw) / 10 ** decimals;
 
-          const baseFragment: GetPricePerShareStageParams<T, V, R>['appToken'] = {
+          const baseFragment: GetPricePerShareParams<T, V, R>['appToken'] = {
             type: ContractType.APP_TOKEN,
             appId: this.appId,
             groupId: this.groupId,

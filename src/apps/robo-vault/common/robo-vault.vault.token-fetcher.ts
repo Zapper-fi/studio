@@ -3,9 +3,9 @@ import { Inject } from '@nestjs/common';
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import {
-  GetDataPropsStageParams,
-  GetPricePerShareStageParams,
-  GetUnderlyingTokensStageParams,
+  GetDataPropsParams,
+  GetPricePerShareParams,
+  GetUnderlyingTokensParams,
 } from '~position/template/app-token.template.types';
 
 import { RoboVault, RoboVaultContractFactory } from '../contracts';
@@ -38,18 +38,16 @@ export abstract class RoboVaultVaultTokenFetcher extends AppTokenTemplatePositio
     return data.map(v => v.addr.toLowerCase());
   }
 
-  async getUnderlyingTokenAddresses({ contract }: GetUnderlyingTokensStageParams<RoboVault>) {
+  async getUnderlyingTokenAddresses({ contract }: GetUnderlyingTokensParams<RoboVault>) {
     return contract.token();
   }
 
-  async getPricePerShare({ contract, appToken }: GetPricePerShareStageParams<RoboVault, RoboTokenDataProps>) {
+  async getPricePerShare({ contract, appToken }: GetPricePerShareParams<RoboVault, RoboTokenDataProps>) {
     const pricePerShareRaw = await contract.pricePerShare();
     return Number(pricePerShareRaw) / 10 ** appToken.tokens[0].decimals;
   }
 
-  async getDataProps({
-    appToken,
-  }: GetDataPropsStageParams<RoboVault, RoboTokenDataProps>): Promise<RoboTokenDataProps> {
+  async getDataProps({ appToken }: GetDataPropsParams<RoboVault, RoboTokenDataProps>): Promise<RoboTokenDataProps> {
     const liquidity = appToken.supply * appToken.price;
     const data = await this.apiClient.getCachedVaults(this.network);
     const apy = (data.find(v => v.addr.toLowerCase() === appToken.address)?.apy ?? 0) * 100;

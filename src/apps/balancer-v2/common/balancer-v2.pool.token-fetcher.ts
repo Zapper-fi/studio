@@ -8,11 +8,11 @@ import { isMulticallUnderlyingError } from '~multicall/multicall.ethers';
 import { DefaultDataProps } from '~position/display.interface';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import {
-  GetDataPropsStageParams,
-  GetDisplayPropsStageParams,
-  GetPricePerShareStageParams,
-  GetTokenPropsStageParams,
-  GetUnderlyingTokensStageParams,
+  GetDataPropsParams,
+  GetDisplayPropsParams,
+  GetPricePerShareParams,
+  GetTokenPropsParams,
+  GetUnderlyingTokensParams,
 } from '~position/template/app-token.template.types';
 
 import { BalancerPool, BalancerV2ContractFactory } from '../contracts';
@@ -73,7 +73,7 @@ export abstract class BalancerV2PoolTokenFetcher extends AppTokenTemplatePositio
     return poolsResponse.pools.map(v => v.address);
   }
 
-  async getSupply({ address, contract, multicall }: GetTokenPropsStageParams<BalancerPool>) {
+  async getSupply({ address, contract, multicall }: GetTokenPropsParams<BalancerPool>) {
     const supply = await contract.totalSupply();
     if (supply.toHexString() !== '0xffffffffffffffffffffffffffff') return supply;
 
@@ -83,7 +83,7 @@ export abstract class BalancerV2PoolTokenFetcher extends AppTokenTemplatePositio
     return phantomPoolContract.getVirtualSupply();
   }
 
-  async getUnderlyingTokenAddresses({ address, contract, multicall }: GetUnderlyingTokensStageParams<BalancerPool>) {
+  async getUnderlyingTokenAddresses({ address, contract, multicall }: GetUnderlyingTokensParams<BalancerPool>) {
     const _vault = this.contractFactory.balancerVault({ address: this.vaultAddress, network: this.network });
     const vault = multicall.wrap(_vault);
 
@@ -97,11 +97,7 @@ export abstract class BalancerV2PoolTokenFetcher extends AppTokenTemplatePositio
     return tokenAddresses;
   }
 
-  async getPricePerShare({
-    appToken,
-    contract,
-    multicall,
-  }: GetPricePerShareStageParams<BalancerPool, DefaultDataProps>) {
+  async getPricePerShare({ appToken, contract, multicall }: GetPricePerShareParams<BalancerPool, DefaultDataProps>) {
     const _vault = this.contractFactory.balancerVault({ address: this.vaultAddress, network: this.network });
     const vault = multicall.wrap(_vault);
 
@@ -119,7 +115,7 @@ export abstract class BalancerV2PoolTokenFetcher extends AppTokenTemplatePositio
   async getDataProps({
     appToken,
     contract,
-  }: GetDataPropsStageParams<BalancerPool, BalancerV2PoolTokenDataProps>): Promise<BalancerV2PoolTokenDataProps> {
+  }: GetDataPropsParams<BalancerPool, BalancerV2PoolTokenDataProps>): Promise<BalancerV2PoolTokenDataProps> {
     const [poolId, feeRaw, weightsRaw] = await Promise.all([
       contract.getPoolId(),
       contract.getSwapFeePercentage().catch(err => {
@@ -150,13 +146,11 @@ export abstract class BalancerV2PoolTokenFetcher extends AppTokenTemplatePositio
     };
   }
 
-  async getLabel({
-    appToken,
-  }: GetDisplayPropsStageParams<BalancerPool, BalancerV2PoolTokenDataProps>): Promise<string> {
+  async getLabel({ appToken }: GetDisplayPropsParams<BalancerPool, BalancerV2PoolTokenDataProps>): Promise<string> {
     return appToken.tokens.map(v => getLabelFromToken(v)).join(' / ');
   }
 
-  async getSecondaryLabel({ appToken }: GetDisplayPropsStageParams<BalancerPool, BalancerV2PoolTokenDataProps>) {
+  async getSecondaryLabel({ appToken }: GetDisplayPropsParams<BalancerPool, BalancerV2PoolTokenDataProps>) {
     const { reserves, liquidity } = appToken.dataProps;
     const reservePercentages = appToken.tokens.map((t, i) => reserves[i] * (t.price / liquidity));
     return reservePercentages.map(p => `${Math.round(p * 100)}%`).join(' / ');

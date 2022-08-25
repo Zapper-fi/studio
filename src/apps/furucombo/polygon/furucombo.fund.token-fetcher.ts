@@ -8,10 +8,10 @@ import { CacheOnInterval } from '~cache/cache-on-interval.decorator';
 import { DisplayProps } from '~position/display.interface';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import {
-  GetUnderlyingTokensStageParams,
-  GetPricePerShareStageParams,
-  GetDataPropsStageParams,
-  GetDisplayPropsStageParams,
+  GetUnderlyingTokensParams,
+  GetPricePerShareParams,
+  GetDataPropsParams,
+  GetDisplayPropsParams,
 } from '~position/template/app-token.template.types';
 import { Network, NETWORK_IDS } from '~types/network.interface';
 
@@ -92,13 +92,13 @@ export class PolygonFurucomboFundTokenFetcher extends AppTokenTemplatePositionFe
     return addresses;
   }
 
-  async getUnderlyingTokenAddresses({ address }: GetUnderlyingTokensStageParams<FurucomboFundShareToken>) {
+  async getUnderlyingTokenAddresses({ address }: GetUnderlyingTokensParams<FurucomboFundShareToken>) {
     return this.furucomboFundMap[address].stakingToken.address;
   }
 
   async getPricePerShare({
     contract,
-  }: GetPricePerShareStageParams<FurucomboFundShareToken, FurucomboFundDataProps>): Promise<number | number[]> {
+  }: GetPricePerShareParams<FurucomboFundShareToken, FurucomboFundDataProps>): Promise<number | number[]> {
     const fund = this.furucomboFundMap[contract.address];
     return this.appToolkit
       .getBigNumber(fund.tokenPrice)
@@ -108,7 +108,7 @@ export class PolygonFurucomboFundTokenFetcher extends AppTokenTemplatePositionFe
 
   async getDataProps({
     appToken,
-  }: GetDataPropsStageParams<FurucomboFundShareToken, FurucomboFundDataProps>): Promise<FurucomboFundDataProps> {
+  }: GetDataPropsParams<FurucomboFundShareToken, FurucomboFundDataProps>): Promise<FurucomboFundDataProps> {
     const fund = this.furucomboFundMap[appToken.address];
 
     return { apy: Number(fund.apy) * 100, liquidity: Number(fund.liquidity) };
@@ -116,13 +116,13 @@ export class PolygonFurucomboFundTokenFetcher extends AppTokenTemplatePositionFe
 
   async getLabel({
     appToken,
-  }: GetDisplayPropsStageParams<FurucomboFundShareToken, FurucomboFundDataProps>): Promise<DisplayProps['label']> {
+  }: GetDisplayPropsParams<FurucomboFundShareToken, FurucomboFundDataProps>): Promise<DisplayProps['label']> {
     return this.furucomboFundMap[appToken.address].name;
   }
 
   async getImages({
     appToken,
-  }: GetDisplayPropsStageParams<FurucomboFundShareToken, FurucomboFundDataProps>): Promise<DisplayProps['images']> {
+  }: GetDisplayPropsParams<FurucomboFundShareToken, FurucomboFundDataProps>): Promise<DisplayProps['images']> {
     return appToken.tokens.map(() => getTokenImg(furucomboToken.address, furucomboToken.network));
   }
 }

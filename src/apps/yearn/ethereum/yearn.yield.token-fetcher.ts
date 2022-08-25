@@ -5,9 +5,9 @@ import { Register } from '~app-toolkit/decorators';
 import { isMulticallUnderlyingError } from '~multicall/multicall.ethers';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import {
-  GetUnderlyingTokensStageParams,
-  GetPricePerShareStageParams,
-  GetDataPropsStageParams,
+  GetUnderlyingTokensParams,
+  GetPricePerShareParams,
+  GetDataPropsParams,
 } from '~position/template/app-token.template.types';
 import { Network } from '~types/network.interface';
 
@@ -51,15 +51,13 @@ export class EthereumYearnYieldTokenFetcher extends AppTokenTemplatePositionFetc
     return Y_TOKENS.map(yToken => yToken.address);
   }
 
-  async getUnderlyingTokenAddresses({ contract }: GetUnderlyingTokensStageParams<YearnVault>): Promise<string[]> {
+  async getUnderlyingTokenAddresses({ contract }: GetUnderlyingTokensParams<YearnVault>): Promise<string[]> {
     const match = Y_TOKENS.find(yToken => yToken.address === contract.address.toLowerCase());
     if (!match) throw new Error('Cannot find specified Y token');
     return [match.underlyingAddress];
   }
 
-  async getPricePerShare({
-    contract,
-  }: GetPricePerShareStageParams<YearnVault, YearnYieldTokenDataProps>): Promise<number> {
+  async getPricePerShare({ contract }: GetPricePerShareParams<YearnVault, YearnYieldTokenDataProps>): Promise<number> {
     return contract
       .getPricePerFullShare()
       .catch(err => {
@@ -70,7 +68,7 @@ export class EthereumYearnYieldTokenFetcher extends AppTokenTemplatePositionFetc
   }
 
   async getDataProps(
-    opts: GetDataPropsStageParams<YearnVault, YearnYieldTokenDataProps>,
+    opts: GetDataPropsParams<YearnVault, YearnYieldTokenDataProps>,
   ): Promise<YearnYieldTokenDataProps> {
     const { appToken } = opts;
     const reserve = appToken.supply * appToken.pricePerShare[0];

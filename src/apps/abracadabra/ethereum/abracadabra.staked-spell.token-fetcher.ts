@@ -4,9 +4,9 @@ import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import {
-  GetDataPropsStageParams,
-  GetPricePerShareStageParams,
-  GetUnderlyingTokensStageParams,
+  GetDataPropsParams,
+  GetPricePerShareParams,
+  GetUnderlyingTokensParams,
 } from '~position/template/app-token.template.types';
 import { Network } from '~types/network.interface';
 
@@ -47,14 +47,14 @@ export class EthereumAbracadabraStakedSpellTokenFetcher extends AppTokenTemplate
     return ['0x26fa3fffb6efe8c1e69103acb4044c26b9a106a9'];
   }
 
-  getUnderlyingTokenAddresses({ contract }: GetUnderlyingTokensStageParams<AbracadabraStakedSpell>) {
+  getUnderlyingTokenAddresses({ contract }: GetUnderlyingTokensParams<AbracadabraStakedSpell>) {
     return contract.token();
   }
 
   async getPricePerShare({
     appToken,
     multicall,
-  }: GetPricePerShareStageParams<AbracadabraStakedSpell, AbracadabraStakedSpellAppTokenDataProps>) {
+  }: GetPricePerShareParams<AbracadabraStakedSpell, AbracadabraStakedSpellAppTokenDataProps>) {
     const underlyingToken = appToken.tokens[0]!;
     const underlying = this.contractFactory.erc20(underlyingToken);
     const reserveRaw = await multicall.wrap(underlying).balanceOf(appToken.address);
@@ -64,7 +64,7 @@ export class EthereumAbracadabraStakedSpellTokenFetcher extends AppTokenTemplate
 
   async getDataProps({
     appToken,
-  }: GetDataPropsStageParams<AbracadabraStakedSpell, AbracadabraStakedSpellAppTokenDataProps>) {
+  }: GetDataPropsParams<AbracadabraStakedSpell, AbracadabraStakedSpellAppTokenDataProps>) {
     const liquidity = appToken.supply * appToken.price;
     return { liquidity };
   }
