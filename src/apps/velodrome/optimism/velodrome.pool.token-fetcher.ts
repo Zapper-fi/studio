@@ -21,6 +21,7 @@ interface PairData {
   gauge_address: string;
   token0_address: string;
   token1_address: string;
+  apr: number;
 }
 
 @Register.TokenPositionFetcher({ appId, groupId, network })
@@ -42,15 +43,21 @@ export class OptimismVelodromePoolsTokenFetcher implements PositionFetcher<AppTo
 
   async getPositions() {
     const { data } = await this.getDefinitions();
-    const tokens = await this.curvePoolTokenHelper.getTokens<VelodromePool>({
+
+    const poolDefinitions = data.map(pool => {
+      return {
+        swapAddress: pool.address.toLowerCase(),
+        tokenAddress: pool.address.toLowerCase(),
+        gaugeAddresses: [pool.gauge_address.toLowerCase()],
+        apy: pool.apr,
+      };
+    });
+
+    return this.curvePoolTokenHelper.getTokens<VelodromePool>({
       network,
       appId,
       groupId,
-      poolDefinitions: data.map(pool => ({
-        swapAddress: pool.address.toLowerCase(),
-        tokenAddress: pool.address.toLowerCase(),
-        gaugeAddress: pool.gauge_address.toLowerCase(),
-      })),
+      poolDefinitions,
       resolvePoolContract: ({ network, address }) => this.contractFactory.velodromePool({ network, address }),
       resolvePoolCoinAddresses: async ({ multicall, poolContract }) =>
         Promise.all([multicall.wrap(poolContract).token0(), multicall.wrap(poolContract).token1()]),
@@ -60,6 +67,5 @@ export class OptimismVelodromePoolsTokenFetcher implements PositionFetcher<AppTo
       resolvePoolTokenPrice: async ({ tokens, reserves, supply }) =>
         (tokens[0].price * reserves[0] + tokens[1].price * reserves[1]) / supply,
     });
-    return tokens;
   }
 }

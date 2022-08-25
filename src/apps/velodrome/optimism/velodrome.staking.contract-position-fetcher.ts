@@ -48,20 +48,22 @@ export class OptimismVelodromeStakingContractPositionFetcher implements Position
           );
           return sum(rates.map(Number)) > 0;
         },
-        resolveRois: async ({ contract, multicall, rewardTokens, stakedToken }) => {
-          const baseROI = sum(
-            await Promise.all(
-              rewardTokens.map(async token => {
-                const rewardRate = await multicall.wrap(contract).rewardPerToken(token.address);
-                return (Number(rewardRate) * token.price) / stakedToken.price;
-              }),
-            ),
+        resolveRois: async ({ contract, multicall, rewardTokens, stakedToken, liquidity }) => {
+          const dailyRewardRatesUSD = await Promise.all(
+            rewardTokens.map(async token => {
+              if (!token) return 0;
+              const rewardRateRaw = await multicall.wrap(contract).rewardPerToken(token.address);
+              const rewardRate = Number(rewardRateRaw) / 10 ** token.decimals;
+              return ((Number(rewardRate) * token.price) / stakedToken.price) * 86400;
+            }),
           );
-          return {
-            dailyROI: baseROI * 86400,
-            weeklyROI: baseROI * 604800,
-            yearlyROI: baseROI * 31536000,
-          };
+
+          const dailyRewardUSD = sum(dailyRewardRatesUSD);
+          const dailyROI = liquidity > 0 ? (dailyRewardUSD + liquidity) / liquidity - 1 : 0;
+          const weeklyROI = dailyROI * 7;
+          const yearlyROI = dailyROI * 365;
+
+          return { dailyROI, weeklyROI, yearlyROI };
         },
       });
     return positions;
