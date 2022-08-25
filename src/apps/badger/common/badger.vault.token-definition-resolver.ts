@@ -35,7 +35,7 @@ export class BadgerVaultTokenDefinitionsResolver {
 
     const vaultDefinitions = values(definitionsData)
       .filter(t => t.type === 'Vault')
-      .map(t => ({ address: t.address.toLowerCase(), underlyingAddress: t.vaultToken.address.toLowerCase() }));
+      .map(t => ({ address: t.address.toLowerCase(), underlyingTokenAddress: t.vaultToken.address.toLowerCase() }));
     return vaultDefinitions;
   }
 }

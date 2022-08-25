@@ -2,10 +2,8 @@ import { Inject } from '@nestjs/common';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
-import {
-  AppTokenTemplatePositionFetcher,
-  UnderlyingTokensStageParams,
-} from '~position/template/app-token.template.position-fetcher';
+import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
+import { GetUnderlyingTokensParams } from '~position/template/app-token.template.types';
 import { Network } from '~types/network.interface';
 
 import { BALANCER_V2_DEFINITION } from '../balancer-v2.definition';
@@ -41,7 +39,7 @@ export class EthereumBalancerV2WrappedAaveTokenFetcher extends AppTokenTemplateP
     return this.contractFactory.balancerWrappedAaveToken({ address, network: this.network });
   }
 
-  getUnderlyingTokenAddresses({ contract }: UnderlyingTokensStageParams<BalancerWrappedAaveToken>) {
+  getUnderlyingTokenAddresses({ contract }: GetUnderlyingTokensParams<BalancerWrappedAaveToken>) {
     return contract.callStatic.ATOKEN();
   }
 }

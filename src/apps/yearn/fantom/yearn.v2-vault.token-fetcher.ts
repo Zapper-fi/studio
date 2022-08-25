@@ -3,7 +3,7 @@ import { Inject } from '@nestjs/common';
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
 import { isMulticallUnderlyingError } from '~multicall/multicall.ethers';
-import { DataPropsStageParams, PricePerShareStageParams } from '~position/template/app-token.template.position-fetcher';
+import { GetDataPropsParams, GetPricePerShareParams } from '~position/template/app-token.template.types';
 import { Network } from '~types/network.interface';
 
 import { YearnContractFactory, YearnVaultV2 } from '../contracts';
@@ -38,7 +38,7 @@ export class FantomYearnV2VaultTokenFetcher extends YearnVaultTokenFetcher<Yearn
     return this.contractFactory.yearnVaultV2({ network: this.network, address });
   }
 
-  async getPricePerShare({ contract, appToken }: PricePerShareStageParams<YearnVaultV2>) {
+  async getPricePerShare({ contract, appToken }: GetPricePerShareParams<YearnVaultV2>) {
     const pricePerShareRaw = await contract.pricePerShare().catch(err => {
       if (isMulticallUnderlyingError(err)) return 0;
       throw err;
@@ -47,7 +47,7 @@ export class FantomYearnV2VaultTokenFetcher extends YearnVaultTokenFetcher<Yearn
   }
 
   async getDataProps(
-    opts: DataPropsStageParams<YearnVaultV2, YearnVaultTokenDataProps>,
+    opts: GetDataPropsParams<YearnVaultV2, YearnVaultTokenDataProps>,
   ): Promise<YearnVaultTokenDataProps> {
     const { appToken } = opts;
     const vault = await this.selectVault(appToken.address);
