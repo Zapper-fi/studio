@@ -47,6 +47,10 @@ export class EthereumStargateAuctionLockedTokenFetcher extends AppTokenTemplateP
     return contract.stargateToken();
   }
 
+  async getPricePerShare(): Promise<number | number[]> {
+    return 4; // 1 aaSTG = 4 STG
+  }
+
   async getDataProps({ appToken }: GetDataPropsParams<StargateAa, StargateAuctionLockedAppTokenDataProps>) {
     const reserve = appToken.supply; // 1:1
     const liquidity = appToken.supply * appToken.price;
