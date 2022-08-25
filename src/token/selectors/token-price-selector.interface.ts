@@ -5,6 +5,7 @@ export type BaseTokenPrice = BaseToken & {
   name: string;
   hide: boolean;
   canExchange: boolean;
+  verified: boolean;
   dailyVolume: number | null;
 };
 
