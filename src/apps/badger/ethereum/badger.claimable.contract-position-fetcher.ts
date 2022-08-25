@@ -5,7 +5,7 @@ import { BADGER_DEFINITION } from '../badger.definition';
 import {
   BadgerClaimableContractPositionFetcher,
   BadgerClaimableDescriptor,
-} from '../helpers/badger.claimable.contract-position-fetcher';
+} from '../common/badger.claimable.contract-position-fetcher';
 
 const appId = BADGER_DEFINITION.id;
 const groupId = BADGER_DEFINITION.groups.claimable.id;
