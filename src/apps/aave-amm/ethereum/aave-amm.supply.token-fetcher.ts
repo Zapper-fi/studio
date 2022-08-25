@@ -4,7 +4,7 @@ import {
   AaveV2ReserveApyData,
   AaveV2ReserveTokenAddressesData,
 } from '~apps/aave-v2/helpers/aave-v2.lending.template.token-fetcher';
-import { DisplayPropsStageParams } from '~position/template/app-token.template.position-fetcher';
+import { GetDisplayPropsStageParams } from '~position/template/app-token.template.types';
 import { Network } from '~types/network.interface';
 
 import { AAVE_AMM_DEFINITION } from '../aave-amm.definition';
@@ -32,7 +32,7 @@ export class EthereumAaveAmmSupplyTokenFetcher extends AaveAmmLendingTemplateTok
     return reserveApyData.supplyApy;
   }
 
-  async getTertiaryLabel({ appToken }: DisplayPropsStageParams<AaveAmmAToken, AaveV2LendingTokenDataProps>) {
+  async getTertiaryLabel({ appToken }: GetDisplayPropsStageParams<AaveAmmAToken, AaveV2LendingTokenDataProps>) {
     return `${(appToken.dataProps.apy * 100).toFixed(3)}% APY`;
   }
 }

@@ -12,9 +12,8 @@ export type GetDefinitionStageParams = {
   multicall: IMulticallWrapper;
 };
 
-export type GetAddressesStageParams<R extends DefaultAppTokenDefinition = DefaultAppTokenDefinition> = {
+export type GetAddressesStageParams = {
   multicall: IMulticallWrapper;
-  definitions: R[];
 };
 
 // PHASE 2: Build position objects

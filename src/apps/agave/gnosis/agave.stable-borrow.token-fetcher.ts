@@ -6,7 +6,7 @@ import {
   AaveV2ReserveApyData,
   AaveV2ReserveTokenAddressesData,
 } from '~apps/aave-v2/helpers/aave-v2.lending.template.token-fetcher';
-import { DisplayPropsStageParams } from '~position/template/app-token.template.position-fetcher';
+import { GetDisplayPropsStageParams } from '~position/template/app-token.template.types';
 import { Network } from '~types/network.interface';
 
 import AGAVE_DEFINITION from '../agave.definition';
@@ -32,7 +32,7 @@ export class GnosisAgaveStableBorrowTokenFetcher extends AaveV2LendingTemplateTo
     return reserveApyData.stableBorrowApy;
   }
 
-  async getTertiaryLabel({ appToken }: DisplayPropsStageParams<AaveV2AToken, AaveV2LendingTokenDataProps>) {
+  async getTertiaryLabel({ appToken }: GetDisplayPropsStageParams<AaveV2AToken, AaveV2LendingTokenDataProps>) {
     return `${(appToken.dataProps.apy * 100).toFixed(3)}% APR (stable)`;
   }
 }

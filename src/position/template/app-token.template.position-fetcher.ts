@@ -46,13 +46,14 @@ export abstract class AppTokenTemplatePositionFetcher<
 
   constructor(@Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit) {}
 
-  // 1. (Optional) Get token definitions (i.e.: token addresses and additional context)
-  async getDefinitions(_params: GetDefinitionStageParams): Promise<R[]> {
-    return [];
-  }
-
-  // 2. Get token addresses
+  // 1. Get token addresses
   abstract getAddresses(params: GetAddressesStageParams): string[] | Promise<string[]>;
+
+  // 2. (Optional) Get token definitions (i.e.: token addresses and additional context)
+  async getDefinitions(params: GetDefinitionStageParams): Promise<R[]> {
+    const addresses = await this.getAddresses(params);
+    return addresses.map(address => ({ address } as R));
+  }
 
   // 3. Get token contract instance
   abstract getContract(address: string): T;
@@ -147,12 +148,14 @@ export abstract class AppTokenTemplatePositionFetcher<
     });
 
     const definitions = await this.getDefinitions({ multicall });
-    const addressesRaw = await this.getAddresses({ multicall, definitions });
+    const addressesRaw = await this.getAddresses({ multicall });
     const addresses = addressesRaw.map(x => x.toLowerCase());
 
     const maybeSkeletons = await Promise.all(
       addresses.map(async address => {
-        const definition = definitions.find(v => v.address === address) ?? ({ address } as R);
+        const definition = definitions.find(v => v.address === address);
+        if (!definition) return null;
+
         const contract = multicall.wrap(this.getContract(address));
         const context = { address, definition, contract, multicall, tokenLoader };
 
