@@ -1,5 +1,5 @@
 import { Inject } from '@nestjs/common';
-import { BigNumberish } from 'ethers';
+import { BigNumber, BigNumberish } from 'ethers';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
@@ -65,7 +65,7 @@ export class FantomGeistIncentivesPositionFetcher extends ContractPositionTempla
 
   async getTokenBalancesPerPosition({
     address,
-    contract,
+    contractPosition,
   }: GetTokenBalancesPerPositionParams<GeistRewards>): Promise<BigNumberish[]> {
     const appTokenAddresses = await this.appToolkit
       .getAppTokenPositions({
@@ -79,7 +79,11 @@ export class FantomGeistIncentivesPositionFetcher extends ContractPositionTempla
       })
       .then(tokens => tokens.map(({ address }) => address));
 
+    // The calls fails when it's using the Multicall wrapped version of the contract
+    const contract = this.contractFactory.geistRewards({ address: contractPosition.address, network: this.network });
     const rewardBalanceRaw = await contract.claimableReward(address, appTokenAddresses, { from: address });
-    return rewardBalanceRaw;
+    const sum = rewardBalanceRaw.reduce((sum, cur) => sum.add(cur), BigNumber.from(0));
+
+    return [sum];
   }
 }
