@@ -1,12 +1,12 @@
 import { Inject } from '@nestjs/common';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
+import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import {
-  AppTokenTemplatePositionFetcher,
-  DataPropsStageParams,
-  PricePerShareStageParams,
-  UnderlyingTokensStageParams,
-} from '~position/template/app-token.template.position-fetcher';
+  GetDataPropsParams,
+  GetPricePerShareParams,
+  GetUnderlyingTokensParams,
+} from '~position/template/app-token.template.types';
 
 import { BeefyContractFactory, BeefyVaultToken } from '../contracts';
 
@@ -16,9 +16,18 @@ export type BeefyVaultTokenDataProps = {
   liquidity: number;
 };
 
+export type BeefyVaultTokenDefinition = {
+  address: string;
+  underlyingAddress: string;
+  id: string;
+  marketName: string;
+  symbol: string;
+};
+
 export abstract class BeefyVaultTokenFetcher extends AppTokenTemplatePositionFetcher<
   BeefyVaultToken,
-  BeefyVaultTokenDataProps
+  BeefyVaultTokenDataProps,
+  BeefyVaultTokenDefinition
 > {
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
@@ -38,25 +47,24 @@ export abstract class BeefyVaultTokenFetcher extends AppTokenTemplatePositionFet
     return vaultDefinitions.map(({ address }) => address.toLowerCase());
   }
 
-  async getUnderlyingTokenAddresses({ address }: UnderlyingTokensStageParams<BeefyVaultToken>): Promise<string[]> {
-    const vaultDefinitions = await this.tokenDefinitionsResolver.getVaultDefinitions(this.network);
-    const vault = vaultDefinitions.find(v => v.address.toLowerCase() === address) ?? null;
-    if (!vault) throw new Error('Cannot find specified vault');
-
-    return [vault.underlyingAddress.toLowerCase()];
+  async getDefinitions(): Promise<BeefyVaultTokenDefinition[]> {
+    return this.tokenDefinitionsResolver.getVaultDefinitions(this.network);
   }
 
-  async getPricePerShare({
-    contract,
-    appToken,
-  }: PricePerShareStageParams<BeefyVaultToken>): Promise<number | number[]> {
+  async getUnderlyingTokenAddresses({
+    definition,
+  }: GetUnderlyingTokensParams<BeefyVaultToken, BeefyVaultTokenDefinition>) {
+    return definition.underlyingAddress;
+  }
+
+  async getPricePerShare({ contract, appToken }: GetPricePerShareParams<BeefyVaultToken>): Promise<number | number[]> {
     const ratioRaw = contract.getPricePerFullShare();
     const decimals = appToken.decimals;
 
     return Number(ratioRaw) / 10 ** decimals;
   }
 
-  async getDataProps(opts: DataPropsStageParams<BeefyVaultToken, BeefyVaultTokenDataProps>) {
+  async getDataProps(opts: GetDataPropsParams<BeefyVaultToken, BeefyVaultTokenDataProps>) {
     const { appToken } = opts;
     const reserve = Number(appToken.pricePerShare) * appToken.supply;
     const liquidity = reserve * appToken.tokens[0].price;
