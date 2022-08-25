@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.194.0](https://github.com/Zapper-fi/studio/compare/v0.193.1...v0.194.0) (2022-08-25)
+
+
+### Features
+
+* **templates:** Refactor contract position template to be more in line with app token template ([#1266](https://github.com/Zapper-fi/studio/issues/1266)) ([21a4635](https://github.com/Zapper-fi/studio/commit/21a46352a7a469420c31a5081a4e17fdafdb758d))
+
 ## [0.193.1](https://github.com/Zapper-fi/studio/compare/v0.193.0...v0.193.1) (2022-08-25)
 
 
