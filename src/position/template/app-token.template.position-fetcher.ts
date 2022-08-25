@@ -51,7 +51,7 @@ export abstract class AppTokenTemplatePositionFetcher<
 
   // 2. (Optional) Get token definitions (i.e.: token addresses and additional context)
   async getDefinitions(params: GetDefinitionsParams): Promise<R[]> {
-    const addresses = await this.getAddresses(params);
+    const addresses = await this.getAddresses({ ...params, definitions: [] });
     return addresses.map(address => ({ address } as R));
   }
 
@@ -146,7 +146,7 @@ export abstract class AppTokenTemplatePositionFetcher<
     });
 
     const definitions = await this.getDefinitions({ multicall });
-    const addressesRaw = await this.getAddresses({ multicall });
+    const addressesRaw = await this.getAddresses({ multicall, definitions });
     const addresses = addressesRaw.map(x => x.toLowerCase());
 
     const maybeSkeletons = await Promise.all(

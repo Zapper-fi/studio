@@ -12,7 +12,8 @@ export type GetDefinitionsParams = {
   multicall: IMulticallWrapper;
 };
 
-export type GetAddressesParams = {
+export type GetAddressesParams<R = DefaultAppTokenDefinition> = {
+  definitions: R[];
   multicall: IMulticallWrapper;
 };
 

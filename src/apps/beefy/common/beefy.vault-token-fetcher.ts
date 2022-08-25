@@ -3,6 +3,7 @@ import { Inject } from '@nestjs/common';
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import {
+  GetAddressesParams,
   GetDataPropsParams,
   GetPricePerShareParams,
   GetUnderlyingTokensParams,
@@ -42,13 +43,12 @@ export abstract class BeefyVaultTokenFetcher extends AppTokenTemplatePositionFet
     return this.contractFactory.beefyVaultToken({ network: this.network, address });
   }
 
-  async getAddresses(): Promise<string[]> {
-    const vaultDefinitions = await this.tokenDefinitionsResolver.getVaultDefinitions(this.network);
-    return vaultDefinitions.map(({ address }) => address.toLowerCase());
-  }
-
   async getDefinitions(): Promise<BeefyVaultTokenDefinition[]> {
     return this.tokenDefinitionsResolver.getVaultDefinitions(this.network);
+  }
+
+  async getAddresses({ definitions }: GetAddressesParams<BeefyVaultTokenDefinition>): Promise<string[]> {
+    return definitions.map(v => v.address);
   }
 
   async getUnderlyingTokenAddresses({

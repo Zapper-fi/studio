@@ -7,6 +7,7 @@ import {
   GetPricePerShareParams,
   GetPriceParams,
   GetUnderlyingTokensParams,
+  GetAddressesParams,
 } from '~position/template/app-token.template.types';
 
 import { BadgerContractFactory, BadgerSett } from '../contracts';
@@ -40,13 +41,12 @@ export abstract class BadgerVaultTokenFetcher extends AppTokenTemplatePositionFe
     return this.contractFactory.badgerSett({ network: this.network, address });
   }
 
-  async getAddresses(): Promise<string[]> {
-    const vaultDefinitions = await this.tokenDefinitionsResolver.getVaultDefinitions(this.network);
-    return vaultDefinitions.map(({ address }) => address.toLowerCase());
-  }
-
   async getDefinitions(): Promise<BadgerVaultTokenDefinition[]> {
     return this.tokenDefinitionsResolver.getVaultDefinitions(this.network);
+  }
+
+  async getAddresses({ definitions }: GetAddressesParams<BadgerVaultTokenDefinition>): Promise<string[]> {
+    return definitions.map(v => v.address);
   }
 
   async getUnderlyingTokenAddresses({ definition }: GetUnderlyingTokensParams<BadgerSett, BadgerVaultTokenDefinition>) {
