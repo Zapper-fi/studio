@@ -10,6 +10,7 @@ import {
 } from '~app-toolkit/helpers/presentation/display-item.present';
 import { getImagesFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { IMulticallWrapper } from '~multicall';
+import { isMulticallUnderlyingError } from '~multicall/multicall.ethers';
 import { ContractType } from '~position/contract.interface';
 import { DefaultDataProps, DisplayProps, StatsItem } from '~position/display.interface';
 import { AppTokenPositionBalance } from '~position/position-balance.interface';
@@ -146,9 +147,10 @@ export abstract class AppTokenTemplatePositionFetcher<
     });
 
     const definitions = await this.getDefinitions({ multicall });
-    const addresses = await this.getAddresses({ multicall, definitions });
+    const addressesRaw = await this.getAddresses({ multicall, definitions });
+    const addresses = addressesRaw.map(x => x.toLowerCase());
 
-    const skeletons = await Promise.all(
+    const maybeSkeletons = await Promise.all(
       addresses.map(async address => {
         const definition = definitions.find(v => v.address === address) ?? ({ address } as R);
         const contract = multicall.wrap(this.getContract(address));
@@ -156,12 +158,18 @@ export abstract class AppTokenTemplatePositionFetcher<
 
         const underlyingTokenAddresses = await this.getUnderlyingTokenAddresses(context)
           .then(v => (Array.isArray(v) ? v : [v]))
-          .then(v => v.map(t => t.toLowerCase()));
+          .then(v => v.map(t => t.toLowerCase()))
+          .catch(err => {
+            if (isMulticallUnderlyingError(err)) return null;
+            throw err;
+          });
 
+        if (!underlyingTokenAddresses) return null;
         return { address, definition, underlyingTokenAddresses };
       }),
     );
 
+    const skeletons = compact(maybeSkeletons);
     const [base, meta] = partition(skeletons, t => {
       const tokenAddresses = skeletons.map(v => v.address);
       return intersection(t.underlyingTokenAddresses, tokenAddresses).length === 0;

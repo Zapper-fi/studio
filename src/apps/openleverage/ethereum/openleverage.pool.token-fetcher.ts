@@ -14,6 +14,7 @@ import {
 import { Network } from '~types/network.interface';
 
 import { OpenleverageContractFactory, OpenleverageLpool } from '../contracts';
+import { OpenleveragePoolAPYHelper } from '../helpers/openleverage-pool.apy-helper';
 import { OPENLEVERAGE_DEFINITION } from '../openleverage.definition';
 
 const appId = OPENLEVERAGE_DEFINITION.id;
@@ -24,6 +25,11 @@ type OpenLeveragePoolsResponse = {
   pools: {
     id: string;
   }[];
+};
+
+type OpenLeverageDataProps = {
+  apy: number;
+  liquidity: number;
 };
 
 const query = gql`
@@ -43,6 +49,8 @@ export class EthereumOpenleveragePoolTokenFetcher extends AppTokenTemplatePositi
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
+    @Inject(OpenleveragePoolAPYHelper)
+    private readonly openleveragePoolAPYHelper: OpenleveragePoolAPYHelper,
     @Inject(OpenleverageContractFactory) protected readonly contractFactory: OpenleverageContractFactory,
   ) {
     super(appToolkit);
@@ -67,12 +75,15 @@ export class EthereumOpenleveragePoolTokenFetcher extends AppTokenTemplatePositi
     return Number(exchangeRateCurrent) / 10 ** 18;
   }
 
-  async getDataProps({ appToken }: GetDataPropsStageParams<OpenleverageLpool>) {
+  async getDataProps({ appToken }: GetDataPropsStageParams<OpenleverageLpool, OpenLeverageDataProps>) {
     const liquidity = appToken.supply * appToken.price;
-    return { liquidity };
+    const poolDetailMap = await this.openleveragePoolAPYHelper.getApy();
+    const apy = poolDetailMap[appToken.address]?.lendingYieldY || 0;
+    return { liquidity, apy };
   }
 
   async getLabel({ appToken }: GetDisplayPropsStageParams<OpenleverageLpool>) {
-    return getLabelFromToken(appToken.tokens[0]);
+    const poolDetailMap = await this.openleveragePoolAPYHelper.getApy();
+    return getLabelFromToken(appToken.tokens[0]) + '/' + poolDetailMap[appToken.address]?.token1Symbol;
   }
 }

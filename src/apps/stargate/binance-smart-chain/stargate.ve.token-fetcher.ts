@@ -6,7 +6,7 @@ import {
   GetTokenBalancesPerPositionParams,
   TokenStageParams,
 } from '~position/template/contract-position.template.position-fetcher';
-import { VotingEscrowTokenFetcher } from '~position/template/voting-escrow.template.contract-position-fetcher';
+import { VotingEscrowTemplateContractPositionFetcher } from '~position/template/voting-escrow.template.contract-position-fetcher';
 import { Network } from '~types/network.interface';
 
 import { StargateContractFactory, StargateVe } from '../contracts';
@@ -17,7 +17,7 @@ const groupId = STARGATE_DEFINITION.groups.ve.id;
 const network = Network.BINANCE_SMART_CHAIN_MAINNET;
 
 @Register.TokenPositionFetcher({ appId, groupId, network })
-export class BinanceSmartChainStargateVeTokenFetcher extends VotingEscrowTokenFetcher<StargateVe> {
+export class BinanceSmartChainStargateVeTokenFetcher extends VotingEscrowTemplateContractPositionFetcher<StargateVe> {
   appId = appId;
   groupId = groupId;
   network = network;
