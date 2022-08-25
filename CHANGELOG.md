@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.195.0](https://github.com/Zapper-fi/studio/compare/v0.194.0...v0.195.0) (2022-08-25)
+
+
+### Features
+
+* **redacted-cartel:** Extract and add revenue locking ([#1268](https://github.com/Zapper-fi/studio/issues/1268)) ([a61d8b3](https://github.com/Zapper-fi/studio/commit/a61d8b3c1426b3f268e73158cc57982158196d7f))
+
 ## [0.194.0](https://github.com/Zapper-fi/studio/compare/v0.193.1...v0.194.0) (2022-08-25)
 
 
