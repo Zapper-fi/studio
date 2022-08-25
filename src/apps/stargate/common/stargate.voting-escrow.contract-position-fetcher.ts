@@ -14,7 +14,7 @@ export abstract class StargateVotingEscrowContractPositionFetcher extends Voting
     super(appToolkit);
   }
 
-  getContract(address: string): StargateVe {
+  getEscrowContract(address: string): StargateVe {
     return this.contractFactory.stargateVe({ address, network: this.network });
   }
 
