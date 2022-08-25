@@ -106,9 +106,9 @@ export abstract class AaveV2LendingTemplateTokenFetcher extends AppTokenTemplate
     const reservesData = await pool.getReserveData(appToken.tokens[0].address);
 
     return this.getApy({
-      supplyApy: Number(reservesData.liquidityRate) / 10 ** 27,
-      stableBorrowApy: Number(reservesData.stableBorrowRate) / 10 ** 27,
-      variableBorrowApy: Number(reservesData.variableBorrowRate) / 10 ** 27,
+      supplyApy: (Number(reservesData.liquidityRate) / 10 ** 27) * 100,
+      stableBorrowApy: (Number(reservesData.stableBorrowRate) / 10 ** 27) * 100,
+      variableBorrowApy: (Number(reservesData.variableBorrowRate) / 10 ** 27) * 100,
     });
   }
 
