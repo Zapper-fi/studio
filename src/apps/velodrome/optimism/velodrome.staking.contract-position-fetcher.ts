@@ -51,7 +51,6 @@ export class OptimismVelodromeStakingContractPositionFetcher implements Position
         resolveRois: async ({ contract, multicall, rewardTokens, stakedToken, liquidity }) => {
           const dailyRewardRatesUSD = await Promise.all(
             rewardTokens.map(async token => {
-              if (!token) return 0;
               const rewardRateRaw = await multicall.wrap(contract).rewardPerToken(token.address);
               const rewardRate = Number(rewardRateRaw) / 10 ** token.decimals;
               return ((Number(rewardRate) * token.price) / stakedToken.price) * 86400;
