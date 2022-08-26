@@ -30,11 +30,11 @@ export class EthereumRhinoFiBridgeContractPositionFetcher extends ContractPositi
     return this.contractFactory.rhinoFiBridge({ address, network: this.network });
   }
 
-  async getDescriptors() {
+  async getDefinitions() {
     return [{ address: '0x5d22045daceab03b158031ecb7d9d06fad24609b' }];
   }
 
-  async getTokenDescriptors() {
+  async getTokenDefinitions() {
     return [];
   }
 

@@ -4,6 +4,44 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.195.0](https://github.com/Zapper-fi/studio/compare/v0.194.0...v0.195.0) (2022-08-25)
+
+
+### Features
+
+* **redacted-cartel:** Extract and add revenue locking ([#1268](https://github.com/Zapper-fi/studio/issues/1268)) ([a61d8b3](https://github.com/Zapper-fi/studio/commit/a61d8b3c1426b3f268e73158cc57982158196d7f))
+
+## [0.194.0](https://github.com/Zapper-fi/studio/compare/v0.193.1...v0.194.0) (2022-08-25)
+
+
+### Features
+
+* **templates:** Refactor contract position template to be more in line with app token template ([#1266](https://github.com/Zapper-fi/studio/issues/1266)) ([21a4635](https://github.com/Zapper-fi/studio/commit/21a46352a7a469420c31a5081a4e17fdafdb758d))
+
+## [0.193.1](https://github.com/Zapper-fi/studio/compare/v0.193.0...v0.193.1) (2022-08-25)
+
+
+### Bug Fixes
+
+* **stargate:** fix aaSTG pricePerShare ([#1264](https://github.com/Zapper-fi/studio/issues/1264)) ([7cc3fec](https://github.com/Zapper-fi/studio/commit/7cc3fecadb71ccd1ca5ab662390cca88c6ffd418))
+
+## [0.193.0](https://github.com/Zapper-fi/studio/compare/v0.192.0...v0.193.0) (2022-08-25)
+
+
+### Features
+
+* **hector-network:** Remove unnecessary token fetchers, balance fetchers, and fix farms ([#1263](https://github.com/Zapper-fi/studio/issues/1263)) ([50a3f32](https://github.com/Zapper-fi/studio/commit/50a3f323d72d9a63d7ea817e57ca468b0dd05884))
+* **hector:** Updates to add Fantom bonds, BSC bonds, and new tokens ([#1259](https://github.com/Zapper-fi/studio/issues/1259)) ([773d56d](https://github.com/Zapper-fi/studio/commit/773d56da1c731b778d7e8d9ec6492c2781361ed8))
+* **templates:** Support definitions in App Token template ([#1254](https://github.com/Zapper-fi/studio/issues/1254)) ([bec70fc](https://github.com/Zapper-fi/studio/commit/bec70fcae4604a1567279ed23255b621376da1f4))
+* **tokemak:** Add tMYC reactor token ([#1262](https://github.com/Zapper-fi/studio/issues/1262)) ([e555a3b](https://github.com/Zapper-fi/studio/commit/e555a3b7b23223df407319d011becfb7ed071f4e))
+
+
+### Bug Fixes
+
+* **aave-forks:** APYs were 100x smaller ([#1260](https://github.com/Zapper-fi/studio/issues/1260)) ([cf24205](https://github.com/Zapper-fi/studio/commit/cf242055487f9b693d6cf38087f7669f5813e8b3))
+* **geist:** Fix Geist incentives ([#1261](https://github.com/Zapper-fi/studio/issues/1261)) ([1c1b47b](https://github.com/Zapper-fi/studio/commit/1c1b47b251cc8674e05bab6e875ab38f39fe3cbc))
+* **robo-vault:** updating app name ([b87308d](https://github.com/Zapper-fi/studio/commit/b87308df9426d212053c8bbb1e53f043431c5d82))
+
 ## [0.192.0](https://github.com/Zapper-fi/studio/compare/v0.191.0...v0.192.0) (2022-08-24)
 
 

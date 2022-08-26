@@ -2,10 +2,7 @@ import { Inject } from '@nestjs/common';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
-import {
-  DataPropsStageParams,
-  GetTokenBalancesPerPositionParams,
-} from '~position/template/contract-position.template.position-fetcher';
+import { GetDataPropsParams, GetTokenBalancesParams } from '~position/template/contract-position.template.types';
 import { SingleStakingFarmTemplateContractPositionFetcher } from '~position/template/single-staking.template.contract-position-fetcher';
 import { Network } from '~types/network.interface';
 
@@ -53,15 +50,15 @@ export class ArbitrumDopexLpFarmContractPositionFetcher extends SingleStakingFar
     return FARMS;
   }
 
-  getRewardRates({ contract }: DataPropsStageParams<DopexSingleRewardStaking>) {
+  getRewardRates({ contract }: GetDataPropsParams<DopexSingleRewardStaking>) {
     return contract.rewardRate();
   }
 
-  getStakedTokenBalance({ address, contract }: GetTokenBalancesPerPositionParams<DopexSingleRewardStaking>) {
+  getStakedTokenBalance({ address, contract }: GetTokenBalancesParams<DopexSingleRewardStaking>) {
     return contract.balanceOf(address);
   }
 
-  getRewardTokenBalances({ address, contract }: GetTokenBalancesPerPositionParams<DopexSingleRewardStaking>) {
+  getRewardTokenBalances({ address, contract }: GetTokenBalancesParams<DopexSingleRewardStaking>) {
     return contract.earned(address);
   }
 }

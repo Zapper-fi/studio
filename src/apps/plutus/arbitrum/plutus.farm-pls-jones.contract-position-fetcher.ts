@@ -2,10 +2,7 @@ import { Inject } from '@nestjs/common';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
-import {
-  DataPropsStageParams,
-  GetTokenBalancesPerPositionParams,
-} from '~position/template/contract-position.template.position-fetcher';
+import { GetDataPropsParams, GetTokenBalancesParams } from '~position/template/contract-position.template.types';
 import {
   SingleStakingFarmDataProps,
   SingleStakingFarmDefinition,
@@ -53,7 +50,7 @@ export class ArbitrumPlutusFarmPlsJonesContractPositionFetcher extends SingleSta
     ];
   }
 
-  async getRewardRates({ contract }: DataPropsStageParams<PlutusFarmPlsJones, SingleStakingFarmDataProps>) {
+  async getRewardRates({ contract }: GetDataPropsParams<PlutusFarmPlsJones, SingleStakingFarmDataProps>) {
     const rewardsDistro = await contract.rewardsDistro();
     const rewardsDistroContract = this.contractFactory.plutusRewardsDistroPlsJones({
       address: rewardsDistro,
@@ -64,11 +61,11 @@ export class ArbitrumPlutusFarmPlsJonesContractPositionFetcher extends SingleSta
     return [emissions.pls_, emissions.plsDpx_, emissions.plsJones_, emissions.jones_];
   }
 
-  async getStakedTokenBalance({ contract, address }: GetTokenBalancesPerPositionParams<PlutusFarmPlsJones>) {
+  async getStakedTokenBalance({ contract, address }: GetTokenBalancesParams<PlutusFarmPlsJones>) {
     return contract.userInfo(address).then(v => v.amount);
   }
 
-  async getRewardTokenBalances({ contract, address }: GetTokenBalancesPerPositionParams<PlutusFarmPlsJones>) {
+  async getRewardTokenBalances({ contract, address }: GetTokenBalancesParams<PlutusFarmPlsJones>) {
     return contract.pendingRewards(address);
   }
 }

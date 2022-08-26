@@ -1,5 +1,5 @@
 import { Inject } from '@nestjs/common';
-import { BigNumberish } from 'ethers';
+import { BigNumber } from 'ethers';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
@@ -7,11 +7,8 @@ import { buildDollarDisplayItem } from '~app-toolkit/helpers/presentation/displa
 import { getTokenImg } from '~app-toolkit/helpers/presentation/image.present';
 import { DisplayProps } from '~position/display.interface';
 import { MetaType } from '~position/position.interface';
-import {
-  ContractPositionTemplatePositionFetcher,
-  DisplayPropsStageParams,
-  GetTokenBalancesPerPositionParams,
-} from '~position/template/contract-position.template.position-fetcher';
+import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
+import { GetDisplayPropsParams, GetTokenBalancesParams } from '~position/template/contract-position.template.types';
 import { Network } from '~types/network.interface';
 
 import { GeistContractFactory, GeistRewards } from '../contracts';
@@ -37,7 +34,7 @@ export class FantomGeistIncentivesPositionFetcher extends ContractPositionTempla
     super(appToolkit);
   }
 
-  async getDescriptors() {
+  async getDefinitions() {
     const incentivesAddress = '0x297fddc5c33ef988dd03bd13e162ae084ea1fe57';
     return [{ address: incentivesAddress }];
   }
@@ -46,7 +43,7 @@ export class FantomGeistIncentivesPositionFetcher extends ContractPositionTempla
     return this.contractFactory.geistRewards({ address, network: this.network });
   }
 
-  async getTokenDescriptors() {
+  async getTokenDefinitions() {
     return [{ address: this.geistTokenAddress, metaType: MetaType.CLAIMABLE }];
   }
 
@@ -54,7 +51,7 @@ export class FantomGeistIncentivesPositionFetcher extends ContractPositionTempla
     return 'Claimable GEIST';
   }
 
-  async getSecondaryLabel(params: DisplayPropsStageParams<GeistRewards>): Promise<DisplayProps['secondaryLabel']> {
+  async getSecondaryLabel(params: GetDisplayPropsParams<GeistRewards>): Promise<DisplayProps['secondaryLabel']> {
     const rewardToken = params.contractPosition.tokens[0];
     return buildDollarDisplayItem(rewardToken.price);
   }
@@ -63,10 +60,7 @@ export class FantomGeistIncentivesPositionFetcher extends ContractPositionTempla
     return [getTokenImg(this.geistTokenAddress, this.network)];
   }
 
-  async getTokenBalancesPerPosition({
-    address,
-    contract,
-  }: GetTokenBalancesPerPositionParams<GeistRewards>): Promise<BigNumberish[]> {
+  async getTokenBalancesPerPosition({ address, contractPosition }: GetTokenBalancesParams<GeistRewards>) {
     const appTokenAddresses = await this.appToolkit
       .getAppTokenPositions({
         appId: GEIST_DEFINITION.id,
@@ -79,7 +73,11 @@ export class FantomGeistIncentivesPositionFetcher extends ContractPositionTempla
       })
       .then(tokens => tokens.map(({ address }) => address));
 
+    // The calls fails when it's using the Multicall wrapped version of the contract
+    const contract = this.contractFactory.geistRewards({ address: contractPosition.address, network: this.network });
     const rewardBalanceRaw = await contract.claimableReward(address, appTokenAddresses, { from: address });
-    return rewardBalanceRaw;
+    const sum = rewardBalanceRaw.reduce((sum, cur) => sum.add(cur), BigNumber.from(0));
+
+    return [sum];
   }
 }

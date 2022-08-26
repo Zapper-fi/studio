@@ -6,19 +6,19 @@ import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { DefaultDataProps } from '~position/display.interface';
 import { MetaType } from '~position/position.interface';
+import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
 import {
-  ContractPositionTemplatePositionFetcher,
-  DisplayPropsStageParams,
-  GetTokenBalancesPerPositionParams,
-  TokenStageParams,
-  UnderlyingTokenDescriptor,
-} from '~position/template/contract-position.template.position-fetcher';
+  GetDisplayPropsParams,
+  GetTokenBalancesParams,
+  GetTokenDefinitionsParams,
+  UnderlyingTokenDefinition,
+} from '~position/template/contract-position.template.types';
 
 import { BadgerContractFactory, BadgerTree } from '../contracts';
 
 import { BadgerClaimableRewardsResolver } from './badger.claimable.rewards-resolver';
 
-export type BadgerClaimableDescriptor = {
+export type BadgerClaimableDefinition = {
   address: string;
   rewardTokenAddress: string;
 };
@@ -26,7 +26,7 @@ export type BadgerClaimableDescriptor = {
 export abstract class BadgerClaimableContractPositionFetcher extends ContractPositionTemplatePositionFetcher<
   BadgerTree,
   DefaultDataProps,
-  BadgerClaimableDescriptor
+  BadgerClaimableDefinition
 > {
   diggTokenAddress: string;
 
@@ -43,13 +43,13 @@ export abstract class BadgerClaimableContractPositionFetcher extends ContractPos
     return this.contractFactory.badgerTree({ network: this.network, address });
   }
 
-  async getTokenDescriptors(
-    param: TokenStageParams<BadgerTree, DefaultDataProps, BadgerClaimableDescriptor>,
-  ): Promise<UnderlyingTokenDescriptor[]> {
-    return [{ address: param.descriptor.rewardTokenAddress, metaType: MetaType.CLAIMABLE }];
+  async getTokenDefinitions({
+    definition,
+  }: GetTokenDefinitionsParams<BadgerTree, BadgerClaimableDefinition>): Promise<UnderlyingTokenDefinition[]> {
+    return [{ address: definition.rewardTokenAddress, metaType: MetaType.CLAIMABLE }];
   }
 
-  async getLabel(params: DisplayPropsStageParams<BadgerTree>): Promise<string> {
+  async getLabel(params: GetDisplayPropsParams<BadgerTree>): Promise<string> {
     const suppliedToken = params.contractPosition.tokens[0];
     return `Claimable ${getLabelFromToken(suppliedToken)}`;
   }
@@ -59,7 +59,7 @@ export abstract class BadgerClaimableContractPositionFetcher extends ContractPos
     contractPosition,
     contract,
     multicall,
-  }: GetTokenBalancesPerPositionParams<BadgerTree, DefaultDataProps>): Promise<BigNumberish[]> {
+  }: GetTokenBalancesParams<BadgerTree, DefaultDataProps>): Promise<BigNumberish[]> {
     const rewardToken = contractPosition.tokens[0];
     const accumulatedRewardsData = await this.badgerClaimableRewardsResolver.getVaultDefinitions({
       address,

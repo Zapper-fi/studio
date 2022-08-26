@@ -2,10 +2,7 @@ import { Inject } from '@nestjs/common';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
-import {
-  DataPropsStageParams,
-  GetTokenBalancesPerPositionParams,
-} from '~position/template/contract-position.template.position-fetcher';
+import { GetDataPropsParams, GetTokenBalancesParams } from '~position/template/contract-position.template.types';
 import { SingleStakingFarmTemplateContractPositionFetcher } from '~position/template/single-staking.template.contract-position-fetcher';
 import { Network } from '~types/network.interface';
 
@@ -53,15 +50,15 @@ export class ArbitrumDopexFarmContractPositionFetcher extends SingleStakingFarmT
     return FARMS;
   }
 
-  getRewardRates({ contract }: DataPropsStageParams<DopexDualRewardStaking>) {
+  getRewardRates({ contract }: GetDataPropsParams<DopexDualRewardStaking>) {
     return Promise.all([contract.rewardRateDPX(), contract.rewardRateRDPX()]);
   }
 
-  getStakedTokenBalance({ address, contract }: GetTokenBalancesPerPositionParams<DopexDualRewardStaking>) {
+  getStakedTokenBalance({ address, contract }: GetTokenBalancesParams<DopexDualRewardStaking>) {
     return contract.balanceOf(address);
   }
 
-  getRewardTokenBalances({ address, contract }: GetTokenBalancesPerPositionParams<DopexDualRewardStaking>) {
+  getRewardTokenBalances({ address, contract }: GetTokenBalancesParams<DopexDualRewardStaking>) {
     return contract.earned(address).then(v => [v.DPXtokensEarned, v.RDPXtokensEarned]);
   }
 }

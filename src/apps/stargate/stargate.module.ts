@@ -4,29 +4,29 @@ import { AbstractApp } from '~app/app.dynamic-module';
 import { ArbitrumStargateEthTokenFetcher } from './arbitrum/stargate.eth.token-fetcher';
 import { ArbitrumStargateFarmContractPositionFetcher } from './arbitrum/stargate.farm.contract-position-fetcher';
 import { ArbitrumStargatePoolTokenFetcher } from './arbitrum/stargate.pool.token-fetcher';
-import { ArbitrumStargateVeTokenFetcher } from './arbitrum/stargate.ve.token-fetcher';
+import { ArbitrumStargateVotingEscrowContractPositionFetcher } from './arbitrum/stargate.voting-escrow.contract-position-fetcher';
 import { AvalancheStargateFarmContractPositionFetcher } from './avalanche/stargate.farm.contract-position-fetcher';
 import { AvalancheStargatePoolTokenFetcher } from './avalanche/stargate.pool.token-fetcher';
-import { AvalancheStargateVeTokenFetcher } from './avalanche/stargate.ve.token-fetcher';
+import { AvalancheStargateVotingEscrowContractPositionFetcher } from './avalanche/stargate.voting-escrow.contract-position-fetcher';
 import { BinanceSmartChainStargateFarmContractPositionFetcher } from './binance-smart-chain/stargate.farm.contract-position-fetcher';
 import { BinanceSmartChainStargatePoolTokenFetcher } from './binance-smart-chain/stargate.pool.token-fetcher';
-import { BinanceSmartChainStargateVeTokenFetcher } from './binance-smart-chain/stargate.ve.token-fetcher';
+import { BinanceSmartChainStargateVotingEscrowContractPositionFetcher } from './binance-smart-chain/stargate.voting-escrow.contract-position-fetcher';
 import { StargateContractFactory } from './contracts';
 import { EthereumStargateAuctionLockedTokenFetcher } from './ethereum/stargate.auction-locked.token-fetcher';
 import { EthereumStargateEthTokenFetcher } from './ethereum/stargate.eth.token-fetcher';
 import { EthereumStargateFarmContractPositionFetcher } from './ethereum/stargate.farm.contract-position-fetcher';
 import { EthereumStargatePoolTokenFetcher } from './ethereum/stargate.pool.token-fetcher';
-import { EthereumStargateVeTokenFetcher } from './ethereum/stargate.ve.token-fetcher';
+import { EthereumStargateVotingEscrowContractPositionFetcher } from './ethereum/stargate.voting-escrow.contract-position-fetcher';
 import { FantomStargateFarmContractPositionFetcher } from './fantom/stargate.farm.contract-position-fetcher';
 import { FantomStargatePoolTokenFetcher } from './fantom/stargate.pool.token-fetcher';
-import { FantomStargateVeTokenFetcher } from './fantom/stargate.ve.token-fetcher';
+import { FantomStargateVotingEscrowContractPositionFetcher } from './fantom/stargate.voting-escrow.contract-position-fetcher';
 import { OptimismStargateEthTokenFetcher } from './optimism/stargate.eth.token-fetcher';
 import { OptimismStargateFarmContractPositionFetcher } from './optimism/stargate.farm.contract-position-fetcher';
 import { OptimismStargatePoolTokenFetcher } from './optimism/stargate.pool.token-fetcher';
-import { OptimismStargateVeTokenFetcher } from './optimism/stargate.ve.token-fetcher';
+import { OptimismStargateVotingEscrowContractPositionFetcher } from './optimism/stargate.voting-escrow.contract-position-fetcher';
 import { PolygonStargateFarmContractPositionFetcher } from './polygon/stargate.farm.contract-position-fetcher';
 import { PolygonStargatePoolTokenFetcher } from './polygon/stargate.pool.token-fetcher';
-import { PolygonStargateVeTokenFetcher } from './polygon/stargate.ve.token-fetcher';
+import { PolygonStargateVotingEscrowContractPositionFetcher } from './polygon/stargate.voting-escrow.contract-position-fetcher';
 import { StargateAppDefinition, STARGATE_DEFINITION } from './stargate.definition';
 
 @Register.AppModule({
@@ -38,34 +38,34 @@ import { StargateAppDefinition, STARGATE_DEFINITION } from './stargate.definitio
     ArbitrumStargateEthTokenFetcher,
     ArbitrumStargateFarmContractPositionFetcher,
     ArbitrumStargatePoolTokenFetcher,
-    ArbitrumStargateVeTokenFetcher,
+    ArbitrumStargateVotingEscrowContractPositionFetcher,
     // Avalanche
     AvalancheStargateFarmContractPositionFetcher,
     AvalancheStargatePoolTokenFetcher,
-    AvalancheStargateVeTokenFetcher,
+    AvalancheStargateVotingEscrowContractPositionFetcher,
     // Binance-smart-chain
     BinanceSmartChainStargateFarmContractPositionFetcher,
     BinanceSmartChainStargatePoolTokenFetcher,
-    BinanceSmartChainStargateVeTokenFetcher,
+    BinanceSmartChainStargateVotingEscrowContractPositionFetcher,
     // Ethereum
     EthereumStargateEthTokenFetcher,
     EthereumStargateFarmContractPositionFetcher,
     EthereumStargatePoolTokenFetcher,
-    EthereumStargateVeTokenFetcher,
+    EthereumStargateVotingEscrowContractPositionFetcher,
     EthereumStargateAuctionLockedTokenFetcher,
     // Fantom
     FantomStargateFarmContractPositionFetcher,
     FantomStargatePoolTokenFetcher,
-    FantomStargateVeTokenFetcher,
+    FantomStargateVotingEscrowContractPositionFetcher,
     // Optimism
     OptimismStargateEthTokenFetcher,
     OptimismStargateFarmContractPositionFetcher,
     OptimismStargatePoolTokenFetcher,
-    OptimismStargateVeTokenFetcher,
+    OptimismStargateVotingEscrowContractPositionFetcher,
     // Polygon
     PolygonStargateFarmContractPositionFetcher,
     PolygonStargatePoolTokenFetcher,
-    PolygonStargateVeTokenFetcher,
+    PolygonStargateVotingEscrowContractPositionFetcher,
   ],
 })
 export class StargateAppModule extends AbstractApp() {}

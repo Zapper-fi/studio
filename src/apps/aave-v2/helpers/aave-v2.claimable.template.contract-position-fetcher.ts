@@ -5,11 +5,8 @@ import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { buildDollarDisplayItem } from '~app-toolkit/helpers/presentation/display-item.present';
 import { DisplayProps } from '~position/display.interface';
 import { MetaType } from '~position/position.interface';
-import {
-  ContractPositionTemplatePositionFetcher,
-  DisplayPropsStageParams,
-  GetTokenBalancesPerPositionParams,
-} from '~position/template/contract-position.template.position-fetcher';
+import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
+import { GetDisplayPropsParams, GetTokenBalancesParams } from '~position/template/contract-position.template.types';
 
 import { AaveStakedTokenIncentivesController, AaveV2ContractFactory } from '../contracts';
 
@@ -33,16 +30,16 @@ export abstract class AaveV2ClaimableTemplatePositionFetcher extends ContractPos
     super(appToolkit);
   }
 
-  async getDescriptors() {
+  async getDefinitions() {
     return [{ address: this.incentivesControllerAddress }];
   }
 
-  async getTokenDescriptors() {
+  async getTokenDefinitions() {
     return [{ address: this.rewardTokenAddress, metaType: MetaType.CLAIMABLE }];
   }
 
   async getLabel(
-    params: DisplayPropsStageParams<AaveStakedTokenIncentivesController, AaveV2ClaimableDataProps>,
+    params: GetDisplayPropsParams<AaveStakedTokenIncentivesController, AaveV2ClaimableDataProps>,
   ): Promise<string> {
     const rewardToken = params.contractPosition.tokens[0];
     return `Claimable ${rewardToken.symbol}`;
@@ -53,7 +50,7 @@ export abstract class AaveV2ClaimableTemplatePositionFetcher extends ContractPos
   }
 
   async getSecondaryLabel(
-    params: DisplayPropsStageParams<AaveStakedTokenIncentivesController, AaveV2ClaimableDataProps>,
+    params: GetDisplayPropsParams<AaveStakedTokenIncentivesController, AaveV2ClaimableDataProps>,
   ): Promise<DisplayProps['secondaryLabel']> {
     const rewardToken = params.contractPosition.tokens[0];
     return buildDollarDisplayItem(rewardToken.price);
@@ -71,9 +68,7 @@ export abstract class AaveV2ClaimableTemplatePositionFetcher extends ContractPos
     contractPosition,
     contract,
     multicall,
-  }: GetTokenBalancesPerPositionParams<AaveStakedTokenIncentivesController, AaveV2ClaimableDataProps>): Promise<
-    BigNumberish[]
-  > {
+  }: GetTokenBalancesParams<AaveStakedTokenIncentivesController, AaveV2ClaimableDataProps>): Promise<BigNumberish[]> {
     // Build contracts for staked token incentives and protocol data provider
     const { dataProps } = contractPosition;
     const { protocolDataProviderAddress } = dataProps;

@@ -3,7 +3,7 @@ import { Inject } from '@nestjs/common';
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { ZERO_ADDRESS } from '~app-toolkit/constants/address';
 import { Register } from '~app-toolkit/decorators';
-import { GetTokenBalancesPerPositionParams } from '~position/template/contract-position.template.position-fetcher';
+import { GetTokenBalancesParams } from '~position/template/contract-position.template.types';
 import {
   SingleStakingFarmDefinition,
   SingleStakingFarmTemplateContractPositionFetcher,
@@ -52,11 +52,11 @@ export class AvalancheTeddyCashFarmContractPositionFetcher extends SingleStaking
     return [0, 0];
   }
 
-  async getStakedTokenBalance({ contract, address }: GetTokenBalancesPerPositionParams<TeddyCashStaking>) {
+  async getStakedTokenBalance({ contract, address }: GetTokenBalancesParams<TeddyCashStaking>) {
     return contract.stakes(address);
   }
 
-  async getRewardTokenBalances({ contract, address }: GetTokenBalancesPerPositionParams<TeddyCashStaking>) {
+  async getRewardTokenBalances({ contract, address }: GetTokenBalancesParams<TeddyCashStaking>) {
     return Promise.all([contract.getPendingLUSDGain(address), contract.getPendingETHGain(address)]);
   }
 }
