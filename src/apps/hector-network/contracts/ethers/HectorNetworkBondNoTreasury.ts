@@ -17,7 +17,7 @@ import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi
 import type { Listener, Provider } from '@ethersproject/providers';
 import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
-export interface HectorNetworkFtmBondDepositoryInterface extends utils.Interface {
+export interface HectorNetworkBondNoTreasuryInterface extends utils.Interface {
   functions: {
     'DAO()': FunctionFragment;
     'HEC()': FunctionFragment;
@@ -288,12 +288,12 @@ export type OwnershipPushedEvent = TypedEvent<[string, string], OwnershipPushedE
 
 export type OwnershipPushedEventFilter = TypedEventFilter<OwnershipPushedEvent>;
 
-export interface HectorNetworkFtmBondDepository extends BaseContract {
+export interface HectorNetworkBondNoTreasury extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
 
-  interface: HectorNetworkFtmBondDepositoryInterface;
+  interface: HectorNetworkBondNoTreasuryInterface;
 
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,
