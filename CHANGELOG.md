@@ -4,6 +4,21 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.197.0](https://github.com/Zapper-fi/studio/compare/v0.196.1...v0.197.0) (2022-08-26)
+
+
+### Features
+
+* **curve:** Support Crypto Factory on Polygon Curve ([#1280](https://github.com/Zapper-fi/studio/issues/1280)) ([313cfca](https://github.com/Zapper-fi/studio/commit/313cfca589e83867f4bef1a972d735b40a4abcba))
+* **hector-network:** Fix no treasury bonds ([#1281](https://github.com/Zapper-fi/studio/issues/1281)) ([4af2253](https://github.com/Zapper-fi/studio/commit/4af2253f43a20e2f56c9637335d789c775b8a651))
+* **illuvium:** Fix V1 stakes and migrate to templates ([#1283](https://github.com/Zapper-fi/studio/issues/1283)) ([e4860a8](https://github.com/Zapper-fi/studio/commit/e4860a8c4ee2fe389da32d19d853bb859a41e6a4))
+
+
+### Bug Fixes
+
+* **beefy:** fix price per share ([#1282](https://github.com/Zapper-fi/studio/issues/1282)) ([40c0849](https://github.com/Zapper-fi/studio/commit/40c0849ba0c80487490247ad42e9809a57ee477e))
+* **openleverage:** Update asset logo ([3088d36](https://github.com/Zapper-fi/studio/commit/3088d36a1c19bdf63238b10fd07672c867c564f6))
+
 ## [0.196.1](https://github.com/Zapper-fi/studio/compare/v0.196.0...v0.196.1) (2022-08-26)
 
 
