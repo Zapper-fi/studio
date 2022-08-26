@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.196.0](https://github.com/Zapper-fi/studio/compare/v0.195.0...v0.196.0) (2022-08-26)
+
+
+### Features
+
+* **token:** add verified property to BaseTokenPrice ([#1270](https://github.com/Zapper-fi/studio/issues/1270)) ([e10b65b](https://github.com/Zapper-fi/studio/commit/e10b65b7bfe1a775db6852487d8d47089aa6317e))
+
 ## [0.195.0](https://github.com/Zapper-fi/studio/compare/v0.194.0...v0.195.0) (2022-08-25)
 
 
