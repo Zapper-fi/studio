@@ -4,8 +4,8 @@ import { AppAction, AppTag, GroupType } from '~app/app.interface';
 import { Network } from '~types/network.interface';
 
 export const ROBO_VAULT_DEFINITION = appDefinition({
-  id: 'robo-vault',
-  name: 'Robo Vault',
+  id: 'robovault',
+  name: 'RoboVault',
   description: 'Single Asset Yield Farming',
   url: 'https://robo-vault.com/',
 
@@ -25,9 +25,9 @@ export const ROBO_VAULT_DEFINITION = appDefinition({
   },
 
   supportedNetworks: {
-    [Network.POLYGON_MAINNET]: [AppAction.VIEW],
-    [Network.FANTOM_OPERA_MAINNET]: [AppAction.VIEW],
     [Network.AVALANCHE_MAINNET]: [AppAction.VIEW],
+    [Network.FANTOM_OPERA_MAINNET]: [AppAction.VIEW],
+    [Network.POLYGON_MAINNET]: [AppAction.VIEW],
   },
 
   primaryColor: '#fff',
