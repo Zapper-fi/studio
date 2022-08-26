@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.196.1](https://github.com/Zapper-fi/studio/compare/v0.196.0...v0.196.1) (2022-08-26)
+
+
+### Bug Fixes
+
+* **aave-forks:** Fix tertiary labels using APY ([#1277](https://github.com/Zapper-fi/studio/issues/1277)) ([4bae1e1](https://github.com/Zapper-fi/studio/commit/4bae1e1562d398e4fd50c88247f0a715c1b6b602))
+
 ## [0.196.0](https://github.com/Zapper-fi/studio/compare/v0.195.0...v0.196.0) (2022-08-26)
 
 
