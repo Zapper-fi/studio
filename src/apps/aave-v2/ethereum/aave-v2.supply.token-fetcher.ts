@@ -33,6 +33,6 @@ export class EthereumAaveV2SupplyTokenFetcher extends AaveV2LendingTemplateToken
   }
 
   async getTertiaryLabel({ appToken }: GetDisplayPropsParams<AaveV2AToken, AaveV2LendingTokenDataProps>) {
-    return `${(appToken.dataProps.apy * 100).toFixed(3)}% APY`;
+    return `${appToken.dataProps.apy.toFixed(3)}% APY`;
   }
 }

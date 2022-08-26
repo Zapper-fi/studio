@@ -33,6 +33,6 @@ export class AvalancheNereusFinanceStableDebtTokenFetcher extends AaveV2LendingT
   }
 
   async getTertiaryLabel({ appToken }: GetDisplayPropsParams<AaveV2AToken, AaveV2LendingTokenDataProps>) {
-    return `${(appToken.dataProps.apy * 100).toFixed(3)}% APR (stable)`;
+    return `${appToken.dataProps.apy.toFixed(3)}% APR (stable)`;
   }
 }

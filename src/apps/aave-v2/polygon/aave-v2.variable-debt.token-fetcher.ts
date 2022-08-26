@@ -33,6 +33,6 @@ export class PolygonAaveV2VariableDebtTokenFetcher extends AaveV2LendingTemplate
   }
 
   async getTertiaryLabel({ appToken }: GetDisplayPropsParams<AaveV2AToken, AaveV2LendingTokenDataProps>) {
-    return `${(appToken.dataProps.apy * 100).toFixed(3)}% APR (variable)`;
+    return `${appToken.dataProps.apy.toFixed(3)}% APR (variable)`;
   }
 }
