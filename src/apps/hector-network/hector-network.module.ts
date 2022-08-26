@@ -1,7 +1,7 @@
 import { Register } from '~app-toolkit/decorators';
 import { AbstractApp } from '~app/app.dynamic-module';
 
-import { BinanceSmartChainHectorNetworkBondContractPositionFetcher } from './binance-smart-chain/hector-network.bond.contract-position-fetcher';
+import { BinanceSmartChainHectorNetworkBondNoTreasuryContractPositionFetcher } from './binance-smart-chain/hector-network.bond.contract-position-fetcher';
 import { HectorNetworkContractFactory } from './contracts';
 import { FantomHectorNetworkBondContractPositionFetcher } from './fantom/hector-network.bond.contract-position-fetcher';
 import { FantomHectorNetworkFarmContractPositionFetcher } from './fantom/hector-network.farm.contract-position-fetcher';
@@ -14,7 +14,7 @@ import { HectorNetworkAppDefinition, HECTOR_NETWORK_DEFINITION } from './hector-
 @Register.AppModule({
   appId: HECTOR_NETWORK_DEFINITION.id,
   providers: [
-    BinanceSmartChainHectorNetworkBondContractPositionFetcher,
+    BinanceSmartChainHectorNetworkBondNoTreasuryContractPositionFetcher,
     FantomHectorNetworkBondContractPositionFetcher,
     FantomHectorNetworkFarmContractPositionFetcher,
     FantomHectorNetworkSHecV1TokenFetcher,

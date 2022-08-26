@@ -1,4 +1,6 @@
 import { Inject } from '@nestjs/common';
+import { BigNumber } from 'ethers';
+import { range } from 'lodash';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
@@ -12,15 +14,15 @@ import {
 } from '~position/template/contract-position.template.types';
 import { Network } from '~types';
 
-import { HectorNetworkBondDepository, HectorNetworkContractFactory } from '../contracts';
+import { HectorNetworkBondNoTreasury, HectorNetworkContractFactory } from '../contracts';
 import { HECTOR_NETWORK_DEFINITION } from '../hector-network.definition';
 
 const appId = HECTOR_NETWORK_DEFINITION.id;
-const groupId = HECTOR_NETWORK_DEFINITION.groups.bond.id;
+const groupId = HECTOR_NETWORK_DEFINITION.groups.bondNoTreasury.id;
 const network = Network.FANTOM_OPERA_MAINNET;
 
 @Register.ContractPositionFetcher({ appId, groupId, network })
-export class FantomHectorNetworkBondContractPositionFetcher extends ContractPositionTemplatePositionFetcher<HectorNetworkBondDepository> {
+export class FantomHectorNetworkBondNoTreasuryContractPositionFetcher extends ContractPositionTemplatePositionFetcher<HectorNetworkBondNoTreasury> {
   appId = appId;
   groupId = groupId;
   network = network;
@@ -35,14 +37,6 @@ export class FantomHectorNetworkBondContractPositionFetcher extends ContractPosi
 
   async getDefinitions() {
     return [
-      { address: '0x4099eb0e82ffa0048e4bf037a9743ca05ec561d7' },
-      { address: '0x6c9b3a47a28a39fea65e99d97895e717df1706d0' },
-      { address: '0x5d05ef2654b9055895f21d7057095e2d7575f5a2' },
-      { address: '0x3c57481f373be0196a26a7d0a8e29e8cedc63ba1' },
-      { address: '0xa4e87a25bc9058e4ec193151558c3c5d02cebe31' },
-      { address: '0xde02631d898acd1bb8ff928c0f0ffa0cf29ab374' },
-      { address: '0xa695750b8439ab2afbd88310946c99747c5b3a2e' },
-      { address: '0x72de9f0e51ca520379a341318870836fdcaf03b9' },
       { address: '0xdd62c045d9a873f1206a5291dcf0ea9fc2aa8ddf' },
       { address: '0x4441f551001ab0785f1006929aa86d0c846f30cc' },
       { address: '0x312ade5a805e5f3975bbdbb9feb5ef4d1e15eb8f' },
@@ -50,10 +44,10 @@ export class FantomHectorNetworkBondContractPositionFetcher extends ContractPosi
   }
 
   getContract(address: string) {
-    return this.contractFactory.hectorNetworkBondDepository({ address, network: this.network });
+    return this.contractFactory.hectorNetworkBondNoTreasury({ address, network: this.network });
   }
 
-  async getTokenDefinitions({ contract }: GetTokenDefinitionsParams<HectorNetworkBondDepository>) {
+  async getTokenDefinitions({ contract }: GetTokenDefinitionsParams<HectorNetworkBondNoTreasury>) {
     const [principle, claimable] = await Promise.all([contract.principle(), contract.HEC()]);
 
     return [
@@ -63,20 +57,24 @@ export class FantomHectorNetworkBondContractPositionFetcher extends ContractPosi
     ];
   }
 
-  async getLabel({ contractPosition }: GetDisplayPropsParams<HectorNetworkBondDepository>) {
+  async getLabel({ contractPosition }: GetDisplayPropsParams<HectorNetworkBondNoTreasury>) {
     return `${getLabelFromToken(contractPosition.tokens[2])} Bond`;
   }
 
-  async getImages({ contractPosition }: GetDisplayPropsParams<HectorNetworkBondDepository>) {
+  async getImages({ contractPosition }: GetDisplayPropsParams<HectorNetworkBondNoTreasury>) {
     return getImagesFromToken(contractPosition.tokens[2]);
   }
 
-  async getTokenBalancesPerPosition({ address, contract }: GetTokenBalancesParams<HectorNetworkBondDepository>) {
-    const [bondInfo, claimablePayout] = await Promise.all([
-      contract.bondInfo(address),
-      contract.pendingPayoutFor(address),
-    ]);
+  async getTokenBalancesPerPosition({ address, contract }: GetTokenBalancesParams<HectorNetworkBondNoTreasury>) {
+    const count = await contract.depositCounts(address);
+    const depositIds = await Promise.all(range(0, Number(count)).map(i => contract.ownedDeposits(address, i)));
+    const bondInfos = await Promise.all(depositIds.map(id => contract.bondInfo(id)));
+    const claimablePayouts = await Promise.all(depositIds.map(id => contract.pendingPayoutFor(id)));
 
-    return [bondInfo.payout.sub(claimablePayout).toString(), claimablePayout.toString()];
+    const totalPayout = bondInfos.reduce((acc, v) => acc.add(v.payout), BigNumber.from(0));
+    const totalClaimablePayout = claimablePayouts.reduce((acc, v) => acc.add(v), BigNumber.from(0));
+    const totalVestingAmount = totalPayout.sub(totalClaimablePayout);
+
+    return [totalVestingAmount, totalClaimablePayout];
   }
 }
