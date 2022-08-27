@@ -6,6 +6,7 @@ import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { BLOCKS_PER_DAY } from '~app-toolkit/constants/blocks';
 import { RewardRateUnit } from '~app-toolkit/helpers/master-chef/master-chef.contract-position-helper';
 import { getImagesFromToken, getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
+import { IMulticallWrapper } from '~multicall';
 import { isMulticallUnderlyingError } from '~multicall/multicall.ethers';
 import { ContractPosition, MetaType } from '~position/position.interface';
 import { isClaimable, isSupplied } from '~position/position.utils';
@@ -40,8 +41,10 @@ export abstract class MasterChefTemplateContractPositionFetcher<
 
   abstract chefAddress: string;
   abstract getPoolLength(contract: T): Promise<BigNumberish>;
-  abstract getStakedTokenAddress(contract: T, poolIndex: number): Promise<string>;
-  abstract getRewardTokenAddress(contract: T, poolIndex: number): Promise<string>;
+
+  // Tokens
+  abstract getStakedTokenAddress(contract: T, poolIndex: number, multicall: IMulticallWrapper): Promise<string>;
+  abstract getRewardTokenAddress(contract: T, poolIndex: number, multicall: IMulticallWrapper): Promise<string>;
 
   // APY
   rewardRateUnit: RewardRateUnit = RewardRateUnit.BLOCK;
@@ -50,8 +53,12 @@ export abstract class MasterChefTemplateContractPositionFetcher<
   abstract getPoolAllocPoints(contract: T, poolIndex: number): Promise<BigNumberish>;
 
   // Balances
-  abstract getStakedTokenBalance(address: string, contract: T, poolIndex: number): Promise<BigNumberish>;
-  abstract getRewardTokenBalance(address: string, contract: T, poolIndex: number): Promise<BigNumberish>;
+  abstract getStakedTokenBalance(
+    params: GetTokenBalancesParams<T, MasterChefContractPositionDataProps>,
+  ): Promise<BigNumberish>;
+  abstract getRewardTokenBalance(
+    params: GetTokenBalancesParams<T, MasterChefContractPositionDataProps>,
+  ): Promise<BigNumberish>;
 
   async getDefinitions() {
     const contract = this.getContract(this.chefAddress);
@@ -62,17 +69,22 @@ export abstract class MasterChefTemplateContractPositionFetcher<
   async getTokenDefinitions({
     contract,
     definition,
+    multicall,
   }: GetTokenDefinitionsParams<T, MasterChefContractPositionDefinition>) {
     const tokenDefinitions: UnderlyingTokenDefinition[] = [];
 
-    const stakedTokenAddress = await this.getStakedTokenAddress(contract, definition.poolIndex).catch(err => {
-      if (isMulticallUnderlyingError(err)) return null;
-      throw err;
-    });
-    const rewardTokenAddress = await this.getRewardTokenAddress(contract, definition.poolIndex).catch(err => {
-      if (isMulticallUnderlyingError(err)) return null;
-      throw err;
-    });
+    const stakedTokenAddress = await this.getStakedTokenAddress(contract, definition.poolIndex, multicall).catch(
+      err => {
+        if (isMulticallUnderlyingError(err)) return null;
+        throw err;
+      },
+    );
+    const rewardTokenAddress = await this.getRewardTokenAddress(contract, definition.poolIndex, multicall).catch(
+      err => {
+        if (isMulticallUnderlyingError(err)) return null;
+        throw err;
+      },
+    );
 
     if (!stakedTokenAddress || !rewardTokenAddress) return null;
 
@@ -81,12 +93,16 @@ export abstract class MasterChefTemplateContractPositionFetcher<
     return tokenDefinitions;
   }
 
-  async getDataProps({
-    contract,
-    contractPosition,
-    definition,
-    multicall,
-  }: GetDataPropsParams<T, V, MasterChefContractPositionDefinition>): Promise<V> {
+  async getReserve({ contractPosition, multicall }: GetDataPropsParams<T, V, MasterChefContractPositionDefinition>) {
+    const stakedToken = contractPosition.tokens.find(isSupplied)!;
+    const stakedTokenContract = this.appToolkit.globalContracts.erc20(stakedToken);
+    const reserveRaw = await multicall.wrap(stakedTokenContract).balanceOf(contractPosition.address);
+    const reserve = Number(reserveRaw) / 10 ** stakedToken.decimals;
+    return reserve;
+  }
+
+  async getDataProps(params: GetDataPropsParams<T, V, MasterChefContractPositionDefinition>): Promise<V> {
+    const { contract, contractPosition, definition } = params;
     const poolIndex = definition.poolIndex;
     const stakedToken = contractPosition.tokens.find(isSupplied)!;
     const rewardToken = contractPosition.tokens.filter(isClaimable)[0];
@@ -101,9 +117,7 @@ export abstract class MasterChefTemplateContractPositionFetcher<
     const poolShare = Number(poolAllocPoints) / Number(totalAllocPoints);
     const rewardRate = poolShare * Number(totalRewardRate);
 
-    const stakedTokenContract = this.appToolkit.globalContracts.erc20(stakedToken);
-    const reserveRaw = await multicall.wrap(stakedTokenContract).balanceOf(contractPosition.address);
-    const reserve = Number(reserveRaw) / 10 ** stakedToken.decimals;
+    const reserve = await this.getReserve(params);
     const liquidity = reserve * stakedToken.price;
 
     const multiplier = this.rewardRateUnit === RewardRateUnit.BLOCK ? BLOCKS_PER_DAY[this.network] : 86400;
@@ -130,17 +144,12 @@ export abstract class MasterChefTemplateContractPositionFetcher<
     return this.appToolkit.getPositionKey(contractPosition, ['poolIndex']);
   }
 
-  async getTokenBalancesPerPosition({
-    address,
-    contractPosition,
-    contract,
-  }: GetTokenBalancesParams<T, MasterChefContractPositionDataProps>) {
+  async getTokenBalancesPerPosition(params: GetTokenBalancesParams<T, MasterChefContractPositionDataProps>) {
     const tokenBalances: BigNumberish[] = [];
-    const poolIndex = contractPosition.dataProps.poolIndex;
 
     const [stakedBalanceRaw, rewardTokenBalanceRaw] = await Promise.all([
-      this.getStakedTokenBalance(address, contract, poolIndex),
-      this.getRewardTokenBalance(address, contract, poolIndex),
+      this.getStakedTokenBalance(params),
+      this.getRewardTokenBalance(params),
     ]);
 
     tokenBalances.push(stakedBalanceRaw);
