@@ -11,6 +11,8 @@ import {
   GetTokenDefinitionsParams,
 } from './contract-position.template.types';
 import {
+  GetMasterChefDataPropsParams,
+  GetMasterChefTokenBalancesParams,
   MasterChefContractPositionDataProps,
   MasterChefContractPositionDefinition,
   MasterChefTemplateContractPositionFetcher,
@@ -20,10 +22,17 @@ export type MasterChefV2ContractPositionDataProps = MasterChefContractPositionDa
   extraRewarderAddress: string;
 };
 
-export type GetMasterChefV2TokenBalancesParams<T extends Contract, V extends Contract> = GetTokenBalancesParams<
-  T,
-  MasterChefV2ContractPositionDataProps
-> & {
+export type GetMasterChefV2ExtraRewardTokenRewardRates<
+  T extends Contract,
+  V extends Contract,
+> = GetMasterChefDataPropsParams<T> & {
+  rewarderContract: V;
+};
+
+export type GetMasterChefV2ExtraRewardTokenBalancesParams<
+  T extends Contract,
+  V extends Contract,
+> = GetMasterChefTokenBalancesParams<T> & {
   rewarderContract: V;
 };
 
@@ -40,9 +49,14 @@ export abstract class MasterChefV2TemplateContractPositionFetcher<
   abstract getExtraRewarderContract(address: string): V;
   abstract getExtraRewardTokenAddresses(contract: V, poolIndex: number): Promise<string[]>;
 
+  // APY
+  abstract getExtraRewardTokenRewardRates(
+    params: GetMasterChefV2ExtraRewardTokenRewardRates<T, V>,
+  ): Promise<BigNumberish | BigNumberish[]>;
+
   // Balances
   abstract getExtraRewardTokenBalances(
-    params: GetMasterChefV2TokenBalancesParams<T, V>,
+    params: GetMasterChefV2ExtraRewardTokenBalancesParams<T, V>,
   ): Promise<BigNumberish | BigNumberish[]>;
 
   async getTokenDefinitions(params: GetTokenDefinitionsParams<T, MasterChefContractPositionDefinition>) {
@@ -58,6 +72,19 @@ export abstract class MasterChefV2TemplateContractPositionFetcher<
     tokenDefinitions.push(...extraRewardTokenAddresses.map(v => ({ metaType: MetaType.CLAIMABLE, address: v })));
 
     return tokenDefinitions;
+  }
+
+  async getRewardRates(
+    params: GetDataPropsParams<T, MasterChefV2ContractPositionDataProps, MasterChefContractPositionDefinition>,
+  ): Promise<BigNumberish[]> {
+    const rewardRates = await super.getRewardRates(params);
+
+    const { contract, definition, multicall } = params;
+    const extraRewarderAddress = await this.getExtraRewarder(contract, definition.poolIndex);
+    const rewarderContract = multicall.wrap(this.getExtraRewarderContract(extraRewarderAddress));
+
+    const extraRewardRates = await this.getExtraRewardTokenRewardRates({ ...params, rewarderContract });
+    return [...rewardRates, ...(Array.isArray(extraRewardRates) ? extraRewardRates : [extraRewardRates])];
   }
 
   async getDataProps(

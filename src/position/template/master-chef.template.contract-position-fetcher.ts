@@ -1,6 +1,6 @@
 import { Inject } from '@nestjs/common';
-import { BigNumberish, Contract } from 'ethers';
-import { range } from 'lodash';
+import { BigNumber, BigNumberish, Contract } from 'ethers';
+import { range, sum } from 'lodash';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { BLOCKS_PER_DAY } from '~app-toolkit/constants/blocks';
@@ -31,6 +31,17 @@ export type MasterChefContractPositionDefinition = {
   poolIndex: number;
 };
 
+export type GetMasterChefDataPropsParams<T extends Contract> = GetDataPropsParams<
+  T,
+  MasterChefContractPositionDataProps,
+  MasterChefContractPositionDefinition
+>;
+
+export type GetMasterChefTokenBalancesParams<T extends Contract> = GetTokenBalancesParams<
+  T,
+  MasterChefContractPositionDataProps
+>;
+
 export abstract class MasterChefTemplateContractPositionFetcher<
   T extends Contract,
   V extends MasterChefContractPositionDataProps = MasterChefContractPositionDataProps,
@@ -48,17 +59,13 @@ export abstract class MasterChefTemplateContractPositionFetcher<
 
   // APY
   rewardRateUnit: RewardRateUnit = RewardRateUnit.BLOCK;
-  abstract getTotalAllocPoints(contract: T, poolIndex: number): Promise<BigNumberish>;
-  abstract getTotalRewardRate(contract: T, poolIndex: number): Promise<BigNumberish>;
-  abstract getPoolAllocPoints(contract: T, poolIndex: number): Promise<BigNumberish>;
+  abstract getTotalAllocPoints(params: GetMasterChefDataPropsParams<T>): Promise<BigNumberish>;
+  abstract getTotalRewardRate(params: GetMasterChefDataPropsParams<T>): Promise<BigNumberish>;
+  abstract getPoolAllocPoints(params: GetMasterChefDataPropsParams<T>): Promise<BigNumberish>;
 
   // Balances
-  abstract getStakedTokenBalance(
-    params: GetTokenBalancesParams<T, MasterChefContractPositionDataProps>,
-  ): Promise<BigNumberish>;
-  abstract getRewardTokenBalance(
-    params: GetTokenBalancesParams<T, MasterChefContractPositionDataProps>,
-  ): Promise<BigNumberish>;
+  abstract getStakedTokenBalance(params: GetMasterChefTokenBalancesParams<T>): Promise<BigNumberish>;
+  abstract getRewardTokenBalance(params: GetMasterChefTokenBalancesParams<T>): Promise<BigNumberish>;
 
   async getDefinitions() {
     const contract = this.getContract(this.chefAddress);
@@ -101,28 +108,34 @@ export abstract class MasterChefTemplateContractPositionFetcher<
     return reserve;
   }
 
-  async getDataProps(params: GetDataPropsParams<T, V, MasterChefContractPositionDefinition>): Promise<V> {
-    const { contract, contractPosition, definition } = params;
-    const poolIndex = definition.poolIndex;
-    const stakedToken = contractPosition.tokens.find(isSupplied)!;
-    const rewardToken = contractPosition.tokens.filter(isClaimable)[0];
-
+  async getRewardRates(
+    params: GetDataPropsParams<T, V, MasterChefContractPositionDefinition>,
+  ): Promise<BigNumberish[]> {
     const [totalAllocPoints, totalRewardRateRaw, poolAllocPoints] = await Promise.all([
-      this.getTotalAllocPoints(contract, poolIndex),
-      this.getTotalRewardRate(contract, poolIndex),
-      this.getPoolAllocPoints(contract, poolIndex),
+      this.getTotalAllocPoints(params),
+      this.getTotalRewardRate(params),
+      this.getPoolAllocPoints(params),
     ]);
 
-    const totalRewardRate = Number(totalRewardRateRaw) / 10 ** rewardToken.decimals;
-    const poolShare = Number(poolAllocPoints) / Number(totalAllocPoints);
-    const rewardRate = poolShare * Number(totalRewardRate);
+    const rewardRate = BigNumber.from(totalRewardRateRaw).mul(poolAllocPoints).div(totalAllocPoints);
+
+    return [rewardRate];
+  }
+
+  async getDataProps(params: GetDataPropsParams<T, V, MasterChefContractPositionDefinition>): Promise<V> {
+    const { contractPosition, definition } = params;
+    const poolIndex = definition.poolIndex;
+    const stakedToken = contractPosition.tokens.find(isSupplied)!;
+    const rewardTokens = contractPosition.tokens.filter(isClaimable);
 
     const reserve = await this.getReserve(params);
+    const rewardRates = await this.getRewardRates(params);
     const liquidity = reserve * stakedToken.price;
 
+    const normalizedRewardRates = rewardTokens.map((rt, i) => Number(rewardRates[i] ?? 0) / 10 ** rt.decimals);
+    const rewardRateUSD = sum(rewardTokens.map((rt, i) => normalizedRewardRates[i] * rt.price));
     const multiplier = this.rewardRateUnit === RewardRateUnit.BLOCK ? BLOCKS_PER_DAY[this.network] : 86400;
-    const dailyRewardRate = rewardRate * multiplier;
-    const dailyRewardRateUSD = dailyRewardRate * rewardToken.price;
+    const dailyRewardRateUSD = rewardRateUSD * multiplier;
 
     const dailyReturn = (dailyRewardRateUSD + liquidity) / liquidity - 1;
     const apy = dailyReturn * 365 * 100;
