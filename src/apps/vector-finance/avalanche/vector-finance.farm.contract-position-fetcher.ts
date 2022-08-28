@@ -128,14 +128,12 @@ export class VectorFinanceFarmContractPositionFetcher extends MasterChefV2Templa
     return poolInfo.allocPoint;
   }
 
-  getExtraRewardTokenRewardRates({
+  async getExtraRewardTokenRewardRates({
     contractPosition,
-    rewarderContract,
-  }: GetMasterChefV2ExtraRewardTokenRewardRates<VectorFinanceMasterChef, VectorFinanceMasterChefRewarder>): Promise<
-    BigNumberish | BigNumberish[]
-  > {
+  }: GetMasterChefV2ExtraRewardTokenRewardRates<VectorFinanceMasterChef, VectorFinanceMasterChefRewarder>) {
+    // @TODO Not sure, there's no reward rate, just a reward per token
     const [, ...extraRewardTokens] = contractPosition.tokens.filter(isClaimable);
-    return Promise.all(extraRewardTokens.map(v => rewarderContract.rewardPerToken(v.address)));
+    return Promise.all(extraRewardTokens.map(async () => 0));
   }
 
   async getStakedTokenBalance({
