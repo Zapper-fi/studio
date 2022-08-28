@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.198.0](https://github.com/Zapper-fi/studio/compare/v0.197.0...v0.198.0) (2022-08-28)
+
+
+### Features
+
+* **vector-finance:** Add support for Vector Finance master chef ([#1284](https://github.com/Zapper-fi/studio/issues/1284)) ([d854702](https://github.com/Zapper-fi/studio/commit/d85470275ebb70f3dea27e6fb5f558e6a3adf730))
+
 ## [0.197.0](https://github.com/Zapper-fi/studio/compare/v0.196.1...v0.197.0) (2022-08-26)
 
 
