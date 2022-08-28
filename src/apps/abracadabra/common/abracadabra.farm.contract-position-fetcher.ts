@@ -41,7 +41,7 @@ export abstract class AbracadabraFarmContractPositionFetcher extends MasterChefT
     return contract.totalAllocPoint();
   }
 
-  async getTotalReardRate({ contract }: GetMasterChefDataPropsParams<PopsicleChef>): Promise<BigNumberish> {
+  async getTotalRewardRate({ contract }: GetMasterChefDataPropsParams<PopsicleChef>): Promise<BigNumberish> {
     return contract.icePerSecond();
   }
 
