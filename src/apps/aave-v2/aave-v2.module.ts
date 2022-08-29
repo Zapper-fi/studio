@@ -13,6 +13,8 @@ import { EthereumAaveV2PositionPresenter } from './ethereum/aave-v2.position-pre
 import { EthereumAaveV2StableDebtTokenFetcher } from './ethereum/aave-v2.stable-debt.token-fetcher';
 import { EthereumAaveV2SupplyTokenFetcher } from './ethereum/aave-v2.supply.token-fetcher';
 import { EthereumAaveV2VariableDebtTokenFetcher } from './ethereum/aave-v2.variable-debt.token-fetcher';
+import { AaveV2ClaimableBalanceHelper } from './helpers/aave-v2.claimable.balance-helper';
+import { AaveV2ClaimableContractPositionHelper } from './helpers/aave-v2.claimable.contract-position-helper';
 import { PolygonAaveV2ClaimableContractPositionFetcher } from './polygon/aave-v2.claimable.contract-position-fetcher';
 import { PolygonAaveV2PositionPresenter } from './polygon/aave-v2.position-presenter';
 import { PolygonAaveV2StableDebtTokenFetcher } from './polygon/aave-v2.stable-debt.token-fetcher';
@@ -23,6 +25,8 @@ import { PolygonAaveV2VariableDebtTokenFetcher } from './polygon/aave-v2.variabl
   appId: AAVE_V2_DEFINITION.id,
   providers: [
     AaveV2AppDefinition,
+    AaveV2ClaimableBalanceHelper,
+    AaveV2ClaimableContractPositionHelper,
     AaveV2ContractFactory,
     AvalancheAaveV2ClaimableContractPositionFetcher,
     AvalancheAaveV2PositionPresenter,
@@ -40,6 +44,6 @@ import { PolygonAaveV2VariableDebtTokenFetcher } from './polygon/aave-v2.variabl
     PolygonAaveV2SupplyTokenFetcher,
     PolygonAaveV2VariableDebtTokenFetcher,
   ],
-  exports: [AaveV2ContractFactory],
+  exports: [AaveV2ClaimableBalanceHelper, AaveV2ClaimableContractPositionHelper, AaveV2ContractFactory],
 })
 export class AaveV2AppModule extends AbstractApp() {}
