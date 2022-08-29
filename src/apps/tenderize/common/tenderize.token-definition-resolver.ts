@@ -24,6 +24,7 @@ export type TenderTokenFetcherResponse = {
     tenderSwap: string;
   }[];
 };
+
 export const TOKEN_QUERY = gql`
   {
     configs {

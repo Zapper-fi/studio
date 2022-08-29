@@ -13,14 +13,7 @@ import {
 import { TenderizeContractFactory, TenderToken } from '../contracts';
 
 import { TenderizeTokenDefinitionsResolver } from './tenderize.token-definition-resolver';
-
-export type TenderizeTokenDefinition = {
-  id: string;
-  address: string;
-  steak: string;
-  lpToken: string;
-  tenderSwap: string;
-};
+import { TenderizeTokenDefinition } from './types';
 
 export abstract class TenderTokenFetcher extends AppTokenTemplatePositionFetcher<
   TenderToken,
