@@ -1,5 +1,4 @@
 import { Inject } from '@nestjs/common';
-import BigNumber from 'bignumber.js';
 import { range } from 'lodash';
 import moment from 'moment';
 
@@ -19,21 +18,21 @@ import {
 } from '~position/template/app-token.template.types';
 import { Network } from '~types/network.interface';
 
-import { PendleContractFactory, PendleYieldToken } from '../contracts';
+import { PendleContractFactory, PendleOwnershipToken } from '../contracts';
 import { PENDLE_DEFINITION } from '../pendle.definition';
 
 const appId = PENDLE_DEFINITION.id;
-const groupId = PENDLE_DEFINITION.groups.yield.id;
+const groupId = PENDLE_DEFINITION.groups.ownership.id;
 const network = Network.ETHEREUM_MAINNET;
 
-export type PendleYieldTokenDataProps = {
+export type PendleOwnershipdTokenDataProps = {
   expiry: number;
   marketAddress: string;
   baseTokenAddress: string;
   baseTokenSymbol: string;
 };
 
-export type PendleYieldTokenDefinition = {
+export type PendleOwnershipTokenDefinition = {
   address: string;
   marketAddress: string;
   ownershipTokenAddress: string;
@@ -45,15 +44,15 @@ export type PendleYieldTokenDefinition = {
 };
 
 @Register.TokenPositionFetcher({ appId, groupId, network })
-export class EthereumPendleYieldTokenFetcher extends AppTokenTemplatePositionFetcher<
-  PendleYieldToken,
-  PendleYieldTokenDataProps,
-  PendleYieldTokenDefinition
+export class EthereumPendleOwnershipTokenFetcher extends AppTokenTemplatePositionFetcher<
+  PendleOwnershipToken,
+  PendleOwnershipdTokenDataProps,
+  PendleOwnershipTokenDefinition
 > {
   appId = appId;
   groupId = groupId;
   network = network;
-  groupLabel = 'Future Yield';
+  groupLabel = 'Ownership';
   pendleDataAddress = '0xe8a6916576832aa5504092c1cccc46e3bb9491d6';
 
   constructor(
@@ -63,7 +62,7 @@ export class EthereumPendleYieldTokenFetcher extends AppTokenTemplatePositionFet
     super(appToolkit);
   }
 
-  async getDefinitions({ multicall }: GetDefinitionsParams): Promise<PendleYieldTokenDefinition[]> {
+  async getDefinitions({ multicall }: GetDefinitionsParams): Promise<PendleOwnershipTokenDefinition[]> {
     const pendleData = this.contractFactory.pendleData({ address: this.pendleDataAddress, network: this.network });
     const numMarkets = await multicall.wrap(pendleData).allMarketsLength();
 
@@ -78,7 +77,10 @@ export class EthereumPendleYieldTokenFetcher extends AppTokenTemplatePositionFet
         ]);
 
         const expiry = Number(expiryRaw);
-        const yieldToken = this.contractFactory.pendleYieldToken({ address: yieldTokenAddress, network: this.network });
+        const yieldToken = this.contractFactory.pendleYieldToken({
+          address: yieldTokenAddress,
+          network: this.network,
+        });
         const [underlyingAddress, forgeAddress] = await Promise.all([
           multicall.wrap(yieldToken).underlyingAsset(),
           multicall.wrap(yieldToken).forge(),
@@ -90,7 +92,7 @@ export class EthereumPendleYieldTokenFetcher extends AppTokenTemplatePositionFet
         const ownershipTokenAddress = await multicall.wrap(pendleData).otTokens(forgeId, baseTokenAddress, expiry);
 
         return {
-          address: yieldTokenAddress.toLowerCase(),
+          address: ownershipTokenAddress.toLowerCase(),
           marketAddress: marketAddress.toLowerCase(),
           ownershipTokenAddress: ownershipTokenAddress.toLowerCase(),
           baseTokenAddress: baseTokenAddress.toLowerCase(),
@@ -110,10 +112,10 @@ export class EthereumPendleYieldTokenFetcher extends AppTokenTemplatePositionFet
   }
 
   getContract(address: string) {
-    return this.contractFactory.pendleYieldToken({ address, network });
+    return this.contractFactory.pendleOwnershipToken({ address, network });
   }
 
-  getUnderlyingTokenAddresses({ contract }: GetUnderlyingTokensParams<PendleYieldToken>) {
+  getUnderlyingTokenAddresses({ contract }: GetUnderlyingTokensParams<PendleOwnershipToken>) {
     return contract.underlyingAsset();
   }
 
@@ -122,32 +124,15 @@ export class EthereumPendleYieldTokenFetcher extends AppTokenTemplatePositionFet
     multicall,
     appToken,
     tokenLoader,
-  }: GetPricePerShareParams<PendleYieldToken, PendleYieldTokenDataProps, PendleYieldTokenDefinition>) {
-    const market = this.contractFactory.pendleMarket({ address: definition.marketAddress, network: this.network });
-    const { expiry, baseTokenAddress } = definition;
-
-    const baseToken = await tokenLoader.getOne({ address: baseTokenAddress.toLowerCase(), network: this.network });
-    if (!baseToken || Date.now() / 1000 > Number(expiry)) return 0;
-
-    const reserves = await multicall.wrap(market).getReserves();
-
-    const price = new BigNumber(10)
-      .pow(appToken.decimals - baseToken.decimals)
-      .times(reserves.tokenBalance.toString())
-      .times(reserves.xytWeight.toString())
-      .div(reserves.tokenWeight.toString())
-      .div(reserves.xytBalance.toString())
-      .times(baseToken.price)
-      .toNumber();
-
-    return price / appToken.tokens[0].price;
+  }: GetPricePerShareParams<PendleOwnershipToken, PendleOwnershipdTokenDataProps, PendleOwnershipTokenDefinition>) {
+    // @TODO
   }
 
   async getDataProps({
     definition,
     tokenLoader,
-  }: GetDataPropsParams<PendleYieldToken, PendleYieldTokenDataProps, PendleYieldTokenDefinition>) {
-    const { marketAddress, expiry, baseTokenAddress } = definition;
+  }: GetDataPropsParams<PendleOwnershipToken, PendleOwnershipdTokenDataProps, PendleOwnershipTokenDefinition>) {
+    const { marketAddress, baseTokenAddress, expiry } = definition;
     const baseToken = await tokenLoader.getOne({ address: baseTokenAddress.toLowerCase(), network: this.network });
     const baseTokenSymbol = baseToken?.symbol ?? '';
     return { marketAddress, expiry, baseTokenAddress, baseTokenSymbol };
@@ -155,15 +140,17 @@ export class EthereumPendleYieldTokenFetcher extends AppTokenTemplatePositionFet
 
   async getLabel({
     appToken,
-  }: GetDisplayPropsParams<PendleYieldToken, PendleYieldTokenDataProps, PendleYieldTokenDefinition>) {
-    return `YT ${getLabelFromToken(appToken.tokens[0])} - ${appToken.dataProps.baseTokenSymbol}`;
+  }: GetDisplayPropsParams<PendleOwnershipToken, PendleOwnershipdTokenDataProps, PendleOwnershipTokenDefinition>) {
+    return `OT ${getLabelFromToken(appToken.tokens[0])} - ${appToken.dataProps.baseTokenSymbol}`;
   }
 
   async getTertiaryLabel({
     appToken,
-  }: GetDisplayPropsParams<PendleYieldToken, PendleYieldTokenDataProps, PendleYieldTokenDefinition>): Promise<
-    string | number | DollarDisplayItem | PercentageDisplayItem | undefined
-  > {
+  }: GetDisplayPropsParams<
+    PendleOwnershipToken,
+    PendleOwnershipdTokenDataProps,
+    PendleOwnershipTokenDefinition
+  >): Promise<string | number | DollarDisplayItem | PercentageDisplayItem | undefined> {
     const { expiry } = appToken.dataProps;
     return `Expires ${moment.unix(expiry).format('LL')}`;
   }

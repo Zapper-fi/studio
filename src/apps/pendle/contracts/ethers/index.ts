@@ -2,9 +2,13 @@
 /* tslint:disable */
 /* eslint-disable */
 export type { PendleData } from './PendleData';
+export type { PendleForge } from './PendleForge';
 export type { PendleMarket } from './PendleMarket';
+export type { PendleOwnershipToken } from './PendleOwnershipToken';
 export type { PendleYieldToken } from './PendleYieldToken';
 export * as factories from './factories';
 export { PendleData__factory } from './factories/PendleData__factory';
+export { PendleForge__factory } from './factories/PendleForge__factory';
 export { PendleMarket__factory } from './factories/PendleMarket__factory';
+export { PendleOwnershipToken__factory } from './factories/PendleOwnershipToken__factory';
 export { PendleYieldToken__factory } from './factories/PendleYieldToken__factory';

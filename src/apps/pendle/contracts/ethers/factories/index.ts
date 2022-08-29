@@ -2,5 +2,7 @@
 /* tslint:disable */
 /* eslint-disable */
 export { PendleData__factory } from './PendleData__factory';
+export { PendleForge__factory } from './PendleForge__factory';
 export { PendleMarket__factory } from './PendleMarket__factory';
+export { PendleOwnershipToken__factory } from './PendleOwnershipToken__factory';
 export { PendleYieldToken__factory } from './PendleYieldToken__factory';
