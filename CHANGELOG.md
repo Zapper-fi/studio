@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.201.0](https://github.com/Zapper-fi/studio/compare/v0.200.0...v0.201.0) (2022-08-29)
+
+
+### Features
+
+* **aave-v2-forks:** Exclusively use templates for everything ([#1296](https://github.com/Zapper-fi/studio/issues/1296)) ([0ae24cb](https://github.com/Zapper-fi/studio/commit/0ae24cb52fc01bbd5f840766b5d2bda9b2b0a0b9))
+
 ## [0.200.0](https://github.com/Zapper-fi/studio/compare/v0.199.0...v0.200.0) (2022-08-29)
 
 
