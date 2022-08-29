@@ -12,12 +12,6 @@ const appId = UNAGII_DEFINITION.id;
 const groupId = UNAGII_DEFINITION.groups.vault.id;
 const network = Network.ETHEREUM_MAINNET;
 
-export type UnagiiTokenDefinition = {
-  address: string;
-  underlyingTokenAddress: string;
-  vaultManagerAddress: string;
-};
-
 @Register.TokenPositionFetcher({ appId, groupId, network })
 export class EthereumUnagiiVaultTokenFetcher extends UnagiiVaultTokenFetcher {
   appId = appId;

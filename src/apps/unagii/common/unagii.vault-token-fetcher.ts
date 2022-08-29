@@ -13,7 +13,8 @@ import {
 } from '~position/template/app-token.template.types';
 
 import { UnagiiContractFactory, UnagiiUtoken } from '../contracts';
-import { UnagiiTokenDefinition } from '../ethereum/unagii.vault.token-fetcher';
+
+import { UnagiiTokenDefinition } from './types';
 
 export abstract class UnagiiVaultTokenFetcher extends AppTokenTemplatePositionFetcher<
   UnagiiUtoken,
