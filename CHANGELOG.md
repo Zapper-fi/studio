@@ -4,6 +4,19 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.200.0](https://github.com/Zapper-fi/studio/compare/v0.199.0...v0.200.0) (2022-08-29)
+
+
+### Features
+
+* **geist:** Remove stuff unrelated to templates ([#1295](https://github.com/Zapper-fi/studio/issues/1295)) ([f93bcb9](https://github.com/Zapper-fi/studio/commit/f93bcb9a6cf1ad3afb1c05c56387c4741a297a49))
+
+
+### Bug Fixes
+
+* **velodrome:** fix APR/APY on staking contract position and pool app token ([#1271](https://github.com/Zapper-fi/studio/issues/1271)) ([804d3d6](https://github.com/Zapper-fi/studio/commit/804d3d69e199831d878c9210db3c81bbd833ee04))
+* **yearn:** fix apy ([#1292](https://github.com/Zapper-fi/studio/issues/1292)) ([16afb91](https://github.com/Zapper-fi/studio/commit/16afb91fbdc11062dfbe27c600b6971e16f13a61))
+
 ## [0.199.0](https://github.com/Zapper-fi/studio/compare/v0.198.0...v0.199.0) (2022-08-29)
 
 
