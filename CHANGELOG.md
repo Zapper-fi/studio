@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.202.0](https://github.com/Zapper-fi/studio/compare/v0.201.0...v0.202.0) (2022-08-29)
+
+
+### Features
+
+* **template:** Remove legacy balance fetchers in templated apps ([#1298](https://github.com/Zapper-fi/studio/issues/1298)) ([bb86cc6](https://github.com/Zapper-fi/studio/commit/bb86cc60642099b30adbfd5ef862f38f9dfda11b))
+
 ## [0.201.0](https://github.com/Zapper-fi/studio/compare/v0.200.0...v0.201.0) (2022-08-29)
 
 
