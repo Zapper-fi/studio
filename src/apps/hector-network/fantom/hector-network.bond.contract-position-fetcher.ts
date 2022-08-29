@@ -43,9 +43,6 @@ export class FantomHectorNetworkBondContractPositionFetcher extends ContractPosi
       { address: '0xde02631d898acd1bb8ff928c0f0ffa0cf29ab374' },
       { address: '0xa695750b8439ab2afbd88310946c99747c5b3a2e' },
       { address: '0x72de9f0e51ca520379a341318870836fdcaf03b9' },
-      { address: '0xdd62c045d9a873f1206a5291dcf0ea9fc2aa8ddf' },
-      { address: '0x4441f551001ab0785f1006929aa86d0c846f30cc' },
-      { address: '0x312ade5a805e5f3975bbdbb9feb5ef4d1e15eb8f' },
     ];
   }
 
@@ -71,14 +68,10 @@ export class FantomHectorNetworkBondContractPositionFetcher extends ContractPosi
     return getImagesFromToken(contractPosition.tokens[2]);
   }
 
-  async getTokenBalancesPerPosition({
-    address,
-    contract,
-    multicall,
-  }: GetTokenBalancesParams<HectorNetworkBondDepository>) {
+  async getTokenBalancesPerPosition({ address, contract }: GetTokenBalancesParams<HectorNetworkBondDepository>) {
     const [bondInfo, claimablePayout] = await Promise.all([
-      multicall.wrap(contract).bondInfo(address),
-      multicall.wrap(contract).pendingPayoutFor(address),
+      contract.bondInfo(address),
+      contract.pendingPayoutFor(address),
     ]);
 
     return [bondInfo.payout.sub(claimablePayout).toString(), claimablePayout.toString()];

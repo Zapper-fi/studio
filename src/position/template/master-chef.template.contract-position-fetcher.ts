@@ -1,11 +1,12 @@
 import { Inject } from '@nestjs/common';
-import { BigNumberish, Contract } from 'ethers';
-import { range } from 'lodash';
+import { BigNumber, BigNumberish, Contract } from 'ethers';
+import { range, sum } from 'lodash';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { BLOCKS_PER_DAY } from '~app-toolkit/constants/blocks';
 import { RewardRateUnit } from '~app-toolkit/helpers/master-chef/master-chef.contract-position-helper';
 import { getImagesFromToken, getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
+import { IMulticallWrapper } from '~multicall';
 import { isMulticallUnderlyingError } from '~multicall/multicall.ethers';
 import { ContractPosition, MetaType } from '~position/position.interface';
 import { isClaimable, isSupplied } from '~position/position.utils';
@@ -30,6 +31,17 @@ export type MasterChefContractPositionDefinition = {
   poolIndex: number;
 };
 
+export type GetMasterChefDataPropsParams<T extends Contract> = GetDataPropsParams<
+  T,
+  MasterChefContractPositionDataProps,
+  MasterChefContractPositionDefinition
+>;
+
+export type GetMasterChefTokenBalancesParams<T extends Contract> = GetTokenBalancesParams<
+  T,
+  MasterChefContractPositionDataProps
+>;
+
 export abstract class MasterChefTemplateContractPositionFetcher<
   T extends Contract,
   V extends MasterChefContractPositionDataProps = MasterChefContractPositionDataProps,
@@ -40,18 +52,20 @@ export abstract class MasterChefTemplateContractPositionFetcher<
 
   abstract chefAddress: string;
   abstract getPoolLength(contract: T): Promise<BigNumberish>;
-  abstract getStakedTokenAddress(contract: T, poolIndex: number): Promise<string>;
-  abstract getRewardTokenAddress(contract: T, poolIndex: number): Promise<string>;
+
+  // Tokens
+  abstract getStakedTokenAddress(contract: T, poolIndex: number, multicall: IMulticallWrapper): Promise<string>;
+  abstract getRewardTokenAddress(contract: T, poolIndex: number, multicall: IMulticallWrapper): Promise<string>;
 
   // APY
   rewardRateUnit: RewardRateUnit = RewardRateUnit.BLOCK;
-  abstract getTotalAllocPoints(contract: T, poolIndex: number): Promise<BigNumberish>;
-  abstract getTotalRewardRate(contract: T, poolIndex: number): Promise<BigNumberish>;
-  abstract getPoolAllocPoints(contract: T, poolIndex: number): Promise<BigNumberish>;
+  abstract getTotalAllocPoints(params: GetMasterChefDataPropsParams<T>): Promise<BigNumberish>;
+  abstract getTotalRewardRate(params: GetMasterChefDataPropsParams<T>): Promise<BigNumberish>;
+  abstract getPoolAllocPoints(params: GetMasterChefDataPropsParams<T>): Promise<BigNumberish>;
 
   // Balances
-  abstract getStakedTokenBalance(address: string, contract: T, poolIndex: number): Promise<BigNumberish>;
-  abstract getRewardTokenBalance(address: string, contract: T, poolIndex: number): Promise<BigNumberish>;
+  abstract getStakedTokenBalance(params: GetMasterChefTokenBalancesParams<T>): Promise<BigNumberish>;
+  abstract getRewardTokenBalance(params: GetMasterChefTokenBalancesParams<T>): Promise<BigNumberish>;
 
   async getDefinitions() {
     const contract = this.getContract(this.chefAddress);
@@ -62,17 +76,22 @@ export abstract class MasterChefTemplateContractPositionFetcher<
   async getTokenDefinitions({
     contract,
     definition,
+    multicall,
   }: GetTokenDefinitionsParams<T, MasterChefContractPositionDefinition>) {
     const tokenDefinitions: UnderlyingTokenDefinition[] = [];
 
-    const stakedTokenAddress = await this.getStakedTokenAddress(contract, definition.poolIndex).catch(err => {
-      if (isMulticallUnderlyingError(err)) return null;
-      throw err;
-    });
-    const rewardTokenAddress = await this.getRewardTokenAddress(contract, definition.poolIndex).catch(err => {
-      if (isMulticallUnderlyingError(err)) return null;
-      throw err;
-    });
+    const stakedTokenAddress = await this.getStakedTokenAddress(contract, definition.poolIndex, multicall).catch(
+      err => {
+        if (isMulticallUnderlyingError(err)) return null;
+        throw err;
+      },
+    );
+    const rewardTokenAddress = await this.getRewardTokenAddress(contract, definition.poolIndex, multicall).catch(
+      err => {
+        if (isMulticallUnderlyingError(err)) return null;
+        throw err;
+      },
+    );
 
     if (!stakedTokenAddress || !rewardTokenAddress) return null;
 
@@ -81,34 +100,42 @@ export abstract class MasterChefTemplateContractPositionFetcher<
     return tokenDefinitions;
   }
 
-  async getDataProps({
-    contract,
-    contractPosition,
-    definition,
-    multicall,
-  }: GetDataPropsParams<T, V, MasterChefContractPositionDefinition>): Promise<V> {
-    const poolIndex = definition.poolIndex;
+  async getReserve({ contractPosition, multicall }: GetDataPropsParams<T, V, MasterChefContractPositionDefinition>) {
     const stakedToken = contractPosition.tokens.find(isSupplied)!;
-    const rewardToken = contractPosition.tokens.filter(isClaimable)[0];
-
-    const [totalAllocPoints, totalRewardRateRaw, poolAllocPoints] = await Promise.all([
-      this.getTotalAllocPoints(contract, poolIndex),
-      this.getTotalRewardRate(contract, poolIndex),
-      this.getPoolAllocPoints(contract, poolIndex),
-    ]);
-
-    const totalRewardRate = Number(totalRewardRateRaw) / 10 ** rewardToken.decimals;
-    const poolShare = Number(poolAllocPoints) / Number(totalAllocPoints);
-    const rewardRate = poolShare * Number(totalRewardRate);
-
     const stakedTokenContract = this.appToolkit.globalContracts.erc20(stakedToken);
     const reserveRaw = await multicall.wrap(stakedTokenContract).balanceOf(contractPosition.address);
     const reserve = Number(reserveRaw) / 10 ** stakedToken.decimals;
+    return reserve;
+  }
+
+  async getRewardRates(
+    params: GetDataPropsParams<T, V, MasterChefContractPositionDefinition>,
+  ): Promise<BigNumberish[]> {
+    const [totalAllocPoints, totalRewardRateRaw, poolAllocPoints] = await Promise.all([
+      this.getTotalAllocPoints(params),
+      this.getTotalRewardRate(params),
+      this.getPoolAllocPoints(params),
+    ]);
+
+    const rewardRate = BigNumber.from(totalRewardRateRaw).mul(poolAllocPoints).div(totalAllocPoints);
+
+    return [rewardRate];
+  }
+
+  async getDataProps(params: GetDataPropsParams<T, V, MasterChefContractPositionDefinition>): Promise<V> {
+    const { contractPosition, definition } = params;
+    const poolIndex = definition.poolIndex;
+    const stakedToken = contractPosition.tokens.find(isSupplied)!;
+    const rewardTokens = contractPosition.tokens.filter(isClaimable);
+
+    const reserve = await this.getReserve(params);
+    const rewardRates = await this.getRewardRates(params);
     const liquidity = reserve * stakedToken.price;
 
+    const normalizedRewardRates = rewardTokens.map((rt, i) => Number(rewardRates[i] ?? 0) / 10 ** rt.decimals);
+    const rewardRateUSD = sum(rewardTokens.map((rt, i) => normalizedRewardRates[i] * rt.price));
     const multiplier = this.rewardRateUnit === RewardRateUnit.BLOCK ? BLOCKS_PER_DAY[this.network] : 86400;
-    const dailyRewardRate = rewardRate * multiplier;
-    const dailyRewardRateUSD = dailyRewardRate * rewardToken.price;
+    const dailyRewardRateUSD = rewardRateUSD * multiplier;
 
     const dailyReturn = (dailyRewardRateUSD + liquidity) / liquidity - 1;
     const apy = dailyReturn * 365 * 100;
@@ -130,17 +157,12 @@ export abstract class MasterChefTemplateContractPositionFetcher<
     return this.appToolkit.getPositionKey(contractPosition, ['poolIndex']);
   }
 
-  async getTokenBalancesPerPosition({
-    address,
-    contractPosition,
-    contract,
-  }: GetTokenBalancesParams<T, MasterChefContractPositionDataProps>) {
+  async getTokenBalancesPerPosition(params: GetTokenBalancesParams<T, MasterChefContractPositionDataProps>) {
     const tokenBalances: BigNumberish[] = [];
-    const poolIndex = contractPosition.dataProps.poolIndex;
 
     const [stakedBalanceRaw, rewardTokenBalanceRaw] = await Promise.all([
-      this.getStakedTokenBalance(address, contract, poolIndex),
-      this.getRewardTokenBalance(address, contract, poolIndex),
+      this.getStakedTokenBalance(params),
+      this.getRewardTokenBalance(params),
     ]);
 
     tokenBalances.push(stakedBalanceRaw);

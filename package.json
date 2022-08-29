@@ -1,6 +1,6 @@
 {
   "name": "@zapper-fi/studio",
-  "version": "0.196.1",
+  "version": "0.199.0",
   "description": "Community build apps for Zapper.fi",
   "license": "MIT",
   "main": "./index.js",
@@ -25,6 +25,7 @@
     "@golevelup/nestjs-modules": "^0.5.0",
     "@nestjs/platform-express": "8.4.2",
     "@nestjs/schedule": "^2.1.0",
+    "@pendle/sdk": "^2.5.8",
     "@uniswap/sdk-core": "^3.0.1",
     "@uniswap/v3-sdk": "^3.9.0",
     "bitcoin-address-validation": "^2.2.1",

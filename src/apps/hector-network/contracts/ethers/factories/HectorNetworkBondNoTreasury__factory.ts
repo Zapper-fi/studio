@@ -4,10 +4,7 @@
 
 import { Contract, Signer, utils } from 'ethers';
 import type { Provider } from '@ethersproject/providers';
-import type {
-  HectorNetworkBscBondDepository,
-  HectorNetworkBscBondDepositoryInterface,
-} from '../HectorNetworkBscBondDepository';
+import type { HectorNetworkBondNoTreasury, HectorNetworkBondNoTreasuryInterface } from '../HectorNetworkBondNoTreasury';
 
 const _abi = [
   {
@@ -891,12 +888,12 @@ const _abi = [
   },
 ];
 
-export class HectorNetworkBscBondDepository__factory {
+export class HectorNetworkBondNoTreasury__factory {
   static readonly abi = _abi;
-  static createInterface(): HectorNetworkBscBondDepositoryInterface {
-    return new utils.Interface(_abi) as HectorNetworkBscBondDepositoryInterface;
+  static createInterface(): HectorNetworkBondNoTreasuryInterface {
+    return new utils.Interface(_abi) as HectorNetworkBondNoTreasuryInterface;
   }
-  static connect(address: string, signerOrProvider: Signer | Provider): HectorNetworkBscBondDepository {
-    return new Contract(address, _abi, signerOrProvider) as HectorNetworkBscBondDepository;
+  static connect(address: string, signerOrProvider: Signer | Provider): HectorNetworkBondNoTreasury {
+    return new Contract(address, _abi, signerOrProvider) as HectorNetworkBondNoTreasury;
   }
 }

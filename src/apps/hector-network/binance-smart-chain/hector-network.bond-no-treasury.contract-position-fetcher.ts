@@ -1,5 +1,6 @@
 import { Inject } from '@nestjs/common';
 import { BigNumber } from 'ethers';
+import { range } from 'lodash';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
@@ -13,15 +14,15 @@ import {
 } from '~position/template/contract-position.template.types';
 import { Network } from '~types';
 
-import { HectorNetworkBscBondDepository, HectorNetworkContractFactory } from '../contracts';
+import { HectorNetworkBondNoTreasury, HectorNetworkContractFactory } from '../contracts';
 import { HECTOR_NETWORK_DEFINITION } from '../hector-network.definition';
 
 const appId = HECTOR_NETWORK_DEFINITION.id;
-const groupId = HECTOR_NETWORK_DEFINITION.groups.bond.id;
+const groupId = HECTOR_NETWORK_DEFINITION.groups.bondNoTreasury.id;
 const network = Network.BINANCE_SMART_CHAIN_MAINNET;
 
 @Register.ContractPositionFetcher({ appId, groupId, network })
-export class BinanceSmartChainHectorNetworkBondContractPositionFetcher extends ContractPositionTemplatePositionFetcher<HectorNetworkBscBondDepository> {
+export class BinanceSmartChainHectorNetworkBondNoTreasuryContractPositionFetcher extends ContractPositionTemplatePositionFetcher<HectorNetworkBondNoTreasury> {
   appId = appId;
   groupId = groupId;
   network = network;
@@ -43,10 +44,10 @@ export class BinanceSmartChainHectorNetworkBondContractPositionFetcher extends C
   }
 
   getContract(address: string) {
-    return this.contractFactory.hectorNetworkBscBondDepository({ address, network: this.network });
+    return this.contractFactory.hectorNetworkBondNoTreasury({ address, network: this.network });
   }
 
-  async getTokenDefinitions({ contract }: GetTokenDefinitionsParams<HectorNetworkBscBondDepository>) {
+  async getTokenDefinitions({ contract }: GetTokenDefinitionsParams<HectorNetworkBondNoTreasury>) {
     const [principle, claimable] = await Promise.all([contract.principle(), contract.HEC()]);
 
     return [
@@ -56,31 +57,24 @@ export class BinanceSmartChainHectorNetworkBondContractPositionFetcher extends C
     ];
   }
 
-  async getLabel({ contractPosition }: GetDisplayPropsParams<HectorNetworkBscBondDepository>) {
+  async getLabel({ contractPosition }: GetDisplayPropsParams<HectorNetworkBondNoTreasury>) {
     return `${getLabelFromToken(contractPosition.tokens[2])} Bond`;
   }
 
-  async getImages({ contractPosition }: GetDisplayPropsParams<HectorNetworkBscBondDepository>) {
+  async getImages({ contractPosition }: GetDisplayPropsParams<HectorNetworkBondNoTreasury>) {
     return getImagesFromToken(contractPosition.tokens[2]);
   }
 
-  async getTokenBalancesPerPosition({
-    address,
-    contract,
-    multicall,
-  }: GetTokenBalancesParams<HectorNetworkBscBondDepository>) {
-    const count = await multicall.wrap(contract).depositCounts(address);
-    const depositIds = await Promise.all(
-      Array(count.toNumber()).map((_, i) => multicall.wrap(contract).ownedDeposits(address, i)),
-    );
-    const bondInfos = await Promise.all(depositIds.map(id => multicall.wrap(contract).bondInfo(id)));
-    const claimablePayouts = await Promise.all(depositIds.map(id => multicall.wrap(contract).pendingPayoutFor(id)));
+  async getTokenBalancesPerPosition({ address, contract }: GetTokenBalancesParams<HectorNetworkBondNoTreasury>) {
+    const count = await contract.depositCounts(address);
+    const depositIds = await Promise.all(range(0, Number(count)).map(i => contract.ownedDeposits(address, i)));
+    const bondInfos = await Promise.all(depositIds.map(id => contract.bondInfo(id)));
+    const claimablePayouts = await Promise.all(depositIds.map(id => contract.pendingPayoutFor(id)));
 
-    let totalPayout = BigNumber.from(0);
-    let totalClaimablePayout = BigNumber.from(0);
-    bondInfos.forEach(info => (totalPayout = totalPayout.add(info.payout)));
-    claimablePayouts.forEach(payout => (totalClaimablePayout = totalClaimablePayout.add(payout)));
+    const totalPayout = bondInfos.reduce((acc, v) => acc.add(v.payout), BigNumber.from(0));
+    const totalClaimablePayout = claimablePayouts.reduce((acc, v) => acc.add(v), BigNumber.from(0));
+    const totalVestingAmount = totalPayout.sub(totalClaimablePayout);
 
-    return [totalPayout.sub(totalClaimablePayout).toString(), totalClaimablePayout.toString()];
+    return [totalVestingAmount, totalClaimablePayout];
   }
 }
