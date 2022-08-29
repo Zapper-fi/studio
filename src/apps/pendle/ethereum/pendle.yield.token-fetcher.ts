@@ -28,9 +28,8 @@ const network = Network.ETHEREUM_MAINNET;
 
 export type PendleYieldTokenDataProps = {
   expiry: number;
-  marketAddress: string;
   baseTokenAddress: string;
-  baseTokenSymbol: string;
+  marketAddress: string;
 };
 
 export type PendleYieldTokenDefinition = {
@@ -40,6 +39,7 @@ export type PendleYieldTokenDefinition = {
   baseTokenAddress: string;
   yieldTokenAddress: string;
   underlyingAddress: string;
+  underlyingYieldAddress: string;
   forgeAddress: string;
   expiry: number;
 };
@@ -79,8 +79,9 @@ export class EthereumPendleYieldTokenFetcher extends AppTokenTemplatePositionFet
 
         const expiry = Number(expiryRaw);
         const yieldToken = this.contractFactory.pendleYieldToken({ address: yieldTokenAddress, network: this.network });
-        const [underlyingAddress, forgeAddress] = await Promise.all([
+        const [underlyingAddress, underlyingYieldAddress, forgeAddress] = await Promise.all([
           multicall.wrap(yieldToken).underlyingAsset(),
+          multicall.wrap(yieldToken).underlyingYieldToken(),
           multicall.wrap(yieldToken).forge(),
         ]);
 
@@ -96,6 +97,7 @@ export class EthereumPendleYieldTokenFetcher extends AppTokenTemplatePositionFet
           baseTokenAddress: baseTokenAddress.toLowerCase(),
           yieldTokenAddress: yieldTokenAddress.toLowerCase(),
           underlyingAddress: underlyingAddress.toLowerCase(),
+          underlyingYieldAddress: underlyingYieldAddress.toLowerCase(),
           forgeAddress: forgeAddress.toLowerCase(),
           expiry,
         };
@@ -145,18 +147,18 @@ export class EthereumPendleYieldTokenFetcher extends AppTokenTemplatePositionFet
 
   async getDataProps({
     definition,
-    tokenLoader,
   }: GetDataPropsParams<PendleYieldToken, PendleYieldTokenDataProps, PendleYieldTokenDefinition>) {
     const { marketAddress, expiry, baseTokenAddress } = definition;
-    const baseToken = await tokenLoader.getOne({ address: baseTokenAddress.toLowerCase(), network: this.network });
-    const baseTokenSymbol = baseToken?.symbol ?? '';
-    return { marketAddress, expiry, baseTokenAddress, baseTokenSymbol };
+    return { marketAddress, baseTokenAddress, expiry };
   }
 
   async getLabel({
     appToken,
+    definition,
+    tokenLoader,
   }: GetDisplayPropsParams<PendleYieldToken, PendleYieldTokenDataProps, PendleYieldTokenDefinition>) {
-    return `YT ${getLabelFromToken(appToken.tokens[0])} - ${appToken.dataProps.baseTokenSymbol}`;
+    const baseToken = await tokenLoader.getOne({ address: definition.baseTokenAddress, network: this.network });
+    return `YT ${getLabelFromToken(appToken.tokens[0])}${baseToken ? ` - ${baseToken.symbol}` : ''}`;
   }
 
   async getTertiaryLabel({

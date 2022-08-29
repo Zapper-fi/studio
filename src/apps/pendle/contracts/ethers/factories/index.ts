@@ -2,7 +2,11 @@
 /* tslint:disable */
 /* eslint-disable */
 export { PendleData__factory } from './PendleData__factory';
+export { PendleDexFactory__factory } from './PendleDexFactory__factory';
+export { PendleDexPair__factory } from './PendleDexPair__factory';
 export { PendleForge__factory } from './PendleForge__factory';
 export { PendleMarket__factory } from './PendleMarket__factory';
 export { PendleOwnershipToken__factory } from './PendleOwnershipToken__factory';
+export { PendleStaking__factory } from './PendleStaking__factory';
+export { PendleStakingManager__factory } from './PendleStakingManager__factory';
 export { PendleYieldToken__factory } from './PendleYieldToken__factory';
