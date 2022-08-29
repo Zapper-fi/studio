@@ -4,7 +4,6 @@ import { AaveV2AppModule } from '~apps/aave-v2';
 
 import { AgaveAppDefinition, AGAVE_DEFINITION } from './agave.definition';
 import { AgaveContractFactory } from './contracts';
-import { GnosisAgaveBalanceFetcher } from './gnosis/agave.balance-fetcher';
 import { GnosisAgaveClaimableContractPositionFetcher } from './gnosis/agave.claimable.contract-position-fetcher';
 import { GnosisAgaveDepositTokenFetcher } from './gnosis/agave.deposit.token-fetcher';
 import { GnosisAgavePositionPresenter } from './gnosis/agave.position-presenter';
@@ -17,7 +16,6 @@ import { GnosisAgaveVariableBorrowTokenFetcher } from './gnosis/agave.variable-b
   providers: [
     AgaveAppDefinition,
     AgaveContractFactory,
-    GnosisAgaveBalanceFetcher,
     GnosisAgaveClaimableContractPositionFetcher,
     GnosisAgaveDepositTokenFetcher,
     GnosisAgavePositionPresenter,
