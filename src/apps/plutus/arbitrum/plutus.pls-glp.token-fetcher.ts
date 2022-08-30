@@ -10,15 +10,15 @@ import { PlutusContractFactory } from '../contracts';
 import PLUTUS_DEFINITION from '../plutus.definition';
 
 const appId = PLUTUS_DEFINITION.id;
-const groupId = PLUTUS_DEFINITION.groups.plsJones.id;
+const groupId = PLUTUS_DEFINITION.groups.plsGlp.id;
 const network = Network.ARBITRUM_MAINNET;
 
 @Register.TokenPositionFetcher({ appId, groupId, network })
-export class ArbitrumPlutusPlsJonesTokenFetcher extends AppTokenTemplatePositionFetcher<Erc20> {
+export class ArbitrumPlutusPlsGlpTokenFetcher extends AppTokenTemplatePositionFetcher<Erc20> {
   appId = appId;
   groupId = groupId;
   network = network;
-  groupLabel = 'plsJONES';
+  groupLabel = 'plsGLP';
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
@@ -32,10 +32,10 @@ export class ArbitrumPlutusPlsJonesTokenFetcher extends AppTokenTemplatePosition
   }
 
   async getAddresses() {
-    return ['0xe7f6c3c1f0018e4c08acc52965e5cbff99e34a44'];
+    return ['0x530f1cbb2ebd71bec58d351dcd3768148986a467'];
   }
 
   async getUnderlyingTokenAddresses() {
-    return ['0xe8ee01ae5959d3231506fcdef2d5f3e85987a39c'];
+    return ['0x4277f8f2c384827b5273592ff7cebd9f2c1ac258'];
   }
 }
