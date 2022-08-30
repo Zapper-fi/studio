@@ -19,9 +19,9 @@ const network = Network.ARBITRUM_MAINNET;
 
 @Register.ContractPositionFetcher({ appId, groupId, network })
 export class ArbitrumPlutusFarmPlsDpxLpContractPositionFetcher extends SingleStakingFarmTemplateContractPositionFetcher<PlutusFarmPlsDpxLp> {
-  appId = appId;
-  groupId = groupId;
-  network = network;
+  appId = PLUTUS_DEFINITION.id;
+  groupId = PLUTUS_DEFINITION.groups.farmPlsDpxLp.id;
+  network = Network.ARBITRUM_MAINNET;
   groupLabel = 'plsDPX LP Farm';
 
   constructor(

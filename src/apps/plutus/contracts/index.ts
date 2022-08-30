@@ -11,9 +11,7 @@ import { PlutusFarmPlsDpxLp__factory } from './ethers';
 import { PlutusFarmPlsDpxV2__factory } from './ethers';
 import { PlutusFarmPlsJones__factory } from './ethers';
 import { PlutusFarmPlsJonesLp__factory } from './ethers';
-import { PlutusFarmPlvGlp__factory } from './ethers';
 import { PlutusLock__factory } from './ethers';
-import { PlutusPlvGlp__factory } from './ethers';
 import { PlutusPrivateTge__factory } from './ethers';
 import { PlutusPrivateTgeVester__factory } from './ethers';
 import { PlutusRewardsDistroPlsDpx__factory } from './ethers';
@@ -50,14 +48,8 @@ export class PlutusContractFactory extends ContractFactory {
   plutusFarmPlsJonesLp({ address, network }: ContractOpts) {
     return PlutusFarmPlsJonesLp__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
-  plutusFarmPlvGlp({ address, network }: ContractOpts) {
-    return PlutusFarmPlvGlp__factory.connect(address, this.appToolkit.getNetworkProvider(network));
-  }
   plutusLock({ address, network }: ContractOpts) {
     return PlutusLock__factory.connect(address, this.appToolkit.getNetworkProvider(network));
-  }
-  plutusPlvGlp({ address, network }: ContractOpts) {
-    return PlutusPlvGlp__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
   plutusPrivateTge({ address, network }: ContractOpts) {
     return PlutusPrivateTge__factory.connect(address, this.appToolkit.getNetworkProvider(network));
@@ -83,9 +75,7 @@ export type { PlutusFarmPlsDpxLp } from './ethers';
 export type { PlutusFarmPlsDpxV2 } from './ethers';
 export type { PlutusFarmPlsJones } from './ethers';
 export type { PlutusFarmPlsJonesLp } from './ethers';
-export type { PlutusFarmPlvGlp } from './ethers';
 export type { PlutusLock } from './ethers';
-export type { PlutusPlvGlp } from './ethers';
 export type { PlutusPrivateTge } from './ethers';
 export type { PlutusPrivateTgeVester } from './ethers';
 export type { PlutusRewardsDistroPlsDpx } from './ethers';

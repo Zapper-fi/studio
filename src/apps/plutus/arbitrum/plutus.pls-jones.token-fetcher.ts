@@ -15,9 +15,9 @@ const network = Network.ARBITRUM_MAINNET;
 
 @Register.TokenPositionFetcher({ appId, groupId, network })
 export class ArbitrumPlutusPlsJonesTokenFetcher extends AppTokenTemplatePositionFetcher<Erc20> {
-  appId = appId;
-  groupId = groupId;
-  network = network;
+  appId = PLUTUS_DEFINITION.id;
+  groupId = PLUTUS_DEFINITION.groups.plsJones.id;
+  network = Network.ARBITRUM_MAINNET;
   groupLabel = 'plsJONES';
 
   constructor(

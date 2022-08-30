@@ -7,12 +7,9 @@ import { ArbitrumPlutusFarmPlsDpxContractPositionFetcher } from './arbitrum/plut
 import { ArbitrumPlutusFarmPlsJonesLpContractPositionFetcher } from './arbitrum/plutus.farm-pls-jones-lp.contract-position-fetcher';
 import { ArbitrumPlutusFarmPlsJonesContractPositionFetcher } from './arbitrum/plutus.farm-pls-jones.contract-position-fetcher';
 import { ArbitrumPlutusFarmPlsContractPositionFetcher } from './arbitrum/plutus.farm-pls.contract-position-fetcher';
-import { ArbitrumPlutusFarmPlvGlpContractPositionFetcher } from './arbitrum/plutus.farm-plv-glp.contract-position-fetcher';
 import { ArbitrumPlutusLockContractPositionFetcher } from './arbitrum/plutus.lock.contract-position-fetcher';
 import { ArbitrumPlutusPlsDpxTokenFetcher } from './arbitrum/plutus.pls-dpx.token-fetcher';
-import { ArbitrumPlutusPlsGlpTokenFetcher } from './arbitrum/plutus.pls-glp.token-fetcher';
 import { ArbitrumPlutusPlsJonesTokenFetcher } from './arbitrum/plutus.pls-jones.token-fetcher';
-import { ArbitrumPlutusPlvGlpTokenFetcher } from './arbitrum/plutus.plv-glp.token-fetcher';
 import { ArbitrumPlutusTgeClaimableContractPositionFetcher } from './arbitrum/plutus.tge-claimable.contract-position-fetcher';
 import { PlutusContractFactory } from './contracts';
 import { PlutusAppDefinition, PLUTUS_DEFINITION } from './plutus.definition';
@@ -26,12 +23,9 @@ import { PlutusAppDefinition, PLUTUS_DEFINITION } from './plutus.definition';
     ArbitrumPlutusFarmPlsJonesLpContractPositionFetcher,
     ArbitrumPlutusFarmPlsJonesContractPositionFetcher,
     ArbitrumPlutusFarmPlsContractPositionFetcher,
-    ArbitrumPlutusFarmPlvGlpContractPositionFetcher,
     ArbitrumPlutusLockContractPositionFetcher,
     ArbitrumPlutusPlsDpxTokenFetcher,
     ArbitrumPlutusPlsJonesTokenFetcher,
-    ArbitrumPlutusPlsGlpTokenFetcher,
-    ArbitrumPlutusPlvGlpTokenFetcher,
     ArbitrumPlutusTgeClaimableContractPositionFetcher,
     PlutusAppDefinition,
     PlutusContractFactory,
