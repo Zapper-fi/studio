@@ -31,14 +31,15 @@ export class TokenDependencySelectorService implements TokenDependencySelectorFa
     return {
       getOne: async ({ network, address }: Parameters<GetOne>[0]) => {
         const fromCache = await this.registryPositionSource.getTokenDependenciesBatch([{ network, address }]);
-        return (fromCache as any as TokenDependency) ?? tokenDataLoader.load({ network, address });
+        const fromApi = await tokenDataLoader.load({ network, address });
+        return fromCache[0] ?? fromApi;
       },
       getMany: async (queries: Parameters<GetMany>[0]) => {
         const fromCache = await this.registryPositionSource.getTokenDependenciesBatch(queries);
-        const docs = await tokenDataLoader.loadMany(queries);
+        const fromApi = await tokenDataLoader.loadMany(queries);
 
         return queries.map((_, i) => {
-          const element = fromCache[i] ?? docs[i];
+          const element = fromCache[i] ?? fromApi[i];
           if (element instanceof Error) return null;
           return element;
         });
