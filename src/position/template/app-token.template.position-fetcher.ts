@@ -1,6 +1,6 @@
 import { Inject } from '@nestjs/common';
 import { BigNumberish, Contract } from 'ethers/lib/ethers';
-import { compact, intersection, isArray, partition, sum } from 'lodash';
+import { compact, intersection, isArray, partition, sortBy, sum } from 'lodash';
 
 import { drillBalance } from '~app-toolkit';
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
@@ -262,7 +262,10 @@ export abstract class AppTokenTemplatePositionFetcher<
       currentTokens.push(...positionsSubset);
     }
 
-    return currentTokens;
+    return sortBy(currentTokens, t => {
+      if (typeof t.dataProps.liquidity === 'number') return -t.dataProps.liquidity;
+      return 1;
+    });
   }
 
   getBalancePerToken({

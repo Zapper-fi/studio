@@ -24,6 +24,9 @@ export type UniswapV2TokenDataProps = {
   liquidity: number;
   reserves: number[];
   fee: number;
+  apy: number;
+  volume: number;
+  volumeChangePercentage: number;
 };
 
 export abstract class UniswapV2PoolOnChainTemplateTokenFetcher extends AppTokenTemplatePositionFetcher<
@@ -32,7 +35,7 @@ export abstract class UniswapV2PoolOnChainTemplateTokenFetcher extends AppTokenT
 > {
   abstract factoryAddress: string;
 
-  fee = 0.003;
+  fee = 0.3;
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
@@ -85,7 +88,11 @@ export abstract class UniswapV2PoolOnChainTemplateTokenFetcher extends AppTokenT
     const reserves = (appToken.pricePerShare as number[]).map(v => v * appToken.supply);
     const liquidity = appToken.price * appToken.supply;
     const fee = this.fee;
-    return { liquidity, reserves, fee };
+    const volume = 0;
+    const volumeChangePercentage = 0;
+    const apy = 0;
+
+    return { liquidity, reserves, apy, fee, volume, volumeChangePercentage };
   }
 
   async getLabel({ appToken }: GetDisplayPropsParams<UniswapPair, UniswapV2TokenDataProps>): Promise<string> {
@@ -105,7 +112,7 @@ export abstract class UniswapV2PoolOnChainTemplateTokenFetcher extends AppTokenT
   }: GetDisplayPropsParams<UniswapPair, UniswapV2TokenDataProps, DefaultAppTokenDefinition>): Promise<
     StatsItem[] | undefined
   > {
-    const { fee, reserves, liquidity } = appToken.dataProps;
+    const { fee, reserves, liquidity, volume, apy } = appToken.dataProps;
     const reservePercentages = appToken.tokens.map((t, i) => reserves[i] * (t.price / liquidity));
     const ratioDisplay = reservePercentages.map(p => `${Math.round(p * 100)}%`).join(' / ');
     const reservesDisplay = reserves.map(v => (v < 0.01 ? '<0.01' : v.toFixed(2))).join(' / ');
@@ -115,6 +122,8 @@ export abstract class UniswapV2PoolOnChainTemplateTokenFetcher extends AppTokenT
       { label: 'Liquidity', value: buildDollarDisplayItem(liquidity) },
       { label: 'Reserves', value: reservesDisplay },
       { label: 'Ratio', value: ratioDisplay },
+      { label: 'Volume', value: buildDollarDisplayItem(volume) },
+      { label: 'APY', value: buildPercentageDisplayItem(apy) },
     ];
   }
 }
