@@ -32,14 +32,15 @@ export class RegistryPositionSource implements PositionSource {
     const groups = this.positionFetcherRegistry.getRegisteredTokenGroups();
     const networkGroups = groups.filter(({ network }) => networks.includes(network));
 
-    const allTokens = await Promise.all(
+    const cachedTokenResults = await Promise.all(
       networkGroups.map(async group => {
         const cacheKey = buildAppPositionsCacheKey({ type: ContractType.APP_TOKEN, ...group });
         const cachedData = await this.cacheManager.get(cacheKey);
         return (cachedData as any as AppTokenPosition[]) ?? [];
       }),
-    ).then(nested => nested.flat());
+    );
 
+    const allTokens = cachedTokenResults.flat();
     return queries.map(q => allTokens.find(t => t.network === q.network && t.address === q.address) ?? null);
   }
 
