@@ -2,11 +2,7 @@ import { Inject, OnApplicationBootstrap } from '@nestjs/common';
 import { DiscoveryService } from '@nestjs/core';
 import { compact } from 'lodash';
 
-import {
-  CACHE_ON_INTERVAL_ELEMENTS_KEY,
-  CACHE_ON_INTERVAL_KEY,
-  CACHE_ON_INTERVAL_TIMEOUT,
-} from '~cache/cache-on-interval.decorator';
+import { CACHE_ON_INTERVAL_KEY, CACHE_ON_INTERVAL_TIMEOUT } from '~cache/cache-on-interval.decorator';
 import { CacheOnIntervalService } from '~cache/cache-on-interval.service';
 import { Network } from '~types/network.interface';
 import { Registry } from '~utils/build-registry';
@@ -65,11 +61,6 @@ export class PositionFetcherRegistry implements OnApplicationBootstrap {
         const cacheKey = buildAppPositionsCacheKey({ type, network, appId, groupId });
         Reflect.defineMetadata(CACHE_ON_INTERVAL_KEY, cacheKey, wrapper.instance['getPositions']);
         Reflect.defineMetadata(CACHE_ON_INTERVAL_TIMEOUT, 45 * 1000, wrapper.instance['getPositions']);
-        if (type === ContractType.APP_TOKEN) {
-          const keyBuilder = (v: AppTokenPosition) => `token:${v.network}:${v.address}`;
-          Reflect.defineMetadata(CACHE_ON_INTERVAL_ELEMENTS_KEY, keyBuilder, wrapper.instance['getPositions']);
-        }
-
         this.cacheOnIntervalService.registerCache(wrapper.instance, 'getPositions');
 
         if (!this.registry.get(type)) this.registry.set(type, new Map());
@@ -94,6 +85,15 @@ export class PositionFetcherRegistry implements OnApplicationBootstrap {
   }) {
     const positionWithOptions = this.registry.get(type)?.get(network)?.get(appId)?.get(groupId);
     return positionWithOptions?.options ?? {};
+  }
+
+  getAllTokenFetchers({ network }: { network: Network }) {
+    const networkFetchers = this.registry.get(ContractType.APP_TOKEN)?.get(network);
+    if (!networkFetchers) return [];
+
+    return [...networkFetchers.values()].flatMap(v =>
+      [...v.values()].map(t => t.fetcher as PositionFetcher<AppTokenPosition>),
+    );
   }
 
   get<T extends AbstractPosition<V>, V = DefaultDataProps>({

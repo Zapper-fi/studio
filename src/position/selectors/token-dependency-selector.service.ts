@@ -1,7 +1,8 @@
 import { Inject, Injectable } from '@nestjs/common';
 import DataLoader from 'dataloader';
-import Cache from 'file-system-cache';
 import { Mutable } from 'type-fest';
+
+import { RegistryPositionSource } from '~position/position-source/position-source.registry';
 
 import { ApiPositionSource } from '../position-source/position-source.api';
 
@@ -17,31 +18,24 @@ import {
 
 @Injectable()
 export class TokenDependencySelectorService implements TokenDependencySelectorFactory {
-  private cacheManager = Cache({
-    basePath: './.cache',
-    ns: '@CacheOnInterval',
-  });
-
-  constructor(@Inject(ApiPositionSource) private readonly positionAPIClient: ApiPositionSource) {}
+  constructor(
+    @Inject(RegistryPositionSource) private readonly registryPositionSource: RegistryPositionSource,
+    @Inject(ApiPositionSource) private readonly apiPositionSource: ApiPositionSource,
+  ) {}
 
   create(_opts: CreateTokenDependencySelectorOptions): TokenDependencySelector {
     const tokenDataLoader = new DataLoader<TokenDependencySelectorKey, TokenDependency | null>(
-      keys => this.positionAPIClient.getTokenDependenciesBatch(keys as Mutable<TokenDependencySelectorKey[]>),
+      keys => this.apiPositionSource.getTokenDependenciesBatch(keys as Mutable<TokenDependencySelectorKey[]>),
       { maxBatchSize: 1000 },
     );
 
     return {
       getOne: async ({ network, address }: Parameters<GetOne>[0]) => {
-        const fromCache = await this.cacheManager.get(`token:${network}:${address}`);
+        const fromCache = await this.registryPositionSource.getTokenDependenciesBatch([{ network, address }]);
         return (fromCache as any as TokenDependency) ?? tokenDataLoader.load({ network, address });
       },
       getMany: async (queries: Parameters<GetMany>[0]) => {
-        const fromCache = await Promise.all(
-          queries.map(
-            async ({ network, address }) =>
-              (await this.cacheManager.get(`token:${network}:${address}`)) as any as TokenDependency,
-          ),
-        );
+        const fromCache = await this.registryPositionSource.getTokenDependenciesBatch(queries);
 
         const docs = await tokenDataLoader.loadMany(queries);
         return queries.map((_, i) => {

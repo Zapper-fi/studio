@@ -5,9 +5,9 @@ import Cache from 'file-system-cache';
 import { isUndefined } from 'lodash';
 
 import {
+  CacheOnIntervalOptions,
   CACHE_ON_INTERVAL_KEY,
   CACHE_ON_INTERVAL_TIMEOUT,
-  CACHE_ON_INTERVAL_ELEMENTS_KEY,
 } from './cache-on-interval.decorator';
 
 @Injectable()
@@ -56,9 +56,8 @@ export class CacheOnIntervalService implements OnModuleInit, OnModuleDestroy {
   registerCache(instance: any, methodName: string) {
     const logger = this.logger;
     const methodRef = instance[methodName];
-    const cacheKey = this.reflector.get<string>(CACHE_ON_INTERVAL_KEY, methodRef);
-    const cacheElementsKey = this.reflector.get<((v: any) => string) | null>(CACHE_ON_INTERVAL_ELEMENTS_KEY, methodRef);
-    const cacheTimeout = this.reflector.get<number>(CACHE_ON_INTERVAL_TIMEOUT, methodRef);
+    const cacheKey: CacheOnIntervalOptions['key'] = this.reflector.get(CACHE_ON_INTERVAL_KEY, methodRef);
+    const cacheTimeout: CacheOnIntervalOptions['timeout'] = this.reflector.get(CACHE_ON_INTERVAL_TIMEOUT, methodRef);
 
     // Don't register cache on interval when missing parameters
     if (!cacheKey || !cacheTimeout) return;
@@ -93,11 +92,8 @@ export class CacheOnIntervalService implements OnModuleInit, OnModuleDestroy {
     }
 
     liveData
-      .then(async (d: any) => {
-        await cacheManager.set(cacheKey, d);
-        if (cacheElementsKey && Array.isArray(d)) {
-          await Promise.all(d.map(v => cacheManager.set(cacheElementsKey(v), v)));
-        }
+      .then((d: any) => {
+        return cacheManager.set(cacheKey, d);
       })
       .then(() => {
         logger.log(`Cache ready for for ${instance.constructor.name}#${methodName}`);
@@ -111,22 +107,17 @@ export class CacheOnIntervalService implements OnModuleInit, OnModuleDestroy {
     const interval = setInterval(() => {
       methodRef
         .apply(instance)
-        .then(async (liveData: any) => {
-          await cacheManager.set(cacheKey, liveData).catch((e: Error) => {
+        .then((liveData: any) => {
+          cacheManager.set(cacheKey, liveData).catch((e: Error) => {
             logger.error(`@CacheOnInterval caching error for ${instance.constructor.name}#${methodName}: ${e.message}`);
             logger.error(chalk.gray(e.stack));
           });
-
-          if (cacheElementsKey && Array.isArray(liveData)) {
-            await Promise.all(liveData.map(v => cacheManager.set(cacheElementsKey(v), v)));
-          }
         })
         .catch((e: Error) => {
           logger.error(`@CacheOnInterval target error for ${instance.constructor.name}#${methodName}: ${e.message}`);
           logger.error(chalk.gray(e.stack));
         });
     }, cacheTimeout);
-
     this.intervals.push(interval);
   }
 }

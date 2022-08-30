@@ -1,11 +1,12 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { partition, groupBy, map, compact } from 'lodash';
+import { partition, groupBy, map, compact, uniq } from 'lodash';
 
 import { ContractType } from '~position/contract.interface';
 import { PositionFetcherRegistry } from '~position/position-fetcher.registry';
 import { AbstractPosition } from '~position/position.interface';
 import { AppGroupsDefinition } from '~position/position.service';
+import { AppTokenSelectorKey } from '~position/selectors/app-token-selector.interface';
 
 import { PositionSource } from './position-source.interface';
 
@@ -18,6 +19,13 @@ export class RegistryPositionSource implements PositionSource {
 
   private getApiResolvedPositions(): string[] {
     return this.configService.get('apiResolvedPositions') ?? [];
+  }
+
+  async getTokenDependenciesBatch(queries: AppTokenSelectorKey[]) {
+    const networks = uniq(queries.map(query => query.network));
+    const fetchers = networks.flatMap(network => this.positionFetcherRegistry.getAllTokenFetchers({ network }));
+    const allTokens = await Promise.all(fetchers.map(v => v.getPositions())).then(nested => nested.flat());
+    return queries.map(q => allTokens.find(token => token.network === q.network && token.address === q.address));
   }
 
   getSupported(definitions: AppGroupsDefinition[], contractType: ContractType) {
