@@ -2,9 +2,8 @@ import { Inject, Injectable } from '@nestjs/common';
 import DataLoader from 'dataloader';
 import { Mutable } from 'type-fest';
 
+import { ApiPositionSource } from '~position/position-source/position-source.api';
 import { RegistryPositionSource } from '~position/position-source/position-source.registry';
-
-import { ApiPositionSource } from '../position-source/position-source.api';
 
 import {
   TokenDependencySelector,
