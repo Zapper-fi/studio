@@ -91,8 +91,8 @@ export class PositionFetcherRegistry implements OnApplicationBootstrap {
     const networkFetchers = this.registry.get(ContractType.APP_TOKEN)?.get(network);
     if (!networkFetchers) return [];
 
-    return [...networkFetchers.values()].flatMap(v =>
-      [...v.values()].map(t => t.fetcher as PositionFetcher<AppTokenPosition>),
+    return Array.from(networkFetchers.values()).flatMap(appFetchers =>
+      Array.from(appFetchers.values()).map(t => t.fetcher as PositionFetcher<AppTokenPosition>),
     );
   }
 
