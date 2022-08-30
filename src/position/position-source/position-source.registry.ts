@@ -1,10 +1,11 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
+import Cache from 'file-system-cache';
 import { partition, groupBy, map, compact, uniq } from 'lodash';
 
 import { ContractType } from '~position/contract.interface';
-import { PositionFetcherRegistry } from '~position/position-fetcher.registry';
-import { AbstractPosition } from '~position/position.interface';
+import { buildAppPositionsCacheKey, PositionFetcherRegistry } from '~position/position-fetcher.registry';
+import { AbstractPosition, AppTokenPosition } from '~position/position.interface';
 import { AppGroupsDefinition } from '~position/position.service';
 import { AppTokenSelectorKey } from '~position/selectors/app-token-selector.interface';
 
@@ -12,6 +13,11 @@ import { PositionSource } from './position-source.interface';
 
 @Injectable()
 export class RegistryPositionSource implements PositionSource {
+  private cacheManager = Cache({
+    basePath: './.cache',
+    ns: '@CacheOnInterval',
+  });
+
   constructor(
     @Inject(ConfigService) private readonly configService: ConfigService,
     @Inject(PositionFetcherRegistry) private readonly positionFetcherRegistry: PositionFetcherRegistry,
@@ -23,8 +29,17 @@ export class RegistryPositionSource implements PositionSource {
 
   async getTokenDependenciesBatch(queries: AppTokenSelectorKey[]) {
     const networks = uniq(queries.map(query => query.network));
-    const fetchers = networks.flatMap(network => this.positionFetcherRegistry.getAllTokenFetchers({ network }));
-    const allTokens = await Promise.all(fetchers.map(v => v.getPositions())).then(nested => nested.flat());
+    const groups = this.positionFetcherRegistry.getRegisteredTokenGroups();
+    const networkGroups = groups.filter(({ network }) => networks.includes(network));
+
+    const allTokens = await Promise.all(
+      networkGroups.map(async group => {
+        const cacheKey = buildAppPositionsCacheKey({ type: ContractType.APP_TOKEN, ...group });
+        const cachedData = await this.cacheManager.get(cacheKey);
+        return (cachedData as any as AppTokenPosition[]) ?? [];
+      }),
+    ).then(nested => nested.flat());
+
     return queries.map(q => allTokens.find(t => t.network === q.network && t.address === q.address) ?? null);
   }
 

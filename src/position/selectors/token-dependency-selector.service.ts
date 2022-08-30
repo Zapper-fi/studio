@@ -36,8 +36,8 @@ export class TokenDependencySelectorService implements TokenDependencySelectorFa
       },
       getMany: async (queries: Parameters<GetMany>[0]) => {
         const fromCache = await this.registryPositionSource.getTokenDependenciesBatch(queries);
-
         const docs = await tokenDataLoader.loadMany(queries);
+
         return queries.map((_, i) => {
           const element = fromCache[i] ?? docs[i];
           if (element instanceof Error) return null;

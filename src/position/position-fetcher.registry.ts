@@ -18,7 +18,7 @@ import {
   PositionOptions,
 } from './position-fetcher.decorator';
 import { PositionFetcher } from './position-fetcher.interface';
-import { AbstractPosition, AppTokenPosition, Position } from './position.interface';
+import { AbstractPosition, Position } from './position.interface';
 
 export const buildAppPositionsCacheKey = (opts: {
   type: ContractType;
@@ -87,12 +87,14 @@ export class PositionFetcherRegistry implements OnApplicationBootstrap {
     return positionWithOptions?.options ?? {};
   }
 
-  getAllTokenFetchers({ network }: { network: Network }) {
-    const networkFetchers = this.registry.get(ContractType.APP_TOKEN)?.get(network);
+  getRegisteredTokenGroups() {
+    const networkFetchers = this.registry.get(ContractType.APP_TOKEN);
     if (!networkFetchers) return [];
 
-    return Array.from(networkFetchers.values()).flatMap(appFetchers =>
-      Array.from(appFetchers.values()).map(t => t.fetcher as PositionFetcher<AppTokenPosition>),
+    return Array.from(networkFetchers.entries()).flatMap(([network, appFetchers]) =>
+      Array.from(appFetchers.entries()).flatMap(([appId, groupFetchers]) =>
+        Array.from(groupFetchers.entries()).flatMap(([groupId]) => ({ network, appId, groupId })),
+      ),
     );
   }
 

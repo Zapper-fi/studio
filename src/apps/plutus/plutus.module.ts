@@ -10,6 +10,7 @@ import { ArbitrumPlutusFarmPlsContractPositionFetcher } from './arbitrum/plutus.
 import { ArbitrumPlutusFarmPlvGlpContractPositionFetcher } from './arbitrum/plutus.farm-plv-glp.contract-position-fetcher';
 import { ArbitrumPlutusLockContractPositionFetcher } from './arbitrum/plutus.lock.contract-position-fetcher';
 import { ArbitrumPlutusPlsDpxTokenFetcher } from './arbitrum/plutus.pls-dpx.token-fetcher';
+import { ArbitrumPlutusPlsGlpTokenFetcher } from './arbitrum/plutus.pls-glp.token-fetcher';
 import { ArbitrumPlutusPlsJonesTokenFetcher } from './arbitrum/plutus.pls-jones.token-fetcher';
 import { ArbitrumPlutusPlvGlpTokenFetcher } from './arbitrum/plutus.plv-glp.token-fetcher';
 import { ArbitrumPlutusTgeClaimableContractPositionFetcher } from './arbitrum/plutus.tge-claimable.contract-position-fetcher';
@@ -29,6 +30,7 @@ import { PlutusAppDefinition, PLUTUS_DEFINITION } from './plutus.definition';
     ArbitrumPlutusLockContractPositionFetcher,
     ArbitrumPlutusPlsDpxTokenFetcher,
     ArbitrumPlutusPlsJonesTokenFetcher,
+    ArbitrumPlutusPlsGlpTokenFetcher,
     ArbitrumPlutusPlvGlpTokenFetcher,
     ArbitrumPlutusTgeClaimableContractPositionFetcher,
     PlutusAppDefinition,
