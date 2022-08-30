@@ -14,7 +14,11 @@ import {
 
 import { UnagiiContractFactory, UnagiiUtoken } from '../contracts';
 
-import { UnagiiTokenDefinition } from './types';
+export type UnagiiTokenDefinition = {
+  address: string;
+  underlyingTokenAddress: string;
+  vaultManagerAddress: string;
+};
 
 export abstract class UnagiiVaultTokenFetcher extends AppTokenTemplatePositionFetcher<
   UnagiiUtoken,
