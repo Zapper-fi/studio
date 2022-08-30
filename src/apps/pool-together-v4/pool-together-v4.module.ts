@@ -1,6 +1,5 @@
 import { Register } from '~app-toolkit/decorators';
 import { AbstractApp } from '~app/app.dynamic-module';
-import { PoolTogetherV3AppModule } from '~apps/pool-together-v3';
 
 import { AvalanchePoolTogetherV4TicketTokenFetcher } from './avalanche/pool-together-v4.ticket-token-fetcher';
 import { PoolTogetherV4ApiPrizePoolRegistry } from './common/pool-together-v4.api.prize-pool-registry';
@@ -12,7 +11,6 @@ import POOL_TOGETHER_V4_DEFINITION, { PoolTogetherV4AppDefinition } from './pool
 
 @Register.AppModule({
   appId: POOL_TOGETHER_V4_DEFINITION.id,
-  imports: [PoolTogetherV3AppModule],
   providers: [
     AvalanchePoolTogetherV4TicketTokenFetcher,
     EthereumPoolTogetherV4TicketTokenFetcher,

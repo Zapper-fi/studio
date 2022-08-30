@@ -17,7 +17,6 @@ export const POOL_TOGETHER_V4_DEFINITION = appDefinition({
   },
   groups: {
     ticket: { id: 'ticket', type: GroupType.TOKEN, label: 'Prize Pools' },
-    claimable: { id: 'claimable', type: GroupType.TOKEN, label: 'Rewards', isHiddenFromExplore: true },
   },
   tags: [AppTag.LOTTERY],
   supportedNetworks: {
