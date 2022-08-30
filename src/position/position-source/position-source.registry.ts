@@ -25,7 +25,7 @@ export class RegistryPositionSource implements PositionSource {
     const networks = uniq(queries.map(query => query.network));
     const fetchers = networks.flatMap(network => this.positionFetcherRegistry.getAllTokenFetchers({ network }));
     const allTokens = await Promise.all(fetchers.map(v => v.getPositions())).then(nested => nested.flat());
-    return queries.map(q => allTokens.find(token => token.network === q.network && token.address === q.address));
+    return queries.map(q => allTokens.find(t => t.network === q.network && t.address === q.address) ?? null);
   }
 
   getSupported(definitions: AppGroupsDefinition[], contractType: ContractType) {
