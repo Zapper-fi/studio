@@ -3,6 +3,7 @@ import { Class } from 'type-fest';
 
 export const CACHE_ON_INTERVAL_KEY = 'CACHE_ON_INTERVAL_KEY';
 export const CACHE_ON_INTERVAL_TIMEOUT = 'CACHE_ON_INTERVAL_TIMEOUT';
+export const CACHE_ON_INTERVAL_ELEMENTS_KEY = 'CACHE_ON_INTERVAL_ELEMENTS_KEY';
 const CACHE_ON_INTERVAL_INSTANCE = 'CACHE_ON_INTERVAL_INSTANCE';
 const CACHE_ON_INTERVAL_FAIL_ON_MISSING_CACHE = 'CACHE_ON_INTERVAL_FAIL_ON_MISSING_CACHE';
 
@@ -10,6 +11,7 @@ export type CacheOnIntervalOptions = {
   key: string;
   timeout: number;
   failOnMissingData?: boolean;
+  elementsKey?: (v: any) => string;
 };
 
 type CacheOnIntervalBuilderOptions = CacheOnIntervalOptions & {

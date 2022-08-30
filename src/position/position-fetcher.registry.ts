@@ -2,7 +2,11 @@ import { Inject, OnApplicationBootstrap } from '@nestjs/common';
 import { DiscoveryService } from '@nestjs/core';
 import { compact } from 'lodash';
 
-import { CACHE_ON_INTERVAL_KEY, CACHE_ON_INTERVAL_TIMEOUT } from '~cache/cache-on-interval.decorator';
+import {
+  CACHE_ON_INTERVAL_ELEMENTS_KEY,
+  CACHE_ON_INTERVAL_KEY,
+  CACHE_ON_INTERVAL_TIMEOUT,
+} from '~cache/cache-on-interval.decorator';
 import { CacheOnIntervalService } from '~cache/cache-on-interval.service';
 import { Network } from '~types/network.interface';
 import { Registry } from '~utils/build-registry';
@@ -18,7 +22,7 @@ import {
   PositionOptions,
 } from './position-fetcher.decorator';
 import { PositionFetcher } from './position-fetcher.interface';
-import { AbstractPosition, Position } from './position.interface';
+import { AbstractPosition, AppTokenPosition, Position } from './position.interface';
 
 export const buildAppPositionsCacheKey = (opts: {
   type: ContractType;
@@ -61,6 +65,11 @@ export class PositionFetcherRegistry implements OnApplicationBootstrap {
         const cacheKey = buildAppPositionsCacheKey({ type, network, appId, groupId });
         Reflect.defineMetadata(CACHE_ON_INTERVAL_KEY, cacheKey, wrapper.instance['getPositions']);
         Reflect.defineMetadata(CACHE_ON_INTERVAL_TIMEOUT, 45 * 1000, wrapper.instance['getPositions']);
+        if (type === ContractType.APP_TOKEN) {
+          const keyBuilder = (v: AppTokenPosition) => `token:${v.network}:${v.address}`;
+          Reflect.defineMetadata(CACHE_ON_INTERVAL_ELEMENTS_KEY, keyBuilder, wrapper.instance['getPositions']);
+        }
+
         this.cacheOnIntervalService.registerCache(wrapper.instance, 'getPositions');
 
         if (!this.registry.get(type)) this.registry.set(type, new Map());
