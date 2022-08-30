@@ -13,5 +13,5 @@ export class AvalanchePoolTogetherV4TicketTokenFetcher extends PoolTogetherV4Pri
   network = network;
   appId = appId;
   groupId = groupId;
-  groupLabel = 'PoolTogether';
+  groupLabel = 'Prize Pools';
 }

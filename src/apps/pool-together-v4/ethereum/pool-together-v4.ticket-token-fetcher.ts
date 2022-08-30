@@ -13,5 +13,5 @@ export class EthereumPoolTogetherV4TicketTokenFetcher extends PoolTogetherV4Priz
   network = network;
   appId = appId;
   groupId = groupId;
-  groupLabel = 'PoolTogether';
+  groupLabel = 'Prize Pools';
 }

@@ -13,5 +13,5 @@ export class PolygonPoolTogetherV4TicketTokenFetcher extends PoolTogetherV4Prize
   network = network;
   appId = appId;
   groupId = groupId;
-  groupLabel = 'PoolTogether';
+  groupLabel = 'Prize Pools';
 }
