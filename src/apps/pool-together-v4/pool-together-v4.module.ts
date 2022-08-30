@@ -1,5 +1,6 @@
 import { Register } from '~app-toolkit/decorators';
 import { AbstractApp } from '~app/app.dynamic-module';
+import { PoolTogetherV3AppModule } from '~apps/pool-together-v3';
 
 import { AvalanchePoolTogetherV4ClaimableContractPositionFetcher } from './avalanche/pool-together-v4.claimable.contract-position-fetcher';
 import { AvalanchePoolTogetherV4TicketTokenFetcher } from './avalanche/pool-together-v4.ticket-token-fetcher';
@@ -13,6 +14,7 @@ import POOL_TOGETHER_V4_DEFINITION, { PoolTogetherV4AppDefinition } from './pool
 
 @Register.AppModule({
   appId: POOL_TOGETHER_V4_DEFINITION.id,
+  imports: [PoolTogetherV3AppModule],
   providers: [
     AvalanchePoolTogetherV4TicketTokenFetcher,
     AvalanchePoolTogetherV4ClaimableContractPositionFetcher,

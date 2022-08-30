@@ -2,11 +2,8 @@ import { Inject } from '@nestjs/common';
 import { BigNumberish } from 'ethers';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
-import { buildDollarDisplayItem } from '~app-toolkit/helpers/presentation/display-item.present';
-import { getTokenImg } from '~app-toolkit/helpers/presentation/image.present';
+import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { PoolTogetherV3ApiPrizePoolRegistry } from '~apps/pool-together-v3/helpers/pool-together-v3.api.prize-pool-registry';
-import { ContractType } from '~position/contract.interface';
-import { DisplayProps } from '~position/display.interface';
 import { MetaType } from '~position/position.interface';
 import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
 import {
@@ -51,23 +48,7 @@ export abstract class PoolTogetherV4ClaimableContractPositionFetcher extends Con
 
   async getLabel({ contractPosition }: GetDisplayPropsParams<PoolTogetherV3TokenFaucet>) {
     const rewardToken = contractPosition.tokens[0];
-    if (rewardToken.type === ContractType.APP_TOKEN) return `Claimable ${rewardToken.displayProps.label}`;
-    return `Claimable ${rewardToken.symbol}`;
-  }
-
-  async getSecondaryLabel({
-    contractPosition,
-  }: GetDisplayPropsParams<PoolTogetherV3TokenFaucet>): Promise<DisplayProps['secondaryLabel']> {
-    const claimableToken = contractPosition.tokens[0];
-    return buildDollarDisplayItem(claimableToken.price);
-  }
-
-  async getImages({
-    contractPosition,
-  }: GetDisplayPropsParams<PoolTogetherV3TokenFaucet>): Promise<DisplayProps['images']> {
-    const rewardToken = contractPosition.tokens[0];
-    if (rewardToken.type === ContractType.APP_TOKEN) return rewardToken.displayProps.images;
-    return [getTokenImg(rewardToken.address, this.network)];
+    return `Claimable ${getLabelFromToken(rewardToken)}`;
   }
 
   async getTokenBalancesPerPosition({
