@@ -1,4 +1,5 @@
 import { Inject } from '@nestjs/common';
+import { sum, range } from 'lodash';
 
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
@@ -37,6 +38,16 @@ export class OptimismVelodromeVotingEscrowContractPositionFetcher extends Voting
   }
 
   async getEscrowedTokenBalance({ contract, address }: GetTokenBalancesParams<VelodromeVe>) {
-    return (await contract.locked(address)).amount;
+    const veCount = Number(await contract.balanceOf(address));
+
+    const balances = await Promise.all(
+      range(veCount).map(async i => {
+        const tokenId = await contract.tokenOfOwnerByIndex(address, i);
+        const balance = await contract.balanceOfNFT(tokenId);
+        return Number(balance);
+      }),
+    );
+
+    return sum(balances);
   }
 }
