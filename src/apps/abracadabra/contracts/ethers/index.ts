@@ -2,15 +2,17 @@
 /* tslint:disable */
 /* eslint-disable */
 export type { AbracadabraBentoBoxTokenContract } from './AbracadabraBentoBoxTokenContract';
+export type { AbracadabraCauldron } from './AbracadabraCauldron';
 export type { AbracadabraConvexWrapper } from './AbracadabraConvexWrapper';
-export type { AbracadabraCouldronTokenContract } from './AbracadabraCouldronTokenContract';
 export type { AbracadabraMspell } from './AbracadabraMspell';
-export type { AbracadabraStakedSpellTokenContract } from './AbracadabraStakedSpellTokenContract';
+export type { AbracadabraStakedSpell } from './AbracadabraStakedSpell';
 export type { PopsicleChef } from './PopsicleChef';
+export type { SushiswapBentobox } from './SushiswapBentobox';
 export * as factories from './factories';
 export { AbracadabraBentoBoxTokenContract__factory } from './factories/AbracadabraBentoBoxTokenContract__factory';
+export { AbracadabraCauldron__factory } from './factories/AbracadabraCauldron__factory';
 export { AbracadabraConvexWrapper__factory } from './factories/AbracadabraConvexWrapper__factory';
-export { AbracadabraCouldronTokenContract__factory } from './factories/AbracadabraCouldronTokenContract__factory';
 export { AbracadabraMspell__factory } from './factories/AbracadabraMspell__factory';
-export { AbracadabraStakedSpellTokenContract__factory } from './factories/AbracadabraStakedSpellTokenContract__factory';
+export { AbracadabraStakedSpell__factory } from './factories/AbracadabraStakedSpell__factory';
 export { PopsicleChef__factory } from './factories/PopsicleChef__factory';
+export { SushiswapBentobox__factory } from './factories/SushiswapBentobox__factory';

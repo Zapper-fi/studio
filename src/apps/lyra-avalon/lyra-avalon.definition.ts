@@ -25,14 +25,30 @@ export const LYRA_AVALON_DEFINITION = appDefinition({
 
     staking: {
       id: 'staking',
-      type: GroupType.TOKEN,
+      type: GroupType.POSITION,
       label: 'Staking',
+    },
+
+    ve: {
+      id: 've',
+      type: GroupType.TOKEN,
+      label: 'VotedEscrow',
+    },
+
+    claimable: {
+      id: 'claimable',
+      type: GroupType.POSITION,
+      label: 'Rewards',
     },
   },
 
   tags: [AppTag.OPTIONS],
   keywords: [],
-  links: {},
+
+  links: {
+    discord: 'https://discord.com/invite/P49mj6UbmC',
+    github: 'https://github.com/lyra-finance',
+  },
 
   supportedNetworks: {
     [Network.OPTIMISM_MAINNET]: [AppAction.VIEW],

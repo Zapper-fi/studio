@@ -12,7 +12,7 @@ export const BLOCKS_PER_DAY: Record<Network, number> = {
   [Network.HARMONY_MAINNET]: 0,
   [Network.FANTOM_OPERA_MAINNET]: 86400,
   [Network.GNOSIS_MAINNET]: 0,
-  [Network.MOONRIVER_MAINNET]: 0,
+  [Network.MOONRIVER_MAINNET]: 5760,
   [Network.CRONOS_MAINNET]: 17280,
   [Network.AURORA_MAINNET]: 86400,
   [Network.EVMOS_MAINNET]: 17280,

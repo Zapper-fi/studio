@@ -10,11 +10,11 @@ import { TraderJoeVeJoeStaking, TraderJoeContractFactory } from '../contracts';
 import { TRADER_JOE_DEFINITION } from '../trader-joe.definition';
 
 const appId = TRADER_JOE_DEFINITION.id;
-const groupId = TRADER_JOE_DEFINITION.groups.veJoeFarm.id;
+const groupId = TRADER_JOE_DEFINITION.groups.veJoe.id;
 const network = Network.AVALANCHE_MAINNET;
 
 @Register.ContractPositionFetcher({ appId, groupId, network })
-export class AvalancheTraderJoeVeJoeFarmContractPositionFetcher implements PositionFetcher<ContractPosition> {
+export class AvalancheTraderJoeVeJoeContractPositionFetcher implements PositionFetcher<ContractPosition> {
   constructor(
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
     @Inject(TraderJoeContractFactory) private readonly contractFactory: TraderJoeContractFactory,

@@ -6,6 +6,7 @@ import { Network } from '~types/network.interface';
 
 import { LlamaAirforceMerkleDistributor__factory } from './ethers';
 import { LlamaAirforceUnionVault__factory } from './ethers';
+import { LlamaAirforceUnionVaultPirex__factory } from './ethers';
 
 // eslint-disable-next-line
 type ContractOpts = { address: string; network: Network };
@@ -22,7 +23,11 @@ export class LlamaAirforceContractFactory extends ContractFactory {
   llamaAirforceUnionVault({ address, network }: ContractOpts) {
     return LlamaAirforceUnionVault__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
+  llamaAirforceUnionVaultPirex({ address, network }: ContractOpts) {
+    return LlamaAirforceUnionVaultPirex__factory.connect(address, this.appToolkit.getNetworkProvider(network));
+  }
 }
 
 export type { LlamaAirforceMerkleDistributor } from './ethers';
 export type { LlamaAirforceUnionVault } from './ethers';
+export type { LlamaAirforceUnionVaultPirex } from './ethers';

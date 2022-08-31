@@ -9,11 +9,11 @@ import { Network } from '~types/network.interface';
 import { SynthetixContractFactory, SynthetixRewards } from '../contracts';
 import { SYNTHETIX_DEFINITION } from '../synthetix.definition';
 
-@Register.ContractPositionBalanceFetcher({
-  appId: SYNTHETIX_DEFINITION.id,
-  groupId: SYNTHETIX_DEFINITION.groups.farm.id,
-  network: Network.ETHEREUM_MAINNET,
-})
+const appId = SYNTHETIX_DEFINITION.id;
+const groupId = SYNTHETIX_DEFINITION.groups.farm.id;
+const network = Network.ETHEREUM_MAINNET;
+
+@Register.ContractPositionBalanceFetcher({ appId, groupId, network })
 export class EthereumSynthetixFarmContractPositionBalanceFetcher
   implements PositionBalanceFetcher<ContractPositionBalance>
 {
@@ -25,9 +25,9 @@ export class EthereumSynthetixFarmContractPositionBalanceFetcher
   async getBalances(address: string) {
     return this.appToolkit.helpers.singleStakingContractPositionBalanceHelper.getBalances<SynthetixRewards>({
       address,
-      appId: SYNTHETIX_DEFINITION.id,
-      groupId: SYNTHETIX_DEFINITION.groups.farm.id,
-      network: Network.ETHEREUM_MAINNET,
+      appId,
+      groupId,
+      network,
       resolveContract: ({ address, network }) => this.synthetixContractFactory.synthetixRewards({ address, network }),
       resolveStakedTokenBalance: ({ contract, address, multicall }) => multicall.wrap(contract).balanceOf(address),
       resolveRewardTokenBalances: ({ contract, address, multicall }) => multicall.wrap(contract).earned(address),

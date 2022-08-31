@@ -1,9 +1,16 @@
 import { Inject } from '@nestjs/common';
 
+import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
-import { CurveVotingEscrowContractPositionHelper } from '~apps/curve/helpers/curve.voting-escrow.contract-position-helper';
-import { PositionFetcher } from '~position/position-fetcher.interface';
-import { ContractPosition } from '~position/position.interface';
+import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
+import { MetaType } from '~position/position.interface';
+import { isSupplied } from '~position/position.utils';
+import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
+import {
+  GetDisplayPropsParams,
+  GetTokenBalancesParams,
+  GetTokenDefinitionsParams,
+} from '~position/template/contract-position.template.types';
 import { Network } from '~types/network.interface';
 
 import { BALANCER_V2_DEFINITION } from '../balancer-v2.definition';
@@ -14,26 +21,39 @@ const groupId = BALANCER_V2_DEFINITION.groups.votingEscrow.id;
 const network = Network.ETHEREUM_MAINNET;
 
 @Register.ContractPositionFetcher({ appId, groupId, network })
-export class EthereumBalancerV2VotingEscrowContractPositionFetcher implements PositionFetcher<ContractPosition> {
-  constructor(
-    @Inject(CurveVotingEscrowContractPositionHelper)
-    private readonly curveVotingEscrowContractPositionHelper: CurveVotingEscrowContractPositionHelper,
-    @Inject(BalancerV2ContractFactory)
-    private readonly balancerV2ContractFactory: BalancerV2ContractFactory,
-  ) {}
+export class EthereumBalancerV2VotingEscrowContractPositionFetcher extends ContractPositionTemplatePositionFetcher<BalancerVeBal> {
+  appId = BALANCER_V2_DEFINITION.id;
+  groupId = BALANCER_V2_DEFINITION.groups.votingEscrow.id;
+  network = Network.ETHEREUM_MAINNET;
+  groupLabel = 'Voting Escrow';
 
-  async getPositions() {
-    const network = Network.ETHEREUM_MAINNET;
-    return this.curveVotingEscrowContractPositionHelper.getContractPositions<BalancerVeBal>({
-      votingEscrowAddress: '0xc128a9954e6c874ea3d62ce62b468ba073093f25',
-      appId: BALANCER_V2_DEFINITION.id,
-      groupId: BALANCER_V2_DEFINITION.groups.votingEscrow.id,
-      network,
-      appTokenDependencies: [
-        { appId: BALANCER_V2_DEFINITION.id, groupIds: [BALANCER_V2_DEFINITION.groups.pool.id], network },
-      ],
-      resolveContract: ({ address }) => this.balancerV2ContractFactory.balancerVeBal({ network, address }),
-      resolveLockedTokenAddress: ({ contract, multicall }) => multicall.wrap(contract).token(),
-    });
+  constructor(
+    @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
+    @Inject(BalancerV2ContractFactory) protected readonly contractFactory: BalancerV2ContractFactory,
+  ) {
+    super(appToolkit);
+  }
+
+  getContract(address: string): BalancerVeBal {
+    return this.contractFactory.balancerVeBal({ address, network: this.network });
+  }
+
+  async getDefinitions() {
+    return [{ address: '0xc128a9954e6c874ea3d62ce62b468ba073093f25' }];
+  }
+
+  async getTokenDefinitions({ contract }: GetTokenDefinitionsParams<BalancerVeBal>) {
+    const tokenAddress = await contract.token();
+    return [{ metaType: MetaType.SUPPLIED, address: tokenAddress }];
+  }
+
+  async getLabel({ contractPosition }: GetDisplayPropsParams<BalancerVeBal>) {
+    const suppliedToken = contractPosition.tokens.find(isSupplied)!;
+    return `Voting Escrow ${getLabelFromToken(suppliedToken)}`;
+  }
+
+  async getTokenBalancesPerPosition({ address, contract }: GetTokenBalancesParams<BalancerVeBal>) {
+    const lockedBalance = await contract.locked(address);
+    return [lockedBalance.amount];
   }
 }

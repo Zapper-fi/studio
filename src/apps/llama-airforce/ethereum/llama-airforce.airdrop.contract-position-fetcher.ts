@@ -1,52 +1,62 @@
 import { Inject } from '@nestjs/common';
 
-import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
+import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
-import { buildDollarDisplayItem } from '~app-toolkit/helpers/presentation/display-item.present';
-import { getImagesFromToken, getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
-import { ContractType } from '~position/contract.interface';
-import { PositionFetcher } from '~position/position-fetcher.interface';
-import { ContractPosition } from '~position/position.interface';
-import { claimable } from '~position/position.utils';
+import { isClaimable } from '~position/position.utils';
+import { GetTokenBalancesParams } from '~position/template/contract-position.template.types';
+import { MerkleTemplateContractPositionFetcher } from '~position/template/merkle.template.contract-position-fetcher';
 import { Network } from '~types/network.interface';
 
+import { LlamaAirforceContractFactory, LlamaAirforceMerkleDistributor } from '../contracts';
 import { LLAMA_AIRFORCE_DEFINITION } from '../llama-airforce.definition';
+
+import { EthereumLlamaAirforceMerkleCache } from './llama-airforce.merkle-cache';
 
 const appId = LLAMA_AIRFORCE_DEFINITION.id;
 const groupId = LLAMA_AIRFORCE_DEFINITION.groups.airdrop.id;
 const network = Network.ETHEREUM_MAINNET;
 
-const MERKLE_CLAIM_ADDRESS = '0xa83043df401346a67eddeb074679b4570b956183';
+@Register.ContractPositionFetcher({ appId, groupId, network, options: { excludeFromTvl: true } })
+export class EthereumLlamaAirforceAirdropContractPositionFetcher extends MerkleTemplateContractPositionFetcher<LlamaAirforceMerkleDistributor> {
+  appId = appId;
+  groupId = groupId;
+  network = network;
+  groupLabel = 'Airdrop';
+  merkleAddress = '0xa83043df401346a67eddeb074679b4570b956183';
 
-@Register.ContractPositionFetcher({ appId, groupId, network })
-export class EthereumLlamaAirforceAirdropContractPositionFetcher implements PositionFetcher<ContractPosition> {
-  constructor(@Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit) {}
+  constructor(
+    @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
+    @Inject(LlamaAirforceContractFactory) protected readonly contractFactory: LlamaAirforceContractFactory,
+    @Inject(EthereumLlamaAirforceMerkleCache) private readonly merkleCache: EthereumLlamaAirforceMerkleCache,
+  ) {
+    super(appToolkit);
+  }
 
-  async getPositions(): Promise<ContractPosition[]> {
-    const appTokens = await this.appToolkit.getAppTokenPositions({
-      appId: LLAMA_AIRFORCE_DEFINITION.id,
-      groupIds: [LLAMA_AIRFORCE_DEFINITION.groups.vault.id],
-      network,
-    });
+  getContract(address: string): LlamaAirforceMerkleDistributor {
+    return this.contractFactory.llamaAirforceMerkleDistributor({ address, network: this.network });
+  }
 
-    const rewardToken = appTokens.find(v => v.symbol === 'uCRV');
-    if (!rewardToken) return [];
+  async getRewardTokenAddresses() {
+    return [
+      '0x83507cc8c8b67ed48badd1f59f684d5d02884c81', // uCRV
+      '0xf964b0e3ffdea659c44a5a52bc0b82a24b89ce0e', // uFXS
+      '0x8659fc767cad6005de79af65dafe4249c57927af', // uCVX
+    ];
+  }
 
-    const contractPositionBalance: ContractPosition = {
-      type: ContractType.POSITION,
-      address: MERKLE_CLAIM_ADDRESS,
-      appId,
-      groupId,
-      network,
-      tokens: [claimable(rewardToken)],
-      dataProps: {},
-      displayProps: {
-        label: `Claimable ${getLabelFromToken(rewardToken)}`,
-        secondaryLabel: buildDollarDisplayItem(rewardToken.price),
-        images: getImagesFromToken(rewardToken),
-      },
-    };
+  async getTokenBalancesPerPosition({
+    address,
+    contractPosition,
+    contract,
+  }: GetTokenBalancesParams<LlamaAirforceMerkleDistributor>) {
+    const rewardToken = contractPosition.tokens.find(isClaimable)!;
+    const rewardsData = await this.merkleCache.getClaim(rewardToken.address, address);
+    if (!rewardsData) return [0];
 
-    return [contractPositionBalance];
+    const { index, amount } = rewardsData;
+    const isClaimed = await contract.isClaimed(index);
+    if (isClaimed) return [0];
+
+    return [amount];
   }
 }

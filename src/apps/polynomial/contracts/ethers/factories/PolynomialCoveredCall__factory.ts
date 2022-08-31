@@ -10,13 +10,38 @@ const _abi = [
   {
     inputs: [
       {
-        internalType: 'string',
-        name: '_name',
-        type: 'string',
+        internalType: 'contract ERC20',
+        name: '_underlying',
+        type: 'address',
       },
       {
         internalType: 'contract ERC20',
-        name: '_underlying',
+        name: '_susd',
+        type: 'address',
+      },
+      {
+        internalType: 'contract IPolynomialVaultToken',
+        name: '_vaultToken',
+        type: 'address',
+      },
+      {
+        internalType: 'contract IOptionMarket',
+        name: '_market',
+        type: 'address',
+      },
+      {
+        internalType: 'contract IOptionMarketWrapperWithSwaps',
+        name: '_marketWrapper',
+        type: 'address',
+      },
+      {
+        internalType: 'contract IOptionToken',
+        name: '_optionToken',
+        type: 'address',
+      },
+      {
+        internalType: 'contract IOptionGreekCache',
+        name: '_greeks',
         type: 'address',
       },
       {
@@ -25,8 +50,8 @@ const _abi = [
         type: 'address',
       },
       {
-        internalType: 'contract IOptionMarket',
-        name: '_lyraMarket',
+        internalType: 'contract IExchangeRates',
+        name: '_exchangeRates',
         type: 'address',
       },
       {
@@ -36,12 +61,215 @@ const _abi = [
       },
       {
         internalType: 'bytes32',
-        name: '_premiumKey',
+        name: '_name',
         type: 'bytes32',
       },
     ],
     stateMutability: 'nonpayable',
     type: 'constructor',
+  },
+  {
+    inputs: [],
+    name: 'DepositsNotPaused',
+    type: 'error',
+  },
+  {
+    inputs: [],
+    name: 'DepositsPaused',
+    type: 'error',
+  },
+  {
+    inputs: [],
+    name: 'ExpectedNonZero',
+    type: 'error',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'uint256',
+        name: 'currentPerf',
+        type: 'uint256',
+      },
+      {
+        internalType: 'uint256',
+        name: 'currentWithdraw',
+        type: 'uint256',
+      },
+      {
+        internalType: 'uint256',
+        name: 'newPerf',
+        type: 'uint256',
+      },
+      {
+        internalType: 'uint256',
+        name: 'newWithdraw',
+        type: 'uint256',
+      },
+    ],
+    name: 'FeesTooHigh',
+    type: 'error',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'uint256',
+        name: 'totalFunds',
+        type: 'uint256',
+      },
+      {
+        internalType: 'uint256',
+        name: 'usedFunds',
+        type: 'uint256',
+      },
+      {
+        internalType: 'uint256',
+        name: 'requiredFunds',
+        type: 'uint256',
+      },
+    ],
+    name: 'InsufficientFunds',
+    type: 'error',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'uint256',
+        name: 'strikeId',
+        type: 'uint256',
+      },
+      {
+        internalType: 'uint256',
+        name: 'positionId',
+        type: 'uint256',
+      },
+    ],
+    name: 'InvalidCloseRequest',
+    type: 'error',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'uint256',
+        name: 'currentCollateralization',
+        type: 'uint256',
+      },
+      {
+        internalType: 'uint256',
+        name: 'requestedCollateralization',
+        type: 'uint256',
+      },
+    ],
+    name: 'InvalidCollateralization',
+    type: 'error',
+  },
+  {
+    inputs: [],
+    name: 'InvalidExpiryPrice',
+    type: 'error',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'uint256',
+        name: 'spotPrice',
+        type: 'uint256',
+      },
+      {
+        internalType: 'bool',
+        name: 'isInvalid',
+        type: 'bool',
+      },
+    ],
+    name: 'InvalidPrice',
+    type: 'error',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'uint256',
+        name: 'minDeposit',
+        type: 'uint256',
+      },
+      {
+        internalType: 'uint256',
+        name: 'requestedAmount',
+        type: 'uint256',
+      },
+    ],
+    name: 'MinimumDepositRequired',
+    type: 'error',
+  },
+  {
+    inputs: [],
+    name: 'NotPaused',
+    type: 'error',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'uint256',
+        name: 'strikeId',
+        type: 'uint256',
+      },
+      {
+        internalType: 'uint256',
+        name: 'positionId',
+        type: 'uint256',
+      },
+      {
+        internalType: 'enum IOptionToken.PositionState',
+        name: 'optionState',
+        type: 'uint8',
+      },
+    ],
+    name: 'OptionNotSettled',
+    type: 'error',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'uint256',
+        name: 'strikeId',
+        type: 'uint256',
+      },
+      {
+        internalType: 'uint256',
+        name: 'delta',
+        type: 'uint256',
+      },
+    ],
+    name: 'OptionTooRisky',
+    type: 'error',
+  },
+  {
+    inputs: [],
+    name: 'Paused',
+    type: 'error',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: false,
+        internalType: 'uint256',
+        name: 'strikeId',
+        type: 'uint256',
+      },
+      {
+        indexed: false,
+        internalType: 'uint256',
+        name: 'positionId',
+        type: 'uint256',
+      },
+      {
+        indexed: false,
+        internalType: 'uint256',
+        name: 'amount',
+        type: 'uint256',
+      },
+    ],
+    name: 'AddCollateral',
+    type: 'event',
   },
   {
     anonymous: false,
@@ -66,106 +294,142 @@ const _abi = [
     anonymous: false,
     inputs: [
       {
-        indexed: true,
-        internalType: 'address',
-        name: 'user',
-        type: 'address',
-      },
-      {
-        indexed: true,
+        indexed: false,
         internalType: 'uint256',
-        name: 'depositRound',
+        name: 'strikeId',
         type: 'uint256',
       },
       {
         indexed: false,
         internalType: 'uint256',
-        name: 'amt',
+        name: 'positionId',
+        type: 'uint256',
+      },
+      {
+        indexed: false,
+        internalType: 'uint256',
+        name: 'amount',
+        type: 'uint256',
+      },
+      {
+        indexed: false,
+        internalType: 'uint256',
+        name: 'collateralWithdrawn',
+        type: 'uint256',
+      },
+      {
+        indexed: false,
+        internalType: 'uint256',
+        name: 'premiumPaid',
         type: 'uint256',
       },
     ],
-    name: 'CancelDeposit',
+    name: 'ClosePosition',
     type: 'event',
   },
   {
     anonymous: false,
     inputs: [
       {
-        indexed: true,
+        indexed: false,
+        internalType: 'uint256',
+        name: 'depositId',
+        type: 'uint256',
+      },
+      {
+        indexed: false,
+        internalType: 'address',
+        name: 'depositor',
+        type: 'address',
+      },
+      {
+        indexed: false,
         internalType: 'address',
         name: 'user',
         type: 'address',
       },
       {
-        indexed: true,
-        internalType: 'uint256',
-        name: 'withdrawnRound',
-        type: 'uint256',
-      },
-      {
         indexed: false,
         internalType: 'uint256',
-        name: 'shares',
+        name: 'amount',
         type: 'uint256',
       },
     ],
-    name: 'CancelWithdraw',
+    name: 'InitiateDeposit',
     type: 'event',
   },
   {
     anonymous: false,
     inputs: [
       {
-        indexed: true,
+        indexed: false,
+        internalType: 'uint256',
+        name: 'withdrawalId',
+        type: 'uint256',
+      },
+      {
+        indexed: false,
+        internalType: 'address',
+        name: 'withdrawer',
+        type: 'address',
+      },
+      {
+        indexed: false,
         internalType: 'address',
         name: 'user',
         type: 'address',
       },
       {
-        indexed: true,
-        internalType: 'uint256',
-        name: 'withdrawnRound',
-        type: 'uint256',
-      },
-      {
         indexed: false,
         internalType: 'uint256',
-        name: 'shares',
-        type: 'uint256',
-      },
-      {
-        indexed: false,
-        internalType: 'uint256',
-        name: 'funds',
+        name: 'tokens',
         type: 'uint256',
       },
     ],
-    name: 'CompleteWithdraw',
+    name: 'InitiateWithdrawal',
     type: 'event',
   },
   {
     anonymous: false,
     inputs: [
       {
-        indexed: true,
-        internalType: 'address',
-        name: 'user',
-        type: 'address',
-      },
-      {
-        indexed: true,
+        indexed: false,
         internalType: 'uint256',
-        name: 'depositRound',
+        name: 'strikeId',
         type: 'uint256',
       },
       {
         indexed: false,
         internalType: 'uint256',
-        name: 'amt',
+        name: 'positionId',
+        type: 'uint256',
+      },
+      {
+        indexed: false,
+        internalType: 'uint256',
+        name: 'amount',
+        type: 'uint256',
+      },
+      {
+        indexed: false,
+        internalType: 'uint256',
+        name: 'collateral',
+        type: 'uint256',
+      },
+      {
+        indexed: false,
+        internalType: 'uint256',
+        name: 'premiumCollected',
+        type: 'uint256',
+      },
+      {
+        indexed: false,
+        internalType: 'uint256',
+        name: 'callDelta',
         type: 'uint256',
       },
     ],
-    name: 'Deposit',
+    name: 'OpenPosition',
     type: 'event',
   },
   {
@@ -192,285 +456,110 @@ const _abi = [
     inputs: [
       {
         indexed: false,
-        internalType: 'address',
-        name: 'account',
-        type: 'address',
+        internalType: 'uint256',
+        name: 'depositId',
+        type: 'uint256',
       },
-    ],
-    name: 'Paused',
-    type: 'event',
-  },
-  {
-    anonymous: false,
-    inputs: [
       {
-        indexed: true,
+        indexed: false,
         internalType: 'address',
         name: 'user',
         type: 'address',
       },
       {
-        indexed: true,
+        indexed: false,
         internalType: 'uint256',
-        name: 'withdrawnRound',
+        name: 'amount',
         type: 'uint256',
       },
       {
         indexed: false,
         internalType: 'uint256',
-        name: 'shares',
+        name: 'tokens',
+        type: 'uint256',
+      },
+      {
+        indexed: false,
+        internalType: 'uint256',
+        name: 'requestedTime',
         type: 'uint256',
       },
     ],
-    name: 'RequestWithdraw',
+    name: 'ProcessDeposit',
     type: 'event',
   },
   {
     anonymous: false,
     inputs: [
       {
-        indexed: true,
+        indexed: false,
         internalType: 'uint256',
-        name: 'round',
+        name: 'withdrawalId',
+        type: 'uint256',
+      },
+      {
+        indexed: false,
+        internalType: 'address',
+        name: 'user',
+        type: 'address',
+      },
+      {
+        indexed: false,
+        internalType: 'uint256',
+        name: 'tokens',
         type: 'uint256',
       },
       {
         indexed: false,
         internalType: 'uint256',
-        name: 'optionsSold',
+        name: 'amount',
         type: 'uint256',
       },
       {
         indexed: false,
         internalType: 'uint256',
-        name: 'totalCost',
-        type: 'uint256',
-      },
-      {
-        indexed: false,
-        internalType: 'uint256',
-        name: 'expiry',
-        type: 'uint256',
-      },
-      {
-        indexed: false,
-        internalType: 'uint256',
-        name: 'strikePrice',
+        name: 'requestedTime',
         type: 'uint256',
       },
     ],
-    name: 'SellOptions',
+    name: 'ProcessWithdrawal',
     type: 'event',
   },
   {
     anonymous: false,
     inputs: [
       {
-        indexed: true,
+        indexed: false,
+        internalType: 'uint256',
+        name: 'withdrawalId',
+        type: 'uint256',
+      },
+      {
+        indexed: false,
         internalType: 'address',
-        name: 'auth',
+        name: 'user',
         type: 'address',
       },
       {
         indexed: false,
         internalType: 'uint256',
-        name: 'oldCap',
+        name: 'tokens',
         type: 'uint256',
       },
       {
         indexed: false,
         internalType: 'uint256',
-        name: 'newCap',
+        name: 'amount',
+        type: 'uint256',
+      },
+      {
+        indexed: false,
+        internalType: 'uint256',
+        name: 'requestedTime',
         type: 'uint256',
       },
     ],
-    name: 'SetCap',
-    type: 'event',
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: true,
-        internalType: 'address',
-        name: 'auth',
-        type: 'address',
-      },
-      {
-        indexed: false,
-        internalType: 'address',
-        name: 'oldReceipient',
-        type: 'address',
-      },
-      {
-        indexed: false,
-        internalType: 'address',
-        name: 'newReceipient',
-        type: 'address',
-      },
-    ],
-    name: 'SetFeeReciepient',
-    type: 'event',
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: true,
-        internalType: 'address',
-        name: 'auth',
-        type: 'address',
-      },
-      {
-        indexed: false,
-        internalType: 'uint256',
-        name: 'oldManageFee',
-        type: 'uint256',
-      },
-      {
-        indexed: false,
-        internalType: 'uint256',
-        name: 'oldPerfFee',
-        type: 'uint256',
-      },
-      {
-        indexed: false,
-        internalType: 'uint256',
-        name: 'newManageFee',
-        type: 'uint256',
-      },
-      {
-        indexed: false,
-        internalType: 'uint256',
-        name: 'newPerfFee',
-        type: 'uint256',
-      },
-    ],
-    name: 'SetFees',
-    type: 'event',
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: true,
-        internalType: 'address',
-        name: 'auth',
-        type: 'address',
-      },
-      {
-        indexed: false,
-        internalType: 'uint256',
-        name: 'oldLimit',
-        type: 'uint256',
-      },
-      {
-        indexed: false,
-        internalType: 'uint256',
-        name: 'newLimit',
-        type: 'uint256',
-      },
-    ],
-    name: 'SetIvLimit',
-    type: 'event',
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: true,
-        internalType: 'address',
-        name: 'auth',
-        type: 'address',
-      },
-      {
-        indexed: false,
-        internalType: 'address',
-        name: 'oldKeeper',
-        type: 'address',
-      },
-      {
-        indexed: false,
-        internalType: 'address',
-        name: 'newKeeper',
-        type: 'address',
-      },
-    ],
-    name: 'SetKeeper',
-    type: 'event',
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: true,
-        internalType: 'address',
-        name: 'auth',
-        type: 'address',
-      },
-      {
-        indexed: false,
-        internalType: 'uint256',
-        name: 'oldDepositLimit',
-        type: 'uint256',
-      },
-      {
-        indexed: false,
-        internalType: 'uint256',
-        name: 'newDepositLimit',
-        type: 'uint256',
-      },
-    ],
-    name: 'SetUserDepositLimit',
-    type: 'event',
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: true,
-        internalType: 'uint256',
-        name: 'round',
-        type: 'uint256',
-      },
-      {
-        indexed: true,
-        internalType: 'uint256',
-        name: 'listingId',
-        type: 'uint256',
-      },
-      {
-        indexed: false,
-        internalType: 'uint256',
-        name: 'newIndex',
-        type: 'uint256',
-      },
-      {
-        indexed: false,
-        internalType: 'uint256',
-        name: 'expiry',
-        type: 'uint256',
-      },
-      {
-        indexed: false,
-        internalType: 'uint256',
-        name: 'strikePrice',
-        type: 'uint256',
-      },
-      {
-        indexed: false,
-        internalType: 'uint256',
-        name: 'lostColl',
-        type: 'uint256',
-      },
-      {
-        indexed: false,
-        internalType: 'uint256',
-        name: 'qty',
-        type: 'uint256',
-      },
-    ],
-    name: 'StartNewRound',
+    name: 'ProcessWithdrawalPartially',
     type: 'event',
   },
   {
@@ -483,15 +572,235 @@ const _abi = [
         type: 'address',
       },
     ],
-    name: 'Unpaused',
+    name: 'SetDepositsPaused',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: false,
+        internalType: 'address',
+        name: 'account',
+        type: 'address',
+      },
+    ],
+    name: 'SetDepositsUnpaused',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: false,
+        internalType: 'address',
+        name: 'account',
+        type: 'address',
+      },
+    ],
+    name: 'SetPaused',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: false,
+        internalType: 'address',
+        name: 'account',
+        type: 'address',
+      },
+    ],
+    name: 'SetUnpaused',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: false,
+        internalType: 'uint256',
+        name: 'strikeId',
+        type: 'uint256',
+      },
+      {
+        indexed: false,
+        internalType: 'uint256',
+        name: 'positionId',
+        type: 'uint256',
+      },
+      {
+        indexed: false,
+        internalType: 'uint256',
+        name: 'amount',
+        type: 'uint256',
+      },
+      {
+        indexed: false,
+        internalType: 'uint256',
+        name: 'totalCollateral',
+        type: 'uint256',
+      },
+      {
+        indexed: false,
+        internalType: 'int256',
+        name: 'totalPremium',
+        type: 'int256',
+      },
+      {
+        indexed: false,
+        internalType: 'uint256',
+        name: 'loss',
+        type: 'uint256',
+      },
+    ],
+    name: 'SettleOption',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: false,
+        internalType: 'uint256',
+        name: 'oldCollateralization',
+        type: 'uint256',
+      },
+      {
+        indexed: false,
+        internalType: 'uint256',
+        name: 'newCollateralization',
+        type: 'uint256',
+      },
+    ],
+    name: 'UpdateCollateralization',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: false,
+        internalType: 'uint256',
+        name: 'oldDepositDelay',
+        type: 'uint256',
+      },
+      {
+        indexed: false,
+        internalType: 'uint256',
+        name: 'newDepositDelay',
+        type: 'uint256',
+      },
+      {
+        indexed: false,
+        internalType: 'uint256',
+        name: 'oldWithdrawDelay',
+        type: 'uint256',
+      },
+      {
+        indexed: false,
+        internalType: 'uint256',
+        name: 'newWithdrawDelay',
+        type: 'uint256',
+      },
+    ],
+    name: 'UpdateDelays',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: false,
+        internalType: 'address',
+        name: 'oldFeeReceipient',
+        type: 'address',
+      },
+      {
+        indexed: false,
+        internalType: 'address',
+        name: 'newFeeReceipient',
+        type: 'address',
+      },
+    ],
+    name: 'UpdateFeeReceipient',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: false,
+        internalType: 'uint256',
+        name: 'oldPerf',
+        type: 'uint256',
+      },
+      {
+        indexed: false,
+        internalType: 'uint256',
+        name: 'oldWithdraw',
+        type: 'uint256',
+      },
+      {
+        indexed: false,
+        internalType: 'uint256',
+        name: 'newPerf',
+        type: 'uint256',
+      },
+      {
+        indexed: false,
+        internalType: 'uint256',
+        name: 'newWithdraw',
+        type: 'uint256',
+      },
+    ],
+    name: 'UpdateFees',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: false,
+        internalType: 'uint256',
+        name: 'oldMinimum',
+        type: 'uint256',
+      },
+      {
+        indexed: false,
+        internalType: 'uint256',
+        name: 'newMinimum',
+        type: 'uint256',
+      },
+    ],
+    name: 'UpdateMinDeposit',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: false,
+        internalType: 'bytes32',
+        name: 'oldCode',
+        type: 'bytes32',
+      },
+      {
+        indexed: false,
+        internalType: 'bytes32',
+        name: 'newCode',
+        type: 'bytes32',
+      },
+    ],
+    name: 'UpdateSynthetixTrackingCode',
     type: 'event',
   },
   {
     inputs: [],
-    name: 'LYRA_CLAIMER',
+    name: 'GREEKS',
     outputs: [
       {
-        internalType: 'contract ILyraDistributor',
+        internalType: 'contract IOptionGreekCache',
         name: '',
         type: 'address',
       },
@@ -501,7 +810,7 @@ const _abi = [
   },
   {
     inputs: [],
-    name: 'LYRA_MARKET',
+    name: 'MARKET',
     outputs: [
       {
         internalType: 'contract IOptionMarket',
@@ -514,7 +823,46 @@ const _abi = [
   },
   {
     inputs: [],
-    name: 'LYRA_TOKEN',
+    name: 'MARKET_WRAPPER',
+    outputs: [
+      {
+        internalType: 'contract IOptionMarketWrapperWithSwaps',
+        name: '',
+        type: 'address',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'OPTION_TOKEN',
+    outputs: [
+      {
+        internalType: 'contract IOptionToken',
+        name: '',
+        type: 'address',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'RATES',
+    outputs: [
+      {
+        internalType: 'contract IExchangeRates',
+        name: '',
+        type: 'address',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'SUSD',
     outputs: [
       {
         internalType: 'contract ERC20',
@@ -540,32 +888,6 @@ const _abi = [
   },
   {
     inputs: [],
-    name: 'SYNTH_KEY_PREMIUM',
-    outputs: [
-      {
-        internalType: 'bytes32',
-        name: '',
-        type: 'bytes32',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'SYNTH_KEY_UNDERLYING',
-    outputs: [
-      {
-        internalType: 'bytes32',
-        name: '',
-        type: 'bytes32',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [],
     name: 'UNDERLYING',
     outputs: [
       {
@@ -575,6 +897,50 @@ const _abi = [
       },
     ],
     stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'UNDERLYING_SYNTH_KEY',
+    outputs: [
+      {
+        internalType: 'bytes32',
+        name: '',
+        type: 'bytes32',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'VAULT_TOKEN',
+    outputs: [
+      {
+        internalType: 'contract IPolynomialVaultToken',
+        name: '',
+        type: 'address',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'uint256',
+        name: 'strikeId',
+        type: 'uint256',
+      },
+      {
+        internalType: 'uint256',
+        name: 'amount',
+        type: 'uint256',
+      },
+    ],
+    name: 'addCollateral',
+    outputs: [],
+    stateMutability: 'nonpayable',
     type: 'function',
   },
   {
@@ -594,90 +960,28 @@ const _abi = [
     inputs: [
       {
         internalType: 'uint256',
-        name: '_amt',
+        name: 'strikeId',
         type: 'uint256',
       },
-    ],
-    name: 'cancelDeposit',
-    outputs: [],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [
       {
         internalType: 'uint256',
-        name: '_shares',
+        name: 'amount',
+        type: 'uint256',
+      },
+      {
+        internalType: 'uint256',
+        name: 'premiumAmount',
         type: 'uint256',
       },
     ],
-    name: 'cancelWithdraw',
-    outputs: [],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        internalType: 'address',
-        name: '_receiver',
-        type: 'address',
-      },
-    ],
-    name: 'claimLyra',
+    name: 'closePosition',
     outputs: [],
     stateMutability: 'nonpayable',
     type: 'function',
   },
   {
     inputs: [],
-    name: 'completeWithdraw',
-    outputs: [],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'currentExpiry',
-    outputs: [
-      {
-        internalType: 'uint256',
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'currentListingId',
-    outputs: [
-      {
-        internalType: 'uint256',
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'currentRound',
-    outputs: [
-      {
-        internalType: 'uint256',
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'currentStrike',
+    name: 'collateralization',
     outputs: [
       {
         internalType: 'uint256',
@@ -691,17 +995,139 @@ const _abi = [
   {
     inputs: [
       {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    name: 'depositQueue',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: 'id',
+        type: 'uint256',
+      },
+      {
         internalType: 'address',
-        name: '_user',
+        name: 'user',
         type: 'address',
       },
       {
         internalType: 'uint256',
-        name: '_amt',
+        name: 'depositedAmount',
+        type: 'uint256',
+      },
+      {
+        internalType: 'uint256',
+        name: 'mintedTokens',
+        type: 'uint256',
+      },
+      {
+        internalType: 'uint256',
+        name: 'requestedTime',
         type: 'uint256',
       },
     ],
-    name: 'deposit',
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'depositsPaused',
+    outputs: [
+      {
+        internalType: 'bool',
+        name: '',
+        type: 'bool',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'feeReceipient',
+    outputs: [
+      {
+        internalType: 'address',
+        name: '',
+        type: 'address',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'getLiveStrikes',
+    outputs: [
+      {
+        internalType: 'uint256[]',
+        name: '',
+        type: 'uint256[]',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'getTokenPrice',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'getTotalSupply',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'address',
+        name: 'user',
+        type: 'address',
+      },
+      {
+        internalType: 'uint256',
+        name: 'amount',
+        type: 'uint256',
+      },
+    ],
+    name: 'initiateDeposit',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'address',
+        name: 'user',
+        type: 'address',
+      },
+      {
+        internalType: 'uint256',
+        name: 'tokens',
+        type: 'uint256',
+      },
+    ],
+    name: 'initiateWithdrawal',
     outputs: [],
     stateMutability: 'nonpayable',
     type: 'function',
@@ -710,31 +1136,11 @@ const _abi = [
     inputs: [
       {
         internalType: 'uint256',
-        name: '_amt',
+        name: '',
         type: 'uint256',
       },
     ],
-    name: 'deposit',
-    outputs: [],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'feeReciepient',
-    outputs: [
-      {
-        internalType: 'address',
-        name: '',
-        type: 'address',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'ivLimit',
+    name: 'liveStrikes',
     outputs: [
       {
         internalType: 'uint256',
@@ -747,12 +1153,12 @@ const _abi = [
   },
   {
     inputs: [],
-    name: 'keeper',
+    name: 'minDepositAmount',
     outputs: [
       {
-        internalType: 'address',
+        internalType: 'uint256',
         name: '',
-        type: 'address',
+        type: 'uint256',
       },
     ],
     stateMutability: 'view',
@@ -760,7 +1166,20 @@ const _abi = [
   },
   {
     inputs: [],
-    name: 'managementFee',
+    name: 'minDepositDelay',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'minWithdrawDelay',
     outputs: [
       {
         internalType: 'uint256',
@@ -776,12 +1195,56 @@ const _abi = [
     name: 'name',
     outputs: [
       {
-        internalType: 'string',
+        internalType: 'bytes32',
         name: '',
-        type: 'string',
+        type: 'bytes32',
       },
     ],
     stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'nextQueuedDepositId',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'nextQueuedWithdrawalId',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'uint256',
+        name: 'strikeId',
+        type: 'uint256',
+      },
+      {
+        internalType: 'uint256',
+        name: 'amount',
+        type: 'uint256',
+      },
+    ],
+    name: 'openPosition',
+    outputs: [],
+    stateMutability: 'nonpayable',
     type: 'function',
   },
   {
@@ -806,38 +1269,19 @@ const _abi = [
   },
   {
     inputs: [],
+    name: 'pauseDeposits',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [],
     name: 'paused',
     outputs: [
       {
         internalType: 'bool',
         name: '',
         type: 'bool',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'pendingDeposits',
-    outputs: [
-      {
-        internalType: 'uint256',
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'pendingWithdraws',
-    outputs: [
-      {
-        internalType: 'uint256',
-        name: '',
-        type: 'uint256',
       },
     ],
     stateMutability: 'view',
@@ -864,7 +1308,61 @@ const _abi = [
         type: 'uint256',
       },
     ],
-    name: 'performanceIndices',
+    name: 'positionDatas',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: 'positionId',
+        type: 'uint256',
+      },
+      {
+        internalType: 'uint256',
+        name: 'amount',
+        type: 'uint256',
+      },
+      {
+        internalType: 'uint256',
+        name: 'collateral',
+        type: 'uint256',
+      },
+      {
+        internalType: 'int256',
+        name: 'premiumCollected',
+        type: 'int256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'uint256',
+        name: 'idCount',
+        type: 'uint256',
+      },
+    ],
+    name: 'processDepositQueue',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'uint256',
+        name: 'idCount',
+        type: 'uint256',
+      },
+    ],
+    name: 'processWithdrawalQueue',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'queuedDepositHead',
     outputs: [
       {
         internalType: 'uint256',
@@ -877,7 +1375,7 @@ const _abi = [
   },
   {
     inputs: [],
-    name: 'premiumCollected',
+    name: 'queuedWithdrawalHead',
     outputs: [
       {
         internalType: 'uint256',
@@ -891,25 +1389,22 @@ const _abi = [
   {
     inputs: [
       {
-        internalType: 'uint256',
-        name: '_shares',
-        type: 'uint256',
+        internalType: 'address',
+        name: 'token',
+        type: 'address',
       },
-    ],
-    name: 'requestWithdraw',
-    outputs: [],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [
+      {
+        internalType: 'address',
+        name: 'receiver',
+        type: 'address',
+      },
       {
         internalType: 'uint256',
-        name: '_amt',
+        name: 'amt',
         type: 'uint256',
       },
     ],
-    name: 'sellOptions',
+    name: 'saveToken',
     outputs: [],
     stateMutability: 'nonpayable',
     type: 'function',
@@ -931,11 +1426,29 @@ const _abi = [
     inputs: [
       {
         internalType: 'uint256',
-        name: '_newCap',
+        name: '_ratio',
         type: 'uint256',
       },
     ],
-    name: 'setCap',
+    name: 'setCollateralization',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'uint256',
+        name: '_depositDelay',
+        type: 'uint256',
+      },
+      {
+        internalType: 'uint256',
+        name: '_withdrawDelay',
+        type: 'uint256',
+      },
+    ],
+    name: 'setDelays',
     outputs: [],
     stateMutability: 'nonpayable',
     type: 'function',
@@ -944,11 +1457,11 @@ const _abi = [
     inputs: [
       {
         internalType: 'address',
-        name: '_feeReciepient',
+        name: '_feeReceipient',
         type: 'address',
       },
     ],
-    name: 'setFeeReciepient',
+    name: 'setFeeReceipient',
     outputs: [],
     stateMutability: 'nonpayable',
     type: 'function',
@@ -957,12 +1470,12 @@ const _abi = [
     inputs: [
       {
         internalType: 'uint256',
-        name: '_perfomanceFee',
+        name: '_performanceFee',
         type: 'uint256',
       },
       {
         internalType: 'uint256',
-        name: '_managementFee',
+        name: '_withdrawalFee',
         type: 'uint256',
       },
     ],
@@ -975,24 +1488,11 @@ const _abi = [
     inputs: [
       {
         internalType: 'uint256',
-        name: '_ivLimit',
+        name: '_minAmt',
         type: 'uint256',
       },
     ],
-    name: 'setIvLimit',
-    outputs: [],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        internalType: 'address',
-        name: '_keeper',
-        type: 'address',
-      },
-    ],
-    name: 'setKeeper',
+    name: 'setMinDepositAmount',
     outputs: [],
     stateMutability: 'nonpayable',
     type: 'function',
@@ -1013,12 +1513,12 @@ const _abi = [
   {
     inputs: [
       {
-        internalType: 'uint256',
-        name: '_depositLimit',
-        type: 'uint256',
+        internalType: 'bytes32',
+        name: '_code',
+        type: 'bytes32',
       },
     ],
-    name: 'setUserDepositLimit',
+    name: 'setSynthetixTracking',
     outputs: [],
     stateMutability: 'nonpayable',
     type: 'function',
@@ -1026,14 +1526,27 @@ const _abi = [
   {
     inputs: [
       {
-        internalType: 'uint256',
-        name: '_listingId',
-        type: 'uint256',
+        internalType: 'uint256[]',
+        name: 'strikeIds',
+        type: 'uint256[]',
       },
     ],
-    name: 'startNewRound',
+    name: 'settleOptions',
     outputs: [],
     stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'synthetixTrackingCode',
+    outputs: [
+      {
+        internalType: 'bytes32',
+        name: '',
+        type: 'bytes32',
+      },
+    ],
+    stateMutability: 'view',
     type: 'function',
   },
   {
@@ -1051,7 +1564,33 @@ const _abi = [
   },
   {
     inputs: [],
-    name: 'totalShares',
+    name: 'totalPremiumCollected',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'totalQueuedDeposits',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'totalQueuedWithdrawals',
     outputs: [
       {
         internalType: 'uint256',
@@ -1071,6 +1610,13 @@ const _abi = [
   },
   {
     inputs: [],
+    name: 'unpauseDeposits',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [],
     name: 'usedFunds',
     outputs: [
       {
@@ -1084,7 +1630,7 @@ const _abi = [
   },
   {
     inputs: [],
-    name: 'userDepositLimit',
+    name: 'withdrawalFee',
     outputs: [
       {
         internalType: 'uint256',
@@ -1098,49 +1644,36 @@ const _abi = [
   {
     inputs: [
       {
-        internalType: 'address',
+        internalType: 'uint256',
         name: '',
+        type: 'uint256',
+      },
+    ],
+    name: 'withdrawalQueue',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: 'id',
+        type: 'uint256',
+      },
+      {
+        internalType: 'address',
+        name: 'user',
         type: 'address',
       },
-    ],
-    name: 'userInfos',
-    outputs: [
       {
         internalType: 'uint256',
-        name: 'depositRound',
+        name: 'withdrawnTokens',
         type: 'uint256',
       },
       {
         internalType: 'uint256',
-        name: 'pendingDeposit',
+        name: 'returnedAmount',
         type: 'uint256',
       },
       {
         internalType: 'uint256',
-        name: 'withdrawRound',
-        type: 'uint256',
-      },
-      {
-        internalType: 'uint256',
-        name: 'withdrawnShares',
-        type: 'uint256',
-      },
-      {
-        internalType: 'uint256',
-        name: 'totalShares',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'vaultCapacity',
-    outputs: [
-      {
-        internalType: 'uint256',
-        name: '',
+        name: 'requestedTime',
         type: 'uint256',
       },
     ],

@@ -46,7 +46,7 @@ export class EthereumMapleFarmContractPositionFetcher implements PositionFetcher
       dependencies: [{ appId: MAPLE_DEFINITION.id, groupIds: [MAPLE_DEFINITION.groups.pool.id], network }],
       resolveFarmDefinitions: async () => farms,
       resolveFarmContract: ({ address, network }) => this.mapleContractFactory.mapleRewards({ address, network }),
-      resolveTotalValueLocked: ({ contract, multicall }) => multicall.wrap(contract).totalSupply(),
+      resolveLiquidity: ({ contract, multicall }) => multicall.wrap(contract).totalSupply(),
       resolveIsActive: this.isActiveStrategy.build({
         resolvePeriodFinish: ({ multicall, contract }) => multicall.wrap(contract).periodFinish(),
       }),

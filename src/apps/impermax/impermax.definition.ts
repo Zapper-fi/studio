@@ -34,10 +34,7 @@ export const IMPERMAX_DEFINITION = appDefinition({
   supportedNetworks: {
     [Network.ETHEREUM_MAINNET]: [AppAction.VIEW],
     [Network.POLYGON_MAINNET]: [AppAction.VIEW],
-    [Network.FANTOM_OPERA_MAINNET]: [AppAction.VIEW],
-    [Network.AVALANCHE_MAINNET]: [AppAction.VIEW],
     [Network.ARBITRUM_MAINNET]: [AppAction.VIEW],
-    [Network.MOONRIVER_MAINNET]: [AppAction.VIEW],
   },
 
   primaryColor: '#fff',

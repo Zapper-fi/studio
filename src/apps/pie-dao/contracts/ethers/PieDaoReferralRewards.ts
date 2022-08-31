@@ -15,7 +15,7 @@ import type {
 } from 'ethers';
 import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
 import type { Listener, Provider } from '@ethersproject/providers';
-import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
 export interface PieDaoReferralRewardsInterface extends utils.Interface {
   functions: {
@@ -82,33 +82,36 @@ export interface PieDaoReferralRewardsInterface extends utils.Interface {
   ): FunctionFragment;
 
   encodeFunctionData(functionFragment: 'DURATION', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'balanceOf', values: [string]): string;
+  encodeFunctionData(functionFragment: 'balanceOf', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'dough', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'earned', values: [string]): string;
+  encodeFunctionData(functionFragment: 'earned', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'exit', values?: undefined): string;
   encodeFunctionData(functionFragment: 'getReward', values?: undefined): string;
   encodeFunctionData(functionFragment: 'isOwner', values?: undefined): string;
   encodeFunctionData(functionFragment: 'lastTimeRewardApplicable', values?: undefined): string;
   encodeFunctionData(functionFragment: 'lastUpdateTime', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'notifyRewardAmount', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'notifyRewardAmount', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'owner', values?: undefined): string;
   encodeFunctionData(functionFragment: 'periodFinish', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'referralOf', values: [string]): string;
+  encodeFunctionData(functionFragment: 'referralOf', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'renounceOwnership', values?: undefined): string;
   encodeFunctionData(functionFragment: 'rewardDistribution', values?: undefined): string;
   encodeFunctionData(functionFragment: 'rewardPerToken', values?: undefined): string;
   encodeFunctionData(functionFragment: 'rewardPerTokenStored', values?: undefined): string;
   encodeFunctionData(functionFragment: 'rewardRate', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'rewards', values: [string]): string;
-  encodeFunctionData(functionFragment: 'saveToken', values: [string]): string;
-  encodeFunctionData(functionFragment: 'setRewardDistribution', values: [string]): string;
-  encodeFunctionData(functionFragment: 'stake(uint256,address)', values: [BigNumberish, string]): string;
-  encodeFunctionData(functionFragment: 'stake(uint256)', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'rewards', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'saveToken', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'setRewardDistribution', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'stake(uint256,address)',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>],
+  ): string;
+  encodeFunctionData(functionFragment: 'stake(uint256)', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'totalSupply', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'transferOwnership', values: [string]): string;
+  encodeFunctionData(functionFragment: 'transferOwnership', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'uni', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'userRewardPerTokenPaid', values: [string]): string;
-  encodeFunctionData(functionFragment: 'withdraw', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'userRewardPerTokenPaid', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'withdraw', values: [PromiseOrValue<BigNumberish>]): string;
 
   decodeFunctionResult(functionFragment: 'DURATION', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'balanceOf', data: BytesLike): Result;
@@ -239,15 +242,15 @@ export interface PieDaoReferralRewards extends BaseContract {
   functions: {
     DURATION(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    balanceOf(account: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    balanceOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     dough(overrides?: CallOverrides): Promise<[string]>;
 
-    earned(account: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    earned(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    exit(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    exit(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
-    getReward(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    getReward(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     isOwner(overrides?: CallOverrides): Promise<[boolean]>;
 
@@ -256,17 +259,17 @@ export interface PieDaoReferralRewards extends BaseContract {
     lastUpdateTime(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     notifyRewardAmount(
-      reward: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      reward: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     owner(overrides?: CallOverrides): Promise<[string]>;
 
     periodFinish(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    referralOf(arg0: string, overrides?: CallOverrides): Promise<[string]>;
+    referralOf(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[string]>;
 
-    renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     rewardDistribution(overrides?: CallOverrides): Promise<[string]>;
 
@@ -276,57 +279,57 @@ export interface PieDaoReferralRewards extends BaseContract {
 
     rewardRate(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    rewards(arg0: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    rewards(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     saveToken(
-      _token: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _token: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setRewardDistribution(
-      _rewardDistribution: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _rewardDistribution: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     'stake(uint256,address)'(
-      amount: BigNumberish,
-      referral: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      amount: PromiseOrValue<BigNumberish>,
+      referral: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     'stake(uint256)'(
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     totalSupply(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     uni(overrides?: CallOverrides): Promise<[string]>;
 
-    userRewardPerTokenPaid(arg0: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    userRewardPerTokenPaid(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     withdraw(
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
   };
 
   DURATION(overrides?: CallOverrides): Promise<BigNumber>;
 
-  balanceOf(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+  balanceOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   dough(overrides?: CallOverrides): Promise<string>;
 
-  earned(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+  earned(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  exit(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  exit(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
-  getReward(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  getReward(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   isOwner(overrides?: CallOverrides): Promise<boolean>;
 
@@ -335,17 +338,17 @@ export interface PieDaoReferralRewards extends BaseContract {
   lastUpdateTime(overrides?: CallOverrides): Promise<BigNumber>;
 
   notifyRewardAmount(
-    reward: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    reward: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   owner(overrides?: CallOverrides): Promise<string>;
 
   periodFinish(overrides?: CallOverrides): Promise<BigNumber>;
 
-  referralOf(arg0: string, overrides?: CallOverrides): Promise<string>;
+  referralOf(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<string>;
 
-  renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   rewardDistribution(overrides?: CallOverrides): Promise<string>;
 
@@ -355,50 +358,53 @@ export interface PieDaoReferralRewards extends BaseContract {
 
   rewardRate(overrides?: CallOverrides): Promise<BigNumber>;
 
-  rewards(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+  rewards(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  saveToken(_token: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  saveToken(
+    _token: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
+  ): Promise<ContractTransaction>;
 
   setRewardDistribution(
-    _rewardDistribution: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _rewardDistribution: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   'stake(uint256,address)'(
-    amount: BigNumberish,
-    referral: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    amount: PromiseOrValue<BigNumberish>,
+    referral: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   'stake(uint256)'(
-    amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
   transferOwnership(
-    newOwner: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    newOwner: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   uni(overrides?: CallOverrides): Promise<string>;
 
-  userRewardPerTokenPaid(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+  userRewardPerTokenPaid(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   withdraw(
-    amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   callStatic: {
     DURATION(overrides?: CallOverrides): Promise<BigNumber>;
 
-    balanceOf(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    balanceOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     dough(overrides?: CallOverrides): Promise<string>;
 
-    earned(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    earned(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     exit(overrides?: CallOverrides): Promise<void>;
 
@@ -410,13 +416,13 @@ export interface PieDaoReferralRewards extends BaseContract {
 
     lastUpdateTime(overrides?: CallOverrides): Promise<BigNumber>;
 
-    notifyRewardAmount(reward: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    notifyRewardAmount(reward: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
     owner(overrides?: CallOverrides): Promise<string>;
 
     periodFinish(overrides?: CallOverrides): Promise<BigNumber>;
 
-    referralOf(arg0: string, overrides?: CallOverrides): Promise<string>;
+    referralOf(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<string>;
 
     renounceOwnership(overrides?: CallOverrides): Promise<void>;
 
@@ -428,69 +434,83 @@ export interface PieDaoReferralRewards extends BaseContract {
 
     rewardRate(overrides?: CallOverrides): Promise<BigNumber>;
 
-    rewards(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    rewards(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    saveToken(_token: string, overrides?: CallOverrides): Promise<void>;
+    saveToken(_token: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    setRewardDistribution(_rewardDistribution: string, overrides?: CallOverrides): Promise<void>;
+    setRewardDistribution(_rewardDistribution: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    'stake(uint256,address)'(amount: BigNumberish, referral: string, overrides?: CallOverrides): Promise<void>;
+    'stake(uint256,address)'(
+      amount: PromiseOrValue<BigNumberish>,
+      referral: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    'stake(uint256)'(amount: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    'stake(uint256)'(amount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
     totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
-    transferOwnership(newOwner: string, overrides?: CallOverrides): Promise<void>;
+    transferOwnership(newOwner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     uni(overrides?: CallOverrides): Promise<string>;
 
-    userRewardPerTokenPaid(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    userRewardPerTokenPaid(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    withdraw(amount: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    withdraw(amount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
   };
 
   filters: {
     'OwnershipTransferred(address,address)'(
-      previousOwner?: string | null,
-      newOwner?: string | null,
+      previousOwner?: PromiseOrValue<string> | null,
+      newOwner?: PromiseOrValue<string> | null,
     ): OwnershipTransferredEventFilter;
-    OwnershipTransferred(previousOwner?: string | null, newOwner?: string | null): OwnershipTransferredEventFilter;
+    OwnershipTransferred(
+      previousOwner?: PromiseOrValue<string> | null,
+      newOwner?: PromiseOrValue<string> | null,
+    ): OwnershipTransferredEventFilter;
 
     'ReferralReward(address,address,uint256)'(
-      user?: string | null,
-      referral?: string | null,
+      user?: PromiseOrValue<string> | null,
+      referral?: PromiseOrValue<string> | null,
       amount?: null,
     ): ReferralRewardEventFilter;
-    ReferralReward(user?: string | null, referral?: string | null, amount?: null): ReferralRewardEventFilter;
+    ReferralReward(
+      user?: PromiseOrValue<string> | null,
+      referral?: PromiseOrValue<string> | null,
+      amount?: null,
+    ): ReferralRewardEventFilter;
 
-    'ReferralSet(address,address)'(user?: string | null, referral?: string | null): ReferralSetEventFilter;
-    ReferralSet(user?: string | null, referral?: string | null): ReferralSetEventFilter;
+    'ReferralSet(address,address)'(
+      user?: PromiseOrValue<string> | null,
+      referral?: PromiseOrValue<string> | null,
+    ): ReferralSetEventFilter;
+    ReferralSet(user?: PromiseOrValue<string> | null, referral?: PromiseOrValue<string> | null): ReferralSetEventFilter;
 
     'RewardAdded(uint256)'(reward?: null): RewardAddedEventFilter;
     RewardAdded(reward?: null): RewardAddedEventFilter;
 
-    'RewardPaid(address,uint256)'(user?: string | null, reward?: null): RewardPaidEventFilter;
-    RewardPaid(user?: string | null, reward?: null): RewardPaidEventFilter;
+    'RewardPaid(address,uint256)'(user?: PromiseOrValue<string> | null, reward?: null): RewardPaidEventFilter;
+    RewardPaid(user?: PromiseOrValue<string> | null, reward?: null): RewardPaidEventFilter;
 
-    'Staked(address,uint256)'(user?: string | null, amount?: null): StakedEventFilter;
-    Staked(user?: string | null, amount?: null): StakedEventFilter;
+    'Staked(address,uint256)'(user?: PromiseOrValue<string> | null, amount?: null): StakedEventFilter;
+    Staked(user?: PromiseOrValue<string> | null, amount?: null): StakedEventFilter;
 
-    'Withdrawn(address,uint256)'(user?: string | null, amount?: null): WithdrawnEventFilter;
-    Withdrawn(user?: string | null, amount?: null): WithdrawnEventFilter;
+    'Withdrawn(address,uint256)'(user?: PromiseOrValue<string> | null, amount?: null): WithdrawnEventFilter;
+    Withdrawn(user?: PromiseOrValue<string> | null, amount?: null): WithdrawnEventFilter;
   };
 
   estimateGas: {
     DURATION(overrides?: CallOverrides): Promise<BigNumber>;
 
-    balanceOf(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    balanceOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     dough(overrides?: CallOverrides): Promise<BigNumber>;
 
-    earned(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    earned(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    exit(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    exit(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
-    getReward(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    getReward(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     isOwner(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -499,17 +519,17 @@ export interface PieDaoReferralRewards extends BaseContract {
     lastUpdateTime(overrides?: CallOverrides): Promise<BigNumber>;
 
     notifyRewardAmount(
-      reward: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      reward: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     owner(overrides?: CallOverrides): Promise<BigNumber>;
 
     periodFinish(overrides?: CallOverrides): Promise<BigNumber>;
 
-    referralOf(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    referralOf(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     rewardDistribution(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -519,52 +539,58 @@ export interface PieDaoReferralRewards extends BaseContract {
 
     rewardRate(overrides?: CallOverrides): Promise<BigNumber>;
 
-    rewards(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    rewards(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    saveToken(_token: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    saveToken(
+      _token: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     setRewardDistribution(
-      _rewardDistribution: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _rewardDistribution: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     'stake(uint256,address)'(
-      amount: BigNumberish,
-      referral: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      amount: PromiseOrValue<BigNumberish>,
+      referral: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     'stake(uint256)'(
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     uni(overrides?: CallOverrides): Promise<BigNumber>;
 
-    userRewardPerTokenPaid(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    userRewardPerTokenPaid(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    withdraw(amount: BigNumberish, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    withdraw(
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
   };
 
   populateTransaction: {
     DURATION(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    balanceOf(account: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    balanceOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     dough(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    earned(account: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    earned(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    exit(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    exit(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
-    getReward(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    getReward(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     isOwner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
@@ -573,17 +599,17 @@ export interface PieDaoReferralRewards extends BaseContract {
     lastUpdateTime(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     notifyRewardAmount(
-      reward: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      reward: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     periodFinish(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    referralOf(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    referralOf(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     rewardDistribution(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
@@ -593,43 +619,43 @@ export interface PieDaoReferralRewards extends BaseContract {
 
     rewardRate(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    rewards(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    rewards(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     saveToken(
-      _token: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _token: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setRewardDistribution(
-      _rewardDistribution: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _rewardDistribution: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     'stake(uint256,address)'(
-      amount: BigNumberish,
-      referral: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      amount: PromiseOrValue<BigNumberish>,
+      referral: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     'stake(uint256)'(
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     totalSupply(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     uni(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    userRewardPerTokenPaid(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    userRewardPerTokenPaid(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     withdraw(
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
   };
 }

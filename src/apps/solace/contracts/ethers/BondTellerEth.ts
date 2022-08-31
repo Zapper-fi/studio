@@ -16,21 +16,21 @@ import type {
 } from 'ethers';
 import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
 import type { Listener, Provider } from '@ethersproject/providers';
-import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
 export declare namespace BondTellerEth {
   export type TermsStruct = {
-    startPrice: BigNumberish;
-    minimumPrice: BigNumberish;
-    maxPayout: BigNumberish;
-    priceAdjNum: BigNumberish;
-    priceAdjDenom: BigNumberish;
-    capacity: BigNumberish;
-    capacityIsPayout: boolean;
-    startTime: BigNumberish;
-    endTime: BigNumberish;
-    globalVestingTerm: BigNumberish;
-    halfLife: BigNumberish;
+    startPrice: PromiseOrValue<BigNumberish>;
+    minimumPrice: PromiseOrValue<BigNumberish>;
+    maxPayout: PromiseOrValue<BigNumberish>;
+    priceAdjNum: PromiseOrValue<BigNumberish>;
+    priceAdjDenom: PromiseOrValue<BigNumberish>;
+    capacity: PromiseOrValue<BigNumberish>;
+    capacityIsPayout: PromiseOrValue<boolean>;
+    startTime: PromiseOrValue<BigNumberish>;
+    endTime: PromiseOrValue<BigNumberish>;
+    globalVestingTerm: PromiseOrValue<BigNumberish>;
+    halfLife: PromiseOrValue<BigNumberish>;
   };
 
   export type TermsStructOutput = [
@@ -205,36 +205,78 @@ export interface BondTellerEthInterface extends utils.Interface {
   encodeFunctionData(functionFragment: 'DOMAIN_SEPARATOR', values?: undefined): string;
   encodeFunctionData(functionFragment: 'PERMIT_TYPEHASH', values?: undefined): string;
   encodeFunctionData(functionFragment: 'acceptGovernance', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'approve', values: [string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'balanceOf', values: [string]): string;
+  encodeFunctionData(
+    functionFragment: 'approve',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'balanceOf', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'baseURI', values?: undefined): string;
   encodeFunctionData(functionFragment: 'bondDepo', values?: undefined): string;
   encodeFunctionData(functionFragment: 'bondPrice', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'bonds', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'calculateAmountIn', values: [BigNumberish, boolean]): string;
-  encodeFunctionData(functionFragment: 'calculateAmountOut', values: [BigNumberish, boolean]): string;
+  encodeFunctionData(functionFragment: 'bonds', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(
+    functionFragment: 'calculateAmountIn',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<boolean>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'calculateAmountOut',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<boolean>],
+  ): string;
   encodeFunctionData(functionFragment: 'capacity', values?: undefined): string;
   encodeFunctionData(functionFragment: 'capacityIsPayout', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'claimPayout', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'claimPayout', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'dao', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'depositEth', values: [BigNumberish, string, boolean]): string;
-  encodeFunctionData(functionFragment: 'depositWeth', values: [BigNumberish, BigNumberish, string, boolean]): string;
+  encodeFunctionData(
+    functionFragment: 'depositEth',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>, PromiseOrValue<boolean>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'depositWeth',
+    values: [
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<string>,
+      PromiseOrValue<boolean>,
+    ],
+  ): string;
   encodeFunctionData(
     functionFragment: 'depositWethSigned',
-    values: [BigNumberish, BigNumberish, string, boolean, BigNumberish, BigNumberish, BytesLike, BytesLike],
+    values: [
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<string>,
+      PromiseOrValue<boolean>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BytesLike>,
+      PromiseOrValue<BytesLike>,
+    ],
   ): string;
   encodeFunctionData(functionFragment: 'endTime', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'exists', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'getApproved', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'exists', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'getApproved', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'globalVestingTerm', values?: undefined): string;
   encodeFunctionData(functionFragment: 'governance', values?: undefined): string;
   encodeFunctionData(functionFragment: 'governanceIsLocked', values?: undefined): string;
   encodeFunctionData(functionFragment: 'halfLife', values?: undefined): string;
   encodeFunctionData(
     functionFragment: 'initialize',
-    values: [string, string, string, string, string, string, string, boolean, string],
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<boolean>,
+      PromiseOrValue<string>,
+    ],
   ): string;
-  encodeFunctionData(functionFragment: 'isApprovedForAll', values: [string, string]): string;
+  encodeFunctionData(
+    functionFragment: 'isApprovedForAll',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>],
+  ): string;
   encodeFunctionData(functionFragment: 'isPermittable', values?: undefined): string;
   encodeFunctionData(functionFragment: 'lastPriceUpdate', values?: undefined): string;
   encodeFunctionData(functionFragment: 'lockGovernance', values?: undefined): string;
@@ -242,48 +284,78 @@ export interface BondTellerEthInterface extends utils.Interface {
   encodeFunctionData(functionFragment: 'minimumPrice', values?: undefined): string;
   encodeFunctionData(functionFragment: 'name', values?: undefined): string;
   encodeFunctionData(functionFragment: 'nextPrice', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'nonces', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'nonces', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'numBonds', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'ownerOf', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'ownerOf', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'pause', values?: undefined): string;
   encodeFunctionData(functionFragment: 'paused', values?: undefined): string;
   encodeFunctionData(functionFragment: 'pendingGovernance', values?: undefined): string;
   encodeFunctionData(
     functionFragment: 'permit',
-    values: [string, BigNumberish, BigNumberish, BigNumberish, BytesLike, BytesLike],
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BytesLike>,
+      PromiseOrValue<BytesLike>,
+    ],
   ): string;
   encodeFunctionData(functionFragment: 'priceAdjDenom', values?: undefined): string;
   encodeFunctionData(functionFragment: 'priceAdjNum', values?: undefined): string;
   encodeFunctionData(functionFragment: 'principal', values?: undefined): string;
   encodeFunctionData(functionFragment: 'protocolFeeBps', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'safeTransfer', values: [string, BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'safeTransfer',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
   encodeFunctionData(
     functionFragment: 'safeTransferFrom(address,address,uint256)',
-    values: [string, string, BigNumberish],
+    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
   ): string;
   encodeFunctionData(
     functionFragment: 'safeTransferFrom(address,address,uint256,bytes)',
-    values: [string, string, BigNumberish, BytesLike],
+    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<BigNumberish>, PromiseOrValue<BytesLike>],
   ): string;
   encodeFunctionData(
     functionFragment: 'setAddresses',
-    values: [string, string, string, string, string, boolean, string],
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<boolean>,
+      PromiseOrValue<string>,
+    ],
   ): string;
-  encodeFunctionData(functionFragment: 'setApprovalForAll', values: [string, boolean]): string;
-  encodeFunctionData(functionFragment: 'setFees', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'setPendingGovernance', values: [string]): string;
+  encodeFunctionData(
+    functionFragment: 'setApprovalForAll',
+    values: [PromiseOrValue<string>, PromiseOrValue<boolean>],
+  ): string;
+  encodeFunctionData(functionFragment: 'setFees', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'setPendingGovernance', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'setTerms', values: [BondTellerEth.TermsStruct]): string;
   encodeFunctionData(functionFragment: 'solace', values?: undefined): string;
   encodeFunctionData(functionFragment: 'startTime', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'supportsInterface', values: [BytesLike]): string;
+  encodeFunctionData(functionFragment: 'supportsInterface', values: [PromiseOrValue<BytesLike>]): string;
   encodeFunctionData(functionFragment: 'symbol', values?: undefined): string;
   encodeFunctionData(functionFragment: 'termsSet', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'tokenByIndex', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'tokenOfOwnerByIndex', values: [string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'tokenURI', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'tokenByIndex', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(
+    functionFragment: 'tokenOfOwnerByIndex',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'tokenURI', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'totalSupply', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'transfer', values: [string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'transferFrom', values: [string, string, BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'transfer',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'transferFrom',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
   encodeFunctionData(functionFragment: 'underwritingPool', values?: undefined): string;
   encodeFunctionData(functionFragment: 'unpause', values?: undefined): string;
   encodeFunctionData(functionFragment: 'xsLocker', values?: undefined): string;
@@ -515,15 +587,15 @@ export interface BondTellerEth extends BaseContract {
 
     PERMIT_TYPEHASH(overrides?: CallOverrides): Promise<[string] & { typehash: string }>;
 
-    acceptGovernance(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    acceptGovernance(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     approve(
-      to: string,
-      tokenId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      to: PromiseOrValue<string>,
+      tokenId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    balanceOf(owner: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    balanceOf(owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     baseURI(overrides?: CallOverrides): Promise<[string]>;
 
@@ -532,7 +604,7 @@ export interface BondTellerEth extends BaseContract {
     bondPrice(overrides?: CallOverrides): Promise<[BigNumber] & { price_: BigNumber }>;
 
     bonds(
-      arg0: BigNumberish,
+      arg0: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<
       [BigNumber, BigNumber, BigNumber, number, number] & {
@@ -545,14 +617,14 @@ export interface BondTellerEth extends BaseContract {
     >;
 
     calculateAmountIn(
-      amountOut: BigNumberish,
-      stake: boolean,
+      amountOut: PromiseOrValue<BigNumberish>,
+      stake: PromiseOrValue<boolean>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber] & { amountIn: BigNumber }>;
 
     calculateAmountOut(
-      amountIn: BigNumberish,
-      stake: boolean,
+      amountIn: PromiseOrValue<BigNumberish>,
+      stake: PromiseOrValue<boolean>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber] & { amountOut: BigNumber }>;
 
@@ -561,44 +633,44 @@ export interface BondTellerEth extends BaseContract {
     capacityIsPayout(overrides?: CallOverrides): Promise<[boolean]>;
 
     claimPayout(
-      bondID: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      bondID: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     dao(overrides?: CallOverrides): Promise<[string]>;
 
     depositEth(
-      minAmountOut: BigNumberish,
-      depositor: string,
-      stake: boolean,
-      overrides?: PayableOverrides & { from?: string | Promise<string> },
+      minAmountOut: PromiseOrValue<BigNumberish>,
+      depositor: PromiseOrValue<string>,
+      stake: PromiseOrValue<boolean>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     depositWeth(
-      amount: BigNumberish,
-      minAmountOut: BigNumberish,
-      depositor: string,
-      stake: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      amount: PromiseOrValue<BigNumberish>,
+      minAmountOut: PromiseOrValue<BigNumberish>,
+      depositor: PromiseOrValue<string>,
+      stake: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     depositWethSigned(
-      amount: BigNumberish,
-      minAmountOut: BigNumberish,
-      depositor: string,
-      stake: boolean,
-      deadline: BigNumberish,
-      v: BigNumberish,
-      r: BytesLike,
-      s: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      amount: PromiseOrValue<BigNumberish>,
+      minAmountOut: PromiseOrValue<BigNumberish>,
+      depositor: PromiseOrValue<string>,
+      stake: PromiseOrValue<boolean>,
+      deadline: PromiseOrValue<BigNumberish>,
+      v: PromiseOrValue<BigNumberish>,
+      r: PromiseOrValue<BytesLike>,
+      s: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     endTime(overrides?: CallOverrides): Promise<[number]>;
 
-    exists(tokenID: BigNumberish, overrides?: CallOverrides): Promise<[boolean] & { status: boolean }>;
+    exists(tokenID: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[boolean] & { status: boolean }>;
 
-    getApproved(tokenId: BigNumberish, overrides?: CallOverrides): Promise<[string]>;
+    getApproved(tokenId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[string]>;
 
     globalVestingTerm(overrides?: CallOverrides): Promise<[number]>;
 
@@ -609,25 +681,29 @@ export interface BondTellerEth extends BaseContract {
     halfLife(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     initialize(
-      name_: string,
-      governance_: string,
-      solace_: string,
-      xsLocker_: string,
-      pool_: string,
-      dao_: string,
-      principal_: string,
-      isPermittable_: boolean,
-      bondDepo_: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      name_: PromiseOrValue<string>,
+      governance_: PromiseOrValue<string>,
+      solace_: PromiseOrValue<string>,
+      xsLocker_: PromiseOrValue<string>,
+      pool_: PromiseOrValue<string>,
+      dao_: PromiseOrValue<string>,
+      principal_: PromiseOrValue<string>,
+      isPermittable_: PromiseOrValue<boolean>,
+      bondDepo_: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    isApprovedForAll(owner: string, operator: string, overrides?: CallOverrides): Promise<[boolean]>;
+    isApprovedForAll(
+      owner: PromiseOrValue<string>,
+      operator: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<[boolean]>;
 
     isPermittable(overrides?: CallOverrides): Promise<[boolean]>;
 
     lastPriceUpdate(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    lockGovernance(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    lockGovernance(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     maxPayout(overrides?: CallOverrides): Promise<[BigNumber]>;
 
@@ -637,26 +713,29 @@ export interface BondTellerEth extends BaseContract {
 
     nextPrice(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    nonces(tokenID: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber] & { nonce: BigNumber }>;
+    nonces(
+      tokenID: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber] & { nonce: BigNumber }>;
 
     numBonds(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    ownerOf(tokenId: BigNumberish, overrides?: CallOverrides): Promise<[string]>;
+    ownerOf(tokenId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[string]>;
 
-    pause(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    pause(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     paused(overrides?: CallOverrides): Promise<[boolean]>;
 
     pendingGovernance(overrides?: CallOverrides): Promise<[string]>;
 
     permit(
-      spender: string,
-      tokenID: BigNumberish,
-      deadline: BigNumberish,
-      v: BigNumberish,
-      r: BytesLike,
-      s: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      spender: PromiseOrValue<string>,
+      tokenID: PromiseOrValue<BigNumberish>,
+      deadline: PromiseOrValue<BigNumberish>,
+      v: PromiseOrValue<BigNumberish>,
+      r: PromiseOrValue<BytesLike>,
+      s: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     priceAdjDenom(overrides?: CallOverrides): Promise<[BigNumber]>;
@@ -668,92 +747,96 @@ export interface BondTellerEth extends BaseContract {
     protocolFeeBps(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     safeTransfer(
-      to: string,
-      tokenID: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      to: PromiseOrValue<string>,
+      tokenID: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     'safeTransferFrom(address,address,uint256)'(
-      from: string,
-      to: string,
-      tokenId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      tokenId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     'safeTransferFrom(address,address,uint256,bytes)'(
-      from: string,
-      to: string,
-      tokenId: BigNumberish,
-      _data: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      tokenId: PromiseOrValue<BigNumberish>,
+      _data: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setAddresses(
-      solace_: string,
-      xsLocker_: string,
-      pool_: string,
-      dao_: string,
-      principal_: string,
-      isPermittable_: boolean,
-      bondDepo_: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      solace_: PromiseOrValue<string>,
+      xsLocker_: PromiseOrValue<string>,
+      pool_: PromiseOrValue<string>,
+      dao_: PromiseOrValue<string>,
+      principal_: PromiseOrValue<string>,
+      isPermittable_: PromiseOrValue<boolean>,
+      bondDepo_: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setApprovalForAll(
-      operator: string,
-      approved: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      operator: PromiseOrValue<string>,
+      approved: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setFees(
-      protocolFee: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      protocolFee: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setPendingGovernance(
-      pendingGovernance_: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      pendingGovernance_: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setTerms(
       terms: BondTellerEth.TermsStruct,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     solace(overrides?: CallOverrides): Promise<[string]>;
 
     startTime(overrides?: CallOverrides): Promise<[number]>;
 
-    supportsInterface(interfaceId: BytesLike, overrides?: CallOverrides): Promise<[boolean]>;
+    supportsInterface(interfaceId: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<[boolean]>;
 
     symbol(overrides?: CallOverrides): Promise<[string]>;
 
     termsSet(overrides?: CallOverrides): Promise<[boolean]>;
 
-    tokenByIndex(index: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber]>;
+    tokenByIndex(index: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    tokenOfOwnerByIndex(owner: string, index: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber]>;
+    tokenOfOwnerByIndex(
+      owner: PromiseOrValue<string>,
+      index: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber]>;
 
-    tokenURI(tokenID: BigNumberish, overrides?: CallOverrides): Promise<[string]>;
+    tokenURI(tokenID: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[string]>;
 
     totalSupply(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     transfer(
-      to: string,
-      tokenID: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      to: PromiseOrValue<string>,
+      tokenID: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     transferFrom(
-      from: string,
-      to: string,
-      tokenId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      tokenId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     underwritingPool(overrides?: CallOverrides): Promise<[string]>;
 
-    unpause(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    unpause(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     xsLocker(overrides?: CallOverrides): Promise<[string]>;
   };
@@ -762,15 +845,15 @@ export interface BondTellerEth extends BaseContract {
 
   PERMIT_TYPEHASH(overrides?: CallOverrides): Promise<string>;
 
-  acceptGovernance(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  acceptGovernance(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   approve(
-    to: string,
-    tokenId: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    to: PromiseOrValue<string>,
+    tokenId: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  balanceOf(owner: string, overrides?: CallOverrides): Promise<BigNumber>;
+  balanceOf(owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   baseURI(overrides?: CallOverrides): Promise<string>;
 
@@ -779,7 +862,7 @@ export interface BondTellerEth extends BaseContract {
   bondPrice(overrides?: CallOverrides): Promise<BigNumber>;
 
   bonds(
-    arg0: BigNumberish,
+    arg0: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides,
   ): Promise<
     [BigNumber, BigNumber, BigNumber, number, number] & {
@@ -791,53 +874,61 @@ export interface BondTellerEth extends BaseContract {
     }
   >;
 
-  calculateAmountIn(amountOut: BigNumberish, stake: boolean, overrides?: CallOverrides): Promise<BigNumber>;
+  calculateAmountIn(
+    amountOut: PromiseOrValue<BigNumberish>,
+    stake: PromiseOrValue<boolean>,
+    overrides?: CallOverrides,
+  ): Promise<BigNumber>;
 
-  calculateAmountOut(amountIn: BigNumberish, stake: boolean, overrides?: CallOverrides): Promise<BigNumber>;
+  calculateAmountOut(
+    amountIn: PromiseOrValue<BigNumberish>,
+    stake: PromiseOrValue<boolean>,
+    overrides?: CallOverrides,
+  ): Promise<BigNumber>;
 
   capacity(overrides?: CallOverrides): Promise<BigNumber>;
 
   capacityIsPayout(overrides?: CallOverrides): Promise<boolean>;
 
   claimPayout(
-    bondID: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    bondID: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   dao(overrides?: CallOverrides): Promise<string>;
 
   depositEth(
-    minAmountOut: BigNumberish,
-    depositor: string,
-    stake: boolean,
-    overrides?: PayableOverrides & { from?: string | Promise<string> },
+    minAmountOut: PromiseOrValue<BigNumberish>,
+    depositor: PromiseOrValue<string>,
+    stake: PromiseOrValue<boolean>,
+    overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   depositWeth(
-    amount: BigNumberish,
-    minAmountOut: BigNumberish,
-    depositor: string,
-    stake: boolean,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    amount: PromiseOrValue<BigNumberish>,
+    minAmountOut: PromiseOrValue<BigNumberish>,
+    depositor: PromiseOrValue<string>,
+    stake: PromiseOrValue<boolean>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   depositWethSigned(
-    amount: BigNumberish,
-    minAmountOut: BigNumberish,
-    depositor: string,
-    stake: boolean,
-    deadline: BigNumberish,
-    v: BigNumberish,
-    r: BytesLike,
-    s: BytesLike,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    amount: PromiseOrValue<BigNumberish>,
+    minAmountOut: PromiseOrValue<BigNumberish>,
+    depositor: PromiseOrValue<string>,
+    stake: PromiseOrValue<boolean>,
+    deadline: PromiseOrValue<BigNumberish>,
+    v: PromiseOrValue<BigNumberish>,
+    r: PromiseOrValue<BytesLike>,
+    s: PromiseOrValue<BytesLike>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   endTime(overrides?: CallOverrides): Promise<number>;
 
-  exists(tokenID: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+  exists(tokenID: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<boolean>;
 
-  getApproved(tokenId: BigNumberish, overrides?: CallOverrides): Promise<string>;
+  getApproved(tokenId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
 
   globalVestingTerm(overrides?: CallOverrides): Promise<number>;
 
@@ -848,25 +939,29 @@ export interface BondTellerEth extends BaseContract {
   halfLife(overrides?: CallOverrides): Promise<BigNumber>;
 
   initialize(
-    name_: string,
-    governance_: string,
-    solace_: string,
-    xsLocker_: string,
-    pool_: string,
-    dao_: string,
-    principal_: string,
-    isPermittable_: boolean,
-    bondDepo_: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    name_: PromiseOrValue<string>,
+    governance_: PromiseOrValue<string>,
+    solace_: PromiseOrValue<string>,
+    xsLocker_: PromiseOrValue<string>,
+    pool_: PromiseOrValue<string>,
+    dao_: PromiseOrValue<string>,
+    principal_: PromiseOrValue<string>,
+    isPermittable_: PromiseOrValue<boolean>,
+    bondDepo_: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  isApprovedForAll(owner: string, operator: string, overrides?: CallOverrides): Promise<boolean>;
+  isApprovedForAll(
+    owner: PromiseOrValue<string>,
+    operator: PromiseOrValue<string>,
+    overrides?: CallOverrides,
+  ): Promise<boolean>;
 
   isPermittable(overrides?: CallOverrides): Promise<boolean>;
 
   lastPriceUpdate(overrides?: CallOverrides): Promise<BigNumber>;
 
-  lockGovernance(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  lockGovernance(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   maxPayout(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -876,26 +971,26 @@ export interface BondTellerEth extends BaseContract {
 
   nextPrice(overrides?: CallOverrides): Promise<BigNumber>;
 
-  nonces(tokenID: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+  nonces(tokenID: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
   numBonds(overrides?: CallOverrides): Promise<BigNumber>;
 
-  ownerOf(tokenId: BigNumberish, overrides?: CallOverrides): Promise<string>;
+  ownerOf(tokenId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
 
-  pause(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  pause(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   paused(overrides?: CallOverrides): Promise<boolean>;
 
   pendingGovernance(overrides?: CallOverrides): Promise<string>;
 
   permit(
-    spender: string,
-    tokenID: BigNumberish,
-    deadline: BigNumberish,
-    v: BigNumberish,
-    r: BytesLike,
-    s: BytesLike,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    spender: PromiseOrValue<string>,
+    tokenID: PromiseOrValue<BigNumberish>,
+    deadline: PromiseOrValue<BigNumberish>,
+    v: PromiseOrValue<BigNumberish>,
+    r: PromiseOrValue<BytesLike>,
+    s: PromiseOrValue<BytesLike>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   priceAdjDenom(overrides?: CallOverrides): Promise<BigNumber>;
@@ -907,92 +1002,96 @@ export interface BondTellerEth extends BaseContract {
   protocolFeeBps(overrides?: CallOverrides): Promise<BigNumber>;
 
   safeTransfer(
-    to: string,
-    tokenID: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    to: PromiseOrValue<string>,
+    tokenID: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   'safeTransferFrom(address,address,uint256)'(
-    from: string,
-    to: string,
-    tokenId: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    from: PromiseOrValue<string>,
+    to: PromiseOrValue<string>,
+    tokenId: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   'safeTransferFrom(address,address,uint256,bytes)'(
-    from: string,
-    to: string,
-    tokenId: BigNumberish,
-    _data: BytesLike,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    from: PromiseOrValue<string>,
+    to: PromiseOrValue<string>,
+    tokenId: PromiseOrValue<BigNumberish>,
+    _data: PromiseOrValue<BytesLike>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setAddresses(
-    solace_: string,
-    xsLocker_: string,
-    pool_: string,
-    dao_: string,
-    principal_: string,
-    isPermittable_: boolean,
-    bondDepo_: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    solace_: PromiseOrValue<string>,
+    xsLocker_: PromiseOrValue<string>,
+    pool_: PromiseOrValue<string>,
+    dao_: PromiseOrValue<string>,
+    principal_: PromiseOrValue<string>,
+    isPermittable_: PromiseOrValue<boolean>,
+    bondDepo_: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setApprovalForAll(
-    operator: string,
-    approved: boolean,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    operator: PromiseOrValue<string>,
+    approved: PromiseOrValue<boolean>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setFees(
-    protocolFee: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    protocolFee: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setPendingGovernance(
-    pendingGovernance_: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    pendingGovernance_: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setTerms(
     terms: BondTellerEth.TermsStruct,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   solace(overrides?: CallOverrides): Promise<string>;
 
   startTime(overrides?: CallOverrides): Promise<number>;
 
-  supportsInterface(interfaceId: BytesLike, overrides?: CallOverrides): Promise<boolean>;
+  supportsInterface(interfaceId: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<boolean>;
 
   symbol(overrides?: CallOverrides): Promise<string>;
 
   termsSet(overrides?: CallOverrides): Promise<boolean>;
 
-  tokenByIndex(index: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+  tokenByIndex(index: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  tokenOfOwnerByIndex(owner: string, index: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+  tokenOfOwnerByIndex(
+    owner: PromiseOrValue<string>,
+    index: PromiseOrValue<BigNumberish>,
+    overrides?: CallOverrides,
+  ): Promise<BigNumber>;
 
-  tokenURI(tokenID: BigNumberish, overrides?: CallOverrides): Promise<string>;
+  tokenURI(tokenID: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
 
   totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
   transfer(
-    to: string,
-    tokenID: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    to: PromiseOrValue<string>,
+    tokenID: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   transferFrom(
-    from: string,
-    to: string,
-    tokenId: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    from: PromiseOrValue<string>,
+    to: PromiseOrValue<string>,
+    tokenId: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   underwritingPool(overrides?: CallOverrides): Promise<string>;
 
-  unpause(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  unpause(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   xsLocker(overrides?: CallOverrides): Promise<string>;
 
@@ -1003,9 +1102,13 @@ export interface BondTellerEth extends BaseContract {
 
     acceptGovernance(overrides?: CallOverrides): Promise<void>;
 
-    approve(to: string, tokenId: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    approve(
+      to: PromiseOrValue<string>,
+      tokenId: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    balanceOf(owner: string, overrides?: CallOverrides): Promise<BigNumber>;
+    balanceOf(owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     baseURI(overrides?: CallOverrides): Promise<string>;
 
@@ -1014,7 +1117,7 @@ export interface BondTellerEth extends BaseContract {
     bondPrice(overrides?: CallOverrides): Promise<BigNumber>;
 
     bonds(
-      arg0: BigNumberish,
+      arg0: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<
       [BigNumber, BigNumber, BigNumber, number, number] & {
@@ -1026,50 +1129,58 @@ export interface BondTellerEth extends BaseContract {
       }
     >;
 
-    calculateAmountIn(amountOut: BigNumberish, stake: boolean, overrides?: CallOverrides): Promise<BigNumber>;
+    calculateAmountIn(
+      amountOut: PromiseOrValue<BigNumberish>,
+      stake: PromiseOrValue<boolean>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    calculateAmountOut(amountIn: BigNumberish, stake: boolean, overrides?: CallOverrides): Promise<BigNumber>;
+    calculateAmountOut(
+      amountIn: PromiseOrValue<BigNumberish>,
+      stake: PromiseOrValue<boolean>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     capacity(overrides?: CallOverrides): Promise<BigNumber>;
 
     capacityIsPayout(overrides?: CallOverrides): Promise<boolean>;
 
-    claimPayout(bondID: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    claimPayout(bondID: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
     dao(overrides?: CallOverrides): Promise<string>;
 
     depositEth(
-      minAmountOut: BigNumberish,
-      depositor: string,
-      stake: boolean,
+      minAmountOut: PromiseOrValue<BigNumberish>,
+      depositor: PromiseOrValue<string>,
+      stake: PromiseOrValue<boolean>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber, BigNumber] & { payout: BigNumber; tokenID: BigNumber }>;
 
     depositWeth(
-      amount: BigNumberish,
-      minAmountOut: BigNumberish,
-      depositor: string,
-      stake: boolean,
+      amount: PromiseOrValue<BigNumberish>,
+      minAmountOut: PromiseOrValue<BigNumberish>,
+      depositor: PromiseOrValue<string>,
+      stake: PromiseOrValue<boolean>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber, BigNumber] & { payout: BigNumber; tokenID: BigNumber }>;
 
     depositWethSigned(
-      amount: BigNumberish,
-      minAmountOut: BigNumberish,
-      depositor: string,
-      stake: boolean,
-      deadline: BigNumberish,
-      v: BigNumberish,
-      r: BytesLike,
-      s: BytesLike,
+      amount: PromiseOrValue<BigNumberish>,
+      minAmountOut: PromiseOrValue<BigNumberish>,
+      depositor: PromiseOrValue<string>,
+      stake: PromiseOrValue<boolean>,
+      deadline: PromiseOrValue<BigNumberish>,
+      v: PromiseOrValue<BigNumberish>,
+      r: PromiseOrValue<BytesLike>,
+      s: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber, BigNumber] & { payout: BigNumber; tokenID: BigNumber }>;
 
     endTime(overrides?: CallOverrides): Promise<number>;
 
-    exists(tokenID: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+    exists(tokenID: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<boolean>;
 
-    getApproved(tokenId: BigNumberish, overrides?: CallOverrides): Promise<string>;
+    getApproved(tokenId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
 
     globalVestingTerm(overrides?: CallOverrides): Promise<number>;
 
@@ -1080,19 +1191,23 @@ export interface BondTellerEth extends BaseContract {
     halfLife(overrides?: CallOverrides): Promise<BigNumber>;
 
     initialize(
-      name_: string,
-      governance_: string,
-      solace_: string,
-      xsLocker_: string,
-      pool_: string,
-      dao_: string,
-      principal_: string,
-      isPermittable_: boolean,
-      bondDepo_: string,
+      name_: PromiseOrValue<string>,
+      governance_: PromiseOrValue<string>,
+      solace_: PromiseOrValue<string>,
+      xsLocker_: PromiseOrValue<string>,
+      pool_: PromiseOrValue<string>,
+      dao_: PromiseOrValue<string>,
+      principal_: PromiseOrValue<string>,
+      isPermittable_: PromiseOrValue<boolean>,
+      bondDepo_: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
-    isApprovedForAll(owner: string, operator: string, overrides?: CallOverrides): Promise<boolean>;
+    isApprovedForAll(
+      owner: PromiseOrValue<string>,
+      operator: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
 
     isPermittable(overrides?: CallOverrides): Promise<boolean>;
 
@@ -1108,11 +1223,11 @@ export interface BondTellerEth extends BaseContract {
 
     nextPrice(overrides?: CallOverrides): Promise<BigNumber>;
 
-    nonces(tokenID: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    nonces(tokenID: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     numBonds(overrides?: CallOverrides): Promise<BigNumber>;
 
-    ownerOf(tokenId: BigNumberish, overrides?: CallOverrides): Promise<string>;
+    ownerOf(tokenId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
 
     pause(overrides?: CallOverrides): Promise<void>;
 
@@ -1121,12 +1236,12 @@ export interface BondTellerEth extends BaseContract {
     pendingGovernance(overrides?: CallOverrides): Promise<string>;
 
     permit(
-      spender: string,
-      tokenID: BigNumberish,
-      deadline: BigNumberish,
-      v: BigNumberish,
-      r: BytesLike,
-      s: BytesLike,
+      spender: PromiseOrValue<string>,
+      tokenID: PromiseOrValue<BigNumberish>,
+      deadline: PromiseOrValue<BigNumberish>,
+      v: PromiseOrValue<BigNumberish>,
+      r: PromiseOrValue<BytesLike>,
+      s: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
@@ -1138,39 +1253,47 @@ export interface BondTellerEth extends BaseContract {
 
     protocolFeeBps(overrides?: CallOverrides): Promise<BigNumber>;
 
-    safeTransfer(to: string, tokenID: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    safeTransfer(
+      to: PromiseOrValue<string>,
+      tokenID: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
     'safeTransferFrom(address,address,uint256)'(
-      from: string,
-      to: string,
-      tokenId: BigNumberish,
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      tokenId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
     'safeTransferFrom(address,address,uint256,bytes)'(
-      from: string,
-      to: string,
-      tokenId: BigNumberish,
-      _data: BytesLike,
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      tokenId: PromiseOrValue<BigNumberish>,
+      _data: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
     setAddresses(
-      solace_: string,
-      xsLocker_: string,
-      pool_: string,
-      dao_: string,
-      principal_: string,
-      isPermittable_: boolean,
-      bondDepo_: string,
+      solace_: PromiseOrValue<string>,
+      xsLocker_: PromiseOrValue<string>,
+      pool_: PromiseOrValue<string>,
+      dao_: PromiseOrValue<string>,
+      principal_: PromiseOrValue<string>,
+      isPermittable_: PromiseOrValue<boolean>,
+      bondDepo_: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
-    setApprovalForAll(operator: string, approved: boolean, overrides?: CallOverrides): Promise<void>;
+    setApprovalForAll(
+      operator: PromiseOrValue<string>,
+      approved: PromiseOrValue<boolean>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    setFees(protocolFee: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    setFees(protocolFee: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
-    setPendingGovernance(pendingGovernance_: string, overrides?: CallOverrides): Promise<void>;
+    setPendingGovernance(pendingGovernance_: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     setTerms(terms: BondTellerEth.TermsStruct, overrides?: CallOverrides): Promise<void>;
 
@@ -1178,23 +1301,36 @@ export interface BondTellerEth extends BaseContract {
 
     startTime(overrides?: CallOverrides): Promise<number>;
 
-    supportsInterface(interfaceId: BytesLike, overrides?: CallOverrides): Promise<boolean>;
+    supportsInterface(interfaceId: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<boolean>;
 
     symbol(overrides?: CallOverrides): Promise<string>;
 
     termsSet(overrides?: CallOverrides): Promise<boolean>;
 
-    tokenByIndex(index: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    tokenByIndex(index: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    tokenOfOwnerByIndex(owner: string, index: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    tokenOfOwnerByIndex(
+      owner: PromiseOrValue<string>,
+      index: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    tokenURI(tokenID: BigNumberish, overrides?: CallOverrides): Promise<string>;
+    tokenURI(tokenID: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
 
     totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
-    transfer(to: string, tokenID: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    transfer(
+      to: PromiseOrValue<string>,
+      tokenID: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    transferFrom(from: string, to: string, tokenId: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    transferFrom(
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      tokenId: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
     underwritingPool(overrides?: CallOverrides): Promise<string>;
 
@@ -1208,31 +1344,39 @@ export interface BondTellerEth extends BaseContract {
     AddressesSet(): AddressesSetEventFilter;
 
     'Approval(address,address,uint256)'(
-      owner?: string | null,
-      approved?: string | null,
-      tokenId?: BigNumberish | null,
+      owner?: PromiseOrValue<string> | null,
+      approved?: PromiseOrValue<string> | null,
+      tokenId?: PromiseOrValue<BigNumberish> | null,
     ): ApprovalEventFilter;
-    Approval(owner?: string | null, approved?: string | null, tokenId?: BigNumberish | null): ApprovalEventFilter;
+    Approval(
+      owner?: PromiseOrValue<string> | null,
+      approved?: PromiseOrValue<string> | null,
+      tokenId?: PromiseOrValue<BigNumberish> | null,
+    ): ApprovalEventFilter;
 
     'ApprovalForAll(address,address,bool)'(
-      owner?: string | null,
-      operator?: string | null,
+      owner?: PromiseOrValue<string> | null,
+      operator?: PromiseOrValue<string> | null,
       approved?: null,
     ): ApprovalForAllEventFilter;
-    ApprovalForAll(owner?: string | null, operator?: string | null, approved?: null): ApprovalForAllEventFilter;
+    ApprovalForAll(
+      owner?: PromiseOrValue<string> | null,
+      operator?: PromiseOrValue<string> | null,
+      approved?: null,
+    ): ApprovalForAllEventFilter;
 
     'BaseURISet(string)'(baseURI?: null): BaseURISetEventFilter;
     BaseURISet(baseURI?: null): BaseURISetEventFilter;
 
     'CreateBond(uint256,uint256,uint256,uint40,uint40)'(
-      lockID?: BigNumberish | null,
+      lockID?: PromiseOrValue<BigNumberish> | null,
       principalAmount?: null,
       payoutAmount?: null,
       vestingStart?: null,
       vestingTime?: null,
     ): CreateBondEventFilter;
     CreateBond(
-      lockID?: BigNumberish | null,
+      lockID?: PromiseOrValue<BigNumberish> | null,
       principalAmount?: null,
       payoutAmount?: null,
       vestingStart?: null,
@@ -1258,21 +1402,29 @@ export interface BondTellerEth extends BaseContract {
     Paused(): PausedEventFilter;
 
     'RedeemBond(uint256,address,uint256)'(
-      bondID?: BigNumberish | null,
+      bondID?: PromiseOrValue<BigNumberish> | null,
       recipient?: null,
       payoutAmount?: null,
     ): RedeemBondEventFilter;
-    RedeemBond(bondID?: BigNumberish | null, recipient?: null, payoutAmount?: null): RedeemBondEventFilter;
+    RedeemBond(
+      bondID?: PromiseOrValue<BigNumberish> | null,
+      recipient?: null,
+      payoutAmount?: null,
+    ): RedeemBondEventFilter;
 
     'TermsSet()'(): TermsSetEventFilter;
     TermsSet(): TermsSetEventFilter;
 
     'Transfer(address,address,uint256)'(
-      from?: string | null,
-      to?: string | null,
-      tokenId?: BigNumberish | null,
+      from?: PromiseOrValue<string> | null,
+      to?: PromiseOrValue<string> | null,
+      tokenId?: PromiseOrValue<BigNumberish> | null,
     ): TransferEventFilter;
-    Transfer(from?: string | null, to?: string | null, tokenId?: BigNumberish | null): TransferEventFilter;
+    Transfer(
+      from?: PromiseOrValue<string> | null,
+      to?: PromiseOrValue<string> | null,
+      tokenId?: PromiseOrValue<BigNumberish> | null,
+    ): TransferEventFilter;
 
     'Unpaused()'(): UnpausedEventFilter;
     Unpaused(): UnpausedEventFilter;
@@ -1283,15 +1435,15 @@ export interface BondTellerEth extends BaseContract {
 
     PERMIT_TYPEHASH(overrides?: CallOverrides): Promise<BigNumber>;
 
-    acceptGovernance(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    acceptGovernance(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     approve(
-      to: string,
-      tokenId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      to: PromiseOrValue<string>,
+      tokenId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    balanceOf(owner: string, overrides?: CallOverrides): Promise<BigNumber>;
+    balanceOf(owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     baseURI(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -1299,52 +1451,63 @@ export interface BondTellerEth extends BaseContract {
 
     bondPrice(overrides?: CallOverrides): Promise<BigNumber>;
 
-    bonds(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    bonds(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    calculateAmountIn(amountOut: BigNumberish, stake: boolean, overrides?: CallOverrides): Promise<BigNumber>;
+    calculateAmountIn(
+      amountOut: PromiseOrValue<BigNumberish>,
+      stake: PromiseOrValue<boolean>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    calculateAmountOut(amountIn: BigNumberish, stake: boolean, overrides?: CallOverrides): Promise<BigNumber>;
+    calculateAmountOut(
+      amountIn: PromiseOrValue<BigNumberish>,
+      stake: PromiseOrValue<boolean>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     capacity(overrides?: CallOverrides): Promise<BigNumber>;
 
     capacityIsPayout(overrides?: CallOverrides): Promise<BigNumber>;
 
-    claimPayout(bondID: BigNumberish, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    claimPayout(
+      bondID: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     dao(overrides?: CallOverrides): Promise<BigNumber>;
 
     depositEth(
-      minAmountOut: BigNumberish,
-      depositor: string,
-      stake: boolean,
-      overrides?: PayableOverrides & { from?: string | Promise<string> },
+      minAmountOut: PromiseOrValue<BigNumberish>,
+      depositor: PromiseOrValue<string>,
+      stake: PromiseOrValue<boolean>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     depositWeth(
-      amount: BigNumberish,
-      minAmountOut: BigNumberish,
-      depositor: string,
-      stake: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      amount: PromiseOrValue<BigNumberish>,
+      minAmountOut: PromiseOrValue<BigNumberish>,
+      depositor: PromiseOrValue<string>,
+      stake: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     depositWethSigned(
-      amount: BigNumberish,
-      minAmountOut: BigNumberish,
-      depositor: string,
-      stake: boolean,
-      deadline: BigNumberish,
-      v: BigNumberish,
-      r: BytesLike,
-      s: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      amount: PromiseOrValue<BigNumberish>,
+      minAmountOut: PromiseOrValue<BigNumberish>,
+      depositor: PromiseOrValue<string>,
+      stake: PromiseOrValue<boolean>,
+      deadline: PromiseOrValue<BigNumberish>,
+      v: PromiseOrValue<BigNumberish>,
+      r: PromiseOrValue<BytesLike>,
+      s: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     endTime(overrides?: CallOverrides): Promise<BigNumber>;
 
-    exists(tokenID: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    exists(tokenID: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    getApproved(tokenId: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    getApproved(tokenId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     globalVestingTerm(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -1355,25 +1518,29 @@ export interface BondTellerEth extends BaseContract {
     halfLife(overrides?: CallOverrides): Promise<BigNumber>;
 
     initialize(
-      name_: string,
-      governance_: string,
-      solace_: string,
-      xsLocker_: string,
-      pool_: string,
-      dao_: string,
-      principal_: string,
-      isPermittable_: boolean,
-      bondDepo_: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      name_: PromiseOrValue<string>,
+      governance_: PromiseOrValue<string>,
+      solace_: PromiseOrValue<string>,
+      xsLocker_: PromiseOrValue<string>,
+      pool_: PromiseOrValue<string>,
+      dao_: PromiseOrValue<string>,
+      principal_: PromiseOrValue<string>,
+      isPermittable_: PromiseOrValue<boolean>,
+      bondDepo_: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    isApprovedForAll(owner: string, operator: string, overrides?: CallOverrides): Promise<BigNumber>;
+    isApprovedForAll(
+      owner: PromiseOrValue<string>,
+      operator: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     isPermittable(overrides?: CallOverrides): Promise<BigNumber>;
 
     lastPriceUpdate(overrides?: CallOverrides): Promise<BigNumber>;
 
-    lockGovernance(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    lockGovernance(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     maxPayout(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -1383,26 +1550,26 @@ export interface BondTellerEth extends BaseContract {
 
     nextPrice(overrides?: CallOverrides): Promise<BigNumber>;
 
-    nonces(tokenID: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    nonces(tokenID: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     numBonds(overrides?: CallOverrides): Promise<BigNumber>;
 
-    ownerOf(tokenId: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    ownerOf(tokenId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    pause(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    pause(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     paused(overrides?: CallOverrides): Promise<BigNumber>;
 
     pendingGovernance(overrides?: CallOverrides): Promise<BigNumber>;
 
     permit(
-      spender: string,
-      tokenID: BigNumberish,
-      deadline: BigNumberish,
-      v: BigNumberish,
-      r: BytesLike,
-      s: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      spender: PromiseOrValue<string>,
+      tokenID: PromiseOrValue<BigNumberish>,
+      deadline: PromiseOrValue<BigNumberish>,
+      v: PromiseOrValue<BigNumberish>,
+      r: PromiseOrValue<BytesLike>,
+      s: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     priceAdjDenom(overrides?: CallOverrides): Promise<BigNumber>;
@@ -1414,89 +1581,96 @@ export interface BondTellerEth extends BaseContract {
     protocolFeeBps(overrides?: CallOverrides): Promise<BigNumber>;
 
     safeTransfer(
-      to: string,
-      tokenID: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      to: PromiseOrValue<string>,
+      tokenID: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     'safeTransferFrom(address,address,uint256)'(
-      from: string,
-      to: string,
-      tokenId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      tokenId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     'safeTransferFrom(address,address,uint256,bytes)'(
-      from: string,
-      to: string,
-      tokenId: BigNumberish,
-      _data: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      tokenId: PromiseOrValue<BigNumberish>,
+      _data: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setAddresses(
-      solace_: string,
-      xsLocker_: string,
-      pool_: string,
-      dao_: string,
-      principal_: string,
-      isPermittable_: boolean,
-      bondDepo_: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      solace_: PromiseOrValue<string>,
+      xsLocker_: PromiseOrValue<string>,
+      pool_: PromiseOrValue<string>,
+      dao_: PromiseOrValue<string>,
+      principal_: PromiseOrValue<string>,
+      isPermittable_: PromiseOrValue<boolean>,
+      bondDepo_: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setApprovalForAll(
-      operator: string,
-      approved: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      operator: PromiseOrValue<string>,
+      approved: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    setFees(protocolFee: BigNumberish, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    setFees(
+      protocolFee: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     setPendingGovernance(
-      pendingGovernance_: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      pendingGovernance_: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setTerms(
       terms: BondTellerEth.TermsStruct,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     solace(overrides?: CallOverrides): Promise<BigNumber>;
 
     startTime(overrides?: CallOverrides): Promise<BigNumber>;
 
-    supportsInterface(interfaceId: BytesLike, overrides?: CallOverrides): Promise<BigNumber>;
+    supportsInterface(interfaceId: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<BigNumber>;
 
     symbol(overrides?: CallOverrides): Promise<BigNumber>;
 
     termsSet(overrides?: CallOverrides): Promise<BigNumber>;
 
-    tokenByIndex(index: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    tokenByIndex(index: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    tokenOfOwnerByIndex(owner: string, index: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    tokenOfOwnerByIndex(
+      owner: PromiseOrValue<string>,
+      index: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    tokenURI(tokenID: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    tokenURI(tokenID: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
     transfer(
-      to: string,
-      tokenID: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      to: PromiseOrValue<string>,
+      tokenID: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     transferFrom(
-      from: string,
-      to: string,
-      tokenId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      tokenId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     underwritingPool(overrides?: CallOverrides): Promise<BigNumber>;
 
-    unpause(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    unpause(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     xsLocker(overrides?: CallOverrides): Promise<BigNumber>;
   };
@@ -1506,15 +1680,15 @@ export interface BondTellerEth extends BaseContract {
 
     PERMIT_TYPEHASH(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    acceptGovernance(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    acceptGovernance(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     approve(
-      to: string,
-      tokenId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      to: PromiseOrValue<string>,
+      tokenId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    balanceOf(owner: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    balanceOf(owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     baseURI(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
@@ -1522,17 +1696,17 @@ export interface BondTellerEth extends BaseContract {
 
     bondPrice(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    bonds(arg0: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    bonds(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     calculateAmountIn(
-      amountOut: BigNumberish,
-      stake: boolean,
+      amountOut: PromiseOrValue<BigNumberish>,
+      stake: PromiseOrValue<boolean>,
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     calculateAmountOut(
-      amountIn: BigNumberish,
-      stake: boolean,
+      amountIn: PromiseOrValue<BigNumberish>,
+      stake: PromiseOrValue<boolean>,
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
@@ -1541,44 +1715,44 @@ export interface BondTellerEth extends BaseContract {
     capacityIsPayout(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     claimPayout(
-      bondID: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      bondID: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     dao(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     depositEth(
-      minAmountOut: BigNumberish,
-      depositor: string,
-      stake: boolean,
-      overrides?: PayableOverrides & { from?: string | Promise<string> },
+      minAmountOut: PromiseOrValue<BigNumberish>,
+      depositor: PromiseOrValue<string>,
+      stake: PromiseOrValue<boolean>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     depositWeth(
-      amount: BigNumberish,
-      minAmountOut: BigNumberish,
-      depositor: string,
-      stake: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      amount: PromiseOrValue<BigNumberish>,
+      minAmountOut: PromiseOrValue<BigNumberish>,
+      depositor: PromiseOrValue<string>,
+      stake: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     depositWethSigned(
-      amount: BigNumberish,
-      minAmountOut: BigNumberish,
-      depositor: string,
-      stake: boolean,
-      deadline: BigNumberish,
-      v: BigNumberish,
-      r: BytesLike,
-      s: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      amount: PromiseOrValue<BigNumberish>,
+      minAmountOut: PromiseOrValue<BigNumberish>,
+      depositor: PromiseOrValue<string>,
+      stake: PromiseOrValue<boolean>,
+      deadline: PromiseOrValue<BigNumberish>,
+      v: PromiseOrValue<BigNumberish>,
+      r: PromiseOrValue<BytesLike>,
+      s: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     endTime(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    exists(tokenID: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    exists(tokenID: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    getApproved(tokenId: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getApproved(tokenId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     globalVestingTerm(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
@@ -1589,25 +1763,29 @@ export interface BondTellerEth extends BaseContract {
     halfLife(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     initialize(
-      name_: string,
-      governance_: string,
-      solace_: string,
-      xsLocker_: string,
-      pool_: string,
-      dao_: string,
-      principal_: string,
-      isPermittable_: boolean,
-      bondDepo_: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      name_: PromiseOrValue<string>,
+      governance_: PromiseOrValue<string>,
+      solace_: PromiseOrValue<string>,
+      xsLocker_: PromiseOrValue<string>,
+      pool_: PromiseOrValue<string>,
+      dao_: PromiseOrValue<string>,
+      principal_: PromiseOrValue<string>,
+      isPermittable_: PromiseOrValue<boolean>,
+      bondDepo_: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    isApprovedForAll(owner: string, operator: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    isApprovedForAll(
+      owner: PromiseOrValue<string>,
+      operator: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
     isPermittable(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     lastPriceUpdate(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    lockGovernance(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    lockGovernance(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     maxPayout(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
@@ -1617,26 +1795,26 @@ export interface BondTellerEth extends BaseContract {
 
     nextPrice(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    nonces(tokenID: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    nonces(tokenID: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     numBonds(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    ownerOf(tokenId: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    ownerOf(tokenId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    pause(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    pause(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     paused(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     pendingGovernance(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     permit(
-      spender: string,
-      tokenID: BigNumberish,
-      deadline: BigNumberish,
-      v: BigNumberish,
-      r: BytesLike,
-      s: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      spender: PromiseOrValue<string>,
+      tokenID: PromiseOrValue<BigNumberish>,
+      deadline: PromiseOrValue<BigNumberish>,
+      v: PromiseOrValue<BigNumberish>,
+      r: PromiseOrValue<BytesLike>,
+      s: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     priceAdjDenom(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -1648,92 +1826,96 @@ export interface BondTellerEth extends BaseContract {
     protocolFeeBps(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     safeTransfer(
-      to: string,
-      tokenID: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      to: PromiseOrValue<string>,
+      tokenID: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     'safeTransferFrom(address,address,uint256)'(
-      from: string,
-      to: string,
-      tokenId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      tokenId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     'safeTransferFrom(address,address,uint256,bytes)'(
-      from: string,
-      to: string,
-      tokenId: BigNumberish,
-      _data: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      tokenId: PromiseOrValue<BigNumberish>,
+      _data: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setAddresses(
-      solace_: string,
-      xsLocker_: string,
-      pool_: string,
-      dao_: string,
-      principal_: string,
-      isPermittable_: boolean,
-      bondDepo_: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      solace_: PromiseOrValue<string>,
+      xsLocker_: PromiseOrValue<string>,
+      pool_: PromiseOrValue<string>,
+      dao_: PromiseOrValue<string>,
+      principal_: PromiseOrValue<string>,
+      isPermittable_: PromiseOrValue<boolean>,
+      bondDepo_: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setApprovalForAll(
-      operator: string,
-      approved: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      operator: PromiseOrValue<string>,
+      approved: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setFees(
-      protocolFee: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      protocolFee: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setPendingGovernance(
-      pendingGovernance_: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      pendingGovernance_: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setTerms(
       terms: BondTellerEth.TermsStruct,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     solace(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     startTime(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    supportsInterface(interfaceId: BytesLike, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    supportsInterface(interfaceId: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     symbol(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     termsSet(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    tokenByIndex(index: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    tokenByIndex(index: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    tokenOfOwnerByIndex(owner: string, index: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    tokenOfOwnerByIndex(
+      owner: PromiseOrValue<string>,
+      index: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
-    tokenURI(tokenID: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    tokenURI(tokenID: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     totalSupply(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     transfer(
-      to: string,
-      tokenID: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      to: PromiseOrValue<string>,
+      tokenID: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     transferFrom(
-      from: string,
-      to: string,
-      tokenId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      tokenId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     underwritingPool(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    unpause(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    unpause(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     xsLocker(overrides?: CallOverrides): Promise<PopulatedTransaction>;
   };

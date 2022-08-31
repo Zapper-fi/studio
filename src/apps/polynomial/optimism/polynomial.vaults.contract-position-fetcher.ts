@@ -1,6 +1,4 @@
 import { Inject } from '@nestjs/common';
-import Axios from 'axios';
-import _ from 'lodash';
 
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
@@ -9,24 +7,24 @@ import { ContractPosition } from '~position/position.interface';
 import { Network } from '~types/network.interface';
 
 import { PolynomialContractFactory, PolynomialCoveredCall, PolynomialPutSelling } from '../contracts';
+import { resolveTitle, getVault, isUnderlyingDenominated } from '../helpers/formatters';
+import { PolynomialApiHelper } from '../helpers/polynomial.api';
 import { POLYNOMIAL_DEFINITION } from '../polynomial.definition';
 
 const appId = POLYNOMIAL_DEFINITION.id;
 const groupId = POLYNOMIAL_DEFINITION.groups.vaults.id;
 const network = Network.OPTIMISM_MAINNET;
 
-const resolveTitle = (title: string) => _.startCase(_.toLower(title));
-
 @Register.ContractPositionFetcher({ appId, groupId, network })
 export class OptimismPolynomialVaultsContractPositionFetcher implements PositionFetcher<ContractPosition> {
   constructor(
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
     @Inject(PolynomialContractFactory) private readonly contractFactory: PolynomialContractFactory,
+    @Inject(PolynomialApiHelper) private readonly apiHelper: PolynomialApiHelper,
   ) {}
 
   async getPositions() {
-    const endpoint = 'https://prodapi.polynomial.fi/vaults';
-    const vaults = await Axios.get(endpoint).then(v => v.data);
+    const vaults = await this.apiHelper.getVaults();
 
     const callPositions =
       await this.appToolkit.helpers.singleStakingFarmContractPositionHelper.getContractPositions<PolynomialCoveredCall>(
@@ -34,18 +32,33 @@ export class OptimismPolynomialVaultsContractPositionFetcher implements Position
           appId,
           groupId,
           network,
+          dependencies: [
+            { appId: POLYNOMIAL_DEFINITION.id, groupIds: [POLYNOMIAL_DEFINITION.groups.vaults.id], network },
+          ],
           resolveFarmAddresses: () =>
-            vaults.filter(vault => vault.type.includes('CALL')).map(vault => vault.contractAddress.toLowerCase()),
+            vaults
+              .filter(vault => isUnderlyingDenominated(vault.vaultId))
+              .map(vault => vault.vaultAddress.toLowerCase()),
           resolveStakedTokenAddress: async ({ multicall, contract }) => multicall.wrap(contract).UNDERLYING(),
+          resolveRewardTokenAddresses: ({ multicall, contract }) => multicall.wrap(contract).VAULT_TOKEN(),
           resolveFarmContract: ({ address }) => this.contractFactory.polynomialCoveredCall({ address, network }),
-          resolveTotalValueLocked: ({ multicall, contract }) => multicall.wrap(contract).totalFunds(),
-          resolveLabel: address =>
-            resolveTitle(vaults.find(vault => vault.contractAddress.toLowerCase() === address).type),
-          resolveRois: () => ({
-            dailyROI: 0,
-            weeklyROI: 0,
-            yearlyROI: 0,
-          }),
+          resolveLiquidity: ({ multicall, contract }) => multicall.wrap(contract).totalFunds(),
+          resolveLabel: (address: string) => resolveTitle(getVault(vaults, address).vaultId),
+          resolveRois: ({ address }) => {
+            const apy = Number(getVault(vaults, address).apy);
+            if (!apy) {
+              return {
+                dailyROI: 0,
+                weeklyROI: 0,
+                yearlyROI: 0,
+              };
+            }
+            return {
+              dailyROI: apy / 365,
+              weeklyROI: apy / 52,
+              yearlyROI: apy,
+            };
+          },
         },
       );
 
@@ -54,18 +67,33 @@ export class OptimismPolynomialVaultsContractPositionFetcher implements Position
         appId,
         groupId,
         network,
+        dependencies: [
+          { appId: POLYNOMIAL_DEFINITION.id, groupIds: [POLYNOMIAL_DEFINITION.groups.vaults.id], network },
+        ],
         resolveFarmAddresses: () =>
-          vaults.filter(vault => vault.type.includes('PUT')).map(vault => vault.contractAddress.toLowerCase()),
-        resolveStakedTokenAddress: async ({ multicall, contract }) => multicall.wrap(contract).COLLATERAL(),
+          vaults
+            .filter(vault => !isUnderlyingDenominated(vault.vaultId))
+            .map(vault => vault.vaultAddress.toLowerCase()), // Put and Gamma positions
+        resolveStakedTokenAddress: async ({ multicall, contract }) => multicall.wrap(contract).SUSD(),
+        resolveRewardTokenAddresses: ({ multicall, contract }) => multicall.wrap(contract).VAULT_TOKEN(),
         resolveFarmContract: ({ address }) => this.contractFactory.polynomialPutSelling({ address, network }),
-        resolveTotalValueLocked: ({ multicall, contract }) => multicall.wrap(contract).totalFunds(),
-        resolveLabel: address =>
-          resolveTitle(vaults.find(vault => vault.contractAddress.toLowerCase() === address).type),
-        resolveRois: () => ({
-          dailyROI: 0,
-          weeklyROI: 0,
-          yearlyROI: 0,
-        }),
+        resolveLiquidity: ({ multicall, contract }) => multicall.wrap(contract).totalFunds(),
+        resolveLabel: (address: string) => resolveTitle(getVault(vaults, address).vaultId),
+        resolveRois: ({ address }) => {
+          const apy = Number(getVault(vaults, address).apy);
+          if (!apy) {
+            return {
+              dailyROI: 0,
+              weeklyROI: 0,
+              yearlyROI: 0,
+            };
+          }
+          return {
+            dailyROI: apy / 365,
+            weeklyROI: apy / 52,
+            yearlyROI: apy,
+          };
+        },
       });
 
     return [...putPositions, ...callPositions];

@@ -15,7 +15,7 @@ import type {
 } from 'ethers';
 import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
 import type { Listener, Provider } from '@ethersproject/providers';
-import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
 export interface StrategyInterface extends utils.Interface {
   functions: {
@@ -137,58 +137,102 @@ export interface StrategyInterface extends utils.Interface {
   encodeFunctionData(functionFragment: 'LOCK', values?: undefined): string;
   encodeFunctionData(functionFragment: 'PERMIT_TYPEHASH', values?: undefined): string;
   encodeFunctionData(functionFragment: 'ROOT', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'allowance', values: [string, string]): string;
-  encodeFunctionData(functionFragment: 'approve', values: [string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'balanceOf', values: [string]): string;
+  encodeFunctionData(functionFragment: 'allowance', values: [PromiseOrValue<string>, PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'approve',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'balanceOf', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'base', values?: undefined): string;
   encodeFunctionData(functionFragment: 'baseId', values?: undefined): string;
   encodeFunctionData(functionFragment: 'baseJoin', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'burn', values: [string]): string;
-  encodeFunctionData(functionFragment: 'burnForBase', values: [string]): string;
+  encodeFunctionData(functionFragment: 'burn', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'burnForBase', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'cached', values?: undefined): string;
   encodeFunctionData(functionFragment: 'cauldron', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'claim', values: [string]): string;
+  encodeFunctionData(functionFragment: 'claim', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'decimals', values?: undefined): string;
   encodeFunctionData(functionFragment: 'deploymentChainId', values?: undefined): string;
   encodeFunctionData(functionFragment: 'endPool', values?: undefined): string;
   encodeFunctionData(functionFragment: 'fyToken', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'getRoleAdmin', values: [BytesLike]): string;
-  encodeFunctionData(functionFragment: 'grantRole', values: [BytesLike, string]): string;
-  encodeFunctionData(functionFragment: 'grantRoles', values: [BytesLike[], string]): string;
-  encodeFunctionData(functionFragment: 'hasRole', values: [BytesLike, string]): string;
-  encodeFunctionData(functionFragment: 'invariants', values: [string]): string;
+  encodeFunctionData(functionFragment: 'getRoleAdmin', values: [PromiseOrValue<BytesLike>]): string;
+  encodeFunctionData(
+    functionFragment: 'grantRole',
+    values: [PromiseOrValue<BytesLike>, PromiseOrValue<string>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'grantRoles',
+    values: [PromiseOrValue<BytesLike>[], PromiseOrValue<string>],
+  ): string;
+  encodeFunctionData(functionFragment: 'hasRole', values: [PromiseOrValue<BytesLike>, PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'invariants', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'ladle', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'lockRole', values: [BytesLike]): string;
-  encodeFunctionData(functionFragment: 'mint', values: [string]): string;
+  encodeFunctionData(functionFragment: 'lockRole', values: [PromiseOrValue<BytesLike>]): string;
+  encodeFunctionData(functionFragment: 'mint', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'name', values?: undefined): string;
   encodeFunctionData(functionFragment: 'nextPool', values?: undefined): string;
   encodeFunctionData(functionFragment: 'nextSeriesId', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'nonces', values: [string]): string;
+  encodeFunctionData(functionFragment: 'nonces', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(
     functionFragment: 'permit',
-    values: [string, string, BigNumberish, BigNumberish, BigNumberish, BytesLike, BytesLike],
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BytesLike>,
+      PromiseOrValue<BytesLike>,
+    ],
   ): string;
   encodeFunctionData(functionFragment: 'pool', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'renounceRole', values: [BytesLike, string]): string;
+  encodeFunctionData(
+    functionFragment: 'renounceRole',
+    values: [PromiseOrValue<BytesLike>, PromiseOrValue<string>],
+  ): string;
   encodeFunctionData(functionFragment: 'resetTokenJoin', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'revokeRole', values: [BytesLike, string]): string;
-  encodeFunctionData(functionFragment: 'revokeRoles', values: [BytesLike[], string]): string;
-  encodeFunctionData(functionFragment: 'rewards', values: [string]): string;
+  encodeFunctionData(
+    functionFragment: 'revokeRole',
+    values: [PromiseOrValue<BytesLike>, PromiseOrValue<string>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'revokeRoles',
+    values: [PromiseOrValue<BytesLike>[], PromiseOrValue<string>],
+  ): string;
+  encodeFunctionData(functionFragment: 'rewards', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'rewardsPerToken', values?: undefined): string;
   encodeFunctionData(functionFragment: 'rewardsPeriod', values?: undefined): string;
   encodeFunctionData(functionFragment: 'rewardsToken', values?: undefined): string;
   encodeFunctionData(functionFragment: 'seriesId', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'setNextPool', values: [string, BytesLike]): string;
-  encodeFunctionData(functionFragment: 'setRewards', values: [BigNumberish, BigNumberish, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'setRewardsToken', values: [string]): string;
-  encodeFunctionData(functionFragment: 'setRoleAdmin', values: [BytesLike, BytesLike]): string;
-  encodeFunctionData(functionFragment: 'setTokenId', values: [BytesLike]): string;
-  encodeFunctionData(functionFragment: 'setYield', values: [string]): string;
-  encodeFunctionData(functionFragment: 'startPool', values: [BigNumberish, BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'setNextPool',
+    values: [PromiseOrValue<string>, PromiseOrValue<BytesLike>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'setRewards',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'setRewardsToken', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'setRoleAdmin',
+    values: [PromiseOrValue<BytesLike>, PromiseOrValue<BytesLike>],
+  ): string;
+  encodeFunctionData(functionFragment: 'setTokenId', values: [PromiseOrValue<BytesLike>]): string;
+  encodeFunctionData(functionFragment: 'setYield', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'startPool',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+  ): string;
   encodeFunctionData(functionFragment: 'symbol', values?: undefined): string;
   encodeFunctionData(functionFragment: 'totalSupply', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'transfer', values: [string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'transferFrom', values: [string, string, BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'transfer',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'transferFrom',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
   encodeFunctionData(functionFragment: 'version', values?: undefined): string;
 
   decodeFunctionResult(functionFragment: 'DOMAIN_SEPARATOR', data: BytesLike): Result;
@@ -442,15 +486,19 @@ export interface Strategy extends BaseContract {
 
     ROOT(overrides?: CallOverrides): Promise<[string]>;
 
-    allowance(owner: string, spender: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    allowance(
+      owner: PromiseOrValue<string>,
+      spender: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber]>;
 
     approve(
-      spender: string,
-      wad: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      spender: PromiseOrValue<string>,
+      wad: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    balanceOf(guy: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    balanceOf(guy: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     base(overrides?: CallOverrides): Promise<[string]>;
 
@@ -458,50 +506,66 @@ export interface Strategy extends BaseContract {
 
     baseJoin(overrides?: CallOverrides): Promise<[string]>;
 
-    burn(to: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    burn(
+      to: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<ContractTransaction>;
 
-    burnForBase(to: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    burnForBase(
+      to: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<ContractTransaction>;
 
     cached(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     cauldron(overrides?: CallOverrides): Promise<[string]>;
 
-    claim(to: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    claim(
+      to: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<ContractTransaction>;
 
     decimals(overrides?: CallOverrides): Promise<[number]>;
 
     deploymentChainId(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    endPool(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    endPool(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     fyToken(overrides?: CallOverrides): Promise<[string]>;
 
-    getRoleAdmin(role: BytesLike, overrides?: CallOverrides): Promise<[string]>;
+    getRoleAdmin(role: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<[string]>;
 
     grantRole(
-      role: BytesLike,
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     grantRoles(
-      roles: BytesLike[],
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      roles: PromiseOrValue<BytesLike>[],
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    hasRole(role: BytesLike, account: string, overrides?: CallOverrides): Promise<[boolean]>;
+    hasRole(
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<[boolean]>;
 
-    invariants(arg0: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    invariants(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     ladle(overrides?: CallOverrides): Promise<[string]>;
 
     lockRole(
-      role: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      role: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    mint(to: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    mint(
+      to: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<ContractTransaction>;
 
     name(overrides?: CallOverrides): Promise<[string]>;
 
@@ -509,43 +573,43 @@ export interface Strategy extends BaseContract {
 
     nextSeriesId(overrides?: CallOverrides): Promise<[string]>;
 
-    nonces(arg0: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    nonces(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     permit(
-      owner: string,
-      spender: string,
-      amount: BigNumberish,
-      deadline: BigNumberish,
-      v: BigNumberish,
-      r: BytesLike,
-      s: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      owner: PromiseOrValue<string>,
+      spender: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      deadline: PromiseOrValue<BigNumberish>,
+      v: PromiseOrValue<BigNumberish>,
+      r: PromiseOrValue<BytesLike>,
+      s: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     pool(overrides?: CallOverrides): Promise<[string]>;
 
     renounceRole(
-      role: BytesLike,
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    resetTokenJoin(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    resetTokenJoin(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     revokeRole(
-      role: BytesLike,
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     revokeRoles(
-      roles: BytesLike[],
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      roles: PromiseOrValue<BytesLike>[],
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     rewards(
-      arg0: string,
+      arg0: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber, BigNumber] & { accumulated: BigNumber; checkpoint: BigNumber }>;
 
@@ -564,40 +628,43 @@ export interface Strategy extends BaseContract {
     seriesId(overrides?: CallOverrides): Promise<[string]>;
 
     setNextPool(
-      pool_: string,
-      seriesId_: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      pool_: PromiseOrValue<string>,
+      seriesId_: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setRewards(
-      start: BigNumberish,
-      end: BigNumberish,
-      rate: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      start: PromiseOrValue<BigNumberish>,
+      end: PromiseOrValue<BigNumberish>,
+      rate: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setRewardsToken(
-      rewardsToken_: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      rewardsToken_: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setRoleAdmin(
-      role: BytesLike,
-      adminRole: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      role: PromiseOrValue<BytesLike>,
+      adminRole: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setTokenId(
-      baseId_: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      baseId_: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    setYield(ladle_: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    setYield(
+      ladle_: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<ContractTransaction>;
 
     startPool(
-      minRatio: BigNumberish,
-      maxRatio: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      minRatio: PromiseOrValue<BigNumberish>,
+      maxRatio: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     symbol(overrides?: CallOverrides): Promise<[string]>;
@@ -605,16 +672,16 @@ export interface Strategy extends BaseContract {
     totalSupply(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     transfer(
-      dst: string,
-      wad: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      dst: PromiseOrValue<string>,
+      wad: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     transferFrom(
-      src: string,
-      dst: string,
-      wad: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      src: PromiseOrValue<string>,
+      dst: PromiseOrValue<string>,
+      wad: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     version(overrides?: CallOverrides): Promise<[string]>;
@@ -628,15 +695,19 @@ export interface Strategy extends BaseContract {
 
   ROOT(overrides?: CallOverrides): Promise<string>;
 
-  allowance(owner: string, spender: string, overrides?: CallOverrides): Promise<BigNumber>;
+  allowance(
+    owner: PromiseOrValue<string>,
+    spender: PromiseOrValue<string>,
+    overrides?: CallOverrides,
+  ): Promise<BigNumber>;
 
   approve(
-    spender: string,
-    wad: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    spender: PromiseOrValue<string>,
+    wad: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  balanceOf(guy: string, overrides?: CallOverrides): Promise<BigNumber>;
+  balanceOf(guy: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   base(overrides?: CallOverrides): Promise<string>;
 
@@ -644,47 +715,66 @@ export interface Strategy extends BaseContract {
 
   baseJoin(overrides?: CallOverrides): Promise<string>;
 
-  burn(to: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  burn(
+    to: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
+  ): Promise<ContractTransaction>;
 
-  burnForBase(to: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  burnForBase(
+    to: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
+  ): Promise<ContractTransaction>;
 
   cached(overrides?: CallOverrides): Promise<BigNumber>;
 
   cauldron(overrides?: CallOverrides): Promise<string>;
 
-  claim(to: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  claim(
+    to: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
+  ): Promise<ContractTransaction>;
 
   decimals(overrides?: CallOverrides): Promise<number>;
 
   deploymentChainId(overrides?: CallOverrides): Promise<BigNumber>;
 
-  endPool(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  endPool(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   fyToken(overrides?: CallOverrides): Promise<string>;
 
-  getRoleAdmin(role: BytesLike, overrides?: CallOverrides): Promise<string>;
+  getRoleAdmin(role: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<string>;
 
   grantRole(
-    role: BytesLike,
-    account: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    role: PromiseOrValue<BytesLike>,
+    account: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   grantRoles(
-    roles: BytesLike[],
-    account: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    roles: PromiseOrValue<BytesLike>[],
+    account: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  hasRole(role: BytesLike, account: string, overrides?: CallOverrides): Promise<boolean>;
+  hasRole(
+    role: PromiseOrValue<BytesLike>,
+    account: PromiseOrValue<string>,
+    overrides?: CallOverrides,
+  ): Promise<boolean>;
 
-  invariants(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+  invariants(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   ladle(overrides?: CallOverrides): Promise<string>;
 
-  lockRole(role: BytesLike, overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  lockRole(
+    role: PromiseOrValue<BytesLike>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
+  ): Promise<ContractTransaction>;
 
-  mint(to: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  mint(
+    to: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
+  ): Promise<ContractTransaction>;
 
   name(overrides?: CallOverrides): Promise<string>;
 
@@ -692,43 +782,43 @@ export interface Strategy extends BaseContract {
 
   nextSeriesId(overrides?: CallOverrides): Promise<string>;
 
-  nonces(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+  nonces(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   permit(
-    owner: string,
-    spender: string,
-    amount: BigNumberish,
-    deadline: BigNumberish,
-    v: BigNumberish,
-    r: BytesLike,
-    s: BytesLike,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    owner: PromiseOrValue<string>,
+    spender: PromiseOrValue<string>,
+    amount: PromiseOrValue<BigNumberish>,
+    deadline: PromiseOrValue<BigNumberish>,
+    v: PromiseOrValue<BigNumberish>,
+    r: PromiseOrValue<BytesLike>,
+    s: PromiseOrValue<BytesLike>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   pool(overrides?: CallOverrides): Promise<string>;
 
   renounceRole(
-    role: BytesLike,
-    account: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    role: PromiseOrValue<BytesLike>,
+    account: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  resetTokenJoin(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  resetTokenJoin(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   revokeRole(
-    role: BytesLike,
-    account: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    role: PromiseOrValue<BytesLike>,
+    account: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   revokeRoles(
-    roles: BytesLike[],
-    account: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    roles: PromiseOrValue<BytesLike>[],
+    account: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   rewards(
-    arg0: string,
+    arg0: PromiseOrValue<string>,
     overrides?: CallOverrides,
   ): Promise<[BigNumber, BigNumber] & { accumulated: BigNumber; checkpoint: BigNumber }>;
 
@@ -747,40 +837,43 @@ export interface Strategy extends BaseContract {
   seriesId(overrides?: CallOverrides): Promise<string>;
 
   setNextPool(
-    pool_: string,
-    seriesId_: BytesLike,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    pool_: PromiseOrValue<string>,
+    seriesId_: PromiseOrValue<BytesLike>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setRewards(
-    start: BigNumberish,
-    end: BigNumberish,
-    rate: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    start: PromiseOrValue<BigNumberish>,
+    end: PromiseOrValue<BigNumberish>,
+    rate: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setRewardsToken(
-    rewardsToken_: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    rewardsToken_: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setRoleAdmin(
-    role: BytesLike,
-    adminRole: BytesLike,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    role: PromiseOrValue<BytesLike>,
+    adminRole: PromiseOrValue<BytesLike>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setTokenId(
-    baseId_: BytesLike,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    baseId_: PromiseOrValue<BytesLike>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  setYield(ladle_: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  setYield(
+    ladle_: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
+  ): Promise<ContractTransaction>;
 
   startPool(
-    minRatio: BigNumberish,
-    maxRatio: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    minRatio: PromiseOrValue<BigNumberish>,
+    maxRatio: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   symbol(overrides?: CallOverrides): Promise<string>;
@@ -788,16 +881,16 @@ export interface Strategy extends BaseContract {
   totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
   transfer(
-    dst: string,
-    wad: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    dst: PromiseOrValue<string>,
+    wad: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   transferFrom(
-    src: string,
-    dst: string,
-    wad: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    src: PromiseOrValue<string>,
+    dst: PromiseOrValue<string>,
+    wad: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   version(overrides?: CallOverrides): Promise<string>;
@@ -811,11 +904,19 @@ export interface Strategy extends BaseContract {
 
     ROOT(overrides?: CallOverrides): Promise<string>;
 
-    allowance(owner: string, spender: string, overrides?: CallOverrides): Promise<BigNumber>;
+    allowance(
+      owner: PromiseOrValue<string>,
+      spender: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    approve(spender: string, wad: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+    approve(
+      spender: PromiseOrValue<string>,
+      wad: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
 
-    balanceOf(guy: string, overrides?: CallOverrides): Promise<BigNumber>;
+    balanceOf(guy: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     base(overrides?: CallOverrides): Promise<string>;
 
@@ -823,15 +924,15 @@ export interface Strategy extends BaseContract {
 
     baseJoin(overrides?: CallOverrides): Promise<string>;
 
-    burn(to: string, overrides?: CallOverrides): Promise<BigNumber>;
+    burn(to: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    burnForBase(to: string, overrides?: CallOverrides): Promise<BigNumber>;
+    burnForBase(to: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     cached(overrides?: CallOverrides): Promise<BigNumber>;
 
     cauldron(overrides?: CallOverrides): Promise<string>;
 
-    claim(to: string, overrides?: CallOverrides): Promise<BigNumber>;
+    claim(to: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     decimals(overrides?: CallOverrides): Promise<number>;
 
@@ -841,21 +942,33 @@ export interface Strategy extends BaseContract {
 
     fyToken(overrides?: CallOverrides): Promise<string>;
 
-    getRoleAdmin(role: BytesLike, overrides?: CallOverrides): Promise<string>;
+    getRoleAdmin(role: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<string>;
 
-    grantRole(role: BytesLike, account: string, overrides?: CallOverrides): Promise<void>;
+    grantRole(
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    grantRoles(roles: BytesLike[], account: string, overrides?: CallOverrides): Promise<void>;
+    grantRoles(
+      roles: PromiseOrValue<BytesLike>[],
+      account: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    hasRole(role: BytesLike, account: string, overrides?: CallOverrides): Promise<boolean>;
+    hasRole(
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
 
-    invariants(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    invariants(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     ladle(overrides?: CallOverrides): Promise<string>;
 
-    lockRole(role: BytesLike, overrides?: CallOverrides): Promise<void>;
+    lockRole(role: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<void>;
 
-    mint(to: string, overrides?: CallOverrides): Promise<BigNumber>;
+    mint(to: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     name(overrides?: CallOverrides): Promise<string>;
 
@@ -863,31 +976,43 @@ export interface Strategy extends BaseContract {
 
     nextSeriesId(overrides?: CallOverrides): Promise<string>;
 
-    nonces(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    nonces(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     permit(
-      owner: string,
-      spender: string,
-      amount: BigNumberish,
-      deadline: BigNumberish,
-      v: BigNumberish,
-      r: BytesLike,
-      s: BytesLike,
+      owner: PromiseOrValue<string>,
+      spender: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      deadline: PromiseOrValue<BigNumberish>,
+      v: PromiseOrValue<BigNumberish>,
+      r: PromiseOrValue<BytesLike>,
+      s: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
     pool(overrides?: CallOverrides): Promise<string>;
 
-    renounceRole(role: BytesLike, account: string, overrides?: CallOverrides): Promise<void>;
+    renounceRole(
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
     resetTokenJoin(overrides?: CallOverrides): Promise<void>;
 
-    revokeRole(role: BytesLike, account: string, overrides?: CallOverrides): Promise<void>;
+    revokeRole(
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    revokeRoles(roles: BytesLike[], account: string, overrides?: CallOverrides): Promise<void>;
+    revokeRoles(
+      roles: PromiseOrValue<BytesLike>[],
+      account: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
     rewards(
-      arg0: string,
+      arg0: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber, BigNumber] & { accumulated: BigNumber; checkpoint: BigNumber }>;
 
@@ -905,44 +1030,80 @@ export interface Strategy extends BaseContract {
 
     seriesId(overrides?: CallOverrides): Promise<string>;
 
-    setNextPool(pool_: string, seriesId_: BytesLike, overrides?: CallOverrides): Promise<void>;
+    setNextPool(
+      pool_: PromiseOrValue<string>,
+      seriesId_: PromiseOrValue<BytesLike>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    setRewards(start: BigNumberish, end: BigNumberish, rate: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    setRewards(
+      start: PromiseOrValue<BigNumberish>,
+      end: PromiseOrValue<BigNumberish>,
+      rate: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    setRewardsToken(rewardsToken_: string, overrides?: CallOverrides): Promise<void>;
+    setRewardsToken(rewardsToken_: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    setRoleAdmin(role: BytesLike, adminRole: BytesLike, overrides?: CallOverrides): Promise<void>;
+    setRoleAdmin(
+      role: PromiseOrValue<BytesLike>,
+      adminRole: PromiseOrValue<BytesLike>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    setTokenId(baseId_: BytesLike, overrides?: CallOverrides): Promise<void>;
+    setTokenId(baseId_: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<void>;
 
-    setYield(ladle_: string, overrides?: CallOverrides): Promise<void>;
+    setYield(ladle_: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    startPool(minRatio: BigNumberish, maxRatio: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    startPool(
+      minRatio: PromiseOrValue<BigNumberish>,
+      maxRatio: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
     symbol(overrides?: CallOverrides): Promise<string>;
 
     totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
-    transfer(dst: string, wad: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+    transfer(
+      dst: PromiseOrValue<string>,
+      wad: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
 
-    transferFrom(src: string, dst: string, wad: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+    transferFrom(
+      src: PromiseOrValue<string>,
+      dst: PromiseOrValue<string>,
+      wad: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
 
     version(overrides?: CallOverrides): Promise<string>;
   };
 
   filters: {
     'Approval(address,address,uint256)'(
-      owner?: string | null,
-      spender?: string | null,
+      owner?: PromiseOrValue<string> | null,
+      spender?: PromiseOrValue<string> | null,
       value?: null,
     ): ApprovalEventFilter;
-    Approval(owner?: string | null, spender?: string | null, value?: null): ApprovalEventFilter;
+    Approval(
+      owner?: PromiseOrValue<string> | null,
+      spender?: PromiseOrValue<string> | null,
+      value?: null,
+    ): ApprovalEventFilter;
 
     'Claimed(address,uint256)'(receiver?: null, claimed?: null): ClaimedEventFilter;
     Claimed(receiver?: null, claimed?: null): ClaimedEventFilter;
 
-    'NextPoolSet(address,bytes6)'(pool?: string | null, seriesId?: BytesLike | null): NextPoolSetEventFilter;
-    NextPoolSet(pool?: string | null, seriesId?: BytesLike | null): NextPoolSetEventFilter;
+    'NextPoolSet(address,bytes6)'(
+      pool?: PromiseOrValue<string> | null,
+      seriesId?: PromiseOrValue<BytesLike> | null,
+    ): NextPoolSetEventFilter;
+    NextPoolSet(
+      pool?: PromiseOrValue<string> | null,
+      seriesId?: PromiseOrValue<BytesLike> | null,
+    ): NextPoolSetEventFilter;
 
     'PoolEnded(address)'(pool?: null): PoolEndedEventFilter;
     PoolEnded(pool?: null): PoolEndedEventFilter;
@@ -960,24 +1121,35 @@ export interface Strategy extends BaseContract {
     RewardsTokenSet(token?: null): RewardsTokenSetEventFilter;
 
     'RoleAdminChanged(bytes4,bytes4)'(
-      role?: BytesLike | null,
-      newAdminRole?: BytesLike | null,
+      role?: PromiseOrValue<BytesLike> | null,
+      newAdminRole?: PromiseOrValue<BytesLike> | null,
     ): RoleAdminChangedEventFilter;
-    RoleAdminChanged(role?: BytesLike | null, newAdminRole?: BytesLike | null): RoleAdminChangedEventFilter;
+    RoleAdminChanged(
+      role?: PromiseOrValue<BytesLike> | null,
+      newAdminRole?: PromiseOrValue<BytesLike> | null,
+    ): RoleAdminChangedEventFilter;
 
     'RoleGranted(bytes4,address,address)'(
-      role?: BytesLike | null,
-      account?: string | null,
-      sender?: string | null,
+      role?: PromiseOrValue<BytesLike> | null,
+      account?: PromiseOrValue<string> | null,
+      sender?: PromiseOrValue<string> | null,
     ): RoleGrantedEventFilter;
-    RoleGranted(role?: BytesLike | null, account?: string | null, sender?: string | null): RoleGrantedEventFilter;
+    RoleGranted(
+      role?: PromiseOrValue<BytesLike> | null,
+      account?: PromiseOrValue<string> | null,
+      sender?: PromiseOrValue<string> | null,
+    ): RoleGrantedEventFilter;
 
     'RoleRevoked(bytes4,address,address)'(
-      role?: BytesLike | null,
-      account?: string | null,
-      sender?: string | null,
+      role?: PromiseOrValue<BytesLike> | null,
+      account?: PromiseOrValue<string> | null,
+      sender?: PromiseOrValue<string> | null,
     ): RoleRevokedEventFilter;
-    RoleRevoked(role?: BytesLike | null, account?: string | null, sender?: string | null): RoleRevokedEventFilter;
+    RoleRevoked(
+      role?: PromiseOrValue<BytesLike> | null,
+      account?: PromiseOrValue<string> | null,
+      sender?: PromiseOrValue<string> | null,
+    ): RoleRevokedEventFilter;
 
     'TokenIdSet(bytes6)'(id?: null): TokenIdSetEventFilter;
     TokenIdSet(id?: null): TokenIdSetEventFilter;
@@ -985,8 +1157,16 @@ export interface Strategy extends BaseContract {
     'TokenJoinReset(address)'(join?: null): TokenJoinResetEventFilter;
     TokenJoinReset(join?: null): TokenJoinResetEventFilter;
 
-    'Transfer(address,address,uint256)'(from?: string | null, to?: string | null, value?: null): TransferEventFilter;
-    Transfer(from?: string | null, to?: string | null, value?: null): TransferEventFilter;
+    'Transfer(address,address,uint256)'(
+      from?: PromiseOrValue<string> | null,
+      to?: PromiseOrValue<string> | null,
+      value?: null,
+    ): TransferEventFilter;
+    Transfer(
+      from?: PromiseOrValue<string> | null,
+      to?: PromiseOrValue<string> | null,
+      value?: null,
+    ): TransferEventFilter;
 
     'UserRewardsUpdated(address,uint256,uint256)'(
       user?: null,
@@ -1008,15 +1188,19 @@ export interface Strategy extends BaseContract {
 
     ROOT(overrides?: CallOverrides): Promise<BigNumber>;
 
-    allowance(owner: string, spender: string, overrides?: CallOverrides): Promise<BigNumber>;
-
-    approve(
-      spender: string,
-      wad: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+    allowance(
+      owner: PromiseOrValue<string>,
+      spender: PromiseOrValue<string>,
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
-    balanceOf(guy: string, overrides?: CallOverrides): Promise<BigNumber>;
+    approve(
+      spender: PromiseOrValue<string>,
+      wad: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
+
+    balanceOf(guy: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     base(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -1024,47 +1208,57 @@ export interface Strategy extends BaseContract {
 
     baseJoin(overrides?: CallOverrides): Promise<BigNumber>;
 
-    burn(to: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    burn(to: PromiseOrValue<string>, overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
-    burnForBase(to: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    burnForBase(
+      to: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     cached(overrides?: CallOverrides): Promise<BigNumber>;
 
     cauldron(overrides?: CallOverrides): Promise<BigNumber>;
 
-    claim(to: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    claim(to: PromiseOrValue<string>, overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     decimals(overrides?: CallOverrides): Promise<BigNumber>;
 
     deploymentChainId(overrides?: CallOverrides): Promise<BigNumber>;
 
-    endPool(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    endPool(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     fyToken(overrides?: CallOverrides): Promise<BigNumber>;
 
-    getRoleAdmin(role: BytesLike, overrides?: CallOverrides): Promise<BigNumber>;
+    getRoleAdmin(role: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<BigNumber>;
 
     grantRole(
-      role: BytesLike,
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     grantRoles(
-      roles: BytesLike[],
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      roles: PromiseOrValue<BytesLike>[],
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    hasRole(role: BytesLike, account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    hasRole(
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    invariants(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    invariants(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     ladle(overrides?: CallOverrides): Promise<BigNumber>;
 
-    lockRole(role: BytesLike, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    lockRole(
+      role: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
-    mint(to: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    mint(to: PromiseOrValue<string>, overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     name(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -1072,42 +1266,42 @@ export interface Strategy extends BaseContract {
 
     nextSeriesId(overrides?: CallOverrides): Promise<BigNumber>;
 
-    nonces(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    nonces(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     permit(
-      owner: string,
-      spender: string,
-      amount: BigNumberish,
-      deadline: BigNumberish,
-      v: BigNumberish,
-      r: BytesLike,
-      s: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      owner: PromiseOrValue<string>,
+      spender: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      deadline: PromiseOrValue<BigNumberish>,
+      v: PromiseOrValue<BigNumberish>,
+      r: PromiseOrValue<BytesLike>,
+      s: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     pool(overrides?: CallOverrides): Promise<BigNumber>;
 
     renounceRole(
-      role: BytesLike,
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    resetTokenJoin(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    resetTokenJoin(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     revokeRole(
-      role: BytesLike,
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     revokeRoles(
-      roles: BytesLike[],
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      roles: PromiseOrValue<BytesLike>[],
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    rewards(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    rewards(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     rewardsPerToken(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -1118,37 +1312,43 @@ export interface Strategy extends BaseContract {
     seriesId(overrides?: CallOverrides): Promise<BigNumber>;
 
     setNextPool(
-      pool_: string,
-      seriesId_: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      pool_: PromiseOrValue<string>,
+      seriesId_: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setRewards(
-      start: BigNumberish,
-      end: BigNumberish,
-      rate: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      start: PromiseOrValue<BigNumberish>,
+      end: PromiseOrValue<BigNumberish>,
+      rate: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setRewardsToken(
-      rewardsToken_: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      rewardsToken_: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setRoleAdmin(
-      role: BytesLike,
-      adminRole: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      role: PromiseOrValue<BytesLike>,
+      adminRole: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    setTokenId(baseId_: BytesLike, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    setTokenId(
+      baseId_: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
-    setYield(ladle_: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    setYield(
+      ladle_: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     startPool(
-      minRatio: BigNumberish,
-      maxRatio: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      minRatio: PromiseOrValue<BigNumberish>,
+      maxRatio: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     symbol(overrides?: CallOverrides): Promise<BigNumber>;
@@ -1156,16 +1356,16 @@ export interface Strategy extends BaseContract {
     totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
     transfer(
-      dst: string,
-      wad: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      dst: PromiseOrValue<string>,
+      wad: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     transferFrom(
-      src: string,
-      dst: string,
-      wad: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      src: PromiseOrValue<string>,
+      dst: PromiseOrValue<string>,
+      wad: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     version(overrides?: CallOverrides): Promise<BigNumber>;
@@ -1180,15 +1380,19 @@ export interface Strategy extends BaseContract {
 
     ROOT(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    allowance(owner: string, spender: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    approve(
-      spender: string,
-      wad: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+    allowance(
+      owner: PromiseOrValue<string>,
+      spender: PromiseOrValue<string>,
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
-    balanceOf(guy: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    approve(
+      spender: PromiseOrValue<string>,
+      wad: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<PopulatedTransaction>;
+
+    balanceOf(guy: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     base(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
@@ -1196,50 +1400,66 @@ export interface Strategy extends BaseContract {
 
     baseJoin(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    burn(to: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    burn(
+      to: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<PopulatedTransaction>;
 
-    burnForBase(to: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    burnForBase(
+      to: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<PopulatedTransaction>;
 
     cached(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     cauldron(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    claim(to: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    claim(
+      to: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<PopulatedTransaction>;
 
     decimals(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     deploymentChainId(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    endPool(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    endPool(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     fyToken(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    getRoleAdmin(role: BytesLike, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getRoleAdmin(role: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     grantRole(
-      role: BytesLike,
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     grantRoles(
-      roles: BytesLike[],
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      roles: PromiseOrValue<BytesLike>[],
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    hasRole(role: BytesLike, account: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    hasRole(
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
-    invariants(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    invariants(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     ladle(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     lockRole(
-      role: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      role: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    mint(to: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    mint(
+      to: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<PopulatedTransaction>;
 
     name(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
@@ -1247,42 +1467,42 @@ export interface Strategy extends BaseContract {
 
     nextSeriesId(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    nonces(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    nonces(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     permit(
-      owner: string,
-      spender: string,
-      amount: BigNumberish,
-      deadline: BigNumberish,
-      v: BigNumberish,
-      r: BytesLike,
-      s: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      owner: PromiseOrValue<string>,
+      spender: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      deadline: PromiseOrValue<BigNumberish>,
+      v: PromiseOrValue<BigNumberish>,
+      r: PromiseOrValue<BytesLike>,
+      s: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     pool(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     renounceRole(
-      role: BytesLike,
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    resetTokenJoin(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    resetTokenJoin(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     revokeRole(
-      role: BytesLike,
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     revokeRoles(
-      roles: BytesLike[],
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      roles: PromiseOrValue<BytesLike>[],
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    rewards(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    rewards(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     rewardsPerToken(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
@@ -1293,43 +1513,43 @@ export interface Strategy extends BaseContract {
     seriesId(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     setNextPool(
-      pool_: string,
-      seriesId_: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      pool_: PromiseOrValue<string>,
+      seriesId_: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setRewards(
-      start: BigNumberish,
-      end: BigNumberish,
-      rate: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      start: PromiseOrValue<BigNumberish>,
+      end: PromiseOrValue<BigNumberish>,
+      rate: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setRewardsToken(
-      rewardsToken_: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      rewardsToken_: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setRoleAdmin(
-      role: BytesLike,
-      adminRole: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      role: PromiseOrValue<BytesLike>,
+      adminRole: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setTokenId(
-      baseId_: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      baseId_: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setYield(
-      ladle_: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      ladle_: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     startPool(
-      minRatio: BigNumberish,
-      maxRatio: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      minRatio: PromiseOrValue<BigNumberish>,
+      maxRatio: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     symbol(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -1337,16 +1557,16 @@ export interface Strategy extends BaseContract {
     totalSupply(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     transfer(
-      dst: string,
-      wad: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      dst: PromiseOrValue<string>,
+      wad: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     transferFrom(
-      src: string,
-      dst: string,
-      wad: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      src: PromiseOrValue<string>,
+      dst: PromiseOrValue<string>,
+      wad: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     version(overrides?: CallOverrides): Promise<PopulatedTransaction>;

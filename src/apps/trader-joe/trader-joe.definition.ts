@@ -12,7 +12,7 @@ export const TRADER_JOE_DEFINITION = appDefinition({
     pool: { id: 'pool', type: GroupType.TOKEN, label: 'Pools' },
     xJoe: { id: 'x-joe', type: GroupType.TOKEN, label: 'xJoe' },
     sJoe: { id: 's-joe', type: GroupType.POSITION, label: 'sJoe' },
-    veJoeFarm: { id: 've-joe-farm', type: GroupType.POSITION, label: 'Farms' },
+    veJoe: { id: 've-joe', type: GroupType.POSITION, label: 'veJoe' },
     chefV2Farm: { id: 'chef-v2-farm', type: GroupType.POSITION, label: 'Farms' },
     chefV3Farm: { id: 'chef-v3-farm', type: GroupType.POSITION, label: 'Farms' },
     chefBoostedFarm: { id: 'chef-boosted-farm', type: GroupType.POSITION, label: 'Boost' },

@@ -3,6 +3,7 @@ import _ from 'lodash';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
+import { buildDollarDisplayItem } from '~app-toolkit/helpers/presentation/display-item.present';
 import { getTokenImg } from '~app-toolkit/helpers/presentation/image.present';
 import { ContractType } from '~position/contract.interface';
 import { PositionFetcher } from '~position/position-fetcher.interface';
@@ -62,6 +63,9 @@ export class EthereumKeeperDaoV2PoolTokenFetcher implements PositionFetcher<AppT
           multicall.wrap(contract).decimals(),
           multicall.wrap(contract).totalSupply(),
         ]);
+        const price = underlyingToken.price;
+        const supply = Number(supplyRaw) / 10 ** decimals;
+        const liquidity = price * supply;
 
         const token: AppTokenPosition = {
           address: t.address,
@@ -71,15 +75,16 @@ export class EthereumKeeperDaoV2PoolTokenFetcher implements PositionFetcher<AppT
           type: ContractType.APP_TOKEN,
           network,
           groupId,
+          price,
+          pricePerShare: 1,
+          supply,
+          tokens: [underlyingToken],
+          dataProps: { liquidity },
           displayProps: {
             label: `Legacy ${symbol}`,
             images: [getTokenImg(underlyingToken.address, network)],
+            statsItems: [{ label: 'Liquidity', value: buildDollarDisplayItem(liquidity) }],
           },
-          dataProps: {},
-          price: underlyingToken.price,
-          pricePerShare: 1,
-          supply: Number(supplyRaw) / 10 ** decimals,
-          tokens: [underlyingToken],
         };
         return token;
       }),

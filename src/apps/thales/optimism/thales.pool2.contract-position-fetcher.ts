@@ -5,6 +5,7 @@ import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
 import { buildDollarDisplayItem } from '~app-toolkit/helpers/presentation/display-item.present';
 import { getImagesFromToken, getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
+import { ARRAKIS_DEFINITION } from '~apps/arrakis/arrakis.definition';
 import { ContractType } from '~position/contract.interface';
 import { PositionFetcher } from '~position/position-fetcher.interface';
 import { ContractPosition, Token } from '~position/position.interface';
@@ -24,9 +25,9 @@ const network = Network.OPTIMISM_MAINNET;
 
 const farmDefinitions = [
   {
-    address: '0x31a20E5b7b1b067705419D57Ab4F72E81cC1F6Bf'.toLowerCase(),
-    stakedTokenAddress: '0xac6705bc7f6a35eb194bdb89066049d6f1b0b1b5'.toLowerCase(),
-    rewardTokenAddress: '0x217d47011b23bb961eb6d93ca9945b7501a5bb11'.toLowerCase(),
+    address: '0x31a20e5b7b1b067705419d57ab4f72e81cc1f6bf',
+    stakedTokenAddress: '0xac6705bc7f6a35eb194bdb89066049d6f1b0b1b5',
+    rewardTokenAddress: '0x217d47011b23bb961eb6d93ca9945b7501a5bb11',
   },
 ];
 
@@ -39,7 +40,12 @@ export class OptimismThalesPool2ContractPositionFetcher implements PositionFetch
 
   async getPositions() {
     const baseTokens = await this.appToolkit.getBaseTokenPrices(network);
-    const appTokens = await this.appToolkit.getAppTokenPositions({ appId: 'sorbet', groupIds: ['pool'], network });
+    const appTokens = await this.appToolkit.getAppTokenPositions({
+      appId: ARRAKIS_DEFINITION.id,
+      groupIds: [ARRAKIS_DEFINITION.groups.pool.id],
+      network,
+    });
+
     const allTokens = [...appTokens, ...baseTokens];
     const multicall = this.appToolkit.getMulticall(network);
 
@@ -73,6 +79,7 @@ export class OptimismThalesPool2ContractPositionFetcher implements PositionFetch
             label,
             images,
             secondaryLabel,
+            statsItems: [{ label: 'Liquidity', value: buildDollarDisplayItem(liquidity) }],
           },
         };
 

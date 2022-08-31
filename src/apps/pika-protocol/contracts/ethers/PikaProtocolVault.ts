@@ -16,22 +16,22 @@ import type {
 } from 'ethers';
 import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
 import type { Listener, Provider } from '@ethersproject/providers';
-import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
 export declare namespace PikaPerpV2 {
   export type ProductStruct = {
-    feed: string;
-    maxLeverage: BigNumberish;
-    fee: BigNumberish;
-    isActive: boolean;
-    openInterestLong: BigNumberish;
-    openInterestShort: BigNumberish;
-    interest: BigNumberish;
-    liquidationThreshold: BigNumberish;
-    liquidationBounty: BigNumberish;
-    minPriceChange: BigNumberish;
-    weight: BigNumberish;
-    reserve: BigNumberish;
+    feed: PromiseOrValue<string>;
+    maxLeverage: PromiseOrValue<BigNumberish>;
+    fee: PromiseOrValue<BigNumberish>;
+    isActive: PromiseOrValue<boolean>;
+    openInterestLong: PromiseOrValue<BigNumberish>;
+    openInterestShort: PromiseOrValue<BigNumberish>;
+    interest: PromiseOrValue<BigNumberish>;
+    liquidationThreshold: PromiseOrValue<BigNumberish>;
+    liquidationBounty: PromiseOrValue<BigNumberish>;
+    minPriceChange: PromiseOrValue<BigNumberish>;
+    weight: PromiseOrValue<BigNumberish>;
+    reserve: PromiseOrValue<BigNumberish>;
   };
 
   export type ProductStructOutput = [
@@ -63,11 +63,11 @@ export declare namespace PikaPerpV2 {
   };
 
   export type VaultStruct = {
-    cap: BigNumberish;
-    balance: BigNumberish;
-    staked: BigNumberish;
-    shares: BigNumberish;
-    stakingPeriod: BigNumberish;
+    cap: PromiseOrValue<BigNumberish>;
+    balance: PromiseOrValue<BigNumberish>;
+    staked: PromiseOrValue<BigNumberish>;
+    shares: PromiseOrValue<BigNumberish>;
+    stakingPeriod: PromiseOrValue<BigNumberish>;
   };
 
   export type VaultStructOutput = [BigNumber, BigNumber, BigNumber, BigNumber, number] & {
@@ -79,14 +79,14 @@ export declare namespace PikaPerpV2 {
   };
 
   export type PositionStruct = {
-    productId: BigNumberish;
-    leverage: BigNumberish;
-    price: BigNumberish;
-    oraclePrice: BigNumberish;
-    margin: BigNumberish;
-    owner: string;
-    timestamp: BigNumberish;
-    isLong: boolean;
+    productId: PromiseOrValue<BigNumberish>;
+    leverage: PromiseOrValue<BigNumberish>;
+    price: PromiseOrValue<BigNumberish>;
+    oraclePrice: PromiseOrValue<BigNumberish>;
+    margin: PromiseOrValue<BigNumberish>;
+    owner: PromiseOrValue<string>;
+    timestamp: PromiseOrValue<BigNumberish>;
+    isLong: PromiseOrValue<boolean>;
   };
 
   export type PositionStructOutput = [
@@ -110,10 +110,10 @@ export declare namespace PikaPerpV2 {
   };
 
   export type StakeStruct = {
-    owner: string;
-    amount: BigNumberish;
-    shares: BigNumberish;
-    timestamp: BigNumberish;
+    owner: PromiseOrValue<string>;
+    amount: PromiseOrValue<BigNumberish>;
+    shares: PromiseOrValue<BigNumberish>;
+    timestamp: PromiseOrValue<BigNumberish>;
   };
 
   export type StakeStructOutput = [string, BigNumber, BigNumber, number] & {
@@ -260,11 +260,23 @@ export interface PikaProtocolVaultInterface extends utils.Interface {
 
   encodeFunctionData(functionFragment: 'BASE', values?: undefined): string;
   encodeFunctionData(functionFragment: 'BASE_DECIMALS', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'addMargin', values: [BigNumberish, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'addProduct', values: [BigNumberish, PikaPerpV2.ProductStruct]): string;
-  encodeFunctionData(functionFragment: 'canLiquidate', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'closePosition', values: [BigNumberish, BigNumberish, boolean]): string;
-  encodeFunctionData(functionFragment: 'closePositionWithId', values: [BigNumberish, BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'addMargin',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'addProduct',
+    values: [PromiseOrValue<BigNumberish>, PikaPerpV2.ProductStruct],
+  ): string;
+  encodeFunctionData(functionFragment: 'canLiquidate', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(
+    functionFragment: 'closePosition',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>, PromiseOrValue<boolean>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'closePositionWithId',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+  ): string;
   encodeFunctionData(functionFragment: 'distributePikaReward', values?: undefined): string;
   encodeFunctionData(functionFragment: 'distributeProtocolReward', values?: undefined): string;
   encodeFunctionData(functionFragment: 'distributeVaultReward', values?: undefined): string;
@@ -272,16 +284,22 @@ export interface PikaProtocolVaultInterface extends utils.Interface {
   encodeFunctionData(functionFragment: 'getPendingPikaReward', values?: undefined): string;
   encodeFunctionData(functionFragment: 'getPendingProtocolReward', values?: undefined): string;
   encodeFunctionData(functionFragment: 'getPendingVaultReward', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'getPosition', values: [string, BigNumberish, boolean]): string;
-  encodeFunctionData(functionFragment: 'getPositionId', values: [string, BigNumberish, boolean]): string;
-  encodeFunctionData(functionFragment: 'getPositions', values: [BigNumberish[]]): string;
-  encodeFunctionData(functionFragment: 'getProduct', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'getShare', values: [string]): string;
-  encodeFunctionData(functionFragment: 'getShareBalance', values: [string]): string;
-  encodeFunctionData(functionFragment: 'getStake', values: [string]): string;
+  encodeFunctionData(
+    functionFragment: 'getPosition',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>, PromiseOrValue<boolean>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'getPositionId',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>, PromiseOrValue<boolean>],
+  ): string;
+  encodeFunctionData(functionFragment: 'getPositions', values: [PromiseOrValue<BigNumberish>[]]): string;
+  encodeFunctionData(functionFragment: 'getProduct', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'getShare', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'getShareBalance', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'getStake', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'getTotalShare', values?: undefined): string;
   encodeFunctionData(functionFragment: 'getVault', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'liquidatePositions', values: [BigNumberish[]]): string;
+  encodeFunctionData(functionFragment: 'liquidatePositions', values: [PromiseOrValue<BigNumberish>[]]): string;
   encodeFunctionData(functionFragment: 'liquidator', values?: undefined): string;
   encodeFunctionData(functionFragment: 'maxPositionMargin', values?: undefined): string;
   encodeFunctionData(functionFragment: 'maxShift', values?: undefined): string;
@@ -289,11 +307,22 @@ export interface PikaProtocolVaultInterface extends utils.Interface {
   encodeFunctionData(functionFragment: 'minProfitTime', values?: undefined): string;
   encodeFunctionData(
     functionFragment: 'openPosition',
-    values: [BigNumberish, BigNumberish, boolean, BigNumberish],
+    values: [
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<boolean>,
+      PromiseOrValue<BigNumberish>,
+    ],
   ): string;
   encodeFunctionData(
     functionFragment: 'openPositionForUser',
-    values: [string, BigNumberish, BigNumberish, boolean, BigNumberish],
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<boolean>,
+      PromiseOrValue<BigNumberish>,
+    ],
   ): string;
   encodeFunctionData(functionFragment: 'oracle', values?: undefined): string;
   encodeFunctionData(functionFragment: 'owner', values?: undefined): string;
@@ -304,25 +333,46 @@ export interface PikaProtocolVaultInterface extends utils.Interface {
   encodeFunctionData(functionFragment: 'pikaRewardRatio', values?: undefined): string;
   encodeFunctionData(functionFragment: 'protocolRewardDistributor', values?: undefined): string;
   encodeFunctionData(functionFragment: 'protocolRewardRatio', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'redeem', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'releaseMargin', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'setCanUserStakeAndAllowPublicLiquidator', values: [boolean, boolean]): string;
-  encodeFunctionData(functionFragment: 'setDistributors', values: [string, string, string, string]): string;
-  encodeFunctionData(functionFragment: 'setExposureMultiplier', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'setLiquidator', values: [string]): string;
-  encodeFunctionData(functionFragment: 'setMargin', values: [BigNumberish, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'setMaxShiftAndMinProfitTime', values: [BigNumberish, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'setOracle', values: [string]): string;
-  encodeFunctionData(functionFragment: 'setOwner', values: [string]): string;
-  encodeFunctionData(functionFragment: 'setRewardRatio', values: [BigNumberish, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'stake', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'stakeForUser', values: [BigNumberish, string]): string;
+  encodeFunctionData(functionFragment: 'redeem', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'releaseMargin', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(
+    functionFragment: 'setCanUserStakeAndAllowPublicLiquidator',
+    values: [PromiseOrValue<boolean>, PromiseOrValue<boolean>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'setDistributors',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<string>],
+  ): string;
+  encodeFunctionData(functionFragment: 'setExposureMultiplier', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'setLiquidator', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'setMargin',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'setMaxShiftAndMinProfitTime',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'setOracle', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'setOwner', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'setRewardRatio',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'stake', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(
+    functionFragment: 'stakeForUser',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>],
+  ): string;
   encodeFunctionData(functionFragment: 'token', values?: undefined): string;
   encodeFunctionData(functionFragment: 'tokenBase', values?: undefined): string;
   encodeFunctionData(functionFragment: 'tokenDecimal', values?: undefined): string;
   encodeFunctionData(functionFragment: 'totalOpenInterest', values?: undefined): string;
   encodeFunctionData(functionFragment: 'totalWeight', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'updateProduct', values: [BigNumberish, PikaPerpV2.ProductStruct]): string;
+  encodeFunctionData(
+    functionFragment: 'updateProduct',
+    values: [PromiseOrValue<BigNumberish>, PikaPerpV2.ProductStruct],
+  ): string;
   encodeFunctionData(functionFragment: 'updateVault', values: [PikaPerpV2.VaultStruct]): string;
   encodeFunctionData(functionFragment: 'utilizationMultiplier', values?: undefined): string;
   encodeFunctionData(functionFragment: 'vaultRewardDistributor', values?: undefined): string;
@@ -605,37 +655,37 @@ export interface PikaProtocolVault extends BaseContract {
     BASE_DECIMALS(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     addMargin(
-      positionId: BigNumberish,
-      margin: BigNumberish,
-      overrides?: PayableOverrides & { from?: string | Promise<string> },
+      positionId: PromiseOrValue<BigNumberish>,
+      margin: PromiseOrValue<BigNumberish>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     addProduct(
-      productId: BigNumberish,
+      productId: PromiseOrValue<BigNumberish>,
       _product: PikaPerpV2.ProductStruct,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    canLiquidate(positionId: BigNumberish, overrides?: CallOverrides): Promise<[boolean]>;
+    canLiquidate(positionId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[boolean]>;
 
     closePosition(
-      productId: BigNumberish,
-      margin: BigNumberish,
-      isLong: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      productId: PromiseOrValue<BigNumberish>,
+      margin: PromiseOrValue<BigNumberish>,
+      isLong: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     closePositionWithId(
-      positionId: BigNumberish,
-      margin: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      positionId: PromiseOrValue<BigNumberish>,
+      margin: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    distributePikaReward(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    distributePikaReward(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
-    distributeProtocolReward(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    distributeProtocolReward(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
-    distributeVaultReward(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    distributeVaultReward(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     exposureMultiplier(overrides?: CallOverrides): Promise<[BigNumber]>;
 
@@ -646,9 +696,9 @@ export interface PikaProtocolVault extends BaseContract {
     getPendingVaultReward(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     getPosition(
-      account: string,
-      productId: BigNumberish,
-      isLong: boolean,
+      account: PromiseOrValue<string>,
+      productId: PromiseOrValue<BigNumberish>,
+      isLong: PromiseOrValue<boolean>,
       overrides?: CallOverrides,
     ): Promise<
       [PikaPerpV2.PositionStructOutput] & {
@@ -657,14 +707,14 @@ export interface PikaProtocolVault extends BaseContract {
     >;
 
     getPositionId(
-      account: string,
-      productId: BigNumberish,
-      isLong: boolean,
+      account: PromiseOrValue<string>,
+      productId: PromiseOrValue<BigNumberish>,
+      isLong: PromiseOrValue<boolean>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber]>;
 
     getPositions(
-      positionIds: BigNumberish[],
+      positionIds: PromiseOrValue<BigNumberish>[],
       overrides?: CallOverrides,
     ): Promise<
       [PikaPerpV2.PositionStructOutput[]] & {
@@ -672,21 +722,24 @@ export interface PikaProtocolVault extends BaseContract {
       }
     >;
 
-    getProduct(productId: BigNumberish, overrides?: CallOverrides): Promise<[PikaPerpV2.ProductStructOutput]>;
+    getProduct(
+      productId: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<[PikaPerpV2.ProductStructOutput]>;
 
-    getShare(stakeOwner: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    getShare(stakeOwner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    getShareBalance(stakeOwner: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    getShareBalance(stakeOwner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    getStake(stakeOwner: string, overrides?: CallOverrides): Promise<[PikaPerpV2.StakeStructOutput]>;
+    getStake(stakeOwner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[PikaPerpV2.StakeStructOutput]>;
 
     getTotalShare(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     getVault(overrides?: CallOverrides): Promise<[PikaPerpV2.VaultStructOutput]>;
 
     liquidatePositions(
-      positionIds: BigNumberish[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      positionIds: PromiseOrValue<BigNumberish>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     liquidator(overrides?: CallOverrides): Promise<[string]>;
@@ -700,20 +753,20 @@ export interface PikaProtocolVault extends BaseContract {
     minProfitTime(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     openPosition(
-      productId: BigNumberish,
-      margin: BigNumberish,
-      isLong: boolean,
-      leverage: BigNumberish,
-      overrides?: PayableOverrides & { from?: string | Promise<string> },
+      productId: PromiseOrValue<BigNumberish>,
+      margin: PromiseOrValue<BigNumberish>,
+      isLong: PromiseOrValue<boolean>,
+      leverage: PromiseOrValue<BigNumberish>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     openPositionForUser(
-      user: string,
-      productId: BigNumberish,
-      margin: BigNumberish,
-      isLong: boolean,
-      leverage: BigNumberish,
-      overrides?: PayableOverrides & { from?: string | Promise<string> },
+      user: PromiseOrValue<string>,
+      productId: PromiseOrValue<BigNumberish>,
+      margin: PromiseOrValue<BigNumberish>,
+      isLong: PromiseOrValue<boolean>,
+      leverage: PromiseOrValue<BigNumberish>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     oracle(overrides?: CallOverrides): Promise<[string]>;
@@ -735,73 +788,76 @@ export interface PikaProtocolVault extends BaseContract {
     protocolRewardRatio(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     redeem(
-      shares: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      shares: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     releaseMargin(
-      positionId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      positionId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setCanUserStakeAndAllowPublicLiquidator(
-      _canUserStake: boolean,
-      _allowPublicLiquidator: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _canUserStake: PromiseOrValue<boolean>,
+      _allowPublicLiquidator: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setDistributors(
-      _protocolRewardDistributor: string,
-      _pikaRewardDistributor: string,
-      _vaultRewardDistributor: string,
-      _vaultTokenReward: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _protocolRewardDistributor: PromiseOrValue<string>,
+      _pikaRewardDistributor: PromiseOrValue<string>,
+      _vaultRewardDistributor: PromiseOrValue<string>,
+      _vaultTokenReward: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setExposureMultiplier(
-      _exposureMultiplier: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _exposureMultiplier: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setLiquidator(
-      _liquidator: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _liquidator: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setMargin(
-      _minMargin: BigNumberish,
-      _maxPositionMargin: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _minMargin: PromiseOrValue<BigNumberish>,
+      _maxPositionMargin: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setMaxShiftAndMinProfitTime(
-      _maxShift: BigNumberish,
-      _minProfitTime: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _maxShift: PromiseOrValue<BigNumberish>,
+      _minProfitTime: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setOracle(
-      _oracle: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _oracle: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    setOwner(_owner: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    setOwner(
+      _owner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<ContractTransaction>;
 
     setRewardRatio(
-      _protocolRewardRatio: BigNumberish,
-      _pikaRewardRatio: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _protocolRewardRatio: PromiseOrValue<BigNumberish>,
+      _pikaRewardRatio: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     stake(
-      amount: BigNumberish,
-      overrides?: PayableOverrides & { from?: string | Promise<string> },
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     stakeForUser(
-      amount: BigNumberish,
-      user: string,
-      overrides?: PayableOverrides & { from?: string | Promise<string> },
+      amount: PromiseOrValue<BigNumberish>,
+      user: PromiseOrValue<string>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     token(overrides?: CallOverrides): Promise<[string]>;
@@ -815,14 +871,14 @@ export interface PikaProtocolVault extends BaseContract {
     totalWeight(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     updateProduct(
-      productId: BigNumberish,
+      productId: PromiseOrValue<BigNumberish>,
       _product: PikaPerpV2.ProductStruct,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     updateVault(
       _vault: PikaPerpV2.VaultStruct,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     utilizationMultiplier(overrides?: CallOverrides): Promise<[BigNumber]>;
@@ -837,37 +893,37 @@ export interface PikaProtocolVault extends BaseContract {
   BASE_DECIMALS(overrides?: CallOverrides): Promise<BigNumber>;
 
   addMargin(
-    positionId: BigNumberish,
-    margin: BigNumberish,
-    overrides?: PayableOverrides & { from?: string | Promise<string> },
+    positionId: PromiseOrValue<BigNumberish>,
+    margin: PromiseOrValue<BigNumberish>,
+    overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   addProduct(
-    productId: BigNumberish,
+    productId: PromiseOrValue<BigNumberish>,
     _product: PikaPerpV2.ProductStruct,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  canLiquidate(positionId: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+  canLiquidate(positionId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<boolean>;
 
   closePosition(
-    productId: BigNumberish,
-    margin: BigNumberish,
-    isLong: boolean,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    productId: PromiseOrValue<BigNumberish>,
+    margin: PromiseOrValue<BigNumberish>,
+    isLong: PromiseOrValue<boolean>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   closePositionWithId(
-    positionId: BigNumberish,
-    margin: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    positionId: PromiseOrValue<BigNumberish>,
+    margin: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  distributePikaReward(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  distributePikaReward(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
-  distributeProtocolReward(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  distributeProtocolReward(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
-  distributeVaultReward(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  distributeVaultReward(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   exposureMultiplier(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -878,36 +934,42 @@ export interface PikaProtocolVault extends BaseContract {
   getPendingVaultReward(overrides?: CallOverrides): Promise<BigNumber>;
 
   getPosition(
-    account: string,
-    productId: BigNumberish,
-    isLong: boolean,
+    account: PromiseOrValue<string>,
+    productId: PromiseOrValue<BigNumberish>,
+    isLong: PromiseOrValue<boolean>,
     overrides?: CallOverrides,
   ): Promise<PikaPerpV2.PositionStructOutput>;
 
   getPositionId(
-    account: string,
-    productId: BigNumberish,
-    isLong: boolean,
+    account: PromiseOrValue<string>,
+    productId: PromiseOrValue<BigNumberish>,
+    isLong: PromiseOrValue<boolean>,
     overrides?: CallOverrides,
   ): Promise<BigNumber>;
 
-  getPositions(positionIds: BigNumberish[], overrides?: CallOverrides): Promise<PikaPerpV2.PositionStructOutput[]>;
+  getPositions(
+    positionIds: PromiseOrValue<BigNumberish>[],
+    overrides?: CallOverrides,
+  ): Promise<PikaPerpV2.PositionStructOutput[]>;
 
-  getProduct(productId: BigNumberish, overrides?: CallOverrides): Promise<PikaPerpV2.ProductStructOutput>;
+  getProduct(
+    productId: PromiseOrValue<BigNumberish>,
+    overrides?: CallOverrides,
+  ): Promise<PikaPerpV2.ProductStructOutput>;
 
-  getShare(stakeOwner: string, overrides?: CallOverrides): Promise<BigNumber>;
+  getShare(stakeOwner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  getShareBalance(stakeOwner: string, overrides?: CallOverrides): Promise<BigNumber>;
+  getShareBalance(stakeOwner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  getStake(stakeOwner: string, overrides?: CallOverrides): Promise<PikaPerpV2.StakeStructOutput>;
+  getStake(stakeOwner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PikaPerpV2.StakeStructOutput>;
 
   getTotalShare(overrides?: CallOverrides): Promise<BigNumber>;
 
   getVault(overrides?: CallOverrides): Promise<PikaPerpV2.VaultStructOutput>;
 
   liquidatePositions(
-    positionIds: BigNumberish[],
-    overrides?: Overrides & { from?: string | Promise<string> },
+    positionIds: PromiseOrValue<BigNumberish>[],
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   liquidator(overrides?: CallOverrides): Promise<string>;
@@ -921,20 +983,20 @@ export interface PikaProtocolVault extends BaseContract {
   minProfitTime(overrides?: CallOverrides): Promise<BigNumber>;
 
   openPosition(
-    productId: BigNumberish,
-    margin: BigNumberish,
-    isLong: boolean,
-    leverage: BigNumberish,
-    overrides?: PayableOverrides & { from?: string | Promise<string> },
+    productId: PromiseOrValue<BigNumberish>,
+    margin: PromiseOrValue<BigNumberish>,
+    isLong: PromiseOrValue<boolean>,
+    leverage: PromiseOrValue<BigNumberish>,
+    overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   openPositionForUser(
-    user: string,
-    productId: BigNumberish,
-    margin: BigNumberish,
-    isLong: boolean,
-    leverage: BigNumberish,
-    overrides?: PayableOverrides & { from?: string | Promise<string> },
+    user: PromiseOrValue<string>,
+    productId: PromiseOrValue<BigNumberish>,
+    margin: PromiseOrValue<BigNumberish>,
+    isLong: PromiseOrValue<boolean>,
+    leverage: PromiseOrValue<BigNumberish>,
+    overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   oracle(overrides?: CallOverrides): Promise<string>;
@@ -956,70 +1018,76 @@ export interface PikaProtocolVault extends BaseContract {
   protocolRewardRatio(overrides?: CallOverrides): Promise<BigNumber>;
 
   redeem(
-    shares: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    shares: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   releaseMargin(
-    positionId: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    positionId: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setCanUserStakeAndAllowPublicLiquidator(
-    _canUserStake: boolean,
-    _allowPublicLiquidator: boolean,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _canUserStake: PromiseOrValue<boolean>,
+    _allowPublicLiquidator: PromiseOrValue<boolean>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setDistributors(
-    _protocolRewardDistributor: string,
-    _pikaRewardDistributor: string,
-    _vaultRewardDistributor: string,
-    _vaultTokenReward: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _protocolRewardDistributor: PromiseOrValue<string>,
+    _pikaRewardDistributor: PromiseOrValue<string>,
+    _vaultRewardDistributor: PromiseOrValue<string>,
+    _vaultTokenReward: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setExposureMultiplier(
-    _exposureMultiplier: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _exposureMultiplier: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setLiquidator(
-    _liquidator: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _liquidator: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setMargin(
-    _minMargin: BigNumberish,
-    _maxPositionMargin: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _minMargin: PromiseOrValue<BigNumberish>,
+    _maxPositionMargin: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setMaxShiftAndMinProfitTime(
-    _maxShift: BigNumberish,
-    _minProfitTime: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _maxShift: PromiseOrValue<BigNumberish>,
+    _minProfitTime: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  setOracle(_oracle: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  setOracle(
+    _oracle: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
+  ): Promise<ContractTransaction>;
 
-  setOwner(_owner: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  setOwner(
+    _owner: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
+  ): Promise<ContractTransaction>;
 
   setRewardRatio(
-    _protocolRewardRatio: BigNumberish,
-    _pikaRewardRatio: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _protocolRewardRatio: PromiseOrValue<BigNumberish>,
+    _pikaRewardRatio: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   stake(
-    amount: BigNumberish,
-    overrides?: PayableOverrides & { from?: string | Promise<string> },
+    amount: PromiseOrValue<BigNumberish>,
+    overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   stakeForUser(
-    amount: BigNumberish,
-    user: string,
-    overrides?: PayableOverrides & { from?: string | Promise<string> },
+    amount: PromiseOrValue<BigNumberish>,
+    user: PromiseOrValue<string>,
+    overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   token(overrides?: CallOverrides): Promise<string>;
@@ -1033,14 +1101,14 @@ export interface PikaProtocolVault extends BaseContract {
   totalWeight(overrides?: CallOverrides): Promise<BigNumber>;
 
   updateProduct(
-    productId: BigNumberish,
+    productId: PromiseOrValue<BigNumberish>,
     _product: PikaPerpV2.ProductStruct,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   updateVault(
     _vault: PikaPerpV2.VaultStruct,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   utilizationMultiplier(overrides?: CallOverrides): Promise<BigNumber>;
@@ -1054,20 +1122,32 @@ export interface PikaProtocolVault extends BaseContract {
 
     BASE_DECIMALS(overrides?: CallOverrides): Promise<BigNumber>;
 
-    addMargin(positionId: BigNumberish, margin: BigNumberish, overrides?: CallOverrides): Promise<void>;
-
-    addProduct(productId: BigNumberish, _product: PikaPerpV2.ProductStruct, overrides?: CallOverrides): Promise<void>;
-
-    canLiquidate(positionId: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
-
-    closePosition(
-      productId: BigNumberish,
-      margin: BigNumberish,
-      isLong: boolean,
+    addMargin(
+      positionId: PromiseOrValue<BigNumberish>,
+      margin: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
-    closePositionWithId(positionId: BigNumberish, margin: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    addProduct(
+      productId: PromiseOrValue<BigNumberish>,
+      _product: PikaPerpV2.ProductStruct,
+      overrides?: CallOverrides,
+    ): Promise<void>;
+
+    canLiquidate(positionId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<boolean>;
+
+    closePosition(
+      productId: PromiseOrValue<BigNumberish>,
+      margin: PromiseOrValue<BigNumberish>,
+      isLong: PromiseOrValue<boolean>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
+
+    closePositionWithId(
+      positionId: PromiseOrValue<BigNumberish>,
+      margin: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
     distributePikaReward(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -1084,34 +1164,40 @@ export interface PikaProtocolVault extends BaseContract {
     getPendingVaultReward(overrides?: CallOverrides): Promise<BigNumber>;
 
     getPosition(
-      account: string,
-      productId: BigNumberish,
-      isLong: boolean,
+      account: PromiseOrValue<string>,
+      productId: PromiseOrValue<BigNumberish>,
+      isLong: PromiseOrValue<boolean>,
       overrides?: CallOverrides,
     ): Promise<PikaPerpV2.PositionStructOutput>;
 
     getPositionId(
-      account: string,
-      productId: BigNumberish,
-      isLong: boolean,
+      account: PromiseOrValue<string>,
+      productId: PromiseOrValue<BigNumberish>,
+      isLong: PromiseOrValue<boolean>,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
-    getPositions(positionIds: BigNumberish[], overrides?: CallOverrides): Promise<PikaPerpV2.PositionStructOutput[]>;
+    getPositions(
+      positionIds: PromiseOrValue<BigNumberish>[],
+      overrides?: CallOverrides,
+    ): Promise<PikaPerpV2.PositionStructOutput[]>;
 
-    getProduct(productId: BigNumberish, overrides?: CallOverrides): Promise<PikaPerpV2.ProductStructOutput>;
+    getProduct(
+      productId: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<PikaPerpV2.ProductStructOutput>;
 
-    getShare(stakeOwner: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getShare(stakeOwner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    getShareBalance(stakeOwner: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getShareBalance(stakeOwner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    getStake(stakeOwner: string, overrides?: CallOverrides): Promise<PikaPerpV2.StakeStructOutput>;
+    getStake(stakeOwner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PikaPerpV2.StakeStructOutput>;
 
     getTotalShare(overrides?: CallOverrides): Promise<BigNumber>;
 
     getVault(overrides?: CallOverrides): Promise<PikaPerpV2.VaultStructOutput>;
 
-    liquidatePositions(positionIds: BigNumberish[], overrides?: CallOverrides): Promise<void>;
+    liquidatePositions(positionIds: PromiseOrValue<BigNumberish>[], overrides?: CallOverrides): Promise<void>;
 
     liquidator(overrides?: CallOverrides): Promise<string>;
 
@@ -1124,19 +1210,19 @@ export interface PikaProtocolVault extends BaseContract {
     minProfitTime(overrides?: CallOverrides): Promise<BigNumber>;
 
     openPosition(
-      productId: BigNumberish,
-      margin: BigNumberish,
-      isLong: boolean,
-      leverage: BigNumberish,
+      productId: PromiseOrValue<BigNumberish>,
+      margin: PromiseOrValue<BigNumberish>,
+      isLong: PromiseOrValue<boolean>,
+      leverage: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     openPositionForUser(
-      user: string,
-      productId: BigNumberish,
-      margin: BigNumberish,
-      isLong: boolean,
-      leverage: BigNumberish,
+      user: PromiseOrValue<string>,
+      productId: PromiseOrValue<BigNumberish>,
+      margin: PromiseOrValue<BigNumberish>,
+      isLong: PromiseOrValue<boolean>,
+      leverage: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
@@ -1158,49 +1244,57 @@ export interface PikaProtocolVault extends BaseContract {
 
     protocolRewardRatio(overrides?: CallOverrides): Promise<BigNumber>;
 
-    redeem(shares: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    redeem(shares: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
-    releaseMargin(positionId: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    releaseMargin(positionId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
     setCanUserStakeAndAllowPublicLiquidator(
-      _canUserStake: boolean,
-      _allowPublicLiquidator: boolean,
+      _canUserStake: PromiseOrValue<boolean>,
+      _allowPublicLiquidator: PromiseOrValue<boolean>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
     setDistributors(
-      _protocolRewardDistributor: string,
-      _pikaRewardDistributor: string,
-      _vaultRewardDistributor: string,
-      _vaultTokenReward: string,
+      _protocolRewardDistributor: PromiseOrValue<string>,
+      _pikaRewardDistributor: PromiseOrValue<string>,
+      _vaultRewardDistributor: PromiseOrValue<string>,
+      _vaultTokenReward: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
-    setExposureMultiplier(_exposureMultiplier: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    setExposureMultiplier(_exposureMultiplier: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
-    setLiquidator(_liquidator: string, overrides?: CallOverrides): Promise<void>;
+    setLiquidator(_liquidator: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    setMargin(_minMargin: BigNumberish, _maxPositionMargin: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    setMargin(
+      _minMargin: PromiseOrValue<BigNumberish>,
+      _maxPositionMargin: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
     setMaxShiftAndMinProfitTime(
-      _maxShift: BigNumberish,
-      _minProfitTime: BigNumberish,
+      _maxShift: PromiseOrValue<BigNumberish>,
+      _minProfitTime: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
-    setOracle(_oracle: string, overrides?: CallOverrides): Promise<void>;
+    setOracle(_oracle: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    setOwner(_owner: string, overrides?: CallOverrides): Promise<void>;
+    setOwner(_owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     setRewardRatio(
-      _protocolRewardRatio: BigNumberish,
-      _pikaRewardRatio: BigNumberish,
+      _protocolRewardRatio: PromiseOrValue<BigNumberish>,
+      _pikaRewardRatio: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
-    stake(amount: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    stake(amount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
-    stakeForUser(amount: BigNumberish, user: string, overrides?: CallOverrides): Promise<void>;
+    stakeForUser(
+      amount: PromiseOrValue<BigNumberish>,
+      user: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
     token(overrides?: CallOverrides): Promise<string>;
 
@@ -1213,7 +1307,7 @@ export interface PikaProtocolVault extends BaseContract {
     totalWeight(overrides?: CallOverrides): Promise<BigNumber>;
 
     updateProduct(
-      productId: BigNumberish,
+      productId: PromiseOrValue<BigNumberish>,
       _product: PikaPerpV2.ProductStruct,
       overrides?: CallOverrides,
     ): Promise<void>;
@@ -1229,24 +1323,24 @@ export interface PikaProtocolVault extends BaseContract {
 
   filters: {
     'AddMargin(uint256,address,uint256,uint256,uint256)'(
-      positionId?: BigNumberish | null,
-      user?: string | null,
+      positionId?: PromiseOrValue<BigNumberish> | null,
+      user?: PromiseOrValue<string> | null,
       margin?: null,
       newMargin?: null,
       newLeverage?: null,
     ): AddMarginEventFilter;
     AddMargin(
-      positionId?: BigNumberish | null,
-      user?: string | null,
+      positionId?: PromiseOrValue<BigNumberish> | null,
+      user?: PromiseOrValue<string> | null,
       margin?: null,
       newMargin?: null,
       newLeverage?: null,
     ): AddMarginEventFilter;
 
     'ClosePosition(uint256,address,uint256,uint256,uint256,uint256,uint256,uint256,int256,bool)'(
-      positionId?: BigNumberish | null,
-      user?: string | null,
-      productId?: BigNumberish | null,
+      positionId?: PromiseOrValue<BigNumberish> | null,
+      user?: PromiseOrValue<string> | null,
+      productId?: PromiseOrValue<BigNumberish> | null,
       price?: null,
       entryPrice?: null,
       margin?: null,
@@ -1256,9 +1350,9 @@ export interface PikaProtocolVault extends BaseContract {
       wasLiquidated?: null,
     ): ClosePositionEventFilter;
     ClosePosition(
-      positionId?: BigNumberish | null,
-      user?: string | null,
-      productId?: BigNumberish | null,
+      positionId?: PromiseOrValue<BigNumberish> | null,
+      user?: PromiseOrValue<string> | null,
+      productId?: PromiseOrValue<BigNumberish> | null,
       price?: null,
       entryPrice?: null,
       margin?: null,
@@ -1269,9 +1363,9 @@ export interface PikaProtocolVault extends BaseContract {
     ): ClosePositionEventFilter;
 
     'NewPosition(uint256,address,uint256,bool,uint256,uint256,uint256,uint256,uint256)'(
-      positionId?: BigNumberish | null,
-      user?: string | null,
-      productId?: BigNumberish | null,
+      positionId?: PromiseOrValue<BigNumberish> | null,
+      user?: PromiseOrValue<string> | null,
+      productId?: PromiseOrValue<BigNumberish> | null,
       isLong?: null,
       price?: null,
       oraclePrice?: null,
@@ -1280,9 +1374,9 @@ export interface PikaProtocolVault extends BaseContract {
       fee?: null,
     ): NewPositionEventFilter;
     NewPosition(
-      positionId?: BigNumberish | null,
-      user?: string | null,
-      productId?: BigNumberish | null,
+      positionId?: PromiseOrValue<BigNumberish> | null,
+      user?: PromiseOrValue<string> | null,
+      productId?: PromiseOrValue<BigNumberish> | null,
       isLong?: null,
       price?: null,
       oraclePrice?: null,
@@ -1301,14 +1395,14 @@ export interface PikaProtocolVault extends BaseContract {
     PikaRewardDistributed(to?: null, amount?: null): PikaRewardDistributedEventFilter;
 
     'PositionLiquidated(uint256,address,uint256,uint256)'(
-      positionId?: BigNumberish | null,
-      liquidator?: string | null,
+      positionId?: PromiseOrValue<BigNumberish> | null,
+      liquidator?: PromiseOrValue<string> | null,
       liquidatorReward?: null,
       remainingReward?: null,
     ): PositionLiquidatedEventFilter;
     PositionLiquidated(
-      positionId?: BigNumberish | null,
-      liquidator?: string | null,
+      positionId?: PromiseOrValue<BigNumberish> | null,
+      liquidator?: PromiseOrValue<string> | null,
       liquidatorReward?: null,
       remainingReward?: null,
     ): PositionLiquidatedEventFilter;
@@ -1323,14 +1417,14 @@ export interface PikaProtocolVault extends BaseContract {
     ProtocolRewardDistributed(to?: null, amount?: null): ProtocolRewardDistributedEventFilter;
 
     'Redeemed(address,uint256,uint256,uint256,bool)'(
-      user?: string | null,
+      user?: PromiseOrValue<string> | null,
       amount?: null,
       shares?: null,
       shareBalance?: null,
       isFullRedeem?: null,
     ): RedeemedEventFilter;
     Redeemed(
-      user?: string | null,
+      user?: PromiseOrValue<string> | null,
       amount?: null,
       shares?: null,
       shareBalance?: null,
@@ -1343,8 +1437,12 @@ export interface PikaProtocolVault extends BaseContract {
     ): RewardRatioUpdatedEventFilter;
     RewardRatioUpdated(protocolRewardRatio?: null, pikaRewardRatio?: null): RewardRatioUpdatedEventFilter;
 
-    'Staked(address,uint256,uint256)'(user?: string | null, amount?: null, shares?: null): StakedEventFilter;
-    Staked(user?: string | null, amount?: null, shares?: null): StakedEventFilter;
+    'Staked(address,uint256,uint256)'(
+      user?: PromiseOrValue<string> | null,
+      amount?: null,
+      shares?: null,
+    ): StakedEventFilter;
+    Staked(user?: PromiseOrValue<string> | null, amount?: null, shares?: null): StakedEventFilter;
 
     'VaultRewardDistributed(address,uint256)'(to?: null, amount?: null): VaultRewardDistributedEventFilter;
     VaultRewardDistributed(to?: null, amount?: null): VaultRewardDistributedEventFilter;
@@ -1359,37 +1457,37 @@ export interface PikaProtocolVault extends BaseContract {
     BASE_DECIMALS(overrides?: CallOverrides): Promise<BigNumber>;
 
     addMargin(
-      positionId: BigNumberish,
-      margin: BigNumberish,
-      overrides?: PayableOverrides & { from?: string | Promise<string> },
+      positionId: PromiseOrValue<BigNumberish>,
+      margin: PromiseOrValue<BigNumberish>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     addProduct(
-      productId: BigNumberish,
+      productId: PromiseOrValue<BigNumberish>,
       _product: PikaPerpV2.ProductStruct,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    canLiquidate(positionId: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    canLiquidate(positionId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     closePosition(
-      productId: BigNumberish,
-      margin: BigNumberish,
-      isLong: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      productId: PromiseOrValue<BigNumberish>,
+      margin: PromiseOrValue<BigNumberish>,
+      isLong: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     closePositionWithId(
-      positionId: BigNumberish,
-      margin: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      positionId: PromiseOrValue<BigNumberish>,
+      margin: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    distributePikaReward(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    distributePikaReward(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
-    distributeProtocolReward(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    distributeProtocolReward(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
-    distributeVaultReward(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    distributeVaultReward(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     exposureMultiplier(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -1400,36 +1498,36 @@ export interface PikaProtocolVault extends BaseContract {
     getPendingVaultReward(overrides?: CallOverrides): Promise<BigNumber>;
 
     getPosition(
-      account: string,
-      productId: BigNumberish,
-      isLong: boolean,
+      account: PromiseOrValue<string>,
+      productId: PromiseOrValue<BigNumberish>,
+      isLong: PromiseOrValue<boolean>,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     getPositionId(
-      account: string,
-      productId: BigNumberish,
-      isLong: boolean,
+      account: PromiseOrValue<string>,
+      productId: PromiseOrValue<BigNumberish>,
+      isLong: PromiseOrValue<boolean>,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
-    getPositions(positionIds: BigNumberish[], overrides?: CallOverrides): Promise<BigNumber>;
+    getPositions(positionIds: PromiseOrValue<BigNumberish>[], overrides?: CallOverrides): Promise<BigNumber>;
 
-    getProduct(productId: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    getProduct(productId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    getShare(stakeOwner: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getShare(stakeOwner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    getShareBalance(stakeOwner: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getShareBalance(stakeOwner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    getStake(stakeOwner: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getStake(stakeOwner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     getTotalShare(overrides?: CallOverrides): Promise<BigNumber>;
 
     getVault(overrides?: CallOverrides): Promise<BigNumber>;
 
     liquidatePositions(
-      positionIds: BigNumberish[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      positionIds: PromiseOrValue<BigNumberish>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     liquidator(overrides?: CallOverrides): Promise<BigNumber>;
@@ -1443,20 +1541,20 @@ export interface PikaProtocolVault extends BaseContract {
     minProfitTime(overrides?: CallOverrides): Promise<BigNumber>;
 
     openPosition(
-      productId: BigNumberish,
-      margin: BigNumberish,
-      isLong: boolean,
-      leverage: BigNumberish,
-      overrides?: PayableOverrides & { from?: string | Promise<string> },
+      productId: PromiseOrValue<BigNumberish>,
+      margin: PromiseOrValue<BigNumberish>,
+      isLong: PromiseOrValue<boolean>,
+      leverage: PromiseOrValue<BigNumberish>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     openPositionForUser(
-      user: string,
-      productId: BigNumberish,
-      margin: BigNumberish,
-      isLong: boolean,
-      leverage: BigNumberish,
-      overrides?: PayableOverrides & { from?: string | Promise<string> },
+      user: PromiseOrValue<string>,
+      productId: PromiseOrValue<BigNumberish>,
+      margin: PromiseOrValue<BigNumberish>,
+      isLong: PromiseOrValue<boolean>,
+      leverage: PromiseOrValue<BigNumberish>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     oracle(overrides?: CallOverrides): Promise<BigNumber>;
@@ -1477,62 +1575,77 @@ export interface PikaProtocolVault extends BaseContract {
 
     protocolRewardRatio(overrides?: CallOverrides): Promise<BigNumber>;
 
-    redeem(shares: BigNumberish, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    redeem(
+      shares: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     releaseMargin(
-      positionId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      positionId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setCanUserStakeAndAllowPublicLiquidator(
-      _canUserStake: boolean,
-      _allowPublicLiquidator: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _canUserStake: PromiseOrValue<boolean>,
+      _allowPublicLiquidator: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setDistributors(
-      _protocolRewardDistributor: string,
-      _pikaRewardDistributor: string,
-      _vaultRewardDistributor: string,
-      _vaultTokenReward: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _protocolRewardDistributor: PromiseOrValue<string>,
+      _pikaRewardDistributor: PromiseOrValue<string>,
+      _vaultRewardDistributor: PromiseOrValue<string>,
+      _vaultTokenReward: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setExposureMultiplier(
-      _exposureMultiplier: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _exposureMultiplier: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    setLiquidator(_liquidator: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    setLiquidator(
+      _liquidator: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     setMargin(
-      _minMargin: BigNumberish,
-      _maxPositionMargin: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _minMargin: PromiseOrValue<BigNumberish>,
+      _maxPositionMargin: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setMaxShiftAndMinProfitTime(
-      _maxShift: BigNumberish,
-      _minProfitTime: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _maxShift: PromiseOrValue<BigNumberish>,
+      _minProfitTime: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    setOracle(_oracle: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    setOracle(
+      _oracle: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
-    setOwner(_owner: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    setOwner(
+      _owner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     setRewardRatio(
-      _protocolRewardRatio: BigNumberish,
-      _pikaRewardRatio: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _protocolRewardRatio: PromiseOrValue<BigNumberish>,
+      _pikaRewardRatio: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    stake(amount: BigNumberish, overrides?: PayableOverrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    stake(
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     stakeForUser(
-      amount: BigNumberish,
-      user: string,
-      overrides?: PayableOverrides & { from?: string | Promise<string> },
+      amount: PromiseOrValue<BigNumberish>,
+      user: PromiseOrValue<string>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     token(overrides?: CallOverrides): Promise<BigNumber>;
@@ -1546,14 +1659,14 @@ export interface PikaProtocolVault extends BaseContract {
     totalWeight(overrides?: CallOverrides): Promise<BigNumber>;
 
     updateProduct(
-      productId: BigNumberish,
+      productId: PromiseOrValue<BigNumberish>,
       _product: PikaPerpV2.ProductStruct,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     updateVault(
       _vault: PikaPerpV2.VaultStruct,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     utilizationMultiplier(overrides?: CallOverrides): Promise<BigNumber>;
@@ -1569,39 +1682,37 @@ export interface PikaProtocolVault extends BaseContract {
     BASE_DECIMALS(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     addMargin(
-      positionId: BigNumberish,
-      margin: BigNumberish,
-      overrides?: PayableOverrides & { from?: string | Promise<string> },
+      positionId: PromiseOrValue<BigNumberish>,
+      margin: PromiseOrValue<BigNumberish>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     addProduct(
-      productId: BigNumberish,
+      productId: PromiseOrValue<BigNumberish>,
       _product: PikaPerpV2.ProductStruct,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    canLiquidate(positionId: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    canLiquidate(positionId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     closePosition(
-      productId: BigNumberish,
-      margin: BigNumberish,
-      isLong: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      productId: PromiseOrValue<BigNumberish>,
+      margin: PromiseOrValue<BigNumberish>,
+      isLong: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     closePositionWithId(
-      positionId: BigNumberish,
-      margin: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      positionId: PromiseOrValue<BigNumberish>,
+      margin: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    distributePikaReward(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    distributePikaReward(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
-    distributeProtocolReward(
-      overrides?: Overrides & { from?: string | Promise<string> },
-    ): Promise<PopulatedTransaction>;
+    distributeProtocolReward(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
-    distributeVaultReward(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    distributeVaultReward(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     exposureMultiplier(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
@@ -1612,36 +1723,36 @@ export interface PikaProtocolVault extends BaseContract {
     getPendingVaultReward(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     getPosition(
-      account: string,
-      productId: BigNumberish,
-      isLong: boolean,
+      account: PromiseOrValue<string>,
+      productId: PromiseOrValue<BigNumberish>,
+      isLong: PromiseOrValue<boolean>,
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     getPositionId(
-      account: string,
-      productId: BigNumberish,
-      isLong: boolean,
+      account: PromiseOrValue<string>,
+      productId: PromiseOrValue<BigNumberish>,
+      isLong: PromiseOrValue<boolean>,
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
-    getPositions(positionIds: BigNumberish[], overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getPositions(positionIds: PromiseOrValue<BigNumberish>[], overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    getProduct(productId: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getProduct(productId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    getShare(stakeOwner: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getShare(stakeOwner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    getShareBalance(stakeOwner: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getShareBalance(stakeOwner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    getStake(stakeOwner: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getStake(stakeOwner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     getTotalShare(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     getVault(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     liquidatePositions(
-      positionIds: BigNumberish[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      positionIds: PromiseOrValue<BigNumberish>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     liquidator(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -1655,20 +1766,20 @@ export interface PikaProtocolVault extends BaseContract {
     minProfitTime(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     openPosition(
-      productId: BigNumberish,
-      margin: BigNumberish,
-      isLong: boolean,
-      leverage: BigNumberish,
-      overrides?: PayableOverrides & { from?: string | Promise<string> },
+      productId: PromiseOrValue<BigNumberish>,
+      margin: PromiseOrValue<BigNumberish>,
+      isLong: PromiseOrValue<boolean>,
+      leverage: PromiseOrValue<BigNumberish>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     openPositionForUser(
-      user: string,
-      productId: BigNumberish,
-      margin: BigNumberish,
-      isLong: boolean,
-      leverage: BigNumberish,
-      overrides?: PayableOverrides & { from?: string | Promise<string> },
+      user: PromiseOrValue<string>,
+      productId: PromiseOrValue<BigNumberish>,
+      margin: PromiseOrValue<BigNumberish>,
+      isLong: PromiseOrValue<boolean>,
+      leverage: PromiseOrValue<BigNumberish>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     oracle(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -1690,76 +1801,76 @@ export interface PikaProtocolVault extends BaseContract {
     protocolRewardRatio(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     redeem(
-      shares: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      shares: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     releaseMargin(
-      positionId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      positionId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setCanUserStakeAndAllowPublicLiquidator(
-      _canUserStake: boolean,
-      _allowPublicLiquidator: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _canUserStake: PromiseOrValue<boolean>,
+      _allowPublicLiquidator: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setDistributors(
-      _protocolRewardDistributor: string,
-      _pikaRewardDistributor: string,
-      _vaultRewardDistributor: string,
-      _vaultTokenReward: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _protocolRewardDistributor: PromiseOrValue<string>,
+      _pikaRewardDistributor: PromiseOrValue<string>,
+      _vaultRewardDistributor: PromiseOrValue<string>,
+      _vaultTokenReward: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setExposureMultiplier(
-      _exposureMultiplier: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _exposureMultiplier: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setLiquidator(
-      _liquidator: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _liquidator: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setMargin(
-      _minMargin: BigNumberish,
-      _maxPositionMargin: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _minMargin: PromiseOrValue<BigNumberish>,
+      _maxPositionMargin: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setMaxShiftAndMinProfitTime(
-      _maxShift: BigNumberish,
-      _minProfitTime: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _maxShift: PromiseOrValue<BigNumberish>,
+      _minProfitTime: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setOracle(
-      _oracle: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _oracle: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setOwner(
-      _owner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _owner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setRewardRatio(
-      _protocolRewardRatio: BigNumberish,
-      _pikaRewardRatio: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _protocolRewardRatio: PromiseOrValue<BigNumberish>,
+      _pikaRewardRatio: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     stake(
-      amount: BigNumberish,
-      overrides?: PayableOverrides & { from?: string | Promise<string> },
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     stakeForUser(
-      amount: BigNumberish,
-      user: string,
-      overrides?: PayableOverrides & { from?: string | Promise<string> },
+      amount: PromiseOrValue<BigNumberish>,
+      user: PromiseOrValue<string>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     token(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -1773,14 +1884,14 @@ export interface PikaProtocolVault extends BaseContract {
     totalWeight(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     updateProduct(
-      productId: BigNumberish,
+      productId: PromiseOrValue<BigNumberish>,
       _product: PikaPerpV2.ProductStruct,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     updateVault(
       _vault: PikaPerpV2.VaultStruct,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     utilizationMultiplier(overrides?: CallOverrides): Promise<PopulatedTransaction>;

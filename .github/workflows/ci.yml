@@ -35,6 +35,32 @@ jobs:
       - name: Studio Background Check 🚓
         run: pnpm build
 
+  unit:
+    name: Unit Tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: actions/setup-node@v2
+        with:
+          node-version: 'lts/gallium'
+
+      - name: Cache pnpm modules
+        uses: actions/cache@v2
+        with:
+          path: ~/.pnpm-store
+          key: ${{ runner.os }}-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-
+
+      - uses: pnpm/action-setup@v2.2.1
+        with:
+          version: 7.0.1
+          run_install: true
+
+      - name: Run Studio Unit Tests 🚓
+        run: pnpm test
+
   integration:
     name: Integration Tests
     runs-on: ubuntu-latest
@@ -85,4 +111,4 @@ jobs:
           run_install: true
 
       - name: Studio linting tests
-        run: pnpm lint
+        run: pnpm lint:ci

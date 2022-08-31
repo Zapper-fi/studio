@@ -1,5 +1,6 @@
 export { SingleStakingContractPositionBalanceHelper } from './helpers/balance/single-staking-farm.contract-position-balance-helper';
 export { TokenBalanceHelper, getContractPositionFromToken, drillBalance } from './helpers/balance/token-balance.helper';
+export { StakedTokenHelper } from './helpers/balance/staked.token-helper';
 export { ContractPositionBalanceHelper } from './helpers/balance/contract-position-balance.helper';
 export { MasterChefContractPositionBalanceHelper } from './helpers/master-chef/master-chef.contract-position-balance-helper';
 export { MasterChefContractPositionHelper } from './helpers/master-chef/master-chef.contract-position-helper';
@@ -26,7 +27,7 @@ export type {
   MasterChefDespositTokenAddressStrategy,
   MasterChefRewardTokenAddressesStrategy,
   MasterChefRewardRateStrategy,
-  MasterChefTotalValueLockedStrategy,
+  MasterChefLiquidityStrategy,
   MasterChefLabelStrategy,
   MasterChefContractPositionDataProps,
 } from './helpers/master-chef/master-chef.contract-position-helper';
@@ -45,7 +46,7 @@ export type {
   SingleStakingFarmDefinition,
   SingleStakingFarmRois,
   SingleStakingFarmDataProps,
-  SingleStakingFarmResolveTotalValueLockedParams,
+  SingleStakingFarmResolveLiquidityParams,
   SingleStakingFarmResolveIsActiveParams,
   SingleStakingFarmResolveRoisParams,
   SingleStakingFarmContractPositionHelperParams,

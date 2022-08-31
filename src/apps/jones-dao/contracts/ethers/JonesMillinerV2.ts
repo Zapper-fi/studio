@@ -15,7 +15,7 @@ import type {
 } from 'ethers';
 import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
 import type { Listener, Provider } from '@ethersproject/providers';
-import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
 export interface JonesMillinerV2Interface extends utils.Interface {
   functions: {
@@ -87,37 +87,61 @@ export interface JonesMillinerV2Interface extends utils.Interface {
       | 'withdraw',
   ): FunctionFragment;
 
-  encodeFunctionData(functionFragment: 'add', values: [BigNumberish, string, boolean]): string;
-  encodeFunctionData(functionFragment: 'addContractAddressToWhitelist', values: [string]): string;
-  encodeFunctionData(functionFragment: 'compound', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'deposit', values: [BigNumberish, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'deposited', values: [BigNumberish, string]): string;
-  encodeFunctionData(functionFragment: 'emergencyWithdraw', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'harvest', values: [BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'add',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>, PromiseOrValue<boolean>],
+  ): string;
+  encodeFunctionData(functionFragment: 'addContractAddressToWhitelist', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'compound', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(
+    functionFragment: 'deposit',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'deposited',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>],
+  ): string;
+  encodeFunctionData(functionFragment: 'emergencyWithdraw', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'harvest', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'hatDistributor', values?: undefined): string;
   encodeFunctionData(functionFragment: 'jones', values?: undefined): string;
   encodeFunctionData(functionFragment: 'jonesPerSecond', values?: undefined): string;
   encodeFunctionData(functionFragment: 'massUpdatePools', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'migrateRewards', values: [BigNumberish, string]): string;
+  encodeFunctionData(
+    functionFragment: 'migrateRewards',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>],
+  ): string;
   encodeFunctionData(functionFragment: 'owner', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'pendingJones', values: [BigNumberish, string]): string;
-  encodeFunctionData(functionFragment: 'poolExistence', values: [string]): string;
-  encodeFunctionData(functionFragment: 'poolInfo', values: [BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'pendingJones',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>],
+  ): string;
+  encodeFunctionData(functionFragment: 'poolExistence', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'poolInfo', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'poolLength', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'removeContractAddressFromWhitelist', values: [string]): string;
+  encodeFunctionData(functionFragment: 'removeContractAddressFromWhitelist', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'renounceOwnership', values?: undefined): string;
   encodeFunctionData(functionFragment: 'rewardManager', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'set', values: [BigNumberish, BigNumberish, boolean]): string;
+  encodeFunctionData(
+    functionFragment: 'set',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>, PromiseOrValue<boolean>],
+  ): string;
   encodeFunctionData(functionFragment: 'startTime', values?: undefined): string;
   encodeFunctionData(functionFragment: 'totalAllocPoint', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'transferOwnership', values: [string]): string;
-  encodeFunctionData(functionFragment: 'updateEmissionRate', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'updateHatDistributor', values: [string]): string;
-  encodeFunctionData(functionFragment: 'updatePool', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'updateRewardsManager', values: [string]): string;
-  encodeFunctionData(functionFragment: 'userInfo', values: [BigNumberish, string]): string;
-  encodeFunctionData(functionFragment: 'whitelistedContract', values: [string]): string;
-  encodeFunctionData(functionFragment: 'withdraw', values: [BigNumberish, BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'transferOwnership', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'updateEmissionRate', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'updateHatDistributor', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'updatePool', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'updateRewardsManager', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'userInfo',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>],
+  ): string;
+  encodeFunctionData(functionFragment: 'whitelistedContract', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'withdraw',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+  ): string;
 
   decodeFunctionResult(functionFragment: 'add', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'addContractAddressToWhitelist', data: BytesLike): Result;
@@ -284,38 +308,42 @@ export interface JonesMillinerV2 extends BaseContract {
 
   functions: {
     add(
-      _allocPoint: BigNumberish,
-      _lpToken: string,
-      _withUpdate: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _allocPoint: PromiseOrValue<BigNumberish>,
+      _lpToken: PromiseOrValue<string>,
+      _withUpdate: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     addContractAddressToWhitelist(
-      _contractAddress: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _contractAddress: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     compound(
-      _pid: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _pid: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     deposit(
-      _pid: BigNumberish,
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _pid: PromiseOrValue<BigNumberish>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    deposited(_pid: BigNumberish, _user: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    deposited(
+      _pid: PromiseOrValue<BigNumberish>,
+      _user: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber]>;
 
     emergencyWithdraw(
-      _pid: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _pid: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     harvest(
-      _pid: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _pid: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     hatDistributor(overrides?: CallOverrides): Promise<[string]>;
@@ -324,22 +352,26 @@ export interface JonesMillinerV2 extends BaseContract {
 
     jonesPerSecond(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    massUpdatePools(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    massUpdatePools(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     migrateRewards(
-      _amount: BigNumberish,
-      _to: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _amount: PromiseOrValue<BigNumberish>,
+      _to: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     owner(overrides?: CallOverrides): Promise<[string]>;
 
-    pendingJones(_pid: BigNumberish, _user: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    pendingJones(
+      _pid: PromiseOrValue<BigNumberish>,
+      _user: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber]>;
 
-    poolExistence(arg0: string, overrides?: CallOverrides): Promise<[boolean]>;
+    poolExistence(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[boolean]>;
 
     poolInfo(
-      arg0: BigNumberish,
+      arg0: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<
       [string, BigNumber, BigNumber, BigNumber, BigNumber] & {
@@ -354,19 +386,19 @@ export interface JonesMillinerV2 extends BaseContract {
     poolLength(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     removeContractAddressFromWhitelist(
-      _contractAddress: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _contractAddress: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     rewardManager(overrides?: CallOverrides): Promise<[string]>;
 
     set(
-      _pid: BigNumberish,
-      _allocPoint: BigNumberish,
-      _withUpdate: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _pid: PromiseOrValue<BigNumberish>,
+      _allocPoint: PromiseOrValue<BigNumberish>,
+      _withUpdate: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     startTime(overrides?: CallOverrides): Promise<[BigNumber]>;
@@ -374,78 +406,82 @@ export interface JonesMillinerV2 extends BaseContract {
     totalAllocPoint(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     updateEmissionRate(
-      _jonesPerSecond: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _jonesPerSecond: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     updateHatDistributor(
-      _distributor: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _distributor: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     updatePool(
-      _pid: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _pid: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     updateRewardsManager(
-      _newManager: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _newManager: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     userInfo(
-      arg0: BigNumberish,
-      arg1: string,
+      arg0: PromiseOrValue<BigNumberish>,
+      arg1: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber, BigNumber] & { amount: BigNumber; rewardDebt: BigNumber }>;
 
-    whitelistedContract(arg0: string, overrides?: CallOverrides): Promise<[boolean]>;
+    whitelistedContract(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[boolean]>;
 
     withdraw(
-      _pid: BigNumberish,
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _pid: PromiseOrValue<BigNumberish>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
   };
 
   add(
-    _allocPoint: BigNumberish,
-    _lpToken: string,
-    _withUpdate: boolean,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _allocPoint: PromiseOrValue<BigNumberish>,
+    _lpToken: PromiseOrValue<string>,
+    _withUpdate: PromiseOrValue<boolean>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   addContractAddressToWhitelist(
-    _contractAddress: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _contractAddress: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   compound(
-    _pid: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _pid: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   deposit(
-    _pid: BigNumberish,
-    _amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _pid: PromiseOrValue<BigNumberish>,
+    _amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  deposited(_pid: BigNumberish, _user: string, overrides?: CallOverrides): Promise<BigNumber>;
+  deposited(
+    _pid: PromiseOrValue<BigNumberish>,
+    _user: PromiseOrValue<string>,
+    overrides?: CallOverrides,
+  ): Promise<BigNumber>;
 
   emergencyWithdraw(
-    _pid: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _pid: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   harvest(
-    _pid: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _pid: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   hatDistributor(overrides?: CallOverrides): Promise<string>;
@@ -454,22 +490,26 @@ export interface JonesMillinerV2 extends BaseContract {
 
   jonesPerSecond(overrides?: CallOverrides): Promise<BigNumber>;
 
-  massUpdatePools(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  massUpdatePools(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   migrateRewards(
-    _amount: BigNumberish,
-    _to: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _amount: PromiseOrValue<BigNumberish>,
+    _to: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   owner(overrides?: CallOverrides): Promise<string>;
 
-  pendingJones(_pid: BigNumberish, _user: string, overrides?: CallOverrides): Promise<BigNumber>;
+  pendingJones(
+    _pid: PromiseOrValue<BigNumberish>,
+    _user: PromiseOrValue<string>,
+    overrides?: CallOverrides,
+  ): Promise<BigNumber>;
 
-  poolExistence(arg0: string, overrides?: CallOverrides): Promise<boolean>;
+  poolExistence(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
   poolInfo(
-    arg0: BigNumberish,
+    arg0: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides,
   ): Promise<
     [string, BigNumber, BigNumber, BigNumber, BigNumber] & {
@@ -484,19 +524,19 @@ export interface JonesMillinerV2 extends BaseContract {
   poolLength(overrides?: CallOverrides): Promise<BigNumber>;
 
   removeContractAddressFromWhitelist(
-    _contractAddress: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _contractAddress: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   rewardManager(overrides?: CallOverrides): Promise<string>;
 
   set(
-    _pid: BigNumberish,
-    _allocPoint: BigNumberish,
-    _withUpdate: boolean,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _pid: PromiseOrValue<BigNumberish>,
+    _allocPoint: PromiseOrValue<BigNumberish>,
+    _withUpdate: PromiseOrValue<boolean>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   startTime(overrides?: CallOverrides): Promise<BigNumber>;
@@ -504,58 +544,71 @@ export interface JonesMillinerV2 extends BaseContract {
   totalAllocPoint(overrides?: CallOverrides): Promise<BigNumber>;
 
   transferOwnership(
-    newOwner: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    newOwner: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   updateEmissionRate(
-    _jonesPerSecond: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _jonesPerSecond: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   updateHatDistributor(
-    _distributor: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _distributor: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   updatePool(
-    _pid: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _pid: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   updateRewardsManager(
-    _newManager: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _newManager: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   userInfo(
-    arg0: BigNumberish,
-    arg1: string,
+    arg0: PromiseOrValue<BigNumberish>,
+    arg1: PromiseOrValue<string>,
     overrides?: CallOverrides,
   ): Promise<[BigNumber, BigNumber] & { amount: BigNumber; rewardDebt: BigNumber }>;
 
-  whitelistedContract(arg0: string, overrides?: CallOverrides): Promise<boolean>;
+  whitelistedContract(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
   withdraw(
-    _pid: BigNumberish,
-    _amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _pid: PromiseOrValue<BigNumberish>,
+    _amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   callStatic: {
-    add(_allocPoint: BigNumberish, _lpToken: string, _withUpdate: boolean, overrides?: CallOverrides): Promise<void>;
+    add(
+      _allocPoint: PromiseOrValue<BigNumberish>,
+      _lpToken: PromiseOrValue<string>,
+      _withUpdate: PromiseOrValue<boolean>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    addContractAddressToWhitelist(_contractAddress: string, overrides?: CallOverrides): Promise<void>;
+    addContractAddressToWhitelist(_contractAddress: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    compound(_pid: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    compound(_pid: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
-    deposit(_pid: BigNumberish, _amount: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    deposit(
+      _pid: PromiseOrValue<BigNumberish>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    deposited(_pid: BigNumberish, _user: string, overrides?: CallOverrides): Promise<BigNumber>;
+    deposited(
+      _pid: PromiseOrValue<BigNumberish>,
+      _user: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    emergencyWithdraw(_pid: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    emergencyWithdraw(_pid: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
-    harvest(_pid: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    harvest(_pid: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
     hatDistributor(overrides?: CallOverrides): Promise<string>;
 
@@ -565,16 +618,24 @@ export interface JonesMillinerV2 extends BaseContract {
 
     massUpdatePools(overrides?: CallOverrides): Promise<void>;
 
-    migrateRewards(_amount: BigNumberish, _to: string, overrides?: CallOverrides): Promise<void>;
+    migrateRewards(
+      _amount: PromiseOrValue<BigNumberish>,
+      _to: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
     owner(overrides?: CallOverrides): Promise<string>;
 
-    pendingJones(_pid: BigNumberish, _user: string, overrides?: CallOverrides): Promise<BigNumber>;
+    pendingJones(
+      _pid: PromiseOrValue<BigNumberish>,
+      _user: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    poolExistence(arg0: string, overrides?: CallOverrides): Promise<boolean>;
+    poolExistence(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
     poolInfo(
-      arg0: BigNumberish,
+      arg0: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<
       [string, BigNumber, BigNumber, BigNumber, BigNumber] & {
@@ -588,119 +649,172 @@ export interface JonesMillinerV2 extends BaseContract {
 
     poolLength(overrides?: CallOverrides): Promise<BigNumber>;
 
-    removeContractAddressFromWhitelist(_contractAddress: string, overrides?: CallOverrides): Promise<void>;
+    removeContractAddressFromWhitelist(
+      _contractAddress: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
     renounceOwnership(overrides?: CallOverrides): Promise<void>;
 
     rewardManager(overrides?: CallOverrides): Promise<string>;
 
-    set(_pid: BigNumberish, _allocPoint: BigNumberish, _withUpdate: boolean, overrides?: CallOverrides): Promise<void>;
+    set(
+      _pid: PromiseOrValue<BigNumberish>,
+      _allocPoint: PromiseOrValue<BigNumberish>,
+      _withUpdate: PromiseOrValue<boolean>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
     startTime(overrides?: CallOverrides): Promise<BigNumber>;
 
     totalAllocPoint(overrides?: CallOverrides): Promise<BigNumber>;
 
-    transferOwnership(newOwner: string, overrides?: CallOverrides): Promise<void>;
+    transferOwnership(newOwner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    updateEmissionRate(_jonesPerSecond: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    updateEmissionRate(_jonesPerSecond: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
-    updateHatDistributor(_distributor: string, overrides?: CallOverrides): Promise<void>;
+    updateHatDistributor(_distributor: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    updatePool(_pid: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    updatePool(_pid: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
-    updateRewardsManager(_newManager: string, overrides?: CallOverrides): Promise<void>;
+    updateRewardsManager(_newManager: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     userInfo(
-      arg0: BigNumberish,
-      arg1: string,
+      arg0: PromiseOrValue<BigNumberish>,
+      arg1: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber, BigNumber] & { amount: BigNumber; rewardDebt: BigNumber }>;
 
-    whitelistedContract(arg0: string, overrides?: CallOverrides): Promise<boolean>;
+    whitelistedContract(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
-    withdraw(_pid: BigNumberish, _amount: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    withdraw(
+      _pid: PromiseOrValue<BigNumberish>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
   };
 
   filters: {
     'Deposit(address,uint256,uint256)'(
-      user?: string | null,
-      pid?: BigNumberish | null,
+      user?: PromiseOrValue<string> | null,
+      pid?: PromiseOrValue<BigNumberish> | null,
       amount?: null,
     ): DepositEventFilter;
-    Deposit(user?: string | null, pid?: BigNumberish | null, amount?: null): DepositEventFilter;
+    Deposit(
+      user?: PromiseOrValue<string> | null,
+      pid?: PromiseOrValue<BigNumberish> | null,
+      amount?: null,
+    ): DepositEventFilter;
 
     'EmergencyWithdraw(address,uint256,uint256)'(
-      user?: string | null,
-      pid?: BigNumberish | null,
+      user?: PromiseOrValue<string> | null,
+      pid?: PromiseOrValue<BigNumberish> | null,
       amount?: null,
     ): EmergencyWithdrawEventFilter;
-    EmergencyWithdraw(user?: string | null, pid?: BigNumberish | null, amount?: null): EmergencyWithdrawEventFilter;
+    EmergencyWithdraw(
+      user?: PromiseOrValue<string> | null,
+      pid?: PromiseOrValue<BigNumberish> | null,
+      amount?: null,
+    ): EmergencyWithdrawEventFilter;
 
     'Harvest(address,uint256,uint256)'(
-      user?: string | null,
-      pid?: BigNumberish | null,
+      user?: PromiseOrValue<string> | null,
+      pid?: PromiseOrValue<BigNumberish> | null,
       amount?: null,
     ): HarvestEventFilter;
-    Harvest(user?: string | null, pid?: BigNumberish | null, amount?: null): HarvestEventFilter;
+    Harvest(
+      user?: PromiseOrValue<string> | null,
+      pid?: PromiseOrValue<BigNumberish> | null,
+      amount?: null,
+    ): HarvestEventFilter;
 
     'NewPool(address,uint256,uint256)'(lp?: null, pid?: null, newAlloc?: null): NewPoolEventFilter;
     NewPool(lp?: null, pid?: null, newAlloc?: null): NewPoolEventFilter;
 
     'OwnershipTransferred(address,address)'(
-      previousOwner?: string | null,
-      newOwner?: string | null,
+      previousOwner?: PromiseOrValue<string> | null,
+      newOwner?: PromiseOrValue<string> | null,
     ): OwnershipTransferredEventFilter;
-    OwnershipTransferred(previousOwner?: string | null, newOwner?: string | null): OwnershipTransferredEventFilter;
+    OwnershipTransferred(
+      previousOwner?: PromiseOrValue<string> | null,
+      newOwner?: PromiseOrValue<string> | null,
+    ): OwnershipTransferredEventFilter;
 
     'PoolUpdate(uint256,uint256)'(pid?: null, newAlloc?: null): PoolUpdateEventFilter;
     PoolUpdate(pid?: null, newAlloc?: null): PoolUpdateEventFilter;
 
-    'SetDevAddress(address,address)'(user?: string | null, newAddress?: string | null): SetDevAddressEventFilter;
-    SetDevAddress(user?: string | null, newAddress?: string | null): SetDevAddressEventFilter;
+    'SetDevAddress(address,address)'(
+      user?: PromiseOrValue<string> | null,
+      newAddress?: PromiseOrValue<string> | null,
+    ): SetDevAddressEventFilter;
+    SetDevAddress(
+      user?: PromiseOrValue<string> | null,
+      newAddress?: PromiseOrValue<string> | null,
+    ): SetDevAddressEventFilter;
 
-    'SetFeeAddress(address,address)'(user?: string | null, newAddress?: string | null): SetFeeAddressEventFilter;
-    SetFeeAddress(user?: string | null, newAddress?: string | null): SetFeeAddressEventFilter;
+    'SetFeeAddress(address,address)'(
+      user?: PromiseOrValue<string> | null,
+      newAddress?: PromiseOrValue<string> | null,
+    ): SetFeeAddressEventFilter;
+    SetFeeAddress(
+      user?: PromiseOrValue<string> | null,
+      newAddress?: PromiseOrValue<string> | null,
+    ): SetFeeAddressEventFilter;
 
     'UpdateEmissionRate(uint256)'(jonesPerSecond?: null): UpdateEmissionRateEventFilter;
     UpdateEmissionRate(jonesPerSecond?: null): UpdateEmissionRateEventFilter;
 
     'Withdraw(address,uint256,uint256)'(
-      user?: string | null,
-      pid?: BigNumberish | null,
+      user?: PromiseOrValue<string> | null,
+      pid?: PromiseOrValue<BigNumberish> | null,
       amount?: null,
     ): WithdrawEventFilter;
-    Withdraw(user?: string | null, pid?: BigNumberish | null, amount?: null): WithdrawEventFilter;
+    Withdraw(
+      user?: PromiseOrValue<string> | null,
+      pid?: PromiseOrValue<BigNumberish> | null,
+      amount?: null,
+    ): WithdrawEventFilter;
   };
 
   estimateGas: {
     add(
-      _allocPoint: BigNumberish,
-      _lpToken: string,
-      _withUpdate: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _allocPoint: PromiseOrValue<BigNumberish>,
+      _lpToken: PromiseOrValue<string>,
+      _withUpdate: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     addContractAddressToWhitelist(
-      _contractAddress: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _contractAddress: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    compound(_pid: BigNumberish, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    compound(
+      _pid: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     deposit(
-      _pid: BigNumberish,
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _pid: PromiseOrValue<BigNumberish>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    deposited(_pid: BigNumberish, _user: string, overrides?: CallOverrides): Promise<BigNumber>;
+    deposited(
+      _pid: PromiseOrValue<BigNumberish>,
+      _user: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     emergencyWithdraw(
-      _pid: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _pid: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    harvest(_pid: BigNumberish, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    harvest(
+      _pid: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     hatDistributor(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -708,38 +822,42 @@ export interface JonesMillinerV2 extends BaseContract {
 
     jonesPerSecond(overrides?: CallOverrides): Promise<BigNumber>;
 
-    massUpdatePools(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    massUpdatePools(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     migrateRewards(
-      _amount: BigNumberish,
-      _to: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _amount: PromiseOrValue<BigNumberish>,
+      _to: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     owner(overrides?: CallOverrides): Promise<BigNumber>;
 
-    pendingJones(_pid: BigNumberish, _user: string, overrides?: CallOverrides): Promise<BigNumber>;
+    pendingJones(
+      _pid: PromiseOrValue<BigNumberish>,
+      _user: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    poolExistence(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    poolExistence(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    poolInfo(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    poolInfo(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     poolLength(overrides?: CallOverrides): Promise<BigNumber>;
 
     removeContractAddressFromWhitelist(
-      _contractAddress: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _contractAddress: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     rewardManager(overrides?: CallOverrides): Promise<BigNumber>;
 
     set(
-      _pid: BigNumberish,
-      _allocPoint: BigNumberish,
-      _withUpdate: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _pid: PromiseOrValue<BigNumberish>,
+      _allocPoint: PromiseOrValue<BigNumberish>,
+      _withUpdate: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     startTime(overrides?: CallOverrides): Promise<BigNumber>;
@@ -747,72 +865,83 @@ export interface JonesMillinerV2 extends BaseContract {
     totalAllocPoint(overrides?: CallOverrides): Promise<BigNumber>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     updateEmissionRate(
-      _jonesPerSecond: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _jonesPerSecond: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     updateHatDistributor(
-      _distributor: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _distributor: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    updatePool(_pid: BigNumberish, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    updatePool(
+      _pid: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     updateRewardsManager(
-      _newManager: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _newManager: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    userInfo(arg0: BigNumberish, arg1: string, overrides?: CallOverrides): Promise<BigNumber>;
+    userInfo(
+      arg0: PromiseOrValue<BigNumberish>,
+      arg1: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    whitelistedContract(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    whitelistedContract(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     withdraw(
-      _pid: BigNumberish,
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _pid: PromiseOrValue<BigNumberish>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
   };
 
   populateTransaction: {
     add(
-      _allocPoint: BigNumberish,
-      _lpToken: string,
-      _withUpdate: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _allocPoint: PromiseOrValue<BigNumberish>,
+      _lpToken: PromiseOrValue<string>,
+      _withUpdate: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     addContractAddressToWhitelist(
-      _contractAddress: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _contractAddress: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     compound(
-      _pid: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _pid: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     deposit(
-      _pid: BigNumberish,
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _pid: PromiseOrValue<BigNumberish>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    deposited(_pid: BigNumberish, _user: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    deposited(
+      _pid: PromiseOrValue<BigNumberish>,
+      _user: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
     emergencyWithdraw(
-      _pid: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _pid: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     harvest(
-      _pid: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _pid: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     hatDistributor(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -821,38 +950,42 @@ export interface JonesMillinerV2 extends BaseContract {
 
     jonesPerSecond(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    massUpdatePools(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    massUpdatePools(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     migrateRewards(
-      _amount: BigNumberish,
-      _to: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _amount: PromiseOrValue<BigNumberish>,
+      _to: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    pendingJones(_pid: BigNumberish, _user: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    pendingJones(
+      _pid: PromiseOrValue<BigNumberish>,
+      _user: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
-    poolExistence(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    poolExistence(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    poolInfo(arg0: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    poolInfo(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     poolLength(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     removeContractAddressFromWhitelist(
-      _contractAddress: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _contractAddress: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     rewardManager(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     set(
-      _pid: BigNumberish,
-      _allocPoint: BigNumberish,
-      _withUpdate: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _pid: PromiseOrValue<BigNumberish>,
+      _allocPoint: PromiseOrValue<BigNumberish>,
+      _withUpdate: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     startTime(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -860,38 +993,42 @@ export interface JonesMillinerV2 extends BaseContract {
     totalAllocPoint(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     updateEmissionRate(
-      _jonesPerSecond: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _jonesPerSecond: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     updateHatDistributor(
-      _distributor: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _distributor: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     updatePool(
-      _pid: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _pid: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     updateRewardsManager(
-      _newManager: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _newManager: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    userInfo(arg0: BigNumberish, arg1: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    userInfo(
+      arg0: PromiseOrValue<BigNumberish>,
+      arg1: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
-    whitelistedContract(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    whitelistedContract(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     withdraw(
-      _pid: BigNumberish,
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _pid: PromiseOrValue<BigNumberish>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
   };
 }

@@ -4,6 +4,7 @@ import axios from 'axios';
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { ZERO_ADDRESS } from '~app-toolkit/constants/address';
 import { Register } from '~app-toolkit/decorators';
+import { buildDollarDisplayItem } from '~app-toolkit/helpers/presentation/display-item.present';
 import { getTokenImg } from '~app-toolkit/helpers/presentation/image.present';
 import { ContractType } from '~position/contract.interface';
 import { PositionFetcher } from '~position/position-fetcher.interface';
@@ -18,7 +19,7 @@ import { SYMPHONY_DEFINITION } from '../symphony.definition';
 const appId = SYMPHONY_DEFINITION.id;
 const groupId = SYMPHONY_DEFINITION.groups.yolo.id;
 const network = Network.AVALANCHE_MAINNET;
-const YOLO_ADDRESS = '0x44f91814c5c766E0762C8C23d65759F631c0ABBD';
+const YOLO_ADDRESS = '0x44f91814c5c766e0762c8c23d65759f631c0abbd';
 const TOKENLIST_URL = 'https://raw.githubusercontent.com/symphony-finance/token-list/master/symphony.tokenlist.json';
 
 @Register.ContractPositionFetcher({ appId, groupId, network })
@@ -79,6 +80,7 @@ export class AvalancheSymphonyYoloContractPositionFetcher implements PositionFet
           displayProps: {
             label,
             images,
+            statsItems: [{ label: 'Liquidity', value: buildDollarDisplayItem(tokenBalanceUSD) }],
           },
         };
 

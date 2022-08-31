@@ -15,7 +15,7 @@ import type {
 } from 'ethers';
 import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
 import type { Listener, Provider } from '@ethersproject/providers';
-import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
 export interface MakerIlkRegistryInterface extends utils.Interface {
   functions: {
@@ -87,43 +87,65 @@ export interface MakerIlkRegistryInterface extends utils.Interface {
       | 'xlip',
   ): FunctionFragment;
 
-  encodeFunctionData(functionFragment: 'add', values: [string]): string;
+  encodeFunctionData(functionFragment: 'add', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'cat', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'class', values: [BytesLike]): string;
+  encodeFunctionData(functionFragment: 'class', values: [PromiseOrValue<BytesLike>]): string;
   encodeFunctionData(functionFragment: 'count', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'dec', values: [BytesLike]): string;
-  encodeFunctionData(functionFragment: 'deny', values: [string]): string;
+  encodeFunctionData(functionFragment: 'dec', values: [PromiseOrValue<BytesLike>]): string;
+  encodeFunctionData(functionFragment: 'deny', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'dog', values?: undefined): string;
   encodeFunctionData(
     functionFragment: 'file(bytes32,bytes32,uint256)',
-    values: [BytesLike, BytesLike, BigNumberish],
+    values: [PromiseOrValue<BytesLike>, PromiseOrValue<BytesLike>, PromiseOrValue<BigNumberish>],
   ): string;
-  encodeFunctionData(functionFragment: 'file(bytes32,bytes32,string)', values: [BytesLike, BytesLike, string]): string;
-  encodeFunctionData(functionFragment: 'file(bytes32,address)', values: [BytesLike, string]): string;
-  encodeFunctionData(functionFragment: 'file(bytes32,bytes32,address)', values: [BytesLike, BytesLike, string]): string;
-  encodeFunctionData(functionFragment: 'gem', values: [BytesLike]): string;
-  encodeFunctionData(functionFragment: 'get', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'ilkData', values: [BytesLike]): string;
-  encodeFunctionData(functionFragment: 'info', values: [BytesLike]): string;
-  encodeFunctionData(functionFragment: 'join', values: [BytesLike]): string;
+  encodeFunctionData(
+    functionFragment: 'file(bytes32,bytes32,string)',
+    values: [PromiseOrValue<BytesLike>, PromiseOrValue<BytesLike>, PromiseOrValue<string>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'file(bytes32,address)',
+    values: [PromiseOrValue<BytesLike>, PromiseOrValue<string>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'file(bytes32,bytes32,address)',
+    values: [PromiseOrValue<BytesLike>, PromiseOrValue<BytesLike>, PromiseOrValue<string>],
+  ): string;
+  encodeFunctionData(functionFragment: 'gem', values: [PromiseOrValue<BytesLike>]): string;
+  encodeFunctionData(functionFragment: 'get', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'ilkData', values: [PromiseOrValue<BytesLike>]): string;
+  encodeFunctionData(functionFragment: 'info', values: [PromiseOrValue<BytesLike>]): string;
+  encodeFunctionData(functionFragment: 'join', values: [PromiseOrValue<BytesLike>]): string;
   encodeFunctionData(functionFragment: 'list()', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'list(uint256,uint256)', values: [BigNumberish, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'name', values: [BytesLike]): string;
-  encodeFunctionData(functionFragment: 'pip', values: [BytesLike]): string;
-  encodeFunctionData(functionFragment: 'pos', values: [BytesLike]): string;
+  encodeFunctionData(
+    functionFragment: 'list(uint256,uint256)',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'name', values: [PromiseOrValue<BytesLike>]): string;
+  encodeFunctionData(functionFragment: 'pip', values: [PromiseOrValue<BytesLike>]): string;
+  encodeFunctionData(functionFragment: 'pos', values: [PromiseOrValue<BytesLike>]): string;
   encodeFunctionData(
     functionFragment: 'put',
-    values: [BytesLike, string, string, BigNumberish, BigNumberish, string, string, string, string],
+    values: [
+      PromiseOrValue<BytesLike>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+    ],
   ): string;
-  encodeFunctionData(functionFragment: 'rely', values: [string]): string;
-  encodeFunctionData(functionFragment: 'remove', values: [BytesLike]): string;
-  encodeFunctionData(functionFragment: 'removeAuth', values: [BytesLike]): string;
+  encodeFunctionData(functionFragment: 'rely', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'remove', values: [PromiseOrValue<BytesLike>]): string;
+  encodeFunctionData(functionFragment: 'removeAuth', values: [PromiseOrValue<BytesLike>]): string;
   encodeFunctionData(functionFragment: 'spot', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'symbol', values: [BytesLike]): string;
-  encodeFunctionData(functionFragment: 'update', values: [BytesLike]): string;
+  encodeFunctionData(functionFragment: 'symbol', values: [PromiseOrValue<BytesLike>]): string;
+  encodeFunctionData(functionFragment: 'update', values: [PromiseOrValue<BytesLike>]): string;
   encodeFunctionData(functionFragment: 'vat', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'wards', values: [string]): string;
-  encodeFunctionData(functionFragment: 'xlip', values: [BytesLike]): string;
+  encodeFunctionData(functionFragment: 'wards', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'xlip', values: [PromiseOrValue<BytesLike>]): string;
 
   decodeFunctionResult(functionFragment: 'add', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'cat', data: BytesLike): Result;
@@ -248,53 +270,59 @@ export interface MakerIlkRegistry extends BaseContract {
   removeListener: OnEvent<this>;
 
   functions: {
-    add(adapter: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    add(
+      adapter: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<ContractTransaction>;
 
     cat(overrides?: CallOverrides): Promise<[string]>;
 
-    class(ilk: BytesLike, overrides?: CallOverrides): Promise<[BigNumber]>;
+    class(ilk: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     count(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    dec(ilk: BytesLike, overrides?: CallOverrides): Promise<[BigNumber]>;
+    dec(ilk: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    deny(usr: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    deny(
+      usr: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<ContractTransaction>;
 
     dog(overrides?: CallOverrides): Promise<[string]>;
 
     'file(bytes32,bytes32,uint256)'(
-      ilk: BytesLike,
-      what: BytesLike,
-      data: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      ilk: PromiseOrValue<BytesLike>,
+      what: PromiseOrValue<BytesLike>,
+      data: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     'file(bytes32,bytes32,string)'(
-      ilk: BytesLike,
-      what: BytesLike,
-      data: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      ilk: PromiseOrValue<BytesLike>,
+      what: PromiseOrValue<BytesLike>,
+      data: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     'file(bytes32,address)'(
-      what: BytesLike,
-      data: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      what: PromiseOrValue<BytesLike>,
+      data: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     'file(bytes32,bytes32,address)'(
-      ilk: BytesLike,
-      what: BytesLike,
-      data: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      ilk: PromiseOrValue<BytesLike>,
+      what: PromiseOrValue<BytesLike>,
+      data: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    gem(ilk: BytesLike, overrides?: CallOverrides): Promise<[string]>;
+    gem(ilk: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<[string]>;
 
-    get(pos: BigNumberish, overrides?: CallOverrides): Promise<[string]>;
+    get(pos: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[string]>;
 
     ilkData(
-      arg0: BytesLike,
+      arg0: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides,
     ): Promise<
       [BigNumber, string, string, number, BigNumber, string, string, string, string] & {
@@ -311,7 +339,7 @@ export interface MakerIlkRegistry extends BaseContract {
     >;
 
     info(
-      ilk: BytesLike,
+      ilk: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides,
     ): Promise<
       [string, string, BigNumber, BigNumber, string, string, string, string] & {
@@ -326,100 +354,119 @@ export interface MakerIlkRegistry extends BaseContract {
       }
     >;
 
-    join(ilk: BytesLike, overrides?: CallOverrides): Promise<[string]>;
+    join(ilk: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<[string]>;
 
     'list()'(overrides?: CallOverrides): Promise<[string[]]>;
 
-    'list(uint256,uint256)'(start: BigNumberish, end: BigNumberish, overrides?: CallOverrides): Promise<[string[]]>;
+    'list(uint256,uint256)'(
+      start: PromiseOrValue<BigNumberish>,
+      end: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<[string[]]>;
 
-    name(ilk: BytesLike, overrides?: CallOverrides): Promise<[string]>;
+    name(ilk: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<[string]>;
 
-    pip(ilk: BytesLike, overrides?: CallOverrides): Promise<[string]>;
+    pip(ilk: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<[string]>;
 
-    pos(ilk: BytesLike, overrides?: CallOverrides): Promise<[BigNumber]>;
+    pos(ilk: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     put(
-      _ilk: BytesLike,
-      _join: string,
-      _gem: string,
-      _dec: BigNumberish,
-      _class: BigNumberish,
-      _pip: string,
-      _xlip: string,
-      _name: string,
-      _symbol: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _ilk: PromiseOrValue<BytesLike>,
+      _join: PromiseOrValue<string>,
+      _gem: PromiseOrValue<string>,
+      _dec: PromiseOrValue<BigNumberish>,
+      _class: PromiseOrValue<BigNumberish>,
+      _pip: PromiseOrValue<string>,
+      _xlip: PromiseOrValue<string>,
+      _name: PromiseOrValue<string>,
+      _symbol: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    rely(usr: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    rely(
+      usr: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<ContractTransaction>;
 
-    remove(ilk: BytesLike, overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    remove(
+      ilk: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<ContractTransaction>;
 
     removeAuth(
-      ilk: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      ilk: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     spot(overrides?: CallOverrides): Promise<[string]>;
 
-    symbol(ilk: BytesLike, overrides?: CallOverrides): Promise<[string]>;
+    symbol(ilk: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<[string]>;
 
-    update(ilk: BytesLike, overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    update(
+      ilk: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<ContractTransaction>;
 
     vat(overrides?: CallOverrides): Promise<[string]>;
 
-    wards(arg0: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    wards(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    xlip(ilk: BytesLike, overrides?: CallOverrides): Promise<[string]>;
+    xlip(ilk: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<[string]>;
   };
 
-  add(adapter: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  add(
+    adapter: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
+  ): Promise<ContractTransaction>;
 
   cat(overrides?: CallOverrides): Promise<string>;
 
-  class(ilk: BytesLike, overrides?: CallOverrides): Promise<BigNumber>;
+  class(ilk: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<BigNumber>;
 
   count(overrides?: CallOverrides): Promise<BigNumber>;
 
-  dec(ilk: BytesLike, overrides?: CallOverrides): Promise<BigNumber>;
+  dec(ilk: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  deny(usr: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  deny(
+    usr: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
+  ): Promise<ContractTransaction>;
 
   dog(overrides?: CallOverrides): Promise<string>;
 
   'file(bytes32,bytes32,uint256)'(
-    ilk: BytesLike,
-    what: BytesLike,
-    data: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    ilk: PromiseOrValue<BytesLike>,
+    what: PromiseOrValue<BytesLike>,
+    data: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   'file(bytes32,bytes32,string)'(
-    ilk: BytesLike,
-    what: BytesLike,
-    data: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    ilk: PromiseOrValue<BytesLike>,
+    what: PromiseOrValue<BytesLike>,
+    data: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   'file(bytes32,address)'(
-    what: BytesLike,
-    data: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    what: PromiseOrValue<BytesLike>,
+    data: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   'file(bytes32,bytes32,address)'(
-    ilk: BytesLike,
-    what: BytesLike,
-    data: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    ilk: PromiseOrValue<BytesLike>,
+    what: PromiseOrValue<BytesLike>,
+    data: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  gem(ilk: BytesLike, overrides?: CallOverrides): Promise<string>;
+  gem(ilk: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<string>;
 
-  get(pos: BigNumberish, overrides?: CallOverrides): Promise<string>;
+  get(pos: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
 
   ilkData(
-    arg0: BytesLike,
+    arg0: PromiseOrValue<BytesLike>,
     overrides?: CallOverrides,
   ): Promise<
     [BigNumber, string, string, number, BigNumber, string, string, string, string] & {
@@ -436,7 +483,7 @@ export interface MakerIlkRegistry extends BaseContract {
   >;
 
   info(
-    ilk: BytesLike,
+    ilk: PromiseOrValue<BytesLike>,
     overrides?: CallOverrides,
   ): Promise<
     [string, string, BigNumber, BigNumber, string, string, string, string] & {
@@ -451,93 +498,113 @@ export interface MakerIlkRegistry extends BaseContract {
     }
   >;
 
-  join(ilk: BytesLike, overrides?: CallOverrides): Promise<string>;
+  join(ilk: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<string>;
 
   'list()'(overrides?: CallOverrides): Promise<string[]>;
 
-  'list(uint256,uint256)'(start: BigNumberish, end: BigNumberish, overrides?: CallOverrides): Promise<string[]>;
+  'list(uint256,uint256)'(
+    start: PromiseOrValue<BigNumberish>,
+    end: PromiseOrValue<BigNumberish>,
+    overrides?: CallOverrides,
+  ): Promise<string[]>;
 
-  name(ilk: BytesLike, overrides?: CallOverrides): Promise<string>;
+  name(ilk: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<string>;
 
-  pip(ilk: BytesLike, overrides?: CallOverrides): Promise<string>;
+  pip(ilk: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<string>;
 
-  pos(ilk: BytesLike, overrides?: CallOverrides): Promise<BigNumber>;
+  pos(ilk: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<BigNumber>;
 
   put(
-    _ilk: BytesLike,
-    _join: string,
-    _gem: string,
-    _dec: BigNumberish,
-    _class: BigNumberish,
-    _pip: string,
-    _xlip: string,
-    _name: string,
-    _symbol: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _ilk: PromiseOrValue<BytesLike>,
+    _join: PromiseOrValue<string>,
+    _gem: PromiseOrValue<string>,
+    _dec: PromiseOrValue<BigNumberish>,
+    _class: PromiseOrValue<BigNumberish>,
+    _pip: PromiseOrValue<string>,
+    _xlip: PromiseOrValue<string>,
+    _name: PromiseOrValue<string>,
+    _symbol: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  rely(usr: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  rely(
+    usr: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
+  ): Promise<ContractTransaction>;
 
-  remove(ilk: BytesLike, overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  remove(
+    ilk: PromiseOrValue<BytesLike>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
+  ): Promise<ContractTransaction>;
 
-  removeAuth(ilk: BytesLike, overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  removeAuth(
+    ilk: PromiseOrValue<BytesLike>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
+  ): Promise<ContractTransaction>;
 
   spot(overrides?: CallOverrides): Promise<string>;
 
-  symbol(ilk: BytesLike, overrides?: CallOverrides): Promise<string>;
+  symbol(ilk: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<string>;
 
-  update(ilk: BytesLike, overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  update(
+    ilk: PromiseOrValue<BytesLike>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
+  ): Promise<ContractTransaction>;
 
   vat(overrides?: CallOverrides): Promise<string>;
 
-  wards(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+  wards(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  xlip(ilk: BytesLike, overrides?: CallOverrides): Promise<string>;
+  xlip(ilk: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<string>;
 
   callStatic: {
-    add(adapter: string, overrides?: CallOverrides): Promise<void>;
+    add(adapter: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     cat(overrides?: CallOverrides): Promise<string>;
 
-    class(ilk: BytesLike, overrides?: CallOverrides): Promise<BigNumber>;
+    class(ilk: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<BigNumber>;
 
     count(overrides?: CallOverrides): Promise<BigNumber>;
 
-    dec(ilk: BytesLike, overrides?: CallOverrides): Promise<BigNumber>;
+    dec(ilk: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    deny(usr: string, overrides?: CallOverrides): Promise<void>;
+    deny(usr: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     dog(overrides?: CallOverrides): Promise<string>;
 
     'file(bytes32,bytes32,uint256)'(
-      ilk: BytesLike,
-      what: BytesLike,
-      data: BigNumberish,
+      ilk: PromiseOrValue<BytesLike>,
+      what: PromiseOrValue<BytesLike>,
+      data: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
     'file(bytes32,bytes32,string)'(
-      ilk: BytesLike,
-      what: BytesLike,
-      data: string,
+      ilk: PromiseOrValue<BytesLike>,
+      what: PromiseOrValue<BytesLike>,
+      data: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
-    'file(bytes32,address)'(what: BytesLike, data: string, overrides?: CallOverrides): Promise<void>;
+    'file(bytes32,address)'(
+      what: PromiseOrValue<BytesLike>,
+      data: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
     'file(bytes32,bytes32,address)'(
-      ilk: BytesLike,
-      what: BytesLike,
-      data: string,
+      ilk: PromiseOrValue<BytesLike>,
+      what: PromiseOrValue<BytesLike>,
+      data: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
-    gem(ilk: BytesLike, overrides?: CallOverrides): Promise<string>;
+    gem(ilk: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<string>;
 
-    get(pos: BigNumberish, overrides?: CallOverrides): Promise<string>;
+    get(pos: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
 
     ilkData(
-      arg0: BytesLike,
+      arg0: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides,
     ): Promise<
       [BigNumber, string, string, number, BigNumber, string, string, string, string] & {
@@ -554,7 +621,7 @@ export interface MakerIlkRegistry extends BaseContract {
     >;
 
     info(
-      ilk: BytesLike,
+      ilk: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides,
     ): Promise<
       [string, string, BigNumber, BigNumber, string, string, string, string] & {
@@ -569,48 +636,52 @@ export interface MakerIlkRegistry extends BaseContract {
       }
     >;
 
-    join(ilk: BytesLike, overrides?: CallOverrides): Promise<string>;
+    join(ilk: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<string>;
 
     'list()'(overrides?: CallOverrides): Promise<string[]>;
 
-    'list(uint256,uint256)'(start: BigNumberish, end: BigNumberish, overrides?: CallOverrides): Promise<string[]>;
+    'list(uint256,uint256)'(
+      start: PromiseOrValue<BigNumberish>,
+      end: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<string[]>;
 
-    name(ilk: BytesLike, overrides?: CallOverrides): Promise<string>;
+    name(ilk: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<string>;
 
-    pip(ilk: BytesLike, overrides?: CallOverrides): Promise<string>;
+    pip(ilk: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<string>;
 
-    pos(ilk: BytesLike, overrides?: CallOverrides): Promise<BigNumber>;
+    pos(ilk: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<BigNumber>;
 
     put(
-      _ilk: BytesLike,
-      _join: string,
-      _gem: string,
-      _dec: BigNumberish,
-      _class: BigNumberish,
-      _pip: string,
-      _xlip: string,
-      _name: string,
-      _symbol: string,
+      _ilk: PromiseOrValue<BytesLike>,
+      _join: PromiseOrValue<string>,
+      _gem: PromiseOrValue<string>,
+      _dec: PromiseOrValue<BigNumberish>,
+      _class: PromiseOrValue<BigNumberish>,
+      _pip: PromiseOrValue<string>,
+      _xlip: PromiseOrValue<string>,
+      _name: PromiseOrValue<string>,
+      _symbol: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
-    rely(usr: string, overrides?: CallOverrides): Promise<void>;
+    rely(usr: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    remove(ilk: BytesLike, overrides?: CallOverrides): Promise<void>;
+    remove(ilk: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<void>;
 
-    removeAuth(ilk: BytesLike, overrides?: CallOverrides): Promise<void>;
+    removeAuth(ilk: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<void>;
 
     spot(overrides?: CallOverrides): Promise<string>;
 
-    symbol(ilk: BytesLike, overrides?: CallOverrides): Promise<string>;
+    symbol(ilk: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<string>;
 
-    update(ilk: BytesLike, overrides?: CallOverrides): Promise<void>;
+    update(ilk: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<void>;
 
     vat(overrides?: CallOverrides): Promise<string>;
 
-    wards(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    wards(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    xlip(ilk: BytesLike, overrides?: CallOverrides): Promise<string>;
+    xlip(ilk: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<string>;
   };
 
   filters: {
@@ -637,197 +708,225 @@ export interface MakerIlkRegistry extends BaseContract {
   };
 
   estimateGas: {
-    add(adapter: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    add(adapter: PromiseOrValue<string>, overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     cat(overrides?: CallOverrides): Promise<BigNumber>;
 
-    class(ilk: BytesLike, overrides?: CallOverrides): Promise<BigNumber>;
+    class(ilk: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<BigNumber>;
 
     count(overrides?: CallOverrides): Promise<BigNumber>;
 
-    dec(ilk: BytesLike, overrides?: CallOverrides): Promise<BigNumber>;
+    dec(ilk: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    deny(usr: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    deny(usr: PromiseOrValue<string>, overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     dog(overrides?: CallOverrides): Promise<BigNumber>;
 
     'file(bytes32,bytes32,uint256)'(
-      ilk: BytesLike,
-      what: BytesLike,
-      data: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      ilk: PromiseOrValue<BytesLike>,
+      what: PromiseOrValue<BytesLike>,
+      data: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     'file(bytes32,bytes32,string)'(
-      ilk: BytesLike,
-      what: BytesLike,
-      data: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      ilk: PromiseOrValue<BytesLike>,
+      what: PromiseOrValue<BytesLike>,
+      data: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     'file(bytes32,address)'(
-      what: BytesLike,
-      data: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      what: PromiseOrValue<BytesLike>,
+      data: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     'file(bytes32,bytes32,address)'(
-      ilk: BytesLike,
-      what: BytesLike,
-      data: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      ilk: PromiseOrValue<BytesLike>,
+      what: PromiseOrValue<BytesLike>,
+      data: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    gem(ilk: BytesLike, overrides?: CallOverrides): Promise<BigNumber>;
+    gem(ilk: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    get(pos: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    get(pos: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    ilkData(arg0: BytesLike, overrides?: CallOverrides): Promise<BigNumber>;
+    ilkData(arg0: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    info(ilk: BytesLike, overrides?: CallOverrides): Promise<BigNumber>;
+    info(ilk: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    join(ilk: BytesLike, overrides?: CallOverrides): Promise<BigNumber>;
+    join(ilk: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<BigNumber>;
 
     'list()'(overrides?: CallOverrides): Promise<BigNumber>;
 
-    'list(uint256,uint256)'(start: BigNumberish, end: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
-
-    name(ilk: BytesLike, overrides?: CallOverrides): Promise<BigNumber>;
-
-    pip(ilk: BytesLike, overrides?: CallOverrides): Promise<BigNumber>;
-
-    pos(ilk: BytesLike, overrides?: CallOverrides): Promise<BigNumber>;
-
-    put(
-      _ilk: BytesLike,
-      _join: string,
-      _gem: string,
-      _dec: BigNumberish,
-      _class: BigNumberish,
-      _pip: string,
-      _xlip: string,
-      _name: string,
-      _symbol: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+    'list(uint256,uint256)'(
+      start: PromiseOrValue<BigNumberish>,
+      end: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
-    rely(usr: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    name(ilk: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    remove(ilk: BytesLike, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    pip(ilk: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    removeAuth(ilk: BytesLike, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    pos(ilk: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<BigNumber>;
+
+    put(
+      _ilk: PromiseOrValue<BytesLike>,
+      _join: PromiseOrValue<string>,
+      _gem: PromiseOrValue<string>,
+      _dec: PromiseOrValue<BigNumberish>,
+      _class: PromiseOrValue<BigNumberish>,
+      _pip: PromiseOrValue<string>,
+      _xlip: PromiseOrValue<string>,
+      _name: PromiseOrValue<string>,
+      _symbol: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
+
+    rely(usr: PromiseOrValue<string>, overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
+
+    remove(
+      ilk: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
+
+    removeAuth(
+      ilk: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     spot(overrides?: CallOverrides): Promise<BigNumber>;
 
-    symbol(ilk: BytesLike, overrides?: CallOverrides): Promise<BigNumber>;
+    symbol(ilk: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    update(ilk: BytesLike, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    update(
+      ilk: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     vat(overrides?: CallOverrides): Promise<BigNumber>;
 
-    wards(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    wards(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    xlip(ilk: BytesLike, overrides?: CallOverrides): Promise<BigNumber>;
+    xlip(ilk: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<BigNumber>;
   };
 
   populateTransaction: {
-    add(adapter: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    add(
+      adapter: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<PopulatedTransaction>;
 
     cat(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    class(ilk: BytesLike, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    class(ilk: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     count(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    dec(ilk: BytesLike, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    dec(ilk: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    deny(usr: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    deny(
+      usr: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<PopulatedTransaction>;
 
     dog(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     'file(bytes32,bytes32,uint256)'(
-      ilk: BytesLike,
-      what: BytesLike,
-      data: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      ilk: PromiseOrValue<BytesLike>,
+      what: PromiseOrValue<BytesLike>,
+      data: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     'file(bytes32,bytes32,string)'(
-      ilk: BytesLike,
-      what: BytesLike,
-      data: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      ilk: PromiseOrValue<BytesLike>,
+      what: PromiseOrValue<BytesLike>,
+      data: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     'file(bytes32,address)'(
-      what: BytesLike,
-      data: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      what: PromiseOrValue<BytesLike>,
+      data: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     'file(bytes32,bytes32,address)'(
-      ilk: BytesLike,
-      what: BytesLike,
-      data: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      ilk: PromiseOrValue<BytesLike>,
+      what: PromiseOrValue<BytesLike>,
+      data: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    gem(ilk: BytesLike, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    gem(ilk: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    get(pos: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    get(pos: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    ilkData(arg0: BytesLike, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    ilkData(arg0: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    info(ilk: BytesLike, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    info(ilk: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    join(ilk: BytesLike, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    join(ilk: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     'list()'(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     'list(uint256,uint256)'(
-      start: BigNumberish,
-      end: BigNumberish,
+      start: PromiseOrValue<BigNumberish>,
+      end: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
-    name(ilk: BytesLike, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    name(ilk: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    pip(ilk: BytesLike, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    pip(ilk: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    pos(ilk: BytesLike, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    pos(ilk: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     put(
-      _ilk: BytesLike,
-      _join: string,
-      _gem: string,
-      _dec: BigNumberish,
-      _class: BigNumberish,
-      _pip: string,
-      _xlip: string,
-      _name: string,
-      _symbol: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _ilk: PromiseOrValue<BytesLike>,
+      _join: PromiseOrValue<string>,
+      _gem: PromiseOrValue<string>,
+      _dec: PromiseOrValue<BigNumberish>,
+      _class: PromiseOrValue<BigNumberish>,
+      _pip: PromiseOrValue<string>,
+      _xlip: PromiseOrValue<string>,
+      _name: PromiseOrValue<string>,
+      _symbol: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    rely(usr: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    rely(
+      usr: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<PopulatedTransaction>;
 
-    remove(ilk: BytesLike, overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    remove(
+      ilk: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<PopulatedTransaction>;
 
     removeAuth(
-      ilk: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      ilk: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     spot(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    symbol(ilk: BytesLike, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    symbol(ilk: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    update(ilk: BytesLike, overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    update(
+      ilk: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<PopulatedTransaction>;
 
     vat(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    wards(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    wards(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    xlip(ilk: BytesLike, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    xlip(ilk: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
   };
 }

@@ -1,7 +1,6 @@
 import { Inject } from '@nestjs/common';
 
 import { Register } from '~app-toolkit/decorators';
-import { OLYMPUS_DEFINITION } from '~apps/olympus/olympus.definition';
 import { UniswapV2ContractFactory } from '~apps/uniswap-v2/contracts';
 import { UniswapV2PoolTokenHelper } from '~apps/uniswap-v2/helpers/uniswap-v2.pool.token-helper';
 import { UniswapV2TheGraphPoolTokenAddressStrategy } from '~apps/uniswap-v2/helpers/uniswap-v2.the-graph.pool-token-address-strategy';
@@ -14,6 +13,7 @@ import { TRADER_JOE_DEFINITION } from '../trader-joe.definition';
 const appId = TRADER_JOE_DEFINITION.id;
 const groupId = TRADER_JOE_DEFINITION.groups.pool.id;
 const network = Network.AVALANCHE_MAINNET;
+
 @Register.TokenPositionFetcher({ appId, groupId, network })
 export class AvalancheTraderJoePoolTokenFetcher implements PositionFetcher<AppTokenPosition> {
   constructor(
@@ -25,18 +25,12 @@ export class AvalancheTraderJoePoolTokenFetcher implements PositionFetcher<AppTo
     private readonly uniswapV2TheGraphPoolTokenAddressStrategy: UniswapV2TheGraphPoolTokenAddressStrategy,
   ) {}
 
-  getPositions() {
-    const network = Network.AVALANCHE_MAINNET;
-    return this.uniswapV2PoolTokenHelper.getTokens({
+  async getPositions() {
+    return await this.uniswapV2PoolTokenHelper.getTokens({
       network,
-      appId: TRADER_JOE_DEFINITION.id,
-      groupId: TRADER_JOE_DEFINITION.groups.pool.id,
+      appId,
+      groupId,
       factoryAddress: '0x9ad6c38be94206ca50bb0d90783181662f0cfa10',
-      appTokenDependencies: [
-        { appId: OLYMPUS_DEFINITION.id, groupIds: [OLYMPUS_DEFINITION.groups.gOhm.id], network },
-        // @TODO: migrate me
-        { appId: 'benqi', groupIds: ['s-avax'], network },
-      ],
       resolveFactoryContract: ({ address, network }) =>
         this.uniswapV2ContractFactory.uniswapFactory({ address, network }),
       resolvePoolContract: ({ address, network }) => this.uniswapV2ContractFactory.uniswapPair({ address, network }),

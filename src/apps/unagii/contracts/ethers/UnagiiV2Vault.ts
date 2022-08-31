@@ -15,7 +15,7 @@ import type {
 } from 'ethers';
 import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
 import type { Listener, Provider } from '@ethersproject/providers';
-import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
 export interface UnagiiV2VaultInterface extends utils.Interface {
   functions: {
@@ -124,34 +124,46 @@ export interface UnagiiV2VaultInterface extends utils.Interface {
   ): FunctionFragment;
 
   encodeFunctionData(functionFragment: 'initialize', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'migrate', values: [string]): string;
-  encodeFunctionData(functionFragment: 'setNextTimeLock', values: [string]): string;
+  encodeFunctionData(functionFragment: 'migrate', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'setNextTimeLock', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'acceptTimeLock', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'setAdmin', values: [string]): string;
-  encodeFunctionData(functionFragment: 'setGuardian', values: [string]): string;
-  encodeFunctionData(functionFragment: 'setFundManager', values: [string]): string;
-  encodeFunctionData(functionFragment: 'setPause', values: [boolean]): string;
-  encodeFunctionData(functionFragment: 'setMinReserve', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'setLockedProfitDegradation', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'setDepositLimit', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'setBlockDelay', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'setFeeOnTransfer', values: [boolean]): string;
-  encodeFunctionData(functionFragment: 'setWhitelist', values: [string, boolean]): string;
+  encodeFunctionData(functionFragment: 'setAdmin', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'setGuardian', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'setFundManager', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'setPause', values: [PromiseOrValue<boolean>]): string;
+  encodeFunctionData(functionFragment: 'setMinReserve', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'setLockedProfitDegradation', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'setDepositLimit', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'setBlockDelay', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'setFeeOnTransfer', values: [PromiseOrValue<boolean>]): string;
+  encodeFunctionData(
+    functionFragment: 'setWhitelist',
+    values: [PromiseOrValue<string>, PromiseOrValue<boolean>],
+  ): string;
   encodeFunctionData(functionFragment: 'totalAssets', values?: undefined): string;
   encodeFunctionData(functionFragment: 'calcLockedProfit', values?: undefined): string;
   encodeFunctionData(functionFragment: 'calcFreeFunds', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'calcSharesToMint', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'calcWithdraw', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'deposit', values: [BigNumberish, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'withdraw', values: [BigNumberish, BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'calcSharesToMint', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'calcWithdraw', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(
+    functionFragment: 'deposit',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'withdraw',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+  ): string;
   encodeFunctionData(functionFragment: 'calcMinReserve', values?: undefined): string;
   encodeFunctionData(functionFragment: 'calcMaxBorrow', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'borrow', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'repay', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'report', values: [BigNumberish, BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'borrow', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'repay', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(
+    functionFragment: 'report',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+  ): string;
   encodeFunctionData(functionFragment: 'forceUpdateBalanceOfVault', values?: undefined): string;
   encodeFunctionData(functionFragment: 'skim', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'sweep', values: [string]): string;
+  encodeFunctionData(functionFragment: 'sweep', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'initialized', values?: undefined): string;
   encodeFunctionData(functionFragment: 'paused', values?: undefined): string;
   encodeFunctionData(functionFragment: 'token', values?: undefined): string;
@@ -169,7 +181,7 @@ export interface UnagiiV2VaultInterface extends utils.Interface {
   encodeFunctionData(functionFragment: 'lockedProfit', values?: undefined): string;
   encodeFunctionData(functionFragment: 'lockedProfitDegradation', values?: undefined): string;
   encodeFunctionData(functionFragment: 'blockDelay', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'whitelist', values: [string]): string;
+  encodeFunctionData(functionFragment: 'whitelist', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'feeOnTransfer', values?: undefined): string;
   encodeFunctionData(functionFragment: 'oldVault', values?: undefined): string;
 
@@ -399,63 +411,69 @@ export interface UnagiiV2Vault extends BaseContract {
   removeListener: OnEvent<this>;
 
   functions: {
-    initialize(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    initialize(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
-    migrate(vault: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
-
-    setNextTimeLock(
-      nextTimeLock: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+    migrate(
+      vault: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    acceptTimeLock(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    setNextTimeLock(
+      nextTimeLock: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<ContractTransaction>;
 
-    setAdmin(admin: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    acceptTimeLock(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
+
+    setAdmin(
+      admin: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<ContractTransaction>;
 
     setGuardian(
-      guardian: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      guardian: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setFundManager(
-      fundManager: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      fundManager: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setPause(
-      paused: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      paused: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setMinReserve(
-      minReserve: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      minReserve: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setLockedProfitDegradation(
-      degradation: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      degradation: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setDepositLimit(
-      limit: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      limit: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setBlockDelay(
-      delay: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      delay: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setFeeOnTransfer(
-      feeOnTransfer: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      feeOnTransfer: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setWhitelist(
-      addr: string,
-      approved: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      addr: PromiseOrValue<string>,
+      approved: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     totalAssets(overrides?: CallOverrides): Promise<[BigNumber]>;
@@ -464,49 +482,50 @@ export interface UnagiiV2Vault extends BaseContract {
 
     calcFreeFunds(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    calcSharesToMint(amount: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber]>;
+    calcSharesToMint(amount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    calcWithdraw(shares: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber]>;
+    calcWithdraw(shares: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     deposit(
-      amount: BigNumberish,
-      _min: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      amount: PromiseOrValue<BigNumberish>,
+      _min: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     withdraw(
-      shares: BigNumberish,
-      _min: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      shares: PromiseOrValue<BigNumberish>,
+      _min: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    calcMinReserve(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    calcMinReserve(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     calcMaxBorrow(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     borrow(
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     repay(
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     report(
-      gain: BigNumberish,
-      loss: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      gain: PromiseOrValue<BigNumberish>,
+      loss: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    forceUpdateBalanceOfVault(
-      overrides?: Overrides & { from?: string | Promise<string> },
+    forceUpdateBalanceOfVault(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
+
+    skim(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
+
+    sweep(
+      token: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
-
-    skim(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
-
-    sweep(token: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
 
     initialized(overrides?: CallOverrides): Promise<[boolean]>;
 
@@ -542,67 +561,76 @@ export interface UnagiiV2Vault extends BaseContract {
 
     blockDelay(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    whitelist(arg0: string, overrides?: CallOverrides): Promise<[boolean]>;
+    whitelist(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[boolean]>;
 
     feeOnTransfer(overrides?: CallOverrides): Promise<[boolean]>;
 
     oldVault(overrides?: CallOverrides): Promise<[string]>;
   };
 
-  initialize(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  initialize(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
-  migrate(vault: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
-
-  setNextTimeLock(
-    nextTimeLock: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+  migrate(
+    vault: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  acceptTimeLock(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  setNextTimeLock(
+    nextTimeLock: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
+  ): Promise<ContractTransaction>;
 
-  setAdmin(admin: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  acceptTimeLock(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
+
+  setAdmin(
+    admin: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
+  ): Promise<ContractTransaction>;
 
   setGuardian(
-    guardian: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    guardian: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setFundManager(
-    fundManager: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    fundManager: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  setPause(paused: boolean, overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  setPause(
+    paused: PromiseOrValue<boolean>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
+  ): Promise<ContractTransaction>;
 
   setMinReserve(
-    minReserve: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    minReserve: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setLockedProfitDegradation(
-    degradation: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    degradation: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setDepositLimit(
-    limit: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    limit: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setBlockDelay(
-    delay: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    delay: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setFeeOnTransfer(
-    feeOnTransfer: boolean,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    feeOnTransfer: PromiseOrValue<boolean>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setWhitelist(
-    addr: string,
-    approved: boolean,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    addr: PromiseOrValue<string>,
+    approved: PromiseOrValue<boolean>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   totalAssets(overrides?: CallOverrides): Promise<BigNumber>;
@@ -611,47 +639,50 @@ export interface UnagiiV2Vault extends BaseContract {
 
   calcFreeFunds(overrides?: CallOverrides): Promise<BigNumber>;
 
-  calcSharesToMint(amount: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+  calcSharesToMint(amount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  calcWithdraw(shares: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+  calcWithdraw(shares: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
   deposit(
-    amount: BigNumberish,
-    _min: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    amount: PromiseOrValue<BigNumberish>,
+    _min: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   withdraw(
-    shares: BigNumberish,
-    _min: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    shares: PromiseOrValue<BigNumberish>,
+    _min: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  calcMinReserve(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  calcMinReserve(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   calcMaxBorrow(overrides?: CallOverrides): Promise<BigNumber>;
 
   borrow(
-    amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   repay(
-    amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   report(
-    gain: BigNumberish,
-    loss: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    gain: PromiseOrValue<BigNumberish>,
+    loss: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  forceUpdateBalanceOfVault(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  forceUpdateBalanceOfVault(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
-  skim(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  skim(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
-  sweep(token: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  sweep(
+    token: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
+  ): Promise<ContractTransaction>;
 
   initialized(overrides?: CallOverrides): Promise<boolean>;
 
@@ -687,7 +718,7 @@ export interface UnagiiV2Vault extends BaseContract {
 
   blockDelay(overrides?: CallOverrides): Promise<BigNumber>;
 
-  whitelist(arg0: string, overrides?: CallOverrides): Promise<boolean>;
+  whitelist(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
   feeOnTransfer(overrides?: CallOverrides): Promise<boolean>;
 
@@ -696,31 +727,35 @@ export interface UnagiiV2Vault extends BaseContract {
   callStatic: {
     initialize(overrides?: CallOverrides): Promise<void>;
 
-    migrate(vault: string, overrides?: CallOverrides): Promise<void>;
+    migrate(vault: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    setNextTimeLock(nextTimeLock: string, overrides?: CallOverrides): Promise<void>;
+    setNextTimeLock(nextTimeLock: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     acceptTimeLock(overrides?: CallOverrides): Promise<void>;
 
-    setAdmin(admin: string, overrides?: CallOverrides): Promise<void>;
+    setAdmin(admin: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    setGuardian(guardian: string, overrides?: CallOverrides): Promise<void>;
+    setGuardian(guardian: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    setFundManager(fundManager: string, overrides?: CallOverrides): Promise<void>;
+    setFundManager(fundManager: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    setPause(paused: boolean, overrides?: CallOverrides): Promise<void>;
+    setPause(paused: PromiseOrValue<boolean>, overrides?: CallOverrides): Promise<void>;
 
-    setMinReserve(minReserve: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    setMinReserve(minReserve: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
-    setLockedProfitDegradation(degradation: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    setLockedProfitDegradation(degradation: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
-    setDepositLimit(limit: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    setDepositLimit(limit: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
-    setBlockDelay(delay: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    setBlockDelay(delay: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
-    setFeeOnTransfer(feeOnTransfer: boolean, overrides?: CallOverrides): Promise<void>;
+    setFeeOnTransfer(feeOnTransfer: PromiseOrValue<boolean>, overrides?: CallOverrides): Promise<void>;
 
-    setWhitelist(addr: string, approved: boolean, overrides?: CallOverrides): Promise<void>;
+    setWhitelist(
+      addr: PromiseOrValue<string>,
+      approved: PromiseOrValue<boolean>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
     totalAssets(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -728,29 +763,41 @@ export interface UnagiiV2Vault extends BaseContract {
 
     calcFreeFunds(overrides?: CallOverrides): Promise<BigNumber>;
 
-    calcSharesToMint(amount: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    calcSharesToMint(amount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    calcWithdraw(shares: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    calcWithdraw(shares: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    deposit(amount: BigNumberish, _min: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    deposit(
+      amount: PromiseOrValue<BigNumberish>,
+      _min: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    withdraw(shares: BigNumberish, _min: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    withdraw(
+      shares: PromiseOrValue<BigNumberish>,
+      _min: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     calcMinReserve(overrides?: CallOverrides): Promise<BigNumber>;
 
     calcMaxBorrow(overrides?: CallOverrides): Promise<BigNumber>;
 
-    borrow(amount: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    borrow(amount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    repay(amount: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    repay(amount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    report(gain: BigNumberish, loss: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    report(
+      gain: PromiseOrValue<BigNumberish>,
+      loss: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
     forceUpdateBalanceOfVault(overrides?: CallOverrides): Promise<void>;
 
     skim(overrides?: CallOverrides): Promise<void>;
 
-    sweep(token: string, overrides?: CallOverrides): Promise<void>;
+    sweep(token: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     initialized(overrides?: CallOverrides): Promise<boolean>;
 
@@ -786,7 +833,7 @@ export interface UnagiiV2Vault extends BaseContract {
 
     blockDelay(overrides?: CallOverrides): Promise<BigNumber>;
 
-    whitelist(arg0: string, overrides?: CallOverrides): Promise<boolean>;
+    whitelist(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
     feeOnTransfer(overrides?: CallOverrides): Promise<boolean>;
 
@@ -820,28 +867,40 @@ export interface UnagiiV2Vault extends BaseContract {
     'SetPause(bool)'(paused?: null): SetPauseEventFilter;
     SetPause(paused?: null): SetPauseEventFilter;
 
-    'SetWhitelist(address,bool)'(addr?: string | null, approved?: null): SetWhitelistEventFilter;
-    SetWhitelist(addr?: string | null, approved?: null): SetWhitelistEventFilter;
+    'SetWhitelist(address,bool)'(addr?: PromiseOrValue<string> | null, approved?: null): SetWhitelistEventFilter;
+    SetWhitelist(addr?: PromiseOrValue<string> | null, approved?: null): SetWhitelistEventFilter;
 
     'Deposit(address,uint256,uint256,uint256)'(
-      sender?: string | null,
+      sender?: PromiseOrValue<string> | null,
       amount?: null,
       diff?: null,
       shares?: null,
     ): DepositEventFilter;
-    Deposit(sender?: string | null, amount?: null, diff?: null, shares?: null): DepositEventFilter;
+    Deposit(sender?: PromiseOrValue<string> | null, amount?: null, diff?: null, shares?: null): DepositEventFilter;
 
-    'Withdraw(address,uint256,uint256)'(owner?: string | null, shares?: null, amount?: null): WithdrawEventFilter;
-    Withdraw(owner?: string | null, shares?: null, amount?: null): WithdrawEventFilter;
+    'Withdraw(address,uint256,uint256)'(
+      owner?: PromiseOrValue<string> | null,
+      shares?: null,
+      amount?: null,
+    ): WithdrawEventFilter;
+    Withdraw(owner?: PromiseOrValue<string> | null, shares?: null, amount?: null): WithdrawEventFilter;
 
-    'Borrow(address,uint256,uint256)'(fundManager?: string | null, amount?: null, borrowed?: null): BorrowEventFilter;
-    Borrow(fundManager?: string | null, amount?: null, borrowed?: null): BorrowEventFilter;
+    'Borrow(address,uint256,uint256)'(
+      fundManager?: PromiseOrValue<string> | null,
+      amount?: null,
+      borrowed?: null,
+    ): BorrowEventFilter;
+    Borrow(fundManager?: PromiseOrValue<string> | null, amount?: null, borrowed?: null): BorrowEventFilter;
 
-    'Repay(address,uint256,uint256)'(fundManager?: string | null, amount?: null, repaid?: null): RepayEventFilter;
-    Repay(fundManager?: string | null, amount?: null, repaid?: null): RepayEventFilter;
+    'Repay(address,uint256,uint256)'(
+      fundManager?: PromiseOrValue<string> | null,
+      amount?: null,
+      repaid?: null,
+    ): RepayEventFilter;
+    Repay(fundManager?: PromiseOrValue<string> | null, amount?: null, repaid?: null): RepayEventFilter;
 
     'Report(address,uint256,uint256,uint256,uint256,uint256,uint256)'(
-      fundManager?: string | null,
+      fundManager?: PromiseOrValue<string> | null,
       balanceOfVault?: null,
       debt?: null,
       gain?: null,
@@ -850,7 +909,7 @@ export interface UnagiiV2Vault extends BaseContract {
       lockedProfit?: null,
     ): ReportEventFilter;
     Report(
-      fundManager?: string | null,
+      fundManager?: PromiseOrValue<string> | null,
       balanceOfVault?: null,
       debt?: null,
       gain?: null,
@@ -864,54 +923,69 @@ export interface UnagiiV2Vault extends BaseContract {
   };
 
   estimateGas: {
-    initialize(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    initialize(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
-    migrate(vault: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    migrate(
+      vault: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     setNextTimeLock(
-      nextTimeLock: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      nextTimeLock: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    acceptTimeLock(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    acceptTimeLock(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
-    setAdmin(admin: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    setAdmin(
+      admin: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
-    setGuardian(guardian: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    setGuardian(
+      guardian: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     setFundManager(
-      fundManager: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      fundManager: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    setPause(paused: boolean, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    setPause(
+      paused: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     setMinReserve(
-      minReserve: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      minReserve: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setLockedProfitDegradation(
-      degradation: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      degradation: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setDepositLimit(
-      limit: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      limit: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    setBlockDelay(delay: BigNumberish, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    setBlockDelay(
+      delay: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     setFeeOnTransfer(
-      feeOnTransfer: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      feeOnTransfer: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setWhitelist(
-      addr: string,
-      approved: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      addr: PromiseOrValue<string>,
+      approved: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     totalAssets(overrides?: CallOverrides): Promise<BigNumber>;
@@ -920,41 +994,47 @@ export interface UnagiiV2Vault extends BaseContract {
 
     calcFreeFunds(overrides?: CallOverrides): Promise<BigNumber>;
 
-    calcSharesToMint(amount: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    calcSharesToMint(amount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    calcWithdraw(shares: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    calcWithdraw(shares: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     deposit(
-      amount: BigNumberish,
-      _min: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      amount: PromiseOrValue<BigNumberish>,
+      _min: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     withdraw(
-      shares: BigNumberish,
-      _min: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      shares: PromiseOrValue<BigNumberish>,
+      _min: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    calcMinReserve(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    calcMinReserve(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     calcMaxBorrow(overrides?: CallOverrides): Promise<BigNumber>;
 
-    borrow(amount: BigNumberish, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
-
-    repay(amount: BigNumberish, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
-
-    report(
-      gain: BigNumberish,
-      loss: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+    borrow(
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    forceUpdateBalanceOfVault(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    repay(
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
-    skim(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    report(
+      gain: PromiseOrValue<BigNumberish>,
+      loss: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
-    sweep(token: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    forceUpdateBalanceOfVault(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
+
+    skim(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
+
+    sweep(token: PromiseOrValue<string>, overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     initialized(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -990,7 +1070,7 @@ export interface UnagiiV2Vault extends BaseContract {
 
     blockDelay(overrides?: CallOverrides): Promise<BigNumber>;
 
-    whitelist(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    whitelist(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     feeOnTransfer(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -998,63 +1078,69 @@ export interface UnagiiV2Vault extends BaseContract {
   };
 
   populateTransaction: {
-    initialize(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    initialize(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
-    migrate(vault: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
-
-    setNextTimeLock(
-      nextTimeLock: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+    migrate(
+      vault: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    acceptTimeLock(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    setNextTimeLock(
+      nextTimeLock: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<PopulatedTransaction>;
 
-    setAdmin(admin: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    acceptTimeLock(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
+
+    setAdmin(
+      admin: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<PopulatedTransaction>;
 
     setGuardian(
-      guardian: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      guardian: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setFundManager(
-      fundManager: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      fundManager: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setPause(
-      paused: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      paused: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setMinReserve(
-      minReserve: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      minReserve: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setLockedProfitDegradation(
-      degradation: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      degradation: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setDepositLimit(
-      limit: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      limit: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setBlockDelay(
-      delay: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      delay: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setFeeOnTransfer(
-      feeOnTransfer: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      feeOnTransfer: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setWhitelist(
-      addr: string,
-      approved: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      addr: PromiseOrValue<string>,
+      approved: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     totalAssets(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -1063,49 +1149,50 @@ export interface UnagiiV2Vault extends BaseContract {
 
     calcFreeFunds(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    calcSharesToMint(amount: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    calcSharesToMint(amount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    calcWithdraw(shares: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    calcWithdraw(shares: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     deposit(
-      amount: BigNumberish,
-      _min: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      amount: PromiseOrValue<BigNumberish>,
+      _min: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     withdraw(
-      shares: BigNumberish,
-      _min: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      shares: PromiseOrValue<BigNumberish>,
+      _min: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    calcMinReserve(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    calcMinReserve(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     calcMaxBorrow(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     borrow(
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     repay(
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     report(
-      gain: BigNumberish,
-      loss: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      gain: PromiseOrValue<BigNumberish>,
+      loss: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    forceUpdateBalanceOfVault(
-      overrides?: Overrides & { from?: string | Promise<string> },
+    forceUpdateBalanceOfVault(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
+
+    skim(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
+
+    sweep(
+      token: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
-
-    skim(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
-
-    sweep(token: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
 
     initialized(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
@@ -1141,7 +1228,7 @@ export interface UnagiiV2Vault extends BaseContract {
 
     blockDelay(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    whitelist(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    whitelist(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     feeOnTransfer(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 

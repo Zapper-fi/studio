@@ -1,6 +1,6 @@
 import { CurvePoolDefinition } from '~apps/curve/curve.types';
 
-export const SADDLE_BASEPOOL_DEFINITIONS: CurvePoolDefinition[] = [
+export const SADDLE_POOL_DEFINITIONS: CurvePoolDefinition[] = [
   // Saddle tBTC/wBTC/renBTC/sBTC (BTC Pool v1)
   {
     swapAddress: '0x4f6a43ad7cba042606decaca730d4ce0a57ac62e',
@@ -36,9 +36,11 @@ export const SADDLE_BASEPOOL_DEFINITIONS: CurvePoolDefinition[] = [
     swapAddress: '0x101cd330d088634b6f64c2eb4276e63bf1bbfde3',
     tokenAddress: '0x1b4ab394327fdf9524632ddf2f0f04f9fa1fe2ec',
   },
-];
-
-export const SADDLE_METAPOOL_DEFINITIONS: CurvePoolDefinition[] = [
+  // Saddle Frax 3Pool
+  {
+    swapAddress: '0x8caea59f3bf1f341f89c51607e4919841131e47a',
+    tokenAddress: '0x0785addf5f7334adb7ec40cd785ebf39bfd91520',
+  },
   // Saddle tBTCV2/wBTC/renBTC/sBTC (tBTCv2 Metapool V1)
   {
     swapAddress: '0xf74ebe6e5586275dc4ced78f5dbef31b1efbe7a5',

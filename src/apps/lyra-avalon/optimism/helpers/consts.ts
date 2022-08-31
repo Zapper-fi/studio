@@ -6,4 +6,4 @@ export const OPTION_TYPES = {
   4: 'Short Put Quote',
 };
 
-export const REGISTRY_ADDRESS = '0x7c7AbDdbCb6c731237f7546d3e4c5165531fb0c1'.toLowerCase();
+export const STAKING_ADDRESS = '0xde48b1b5853cc63b1d05e507414d3e02831722f8'.toLowerCase();

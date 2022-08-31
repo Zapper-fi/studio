@@ -8,9 +8,29 @@ export const BEETHOVEN_X_DEFINITION = appDefinition({
   name: 'Beethoven-X',
   description: `Beethoven X enables secure and efficient - high speed, low cost - trading. Start trading immediately, no registration required. Just connect your wallet and you’re good to go.`,
   groups: {
-    pool: { id: 'pool', type: GroupType.TOKEN, label: 'Pools' },
-    farm: { id: 'farm', type: GroupType.POSITION, label: 'Farms' },
-    fBeets: { id: 'fBEETS', type: GroupType.TOKEN, label: 'Staking' },
+    pool: {
+      id: 'pool',
+      type: GroupType.TOKEN,
+      label: 'Pools',
+    },
+
+    farm: {
+      id: 'farm',
+      type: GroupType.POSITION,
+      label: 'Farms',
+    },
+
+    chef: {
+      id: 'chef',
+      type: GroupType.POSITION,
+      label: 'Chef Farms',
+    },
+
+    fBeets: {
+      id: 'f-beets',
+      type: GroupType.TOKEN,
+      label: 'Staking',
+    },
   },
   url: 'https://app.beets.fi/',
   links: {
@@ -21,7 +41,7 @@ export const BEETHOVEN_X_DEFINITION = appDefinition({
     learn: 'https://docs.beets.fi',
   },
   tags: [AppTag.YIELD_AGGREGATOR],
-  supportedNetworks: { [Network.FANTOM_OPERA_MAINNET]: [AppAction.VIEW] },
+  supportedNetworks: { [Network.FANTOM_OPERA_MAINNET]: [AppAction.VIEW], [Network.OPTIMISM_MAINNET]: [AppAction.VIEW] },
   token: {
     address: '0xf24bcf4d1e507740041c9cfd2dddb29585adce1e',
     network: Network.FANTOM_OPERA_MAINNET,

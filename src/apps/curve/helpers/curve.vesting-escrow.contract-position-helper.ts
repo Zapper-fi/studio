@@ -3,7 +3,7 @@ import { Inject } from '@nestjs/common';
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { buildDollarDisplayItem } from '~app-toolkit/helpers/presentation/display-item.present';
 import { getTokenImg } from '~app-toolkit/helpers/presentation/image.present';
-import { EthersMulticall as Multicall } from '~multicall/multicall.ethers';
+import { IMulticallWrapper } from '~multicall/multicall.interface';
 import { ContractType } from '~position/contract.interface';
 import { ContractPosition } from '~position/position.interface';
 import { claimable, vesting } from '~position/position.utils';
@@ -17,7 +17,7 @@ type CurveVestingEscrowContractPositionHelperParams<T> = {
   network: Network;
   vestingEscrowAddress: string;
   resolveVestingEscrowContract: (opts: { contractFactory: ContractFactory; address: string }) => T;
-  resolveVestingTokenAddress: (opts: { contract: T; multicall: Multicall }) => Promise<string>;
+  resolveVestingTokenAddress: (opts: { contract: T; multicall: IMulticallWrapper }) => Promise<string>;
 };
 
 export class CurveVestingEscrowContractPositionHelper {
@@ -45,13 +45,25 @@ export class CurveVestingEscrowContractPositionHelper {
     const escrowedToken = baseTokens.find(v => v.address === escrowedTokenAddress)!;
     const tokens = [claimable(escrowedToken), vesting(escrowedToken)];
 
+    const escrowedTokenContract = this.contractFactory.erc20({ address: escrowedToken.address, network });
+    const balanceOfRaw = await multicall.wrap(escrowedTokenContract).balanceOf(vestingEscrowAddress);
+    const balanceOf = Number(balanceOfRaw) / 10 ** escrowedToken.decimals;
+    const liquidity = balanceOf * escrowedToken.price;
+
     // Display Props
     const label = `Vesting Escrow ${escrowedToken.symbol}`;
     const secondaryLabel = buildDollarDisplayItem(escrowedToken.price);
     const images = [getTokenImg(escrowedToken.address, network)];
-    const statsItems = [];
+    const statsItems = [
+      {
+        label: 'Liquidity',
+        value: buildDollarDisplayItem(liquidity),
+      },
+    ];
 
-    const dataProps = {};
+    const dataProps = {
+      liquidity,
+    };
     const displayProps = { label, secondaryLabel, images, statsItems };
 
     const contractPosition: ContractPosition = {
@@ -60,9 +72,9 @@ export class CurveVestingEscrowContractPositionHelper {
       appId,
       groupId,
       network,
+      tokens,
       dataProps,
       displayProps,
-      tokens,
     };
 
     return [contractPosition];

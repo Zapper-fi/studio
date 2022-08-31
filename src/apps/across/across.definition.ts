@@ -5,7 +5,7 @@ import { Network } from '~types/network.interface';
 
 export const ACROSS_DEFINITION = appDefinition({
   id: 'across',
-  name: 'across',
+  name: 'Across',
   description: 'Across is the fastest, cheapest and most secure cross-chain bridge.',
   url: 'https://across.to',
   groups: {
@@ -22,9 +22,6 @@ export const ACROSS_DEFINITION = appDefinition({
   },
   supportedNetworks: {
     [Network.ETHEREUM_MAINNET]: [AppAction.VIEW],
-    [Network.POLYGON_MAINNET]: [AppAction.VIEW],
-    [Network.ARBITRUM_MAINNET]: [AppAction.VIEW],
-    // [Network.BOBA_MAINNET]: [ProtocolAction.VIEW],
   },
   primaryColor: '#fff',
 });

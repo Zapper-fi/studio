@@ -15,7 +15,7 @@ import type {
 } from 'ethers';
 import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
 import type { Listener, Provider } from '@ethersproject/providers';
-import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
 export interface StabilityPoolInterface extends utils.Interface {
   functions: {
@@ -138,40 +138,63 @@ export interface StabilityPoolInterface extends utils.Interface {
   encodeFunctionData(functionFragment: 'currentEpoch', values?: undefined): string;
   encodeFunctionData(functionFragment: 'currentScale', values?: undefined): string;
   encodeFunctionData(functionFragment: 'defaultPool', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'depositSnapshots', values: [string]): string;
-  encodeFunctionData(functionFragment: 'deposits', values: [string]): string;
-  encodeFunctionData(functionFragment: 'epochToScaleToG', values: [BigNumberish, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'epochToScaleToSum', values: [BigNumberish, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'frontEndSnapshots', values: [string]): string;
-  encodeFunctionData(functionFragment: 'frontEndStakes', values: [string]): string;
-  encodeFunctionData(functionFragment: 'frontEnds', values: [string]): string;
-  encodeFunctionData(functionFragment: 'getCompoundedFrontEndStake', values: [string]): string;
-  encodeFunctionData(functionFragment: 'getCompoundedLUSDDeposit', values: [string]): string;
-  encodeFunctionData(functionFragment: 'getDepositorETHGain', values: [string]): string;
-  encodeFunctionData(functionFragment: 'getDepositorLQTYGain', values: [string]): string;
+  encodeFunctionData(functionFragment: 'depositSnapshots', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'deposits', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'epochToScaleToG',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'epochToScaleToSum',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'frontEndSnapshots', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'frontEndStakes', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'frontEnds', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'getCompoundedFrontEndStake', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'getCompoundedLUSDDeposit', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'getDepositorETHGain', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'getDepositorLQTYGain', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'getETH', values?: undefined): string;
   encodeFunctionData(functionFragment: 'getEntireSystemColl', values?: undefined): string;
   encodeFunctionData(functionFragment: 'getEntireSystemDebt', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'getFrontEndLQTYGain', values: [string]): string;
+  encodeFunctionData(functionFragment: 'getFrontEndLQTYGain', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'getTotalLUSDDeposits', values?: undefined): string;
   encodeFunctionData(functionFragment: 'isOwner', values?: undefined): string;
   encodeFunctionData(functionFragment: 'lastETHError_Offset', values?: undefined): string;
   encodeFunctionData(functionFragment: 'lastLQTYError', values?: undefined): string;
   encodeFunctionData(functionFragment: 'lastLUSDLossError_Offset', values?: undefined): string;
   encodeFunctionData(functionFragment: 'lusdToken', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'offset', values: [BigNumberish, BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'offset',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+  ): string;
   encodeFunctionData(functionFragment: 'owner', values?: undefined): string;
   encodeFunctionData(functionFragment: 'priceFeed', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'provideToSP', values: [BigNumberish, string]): string;
-  encodeFunctionData(functionFragment: 'registerFrontEnd', values: [BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'provideToSP',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>],
+  ): string;
+  encodeFunctionData(functionFragment: 'registerFrontEnd', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(
     functionFragment: 'setAddresses',
-    values: [string, string, string, string, string, string, string],
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+    ],
   ): string;
   encodeFunctionData(functionFragment: 'sortedTroves', values?: undefined): string;
   encodeFunctionData(functionFragment: 'troveManager', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'withdrawETHGainToTrove', values: [string, string]): string;
-  encodeFunctionData(functionFragment: 'withdrawFromSP', values: [BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'withdrawETHGainToTrove',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>],
+  ): string;
+  encodeFunctionData(functionFragment: 'withdrawFromSP', values: [PromiseOrValue<BigNumberish>]): string;
 
   decodeFunctionResult(functionFragment: 'BORROWING_FEE_FLOOR', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'CCR', data: BytesLike): Result;
@@ -545,7 +568,7 @@ export interface StabilityPool extends BaseContract {
     defaultPool(overrides?: CallOverrides): Promise<[string]>;
 
     depositSnapshots(
-      arg0: string,
+      arg0: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<
       [BigNumber, BigNumber, BigNumber, BigNumber, BigNumber] & {
@@ -558,16 +581,24 @@ export interface StabilityPool extends BaseContract {
     >;
 
     deposits(
-      arg0: string,
+      arg0: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber, string] & { initialValue: BigNumber; frontEndTag: string }>;
 
-    epochToScaleToG(arg0: BigNumberish, arg1: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber]>;
+    epochToScaleToG(
+      arg0: PromiseOrValue<BigNumberish>,
+      arg1: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber]>;
 
-    epochToScaleToSum(arg0: BigNumberish, arg1: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber]>;
+    epochToScaleToSum(
+      arg0: PromiseOrValue<BigNumberish>,
+      arg1: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber]>;
 
     frontEndSnapshots(
-      arg0: string,
+      arg0: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<
       [BigNumber, BigNumber, BigNumber, BigNumber, BigNumber] & {
@@ -579,20 +610,20 @@ export interface StabilityPool extends BaseContract {
       }
     >;
 
-    frontEndStakes(arg0: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    frontEndStakes(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     frontEnds(
-      arg0: string,
+      arg0: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber, boolean] & { kickbackRate: BigNumber; registered: boolean }>;
 
-    getCompoundedFrontEndStake(_frontEnd: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    getCompoundedFrontEndStake(_frontEnd: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    getCompoundedLUSDDeposit(_depositor: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    getCompoundedLUSDDeposit(_depositor: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    getDepositorETHGain(_depositor: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    getDepositorETHGain(_depositor: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    getDepositorLQTYGain(_depositor: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    getDepositorLQTYGain(_depositor: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     getETH(overrides?: CallOverrides): Promise<[BigNumber]>;
 
@@ -600,7 +631,7 @@ export interface StabilityPool extends BaseContract {
 
     getEntireSystemDebt(overrides?: CallOverrides): Promise<[BigNumber] & { entireSystemDebt: BigNumber }>;
 
-    getFrontEndLQTYGain(_frontEnd: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    getFrontEndLQTYGain(_frontEnd: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     getTotalLUSDDeposits(overrides?: CallOverrides): Promise<[BigNumber]>;
 
@@ -615,9 +646,9 @@ export interface StabilityPool extends BaseContract {
     lusdToken(overrides?: CallOverrides): Promise<[string]>;
 
     offset(
-      _debtToOffset: BigNumberish,
-      _collToAdd: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _debtToOffset: PromiseOrValue<BigNumberish>,
+      _collToAdd: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     owner(overrides?: CallOverrides): Promise<[string]>;
@@ -625,25 +656,25 @@ export interface StabilityPool extends BaseContract {
     priceFeed(overrides?: CallOverrides): Promise<[string]>;
 
     provideToSP(
-      _amount: BigNumberish,
-      _frontEndTag: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _amount: PromiseOrValue<BigNumberish>,
+      _frontEndTag: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     registerFrontEnd(
-      _kickbackRate: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _kickbackRate: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setAddresses(
-      _borrowerOperationsAddress: string,
-      _troveManagerAddress: string,
-      _activePoolAddress: string,
-      _lusdTokenAddress: string,
-      _sortedTrovesAddress: string,
-      _priceFeedAddress: string,
-      _communityIssuanceAddress: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _borrowerOperationsAddress: PromiseOrValue<string>,
+      _troveManagerAddress: PromiseOrValue<string>,
+      _activePoolAddress: PromiseOrValue<string>,
+      _lusdTokenAddress: PromiseOrValue<string>,
+      _sortedTrovesAddress: PromiseOrValue<string>,
+      _priceFeedAddress: PromiseOrValue<string>,
+      _communityIssuanceAddress: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     sortedTroves(overrides?: CallOverrides): Promise<[string]>;
@@ -651,14 +682,14 @@ export interface StabilityPool extends BaseContract {
     troveManager(overrides?: CallOverrides): Promise<[string]>;
 
     withdrawETHGainToTrove(
-      _upperHint: string,
-      _lowerHint: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _upperHint: PromiseOrValue<string>,
+      _lowerHint: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     withdrawFromSP(
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
   };
 
@@ -697,7 +728,7 @@ export interface StabilityPool extends BaseContract {
   defaultPool(overrides?: CallOverrides): Promise<string>;
 
   depositSnapshots(
-    arg0: string,
+    arg0: PromiseOrValue<string>,
     overrides?: CallOverrides,
   ): Promise<
     [BigNumber, BigNumber, BigNumber, BigNumber, BigNumber] & {
@@ -710,16 +741,24 @@ export interface StabilityPool extends BaseContract {
   >;
 
   deposits(
-    arg0: string,
+    arg0: PromiseOrValue<string>,
     overrides?: CallOverrides,
   ): Promise<[BigNumber, string] & { initialValue: BigNumber; frontEndTag: string }>;
 
-  epochToScaleToG(arg0: BigNumberish, arg1: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+  epochToScaleToG(
+    arg0: PromiseOrValue<BigNumberish>,
+    arg1: PromiseOrValue<BigNumberish>,
+    overrides?: CallOverrides,
+  ): Promise<BigNumber>;
 
-  epochToScaleToSum(arg0: BigNumberish, arg1: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+  epochToScaleToSum(
+    arg0: PromiseOrValue<BigNumberish>,
+    arg1: PromiseOrValue<BigNumberish>,
+    overrides?: CallOverrides,
+  ): Promise<BigNumber>;
 
   frontEndSnapshots(
-    arg0: string,
+    arg0: PromiseOrValue<string>,
     overrides?: CallOverrides,
   ): Promise<
     [BigNumber, BigNumber, BigNumber, BigNumber, BigNumber] & {
@@ -731,20 +770,20 @@ export interface StabilityPool extends BaseContract {
     }
   >;
 
-  frontEndStakes(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+  frontEndStakes(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   frontEnds(
-    arg0: string,
+    arg0: PromiseOrValue<string>,
     overrides?: CallOverrides,
   ): Promise<[BigNumber, boolean] & { kickbackRate: BigNumber; registered: boolean }>;
 
-  getCompoundedFrontEndStake(_frontEnd: string, overrides?: CallOverrides): Promise<BigNumber>;
+  getCompoundedFrontEndStake(_frontEnd: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  getCompoundedLUSDDeposit(_depositor: string, overrides?: CallOverrides): Promise<BigNumber>;
+  getCompoundedLUSDDeposit(_depositor: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  getDepositorETHGain(_depositor: string, overrides?: CallOverrides): Promise<BigNumber>;
+  getDepositorETHGain(_depositor: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  getDepositorLQTYGain(_depositor: string, overrides?: CallOverrides): Promise<BigNumber>;
+  getDepositorLQTYGain(_depositor: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   getETH(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -752,7 +791,7 @@ export interface StabilityPool extends BaseContract {
 
   getEntireSystemDebt(overrides?: CallOverrides): Promise<BigNumber>;
 
-  getFrontEndLQTYGain(_frontEnd: string, overrides?: CallOverrides): Promise<BigNumber>;
+  getFrontEndLQTYGain(_frontEnd: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   getTotalLUSDDeposits(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -767,9 +806,9 @@ export interface StabilityPool extends BaseContract {
   lusdToken(overrides?: CallOverrides): Promise<string>;
 
   offset(
-    _debtToOffset: BigNumberish,
-    _collToAdd: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _debtToOffset: PromiseOrValue<BigNumberish>,
+    _collToAdd: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   owner(overrides?: CallOverrides): Promise<string>;
@@ -777,25 +816,25 @@ export interface StabilityPool extends BaseContract {
   priceFeed(overrides?: CallOverrides): Promise<string>;
 
   provideToSP(
-    _amount: BigNumberish,
-    _frontEndTag: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _amount: PromiseOrValue<BigNumberish>,
+    _frontEndTag: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   registerFrontEnd(
-    _kickbackRate: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _kickbackRate: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setAddresses(
-    _borrowerOperationsAddress: string,
-    _troveManagerAddress: string,
-    _activePoolAddress: string,
-    _lusdTokenAddress: string,
-    _sortedTrovesAddress: string,
-    _priceFeedAddress: string,
-    _communityIssuanceAddress: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _borrowerOperationsAddress: PromiseOrValue<string>,
+    _troveManagerAddress: PromiseOrValue<string>,
+    _activePoolAddress: PromiseOrValue<string>,
+    _lusdTokenAddress: PromiseOrValue<string>,
+    _sortedTrovesAddress: PromiseOrValue<string>,
+    _priceFeedAddress: PromiseOrValue<string>,
+    _communityIssuanceAddress: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   sortedTroves(overrides?: CallOverrides): Promise<string>;
@@ -803,14 +842,14 @@ export interface StabilityPool extends BaseContract {
   troveManager(overrides?: CallOverrides): Promise<string>;
 
   withdrawETHGainToTrove(
-    _upperHint: string,
-    _lowerHint: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _upperHint: PromiseOrValue<string>,
+    _lowerHint: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   withdrawFromSP(
-    _amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   callStatic: {
@@ -849,7 +888,7 @@ export interface StabilityPool extends BaseContract {
     defaultPool(overrides?: CallOverrides): Promise<string>;
 
     depositSnapshots(
-      arg0: string,
+      arg0: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<
       [BigNumber, BigNumber, BigNumber, BigNumber, BigNumber] & {
@@ -862,16 +901,24 @@ export interface StabilityPool extends BaseContract {
     >;
 
     deposits(
-      arg0: string,
+      arg0: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber, string] & { initialValue: BigNumber; frontEndTag: string }>;
 
-    epochToScaleToG(arg0: BigNumberish, arg1: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    epochToScaleToG(
+      arg0: PromiseOrValue<BigNumberish>,
+      arg1: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    epochToScaleToSum(arg0: BigNumberish, arg1: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    epochToScaleToSum(
+      arg0: PromiseOrValue<BigNumberish>,
+      arg1: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     frontEndSnapshots(
-      arg0: string,
+      arg0: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<
       [BigNumber, BigNumber, BigNumber, BigNumber, BigNumber] & {
@@ -883,20 +930,20 @@ export interface StabilityPool extends BaseContract {
       }
     >;
 
-    frontEndStakes(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    frontEndStakes(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     frontEnds(
-      arg0: string,
+      arg0: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber, boolean] & { kickbackRate: BigNumber; registered: boolean }>;
 
-    getCompoundedFrontEndStake(_frontEnd: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getCompoundedFrontEndStake(_frontEnd: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    getCompoundedLUSDDeposit(_depositor: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getCompoundedLUSDDeposit(_depositor: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    getDepositorETHGain(_depositor: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getDepositorETHGain(_depositor: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    getDepositorLQTYGain(_depositor: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getDepositorLQTYGain(_depositor: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     getETH(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -904,7 +951,7 @@ export interface StabilityPool extends BaseContract {
 
     getEntireSystemDebt(overrides?: CallOverrides): Promise<BigNumber>;
 
-    getFrontEndLQTYGain(_frontEnd: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getFrontEndLQTYGain(_frontEnd: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     getTotalLUSDDeposits(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -918,24 +965,32 @@ export interface StabilityPool extends BaseContract {
 
     lusdToken(overrides?: CallOverrides): Promise<string>;
 
-    offset(_debtToOffset: BigNumberish, _collToAdd: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    offset(
+      _debtToOffset: PromiseOrValue<BigNumberish>,
+      _collToAdd: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
     owner(overrides?: CallOverrides): Promise<string>;
 
     priceFeed(overrides?: CallOverrides): Promise<string>;
 
-    provideToSP(_amount: BigNumberish, _frontEndTag: string, overrides?: CallOverrides): Promise<void>;
+    provideToSP(
+      _amount: PromiseOrValue<BigNumberish>,
+      _frontEndTag: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    registerFrontEnd(_kickbackRate: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    registerFrontEnd(_kickbackRate: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
     setAddresses(
-      _borrowerOperationsAddress: string,
-      _troveManagerAddress: string,
-      _activePoolAddress: string,
-      _lusdTokenAddress: string,
-      _sortedTrovesAddress: string,
-      _priceFeedAddress: string,
-      _communityIssuanceAddress: string,
+      _borrowerOperationsAddress: PromiseOrValue<string>,
+      _troveManagerAddress: PromiseOrValue<string>,
+      _activePoolAddress: PromiseOrValue<string>,
+      _lusdTokenAddress: PromiseOrValue<string>,
+      _sortedTrovesAddress: PromiseOrValue<string>,
+      _priceFeedAddress: PromiseOrValue<string>,
+      _communityIssuanceAddress: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
@@ -943,9 +998,13 @@ export interface StabilityPool extends BaseContract {
 
     troveManager(overrides?: CallOverrides): Promise<string>;
 
-    withdrawETHGainToTrove(_upperHint: string, _lowerHint: string, overrides?: CallOverrides): Promise<void>;
+    withdrawETHGainToTrove(
+      _upperHint: PromiseOrValue<string>,
+      _lowerHint: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    withdrawFromSP(_amount: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    withdrawFromSP(_amount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
   };
 
   filters: {
@@ -966,24 +1025,28 @@ export interface StabilityPool extends BaseContract {
     DefaultPoolAddressChanged(_newDefaultPoolAddress?: null): DefaultPoolAddressChangedEventFilter;
 
     'DepositSnapshotUpdated(address,uint256,uint256,uint256)'(
-      _depositor?: string | null,
+      _depositor?: PromiseOrValue<string> | null,
       _P?: null,
       _S?: null,
       _G?: null,
     ): DepositSnapshotUpdatedEventFilter;
     DepositSnapshotUpdated(
-      _depositor?: string | null,
+      _depositor?: PromiseOrValue<string> | null,
       _P?: null,
       _S?: null,
       _G?: null,
     ): DepositSnapshotUpdatedEventFilter;
 
     'ETHGainWithdrawn(address,uint256,uint256)'(
-      _depositor?: string | null,
+      _depositor?: PromiseOrValue<string> | null,
       _ETH?: null,
       _LUSDLoss?: null,
     ): ETHGainWithdrawnEventFilter;
-    ETHGainWithdrawn(_depositor?: string | null, _ETH?: null, _LUSDLoss?: null): ETHGainWithdrawnEventFilter;
+    ETHGainWithdrawn(
+      _depositor?: PromiseOrValue<string> | null,
+      _ETH?: null,
+      _LUSDLoss?: null,
+    ): ETHGainWithdrawnEventFilter;
 
     'EpochUpdated(uint128)'(_currentEpoch?: null): EpochUpdatedEventFilter;
     EpochUpdated(_currentEpoch?: null): EpochUpdatedEventFilter;
@@ -992,49 +1055,68 @@ export interface StabilityPool extends BaseContract {
     EtherSent(_to?: null, _amount?: null): EtherSentEventFilter;
 
     'FrontEndRegistered(address,uint256)'(
-      _frontEnd?: string | null,
+      _frontEnd?: PromiseOrValue<string> | null,
       _kickbackRate?: null,
     ): FrontEndRegisteredEventFilter;
-    FrontEndRegistered(_frontEnd?: string | null, _kickbackRate?: null): FrontEndRegisteredEventFilter;
+    FrontEndRegistered(_frontEnd?: PromiseOrValue<string> | null, _kickbackRate?: null): FrontEndRegisteredEventFilter;
 
     'FrontEndSnapshotUpdated(address,uint256,uint256)'(
-      _frontEnd?: string | null,
+      _frontEnd?: PromiseOrValue<string> | null,
       _P?: null,
       _G?: null,
     ): FrontEndSnapshotUpdatedEventFilter;
-    FrontEndSnapshotUpdated(_frontEnd?: string | null, _P?: null, _G?: null): FrontEndSnapshotUpdatedEventFilter;
+    FrontEndSnapshotUpdated(
+      _frontEnd?: PromiseOrValue<string> | null,
+      _P?: null,
+      _G?: null,
+    ): FrontEndSnapshotUpdatedEventFilter;
 
     'FrontEndStakeChanged(address,uint256,address)'(
-      _frontEnd?: string | null,
+      _frontEnd?: PromiseOrValue<string> | null,
       _newFrontEndStake?: null,
       _depositor?: null,
     ): FrontEndStakeChangedEventFilter;
     FrontEndStakeChanged(
-      _frontEnd?: string | null,
+      _frontEnd?: PromiseOrValue<string> | null,
       _newFrontEndStake?: null,
       _depositor?: null,
     ): FrontEndStakeChangedEventFilter;
 
-    'FrontEndTagSet(address,address)'(_depositor?: string | null, _frontEnd?: string | null): FrontEndTagSetEventFilter;
-    FrontEndTagSet(_depositor?: string | null, _frontEnd?: string | null): FrontEndTagSetEventFilter;
+    'FrontEndTagSet(address,address)'(
+      _depositor?: PromiseOrValue<string> | null,
+      _frontEnd?: PromiseOrValue<string> | null,
+    ): FrontEndTagSetEventFilter;
+    FrontEndTagSet(
+      _depositor?: PromiseOrValue<string> | null,
+      _frontEnd?: PromiseOrValue<string> | null,
+    ): FrontEndTagSetEventFilter;
 
     'G_Updated(uint256,uint128,uint128)'(_G?: null, _epoch?: null, _scale?: null): G_UpdatedEventFilter;
     G_Updated(_G?: null, _epoch?: null, _scale?: null): G_UpdatedEventFilter;
 
-    'LQTYPaidToDepositor(address,uint256)'(_depositor?: string | null, _LQTY?: null): LQTYPaidToDepositorEventFilter;
-    LQTYPaidToDepositor(_depositor?: string | null, _LQTY?: null): LQTYPaidToDepositorEventFilter;
+    'LQTYPaidToDepositor(address,uint256)'(
+      _depositor?: PromiseOrValue<string> | null,
+      _LQTY?: null,
+    ): LQTYPaidToDepositorEventFilter;
+    LQTYPaidToDepositor(_depositor?: PromiseOrValue<string> | null, _LQTY?: null): LQTYPaidToDepositorEventFilter;
 
-    'LQTYPaidToFrontEnd(address,uint256)'(_frontEnd?: string | null, _LQTY?: null): LQTYPaidToFrontEndEventFilter;
-    LQTYPaidToFrontEnd(_frontEnd?: string | null, _LQTY?: null): LQTYPaidToFrontEndEventFilter;
+    'LQTYPaidToFrontEnd(address,uint256)'(
+      _frontEnd?: PromiseOrValue<string> | null,
+      _LQTY?: null,
+    ): LQTYPaidToFrontEndEventFilter;
+    LQTYPaidToFrontEnd(_frontEnd?: PromiseOrValue<string> | null, _LQTY?: null): LQTYPaidToFrontEndEventFilter;
 
     'LUSDTokenAddressChanged(address)'(_newLUSDTokenAddress?: null): LUSDTokenAddressChangedEventFilter;
     LUSDTokenAddressChanged(_newLUSDTokenAddress?: null): LUSDTokenAddressChangedEventFilter;
 
     'OwnershipTransferred(address,address)'(
-      previousOwner?: string | null,
-      newOwner?: string | null,
+      previousOwner?: PromiseOrValue<string> | null,
+      newOwner?: PromiseOrValue<string> | null,
     ): OwnershipTransferredEventFilter;
-    OwnershipTransferred(previousOwner?: string | null, newOwner?: string | null): OwnershipTransferredEventFilter;
+    OwnershipTransferred(
+      previousOwner?: PromiseOrValue<string> | null,
+      newOwner?: PromiseOrValue<string> | null,
+    ): OwnershipTransferredEventFilter;
 
     'P_Updated(uint256)'(_P?: null): P_UpdatedEventFilter;
     P_Updated(_P?: null): P_UpdatedEventFilter;
@@ -1061,10 +1143,10 @@ export interface StabilityPool extends BaseContract {
     TroveManagerAddressChanged(_newTroveManagerAddress?: null): TroveManagerAddressChangedEventFilter;
 
     'UserDepositChanged(address,uint256)'(
-      _depositor?: string | null,
+      _depositor?: PromiseOrValue<string> | null,
       _newDeposit?: null,
     ): UserDepositChangedEventFilter;
-    UserDepositChanged(_depositor?: string | null, _newDeposit?: null): UserDepositChangedEventFilter;
+    UserDepositChanged(_depositor?: PromiseOrValue<string> | null, _newDeposit?: null): UserDepositChangedEventFilter;
   };
 
   estimateGas: {
@@ -1102,27 +1184,35 @@ export interface StabilityPool extends BaseContract {
 
     defaultPool(overrides?: CallOverrides): Promise<BigNumber>;
 
-    depositSnapshots(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    depositSnapshots(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    deposits(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    deposits(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    epochToScaleToG(arg0: BigNumberish, arg1: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    epochToScaleToG(
+      arg0: PromiseOrValue<BigNumberish>,
+      arg1: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    epochToScaleToSum(arg0: BigNumberish, arg1: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    epochToScaleToSum(
+      arg0: PromiseOrValue<BigNumberish>,
+      arg1: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    frontEndSnapshots(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    frontEndSnapshots(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    frontEndStakes(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    frontEndStakes(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    frontEnds(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    frontEnds(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    getCompoundedFrontEndStake(_frontEnd: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getCompoundedFrontEndStake(_frontEnd: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    getCompoundedLUSDDeposit(_depositor: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getCompoundedLUSDDeposit(_depositor: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    getDepositorETHGain(_depositor: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getDepositorETHGain(_depositor: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    getDepositorLQTYGain(_depositor: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getDepositorLQTYGain(_depositor: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     getETH(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -1130,7 +1220,7 @@ export interface StabilityPool extends BaseContract {
 
     getEntireSystemDebt(overrides?: CallOverrides): Promise<BigNumber>;
 
-    getFrontEndLQTYGain(_frontEnd: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getFrontEndLQTYGain(_frontEnd: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     getTotalLUSDDeposits(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -1145,9 +1235,9 @@ export interface StabilityPool extends BaseContract {
     lusdToken(overrides?: CallOverrides): Promise<BigNumber>;
 
     offset(
-      _debtToOffset: BigNumberish,
-      _collToAdd: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _debtToOffset: PromiseOrValue<BigNumberish>,
+      _collToAdd: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     owner(overrides?: CallOverrides): Promise<BigNumber>;
@@ -1155,25 +1245,25 @@ export interface StabilityPool extends BaseContract {
     priceFeed(overrides?: CallOverrides): Promise<BigNumber>;
 
     provideToSP(
-      _amount: BigNumberish,
-      _frontEndTag: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _amount: PromiseOrValue<BigNumberish>,
+      _frontEndTag: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     registerFrontEnd(
-      _kickbackRate: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _kickbackRate: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setAddresses(
-      _borrowerOperationsAddress: string,
-      _troveManagerAddress: string,
-      _activePoolAddress: string,
-      _lusdTokenAddress: string,
-      _sortedTrovesAddress: string,
-      _priceFeedAddress: string,
-      _communityIssuanceAddress: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _borrowerOperationsAddress: PromiseOrValue<string>,
+      _troveManagerAddress: PromiseOrValue<string>,
+      _activePoolAddress: PromiseOrValue<string>,
+      _lusdTokenAddress: PromiseOrValue<string>,
+      _sortedTrovesAddress: PromiseOrValue<string>,
+      _priceFeedAddress: PromiseOrValue<string>,
+      _communityIssuanceAddress: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     sortedTroves(overrides?: CallOverrides): Promise<BigNumber>;
@@ -1181,14 +1271,14 @@ export interface StabilityPool extends BaseContract {
     troveManager(overrides?: CallOverrides): Promise<BigNumber>;
 
     withdrawETHGainToTrove(
-      _upperHint: string,
-      _lowerHint: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _upperHint: PromiseOrValue<string>,
+      _lowerHint: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     withdrawFromSP(
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
   };
 
@@ -1227,27 +1317,41 @@ export interface StabilityPool extends BaseContract {
 
     defaultPool(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    depositSnapshots(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    depositSnapshots(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    deposits(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    deposits(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    epochToScaleToG(arg0: BigNumberish, arg1: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    epochToScaleToG(
+      arg0: PromiseOrValue<BigNumberish>,
+      arg1: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
-    epochToScaleToSum(arg0: BigNumberish, arg1: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    epochToScaleToSum(
+      arg0: PromiseOrValue<BigNumberish>,
+      arg1: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
-    frontEndSnapshots(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    frontEndSnapshots(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    frontEndStakes(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    frontEndStakes(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    frontEnds(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    frontEnds(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    getCompoundedFrontEndStake(_frontEnd: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getCompoundedFrontEndStake(
+      _frontEnd: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
-    getCompoundedLUSDDeposit(_depositor: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getCompoundedLUSDDeposit(
+      _depositor: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
-    getDepositorETHGain(_depositor: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getDepositorETHGain(_depositor: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    getDepositorLQTYGain(_depositor: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getDepositorLQTYGain(_depositor: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     getETH(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
@@ -1255,7 +1359,7 @@ export interface StabilityPool extends BaseContract {
 
     getEntireSystemDebt(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    getFrontEndLQTYGain(_frontEnd: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getFrontEndLQTYGain(_frontEnd: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     getTotalLUSDDeposits(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
@@ -1270,9 +1374,9 @@ export interface StabilityPool extends BaseContract {
     lusdToken(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     offset(
-      _debtToOffset: BigNumberish,
-      _collToAdd: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _debtToOffset: PromiseOrValue<BigNumberish>,
+      _collToAdd: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -1280,25 +1384,25 @@ export interface StabilityPool extends BaseContract {
     priceFeed(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     provideToSP(
-      _amount: BigNumberish,
-      _frontEndTag: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _amount: PromiseOrValue<BigNumberish>,
+      _frontEndTag: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     registerFrontEnd(
-      _kickbackRate: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _kickbackRate: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setAddresses(
-      _borrowerOperationsAddress: string,
-      _troveManagerAddress: string,
-      _activePoolAddress: string,
-      _lusdTokenAddress: string,
-      _sortedTrovesAddress: string,
-      _priceFeedAddress: string,
-      _communityIssuanceAddress: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _borrowerOperationsAddress: PromiseOrValue<string>,
+      _troveManagerAddress: PromiseOrValue<string>,
+      _activePoolAddress: PromiseOrValue<string>,
+      _lusdTokenAddress: PromiseOrValue<string>,
+      _sortedTrovesAddress: PromiseOrValue<string>,
+      _priceFeedAddress: PromiseOrValue<string>,
+      _communityIssuanceAddress: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     sortedTroves(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -1306,14 +1410,14 @@ export interface StabilityPool extends BaseContract {
     troveManager(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     withdrawETHGainToTrove(
-      _upperHint: string,
-      _lowerHint: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _upperHint: PromiseOrValue<string>,
+      _lowerHint: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     withdrawFromSP(
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
   };
 }

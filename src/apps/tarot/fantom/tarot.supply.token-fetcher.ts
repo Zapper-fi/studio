@@ -14,9 +14,11 @@ import { Network } from '~types/network.interface';
 import { TarotContractFactory } from '../contracts';
 import { TAROT_DEFINITION } from '../tarot.definition';
 
-export type TarotSupplyTokenDataProps = {
-  liquidity: number;
-};
+const tarotFactoryAddresses = [
+  '0x35c052bbf8338b06351782a565aa9aad173432ea', // Tarot Classic
+  '0xf6d943c8904195d0f69ba03d97c0baf5bbdcd01b', // Tarot Requiem
+  '0xbf76f858b42bb9b196a87e43235c2f0058cf7322', // Tarot Carcosa
+];
 
 const appId = TAROT_DEFINITION.id;
 const groupId = TAROT_DEFINITION.groups.supply.id;
@@ -29,24 +31,18 @@ export class FantomTarotSupplyTokenFetcher implements PositionFetcher<AppTokenPo
     @Inject(TarotContractFactory) private readonly contractFactory: TarotContractFactory,
   ) {}
 
-  async getPositions(): Promise<AppTokenPosition[]> {
+  async getPositions() {
     const multicall = this.appToolkit.getMulticall(network);
 
     const baseTokens = await this.appToolkit.getBaseTokenPrices(network);
     const appTokens = await this.appToolkit.getAppTokenPositions(
       { appId: CURVE_DEFINITION.id, groupIds: [CURVE_DEFINITION.groups.pool.id], network },
-      { appId: TAROT_DEFINITION.id, groupIds: [TAROT_DEFINITION.groups.supplyVault.id], network },
+      { appId: TAROT_DEFINITION.id, groupIds: [TAROT_DEFINITION.groups.vault.id], network },
       { appId: 'spiritswap', groupIds: ['pool'], network },
       { appId: 'spookyswap', groupIds: ['pool'], network },
       { appId: 'tomb', groupIds: ['pool'], network },
     );
     const allTokens = [...appTokens, ...baseTokens];
-
-    const tarotFactoryAddresses = [
-      '0x35c052bbf8338b06351782a565aa9aad173432ea', // Tarot Classic
-      '0xf6d943c8904195d0f69ba03d97c0baf5bbdcd01b', // Tarot Requiem
-      '0xbf76f858b42bb9b196a87e43235c2f0058cf7322', // Tarot Carcosa
-    ];
 
     const allTarotTokens = await Promise.all(
       tarotFactoryAddresses.map(async tarotFactoryAddress => {
@@ -90,24 +86,25 @@ export class FantomTarotSupplyTokenFetcher implements PositionFetcher<AppTokenPo
                 const underlyingToken = allTokens.find(v => v.address === underlyingTokenAddress);
                 if (!underlyingToken) return null;
 
-                const [exchangeRateRaw, supplyRaw] = await Promise.all([
+                const [exchangeRateRaw, supplyRaw, decimals] = await Promise.all([
                   multicall.wrap(borrowTokenContract).callStatic.exchangeRate(),
                   multicall.wrap(borrowTokenContract).totalSupply(),
+                  multicall.wrap(borrowTokenContract).decimals(),
                 ]);
 
-                const supply = Number(supplyRaw) / 10 ** 18;
-                const pricePerShare = Number(exchangeRateRaw) / 10 ** 18;
+                const supply = Number(supplyRaw) / 10 ** decimals;
+                const pricePerShare = Number(exchangeRateRaw) / 10 ** decimals;
                 const price = pricePerShare * underlyingToken.price;
                 const liquidity = price * supply;
 
-                const token: AppTokenPosition<TarotSupplyTokenDataProps> = {
+                const token: AppTokenPosition = {
                   type: ContractType.APP_TOKEN,
                   appId,
-                  network: Network.FANTOM_OPERA_MAINNET,
-                  groupId: TAROT_DEFINITION.groups.supply.id,
+                  network,
+                  groupId,
                   address: bTokenAddress,
-                  symbol: `bTAROT-${underlyingToken.symbol}`,
-                  decimals: 18,
+                  symbol: underlyingToken.symbol,
+                  decimals,
                   supply,
                   pricePerShare,
                   price,
@@ -131,7 +128,7 @@ export class FantomTarotSupplyTokenFetcher implements PositionFetcher<AppTokenPo
               }),
             );
 
-            return tokens;
+            return _.compact(tokens);
           }),
         );
 
@@ -139,6 +136,6 @@ export class FantomTarotSupplyTokenFetcher implements PositionFetcher<AppTokenPo
       }),
     );
 
-    return _.compact(allTarotTokens.flat());
+    return allTarotTokens.flat();
   }
 }

@@ -15,7 +15,7 @@ import type {
 } from 'ethers';
 import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
 import type { Listener, Provider } from '@ethersproject/providers';
-import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
 export interface EnzymeFinanceVaultInterface extends utils.Interface {
   functions: {
@@ -85,14 +85,26 @@ export interface EnzymeFinanceVaultInterface extends utils.Interface {
       | 'withdrawAssetTo',
   ): FunctionFragment;
 
-  encodeFunctionData(functionFragment: 'addTrackedAsset', values: [string]): string;
-  encodeFunctionData(functionFragment: 'allowance', values: [string, string]): string;
-  encodeFunctionData(functionFragment: 'approve', values: [string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'approveAssetSpender', values: [string, string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'balanceOf', values: [string]): string;
-  encodeFunctionData(functionFragment: 'burnShares', values: [string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'callOnContract', values: [string, BytesLike]): string;
-  encodeFunctionData(functionFragment: 'canMigrate', values: [string]): string;
+  encodeFunctionData(functionFragment: 'addTrackedAsset', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'allowance', values: [PromiseOrValue<string>, PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'approve',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'approveAssetSpender',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'balanceOf', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'burnShares',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'callOnContract',
+    values: [PromiseOrValue<string>, PromiseOrValue<BytesLike>],
+  ): string;
+  encodeFunctionData(functionFragment: 'canMigrate', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'decimals', values?: undefined): string;
   encodeFunctionData(functionFragment: 'getAccessor', values?: undefined): string;
   encodeFunctionData(functionFragment: 'getCreator', values?: undefined): string;
@@ -100,21 +112,39 @@ export interface EnzymeFinanceVaultInterface extends utils.Interface {
   encodeFunctionData(functionFragment: 'getOwner', values?: undefined): string;
   encodeFunctionData(functionFragment: 'getTrackedAssets', values?: undefined): string;
   encodeFunctionData(functionFragment: 'getVaultLib', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'init', values: [string, string, string]): string;
-  encodeFunctionData(functionFragment: 'isTrackedAsset', values: [string]): string;
-  encodeFunctionData(functionFragment: 'mintShares', values: [string, BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'init',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<string>],
+  ): string;
+  encodeFunctionData(functionFragment: 'isTrackedAsset', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'mintShares',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
   encodeFunctionData(functionFragment: 'name', values?: undefined): string;
   encodeFunctionData(functionFragment: 'proxiableUUID', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'removeTrackedAsset', values: [string]): string;
-  encodeFunctionData(functionFragment: 'setAccessor', values: [string]): string;
-  encodeFunctionData(functionFragment: 'setMigrator', values: [string]): string;
-  encodeFunctionData(functionFragment: 'setVaultLib', values: [string]): string;
+  encodeFunctionData(functionFragment: 'removeTrackedAsset', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'setAccessor', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'setMigrator', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'setVaultLib', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'symbol', values?: undefined): string;
   encodeFunctionData(functionFragment: 'totalSupply', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'transfer', values: [string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'transferFrom', values: [string, string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'transferShares', values: [string, string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'withdrawAssetTo', values: [string, string, BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'transfer',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'transferFrom',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'transferShares',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'withdrawAssetTo',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
 
   decodeFunctionResult(functionFragment: 'addTrackedAsset', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'allowance', data: BytesLike): Result;
@@ -267,40 +297,44 @@ export interface EnzymeFinanceVault extends BaseContract {
 
   functions: {
     addTrackedAsset(
-      _asset: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _asset: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    allowance(_owner: string, _spender: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    allowance(
+      _owner: PromiseOrValue<string>,
+      _spender: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber]>;
 
     approve(
-      arg0: string,
-      arg1: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     approveAssetSpender(
-      _asset: string,
-      _target: string,
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _asset: PromiseOrValue<string>,
+      _target: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    balanceOf(_account: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    balanceOf(_account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     burnShares(
-      _target: string,
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _target: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     callOnContract(
-      _contract: string,
-      _callData: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _contract: PromiseOrValue<string>,
+      _callData: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    canMigrate(_who: string, overrides?: CallOverrides): Promise<[boolean] & { canMigrate_: boolean }>;
+    canMigrate(_who: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[boolean] & { canMigrate_: boolean }>;
 
     decimals(overrides?: CallOverrides): Promise<[number]>;
 
@@ -317,18 +351,21 @@ export interface EnzymeFinanceVault extends BaseContract {
     getVaultLib(overrides?: CallOverrides): Promise<[string] & { vaultLib_: string }>;
 
     init(
-      _owner: string,
-      _accessor: string,
-      _fundName: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _owner: PromiseOrValue<string>,
+      _accessor: PromiseOrValue<string>,
+      _fundName: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    isTrackedAsset(_asset: string, overrides?: CallOverrides): Promise<[boolean] & { isTrackedAsset_: boolean }>;
+    isTrackedAsset(
+      _asset: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<[boolean] & { isTrackedAsset_: boolean }>;
 
     mintShares(
-      _target: string,
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _target: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     name(overrides?: CallOverrides): Promise<[string]>;
@@ -336,23 +373,23 @@ export interface EnzymeFinanceVault extends BaseContract {
     proxiableUUID(overrides?: CallOverrides): Promise<[string] & { uuid_: string }>;
 
     removeTrackedAsset(
-      _asset: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _asset: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setAccessor(
-      _nextAccessor: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _nextAccessor: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setMigrator(
-      _nextMigrator: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _nextMigrator: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setVaultLib(
-      _nextVaultLib: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _nextVaultLib: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     symbol(overrides?: CallOverrides): Promise<[string] & { symbol_: string }>;
@@ -360,68 +397,72 @@ export interface EnzymeFinanceVault extends BaseContract {
     totalSupply(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     transfer(
-      arg0: string,
-      arg1: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     transferFrom(
-      arg0: string,
-      arg1: string,
-      arg2: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
+      arg2: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     transferShares(
-      _from: string,
-      _to: string,
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _from: PromiseOrValue<string>,
+      _to: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     withdrawAssetTo(
-      _asset: string,
-      _target: string,
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _asset: PromiseOrValue<string>,
+      _target: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
   };
 
   addTrackedAsset(
-    _asset: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _asset: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  allowance(_owner: string, _spender: string, overrides?: CallOverrides): Promise<BigNumber>;
+  allowance(
+    _owner: PromiseOrValue<string>,
+    _spender: PromiseOrValue<string>,
+    overrides?: CallOverrides,
+  ): Promise<BigNumber>;
 
   approve(
-    arg0: string,
-    arg1: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    arg0: PromiseOrValue<string>,
+    arg1: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   approveAssetSpender(
-    _asset: string,
-    _target: string,
-    _amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _asset: PromiseOrValue<string>,
+    _target: PromiseOrValue<string>,
+    _amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  balanceOf(_account: string, overrides?: CallOverrides): Promise<BigNumber>;
+  balanceOf(_account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   burnShares(
-    _target: string,
-    _amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _target: PromiseOrValue<string>,
+    _amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   callOnContract(
-    _contract: string,
-    _callData: BytesLike,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _contract: PromiseOrValue<string>,
+    _callData: PromiseOrValue<BytesLike>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  canMigrate(_who: string, overrides?: CallOverrides): Promise<boolean>;
+  canMigrate(_who: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
   decimals(overrides?: CallOverrides): Promise<number>;
 
@@ -438,18 +479,18 @@ export interface EnzymeFinanceVault extends BaseContract {
   getVaultLib(overrides?: CallOverrides): Promise<string>;
 
   init(
-    _owner: string,
-    _accessor: string,
-    _fundName: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _owner: PromiseOrValue<string>,
+    _accessor: PromiseOrValue<string>,
+    _fundName: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  isTrackedAsset(_asset: string, overrides?: CallOverrides): Promise<boolean>;
+  isTrackedAsset(_asset: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
   mintShares(
-    _target: string,
-    _amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _target: PromiseOrValue<string>,
+    _amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   name(overrides?: CallOverrides): Promise<string>;
@@ -457,23 +498,23 @@ export interface EnzymeFinanceVault extends BaseContract {
   proxiableUUID(overrides?: CallOverrides): Promise<string>;
 
   removeTrackedAsset(
-    _asset: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _asset: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setAccessor(
-    _nextAccessor: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _nextAccessor: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setMigrator(
-    _nextMigrator: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _nextMigrator: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setVaultLib(
-    _nextVaultLib: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _nextVaultLib: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   symbol(overrides?: CallOverrides): Promise<string>;
@@ -481,53 +522,69 @@ export interface EnzymeFinanceVault extends BaseContract {
   totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
   transfer(
-    arg0: string,
-    arg1: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    arg0: PromiseOrValue<string>,
+    arg1: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   transferFrom(
-    arg0: string,
-    arg1: string,
-    arg2: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    arg0: PromiseOrValue<string>,
+    arg1: PromiseOrValue<string>,
+    arg2: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   transferShares(
-    _from: string,
-    _to: string,
-    _amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _from: PromiseOrValue<string>,
+    _to: PromiseOrValue<string>,
+    _amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   withdrawAssetTo(
-    _asset: string,
-    _target: string,
-    _amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _asset: PromiseOrValue<string>,
+    _target: PromiseOrValue<string>,
+    _amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   callStatic: {
-    addTrackedAsset(_asset: string, overrides?: CallOverrides): Promise<void>;
+    addTrackedAsset(_asset: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    allowance(_owner: string, _spender: string, overrides?: CallOverrides): Promise<BigNumber>;
+    allowance(
+      _owner: PromiseOrValue<string>,
+      _spender: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    approve(arg0: string, arg1: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+    approve(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
 
     approveAssetSpender(
-      _asset: string,
-      _target: string,
-      _amount: BigNumberish,
+      _asset: PromiseOrValue<string>,
+      _target: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
-    balanceOf(_account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    balanceOf(_account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    burnShares(_target: string, _amount: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    burnShares(
+      _target: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    callOnContract(_contract: string, _callData: BytesLike, overrides?: CallOverrides): Promise<void>;
+    callOnContract(
+      _contract: PromiseOrValue<string>,
+      _callData: PromiseOrValue<BytesLike>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    canMigrate(_who: string, overrides?: CallOverrides): Promise<boolean>;
+    canMigrate(_who: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
     decimals(overrides?: CallOverrides): Promise<number>;
 
@@ -543,35 +600,63 @@ export interface EnzymeFinanceVault extends BaseContract {
 
     getVaultLib(overrides?: CallOverrides): Promise<string>;
 
-    init(_owner: string, _accessor: string, _fundName: string, overrides?: CallOverrides): Promise<void>;
+    init(
+      _owner: PromiseOrValue<string>,
+      _accessor: PromiseOrValue<string>,
+      _fundName: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    isTrackedAsset(_asset: string, overrides?: CallOverrides): Promise<boolean>;
+    isTrackedAsset(_asset: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
-    mintShares(_target: string, _amount: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    mintShares(
+      _target: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
     name(overrides?: CallOverrides): Promise<string>;
 
     proxiableUUID(overrides?: CallOverrides): Promise<string>;
 
-    removeTrackedAsset(_asset: string, overrides?: CallOverrides): Promise<void>;
+    removeTrackedAsset(_asset: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    setAccessor(_nextAccessor: string, overrides?: CallOverrides): Promise<void>;
+    setAccessor(_nextAccessor: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    setMigrator(_nextMigrator: string, overrides?: CallOverrides): Promise<void>;
+    setMigrator(_nextMigrator: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    setVaultLib(_nextVaultLib: string, overrides?: CallOverrides): Promise<void>;
+    setVaultLib(_nextVaultLib: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     symbol(overrides?: CallOverrides): Promise<string>;
 
     totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
-    transfer(arg0: string, arg1: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+    transfer(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
 
-    transferFrom(arg0: string, arg1: string, arg2: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+    transferFrom(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
+      arg2: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
 
-    transferShares(_from: string, _to: string, _amount: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    transferShares(
+      _from: PromiseOrValue<string>,
+      _to: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    withdrawAssetTo(_asset: string, _target: string, _amount: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    withdrawAssetTo(
+      _asset: PromiseOrValue<string>,
+      _target: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
   };
 
   filters: {
@@ -579,18 +664,26 @@ export interface EnzymeFinanceVault extends BaseContract {
     AccessorSet(prevAccessor?: null, nextAccessor?: null): AccessorSetEventFilter;
 
     'Approval(address,address,uint256)'(
-      owner?: string | null,
-      spender?: string | null,
+      owner?: PromiseOrValue<string> | null,
+      spender?: PromiseOrValue<string> | null,
       value?: null,
     ): ApprovalEventFilter;
-    Approval(owner?: string | null, spender?: string | null, value?: null): ApprovalEventFilter;
+    Approval(
+      owner?: PromiseOrValue<string> | null,
+      spender?: PromiseOrValue<string> | null,
+      value?: null,
+    ): ApprovalEventFilter;
 
     'AssetWithdrawn(address,address,uint256)'(
-      asset?: string | null,
-      target?: string | null,
+      asset?: PromiseOrValue<string> | null,
+      target?: PromiseOrValue<string> | null,
       amount?: null,
     ): AssetWithdrawnEventFilter;
-    AssetWithdrawn(asset?: string | null, target?: string | null, amount?: null): AssetWithdrawnEventFilter;
+    AssetWithdrawn(
+      asset?: PromiseOrValue<string> | null,
+      target?: PromiseOrValue<string> | null,
+      amount?: null,
+    ): AssetWithdrawnEventFilter;
 
     'MigratorSet(address,address)'(prevMigrator?: null, nextMigrator?: null): MigratorSetEventFilter;
     MigratorSet(prevMigrator?: null, nextMigrator?: null): MigratorSetEventFilter;
@@ -604,46 +697,61 @@ export interface EnzymeFinanceVault extends BaseContract {
     'TrackedAssetRemoved(address)'(asset?: null): TrackedAssetRemovedEventFilter;
     TrackedAssetRemoved(asset?: null): TrackedAssetRemovedEventFilter;
 
-    'Transfer(address,address,uint256)'(from?: string | null, to?: string | null, value?: null): TransferEventFilter;
-    Transfer(from?: string | null, to?: string | null, value?: null): TransferEventFilter;
+    'Transfer(address,address,uint256)'(
+      from?: PromiseOrValue<string> | null,
+      to?: PromiseOrValue<string> | null,
+      value?: null,
+    ): TransferEventFilter;
+    Transfer(
+      from?: PromiseOrValue<string> | null,
+      to?: PromiseOrValue<string> | null,
+      value?: null,
+    ): TransferEventFilter;
 
     'VaultLibSet(address,address)'(prevVaultLib?: null, nextVaultLib?: null): VaultLibSetEventFilter;
     VaultLibSet(prevVaultLib?: null, nextVaultLib?: null): VaultLibSetEventFilter;
   };
 
   estimateGas: {
-    addTrackedAsset(_asset: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    addTrackedAsset(
+      _asset: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
-    allowance(_owner: string, _spender: string, overrides?: CallOverrides): Promise<BigNumber>;
+    allowance(
+      _owner: PromiseOrValue<string>,
+      _spender: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     approve(
-      arg0: string,
-      arg1: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     approveAssetSpender(
-      _asset: string,
-      _target: string,
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _asset: PromiseOrValue<string>,
+      _target: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    balanceOf(_account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    balanceOf(_account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     burnShares(
-      _target: string,
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _target: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     callOnContract(
-      _contract: string,
-      _callData: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _contract: PromiseOrValue<string>,
+      _callData: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    canMigrate(_who: string, overrides?: CallOverrides): Promise<BigNumber>;
+    canMigrate(_who: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     decimals(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -660,100 +768,116 @@ export interface EnzymeFinanceVault extends BaseContract {
     getVaultLib(overrides?: CallOverrides): Promise<BigNumber>;
 
     init(
-      _owner: string,
-      _accessor: string,
-      _fundName: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _owner: PromiseOrValue<string>,
+      _accessor: PromiseOrValue<string>,
+      _fundName: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    isTrackedAsset(_asset: string, overrides?: CallOverrides): Promise<BigNumber>;
+    isTrackedAsset(_asset: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     mintShares(
-      _target: string,
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _target: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     name(overrides?: CallOverrides): Promise<BigNumber>;
 
     proxiableUUID(overrides?: CallOverrides): Promise<BigNumber>;
 
-    removeTrackedAsset(_asset: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    removeTrackedAsset(
+      _asset: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
-    setAccessor(_nextAccessor: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    setAccessor(
+      _nextAccessor: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
-    setMigrator(_nextMigrator: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    setMigrator(
+      _nextMigrator: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
-    setVaultLib(_nextVaultLib: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    setVaultLib(
+      _nextVaultLib: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     symbol(overrides?: CallOverrides): Promise<BigNumber>;
 
     totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
     transfer(
-      arg0: string,
-      arg1: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     transferFrom(
-      arg0: string,
-      arg1: string,
-      arg2: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
+      arg2: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     transferShares(
-      _from: string,
-      _to: string,
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _from: PromiseOrValue<string>,
+      _to: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     withdrawAssetTo(
-      _asset: string,
-      _target: string,
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _asset: PromiseOrValue<string>,
+      _target: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
   };
 
   populateTransaction: {
     addTrackedAsset(
-      _asset: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _asset: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    allowance(_owner: string, _spender: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    allowance(
+      _owner: PromiseOrValue<string>,
+      _spender: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
     approve(
-      arg0: string,
-      arg1: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     approveAssetSpender(
-      _asset: string,
-      _target: string,
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _asset: PromiseOrValue<string>,
+      _target: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    balanceOf(_account: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    balanceOf(_account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     burnShares(
-      _target: string,
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _target: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     callOnContract(
-      _contract: string,
-      _callData: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _contract: PromiseOrValue<string>,
+      _callData: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    canMigrate(_who: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    canMigrate(_who: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     decimals(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
@@ -770,18 +894,18 @@ export interface EnzymeFinanceVault extends BaseContract {
     getVaultLib(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     init(
-      _owner: string,
-      _accessor: string,
-      _fundName: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _owner: PromiseOrValue<string>,
+      _accessor: PromiseOrValue<string>,
+      _fundName: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    isTrackedAsset(_asset: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    isTrackedAsset(_asset: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     mintShares(
-      _target: string,
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _target: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     name(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -789,23 +913,23 @@ export interface EnzymeFinanceVault extends BaseContract {
     proxiableUUID(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     removeTrackedAsset(
-      _asset: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _asset: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setAccessor(
-      _nextAccessor: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _nextAccessor: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setMigrator(
-      _nextMigrator: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _nextMigrator: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setVaultLib(
-      _nextVaultLib: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _nextVaultLib: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     symbol(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -813,30 +937,30 @@ export interface EnzymeFinanceVault extends BaseContract {
     totalSupply(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     transfer(
-      arg0: string,
-      arg1: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     transferFrom(
-      arg0: string,
-      arg1: string,
-      arg2: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
+      arg2: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     transferShares(
-      _from: string,
-      _to: string,
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _from: PromiseOrValue<string>,
+      _to: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     withdrawAssetTo(
-      _asset: string,
-      _target: string,
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _asset: PromiseOrValue<string>,
+      _target: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
   };
 }

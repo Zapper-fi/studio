@@ -15,7 +15,7 @@ import type {
 } from 'ethers';
 import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
 import type { Listener, Provider } from '@ethersproject/providers';
-import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
 export interface QiDaoMasterChefInterface extends utils.Interface {
   functions: {
@@ -75,31 +75,57 @@ export interface QiDaoMasterChefInterface extends utils.Interface {
       | 'withdraw',
   ): FunctionFragment;
 
-  encodeFunctionData(functionFragment: 'add', values: [BigNumberish, string, boolean, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'deposit', values: [BigNumberish, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'deposited', values: [BigNumberish, string]): string;
-  encodeFunctionData(functionFragment: 'emergencyWithdraw', values: [BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'add',
+    values: [
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<string>,
+      PromiseOrValue<boolean>,
+      PromiseOrValue<BigNumberish>,
+    ],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'deposit',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'deposited',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>],
+  ): string;
+  encodeFunctionData(functionFragment: 'emergencyWithdraw', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'endBlock', values?: undefined): string;
   encodeFunctionData(functionFragment: 'erc20', values?: undefined): string;
   encodeFunctionData(functionFragment: 'feeAddress', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'fund', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'fund', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'massUpdatePools', values?: undefined): string;
   encodeFunctionData(functionFragment: 'owner', values?: undefined): string;
   encodeFunctionData(functionFragment: 'paidOut', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'pending', values: [BigNumberish, string]): string;
-  encodeFunctionData(functionFragment: 'poolInfo', values: [BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'pending',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>],
+  ): string;
+  encodeFunctionData(functionFragment: 'poolInfo', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'poolLength', values?: undefined): string;
   encodeFunctionData(functionFragment: 'renounceOwnership', values?: undefined): string;
   encodeFunctionData(functionFragment: 'rewardPerBlock', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'set', values: [BigNumberish, BigNumberish, boolean]): string;
-  encodeFunctionData(functionFragment: 'setFeeAddress', values: [string]): string;
+  encodeFunctionData(
+    functionFragment: 'set',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>, PromiseOrValue<boolean>],
+  ): string;
+  encodeFunctionData(functionFragment: 'setFeeAddress', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'startBlock', values?: undefined): string;
   encodeFunctionData(functionFragment: 'totalAllocPoint', values?: undefined): string;
   encodeFunctionData(functionFragment: 'totalPending', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'transferOwnership', values: [string]): string;
-  encodeFunctionData(functionFragment: 'updatePool', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'userInfo', values: [BigNumberish, string]): string;
-  encodeFunctionData(functionFragment: 'withdraw', values: [BigNumberish, BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'transferOwnership', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'updatePool', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(
+    functionFragment: 'userInfo',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'withdraw',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+  ): string;
 
   decodeFunctionResult(functionFragment: 'add', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'deposit', data: BytesLike): Result;
@@ -199,24 +225,28 @@ export interface QiDaoMasterChef extends BaseContract {
 
   functions: {
     add(
-      _allocPoint: BigNumberish,
-      _lpToken: string,
-      _withUpdate: boolean,
-      _depositFeeBP: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _allocPoint: PromiseOrValue<BigNumberish>,
+      _lpToken: PromiseOrValue<string>,
+      _withUpdate: PromiseOrValue<boolean>,
+      _depositFeeBP: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     deposit(
-      _pid: BigNumberish,
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _pid: PromiseOrValue<BigNumberish>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    deposited(_pid: BigNumberish, _user: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    deposited(
+      _pid: PromiseOrValue<BigNumberish>,
+      _user: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber]>;
 
     emergencyWithdraw(
-      _pid: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _pid: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     endBlock(overrides?: CallOverrides): Promise<[BigNumber]>;
@@ -226,20 +256,24 @@ export interface QiDaoMasterChef extends BaseContract {
     feeAddress(overrides?: CallOverrides): Promise<[string]>;
 
     fund(
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    massUpdatePools(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    massUpdatePools(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     owner(overrides?: CallOverrides): Promise<[string]>;
 
     paidOut(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    pending(_pid: BigNumberish, _user: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    pending(
+      _pid: PromiseOrValue<BigNumberish>,
+      _user: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber]>;
 
     poolInfo(
-      arg0: BigNumberish,
+      arg0: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<
       [string, BigNumber, BigNumber, BigNumber, number] & {
@@ -253,20 +287,20 @@ export interface QiDaoMasterChef extends BaseContract {
 
     poolLength(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     rewardPerBlock(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     set(
-      _pid: BigNumberish,
-      _allocPoint: BigNumberish,
-      _withUpdate: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _pid: PromiseOrValue<BigNumberish>,
+      _allocPoint: PromiseOrValue<BigNumberish>,
+      _withUpdate: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setFeeAddress(
-      _feeAddress: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _feeAddress: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     startBlock(overrides?: CallOverrides): Promise<[BigNumber]>;
@@ -276,47 +310,51 @@ export interface QiDaoMasterChef extends BaseContract {
     totalPending(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     updatePool(
-      _pid: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _pid: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     userInfo(
-      arg0: BigNumberish,
-      arg1: string,
+      arg0: PromiseOrValue<BigNumberish>,
+      arg1: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber, BigNumber] & { amount: BigNumber; rewardDebt: BigNumber }>;
 
     withdraw(
-      _pid: BigNumberish,
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _pid: PromiseOrValue<BigNumberish>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
   };
 
   add(
-    _allocPoint: BigNumberish,
-    _lpToken: string,
-    _withUpdate: boolean,
-    _depositFeeBP: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _allocPoint: PromiseOrValue<BigNumberish>,
+    _lpToken: PromiseOrValue<string>,
+    _withUpdate: PromiseOrValue<boolean>,
+    _depositFeeBP: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   deposit(
-    _pid: BigNumberish,
-    _amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _pid: PromiseOrValue<BigNumberish>,
+    _amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  deposited(_pid: BigNumberish, _user: string, overrides?: CallOverrides): Promise<BigNumber>;
+  deposited(
+    _pid: PromiseOrValue<BigNumberish>,
+    _user: PromiseOrValue<string>,
+    overrides?: CallOverrides,
+  ): Promise<BigNumber>;
 
   emergencyWithdraw(
-    _pid: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _pid: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   endBlock(overrides?: CallOverrides): Promise<BigNumber>;
@@ -326,20 +364,24 @@ export interface QiDaoMasterChef extends BaseContract {
   feeAddress(overrides?: CallOverrides): Promise<string>;
 
   fund(
-    _amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  massUpdatePools(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  massUpdatePools(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   owner(overrides?: CallOverrides): Promise<string>;
 
   paidOut(overrides?: CallOverrides): Promise<BigNumber>;
 
-  pending(_pid: BigNumberish, _user: string, overrides?: CallOverrides): Promise<BigNumber>;
+  pending(
+    _pid: PromiseOrValue<BigNumberish>,
+    _user: PromiseOrValue<string>,
+    overrides?: CallOverrides,
+  ): Promise<BigNumber>;
 
   poolInfo(
-    arg0: BigNumberish,
+    arg0: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides,
   ): Promise<
     [string, BigNumber, BigNumber, BigNumber, number] & {
@@ -353,20 +395,20 @@ export interface QiDaoMasterChef extends BaseContract {
 
   poolLength(overrides?: CallOverrides): Promise<BigNumber>;
 
-  renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   rewardPerBlock(overrides?: CallOverrides): Promise<BigNumber>;
 
   set(
-    _pid: BigNumberish,
-    _allocPoint: BigNumberish,
-    _withUpdate: boolean,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _pid: PromiseOrValue<BigNumberish>,
+    _allocPoint: PromiseOrValue<BigNumberish>,
+    _withUpdate: PromiseOrValue<boolean>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setFeeAddress(
-    _feeAddress: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _feeAddress: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   startBlock(overrides?: CallOverrides): Promise<BigNumber>;
@@ -376,41 +418,49 @@ export interface QiDaoMasterChef extends BaseContract {
   totalPending(overrides?: CallOverrides): Promise<BigNumber>;
 
   transferOwnership(
-    newOwner: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    newOwner: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   updatePool(
-    _pid: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _pid: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   userInfo(
-    arg0: BigNumberish,
-    arg1: string,
+    arg0: PromiseOrValue<BigNumberish>,
+    arg1: PromiseOrValue<string>,
     overrides?: CallOverrides,
   ): Promise<[BigNumber, BigNumber] & { amount: BigNumber; rewardDebt: BigNumber }>;
 
   withdraw(
-    _pid: BigNumberish,
-    _amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _pid: PromiseOrValue<BigNumberish>,
+    _amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   callStatic: {
     add(
-      _allocPoint: BigNumberish,
-      _lpToken: string,
-      _withUpdate: boolean,
-      _depositFeeBP: BigNumberish,
+      _allocPoint: PromiseOrValue<BigNumberish>,
+      _lpToken: PromiseOrValue<string>,
+      _withUpdate: PromiseOrValue<boolean>,
+      _depositFeeBP: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
-    deposit(_pid: BigNumberish, _amount: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    deposit(
+      _pid: PromiseOrValue<BigNumberish>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    deposited(_pid: BigNumberish, _user: string, overrides?: CallOverrides): Promise<BigNumber>;
+    deposited(
+      _pid: PromiseOrValue<BigNumberish>,
+      _user: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    emergencyWithdraw(_pid: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    emergencyWithdraw(_pid: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
     endBlock(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -418,7 +468,7 @@ export interface QiDaoMasterChef extends BaseContract {
 
     feeAddress(overrides?: CallOverrides): Promise<string>;
 
-    fund(_amount: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    fund(_amount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
     massUpdatePools(overrides?: CallOverrides): Promise<void>;
 
@@ -426,10 +476,14 @@ export interface QiDaoMasterChef extends BaseContract {
 
     paidOut(overrides?: CallOverrides): Promise<BigNumber>;
 
-    pending(_pid: BigNumberish, _user: string, overrides?: CallOverrides): Promise<BigNumber>;
+    pending(
+      _pid: PromiseOrValue<BigNumberish>,
+      _user: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     poolInfo(
-      arg0: BigNumberish,
+      arg0: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<
       [string, BigNumber, BigNumber, BigNumber, number] & {
@@ -447,9 +501,14 @@ export interface QiDaoMasterChef extends BaseContract {
 
     rewardPerBlock(overrides?: CallOverrides): Promise<BigNumber>;
 
-    set(_pid: BigNumberish, _allocPoint: BigNumberish, _withUpdate: boolean, overrides?: CallOverrides): Promise<void>;
+    set(
+      _pid: PromiseOrValue<BigNumberish>,
+      _allocPoint: PromiseOrValue<BigNumberish>,
+      _withUpdate: PromiseOrValue<boolean>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    setFeeAddress(_feeAddress: string, overrides?: CallOverrides): Promise<void>;
+    setFeeAddress(_feeAddress: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     startBlock(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -457,68 +516,91 @@ export interface QiDaoMasterChef extends BaseContract {
 
     totalPending(overrides?: CallOverrides): Promise<BigNumber>;
 
-    transferOwnership(newOwner: string, overrides?: CallOverrides): Promise<void>;
+    transferOwnership(newOwner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    updatePool(_pid: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    updatePool(_pid: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
     userInfo(
-      arg0: BigNumberish,
-      arg1: string,
+      arg0: PromiseOrValue<BigNumberish>,
+      arg1: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber, BigNumber] & { amount: BigNumber; rewardDebt: BigNumber }>;
 
-    withdraw(_pid: BigNumberish, _amount: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    withdraw(
+      _pid: PromiseOrValue<BigNumberish>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
   };
 
   filters: {
     'Deposit(address,uint256,uint256)'(
-      user?: string | null,
-      pid?: BigNumberish | null,
+      user?: PromiseOrValue<string> | null,
+      pid?: PromiseOrValue<BigNumberish> | null,
       amount?: null,
     ): DepositEventFilter;
-    Deposit(user?: string | null, pid?: BigNumberish | null, amount?: null): DepositEventFilter;
+    Deposit(
+      user?: PromiseOrValue<string> | null,
+      pid?: PromiseOrValue<BigNumberish> | null,
+      amount?: null,
+    ): DepositEventFilter;
 
     'EmergencyWithdraw(address,uint256,uint256)'(
-      user?: string | null,
-      pid?: BigNumberish | null,
+      user?: PromiseOrValue<string> | null,
+      pid?: PromiseOrValue<BigNumberish> | null,
       amount?: null,
     ): EmergencyWithdrawEventFilter;
-    EmergencyWithdraw(user?: string | null, pid?: BigNumberish | null, amount?: null): EmergencyWithdrawEventFilter;
+    EmergencyWithdraw(
+      user?: PromiseOrValue<string> | null,
+      pid?: PromiseOrValue<BigNumberish> | null,
+      amount?: null,
+    ): EmergencyWithdrawEventFilter;
 
     'OwnershipTransferred(address,address)'(
-      previousOwner?: string | null,
-      newOwner?: string | null,
+      previousOwner?: PromiseOrValue<string> | null,
+      newOwner?: PromiseOrValue<string> | null,
     ): OwnershipTransferredEventFilter;
-    OwnershipTransferred(previousOwner?: string | null, newOwner?: string | null): OwnershipTransferredEventFilter;
+    OwnershipTransferred(
+      previousOwner?: PromiseOrValue<string> | null,
+      newOwner?: PromiseOrValue<string> | null,
+    ): OwnershipTransferredEventFilter;
 
     'Withdraw(address,uint256,uint256)'(
-      user?: string | null,
-      pid?: BigNumberish | null,
+      user?: PromiseOrValue<string> | null,
+      pid?: PromiseOrValue<BigNumberish> | null,
       amount?: null,
     ): WithdrawEventFilter;
-    Withdraw(user?: string | null, pid?: BigNumberish | null, amount?: null): WithdrawEventFilter;
+    Withdraw(
+      user?: PromiseOrValue<string> | null,
+      pid?: PromiseOrValue<BigNumberish> | null,
+      amount?: null,
+    ): WithdrawEventFilter;
   };
 
   estimateGas: {
     add(
-      _allocPoint: BigNumberish,
-      _lpToken: string,
-      _withUpdate: boolean,
-      _depositFeeBP: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _allocPoint: PromiseOrValue<BigNumberish>,
+      _lpToken: PromiseOrValue<string>,
+      _withUpdate: PromiseOrValue<boolean>,
+      _depositFeeBP: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     deposit(
-      _pid: BigNumberish,
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _pid: PromiseOrValue<BigNumberish>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    deposited(_pid: BigNumberish, _user: string, overrides?: CallOverrides): Promise<BigNumber>;
+    deposited(
+      _pid: PromiseOrValue<BigNumberish>,
+      _user: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     emergencyWithdraw(
-      _pid: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _pid: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     endBlock(overrides?: CallOverrides): Promise<BigNumber>;
@@ -527,32 +609,42 @@ export interface QiDaoMasterChef extends BaseContract {
 
     feeAddress(overrides?: CallOverrides): Promise<BigNumber>;
 
-    fund(_amount: BigNumberish, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    fund(
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
-    massUpdatePools(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    massUpdatePools(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     owner(overrides?: CallOverrides): Promise<BigNumber>;
 
     paidOut(overrides?: CallOverrides): Promise<BigNumber>;
 
-    pending(_pid: BigNumberish, _user: string, overrides?: CallOverrides): Promise<BigNumber>;
+    pending(
+      _pid: PromiseOrValue<BigNumberish>,
+      _user: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    poolInfo(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    poolInfo(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     poolLength(overrides?: CallOverrides): Promise<BigNumber>;
 
-    renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     rewardPerBlock(overrides?: CallOverrides): Promise<BigNumber>;
 
     set(
-      _pid: BigNumberish,
-      _allocPoint: BigNumberish,
-      _withUpdate: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _pid: PromiseOrValue<BigNumberish>,
+      _allocPoint: PromiseOrValue<BigNumberish>,
+      _withUpdate: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    setFeeAddress(_feeAddress: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    setFeeAddress(
+      _feeAddress: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     startBlock(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -561,41 +653,52 @@ export interface QiDaoMasterChef extends BaseContract {
     totalPending(overrides?: CallOverrides): Promise<BigNumber>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    updatePool(_pid: BigNumberish, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    updatePool(
+      _pid: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
-    userInfo(arg0: BigNumberish, arg1: string, overrides?: CallOverrides): Promise<BigNumber>;
+    userInfo(
+      arg0: PromiseOrValue<BigNumberish>,
+      arg1: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     withdraw(
-      _pid: BigNumberish,
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _pid: PromiseOrValue<BigNumberish>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
   };
 
   populateTransaction: {
     add(
-      _allocPoint: BigNumberish,
-      _lpToken: string,
-      _withUpdate: boolean,
-      _depositFeeBP: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _allocPoint: PromiseOrValue<BigNumberish>,
+      _lpToken: PromiseOrValue<string>,
+      _withUpdate: PromiseOrValue<boolean>,
+      _depositFeeBP: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     deposit(
-      _pid: BigNumberish,
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _pid: PromiseOrValue<BigNumberish>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    deposited(_pid: BigNumberish, _user: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    deposited(
+      _pid: PromiseOrValue<BigNumberish>,
+      _user: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
     emergencyWithdraw(
-      _pid: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _pid: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     endBlock(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -605,36 +708,40 @@ export interface QiDaoMasterChef extends BaseContract {
     feeAddress(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     fund(
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    massUpdatePools(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    massUpdatePools(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     paidOut(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    pending(_pid: BigNumberish, _user: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    pending(
+      _pid: PromiseOrValue<BigNumberish>,
+      _user: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
-    poolInfo(arg0: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    poolInfo(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     poolLength(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     rewardPerBlock(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     set(
-      _pid: BigNumberish,
-      _allocPoint: BigNumberish,
-      _withUpdate: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _pid: PromiseOrValue<BigNumberish>,
+      _allocPoint: PromiseOrValue<BigNumberish>,
+      _withUpdate: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setFeeAddress(
-      _feeAddress: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _feeAddress: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     startBlock(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -644,21 +751,25 @@ export interface QiDaoMasterChef extends BaseContract {
     totalPending(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     updatePool(
-      _pid: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _pid: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    userInfo(arg0: BigNumberish, arg1: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    userInfo(
+      arg0: PromiseOrValue<BigNumberish>,
+      arg1: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
     withdraw(
-      _pid: BigNumberish,
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _pid: PromiseOrValue<BigNumberish>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
   };
 }

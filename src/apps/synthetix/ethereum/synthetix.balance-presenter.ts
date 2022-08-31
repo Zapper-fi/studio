@@ -10,7 +10,9 @@ import { Network } from '~types/network.interface';
 import { SynthetixMintrMetaHelper } from '../helpers/synthetix.mintr.meta-helper';
 import { SYNTHETIX_DEFINITION } from '../synthetix.definition';
 
-@Register.BalancePresenter({ appId: SYNTHETIX_DEFINITION.id, network: Network.ETHEREUM_MAINNET })
+const network = Network.ETHEREUM_MAINNET;
+
+@Register.BalancePresenter({ appId: SYNTHETIX_DEFINITION.id, network })
 export class EthereumSynthetixBalancePresenter implements BalancePresenter {
   constructor(@Inject(SynthetixMintrMetaHelper) private readonly synthetixMintrMetaHelper: SynthetixMintrMetaHelper) {}
 
@@ -22,7 +24,7 @@ export class EthereumSynthetixBalancePresenter implements BalancePresenter {
 
         // For the Mintr group, add additional metadata
         if (group.id === SYNTHETIX_DEFINITION.groups.mintr.id) {
-          const meta = await this.synthetixMintrMetaHelper.getMeta({ address, network: Network.ETHEREUM_MAINNET });
+          const meta = await this.synthetixMintrMetaHelper.getMeta({ address, network });
           return { label: group.label, assets: groupBalances, meta };
         }
 

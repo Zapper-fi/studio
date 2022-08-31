@@ -1,6 +1,8 @@
 import { Register } from '~app-toolkit/decorators';
 import { AbstractApp } from '~app/app.dynamic-module';
 
+import { CeloGoodGhostingBalanceFetcher } from './celo/good-ghosting.balance-fetcher';
+import { CeloGoodGhostingGameContractPositionFetcher } from './celo/good-ghosting.game.contract-position-fetcher';
 import { GoodGhostingContractFactory } from './contracts';
 import { GoodGhostingAppDefinition, GOOD_GHOSTING_DEFINITION } from './good-ghosting.definition';
 import { GoodGhostingBalanceFetcherHelper } from './helpers/good-ghosting.balance-fetcher-helper';
@@ -14,11 +16,16 @@ import { PolygonGoodGhostingGameContractPositionFetcher } from './polygon/good-g
   providers: [
     GoodGhostingAppDefinition,
     GoodGhostingContractFactory,
+    // Polygon
     PolygonGoodGhostingBalanceFetcher,
     PolygonGoodGhostingGameContractPositionFetcher,
+    // Celo
+    CeloGoodGhostingBalanceFetcher,
+    CeloGoodGhostingGameContractPositionFetcher,
+    // Helpers
     GoodGhostingGameContractPositionFetcherHelper,
-    GoodGhostingBalanceFetcherHelper,
     GoodGhostingGameConfigFetcherHelper,
+    GoodGhostingBalanceFetcherHelper,
   ],
 })
 export class GoodGhostingAppModule extends AbstractApp() {}

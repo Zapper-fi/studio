@@ -16,7 +16,7 @@ import type {
 } from 'ethers';
 import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
 import type { Listener, Provider } from '@ethersproject/providers';
-import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
 export interface AlphaBankInterface extends utils.Interface {
   functions: {
@@ -96,43 +96,70 @@ export interface AlphaBankInterface extends utils.Interface {
       | 'work',
   ): FunctionFragment;
 
-  encodeFunctionData(functionFragment: 'allowance', values: [string, string]): string;
-  encodeFunctionData(functionFragment: 'approve', values: [string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'balanceOf', values: [string]): string;
+  encodeFunctionData(functionFragment: 'allowance', values: [PromiseOrValue<string>, PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'approve',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'balanceOf', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'config', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'debtShareToVal', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'debtValToShare', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'debtShareToVal', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'debtValToShare', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'decimals', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'decreaseAllowance', values: [string, BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'decreaseAllowance',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
   encodeFunctionData(functionFragment: 'deposit', values?: undefined): string;
   encodeFunctionData(functionFragment: 'glbDebtShare', values?: undefined): string;
   encodeFunctionData(functionFragment: 'glbDebtVal', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'increaseAllowance', values: [string, BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'increaseAllowance',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
   encodeFunctionData(functionFragment: 'isOwner', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'kill', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'kill', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'lastAccrueTime', values?: undefined): string;
   encodeFunctionData(functionFragment: 'name', values?: undefined): string;
   encodeFunctionData(functionFragment: 'nextPositionID', values?: undefined): string;
   encodeFunctionData(functionFragment: 'owner', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'pendingInterest', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'positionInfo', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'positions', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'recover', values: [string, string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'reduceReserve', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'pendingInterest', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'positionInfo', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'positions', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(
+    functionFragment: 'recover',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'reduceReserve', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'renounceOwnership', values?: undefined): string;
   encodeFunctionData(functionFragment: 'reservePool', values?: undefined): string;
   encodeFunctionData(functionFragment: 'symbol', values?: undefined): string;
   encodeFunctionData(functionFragment: 'totalETH', values?: undefined): string;
   encodeFunctionData(functionFragment: 'totalSupply', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'transfer', values: [string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'transferFrom', values: [string, string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'transferOwnership', values: [string]): string;
-  encodeFunctionData(functionFragment: 'updateConfig', values: [string]): string;
-  encodeFunctionData(functionFragment: 'withdraw', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'withdrawReserve', values: [string, BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'transfer',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'transferFrom',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'transferOwnership', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'updateConfig', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'withdraw', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(
+    functionFragment: 'withdrawReserve',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
   encodeFunctionData(
     functionFragment: 'work',
-    values: [BigNumberish, string, BigNumberish, BigNumberish, BytesLike],
+    values: [
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BytesLike>,
+    ],
   ): string;
 
   decodeFunctionResult(functionFragment: 'allowance', data: BytesLike): Result;
@@ -273,45 +300,52 @@ export interface AlphaBank extends BaseContract {
   removeListener: OnEvent<this>;
 
   functions: {
-    allowance(owner: string, spender: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    allowance(
+      owner: PromiseOrValue<string>,
+      spender: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber]>;
 
     approve(
-      spender: string,
-      value: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      spender: PromiseOrValue<string>,
+      value: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    balanceOf(account: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    balanceOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     config(overrides?: CallOverrides): Promise<[string]>;
 
-    debtShareToVal(debtShare: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber]>;
+    debtShareToVal(debtShare: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    debtValToShare(debtVal: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber]>;
+    debtValToShare(debtVal: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     decimals(overrides?: CallOverrides): Promise<[number]>;
 
     decreaseAllowance(
-      spender: string,
-      subtractedValue: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      spender: PromiseOrValue<string>,
+      subtractedValue: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    deposit(overrides?: PayableOverrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    deposit(overrides?: PayableOverrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     glbDebtShare(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     glbDebtVal(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     increaseAllowance(
-      spender: string,
-      addedValue: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      spender: PromiseOrValue<string>,
+      addedValue: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     isOwner(overrides?: CallOverrides): Promise<[boolean]>;
 
-    kill(id: BigNumberish, overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    kill(
+      id: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<ContractTransaction>;
 
     lastAccrueTime(overrides?: CallOverrides): Promise<[BigNumber]>;
 
@@ -321,12 +355,12 @@ export interface AlphaBank extends BaseContract {
 
     owner(overrides?: CallOverrides): Promise<[string]>;
 
-    pendingInterest(msgValue: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber]>;
+    pendingInterest(msgValue: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    positionInfo(id: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber, BigNumber]>;
+    positionInfo(id: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[BigNumber, BigNumber]>;
 
     positions(
-      arg0: BigNumberish,
+      arg0: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<
       [string, string, BigNumber] & {
@@ -337,18 +371,18 @@ export interface AlphaBank extends BaseContract {
     >;
 
     recover(
-      token: string,
-      to: string,
-      value: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      token: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      value: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     reduceReserve(
-      value: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      value: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     reservePool(overrides?: CallOverrides): Promise<[BigNumber]>;
 
@@ -359,88 +393,95 @@ export interface AlphaBank extends BaseContract {
     totalSupply(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     transfer(
-      recipient: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      recipient: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     transferFrom(
-      sender: string,
-      recipient: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      sender: PromiseOrValue<string>,
+      recipient: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     updateConfig(
-      _config: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _config: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     withdraw(
-      share: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      share: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     withdrawReserve(
-      to: string,
-      value: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      to: PromiseOrValue<string>,
+      value: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     work(
-      id: BigNumberish,
-      goblin: string,
-      loan: BigNumberish,
-      maxReturn: BigNumberish,
-      data: BytesLike,
-      overrides?: PayableOverrides & { from?: string | Promise<string> },
+      id: PromiseOrValue<BigNumberish>,
+      goblin: PromiseOrValue<string>,
+      loan: PromiseOrValue<BigNumberish>,
+      maxReturn: PromiseOrValue<BigNumberish>,
+      data: PromiseOrValue<BytesLike>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
   };
 
-  allowance(owner: string, spender: string, overrides?: CallOverrides): Promise<BigNumber>;
+  allowance(
+    owner: PromiseOrValue<string>,
+    spender: PromiseOrValue<string>,
+    overrides?: CallOverrides,
+  ): Promise<BigNumber>;
 
   approve(
-    spender: string,
-    value: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    spender: PromiseOrValue<string>,
+    value: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  balanceOf(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+  balanceOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   config(overrides?: CallOverrides): Promise<string>;
 
-  debtShareToVal(debtShare: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+  debtShareToVal(debtShare: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  debtValToShare(debtVal: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+  debtValToShare(debtVal: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
   decimals(overrides?: CallOverrides): Promise<number>;
 
   decreaseAllowance(
-    spender: string,
-    subtractedValue: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    spender: PromiseOrValue<string>,
+    subtractedValue: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  deposit(overrides?: PayableOverrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  deposit(overrides?: PayableOverrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   glbDebtShare(overrides?: CallOverrides): Promise<BigNumber>;
 
   glbDebtVal(overrides?: CallOverrides): Promise<BigNumber>;
 
   increaseAllowance(
-    spender: string,
-    addedValue: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    spender: PromiseOrValue<string>,
+    addedValue: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   isOwner(overrides?: CallOverrides): Promise<boolean>;
 
-  kill(id: BigNumberish, overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  kill(
+    id: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
+  ): Promise<ContractTransaction>;
 
   lastAccrueTime(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -450,12 +491,12 @@ export interface AlphaBank extends BaseContract {
 
   owner(overrides?: CallOverrides): Promise<string>;
 
-  pendingInterest(msgValue: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+  pendingInterest(msgValue: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  positionInfo(id: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber, BigNumber]>;
+  positionInfo(id: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[BigNumber, BigNumber]>;
 
   positions(
-    arg0: BigNumberish,
+    arg0: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides,
   ): Promise<
     [string, string, BigNumber] & {
@@ -466,18 +507,18 @@ export interface AlphaBank extends BaseContract {
   >;
 
   recover(
-    token: string,
-    to: string,
-    value: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    token: PromiseOrValue<string>,
+    to: PromiseOrValue<string>,
+    value: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   reduceReserve(
-    value: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    value: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   reservePool(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -488,64 +529,76 @@ export interface AlphaBank extends BaseContract {
   totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
   transfer(
-    recipient: string,
-    amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    recipient: PromiseOrValue<string>,
+    amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   transferFrom(
-    sender: string,
-    recipient: string,
-    amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    sender: PromiseOrValue<string>,
+    recipient: PromiseOrValue<string>,
+    amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   transferOwnership(
-    newOwner: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    newOwner: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   updateConfig(
-    _config: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _config: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   withdraw(
-    share: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    share: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   withdrawReserve(
-    to: string,
-    value: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    to: PromiseOrValue<string>,
+    value: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   work(
-    id: BigNumberish,
-    goblin: string,
-    loan: BigNumberish,
-    maxReturn: BigNumberish,
-    data: BytesLike,
-    overrides?: PayableOverrides & { from?: string | Promise<string> },
+    id: PromiseOrValue<BigNumberish>,
+    goblin: PromiseOrValue<string>,
+    loan: PromiseOrValue<BigNumberish>,
+    maxReturn: PromiseOrValue<BigNumberish>,
+    data: PromiseOrValue<BytesLike>,
+    overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   callStatic: {
-    allowance(owner: string, spender: string, overrides?: CallOverrides): Promise<BigNumber>;
+    allowance(
+      owner: PromiseOrValue<string>,
+      spender: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    approve(spender: string, value: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+    approve(
+      spender: PromiseOrValue<string>,
+      value: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
 
-    balanceOf(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    balanceOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     config(overrides?: CallOverrides): Promise<string>;
 
-    debtShareToVal(debtShare: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    debtShareToVal(debtShare: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    debtValToShare(debtVal: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    debtValToShare(debtVal: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     decimals(overrides?: CallOverrides): Promise<number>;
 
-    decreaseAllowance(spender: string, subtractedValue: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+    decreaseAllowance(
+      spender: PromiseOrValue<string>,
+      subtractedValue: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
 
     deposit(overrides?: CallOverrides): Promise<void>;
 
@@ -553,11 +606,15 @@ export interface AlphaBank extends BaseContract {
 
     glbDebtVal(overrides?: CallOverrides): Promise<BigNumber>;
 
-    increaseAllowance(spender: string, addedValue: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+    increaseAllowance(
+      spender: PromiseOrValue<string>,
+      addedValue: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
 
     isOwner(overrides?: CallOverrides): Promise<boolean>;
 
-    kill(id: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    kill(id: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
     lastAccrueTime(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -567,12 +624,12 @@ export interface AlphaBank extends BaseContract {
 
     owner(overrides?: CallOverrides): Promise<string>;
 
-    pendingInterest(msgValue: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    pendingInterest(msgValue: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    positionInfo(id: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber, BigNumber]>;
+    positionInfo(id: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[BigNumber, BigNumber]>;
 
     positions(
-      arg0: BigNumberish,
+      arg0: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<
       [string, string, BigNumber] & {
@@ -582,9 +639,14 @@ export interface AlphaBank extends BaseContract {
       }
     >;
 
-    recover(token: string, to: string, value: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    recover(
+      token: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      value: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    reduceReserve(value: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    reduceReserve(value: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
     renounceOwnership(overrides?: CallOverrides): Promise<void>;
 
@@ -596,103 +658,143 @@ export interface AlphaBank extends BaseContract {
 
     totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
-    transfer(recipient: string, amount: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+    transfer(
+      recipient: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
 
-    transferFrom(sender: string, recipient: string, amount: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+    transferFrom(
+      sender: PromiseOrValue<string>,
+      recipient: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
 
-    transferOwnership(newOwner: string, overrides?: CallOverrides): Promise<void>;
+    transferOwnership(newOwner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    updateConfig(_config: string, overrides?: CallOverrides): Promise<void>;
+    updateConfig(_config: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    withdraw(share: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    withdraw(share: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
-    withdrawReserve(to: string, value: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    withdrawReserve(
+      to: PromiseOrValue<string>,
+      value: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
     work(
-      id: BigNumberish,
-      goblin: string,
-      loan: BigNumberish,
-      maxReturn: BigNumberish,
-      data: BytesLike,
+      id: PromiseOrValue<BigNumberish>,
+      goblin: PromiseOrValue<string>,
+      loan: PromiseOrValue<BigNumberish>,
+      maxReturn: PromiseOrValue<BigNumberish>,
+      data: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides,
     ): Promise<void>;
   };
 
   filters: {
-    'AddDebt(uint256,uint256)'(id?: BigNumberish | null, debtShare?: null): AddDebtEventFilter;
-    AddDebt(id?: BigNumberish | null, debtShare?: null): AddDebtEventFilter;
+    'AddDebt(uint256,uint256)'(id?: PromiseOrValue<BigNumberish> | null, debtShare?: null): AddDebtEventFilter;
+    AddDebt(id?: PromiseOrValue<BigNumberish> | null, debtShare?: null): AddDebtEventFilter;
 
     'Approval(address,address,uint256)'(
-      owner?: string | null,
-      spender?: string | null,
+      owner?: PromiseOrValue<string> | null,
+      spender?: PromiseOrValue<string> | null,
       value?: null,
     ): ApprovalEventFilter;
-    Approval(owner?: string | null, spender?: string | null, value?: null): ApprovalEventFilter;
+    Approval(
+      owner?: PromiseOrValue<string> | null,
+      spender?: PromiseOrValue<string> | null,
+      value?: null,
+    ): ApprovalEventFilter;
 
     'Kill(uint256,address,uint256,uint256)'(
-      id?: BigNumberish | null,
-      killer?: string | null,
+      id?: PromiseOrValue<BigNumberish> | null,
+      killer?: PromiseOrValue<string> | null,
       prize?: null,
       left?: null,
     ): KillEventFilter;
-    Kill(id?: BigNumberish | null, killer?: string | null, prize?: null, left?: null): KillEventFilter;
+    Kill(
+      id?: PromiseOrValue<BigNumberish> | null,
+      killer?: PromiseOrValue<string> | null,
+      prize?: null,
+      left?: null,
+    ): KillEventFilter;
 
     'OwnershipTransferred(address,address)'(
-      previousOwner?: string | null,
-      newOwner?: string | null,
+      previousOwner?: PromiseOrValue<string> | null,
+      newOwner?: PromiseOrValue<string> | null,
     ): OwnershipTransferredEventFilter;
-    OwnershipTransferred(previousOwner?: string | null, newOwner?: string | null): OwnershipTransferredEventFilter;
+    OwnershipTransferred(
+      previousOwner?: PromiseOrValue<string> | null,
+      newOwner?: PromiseOrValue<string> | null,
+    ): OwnershipTransferredEventFilter;
 
-    'RemoveDebt(uint256,uint256)'(id?: BigNumberish | null, debtShare?: null): RemoveDebtEventFilter;
-    RemoveDebt(id?: BigNumberish | null, debtShare?: null): RemoveDebtEventFilter;
+    'RemoveDebt(uint256,uint256)'(id?: PromiseOrValue<BigNumberish> | null, debtShare?: null): RemoveDebtEventFilter;
+    RemoveDebt(id?: PromiseOrValue<BigNumberish> | null, debtShare?: null): RemoveDebtEventFilter;
 
-    'Transfer(address,address,uint256)'(from?: string | null, to?: string | null, value?: null): TransferEventFilter;
-    Transfer(from?: string | null, to?: string | null, value?: null): TransferEventFilter;
+    'Transfer(address,address,uint256)'(
+      from?: PromiseOrValue<string> | null,
+      to?: PromiseOrValue<string> | null,
+      value?: null,
+    ): TransferEventFilter;
+    Transfer(
+      from?: PromiseOrValue<string> | null,
+      to?: PromiseOrValue<string> | null,
+      value?: null,
+    ): TransferEventFilter;
 
-    'Work(uint256,uint256)'(id?: BigNumberish | null, loan?: null): WorkEventFilter;
-    Work(id?: BigNumberish | null, loan?: null): WorkEventFilter;
+    'Work(uint256,uint256)'(id?: PromiseOrValue<BigNumberish> | null, loan?: null): WorkEventFilter;
+    Work(id?: PromiseOrValue<BigNumberish> | null, loan?: null): WorkEventFilter;
   };
 
   estimateGas: {
-    allowance(owner: string, spender: string, overrides?: CallOverrides): Promise<BigNumber>;
-
-    approve(
-      spender: string,
-      value: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+    allowance(
+      owner: PromiseOrValue<string>,
+      spender: PromiseOrValue<string>,
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
-    balanceOf(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    approve(
+      spender: PromiseOrValue<string>,
+      value: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
+
+    balanceOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     config(overrides?: CallOverrides): Promise<BigNumber>;
 
-    debtShareToVal(debtShare: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    debtShareToVal(debtShare: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    debtValToShare(debtVal: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    debtValToShare(debtVal: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     decimals(overrides?: CallOverrides): Promise<BigNumber>;
 
     decreaseAllowance(
-      spender: string,
-      subtractedValue: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      spender: PromiseOrValue<string>,
+      subtractedValue: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    deposit(overrides?: PayableOverrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    deposit(overrides?: PayableOverrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     glbDebtShare(overrides?: CallOverrides): Promise<BigNumber>;
 
     glbDebtVal(overrides?: CallOverrides): Promise<BigNumber>;
 
     increaseAllowance(
-      spender: string,
-      addedValue: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      spender: PromiseOrValue<string>,
+      addedValue: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     isOwner(overrides?: CallOverrides): Promise<BigNumber>;
 
-    kill(id: BigNumberish, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    kill(
+      id: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     lastAccrueTime(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -702,22 +804,25 @@ export interface AlphaBank extends BaseContract {
 
     owner(overrides?: CallOverrides): Promise<BigNumber>;
 
-    pendingInterest(msgValue: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    pendingInterest(msgValue: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    positionInfo(id: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    positionInfo(id: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    positions(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    positions(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     recover(
-      token: string,
-      to: string,
-      value: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      token: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      value: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    reduceReserve(value: BigNumberish, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    reduceReserve(
+      value: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
-    renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     reservePool(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -728,83 +833,96 @@ export interface AlphaBank extends BaseContract {
     totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
     transfer(
-      recipient: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      recipient: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     transferFrom(
-      sender: string,
-      recipient: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      sender: PromiseOrValue<string>,
+      recipient: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    updateConfig(_config: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    updateConfig(
+      _config: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
-    withdraw(share: BigNumberish, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    withdraw(
+      share: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     withdrawReserve(
-      to: string,
-      value: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      to: PromiseOrValue<string>,
+      value: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     work(
-      id: BigNumberish,
-      goblin: string,
-      loan: BigNumberish,
-      maxReturn: BigNumberish,
-      data: BytesLike,
-      overrides?: PayableOverrides & { from?: string | Promise<string> },
+      id: PromiseOrValue<BigNumberish>,
+      goblin: PromiseOrValue<string>,
+      loan: PromiseOrValue<BigNumberish>,
+      maxReturn: PromiseOrValue<BigNumberish>,
+      data: PromiseOrValue<BytesLike>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
   };
 
   populateTransaction: {
-    allowance(owner: string, spender: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    approve(
-      spender: string,
-      value: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+    allowance(
+      owner: PromiseOrValue<string>,
+      spender: PromiseOrValue<string>,
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
-    balanceOf(account: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    approve(
+      spender: PromiseOrValue<string>,
+      value: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<PopulatedTransaction>;
+
+    balanceOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     config(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    debtShareToVal(debtShare: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    debtShareToVal(debtShare: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    debtValToShare(debtVal: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    debtValToShare(debtVal: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     decimals(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     decreaseAllowance(
-      spender: string,
-      subtractedValue: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      spender: PromiseOrValue<string>,
+      subtractedValue: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    deposit(overrides?: PayableOverrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    deposit(overrides?: PayableOverrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     glbDebtShare(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     glbDebtVal(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     increaseAllowance(
-      spender: string,
-      addedValue: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      spender: PromiseOrValue<string>,
+      addedValue: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     isOwner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    kill(id: BigNumberish, overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    kill(
+      id: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<PopulatedTransaction>;
 
     lastAccrueTime(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
@@ -814,25 +932,25 @@ export interface AlphaBank extends BaseContract {
 
     owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    pendingInterest(msgValue: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    pendingInterest(msgValue: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    positionInfo(id: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    positionInfo(id: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    positions(arg0: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    positions(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     recover(
-      token: string,
-      to: string,
-      value: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      token: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      value: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     reduceReserve(
-      value: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      value: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     reservePool(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
@@ -843,46 +961,46 @@ export interface AlphaBank extends BaseContract {
     totalSupply(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     transfer(
-      recipient: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      recipient: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     transferFrom(
-      sender: string,
-      recipient: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      sender: PromiseOrValue<string>,
+      recipient: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     updateConfig(
-      _config: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _config: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     withdraw(
-      share: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      share: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     withdrawReserve(
-      to: string,
-      value: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      to: PromiseOrValue<string>,
+      value: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     work(
-      id: BigNumberish,
-      goblin: string,
-      loan: BigNumberish,
-      maxReturn: BigNumberish,
-      data: BytesLike,
-      overrides?: PayableOverrides & { from?: string | Promise<string> },
+      id: PromiseOrValue<BigNumberish>,
+      goblin: PromiseOrValue<string>,
+      loan: PromiseOrValue<BigNumberish>,
+      maxReturn: PromiseOrValue<BigNumberish>,
+      data: PromiseOrValue<BytesLike>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
   };
 }

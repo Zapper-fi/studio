@@ -2,6 +2,7 @@ import { Inject, Injectable } from '@nestjs/common';
 
 import { ContractPositionBalanceHelper } from './helpers/balance/contract-position-balance.helper';
 import { SingleStakingContractPositionBalanceHelper } from './helpers/balance/single-staking-farm.contract-position-balance-helper';
+import { StakedTokenHelper } from './helpers/balance/staked.token-helper';
 import { TokenBalanceHelper } from './helpers/balance/token-balance.helper';
 import { MasterChefContractPositionBalanceHelper } from './helpers/master-chef/master-chef.contract-position-balance-helper';
 import { MasterChefContractPositionHelper } from './helpers/master-chef/master-chef.contract-position-helper';
@@ -19,6 +20,7 @@ import { TheGraphHelper } from './helpers/the-graph/the-graph.helper';
 export const AppToolkitHelpers = [
   // General
   TokenBalanceHelper,
+  StakedTokenHelper,
   ContractPositionBalanceHelper,
   TheGraphHelper,
   // Single Staking
@@ -43,6 +45,7 @@ export const AppToolkitHelpers = [
 export class AppToolkitHelperRegistry {
   constructor(
     @Inject(TokenBalanceHelper) public readonly tokenBalanceHelper: TokenBalanceHelper,
+    @Inject(StakedTokenHelper) public readonly stakedTokenHelper: StakedTokenHelper,
     @Inject(ContractPositionBalanceHelper) public readonly contractPositionBalanceHelper: ContractPositionBalanceHelper,
     @Inject(TheGraphHelper) public readonly theGraphHelper: TheGraphHelper,
     @Inject(SingleStakingContractPositionBalanceHelper)

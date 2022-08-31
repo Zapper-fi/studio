@@ -3,4 +3,5 @@
 /* eslint-disable */
 export { PolynomialCoveredCall__factory } from './PolynomialCoveredCall__factory';
 export { PolynomialPutSelling__factory } from './PolynomialPutSelling__factory';
-export { Vaults__factory } from './Vaults__factory';
+export { PolynomialResolver__factory } from './PolynomialResolver__factory';
+export { PolynomialVaultToken__factory } from './PolynomialVaultToken__factory';

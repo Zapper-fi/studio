@@ -15,7 +15,7 @@ import type {
 } from 'ethers';
 import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
 import type { Listener, Provider } from '@ethersproject/providers';
-import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
 export interface BenisInterface extends utils.Interface {
   functions: {
@@ -69,28 +69,52 @@ export interface BenisInterface extends utils.Interface {
       | 'withdraw',
   ): FunctionFragment;
 
-  encodeFunctionData(functionFragment: 'add', values: [BigNumberish, string, boolean]): string;
-  encodeFunctionData(functionFragment: 'changeEndTime', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'deposit', values: [BigNumberish, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'emergencyWithdraw', values: [BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'add',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>, PromiseOrValue<boolean>],
+  ): string;
+  encodeFunctionData(functionFragment: 'changeEndTime', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(
+    functionFragment: 'deposit',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'emergencyWithdraw', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'endTime', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'getMultiplier', values: [BigNumberish, BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'getMultiplier',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+  ): string;
   encodeFunctionData(functionFragment: 'massUpdatePools', values?: undefined): string;
   encodeFunctionData(functionFragment: 'owner', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'pendingWBAN', values: [BigNumberish, string]): string;
-  encodeFunctionData(functionFragment: 'poolInfo', values: [BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'pendingWBAN',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>],
+  ): string;
+  encodeFunctionData(functionFragment: 'poolInfo', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'poolLength', values?: undefined): string;
   encodeFunctionData(functionFragment: 'renounceOwnership', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'set', values: [BigNumberish, BigNumberish, boolean]): string;
-  encodeFunctionData(functionFragment: 'setWBANPerSecond', values: [BigNumberish, boolean]): string;
+  encodeFunctionData(
+    functionFragment: 'set',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>, PromiseOrValue<boolean>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'setWBANPerSecond',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<boolean>],
+  ): string;
   encodeFunctionData(functionFragment: 'startTime', values?: undefined): string;
   encodeFunctionData(functionFragment: 'totalAllocPoint', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'transferOwnership', values: [string]): string;
-  encodeFunctionData(functionFragment: 'updatePool', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'userInfo', values: [BigNumberish, string]): string;
+  encodeFunctionData(functionFragment: 'transferOwnership', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'updatePool', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(
+    functionFragment: 'userInfo',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>],
+  ): string;
   encodeFunctionData(functionFragment: 'wban', values?: undefined): string;
   encodeFunctionData(functionFragment: 'wbanPerSecond', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'withdraw', values: [BigNumberish, BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'withdraw',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+  ): string;
 
   decodeFunctionResult(functionFragment: 'add', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'changeEndTime', data: BytesLike): Result;
@@ -187,40 +211,48 @@ export interface Benis extends BaseContract {
 
   functions: {
     add(
-      _allocPoint: BigNumberish,
-      _stakingToken: string,
-      _withUpdate: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _allocPoint: PromiseOrValue<BigNumberish>,
+      _stakingToken: PromiseOrValue<string>,
+      _withUpdate: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     changeEndTime(
-      addSeconds: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      addSeconds: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     deposit(
-      _pid: BigNumberish,
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _pid: PromiseOrValue<BigNumberish>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     emergencyWithdraw(
-      _pid: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _pid: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     endTime(overrides?: CallOverrides): Promise<[number]>;
 
-    getMultiplier(_from: BigNumberish, _to: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber]>;
+    getMultiplier(
+      _from: PromiseOrValue<BigNumberish>,
+      _to: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber]>;
 
-    massUpdatePools(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    massUpdatePools(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     owner(overrides?: CallOverrides): Promise<[string]>;
 
-    pendingWBAN(_pid: BigNumberish, _user: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    pendingWBAN(
+      _pid: PromiseOrValue<BigNumberish>,
+      _user: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber]>;
 
     poolInfo(
-      arg0: BigNumberish,
+      arg0: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<
       [string, BigNumber, BigNumber, number, number] & {
@@ -234,19 +266,19 @@ export interface Benis extends BaseContract {
 
     poolLength(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     set(
-      _pid: BigNumberish,
-      _allocPoint: BigNumberish,
-      _withUpdate: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _pid: PromiseOrValue<BigNumberish>,
+      _allocPoint: PromiseOrValue<BigNumberish>,
+      _withUpdate: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setWBANPerSecond(
-      _wbanPerSecond: BigNumberish,
-      _withUpdate: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _wbanPerSecond: PromiseOrValue<BigNumberish>,
+      _withUpdate: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     startTime(overrides?: CallOverrides): Promise<[number]>;
@@ -254,18 +286,18 @@ export interface Benis extends BaseContract {
     totalAllocPoint(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     updatePool(
-      _pid: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _pid: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     userInfo(
-      arg0: BigNumberish,
-      arg1: string,
+      arg0: PromiseOrValue<BigNumberish>,
+      arg1: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<
       [BigNumber, BigNumber, BigNumber] & {
@@ -280,47 +312,55 @@ export interface Benis extends BaseContract {
     wbanPerSecond(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     withdraw(
-      _pid: BigNumberish,
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _pid: PromiseOrValue<BigNumberish>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
   };
 
   add(
-    _allocPoint: BigNumberish,
-    _stakingToken: string,
-    _withUpdate: boolean,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _allocPoint: PromiseOrValue<BigNumberish>,
+    _stakingToken: PromiseOrValue<string>,
+    _withUpdate: PromiseOrValue<boolean>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   changeEndTime(
-    addSeconds: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    addSeconds: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   deposit(
-    _pid: BigNumberish,
-    _amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _pid: PromiseOrValue<BigNumberish>,
+    _amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   emergencyWithdraw(
-    _pid: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _pid: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   endTime(overrides?: CallOverrides): Promise<number>;
 
-  getMultiplier(_from: BigNumberish, _to: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+  getMultiplier(
+    _from: PromiseOrValue<BigNumberish>,
+    _to: PromiseOrValue<BigNumberish>,
+    overrides?: CallOverrides,
+  ): Promise<BigNumber>;
 
-  massUpdatePools(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  massUpdatePools(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   owner(overrides?: CallOverrides): Promise<string>;
 
-  pendingWBAN(_pid: BigNumberish, _user: string, overrides?: CallOverrides): Promise<BigNumber>;
+  pendingWBAN(
+    _pid: PromiseOrValue<BigNumberish>,
+    _user: PromiseOrValue<string>,
+    overrides?: CallOverrides,
+  ): Promise<BigNumber>;
 
   poolInfo(
-    arg0: BigNumberish,
+    arg0: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides,
   ): Promise<
     [string, BigNumber, BigNumber, number, number] & {
@@ -334,19 +374,19 @@ export interface Benis extends BaseContract {
 
   poolLength(overrides?: CallOverrides): Promise<BigNumber>;
 
-  renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   set(
-    _pid: BigNumberish,
-    _allocPoint: BigNumberish,
-    _withUpdate: boolean,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _pid: PromiseOrValue<BigNumberish>,
+    _allocPoint: PromiseOrValue<BigNumberish>,
+    _withUpdate: PromiseOrValue<boolean>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setWBANPerSecond(
-    _wbanPerSecond: BigNumberish,
-    _withUpdate: boolean,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _wbanPerSecond: PromiseOrValue<BigNumberish>,
+    _withUpdate: PromiseOrValue<boolean>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   startTime(overrides?: CallOverrides): Promise<number>;
@@ -354,18 +394,18 @@ export interface Benis extends BaseContract {
   totalAllocPoint(overrides?: CallOverrides): Promise<BigNumber>;
 
   transferOwnership(
-    newOwner: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    newOwner: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   updatePool(
-    _pid: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _pid: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   userInfo(
-    arg0: BigNumberish,
-    arg1: string,
+    arg0: PromiseOrValue<BigNumberish>,
+    arg1: PromiseOrValue<string>,
     overrides?: CallOverrides,
   ): Promise<
     [BigNumber, BigNumber, BigNumber] & {
@@ -380,37 +420,49 @@ export interface Benis extends BaseContract {
   wbanPerSecond(overrides?: CallOverrides): Promise<BigNumber>;
 
   withdraw(
-    _pid: BigNumberish,
-    _amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _pid: PromiseOrValue<BigNumberish>,
+    _amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   callStatic: {
     add(
-      _allocPoint: BigNumberish,
-      _stakingToken: string,
-      _withUpdate: boolean,
+      _allocPoint: PromiseOrValue<BigNumberish>,
+      _stakingToken: PromiseOrValue<string>,
+      _withUpdate: PromiseOrValue<boolean>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
-    changeEndTime(addSeconds: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    changeEndTime(addSeconds: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
-    deposit(_pid: BigNumberish, _amount: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    deposit(
+      _pid: PromiseOrValue<BigNumberish>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    emergencyWithdraw(_pid: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    emergencyWithdraw(_pid: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
     endTime(overrides?: CallOverrides): Promise<number>;
 
-    getMultiplier(_from: BigNumberish, _to: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    getMultiplier(
+      _from: PromiseOrValue<BigNumberish>,
+      _to: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     massUpdatePools(overrides?: CallOverrides): Promise<void>;
 
     owner(overrides?: CallOverrides): Promise<string>;
 
-    pendingWBAN(_pid: BigNumberish, _user: string, overrides?: CallOverrides): Promise<BigNumber>;
+    pendingWBAN(
+      _pid: PromiseOrValue<BigNumberish>,
+      _user: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     poolInfo(
-      arg0: BigNumberish,
+      arg0: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<
       [string, BigNumber, BigNumber, number, number] & {
@@ -426,21 +478,30 @@ export interface Benis extends BaseContract {
 
     renounceOwnership(overrides?: CallOverrides): Promise<void>;
 
-    set(_pid: BigNumberish, _allocPoint: BigNumberish, _withUpdate: boolean, overrides?: CallOverrides): Promise<void>;
+    set(
+      _pid: PromiseOrValue<BigNumberish>,
+      _allocPoint: PromiseOrValue<BigNumberish>,
+      _withUpdate: PromiseOrValue<boolean>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    setWBANPerSecond(_wbanPerSecond: BigNumberish, _withUpdate: boolean, overrides?: CallOverrides): Promise<void>;
+    setWBANPerSecond(
+      _wbanPerSecond: PromiseOrValue<BigNumberish>,
+      _withUpdate: PromiseOrValue<boolean>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
     startTime(overrides?: CallOverrides): Promise<number>;
 
     totalAllocPoint(overrides?: CallOverrides): Promise<BigNumber>;
 
-    transferOwnership(newOwner: string, overrides?: CallOverrides): Promise<void>;
+    transferOwnership(newOwner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    updatePool(_pid: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    updatePool(_pid: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
     userInfo(
-      arg0: BigNumberish,
-      arg1: string,
+      arg0: PromiseOrValue<BigNumberish>,
+      arg1: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<
       [BigNumber, BigNumber, BigNumber] & {
@@ -454,89 +515,116 @@ export interface Benis extends BaseContract {
 
     wbanPerSecond(overrides?: CallOverrides): Promise<BigNumber>;
 
-    withdraw(_pid: BigNumberish, _amount: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    withdraw(
+      _pid: PromiseOrValue<BigNumberish>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
   };
 
   filters: {
     'Deposit(address,uint256,uint256)'(
-      user?: string | null,
-      pid?: BigNumberish | null,
+      user?: PromiseOrValue<string> | null,
+      pid?: PromiseOrValue<BigNumberish> | null,
       amount?: null,
     ): DepositEventFilter;
-    Deposit(user?: string | null, pid?: BigNumberish | null, amount?: null): DepositEventFilter;
+    Deposit(
+      user?: PromiseOrValue<string> | null,
+      pid?: PromiseOrValue<BigNumberish> | null,
+      amount?: null,
+    ): DepositEventFilter;
 
     'EmergencyWithdraw(address,uint256,uint256)'(
-      user?: string | null,
-      pid?: BigNumberish | null,
+      user?: PromiseOrValue<string> | null,
+      pid?: PromiseOrValue<BigNumberish> | null,
       amount?: null,
     ): EmergencyWithdrawEventFilter;
-    EmergencyWithdraw(user?: string | null, pid?: BigNumberish | null, amount?: null): EmergencyWithdrawEventFilter;
+    EmergencyWithdraw(
+      user?: PromiseOrValue<string> | null,
+      pid?: PromiseOrValue<BigNumberish> | null,
+      amount?: null,
+    ): EmergencyWithdrawEventFilter;
 
     'OwnershipTransferred(address,address)'(
-      previousOwner?: string | null,
-      newOwner?: string | null,
+      previousOwner?: PromiseOrValue<string> | null,
+      newOwner?: PromiseOrValue<string> | null,
     ): OwnershipTransferredEventFilter;
-    OwnershipTransferred(previousOwner?: string | null, newOwner?: string | null): OwnershipTransferredEventFilter;
+    OwnershipTransferred(
+      previousOwner?: PromiseOrValue<string> | null,
+      newOwner?: PromiseOrValue<string> | null,
+    ): OwnershipTransferredEventFilter;
 
     'Withdraw(address,uint256,uint256)'(
-      user?: string | null,
-      pid?: BigNumberish | null,
+      user?: PromiseOrValue<string> | null,
+      pid?: PromiseOrValue<BigNumberish> | null,
       amount?: null,
     ): WithdrawEventFilter;
-    Withdraw(user?: string | null, pid?: BigNumberish | null, amount?: null): WithdrawEventFilter;
+    Withdraw(
+      user?: PromiseOrValue<string> | null,
+      pid?: PromiseOrValue<BigNumberish> | null,
+      amount?: null,
+    ): WithdrawEventFilter;
   };
 
   estimateGas: {
     add(
-      _allocPoint: BigNumberish,
-      _stakingToken: string,
-      _withUpdate: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _allocPoint: PromiseOrValue<BigNumberish>,
+      _stakingToken: PromiseOrValue<string>,
+      _withUpdate: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     changeEndTime(
-      addSeconds: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      addSeconds: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     deposit(
-      _pid: BigNumberish,
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _pid: PromiseOrValue<BigNumberish>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     emergencyWithdraw(
-      _pid: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _pid: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     endTime(overrides?: CallOverrides): Promise<BigNumber>;
 
-    getMultiplier(_from: BigNumberish, _to: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    getMultiplier(
+      _from: PromiseOrValue<BigNumberish>,
+      _to: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    massUpdatePools(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    massUpdatePools(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     owner(overrides?: CallOverrides): Promise<BigNumber>;
 
-    pendingWBAN(_pid: BigNumberish, _user: string, overrides?: CallOverrides): Promise<BigNumber>;
+    pendingWBAN(
+      _pid: PromiseOrValue<BigNumberish>,
+      _user: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    poolInfo(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    poolInfo(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     poolLength(overrides?: CallOverrides): Promise<BigNumber>;
 
-    renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     set(
-      _pid: BigNumberish,
-      _allocPoint: BigNumberish,
-      _withUpdate: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _pid: PromiseOrValue<BigNumberish>,
+      _allocPoint: PromiseOrValue<BigNumberish>,
+      _withUpdate: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setWBANPerSecond(
-      _wbanPerSecond: BigNumberish,
-      _withUpdate: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _wbanPerSecond: PromiseOrValue<BigNumberish>,
+      _withUpdate: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     startTime(overrides?: CallOverrides): Promise<BigNumber>;
@@ -544,76 +632,91 @@ export interface Benis extends BaseContract {
     totalAllocPoint(overrides?: CallOverrides): Promise<BigNumber>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    updatePool(_pid: BigNumberish, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    updatePool(
+      _pid: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
-    userInfo(arg0: BigNumberish, arg1: string, overrides?: CallOverrides): Promise<BigNumber>;
+    userInfo(
+      arg0: PromiseOrValue<BigNumberish>,
+      arg1: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     wban(overrides?: CallOverrides): Promise<BigNumber>;
 
     wbanPerSecond(overrides?: CallOverrides): Promise<BigNumber>;
 
     withdraw(
-      _pid: BigNumberish,
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _pid: PromiseOrValue<BigNumberish>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
   };
 
   populateTransaction: {
     add(
-      _allocPoint: BigNumberish,
-      _stakingToken: string,
-      _withUpdate: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _allocPoint: PromiseOrValue<BigNumberish>,
+      _stakingToken: PromiseOrValue<string>,
+      _withUpdate: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     changeEndTime(
-      addSeconds: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      addSeconds: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     deposit(
-      _pid: BigNumberish,
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _pid: PromiseOrValue<BigNumberish>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     emergencyWithdraw(
-      _pid: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _pid: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     endTime(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    getMultiplier(_from: BigNumberish, _to: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getMultiplier(
+      _from: PromiseOrValue<BigNumberish>,
+      _to: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
-    massUpdatePools(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    massUpdatePools(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    pendingWBAN(_pid: BigNumberish, _user: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    pendingWBAN(
+      _pid: PromiseOrValue<BigNumberish>,
+      _user: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
-    poolInfo(arg0: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    poolInfo(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     poolLength(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     set(
-      _pid: BigNumberish,
-      _allocPoint: BigNumberish,
-      _withUpdate: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _pid: PromiseOrValue<BigNumberish>,
+      _allocPoint: PromiseOrValue<BigNumberish>,
+      _withUpdate: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setWBANPerSecond(
-      _wbanPerSecond: BigNumberish,
-      _withUpdate: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _wbanPerSecond: PromiseOrValue<BigNumberish>,
+      _withUpdate: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     startTime(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -621,25 +724,29 @@ export interface Benis extends BaseContract {
     totalAllocPoint(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     updatePool(
-      _pid: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _pid: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    userInfo(arg0: BigNumberish, arg1: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    userInfo(
+      arg0: PromiseOrValue<BigNumberish>,
+      arg1: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
     wban(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     wbanPerSecond(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     withdraw(
-      _pid: BigNumberish,
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _pid: PromiseOrValue<BigNumberish>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
   };
 }
