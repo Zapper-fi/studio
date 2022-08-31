@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.205.0](https://github.com/Zapper-fi/studio/compare/v0.204.0...v0.205.0) (2022-08-31)
+
+
+### Features
+
+* **pool-together-v4:** Add 1 hour TTL for logs ([#1312](https://github.com/Zapper-fi/studio/issues/1312)) ([5e4d043](https://github.com/Zapper-fi/studio/commit/5e4d043c5747dc68a07bf40153bb764c0d656864))
+
 ## [0.204.0](https://github.com/Zapper-fi/studio/compare/v0.203.0...v0.204.0) (2022-08-31)
 
 
