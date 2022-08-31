@@ -44,7 +44,7 @@ export class TenderizeTokenDefinitionsResolver {
 
   @Cache({
     key: network => `studio:tenderize:${network}:token-data`,
-    ttl: 5 * 60, // 60 minutes
+    ttl: 5 * 60, // 5 minutes
   })
   private async getVaultDefinitionsData(network: Network) {
     const data = await this.appToolkit.helpers.theGraphHelper.request<TenderTokenFetcherResponse>({
@@ -72,7 +72,7 @@ export class TenderizeTokenDefinitionsResolver {
 
   @Cache({
     key: `studio:tenderize:token-apy-data`,
-    ttl: 5 * 60, // 60 minutes
+    ttl: 5 * 60, // 5 minutes
   })
   private async getTokenApyData() {
     const { data } = await Axios.get<TokenApyResponse>('https://www.tenderize.me/api/apy');

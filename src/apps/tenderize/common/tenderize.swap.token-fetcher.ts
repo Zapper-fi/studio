@@ -12,8 +12,8 @@ import {
 
 import { TenderizeContractFactory, TenderToken } from '../contracts';
 
+import { TenderizeTokenDefinition } from './tenderize-token-definition';
 import { TenderizeTokenDefinitionsResolver } from './tenderize.token-definition-resolver';
-import { TenderizeTokenDefinition } from './types';
 
 export abstract class SwapTokenFetcher extends AppTokenTemplatePositionFetcher<
   TenderToken,
