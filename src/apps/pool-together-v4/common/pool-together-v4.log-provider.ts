@@ -1,4 +1,5 @@
 import { Inject, Injectable } from '@nestjs/common';
+import moment from 'moment';
 
 import { Cache } from '~cache/cache.decorator';
 import { Network } from '~types';
@@ -18,6 +19,7 @@ export class PoolTogetherV4LogProvider {
   @Cache({
     key: ({ network, address, fromBlock }: { network: Network; fromBlock: number; address: string }) =>
       `pool-together-v4:${network}:community-pool-builder-logs:${address}:${fromBlock}`,
+    ttl: moment.duration(1, 'hour').asSeconds(),
   })
   async getPoolWithMultipleWinnersBuilderLogs({
     fromBlock,
