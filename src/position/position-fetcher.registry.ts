@@ -87,6 +87,17 @@ export class PositionFetcherRegistry implements OnApplicationBootstrap {
     return positionWithOptions?.options ?? {};
   }
 
+  getRegisteredTokenGroups() {
+    const networkFetchers = this.registry.get(ContractType.APP_TOKEN);
+    if (!networkFetchers) return [];
+
+    return Array.from(networkFetchers.entries()).flatMap(([network, appFetchers]) =>
+      Array.from(appFetchers.entries()).flatMap(([appId, groupFetchers]) =>
+        Array.from(groupFetchers.entries()).flatMap(([groupId]) => ({ network, appId, groupId })),
+      ),
+    );
+  }
+
   get<T extends AbstractPosition<V>, V = DefaultDataProps>({
     type,
     network,

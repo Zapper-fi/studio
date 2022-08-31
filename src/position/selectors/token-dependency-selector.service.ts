@@ -2,7 +2,8 @@ import { Inject, Injectable } from '@nestjs/common';
 import DataLoader from 'dataloader';
 import { Mutable } from 'type-fest';
 
-import { ApiPositionSource } from '../position-source/position-source.api';
+import { ApiPositionSource } from '~position/position-source/position-source.api';
+import { RegistryPositionSource } from '~position/position-source/position-source.registry';
 
 import {
   TokenDependencySelector,
@@ -16,22 +17,31 @@ import {
 
 @Injectable()
 export class TokenDependencySelectorService implements TokenDependencySelectorFactory {
-  constructor(@Inject(ApiPositionSource) private readonly positionAPIClient: ApiPositionSource) {}
+  constructor(
+    @Inject(RegistryPositionSource) private readonly registryPositionSource: RegistryPositionSource,
+    @Inject(ApiPositionSource) private readonly apiPositionSource: ApiPositionSource,
+  ) {}
 
   create(_opts: CreateTokenDependencySelectorOptions): TokenDependencySelector {
     const tokenDataLoader = new DataLoader<TokenDependencySelectorKey, TokenDependency | null>(
-      keys => this.positionAPIClient.getTokenDependenciesBatch(keys as Mutable<TokenDependencySelectorKey[]>),
+      keys => this.apiPositionSource.getTokenDependenciesBatch(keys as Mutable<TokenDependencySelectorKey[]>),
       { maxBatchSize: 1000 },
     );
 
     return {
-      getOne: ({ network, address }: Parameters<GetOne>[0]) => tokenDataLoader.load({ network, address }),
+      getOne: async ({ network, address }: Parameters<GetOne>[0]) => {
+        const fromCache = await this.registryPositionSource.getTokenDependenciesBatch([{ network, address }]);
+        const fromApi = await tokenDataLoader.load({ network, address });
+        return fromCache[0] ?? fromApi;
+      },
       getMany: async (queries: Parameters<GetMany>[0]) => {
-        const docs = await tokenDataLoader.loadMany(queries);
+        const fromCache = await this.registryPositionSource.getTokenDependenciesBatch(queries);
+        const fromApi = await tokenDataLoader.loadMany(queries);
 
-        return docs.map(doc => {
-          if (doc instanceof Error) return null;
-          return doc;
+        return queries.map((_, i) => {
+          const element = fromCache[i] ?? fromApi[i];
+          if (element instanceof Error) return null;
+          return element;
         });
       },
     };

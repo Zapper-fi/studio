@@ -21,9 +21,9 @@ const network = Network.ARBITRUM_MAINNET;
 
 @Register.ContractPositionFetcher({ appId, groupId, network })
 export class ArbitrumPlutusTgeClaimableContractPositionFetcher extends ContractPositionTemplatePositionFetcher<PlutusPrivateTgeVester> {
-  appId = PLUTUS_DEFINITION.id;
-  groupId = PLUTUS_DEFINITION.groups.tgeClaimable.id;
-  network = Network.ARBITRUM_MAINNET;
+  appId = appId;
+  groupId = groupId;
+  network = network;
   groupLabel = 'Private TGE Allocation';
 
   constructor(

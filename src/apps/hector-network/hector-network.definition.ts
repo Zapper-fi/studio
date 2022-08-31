@@ -40,6 +40,12 @@ export const HECTOR_NETWORK_DEFINITION = appDefinition({
       label: 'Bonds',
     },
 
+    bondNoTreasury: {
+      id: 'bond-no-treasury',
+      type: GroupType.POSITION,
+      label: 'Bonds',
+    },
+
     stakeBond: {
       id: 'stake-bond',
       type: GroupType.POSITION,
