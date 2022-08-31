@@ -40,10 +40,10 @@ export class OptimismVelodromePoolsTokenFetcher extends AppTokenTemplatePosition
   VelodromePool,
   VelodromePoolTokenDataProps
 > {
-  appId: string;
-  groupId: string;
-  network: Network;
-  groupLabel: string;
+  appId = appId;
+  groupId = groupId;
+  network = network;
+  groupLabel = 'Pools';
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,

@@ -45,7 +45,8 @@ export class OptimismVelodromeStakingContractPositionFetcher extends SingleStaki
 
   async getFarmAddresses() {
     const { data } = await axios.get<{ data: VelodromeApiPairData[] }>('https://api.velodrome.finance/api/v1/pairs');
-    return data.data.map(pool => pool.gauge_address);
+    const gaugeAddresses = data.data.map(pool => pool.gauge_address).filter(v => !!v);
+    return gaugeAddresses;
   }
 
   async getStakedTokenAddress({ contract }: GetTokenDefinitionsParams<VelodromeGauge>) {
