@@ -18,11 +18,11 @@ type Definition = DefaultAppTokenDefinition & {
   underlyingTokenAddress: string;
 };
 
-type PoolTogetherV4PrizePoolDataProps = {
+type PoolTogetherV4TicketDataProps = {
   liquidity: number;
 };
 
-export abstract class PoolTogetherV4PrizePoolTokenFetcher extends AppTokenTemplatePositionFetcher<
+export abstract class PoolTogetherV4TicketTokenFetcher extends AppTokenTemplatePositionFetcher<
   PoolTogetherV4Ticket,
   DefaultDataProps,
   Definition
@@ -92,9 +92,9 @@ export abstract class PoolTogetherV4PrizePoolTokenFetcher extends AppTokenTempla
     appToken,
   }: GetDataPropsParams<
     PoolTogetherV4Ticket,
-    PoolTogetherV4PrizePoolDataProps,
+    PoolTogetherV4TicketDataProps,
     Definition
-  >): Promise<PoolTogetherV4PrizePoolDataProps> {
+  >): Promise<PoolTogetherV4TicketDataProps> {
     const underlyingToken = appToken.tokens[0];
     const liquidity = appToken.supply * underlyingToken.price;
     return { liquidity };
