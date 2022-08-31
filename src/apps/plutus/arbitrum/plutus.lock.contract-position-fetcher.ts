@@ -53,9 +53,9 @@ const PLUTUS_LOCKS = [
 
 @Register.ContractPositionFetcher({ appId, groupId, network })
 export class ArbitrumPlutusLockContractPositionFetcher extends SingleStakingFarmTemplateContractPositionFetcher<PlutusLock> {
-  appId = PLUTUS_DEFINITION.id;
-  groupId = PLUTUS_DEFINITION.groups.lock.id;
-  network = Network.ARBITRUM_MAINNET;
+  appId = appId;
+  groupId = groupId;
+  network = network;
   groupLabel = 'Locked PLS';
 
   constructor(
