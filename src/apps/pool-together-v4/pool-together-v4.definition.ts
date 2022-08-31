@@ -17,6 +17,7 @@ export const POOL_TOGETHER_V4_DEFINITION = appDefinition({
   },
   groups: {
     ticket: { id: 'ticket', type: GroupType.TOKEN, label: 'Prize Pools' },
+    communityTicket: { id: 'community-ticket', type: GroupType.TOKEN, label: 'Community Prize Pools' },
   },
   tags: [AppTag.LOTTERY],
   supportedNetworks: {

@@ -10,19 +10,19 @@ import {
 } from '~position/template/single-staking.template.contract-position-fetcher';
 import { Network } from '~types/network.interface';
 
-import { PlutusContractFactory, PlutusFarmPls } from '../contracts';
+import { PlutusContractFactory, PlutusFarmPlvGlp } from '../contracts';
 import PLUTUS_DEFINITION from '../plutus.definition';
 
 const appId = PLUTUS_DEFINITION.id;
-const groupId = PLUTUS_DEFINITION.groups.farmPls.id;
+const groupId = PLUTUS_DEFINITION.groups.farmPlvGlp.id;
 const network = Network.ARBITRUM_MAINNET;
 
 @Register.ContractPositionFetcher({ appId, groupId, network })
-export class ArbitrumPlutusFarmPlsContractPositionFetcher extends SingleStakingFarmTemplateContractPositionFetcher<PlutusFarmPls> {
+export class ArbitrumPlutusFarmPlvGlpContractPositionFetcher extends SingleStakingFarmTemplateContractPositionFetcher<PlutusFarmPlvGlp> {
   appId = appId;
   groupId = groupId;
   network = network;
-  groupLabel = 'PLS Farm';
+  groupLabel = 'plvGLP Farm';
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
@@ -31,15 +31,15 @@ export class ArbitrumPlutusFarmPlsContractPositionFetcher extends SingleStakingF
     super(appToolkit);
   }
 
-  getContract(address: string): PlutusFarmPls {
-    return this.contractFactory.plutusFarmPls({ address, network: this.network });
+  getContract(address: string): PlutusFarmPlvGlp {
+    return this.contractFactory.plutusFarmPlvGlp({ address, network: this.network });
   }
 
   async getFarmDefinitions(): Promise<SingleStakingFarmDefinition[]> {
     return [
       {
-        address: '0x5593473e318f0314eb2518239c474e183c4cbed5',
-        stakedTokenAddress: '0x6cc0d643c7b8709f468f58f363d73af6e4971515',
+        address: '0x4e5cf54fde5e1237e80e87fcba555d829e1307ce',
+        stakedTokenAddress: '0x5326e71ff593ecc2cf7acae5fe57582d6e74cff1',
         rewardTokenAddresses: [
           '0x51318b7d00db7acc4026c88c3952b66278b6a67f', // PLS
         ],
@@ -47,15 +47,15 @@ export class ArbitrumPlutusFarmPlsContractPositionFetcher extends SingleStakingF
     ];
   }
 
-  async getRewardRates({ contract }: GetDataPropsParams<PlutusFarmPls, SingleStakingFarmDataProps>) {
+  async getRewardRates({ contract }: GetDataPropsParams<PlutusFarmPlvGlp, SingleStakingFarmDataProps>) {
     return contract.plsPerSecond();
   }
 
-  async getStakedTokenBalance({ contract, address }: GetTokenBalancesParams<PlutusFarmPls>) {
-    return contract.userInfo(0, address).then(v => v.amount);
+  async getStakedTokenBalance({ contract, address }: GetTokenBalancesParams<PlutusFarmPlvGlp>) {
+    return contract.userInfo(address).then(v => v.amount);
   }
 
-  async getRewardTokenBalances({ contract, address }: GetTokenBalancesParams<PlutusFarmPls>) {
-    return contract.pendingPls(0, address);
+  async getRewardTokenBalances({ contract, address }: GetTokenBalancesParams<PlutusFarmPlvGlp>) {
+    return contract.pendingRewards(address);
   }
 }

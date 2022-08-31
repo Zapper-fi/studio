@@ -4,6 +4,37 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.206.0](https://github.com/Zapper-fi/studio/compare/v0.205.1...v0.206.0) (2022-08-31)
+
+
+### Features
+
+* **plutus:** Fix farm plvGLP ([88684ac](https://github.com/Zapper-fi/studio/commit/88684acdc42bfbc867355a59581fddc189390699))
+
+## [0.205.1](https://github.com/Zapper-fi/studio/compare/v0.205.0...v0.205.1) (2022-08-31)
+
+
+### Bug Fixes
+
+* **pool-together-v4:** Packer was unable to cache the logs ([#1314](https://github.com/Zapper-fi/studio/issues/1314)) ([a33b04d](https://github.com/Zapper-fi/studio/commit/a33b04d0c8121c7dc1471368b4becf62b93f0c9e))
+
+## [0.205.0](https://github.com/Zapper-fi/studio/compare/v0.204.0...v0.205.0) (2022-08-31)
+
+
+### Features
+
+* **pool-together-v4:** Add 1 hour TTL for logs ([#1312](https://github.com/Zapper-fi/studio/issues/1312)) ([5e4d043](https://github.com/Zapper-fi/studio/commit/5e4d043c5747dc68a07bf40153bb764c0d656864))
+
+## [0.204.0](https://github.com/Zapper-fi/studio/compare/v0.203.0...v0.204.0) (2022-08-31)
+
+
+### Features
+
+* **plutus:** Add plsGLP, plvGLP, and plvGLP farm ([#1307](https://github.com/Zapper-fi/studio/issues/1307)) ([6ea68eb](https://github.com/Zapper-fi/studio/commit/6ea68eb473be206b2756519b741e3a76dc82b1cd))
+* **pool-together-v4:** Add support for community pools ([#1311](https://github.com/Zapper-fi/studio/issues/1311)) ([47d77e6](https://github.com/Zapper-fi/studio/commit/47d77e6d458886864cfb2d45d8d98559714bfc04))
+* **positions:** Rely on local cache for dependencies preferentially over API data ([#1308](https://github.com/Zapper-fi/studio/issues/1308)) ([5ccef3c](https://github.com/Zapper-fi/studio/commit/5ccef3ca77dfbee1ea4a8fe07fd082accbe64f56))
+* **velodrome:** Move to templates ([#1310](https://github.com/Zapper-fi/studio/issues/1310)) ([aabbda6](https://github.com/Zapper-fi/studio/commit/aabbda6a49e6c783810571f362e020b2dd41b0a1))
+
 ## [0.203.0](https://github.com/Zapper-fi/studio/compare/v0.202.0...v0.203.0) (2022-08-30)
 
 
