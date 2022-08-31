@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.206.0](https://github.com/Zapper-fi/studio/compare/v0.205.1...v0.206.0) (2022-08-31)
+
+
+### Features
+
+* **plutus:** Fix farm plvGLP ([88684ac](https://github.com/Zapper-fi/studio/commit/88684acdc42bfbc867355a59581fddc189390699))
+
 ## [0.205.1](https://github.com/Zapper-fi/studio/compare/v0.205.0...v0.205.1) (2022-08-31)
 
 
