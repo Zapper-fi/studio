@@ -1,4 +1,5 @@
 import { Inject, Injectable } from '@nestjs/common';
+import { Event } from 'ethers';
 import moment from 'moment';
 
 import { Cache } from '~cache/cache.decorator';
@@ -31,10 +32,22 @@ export class PoolTogetherV4LogProvider {
     fromBlock: number;
   }) {
     const contract = this.contractFactory.poolTogetherV4PoolWithMultipleWinnersBuilder({ network, address });
+    const mapper = <T extends Event>({ address, event, args }: T) => ({
+      args: Array.from(args?.values() ?? []),
+      address,
+      event,
+    });
+
     const [stakeLogs, compoundLogs, yieldLogs] = await Promise.all([
-      contract.queryFilter(contract.filters.StakePrizePoolWithMultipleWinnersCreated(), fromBlock),
-      contract.queryFilter(contract.filters.CompoundPrizePoolWithMultipleWinnersCreated(), fromBlock),
-      contract.queryFilter(contract.filters.YieldSourcePrizePoolWithMultipleWinnersCreated(), fromBlock),
+      contract
+        .queryFilter(contract.filters.StakePrizePoolWithMultipleWinnersCreated(), fromBlock)
+        .then(logs => logs.map(mapper)),
+      contract
+        .queryFilter(contract.filters.CompoundPrizePoolWithMultipleWinnersCreated(), fromBlock)
+        .then(logs => logs.map(mapper)),
+      contract
+        .queryFilter(contract.filters.YieldSourcePrizePoolWithMultipleWinnersCreated(), fromBlock)
+        .then(logs => logs.map(mapper)),
     ]);
 
     return {
