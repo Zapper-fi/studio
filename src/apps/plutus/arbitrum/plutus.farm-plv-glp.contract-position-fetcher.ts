@@ -10,7 +10,7 @@ import {
 } from '~position/template/single-staking.template.contract-position-fetcher';
 import { Network } from '~types/network.interface';
 
-import { PlutusContractFactory, PlutusFarmPls } from '../contracts';
+import { PlutusContractFactory, PlutusFarmPlvGlp } from '../contracts';
 import PLUTUS_DEFINITION from '../plutus.definition';
 
 const appId = PLUTUS_DEFINITION.id;
@@ -18,7 +18,7 @@ const groupId = PLUTUS_DEFINITION.groups.farmPlvGlp.id;
 const network = Network.ARBITRUM_MAINNET;
 
 @Register.ContractPositionFetcher({ appId, groupId, network })
-export class ArbitrumPlutusFarmPlvGlpContractPositionFetcher extends SingleStakingFarmTemplateContractPositionFetcher<PlutusFarmPls> {
+export class ArbitrumPlutusFarmPlvGlpContractPositionFetcher extends SingleStakingFarmTemplateContractPositionFetcher<PlutusFarmPlvGlp> {
   appId = appId;
   groupId = groupId;
   network = network;
@@ -31,8 +31,8 @@ export class ArbitrumPlutusFarmPlvGlpContractPositionFetcher extends SingleStaki
     super(appToolkit);
   }
 
-  getContract(address: string): PlutusFarmPls {
-    return this.contractFactory.plutusFarmPls({ address, network: this.network });
+  getContract(address: string): PlutusFarmPlvGlp {
+    return this.contractFactory.plutusFarmPlvGlp({ address, network: this.network });
   }
 
   async getFarmDefinitions(): Promise<SingleStakingFarmDefinition[]> {
@@ -47,15 +47,15 @@ export class ArbitrumPlutusFarmPlvGlpContractPositionFetcher extends SingleStaki
     ];
   }
 
-  async getRewardRates({ contract }: GetDataPropsParams<PlutusFarmPls, SingleStakingFarmDataProps>) {
+  async getRewardRates({ contract }: GetDataPropsParams<PlutusFarmPlvGlp, SingleStakingFarmDataProps>) {
     return contract.plsPerSecond();
   }
 
-  async getStakedTokenBalance({ contract, address }: GetTokenBalancesParams<PlutusFarmPls>) {
-    return contract.userInfo(0, address).then(v => v.amount);
+  async getStakedTokenBalance({ contract, address }: GetTokenBalancesParams<PlutusFarmPlvGlp>) {
+    return contract.userInfo(address).then(v => v.amount);
   }
 
-  async getRewardTokenBalances({ contract, address }: GetTokenBalancesParams<PlutusFarmPls>) {
-    return contract.pendingPls(0, address);
+  async getRewardTokenBalances({ contract, address }: GetTokenBalancesParams<PlutusFarmPlvGlp>) {
+    return contract.pendingRewards(address);
   }
 }
