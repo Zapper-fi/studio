@@ -1,7 +1,6 @@
 import { Register } from '~app-toolkit/decorators';
 import { AbstractApp } from '~app/app.dynamic-module';
 
-import { AvalancheYieldyakBalanceFetcher } from './avalanche/yield-yak.balance-fetcher';
 import { AvalancheYieldyakFarmContractPositionFetcher } from './avalanche/yield-yak.farm.contract-position-fetcher';
 import { AvalancheYieldyakVaultTokenFetcher } from './avalanche/yield-yak.vault.token-fetcher';
 import { YieldYakContractFactory } from './contracts';
@@ -15,7 +14,6 @@ import { YieldYakAppDefinition, YIELD_YAK_DEFINITION } from './yield-yak.definit
     YieldYakContractFactory,
     YieldYakVaultTokenDefinitionsResolver,
     AvalancheYieldyakVaultTokenFetcher,
-    AvalancheYieldyakBalanceFetcher,
     AvalancheYieldyakFarmContractPositionFetcher,
   ],
   exports: [YieldYakAppDefinition, YieldYakContractFactory],

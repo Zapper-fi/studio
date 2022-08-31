@@ -1,6 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import Axios from 'axios';
+import moment from 'moment';
 
+import { Cache } from '~cache/cache.decorator';
 import { Network, NETWORK_IDS } from '~types/network.interface';
 
 export type V4PrizePool = {
@@ -25,7 +27,10 @@ type V4ApiPrizePool = {
 
 @Injectable()
 export class PoolTogetherV4ApiPrizePoolRegistry {
-  ///////////////////// V4 Prize Pools /////////////////////
+  @Cache({
+    key: (network: Network) => `pool-together-v4:${network}:prize-pool-registry`,
+    ttl: moment.duration(30, 'minutes').asSeconds(),
+  })
   async getV4PrizePools(network: Network): Promise<V4PrizePool[]> {
     const prizePoolUrl = `https://pooltogether-api.com/v4/addresses/prize-pools/${NETWORK_IDS[network]}`;
     const v4PrizePools = await Axios.get<{ [prizePoolAddress: string]: V4ApiPrizePool }>(prizePoolUrl).then(
