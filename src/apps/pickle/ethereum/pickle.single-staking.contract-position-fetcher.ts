@@ -2,10 +2,7 @@ import { Inject } from '@nestjs/common';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
-import {
-  DataPropsStageParams,
-  GetTokenBalancesPerPositionParams,
-} from '~position/template/contract-position.template.position-fetcher';
+import { GetDataPropsParams, GetTokenBalancesParams } from '~position/template/contract-position.template.types';
 import {
   SingleStakingFarmDataProps,
   SingleStakingFarmDefinition,
@@ -52,21 +49,21 @@ export class EthereumPickleSingleRewardPositionFetcher extends SingleStakingFarm
     }));
   }
 
-  getRewardRates({ contract }: DataPropsStageParams<PickleJarSingleRewardStaking, SingleStakingFarmDataProps>) {
+  getRewardRates({ contract }: GetDataPropsParams<PickleJarSingleRewardStaking, SingleStakingFarmDataProps>) {
     return contract.rewardRate();
   }
 
   getStakedTokenBalance({
     address,
     contract,
-  }: GetTokenBalancesPerPositionParams<PickleJarSingleRewardStaking, SingleStakingFarmDataProps>) {
+  }: GetTokenBalancesParams<PickleJarSingleRewardStaking, SingleStakingFarmDataProps>) {
     return contract.balanceOf(address);
   }
 
   getRewardTokenBalances({
     address,
     contract,
-  }: GetTokenBalancesPerPositionParams<PickleJarSingleRewardStaking, SingleStakingFarmDataProps>) {
+  }: GetTokenBalancesParams<PickleJarSingleRewardStaking, SingleStakingFarmDataProps>) {
     return contract.earned(address);
   }
 }

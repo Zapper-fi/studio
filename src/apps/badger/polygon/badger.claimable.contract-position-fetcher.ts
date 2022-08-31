@@ -4,8 +4,8 @@ import { Network } from '~types/network.interface';
 import { BADGER_DEFINITION } from '../badger.definition';
 import {
   BadgerClaimableContractPositionFetcher,
-  BadgerClaimableDescriptor,
-} from '../helpers/badger.claimable.contract-position-fetcher';
+  BadgerClaimableDefinition,
+} from '../common/badger.claimable.contract-position-fetcher';
 
 const appId = BADGER_DEFINITION.id;
 const groupId = BADGER_DEFINITION.groups.claimable.id;
@@ -18,7 +18,7 @@ export class PolygonBadgerClaimableContractPositionFetcher extends BadgerClaimab
   network = network;
   groupLabel = 'Rewards';
 
-  async getDescriptors(): Promise<BadgerClaimableDescriptor[]> {
+  async getDefinitions(): Promise<BadgerClaimableDefinition[]> {
     return [
       {
         address: '0x2c798fafd37c7dcdcac2498e19432898bc51376b',

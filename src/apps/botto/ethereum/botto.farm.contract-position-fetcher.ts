@@ -3,10 +3,7 @@ import { BigNumberish } from 'ethers';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
-import {
-  DataPropsStageParams,
-  GetTokenBalancesPerPositionParams,
-} from '~position/template/contract-position.template.position-fetcher';
+import { GetDataPropsParams, GetTokenBalancesParams } from '~position/template/contract-position.template.types';
 import {
   SingleStakingFarmDataProps,
   SingleStakingFarmTemplateContractPositionFetcher,
@@ -48,7 +45,7 @@ export class EthereumBottoFarmContractPositionFetcher extends SingleStakingFarmT
     return this.contractFactory.bottoLiquidityMining({ address, network: this.network });
   }
 
-  async getRewardRates({ contract }: DataPropsStageParams<BottoLiquidityMining, SingleStakingFarmDataProps>) {
+  async getRewardRates({ contract }: GetDataPropsParams<BottoLiquidityMining, SingleStakingFarmDataProps>) {
     const [totalRewards, startTime, endTime] = await Promise.all([
       contract.totalRewards(),
       contract.firstStakeTime(),
@@ -61,16 +58,14 @@ export class EthereumBottoFarmContractPositionFetcher extends SingleStakingFarmT
   async getStakedTokenBalance({
     address,
     contract,
-  }: GetTokenBalancesPerPositionParams<BottoLiquidityMining, SingleStakingFarmDataProps>) {
+  }: GetTokenBalancesParams<BottoLiquidityMining, SingleStakingFarmDataProps>) {
     return contract.totalUserStake(address);
   }
 
   getRewardTokenBalances({
     address,
     contract,
-  }: GetTokenBalancesPerPositionParams<BottoLiquidityMining, SingleStakingFarmDataProps>): Promise<
-    BigNumberish | BigNumberish[]
-  > {
+  }: GetTokenBalancesParams<BottoLiquidityMining, SingleStakingFarmDataProps>): Promise<BigNumberish | BigNumberish[]> {
     return contract.callStatic
       .withdraw({ from: address })
       .then(res => res.reward)

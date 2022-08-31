@@ -4,8 +4,8 @@ import { Network } from '~types/network.interface';
 import { BADGER_DEFINITION } from '../badger.definition';
 import {
   BadgerClaimableContractPositionFetcher,
-  BadgerClaimableDescriptor,
-} from '../helpers/badger.claimable.contract-position-fetcher';
+  BadgerClaimableDefinition,
+} from '../common/badger.claimable.contract-position-fetcher';
 
 const appId = BADGER_DEFINITION.id;
 const groupId = BADGER_DEFINITION.groups.claimable.id;
@@ -19,7 +19,7 @@ export class EthereumBadgerClaimableContractPositionFetcher extends BadgerClaima
   groupLabel = 'Rewards';
   diggTokenAddress = '0x798d1be841a82a273720ce31c822c61a67a601c3';
 
-  async getDescriptors(): Promise<BadgerClaimableDescriptor[]> {
+  async getDefinitions(): Promise<BadgerClaimableDefinition[]> {
     return [
       {
         address: '0x660802fc641b154aba66a62137e71f331b6d787a',

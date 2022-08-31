@@ -5,7 +5,7 @@ import { Network } from '~types/network.interface';
 
 export const ROBO_VAULT_DEFINITION = appDefinition({
   id: 'robo-vault',
-  name: 'robo-vault',
+  name: 'Robo Vault',
   description: 'Single Asset Yield Farming',
   url: 'https://robo-vault.com/',
 

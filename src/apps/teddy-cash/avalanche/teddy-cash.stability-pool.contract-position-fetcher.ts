@@ -5,12 +5,12 @@ import { ZERO_ADDRESS } from '~app-toolkit/constants/address';
 import { Register } from '~app-toolkit/decorators';
 import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { MetaType } from '~position/position.interface';
+import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
 import {
-  ContractPositionTemplatePositionFetcher,
-  DefaultContractPositionDescriptor,
-  DisplayPropsStageParams,
-  GetTokenBalancesPerPositionParams,
-} from '~position/template/contract-position.template.position-fetcher';
+  DefaultContractPositionDefinition,
+  GetDisplayPropsParams,
+  GetTokenBalancesParams,
+} from '~position/template/contract-position.template.types';
 import { Network } from '~types';
 
 import { TeddyCashContractFactory } from '../contracts';
@@ -39,11 +39,11 @@ export class AvalancheTeddyCashStabilityPoolContractPositionFetcher extends Cont
     return this.contractFactory.teddyCashStabilityPool({ address, network: this.network });
   }
 
-  async getDescriptors(): Promise<DefaultContractPositionDescriptor[]> {
+  async getDefinitions(): Promise<DefaultContractPositionDefinition[]> {
     return [{ address: '0x7aed63385c03dc8ed2133f705bbb63e8ea607522' }];
   }
 
-  async getTokenDescriptors() {
+  async getTokenDefinitions() {
     return [
       { metaType: MetaType.SUPPLIED, address: '0x4fbf0429599460d327bd5f55625e30e4fc066095' }, // TSD
       { metaType: MetaType.CLAIMABLE, address: ZERO_ADDRESS }, // AVAX
@@ -51,11 +51,11 @@ export class AvalancheTeddyCashStabilityPoolContractPositionFetcher extends Cont
     ];
   }
 
-  async getLabel({ contractPosition }: DisplayPropsStageParams<TeddyCashStabilityPool>): Promise<string> {
+  async getLabel({ contractPosition }: GetDisplayPropsParams<TeddyCashStabilityPool>): Promise<string> {
     return `${getLabelFromToken(contractPosition.tokens[0])} Stability Pool`;
   }
 
-  getTokenBalancesPerPosition({ address, contract }: GetTokenBalancesPerPositionParams<TeddyCashStabilityPool>) {
+  getTokenBalancesPerPosition({ address, contract }: GetTokenBalancesParams<TeddyCashStabilityPool>) {
     return Promise.all([
       contract.getCompoundedLUSDDeposit(address),
       contract.getDepositorETHGain(address),

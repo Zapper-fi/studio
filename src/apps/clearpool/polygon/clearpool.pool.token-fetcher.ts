@@ -3,13 +3,13 @@ import Axios from 'axios';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
+import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import {
-  AppTokenTemplatePositionFetcher,
-  DataPropsStageParams,
-  DisplayPropsStageParams,
-  PricePerShareStageParams,
-  UnderlyingTokensStageParams,
-} from '~position/template/app-token.template.position-fetcher';
+  GetDataPropsParams,
+  GetDisplayPropsParams,
+  GetPricePerShareParams,
+  GetUnderlyingTokensParams,
+} from '~position/template/app-token.template.types';
 import { Network, NETWORK_IDS } from '~types';
 
 import { CLEARPOOL_DEFINITION } from '../clearpool.definition';
@@ -50,23 +50,23 @@ export class PolygonClearpoolPoolTokenFetcher extends AppTokenTemplatePositionFe
     return this.clearpoolContractFactory.clearpoolPool({ address, network });
   }
 
-  async getUnderlyingTokenAddresses({ contract }: UnderlyingTokensStageParams<ClearpoolPool>) {
+  async getUnderlyingTokenAddresses({ contract }: GetUnderlyingTokensParams<ClearpoolPool>) {
     return contract.currency();
   }
 
-  getPricePerShare({
+  async getPricePerShare({
     contract,
-  }: PricePerShareStageParams<ClearpoolPool, ClearpoolPoolTokenDataProps>): Promise<number | number[]> {
+  }: GetPricePerShareParams<ClearpoolPool, ClearpoolPoolTokenDataProps>): Promise<number | number[]> {
     return contract.getCurrentExchangeRate().then(v => Number(v) / 10 ** 18);
   }
 
-  async getDataProps({ contract }: DataPropsStageParams<ClearpoolPool, ClearpoolPoolTokenDataProps>) {
+  async getDataProps({ contract }: GetDataPropsParams<ClearpoolPool, ClearpoolPoolTokenDataProps>) {
     const poolSizeRaw = await contract.poolSize();
     const liquidity = Number(poolSizeRaw) / 10 ** 6;
     return { liquidity };
   }
 
-  getLabel({ contract }: DisplayPropsStageParams<ClearpoolPool, ClearpoolPoolTokenDataProps>) {
+  getLabel({ contract }: GetDisplayPropsParams<ClearpoolPool, ClearpoolPoolTokenDataProps>) {
     return contract.name();
   }
 }

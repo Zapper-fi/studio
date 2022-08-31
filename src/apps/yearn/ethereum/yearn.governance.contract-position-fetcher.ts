@@ -3,10 +3,7 @@ import { Inject } from '@nestjs/common';
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
 import { SynthetixContractFactory, SynthetixRewards } from '~apps/synthetix';
-import {
-  DataPropsStageParams,
-  GetTokenBalancesPerPositionParams,
-} from '~position/template/contract-position.template.position-fetcher';
+import { GetDataPropsParams, GetTokenBalancesParams } from '~position/template/contract-position.template.types';
 import {
   SingleStakingFarmDefinition,
   SingleStakingFarmTemplateContractPositionFetcher,
@@ -47,15 +44,15 @@ export class EthereumYearnGovernanceContractPositionFetcher extends SingleStakin
     ];
   }
 
-  async getRewardRates({ contract }: DataPropsStageParams<SynthetixRewards>) {
+  async getRewardRates({ contract }: GetDataPropsParams<SynthetixRewards>) {
     return contract.rewardRate();
   }
 
-  async getStakedTokenBalance({ contract, address }: GetTokenBalancesPerPositionParams<SynthetixRewards>) {
+  async getStakedTokenBalance({ contract, address }: GetTokenBalancesParams<SynthetixRewards>) {
     return contract.balanceOf(address);
   }
 
-  async getRewardTokenBalances({ contract, address }: GetTokenBalancesPerPositionParams<SynthetixRewards>) {
+  async getRewardTokenBalances({ contract, address }: GetTokenBalancesParams<SynthetixRewards>) {
     return contract.rewards(address);
   }
 }

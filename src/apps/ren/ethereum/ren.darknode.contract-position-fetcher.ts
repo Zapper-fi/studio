@@ -9,10 +9,8 @@ import { Register } from '~app-toolkit/decorators';
 import { ContractPositionBalance } from '~position/position-balance.interface';
 import { MetaType } from '~position/position.interface';
 import { isClaimable, isSupplied } from '~position/position.utils';
-import {
-  ContractPositionTemplatePositionFetcher,
-  DisplayPropsStageParams,
-} from '~position/template/contract-position.template.position-fetcher';
+import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
+import { GetDisplayPropsParams } from '~position/template/contract-position.template.types';
 import { Network } from '~types';
 
 import { RenApiClient } from '../common/ren.api.client';
@@ -42,11 +40,11 @@ export class EthereumRenDarknodeContractPositionFetcher extends ContractPosition
     return this.contractFactory.renDarknodeRegistry({ address, network: this.network });
   }
 
-  async getDescriptors() {
+  async getDefinitions() {
     return [{ address: '0x2d7b6c95afeffa50c068d50f89c5c0014e054f0a' }];
   }
 
-  async getTokenDescriptors() {
+  async getTokenDefinitions() {
     const { assets } = await this.apiClient.getDarknodeAssets();
     const claimable = [ZERO_ADDRESS, ...assets.map(v => v.tokenAddress)];
 
@@ -56,7 +54,7 @@ export class EthereumRenDarknodeContractPositionFetcher extends ContractPosition
     ];
   }
 
-  async getLabel(params: DisplayPropsStageParams<RenDarknodeRegistry>): Promise<string> {
+  async getLabel(params: GetDisplayPropsParams<RenDarknodeRegistry>): Promise<string> {
     const suppliedToken = params.contractPosition.tokens[0];
     return `${suppliedToken.symbol} in Darknodes`;
   }

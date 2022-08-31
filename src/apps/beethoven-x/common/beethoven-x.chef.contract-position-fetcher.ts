@@ -2,7 +2,11 @@ import { Inject } from '@nestjs/common';
 import { BigNumberish } from 'ethers';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
-import { MasterChefTemplateContractPositionFetcher } from '~position/template/master-chef.template.contract-position-fetcher';
+import {
+  GetMasterChefDataPropsParams,
+  GetMasterChefTokenBalancesParams,
+  MasterChefTemplateContractPositionFetcher,
+} from '~position/template/master-chef.template.contract-position-fetcher';
 
 import { BeethovenXContractFactory, BeethovenXMasterchef } from '../contracts';
 
@@ -30,31 +34,34 @@ export abstract class BeethovenXChefContractPositionFetcher extends MasterChefTe
     return contract.beets();
   }
 
-  async getTotalAllocPoints(contract: BeethovenXMasterchef): Promise<BigNumberish> {
+  async getTotalAllocPoints({ contract }: GetMasterChefDataPropsParams<BeethovenXMasterchef>): Promise<BigNumberish> {
     return contract.totalAllocPoint();
   }
 
-  async getTotalRewardRate(contract: BeethovenXMasterchef): Promise<BigNumberish> {
+  async getTotalRewardRate({ contract }: GetMasterChefDataPropsParams<BeethovenXMasterchef>): Promise<BigNumberish> {
     return contract.beetsPerBlock();
   }
 
-  async getPoolAllocPoints(contract: BeethovenXMasterchef, poolIndex: number): Promise<BigNumberish> {
-    return contract.poolInfo(poolIndex).then(v => v.allocPoint);
+  async getPoolAllocPoints({
+    contract,
+    definition,
+  }: GetMasterChefDataPropsParams<BeethovenXMasterchef>): Promise<BigNumberish> {
+    return contract.poolInfo(definition.poolIndex).then(v => v.allocPoint);
   }
 
-  async getStakedTokenBalance(
-    address: string,
-    contract: BeethovenXMasterchef,
-    poolIndex: number,
-  ): Promise<BigNumberish> {
-    return contract.userInfo(poolIndex, address).then(v => v.amount);
+  async getStakedTokenBalance({
+    address,
+    contract,
+    contractPosition,
+  }: GetMasterChefTokenBalancesParams<BeethovenXMasterchef>): Promise<BigNumberish> {
+    return contract.userInfo(contractPosition.dataProps.poolIndex, address).then(v => v.amount);
   }
 
-  async getRewardTokenBalance(
-    address: string,
-    contract: BeethovenXMasterchef,
-    poolIndex: number,
-  ): Promise<BigNumberish> {
-    return contract.pendingBeets(poolIndex, address);
+  async getRewardTokenBalance({
+    address,
+    contract,
+    contractPosition,
+  }: GetMasterChefTokenBalancesParams<BeethovenXMasterchef>): Promise<BigNumberish> {
+    return contract.pendingBeets(contractPosition.dataProps.poolIndex, address);
   }
 }

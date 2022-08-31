@@ -3,7 +3,7 @@ import { padEnd } from 'lodash';
 import Web3 from 'web3';
 
 import { Register } from '~app-toolkit/decorators';
-import { GetTokenBalancesPerPositionParams } from '~position/template/contract-position.template.position-fetcher';
+import { GetTokenBalancesParams } from '~position/template/contract-position.template.types';
 import { Network } from '~types/network.interface';
 
 import { DopexSsovContractPositionFetcher, DopexSsovDataProps } from '../common/dopex.ssov.contract-position-fetcher';
@@ -60,7 +60,7 @@ export class ArbitrumDopexEthSsovContractPositionFetcher extends DopexSsovContra
   getTotalEpochStrikeDepositBalance({
     contract,
     contractPosition,
-  }: GetTokenBalancesPerPositionParams<DopexEthSsov, DopexSsovDataProps>) {
+  }: GetTokenBalancesParams<DopexEthSsov, DopexSsovDataProps>) {
     const { epoch, strike } = contractPosition.dataProps;
     return contract.totalEpochStrikeEthBalance(epoch, strike);
   }
@@ -69,7 +69,7 @@ export class ArbitrumDopexEthSsovContractPositionFetcher extends DopexSsovContra
     contract,
     contractPosition,
     multicall,
-  }: GetTokenBalancesPerPositionParams<DopexEthSsov, DopexSsovDataProps>): Promise<BigNumberish | BigNumberish[]> {
+  }: GetTokenBalancesParams<DopexEthSsov, DopexSsovDataProps>): Promise<BigNumberish | BigNumberish[]> {
     const { epoch } = contractPosition.dataProps;
     const rewardDistributionName = padEnd(Web3.utils.asciiToHex('RewardsDistribution'), 66, '0');
     const rewardDistrbutionAddress = await multicall.wrap(contract).getAddress(rewardDistributionName);

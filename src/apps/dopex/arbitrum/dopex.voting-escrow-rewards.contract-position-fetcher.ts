@@ -5,12 +5,12 @@ import { Register } from '~app-toolkit/decorators';
 import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { MetaType } from '~position/position.interface';
 import { isClaimable } from '~position/position.utils';
+import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
 import {
-  ContractPositionTemplatePositionFetcher,
-  DisplayPropsStageParams,
-  GetTokenBalancesPerPositionParams,
-  TokenStageParams,
-} from '~position/template/contract-position.template.position-fetcher';
+  GetDisplayPropsParams,
+  GetTokenBalancesParams,
+  GetTokenDefinitionsParams,
+} from '~position/template/contract-position.template.types';
 import { Network } from '~types/network.interface';
 
 import { DopexContractFactory, DopexVotingEscrowRewards } from '../contracts';
@@ -38,23 +38,20 @@ export class ArbitrumDopexVotingEscrowRewardsContractPositionFetcher extends Con
     return this.contractFactory.dopexVotingEscrowRewards({ address, network: this.network });
   }
 
-  async getDescriptors() {
+  async getDefinitions() {
     return [{ address: '0xcbbfb7e0e6782df0d3e91f8d785a5bf9e8d9775f' }];
   }
 
-  async getTokenDescriptors({ contract }: TokenStageParams<DopexVotingEscrowRewards>) {
+  async getTokenDefinitions({ contract }: GetTokenDefinitionsParams<DopexVotingEscrowRewards>) {
     return [{ metaType: MetaType.CLAIMABLE, address: await contract.emittedToken() }];
   }
 
-  async getLabel({ contractPosition }: DisplayPropsStageParams<DopexVotingEscrowRewards>) {
+  async getLabel({ contractPosition }: GetDisplayPropsParams<DopexVotingEscrowRewards>) {
     const suppliedToken = contractPosition.tokens.find(isClaimable)!;
     return `Voting Escrow ${getLabelFromToken(suppliedToken)} Rewards`;
   }
 
-  async getTokenBalancesPerPosition({
-    address,
-    contract,
-  }: GetTokenBalancesPerPositionParams<DopexVotingEscrowRewards>) {
+  async getTokenBalancesPerPosition({ address, contract }: GetTokenBalancesParams<DopexVotingEscrowRewards>) {
     return [await contract.earned(address)];
   }
 }

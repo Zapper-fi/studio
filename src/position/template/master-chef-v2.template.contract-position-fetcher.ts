@@ -4,20 +4,36 @@ import { BigNumberish, Contract } from 'ethers';
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { ZERO_ADDRESS } from '~app-toolkit/constants/address';
 import { MetaType } from '~position/position.interface';
-import {
-  DataPropsStageParams,
-  GetTokenBalancesPerPositionParams,
-  TokenStageParams,
-} from '~position/template/contract-position.template.position-fetcher';
 
 import {
+  GetDataPropsParams,
+  GetTokenBalancesParams,
+  GetTokenDefinitionsParams,
+} from './contract-position.template.types';
+import {
+  GetMasterChefDataPropsParams,
+  GetMasterChefTokenBalancesParams,
   MasterChefContractPositionDataProps,
-  MasterChefContractPositionDescriptor,
+  MasterChefContractPositionDefinition,
   MasterChefTemplateContractPositionFetcher,
 } from './master-chef.template.contract-position-fetcher';
 
 export type MasterChefV2ContractPositionDataProps = MasterChefContractPositionDataProps & {
   extraRewarderAddress: string;
+};
+
+export type GetMasterChefV2ExtraRewardTokenRewardRates<
+  T extends Contract,
+  V extends Contract,
+> = GetMasterChefDataPropsParams<T> & {
+  rewarderContract: V;
+};
+
+export type GetMasterChefV2ExtraRewardTokenBalancesParams<
+  T extends Contract,
+  V extends Contract,
+> = GetMasterChefTokenBalancesParams<T> & {
+  rewarderContract: V;
 };
 
 export abstract class MasterChefV2TemplateContractPositionFetcher<
@@ -28,48 +44,68 @@ export abstract class MasterChefV2TemplateContractPositionFetcher<
     super(appToolkit);
   }
 
+  // Tokens
   abstract getExtraRewarder(contract: T, poolIndex: number): Promise<string>;
   abstract getExtraRewarderContract(address: string): V;
-  abstract getExtraRewardTokenAddress(contract: V, poolIndex: number): Promise<string>;
-  abstract getExtraRewardTokenBalance(address: string, contract: V, poolIndex: number): Promise<BigNumberish>;
+  abstract getExtraRewardTokenAddresses(contract: V, poolIndex: number): Promise<string[]>;
 
-  async getTokenDescriptors(
-    params: TokenStageParams<T, MasterChefV2ContractPositionDataProps, MasterChefContractPositionDescriptor>,
-  ) {
-    const { multicall, descriptor, contract } = params;
-    const tokenDescriptors = await super.getTokenDescriptors(params);
-    if (!tokenDescriptors) return null; // break early if it failed to resolve the primary supplied and claimable
+  // APY
+  abstract getExtraRewardTokenRewardRates(
+    params: GetMasterChefV2ExtraRewardTokenRewardRates<T, V>,
+  ): Promise<BigNumberish | BigNumberish[]>;
 
-    const extraRewarderAddress = await this.getExtraRewarder(contract, descriptor.poolIndex);
-    if (extraRewarderAddress === ZERO_ADDRESS) return tokenDescriptors;
+  // Balances
+  abstract getExtraRewardTokenBalances(
+    params: GetMasterChefV2ExtraRewardTokenBalancesParams<T, V>,
+  ): Promise<BigNumberish | BigNumberish[]>;
+
+  async getTokenDefinitions(params: GetTokenDefinitionsParams<T, MasterChefContractPositionDefinition>) {
+    const { multicall, definition, contract } = params;
+    const tokenDefinitions = await super.getTokenDefinitions(params);
+    if (!tokenDefinitions) return null; // break early if it failed to resolve the primary supplied and claimable
+
+    const extraRewarderAddress = await this.getExtraRewarder(contract, definition.poolIndex);
+    if (extraRewarderAddress === ZERO_ADDRESS) return tokenDefinitions;
 
     const rewarderContract = multicall.wrap(this.getExtraRewarderContract(extraRewarderAddress));
-    const extraRewardTokenAddress = await this.getExtraRewardTokenAddress(rewarderContract, descriptor.poolIndex);
-    tokenDescriptors.push({ metaType: MetaType.CLAIMABLE, address: extraRewardTokenAddress });
+    const extraRewardTokenAddresses = await this.getExtraRewardTokenAddresses(rewarderContract, definition.poolIndex);
+    tokenDefinitions.push(...extraRewardTokenAddresses.map(v => ({ metaType: MetaType.CLAIMABLE, address: v })));
 
-    return tokenDescriptors;
+    return tokenDefinitions;
+  }
+
+  async getRewardRates(
+    params: GetDataPropsParams<T, MasterChefV2ContractPositionDataProps, MasterChefContractPositionDefinition>,
+  ): Promise<BigNumberish[]> {
+    const rewardRates = await super.getRewardRates(params);
+
+    const { contract, definition, multicall } = params;
+    const extraRewarderAddress = await this.getExtraRewarder(contract, definition.poolIndex);
+    const rewarderContract = multicall.wrap(this.getExtraRewarderContract(extraRewarderAddress));
+
+    const extraRewardRates = await this.getExtraRewardTokenRewardRates({ ...params, rewarderContract });
+    return [...rewardRates, ...(Array.isArray(extraRewardRates) ? extraRewardRates : [extraRewardRates])];
   }
 
   async getDataProps(
-    params: DataPropsStageParams<T, MasterChefV2ContractPositionDataProps, MasterChefContractPositionDescriptor>,
+    params: GetDataPropsParams<T, MasterChefV2ContractPositionDataProps, MasterChefContractPositionDefinition>,
   ): Promise<MasterChefV2ContractPositionDataProps> {
-    const { descriptor, contract } = params;
+    const { definition, contract } = params;
     const dataProps = await super.getDataProps(params);
-    const extraRewarderAddress = await this.getExtraRewarder(contract, descriptor.poolIndex);
+    const extraRewarderAddress = await this.getExtraRewarder(contract, definition.poolIndex);
     return { ...dataProps, extraRewarderAddress: extraRewarderAddress.toLowerCase() };
   }
 
-  async getTokenBalancesPerPosition(
-    params: GetTokenBalancesPerPositionParams<T, MasterChefV2ContractPositionDataProps>,
-  ) {
-    const { address, contractPosition, multicall } = params;
-    const { extraRewarderAddress, poolIndex } = contractPosition.dataProps;
+  async getTokenBalancesPerPosition(params: GetTokenBalancesParams<T, MasterChefV2ContractPositionDataProps>) {
+    const { contractPosition, multicall } = params;
+    const { extraRewarderAddress } = contractPosition.dataProps;
 
     const tokenBalancesForPosition = await super.getTokenBalancesPerPosition(params);
     if (extraRewarderAddress === ZERO_ADDRESS) return tokenBalancesForPosition;
 
     const rewarderContract = multicall.wrap(this.getExtraRewarderContract(extraRewarderAddress));
-    const extraRewardBalance = await this.getExtraRewardTokenBalance(address, rewarderContract, poolIndex);
-    return [...tokenBalancesForPosition, extraRewardBalance];
+    const extraResult = await this.getExtraRewardTokenBalances({ ...params, rewarderContract });
+    const extraRewardBalances = Array.isArray(extraResult) ? extraResult : [extraResult];
+    return [...tokenBalancesForPosition, ...extraRewardBalances];
   }
 }

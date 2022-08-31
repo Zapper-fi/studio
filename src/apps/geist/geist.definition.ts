@@ -13,10 +13,17 @@ export const GEIST_DEFINITION = appDefinition({
   links: {},
 
   groups: {
-    claimable: {
-      id: 'claimable',
+    platformFees: {
+      id: 'platform-fees',
       type: GroupType.POSITION,
       label: 'Platform Fees',
+      isHiddenFromExplore: true,
+    },
+
+    incentives: {
+      id: 'incentives',
+      type: GroupType.POSITION,
+      label: 'Incentives',
       isHiddenFromExplore: true,
     },
 

@@ -32,7 +32,7 @@ export class EthereumConvexBoosterContractPositionFetcher extends ContractPositi
     return this.contractFactory.convexBooster({ address, network: this.network });
   }
 
-  async getDescriptors() {
+  async getDefinitions() {
     return [{ address: '0xf403c135812408bfbe8713b5a23a04b3d48aae31' }];
   }
 

@@ -4,12 +4,12 @@ import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
 import { getImagesFromToken, getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { MetaType } from '~position/position.interface';
+import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
 import {
-  ContractPositionTemplatePositionFetcher,
-  DisplayPropsStageParams,
-  GetTokenBalancesPerPositionParams,
-  TokenStageParams,
-} from '~position/template/contract-position.template.position-fetcher';
+  GetDisplayPropsParams,
+  GetTokenBalancesParams,
+  GetTokenDefinitionsParams,
+} from '~position/template/contract-position.template.types';
 import { Network } from '~types';
 
 import { HectorNetworkContractFactory, HectorNetworkStakeBondDepository } from '../contracts';
@@ -33,7 +33,7 @@ export class FantomHectorNetworkStakeBondContractPositionFetcher extends Contrac
     super(appToolkit);
   }
 
-  async getDescriptors() {
+  async getDefinitions() {
     return [
       { address: '0x23337b675375507ce218df5f92f1a71252dab3e5' },
       { address: '0xd0373f236be04ecf08f51fc4e3ade7159d7cde65' },
@@ -49,7 +49,7 @@ export class FantomHectorNetworkStakeBondContractPositionFetcher extends Contrac
     return this.contractFactory.hectorNetworkStakeBondDepository({ address, network: this.network });
   }
 
-  async getTokenDescriptors({ contract }: TokenStageParams<HectorNetworkStakeBondDepository>) {
+  async getTokenDefinitions({ contract }: GetTokenDefinitionsParams<HectorNetworkStakeBondDepository>) {
     const [principle, claimable] = await Promise.all([contract.principle(), contract.sHEC()]);
 
     return [
@@ -59,11 +59,11 @@ export class FantomHectorNetworkStakeBondContractPositionFetcher extends Contrac
     ];
   }
 
-  async getLabel({ contractPosition }: DisplayPropsStageParams<HectorNetworkStakeBondDepository>) {
+  async getLabel({ contractPosition }: GetDisplayPropsParams<HectorNetworkStakeBondDepository>) {
     return `${getLabelFromToken(contractPosition.tokens[2])} Bond`;
   }
 
-  async getImages({ contractPosition }: DisplayPropsStageParams<HectorNetworkStakeBondDepository>) {
+  async getImages({ contractPosition }: GetDisplayPropsParams<HectorNetworkStakeBondDepository>) {
     return getImagesFromToken(contractPosition.tokens[2]);
   }
 
@@ -71,7 +71,7 @@ export class FantomHectorNetworkStakeBondContractPositionFetcher extends Contrac
     address,
     contract,
     multicall,
-  }: GetTokenBalancesPerPositionParams<HectorNetworkStakeBondDepository>) {
+  }: GetTokenBalancesParams<HectorNetworkStakeBondDepository>) {
     const [bondInfo, claimablePayout] = await Promise.all([
       multicall.wrap(contract).bondInfo(address),
       multicall.wrap(contract).pendingPayoutFor(address),

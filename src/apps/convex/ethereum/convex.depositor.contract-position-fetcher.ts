@@ -4,11 +4,8 @@ import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
 import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { MetaType } from '~position/position.interface';
-import {
-  ContractPositionTemplatePositionFetcher,
-  DisplayPropsStageParams,
-  TokenStageParams,
-} from '~position/template/contract-position.template.position-fetcher';
+import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
+import { GetDisplayPropsParams, GetTokenDefinitionsParams } from '~position/template/contract-position.template.types';
 import { Network } from '~types/network.interface';
 
 import { ConvexContractFactory } from '../contracts';
@@ -37,15 +34,15 @@ export class EthereumConvexDepositorContractPositionFetcher extends ContractPosi
     return this.contractFactory.convexDepositor({ address, network: this.network });
   }
 
-  async getDescriptors() {
+  async getDefinitions() {
     return [{ address: '0x8014595f2ab54cd7c604b00e9fb932176fdc86ae' }];
   }
 
-  async getTokenDescriptors(_params: TokenStageParams<ConvexDepositor>) {
+  async getTokenDefinitions(_params: GetTokenDefinitionsParams<ConvexDepositor>) {
     return [{ metaType: MetaType.SUPPLIED, address: '0x4e3fbd56cd56c3e72c1403e103b45db9da5b9d2b' }];
   }
 
-  async getLabel({ contractPosition }: DisplayPropsStageParams<ConvexDepositor>) {
+  async getLabel({ contractPosition }: GetDisplayPropsParams<ConvexDepositor>) {
     const depositToken = contractPosition.tokens[0]!;
     return `${getLabelFromToken(depositToken)} Depositor`;
   }
