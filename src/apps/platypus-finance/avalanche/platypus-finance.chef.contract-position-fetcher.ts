@@ -2,6 +2,7 @@ import { Inject } from '@nestjs/common';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
+import { isMulticallUnderlyingError } from '~multicall/multicall.ethers';
 import {
   GetMasterChefDataPropsParams,
   GetMasterChefTokenBalancesParams,
@@ -72,6 +73,12 @@ export class AvalanchePlatypusFinanceChefContractPositionFetcher extends MasterC
     contract,
     contractPosition,
   }: GetMasterChefTokenBalancesParams<PlatypusFinanceMasterPlatypusV2>) {
-    return (await contract.pendingTokens(contractPosition.dataProps.poolIndex, address)).pendingPtp;
+    return contract
+      .pendingTokens(contractPosition.dataProps.poolIndex, address)
+      .then(v => v.pendingPtp)
+      .catch(err => {
+        if (isMulticallUnderlyingError(err)) return 0;
+        throw err;
+      });
   }
 }
