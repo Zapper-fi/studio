@@ -10,15 +10,20 @@ import {
   GetUnderlyingTokensParams,
 } from '~position/template/app-token.template.types';
 
-import { BarnbridgeSmartAlphaContractFactory, BarnbridgeSmartAlphaPool } from '../contracts';
-import { BarnbridgeSmartAlphaSeniorPoolTokenDefinition } from '../ethereum/barnbridge-smart-alpha.senior-pool.token-fetcher';
+import { BarnbridgeSmartAlphaContractFactory, BarnbridgeSmartAlphaToken } from '../contracts';
+
+export type BarnbridgeSmartAlphaSeniorPoolTokenDefinition = {
+  address: string;
+  smartPoolAddress: string;
+  underlyingTokenAddress: string;
+};
 
 export abstract class BarnbridgeSmartAlphaSeniorPoolTokenFetcher extends AppTokenTemplatePositionFetcher<
-  BarnbridgeSmartAlphaPool,
+  BarnbridgeSmartAlphaToken,
   DefaultDataProps,
   BarnbridgeSmartAlphaSeniorPoolTokenDefinition
 > {
-  minLiquidity = 0;
+  abstract poolAlphaAddresses: string[];
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
@@ -28,8 +33,31 @@ export abstract class BarnbridgeSmartAlphaSeniorPoolTokenFetcher extends AppToke
     super(appToolkit);
   }
 
-  getContract(address: string): BarnbridgeSmartAlphaPool {
-    return this.contractFactory.barnbridgeSmartAlphaPool({ network: this.network, address });
+  async getDefinitions({ multicall }): Promise<BarnbridgeSmartAlphaSeniorPoolTokenDefinition[]> {
+    const poolAlphaPositions = await Promise.all(
+      this.poolAlphaAddresses.map(async poolAddress => {
+        const poolContract = this.contractFactory.barnbridgeSmartAlphaPool({
+          address: poolAddress,
+          network: this.network,
+        });
+        const [seniorAddressRaw, underlyingTokenAddressRaw] = await Promise.all([
+          multicall.wrap(poolContract).seniorToken(),
+          multicall.wrap(poolContract).poolToken(),
+        ]);
+
+        return {
+          address: seniorAddressRaw.toLowerCase(),
+          smartPoolAddress: poolAddress,
+          underlyingTokenAddress: underlyingTokenAddressRaw.toLowerCase(),
+        };
+      }),
+    );
+
+    return poolAlphaPositions;
+  }
+
+  getContract(address: string): BarnbridgeSmartAlphaToken {
+    return this.contractFactory.barnbridgeSmartAlphaToken({ network: this.network, address });
   }
 
   async getAddresses({
@@ -40,7 +68,7 @@ export abstract class BarnbridgeSmartAlphaSeniorPoolTokenFetcher extends AppToke
 
   async getUnderlyingTokenAddresses({
     definition,
-  }: GetUnderlyingTokensParams<BarnbridgeSmartAlphaPool, BarnbridgeSmartAlphaSeniorPoolTokenDefinition>) {
+  }: GetUnderlyingTokensParams<BarnbridgeSmartAlphaToken, BarnbridgeSmartAlphaSeniorPoolTokenDefinition>) {
     return [definition.underlyingTokenAddress];
   }
 
@@ -49,7 +77,7 @@ export abstract class BarnbridgeSmartAlphaSeniorPoolTokenFetcher extends AppToke
     definition,
     appToken,
   }: GetPriceParams<
-    BarnbridgeSmartAlphaPool,
+    BarnbridgeSmartAlphaToken,
     DefaultDataProps,
     BarnbridgeSmartAlphaSeniorPoolTokenDefinition
   >): Promise<number> {
@@ -62,7 +90,7 @@ export abstract class BarnbridgeSmartAlphaSeniorPoolTokenFetcher extends AppToke
     return Number(seniorTokenPriceInUnderlying) * appToken.tokens[0].price;
   }
 
-  async getDataProps({ appToken }: GetDataPropsParams<BarnbridgeSmartAlphaPool, DefaultDataProps>) {
+  async getDataProps({ appToken }: GetDataPropsParams<BarnbridgeSmartAlphaToken, DefaultDataProps>) {
     const liquidity = appToken.supply * appToken.price;
     return { liquidity };
   }

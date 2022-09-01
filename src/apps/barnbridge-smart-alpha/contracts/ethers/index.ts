@@ -2,5 +2,7 @@
 /* tslint:disable */
 /* eslint-disable */
 export type { BarnbridgeSmartAlphaPool } from './BarnbridgeSmartAlphaPool';
+export type { BarnbridgeSmartAlphaToken } from './BarnbridgeSmartAlphaToken';
 export * as factories from './factories';
 export { BarnbridgeSmartAlphaPool__factory } from './factories/BarnbridgeSmartAlphaPool__factory';
+export { BarnbridgeSmartAlphaToken__factory } from './factories/BarnbridgeSmartAlphaToken__factory';
