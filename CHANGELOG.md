@@ -4,6 +4,18 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.207.0](https://github.com/Zapper-fi/studio/compare/v0.206.0...v0.207.0) (2022-09-01)
+
+
+### Features
+
+* **apps:** Add Morpho app to zapper studio ([#1215](https://github.com/Zapper-fi/studio/issues/1215)) ([6cab0d7](https://github.com/Zapper-fi/studio/commit/6cab0d7c502a5145f20c9fed55106c6b181fa1b3))
+* **llama-airforce:** Add uauraBAL and migrate to templates ([#1317](https://github.com/Zapper-fi/studio/issues/1317)) ([1aff357](https://github.com/Zapper-fi/studio/commit/1aff35726a2c688724c5a33f5313277b488b8fa2))
+* **morpho:** Move to templates, fix position ([#1323](https://github.com/Zapper-fi/studio/issues/1323)) ([2a6f2a3](https://github.com/Zapper-fi/studio/commit/2a6f2a31a472bb5639324d69f28383cd4cbe2b46))
+* **platypus:** Add alt pools and factory pools ([#1319](https://github.com/Zapper-fi/studio/issues/1319)) ([15b5d0a](https://github.com/Zapper-fi/studio/commit/15b5d0a23ee4c94ff690554e50cb8bba811b5c55))
+* **spool:** Added Spool staking, emits SPOOL and voSPOOL ([#1275](https://github.com/Zapper-fi/studio/issues/1275)) ([1128a46](https://github.com/Zapper-fi/studio/commit/1128a46cdb088b82696fdac5963cf4c562111d45))
+* **template:** Add more features to template registry ([#1321](https://github.com/Zapper-fi/studio/issues/1321)) ([1d875f0](https://github.com/Zapper-fi/studio/commit/1d875f066888b58f130c8019cf7a2a2c6fe0321a))
+
 ## [0.206.0](https://github.com/Zapper-fi/studio/compare/v0.205.1...v0.206.0) (2022-08-31)
 
 
