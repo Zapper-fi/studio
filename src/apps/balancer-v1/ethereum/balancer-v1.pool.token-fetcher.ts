@@ -1,4 +1,5 @@
 import { Inject } from '@nestjs/common';
+import DataLoader from 'dataloader';
 import { gql } from 'graphql-request';
 import { sum } from 'lodash';
 
@@ -22,6 +23,8 @@ import { Network } from '~types/network.interface';
 
 import BALANCER_V1_DEFINITION from '../balancer-v1.definition';
 import { BalancerPoolToken, BalancerV1ContractFactory } from '../contracts';
+
+import { EthereumBalancerV1PoolSubgraphVolumeDataLoader } from './balancer-v1.volume.data-loader';
 
 type GetAllPoolsData = {
   pools: {
@@ -59,9 +62,13 @@ export class EthereumBalancerV1PoolTokenFetcher extends AppTokenTemplatePosition
   network = network;
   groupLabel = 'Pools';
 
+  volumeDataLoader: DataLoader<string, number>;
+
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
     @Inject(BalancerV1ContractFactory) protected readonly contractFactory: BalancerV1ContractFactory,
+    @Inject(EthereumBalancerV1PoolSubgraphVolumeDataLoader)
+    protected readonly volumeDataLoaderBuilder: EthereumBalancerV1PoolSubgraphVolumeDataLoader,
   ) {
     super(appToolkit);
   }
@@ -71,18 +78,18 @@ export class EthereumBalancerV1PoolTokenFetcher extends AppTokenTemplatePosition
   }
 
   async getAddresses() {
-    const requiredPoolAddresses = ['0xc697051d1c6296c24ae3bcef39aca743861d9a81'];
+    this.volumeDataLoader = this.volumeDataLoaderBuilder.getLoader();
+
     const poolsFromSubgraph = await this.appToolkit.helpers.theGraphHelper.requestGraph<GetAllPoolsData>({
       endpoint: 'https://api.thegraph.com/subgraphs/name/balancer-labs/balancer',
       query: getPoolsQuery,
     });
 
-    const poolAddresses = [...poolsFromSubgraph.pools.map(v => v.id), ...requiredPoolAddresses];
-    return poolAddresses;
+    return poolsFromSubgraph.pools.map(v => v.id);
   }
 
   async getUnderlyingTokenAddresses({ contract }: GetUnderlyingTokensParams<BalancerPoolToken>) {
-    return contract.getFinalTokens();
+    return contract.getCurrentTokens();
   }
 
   async getPricePerShare({ contract, appToken }: GetPricePerShareParams<BalancerPoolToken>) {
@@ -96,9 +103,9 @@ export class EthereumBalancerV1PoolTokenFetcher extends AppTokenTemplatePosition
     const reserves = (appToken.pricePerShare as number[]).map(pps => pps * appToken.supply);
     const liquidity = sum(reserves.map((r, i) => r * appToken.tokens[i].price));
     const fee = Number(await contract.getSwapFee()) / 10 ** 18;
-    const weightsRaw = await Promise.all(appToken.tokens.map(t => contract.getDenormalizedWeight(t.address)));
-    const weight = weightsRaw.map(w => Number(w) / 10 ** 18 / 100);
-    const volume = 0;
+    const weightsRaw = await Promise.all(appToken.tokens.map(t => contract.getNormalizedWeight(t.address)));
+    const weight = weightsRaw.map(w => Number(w) / 10 ** 18);
+    const volume = await this.volumeDataLoader.load(appToken.address);
 
     return { liquidity, fee, volume, reserves, weight };
   }
