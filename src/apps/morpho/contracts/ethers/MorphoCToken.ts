@@ -17,7 +17,7 @@ import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi
 import type { Listener, Provider } from '@ethersproject/providers';
 import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
-export interface CompoundCTokenInterface extends utils.Interface {
+export interface MorphoCTokenInterface extends utils.Interface {
   functions: {
     '_acceptAdmin()': FunctionFragment;
     '_addReserves(uint256)': FunctionFragment;
@@ -443,12 +443,12 @@ export type TransferEvent = TypedEvent<[string, string, BigNumber], TransferEven
 
 export type TransferEventFilter = TypedEventFilter<TransferEvent>;
 
-export interface CompoundCToken extends BaseContract {
+export interface MorphoCToken extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
 
-  interface: CompoundCTokenInterface;
+  interface: MorphoCTokenInterface;
 
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,

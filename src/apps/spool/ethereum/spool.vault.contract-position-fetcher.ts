@@ -11,6 +11,7 @@ import {
   buildStringDisplayItem,
 } from '~app-toolkit/helpers/presentation/display-item.present';
 import { SpoolContractFactory } from '~apps/spool';
+import { ANALYTICS_API_BASE_URL, SUBGRAPH_API_BASE_URL } from '~apps/spool/ethereum/spool.constants';
 import { ContractType } from '~position/contract.interface';
 import { WithMetaType } from '~position/display.interface';
 import { PositionFetcher } from '~position/position-fetcher.interface';
@@ -26,8 +27,6 @@ import { Platform, RewardAnalytics, VaultDetails, SpoolVaults, StrategyAnalytics
 const appId = SPOOL_DEFINITION.id;
 const groupId = SPOOL_DEFINITION.groups.vault.id;
 const network = Network.ETHEREUM_MAINNET;
-const ANALYTICS_API_BASE_URL = 'https://analytics.spool.fi';
-const SUBGRAPH_API_BASE_URL = 'https://api.thegraph.com/subgraphs/name/spoolfi/spool';
 
 const platformQuery = gql`
   query {
@@ -241,7 +240,7 @@ export class EthereumSpoolVaultContractPositionFetcher implements PositionFetche
       .map(strategy => parseFloat(strategy.allocation) * strategyAnalytics[strategy.strategy.id][0].apy)
       .reduce((a, b) => a + b, 0);
 
-    const apy = stats.apy || baseApy;
+    const apy = stats.apy || (baseApy / 100.0);
     const tvr = parseFloat(stats.tvr);
 
     const incentivizedApy = Object.values(rewardAnalytics[vault.id] || {})
