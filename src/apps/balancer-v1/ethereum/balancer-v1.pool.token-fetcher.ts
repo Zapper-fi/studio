@@ -102,7 +102,7 @@ export class EthereumBalancerV1PoolTokenFetcher extends AppTokenTemplatePosition
   async getDataProps({ appToken, contract }: GetDataPropsParams<BalancerPoolToken>) {
     const reserves = (appToken.pricePerShare as number[]).map(pps => pps * appToken.supply);
     const liquidity = sum(reserves.map((r, i) => r * appToken.tokens[i].price));
-    const fee = Number(await contract.getSwapFee()) / 10 ** 18;
+    const fee = (Number(await contract.getSwapFee()) / 10 ** 18) * 100;
     const weightsRaw = await Promise.all(appToken.tokens.map(t => contract.getNormalizedWeight(t.address)));
     const weight = weightsRaw.map(w => Number(w) / 10 ** 18);
     const volume = await this.volumeDataLoader.load(appToken.address);
