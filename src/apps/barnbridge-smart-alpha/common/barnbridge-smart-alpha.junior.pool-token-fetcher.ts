@@ -6,6 +6,7 @@ import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.te
 import {
   GetAddressesParams,
   GetDataPropsParams,
+  GetDisplayPropsParams,
   GetPriceParams,
   GetUnderlyingTokensParams,
 } from '~position/template/app-token.template.types';
@@ -88,6 +89,14 @@ export abstract class BarnbridgeSmartAlphaJuniorPoolTokenFetcher extends AppToke
     const juniorTokenPriceInUnderlyingRaw = await multicall.wrap(alphaPoolContract).estimateCurrentJuniorTokenPrice();
     const juniorTokenPriceInUnderlying = Number(juniorTokenPriceInUnderlyingRaw) / 10 ** 18;
     return Number(juniorTokenPriceInUnderlying) * appToken.tokens[0].price;
+  }
+
+  async getLabel({ appToken }: GetDisplayPropsParams<BarnbridgeSmartAlphaToken>): Promise<string> {
+    const lowerBoundIndex = appToken.symbol.lastIndexOf('-') + 1;
+    const upperBoundIndex = appToken.symbol.lastIndexOf('w');
+    const duration = appToken.symbol.substring(lowerBoundIndex, upperBoundIndex);
+    const durationLabel = Number(duration) < 2 ? 'week' : 'weeks';
+    return [appToken.tokens[0].symbol, 'Junior Pool', '-', duration, durationLabel].join(' ');
   }
 
   async getDataProps({ appToken }: GetDataPropsParams<BarnbridgeSmartAlphaToken, DefaultDataProps>) {
