@@ -63,14 +63,9 @@ export class EthereumAaveSafetyModuleAbptTokenFetcher extends AppTokenTemplatePo
   async getPricePerShare({
     appToken,
     multicall,
-    tokenLoader,
   }: GetPricePerShareParams<AaveAbpt, AaveSafetyModuleAbptTokenDataProps>) {
     const wethAddress = '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2';
     const aaveAddress = '0x7fc66500c84a76ad7e9c93437bfc5ac33e2ddae9';
-
-    const tokenRequests = [wethAddress, aaveAddress].map(v => ({ address: v, network: this.network }));
-    const [wethToken, aaveToken] = await tokenLoader.getMany(tokenRequests);
-    if (!wethToken || !aaveToken) return null as any; // force throw
 
     const poolToken = this.contractFactory.aaveBpt({
       address: appToken.tokens[0].address,
@@ -82,13 +77,13 @@ export class EthereumAaveSafetyModuleAbptTokenFetcher extends AppTokenTemplatePo
       multicall.wrap(poolToken).getBalance(aaveAddress),
     ]);
 
-    const aaveReserve = Number(aaveReserveRaw) / 10 ** aaveToken.decimals;
-    const wethReserve = Number(wethReserveRaw) / 10 ** wethToken.decimals;
+    const aaveReserve = Number(aaveReserveRaw) / 10 ** 18;
+    const wethReserve = Number(wethReserveRaw) / 10 ** 18;
     return [aaveReserve / appToken.supply, wethReserve / appToken.supply];
   }
 
   async getDataProps({ appToken }: GetDataPropsParams<AaveAbpt, AaveSafetyModuleAbptTokenDataProps>) {
-    const fee = 0.03;
+    const fee = 0.003;
     const reserves = (appToken.pricePerShare as number[]).map(v => v * appToken.supply);
     const liquidity = sum(reserves.map((v, i) => v * appToken.tokens[i].price));
     return { fee, reserves, liquidity };
