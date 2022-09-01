@@ -4,12 +4,13 @@ import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
 import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { MetaType } from '~position/position.interface';
+import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
 import {
-  ContractPositionTemplatePositionFetcher,
-  DisplayPropsStageParams,
-  GetTokenBalancesPerPositionParams,
-  TokenStageParams,
-} from '~position/template/contract-position.template.position-fetcher';
+  DefaultContractPositionDefinition,
+  GetDisplayPropsParams,
+  GetTokenBalancesParams,
+  GetTokenDefinitionsParams,
+} from '~position/template/contract-position.template.types';
 import { Network } from '~types';
 
 import { AAVE_SAFETY_MODULE_DEFINITION } from '../aave-safety-module.definition';
@@ -17,13 +18,14 @@ import { AaveSafetyModuleContractFactory, AaveStkAave } from '../contracts';
 
 const appId = AAVE_SAFETY_MODULE_DEFINITION.id;
 const groupId = AAVE_SAFETY_MODULE_DEFINITION.groups.stkAaveClaimable.id;
-const network = Network.ARBITRUM_MAINNET;
+const network = Network.ETHEREUM_MAINNET;
 
 @Register.ContractPositionFetcher({ appId, groupId, network })
 export class EthereumAaveSafetyModuleStkAaveClaimableContractPositionFetcher extends ContractPositionTemplatePositionFetcher<AaveStkAave> {
-  appId = AAVE_SAFETY_MODULE_DEFINITION.id;
-  groupId = AAVE_SAFETY_MODULE_DEFINITION.groups.stkAaveClaimable.id;
-  network = Network.ARBITRUM_MAINNET;
+  appId = appId;
+  groupId = groupId;
+  network = network;
+  groupLabel = 'stkAAVE Rewards';
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
@@ -36,19 +38,19 @@ export class EthereumAaveSafetyModuleStkAaveClaimableContractPositionFetcher ext
     return this.contractFactory.aaveStkAave({ address, network: this.network });
   }
 
-  async getDescriptors() {
+  async getDefinitions(): Promise<DefaultContractPositionDefinition[]> {
     return [{ address: '0x4da27a545c0c5b758a6ba100e3a049001de870f5' }];
   }
 
-  async getTokenDescriptors(_params: TokenStageParams<AaveStkAave>) {
+  async getTokenDefinitions(_params: GetTokenDefinitionsParams<AaveStkAave>) {
     return [{ metaType: MetaType.CLAIMABLE, address: '0x7fc66500c84a76ad7e9c93437bfc5ac33e2ddae9' }];
   }
 
-  async getLabel({ contractPosition }: DisplayPropsStageParams<AaveStkAave>) {
+  async getLabel({ contractPosition }: GetDisplayPropsParams<AaveStkAave>) {
     return `Claimable ${getLabelFromToken(contractPosition.tokens[0])}`;
   }
 
-  async getTokenBalancesPerPosition({ address, contract }: GetTokenBalancesPerPositionParams<AaveStkAave>) {
+  async getTokenBalancesPerPosition({ address, contract }: GetTokenBalancesParams<AaveStkAave>) {
     const rewardBalance = await contract.getTotalRewardsBalance(address);
     return [rewardBalance];
   }

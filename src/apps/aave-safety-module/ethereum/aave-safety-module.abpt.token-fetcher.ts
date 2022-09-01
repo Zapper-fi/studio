@@ -4,13 +4,13 @@ import { sum } from 'lodash';
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
 import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
+import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import {
-  AppTokenTemplatePositionFetcher,
-  DataPropsStageParams,
-  DisplayPropsStageParams,
-  PricePerShareStageParams,
-  UnderlyingTokensStageParams,
-} from '~position/template/app-token.template.position-fetcher';
+  GetDataPropsParams,
+  GetDisplayPropsParams,
+  GetPricePerShareParams,
+  GetUnderlyingTokensParams,
+} from '~position/template/app-token.template.types';
 import { Network } from '~types/network.interface';
 
 import { AAVE_SAFETY_MODULE_DEFINITION } from '../aave-safety-module.definition';
@@ -31,9 +31,10 @@ export class EthereumAaveSafetyModuleAbptTokenFetcher extends AppTokenTemplatePo
   AaveAbpt,
   AaveSafetyModuleAbptTokenDataProps
 > {
-  appId = AAVE_SAFETY_MODULE_DEFINITION.id;
-  groupId = AAVE_SAFETY_MODULE_DEFINITION.groups.abpt.id;
-  network = Network.ETHEREUM_MAINNET;
+  appId = appId;
+  groupId = groupId;
+  network = network;
+  groupLabel = 'ABPT';
 
   readonly bptAddress = '0xc697051d1c6296c24ae3bcef39aca743861d9a81';
   readonly abptAddress = '0x41a08648c3766f9f9d85598ff102a08f4ef84f84';
@@ -55,7 +56,7 @@ export class EthereumAaveSafetyModuleAbptTokenFetcher extends AppTokenTemplatePo
     return ['0x41a08648c3766f9f9d85598ff102a08f4ef84f84'];
   }
 
-  async getUnderlyingTokenAddresses(_params: UnderlyingTokensStageParams<AaveAbpt>): Promise<string | string[]> {
+  async getUnderlyingTokenAddresses(_params: GetUnderlyingTokensParams<AaveAbpt>): Promise<string | string[]> {
     return ['0xc697051d1c6296c24ae3bcef39aca743861d9a81'];
   }
 
@@ -63,7 +64,7 @@ export class EthereumAaveSafetyModuleAbptTokenFetcher extends AppTokenTemplatePo
     appToken,
     multicall,
     tokenLoader,
-  }: PricePerShareStageParams<AaveAbpt, AaveSafetyModuleAbptTokenDataProps>) {
+  }: GetPricePerShareParams<AaveAbpt, AaveSafetyModuleAbptTokenDataProps>) {
     const wethAddress = '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2';
     const aaveAddress = '0x7fc66500c84a76ad7e9c93437bfc5ac33e2ddae9';
 
@@ -86,18 +87,18 @@ export class EthereumAaveSafetyModuleAbptTokenFetcher extends AppTokenTemplatePo
     return [aaveReserve / appToken.supply, wethReserve / appToken.supply];
   }
 
-  async getDataProps({ appToken }: DataPropsStageParams<AaveAbpt, AaveSafetyModuleAbptTokenDataProps>) {
+  async getDataProps({ appToken }: GetDataPropsParams<AaveAbpt, AaveSafetyModuleAbptTokenDataProps>) {
     const fee = 0.03;
     const reserves = (appToken.pricePerShare as number[]).map(v => v * appToken.supply);
     const liquidity = sum(reserves.map((v, i) => v * appToken.tokens[i].price));
     return { fee, reserves, liquidity };
   }
 
-  async getLabel({ appToken }: DisplayPropsStageParams<AaveAbpt, AaveSafetyModuleAbptTokenDataProps>) {
+  async getLabel({ appToken }: GetDisplayPropsParams<AaveAbpt, AaveSafetyModuleAbptTokenDataProps>) {
     return appToken.tokens.map(v => getLabelFromToken(v)).join(' / ');
   }
 
-  async getSecondaryLabel({ appToken }: DisplayPropsStageParams<AaveAbpt, AaveSafetyModuleAbptTokenDataProps>) {
+  async getSecondaryLabel({ appToken }: GetDisplayPropsParams<AaveAbpt, AaveSafetyModuleAbptTokenDataProps>) {
     const { reserves, liquidity } = appToken.dataProps;
     const reservePercentages = appToken.tokens.map((t, i) => reserves[i] * (t.price / liquidity));
     return reservePercentages.map(p => `${Math.round(p * 100)}%`).join(' / ');

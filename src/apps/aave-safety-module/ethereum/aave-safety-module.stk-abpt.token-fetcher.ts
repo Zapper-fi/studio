@@ -3,11 +3,8 @@ import { Inject } from '@nestjs/common';
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { ZERO_ADDRESS } from '~app-toolkit/constants/address';
 import { Register } from '~app-toolkit/decorators';
-import {
-  AppTokenTemplatePositionFetcher,
-  DataPropsStageParams,
-  UnderlyingTokensStageParams,
-} from '~position/template/app-token.template.position-fetcher';
+import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
+import { GetDataPropsParams } from '~position/template/app-token.template.types';
 import { Network } from '~types/network.interface';
 
 import { AAVE_SAFETY_MODULE_DEFINITION } from '../aave-safety-module.definition';
@@ -30,6 +27,7 @@ export class EthereumAaveSafetyModuleStkAbptTokenFetcher extends AppTokenTemplat
   appId = AAVE_SAFETY_MODULE_DEFINITION.id;
   groupId = AAVE_SAFETY_MODULE_DEFINITION.groups.stkAbpt.id;
   network = Network.ETHEREUM_MAINNET;
+  groupLabel = 'stkABPT';
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
@@ -46,14 +44,11 @@ export class EthereumAaveSafetyModuleStkAbptTokenFetcher extends AppTokenTemplat
     return ['0xa1116930326d21fb917d5a27f1e9943a9595fb47'];
   }
 
-  async getUnderlyingTokenAddresses(_params: UnderlyingTokensStageParams<AaveStkAbpt>) {
+  async getUnderlyingTokenAddresses() {
     return ['0x41a08648c3766f9f9d85598ff102a08f4ef84f84'];
   }
 
-  async getDataProps({
-    multicall,
-    appToken,
-  }: DataPropsStageParams<AaveStkAbpt, AaveSafetyModuleStkAbptTokenDataProps>) {
+  async getDataProps({ multicall, appToken }: GetDataPropsParams<AaveStkAbpt, AaveSafetyModuleStkAbptTokenDataProps>) {
     const helperAddress = '0xa82247b44750ae23076d6746a9b5b8dc0ecbb646';
     const stkApyHelperContract = this.contractFactory.aaveStkApyHelper({
       network: this.network,

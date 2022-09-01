@@ -3,11 +3,8 @@ import { Inject } from '@nestjs/common';
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { ZERO_ADDRESS } from '~app-toolkit/constants/address';
 import { Register } from '~app-toolkit/decorators';
-import {
-  AppTokenTemplatePositionFetcher,
-  DataPropsStageParams,
-  UnderlyingTokensStageParams,
-} from '~position/template/app-token.template.position-fetcher';
+import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
+import { GetDataPropsParams, GetUnderlyingTokensParams } from '~position/template/app-token.template.types';
 import { Network } from '~types/network.interface';
 
 import { AAVE_SAFETY_MODULE_DEFINITION } from '../aave-safety-module.definition';
@@ -27,9 +24,10 @@ export class EthereumAaveSafetyModuleStkAaveTokenFetcher extends AppTokenTemplat
   AaveStkAave,
   AaveSafetyModuleStkAaveTokenDataProps
 > {
-  appId = AAVE_SAFETY_MODULE_DEFINITION.id;
-  groupId = AAVE_SAFETY_MODULE_DEFINITION.groups.stkAave.id;
-  network = Network.ETHEREUM_MAINNET;
+  appId = appId;
+  groupId = groupId;
+  network = network;
+  groupLabel = 'stkAAVE';
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
@@ -46,14 +44,11 @@ export class EthereumAaveSafetyModuleStkAaveTokenFetcher extends AppTokenTemplat
     return ['0x4da27a545c0c5b758a6ba100e3a049001de870f5'];
   }
 
-  async getUnderlyingTokenAddresses(_params: UnderlyingTokensStageParams<AaveStkAave>) {
+  async getUnderlyingTokenAddresses(_params: GetUnderlyingTokensParams<AaveStkAave>) {
     return ['0x7fc66500c84a76ad7e9c93437bfc5ac33e2ddae9'];
   }
 
-  async getDataProps({
-    multicall,
-    appToken,
-  }: DataPropsStageParams<AaveStkAave, AaveSafetyModuleStkAaveTokenDataProps>) {
+  async getDataProps({ multicall, appToken }: GetDataPropsParams<AaveStkAave, AaveSafetyModuleStkAaveTokenDataProps>) {
     const helperAddress = '0xa82247b44750ae23076d6746a9b5b8dc0ecbb646';
     const stkApyHelperContract = this.contractFactory.aaveStkApyHelper({
       network: this.network,
