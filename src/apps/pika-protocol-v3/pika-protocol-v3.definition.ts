@@ -1,6 +1,6 @@
 import { Register } from '~app-toolkit/decorators';
 import { appDefinition, AppDefinition } from '~app/app.definition';
-import { AppAction, AppTag } from '~app/app.interface';
+import { AppAction, AppTag, GroupType } from '~app/app.interface';
 import { Network } from '~types/network.interface';
 
 export const PIKA_PROTOCOL_V_3_DEFINITION = appDefinition({
@@ -9,7 +9,13 @@ export const PIKA_PROTOCOL_V_3_DEFINITION = appDefinition({
   description:
     'Pika Protocol is a decentralized perpetual swap exchange on Optimism, offering up to 50x leverage on any asset with deep liquidity',
   url: 'https://www.pikaprotocol.com/',
-  groups: {},
+  groups: {
+    vault: {
+      id: 'vault',
+      type: GroupType.POSITION,
+      label: 'Vault',
+    },
+  },
   tags: [AppTag.PERPETUALS_EXCHANGE],
   keywords: [],
   links: {},
