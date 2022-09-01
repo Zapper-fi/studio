@@ -1,4 +1,6 @@
 import { Inject } from '@nestjs/common';
+import moment from 'moment';
+import 'moment-duration-format';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { DefaultDataProps } from '~position/display.interface';
@@ -91,12 +93,23 @@ export abstract class BarnbridgeSmartAlphaJuniorPoolTokenFetcher extends AppToke
     return Number(juniorTokenPriceInUnderlying) * appToken.tokens[0].price;
   }
 
-  async getLabel({ appToken }: GetDisplayPropsParams<BarnbridgeSmartAlphaToken>): Promise<string> {
-    const lowerBoundIndex = appToken.symbol.lastIndexOf('-') + 1;
-    const upperBoundIndex = appToken.symbol.lastIndexOf('w');
-    const duration = appToken.symbol.substring(lowerBoundIndex, upperBoundIndex);
-    const durationLabel = Number(duration) < 2 ? 'week' : 'weeks';
-    return [appToken.tokens[0].symbol, 'Junior Pool', '-', duration, durationLabel].join(' ');
+  async getLabel({
+    multicall,
+    definition,
+    appToken,
+  }: GetDisplayPropsParams<
+    BarnbridgeSmartAlphaToken,
+    DefaultDataProps,
+    BarnbridgeSmartAlphaJuniorPoolTokenDefinition
+  >): Promise<string> {
+    const alphaPoolContract = this.contractFactory.barnbridgeSmartAlphaPool({
+      address: definition.smartPoolAddress,
+      network: this.network,
+    });
+    const durationRaw = await multicall.wrap(alphaPoolContract).epochDuration();
+    const duration = moment.duration(Number(durationRaw), 'seconds').format('w [weeks]');
+
+    return [appToken.tokens[0].symbol, 'Junior Pool', '-', duration].join(' ');
   }
 
   async getDataProps({ appToken }: GetDataPropsParams<BarnbridgeSmartAlphaToken, DefaultDataProps>) {
