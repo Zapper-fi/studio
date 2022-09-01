@@ -52,7 +52,7 @@ export abstract class AppTokenTemplatePositionFetcher<
   // 2. (Optional) Get token definitions (i.e.: token addresses and additional context)
   async getDefinitions(params: GetDefinitionsParams): Promise<R[]> {
     const addresses = await this.getAddresses({ ...params, definitions: [] });
-    return addresses.map(address => ({ address } as R));
+    return addresses.map(address => ({ address: address.toLowerCase() } as R));
   }
 
   // 3. Get token contract instance
