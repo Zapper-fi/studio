@@ -54,7 +54,7 @@ export class PolygonClearpoolPoolTokenFetcher extends AppTokenTemplatePositionFe
     return contract.currency();
   }
 
-  getPricePerShare({
+  async getPricePerShare({
     contract,
   }: GetPricePerShareParams<ClearpoolPool, ClearpoolPoolTokenDataProps>): Promise<number | number[]> {
     return contract.getCurrentExchangeRate().then(v => Number(v) / 10 ** 18);

@@ -4,6 +4,99 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.207.0](https://github.com/Zapper-fi/studio/compare/v0.206.0...v0.207.0) (2022-09-01)
+
+
+### Features
+
+* **apps:** Add Morpho app to zapper studio ([#1215](https://github.com/Zapper-fi/studio/issues/1215)) ([6cab0d7](https://github.com/Zapper-fi/studio/commit/6cab0d7c502a5145f20c9fed55106c6b181fa1b3))
+* **llama-airforce:** Add uauraBAL and migrate to templates ([#1317](https://github.com/Zapper-fi/studio/issues/1317)) ([1aff357](https://github.com/Zapper-fi/studio/commit/1aff35726a2c688724c5a33f5313277b488b8fa2))
+* **morpho:** Move to templates, fix position ([#1323](https://github.com/Zapper-fi/studio/issues/1323)) ([2a6f2a3](https://github.com/Zapper-fi/studio/commit/2a6f2a31a472bb5639324d69f28383cd4cbe2b46))
+* **platypus:** Add alt pools and factory pools ([#1319](https://github.com/Zapper-fi/studio/issues/1319)) ([15b5d0a](https://github.com/Zapper-fi/studio/commit/15b5d0a23ee4c94ff690554e50cb8bba811b5c55))
+* **spool:** Added Spool staking, emits SPOOL and voSPOOL ([#1275](https://github.com/Zapper-fi/studio/issues/1275)) ([1128a46](https://github.com/Zapper-fi/studio/commit/1128a46cdb088b82696fdac5963cf4c562111d45))
+* **template:** Add more features to template registry ([#1321](https://github.com/Zapper-fi/studio/issues/1321)) ([1d875f0](https://github.com/Zapper-fi/studio/commit/1d875f066888b58f130c8019cf7a2a2c6fe0321a))
+
+## [0.206.0](https://github.com/Zapper-fi/studio/compare/v0.205.1...v0.206.0) (2022-08-31)
+
+
+### Features
+
+* **plutus:** Fix farm plvGLP ([88684ac](https://github.com/Zapper-fi/studio/commit/88684acdc42bfbc867355a59581fddc189390699))
+
+## [0.205.1](https://github.com/Zapper-fi/studio/compare/v0.205.0...v0.205.1) (2022-08-31)
+
+
+### Bug Fixes
+
+* **pool-together-v4:** Packer was unable to cache the logs ([#1314](https://github.com/Zapper-fi/studio/issues/1314)) ([a33b04d](https://github.com/Zapper-fi/studio/commit/a33b04d0c8121c7dc1471368b4becf62b93f0c9e))
+
+## [0.205.0](https://github.com/Zapper-fi/studio/compare/v0.204.0...v0.205.0) (2022-08-31)
+
+
+### Features
+
+* **pool-together-v4:** Add 1 hour TTL for logs ([#1312](https://github.com/Zapper-fi/studio/issues/1312)) ([5e4d043](https://github.com/Zapper-fi/studio/commit/5e4d043c5747dc68a07bf40153bb764c0d656864))
+
+## [0.204.0](https://github.com/Zapper-fi/studio/compare/v0.203.0...v0.204.0) (2022-08-31)
+
+
+### Features
+
+* **plutus:** Add plsGLP, plvGLP, and plvGLP farm ([#1307](https://github.com/Zapper-fi/studio/issues/1307)) ([6ea68eb](https://github.com/Zapper-fi/studio/commit/6ea68eb473be206b2756519b741e3a76dc82b1cd))
+* **pool-together-v4:** Add support for community pools ([#1311](https://github.com/Zapper-fi/studio/issues/1311)) ([47d77e6](https://github.com/Zapper-fi/studio/commit/47d77e6d458886864cfb2d45d8d98559714bfc04))
+* **positions:** Rely on local cache for dependencies preferentially over API data ([#1308](https://github.com/Zapper-fi/studio/issues/1308)) ([5ccef3c](https://github.com/Zapper-fi/studio/commit/5ccef3ca77dfbee1ea4a8fe07fd082accbe64f56))
+* **velodrome:** Move to templates ([#1310](https://github.com/Zapper-fi/studio/issues/1310)) ([aabbda6](https://github.com/Zapper-fi/studio/commit/aabbda6a49e6c783810571f362e020b2dd41b0a1))
+
+## [0.203.0](https://github.com/Zapper-fi/studio/compare/v0.202.0...v0.203.0) (2022-08-30)
+
+
+### Features
+
+* **biswap:** Migrate Biswap to templates and create on-chain Uniswap V2 template class ([#1300](https://github.com/Zapper-fi/studio/issues/1300)) ([c5338ec](https://github.com/Zapper-fi/studio/commit/c5338ecd4bacc52ec04e1f2207867bda03c0379d))
+* **plutus:** Fix lock balances ([#1304](https://github.com/Zapper-fi/studio/issues/1304)) ([18c4f71](https://github.com/Zapper-fi/studio/commit/18c4f71831c5c98e5fd78c67bb98cb28f948ebbd))
+* **pool-together-v4:** Refactor to template ([#1302](https://github.com/Zapper-fi/studio/issues/1302)) ([070dea6](https://github.com/Zapper-fi/studio/commit/070dea6c236492d7ad864a1c257f3ebbdbd56458))
+
+## [0.202.0](https://github.com/Zapper-fi/studio/compare/v0.201.0...v0.202.0) (2022-08-29)
+
+
+### Features
+
+* **template:** Remove legacy balance fetchers in templated apps ([#1298](https://github.com/Zapper-fi/studio/issues/1298)) ([bb86cc6](https://github.com/Zapper-fi/studio/commit/bb86cc60642099b30adbfd5ef862f38f9dfda11b))
+
+## [0.201.0](https://github.com/Zapper-fi/studio/compare/v0.200.0...v0.201.0) (2022-08-29)
+
+
+### Features
+
+* **aave-v2-forks:** Exclusively use templates for everything ([#1296](https://github.com/Zapper-fi/studio/issues/1296)) ([0ae24cb](https://github.com/Zapper-fi/studio/commit/0ae24cb52fc01bbd5f840766b5d2bda9b2b0a0b9))
+
+## [0.200.0](https://github.com/Zapper-fi/studio/compare/v0.199.0...v0.200.0) (2022-08-29)
+
+
+### Features
+
+* **geist:** Remove stuff unrelated to templates ([#1295](https://github.com/Zapper-fi/studio/issues/1295)) ([f93bcb9](https://github.com/Zapper-fi/studio/commit/f93bcb9a6cf1ad3afb1c05c56387c4741a297a49))
+
+
+### Bug Fixes
+
+* **velodrome:** fix APR/APY on staking contract position and pool app token ([#1271](https://github.com/Zapper-fi/studio/issues/1271)) ([804d3d6](https://github.com/Zapper-fi/studio/commit/804d3d69e199831d878c9210db3c81bbd833ee04))
+* **yearn:** fix apy ([#1292](https://github.com/Zapper-fi/studio/issues/1292)) ([16afb91](https://github.com/Zapper-fi/studio/commit/16afb91fbdc11062dfbe27c600b6971e16f13a61))
+
+## [0.199.0](https://github.com/Zapper-fi/studio/compare/v0.198.0...v0.199.0) (2022-08-29)
+
+
+### Features
+
+* **pendle:** Support Pendle OT, YT, and staking balances ([#1288](https://github.com/Zapper-fi/studio/issues/1288)) ([eb8bbf9](https://github.com/Zapper-fi/studio/commit/eb8bbf987daa1ccfcf4282a2c6faad4842a700f9))
+
+## [0.198.0](https://github.com/Zapper-fi/studio/compare/v0.197.0...v0.198.0) (2022-08-28)
+
+
+### Features
+
+* **vector-finance:** Add support for Vector Finance master chef ([#1284](https://github.com/Zapper-fi/studio/issues/1284)) ([d854702](https://github.com/Zapper-fi/studio/commit/d85470275ebb70f3dea27e6fb5f558e6a3adf730))
+
 ## [0.197.0](https://github.com/Zapper-fi/studio/compare/v0.196.1...v0.197.0) (2022-08-26)
 
 

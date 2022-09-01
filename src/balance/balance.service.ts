@@ -53,7 +53,7 @@ export class BalanceService {
   }
 
   private async getBalancesTemplateStrategy({ appId, addresses, network }: GetBalancesQuery & GetBalancesParams) {
-    const templates = this.positionFetcherTemplateRegistry.getTemplatesForApp(appId, network);
+    const templates = this.positionFetcherTemplateRegistry.getTemplatesForAppOnNetwork(appId, network);
 
     // If there is no custom fetcher defined, and there are no token/contract position groups defined, declare 404
     if (!templates.length) throw new NotFoundException(`Protocol ${appId} is not supported on network ${network}`);
@@ -134,7 +134,7 @@ export class BalanceService {
 
   async getBalances({ appId, addresses, network }: GetBalancesQuery & GetBalancesParams) {
     // @TODO there is no 404 thrown anymore if there is no balance fetcher... add appId validation at least
-    if (this.positionFetcherTemplateRegistry.getAppHasTemplates(appId, network)) {
+    if (this.positionFetcherTemplateRegistry.getAppHasTemplatesOnNetwork(appId, network)) {
       return this.getBalancesTemplateStrategy({ appId, network, addresses });
     }
     if (this.balanceFetcherRegistry.get(appId, network)) {

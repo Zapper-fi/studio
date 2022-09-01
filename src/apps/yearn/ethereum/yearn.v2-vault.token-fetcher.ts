@@ -54,7 +54,7 @@ export class EthereumYearnV2VaultTokenFetcher extends YearnVaultTokenFetcher<Yea
     if (!vault) throw new Error('Cannot find specified vault');
 
     const liquidity = appToken.price * appToken.supply;
-    const apy = vault.apy?.net_apy;
+    const apy = vault.apy?.net_apy * 100;
     const isBlocked = !!(vault.emergencyShutdown || vault.migration?.available);
     const reserve = appToken.pricePerShare[0] * appToken.supply;
 
