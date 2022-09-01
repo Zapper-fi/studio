@@ -1,18 +1,14 @@
 import { Inject, Injectable, Logger, NotFoundException } from '@nestjs/common';
 import { fromPairs } from 'lodash';
 
-import { ContractFactory } from '~contract';
-import { NetworkProviderService } from '~network-provider/network-provider.service';
 import { ContractType } from '~position/contract.interface';
 import { PositionBalanceFetcherRegistry } from '~position/position-balance-fetcher.registry';
 import { PositionFetcherRegistry } from '~position/position-fetcher.registry';
-import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
-import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
-import { Network } from '~types/network.interface';
+import { PositionFetcherTemplateRegistry } from '~position/position-fetcher.template-registry';
 
 import { TokenBalanceResponse } from './balance-fetcher.interface';
 import { BalanceFetcherRegistry } from './balance-fetcher.registry';
-import { BalancePresenterRegistry } from './balance-presenter.registry';
+import { BalancePresentationService } from './balance-presentation.service';
 import { DefaultBalancePresenterFactory } from './default.balance-presenter.factory';
 import { DefaultContractPositionBalanceFetcherFactory } from './default.contract-position-balance-fetcher.factory';
 import { DefaultTokenBalanceFetcherFactory } from './default.token-balance-fetcher.factory';
@@ -22,24 +18,22 @@ import { GetBalancesQuery } from './dto/get-balances-query.dto';
 @Injectable()
 export class BalanceService {
   private logger = new Logger(BalanceService.name);
-  private readonly contractFactory: ContractFactory;
 
   constructor(
     @Inject(BalanceFetcherRegistry) private readonly balanceFetcherRegistry: BalanceFetcherRegistry,
     @Inject(PositionFetcherRegistry) private readonly positionFetcherRegistry: PositionFetcherRegistry,
     @Inject(PositionBalanceFetcherRegistry)
     private readonly positionFetcherBalanceFetcherRegistry: PositionBalanceFetcherRegistry,
-    @Inject(BalancePresenterRegistry) private readonly balancePresenterRegistry: BalancePresenterRegistry,
-    @Inject(NetworkProviderService) private readonly networkProviderService: NetworkProviderService,
     @Inject(DefaultBalancePresenterFactory)
-    private readonly defaultBalancePresenterFactory: DefaultBalancePresenterFactory,
-    @Inject(DefaultTokenBalanceFetcherFactory)
     private readonly defaultTokenBalanceFetcherFactory: DefaultTokenBalanceFetcherFactory,
+    @Inject(PositionFetcherTemplateRegistry)
+    private readonly positionFetcherTemplateRegistry: PositionFetcherTemplateRegistry,
     @Inject(DefaultContractPositionBalanceFetcherFactory)
     private readonly defaultContractPositionBalanceFetcherFactory: DefaultContractPositionBalanceFetcherFactory,
-  ) {
-    this.contractFactory = new ContractFactory((network: Network) => this.networkProviderService.getProvider(network));
-  }
+
+    @Inject(BalancePresentationService)
+    private readonly balancePresentationService: BalancePresentationService,
+  ) {}
 
   private async getBalancesLegacyStrategy({ appId, addresses, network }: GetBalancesQuery & GetBalancesParams) {
     const fetcher = this.balanceFetcherRegistry.get(appId, network)!;
@@ -58,12 +52,35 @@ export class BalanceService {
     return fromPairs(addressBalancePairs);
   }
 
+  private async getBalancesTemplateStrategy({ appId, addresses, network }: GetBalancesQuery & GetBalancesParams) {
+    const templates = this.positionFetcherTemplateRegistry.getTemplatesForAppOnNetwork(appId, network);
+
+    // If there is no custom fetcher defined, and there are no token/contract position groups defined, declare 404
+    if (!templates.length) throw new NotFoundException(`Protocol ${appId} is not supported on network ${network}`);
+
+    const addressBalancePairs = await Promise.all(
+      addresses.map(async address => {
+        const balances = await Promise.all(templates.map(template => template.getBalances(address)));
+        const presentedBalances = await this.balancePresentationService.presentTemplates({
+          appId,
+          network,
+          address,
+          balances: balances.flat(),
+        });
+        return [address, presentedBalances];
+      }),
+    );
+
+    return fromPairs(addressBalancePairs);
+  }
+
   private async getBalancesGeneralizedStrategy({ appId, addresses, network }: GetBalancesQuery & GetBalancesParams) {
     const tokenGroupIds = this.positionFetcherRegistry.getGroupIdsForApp({
       type: ContractType.APP_TOKEN,
       network,
       appId,
     });
+
     const positionGroupIds = this.positionFetcherRegistry.getGroupIdsForApp({
       type: ContractType.POSITION,
       network,
@@ -81,10 +98,6 @@ export class BalanceService {
             tokenGroupIds.map(async groupId => {
               const fetcherSelector = { type: ContractType.APP_TOKEN, appId, groupId, network };
 
-              const templateFetcher = this.positionFetcherRegistry.get(fetcherSelector);
-              if (templateFetcher instanceof AppTokenTemplatePositionFetcher)
-                return templateFetcher.getBalances(address);
-
               const balanceFetcher = this.positionFetcherBalanceFetcherRegistry.get(fetcherSelector);
               if (balanceFetcher) return balanceFetcher.getBalances(address);
 
@@ -95,9 +108,6 @@ export class BalanceService {
           await Promise.all(
             positionGroupIds.map(async groupId => {
               const fetcherSelector = { type: ContractType.POSITION, appId, groupId, network };
-              const templateFetcher = this.positionFetcherRegistry.get(fetcherSelector);
-              if (templateFetcher instanceof ContractPositionTemplatePositionFetcher)
-                return templateFetcher.getBalances(address);
 
               const balanceFetcher = this.positionFetcherBalanceFetcherRegistry.get(fetcherSelector);
               if (balanceFetcher) return balanceFetcher.getBalances(address);
@@ -108,12 +118,14 @@ export class BalanceService {
           ),
         ]);
 
-        const presenter =
-          this.balancePresenterRegistry.get(appId, network) ??
-          this.defaultBalancePresenterFactory.build({ appId, network });
         const preprocessed = [...tokenBalances.flat(), ...contractPositionBalances.flat()];
-        const balances = await presenter.present(address, preprocessed);
-        return [address, balances];
+        const presentedBalances = await this.balancePresentationService.present({
+          appId,
+          network,
+          address,
+          balances: preprocessed,
+        });
+        return [address, presentedBalances];
       }),
     );
 
@@ -122,8 +134,12 @@ export class BalanceService {
 
   async getBalances({ appId, addresses, network }: GetBalancesQuery & GetBalancesParams) {
     // @TODO there is no 404 thrown anymore if there is no balance fetcher... add appId validation at least
-    return this.balanceFetcherRegistry.get(appId, network)
-      ? this.getBalancesLegacyStrategy({ appId, addresses, network })
-      : this.getBalancesGeneralizedStrategy({ appId, addresses, network });
+    if (this.positionFetcherTemplateRegistry.getAppHasTemplatesOnNetwork(appId, network)) {
+      return this.getBalancesTemplateStrategy({ appId, network, addresses });
+    }
+    if (this.balanceFetcherRegistry.get(appId, network)) {
+      return this.getBalancesLegacyStrategy({ appId, addresses, network });
+    }
+    return this.getBalancesGeneralizedStrategy({ appId, addresses, network });
   }
 }

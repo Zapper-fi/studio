@@ -1,13 +1,15 @@
 import { Inject } from '@nestjs/common';
 
+import { drillBalance } from '~app-toolkit';
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
+import { AppTokenPositionBalance } from '~position/position-balance.interface';
+import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import {
-  AppTokenTemplatePositionFetcher,
-  DataPropsStageParams,
-  DisplayPropsStageParams,
-  UnderlyingTokensStageParams,
-} from '~position/template/app-token.template.position-fetcher';
+  GetDataPropsParams,
+  GetDisplayPropsParams,
+  GetUnderlyingTokensParams,
+} from '~position/template/app-token.template.types';
 
 import { AaveV2ContractFactory } from '../contracts';
 import { AaveV2AToken } from '../contracts/ethers/AaveV2AToken';
@@ -86,14 +88,14 @@ export abstract class AaveV2LendingTemplateTokenFetcher extends AppTokenTemplate
     );
   }
 
-  async getUnderlyingTokenAddresses({ contract }: UnderlyingTokensStageParams<AaveV2AToken>) {
+  async getUnderlyingTokenAddresses({ contract }: GetUnderlyingTokensParams<AaveV2AToken>) {
     return contract.UNDERLYING_ASSET_ADDRESS();
   }
 
   async getReserveApy({
     appToken,
     multicall,
-  }: DataPropsStageParams<AaveV2AToken, AaveV2LendingTokenDataProps>): Promise<number> {
+  }: GetDataPropsParams<AaveV2AToken, AaveV2LendingTokenDataProps>): Promise<number> {
     const pool = multicall.wrap(
       this.contractFactory.aaveProtocolDataProvider({
         network: this.network,
@@ -104,16 +106,16 @@ export abstract class AaveV2LendingTemplateTokenFetcher extends AppTokenTemplate
     const reservesData = await pool.getReserveData(appToken.tokens[0].address);
 
     return this.getApy({
-      supplyApy: Number(reservesData.liquidityRate) / 10 ** 27,
-      stableBorrowApy: Number(reservesData.stableBorrowRate) / 10 ** 27,
-      variableBorrowApy: Number(reservesData.variableBorrowRate) / 10 ** 27,
+      supplyApy: (Number(reservesData.liquidityRate) / 10 ** 27) * 100,
+      stableBorrowApy: (Number(reservesData.stableBorrowRate) / 10 ** 27) * 100,
+      variableBorrowApy: (Number(reservesData.variableBorrowRate) / 10 ** 27) * 100,
     });
   }
 
   async getReserveConfigurationData({
     appToken,
     multicall,
-  }: DataPropsStageParams<AaveV2AToken, AaveV2TemplateTokenDataProps>): Promise<AaveV2ReserveConfigurationData> {
+  }: GetDataPropsParams<AaveV2AToken, AaveV2TemplateTokenDataProps>): Promise<AaveV2ReserveConfigurationData> {
     const pool = multicall.wrap(
       this.contractFactory.aaveProtocolDataProvider({
         network: this.network,
@@ -128,7 +130,7 @@ export abstract class AaveV2LendingTemplateTokenFetcher extends AppTokenTemplate
     return { liquidationThreshold, enabledAsCollateral };
   }
 
-  async getDataProps(opts: DataPropsStageParams<AaveV2AToken, AaveV2LendingTokenDataProps>) {
+  async getDataProps(opts: GetDataPropsParams<AaveV2AToken, AaveV2LendingTokenDataProps>) {
     const reserveConfigData = await this.getReserveConfigurationData(opts);
     const apy = await this.getReserveApy(opts);
 
@@ -139,13 +141,32 @@ export abstract class AaveV2LendingTemplateTokenFetcher extends AppTokenTemplate
     return { liquidity, isActive, apy, ...reserveConfigData };
   }
 
-  async getLabel({ appToken }: DisplayPropsStageParams<AaveV2AToken, AaveV2LendingTokenDataProps>): Promise<string> {
+  async getLabel({ appToken }: GetDisplayPropsParams<AaveV2AToken, AaveV2LendingTokenDataProps>): Promise<string> {
     return getLabelFromToken(appToken.tokens[0]);
   }
 
   async getLabelDetailed({
     appToken,
-  }: DisplayPropsStageParams<AaveV2AToken, AaveV2LendingTokenDataProps>): Promise<string> {
+  }: GetDisplayPropsParams<AaveV2AToken, AaveV2LendingTokenDataProps>): Promise<string> {
     return appToken.symbol;
+  }
+
+  async getBalances(address: string): Promise<AppTokenPositionBalance<AaveV2LendingTokenDataProps>[]> {
+    const multicall = this.appToolkit.getMulticall(this.network);
+    const appTokens = await this.appToolkit.getAppTokenPositions<AaveV2LendingTokenDataProps>({
+      appId: this.appId,
+      network: this.network,
+      groupIds: [this.groupId],
+    });
+
+    const balances = await Promise.all(
+      appTokens.map(async appToken => {
+        const balanceRaw = await this.getBalancePerToken({ multicall, address, appToken });
+        const tokenBalance = drillBalance(appToken, balanceRaw.toString(), { isDebt: this.isDebt });
+        return tokenBalance;
+      }),
+    );
+
+    return balances as AppTokenPositionBalance<AaveV2LendingTokenDataProps>[];
   }
 }

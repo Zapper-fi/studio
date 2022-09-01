@@ -5,7 +5,15 @@ import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { ZERO_ADDRESS } from '~app-toolkit/constants/address';
 import { Register } from '~app-toolkit/decorators';
 import { RewardRateUnit } from '~app-toolkit/helpers/master-chef/master-chef.contract-position-helper';
-import { MasterChefV2TemplateContractPositionFetcher } from '~position/template/master-chef-v2.template.contract-position-fetcher';
+import {
+  GetMasterChefV2ExtraRewardTokenBalancesParams,
+  GetMasterChefV2ExtraRewardTokenRewardRates,
+  MasterChefV2TemplateContractPositionFetcher,
+} from '~position/template/master-chef-v2.template.contract-position-fetcher';
+import {
+  GetMasterChefDataPropsParams,
+  GetMasterChefTokenBalancesParams,
+} from '~position/template/master-chef.template.contract-position-fetcher';
 import { Network } from '~types/network.interface';
 
 import { PickleContractFactory, PickleMiniChefV2, PickleRewarder } from '../contracts';
@@ -20,9 +28,10 @@ export class PolygonPickleFarmContractPositionFetcher extends MasterChefV2Templa
   PickleMiniChefV2,
   PickleRewarder
 > {
-  appId = PICKLE_DEFINITION.id;
-  groupId = PICKLE_DEFINITION.groups.masterchefV2Farm.id;
-  network = Network.POLYGON_MAINNET;
+  appId = appId;
+  groupId = groupId;
+  network = network;
+  groupLabel = 'Farms';
   chefAddress = '0x20b2a3fc7b13ca0ccf7af81a68a14cb3116e8749';
   rewardRateUnit = RewardRateUnit.SECOND;
 
@@ -57,35 +66,53 @@ export class PolygonPickleFarmContractPositionFetcher extends MasterChefV2Templa
     return contract.rewarder(poolIndex);
   }
 
-  async getExtraRewardTokenAddress(contract: PickleRewarder, poolIndex: number) {
-    return contract.pendingTokens(poolIndex, ZERO_ADDRESS, 0).then(v => v.rewardTokens[0]);
+  async getExtraRewardTokenAddresses(contract: PickleRewarder, poolIndex: number) {
+    return contract.pendingTokens(poolIndex, ZERO_ADDRESS, 0).then(v => [v.rewardTokens[0]]);
   }
 
-  async getTotalAllocPoints(contract: PickleMiniChefV2) {
+  async getTotalAllocPoints({ contract }: GetMasterChefDataPropsParams<PickleMiniChefV2>) {
     return contract.totalAllocPoint();
   }
 
-  async getTotalRewardRate(contract: PickleMiniChefV2) {
+  async getTotalRewardRate({ contract }: GetMasterChefDataPropsParams<PickleMiniChefV2>) {
     return contract.picklePerSecond();
   }
 
-  async getPoolAllocPoints(contract: PickleMiniChefV2, poolIndex: number) {
-    return contract.poolInfo(poolIndex).then(v => v.allocPoint);
+  async getPoolAllocPoints({ contract, definition }: GetMasterChefDataPropsParams<PickleMiniChefV2>) {
+    return contract.poolInfo(definition.poolIndex).then(v => v.allocPoint);
   }
 
-  async getStakedTokenBalance(address: string, contract: PickleMiniChefV2, poolIndex: number): Promise<BigNumberish> {
-    return contract.userInfo(poolIndex, address).then(v => v.amount);
+  async getExtraRewardTokenRewardRates({
+    rewarderContract,
+  }: GetMasterChefV2ExtraRewardTokenRewardRates<PickleMiniChefV2, PickleRewarder>) {
+    return rewarderContract.rewardPerSecond();
   }
 
-  async getRewardTokenBalance(address: string, contract: PickleMiniChefV2, poolIndex: number): Promise<BigNumberish> {
-    return contract.pendingPickle(poolIndex, address);
+  async getStakedTokenBalance({
+    address,
+    contract,
+    contractPosition,
+  }: GetMasterChefTokenBalancesParams<PickleMiniChefV2>) {
+    return contract.userInfo(contractPosition.dataProps.poolIndex, address).then(v => v.amount);
   }
 
-  async getExtraRewardTokenBalance(
-    address: string,
-    contract: PickleRewarder,
-    poolIndex: number,
-  ): Promise<BigNumberish> {
-    return contract.pendingTokens(poolIndex, address, 0).then(v => v.rewardAmounts[0]);
+  async getRewardTokenBalance({
+    address,
+    contract,
+    contractPosition,
+  }: GetMasterChefTokenBalancesParams<PickleMiniChefV2>) {
+    return contract.pendingPickle(contractPosition.dataProps.poolIndex, address);
+  }
+
+  async getExtraRewardTokenBalances({
+    address,
+    rewarderContract,
+    contractPosition,
+  }: GetMasterChefV2ExtraRewardTokenBalancesParams<PickleMiniChefV2, PickleRewarder>): Promise<
+    BigNumberish | BigNumberish[]
+  > {
+    return rewarderContract
+      .pendingTokens(contractPosition.dataProps.poolIndex, address, 0)
+      .then(v => v.rewardAmounts[0]);
   }
 }

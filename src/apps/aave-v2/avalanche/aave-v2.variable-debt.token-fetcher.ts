@@ -1,5 +1,5 @@
 import { Register } from '~app-toolkit/decorators';
-import { DisplayPropsStageParams } from '~position/template/app-token.template.position-fetcher';
+import { GetDisplayPropsParams } from '~position/template/app-token.template.types';
 import { Network } from '~types/network.interface';
 
 import { AAVE_V2_DEFINITION } from '../aave-v2.definition';
@@ -20,6 +20,7 @@ export class AvalancheAaveV2VariableDebtTokenFetcher extends AaveV2LendingTempla
   appId = AAVE_V2_DEFINITION.id;
   groupId = AAVE_V2_DEFINITION.groups.variableDebt.id;
   network = Network.AVALANCHE_MAINNET;
+  groupLabel = 'Lending';
   providerAddress = '0x65285e9dfab318f57051ab2b139cccf232945451';
   isDebt = true;
 
@@ -31,7 +32,7 @@ export class AvalancheAaveV2VariableDebtTokenFetcher extends AaveV2LendingTempla
     return reserveApyData.variableBorrowApy;
   }
 
-  async getTertiaryLabel({ appToken }: DisplayPropsStageParams<AaveV2AToken, AaveV2LendingTokenDataProps>) {
-    return `${(appToken.dataProps.apy * 100).toFixed(3)}% APR (variable)`;
+  async getTertiaryLabel({ appToken }: GetDisplayPropsParams<AaveV2AToken, AaveV2LendingTokenDataProps>) {
+    return `${appToken.dataProps.apy.toFixed(3)}% APR (variable)`;
   }
 }

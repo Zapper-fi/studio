@@ -6,13 +6,13 @@ import _ from 'lodash';
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
 import { DefaultDataProps } from '~position/display.interface';
+import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import {
-  AppTokenTemplatePositionFetcher,
-  DataPropsStageParams,
-  DisplayPropsStageParams,
-  PriceStageParams,
-  UnderlyingTokensStageParams,
-} from '~position/template/app-token.template.position-fetcher';
+  GetDataPropsParams,
+  GetDisplayPropsParams,
+  GetPriceParams,
+  GetUnderlyingTokensParams,
+} from '~position/template/app-token.template.types';
 import { Network } from '~types/network.interface';
 
 import { EnzymeFinanceContractFactory, EnzymeFinanceVault } from '../contracts';
@@ -43,9 +43,10 @@ const network = Network.ETHEREUM_MAINNET;
 
 @Register.TokenPositionFetcher({ appId, groupId, network })
 export class EthereumEnzymeFinanceVaultTokenFetcher extends AppTokenTemplatePositionFetcher<EnzymeFinanceVault> {
-  appId = ENZYME_FINANCE_DEFINITION.id;
-  groupId = ENZYME_FINANCE_DEFINITION.groups.vault.id;
-  network = Network.ETHEREUM_MAINNET;
+  appId = appId;
+  groupId = groupId;
+  network = network;
+  groupLabel = 'Vaults';
 
   constructor(
     @Inject(EnzymeFinanceContractFactory) private readonly contractFactory: EnzymeFinanceContractFactory,
@@ -66,15 +67,15 @@ export class EthereumEnzymeFinanceVaultTokenFetcher extends AppTokenTemplatePosi
 
   async getLabel({
     contract,
-  }: DisplayPropsStageParams<EnzymeFinanceVault, EnzymeFinanceVaultTokenDataProps>): Promise<string> {
+  }: GetDisplayPropsParams<EnzymeFinanceVault, EnzymeFinanceVaultTokenDataProps>): Promise<string> {
     return contract.name();
   }
 
-  async getUnderlyingTokenAddresses({ contract }: UnderlyingTokensStageParams<EnzymeFinanceVault>) {
+  async getUnderlyingTokenAddresses({ contract }: GetUnderlyingTokensParams<EnzymeFinanceVault>) {
     return (await contract.getTrackedAssets()).map(x => x.toLowerCase());
   }
 
-  async getPrice({ appToken, multicall }: PriceStageParams<EnzymeFinanceVault, DefaultDataProps>): Promise<number> {
+  async getPrice({ appToken, multicall }: GetPriceParams<EnzymeFinanceVault, DefaultDataProps>): Promise<number> {
     const totalAssetUnderManagement = _.sum(
       await Promise.all(
         appToken.tokens.map(async token => {
@@ -91,7 +92,7 @@ export class EthereumEnzymeFinanceVaultTokenFetcher extends AppTokenTemplatePosi
       : 0;
   }
 
-  async getDataProps(opts: DataPropsStageParams<EnzymeFinanceVault, DefaultDataProps>): Promise<DefaultDataProps> {
+  async getDataProps(opts: GetDataPropsParams<EnzymeFinanceVault, DefaultDataProps>): Promise<DefaultDataProps> {
     const { appToken } = opts;
     const liquidity = appToken.price * appToken.supply;
     const isActive = appToken.supply > 0 ? true : false;

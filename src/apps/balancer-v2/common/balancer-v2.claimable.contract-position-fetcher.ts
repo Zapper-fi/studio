@@ -9,11 +9,11 @@ import { getLabelFromToken, getTokenImg } from '~app-toolkit/helpers/presentatio
 import { ContractType } from '~position/contract.interface';
 import { ContractPositionBalance } from '~position/position-balance.interface';
 import { claimable } from '~position/position.utils';
+import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
 import {
-  ContractPositionTemplatePositionFetcher,
-  DefaultContractPositionDescriptor,
-  DisplayPropsStageParams,
-} from '~position/template/contract-position.template.position-fetcher';
+  DefaultContractPositionDefinition,
+  GetDisplayPropsParams,
+} from '~position/template/contract-position.template.types';
 
 import { BalancerMerkleOrchard, BalancerV2ContractFactory } from '../contracts';
 
@@ -33,11 +33,11 @@ export abstract class BalancerV2ClaimableContractPositionFetcher extends Contrac
     return this.contractFactory.balancerMerkleOrchard({ address, network: this.network });
   }
 
-  async getDescriptors(): Promise<DefaultContractPositionDescriptor[]> {
+  async getDefinitions(): Promise<DefaultContractPositionDefinition[]> {
     return [];
   }
 
-  async getLabel({ contractPosition }: DisplayPropsStageParams<BalancerMerkleOrchard>): Promise<string> {
+  async getLabel({ contractPosition }: GetDisplayPropsParams<BalancerMerkleOrchard>): Promise<string> {
     return `Claimable ${getLabelFromToken(contractPosition.tokens[0])}`;
   }
 

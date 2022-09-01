@@ -6,7 +6,7 @@ import {
   AaveV2ReserveApyData,
   AaveV2ReserveTokenAddressesData,
 } from '~apps/aave-v2/helpers/aave-v2.lending.template.token-fetcher';
-import { DisplayPropsStageParams } from '~position/template/app-token.template.position-fetcher';
+import { GetDisplayPropsParams } from '~position/template/app-token.template.types';
 import { Network } from '~types/network.interface';
 
 import { NEREUS_FINANCE_DEFINITION } from '../nereus-finance.definition';
@@ -20,6 +20,7 @@ export class AvalancheNereusFinanceSupplyTokenFetcher extends AaveV2LendingTempl
   appId = NEREUS_FINANCE_DEFINITION.id;
   groupId = NEREUS_FINANCE_DEFINITION.groups.supply.id;
   network = Network.AVALANCHE_MAINNET;
+  groupLabel = 'Lending';
   providerAddress = '0xec090929fbc1b285fc9b3c8ebb92fbc62f01d804';
   isDebt = false;
 
@@ -31,7 +32,7 @@ export class AvalancheNereusFinanceSupplyTokenFetcher extends AaveV2LendingTempl
     return reserveApyData.supplyApy;
   }
 
-  async getTertiaryLabel({ appToken }: DisplayPropsStageParams<AaveV2AToken, AaveV2LendingTokenDataProps>) {
-    return `${(appToken.dataProps.apy * 100).toFixed(3)}% APY`;
+  async getTertiaryLabel({ appToken }: GetDisplayPropsParams<AaveV2AToken, AaveV2LendingTokenDataProps>) {
+    return `${appToken.dataProps.apy.toFixed(3)}% APY`;
   }
 }

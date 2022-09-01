@@ -14,56 +14,48 @@ export const BASTION_PROTOCOL_DEFINITION = appDefinition({
       id: 'supply-main-hub',
       type: GroupType.TOKEN,
       label: 'Main Hub',
-      groupLabel: 'Supply',
     },
 
     borrowMainHub: {
       id: 'borrow-main-hub',
       type: GroupType.TOKEN,
       label: 'Main Hub',
-      groupLabel: 'Borrow',
     },
 
     supplyStakedNear: {
       id: 'supply-staked-near',
       type: GroupType.TOKEN,
       label: 'Staked NEAR',
-      groupLabel: 'Supply',
     },
 
     borrowStakedNear: {
       id: 'borrow-staked-near',
       type: GroupType.TOKEN,
       label: 'Staked NEAR',
-      groupLabel: 'Borrow',
     },
 
     supplyAuroraEcosystem: {
       id: 'supply-aurora-ecosystem',
       type: GroupType.TOKEN,
       label: 'Aurora Ecosystem',
-      groupLabel: 'Supply',
     },
 
     borrowAuroraEcosystem: {
       id: 'borrow-aurora-ecosystem',
       type: GroupType.TOKEN,
       label: 'Aurora Ecosystem',
-      groupLabel: 'Borrow',
     },
 
     supplyMultichain: {
       id: 'supply-multichain',
       type: GroupType.TOKEN,
       label: 'Multichain Realm',
-      groupLabel: 'Supply',
     },
 
     borrowMultichain: {
       id: 'borrow-multichain',
       type: GroupType.TOKEN,
       label: 'Multichain Realm',
-      groupLabel: 'Borrow',
     },
 
     swap: {

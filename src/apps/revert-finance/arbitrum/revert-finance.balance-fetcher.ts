@@ -8,13 +8,17 @@ import { presentBalanceFetcherResponse } from '~app-toolkit/helpers/presentation
 import { UniswapV2ContractFactory } from '~apps/uniswap-v2';
 import { UniswapV3LiquidityTokenHelper } from '~apps/uniswap-v2/helpers/uniswap-v3.liquidity.token-helper';
 import { BalanceFetcher } from '~balance/balance-fetcher.interface';
-import { AppTokenPositionBalance, ContractPositionBalance } from '~position/position-balance.interface';
+import { ContractPositionBalance, TokenBalance } from '~position/position-balance.interface';
+import { claimable } from '~position/position.utils';
 import { Network } from '~types/network.interface';
 
 import { accountBalancesQuery, CompoundorAccountBalances } from '../graphql/accountBalancesQuery';
 import { accountCompoundingTokensQuery, CompoundingAccountTokens } from '../graphql/accountCompoundingTokensQuery';
 import { generateGraphUrlForNetwork } from '../graphql/graphUrlGenerator';
-import { getCompoundorContractPosition } from '../helpers/contractPositionParser';
+import {
+  getCompoundingContractPosition,
+  getCompoundorRewardsContractPosition,
+} from '../helpers/contractPositionParser';
 import { REVERT_FINANCE_DEFINITION } from '../revert-finance.definition';
 
 const network = Network.ARBITRUM_MAINNET;
@@ -28,7 +32,7 @@ export class ArbitrumRevertFinanceBalanceFetcher implements BalanceFetcher {
     private readonly uniswapV3LiquidityTokenHelper: UniswapV3LiquidityTokenHelper,
   ) {}
 
-  async getCompoundorAccountBalances(address: string) {
+  async getCompoundorRewardBalances(address: string) {
     const graphHelper = this.appToolkit.helpers.theGraphHelper;
     const data = await graphHelper.requestGraph<CompoundorAccountBalances>({
       endpoint: generateGraphUrlForNetwork(network),
@@ -37,13 +41,13 @@ export class ArbitrumRevertFinanceBalanceFetcher implements BalanceFetcher {
     });
     if (!data) return [];
     const baseTokens = await this.appToolkit.getBaseTokenPrices(network);
-    const accountBalances: Array<ContractPositionBalance> = [];
-    data.accountBalances.map(({ token, balance }) => {
+    const accountRewardsBalances: Array<TokenBalance> = [];
+    data.accountBalances.forEach(({ token, balance }) => {
       const existingToken = baseTokens.find(item => item.address === token)!;
-      if (!token) return [];
-      accountBalances.push(getCompoundorContractPosition(network, existingToken, balance));
+      if (!existingToken) return;
+      accountRewardsBalances.push({ ...existingToken, ...drillBalance(claimable(existingToken), balance) });
     });
-    return accountBalances;
+    return [getCompoundorRewardsContractPosition(network, accountRewardsBalances)];
   }
 
   async getCompoundingAccountTokens(address: string) {
@@ -55,7 +59,7 @@ export class ArbitrumRevertFinanceBalanceFetcher implements BalanceFetcher {
     });
     if (!data) return [];
     const multicall = this.appToolkit.getMulticall(network);
-    const compoundingBalances: Array<AppTokenPositionBalance> = [];
+    const compoundingBalances: Array<ContractPositionBalance> = [];
     const baseTokens = await this.appToolkit.getBaseTokenPrices(network);
     await Promise.all(
       data.tokens.map(async ({ id }) => {
@@ -65,22 +69,26 @@ export class ArbitrumRevertFinanceBalanceFetcher implements BalanceFetcher {
           context: { multicall, baseTokens },
         });
         if (!uniV3Token) return;
-        compoundingBalances.push(drillBalance(uniV3Token, '1'));
+        const position = getCompoundingContractPosition(network, uniV3Token);
+        compoundingBalances.push({
+          key: this.appToolkit.getPositionKey(position, ['compoundingPositionId']),
+          ...position,
+        });
       }),
     );
     return compoundingBalances;
   }
 
   async getBalances(address: string) {
-    const [compoundorAccountBalances, compoundingAccountBalances] = await Promise.all([
-      this.getCompoundorAccountBalances(address),
+    const [compoundorRewardsBalances, compoundingAccountBalances] = await Promise.all([
+      this.getCompoundorRewardBalances(address),
       this.getCompoundingAccountTokens(address),
     ]);
 
     return presentBalanceFetcherResponse([
       {
         label: 'Compoundor rewards',
-        assets: compoundorAccountBalances,
+        assets: compoundorRewardsBalances,
       },
       {
         label: 'Compounding positions',

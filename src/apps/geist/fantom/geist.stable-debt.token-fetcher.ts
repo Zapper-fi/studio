@@ -6,7 +6,7 @@ import {
   AaveV2ReserveApyData,
   AaveV2ReserveTokenAddressesData,
 } from '~apps/aave-v2/helpers/aave-v2.lending.template.token-fetcher';
-import { DisplayPropsStageParams } from '~position/template/app-token.template.position-fetcher';
+import { GetDisplayPropsParams } from '~position/template/app-token.template.types';
 import { Network } from '~types/network.interface';
 
 import { GEIST_DEFINITION } from '../geist.definition';
@@ -20,6 +20,7 @@ export class FantomGeistStableDebtTokenFetcher extends AaveV2LendingTemplateToke
   appId = GEIST_DEFINITION.id;
   groupId = GEIST_DEFINITION.groups.stableDebt.id;
   network = Network.FANTOM_OPERA_MAINNET;
+  groupLabel = 'Lending';
   providerAddress = '0xf3b0611e2e4d2cd6ab4bb3e01ade211c3f42a8c3';
   isDebt = true;
 
@@ -31,7 +32,7 @@ export class FantomGeistStableDebtTokenFetcher extends AaveV2LendingTemplateToke
     return reserveApyData.stableBorrowApy;
   }
 
-  async getTertiaryLabel({ appToken }: DisplayPropsStageParams<AaveV2AToken, AaveV2LendingTokenDataProps>) {
-    return `${(appToken.dataProps.apy * 100).toFixed(3)}% APR (stable)`;
+  async getTertiaryLabel({ appToken }: GetDisplayPropsParams<AaveV2AToken, AaveV2LendingTokenDataProps>) {
+    return `${appToken.dataProps.apy.toFixed(3)}% APR (stable)`;
   }
 }

@@ -3,10 +3,18 @@ import { AbstractApp } from '~app/app.dynamic-module';
 
 import { BinanceSmartChainOpenleveragePoolTokenFetcher } from './binance-smart-chain/openleverage.pool.token-fetcher';
 import { OpenleverageContractFactory } from './contracts';
+import { EthereumOpenleveragePoolTokenFetcher } from './ethereum/openleverage.pool.token-fetcher';
+import { OpenleveragePoolAPYHelper } from './helpers/openleverage-pool.apy-helper';
 import { OpenleverageAppDefinition, OPENLEVERAGE_DEFINITION } from './openleverage.definition';
 
 @Register.AppModule({
   appId: OPENLEVERAGE_DEFINITION.id,
-  providers: [BinanceSmartChainOpenleveragePoolTokenFetcher, OpenleverageAppDefinition, OpenleverageContractFactory],
+  providers: [
+    EthereumOpenleveragePoolTokenFetcher,
+    BinanceSmartChainOpenleveragePoolTokenFetcher,
+    OpenleverageAppDefinition,
+    OpenleverageContractFactory,
+    OpenleveragePoolAPYHelper,
+  ],
 })
 export class OpenleverageAppModule extends AbstractApp() {}

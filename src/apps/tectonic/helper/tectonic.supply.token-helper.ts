@@ -150,7 +150,7 @@ export class TectonicSupplyTokenHelper {
           ? await getDisplayLabel({ contract, multicall, underlyingToken })
           : underlyingToken.symbol;
         const secondaryLabel = buildDollarDisplayItem(underlyingToken.price);
-        const tertiaryLabel = `${supplyApy * 100}% APY`;
+        const tertiaryLabel = `${(supplyApy * 100).toFixed(3)}% APY`;
         const images = [getTokenImg(underlyingToken.address, network)];
         const balanceDisplayMode = BalanceDisplayMode.UNDERLYING;
         const statsItems = [

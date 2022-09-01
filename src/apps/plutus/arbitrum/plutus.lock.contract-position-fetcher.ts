@@ -4,10 +4,7 @@ import { range } from 'lodash';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
-import {
-  DisplayPropsStageParams,
-  GetTokenBalancesPerPositionParams,
-} from '~position/template/contract-position.template.position-fetcher';
+import { GetDisplayPropsParams, GetTokenBalancesParams } from '~position/template/contract-position.template.types';
 import {
   SingleStakingFarmDefinition,
   SingleStakingFarmTemplateContractPositionFetcher,
@@ -56,9 +53,10 @@ const PLUTUS_LOCKS = [
 
 @Register.ContractPositionFetcher({ appId, groupId, network })
 export class ArbitrumPlutusLockContractPositionFetcher extends SingleStakingFarmTemplateContractPositionFetcher<PlutusLock> {
-  appId = PLUTUS_DEFINITION.id;
-  groupId = PLUTUS_DEFINITION.groups.lock.id;
-  network = Network.ARBITRUM_MAINNET;
+  appId = appId;
+  groupId = groupId;
+  network = network;
+  groupLabel = 'Locked PLS';
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
@@ -79,21 +77,16 @@ export class ArbitrumPlutusLockContractPositionFetcher extends SingleStakingFarm
     return [0, 0];
   }
 
-  async getLabel({ contractPosition }: DisplayPropsStageParams<PlutusLock>) {
+  async getLabel({ contractPosition }: GetDisplayPropsParams<PlutusLock>) {
     const lockDuration = PLUTUS_LOCKS.find(v => v.address === contractPosition.address)!.lockDuration;
     return `PLS ${lockDuration} Month Lock`;
   }
 
-  async getStakedTokenBalance({ contract, address }: GetTokenBalancesPerPositionParams<PlutusLock>) {
+  async getStakedTokenBalance({ contract, address }: GetTokenBalancesParams<PlutusLock>) {
     return contract.stakedDetails(address).then(details => details.amount);
   }
 
-  async getRewardTokenBalances({
-    contractPosition,
-    contract,
-    address,
-    multicall,
-  }: GetTokenBalancesPerPositionParams<PlutusLock>) {
+  async getRewardTokenBalances({ contractPosition, contract, address, multicall }: GetTokenBalancesParams<PlutusLock>) {
     const rewardsAddress = PLUTUS_LOCKS.find(v => v.address === contractPosition.address)!.rewardsDistributor;
     const rewardsContract = this.contractFactory.plutusEpochStakingRewardsRolling({
       address: rewardsAddress,
@@ -115,7 +108,8 @@ export class ArbitrumPlutusLockContractPositionFetcher extends SingleStakingFarm
         const userPlsJonesShare = await multicall
           .wrap(rewardsContract)
           .calculateShare(address, epoch, rewardsForEpoch.plsJones);
-        if (Number(userPlsDpxShare) === 0 && Number(userPlsJonesShare) === 0) return [];
+        if (Number(userPlsDpxShare) === 0 && Number(userPlsJonesShare) === 0)
+          return [new BigNumber(0), new BigNumber(0)];
 
         const now = Date.now() / 1000;
         const vestedDuration =

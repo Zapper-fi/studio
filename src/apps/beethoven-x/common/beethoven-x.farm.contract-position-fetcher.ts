@@ -7,9 +7,10 @@ import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { ZERO_ADDRESS } from '~app-toolkit/constants/address';
 import { isClaimable } from '~position/position.utils';
 import {
-  DataPropsStageParams,
-  GetTokenBalancesPerPositionParams,
-} from '~position/template/contract-position.template.position-fetcher';
+  GetDataPropsParams,
+  GetTokenBalancesParams,
+  GetTokenDefinitionsParams,
+} from '~position/template/contract-position.template.types';
 import {
   SingleStakingFarmDataProps,
   SingleStakingFarmDynamicTemplateContractPositionFetcher,
@@ -54,11 +55,11 @@ export abstract class BeethovenXFarmContractPositionFetcher extends SingleStakin
     return gaugesResponse.gauges.map(({ id }) => id.toLowerCase());
   }
 
-  async getStakedTokenAddress(contract: BeethovenXGauge) {
+  async getStakedTokenAddress({ contract }: GetTokenDefinitionsParams<BeethovenXGauge>) {
     return contract.lp_token();
   }
 
-  async getRewardTokenAddresses(contract: BeethovenXGauge) {
+  async getRewardTokenAddresses({ contract }: GetTokenDefinitionsParams<BeethovenXGauge>) {
     const rewardTokenAddresses = await Promise.all(range(0, 4).map(async i => contract.reward_tokens(i)));
     return rewardTokenAddresses.map(v => v.toLowerCase()).filter(v => v !== ZERO_ADDRESS);
   }
@@ -66,7 +67,7 @@ export abstract class BeethovenXFarmContractPositionFetcher extends SingleStakin
   async getRewardRates({
     contract,
     contractPosition,
-  }: DataPropsStageParams<BeethovenXGauge, SingleStakingFarmDataProps>) {
+  }: GetDataPropsParams<BeethovenXGauge, SingleStakingFarmDataProps>) {
     const claimableTokens = contractPosition.tokens.filter(isClaimable);
     const rewardData = await Promise.all(claimableTokens.map(ct => contract.reward_data(ct.address)));
     return rewardData.map(v => v.rate);
@@ -75,7 +76,7 @@ export abstract class BeethovenXFarmContractPositionFetcher extends SingleStakin
   getStakedTokenBalance({
     address,
     contract,
-  }: GetTokenBalancesPerPositionParams<BeethovenXGauge, SingleStakingFarmDataProps>): Promise<BigNumberish> {
+  }: GetTokenBalancesParams<BeethovenXGauge, SingleStakingFarmDataProps>): Promise<BigNumberish> {
     return contract.balanceOf(address);
   }
 
@@ -83,7 +84,7 @@ export abstract class BeethovenXFarmContractPositionFetcher extends SingleStakin
     address,
     contractPosition,
     contract,
-  }: GetTokenBalancesPerPositionParams<BeethovenXGauge, SingleStakingFarmDataProps>) {
+  }: GetTokenBalancesParams<BeethovenXGauge, SingleStakingFarmDataProps>) {
     const rewardTokens = contractPosition.tokens.filter(isClaimable);
     return Promise.all(rewardTokens.map(v => contract.claimable_reward(address, v.address)));
   }

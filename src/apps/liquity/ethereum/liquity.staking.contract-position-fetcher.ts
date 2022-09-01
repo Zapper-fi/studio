@@ -3,12 +3,15 @@ import { Inject } from '@nestjs/common';
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { ZERO_ADDRESS } from '~app-toolkit/constants/address';
 import { Register } from '~app-toolkit/decorators';
-import { PositionFetcher } from '~position/position-fetcher.interface';
-import { ContractPosition } from '~position/position.interface';
+import { GetTokenBalancesParams } from '~position/template/contract-position.template.types';
+import {
+  SingleStakingFarmDefinition,
+  SingleStakingFarmTemplateContractPositionFetcher,
+} from '~position/template/single-staking.template.contract-position-fetcher';
 import { Network } from '~types/network.interface';
 
 import { LiquityContractFactory, LiquityStaking } from '../contracts';
-import { LIQUITY_DEFINITION } from '../liquity.definition';
+import LIQUITY_DEFINITION from '../liquity.definition';
 
 const FARMS = [
   {
@@ -23,22 +26,36 @@ const groupId = LIQUITY_DEFINITION.groups.staking.id;
 const network = Network.ETHEREUM_MAINNET;
 
 @Register.ContractPositionFetcher({ appId, groupId, network })
-export class EthereumLiquityStakingContractPositionFetcher implements PositionFetcher<ContractPosition> {
-  constructor(
-    @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
-    @Inject(LiquityContractFactory) private readonly liquityContractFactory: LiquityContractFactory,
-  ) {}
+export class EthereumLiquityStakingContractPositionFetcher extends SingleStakingFarmTemplateContractPositionFetcher<LiquityStaking> {
+  appId = appId;
+  groupId = groupId;
+  network = network;
+  groupLabel = 'Staked';
 
-  async getPositions() {
-    return this.appToolkit.helpers.singleStakingFarmContractPositionHelper.getContractPositions<LiquityStaking>({
-      appId,
-      groupId,
-      network,
-      dependencies: [],
-      resolveFarmDefinitions: async () => FARMS,
-      resolveFarmContract: ({ address, network }) => this.liquityContractFactory.liquityStaking({ address, network }),
-      resolveIsActive: async () => true,
-      resolveRois: async () => ({ dailyROI: 0, weeklyROI: 0, yearlyROI: 0 }),
-    });
+  constructor(
+    @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
+    @Inject(LiquityContractFactory) protected readonly contractFactory: LiquityContractFactory,
+  ) {
+    super(appToolkit);
+  }
+
+  getContract(address: string): LiquityStaking {
+    return this.contractFactory.liquityStaking({ address, network: this.network });
+  }
+
+  async getFarmDefinitions(): Promise<SingleStakingFarmDefinition[]> {
+    return FARMS;
+  }
+
+  async getRewardRates() {
+    return [0, 0];
+  }
+
+  async getStakedTokenBalance({ contract, address }: GetTokenBalancesParams<LiquityStaking>) {
+    return contract.stakes(address);
+  }
+
+  async getRewardTokenBalances({ contract, address }: GetTokenBalancesParams<LiquityStaking>) {
+    return Promise.all([contract.getPendingLUSDGain(address), contract.getPendingETHGain(address)]);
   }
 }

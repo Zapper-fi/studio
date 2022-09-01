@@ -11,12 +11,9 @@ import { DefaultDataProps } from '~position/display.interface';
 import { PositionKeyService } from '~position/position-key.service';
 import { AppTokenPosition, ContractPosition, NonFungibleToken } from '~position/position.interface';
 import { AppGroupsDefinition, PositionService } from '~position/position.service';
-import { CreateAppTokenSelectorOptions } from '~position/selectors/app-token-selector.interface';
-import { AppTokenSelectorService } from '~position/selectors/app-token-selector.service';
 import { CreateTokenDependencySelectorOptions } from '~position/selectors/token-dependency-selector.interface';
 import { TokenDependencySelectorService } from '~position/selectors/token-dependency-selector.service';
 import { BaseToken } from '~position/token.interface';
-import { CreatePriceSelectorOptions } from '~token/selectors/token-price-selector.interface';
 import { PriceSelectorService } from '~token/selectors/token-price-selector.service';
 import { Network } from '~types/network.interface';
 
@@ -32,9 +29,9 @@ export class AppToolkit implements IAppToolkit {
     @Inject(AppService) private readonly appService: AppService,
     @Inject(NetworkProviderService) private readonly networkProviderService: NetworkProviderService,
     @Inject(PositionService) private readonly positionService: PositionService,
-    @Inject(PositionKeyService) private readonly positionKeyService: PositionKeyService,
+    @Inject(PositionKeyService)
+    private readonly positionKeyService: PositionKeyService,
     @Inject(PriceSelectorService) private readonly priceSelectorService: PriceSelectorService,
-    @Inject(AppTokenSelectorService) private readonly appTokenSelectorService: AppTokenSelectorService,
     @Inject(TokenDependencySelectorService)
     private readonly tokenDependencySelectorService: TokenDependencySelectorService,
     @Inject(MulticallService) private readonly multicallService: MulticallService,
@@ -77,19 +74,7 @@ export class AppToolkit implements IAppToolkit {
     return this.priceSelectorService.create().getOne(opts);
   }
 
-  getBaseTokenPriceSelector(opts: CreatePriceSelectorOptions = {}) {
-    return this.priceSelectorService.create(opts);
-  }
-
   // Positions
-
-  getTokenDependencySelector(opts: CreateTokenDependencySelectorOptions = {}) {
-    return this.tokenDependencySelectorService.create(opts);
-  }
-
-  getAppTokenSelector(opts: CreateAppTokenSelectorOptions = {}) {
-    return this.appTokenSelectorService.create(opts);
-  }
 
   getAppTokenPositions<T = DefaultDataProps>(...appTokenDefinitions: AppGroupsDefinition[]) {
     return this.positionService.getAppTokenPositions<T>(...appTokenDefinitions);
@@ -97,6 +82,12 @@ export class AppToolkit implements IAppToolkit {
 
   getAppContractPositions<T = DefaultDataProps>(...appTokenDefinitions: AppGroupsDefinition[]) {
     return this.positionService.getAppContractPositions<T>(...appTokenDefinitions);
+  }
+
+  // Token Dependencies
+
+  getTokenDependencySelector(opts: CreateTokenDependencySelectorOptions = {}) {
+    return this.tokenDependencySelectorService.create(opts);
   }
 
   // Position Key
