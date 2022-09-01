@@ -240,7 +240,7 @@ export class EthereumSpoolVaultContractPositionFetcher implements PositionFetche
       .map(strategy => parseFloat(strategy.allocation) * strategyAnalytics[strategy.strategy.id][0].apy)
       .reduce((a, b) => a + b, 0);
 
-    const apy = stats.apy || baseApy;
+    const apy = stats.apy || (baseApy / 100.0);
     const tvr = parseFloat(stats.tvr);
 
     const incentivizedApy = Object.values(rewardAnalytics[vault.id] || {})
