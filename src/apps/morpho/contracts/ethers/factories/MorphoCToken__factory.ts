@@ -4,7 +4,7 @@
 
 import { Contract, Signer, utils } from 'ethers';
 import type { Provider } from '@ethersproject/providers';
-import type { CompoundCToken, CompoundCTokenInterface } from '../CompoundCToken';
+import type { MorphoCToken, MorphoCTokenInterface } from '../MorphoCToken';
 
 const _abi = [
   {
@@ -1471,12 +1471,12 @@ const _abi = [
   },
 ];
 
-export class CompoundCToken__factory {
+export class MorphoCToken__factory {
   static readonly abi = _abi;
-  static createInterface(): CompoundCTokenInterface {
-    return new utils.Interface(_abi) as CompoundCTokenInterface;
+  static createInterface(): MorphoCTokenInterface {
+    return new utils.Interface(_abi) as MorphoCTokenInterface;
   }
-  static connect(address: string, signerOrProvider: Signer | Provider): CompoundCToken {
-    return new Contract(address, _abi, signerOrProvider) as CompoundCToken;
+  static connect(address: string, signerOrProvider: Signer | Provider): MorphoCToken {
+    return new Contract(address, _abi, signerOrProvider) as MorphoCToken;
   }
 }

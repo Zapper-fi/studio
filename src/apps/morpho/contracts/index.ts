@@ -4,8 +4,8 @@ import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { ContractFactory } from '~contract/contracts';
 import { Network } from '~types/network.interface';
 
-import { CompoundCToken__factory } from './ethers';
-import { CompoundComptroller__factory } from './ethers';
+import { Morpho__factory } from './ethers';
+import { MorphoCToken__factory } from './ethers';
 import { MorphoCompoundLens__factory } from './ethers';
 
 // eslint-disable-next-line
@@ -17,17 +17,17 @@ export class MorphoContractFactory extends ContractFactory {
     super((network: Network) => appToolkit.getNetworkProvider(network));
   }
 
-  compoundCToken({ address, network }: ContractOpts) {
-    return CompoundCToken__factory.connect(address, this.appToolkit.getNetworkProvider(network));
+  morpho({ address, network }: ContractOpts) {
+    return Morpho__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
-  compoundComptroller({ address, network }: ContractOpts) {
-    return CompoundComptroller__factory.connect(address, this.appToolkit.getNetworkProvider(network));
+  morphoCToken({ address, network }: ContractOpts) {
+    return MorphoCToken__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
   morphoCompoundLens({ address, network }: ContractOpts) {
     return MorphoCompoundLens__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
 }
 
-export type { CompoundCToken } from './ethers';
-export type { CompoundComptroller } from './ethers';
+export type { Morpho } from './ethers';
+export type { MorphoCToken } from './ethers';
 export type { MorphoCompoundLens } from './ethers';
