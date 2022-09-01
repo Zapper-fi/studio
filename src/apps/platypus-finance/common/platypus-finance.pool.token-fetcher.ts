@@ -28,17 +28,15 @@ export abstract class PlatypusFinancePoolTokenFetcher extends AppTokenTemplatePo
     super(appToolkit);
   }
 
-  abstract getPoolAddresses(): Promise<string[]>;
+  abstract poolAddresses: string[];
 
   getContract(address: string): PlatypusFinancePoolToken {
     return this.contractFactory.platypusFinancePoolToken({ address, network: this.network });
   }
 
   async getAddresses({ multicall }: GetAddressesParams) {
-    const poolAddresses = await this.getPoolAddresses();
-
     const tokenAddressesByPool = await Promise.all(
-      poolAddresses.map(async poolAddress => {
+      this.poolAddresses.map(async poolAddress => {
         const _poolContract = this.contractFactory.platypusFinancePool({ address: poolAddress, network: this.network });
         const poolContract = multicall.wrap(_poolContract);
 
@@ -63,7 +61,7 @@ export abstract class PlatypusFinancePoolTokenFetcher extends AppTokenTemplatePo
 
     const amount = new BigNumber(10).pow(appToken.tokens[0].decimals).toFixed(0);
     const pricePerShareRaw = await pool.quotePotentialWithdraw(appToken.tokens[0].address, amount);
-    return Number(pricePerShareRaw) / 10 ** appToken.decimals;
+    return Number(pricePerShareRaw.amount) / 10 ** appToken.decimals;
   }
 
   async getDataProps({ appToken }: GetDataPropsParams<PlatypusFinancePoolToken>) {

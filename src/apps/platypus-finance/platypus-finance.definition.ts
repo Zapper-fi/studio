@@ -26,12 +26,6 @@ export const PLATYPUS_FINANCE_DEFINITION = appDefinition({
       label: 'Pools',
     },
 
-    altPool: {
-      id: 'alt-pool',
-      type: GroupType.TOKEN,
-      label: 'Alt Pools',
-    },
-
     farm: {
       id: 'farm',
       type: GroupType.POSITION,
