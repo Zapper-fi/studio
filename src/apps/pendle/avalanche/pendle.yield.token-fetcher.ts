@@ -9,10 +9,10 @@ const groupId = PENDLE_DEFINITION.groups.yield.id;
 const network = Network.ETHEREUM_MAINNET;
 
 @Register.TokenPositionFetcher({ appId, groupId, network })
-export class EthereumPendleYieldTokenFetcher extends PendleYieldTokenFetcher {
+export class AvalanchePendleYieldTokenFetcher extends PendleYieldTokenFetcher {
   appId = appId;
   groupId = groupId;
   network = network;
   groupLabel = 'Future Yield';
-  pendleDataAddress = '0xe8a6916576832aa5504092c1cccc46e3bb9491d6';
+  pendleDataAddress = '0x94d7e5c48ca9627001facb04d1820c54dff3032c';
 }
