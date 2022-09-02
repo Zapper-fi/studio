@@ -33,7 +33,12 @@ export class OptimismPikaProtocolV3BalanceFetcher implements BalanceFetcher {
       network,
 
       resolveBalances: async ({ address, contractPosition, multicall }) => {
-        const contract = this.contractFactory.pikaProtocolVaultV3({
+        const rewardsContract = this.contractFactory.pikaProtocolV3Rewards({
+          address: '0x939c11c596b851447e5220584d37f12854ba02ae',
+          network,
+        });
+
+        const contract = this.contractFactory.pikaProtocolV3Vault({
           address: contractPosition.address,
           network,
         });
@@ -43,7 +48,7 @@ export class OptimismPikaProtocolV3BalanceFetcher implements BalanceFetcher {
 
         const [stakedBalanceRaw, rewardBalanceRaw] = await Promise.all([
           multicall.wrap(contract).getShare(address),
-          multicall.wrap(contract).getStake(address),
+          multicall.wrap(rewardsContract).getClaimableReward(address),
         ]);
 
         return [

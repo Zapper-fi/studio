@@ -59,7 +59,7 @@ export class OptimismPikaProtocolV3VaultContractPositionFetcher implements Posit
         const rewardToken = allTokens.find(v => v.address === rewardTokenAddress);
         if (!stakedToken || !rewardToken) return null;
 
-        const contract = this.pikaProtocolV3ContractFactory.pikaProtocolVaultV3({ address, network });
+        const contract = this.pikaProtocolV3ContractFactory.pikaProtocolV3Vault({ address, network });
         const balanceRaw = await this.getVaultBalance(contract.address, stakedToken.address);
         const liquidity = Number(balanceRaw) / 10 ** stakedToken.decimals;
         const tokens = [supplied(stakedToken), claimable(rewardToken)];
