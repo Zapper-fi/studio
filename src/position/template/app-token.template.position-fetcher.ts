@@ -42,12 +42,12 @@ export abstract class AppTokenTemplatePositionFetcher<
   abstract network: Network;
   abstract groupLabel: string;
 
-  fromNetwork?: Network;
-  minLiquidity = 1000;
-
   isExcludedFromBalances = false;
   isExcludedFromExplore = false;
   isExcludedFromTvl = false;
+
+  fromNetwork?: Network;
+  minLiquidity = 1000;
 
   constructor(@Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit) {}
 
