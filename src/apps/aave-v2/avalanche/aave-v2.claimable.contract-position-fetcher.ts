@@ -8,7 +8,7 @@ const appId = AAVE_V2_DEFINITION.id;
 const groupId = AAVE_V2_DEFINITION.groups.claimable.id;
 const network = Network.AVALANCHE_MAINNET;
 
-@Register.ContractPositionFetcher({ appId, groupId, network, options: { excludeFromTvl: true } })
+@Register.ContractPositionFetcher({ appId, groupId, network })
 export class AvalancheAaveV2ClaimableContractPositionFetcher extends AaveV2ClaimableTemplatePositionFetcher {
   network = network;
   appId = appId;
