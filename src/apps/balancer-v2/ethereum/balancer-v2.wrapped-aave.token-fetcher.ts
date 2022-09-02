@@ -13,7 +13,7 @@ const appId = BALANCER_V2_DEFINITION.id;
 const groupId = BALANCER_V2_DEFINITION.groups.wrappedAave.id;
 const network = Network.ETHEREUM_MAINNET;
 
-@Register.TokenPositionFetcher({ appId, groupId, network, options: { excludeFromTvl: true } })
+@Register.TokenPositionFetcher({ appId, groupId, network })
 export class EthereumBalancerV2WrappedAaveTokenFetcher extends AppTokenTemplatePositionFetcher<BalancerWrappedAaveToken> {
   appId = BALANCER_V2_DEFINITION.id;
   groupId = BALANCER_V2_DEFINITION.groups.wrappedAave.id;
@@ -21,6 +21,7 @@ export class EthereumBalancerV2WrappedAaveTokenFetcher extends AppTokenTemplateP
   groupLabel = 'Wrapped Aave';
 
   isExcludedFromExplore = true;
+  isExcludedFromTvl = true;
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,

@@ -30,7 +30,7 @@ const appId = CONVEX_DEFINITION.id;
 const groupId = CONVEX_DEFINITION.groups.deposit.id;
 const network = Network.ETHEREUM_MAINNET;
 
-@Register.TokenPositionFetcher({ appId, groupId, network, options: { excludeFromTvl: true } })
+@Register.TokenPositionFetcher({ appId, groupId, network })
 export class EthereumConvexDepositTokenFetcher extends AppTokenTemplatePositionFetcher<
   ConvexDepositToken,
   ConvexDepositTokenDataProps,
@@ -42,6 +42,7 @@ export class EthereumConvexDepositTokenFetcher extends AppTokenTemplatePositionF
   groupLabel = 'Liqudity Pool Staking';
 
   isExcludedFromExplore = true;
+  isExcludedFromTvl = true;
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,

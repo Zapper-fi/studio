@@ -16,6 +16,7 @@ export class AvalancheAaveV2ClaimableContractPositionFetcher extends AaveV2Claim
   groupLabel = 'Rewards';
 
   isExcludedFromExplore = true;
+  isExcludedFromTvl = true;
 
   incentivesControllerAddress = '0x01d83fe6a10d2f2b7af17034343746188272cac9';
   protocolDataProviderAddress = '0x65285e9dfab318f57051ab2b139cccf232945451';

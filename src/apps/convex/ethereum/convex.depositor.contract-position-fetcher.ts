@@ -16,7 +16,7 @@ const appId = CONVEX_DEFINITION.id;
 const groupId = CONVEX_DEFINITION.groups.depositor.id;
 const network = Network.ETHEREUM_MAINNET;
 
-@Register.ContractPositionFetcher({ appId, groupId, network, options: { excludeFromTvl: true } })
+@Register.ContractPositionFetcher({ appId, groupId, network })
 export class EthereumConvexDepositorContractPositionFetcher extends ContractPositionTemplatePositionFetcher<ConvexDepositor> {
   appId = appId;
   groupId = groupId;
@@ -24,6 +24,7 @@ export class EthereumConvexDepositorContractPositionFetcher extends ContractPosi
   groupLabel = 'Depositor';
 
   isExcludedFromExplore = true;
+  isExcludedFromTvl = true;
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,

@@ -11,7 +11,7 @@ const appId = BADGER_DEFINITION.id;
 const groupId = BADGER_DEFINITION.groups.claimable.id;
 const network = Network.ETHEREUM_MAINNET;
 
-@Register.ContractPositionFetcher({ appId, groupId, network, options: { excludeFromTvl: true } })
+@Register.ContractPositionFetcher({ appId, groupId, network })
 export class EthereumBadgerClaimableContractPositionFetcher extends BadgerClaimableContractPositionFetcher {
   appId = appId;
   groupId = groupId;
@@ -19,6 +19,7 @@ export class EthereumBadgerClaimableContractPositionFetcher extends BadgerClaima
   groupLabel = 'Rewards';
 
   isExcludedFromExplore = true;
+  isExcludedFromTvl = true;
 
   diggTokenAddress = '0x798d1be841a82a273720ce31c822c61a67a601c3';
 

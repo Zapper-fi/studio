@@ -16,7 +16,7 @@ const appId = LLAMA_AIRFORCE_DEFINITION.id;
 const groupId = LLAMA_AIRFORCE_DEFINITION.groups.airdrop.id;
 const network = Network.ETHEREUM_MAINNET;
 
-@Register.ContractPositionFetcher({ appId, groupId, network, options: { excludeFromTvl: true } })
+@Register.ContractPositionFetcher({ appId, groupId, network })
 export class EthereumLlamaAirforceAirdropContractPositionFetcher extends MerkleTemplateContractPositionFetcher<LlamaAirforceMerkleDistributor> {
   appId = appId;
   groupId = groupId;
@@ -25,6 +25,7 @@ export class EthereumLlamaAirforceAirdropContractPositionFetcher extends MerkleT
   merkleAddress = '0xa83043df401346a67eddeb074679b4570b956183';
 
   isExcludedFromExplore = true;
+  isExcludedFromTvl = true;
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,

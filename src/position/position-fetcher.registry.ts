@@ -18,6 +18,7 @@ import {
   PositionOptions,
 } from './position-fetcher.decorator';
 import { PositionFetcher } from './position-fetcher.interface';
+import { PositionFetcherTemplateRegistry } from './position-fetcher.template-registry';
 import { AbstractPosition, Position } from './position.interface';
 
 export const buildAppPositionsCacheKey = (opts: {
@@ -36,6 +37,8 @@ export class PositionFetcherRegistry implements OnApplicationBootstrap {
   constructor(
     @Inject(DiscoveryService) private readonly discoveryService: DiscoveryService,
     @Inject(CacheOnIntervalService) private readonly cacheOnIntervalService: CacheOnIntervalService,
+    @Inject(PositionFetcherTemplateRegistry)
+    private readonly positionFetcherTemplateRegistry: PositionFetcherTemplateRegistry,
   ) {}
 
   onApplicationBootstrap() {
@@ -87,6 +90,16 @@ export class PositionFetcherRegistry implements OnApplicationBootstrap {
     return positionWithOptions?.options ?? {};
   }
 
+  private getIsExcludedFromTvl(opts: { type: ContractType; network: Network; appId: string; groupId: string }) {
+    const template =
+      opts.type === ContractType.APP_TOKEN
+        ? this.positionFetcherTemplateRegistry.getAppTokenTemplate(opts)
+        : this.positionFetcherTemplateRegistry.getContractPositionTemplate(opts);
+
+    if (template) return template.isExcludedFromTvl;
+    else return !!this.getOptions(opts).excludeFromTvl;
+  }
+
   getRegisteredTokenGroups() {
     const networkFetchers = this.registry.get(ContractType.APP_TOKEN);
     if (!networkFetchers) return [];
@@ -125,7 +138,7 @@ export class PositionFetcherRegistry implements OnApplicationBootstrap {
     const groupIds = types.map(type => {
       const groupIds = this.getGroupIdsForApp({ type, network, appId });
       const tvlEnabledGroupIds = groupIds.filter(
-        groupId => !this.getOptions({ type, appId, groupId, network }).excludeFromTvl,
+        groupId => !this.getIsExcludedFromTvl({ type, appId, groupId, network }),
       );
       return { type, groupIds: compact(tvlEnabledGroupIds) };
     });

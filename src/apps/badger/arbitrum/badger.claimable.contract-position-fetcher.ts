@@ -11,7 +11,7 @@ const appId = BADGER_DEFINITION.id;
 const groupId = BADGER_DEFINITION.groups.claimable.id;
 const network = Network.ARBITRUM_MAINNET;
 
-@Register.ContractPositionFetcher({ appId, groupId, network, options: { excludeFromTvl: true } })
+@Register.ContractPositionFetcher({ appId, groupId, network })
 export class ArbitrumBadgerClaimableContractPositionFetcher extends BadgerClaimableContractPositionFetcher {
   appId = appId;
   groupId = groupId;
@@ -19,6 +19,7 @@ export class ArbitrumBadgerClaimableContractPositionFetcher extends BadgerClaima
   groupLabel = 'Rewards';
 
   isExcludedFromExplore = true;
+  isExcludedFromTvl = true;
 
   async getDefinitions(): Promise<BadgerClaimableDefinition[]> {
     return [
