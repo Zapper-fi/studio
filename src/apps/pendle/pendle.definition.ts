@@ -24,6 +24,12 @@ export const PENDLE_DEFINITION = appDefinition({
       label: 'Pools',
     },
 
+    liquidityMining: {
+      id: 'liquidity-mining',
+      type: GroupType.POSITION,
+      label: 'Liquidity Mining',
+    },
+
     yield: {
       id: 'yield',
       type: GroupType.TOKEN,

@@ -6,7 +6,7 @@ import { PENDLE_DEFINITION } from '../pendle.definition';
 
 const appId = PENDLE_DEFINITION.id;
 const groupId = PENDLE_DEFINITION.groups.yield.id;
-const network = Network.ETHEREUM_MAINNET;
+const network = Network.AVALANCHE_MAINNET;
 
 @Register.TokenPositionFetcher({ appId, groupId, network })
 export class AvalanchePendleYieldTokenFetcher extends PendleYieldTokenFetcher {

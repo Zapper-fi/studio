@@ -8,6 +8,7 @@ import { PendleData__factory } from './ethers';
 import { PendleDexFactory__factory } from './ethers';
 import { PendleDexPair__factory } from './ethers';
 import { PendleForge__factory } from './ethers';
+import { PendleLiquidityMining__factory } from './ethers';
 import { PendleMarket__factory } from './ethers';
 import { PendleOwnershipToken__factory } from './ethers';
 import { PendleStaking__factory } from './ethers';
@@ -35,6 +36,9 @@ export class PendleContractFactory extends ContractFactory {
   pendleForge({ address, network }: ContractOpts) {
     return PendleForge__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
+  pendleLiquidityMining({ address, network }: ContractOpts) {
+    return PendleLiquidityMining__factory.connect(address, this.appToolkit.getNetworkProvider(network));
+  }
   pendleMarket({ address, network }: ContractOpts) {
     return PendleMarket__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
@@ -56,6 +60,7 @@ export type { PendleData } from './ethers';
 export type { PendleDexFactory } from './ethers';
 export type { PendleDexPair } from './ethers';
 export type { PendleForge } from './ethers';
+export type { PendleLiquidityMining } from './ethers';
 export type { PendleMarket } from './ethers';
 export type { PendleOwnershipToken } from './ethers';
 export type { PendleStaking } from './ethers';
