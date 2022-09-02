@@ -4,6 +4,14 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.209.0](https://github.com/Zapper-fi/studio/compare/v0.208.0...v0.209.0) (2022-09-02)
+
+
+### Features
+
+* **aave-safety-module:** Refactor Aave Safety Module to template pattern ([#1161](https://github.com/Zapper-fi/studio/issues/1161)) ([f5a4346](https://github.com/Zapper-fi/studio/commit/f5a43467da51fbcb3e98c133c10de03f0e031b20))
+* **template:** Add position fetcher template commons ([#1330](https://github.com/Zapper-fi/studio/issues/1330)) ([399eaff](https://github.com/Zapper-fi/studio/commit/399eaff33a1fd80dcf16845ba4991b27a55a65f8))
+
 ## [0.208.0](https://github.com/Zapper-fi/studio/compare/v0.207.0...v0.208.0) (2022-09-02)
 
 

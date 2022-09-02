@@ -1,6 +1,6 @@
 {
   "name": "@zapper-fi/studio",
-  "version": "0.208.0",
+  "version": "0.209.0",
   "description": "Community build apps for Zapper.fi",
   "license": "MIT",
   "main": "./index.js",
@@ -26,6 +26,7 @@
     "@nestjs/platform-express": "8.4.2",
     "@nestjs/schedule": "^2.1.0",
     "@pendle/sdk": "^2.5.8",
+    "@types/moment-duration-format": "^2.2.3",
     "@uniswap/sdk-core": "^3.0.1",
     "@uniswap/v3-sdk": "^3.9.0",
     "bitcoin-address-validation": "^2.2.1",
@@ -35,6 +36,7 @@
     "fs-extra": "^10.0.1",
     "inquirer": "^8.2.2",
     "lodash": "^4.17.21",
+    "moment-duration-format": "^2.3.2",
     "murmurhash-js": "^1.0.0",
     "rimraf": "^3.0.2"
   },
