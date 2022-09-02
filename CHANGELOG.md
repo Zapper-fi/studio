@@ -4,6 +4,21 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.208.0](https://github.com/Zapper-fi/studio/compare/v0.207.0...v0.208.0) (2022-09-02)
+
+
+### Features
+
+* **balancer-v1:** Balancer V1 to templates ([#1325](https://github.com/Zapper-fi/studio/issues/1325)) ([e38bb38](https://github.com/Zapper-fi/studio/commit/e38bb38389a2fb63af556d36b0451c54f835d538))
+* **manifold-finance:** Track xFOLD staked token balance ([#1328](https://github.com/Zapper-fi/studio/issues/1328)) ([6f001e7](https://github.com/Zapper-fi/studio/commit/6f001e71129815cca8fd98207dd6970bf195171e))
+* **pika-protocol-v3:** Add logo ([e771ec1](https://github.com/Zapper-fi/studio/commit/e771ec170507d04abc41eff09b892cbc0a6b971a))
+* **pika-protocol:** Change method signature for getStake, fix linting ([8bff210](https://github.com/Zapper-fi/studio/commit/8bff21079a1389c10a3ec7032d7046ad60dcf85c))
+
+
+### Bug Fixes
+
+* **spool:** vault locally calculated base APY to [0, 1.0] ([#1326](https://github.com/Zapper-fi/studio/issues/1326)) ([ada5b3d](https://github.com/Zapper-fi/studio/commit/ada5b3d18b07f4a0eda4c006864b0ea7896c3497))
+
 ## [0.207.0](https://github.com/Zapper-fi/studio/compare/v0.206.0...v0.207.0) (2022-09-01)
 
 
