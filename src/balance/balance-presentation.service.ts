@@ -62,19 +62,15 @@ export class BalancePresentationService {
     const defaultPresenter = this.defaultPositionPresenterFactory.build({ appId, network });
     if (!customPresenter) return defaultPresenter.presentBalances(balances);
 
-    const filteredBalances = balances.filter(
-      ({ groupId }) => !customPresenter.excludedGroupIdsFromBalances.includes(groupId),
-    );
-
     // When balance product meta resolvers, use default presenter with position groups from either the custom or default presenter
     const positionGroups = customPresenter.positionGroups ?? defaultPresenter.getBalanceProductGroups();
     const balanceProductMetaResolvers = this.positionPresenterRegistry.getBalanceProductMetaResolvers(appId, network);
-    if (!balanceProductMetaResolvers) return defaultPresenter.presentBalances(filteredBalances, positionGroups);
+    if (!balanceProductMetaResolvers) return defaultPresenter.presentBalances(balances, positionGroups);
 
     // Try to resolve balance product metas, grouping balances by group selector specified in the custom presenter
     const presentedBalances = await Promise.all(
       positionGroups.map(positionGroup => {
-        const groupedBalances = this.groupBalancesByPositionGroup(filteredBalances, positionGroup);
+        const groupedBalances = this.groupBalancesByPositionGroup(balances, positionGroup);
 
         return Promise.all(
           // For each computed label group, run the meta resolve if exists
