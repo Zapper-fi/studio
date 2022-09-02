@@ -14,7 +14,6 @@ import { DefaultDataProps, DisplayProps, StatsItem } from '~position/display.int
 import { ContractPositionBalance } from '~position/position-balance.interface';
 import { PositionFetcher } from '~position/position-fetcher.interface';
 import { ContractPosition, MetaType } from '~position/position.interface';
-import { AppGroupsDefinition } from '~position/position.service';
 import { metatyped } from '~position/position.utils';
 import { Network } from '~types/network.interface';
 
@@ -27,18 +26,22 @@ import {
   GetTokenDefinitionsParams,
   UnderlyingTokenDefinition,
 } from './contract-position.template.types';
+import { PositionFetcherTemplateCommons } from './position-fetcher.template.types';
 
 export abstract class ContractPositionTemplatePositionFetcher<
   T extends Contract,
   V extends DefaultDataProps = DefaultDataProps,
   R extends DefaultContractPositionDefinition = DefaultContractPositionDefinition,
-> implements PositionFetcher<ContractPosition<V>>
+> implements PositionFetcher<ContractPosition<V>>, PositionFetcherTemplateCommons
 {
   abstract appId: string;
   abstract groupId: string;
   abstract network: Network;
   abstract groupLabel: string;
-  dependencies: AppGroupsDefinition[] = [];
+
+  isExcludedFromBalances = false;
+  isExcludedFromExplore = false;
+  isExcludedFromTvl = false;
 
   constructor(@Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit) {}
 

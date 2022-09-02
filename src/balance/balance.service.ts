@@ -53,14 +53,15 @@ export class BalanceService {
   }
 
   private async getBalancesTemplateStrategy({ appId, addresses, network }: GetBalancesQuery & GetBalancesParams) {
-    const templates = this.positionFetcherTemplateRegistry.getTemplatesForAppOnNetwork(appId, network);
-
     // If there is no custom fetcher defined, and there are no token/contract position groups defined, declare 404
+    const templates = this.positionFetcherTemplateRegistry.getTemplatesForAppOnNetwork(appId, network);
     if (!templates.length) throw new NotFoundException(`Protocol ${appId} is not supported on network ${network}`);
+
+    const balanceEnabledTemplates = templates.filter(template => !template.isExcludedFromBalances);
 
     const addressBalancePairs = await Promise.all(
       addresses.map(async address => {
-        const balances = await Promise.all(templates.map(template => template.getBalances(address)));
+        const balances = await Promise.all(balanceEnabledTemplates.map(template => template.getBalances(address)));
         const presentedBalances = await this.balancePresentationService.presentTemplates({
           appId,
           network,

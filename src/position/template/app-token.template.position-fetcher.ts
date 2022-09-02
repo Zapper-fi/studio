@@ -29,17 +29,22 @@ import {
   GetTokenPropsParams,
   GetUnderlyingTokensParams,
 } from './app-token.template.types';
+import { PositionFetcherTemplateCommons } from './position-fetcher.template.types';
 
 export abstract class AppTokenTemplatePositionFetcher<
   T extends Contract,
   V extends DefaultDataProps = DefaultDataProps,
   R extends DefaultAppTokenDefinition = DefaultAppTokenDefinition,
-> implements PositionFetcher<AppTokenPosition<V>>
+> implements PositionFetcher<AppTokenPosition<V>>, PositionFetcherTemplateCommons
 {
   abstract appId: string;
   abstract groupId: string;
   abstract network: Network;
   abstract groupLabel: string;
+
+  isExcludedFromBalances = false;
+  isExcludedFromExplore = false;
+  isExcludedFromTvl = false;
 
   fromNetwork?: Network;
   minLiquidity = 1000;
