@@ -4,7 +4,6 @@ import { ContractPositionBalance, TokenBalance } from '~position/position-balanc
 import { Network } from '~types';
 
 export interface PositionPresenter {
-  excludedGroupIdsFromBalances: string[];
   explorePresentationConfig?: PresentationConfig;
 }
 
@@ -13,7 +12,6 @@ export abstract class PositionPresenterTemplate implements PositionPresenter {
   abstract appId: string;
 
   positionGroups?: PositionGroup[];
-  excludedGroupIdsFromBalances: string[] = [];
   explorePresentationConfig?: PresentationConfig;
 }
 
