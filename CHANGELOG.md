@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.211.0](https://github.com/Zapper-fi/studio/compare/v0.210.0...v0.211.0) (2022-09-02)
+
+
+### Features
+
+* **template:** Exclude from TVL ([#1336](https://github.com/Zapper-fi/studio/issues/1336)) ([e85f02b](https://github.com/Zapper-fi/studio/commit/e85f02ba0b8f3ea297035ac21873918ef12ddef9))
+
 ## [0.210.0](https://github.com/Zapper-fi/studio/compare/v0.209.0...v0.210.0) (2022-09-02)
 
 
