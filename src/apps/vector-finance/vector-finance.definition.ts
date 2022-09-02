@@ -24,16 +24,10 @@ export const VECTOR_FINANCE_DEFINITION = appDefinition({
       type: GroupType.POSITION,
       label: 'farm',
     },
-
-    vault: {
-      id: 'vault',
-      type: GroupType.TOKEN,
-      label: 'vault',
-    },
   },
 
   supportedNetworks: {
-    [Network.AURORA_MAINNET]: [AppAction.VIEW],
+    [Network.AVALANCHE_MAINNET]: [AppAction.VIEW],
   },
 
   primaryColor: '#fff',
