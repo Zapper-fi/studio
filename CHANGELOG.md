@@ -4,6 +4,37 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.210.0](https://github.com/Zapper-fi/studio/compare/v0.209.0...v0.210.0) (2022-09-02)
+
+
+### Features
+
+* **barnbridge-smart-alpha:** Add BarnBridge Smart Alpha on Ethereum ([#1286](https://github.com/Zapper-fi/studio/issues/1286)) ([1ecd8a8](https://github.com/Zapper-fi/studio/commit/1ecd8a87755792198f84478925cfb97f9672fc0a))
+* **template:** Use `isExcludedFromExplore` for templates ([#1333](https://github.com/Zapper-fi/studio/issues/1333)) ([362d6f2](https://github.com/Zapper-fi/studio/commit/362d6f27de7fa9800e8ebea651ae4e22c24b7ba8))
+
+## [0.209.0](https://github.com/Zapper-fi/studio/compare/v0.208.0...v0.209.0) (2022-09-02)
+
+
+### Features
+
+* **aave-safety-module:** Refactor Aave Safety Module to template pattern ([#1161](https://github.com/Zapper-fi/studio/issues/1161)) ([f5a4346](https://github.com/Zapper-fi/studio/commit/f5a43467da51fbcb3e98c133c10de03f0e031b20))
+* **template:** Add position fetcher template commons ([#1330](https://github.com/Zapper-fi/studio/issues/1330)) ([399eaff](https://github.com/Zapper-fi/studio/commit/399eaff33a1fd80dcf16845ba4991b27a55a65f8))
+
+## [0.208.0](https://github.com/Zapper-fi/studio/compare/v0.207.0...v0.208.0) (2022-09-02)
+
+
+### Features
+
+* **balancer-v1:** Balancer V1 to templates ([#1325](https://github.com/Zapper-fi/studio/issues/1325)) ([e38bb38](https://github.com/Zapper-fi/studio/commit/e38bb38389a2fb63af556d36b0451c54f835d538))
+* **manifold-finance:** Track xFOLD staked token balance ([#1328](https://github.com/Zapper-fi/studio/issues/1328)) ([6f001e7](https://github.com/Zapper-fi/studio/commit/6f001e71129815cca8fd98207dd6970bf195171e))
+* **pika-protocol-v3:** Add logo ([e771ec1](https://github.com/Zapper-fi/studio/commit/e771ec170507d04abc41eff09b892cbc0a6b971a))
+* **pika-protocol:** Change method signature for getStake, fix linting ([8bff210](https://github.com/Zapper-fi/studio/commit/8bff21079a1389c10a3ec7032d7046ad60dcf85c))
+
+
+### Bug Fixes
+
+* **spool:** vault locally calculated base APY to [0, 1.0] ([#1326](https://github.com/Zapper-fi/studio/issues/1326)) ([ada5b3d](https://github.com/Zapper-fi/studio/commit/ada5b3d18b07f4a0eda4c006864b0ea7896c3497))
+
 ## [0.207.0](https://github.com/Zapper-fi/studio/compare/v0.206.0...v0.207.0) (2022-09-01)
 
 

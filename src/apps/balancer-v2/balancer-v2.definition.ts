@@ -26,7 +26,6 @@ export const BALANCER_V2_DEFINITION = appDefinition({
       id: 'wrapped-aave',
       type: GroupType.TOKEN,
       label: 'Wrapped Aave',
-      isHiddenFromExplore: true,
     },
 
     farm: {

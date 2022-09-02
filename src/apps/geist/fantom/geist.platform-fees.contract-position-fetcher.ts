@@ -30,6 +30,8 @@ export class FantomGeistPlatformFeesPositionFetcher extends ContractPositionTemp
   groupId = groupId;
   groupLabel = 'Platform Fees';
 
+  isExcludedFromExplore = true;
+
   geistTokenAddress = '0xd8321aa83fb0a4ecd6348d4577431310a6e0814d';
 
   constructor(
