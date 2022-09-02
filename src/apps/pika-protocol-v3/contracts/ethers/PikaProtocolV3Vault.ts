@@ -107,7 +107,7 @@ export declare namespace PikaPerpV3 {
   };
 }
 
-export interface PikaProtocolVaultV3Interface extends utils.Interface {
+export interface PikaProtocolV3VaultInterface extends utils.Interface {
   functions: {
     'addMargin(uint256,uint256)': FunctionFragment;
     'addProduct(uint256,(address,uint72,uint16,bool,uint64,uint64,uint32,uint32,uint64))': FunctionFragment;
@@ -655,12 +655,12 @@ export type VaultUpdatedEvent = TypedEvent<[PikaPerpV3.VaultStructOutput], Vault
 
 export type VaultUpdatedEventFilter = TypedEventFilter<VaultUpdatedEvent>;
 
-export interface PikaProtocolVaultV3 extends BaseContract {
+export interface PikaProtocolV3Vault extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
 
-  interface: PikaProtocolVaultV3Interface;
+  interface: PikaProtocolV3VaultInterface;
 
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,

@@ -4,7 +4,7 @@
 
 import { Contract, Signer, utils } from 'ethers';
 import type { Provider } from '@ethersproject/providers';
-import type { PikaProtocolVaultV3, PikaProtocolVaultV3Interface } from '../PikaProtocolVaultV3';
+import type { PikaProtocolV3Vault, PikaProtocolV3VaultInterface } from '../PikaProtocolV3Vault';
 
 const _abi = [
   {
@@ -2006,12 +2006,12 @@ const _abi = [
   },
 ];
 
-export class PikaProtocolVaultV3__factory {
+export class PikaProtocolV3Vault__factory {
   static readonly abi = _abi;
-  static createInterface(): PikaProtocolVaultV3Interface {
-    return new utils.Interface(_abi) as PikaProtocolVaultV3Interface;
+  static createInterface(): PikaProtocolV3VaultInterface {
+    return new utils.Interface(_abi) as PikaProtocolV3VaultInterface;
   }
-  static connect(address: string, signerOrProvider: Signer | Provider): PikaProtocolVaultV3 {
-    return new Contract(address, _abi, signerOrProvider) as PikaProtocolVaultV3;
+  static connect(address: string, signerOrProvider: Signer | Provider): PikaProtocolV3Vault {
+    return new Contract(address, _abi, signerOrProvider) as PikaProtocolV3Vault;
   }
 }
