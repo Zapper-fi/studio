@@ -57,7 +57,7 @@ export class EthereumAaveSafetyModuleStkAbptTokenFetcher extends AppTokenTemplat
 
     const stkAaveData = await multicall.wrap(stkApyHelperContract).getStkBptData(ZERO_ADDRESS);
     const liquidity = appToken.price * appToken.supply;
-    const apy = +stkAaveData[5] / 1e4;
+    const apy = (+stkAaveData[5] / 1e4) * 100;
     return { liquidity, apy };
   }
 }

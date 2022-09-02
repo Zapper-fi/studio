@@ -57,24 +57,21 @@ export class EthereumAaveSafetyModuleAbptTokenFetcher extends AppTokenTemplatePo
   }
 
   async getUnderlyingTokenAddresses(_params: GetUnderlyingTokensParams<AaveAbpt>): Promise<string | string[]> {
-    return ['0xc697051d1c6296c24ae3bcef39aca743861d9a81'];
+    return [this.aaveAddress, this.wethAddress];
   }
 
   async getPricePerShare({
     appToken,
     multicall,
   }: GetPricePerShareParams<AaveAbpt, AaveSafetyModuleAbptTokenDataProps>) {
-    const wethAddress = '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2';
-    const aaveAddress = '0x7fc66500c84a76ad7e9c93437bfc5ac33e2ddae9';
-
     const poolToken = this.contractFactory.aaveBpt({
-      address: appToken.tokens[0].address,
+      address: this.bptAddress,
       network: this.network,
     });
 
     const [wethReserveRaw, aaveReserveRaw] = await Promise.all([
-      multicall.wrap(poolToken).getBalance(wethAddress),
-      multicall.wrap(poolToken).getBalance(aaveAddress),
+      multicall.wrap(poolToken).getBalance(this.wethAddress),
+      multicall.wrap(poolToken).getBalance(this.aaveAddress),
     ]);
 
     const aaveReserve = Number(aaveReserveRaw) / 10 ** 18;
