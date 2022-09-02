@@ -20,6 +20,8 @@ export class EthereumBalancerV2WrappedAaveTokenFetcher extends AppTokenTemplateP
   network = Network.ETHEREUM_MAINNET;
   groupLabel = 'Wrapped Aave';
 
+  isExcludedFromExplore = true;
+
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
     @Inject(BalancerV2ContractFactory) protected readonly contractFactory: BalancerV2ContractFactory,
