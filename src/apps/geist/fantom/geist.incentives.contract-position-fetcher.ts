@@ -25,6 +25,8 @@ export class FantomGeistIncentivesPositionFetcher extends ContractPositionTempla
   groupId = groupId;
   groupLabel = 'Incentives';
 
+  isExcludedFromExplore = true;
+
   geistTokenAddress = '0xd8321aa83fb0a4ecd6348d4577431310a6e0814d';
 
   constructor(

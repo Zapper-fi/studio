@@ -17,6 +17,9 @@ export class EthereumBadgerClaimableContractPositionFetcher extends BadgerClaima
   groupId = groupId;
   network = network;
   groupLabel = 'Rewards';
+
+  isExcludedFromExplore = true;
+
   diggTokenAddress = '0x798d1be841a82a273720ce31c822c61a67a601c3';
 
   async getDefinitions(): Promise<BadgerClaimableDefinition[]> {

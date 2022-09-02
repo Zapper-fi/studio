@@ -23,6 +23,8 @@ export class EthereumConvexDepositorContractPositionFetcher extends ContractPosi
   network = network;
   groupLabel = 'Depositor';
 
+  isExcludedFromExplore = true;
+
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
     @Inject(ConvexContractFactory) protected readonly contractFactory: ConvexContractFactory,

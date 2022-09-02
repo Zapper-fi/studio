@@ -18,6 +18,8 @@ export class PolygonBadgerClaimableContractPositionFetcher extends BadgerClaimab
   network = network;
   groupLabel = 'Rewards';
 
+  isExcludedFromExplore = true;
+
   async getDefinitions(): Promise<BadgerClaimableDefinition[]> {
     return [
       {

@@ -24,6 +24,8 @@ export class EthereumLlamaAirforceAirdropContractPositionFetcher extends MerkleT
   groupLabel = 'Airdrop';
   merkleAddress = '0xa83043df401346a67eddeb074679b4570b956183';
 
+  isExcludedFromExplore = true;
+
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
     @Inject(LlamaAirforceContractFactory) protected readonly contractFactory: LlamaAirforceContractFactory,

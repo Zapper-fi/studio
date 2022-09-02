@@ -18,6 +18,8 @@ export class ArbitrumBadgerClaimableContractPositionFetcher extends BadgerClaima
   network = network;
   groupLabel = 'Rewards';
 
+  isExcludedFromExplore = true;
+
   async getDefinitions(): Promise<BadgerClaimableDefinition[]> {
     return [
       {

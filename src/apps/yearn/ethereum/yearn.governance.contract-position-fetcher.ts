@@ -23,6 +23,8 @@ export class EthereumYearnGovernanceContractPositionFetcher extends SingleStakin
   network = network;
   groupLabel = 'Governance';
 
+  isExcludedFromExplore = true;
+
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
     @Inject(SynthetixContractFactory) protected readonly contractFactory: SynthetixContractFactory,
