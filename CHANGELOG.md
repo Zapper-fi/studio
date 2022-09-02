@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.212.0](https://github.com/Zapper-fi/studio/compare/v0.211.0...v0.212.0) (2022-09-02)
+
+
+### Features
+
+* **pika-protocol-v3:** Fix claimable rewards ([#1338](https://github.com/Zapper-fi/studio/issues/1338)) ([7657f64](https://github.com/Zapper-fi/studio/commit/7657f64ffc8f8e575e065ff5de23d1fb5420f29f))
+
 ## [0.211.0](https://github.com/Zapper-fi/studio/compare/v0.210.0...v0.211.0) (2022-09-02)
 
 
