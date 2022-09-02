@@ -22,6 +22,7 @@ export class EthereumYearnGovernanceContractPositionFetcher extends SingleStakin
   groupId = groupId;
   network = network;
   groupLabel = 'Governance';
+
   isExcludedFromExplore = true;
 
   constructor(
