@@ -4,7 +4,7 @@
 
 import { Contract, Signer, utils } from 'ethers';
 import type { Provider } from '@ethersproject/providers';
-import type { AaveStakedApyHelper, AaveStakedApyHelperInterface } from '../AaveStakedApyHelper';
+import type { AaveStkApyHelper, AaveStkApyHelperInterface } from '../AaveStkApyHelper';
 
 const _abi = [
   {
@@ -458,12 +458,12 @@ const _abi = [
   },
 ];
 
-export class AaveStakedApyHelper__factory {
+export class AaveStkApyHelper__factory {
   static readonly abi = _abi;
-  static createInterface(): AaveStakedApyHelperInterface {
-    return new utils.Interface(_abi) as AaveStakedApyHelperInterface;
+  static createInterface(): AaveStkApyHelperInterface {
+    return new utils.Interface(_abi) as AaveStkApyHelperInterface;
   }
-  static connect(address: string, signerOrProvider: Signer | Provider): AaveStakedApyHelper {
-    return new Contract(address, _abi, signerOrProvider) as AaveStakedApyHelper;
+  static connect(address: string, signerOrProvider: Signer | Provider): AaveStkApyHelper {
+    return new Contract(address, _abi, signerOrProvider) as AaveStkApyHelper;
   }
 }
