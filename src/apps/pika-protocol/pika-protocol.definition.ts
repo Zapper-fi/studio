@@ -5,7 +5,7 @@ import { Network } from '~types/network.interface';
 
 export const PIKA_PROTOCOL_DEFINITION = appDefinition({
   id: 'pika-protocol',
-  name: 'Pika Protocol',
+  name: 'Pika Protocol V2',
   description:
     'Pika Protocol is a decentralized perpetual swap exchange on Optimism, offering up to 50x leverage on any asset with deep liquidity',
   url: 'https://app.pikaprotocol.com',

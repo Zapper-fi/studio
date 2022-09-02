@@ -63,7 +63,7 @@ export declare namespace StakeUIHelperI {
   };
 }
 
-export interface AaveStakedApyHelperInterface extends utils.Interface {
+export interface AaveStkApyHelperInterface extends utils.Interface {
   functions: {
     'AAVE()': FunctionFragment;
     'BPT()': FunctionFragment;
@@ -112,12 +112,12 @@ export interface AaveStakedApyHelperInterface extends utils.Interface {
   events: {};
 }
 
-export interface AaveStakedApyHelper extends BaseContract {
+export interface AaveStkApyHelper extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
 
-  interface: AaveStakedApyHelperInterface;
+  interface: AaveStkApyHelperInterface;
 
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,
