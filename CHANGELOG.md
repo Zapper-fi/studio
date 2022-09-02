@@ -4,6 +4,14 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.210.0](https://github.com/Zapper-fi/studio/compare/v0.209.0...v0.210.0) (2022-09-02)
+
+
+### Features
+
+* **barnbridge-smart-alpha:** Add BarnBridge Smart Alpha on Ethereum ([#1286](https://github.com/Zapper-fi/studio/issues/1286)) ([1ecd8a8](https://github.com/Zapper-fi/studio/commit/1ecd8a87755792198f84478925cfb97f9672fc0a))
+* **template:** Use `isExcludedFromExplore` for templates ([#1333](https://github.com/Zapper-fi/studio/issues/1333)) ([362d6f2](https://github.com/Zapper-fi/studio/commit/362d6f27de7fa9800e8ebea651ae4e22c24b7ba8))
+
 ## [0.209.0](https://github.com/Zapper-fi/studio/compare/v0.208.0...v0.209.0) (2022-09-02)
 
 
