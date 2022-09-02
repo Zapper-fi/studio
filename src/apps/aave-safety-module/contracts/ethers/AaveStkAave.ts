@@ -31,7 +31,7 @@ export declare namespace DistributionTypes {
   };
 }
 
-export interface BalancerStkAbptInterface extends utils.Interface {
+export interface AaveStkAaveInterface extends utils.Interface {
   functions: {
     'COOLDOWN_SECONDS()': FunctionFragment;
     'DELEGATE_BY_TYPE_TYPEHASH()': FunctionFragment;
@@ -71,7 +71,7 @@ export interface BalancerStkAbptInterface extends utils.Interface {
     'getTotalRewardsBalance(address)': FunctionFragment;
     'getUserAssetData(address,address)': FunctionFragment;
     'increaseAllowance(address,uint256)': FunctionFragment;
-    'initialize(string,string,uint8)': FunctionFragment;
+    'initialize()': FunctionFragment;
     'name()': FunctionFragment;
     'permit(address,address,uint256,uint256,uint8,bytes32,bytes32)': FunctionFragment;
     'redeem(address,uint256)': FunctionFragment;
@@ -236,10 +236,7 @@ export interface BalancerStkAbptInterface extends utils.Interface {
     functionFragment: 'increaseAllowance',
     values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
   ): string;
-  encodeFunctionData(
-    functionFragment: 'initialize',
-    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
-  ): string;
+  encodeFunctionData(functionFragment: 'initialize', values?: undefined): string;
   encodeFunctionData(functionFragment: 'name', values?: undefined): string;
   encodeFunctionData(
     functionFragment: 'permit',
@@ -455,12 +452,12 @@ export type UserIndexUpdatedEvent = TypedEvent<[string, string, BigNumber], User
 
 export type UserIndexUpdatedEventFilter = TypedEventFilter<UserIndexUpdatedEvent>;
 
-export interface BalancerStkAbpt extends BaseContract {
+export interface AaveStkAave extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
 
-  interface: BalancerStkAbptInterface;
+  interface: AaveStkAaveInterface;
 
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,
@@ -607,8 +604,8 @@ export interface BalancerStkAbpt extends BaseContract {
       amountToReceive: PromiseOrValue<BigNumberish>,
       toAddress: PromiseOrValue<string>,
       toBalance: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<ContractTransaction>;
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber]>;
 
     getPowerAtBlock(
       user: PromiseOrValue<string>,
@@ -637,12 +634,7 @@ export interface BalancerStkAbpt extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    initialize(
-      name: PromiseOrValue<string>,
-      symbol: PromiseOrValue<string>,
-      decimals: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<ContractTransaction>;
+    initialize(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     name(overrides?: CallOverrides): Promise<[string]>;
 
@@ -822,8 +814,8 @@ export interface BalancerStkAbpt extends BaseContract {
     amountToReceive: PromiseOrValue<BigNumberish>,
     toAddress: PromiseOrValue<string>,
     toBalance: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> },
-  ): Promise<ContractTransaction>;
+    overrides?: CallOverrides,
+  ): Promise<BigNumber>;
 
   getPowerAtBlock(
     user: PromiseOrValue<string>,
@@ -852,12 +844,7 @@ export interface BalancerStkAbpt extends BaseContract {
     overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  initialize(
-    name: PromiseOrValue<string>,
-    symbol: PromiseOrValue<string>,
-    decimals: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> },
-  ): Promise<ContractTransaction>;
+  initialize(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   name(overrides?: CallOverrides): Promise<string>;
 
@@ -1064,12 +1051,7 @@ export interface BalancerStkAbpt extends BaseContract {
       overrides?: CallOverrides,
     ): Promise<boolean>;
 
-    initialize(
-      name: PromiseOrValue<string>,
-      symbol: PromiseOrValue<string>,
-      decimals: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides,
-    ): Promise<void>;
+    initialize(overrides?: CallOverrides): Promise<void>;
 
     name(overrides?: CallOverrides): Promise<string>;
 
@@ -1341,7 +1323,7 @@ export interface BalancerStkAbpt extends BaseContract {
       amountToReceive: PromiseOrValue<BigNumberish>,
       toAddress: PromiseOrValue<string>,
       toBalance: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     getPowerAtBlock(
@@ -1371,12 +1353,7 @@ export interface BalancerStkAbpt extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    initialize(
-      name: PromiseOrValue<string>,
-      symbol: PromiseOrValue<string>,
-      decimals: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<BigNumber>;
+    initialize(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     name(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -1548,7 +1525,7 @@ export interface BalancerStkAbpt extends BaseContract {
       amountToReceive: PromiseOrValue<BigNumberish>,
       toAddress: PromiseOrValue<string>,
       toBalance: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     getPowerAtBlock(
@@ -1578,12 +1555,7 @@ export interface BalancerStkAbpt extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    initialize(
-      name: PromiseOrValue<string>,
-      symbol: PromiseOrValue<string>,
-      decimals: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<PopulatedTransaction>;
+    initialize(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     name(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 

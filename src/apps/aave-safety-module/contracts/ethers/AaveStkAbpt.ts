@@ -31,7 +31,7 @@ export declare namespace DistributionTypes {
   };
 }
 
-export interface StakedAaveInterface extends utils.Interface {
+export interface AaveStkAbptInterface extends utils.Interface {
   functions: {
     'COOLDOWN_SECONDS()': FunctionFragment;
     'DELEGATE_BY_TYPE_TYPEHASH()': FunctionFragment;
@@ -71,7 +71,7 @@ export interface StakedAaveInterface extends utils.Interface {
     'getTotalRewardsBalance(address)': FunctionFragment;
     'getUserAssetData(address,address)': FunctionFragment;
     'increaseAllowance(address,uint256)': FunctionFragment;
-    'initialize()': FunctionFragment;
+    'initialize(string,string,uint8)': FunctionFragment;
     'name()': FunctionFragment;
     'permit(address,address,uint256,uint256,uint8,bytes32,bytes32)': FunctionFragment;
     'redeem(address,uint256)': FunctionFragment;
@@ -236,7 +236,10 @@ export interface StakedAaveInterface extends utils.Interface {
     functionFragment: 'increaseAllowance',
     values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
   ): string;
-  encodeFunctionData(functionFragment: 'initialize', values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: 'initialize',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
   encodeFunctionData(functionFragment: 'name', values?: undefined): string;
   encodeFunctionData(
     functionFragment: 'permit',
@@ -452,12 +455,12 @@ export type UserIndexUpdatedEvent = TypedEvent<[string, string, BigNumber], User
 
 export type UserIndexUpdatedEventFilter = TypedEventFilter<UserIndexUpdatedEvent>;
 
-export interface StakedAave extends BaseContract {
+export interface AaveStkAbpt extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
 
-  interface: StakedAaveInterface;
+  interface: AaveStkAbptInterface;
 
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,
@@ -604,8 +607,8 @@ export interface StakedAave extends BaseContract {
       amountToReceive: PromiseOrValue<BigNumberish>,
       toAddress: PromiseOrValue<string>,
       toBalance: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides,
-    ): Promise<[BigNumber]>;
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<ContractTransaction>;
 
     getPowerAtBlock(
       user: PromiseOrValue<string>,
@@ -634,7 +637,12 @@ export interface StakedAave extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    initialize(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
+    initialize(
+      name: PromiseOrValue<string>,
+      symbol: PromiseOrValue<string>,
+      decimals: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<ContractTransaction>;
 
     name(overrides?: CallOverrides): Promise<[string]>;
 
@@ -814,8 +822,8 @@ export interface StakedAave extends BaseContract {
     amountToReceive: PromiseOrValue<BigNumberish>,
     toAddress: PromiseOrValue<string>,
     toBalance: PromiseOrValue<BigNumberish>,
-    overrides?: CallOverrides,
-  ): Promise<BigNumber>;
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
+  ): Promise<ContractTransaction>;
 
   getPowerAtBlock(
     user: PromiseOrValue<string>,
@@ -844,7 +852,12 @@ export interface StakedAave extends BaseContract {
     overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  initialize(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
+  initialize(
+    name: PromiseOrValue<string>,
+    symbol: PromiseOrValue<string>,
+    decimals: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
+  ): Promise<ContractTransaction>;
 
   name(overrides?: CallOverrides): Promise<string>;
 
@@ -1051,7 +1064,12 @@ export interface StakedAave extends BaseContract {
       overrides?: CallOverrides,
     ): Promise<boolean>;
 
-    initialize(overrides?: CallOverrides): Promise<void>;
+    initialize(
+      name: PromiseOrValue<string>,
+      symbol: PromiseOrValue<string>,
+      decimals: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
     name(overrides?: CallOverrides): Promise<string>;
 
@@ -1323,7 +1341,7 @@ export interface StakedAave extends BaseContract {
       amountToReceive: PromiseOrValue<BigNumberish>,
       toAddress: PromiseOrValue<string>,
       toBalance: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     getPowerAtBlock(
@@ -1353,7 +1371,12 @@ export interface StakedAave extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    initialize(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
+    initialize(
+      name: PromiseOrValue<string>,
+      symbol: PromiseOrValue<string>,
+      decimals: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     name(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -1525,7 +1548,7 @@ export interface StakedAave extends BaseContract {
       amountToReceive: PromiseOrValue<BigNumberish>,
       toAddress: PromiseOrValue<string>,
       toBalance: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     getPowerAtBlock(
@@ -1555,7 +1578,12 @@ export interface StakedAave extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    initialize(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
+    initialize(
+      name: PromiseOrValue<string>,
+      symbol: PromiseOrValue<string>,
+      decimals: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<PopulatedTransaction>;
 
     name(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 

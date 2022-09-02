@@ -4,7 +4,7 @@
 
 import { Contract, Signer, utils } from 'ethers';
 import type { Provider } from '@ethersproject/providers';
-import type { BalancerStkAbpt, BalancerStkAbptInterface } from '../BalancerStkAbpt';
+import type { AaveStkAbpt, AaveStkAbptInterface } from '../AaveStkAbpt';
 
 const _abi = [
   {
@@ -1331,12 +1331,12 @@ const _abi = [
   },
 ];
 
-export class BalancerStkAbpt__factory {
+export class AaveStkAbpt__factory {
   static readonly abi = _abi;
-  static createInterface(): BalancerStkAbptInterface {
-    return new utils.Interface(_abi) as BalancerStkAbptInterface;
+  static createInterface(): AaveStkAbptInterface {
+    return new utils.Interface(_abi) as AaveStkAbptInterface;
   }
-  static connect(address: string, signerOrProvider: Signer | Provider): BalancerStkAbpt {
-    return new Contract(address, _abi, signerOrProvider) as BalancerStkAbpt;
+  static connect(address: string, signerOrProvider: Signer | Provider): AaveStkAbpt {
+    return new Contract(address, _abi, signerOrProvider) as AaveStkAbpt;
   }
 }
