@@ -1,7 +1,6 @@
 import { Inject } from '@nestjs/common';
 import { compact } from 'lodash';
 
-
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
 import { buildDollarDisplayItem } from '~app-toolkit/helpers/presentation/display-item.present';
@@ -22,7 +21,7 @@ const network = Network.OPTIMISM_MAINNET;
 const VAULTS = [
   // USDC
   {
-    address: '0xD5A8f233CBdDb40368D55C3320644Fb36e597002',
+    address: '0xd5a8f233cbddb40368d55c3320644fb36e597002',
     stakedTokenAddress: '0x7f5c764cbc14f9669b88837ca1490cca17c31607',
     rewardTokenAddress: '0x7f5c764cbc14f9669b88837ca1490cca17c31607',
   },
@@ -40,7 +39,9 @@ export class OptimismPikaProtocolV3VaultContractPositionFetcher implements Posit
     const multicall = this.appToolkit.getMulticall(network);
     const depositTokenContract = multicall.wrap(
       this.appToolkit.globalContracts.erc20({
-        network, address: depositTokenAddress}),
+        network,
+        address: depositTokenAddress,
+      }),
     );
 
     return await Promise.all([depositTokenContract.balanceOf(vaultContractAddress)]);
@@ -53,12 +54,12 @@ export class OptimismPikaProtocolV3VaultContractPositionFetcher implements Posit
     const allTokens = [...appTokens, ...baseTokens];
 
     const positions = await Promise.all(
-      VAULTS.map(async ({ address, stakedTokenAddress, rewardTokenAddress}) => {
+      VAULTS.map(async ({ address, stakedTokenAddress, rewardTokenAddress }) => {
         const stakedToken = allTokens.find(v => v.address === stakedTokenAddress);
         const rewardToken = allTokens.find(v => v.address === rewardTokenAddress);
-        if ( !stakedToken || !rewardToken) return null;
+        if (!stakedToken || !rewardToken) return null;
 
-        const contract = this.pikaProtocolV3ContractFactory.pikaProtocolVaultV3({address, network});
+        const contract = this.pikaProtocolV3ContractFactory.pikaProtocolVaultV3({ address, network });
         const balanceRaw = await this.getVaultBalance(contract.address, stakedToken.address);
         const liquidity = Number(balanceRaw) / 10 ** stakedToken.decimals;
         const tokens = [supplied(stakedToken), claimable(rewardToken)];
@@ -76,12 +77,12 @@ export class OptimismPikaProtocolV3VaultContractPositionFetcher implements Posit
           tokens,
           dataProps: { liquidity },
           displayProps: {
-            label, 
+            label,
             secondaryLabel,
             images,
             statsItems: [{ label: 'Liquidity', value: buildDollarDisplayItem(liquidity) }],
           },
-        }
+        };
 
         return position;
       }),

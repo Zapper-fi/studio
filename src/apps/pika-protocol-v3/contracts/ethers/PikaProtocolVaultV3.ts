@@ -105,20 +105,6 @@ export declare namespace PikaPerpV3 {
     isNextPrice: boolean;
     timestamp: BigNumber;
   };
-
-  export type StakeStruct = {
-    owner: PromiseOrValue<string>;
-    amount: PromiseOrValue<BigNumberish>;
-    shares: PromiseOrValue<BigNumberish>;
-    timestamp: PromiseOrValue<BigNumberish>;
-  };
-
-  export type StakeStructOutput = [string, BigNumber, BigNumber, BigNumber] & {
-    owner: string;
-    amount: BigNumber;
-    shares: BigNumber;
-    timestamp: BigNumber;
-  };
 }
 
 export interface PikaProtocolVaultV3Interface extends utils.Interface {
@@ -774,7 +760,7 @@ export interface PikaProtocolVaultV3 extends BaseContract {
 
     getShare(stakeOwner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    getStake(stakeOwner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[PikaPerpV3.StakeStructOutput]>;
+    getStake(stakeOwner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     getTotalShare(overrides?: CallOverrides): Promise<[BigNumber]>;
 
@@ -1029,7 +1015,7 @@ export interface PikaProtocolVaultV3 extends BaseContract {
 
   getShare(stakeOwner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  getStake(stakeOwner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PikaPerpV3.StakeStructOutput>;
+  getStake(stakeOwner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   getTotalShare(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -1284,7 +1270,7 @@ export interface PikaProtocolVaultV3 extends BaseContract {
 
     getShare(stakeOwner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    getStake(stakeOwner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PikaPerpV3.StakeStructOutput>;
+    getStake(stakeOwner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     getTotalShare(overrides?: CallOverrides): Promise<BigNumber>;
 

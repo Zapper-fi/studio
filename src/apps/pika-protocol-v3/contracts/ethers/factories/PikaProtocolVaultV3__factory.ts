@@ -1166,31 +1166,9 @@ const _abi = [
     name: 'getStake',
     outputs: [
       {
-        components: [
-          {
-            internalType: 'address',
-            name: 'owner',
-            type: 'address',
-          },
-          {
-            internalType: 'uint96',
-            name: 'amount',
-            type: 'uint96',
-          },
-          {
-            internalType: 'uint128',
-            name: 'shares',
-            type: 'uint128',
-          },
-          {
-            internalType: 'uint128',
-            name: 'timestamp',
-            type: 'uint128',
-          },
-        ],
-        internalType: 'struct PikaPerpV3.Stake',
+        internalType: 'uint256',
         name: '',
-        type: 'tuple',
+        type: 'uint256',
       },
     ],
     stateMutability: 'view',
