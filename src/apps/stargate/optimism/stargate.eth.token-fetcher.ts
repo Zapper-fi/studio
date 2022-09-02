@@ -1,8 +1,7 @@
-import { Inject } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { ZERO_ADDRESS } from '~app-toolkit/constants/address';
-import { Register } from '~app-toolkit/decorators';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import { GetDataPropsParams } from '~position/template/app-token.template.types';
 import { Network } from '~types/network.interface';
@@ -10,23 +9,19 @@ import { Network } from '~types/network.interface';
 import { StargateContractFactory, StargateEth } from '../contracts';
 import { STARGATE_DEFINITION } from '../stargate.definition';
 
-const appId = STARGATE_DEFINITION.id;
-const groupId = STARGATE_DEFINITION.groups.eth.id;
-const network = Network.OPTIMISM_MAINNET;
-
 type StargateEthAppTokenDataProps = {
   liquidity: number;
   reserve: number;
 };
 
-@Register.TokenPositionFetcher({ appId, groupId, network })
+@Injectable()
 export class OptimismStargateEthTokenFetcher extends AppTokenTemplatePositionFetcher<
   StargateEth,
   StargateEthAppTokenDataProps
 > {
-  appId = appId;
-  groupId = groupId;
-  network = network;
+  appId = STARGATE_DEFINITION.id;
+  groupId = STARGATE_DEFINITION.groups.eth.id;
+  network = Network.OPTIMISM_MAINNET;
   groupLabel = 'Wrapped';
 
   constructor(

@@ -1,14 +1,11 @@
-import { Register } from '~app-toolkit/decorators';
+import { Injectable } from '@nestjs/common';
+
 import { Network } from '~types/network.interface';
 
 import { BEETHOVEN_X_DEFINITION } from '../beethoven-x.definition';
 import { BeethovenXChefContractPositionFetcher } from '../common/beethoven-x.chef.contract-position-fetcher';
 
-const appId = BEETHOVEN_X_DEFINITION.id;
-const groupId = BEETHOVEN_X_DEFINITION.groups.chef.id;
-const network = Network.FANTOM_OPERA_MAINNET;
-
-@Register.ContractPositionFetcher({ appId, groupId, network })
+@Injectable()
 export class FantomBeethovenXChefContractPositionFetcher extends BeethovenXChefContractPositionFetcher {
   appId = BEETHOVEN_X_DEFINITION.id;
   groupId = BEETHOVEN_X_DEFINITION.groups.chef.id;

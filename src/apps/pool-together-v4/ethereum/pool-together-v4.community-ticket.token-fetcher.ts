@@ -1,19 +1,16 @@
-import { Register } from '~app-toolkit/decorators';
+import { Injectable } from '@nestjs/common';
+
 import { Network } from '~types/network.interface';
 
 import { PoolTogetherV4CommunityTicketTokenFetcher } from '../common/pool-together-v4.community-ticket.token-fetcher';
 import { PoolWithMultipleWinnersBuilderCreatedType } from '../common/pool-together-v4.log-provider';
 import { POOL_TOGETHER_V4_DEFINITION } from '../pool-together-v4.definition';
 
-const appId = POOL_TOGETHER_V4_DEFINITION.id;
-const groupId = POOL_TOGETHER_V4_DEFINITION.groups.communityTicket.id;
-const network = Network.ETHEREUM_MAINNET;
-
-@Register.TokenPositionFetcher({ appId, groupId, network })
+@Injectable()
 export class EthereumPoolTogetherV4CommunityTicketTokenFetcher extends PoolTogetherV4CommunityTicketTokenFetcher {
-  network = network;
-  appId = appId;
-  groupId = groupId;
+  appId = POOL_TOGETHER_V4_DEFINITION.id;
+  groupId = POOL_TOGETHER_V4_DEFINITION.groups.communityTicket.id;
+  network = Network.ETHEREUM_MAINNET;
   groupLabel = 'Community Prize Pools';
 
   extraDefinitions = [

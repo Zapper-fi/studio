@@ -1,7 +1,6 @@
-import { Inject } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
-import { Register } from '~app-toolkit/decorators';
 import { isMulticallUnderlyingError } from '~multicall/multicall.ethers';
 import {
   GetMasterChefDataPropsParams,
@@ -13,15 +12,11 @@ import { Network } from '~types/network.interface';
 import { PlatypusFinanceContractFactory, PlatypusFinanceMasterPlatypusV1 } from '../contracts';
 import { PLATYPUS_FINANCE_DEFINITION } from '../platypus-finance.definition';
 
-const appId = PLATYPUS_FINANCE_DEFINITION.id;
-const groupId = PLATYPUS_FINANCE_DEFINITION.groups.farm.id;
-const network = Network.AVALANCHE_MAINNET;
-
-@Register.ContractPositionFetcher({ appId, groupId, network })
+@Injectable()
 export class AvalanchePlatypusFinanceFarmContractPositionFetcher extends MasterChefTemplateContractPositionFetcher<PlatypusFinanceMasterPlatypusV1> {
-  appId = appId;
-  groupId = groupId;
-  network = network;
+  appId = PLATYPUS_FINANCE_DEFINITION.id;
+  groupId = PLATYPUS_FINANCE_DEFINITION.groups.farm.id;
+  network = Network.AVALANCHE_MAINNET;
   groupLabel = 'Farms';
   chefAddress = '0xb0523f9f473812fb195ee49bc7d2ab9873a98044';
 

@@ -1,7 +1,6 @@
-import { Inject } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
-import { Register } from '~app-toolkit/decorators';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import { GetUnderlyingTokensParams } from '~position/template/app-token.template.types';
 import { Network } from '~types/network.interface';
@@ -9,15 +8,11 @@ import { Network } from '~types/network.interface';
 import { SteakHutContractFactory, SteakHutHjoe } from '../contracts';
 import { STEAK_HUT_DEFINITION } from '../steak-hut.definition';
 
-const appId = STEAK_HUT_DEFINITION.id;
-const groupId = STEAK_HUT_DEFINITION.groups.ve.id;
-const network = Network.AVALANCHE_MAINNET;
-
-@Register.TokenPositionFetcher({ appId, groupId, network })
+@Injectable()
 export class AvalancheSteakHutVeTokenFetcher extends AppTokenTemplatePositionFetcher<SteakHutHjoe> {
-  appId = appId;
-  groupId = groupId;
-  network = network;
+  appId = STEAK_HUT_DEFINITION.id;
+  groupId = STEAK_HUT_DEFINITION.groups.ve.id;
+  network = Network.AVALANCHE_MAINNET;
   groupLabel = 'VotedEscrow';
 
   constructor(

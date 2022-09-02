@@ -1,7 +1,6 @@
-import { Inject } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
-import { Register } from '~app-toolkit/decorators';
 import { isMulticallUnderlyingError } from '~multicall/multicall.ethers';
 import { GetDataPropsParams, GetPricePerShareParams } from '~position/template/app-token.template.types';
 import { Network } from '~types/network.interface';
@@ -11,15 +10,11 @@ import { YearnVaultTokenDefinitionsResolver } from '../helpers/yearn.vault.token
 import { YearnVaultTokenDataProps, YearnVaultTokenFetcher } from '../helpers/yearn.vault.token-fetcher';
 import { YEARN_DEFINITION } from '../yearn.definition';
 
-const appId = YEARN_DEFINITION.id;
-const groupId = YEARN_DEFINITION.groups.v2Vault.id;
-const network = Network.ARBITRUM_MAINNET;
-
-@Register.TokenPositionFetcher({ appId, groupId, network })
+@Injectable()
 export class ArbitrumYearnV2VaultTokenFetcher extends YearnVaultTokenFetcher<YearnVaultV2> {
-  appId = appId;
-  groupId = groupId;
-  network = network;
+  appId = YEARN_DEFINITION.id;
+  groupId = YEARN_DEFINITION.groups.v2Vault.id;
+  network = Network.ARBITRUM_MAINNET;
   groupLabel = 'Vaults';
 
   vaultType = 'v2' as const;

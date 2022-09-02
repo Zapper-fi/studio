@@ -1,18 +1,15 @@
-import { Register } from '~app-toolkit/decorators';
+import { Injectable } from '@nestjs/common';
+
 import { VaultTokenFetcher } from '~position/template/vault.template.token-fetcher';
 import { Network } from '~types/network.interface';
 
 import { MANIFOLD_FINANCE_DEFINITION } from '../manifold-finance.definition';
 
-const appId = MANIFOLD_FINANCE_DEFINITION.id;
-const groupId = MANIFOLD_FINANCE_DEFINITION.groups.staking.id;
-const network = Network.ETHEREUM_MAINNET;
-
-@Register.TokenPositionFetcher({ appId, groupId, network })
+@Injectable()
 export class EthereumManifoldFinanceStakingTokenFetcher extends VaultTokenFetcher {
-  appId = appId;
-  groupId = groupId;
-  network = network;
+  appId = MANIFOLD_FINANCE_DEFINITION.id;
+  groupId = MANIFOLD_FINANCE_DEFINITION.groups.staking.id;
+  network = Network.ETHEREUM_MAINNET;
   groupLabel = 'xFOLD';
 
   vaultAddress = '0x454bd9e2b29eb5963048cc1a8bd6fd44e89899cb';

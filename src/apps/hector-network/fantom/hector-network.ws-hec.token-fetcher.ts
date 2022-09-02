@@ -1,7 +1,6 @@
-import { Inject } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
-import { Register } from '~app-toolkit/decorators';
 import { Erc20 } from '~contract/contracts';
 import { DisplayProps } from '~position/display.interface';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
@@ -20,18 +19,14 @@ type HectorNetworkWsHecDataProps = {
   liquidity: number;
 };
 
-const appId = HECTOR_NETWORK_DEFINITION.id;
-const groupId = HECTOR_NETWORK_DEFINITION.groups.wsHec.id;
-const network = Network.FANTOM_OPERA_MAINNET;
-
-@Register.TokenPositionFetcher({ appId, groupId, network })
+@Injectable()
 export class FantomHectorNetworkWsHecTokenFetcher extends AppTokenTemplatePositionFetcher<
   Erc20,
   HectorNetworkWsHecDataProps
 > {
-  appId = appId;
-  groupId = groupId;
-  network = network;
+  appId = HECTOR_NETWORK_DEFINITION.id;
+  groupId = HECTOR_NETWORK_DEFINITION.groups.wsHec.id;
+  network = Network.FANTOM_OPERA_MAINNET;
   groupLabel = 'Wrapped sHEC V2';
 
   constructor(

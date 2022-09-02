@@ -1,10 +1,9 @@
-import { Inject } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import BigNumber from 'bignumber.js';
 import { range } from 'lodash';
 import moment from 'moment';
 
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
-import { Register } from '~app-toolkit/decorators';
 import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { DollarDisplayItem, PercentageDisplayItem } from '~position/display.interface';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
@@ -21,10 +20,6 @@ import { Network } from '~types/network.interface';
 
 import { PendleContractFactory, PendleYieldToken } from '../contracts';
 import { PENDLE_DEFINITION } from '../pendle.definition';
-
-const appId = PENDLE_DEFINITION.id;
-const groupId = PENDLE_DEFINITION.groups.yield.id;
-const network = Network.ETHEREUM_MAINNET;
 
 export type PendleYieldTokenDataProps = {
   expiry: number;
@@ -44,15 +39,15 @@ export type PendleYieldTokenDefinition = {
   expiry: number;
 };
 
-@Register.TokenPositionFetcher({ appId, groupId, network })
+@Injectable()
 export class EthereumPendleYieldTokenFetcher extends AppTokenTemplatePositionFetcher<
   PendleYieldToken,
   PendleYieldTokenDataProps,
   PendleYieldTokenDefinition
 > {
-  appId = appId;
-  groupId = groupId;
-  network = network;
+  appId = PENDLE_DEFINITION.id;
+  groupId = PENDLE_DEFINITION.groups.yield.id;
+  network = Network.ETHEREUM_MAINNET;
   groupLabel = 'Future Yield';
   pendleDataAddress = '0xe8a6916576832aa5504092c1cccc46e3bb9491d6';
 

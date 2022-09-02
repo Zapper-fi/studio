@@ -1,8 +1,7 @@
-import { Inject } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { BigNumberish } from 'ethers';
 
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
-import { Register } from '~app-toolkit/decorators';
 import {
   GetMasterChefDataPropsParams,
   GetMasterChefTokenBalancesParams,
@@ -13,15 +12,11 @@ import { Network } from '~types/network.interface';
 import { BISWAP_DEFINITION } from '../biswap.definition';
 import { BiswapContractFactory, BiswapMasterchef } from '../contracts';
 
-const appId = BISWAP_DEFINITION.id;
-const groupId = BISWAP_DEFINITION.groups.farm.id;
-const network = Network.BINANCE_SMART_CHAIN_MAINNET;
-
-@Register.ContractPositionFetcher({ appId, groupId, network })
+@Injectable()
 export class BinanceSmartChainBiswapContractPositionFetcher extends MasterChefTemplateContractPositionFetcher<BiswapMasterchef> {
-  appId = appId;
-  groupId = groupId;
-  network = network;
+  appId = BISWAP_DEFINITION.id;
+  groupId = BISWAP_DEFINITION.groups.farm.id;
+  network = Network.BINANCE_SMART_CHAIN_MAINNET;
   groupLabel = 'Farms';
   chefAddress = '0xdbc1a13490deef9c3c12b44fe77b503c1b061739';
 

@@ -1,9 +1,8 @@
-import { Inject } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { BigNumberish } from 'ethers';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { ZERO_ADDRESS } from '~app-toolkit/constants/address';
-import { Register } from '~app-toolkit/decorators';
 import { RewardRateUnit } from '~app-toolkit/helpers/master-chef/master-chef.contract-position-helper';
 import {
   GetMasterChefDataPropsParams,
@@ -15,15 +14,11 @@ import { Network } from '~types/network.interface';
 import { YieldYakChef, YieldYakContractFactory } from '../contracts';
 import { YIELD_YAK_DEFINITION } from '../yield-yak.definition';
 
-const appId = YIELD_YAK_DEFINITION.id;
-const groupId = YIELD_YAK_DEFINITION.groups.farm.id;
-const network = Network.AVALANCHE_MAINNET;
-
-@Register.ContractPositionFetcher({ appId, groupId, network })
+@Injectable()
 export class AvalancheYieldyakFarmContractPositionFetcher extends MasterChefTemplateContractPositionFetcher<YieldYakChef> {
-  appId = appId;
-  groupId = groupId;
-  network = network;
+  appId = YIELD_YAK_DEFINITION.id;
+  groupId = YIELD_YAK_DEFINITION.groups.farm.id;
+  network = Network.AVALANCHE_MAINNET;
   groupLabel = 'Farms';
   chefAddress = '0x0cf605484a512d3f3435fed77ab5ddc0525daf5f';
   rewardRateUnit = RewardRateUnit.BLOCK;

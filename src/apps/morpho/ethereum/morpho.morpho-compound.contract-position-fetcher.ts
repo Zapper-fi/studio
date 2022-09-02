@@ -1,10 +1,9 @@
-import { Inject } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { BigNumberish } from 'ethers';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { ZERO_ADDRESS } from '~app-toolkit/constants/address';
 import { BLOCKS_PER_DAY } from '~app-toolkit/constants/blocks';
-import { Register } from '~app-toolkit/decorators';
 import {
   buildDollarDisplayItem,
   buildNumberDisplayItem,
@@ -28,10 +27,6 @@ import { Network } from '~types/network.interface';
 import { Morpho, MorphoContractFactory } from '../contracts';
 import { MORPHO_DEFINITION } from '../morpho.definition';
 
-const appId = MORPHO_DEFINITION.id;
-const groupId = MORPHO_DEFINITION.groups.morphoCompound.id;
-const network = Network.ETHEREUM_MAINNET;
-
 export type MorphoCompoundContractPositionDefinition = {
   address: string;
   marketAddress: string;
@@ -50,15 +45,15 @@ export type MorphoCompoundContractPositionDataProps = {
   borrowUSD: number;
 };
 
-@Register.ContractPositionFetcher({ appId, groupId, network })
+@Injectable()
 export class EthereumMorphoCompoundSupplyContractPositionFetcher extends ContractPositionTemplatePositionFetcher<
   Morpho,
   MorphoCompoundContractPositionDataProps,
   MorphoCompoundContractPositionDefinition
 > {
-  appId = appId;
-  groupId = groupId;
-  network = network;
+  appId = MORPHO_DEFINITION.id;
+  groupId = MORPHO_DEFINITION.groups.morphoCompound.id;
+  network = Network.ETHEREUM_MAINNET;
   groupLabel = 'Morpho Compound';
 
   morphoAddress = '0x8888882f8f843896699869179fb6e4f7e3b58888';
