@@ -8,7 +8,7 @@ const appId = AGAVE_DEFINITION.id;
 const groupId = AGAVE_DEFINITION.groups.claimable.id;
 const network = Network.GNOSIS_MAINNET;
 
-@Register.ContractPositionFetcher({ appId, groupId, network, options: { excludeFromTvl: true } })
+@Register.ContractPositionFetcher({ appId, groupId, network })
 export class GnosisAgaveClaimableContractPositionFetcher extends AaveV2ClaimableTemplatePositionFetcher {
   network = network;
   appId = appId;
@@ -16,6 +16,7 @@ export class GnosisAgaveClaimableContractPositionFetcher extends AaveV2Claimable
   groupLabel = 'Rewards';
 
   isExcludedFromExplore = true;
+  isExcludedFromTvl = true;
 
   incentivesControllerAddress = '0xfa255f5104f129b78f477e9a6d050a02f31a5d86';
   protocolDataProviderAddress = '0x24dcbd376db23e4771375092344f5cbea3541fc0';

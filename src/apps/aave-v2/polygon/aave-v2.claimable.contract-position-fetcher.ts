@@ -8,7 +8,7 @@ const appId = AAVE_V2_DEFINITION.id;
 const groupId = AAVE_V2_DEFINITION.groups.claimable.id;
 const network = Network.POLYGON_MAINNET;
 
-@Register.ContractPositionFetcher({ appId, groupId, network, options: { excludeFromTvl: true } })
+@Register.ContractPositionFetcher({ appId, groupId, network })
 export class PolygonAaveV2ClaimableContractPositionFetcher extends AaveV2ClaimableTemplatePositionFetcher {
   network = network;
   appId = appId;
@@ -16,6 +16,7 @@ export class PolygonAaveV2ClaimableContractPositionFetcher extends AaveV2Claimab
   groupLabel = 'Rewards';
 
   isExcludedFromExplore = true;
+  isExcludedFromTvl = true;
 
   incentivesControllerAddress = '0x357d51124f59836ded84c8a1730d72b749d8bc23';
   protocolDataProviderAddress = '0x7551b5d2763519d4e37e8b81929d336de671d46d';
