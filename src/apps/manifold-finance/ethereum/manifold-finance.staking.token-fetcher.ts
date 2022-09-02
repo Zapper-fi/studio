@@ -16,8 +16,7 @@ export class EthereumManifoldFinanceStakingTokenFetcher extends VaultTokenFetche
   groupLabel = 'xFOLD';
 
   vaultAddress = '0x454bd9e2b29eb5963048cc1a8bd6fd44e89899cb';
-  underlyingTokenAddress = '0xc0d4ceb216b3ba9c3701b291766fdcba977cec3a';
-  reserveAddress = '0x454bd9e2b29eb5963048cc1a8bd6fd44e89899cb';
+  underlyingTokenAddress = '0xd084944d3c05cd115c09d072b9f44ba3e0e45921';
 
   async getPricePerShare() {
     return 1;
