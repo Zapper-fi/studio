@@ -84,12 +84,6 @@ export class PositionFetcherRegistry implements OnApplicationBootstrap {
         const groupId = Reflect.getMetadata(POSITION_FETCHER_GROUP, wrapper.metatype);
         const options = Reflect.getMetadata(POSITION_FETCHER_OPTIONS, wrapper.metatype);
 
-        // Register the position fetcher in the caching module
-        const cacheKey = buildAppPositionsCacheKey({ type, network, appId, groupId });
-        Reflect.defineMetadata(CACHE_ON_INTERVAL_KEY, cacheKey, wrapper.instance['getPositions']);
-        Reflect.defineMetadata(CACHE_ON_INTERVAL_TIMEOUT, 45 * 1000, wrapper.instance['getPositions']);
-        this.cacheOnIntervalService.registerCache(wrapper.instance, 'getPositions');
-
         this.setToRegistry({ type, appId, network, groupId, fetcher: wrapper.instance, options });
       });
   }
@@ -115,6 +109,12 @@ export class PositionFetcherRegistry implements OnApplicationBootstrap {
       this.registry.get(type)!.get(network)!.set(appId, new Map());
 
     this.registry.get(type)?.get(network)?.get(appId)?.set(groupId, { fetcher, options });
+
+    // Register the position fetcher in the caching module
+    const cacheKey = buildAppPositionsCacheKey({ type, network, appId, groupId });
+    Reflect.defineMetadata(CACHE_ON_INTERVAL_KEY, cacheKey, fetcher['getPositions']);
+    Reflect.defineMetadata(CACHE_ON_INTERVAL_TIMEOUT, 45 * 1000, fetcher['getPositions']);
+    this.cacheOnIntervalService.registerCache(fetcher, 'getPositions');
   }
 
   private getOptions({
