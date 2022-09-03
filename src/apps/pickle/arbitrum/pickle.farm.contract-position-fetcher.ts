@@ -1,9 +1,8 @@
-import { Inject } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { BigNumberish } from 'ethers';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { ZERO_ADDRESS } from '~app-toolkit/constants/address';
-import { Register } from '~app-toolkit/decorators';
 import { RewardRateUnit } from '~app-toolkit/helpers/master-chef/master-chef.contract-position-helper';
 import {
   GetMasterChefV2ExtraRewardTokenBalancesParams,
@@ -19,18 +18,14 @@ import { Network } from '~types/network.interface';
 import { PickleContractFactory, PickleMiniChefV2, PickleRewarder } from '../contracts';
 import { PICKLE_DEFINITION } from '../pickle.definition';
 
-const appId = PICKLE_DEFINITION.id;
-const groupId = PICKLE_DEFINITION.groups.masterchefV2Farm.id;
-const network = Network.ARBITRUM_MAINNET;
-
-@Register.ContractPositionFetcher({ appId, groupId, network })
+@Injectable()
 export class ArbitrumPickleFarmContractPositionFetcher extends MasterChefV2TemplateContractPositionFetcher<
   PickleMiniChefV2,
   PickleRewarder
 > {
-  appId = appId;
-  groupId = groupId;
-  network = network;
+  appId = PICKLE_DEFINITION.id;
+  groupId = PICKLE_DEFINITION.groups.masterchefV2Farm.id;
+  network = Network.ARBITRUM_MAINNET;
   groupLabel = 'Farms';
   chefAddress = '0x7ecc7163469f37b777d7b8f45a667314030ace24';
   rewardRateUnit = RewardRateUnit.SECOND;

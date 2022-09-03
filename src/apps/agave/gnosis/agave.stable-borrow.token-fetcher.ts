@@ -1,4 +1,5 @@
-import { Register } from '~app-toolkit/decorators';
+import { Injectable } from '@nestjs/common';
+
 import { AaveV2AToken } from '~apps/aave-v2/contracts';
 import {
   AaveV2LendingTemplateTokenFetcher,
@@ -11,11 +12,7 @@ import { Network } from '~types/network.interface';
 
 import AGAVE_DEFINITION from '../agave.definition';
 
-const appId = AGAVE_DEFINITION.id;
-const groupId = AGAVE_DEFINITION.groups.stableBorrow.id;
-const network = Network.GNOSIS_MAINNET;
-
-@Register.TokenPositionFetcher({ appId, groupId, network })
+@Injectable()
 export class GnosisAgaveStableBorrowTokenFetcher extends AaveV2LendingTemplateTokenFetcher {
   appId = AGAVE_DEFINITION.id;
   groupId = AGAVE_DEFINITION.groups.stableBorrow.id;

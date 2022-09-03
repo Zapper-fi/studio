@@ -1,7 +1,6 @@
-import { Inject } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
-import { Register } from '~app-toolkit/decorators';
 import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { MetaType } from '~position/position.interface';
 import { isSupplied } from '~position/position.utils';
@@ -17,15 +16,11 @@ import { ConvexContractFactory } from '../contracts';
 import { ConvexVotingEscrow } from '../contracts/ethers/ConvexVotingEscrow';
 import { CONVEX_DEFINITION } from '../convex.definition';
 
-const appId = CONVEX_DEFINITION.id;
-const groupId = CONVEX_DEFINITION.groups.votingEscrow.id;
-const network = Network.ETHEREUM_MAINNET;
-
-@Register.ContractPositionFetcher({ appId, groupId, network })
+@Injectable()
 export class EthereumConvexVotingEscrowContractPositionFetcher extends ContractPositionTemplatePositionFetcher<ConvexVotingEscrow> {
-  appId = appId;
-  groupId = groupId;
-  network = network;
+  appId = CONVEX_DEFINITION.id;
+  groupId = CONVEX_DEFINITION.groups.votingEscrow.id;
+  network = Network.ETHEREUM_MAINNET;
   groupLabel = 'Vote Locked CVX';
 
   constructor(

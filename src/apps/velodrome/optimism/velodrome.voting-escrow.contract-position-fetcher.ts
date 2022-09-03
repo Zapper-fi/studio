@@ -1,8 +1,7 @@
-import { Inject } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { sum, range } from 'lodash';
 
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
-import { Register } from '~app-toolkit/decorators';
 import { GetTokenDefinitionsParams, GetTokenBalancesParams } from '~position/template/contract-position.template.types';
 import { VotingEscrowTemplateContractPositionFetcher } from '~position/template/voting-escrow.template.contract-position-fetcher';
 import { Network } from '~types/network.interface';
@@ -10,15 +9,11 @@ import { Network } from '~types/network.interface';
 import { VelodromeContractFactory, VelodromeVe } from '../contracts';
 import { VELODROME_DEFINITION } from '../velodrome.definition';
 
-const appId = VELODROME_DEFINITION.id;
-const groupId = VELODROME_DEFINITION.groups.votingEscrow.id;
-const network = Network.OPTIMISM_MAINNET;
-
-@Register.ContractPositionFetcher({ appId, groupId, network })
+@Injectable()
 export class OptimismVelodromeVotingEscrowContractPositionFetcher extends VotingEscrowTemplateContractPositionFetcher<VelodromeVe> {
-  appId = appId;
-  groupId = groupId;
-  network = network;
+  appId = VELODROME_DEFINITION.id;
+  groupId = VELODROME_DEFINITION.groups.votingEscrow.id;
+  network = Network.OPTIMISM_MAINNET;
   groupLabel = 'Voting Escrow';
   veTokenAddress = '0x9c7305eb78a432ced5c4d14cac27e8ed569a2e26';
 

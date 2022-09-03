@@ -1,7 +1,6 @@
-import { Inject } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
-import { Register } from '~app-toolkit/decorators';
 import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { DefaultDataProps } from '~position/display.interface';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
@@ -16,15 +15,11 @@ import { YieldYakContractFactory, YieldYakVault } from '../contracts';
 import { YieldYakVaultTokenDefinitionsResolver } from '../helpers/yield-yak.vault.token-definitions-resolver';
 import { YIELD_YAK_DEFINITION } from '../yield-yak.definition';
 
-const appId = YIELD_YAK_DEFINITION.id;
-const groupId = YIELD_YAK_DEFINITION.groups.vault.id;
-const network = Network.AVALANCHE_MAINNET;
-
-@Register.TokenPositionFetcher({ appId, groupId, network })
+@Injectable()
 export class AvalancheYieldyakVaultTokenFetcher extends AppTokenTemplatePositionFetcher<YieldYakVault> {
-  appId = appId;
-  groupId = groupId;
-  network = network;
+  appId = YIELD_YAK_DEFINITION.id;
+  groupId = YIELD_YAK_DEFINITION.groups.vault.id;
+  network = Network.AVALANCHE_MAINNET;
   groupLabel = 'Vaults';
 
   constructor(

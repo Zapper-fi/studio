@@ -1,18 +1,15 @@
-import { Register } from '~app-toolkit/decorators';
+import { Injectable } from '@nestjs/common';
+
 import { Network } from '~types/network.interface';
 
 import { ABRACADABRA_DEFINITION } from '../abracadabra.definition';
 import { AbracadabraCauldronContractPositionFetcher } from '../common/abracadabra.cauldron.contract-position-fetcher';
 
-const appId = ABRACADABRA_DEFINITION.id;
-const groupId = ABRACADABRA_DEFINITION.groups.cauldron.id;
-const network = Network.AVALANCHE_MAINNET;
-
-@Register.ContractPositionFetcher({ appId, groupId, network })
+@Injectable()
 export class AvalancheAbracadabraCauldronContractPositionFetcher extends AbracadabraCauldronContractPositionFetcher {
-  appId = appId;
-  groupId = groupId;
-  network = network;
+  appId = ABRACADABRA_DEFINITION.id;
+  groupId = ABRACADABRA_DEFINITION.groups.cauldron.id;
+  network = Network.AVALANCHE_MAINNET;
   groupLabel = 'Cauldrons';
   cauldrons = [
     '0x3cfed0439ab822530b1ffbd19536d897ef30d2a2', // AVAX

@@ -1,4 +1,5 @@
-import { Register } from '~app-toolkit/decorators';
+import { Injectable } from '@nestjs/common';
+
 import { AaveV2AToken } from '~apps/aave-v2/contracts';
 import {
   AaveV2LendingTemplateTokenFetcher,
@@ -11,11 +12,7 @@ import { Network } from '~types/network.interface';
 
 import { GEIST_DEFINITION } from '../geist.definition';
 
-const appId = GEIST_DEFINITION.id;
-const groupId = GEIST_DEFINITION.groups.stableDebt.id;
-const network = Network.FANTOM_OPERA_MAINNET;
-
-@Register.TokenPositionFetcher({ appId, groupId, network })
+@Injectable()
 export class FantomGeistStableDebtTokenFetcher extends AaveV2LendingTemplateTokenFetcher {
   appId = GEIST_DEFINITION.id;
   groupId = GEIST_DEFINITION.groups.stableDebt.id;

@@ -1,7 +1,6 @@
-import { Inject } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
-import { Register } from '~app-toolkit/decorators';
 import { isMulticallUnderlyingError } from '~multicall/multicall.ethers';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import {
@@ -21,18 +20,14 @@ type YearnYieldTokenDataProps = {
   reserve: number;
 };
 
-const appId = YEARN_DEFINITION.id;
-const groupId = YEARN_DEFINITION.groups.yield.id;
-const network = Network.ETHEREUM_MAINNET;
-
-@Register.TokenPositionFetcher({ appId, groupId, network })
+@Injectable()
 export class EthereumYearnYieldTokenFetcher extends AppTokenTemplatePositionFetcher<
   YearnVault,
   YearnYieldTokenDataProps
 > {
-  appId = appId;
-  groupId = groupId;
-  network = network;
+  appId = YEARN_DEFINITION.id;
+  groupId = YEARN_DEFINITION.groups.yield.id;
+  network = Network.ETHEREUM_MAINNET;
   groupLabel = 'Yield Tokens';
 
   constructor(

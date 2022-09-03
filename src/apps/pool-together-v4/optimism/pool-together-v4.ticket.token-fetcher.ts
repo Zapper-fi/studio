@@ -1,4 +1,5 @@
-import { Register } from '~app-toolkit/decorators';
+import { Injectable } from '@nestjs/common';
+
 import { Network } from '~types/network.interface';
 
 import { PoolTogetherV4TicketTokenFetcher } from '../common/pool-together-v4.ticket.token-fetcher';
@@ -8,7 +9,7 @@ const appId = POOL_TOGETHER_V4_DEFINITION.id;
 const groupId = POOL_TOGETHER_V4_DEFINITION.groups.ticket.id;
 const network = Network.OPTIMISM_MAINNET;
 
-@Register.TokenPositionFetcher({ appId, groupId, network })
+@Injectable()
 export class OptimismPoolTogetherV4TicketTokenFetcher extends PoolTogetherV4TicketTokenFetcher {
   network = network;
   appId = appId;

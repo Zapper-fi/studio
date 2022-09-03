@@ -1,8 +1,7 @@
-import { Inject } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { sum } from 'lodash';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
-import { Register } from '~app-toolkit/decorators';
 import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import {
@@ -22,18 +21,14 @@ type AaveSafetyModuleAbptTokenDataProps = {
   fee: number;
 };
 
-const appId = AAVE_SAFETY_MODULE_DEFINITION.id;
-const groupId = AAVE_SAFETY_MODULE_DEFINITION.groups.abpt.id;
-const network = Network.ETHEREUM_MAINNET;
-
-@Register.TokenPositionFetcher({ appId, groupId, network })
+@Injectable()
 export class EthereumAaveSafetyModuleAbptTokenFetcher extends AppTokenTemplatePositionFetcher<
   AaveAbpt,
   AaveSafetyModuleAbptTokenDataProps
 > {
-  appId = appId;
-  groupId = groupId;
-  network = network;
+  appId = AAVE_SAFETY_MODULE_DEFINITION.id;
+  groupId = AAVE_SAFETY_MODULE_DEFINITION.groups.abpt.id;
+  network = Network.ETHEREUM_MAINNET;
   groupLabel = 'ABPT';
 
   readonly bptAddress = '0xc697051d1c6296c24ae3bcef39aca743861d9a81';

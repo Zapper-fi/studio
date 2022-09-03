@@ -1,9 +1,8 @@
-import { Inject } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import BigNumber from 'bignumber.js';
 import { range } from 'lodash';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
-import { Register } from '~app-toolkit/decorators';
 import { isSupplied } from '~position/position.utils';
 import { GetTokenBalancesParams, GetTokenDefinitionsParams } from '~position/template/contract-position.template.types';
 import { SingleStakingFarmDynamicTemplateContractPositionFetcher } from '~position/template/single-staking.dynamic.template.contract-position-fetcher';
@@ -12,15 +11,11 @@ import { Network } from '~types/network.interface';
 import { IlluviumContractFactory, IlluviumCorePool } from '../contracts';
 import { ILLUVIUM_DEFINITION } from '../illuvium.definition';
 
-const appId = ILLUVIUM_DEFINITION.id;
-const groupId = ILLUVIUM_DEFINITION.groups.farm.id;
-const network = Network.ETHEREUM_MAINNET;
-
-@Register.ContractPositionFetcher({ appId, groupId, network })
+@Injectable()
 export class EthereumIlluviumFarmContractPositionFetcher extends SingleStakingFarmDynamicTemplateContractPositionFetcher<IlluviumCorePool> {
-  appId = appId;
-  groupId = groupId;
-  network = network;
+  appId = ILLUVIUM_DEFINITION.id;
+  groupId = ILLUVIUM_DEFINITION.groups.farm.id;
+  network = Network.ETHEREUM_MAINNET;
   groupLabel = 'Staking';
 
   constructor(
@@ -54,7 +49,10 @@ export class EthereumIlluviumFarmContractPositionFetcher extends SingleStakingFa
     const stakedToken = contractPosition.tokens.find(isSupplied)!;
 
     const v2StakingAddress = '0x7f5f854ffb6b7701540a00c69c4ab2de2b34291d';
-    const v2StakingContract = this.contractFactory.illuviumIlvPoolV2({ address: v2StakingAddress, network });
+    const v2StakingContract = this.contractFactory.illuviumIlvPoolV2({
+      address: v2StakingAddress,
+      network: this.network,
+    });
 
     // For the V1 ILV farm, deduct deposits made after the last V1 yield
     let voidAmountBN = new BigNumber(0);

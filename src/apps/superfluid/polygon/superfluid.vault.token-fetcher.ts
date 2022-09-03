@@ -1,8 +1,7 @@
-import { Inject } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { gql } from 'graphql-request';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
-import { Register } from '~app-toolkit/decorators';
 import { DefaultDataProps } from '~position/display.interface';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import { GetUnderlyingTokensParams, GetDataPropsParams } from '~position/template/app-token.template.types';
@@ -29,11 +28,7 @@ type TokensResponse = {
   }[];
 };
 
-const appId = SUPERFLUID_DEFINITION.id;
-const groupId = SUPERFLUID_DEFINITION.groups.vault.id;
-const network = Network.POLYGON_MAINNET;
-
-@Register.TokenPositionFetcher({ appId, groupId, network })
+@Injectable()
 export class PolygonSuperfluidVaultTokenFetcher extends AppTokenTemplatePositionFetcher<VaultToken> {
   appId = SUPERFLUID_DEFINITION.id;
   groupId = SUPERFLUID_DEFINITION.groups.vault.id;

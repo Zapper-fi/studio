@@ -1,11 +1,10 @@
-import { Inject } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import BigNumber from 'bignumber.js';
 import { compact, groupBy, sumBy, values } from 'lodash';
 
 import { drillBalance } from '~app-toolkit';
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { ZERO_ADDRESS } from '~app-toolkit/constants/address';
-import { Register } from '~app-toolkit/decorators';
 import { ContractPositionBalance } from '~position/position-balance.interface';
 import { MetaType } from '~position/position.interface';
 import { isClaimable, isSupplied } from '~position/position.utils';
@@ -17,15 +16,11 @@ import { RenApiClient } from '../common/ren.api.client';
 import { RenContractFactory, RenDarknodeRegistry } from '../contracts';
 import { REN_DEFINITION } from '../ren.definition';
 
-const appId = REN_DEFINITION.id;
-const groupId = REN_DEFINITION.groups.darknode.id;
-const network = Network.ETHEREUM_MAINNET;
-
-@Register.ContractPositionFetcher({ appId, groupId, network })
+@Injectable()
 export class EthereumRenDarknodeContractPositionFetcher extends ContractPositionTemplatePositionFetcher<RenDarknodeRegistry> {
-  appId = appId;
-  groupId = groupId;
-  network = network;
+  appId = REN_DEFINITION.id;
+  groupId = REN_DEFINITION.groups.darknode.id;
+  network = Network.ETHEREUM_MAINNET;
   groupLabel = 'Darknodes';
 
   constructor(

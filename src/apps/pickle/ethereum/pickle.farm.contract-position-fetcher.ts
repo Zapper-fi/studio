@@ -1,8 +1,7 @@
-import { Inject } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { BigNumberish } from 'ethers';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
-import { Register } from '~app-toolkit/decorators';
 import { RewardRateUnit } from '~app-toolkit/helpers/master-chef/master-chef.contract-position-helper';
 import {
   GetMasterChefDataPropsParams,
@@ -14,14 +13,10 @@ import { Network } from '~types/network.interface';
 import { PickleContractFactory, PickleJarMasterchef } from '../contracts';
 import { PICKLE_DEFINITION } from '../pickle.definition';
 
-const appId = PICKLE_DEFINITION.id;
-const groupId = PICKLE_DEFINITION.groups.masterchefFarm.id;
-const network = Network.ETHEREUM_MAINNET;
-
-@Register.ContractPositionFetcher({ appId, groupId, network })
+@Injectable()
 export class EthereumPickleFarmContractPositionFetcher extends MasterChefTemplateContractPositionFetcher<PickleJarMasterchef> {
   appId = PICKLE_DEFINITION.id;
-  groupId = PICKLE_DEFINITION.groups.masterchefV2Farm.id;
+  groupId = PICKLE_DEFINITION.groups.masterchefFarm.id;
   network = Network.ETHEREUM_MAINNET;
   groupLabel = 'Farms';
   chefAddress = '0xbd17b1ce622d73bd438b9e658aca5996dc394b0d';
