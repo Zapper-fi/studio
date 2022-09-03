@@ -52,7 +52,10 @@ export class EthereumConvexDepositTokenFetcher extends AppTokenTemplatePositionF
 
   async getDefinitions({ multicall }: GetDefinitionsParams): Promise<ConvexDepositTokenDefinition[]> {
     const boosterContractAddress = '0xf403c135812408bfbe8713b5a23a04b3d48aae31';
-    const depositContract = this.contractFactory.convexBooster({ address: boosterContractAddress, network });
+    const depositContract = this.contractFactory.convexBooster({
+      address: boosterContractAddress,
+      network: this.network,
+    });
     const numOfPools = await multicall.wrap(depositContract).poolLength();
 
     const definitions = await Promise.all(
@@ -73,7 +76,10 @@ export class EthereumConvexDepositTokenFetcher extends AppTokenTemplatePositionF
     definition,
   }: GetUnderlyingTokensParams<ConvexDepositToken, ConvexDepositTokenDefinition>) {
     const boosterContractAddress = '0xf403c135812408bfbe8713b5a23a04b3d48aae31';
-    const depositContract = this.contractFactory.convexBooster({ address: boosterContractAddress, network });
+    const depositContract = this.contractFactory.convexBooster({
+      address: boosterContractAddress,
+      network: this.network,
+    });
     const poolInfo = await depositContract.poolInfo(definition.poolIndex);
     return poolInfo.lptoken;
   }

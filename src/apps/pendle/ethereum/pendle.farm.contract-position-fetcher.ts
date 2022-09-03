@@ -34,7 +34,7 @@ export class EthereumPendleFarmContractPositionFetcher extends SingleStakingFarm
   }
 
   getContract(address: string): PendleStaking {
-    return this.contractFactory.pendleStaking({ address, network });
+    return this.contractFactory.pendleStaking({ address, network: this.network });
   }
 
   async getFarmDefinitions() {

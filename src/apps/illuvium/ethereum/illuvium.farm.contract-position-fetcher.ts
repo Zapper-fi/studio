@@ -49,7 +49,10 @@ export class EthereumIlluviumFarmContractPositionFetcher extends SingleStakingFa
     const stakedToken = contractPosition.tokens.find(isSupplied)!;
 
     const v2StakingAddress = '0x7f5f854ffb6b7701540a00c69c4ab2de2b34291d';
-    const v2StakingContract = this.contractFactory.illuviumIlvPoolV2({ address: v2StakingAddress, network });
+    const v2StakingContract = this.contractFactory.illuviumIlvPoolV2({
+      address: v2StakingAddress,
+      network: this.network,
+    });
 
     // For the V1 ILV farm, deduct deposits made after the last V1 yield
     let voidAmountBN = new BigNumber(0);

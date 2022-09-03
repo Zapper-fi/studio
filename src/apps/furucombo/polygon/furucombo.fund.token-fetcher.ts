@@ -43,14 +43,18 @@ type FurucomboFundDataProps = {
   liquidity: number;
 };
 
+const appId = FURUCOMBO_DEFINITION.id;
+const groupId = FURUCOMBO_DEFINITION.groups.fund.id;
+const network = Network.POLYGON_MAINNET;
+
 @Injectable()
 export class PolygonFurucomboFundTokenFetcher extends AppTokenTemplatePositionFetcher<
   FurucomboFundShareToken,
   FurucomboFundDataProps
 > {
-  appId = FURUCOMBO_DEFINITION.id;
-  groupId = FURUCOMBO_DEFINITION.groups.fund.id;
-  network = Network.POLYGON_MAINNET;
+  appId = appId;
+  groupId = groupId;
+  network = network;
   groupLabel = 'Furucombo Funds';
   furucomboFundMap: Record<string, FurucomboFund> = {};
 
@@ -71,7 +75,7 @@ export class PolygonFurucomboFundTokenFetcher extends AppTokenTemplatePositionFe
   })
   async getFurucomboFunds() {
     const { data } = await Axios.get<{ investables: FurucomboFund[] }>('https://api.furucombo.app/v1/investables', {
-      params: { chainId: NETWORK_IDS[network], category: 'fund', protocol: 'furucombo' },
+      params: { chainId: NETWORK_IDS[this.network], category: 'fund', protocol: 'furucombo' },
     });
     return data.investables;
   }

@@ -66,7 +66,7 @@ export class FantomGeistIncentivesPositionFetcher extends ContractPositionTempla
           GEIST_DEFINITION.groups.variableDebt.id,
           GEIST_DEFINITION.groups.stableDebt.id,
         ],
-        network,
+        network: this.network,
       })
       .then(tokens => tokens.map(({ address }) => address));
 
