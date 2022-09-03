@@ -1,7 +1,6 @@
-import { Inject } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
-import { Register } from '~app-toolkit/decorators';
 import { Erc20 } from '~contract/contracts';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import { Network } from '~types/network.interface';
@@ -9,15 +8,11 @@ import { Network } from '~types/network.interface';
 import { PlutusContractFactory } from '../contracts';
 import PLUTUS_DEFINITION from '../plutus.definition';
 
-const appId = PLUTUS_DEFINITION.id;
-const groupId = PLUTUS_DEFINITION.groups.plsJones.id;
-const network = Network.ARBITRUM_MAINNET;
-
-@Register.TokenPositionFetcher({ appId, groupId, network })
+@Injectable()
 export class ArbitrumPlutusPlsJonesTokenFetcher extends AppTokenTemplatePositionFetcher<Erc20> {
-  appId = appId;
-  groupId = groupId;
-  network = network;
+  appId = PLUTUS_DEFINITION.id;
+  groupId = PLUTUS_DEFINITION.groups.plsJones.id;
+  network = Network.ARBITRUM_MAINNET;
   groupLabel = 'plsJONES';
 
   constructor(

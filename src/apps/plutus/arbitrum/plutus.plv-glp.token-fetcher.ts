@@ -1,8 +1,7 @@
-import { Inject } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { BigNumber } from 'ethers';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
-import { Register } from '~app-toolkit/decorators';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import {
   GetDataPropsParams,
@@ -15,23 +14,19 @@ import { PlutusContractFactory } from '../contracts';
 import { PlutusPlvGlp } from '../contracts/ethers/PlutusPlvGlp';
 import { PLUTUS_DEFINITION } from '../plutus.definition';
 
-const appId = PLUTUS_DEFINITION.id;
-const groupId = PLUTUS_DEFINITION.groups.plvGlp.id;
-const network = Network.ARBITRUM_MAINNET;
-
 type PlutusPlvGlpTokenDataProps = {
   reserve: number;
   liquidity: number;
 };
 
-@Register.TokenPositionFetcher({ appId, groupId, network })
+@Injectable()
 export class ArbitrumPlutusPlvGlpTokenFetcher extends AppTokenTemplatePositionFetcher<
   PlutusPlvGlp,
   PlutusPlvGlpTokenDataProps
 > {
-  appId = appId;
-  groupId = groupId;
-  network = network;
+  appId = PLUTUS_DEFINITION.id;
+  groupId = PLUTUS_DEFINITION.groups.plvGlp.id;
+  network = Network.ARBITRUM_MAINNET;
   groupLabel = 'plvGLP';
 
   constructor(
