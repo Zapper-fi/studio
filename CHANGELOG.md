@@ -4,6 +4,14 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.213.0](https://github.com/Zapper-fi/studio/compare/v0.212.0...v0.213.0) (2022-09-03)
+
+
+### Features
+
+* **template:** Remove @Register decorator for templates ([#1341](https://github.com/Zapper-fi/studio/issues/1341)) ([3d64a19](https://github.com/Zapper-fi/studio/commit/3d64a19f0dbc69c1226365d735c3c52ddfc540d3))
+* **vector-finance:** Fix explore ([ccabb13](https://github.com/Zapper-fi/studio/commit/ccabb1344037df1e298f0fa62e04d3b0eebfbfd7))
+
 ## [0.212.0](https://github.com/Zapper-fi/studio/compare/v0.211.0...v0.212.0) (2022-09-02)
 
 
