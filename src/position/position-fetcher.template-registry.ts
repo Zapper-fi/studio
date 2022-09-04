@@ -1,5 +1,6 @@
 import { Inject, Injectable, OnModuleInit } from '@nestjs/common';
 import { DiscoveryService } from '@nestjs/core';
+import { uniq } from 'lodash';
 
 import { Erc20 } from '~contract/contracts';
 import { Network } from '~types/network.interface';
@@ -50,12 +51,18 @@ export class PositionFetcherTemplateRegistry implements OnModuleInit {
   }
 
   getTemplatesForApp(appId: string) {
-    const networks = Array.from(this.appTokenTemplateRegistry.get(appId)?.keys() ?? []);
+    const appTokenNetworks = Array.from(this.appTokenTemplateRegistry.get(appId)?.keys() ?? []);
+    const contractPositionNetworks = Array.from(this.contractPositionTemplateRegistry.get(appId)?.keys() ?? []);
+    const networks = uniq([...appTokenNetworks, ...contractPositionNetworks]);
+
     return networks.flatMap(network => this.getTemplatesForAppOnNetwork(appId, network));
   }
 
   getAppHasTemplates(appId: string) {
-    const networks = Array.from(this.appTokenTemplateRegistry.get(appId)?.keys() ?? []);
+    const appTokenNetworks = Array.from(this.appTokenTemplateRegistry.get(appId)?.keys() ?? []);
+    const contractPositionNetworks = Array.from(this.contractPositionTemplateRegistry.get(appId)?.keys() ?? []);
+    const networks = uniq([...appTokenNetworks, ...contractPositionNetworks]);
+
     return networks.some(network => this.getAppHasTemplatesOnNetwork(appId, network));
   }
 
@@ -72,10 +79,12 @@ export class PositionFetcherTemplateRegistry implements OnModuleInit {
   }
 
   getAllTemplates() {
-    const appIds = Array.from(this.appTokenTemplateRegistry.keys() ?? []);
+    const appTokenAppIds = Array.from(this.appTokenTemplateRegistry.keys() ?? []);
+    const contractAppIds = Array.from(this.contractPositionTemplateRegistry.keys() ?? []);
+    const appIds = uniq([...appTokenAppIds, ...contractAppIds]);
+
     return appIds.flatMap(appId => {
-      const networks = Array.from(this.appTokenTemplateRegistry.get(appId)?.keys() ?? []);
-      return networks.flatMap(network => this.getTemplatesForAppOnNetwork(appId, network));
+      return this.getTemplatesForApp(appId);
     });
   }
 }
