@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.214.1](https://github.com/Zapper-fi/studio/compare/v0.214.0...v0.214.1) (2022-09-04)
+
+
+### Bug Fixes
+
+* **badger:** Fix cache key on claimable amounts ([0616e65](https://github.com/Zapper-fi/studio/commit/0616e657e04ffa8f7f97c653c8e2bf0cebe1014a))
+
 ## [0.214.0](https://github.com/Zapper-fi/studio/compare/v0.213.0...v0.214.0) (2022-09-04)
 
 
