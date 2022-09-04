@@ -4,6 +4,14 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.214.0](https://github.com/Zapper-fi/studio/compare/v0.213.0...v0.214.0) (2022-09-04)
+
+
+### Features
+
+* **morpho:** Fix presenter and cETH underlying ([#1343](https://github.com/Zapper-fi/studio/issues/1343)) ([423c116](https://github.com/Zapper-fi/studio/commit/423c1161a9dc41b73eba404230f9a314ef64088a))
+* **position-registry:** Fix derp not registering contract positions ([#1344](https://github.com/Zapper-fi/studio/issues/1344)) ([a29fbe3](https://github.com/Zapper-fi/studio/commit/a29fbe32f1eeb3e8c30c096714f9b332f378c059))
+
 ## [0.213.0](https://github.com/Zapper-fi/studio/compare/v0.212.0...v0.213.0) (2022-09-03)
 
 
