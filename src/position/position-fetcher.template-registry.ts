@@ -83,8 +83,6 @@ export class PositionFetcherTemplateRegistry implements OnModuleInit {
     const contractAppIds = Array.from(this.contractPositionTemplateRegistry.keys() ?? []);
     const appIds = uniq([...appTokenAppIds, ...contractAppIds]);
 
-    return appIds.flatMap(appId => {
-      return this.getTemplatesForApp(appId);
-    });
+    return appIds.flatMap(appId => this.getTemplatesForApp(appId));
   }
 }
