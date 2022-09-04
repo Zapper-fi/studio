@@ -23,10 +23,10 @@ export const POOL_QUERY = gql`
 export class RubiconPoolDefinitionsResolver {
   constructor(@Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit) {}
 
-  /*@Cache({
+  @Cache({
     key: `studio:rubicon:optimism:pool-data`,
     ttl: 5 * 60, // 5 minutes
-  })*/
+  })
   private async getPoolDefinitionsData() {
     const data = await this.appToolkit.helpers.theGraphHelper.request<RubiconPoolFetcherResponse>({
       endpoint: `https://api.thegraph.com/subgraphs/name/denverbaumgartner/bathtokenoptimism`,

@@ -52,13 +52,18 @@ export abstract class RubiconPoolTokenFetcher extends AppTokenTemplatePositionFe
     return definition.underlyingTokenAddress;
   }
 
-  async getDecimals({ multicall, definition }: GetTokenPropsParams<BathToken, RubiconPoolDefinition>) {
+  async getSupply({ multicall, definition, contract }: GetTokenPropsParams<BathToken, RubiconPoolDefinition>) {
     const underlyingAssetContract = this.contractFactory.erc20({
       address: definition.underlyingTokenAddress,
       network: this.network,
     });
 
-    return multicall.wrap(underlyingAssetContract).decimals();
+    const supplyRaw = await contract.totalSupply();
+    const decimal = await contract.decimals();
+    const decimalsUnderlying = await multicall.wrap(underlyingAssetContract).decimals();
+    const supply = (Number(supplyRaw) / 10 ** decimalsUnderlying) * 10 ** decimal;
+
+    return supply;
   }
 
   async getPricePerShare({
