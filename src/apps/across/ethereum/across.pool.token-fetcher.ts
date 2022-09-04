@@ -1,4 +1,5 @@
-import { Register } from '~app-toolkit/decorators';
+import { Injectable } from '@nestjs/common';
+
 import { Network } from '~types/network.interface';
 
 import ACROSS_DEFINITION from '../across.definition';
@@ -65,15 +66,11 @@ const v2Pools = [
   },
 ];
 
-const appId = ACROSS_DEFINITION.id;
-const groupId = ACROSS_DEFINITION.groups.pool.id;
-const network = Network.ETHEREUM_MAINNET;
-
-@Register.TokenPositionFetcher({ appId, groupId, network })
+@Injectable()
 export class EthereumAcrossPoolTokenFetcher extends AcrossPoolTokenFetcher {
-  appId = appId;
-  groupId = groupId;
-  network = network;
+  appId = ACROSS_DEFINITION.id;
+  groupId = ACROSS_DEFINITION.groups.pool.id;
+  network = Network.ETHEREUM_MAINNET;
   groupLabel = 'Pools';
 
   async getDefinitions(): Promise<AcrossPoolTokenDefinition[]> {

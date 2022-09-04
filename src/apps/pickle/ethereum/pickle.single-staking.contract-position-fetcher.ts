@@ -1,7 +1,6 @@
-import { Inject } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
-import { Register } from '~app-toolkit/decorators';
 import { GetDataPropsParams, GetTokenBalancesParams } from '~position/template/contract-position.template.types';
 import {
   SingleStakingFarmDataProps,
@@ -15,15 +14,11 @@ import { PickleContractFactory } from '../contracts';
 import { PickleJarSingleRewardStaking } from '../contracts/ethers/PickleJarSingleRewardStaking';
 import { PICKLE_DEFINITION } from '../pickle.definition';
 
-const appId = PICKLE_DEFINITION.id;
-const groupId = PICKLE_DEFINITION.groups.singleStakingFarm.id;
-const network = Network.ETHEREUM_MAINNET;
-
-@Register.ContractPositionFetcher({ appId, groupId, network })
+@Injectable()
 export class EthereumPickleSingleRewardPositionFetcher extends SingleStakingFarmTemplateContractPositionFetcher<PickleJarSingleRewardStaking> {
-  appId = appId;
-  groupId = groupId;
-  network = network;
+  appId = PICKLE_DEFINITION.id;
+  groupId = PICKLE_DEFINITION.groups.singleStakingFarm.id;
+  network = Network.ETHEREUM_MAINNET;
   groupLabel = 'Farms';
 
   constructor(
@@ -39,7 +34,7 @@ export class EthereumPickleSingleRewardPositionFetcher extends SingleStakingFarm
   }
 
   async getFarmDefinitions(): Promise<SingleStakingFarmDefinition[]> {
-    const vaults = await this.jarCacheManager.getJarDefinitions({ network });
+    const vaults = await this.jarCacheManager.getJarDefinitions({ network: this.network });
     const vaultsWithGauge = vaults.filter(v => v.gaugeAddress!);
 
     return vaultsWithGauge.map(({ vaultAddress, gaugeAddress }) => ({

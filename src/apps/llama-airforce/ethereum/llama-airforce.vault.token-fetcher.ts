@@ -1,7 +1,6 @@
-import { Inject } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
-import { Register } from '~app-toolkit/decorators';
 import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import {
@@ -20,18 +19,14 @@ export type LlamaAirforceVaultTokenDataProps = {
   liquidity: number;
 };
 
-const appId = LLAMA_AIRFORCE_DEFINITION.id;
-const groupId = LLAMA_AIRFORCE_DEFINITION.groups.vault.id;
-const network = Network.ETHEREUM_MAINNET;
-
-@Register.TokenPositionFetcher({ appId, groupId, network })
+@Injectable()
 export class EthereumLlamaAirforceVaultTokenFetcher extends AppTokenTemplatePositionFetcher<
   LlamaAirforceUnionVault,
   LlamaAirforceVaultTokenDataProps
 > {
-  appId = appId;
-  groupId = groupId;
-  network = network;
+  appId = LLAMA_AIRFORCE_DEFINITION.id;
+  groupId = LLAMA_AIRFORCE_DEFINITION.groups.vault.id;
+  network = Network.ETHEREUM_MAINNET;
   groupLabel = 'Vaults';
 
   constructor(

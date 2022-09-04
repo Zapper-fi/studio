@@ -1,17 +1,14 @@
-import { Register } from '~app-toolkit/decorators';
+import { Injectable } from '@nestjs/common';
+
 import { Network } from '~types/network.interface';
 
 import { PickleJarTokenFetcher } from '../common/pickle.jar.token-fetcher';
 import { PICKLE_DEFINITION } from '../pickle.definition';
 
-const appId = PICKLE_DEFINITION.id;
-const groupId = PICKLE_DEFINITION.groups.jar.id;
-const network = Network.ETHEREUM_MAINNET;
-
-@Register.TokenPositionFetcher({ appId, groupId, network })
+@Injectable()
 export class EthereumPickleJarTokenFetcher extends PickleJarTokenFetcher {
-  appId = appId;
-  groupId = groupId;
-  network = network;
+  appId = PICKLE_DEFINITION.id;
+  groupId = PICKLE_DEFINITION.groups.jar.id;
+  network = Network.ETHEREUM_MAINNET;
   groupLabel = 'Jars';
 }

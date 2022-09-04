@@ -1,7 +1,6 @@
-import { Inject } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
-import { Register } from '~app-toolkit/decorators';
 import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { MetaType } from '~position/position.interface';
 import { isSupplied } from '~position/position.utils';
@@ -16,11 +15,7 @@ import { Network } from '~types/network.interface';
 import { BALANCER_V2_DEFINITION } from '../balancer-v2.definition';
 import { BalancerV2ContractFactory, BalancerVeBal } from '../contracts';
 
-const appId = BALANCER_V2_DEFINITION.id;
-const groupId = BALANCER_V2_DEFINITION.groups.votingEscrow.id;
-const network = Network.ETHEREUM_MAINNET;
-
-@Register.ContractPositionFetcher({ appId, groupId, network })
+@Injectable()
 export class EthereumBalancerV2VotingEscrowContractPositionFetcher extends ContractPositionTemplatePositionFetcher<BalancerVeBal> {
   appId = BALANCER_V2_DEFINITION.id;
   groupId = BALANCER_V2_DEFINITION.groups.votingEscrow.id;

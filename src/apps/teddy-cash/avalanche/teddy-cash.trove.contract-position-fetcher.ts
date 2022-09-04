@@ -1,8 +1,7 @@
-import { Inject } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { ZERO_ADDRESS } from '~app-toolkit/constants/address';
-import { Register } from '~app-toolkit/decorators';
 import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { MetaType } from '~position/position.interface';
 import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
@@ -16,15 +15,11 @@ import { Network } from '~types';
 import { TeddyCashContractFactory, TeddyCashTroveManager } from '../contracts';
 import { TEDDY_CASH_DEFINITION } from '../teddy-cash.definition';
 
-const appId = TEDDY_CASH_DEFINITION.id;
-const groupId = TEDDY_CASH_DEFINITION.groups.trove.id;
-const network = Network.AVALANCHE_MAINNET;
-
-@Register.ContractPositionFetcher({ appId, groupId, network })
+@Injectable()
 export class AvalancheTeddyCashTroveContractPositionFetcher extends ContractPositionTemplatePositionFetcher<TeddyCashTroveManager> {
-  appId = appId;
-  groupId = groupId;
-  network = network;
+  appId = TEDDY_CASH_DEFINITION.id;
+  groupId = TEDDY_CASH_DEFINITION.groups.trove.id;
+  network = Network.AVALANCHE_MAINNET;
   groupLabel = 'Farms';
 
   constructor(

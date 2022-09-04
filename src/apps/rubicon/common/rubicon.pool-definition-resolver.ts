@@ -2,6 +2,7 @@ import { Inject, Injectable } from '@nestjs/common';
 import { gql } from 'graphql-request';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
+import { Cache } from '~cache/cache.decorator';
 
 export type RubiconPoolFetcherResponse = {
   pools: {

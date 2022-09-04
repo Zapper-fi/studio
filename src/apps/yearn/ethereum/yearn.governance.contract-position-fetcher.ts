@@ -1,7 +1,6 @@
-import { Inject } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
-import { Register } from '~app-toolkit/decorators';
 import { SynthetixContractFactory, SynthetixRewards } from '~apps/synthetix';
 import { GetDataPropsParams, GetTokenBalancesParams } from '~position/template/contract-position.template.types';
 import {
@@ -12,15 +11,11 @@ import { Network } from '~types/network.interface';
 
 import { YEARN_DEFINITION } from '../yearn.definition';
 
-const appId = YEARN_DEFINITION.id;
-const groupId = YEARN_DEFINITION.groups.governance.id;
-const network = Network.ETHEREUM_MAINNET;
-
-@Register.ContractPositionFetcher({ appId, groupId, network })
+@Injectable()
 export class EthereumYearnGovernanceContractPositionFetcher extends SingleStakingFarmTemplateContractPositionFetcher<SynthetixRewards> {
-  appId = appId;
-  groupId = groupId;
-  network = network;
+  appId = YEARN_DEFINITION.id;
+  groupId = YEARN_DEFINITION.groups.governance.id;
+  network = Network.ETHEREUM_MAINNET;
   groupLabel = 'Governance';
 
   isExcludedFromExplore = true;

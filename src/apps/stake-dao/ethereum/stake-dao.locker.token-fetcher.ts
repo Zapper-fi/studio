@@ -1,8 +1,7 @@
-import { Inject } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import BigNumber from 'bignumber.js';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
-import { Register } from '~app-toolkit/decorators';
 import { Erc20 } from '~contract/contracts';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import { GetUnderlyingTokensParams, GetPricePerShareParams } from '~position/template/app-token.template.types';
@@ -10,10 +9,6 @@ import { Network } from '~types';
 
 import { StakeDaoContractFactory } from '../contracts';
 import { STAKE_DAO_DEFINITION } from '../stake-dao.definition';
-
-const appId = STAKE_DAO_DEFINITION.id;
-const groupId = STAKE_DAO_DEFINITION.groups.locker.id;
-const network = Network.ETHEREUM_MAINNET;
 
 export const LOCKERS = [
   {
@@ -41,11 +36,11 @@ export const LOCKERS = [
   },
 ];
 
-@Register.TokenPositionFetcher({ appId, groupId, network })
+@Injectable()
 export class EthereumStakeDaoLockerTokenFetcher extends AppTokenTemplatePositionFetcher<Erc20> {
-  appId = appId;
-  groupId = groupId;
-  network = network;
+  appId = STAKE_DAO_DEFINITION.id;
+  groupId = STAKE_DAO_DEFINITION.groups.locker.id;
+  network = Network.ETHEREUM_MAINNET;
   groupLabel = 'Lockers';
 
   constructor(

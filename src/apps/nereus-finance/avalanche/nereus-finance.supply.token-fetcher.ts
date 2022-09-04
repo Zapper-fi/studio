@@ -1,4 +1,5 @@
-import { Register } from '~app-toolkit/decorators';
+import { Injectable } from '@nestjs/common';
+
 import { AaveV2AToken } from '~apps/aave-v2/contracts';
 import {
   AaveV2LendingTemplateTokenFetcher,
@@ -11,11 +12,7 @@ import { Network } from '~types/network.interface';
 
 import { NEREUS_FINANCE_DEFINITION } from '../nereus-finance.definition';
 
-const appId = NEREUS_FINANCE_DEFINITION.id;
-const groupId = NEREUS_FINANCE_DEFINITION.groups.supply.id;
-const network = Network.AVALANCHE_MAINNET;
-
-@Register.TokenPositionFetcher({ appId, groupId, network })
+@Injectable()
 export class AvalancheNereusFinanceSupplyTokenFetcher extends AaveV2LendingTemplateTokenFetcher {
   appId = NEREUS_FINANCE_DEFINITION.id;
   groupId = NEREUS_FINANCE_DEFINITION.groups.supply.id;

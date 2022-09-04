@@ -1,4 +1,5 @@
-import { Register } from '~app-toolkit/decorators';
+import { Injectable } from '@nestjs/common';
+
 import { AaveAmmAToken } from '~apps/aave-amm/contracts';
 import { AaveAmmLendingTemplateTokenFetcher } from '~apps/aave-amm/helpers/aave-amm.lending.template.token-fetcher';
 import {
@@ -11,11 +12,7 @@ import { Network } from '~types/network.interface';
 
 import { STURDY_DEFINITION } from '../sturdy.definition';
 
-const appId = STURDY_DEFINITION.id;
-const groupId = STURDY_DEFINITION.groups.supply.id;
-const network = Network.ETHEREUM_MAINNET;
-
-@Register.TokenPositionFetcher({ appId, groupId, network })
+@Injectable()
 export class EthereumSturdySupplyTokenFetcher extends AaveAmmLendingTemplateTokenFetcher {
   appId = STURDY_DEFINITION.id;
   groupId = STURDY_DEFINITION.groups.supply.id;

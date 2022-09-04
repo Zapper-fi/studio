@@ -1,8 +1,8 @@
+import { Injectable } from '@nestjs/common';
 import { BigNumberish } from 'ethers';
 import { padEnd } from 'lodash';
 import Web3 from 'web3';
 
-import { Register } from '~app-toolkit/decorators';
 import { GetTokenBalancesParams } from '~position/template/contract-position.template.types';
 import { Network } from '~types/network.interface';
 
@@ -10,15 +10,11 @@ import { DopexSsovContractPositionFetcher, DopexSsovDataProps } from '../common/
 import { DopexEthSsov } from '../contracts';
 import { DOPEX_DEFINITION } from '../dopex.definition';
 
-const appId = DOPEX_DEFINITION.id;
-const groupId = DOPEX_DEFINITION.groups.ethSsov.id;
-const network = Network.ARBITRUM_MAINNET;
-
-@Register.ContractPositionFetcher({ appId, groupId, network })
+@Injectable()
 export class ArbitrumDopexEthSsovContractPositionFetcher extends DopexSsovContractPositionFetcher<DopexEthSsov> {
-  appId = appId;
-  groupId = groupId;
-  network = network;
+  appId = DOPEX_DEFINITION.id;
+  groupId = DOPEX_DEFINITION.groups.ethSsov.id;
+  network = Network.ARBITRUM_MAINNET;
   groupLabel = 'SSOVs';
 
   getContract(address: string): DopexEthSsov {

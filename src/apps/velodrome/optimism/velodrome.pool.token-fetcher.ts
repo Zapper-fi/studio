@@ -1,8 +1,7 @@
-import { Inject } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import Axios from 'axios';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
-import { Register } from '~app-toolkit/decorators';
 import { buildDollarDisplayItem } from '~app-toolkit/helpers/presentation/display-item.present';
 import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { DefaultDataProps } from '~position/display.interface';
@@ -18,10 +17,6 @@ import { Network } from '~types/network.interface';
 import { VelodromeContractFactory, VelodromePool } from '../contracts';
 import { VELODROME_DEFINITION } from '../velodrome.definition';
 
-const appId = VELODROME_DEFINITION.id;
-const groupId = VELODROME_DEFINITION.groups.pool.id;
-const network = Network.OPTIMISM_MAINNET;
-
 export interface VelodromeApiPairData {
   address: string;
   gauge_address: string;
@@ -35,14 +30,14 @@ export type VelodromePoolTokenDataProps = {
   reserves: number[];
 };
 
-@Register.TokenPositionFetcher({ appId, groupId, network })
+@Injectable()
 export class OptimismVelodromePoolsTokenFetcher extends AppTokenTemplatePositionFetcher<
   VelodromePool,
   VelodromePoolTokenDataProps
 > {
-  appId = appId;
-  groupId = groupId;
-  network = network;
+  appId = VELODROME_DEFINITION.id;
+  groupId = VELODROME_DEFINITION.groups.pool.id;
+  network = Network.OPTIMISM_MAINNET;
   groupLabel = 'Pools';
 
   constructor(

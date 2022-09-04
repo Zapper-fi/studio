@@ -5,8 +5,11 @@ import { Erc20 } from '~contract/contracts';
 import { Network } from '~types/network.interface';
 import { buildTemplateRegistry } from '~utils/build-template-registry';
 
+import { ContractType } from './contract.interface';
 import { AppTokenTemplatePositionFetcher } from './template/app-token.template.position-fetcher';
 import { ContractPositionTemplatePositionFetcher } from './template/contract-position.template.position-fetcher';
+
+type Template = AppTokenTemplatePositionFetcher<Erc20> | ContractPositionTemplatePositionFetcher<Erc20>;
 
 @Injectable()
 export class PositionFetcherTemplateRegistry implements OnModuleInit {
@@ -32,6 +35,10 @@ export class PositionFetcherTemplateRegistry implements OnModuleInit {
       template: ContractPositionTemplatePositionFetcher,
       keySelector: t => [t.appId, t.network, t.groupId] as const,
     });
+  }
+
+  getTemplateType(template: Template) {
+    return template instanceof AppTokenTemplatePositionFetcher ? ContractType.APP_TOKEN : ContractType.POSITION;
   }
 
   getAppTokenTemplate({ network, appId, groupId }: { network: Network; appId: string; groupId: string }) {
@@ -62,5 +69,13 @@ export class PositionFetcherTemplateRegistry implements OnModuleInit {
     const appTokenTemplates = this.appTokenTemplateRegistry.get(appId)?.get(network);
     const contractPositionTemplates = this.contractPositionTemplateRegistry.get(appId)?.get(network);
     return !!appTokenTemplates || !!contractPositionTemplates;
+  }
+
+  getAllTemplates() {
+    const appIds = Array.from(this.appTokenTemplateRegistry.keys() ?? []);
+    return appIds.flatMap(appId => {
+      const networks = Array.from(this.appTokenTemplateRegistry.get(appId)?.keys() ?? []);
+      return networks.flatMap(network => this.getTemplatesForAppOnNetwork(appId, network));
+    });
   }
 }

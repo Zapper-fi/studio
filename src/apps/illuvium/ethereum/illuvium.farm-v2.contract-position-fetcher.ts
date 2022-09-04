@@ -1,7 +1,6 @@
-import { Inject } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
-import { Register } from '~app-toolkit/decorators';
 import { GetTokenDefinitionsParams, GetTokenBalancesParams } from '~position/template/contract-position.template.types';
 import { SingleStakingFarmDynamicTemplateContractPositionFetcher } from '~position/template/single-staking.dynamic.template.contract-position-fetcher';
 import { Network } from '~types/network.interface';
@@ -9,15 +8,11 @@ import { Network } from '~types/network.interface';
 import { IlluviumContractFactory, IlluviumIlvPoolV2 } from '../contracts';
 import { ILLUVIUM_DEFINITION } from '../illuvium.definition';
 
-const appId = ILLUVIUM_DEFINITION.id;
-const groupId = ILLUVIUM_DEFINITION.groups.farmV2.id;
-const network = Network.ETHEREUM_MAINNET;
-
-@Register.ContractPositionFetcher({ appId, groupId, network })
+@Injectable()
 export class EthereumIlluviumFarmV2ContractPositionFetcher extends SingleStakingFarmDynamicTemplateContractPositionFetcher<IlluviumIlvPoolV2> {
-  appId = appId;
-  groupId = groupId;
-  network = network;
+  appId = ILLUVIUM_DEFINITION.id;
+  groupId = ILLUVIUM_DEFINITION.groups.farmV2.id;
+  network = Network.ETHEREUM_MAINNET;
   groupLabel = 'Staking';
 
   constructor(

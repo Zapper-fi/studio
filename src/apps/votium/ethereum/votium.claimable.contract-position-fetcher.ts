@@ -1,8 +1,7 @@
-import { Inject } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import Axios from 'axios';
 
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
-import { Register } from '~app-toolkit/decorators';
 import { isClaimable } from '~position/position.utils';
 import { GetTokenBalancesParams } from '~position/template/contract-position.template.types';
 import { MerkleTemplateContractPositionFetcher } from '~position/template/merkle.template.contract-position-fetcher';
@@ -13,15 +12,11 @@ import { VOTIUM_DEFINITION } from '../votium.definition';
 
 import { EthereumVotiumMerkleCache, VotiumActiveTokenData } from './votium.merkle-cache';
 
-const appId = VOTIUM_DEFINITION.id;
-const groupId = VOTIUM_DEFINITION.groups.claimable.id;
-const network = Network.ETHEREUM_MAINNET;
-
-@Register.ContractPositionFetcher({ appId, groupId, network })
+@Injectable()
 export class EthereumVotiumClaimableContractPositionFetcher extends MerkleTemplateContractPositionFetcher<VotiumMultiMerkle> {
-  appId = appId;
-  groupId = groupId;
-  network = network;
+  appId = VOTIUM_DEFINITION.id;
+  groupId = VOTIUM_DEFINITION.groups.claimable.id;
+  network = Network.ETHEREUM_MAINNET;
   groupLabel = 'Claimable';
   merkleAddress = '0x378ba9b73309be80bf4c2c027aad799766a7ed5a';
 

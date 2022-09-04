@@ -1,7 +1,6 @@
-import { Inject } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
-import { Register } from '~app-toolkit/decorators';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import {
   GetDataPropsParams,
@@ -14,22 +13,18 @@ import { ABRACADABRA_DEFINITION } from '../abracadabra.definition';
 import { AbracadabraContractFactory } from '../contracts';
 import { AbracadabraStakedSpell } from '../contracts/ethers';
 
-const appId = ABRACADABRA_DEFINITION.id;
-const groupId = ABRACADABRA_DEFINITION.groups.stakedSpell.id;
-const network = Network.ETHEREUM_MAINNET;
-
 type AbracadabraStakedSpellAppTokenDataProps = {
   liquidity: number;
 };
 
-@Register.TokenPositionFetcher({ appId, groupId, network })
+@Injectable()
 export class EthereumAbracadabraStakedSpellTokenFetcher extends AppTokenTemplatePositionFetcher<
   AbracadabraStakedSpell,
   AbracadabraStakedSpellAppTokenDataProps
 > {
-  appId = appId;
-  groupId = groupId;
-  network = network;
+  appId = ABRACADABRA_DEFINITION.id;
+  groupId = ABRACADABRA_DEFINITION.groups.stakedSpell.id;
+  network = Network.ETHEREUM_MAINNET;
   groupLabel = 'Staked SPELL';
 
   constructor(

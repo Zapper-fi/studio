@@ -1,8 +1,7 @@
-import { Inject } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { ZERO_ADDRESS } from '~app-toolkit/constants/address';
-import { Register } from '~app-toolkit/decorators';
 import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { MetaType } from '~position/position.interface';
 import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
@@ -16,15 +15,11 @@ import { Network } from '~types';
 import { LiquityContractFactory, StabilityPool } from '../contracts';
 import LIQUITY_DEFINITION from '../liquity.definition';
 
-const appId = LIQUITY_DEFINITION.id;
-const groupId = LIQUITY_DEFINITION.groups.stabilityPool.id;
-const network = Network.ETHEREUM_MAINNET;
-
-@Register.ContractPositionFetcher({ appId, groupId, network })
+@Injectable()
 export class EthereumLiquityStabilityPoolContractPositionFetcher extends ContractPositionTemplatePositionFetcher<StabilityPool> {
-  appId = appId;
-  groupId = groupId;
-  network = network;
+  appId = LIQUITY_DEFINITION.id;
+  groupId = LIQUITY_DEFINITION.groups.stabilityPool.id;
+  network = Network.ETHEREUM_MAINNET;
   groupLabel = 'Stability Pool';
 
   constructor(
