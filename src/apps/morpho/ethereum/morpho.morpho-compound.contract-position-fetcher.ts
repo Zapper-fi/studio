@@ -2,7 +2,6 @@ import { Inject, Injectable } from '@nestjs/common';
 import { BigNumberish } from 'ethers';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
-import { ZERO_ADDRESS } from '~app-toolkit/constants/address';
 import { BLOCKS_PER_DAY } from '~app-toolkit/constants/blocks';
 import {
   buildDollarDisplayItem,
@@ -81,7 +80,7 @@ export class EthereumMorphoCompoundSupplyContractPositionFetcher extends Contrac
         const market = this.contractFactory.morphoCToken({ address: marketAddress, network: this.network });
         const marketContract = multicall.wrap(market);
         const supplyTokenAddress = await marketContract.underlying().catch(err => {
-          if (isMulticallUnderlyingError(err)) return ZERO_ADDRESS;
+          if (isMulticallUnderlyingError(err)) return '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2';
           throw err;
         });
 

@@ -2,7 +2,9 @@ import { Inject, Injectable } from '@nestjs/common';
 import { formatUnits } from 'ethers/lib/utils';
 import { uniq } from 'lodash';
 
+import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
+import { isMulticallUnderlyingError } from '~multicall/multicall.ethers';
 import { ContractPositionBalance } from '~position/position-balance.interface';
 import { PositionPresenterTemplate, ReadonlyBalances } from '~position/template/position-presenter.template';
 import { Network } from '~types';
@@ -19,7 +21,10 @@ export class EthereumMorphoPositionPresenter extends PositionPresenterTemplate {
 
   lensAddress = '0x930f1b46e1d081ec1524efd95752be3ece51ef67';
 
-  constructor(@Inject(MorphoContractFactory) protected readonly contractFactory: MorphoContractFactory) {
+  constructor(
+    @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
+    @Inject(MorphoContractFactory) protected readonly contractFactory: MorphoContractFactory,
+  ) {
     super();
   }
 
@@ -28,9 +33,19 @@ export class EthereumMorphoPositionPresenter extends PositionPresenterTemplate {
     const markets = (balances as ContractPositionBalance<MorphoCompoundContractPositionDataProps>[]).map(
       v => v.dataProps.marketAddress,
     );
-    const lens = this.contractFactory.morphoCompoundLens({ address: this.lensAddress, network: this.network });
-    const { collateralValue, debtValue, maxDebtValue } = await lens.getUserBalanceStates(address, uniq(markets));
 
+    const multicall = this.appToolkit.getMulticall(this.network);
+    const lens = this.contractFactory.morphoCompoundLens({ address: this.lensAddress, network: this.network });
+    const balanceStates = await multicall
+      .wrap(lens)
+      .getUserBalanceStates(address, uniq(markets))
+      .catch(err => {
+        if (isMulticallUnderlyingError(err)) return null;
+        throw err;
+      });
+    if (!balanceStates) return [];
+
+    const { collateralValue, debtValue, maxDebtValue } = balanceStates;
     const totalDebt = +formatUnits(debtValue);
     const maxDebt = +formatUnits(maxDebtValue);
 
