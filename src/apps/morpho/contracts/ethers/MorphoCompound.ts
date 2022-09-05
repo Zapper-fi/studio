@@ -43,7 +43,7 @@ export declare namespace Types {
   };
 }
 
-export interface MorphoInterface extends utils.Interface {
+export interface MorphoCompoundInterface extends utils.Interface {
   functions: {
     'CTOKEN_DECIMALS()': FunctionFragment;
     'MAX_BASIS_POINTS()': FunctionFragment;
@@ -558,12 +558,12 @@ export type TreasuryVaultSetEvent = TypedEvent<[string], TreasuryVaultSetEventOb
 
 export type TreasuryVaultSetEventFilter = TypedEventFilter<TreasuryVaultSetEvent>;
 
-export interface Morpho extends BaseContract {
+export interface MorphoCompound extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
 
-  interface: MorphoInterface;
+  interface: MorphoCompoundInterface;
 
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,

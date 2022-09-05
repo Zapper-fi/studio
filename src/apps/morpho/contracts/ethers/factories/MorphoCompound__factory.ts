@@ -4,7 +4,7 @@
 
 import { Contract, Signer, utils } from 'ethers';
 import type { Provider } from '@ethersproject/providers';
-import type { Morpho, MorphoInterface } from '../Morpho';
+import type { MorphoCompound, MorphoCompoundInterface } from '../MorphoCompound';
 
 const _abi = [
   {
@@ -1575,12 +1575,12 @@ const _abi = [
   },
 ];
 
-export class Morpho__factory {
+export class MorphoCompound__factory {
   static readonly abi = _abi;
-  static createInterface(): MorphoInterface {
-    return new utils.Interface(_abi) as MorphoInterface;
+  static createInterface(): MorphoCompoundInterface {
+    return new utils.Interface(_abi) as MorphoCompoundInterface;
   }
-  static connect(address: string, signerOrProvider: Signer | Provider): Morpho {
-    return new Contract(address, _abi, signerOrProvider) as Morpho;
+  static connect(address: string, signerOrProvider: Signer | Provider): MorphoCompound {
+    return new Contract(address, _abi, signerOrProvider) as MorphoCompound;
   }
 }

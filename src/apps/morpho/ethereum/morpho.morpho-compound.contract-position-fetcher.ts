@@ -9,6 +9,7 @@ import {
   buildPercentageDisplayItem,
 } from '~app-toolkit/helpers/presentation/display-item.present';
 import { getImagesFromToken, getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
+import { MorphoCompound } from '~apps/morpho/contracts/ethers';
 import { isMulticallUnderlyingError } from '~multicall/multicall.ethers';
 import { StatsItem } from '~position/display.interface';
 import { MetaType } from '~position/position.interface';
@@ -23,7 +24,7 @@ import {
 } from '~position/template/contract-position.template.types';
 import { Network } from '~types/network.interface';
 
-import { Morpho, MorphoContractFactory } from '../contracts';
+import { MorphoContractFactory } from '../contracts';
 import { MORPHO_DEFINITION } from '../morpho.definition';
 
 export type MorphoCompoundContractPositionDefinition = {
@@ -46,7 +47,7 @@ export type MorphoCompoundContractPositionDataProps = {
 
 @Injectable()
 export class EthereumMorphoCompoundSupplyContractPositionFetcher extends ContractPositionTemplatePositionFetcher<
-  Morpho,
+  MorphoCompound,
   MorphoCompoundContractPositionDataProps,
   MorphoCompoundContractPositionDefinition
 > {
@@ -56,7 +57,7 @@ export class EthereumMorphoCompoundSupplyContractPositionFetcher extends Contrac
   groupLabel = 'Morpho Compound';
 
   morphoAddress = '0x8888882f8f843896699869179fb6e4f7e3b58888';
-
+  wEthAddress = '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2';
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
     @Inject(MorphoContractFactory) protected readonly contractFactory: MorphoContractFactory,
@@ -64,40 +65,37 @@ export class EthereumMorphoCompoundSupplyContractPositionFetcher extends Contrac
     super(appToolkit);
   }
 
-  getContract(address: string): Morpho {
-    return this.contractFactory.morpho({ address, network: this.network });
+  getContract(address: string): MorphoCompound {
+    return this.contractFactory.morphoCompound({ address, network: this.network });
   }
 
   async getDefinitions({ multicall }: GetDefinitionsParams) {
-    const morphoAddress = '0x8888882f8f843896699869179fb6e4f7e3b58888';
-    const morphoLens = this.contractFactory.morpho({ address: morphoAddress, network: this.network });
+    const morphoCompound = this.contractFactory.morphoCompound({ address: this.morphoAddress, network: this.network });
 
-    const lens = multicall.wrap(morphoLens);
-    const markets = await lens.getAllMarkets();
+    const morpho = multicall.wrap(morphoCompound);
+    const markets = await morpho.getAllMarkets();
 
-    const definitions = await Promise.all(
+    return Promise.all(
       markets.map(async marketAddress => {
         const market = this.contractFactory.morphoCToken({ address: marketAddress, network: this.network });
         const marketContract = multicall.wrap(market);
         const supplyTokenAddress = await marketContract.underlying().catch(err => {
-          if (isMulticallUnderlyingError(err)) return '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2';
+          if (isMulticallUnderlyingError(err)) return this.wEthAddress;
           throw err;
         });
 
         return {
-          address: morphoAddress,
+          address: this.morphoAddress,
           marketAddress: marketAddress.toLowerCase(),
           supplyTokenAddress: supplyTokenAddress.toLowerCase(),
         };
       }),
     );
-
-    return definitions;
   }
 
   async getTokenDefinitions({
     definition,
-  }: GetTokenDefinitionsParams<Morpho, MorphoCompoundContractPositionDefinition>) {
+  }: GetTokenDefinitionsParams<MorphoCompound, MorphoCompoundContractPositionDefinition>) {
     return [
       { metaType: MetaType.SUPPLIED, address: definition.supplyTokenAddress },
       { metaType: MetaType.BORROWED, address: definition.supplyTokenAddress },
@@ -109,7 +107,7 @@ export class EthereumMorphoCompoundSupplyContractPositionFetcher extends Contrac
     multicall,
     definition,
   }: GetDataPropsParams<
-    Morpho,
+    MorphoCompound,
     MorphoCompoundContractPositionDataProps,
     MorphoCompoundContractPositionDefinition
   >): Promise<MorphoCompoundContractPositionDataProps> {
@@ -146,18 +144,18 @@ export class EthereumMorphoCompoundSupplyContractPositionFetcher extends Contrac
     return { marketAddress, supplyApy, borrowApy, liquidity, p2pDisabled, supply, supplyUSD, borrow, borrowUSD };
   }
 
-  async getLabel({ contractPosition }: GetDisplayPropsParams<Morpho>) {
+  async getLabel({ contractPosition }: GetDisplayPropsParams<MorphoCompound>) {
     return getLabelFromToken(contractPosition.tokens[0]);
   }
 
-  async getImages({ contractPosition }: GetDisplayPropsParams<Morpho>) {
+  async getImages({ contractPosition }: GetDisplayPropsParams<MorphoCompound>) {
     return getImagesFromToken(contractPosition.tokens[0]);
   }
 
   async getStatsItems({
     contractPosition,
   }: GetDisplayPropsParams<
-    Morpho,
+    MorphoCompound,
     MorphoCompoundContractPositionDataProps,
     DefaultContractPositionDefinition
   >): Promise<StatsItem[] | undefined> {
@@ -177,7 +175,7 @@ export class EthereumMorphoCompoundSupplyContractPositionFetcher extends Contrac
     address,
     contractPosition,
     multicall,
-  }: GetTokenBalancesParams<Morpho, MorphoCompoundContractPositionDataProps>): Promise<BigNumberish[]> {
+  }: GetTokenBalancesParams<MorphoCompound, MorphoCompoundContractPositionDataProps>): Promise<BigNumberish[]> {
     const lensAddress = '0x930f1b46e1d081ec1524efd95752be3ece51ef67';
     const _lens = this.contractFactory.morphoCompoundLens({ address: lensAddress, network: this.network });
     const lens = multicall.wrap(_lens);
