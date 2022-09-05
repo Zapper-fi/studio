@@ -1,53 +1,82 @@
-import { Inject } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
+import BigNumber from 'bignumber.js';
+import { range } from 'lodash';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
-import { Register } from '~app-toolkit/decorators';
-import { PositionFetcher } from '~position/position-fetcher.interface';
-import { ContractPosition } from '~position/position.interface';
+import { isSupplied } from '~position/position.utils';
+import { GetTokenBalancesParams, GetTokenDefinitionsParams } from '~position/template/contract-position.template.types';
+import { SingleStakingFarmDynamicTemplateContractPositionFetcher } from '~position/template/single-staking.dynamic.template.contract-position-fetcher';
 import { Network } from '~types/network.interface';
 
 import { IlluviumContractFactory, IlluviumCorePool } from '../contracts';
 import { ILLUVIUM_DEFINITION } from '../illuvium.definition';
 
-const appId = ILLUVIUM_DEFINITION.id;
-const groupId = ILLUVIUM_DEFINITION.groups.farm.id;
-const network = Network.ETHEREUM_MAINNET;
-
-@Register.ContractPositionFetcher({ appId, groupId, network })
-export class EthereumIlluviumFarmContractPositionFetcher implements PositionFetcher<ContractPosition> {
-  private readonly ILV_STAKING_ADDRESS = '0x25121eddf746c884dde4619b573a7b10714e2a36';
-  private readonly SLP_ILV_ETH_STAKING_ADDRESS = '0x8b4d8443a0229349a9892d4f7cbe89ef5f843f72';
+@Injectable()
+export class EthereumIlluviumFarmContractPositionFetcher extends SingleStakingFarmDynamicTemplateContractPositionFetcher<IlluviumCorePool> {
+  appId = ILLUVIUM_DEFINITION.id;
+  groupId = ILLUVIUM_DEFINITION.groups.farm.id;
+  network = Network.ETHEREUM_MAINNET;
+  groupLabel = 'Staking';
 
   constructor(
-    @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
-    @Inject(IlluviumContractFactory) private readonly contractFactory: IlluviumContractFactory,
-  ) {}
+    @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
+    @Inject(IlluviumContractFactory) protected readonly contractFactory: IlluviumContractFactory,
+  ) {
+    super(appToolkit);
+  }
 
-  async getPositions() {
-    return Promise.all([
-      // ILV staking
-      this.appToolkit.helpers.singleStakingFarmContractPositionHelper.getContractPositions<IlluviumCorePool>({
-        appId,
-        groupId,
-        network,
-        resolveFarmAddresses: () => [this.ILV_STAKING_ADDRESS],
-        resolveFarmContract: ({ address, network }) => this.contractFactory.illuviumCorePool({ address, network }),
-        resolveStakedTokenAddress: ({ contract, multicall }) => multicall.wrap(contract).poolToken(),
-        resolveRewardTokenAddresses: ({ contract, multicall }) => multicall.wrap(contract).ilv(),
-        resolveRois: () => ({ dailyROI: 0, weeklyROI: 0, yearlyROI: 0 }),
-      }),
-      // ILV/ETH staking
-      this.appToolkit.helpers.singleStakingFarmContractPositionHelper.getContractPositions<IlluviumCorePool>({
-        appId,
-        groupId,
-        network,
-        dependencies: [{ appId: 'sushiswap', groupIds: ['pool'], network }],
-        resolveFarmAddresses: () => [this.SLP_ILV_ETH_STAKING_ADDRESS],
-        resolveFarmContract: ({ address, network }) => this.contractFactory.illuviumCorePool({ address, network }),
-        resolveStakedTokenAddress: ({ contract, multicall }) => multicall.wrap(contract).poolToken(),
-        resolveRewardTokenAddresses: ({ contract, multicall }) => multicall.wrap(contract).ilv(),
-        resolveRois: () => ({ dailyROI: 0, weeklyROI: 0, yearlyROI: 0 }),
-      }),
-    ]).then(v => v.flat());
+  getContract(address: string): IlluviumCorePool {
+    return this.contractFactory.illuviumCorePool({ address, network: this.network });
+  }
+
+  getFarmAddresses() {
+    return ['0x25121eddf746c884dde4619b573a7b10714e2a36', '0x8b4d8443a0229349a9892d4f7cbe89ef5f843f72'];
+  }
+
+  getStakedTokenAddress({ contract }: GetTokenDefinitionsParams<IlluviumCorePool>) {
+    return contract.poolToken();
+  }
+
+  getRewardTokenAddresses({ contract }: GetTokenDefinitionsParams<IlluviumCorePool>) {
+    return contract.ilv();
+  }
+
+  async getRewardRates() {
+    return 0;
+  }
+
+  async getStakedTokenBalance({ address, contract, contractPosition }: GetTokenBalancesParams<IlluviumCorePool>) {
+    const stakedToken = contractPosition.tokens.find(isSupplied)!;
+
+    const v2StakingAddress = '0x7f5f854ffb6b7701540a00c69c4ab2de2b34291d';
+    const v2StakingContract = this.contractFactory.illuviumIlvPoolV2({
+      address: v2StakingAddress,
+      network: this.network,
+    });
+
+    // For the V1 ILV farm, deduct deposits made after the last V1 yield
+    let voidAmountBN = new BigNumber(0);
+    if (stakedToken.symbol === 'ILV') {
+      const LAST_V1_YIELD_CREATED = 1642660625;
+      const depositsLength = Number(await contract.getDepositsLength(address));
+      const depositIndexes = range(0, depositsLength);
+      const deposits = await Promise.all(depositIndexes.map(v => contract.getDeposit(address, v)));
+      const v1YieldMinted = await Promise.all(depositIndexes.map(v => v2StakingContract.v1YieldMinted(address, v)));
+
+      const voidDeposits = deposits.filter((v, i) => {
+        const isAfterLastV1Yield = Number(v.lockedFrom) > LAST_V1_YIELD_CREATED;
+        const isV1YieldMinted = v1YieldMinted[i];
+        return v.isYield && (isAfterLastV1Yield || isV1YieldMinted);
+      });
+
+      voidAmountBN = voidDeposits.reduce((acc, v) => acc.plus(v.tokenAmount.toString()), new BigNumber(0));
+    }
+
+    const stakedBalance = await contract.balanceOf(address);
+    return new BigNumber(stakedBalance.toString()).minus(voidAmountBN).toString();
+  }
+
+  async getRewardTokenBalances() {
+    return 0;
   }
 }

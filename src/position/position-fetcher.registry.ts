@@ -18,6 +18,7 @@ import {
   PositionOptions,
 } from './position-fetcher.decorator';
 import { PositionFetcher } from './position-fetcher.interface';
+import { PositionFetcherTemplateRegistry } from './position-fetcher.template-registry';
 import { AbstractPosition, Position } from './position.interface';
 
 export const buildAppPositionsCacheKey = (opts: {
@@ -36,9 +37,35 @@ export class PositionFetcherRegistry implements OnApplicationBootstrap {
   constructor(
     @Inject(DiscoveryService) private readonly discoveryService: DiscoveryService,
     @Inject(CacheOnIntervalService) private readonly cacheOnIntervalService: CacheOnIntervalService,
+    @Inject(PositionFetcherTemplateRegistry)
+    private readonly positionFetcherTemplateRegistry: PositionFetcherTemplateRegistry,
   ) {}
 
   onApplicationBootstrap() {
+    /* @TODO: Burn this extreme abomination since we need to guarantee the template registry is built
+     * Can be removed when all the position fetchers have been migrated to templates
+     */
+    this.positionFetcherTemplateRegistry.onModuleInit();
+    this.registerPositionFetchers();
+    this.registerTemplates();
+  }
+
+  private registerTemplates() {
+    const templates = this.positionFetcherTemplateRegistry.getAllTemplates();
+
+    for (const template of templates) {
+      const type = this.positionFetcherTemplateRegistry.getTemplateType(template);
+      this.setToRegistry({
+        type,
+        appId: template.appId,
+        network: template.network,
+        groupId: template.groupId,
+        fetcher: template,
+      });
+    }
+  }
+
+  private registerPositionFetchers() {
     const wrappers = this.discoveryService.getProviders();
 
     wrappers
@@ -57,19 +84,37 @@ export class PositionFetcherRegistry implements OnApplicationBootstrap {
         const groupId = Reflect.getMetadata(POSITION_FETCHER_GROUP, wrapper.metatype);
         const options = Reflect.getMetadata(POSITION_FETCHER_OPTIONS, wrapper.metatype);
 
-        // Register the position fetcher in the caching module
-        const cacheKey = buildAppPositionsCacheKey({ type, network, appId, groupId });
-        Reflect.defineMetadata(CACHE_ON_INTERVAL_KEY, cacheKey, wrapper.instance['getPositions']);
-        Reflect.defineMetadata(CACHE_ON_INTERVAL_TIMEOUT, 45 * 1000, wrapper.instance['getPositions']);
-        this.cacheOnIntervalService.registerCache(wrapper.instance, 'getPositions');
-
-        if (!this.registry.get(type)) this.registry.set(type, new Map());
-        if (!this.registry.get(type)!.get(network)) this.registry.get(type)!.set(network, new Map());
-        if (!this.registry.get(type)!.get(network)!.get(appId))
-          this.registry.get(type)!.get(network)!.set(appId, new Map());
-
-        this.registry.get(type)?.get(network)?.get(appId)?.set(groupId, { fetcher: wrapper.instance, options });
+        this.setToRegistry({ type, appId, network, groupId, fetcher: wrapper.instance, options });
       });
+  }
+
+  private setToRegistry({
+    type,
+    appId,
+    network,
+    groupId,
+    fetcher,
+    options = {},
+  }: {
+    type: ContractType;
+    appId: string;
+    network: Network;
+    groupId: string;
+    options?: PositionOptions;
+    fetcher: PositionFetcher<Position>;
+  }) {
+    if (!this.registry.get(type)) this.registry.set(type, new Map());
+    if (!this.registry.get(type)!.get(network)) this.registry.get(type)!.set(network, new Map());
+    if (!this.registry.get(type)!.get(network)!.get(appId))
+      this.registry.get(type)!.get(network)!.set(appId, new Map());
+
+    this.registry.get(type)?.get(network)?.get(appId)?.set(groupId, { fetcher, options });
+
+    // Register the position fetcher in the caching module
+    const cacheKey = buildAppPositionsCacheKey({ type, network, appId, groupId });
+    Reflect.defineMetadata(CACHE_ON_INTERVAL_KEY, cacheKey, fetcher['getPositions']);
+    Reflect.defineMetadata(CACHE_ON_INTERVAL_TIMEOUT, 45 * 1000, fetcher['getPositions']);
+    this.cacheOnIntervalService.registerCache(fetcher, 'getPositions');
   }
 
   private getOptions({
@@ -85,6 +130,27 @@ export class PositionFetcherRegistry implements OnApplicationBootstrap {
   }) {
     const positionWithOptions = this.registry.get(type)?.get(network)?.get(appId)?.get(groupId);
     return positionWithOptions?.options ?? {};
+  }
+
+  private getIsExcludedFromTvl(opts: { type: ContractType; network: Network; appId: string; groupId: string }) {
+    const template =
+      opts.type === ContractType.APP_TOKEN
+        ? this.positionFetcherTemplateRegistry.getAppTokenTemplate(opts)
+        : this.positionFetcherTemplateRegistry.getContractPositionTemplate(opts);
+
+    if (template) return template.isExcludedFromTvl;
+    else return !!this.getOptions(opts).excludeFromTvl;
+  }
+
+  getRegisteredTokenGroups() {
+    const networkFetchers = this.registry.get(ContractType.APP_TOKEN);
+    if (!networkFetchers) return [];
+
+    return Array.from(networkFetchers.entries()).flatMap(([network, appFetchers]) =>
+      Array.from(appFetchers.entries()).flatMap(([appId, groupFetchers]) =>
+        Array.from(groupFetchers.entries()).flatMap(([groupId]) => ({ network, appId, groupId })),
+      ),
+    );
   }
 
   get<T extends AbstractPosition<V>, V = DefaultDataProps>({
@@ -114,7 +180,7 @@ export class PositionFetcherRegistry implements OnApplicationBootstrap {
     const groupIds = types.map(type => {
       const groupIds = this.getGroupIdsForApp({ type, network, appId });
       const tvlEnabledGroupIds = groupIds.filter(
-        groupId => !this.getOptions({ type, appId, groupId, network }).excludeFromTvl,
+        groupId => !this.getIsExcludedFromTvl({ type, appId, groupId, network }),
       );
       return { type, groupIds: compact(tvlEnabledGroupIds) };
     });

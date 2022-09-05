@@ -1,35 +1,31 @@
-import { Inject } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
-import { Register } from '~app-toolkit/decorators';
+import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import {
-  AppTokenTemplatePositionFetcher,
-  DataPropsStageParams,
-  PricePerShareStageParams,
-  UnderlyingTokensStageParams,
-} from '~position/template/app-token.template.position-fetcher';
+  GetDataPropsParams,
+  GetPricePerShareParams,
+  GetUnderlyingTokensParams,
+} from '~position/template/app-token.template.types';
 import { Network } from '~types/network.interface';
 
 import { ABRACADABRA_DEFINITION } from '../abracadabra.definition';
 import { AbracadabraContractFactory } from '../contracts';
 import { AbracadabraStakedSpell } from '../contracts/ethers';
 
-const appId = ABRACADABRA_DEFINITION.id;
-const groupId = ABRACADABRA_DEFINITION.groups.stakedSpell.id;
-const network = Network.ETHEREUM_MAINNET;
-
 type AbracadabraStakedSpellAppTokenDataProps = {
   liquidity: number;
 };
 
-@Register.TokenPositionFetcher({ appId, groupId, network })
+@Injectable()
 export class EthereumAbracadabraStakedSpellTokenFetcher extends AppTokenTemplatePositionFetcher<
   AbracadabraStakedSpell,
   AbracadabraStakedSpellAppTokenDataProps
 > {
-  appId = appId;
-  groupId = groupId;
-  network = network;
+  appId = ABRACADABRA_DEFINITION.id;
+  groupId = ABRACADABRA_DEFINITION.groups.stakedSpell.id;
+  network = Network.ETHEREUM_MAINNET;
+  groupLabel = 'Staked SPELL';
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
@@ -46,14 +42,14 @@ export class EthereumAbracadabraStakedSpellTokenFetcher extends AppTokenTemplate
     return ['0x26fa3fffb6efe8c1e69103acb4044c26b9a106a9'];
   }
 
-  getUnderlyingTokenAddresses({ contract }: UnderlyingTokensStageParams<AbracadabraStakedSpell>) {
+  getUnderlyingTokenAddresses({ contract }: GetUnderlyingTokensParams<AbracadabraStakedSpell>) {
     return contract.token();
   }
 
   async getPricePerShare({
     appToken,
     multicall,
-  }: PricePerShareStageParams<AbracadabraStakedSpell, AbracadabraStakedSpellAppTokenDataProps>) {
+  }: GetPricePerShareParams<AbracadabraStakedSpell, AbracadabraStakedSpellAppTokenDataProps>) {
     const underlyingToken = appToken.tokens[0]!;
     const underlying = this.contractFactory.erc20(underlyingToken);
     const reserveRaw = await multicall.wrap(underlying).balanceOf(appToken.address);
@@ -63,7 +59,7 @@ export class EthereumAbracadabraStakedSpellTokenFetcher extends AppTokenTemplate
 
   async getDataProps({
     appToken,
-  }: DataPropsStageParams<AbracadabraStakedSpell, AbracadabraStakedSpellAppTokenDataProps>) {
+  }: GetDataPropsParams<AbracadabraStakedSpell, AbracadabraStakedSpellAppTokenDataProps>) {
     const liquidity = appToken.supply * appToken.price;
     return { liquidity };
   }

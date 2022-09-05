@@ -1,9 +1,8 @@
-import { Inject } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
-import { Register } from '~app-toolkit/decorators';
 import { isMulticallUnderlyingError } from '~multicall/multicall.ethers';
-import { DataPropsStageParams, PricePerShareStageParams } from '~position/template/app-token.template.position-fetcher';
+import { GetDataPropsParams, GetPricePerShareParams } from '~position/template/app-token.template.types';
 import { Network } from '~types/network.interface';
 
 import { YearnContractFactory, YearnVaultV2 } from '../contracts';
@@ -11,15 +10,12 @@ import { YearnVaultTokenDefinitionsResolver } from '../helpers/yearn.vault.token
 import { YearnVaultTokenDataProps, YearnVaultTokenFetcher } from '../helpers/yearn.vault.token-fetcher';
 import { YEARN_DEFINITION } from '../yearn.definition';
 
-const appId = YEARN_DEFINITION.id;
-const groupId = YEARN_DEFINITION.groups.v2Vault.id;
-const network = Network.ARBITRUM_MAINNET;
-
-@Register.TokenPositionFetcher({ appId, groupId, network })
+@Injectable()
 export class ArbitrumYearnV2VaultTokenFetcher extends YearnVaultTokenFetcher<YearnVaultV2> {
-  appId = appId;
-  groupId = groupId;
-  network = network;
+  appId = YEARN_DEFINITION.id;
+  groupId = YEARN_DEFINITION.groups.v2Vault.id;
+  network = Network.ARBITRUM_MAINNET;
+  groupLabel = 'Vaults';
 
   vaultType = 'v2' as const;
   vaultsToIgnore = [];
@@ -37,7 +33,7 @@ export class ArbitrumYearnV2VaultTokenFetcher extends YearnVaultTokenFetcher<Yea
     return this.contractFactory.yearnVaultV2({ network: this.network, address });
   }
 
-  async getPricePerShare({ contract, appToken }: PricePerShareStageParams<YearnVaultV2>) {
+  async getPricePerShare({ contract, appToken }: GetPricePerShareParams<YearnVaultV2>) {
     const pricePerShareRaw = await contract.pricePerShare().catch(err => {
       if (isMulticallUnderlyingError(err)) return 0;
       throw err;
@@ -46,7 +42,7 @@ export class ArbitrumYearnV2VaultTokenFetcher extends YearnVaultTokenFetcher<Yea
   }
 
   async getDataProps(
-    opts: DataPropsStageParams<YearnVaultV2, YearnVaultTokenDataProps>,
+    opts: GetDataPropsParams<YearnVaultV2, YearnVaultTokenDataProps>,
   ): Promise<YearnVaultTokenDataProps> {
     const { appToken } = opts;
     const vault = await this.selectVault(appToken.address);

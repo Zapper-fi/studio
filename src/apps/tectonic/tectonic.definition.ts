@@ -22,21 +22,27 @@ export const TECTONIC_DEFINITION = appDefinition({
       id: 'supply',
       type: GroupType.TOKEN,
       label: 'Lending',
-      groupLabel: 'Supply',
     },
 
     borrow: {
       id: 'borrow',
       type: GroupType.POSITION,
       label: 'Lending',
-      groupLabel: 'Borrow',
+    },
+
+    xtonic: {
+      id: 'xtonic',
+      type: GroupType.TOKEN,
+      label: 'xTONIC',
     },
   },
+
   presentationConfig: {
     tabs: [
       {
         label: 'Lending',
         viewType: 'split',
+
         views: [
           {
             viewType: 'list',
@@ -52,6 +58,7 @@ export const TECTONIC_DEFINITION = appDefinition({
       },
     ],
   },
+
   tags: [AppTag.LENDING],
   keywords: [],
   links: {},

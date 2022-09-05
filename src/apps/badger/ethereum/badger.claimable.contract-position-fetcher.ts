@@ -1,24 +1,26 @@
-import { Register } from '~app-toolkit/decorators';
+import { Injectable } from '@nestjs/common';
+
 import { Network } from '~types/network.interface';
 
 import { BADGER_DEFINITION } from '../badger.definition';
 import {
   BadgerClaimableContractPositionFetcher,
-  BadgerClaimableDescriptor,
-} from '../helpers/badger.claimable.contract-position-fetcher';
+  BadgerClaimableDefinition,
+} from '../common/badger.claimable.contract-position-fetcher';
 
-const appId = BADGER_DEFINITION.id;
-const groupId = BADGER_DEFINITION.groups.claimable.id;
-const network = Network.ETHEREUM_MAINNET;
-
-@Register.ContractPositionFetcher({ appId, groupId, network, options: { excludeFromTvl: true } })
+@Injectable()
 export class EthereumBadgerClaimableContractPositionFetcher extends BadgerClaimableContractPositionFetcher {
-  appId = appId;
-  groupId = groupId;
-  network = network;
+  appId = BADGER_DEFINITION.id;
+  groupId = BADGER_DEFINITION.groups.claimable.id;
+  network = Network.ETHEREUM_MAINNET;
+  groupLabel = 'Rewards';
+
+  isExcludedFromExplore = true;
+  isExcludedFromTvl = true;
+
   diggTokenAddress = '0x798d1be841a82a273720ce31c822c61a67a601c3';
 
-  async getDescriptors(): Promise<BadgerClaimableDescriptor[]> {
+  async getDefinitions(): Promise<BadgerClaimableDefinition[]> {
     return [
       {
         address: '0x660802fc641b154aba66a62137e71f331b6d787a',

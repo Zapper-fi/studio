@@ -1,34 +1,27 @@
-import { Inject } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
-import { Register } from '~app-toolkit/decorators';
-import {
-  AppTokenTemplatePositionFetcher,
-  DataPropsStageParams,
-  UnderlyingTokensStageParams,
-} from '~position/template/app-token.template.position-fetcher';
+import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
+import { GetUnderlyingTokensParams, GetDataPropsParams } from '~position/template/app-token.template.types';
 import { Network } from '~types/network.interface';
 
 import { StargateAa, StargateContractFactory } from '../contracts';
 import { STARGATE_DEFINITION } from '../stargate.definition';
-
-const appId = STARGATE_DEFINITION.id;
-const groupId = STARGATE_DEFINITION.groups.auctionLocked.id;
-const network = Network.ETHEREUM_MAINNET;
 
 type StargateAuctionLockedAppTokenDataProps = {
   liquidity: number;
   reserve: number;
 };
 
-@Register.TokenPositionFetcher({ appId, groupId, network })
+@Injectable()
 export class EthereumStargateAuctionLockedTokenFetcher extends AppTokenTemplatePositionFetcher<
   StargateAa,
   StargateAuctionLockedAppTokenDataProps
 > {
-  appId = appId;
-  groupId = groupId;
-  network = network;
+  appId = STARGATE_DEFINITION.id;
+  groupId = STARGATE_DEFINITION.groups.auctionLocked.id;
+  network = Network.ETHEREUM_MAINNET;
+  groupLabel = 'Auction Locked';
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
@@ -45,11 +38,15 @@ export class EthereumStargateAuctionLockedTokenFetcher extends AppTokenTemplateP
     return ['0x4dfcad285ef39fed84e77edf1b7dbc442565e55e'];
   }
 
-  getUnderlyingTokenAddresses({ contract }: UnderlyingTokensStageParams<StargateAa>) {
+  getUnderlyingTokenAddresses({ contract }: GetUnderlyingTokensParams<StargateAa>) {
     return contract.stargateToken();
   }
 
-  async getDataProps({ appToken }: DataPropsStageParams<StargateAa, StargateAuctionLockedAppTokenDataProps>) {
+  async getPricePerShare(): Promise<number | number[]> {
+    return 4; // 1 aaSTG = 4 STG
+  }
+
+  async getDataProps({ appToken }: GetDataPropsParams<StargateAa, StargateAuctionLockedAppTokenDataProps>) {
     const reserve = appToken.supply; // 1:1
     const liquidity = appToken.supply * appToken.price;
     return { reserve, liquidity };

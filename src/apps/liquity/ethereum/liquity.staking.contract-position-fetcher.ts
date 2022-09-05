@@ -1,9 +1,8 @@
-import { Inject } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { ZERO_ADDRESS } from '~app-toolkit/constants/address';
-import { Register } from '~app-toolkit/decorators';
-import { GetTokenBalancesPerPositionParams } from '~position/template/contract-position.template.position-fetcher';
+import { GetTokenBalancesParams } from '~position/template/contract-position.template.types';
 import {
   SingleStakingFarmDefinition,
   SingleStakingFarmTemplateContractPositionFetcher,
@@ -21,15 +20,12 @@ const FARMS = [
   },
 ];
 
-const appId = LIQUITY_DEFINITION.id;
-const groupId = LIQUITY_DEFINITION.groups.staking.id;
-const network = Network.ETHEREUM_MAINNET;
-
-@Register.ContractPositionFetcher({ appId, groupId, network })
+@Injectable()
 export class EthereumLiquityStakingContractPositionFetcher extends SingleStakingFarmTemplateContractPositionFetcher<LiquityStaking> {
-  appId = appId;
-  groupId = groupId;
-  network = network;
+  appId = LIQUITY_DEFINITION.id;
+  groupId = LIQUITY_DEFINITION.groups.staking.id;
+  network = Network.ETHEREUM_MAINNET;
+  groupLabel = 'Staked';
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
@@ -50,11 +46,11 @@ export class EthereumLiquityStakingContractPositionFetcher extends SingleStaking
     return [0, 0];
   }
 
-  async getStakedTokenBalance({ contract, address }: GetTokenBalancesPerPositionParams<LiquityStaking>) {
+  async getStakedTokenBalance({ contract, address }: GetTokenBalancesParams<LiquityStaking>) {
     return contract.stakes(address);
   }
 
-  async getRewardTokenBalances({ contract, address }: GetTokenBalancesPerPositionParams<LiquityStaking>) {
+  async getRewardTokenBalances({ contract, address }: GetTokenBalancesParams<LiquityStaking>) {
     return Promise.all([contract.getPendingLUSDGain(address), contract.getPendingETHGain(address)]);
   }
 }

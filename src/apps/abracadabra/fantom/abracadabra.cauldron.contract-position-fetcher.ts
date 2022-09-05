@@ -1,18 +1,16 @@
-import { Register } from '~app-toolkit/decorators';
+import { Injectable } from '@nestjs/common';
+
 import { Network } from '~types/network.interface';
 
 import { ABRACADABRA_DEFINITION } from '../abracadabra.definition';
 import { AbracadabraCauldronContractPositionFetcher } from '../common/abracadabra.cauldron.contract-position-fetcher';
 
-const appId = ABRACADABRA_DEFINITION.id;
-const groupId = ABRACADABRA_DEFINITION.groups.cauldron.id;
-const network = Network.FANTOM_OPERA_MAINNET;
-
-@Register.ContractPositionFetcher({ appId, groupId, network })
+@Injectable()
 export class FantomAbracadabraCauldronContractPositionFetcher extends AbracadabraCauldronContractPositionFetcher {
-  appId = appId;
-  groupId = groupId;
-  network = network;
+  appId = ABRACADABRA_DEFINITION.id;
+  groupId = ABRACADABRA_DEFINITION.groups.cauldron.id;
+  network = Network.FANTOM_OPERA_MAINNET;
+  groupLabel = 'Cauldrons';
   cauldrons = [
     '0x8e45af6743422e488afacdad842ce75a09eaed34', // wFTM
     '0xd4357d43545f793101b592bacab89943dc89d11b', // wFTM

@@ -35,6 +35,7 @@ export class OptimismPikaProtocolBalanceFetcher implements BalanceFetcher {
 
     return contract;
   }
+
   async getFarmBalances(address: string) {
     return this.appToolkit.helpers.contractPositionBalanceHelper.getContractPositionBalances({
       address,

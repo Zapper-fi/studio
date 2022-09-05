@@ -1,30 +1,26 @@
-import { Inject } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
-import { Register } from '~app-toolkit/decorators';
 import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { DefaultDataProps } from '~position/display.interface';
+import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import {
-  AppTokenTemplatePositionFetcher,
-  DataPropsStageParams,
-  DisplayPropsStageParams,
-  UnderlyingTokensStageParams,
-} from '~position/template/app-token.template.position-fetcher';
+  GetUnderlyingTokensParams,
+  GetDisplayPropsParams,
+  GetDataPropsParams,
+} from '~position/template/app-token.template.types';
 import { Network } from '~types/network.interface';
 
 import { YieldYakContractFactory, YieldYakVault } from '../contracts';
 import { YieldYakVaultTokenDefinitionsResolver } from '../helpers/yield-yak.vault.token-definitions-resolver';
 import { YIELD_YAK_DEFINITION } from '../yield-yak.definition';
 
-const appId = YIELD_YAK_DEFINITION.id;
-const groupId = YIELD_YAK_DEFINITION.groups.vault.id;
-const network = Network.AVALANCHE_MAINNET;
-
-@Register.TokenPositionFetcher({ appId, groupId, network })
+@Injectable()
 export class AvalancheYieldyakVaultTokenFetcher extends AppTokenTemplatePositionFetcher<YieldYakVault> {
-  appId = appId;
-  groupId = groupId;
-  network = network;
+  appId = YIELD_YAK_DEFINITION.id;
+  groupId = YIELD_YAK_DEFINITION.groups.vault.id;
+  network = Network.AVALANCHE_MAINNET;
+  groupLabel = 'Vaults';
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
@@ -53,18 +49,18 @@ export class AvalancheYieldyakVaultTokenFetcher extends AppTokenTemplatePosition
     return vaultDefinitions.map(address => address.id.toLowerCase());
   }
 
-  async getUnderlyingTokenAddresses({ contract }: UnderlyingTokensStageParams<YieldYakVault>) {
+  async getUnderlyingTokenAddresses({ contract }: GetUnderlyingTokensParams<YieldYakVault>) {
     const vault = await this.selectVault(contract.address.toLowerCase());
     if (!vault) throw new Error('Cannot find specified vault');
 
     return [vault.depositToken.id.toLowerCase()];
   }
 
-  async getLabel({ appToken }: DisplayPropsStageParams<YieldYakVault, DefaultDataProps>): Promise<string> {
+  async getLabel({ appToken }: GetDisplayPropsParams<YieldYakVault, DefaultDataProps>): Promise<string> {
     return appToken.tokens.map(v => getLabelFromToken(v)).join(' / ');
   }
 
-  async getDataProps(opts: DataPropsStageParams<YieldYakVault, DefaultDataProps>): Promise<DefaultDataProps> {
+  async getDataProps(opts: GetDataPropsParams<YieldYakVault, DefaultDataProps>): Promise<DefaultDataProps> {
     const { appToken } = opts;
     const liquidity = appToken.price * appToken.supply;
 
