@@ -19,12 +19,37 @@ export class EthereumMorphoPositionPresenter extends PositionPresenterTemplate {
   appId = MORPHO_DEFINITION.id;
 
   morphoCompoundLensAddress = '0x930f1b46e1d081ec1524efd95752be3ece51ef67';
+  morphoAaveLensAddress = '0x507fa343d0a90786d86c7cd885f5c49263a91ff4';
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
     @Inject(MorphoContractFactory) protected readonly contractFactory: MorphoContractFactory,
   ) {
     super();
+  }
+
+  @Register.BalanceProductMeta('Morpho Aave')
+  async getMorphoAaveMeta(address: string) {
+    const multicall = this.appToolkit.getMulticall(this.network);
+    const lens = this.contractFactory.morphoAaveV2Lens({
+      address: this.morphoAaveLensAddress,
+      network: this.network,
+    });
+    const healthFactor = await multicall
+      .wrap(lens)
+      .getUserHealthFactor(address)
+      .catch(err => {
+        if (isMulticallUnderlyingError(err)) return null;
+        throw err;
+      });
+    if (!healthFactor) return [];
+    return [
+      {
+        label: 'Health Factor',
+        value: +formatUnits(healthFactor),
+        type: 'number',
+      },
+    ];
   }
 
   @Register.BalanceProductMeta('Morpho Compound')
@@ -48,9 +73,27 @@ export class EthereumMorphoPositionPresenter extends PositionPresenterTemplate {
     if (!balanceStates) return [];
 
     const { collateralValue, debtValue, maxDebtValue } = balanceStates;
-    const totalDebt = +formatUnits(debtValue);
-    const maxDebt = +formatUnits(maxDebtValue);
 
+    const maxDebt = +formatUnits(maxDebtValue);
+    return this._presentMeta({
+      collateral: +formatUnits(collateralValue),
+      debt: +formatUnits(debtValue),
+      maxDebt,
+      liquidationThreshold: maxDebt,
+    });
+  }
+
+  private _presentMeta({
+    collateral,
+    debt,
+    maxDebt,
+    liquidationThreshold,
+  }: {
+    collateral: number;
+    debt: number;
+    maxDebt: number;
+    liquidationThreshold: number;
+  }) {
     return [
       {
         label: 'Collateral',
@@ -59,17 +102,17 @@ export class EthereumMorphoPositionPresenter extends PositionPresenterTemplate {
       },
       {
         label: 'Total Supply',
-        value: +formatUnits(collateralValue),
+        value: collateral,
         type: 'dollar',
       },
       {
         label: 'Debt',
-        value: totalDebt,
+        value: debt,
         type: 'dollar',
       },
       {
         label: 'Utilization Rate',
-        value: maxDebt > 0 ? totalDebt / maxDebt : 0,
+        value: liquidationThreshold > 0 ? debt / liquidationThreshold : 0,
         type: 'pct',
       },
     ];
