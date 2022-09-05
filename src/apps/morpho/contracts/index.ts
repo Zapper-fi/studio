@@ -4,6 +4,7 @@ import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { ContractFactory } from '~contract/contracts';
 import { Network } from '~types/network.interface';
 
+import { MorphoAaveV2Lens__factory } from './ethers';
 import { MorphoCToken__factory } from './ethers';
 import { MorphoCompound__factory } from './ethers';
 import { MorphoCompoundLens__factory } from './ethers';
@@ -17,6 +18,9 @@ export class MorphoContractFactory extends ContractFactory {
     super((network: Network) => appToolkit.getNetworkProvider(network));
   }
 
+  morphoAaveV2Lens({ address, network }: ContractOpts) {
+    return MorphoAaveV2Lens__factory.connect(address, this.appToolkit.getNetworkProvider(network));
+  }
   morphoCToken({ address, network }: ContractOpts) {
     return MorphoCToken__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
@@ -28,6 +32,7 @@ export class MorphoContractFactory extends ContractFactory {
   }
 }
 
+export type { MorphoAaveV2Lens } from './ethers';
 export type { MorphoCToken } from './ethers';
 export type { MorphoCompound } from './ethers';
 export type { MorphoCompoundLens } from './ethers';

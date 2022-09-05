@@ -4,6 +4,7 @@ import { uniq } from 'lodash';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
+import { MorphoContractPositionDataProps } from '~apps/morpho/helpers/position-fetcher.common';
 import { isMulticallUnderlyingError } from '~multicall/multicall.ethers';
 import { ContractPositionBalance } from '~position/position-balance.interface';
 import { PositionPresenterTemplate, ReadonlyBalances } from '~position/template/position-presenter.template';
@@ -12,14 +13,12 @@ import { Network } from '~types';
 import { MorphoContractFactory } from '../contracts';
 import MORPHO_DEFINITION from '../morpho.definition';
 
-import { MorphoCompoundContractPositionDataProps } from './morpho.morpho-compound.contract-position-fetcher';
-
 @Injectable()
 export class EthereumMorphoPositionPresenter extends PositionPresenterTemplate {
   network = Network.ETHEREUM_MAINNET;
   appId = MORPHO_DEFINITION.id;
 
-  lensAddress = '0x930f1b46e1d081ec1524efd95752be3ece51ef67';
+  morphoCompoundLensAddress = '0x930f1b46e1d081ec1524efd95752be3ece51ef67';
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
@@ -30,12 +29,15 @@ export class EthereumMorphoPositionPresenter extends PositionPresenterTemplate {
 
   @Register.BalanceProductMeta('Morpho Compound')
   async getMorphoCompoundMeta(address: string, balances: ReadonlyBalances) {
-    const markets = (balances as ContractPositionBalance<MorphoCompoundContractPositionDataProps>[]).map(
+    const markets = (balances as ContractPositionBalance<MorphoContractPositionDataProps>[]).map(
       v => v.dataProps.marketAddress,
     );
 
     const multicall = this.appToolkit.getMulticall(this.network);
-    const lens = this.contractFactory.morphoCompoundLens({ address: this.lensAddress, network: this.network });
+    const lens = this.contractFactory.morphoCompoundLens({
+      address: this.morphoCompoundLensAddress,
+      network: this.network,
+    });
     const balanceStates = await multicall
       .wrap(lens)
       .getUserBalanceStates(address, uniq(markets))

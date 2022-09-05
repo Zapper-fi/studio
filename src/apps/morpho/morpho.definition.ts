@@ -16,6 +16,11 @@ export const MORPHO_DEFINITION = appDefinition({
       type: GroupType.POSITION,
       label: 'Lending',
     },
+    morphoAaveV2: {
+      id: 'morpho-aave-v2',
+      type: GroupType.POSITION,
+      label: 'Lending',
+    },
   },
 
   tags: [AppTag.LENDING],
