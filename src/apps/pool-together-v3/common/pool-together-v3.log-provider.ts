@@ -5,7 +5,7 @@ import moment from 'moment';
 import { Cache } from '~cache/cache.decorator';
 import { Network } from '~types';
 
-import { PoolTogetherV4ContractFactory } from '../contracts';
+import { PoolTogetherV3ContractFactory } from '../contracts';
 
 export enum PoolWithMultipleWinnersBuilderCreatedType {
   STAKE = 'stake',
@@ -14,12 +14,12 @@ export enum PoolWithMultipleWinnersBuilderCreatedType {
 }
 
 @Injectable()
-export class PoolTogetherV4LogProvider {
-  constructor(@Inject(PoolTogetherV4ContractFactory) private readonly contractFactory: PoolTogetherV4ContractFactory) {}
+export class PoolTogetherV3LogProvider {
+  constructor(@Inject(PoolTogetherV3ContractFactory) private readonly contractFactory: PoolTogetherV3ContractFactory) {}
 
   @Cache({
     key: ({ network, address, fromBlock }: { network: Network; fromBlock: number; address: string }) =>
-      `pool-together-v4:${network}:community-pool-builder-logs:${address}:${fromBlock}`,
+      `pool-together-v3:${network}:community-pool-builder-logs:${address}:${fromBlock}`,
     ttl: moment.duration(1, 'hour').asSeconds(),
   })
   async getPoolWithMultipleWinnersBuilderLogs({
@@ -31,7 +31,7 @@ export class PoolTogetherV4LogProvider {
     network: Network;
     fromBlock: number;
   }) {
-    const contract = this.contractFactory.poolTogetherV4PoolWithMultipleWinnersBuilder({ network, address });
+    const contract = this.contractFactory.poolTogetherV3PoolWithMultipleWinnersBuilder({ network, address });
     const mapper = <T extends Event>({ address, event, args }: T) => ({
       args: Array.from(args?.values() ?? []),
       address,

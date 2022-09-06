@@ -11,4 +11,5 @@ export class EthereumPoolTogetherV3TicketTokenFetcher extends PoolTogetherV3Tick
   groupId = POOL_TOGETHER_V3_DEFINITION.groups.ticket.id;
   network = Network.ETHEREUM_MAINNET;
   groupLabel = 'Prize Pools';
+  isExcludedFromExplore = true;
 }

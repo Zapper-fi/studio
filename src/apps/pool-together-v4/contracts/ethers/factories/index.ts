@@ -3,8 +3,5 @@
 /* eslint-disable */
 export { PoolTogetherMerkleDistributor__factory } from './PoolTogetherMerkleDistributor__factory';
 export { PoolTogetherV3TokenFaucet__factory } from './PoolTogetherV3TokenFaucet__factory';
-export { PoolTogetherV4CommunityPrizePool__factory } from './PoolTogetherV4CommunityPrizePool__factory';
-export { PoolTogetherV4MultipleWinners__factory } from './PoolTogetherV4MultipleWinners__factory';
-export { PoolTogetherV4PoolWithMultipleWinnersBuilder__factory } from './PoolTogetherV4PoolWithMultipleWinnersBuilder__factory';
 export { PoolTogetherV4PrizePool__factory } from './PoolTogetherV4PrizePool__factory';
 export { PoolTogetherV4Ticket__factory } from './PoolTogetherV4Ticket__factory';

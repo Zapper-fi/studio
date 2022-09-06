@@ -5,9 +5,9 @@
 import { Contract, Signer, utils } from 'ethers';
 import type { Provider } from '@ethersproject/providers';
 import type {
-  PoolTogetherV4PoolWithMultipleWinnersBuilder,
-  PoolTogetherV4PoolWithMultipleWinnersBuilderInterface,
-} from '../PoolTogetherV4PoolWithMultipleWinnersBuilder';
+  PoolTogetherV3PoolWithMultipleWinnersBuilder,
+  PoolTogetherV3PoolWithMultipleWinnersBuilderInterface,
+} from '../PoolTogetherV3PoolWithMultipleWinnersBuilder';
 
 const _abi = [
   {
@@ -525,12 +525,12 @@ const _abi = [
   },
 ];
 
-export class PoolTogetherV4PoolWithMultipleWinnersBuilder__factory {
+export class PoolTogetherV3PoolWithMultipleWinnersBuilder__factory {
   static readonly abi = _abi;
-  static createInterface(): PoolTogetherV4PoolWithMultipleWinnersBuilderInterface {
-    return new utils.Interface(_abi) as PoolTogetherV4PoolWithMultipleWinnersBuilderInterface;
+  static createInterface(): PoolTogetherV3PoolWithMultipleWinnersBuilderInterface {
+    return new utils.Interface(_abi) as PoolTogetherV3PoolWithMultipleWinnersBuilderInterface;
   }
-  static connect(address: string, signerOrProvider: Signer | Provider): PoolTogetherV4PoolWithMultipleWinnersBuilder {
-    return new Contract(address, _abi, signerOrProvider) as PoolTogetherV4PoolWithMultipleWinnersBuilder;
+  static connect(address: string, signerOrProvider: Signer | Provider): PoolTogetherV3PoolWithMultipleWinnersBuilder {
+    return new Contract(address, _abi, signerOrProvider) as PoolTogetherV3PoolWithMultipleWinnersBuilder;
   }
 }

@@ -11,6 +11,7 @@ export class EthereumPoolTogetherV3AirdropTokenFetcher extends PoolTogetherV3Air
   groupId = POOL_TOGETHER_V3_DEFINITION.groups.airdrop.id;
   network = Network.ETHEREUM_MAINNET;
   groupLabel = 'Airdrops';
+  isExcludedFromExplore = true;
 
   merkleAddress = '0xbe1a33519f586a4c8aa37525163df8d67997016f';
   airdropTokenAddress = '0x0cec1a9154ff802e7934fc916ed7ca50bde6844e'; // POOL
