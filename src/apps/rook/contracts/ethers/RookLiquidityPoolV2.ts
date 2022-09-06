@@ -18,7 +18,7 @@ import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi
 import type { Listener, Provider } from '@ethersproject/providers';
 import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
-export interface KeeperDaoLiquidityPoolV2Interface extends utils.Interface {
+export interface RookLiquidityPoolV2Interface extends utils.Interface {
   functions: {
     'ETHEREUM()': FunctionFragment;
     'FEE_BASE()': FunctionFragment;
@@ -285,12 +285,12 @@ export type WithdrewEvent = TypedEvent<[string, string, string, BigNumber, BigNu
 
 export type WithdrewEventFilter = TypedEventFilter<WithdrewEvent>;
 
-export interface KeeperDaoLiquidityPoolV2 extends BaseContract {
+export interface RookLiquidityPoolV2 extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
 
-  interface: KeeperDaoLiquidityPoolV2Interface;
+  interface: RookLiquidityPoolV2Interface;
 
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,

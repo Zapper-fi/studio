@@ -4,7 +4,7 @@
 
 import { Contract, Signer, utils } from 'ethers';
 import type { Provider } from '@ethersproject/providers';
-import type { KeeperDaoLiquidityPoolV2, KeeperDaoLiquidityPoolV2Interface } from '../KeeperDaoLiquidityPoolV2';
+import type { RookLiquidityPoolV2, RookLiquidityPoolV2Interface } from '../RookLiquidityPoolV2';
 
 const _abi = [
   {
@@ -785,12 +785,12 @@ const _abi = [
   },
 ];
 
-export class KeeperDaoLiquidityPoolV2__factory {
+export class RookLiquidityPoolV2__factory {
   static readonly abi = _abi;
-  static createInterface(): KeeperDaoLiquidityPoolV2Interface {
-    return new utils.Interface(_abi) as KeeperDaoLiquidityPoolV2Interface;
+  static createInterface(): RookLiquidityPoolV2Interface {
+    return new utils.Interface(_abi) as RookLiquidityPoolV2Interface;
   }
-  static connect(address: string, signerOrProvider: Signer | Provider): KeeperDaoLiquidityPoolV2 {
-    return new Contract(address, _abi, signerOrProvider) as KeeperDaoLiquidityPoolV2;
+  static connect(address: string, signerOrProvider: Signer | Provider): RookLiquidityPoolV2 {
+    return new Contract(address, _abi, signerOrProvider) as RookLiquidityPoolV2;
   }
 }
