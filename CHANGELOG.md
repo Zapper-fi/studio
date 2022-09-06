@@ -4,6 +4,19 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.215.0](https://github.com/Zapper-fi/studio/compare/v0.214.1...v0.215.0) (2022-09-06)
+
+
+### Features
+
+* **aelin:** Fix broken Optimism pools, migrate to Templates ([#1351](https://github.com/Zapper-fi/studio/issues/1351)) ([0c19878](https://github.com/Zapper-fi/studio/commit/0c19878fdc508128ee435b24436696820ec92319))
+
+
+### Bug Fixes
+
+* **furucombo:** Fix broken token fetcher ([#1353](https://github.com/Zapper-fi/studio/issues/1353)) ([a8b1d08](https://github.com/Zapper-fi/studio/commit/a8b1d08b19c80beea6f4efab5daeafe69e5ed340))
+* **rubicon:** Rename back to bath tokens, use injectable decorator ([a975cae](https://github.com/Zapper-fi/studio/commit/a975caef8f6bd3d9f134289c63f4b58f017cc507))
+
 ## [0.214.1](https://github.com/Zapper-fi/studio/compare/v0.214.0...v0.214.1) (2022-09-04)
 
 
