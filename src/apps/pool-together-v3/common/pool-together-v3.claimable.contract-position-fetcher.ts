@@ -3,7 +3,6 @@ import { BigNumberish } from 'ethers';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
-import { PoolTogetherV3ApiPrizePoolRegistry } from '~apps/pool-together-v3/helpers/pool-together-v3.api.prize-pool-registry';
 import { MetaType } from '~position/position.interface';
 import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
 import {
@@ -14,12 +13,14 @@ import {
   UnderlyingTokenDefinition,
 } from '~position/template/contract-position.template.types';
 
-import { PoolTogetherV3TokenFaucet, PoolTogetherV4ContractFactory } from '../contracts';
+import { PoolTogetherV3ContractFactory, PoolTogetherV3TokenFaucet } from '../contracts';
 
-export abstract class PoolTogetherV4ClaimableContractPositionFetcher extends ContractPositionTemplatePositionFetcher<PoolTogetherV3TokenFaucet> {
+import { PoolTogetherV3ApiPrizePoolRegistry } from './pool-together-v3.api.prize-pool-registry';
+
+export abstract class PoolTogetherV3ClaimableContractPositionFetcher extends ContractPositionTemplatePositionFetcher<PoolTogetherV3TokenFaucet> {
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(PoolTogetherV4ContractFactory) private readonly contractFactory: PoolTogetherV4ContractFactory,
+    @Inject(PoolTogetherV3ContractFactory) private readonly contractFactory: PoolTogetherV3ContractFactory,
     @Inject(PoolTogetherV3ApiPrizePoolRegistry)
     private readonly poolTogetherV3ApiPrizePoolRegistry: PoolTogetherV3ApiPrizePoolRegistry,
   ) {
@@ -42,7 +43,7 @@ export abstract class PoolTogetherV4ClaimableContractPositionFetcher extends Con
   }: GetTokenDefinitionsParams<PoolTogetherV3TokenFaucet, DefaultContractPositionDefinition>): Promise<
     UnderlyingTokenDefinition[] | null
   > {
-    const rewardTokenAddressRaw = await contract.asset();
+    const rewardTokenAddressRaw = await contract.asset().then(addr => addr.toLowerCase());
     return [{ address: rewardTokenAddressRaw, metaType: MetaType.CLAIMABLE }];
   }
 

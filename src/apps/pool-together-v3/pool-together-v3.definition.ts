@@ -22,8 +22,15 @@ export const POOL_TOGETHER_V3_DEFINITION = appDefinition({
       label: 'Prize Pools',
       isHiddenFromExplore: true,
     },
+    sponsorship: {
+      id: 'sponsorship',
+      type: GroupType.TOKEN,
+      label: 'Prize Pools',
+      isHiddenFromExplore: true,
+    },
+    airdrop: { id: 'airdop', type: GroupType.TOKEN, label: 'Airdrops', isHiddenFromExplore: true },
     claimable: { id: 'claimable', type: GroupType.TOKEN, label: 'Rewards', isHiddenFromExplore: true },
-    pod: { id: 'pod', type: GroupType.POSITION, label: 'Prize Pods', isHiddenFromExplore: true },
+    pod: { id: 'pod', type: GroupType.TOKEN, label: 'Prize Pods', isHiddenFromExplore: true },
   },
   tags: [AppTag.LOTTERY],
   supportedNetworks: {
