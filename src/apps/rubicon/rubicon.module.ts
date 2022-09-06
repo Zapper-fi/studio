@@ -3,7 +3,7 @@ import { AbstractApp } from '~app/app.dynamic-module';
 
 import { RubiconPoolDefinitionsResolver } from './common/rubicon.pool-definition-resolver';
 import { RubiconContractFactory } from './contracts';
-import { OptimismRubiconPoolTokenFetcher } from './optimism/rubicon.pool.token-fetcher';
+import { OptimismRubiconBathTokenFetcher } from './optimism/rubicon.bath.token-fetcher';
 import { RubiconAppDefinition, RUBICON_DEFINITION } from './rubicon.definition';
 
 @Register.AppModule({
@@ -12,7 +12,7 @@ import { RubiconAppDefinition, RUBICON_DEFINITION } from './rubicon.definition';
     RubiconAppDefinition,
     RubiconContractFactory,
     RubiconPoolDefinitionsResolver,
-    OptimismRubiconPoolTokenFetcher,
+    OptimismRubiconBathTokenFetcher,
   ],
 })
 export class RubiconAppModule extends AbstractApp() {}

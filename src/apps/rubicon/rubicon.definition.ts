@@ -10,10 +10,10 @@ export const RUBICON_DEFINITION = appDefinition({
   url: 'https://app.rubicon.finance',
 
   groups: {
-    pool: {
-      id: 'pool',
+    bath: {
+      id: 'bath',
       type: GroupType.TOKEN,
-      label: 'Pools',
+      label: 'Bath Tokens',
     },
   },
 

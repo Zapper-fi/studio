@@ -22,7 +22,7 @@ export type RubiconPoolDefinition = {
   underlyingTokenAddress: string;
 };
 
-export abstract class RubiconPoolTokenFetcher extends AppTokenTemplatePositionFetcher<
+export abstract class RubiconBathTokenFetcher extends AppTokenTemplatePositionFetcher<
   BathToken,
   DefaultDataProps,
   RubiconPoolDefinition
