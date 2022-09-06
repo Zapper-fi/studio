@@ -5,7 +5,7 @@ import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import { GetUnderlyingTokensParams } from '~position/template/app-token.template.types';
 
-import { YearnVaultTokenDefinitionsResolver } from '../helpers/yearn.vault.token-definitions-resolver';
+import { YearnVaultTokenDefinitionsResolver } from './yearn.vault.token-definitions-resolver';
 
 export type YearnVaultTokenDataProps = {
   liquidity: number;
@@ -29,7 +29,7 @@ export abstract class YearnVaultTokenFetcher<T extends Contract> extends AppToke
   abstract vaultType: 'v1' | 'v2';
   abstract vaultsToIgnore: string[];
 
-  private getVaultDefinitions() {
+  protected getVaultDefinitions() {
     return this.tokenDefinitionsResolver.getVaultDefinitions({
       network: this.network,
       vaultsToIgnore: this.vaultsToIgnore,
