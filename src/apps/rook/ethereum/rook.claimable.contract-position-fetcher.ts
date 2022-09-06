@@ -98,17 +98,21 @@ export class EthereumRookClaimableContractPositionFetcher extends ContractPositi
     contractPosition,
     contract,
   }: GetTokenBalancesParams<RookLiquidityPoolDistributor, DefaultDataProps>): Promise<BigNumberish[]> {
-    const definition = REWARD_DEFINITIONS.find(t => t.address === contractPosition.address);
-    if (!definition) return [];
+    try {
+      const definition = REWARD_DEFINITIONS.find(t => t.address === contractPosition.address);
+      if (!definition) return [];
 
-    const { data } = await Axios.get<RewardOfLiquidityProviderResponse>(`${definition.url}/${address}`);
-    const earnedRaw = data.earnings_to_date;
-    const earned = new BigNumber(earnedRaw, 16);
-    if (earned.eq(0)) return [];
+      const { data } = await Axios.get<RewardOfLiquidityProviderResponse>(`${definition.url}/${address}`);
+      const earnedRaw = data.earnings_to_date;
+      const earned = new BigNumber(earnedRaw, 16);
+      if (earned.eq(0)) return [];
 
-    const claimedRaw = await contract.claimedAmount(address);
-    const claimed = new BigNumber(claimedRaw.toString());
-    const claimableBalanceRaw = earned.minus(claimed).toFixed(0);
-    return [claimableBalanceRaw];
+      const claimedRaw = await contract.claimedAmount(address);
+      const claimed = new BigNumber(claimedRaw.toString());
+      const claimableBalanceRaw = earned.minus(claimed).toFixed(0);
+      return [claimableBalanceRaw];
+    } catch (err) {
+      return [];
+    }
   }
 }
