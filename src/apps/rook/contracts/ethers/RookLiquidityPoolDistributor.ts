@@ -17,7 +17,7 @@ import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi
 import type { Listener, Provider } from '@ethersproject/providers';
 import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
-export interface KeeperDaoLiquidityPoolDistributorInterface extends utils.Interface {
+export interface RookLiquidityPoolDistributorInterface extends utils.Interface {
   functions: {
     'blacklistRecoverableToken(address)': FunctionFragment;
     'claim(address,uint256,uint256,bytes)': FunctionFragment;
@@ -113,12 +113,12 @@ export type OwnershipTransferredEvent = TypedEvent<[string, string], OwnershipTr
 
 export type OwnershipTransferredEventFilter = TypedEventFilter<OwnershipTransferredEvent>;
 
-export interface KeeperDaoLiquidityPoolDistributor extends BaseContract {
+export interface RookLiquidityPoolDistributor extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
 
-  interface: KeeperDaoLiquidityPoolDistributorInterface;
+  interface: RookLiquidityPoolDistributorInterface;
 
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,
