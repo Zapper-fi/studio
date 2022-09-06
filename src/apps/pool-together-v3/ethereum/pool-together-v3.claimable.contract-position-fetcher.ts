@@ -11,4 +11,5 @@ export class EthereumPoolTogetherV3ClaimableContractPositionFetcher extends Pool
   groupId = POOL_TOGETHER_V3_DEFINITION.groups.claimable.id;
   network = Network.ETHEREUM_MAINNET;
   groupLabel = 'Rewards';
+  isExcludedFromExplore = true;
 }

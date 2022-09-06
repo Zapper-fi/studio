@@ -11,4 +11,5 @@ export class CeloPoolTogetherV3TicketTokenFetcher extends PoolTogetherV3TicketTo
   groupId = POOL_TOGETHER_V3_DEFINITION.groups.ticket.id;
   network = Network.CELO_MAINNET;
   groupLabel = 'Prize Pools';
+  isExcludedFromExplore = true;
 }

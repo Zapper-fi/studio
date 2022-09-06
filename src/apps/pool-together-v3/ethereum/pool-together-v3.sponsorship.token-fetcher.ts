@@ -11,4 +11,5 @@ export class EthereumPoolTogetherV3SponsorshipTokenFetcher extends PoolTogetherV
   groupId = POOL_TOGETHER_V3_DEFINITION.groups.sponsorship.id;
   network = Network.ETHEREUM_MAINNET;
   groupLabel = 'Prize Pools';
+  isExcludedFromExplore = true;
 }

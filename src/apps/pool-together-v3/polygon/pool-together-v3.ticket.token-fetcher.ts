@@ -11,4 +11,5 @@ export class PolygonPoolTogetherV3TicketTokenFetcher extends PoolTogetherV3Ticke
   groupId = POOL_TOGETHER_V3_DEFINITION.groups.ticket.id;
   network = Network.POLYGON_MAINNET;
   groupLabel = 'Prize Pools';
+  isExcludedFromExplore = true;
 }

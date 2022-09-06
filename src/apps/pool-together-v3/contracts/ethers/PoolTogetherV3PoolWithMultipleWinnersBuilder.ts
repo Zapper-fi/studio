@@ -108,7 +108,7 @@ export declare namespace MultipleWinnersBuilder {
   };
 }
 
-export interface PoolTogetherV4PoolWithMultipleWinnersBuilderInterface extends utils.Interface {
+export interface PoolTogetherV3PoolWithMultipleWinnersBuilderInterface extends utils.Interface {
   functions: {
     'compoundPrizePoolProxyFactory()': FunctionFragment;
     'createCompoundMultipleWinners((address,uint256),(address,uint256,uint256,string,string,string,string,uint256,uint256,uint256,(address,uint16,uint8)[],bool),uint8)': FunctionFragment;
@@ -218,12 +218,12 @@ export type YieldSourcePrizePoolWithMultipleWinnersCreatedEvent = TypedEvent<
 export type YieldSourcePrizePoolWithMultipleWinnersCreatedEventFilter =
   TypedEventFilter<YieldSourcePrizePoolWithMultipleWinnersCreatedEvent>;
 
-export interface PoolTogetherV4PoolWithMultipleWinnersBuilder extends BaseContract {
+export interface PoolTogetherV3PoolWithMultipleWinnersBuilder extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
 
-  interface: PoolTogetherV4PoolWithMultipleWinnersBuilderInterface;
+  interface: PoolTogetherV3PoolWithMultipleWinnersBuilderInterface;
 
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,

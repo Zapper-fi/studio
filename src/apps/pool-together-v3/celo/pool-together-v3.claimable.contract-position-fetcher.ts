@@ -11,4 +11,5 @@ export class CeloPoolTogetherV3ClaimableContractPositionFetcher extends PoolToge
   groupId = POOL_TOGETHER_V3_DEFINITION.groups.claimable.id;
   network = Network.CELO_MAINNET;
   groupLabel = 'Rewards';
+  isExcludedFromExplore = true;
 }

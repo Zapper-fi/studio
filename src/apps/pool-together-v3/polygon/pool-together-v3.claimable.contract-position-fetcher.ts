@@ -11,4 +11,5 @@ export class PolygonPoolTogetherV3ClaimableContractPositionFetcher extends PoolT
   groupId = POOL_TOGETHER_V3_DEFINITION.groups.claimable.id;
   network = Network.POLYGON_MAINNET;
   groupLabel = 'Rewards';
+  isExcludedFromExplore = true;
 }

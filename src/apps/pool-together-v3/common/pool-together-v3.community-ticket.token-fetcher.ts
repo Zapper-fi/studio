@@ -12,10 +12,10 @@ import {
 } from '~position/template/app-token.template.types';
 import { GetUnderlyingTokensParams, GetDataPropsParams } from '~position/template/app-token.template.types';
 
-import { PoolTogetherV4ContractFactory, PoolTogetherV4Ticket } from '../contracts';
+import { PoolTogetherV3ContractFactory, PoolTogetherV3Ticket } from '../contracts';
 
-import { POOL_WITH_MULTIPLE_WINNERS_BUILDERS } from './pool-together-v4.community-ticket.pool-builders';
-import { PoolTogetherV4LogProvider, PoolWithMultipleWinnersBuilderCreatedType } from './pool-together-v4.log-provider';
+import { POOL_WITH_MULTIPLE_WINNERS_BUILDERS } from './pool-together-v3.community-tocket.pool-builders';
+import { PoolTogetherV3LogProvider, PoolWithMultipleWinnersBuilderCreatedType } from './pool-together-v3.log-provider';
 
 type Definition = DefaultAppTokenDefinition & {
   type: PoolWithMultipleWinnersBuilderCreatedType;
@@ -24,20 +24,20 @@ type Definition = DefaultAppTokenDefinition & {
   prizePool: string;
 };
 
-type PoolTogetherV4CommunityTicketDataProps = {
+type PoolTogetherV3CommunityTicketDataProps = {
   liquidity: number;
   poolType: PoolWithMultipleWinnersBuilderCreatedType;
 };
 
-export abstract class PoolTogetherV4CommunityTicketTokenFetcher extends AppTokenTemplatePositionFetcher<
-  PoolTogetherV4Ticket,
+export abstract class PoolTogetherV3CommunityTicketTokenFetcher extends AppTokenTemplatePositionFetcher<
+  PoolTogetherV3Ticket,
   DefaultDataProps,
   Definition
 > {
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(PoolTogetherV4ContractFactory) private readonly contractFactory: PoolTogetherV4ContractFactory,
-    @Inject(PoolTogetherV4LogProvider) private readonly logProvider: PoolTogetherV4LogProvider,
+    @Inject(PoolTogetherV3ContractFactory) private readonly contractFactory: PoolTogetherV3ContractFactory,
+    @Inject(PoolTogetherV3LogProvider) private readonly logProvider: PoolTogetherV3LogProvider,
   ) {
     super(appToolkit);
   }
@@ -55,8 +55,8 @@ export abstract class PoolTogetherV4CommunityTicketTokenFetcher extends AppToken
     return poolBuilders ?? [];
   }
 
-  getContract(address: string): PoolTogetherV4Ticket {
-    return this.contractFactory.poolTogetherV4Ticket({ address, network: this.network });
+  getContract(address: string): PoolTogetherV3Ticket {
+    return this.contractFactory.poolTogetherV3Ticket({ address, network: this.network });
   }
 
   async getAddresses({ definitions }: GetAddressesParams): Promise<string[]> {
@@ -85,7 +85,7 @@ export abstract class PoolTogetherV4CommunityTicketTokenFetcher extends AppToken
             const prizePool = log.args[0].toLowerCase();
             const prizeStrategy = log.args[1].toLowerCase();
             const contract = multicall.wrap(
-              this.contractFactory.poolTogetherV4MultipleWinners({
+              this.contractFactory.poolTogetherV3MultipleWinners({
                 network: this.network,
                 address: prizeStrategy,
               }),
@@ -110,7 +110,7 @@ export abstract class PoolTogetherV4CommunityTicketTokenFetcher extends AppToken
 
   async getLabel({
     appToken,
-  }: GetDisplayPropsParams<PoolTogetherV4Ticket, PoolTogetherV4CommunityTicketDataProps, Definition>) {
+  }: GetDisplayPropsParams<PoolTogetherV3Ticket, PoolTogetherV3CommunityTicketDataProps, Definition>) {
     if (appToken.dataProps.poolType === PoolWithMultipleWinnersBuilderCreatedType.COMPOUND)
       return `${appToken.symbol} (Compound)`;
     if (appToken.dataProps.poolType === PoolWithMultipleWinnersBuilderCreatedType.STAKE)
@@ -123,9 +123,9 @@ export abstract class PoolTogetherV4CommunityTicketTokenFetcher extends AppToken
   async getUnderlyingTokenAddresses({
     definition,
     multicall,
-  }: GetUnderlyingTokensParams<PoolTogetherV4Ticket, Definition>): Promise<string | string[]> {
+  }: GetUnderlyingTokensParams<PoolTogetherV3Ticket, Definition>): Promise<string | string[]> {
     const contract = multicall.wrap(
-      this.contractFactory.poolTogetherV4CommunityPrizePool({ network: this.network, address: definition.prizePool }),
+      this.contractFactory.poolTogetherV3CommunityPrizePool({ network: this.network, address: definition.prizePool }),
     );
     const underlyingTokenAddress = await contract.token().then(addr => addr.toLowerCase());
     return [underlyingTokenAddress];
@@ -135,10 +135,10 @@ export abstract class PoolTogetherV4CommunityTicketTokenFetcher extends AppToken
     appToken,
     definition,
   }: GetDataPropsParams<
-    PoolTogetherV4Ticket,
-    PoolTogetherV4CommunityTicketDataProps,
+    PoolTogetherV3Ticket,
+    PoolTogetherV3CommunityTicketDataProps,
     Definition
-  >): Promise<PoolTogetherV4CommunityTicketDataProps> {
+  >): Promise<PoolTogetherV3CommunityTicketDataProps> {
     const underlyingToken = appToken.tokens[0];
     const liquidity = appToken.supply * underlyingToken.price;
     return { liquidity, poolType: definition.type };

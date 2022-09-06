@@ -11,4 +11,5 @@ export class CeloPoolTogetherV3SponsorshipTokenFetcher extends PoolTogetherV3Spo
   groupId = POOL_TOGETHER_V3_DEFINITION.groups.sponsorship.id;
   network = Network.CELO_MAINNET;
   groupLabel = 'Prize Pools';
+  isExcludedFromExplore = true;
 }

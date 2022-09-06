@@ -31,7 +31,7 @@ export declare namespace PrizeSplit {
   };
 }
 
-export interface PoolTogetherV4MultipleWinnersInterface extends utils.Interface {
+export interface PoolTogetherV3MultipleWinnersInterface extends utils.Interface {
   functions: {
     'VERSION()': FunctionFragment;
     'addExternalErc20Award(address)': FunctionFragment;
@@ -603,12 +603,12 @@ export type TokenListenerUpdatedEvent = TypedEvent<[string], TokenListenerUpdate
 
 export type TokenListenerUpdatedEventFilter = TypedEventFilter<TokenListenerUpdatedEvent>;
 
-export interface PoolTogetherV4MultipleWinners extends BaseContract {
+export interface PoolTogetherV3MultipleWinners extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
 
-  interface: PoolTogetherV4MultipleWinnersInterface;
+  interface: PoolTogetherV3MultipleWinnersInterface;
 
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,

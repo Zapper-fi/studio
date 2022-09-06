@@ -11,4 +11,5 @@ export class PolygonPoolTogetherV3SponsorshipTokenFetcher extends PoolTogetherV3
   groupId = POOL_TOGETHER_V3_DEFINITION.groups.sponsorship.id;
   network = Network.POLYGON_MAINNET;
   groupLabel = 'Prize Pools';
+  isExcludedFromExplore = true;
 }
