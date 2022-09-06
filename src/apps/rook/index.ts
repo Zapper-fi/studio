@@ -1,5 +1,5 @@
-export { KEEPER_DAO_DEFINITION, KeeperDaoAppDefinition } from './keeper-dao.definition';
-export { KeeperDaoAppModule } from './keeper-dao.module';
+export { ROOK_DEFINITION as KEEPER_DAO_DEFINITION, KeeperDaoAppDefinition } from './rook.definition';
+export { RookAppModule as KeeperDaoAppModule } from './rook.module';
 export { KeeperDaoContractFactory } from './contracts';
 
 /* Contracts */

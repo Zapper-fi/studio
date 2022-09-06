@@ -5,9 +5,9 @@
 import { Contract, Signer, utils } from 'ethers';
 import type { Provider } from '@ethersproject/providers';
 import type {
-  KeeperDaoLiquidityPoolDistributor,
-  KeeperDaoLiquidityPoolDistributorInterface,
-} from '../KeeperDaoLiquidityPoolDistributor';
+  RookLiquidityPoolDistributor,
+  RookLiquidityPoolDistributorInterface,
+} from '../RookLiquidityPoolDistributor';
 
 const _abi = [
   {
@@ -252,12 +252,12 @@ const _abi = [
   },
 ];
 
-export class KeeperDaoLiquidityPoolDistributor__factory {
+export class RookLiquidityPoolDistributor__factory {
   static readonly abi = _abi;
-  static createInterface(): KeeperDaoLiquidityPoolDistributorInterface {
-    return new utils.Interface(_abi) as KeeperDaoLiquidityPoolDistributorInterface;
+  static createInterface(): RookLiquidityPoolDistributorInterface {
+    return new utils.Interface(_abi) as RookLiquidityPoolDistributorInterface;
   }
-  static connect(address: string, signerOrProvider: Signer | Provider): KeeperDaoLiquidityPoolDistributor {
-    return new Contract(address, _abi, signerOrProvider) as KeeperDaoLiquidityPoolDistributor;
+  static connect(address: string, signerOrProvider: Signer | Provider): RookLiquidityPoolDistributor {
+    return new Contract(address, _abi, signerOrProvider) as RookLiquidityPoolDistributor;
   }
 }

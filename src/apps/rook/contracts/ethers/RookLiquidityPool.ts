@@ -18,27 +18,31 @@ import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi
 import type { Listener, Provider } from '@ethersproject/providers';
 import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
-export interface KeeperDaoLiquidityPoolV2Interface extends utils.Interface {
+export interface RookLiquidityPoolInterface extends utils.Interface {
   functions: {
+    'BIPS_BASE()': FunctionFragment;
+    'DEFAULT_ADMIN_ROLE()': FunctionFragment;
     'ETHEREUM()': FunctionFragment;
-    'FEE_BASE()': FunctionFragment;
-    'VERSION()': FunctionFragment;
+    'OPERATOR_ROLE()': FunctionFragment;
+    'adapterBorrow(address,uint256,bytes)': FunctionFragment;
+    'adapterLimits(address)': FunctionFragment;
+    'adapterLoanedAmount(address,address)': FunctionFragment;
+    'adapterRepay(address,address,uint256)': FunctionFragment;
     'addOperator(address)': FunctionFragment;
-    'addPauser(address)': FunctionFragment;
     'blacklistRecoverableToken(address)': FunctionFragment;
     'borrow(address,uint256,bytes)': FunctionFragment;
     'borrowableBalance(address)': FunctionFragment;
+    'borrower()': FunctionFragment;
     'deposit(address,uint256)': FunctionFragment;
     'depositFeeInBips()': FunctionFragment;
-    'initialize(string,address)': FunctionFragment;
-    'initialize()': FunctionFragment;
-    'initialize(address)': FunctionFragment;
+    'getRoleAdmin(bytes32)': FunctionFragment;
+    'grantRole(bytes32,address)': FunctionFragment;
+    'hasRole(bytes32,address)': FunctionFragment;
     'isOperator(address)': FunctionFragment;
-    'isPauser(address)': FunctionFragment;
     'kToken(address)': FunctionFragment;
     'kTokens(address)': FunctionFragment;
+    'loanedAmount(address)': FunctionFragment;
     'migrate(address)': FunctionFragment;
-    'operators(uint256)': FunctionFragment;
     'pause()': FunctionFragment;
     'paused()': FunctionFragment;
     'poolFeeInBips()': FunctionFragment;
@@ -47,9 +51,13 @@ export interface KeeperDaoLiquidityPoolV2Interface extends utils.Interface {
     'registeredKTokens(address)': FunctionFragment;
     'registeredTokens(uint256)': FunctionFragment;
     'renounceOperator()': FunctionFragment;
-    'renouncePauser()': FunctionFragment;
+    'renounceRole(bytes32,address)': FunctionFragment;
+    'revokeRole(bytes32,address)': FunctionFragment;
+    'supportsInterface(bytes4)': FunctionFragment;
+    'totalValueLocked(address)': FunctionFragment;
     'underlyingBalance(address,address)': FunctionFragment;
     'unpause()': FunctionFragment;
+    'updateAdapterLimit(address,uint256)': FunctionFragment;
     'updateDepositFee(uint256)': FunctionFragment;
     'updateFeePool(address)': FunctionFragment;
     'updatePoolFee(uint256)': FunctionFragment;
@@ -58,25 +66,29 @@ export interface KeeperDaoLiquidityPoolV2Interface extends utils.Interface {
 
   getFunction(
     nameOrSignatureOrTopic:
+      | 'BIPS_BASE'
+      | 'DEFAULT_ADMIN_ROLE'
       | 'ETHEREUM'
-      | 'FEE_BASE'
-      | 'VERSION'
+      | 'OPERATOR_ROLE'
+      | 'adapterBorrow'
+      | 'adapterLimits'
+      | 'adapterLoanedAmount'
+      | 'adapterRepay'
       | 'addOperator'
-      | 'addPauser'
       | 'blacklistRecoverableToken'
       | 'borrow'
       | 'borrowableBalance'
+      | 'borrower'
       | 'deposit'
       | 'depositFeeInBips'
-      | 'initialize(string,address)'
-      | 'initialize()'
-      | 'initialize(address)'
+      | 'getRoleAdmin'
+      | 'grantRole'
+      | 'hasRole'
       | 'isOperator'
-      | 'isPauser'
       | 'kToken'
       | 'kTokens'
+      | 'loanedAmount'
       | 'migrate'
-      | 'operators'
       | 'pause'
       | 'paused'
       | 'poolFeeInBips'
@@ -85,43 +97,60 @@ export interface KeeperDaoLiquidityPoolV2Interface extends utils.Interface {
       | 'registeredKTokens'
       | 'registeredTokens'
       | 'renounceOperator'
-      | 'renouncePauser'
+      | 'renounceRole'
+      | 'revokeRole'
+      | 'supportsInterface'
+      | 'totalValueLocked'
       | 'underlyingBalance'
       | 'unpause'
+      | 'updateAdapterLimit'
       | 'updateDepositFee'
       | 'updateFeePool'
       | 'updatePoolFee'
       | 'withdraw',
   ): FunctionFragment;
 
+  encodeFunctionData(functionFragment: 'BIPS_BASE', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'DEFAULT_ADMIN_ROLE', values?: undefined): string;
   encodeFunctionData(functionFragment: 'ETHEREUM', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'FEE_BASE', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'VERSION', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'OPERATOR_ROLE', values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: 'adapterBorrow',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>, PromiseOrValue<BytesLike>],
+  ): string;
+  encodeFunctionData(functionFragment: 'adapterLimits', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'adapterLoanedAmount',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'adapterRepay',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
   encodeFunctionData(functionFragment: 'addOperator', values: [PromiseOrValue<string>]): string;
-  encodeFunctionData(functionFragment: 'addPauser', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'blacklistRecoverableToken', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(
     functionFragment: 'borrow',
     values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>, PromiseOrValue<BytesLike>],
   ): string;
   encodeFunctionData(functionFragment: 'borrowableBalance', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'borrower', values?: undefined): string;
   encodeFunctionData(
     functionFragment: 'deposit',
     values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
   ): string;
   encodeFunctionData(functionFragment: 'depositFeeInBips', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'getRoleAdmin', values: [PromiseOrValue<BytesLike>]): string;
   encodeFunctionData(
-    functionFragment: 'initialize(string,address)',
-    values: [PromiseOrValue<string>, PromiseOrValue<string>],
+    functionFragment: 'grantRole',
+    values: [PromiseOrValue<BytesLike>, PromiseOrValue<string>],
   ): string;
-  encodeFunctionData(functionFragment: 'initialize()', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'initialize(address)', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'hasRole', values: [PromiseOrValue<BytesLike>, PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'isOperator', values: [PromiseOrValue<string>]): string;
-  encodeFunctionData(functionFragment: 'isPauser', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'kToken', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'kTokens', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'loanedAmount', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'migrate', values: [PromiseOrValue<string>]): string;
-  encodeFunctionData(functionFragment: 'operators', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'pause', values?: undefined): string;
   encodeFunctionData(functionFragment: 'paused', values?: undefined): string;
   encodeFunctionData(functionFragment: 'poolFeeInBips', values?: undefined): string;
@@ -130,12 +159,25 @@ export interface KeeperDaoLiquidityPoolV2Interface extends utils.Interface {
   encodeFunctionData(functionFragment: 'registeredKTokens', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'registeredTokens', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'renounceOperator', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'renouncePauser', values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: 'renounceRole',
+    values: [PromiseOrValue<BytesLike>, PromiseOrValue<string>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'revokeRole',
+    values: [PromiseOrValue<BytesLike>, PromiseOrValue<string>],
+  ): string;
+  encodeFunctionData(functionFragment: 'supportsInterface', values: [PromiseOrValue<BytesLike>]): string;
+  encodeFunctionData(functionFragment: 'totalValueLocked', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(
     functionFragment: 'underlyingBalance',
     values: [PromiseOrValue<string>, PromiseOrValue<string>],
   ): string;
   encodeFunctionData(functionFragment: 'unpause', values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: 'updateAdapterLimit',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
   encodeFunctionData(functionFragment: 'updateDepositFee', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'updateFeePool', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'updatePoolFee', values: [PromiseOrValue<BigNumberish>]): string;
@@ -144,25 +186,29 @@ export interface KeeperDaoLiquidityPoolV2Interface extends utils.Interface {
     values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
   ): string;
 
+  decodeFunctionResult(functionFragment: 'BIPS_BASE', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'DEFAULT_ADMIN_ROLE', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'ETHEREUM', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'FEE_BASE', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'VERSION', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'OPERATOR_ROLE', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'adapterBorrow', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'adapterLimits', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'adapterLoanedAmount', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'adapterRepay', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'addOperator', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'addPauser', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'blacklistRecoverableToken', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'borrow', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'borrowableBalance', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'borrower', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'deposit', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'depositFeeInBips', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'initialize(string,address)', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'initialize()', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'initialize(address)', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'getRoleAdmin', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'grantRole', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'hasRole', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'isOperator', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'isPauser', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'kToken', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'kTokens', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'loanedAmount', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'migrate', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'operators', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'pause', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'paused', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'poolFeeInBips', data: BytesLike): Result;
@@ -171,38 +217,77 @@ export interface KeeperDaoLiquidityPoolV2Interface extends utils.Interface {
   decodeFunctionResult(functionFragment: 'registeredKTokens', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'registeredTokens', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'renounceOperator', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'renouncePauser', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'renounceRole', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'revokeRole', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'supportsInterface', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'totalValueLocked', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'underlyingBalance', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'unpause', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'updateAdapterLimit', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'updateDepositFee', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'updateFeePool', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'updatePoolFee', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'withdraw', data: BytesLike): Result;
 
   events: {
+    'AdapterBorrowed(address,address,uint256)': EventFragment;
+    'AdapterLimitChanged(address,uint256,uint256)': EventFragment;
+    'AdapterRepaid(address,address,uint256)': EventFragment;
     'Borrowed(address,address,uint256,uint256)': EventFragment;
     'Deposited(address,address,uint256,uint256)': EventFragment;
     'EtherReceived(address,uint256)': EventFragment;
     'OperatorAdded(address)': EventFragment;
     'OperatorRemoved(address)': EventFragment;
     'Paused(address)': EventFragment;
-    'PauserAdded(address)': EventFragment;
-    'PauserRemoved(address)': EventFragment;
+    'RoleAdminChanged(bytes32,bytes32,bytes32)': EventFragment;
+    'RoleGranted(bytes32,address,address)': EventFragment;
+    'RoleRevoked(bytes32,address,address)': EventFragment;
     'Unpaused(address)': EventFragment;
     'Withdrew(address,address,address,uint256,uint256)': EventFragment;
   };
 
+  getEvent(nameOrSignatureOrTopic: 'AdapterBorrowed'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'AdapterLimitChanged'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'AdapterRepaid'): EventFragment;
   getEvent(nameOrSignatureOrTopic: 'Borrowed'): EventFragment;
   getEvent(nameOrSignatureOrTopic: 'Deposited'): EventFragment;
   getEvent(nameOrSignatureOrTopic: 'EtherReceived'): EventFragment;
   getEvent(nameOrSignatureOrTopic: 'OperatorAdded'): EventFragment;
   getEvent(nameOrSignatureOrTopic: 'OperatorRemoved'): EventFragment;
   getEvent(nameOrSignatureOrTopic: 'Paused'): EventFragment;
-  getEvent(nameOrSignatureOrTopic: 'PauserAdded'): EventFragment;
-  getEvent(nameOrSignatureOrTopic: 'PauserRemoved'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'RoleAdminChanged'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'RoleGranted'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'RoleRevoked'): EventFragment;
   getEvent(nameOrSignatureOrTopic: 'Unpaused'): EventFragment;
   getEvent(nameOrSignatureOrTopic: 'Withdrew'): EventFragment;
 }
+
+export interface AdapterBorrowedEventObject {
+  _adapter: string;
+  _token: string;
+  _amount: BigNumber;
+}
+export type AdapterBorrowedEvent = TypedEvent<[string, string, BigNumber], AdapterBorrowedEventObject>;
+
+export type AdapterBorrowedEventFilter = TypedEventFilter<AdapterBorrowedEvent>;
+
+export interface AdapterLimitChangedEventObject {
+  _adapter: string;
+  _from: BigNumber;
+  _to: BigNumber;
+}
+export type AdapterLimitChangedEvent = TypedEvent<[string, BigNumber, BigNumber], AdapterLimitChangedEventObject>;
+
+export type AdapterLimitChangedEventFilter = TypedEventFilter<AdapterLimitChangedEvent>;
+
+export interface AdapterRepaidEventObject {
+  _adapter: string;
+  _token: string;
+  _amount: BigNumber;
+}
+export type AdapterRepaidEvent = TypedEvent<[string, string, BigNumber], AdapterRepaidEventObject>;
+
+export type AdapterRepaidEventFilter = TypedEventFilter<AdapterRepaidEvent>;
 
 export interface BorrowedEventObject {
   _borrower: string;
@@ -253,19 +338,32 @@ export type PausedEvent = TypedEvent<[string], PausedEventObject>;
 
 export type PausedEventFilter = TypedEventFilter<PausedEvent>;
 
-export interface PauserAddedEventObject {
-  account: string;
+export interface RoleAdminChangedEventObject {
+  role: string;
+  previousAdminRole: string;
+  newAdminRole: string;
 }
-export type PauserAddedEvent = TypedEvent<[string], PauserAddedEventObject>;
+export type RoleAdminChangedEvent = TypedEvent<[string, string, string], RoleAdminChangedEventObject>;
 
-export type PauserAddedEventFilter = TypedEventFilter<PauserAddedEvent>;
+export type RoleAdminChangedEventFilter = TypedEventFilter<RoleAdminChangedEvent>;
 
-export interface PauserRemovedEventObject {
+export interface RoleGrantedEventObject {
+  role: string;
   account: string;
+  sender: string;
 }
-export type PauserRemovedEvent = TypedEvent<[string], PauserRemovedEventObject>;
+export type RoleGrantedEvent = TypedEvent<[string, string, string], RoleGrantedEventObject>;
 
-export type PauserRemovedEventFilter = TypedEventFilter<PauserRemovedEvent>;
+export type RoleGrantedEventFilter = TypedEventFilter<RoleGrantedEvent>;
+
+export interface RoleRevokedEventObject {
+  role: string;
+  account: string;
+  sender: string;
+}
+export type RoleRevokedEvent = TypedEvent<[string, string, string], RoleRevokedEventObject>;
+
+export type RoleRevokedEventFilter = TypedEventFilter<RoleRevokedEvent>;
 
 export interface UnpausedEventObject {
   account: string;
@@ -285,12 +383,12 @@ export type WithdrewEvent = TypedEvent<[string, string, string, BigNumber, BigNu
 
 export type WithdrewEventFilter = TypedEventFilter<WithdrewEvent>;
 
-export interface KeeperDaoLiquidityPoolV2 extends BaseContract {
+export interface RookLiquidityPool extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
 
-  interface: KeeperDaoLiquidityPoolV2Interface;
+  interface: RookLiquidityPoolInterface;
 
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,
@@ -308,18 +406,37 @@ export interface KeeperDaoLiquidityPoolV2 extends BaseContract {
   removeListener: OnEvent<this>;
 
   functions: {
+    BIPS_BASE(overrides?: CallOverrides): Promise<[BigNumber]>;
+
+    DEFAULT_ADMIN_ROLE(overrides?: CallOverrides): Promise<[string]>;
+
     ETHEREUM(overrides?: CallOverrides): Promise<[string]>;
 
-    FEE_BASE(overrides?: CallOverrides): Promise<[BigNumber]>;
+    OPERATOR_ROLE(overrides?: CallOverrides): Promise<[string]>;
 
-    VERSION(overrides?: CallOverrides): Promise<[string]>;
-
-    addOperator(
-      account: PromiseOrValue<string>,
+    adapterBorrow(
+      _token: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
+      _data: PromiseOrValue<BytesLike>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    addPauser(
+    adapterLimits(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
+
+    adapterLoanedAmount(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber]>;
+
+    adapterRepay(
+      _adapter: PromiseOrValue<string>,
+      _token: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
+    ): Promise<ContractTransaction>;
+
+    addOperator(
       account: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
@@ -338,6 +455,8 @@ export interface KeeperDaoLiquidityPoolV2 extends BaseContract {
 
     borrowableBalance(_token: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
+    borrower(overrides?: CallOverrides): Promise<[string]>;
+
     deposit(
       _token: PromiseOrValue<string>,
       _amount: PromiseOrValue<BigNumberish>,
@@ -346,33 +465,32 @@ export interface KeeperDaoLiquidityPoolV2 extends BaseContract {
 
     depositFeeInBips(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    'initialize(string,address)'(
-      _VERSION: PromiseOrValue<string>,
-      _borrower: PromiseOrValue<string>,
+    getRoleAdmin(role: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<[string]>;
+
+    grantRole(
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    'initialize()'(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
-
-    'initialize(address)'(
-      sender: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<ContractTransaction>;
+    hasRole(
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<[boolean]>;
 
     isOperator(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[boolean]>;
-
-    isPauser(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[boolean]>;
 
     kToken(_token: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[string]>;
 
     kTokens(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[string]>;
 
+    loanedAmount(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
+
     migrate(
       _newLP: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
-
-    operators(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[string]>;
 
     pause(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
@@ -396,7 +514,21 @@ export interface KeeperDaoLiquidityPoolV2 extends BaseContract {
 
     renounceOperator(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
-    renouncePauser(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
+    renounceRole(
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<ContractTransaction>;
+
+    revokeRole(
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<ContractTransaction>;
+
+    supportsInterface(interfaceId: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<[boolean]>;
+
+    totalValueLocked(_token: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     underlyingBalance(
       _token: PromiseOrValue<string>,
@@ -405,6 +537,12 @@ export interface KeeperDaoLiquidityPoolV2 extends BaseContract {
     ): Promise<[BigNumber]>;
 
     unpause(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
+
+    updateAdapterLimit(
+      _adapter: PromiseOrValue<string>,
+      _limitInBips: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<ContractTransaction>;
 
     updateDepositFee(
       _depositFeeInBips: PromiseOrValue<BigNumberish>,
@@ -429,18 +567,37 @@ export interface KeeperDaoLiquidityPoolV2 extends BaseContract {
     ): Promise<ContractTransaction>;
   };
 
+  BIPS_BASE(overrides?: CallOverrides): Promise<BigNumber>;
+
+  DEFAULT_ADMIN_ROLE(overrides?: CallOverrides): Promise<string>;
+
   ETHEREUM(overrides?: CallOverrides): Promise<string>;
 
-  FEE_BASE(overrides?: CallOverrides): Promise<BigNumber>;
+  OPERATOR_ROLE(overrides?: CallOverrides): Promise<string>;
 
-  VERSION(overrides?: CallOverrides): Promise<string>;
-
-  addOperator(
-    account: PromiseOrValue<string>,
+  adapterBorrow(
+    _token: PromiseOrValue<string>,
+    _amount: PromiseOrValue<BigNumberish>,
+    _data: PromiseOrValue<BytesLike>,
     overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  addPauser(
+  adapterLimits(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
+
+  adapterLoanedAmount(
+    arg0: PromiseOrValue<string>,
+    arg1: PromiseOrValue<string>,
+    overrides?: CallOverrides,
+  ): Promise<BigNumber>;
+
+  adapterRepay(
+    _adapter: PromiseOrValue<string>,
+    _token: PromiseOrValue<string>,
+    _amount: PromiseOrValue<BigNumberish>,
+    overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
+  ): Promise<ContractTransaction>;
+
+  addOperator(
     account: PromiseOrValue<string>,
     overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
@@ -459,6 +616,8 @@ export interface KeeperDaoLiquidityPoolV2 extends BaseContract {
 
   borrowableBalance(_token: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
+  borrower(overrides?: CallOverrides): Promise<string>;
+
   deposit(
     _token: PromiseOrValue<string>,
     _amount: PromiseOrValue<BigNumberish>,
@@ -467,33 +626,32 @@ export interface KeeperDaoLiquidityPoolV2 extends BaseContract {
 
   depositFeeInBips(overrides?: CallOverrides): Promise<BigNumber>;
 
-  'initialize(string,address)'(
-    _VERSION: PromiseOrValue<string>,
-    _borrower: PromiseOrValue<string>,
+  getRoleAdmin(role: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<string>;
+
+  grantRole(
+    role: PromiseOrValue<BytesLike>,
+    account: PromiseOrValue<string>,
     overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  'initialize()'(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
-
-  'initialize(address)'(
-    sender: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> },
-  ): Promise<ContractTransaction>;
+  hasRole(
+    role: PromiseOrValue<BytesLike>,
+    account: PromiseOrValue<string>,
+    overrides?: CallOverrides,
+  ): Promise<boolean>;
 
   isOperator(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
-
-  isPauser(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
   kToken(_token: PromiseOrValue<string>, overrides?: CallOverrides): Promise<string>;
 
   kTokens(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<string>;
 
+  loanedAmount(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
+
   migrate(
     _newLP: PromiseOrValue<string>,
     overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
-
-  operators(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
 
   pause(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
@@ -517,7 +675,21 @@ export interface KeeperDaoLiquidityPoolV2 extends BaseContract {
 
   renounceOperator(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
-  renouncePauser(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
+  renounceRole(
+    role: PromiseOrValue<BytesLike>,
+    account: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
+  ): Promise<ContractTransaction>;
+
+  revokeRole(
+    role: PromiseOrValue<BytesLike>,
+    account: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
+  ): Promise<ContractTransaction>;
+
+  supportsInterface(interfaceId: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<boolean>;
+
+  totalValueLocked(_token: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   underlyingBalance(
     _token: PromiseOrValue<string>,
@@ -526,6 +698,12 @@ export interface KeeperDaoLiquidityPoolV2 extends BaseContract {
   ): Promise<BigNumber>;
 
   unpause(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
+
+  updateAdapterLimit(
+    _adapter: PromiseOrValue<string>,
+    _limitInBips: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
+  ): Promise<ContractTransaction>;
 
   updateDepositFee(
     _depositFeeInBips: PromiseOrValue<BigNumberish>,
@@ -550,15 +728,37 @@ export interface KeeperDaoLiquidityPoolV2 extends BaseContract {
   ): Promise<ContractTransaction>;
 
   callStatic: {
+    BIPS_BASE(overrides?: CallOverrides): Promise<BigNumber>;
+
+    DEFAULT_ADMIN_ROLE(overrides?: CallOverrides): Promise<string>;
+
     ETHEREUM(overrides?: CallOverrides): Promise<string>;
 
-    FEE_BASE(overrides?: CallOverrides): Promise<BigNumber>;
+    OPERATOR_ROLE(overrides?: CallOverrides): Promise<string>;
 
-    VERSION(overrides?: CallOverrides): Promise<string>;
+    adapterBorrow(
+      _token: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
+      _data: PromiseOrValue<BytesLike>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
+
+    adapterLimits(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
+
+    adapterLoanedAmount(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
+
+    adapterRepay(
+      _adapter: PromiseOrValue<string>,
+      _token: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
     addOperator(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
-
-    addPauser(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     blacklistRecoverableToken(_token: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
@@ -571,6 +771,8 @@ export interface KeeperDaoLiquidityPoolV2 extends BaseContract {
 
     borrowableBalance(_token: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
+    borrower(overrides?: CallOverrides): Promise<string>;
+
     deposit(
       _token: PromiseOrValue<string>,
       _amount: PromiseOrValue<BigNumberish>,
@@ -579,27 +781,29 @@ export interface KeeperDaoLiquidityPoolV2 extends BaseContract {
 
     depositFeeInBips(overrides?: CallOverrides): Promise<BigNumber>;
 
-    'initialize(string,address)'(
-      _VERSION: PromiseOrValue<string>,
-      _borrower: PromiseOrValue<string>,
+    getRoleAdmin(role: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<string>;
+
+    grantRole(
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
-    'initialize()'(overrides?: CallOverrides): Promise<void>;
-
-    'initialize(address)'(sender: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
+    hasRole(
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
 
     isOperator(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
-
-    isPauser(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
     kToken(_token: PromiseOrValue<string>, overrides?: CallOverrides): Promise<string>;
 
     kTokens(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<string>;
 
-    migrate(_newLP: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
+    loanedAmount(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    operators(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
+    migrate(_newLP: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     pause(overrides?: CallOverrides): Promise<void>;
 
@@ -617,7 +821,21 @@ export interface KeeperDaoLiquidityPoolV2 extends BaseContract {
 
     renounceOperator(overrides?: CallOverrides): Promise<void>;
 
-    renouncePauser(overrides?: CallOverrides): Promise<void>;
+    renounceRole(
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
+
+    revokeRole(
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
+
+    supportsInterface(interfaceId: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<boolean>;
+
+    totalValueLocked(_token: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     underlyingBalance(
       _token: PromiseOrValue<string>,
@@ -626,6 +844,12 @@ export interface KeeperDaoLiquidityPoolV2 extends BaseContract {
     ): Promise<BigNumber>;
 
     unpause(overrides?: CallOverrides): Promise<void>;
+
+    updateAdapterLimit(
+      _adapter: PromiseOrValue<string>,
+      _limitInBips: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
     updateDepositFee(_depositFeeInBips: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
@@ -642,6 +866,39 @@ export interface KeeperDaoLiquidityPoolV2 extends BaseContract {
   };
 
   filters: {
+    'AdapterBorrowed(address,address,uint256)'(
+      _adapter?: PromiseOrValue<string> | null,
+      _token?: PromiseOrValue<string> | null,
+      _amount?: null,
+    ): AdapterBorrowedEventFilter;
+    AdapterBorrowed(
+      _adapter?: PromiseOrValue<string> | null,
+      _token?: PromiseOrValue<string> | null,
+      _amount?: null,
+    ): AdapterBorrowedEventFilter;
+
+    'AdapterLimitChanged(address,uint256,uint256)'(
+      _adapter?: PromiseOrValue<string> | null,
+      _from?: null,
+      _to?: null,
+    ): AdapterLimitChangedEventFilter;
+    AdapterLimitChanged(
+      _adapter?: PromiseOrValue<string> | null,
+      _from?: null,
+      _to?: null,
+    ): AdapterLimitChangedEventFilter;
+
+    'AdapterRepaid(address,address,uint256)'(
+      _adapter?: PromiseOrValue<string> | null,
+      _token?: PromiseOrValue<string> | null,
+      _amount?: null,
+    ): AdapterRepaidEventFilter;
+    AdapterRepaid(
+      _adapter?: PromiseOrValue<string> | null,
+      _token?: PromiseOrValue<string> | null,
+      _amount?: null,
+    ): AdapterRepaidEventFilter;
+
     'Borrowed(address,address,uint256,uint256)'(
       _borrower?: PromiseOrValue<string> | null,
       _token?: PromiseOrValue<string> | null,
@@ -680,11 +937,38 @@ export interface KeeperDaoLiquidityPoolV2 extends BaseContract {
     'Paused(address)'(account?: null): PausedEventFilter;
     Paused(account?: null): PausedEventFilter;
 
-    'PauserAdded(address)'(account?: PromiseOrValue<string> | null): PauserAddedEventFilter;
-    PauserAdded(account?: PromiseOrValue<string> | null): PauserAddedEventFilter;
+    'RoleAdminChanged(bytes32,bytes32,bytes32)'(
+      role?: PromiseOrValue<BytesLike> | null,
+      previousAdminRole?: PromiseOrValue<BytesLike> | null,
+      newAdminRole?: PromiseOrValue<BytesLike> | null,
+    ): RoleAdminChangedEventFilter;
+    RoleAdminChanged(
+      role?: PromiseOrValue<BytesLike> | null,
+      previousAdminRole?: PromiseOrValue<BytesLike> | null,
+      newAdminRole?: PromiseOrValue<BytesLike> | null,
+    ): RoleAdminChangedEventFilter;
 
-    'PauserRemoved(address)'(account?: PromiseOrValue<string> | null): PauserRemovedEventFilter;
-    PauserRemoved(account?: PromiseOrValue<string> | null): PauserRemovedEventFilter;
+    'RoleGranted(bytes32,address,address)'(
+      role?: PromiseOrValue<BytesLike> | null,
+      account?: PromiseOrValue<string> | null,
+      sender?: PromiseOrValue<string> | null,
+    ): RoleGrantedEventFilter;
+    RoleGranted(
+      role?: PromiseOrValue<BytesLike> | null,
+      account?: PromiseOrValue<string> | null,
+      sender?: PromiseOrValue<string> | null,
+    ): RoleGrantedEventFilter;
+
+    'RoleRevoked(bytes32,address,address)'(
+      role?: PromiseOrValue<BytesLike> | null,
+      account?: PromiseOrValue<string> | null,
+      sender?: PromiseOrValue<string> | null,
+    ): RoleRevokedEventFilter;
+    RoleRevoked(
+      role?: PromiseOrValue<BytesLike> | null,
+      account?: PromiseOrValue<string> | null,
+      sender?: PromiseOrValue<string> | null,
+    ): RoleRevokedEventFilter;
 
     'Unpaused(address)'(account?: null): UnpausedEventFilter;
     Unpaused(account?: null): UnpausedEventFilter;
@@ -706,18 +990,37 @@ export interface KeeperDaoLiquidityPoolV2 extends BaseContract {
   };
 
   estimateGas: {
+    BIPS_BASE(overrides?: CallOverrides): Promise<BigNumber>;
+
+    DEFAULT_ADMIN_ROLE(overrides?: CallOverrides): Promise<BigNumber>;
+
     ETHEREUM(overrides?: CallOverrides): Promise<BigNumber>;
 
-    FEE_BASE(overrides?: CallOverrides): Promise<BigNumber>;
+    OPERATOR_ROLE(overrides?: CallOverrides): Promise<BigNumber>;
 
-    VERSION(overrides?: CallOverrides): Promise<BigNumber>;
-
-    addOperator(
-      account: PromiseOrValue<string>,
+    adapterBorrow(
+      _token: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
+      _data: PromiseOrValue<BytesLike>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    addPauser(
+    adapterLimits(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
+
+    adapterLoanedAmount(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
+
+    adapterRepay(
+      _adapter: PromiseOrValue<string>,
+      _token: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
+
+    addOperator(
       account: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
@@ -736,6 +1039,8 @@ export interface KeeperDaoLiquidityPoolV2 extends BaseContract {
 
     borrowableBalance(_token: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
+    borrower(overrides?: CallOverrides): Promise<BigNumber>;
+
     deposit(
       _token: PromiseOrValue<string>,
       _amount: PromiseOrValue<BigNumberish>,
@@ -744,33 +1049,32 @@ export interface KeeperDaoLiquidityPoolV2 extends BaseContract {
 
     depositFeeInBips(overrides?: CallOverrides): Promise<BigNumber>;
 
-    'initialize(string,address)'(
-      _VERSION: PromiseOrValue<string>,
-      _borrower: PromiseOrValue<string>,
+    getRoleAdmin(role: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<BigNumber>;
+
+    grantRole(
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    'initialize()'(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
-
-    'initialize(address)'(
-      sender: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    hasRole(
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     isOperator(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
-
-    isPauser(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     kToken(_token: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     kTokens(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
+    loanedAmount(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
+
     migrate(
       _newLP: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
-
-    operators(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     pause(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
@@ -794,7 +1098,21 @@ export interface KeeperDaoLiquidityPoolV2 extends BaseContract {
 
     renounceOperator(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
-    renouncePauser(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
+    renounceRole(
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
+
+    revokeRole(
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
+
+    supportsInterface(interfaceId: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<BigNumber>;
+
+    totalValueLocked(_token: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     underlyingBalance(
       _token: PromiseOrValue<string>,
@@ -803,6 +1121,12 @@ export interface KeeperDaoLiquidityPoolV2 extends BaseContract {
     ): Promise<BigNumber>;
 
     unpause(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
+
+    updateAdapterLimit(
+      _adapter: PromiseOrValue<string>,
+      _limitInBips: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     updateDepositFee(
       _depositFeeInBips: PromiseOrValue<BigNumberish>,
@@ -828,18 +1152,37 @@ export interface KeeperDaoLiquidityPoolV2 extends BaseContract {
   };
 
   populateTransaction: {
+    BIPS_BASE(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    DEFAULT_ADMIN_ROLE(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
     ETHEREUM(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    FEE_BASE(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    OPERATOR_ROLE(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    VERSION(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    addOperator(
-      account: PromiseOrValue<string>,
+    adapterBorrow(
+      _token: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
+      _data: PromiseOrValue<BytesLike>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    addPauser(
+    adapterLimits(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    adapterLoanedAmount(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
+
+    adapterRepay(
+      _adapter: PromiseOrValue<string>,
+      _token: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
+    ): Promise<PopulatedTransaction>;
+
+    addOperator(
       account: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
@@ -858,6 +1201,8 @@ export interface KeeperDaoLiquidityPoolV2 extends BaseContract {
 
     borrowableBalance(_token: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
+    borrower(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
     deposit(
       _token: PromiseOrValue<string>,
       _amount: PromiseOrValue<BigNumberish>,
@@ -866,33 +1211,32 @@ export interface KeeperDaoLiquidityPoolV2 extends BaseContract {
 
     depositFeeInBips(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    'initialize(string,address)'(
-      _VERSION: PromiseOrValue<string>,
-      _borrower: PromiseOrValue<string>,
+    getRoleAdmin(role: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    grantRole(
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    'initialize()'(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
-
-    'initialize(address)'(
-      sender: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    hasRole(
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     isOperator(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    isPauser(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     kToken(_token: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     kTokens(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
+    loanedAmount(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
     migrate(
       _newLP: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
-
-    operators(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     pause(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
@@ -916,7 +1260,21 @@ export interface KeeperDaoLiquidityPoolV2 extends BaseContract {
 
     renounceOperator(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
-    renouncePauser(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
+    renounceRole(
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<PopulatedTransaction>;
+
+    revokeRole(
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<PopulatedTransaction>;
+
+    supportsInterface(interfaceId: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    totalValueLocked(_token: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     underlyingBalance(
       _token: PromiseOrValue<string>,
@@ -925,6 +1283,12 @@ export interface KeeperDaoLiquidityPoolV2 extends BaseContract {
     ): Promise<PopulatedTransaction>;
 
     unpause(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
+
+    updateAdapterLimit(
+      _adapter: PromiseOrValue<string>,
+      _limitInBips: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<PopulatedTransaction>;
 
     updateDepositFee(
       _depositFeeInBips: PromiseOrValue<BigNumberish>,
