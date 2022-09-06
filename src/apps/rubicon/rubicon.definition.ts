@@ -9,23 +9,15 @@ export const RUBICON_DEFINITION = appDefinition({
   description: 'Rubicon is the order book exchange standard of Ethereum',
   url: 'https://app.rubicon.finance',
 
-  // https://studio.zapper.fi/docs/tutorial/update-app-definition#what-are-groups
   groups: {
-    bath: {
-      id: 'bath',
+    pool: {
+      id: 'pool',
       type: GroupType.TOKEN,
-      label: 'Bath Tokens',
+      label: 'Pools',
     },
   },
 
-  tags: [
-    AppTag.CROSS_CHAIN,
-    AppTag.DECENTRALIZED_EXCHANGE,
-    AppTag.INFRASTRUCTURE,
-    AppTag.LIQUIDITY_POOL,
-    AppTag.LIQUID_STAKING,
-  ],
-
+  tags: [AppTag.CROSS_CHAIN, AppTag.DECENTRALIZED_EXCHANGE, AppTag.LIQUIDITY_POOL],
   keywords: ['dex', 'orderBook', 'ethereum', 'CLOBmaxis', 'rbcn'],
 
   links: {
