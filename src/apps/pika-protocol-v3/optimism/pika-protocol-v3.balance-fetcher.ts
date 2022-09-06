@@ -5,6 +5,7 @@ import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
 import { presentBalanceFetcherResponse } from '~app-toolkit/helpers/presentation/balance-fetcher-response.present';
 import { BalanceFetcher } from '~balance/balance-fetcher.interface';
+import { IMulticallWrapper } from '~multicall';
 import { isClaimable, isSupplied } from '~position/position.utils';
 import { Network } from '~types/network.interface';
 
@@ -25,11 +26,12 @@ export class OptimismPikaProtocolV3BalanceFetcher implements BalanceFetcher {
     return presentBalanceFetcherResponse([{ label: 'Vaults', assets: vaultBalances }]);
   }
 
-  private async getBalanceInVault(contract: PikaProtocolV3Vault, address: string) {
-    const userShare = Number(await contract.getShare(address));
-    const vaultBalance = Number(await (await contract.getVault()).balance);
-    const totalShare = Number(await contract.getTotalShare());
-    return userShare * vaultBalance / totalShare;
+  private async getBalanceInVault(multicall: IMulticallWrapper, contract: PikaProtocolV3Vault, address: string) {
+    const contractInst = await multicall.wrap(contract);
+    const userShare = await contractInst.getShare(address);
+    const vaultBalance = (await contractInst.getVault()).balance;
+    const totalShare = await contractInst.getTotalShare();
+    return Number(userShare) * Number(vaultBalance) / Number(totalShare);
   }
 
   async getFarmBalances(address: string) {
@@ -54,7 +56,7 @@ export class OptimismPikaProtocolV3BalanceFetcher implements BalanceFetcher {
         const rewardToken = contractPosition.tokens.find(isClaimable)!;
 
         const [stakedBalanceRaw, rewardBalanceRaw] = await Promise.all([
-          this.getBalanceInVault(contract, address),
+          this.getBalanceInVault(multicall, contract, address),
           multicall.wrap(rewardsContract).getClaimableReward(address),
         ]);
 
