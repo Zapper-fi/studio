@@ -2,5 +2,6 @@
 /* tslint:disable */
 /* eslint-disable */
 export { RookKToken__factory } from './RookKToken__factory';
-export { RookLiquidityPool__factory } from './RookLiquidityPool__factory';
 export { RookLiquidityPoolDistributor__factory } from './RookLiquidityPoolDistributor__factory';
+export { RookLiquidityPoolV2__factory } from './RookLiquidityPoolV2__factory';
+export { RookLiquidityPoolV3__factory } from './RookLiquidityPoolV3__factory';

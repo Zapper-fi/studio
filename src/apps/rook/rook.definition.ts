@@ -34,6 +34,12 @@ export const ROOK_DEFINITION = appDefinition({
       type: GroupType.TOKEN,
       label: 'xROOK',
     },
+
+    claimable: {
+      id: 'claimable',
+      type: GroupType.POSITION,
+      label: 'Rewards',
+    },
   },
 
   supportedNetworks: {

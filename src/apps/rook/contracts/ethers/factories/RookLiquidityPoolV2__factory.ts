@@ -4,89 +4,9 @@
 
 import { Contract, Signer, utils } from 'ethers';
 import type { Provider } from '@ethersproject/providers';
-import type { RookLiquidityPool, RookLiquidityPoolInterface } from '../RookLiquidityPool';
+import type { RookLiquidityPoolV2, RookLiquidityPoolV2Interface } from '../RookLiquidityPoolV2';
 
 const _abi = [
-  {
-    inputs: [],
-    stateMutability: 'nonpayable',
-    type: 'constructor',
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: true,
-        internalType: 'address',
-        name: '_adapter',
-        type: 'address',
-      },
-      {
-        indexed: true,
-        internalType: 'address',
-        name: '_token',
-        type: 'address',
-      },
-      {
-        indexed: false,
-        internalType: 'uint256',
-        name: '_amount',
-        type: 'uint256',
-      },
-    ],
-    name: 'AdapterBorrowed',
-    type: 'event',
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: true,
-        internalType: 'address',
-        name: '_adapter',
-        type: 'address',
-      },
-      {
-        indexed: false,
-        internalType: 'uint256',
-        name: '_from',
-        type: 'uint256',
-      },
-      {
-        indexed: false,
-        internalType: 'uint256',
-        name: '_to',
-        type: 'uint256',
-      },
-    ],
-    name: 'AdapterLimitChanged',
-    type: 'event',
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: true,
-        internalType: 'address',
-        name: '_adapter',
-        type: 'address',
-      },
-      {
-        indexed: true,
-        internalType: 'address',
-        name: '_token',
-        type: 'address',
-      },
-      {
-        indexed: false,
-        internalType: 'uint256',
-        name: '_amount',
-        type: 'uint256',
-      },
-    ],
-    name: 'AdapterRepaid',
-    type: 'event',
-  },
   {
     anonymous: false,
     inputs: [
@@ -212,24 +132,12 @@ const _abi = [
     inputs: [
       {
         indexed: true,
-        internalType: 'bytes32',
-        name: 'role',
-        type: 'bytes32',
-      },
-      {
-        indexed: true,
-        internalType: 'bytes32',
-        name: 'previousAdminRole',
-        type: 'bytes32',
-      },
-      {
-        indexed: true,
-        internalType: 'bytes32',
-        name: 'newAdminRole',
-        type: 'bytes32',
+        internalType: 'address',
+        name: 'account',
+        type: 'address',
       },
     ],
-    name: 'RoleAdminChanged',
+    name: 'PauserAdded',
     type: 'event',
   },
   {
@@ -237,49 +145,12 @@ const _abi = [
     inputs: [
       {
         indexed: true,
-        internalType: 'bytes32',
-        name: 'role',
-        type: 'bytes32',
-      },
-      {
-        indexed: true,
         internalType: 'address',
         name: 'account',
         type: 'address',
       },
-      {
-        indexed: true,
-        internalType: 'address',
-        name: 'sender',
-        type: 'address',
-      },
     ],
-    name: 'RoleGranted',
-    type: 'event',
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: true,
-        internalType: 'bytes32',
-        name: 'role',
-        type: 'bytes32',
-      },
-      {
-        indexed: true,
-        internalType: 'address',
-        name: 'account',
-        type: 'address',
-      },
-      {
-        indexed: true,
-        internalType: 'address',
-        name: 'sender',
-        type: 'address',
-      },
-    ],
-    name: 'RoleRevoked',
+    name: 'PauserRemoved',
     type: 'event',
   },
   {
@@ -333,32 +204,12 @@ const _abi = [
     type: 'event',
   },
   {
-    inputs: [],
-    name: 'BIPS_BASE',
-    outputs: [
-      {
-        internalType: 'uint256',
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
+    payable: true,
+    stateMutability: 'payable',
+    type: 'fallback',
   },
   {
-    inputs: [],
-    name: 'DEFAULT_ADMIN_ROLE',
-    outputs: [
-      {
-        internalType: 'bytes32',
-        name: '',
-        type: 'bytes32',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
+    constant: true,
     inputs: [],
     name: 'ETHEREUM',
     outputs: [
@@ -368,54 +219,14 @@ const _abi = [
         type: 'address',
       },
     ],
+    payable: false,
     stateMutability: 'view',
     type: 'function',
   },
   {
+    constant: true,
     inputs: [],
-    name: 'OPERATOR_ROLE',
-    outputs: [
-      {
-        internalType: 'bytes32',
-        name: '',
-        type: 'bytes32',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        internalType: 'address',
-        name: '_token',
-        type: 'address',
-      },
-      {
-        internalType: 'uint256',
-        name: '_amount',
-        type: 'uint256',
-      },
-      {
-        internalType: 'bytes',
-        name: '_data',
-        type: 'bytes',
-      },
-    ],
-    name: 'adapterBorrow',
-    outputs: [],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        internalType: 'address',
-        name: '',
-        type: 'address',
-      },
-    ],
-    name: 'adapterLimits',
+    name: 'FEE_BASE',
     outputs: [
       {
         internalType: 'uint256',
@@ -423,57 +234,27 @@ const _abi = [
         type: 'uint256',
       },
     ],
+    payable: false,
     stateMutability: 'view',
     type: 'function',
   },
   {
-    inputs: [
-      {
-        internalType: 'address',
-        name: '',
-        type: 'address',
-      },
-      {
-        internalType: 'address',
-        name: '',
-        type: 'address',
-      },
-    ],
-    name: 'adapterLoanedAmount',
+    constant: true,
+    inputs: [],
+    name: 'VERSION',
     outputs: [
       {
-        internalType: 'uint256',
+        internalType: 'string',
         name: '',
-        type: 'uint256',
+        type: 'string',
       },
     ],
+    payable: false,
     stateMutability: 'view',
     type: 'function',
   },
   {
-    inputs: [
-      {
-        internalType: 'address',
-        name: '_adapter',
-        type: 'address',
-      },
-      {
-        internalType: 'address',
-        name: '_token',
-        type: 'address',
-      },
-      {
-        internalType: 'uint256',
-        name: '_amount',
-        type: 'uint256',
-      },
-    ],
-    name: 'adapterRepay',
-    outputs: [],
-    stateMutability: 'payable',
-    type: 'function',
-  },
-  {
+    constant: false,
     inputs: [
       {
         internalType: 'address',
@@ -483,10 +264,27 @@ const _abi = [
     ],
     name: 'addOperator',
     outputs: [],
+    payable: false,
     stateMutability: 'nonpayable',
     type: 'function',
   },
   {
+    constant: false,
+    inputs: [
+      {
+        internalType: 'address',
+        name: 'account',
+        type: 'address',
+      },
+    ],
+    name: 'addPauser',
+    outputs: [],
+    payable: false,
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    constant: false,
     inputs: [
       {
         internalType: 'address',
@@ -496,10 +294,12 @@ const _abi = [
     ],
     name: 'blacklistRecoverableToken',
     outputs: [],
+    payable: false,
     stateMutability: 'nonpayable',
     type: 'function',
   },
   {
+    constant: false,
     inputs: [
       {
         internalType: 'address',
@@ -519,10 +319,12 @@ const _abi = [
     ],
     name: 'borrow',
     outputs: [],
+    payable: false,
     stateMutability: 'nonpayable',
     type: 'function',
   },
   {
+    constant: true,
     inputs: [
       {
         internalType: 'address',
@@ -538,23 +340,12 @@ const _abi = [
         type: 'uint256',
       },
     ],
+    payable: false,
     stateMutability: 'view',
     type: 'function',
   },
   {
-    inputs: [],
-    name: 'borrower',
-    outputs: [
-      {
-        internalType: 'contract BorrowerProxy',
-        name: '',
-        type: 'address',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
+    constant: false,
     inputs: [
       {
         internalType: 'address',
@@ -575,10 +366,12 @@ const _abi = [
         type: 'uint256',
       },
     ],
+    payable: true,
     stateMutability: 'payable',
     type: 'function',
   },
   {
+    constant: true,
     inputs: [],
     name: 'depositFeeInBips',
     outputs: [
@@ -588,71 +381,56 @@ const _abi = [
         type: 'uint256',
       },
     ],
+    payable: false,
     stateMutability: 'view',
     type: 'function',
   },
   {
+    constant: false,
     inputs: [
       {
-        internalType: 'bytes32',
-        name: 'role',
-        type: 'bytes32',
-      },
-    ],
-    name: 'getRoleAdmin',
-    outputs: [
-      {
-        internalType: 'bytes32',
-        name: '',
-        type: 'bytes32',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        internalType: 'bytes32',
-        name: 'role',
-        type: 'bytes32',
+        internalType: 'string',
+        name: '_VERSION',
+        type: 'string',
       },
       {
         internalType: 'address',
-        name: 'account',
+        name: '_borrower',
         type: 'address',
       },
     ],
-    name: 'grantRole',
+    name: 'initialize',
     outputs: [],
+    payable: false,
     stateMutability: 'nonpayable',
     type: 'function',
   },
   {
-    inputs: [
-      {
-        internalType: 'bytes32',
-        name: 'role',
-        type: 'bytes32',
-      },
-      {
-        internalType: 'address',
-        name: 'account',
-        type: 'address',
-      },
-    ],
-    name: 'hasRole',
-    outputs: [
-      {
-        internalType: 'bool',
-        name: '',
-        type: 'bool',
-      },
-    ],
-    stateMutability: 'view',
+    constant: false,
+    inputs: [],
+    name: 'initialize',
+    outputs: [],
+    payable: false,
+    stateMutability: 'nonpayable',
     type: 'function',
   },
   {
+    constant: false,
+    inputs: [
+      {
+        internalType: 'address',
+        name: 'sender',
+        type: 'address',
+      },
+    ],
+    name: 'initialize',
+    outputs: [],
+    payable: false,
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    constant: true,
     inputs: [
       {
         internalType: 'address',
@@ -668,10 +446,33 @@ const _abi = [
         type: 'bool',
       },
     ],
+    payable: false,
     stateMutability: 'view',
     type: 'function',
   },
   {
+    constant: true,
+    inputs: [
+      {
+        internalType: 'address',
+        name: 'account',
+        type: 'address',
+      },
+    ],
+    name: 'isPauser',
+    outputs: [
+      {
+        internalType: 'bool',
+        name: '',
+        type: 'bool',
+      },
+    ],
+    payable: false,
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    constant: true,
     inputs: [
       {
         internalType: 'address',
@@ -687,10 +488,12 @@ const _abi = [
         type: 'address',
       },
     ],
+    payable: false,
     stateMutability: 'view',
     type: 'function',
   },
   {
+    constant: true,
     inputs: [
       {
         internalType: 'address',
@@ -706,29 +509,12 @@ const _abi = [
         type: 'address',
       },
     ],
+    payable: false,
     stateMutability: 'view',
     type: 'function',
   },
   {
-    inputs: [
-      {
-        internalType: 'address',
-        name: '',
-        type: 'address',
-      },
-    ],
-    name: 'loanedAmount',
-    outputs: [
-      {
-        internalType: 'uint256',
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
+    constant: false,
     inputs: [
       {
         internalType: 'contract ILiquidityPool',
@@ -738,17 +524,42 @@ const _abi = [
     ],
     name: 'migrate',
     outputs: [],
+    payable: false,
     stateMutability: 'nonpayable',
     type: 'function',
   },
   {
+    constant: true,
+    inputs: [
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    name: 'operators',
+    outputs: [
+      {
+        internalType: 'address',
+        name: '',
+        type: 'address',
+      },
+    ],
+    payable: false,
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    constant: false,
     inputs: [],
     name: 'pause',
     outputs: [],
+    payable: false,
     stateMutability: 'nonpayable',
     type: 'function',
   },
   {
+    constant: true,
     inputs: [],
     name: 'paused',
     outputs: [
@@ -758,10 +569,12 @@ const _abi = [
         type: 'bool',
       },
     ],
+    payable: false,
     stateMutability: 'view',
     type: 'function',
   },
   {
+    constant: true,
     inputs: [],
     name: 'poolFeeInBips',
     outputs: [
@@ -771,10 +584,12 @@ const _abi = [
         type: 'uint256',
       },
     ],
+    payable: false,
     stateMutability: 'view',
     type: 'function',
   },
   {
+    constant: false,
     inputs: [
       {
         internalType: 'address',
@@ -784,10 +599,12 @@ const _abi = [
     ],
     name: 'recoverTokens',
     outputs: [],
+    payable: false,
     stateMutability: 'nonpayable',
     type: 'function',
   },
   {
+    constant: false,
     inputs: [
       {
         internalType: 'contract IKToken',
@@ -797,10 +614,12 @@ const _abi = [
     ],
     name: 'register',
     outputs: [],
+    payable: false,
     stateMutability: 'nonpayable',
     type: 'function',
   },
   {
+    constant: true,
     inputs: [
       {
         internalType: 'address',
@@ -816,10 +635,12 @@ const _abi = [
         type: 'bool',
       },
     ],
+    payable: false,
     stateMutability: 'view',
     type: 'function',
   },
   {
+    constant: true,
     inputs: [
       {
         internalType: 'uint256',
@@ -835,91 +656,30 @@ const _abi = [
         type: 'address',
       },
     ],
+    payable: false,
     stateMutability: 'view',
     type: 'function',
   },
   {
+    constant: false,
     inputs: [],
     name: 'renounceOperator',
     outputs: [],
+    payable: false,
     stateMutability: 'nonpayable',
     type: 'function',
   },
   {
-    inputs: [
-      {
-        internalType: 'bytes32',
-        name: 'role',
-        type: 'bytes32',
-      },
-      {
-        internalType: 'address',
-        name: 'account',
-        type: 'address',
-      },
-    ],
-    name: 'renounceRole',
+    constant: false,
+    inputs: [],
+    name: 'renouncePauser',
     outputs: [],
+    payable: false,
     stateMutability: 'nonpayable',
     type: 'function',
   },
   {
-    inputs: [
-      {
-        internalType: 'bytes32',
-        name: 'role',
-        type: 'bytes32',
-      },
-      {
-        internalType: 'address',
-        name: 'account',
-        type: 'address',
-      },
-    ],
-    name: 'revokeRole',
-    outputs: [],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        internalType: 'bytes4',
-        name: 'interfaceId',
-        type: 'bytes4',
-      },
-    ],
-    name: 'supportsInterface',
-    outputs: [
-      {
-        internalType: 'bool',
-        name: '',
-        type: 'bool',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        internalType: 'address',
-        name: '_token',
-        type: 'address',
-      },
-    ],
-    name: 'totalValueLocked',
-    outputs: [
-      {
-        internalType: 'uint256',
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
+    constant: true,
     inputs: [
       {
         internalType: 'address',
@@ -940,35 +700,21 @@ const _abi = [
         type: 'uint256',
       },
     ],
+    payable: false,
     stateMutability: 'view',
     type: 'function',
   },
   {
+    constant: false,
     inputs: [],
     name: 'unpause',
     outputs: [],
+    payable: false,
     stateMutability: 'nonpayable',
     type: 'function',
   },
   {
-    inputs: [
-      {
-        internalType: 'address',
-        name: '_adapter',
-        type: 'address',
-      },
-      {
-        internalType: 'uint256',
-        name: '_limitInBips',
-        type: 'uint256',
-      },
-    ],
-    name: 'updateAdapterLimit',
-    outputs: [],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
+    constant: false,
     inputs: [
       {
         internalType: 'uint256',
@@ -978,10 +724,12 @@ const _abi = [
     ],
     name: 'updateDepositFee',
     outputs: [],
+    payable: false,
     stateMutability: 'nonpayable',
     type: 'function',
   },
   {
+    constant: false,
     inputs: [
       {
         internalType: 'address payable',
@@ -991,10 +739,12 @@ const _abi = [
     ],
     name: 'updateFeePool',
     outputs: [],
+    payable: false,
     stateMutability: 'nonpayable',
     type: 'function',
   },
   {
+    constant: false,
     inputs: [
       {
         internalType: 'uint256',
@@ -1004,10 +754,12 @@ const _abi = [
     ],
     name: 'updatePoolFee',
     outputs: [],
+    payable: false,
     stateMutability: 'nonpayable',
     type: 'function',
   },
   {
+    constant: false,
     inputs: [
       {
         internalType: 'address payable',
@@ -1027,21 +779,18 @@ const _abi = [
     ],
     name: 'withdraw',
     outputs: [],
+    payable: false,
     stateMutability: 'nonpayable',
     type: 'function',
   },
-  {
-    stateMutability: 'payable',
-    type: 'receive',
-  },
 ];
 
-export class RookLiquidityPool__factory {
+export class RookLiquidityPoolV2__factory {
   static readonly abi = _abi;
-  static createInterface(): RookLiquidityPoolInterface {
-    return new utils.Interface(_abi) as RookLiquidityPoolInterface;
+  static createInterface(): RookLiquidityPoolV2Interface {
+    return new utils.Interface(_abi) as RookLiquidityPoolV2Interface;
   }
-  static connect(address: string, signerOrProvider: Signer | Provider): RookLiquidityPool {
-    return new Contract(address, _abi, signerOrProvider) as RookLiquidityPool;
+  static connect(address: string, signerOrProvider: Signer | Provider): RookLiquidityPoolV2 {
+    return new Contract(address, _abi, signerOrProvider) as RookLiquidityPoolV2;
   }
 }

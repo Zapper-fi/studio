@@ -1,4 +1,5 @@
 import { Inject } from '@nestjs/common';
+import { BigNumber } from 'ethers';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { ETH_ADDR_ALIAS, ZERO_ADDRESS } from '~app-toolkit/constants/address';
@@ -20,6 +21,7 @@ export type RookPoolTokenDataProps = {
 export abstract class RookPoolTokenFetcher extends AppTokenTemplatePositionFetcher<RookKToken, RookPoolTokenDataProps> {
   abstract kTokenAddresses: string[];
   abstract liquidityPoolAddress: string;
+  abstract isV3: boolean;
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
@@ -42,8 +44,24 @@ export abstract class RookPoolTokenFetcher extends AppTokenTemplatePositionFetch
   }
 
   async getPricePerShare({ appToken, multicall }: GetPricePerShareParams<RookKToken, RookPoolTokenDataProps>) {
-    const pool = this.contractFactory.rookLiquidityPool({ address: this.liquidityPoolAddress, network: this.network });
-    const reserveRaw = await multicall.wrap(pool).totalValueLocked(appToken.tokens[0].address);
+    let reserveRaw: BigNumber;
+
+    if (this.isV3) {
+      const pool = this.contractFactory.rookLiquidityPoolV3({
+        address: this.liquidityPoolAddress,
+        network: this.network,
+      });
+      const underlyingTokenAddress = appToken.tokens[0].address.replace(ZERO_ADDRESS, ETH_ADDR_ALIAS);
+      reserveRaw = await multicall.wrap(pool).totalValueLocked(underlyingTokenAddress);
+    } else {
+      const pool = this.contractFactory.rookLiquidityPoolV2({
+        address: this.liquidityPoolAddress,
+        network: this.network,
+      });
+      const underlyingTokenAddress = appToken.tokens[0].address.replace(ZERO_ADDRESS, ETH_ADDR_ALIAS);
+      reserveRaw = await multicall.wrap(pool).borrowableBalance(underlyingTokenAddress);
+    }
+
     const reserve = Number(reserveRaw) / 10 ** appToken.tokens[0].decimals;
     return reserve / appToken.supply;
   }

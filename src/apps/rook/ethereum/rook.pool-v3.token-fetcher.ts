@@ -12,6 +12,7 @@ export class EthereumRookV3PoolTokenFetcher extends RookPoolTokenFetcher {
   network = Network.ETHEREUM_MAINNET;
   groupLabel = 'V3 Pools';
 
+  isV3 = true;
   liquidityPoolAddress = '0x4f868c1aa37fcf307ab38d215382e88fca6275e2';
   kTokenAddresses = [
     '0x77565202d78a6eda565c7dc737ff1d8e64fd672a', // kBTC
