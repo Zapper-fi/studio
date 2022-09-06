@@ -1,7 +1,9 @@
-export { ROOK_DEFINITION as KEEPER_DAO_DEFINITION, KeeperDaoAppDefinition } from './rook.definition';
-export { RookAppModule as KeeperDaoAppModule } from './rook.module';
-export { KeeperDaoContractFactory } from './contracts';
+export { ROOK_DEFINITION, RookAppDefinition } from './rook.definition';
+export { RookAppModule } from './rook.module';
+export { RookContractFactory } from './contracts';
 
 /* Contracts */
-export type { KeeperDaoLiquidityPoolDistributor } from './contracts';
-export type { KeeperDaoLiquidityPoolV2 } from './contracts';
+export type { RookKToken } from './contracts';
+export type { RookLiquidityPoolDistributor } from './contracts';
+export type { RookLiquidityPoolV2 } from './contracts';
+export type { RookLiquidityPoolV3 } from './contracts';
