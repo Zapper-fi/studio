@@ -1,7 +1,6 @@
 import { Inject, Injectable } from '@nestjs/common';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
-import { SynthetixContractFactory, SynthetixRewards } from '~apps/synthetix';
 import { GetDataPropsParams, GetTokenBalancesParams } from '~position/template/contract-position.template.types';
 import {
   SingleStakingFarmDefinition,
@@ -9,10 +8,12 @@ import {
 } from '~position/template/single-staking.template.contract-position-fetcher';
 import { Network } from '~types/network.interface';
 
+import { YearnContractFactory } from '../contracts';
+import { YearnGovernance } from '../contracts/ethers/YearnGovernance';
 import { YEARN_DEFINITION } from '../yearn.definition';
 
 @Injectable()
-export class EthereumYearnGovernanceContractPositionFetcher extends SingleStakingFarmTemplateContractPositionFetcher<SynthetixRewards> {
+export class EthereumYearnGovernanceContractPositionFetcher extends SingleStakingFarmTemplateContractPositionFetcher<YearnGovernance> {
   appId = YEARN_DEFINITION.id;
   groupId = YEARN_DEFINITION.groups.governance.id;
   network = Network.ETHEREUM_MAINNET;
@@ -22,13 +23,13 @@ export class EthereumYearnGovernanceContractPositionFetcher extends SingleStakin
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(SynthetixContractFactory) protected readonly contractFactory: SynthetixContractFactory,
+    @Inject(YearnContractFactory) protected readonly contractFactory: YearnContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): SynthetixRewards {
-    return this.contractFactory.synthetixRewards({ address, network: this.network });
+  getContract(address: string): YearnGovernance {
+    return this.contractFactory.yearnGovernance({ address, network: this.network });
   }
 
   async getFarmDefinitions(): Promise<SingleStakingFarmDefinition[]> {
@@ -41,15 +42,15 @@ export class EthereumYearnGovernanceContractPositionFetcher extends SingleStakin
     ];
   }
 
-  async getRewardRates({ contract }: GetDataPropsParams<SynthetixRewards>) {
+  async getRewardRates({ contract }: GetDataPropsParams<YearnGovernance>) {
     return contract.rewardRate();
   }
 
-  async getStakedTokenBalance({ contract, address }: GetTokenBalancesParams<SynthetixRewards>) {
+  async getStakedTokenBalance({ contract, address }: GetTokenBalancesParams<YearnGovernance>) {
     return contract.balanceOf(address);
   }
 
-  async getRewardTokenBalances({ contract, address }: GetTokenBalancesParams<SynthetixRewards>) {
+  async getRewardTokenBalances({ contract, address }: GetTokenBalancesParams<YearnGovernance>) {
     return contract.rewards(address);
   }
 }

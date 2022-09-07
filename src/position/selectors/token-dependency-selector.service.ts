@@ -24,24 +24,24 @@ export class TokenDependencySelectorService implements TokenDependencySelectorFa
 
   create(_opts: CreateTokenDependencySelectorOptions): TokenDependencySelector {
     const tokenDataLoader = new DataLoader<TokenDependencySelectorKey, TokenDependency | null>(
-      keys => this.apiPositionSource.getTokenDependenciesBatch(keys as Mutable<TokenDependencySelectorKey[]>),
+      async (keys: Mutable<TokenDependencySelectorKey[]>) => {
+        const [fromCache, fromApi] = await Promise.all([
+          this.registryPositionSource.getTokenDependenciesBatch(keys),
+          this.apiPositionSource.getTokenDependenciesBatch(keys),
+        ]);
+
+        return keys.map((_key, idx) => fromCache[idx] ?? fromApi[idx] ?? null);
+      },
       { maxBatchSize: 1000 },
     );
 
     return {
-      getOne: async ({ network, address }: Parameters<GetOne>[0]) => {
-        const fromCache = await this.registryPositionSource.getTokenDependenciesBatch([{ network, address }]);
-        const fromApi = await tokenDataLoader.load({ network, address });
-        return fromCache[0] ?? fromApi;
-      },
+      getOne: async (key: Parameters<GetOne>[0]) => tokenDataLoader.load(key),
       getMany: async (queries: Parameters<GetMany>[0]) => {
-        const fromCache = await this.registryPositionSource.getTokenDependenciesBatch(queries);
-        const fromApi = await tokenDataLoader.loadMany(queries);
-
-        return queries.map((_, i) => {
-          const element = fromCache[i] ?? fromApi[i];
-          if (element instanceof Error) return null;
-          return element;
+        const docs = await tokenDataLoader.loadMany(queries);
+        return docs.map(doc => {
+          if (doc instanceof Error) return null;
+          return doc;
         });
       },
     };
