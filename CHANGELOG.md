@@ -4,6 +4,28 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.216.0](https://github.com/Zapper-fi/studio/compare/v0.215.0...v0.216.0) (2022-09-07)
+
+
+### Features
+
+* **convex:** Optimize Convex balance fetching ([#1367](https://github.com/Zapper-fi/studio/issues/1367)) ([0051fb8](https://github.com/Zapper-fi/studio/commit/0051fb833575b6e354a939ad0d670fcccee3aa3d))
+* **granary-finance:** Support Granary Finance lending on Ethereum and Optimism ([#1347](https://github.com/Zapper-fi/studio/issues/1347)) ([e0b6446](https://github.com/Zapper-fi/studio/commit/e0b6446cd2caba73a5525d5115022595b0136bcc))
+* **morpho:** add Morpho Aave positions ([#1348](https://github.com/Zapper-fi/studio/issues/1348)) ([9b5a2af](https://github.com/Zapper-fi/studio/commit/9b5a2af9116f5325c980c5dbefb800f2435fc0b8))
+* **pool-together-v3:** Migrate to templates ([#1361](https://github.com/Zapper-fi/studio/issues/1361)) ([a3c92d6](https://github.com/Zapper-fi/studio/commit/a3c92d65be37d9587811394d978e561a65fc90d3))
+* **pool-together-v3:** Move community pools to V3 ([#1363](https://github.com/Zapper-fi/studio/issues/1363)) ([9b1f18a](https://github.com/Zapper-fi/studio/commit/9b1f18a110e830f850672acd061f766dce3498ca))
+* **rari-fuse:** Migrate to templates and position presenter ([#1362](https://github.com/Zapper-fi/studio/issues/1362)) ([2e2ab42](https://github.com/Zapper-fi/studio/commit/2e2ab4207b36cb2e7299a7b0e64da2d58faac92f))
+* **rocket-pool:** Move to templates ([#1358](https://github.com/Zapper-fi/studio/issues/1358)) ([ca0e8d3](https://github.com/Zapper-fi/studio/commit/ca0e8d3c44389746a1e7d2a75d802b6f7e375bd1))
+* **rook:** Rebrand KeeperDAO, migrate to templates ([#1356](https://github.com/Zapper-fi/studio/issues/1356)) ([7249be0](https://github.com/Zapper-fi/studio/commit/7249be09789218868da973dfee5978587c365a65))
+* **token-deps:** Optimize cache logic ([#1365](https://github.com/Zapper-fi/studio/issues/1365)) ([ab7a2b5](https://github.com/Zapper-fi/studio/commit/ab7a2b52ecaad85210e78d1abd7c75c4ccf97845))
+
+
+### Bug Fixes
+
+* **euler:** Migrate Euler to template ([#1364](https://github.com/Zapper-fi/studio/issues/1364)) ([d43de90](https://github.com/Zapper-fi/studio/commit/d43de905695df35b7a0f25a3656dea1cf4e18001))
+* **pika-protocol-v3:** Updates vault position calculation logic ([#1360](https://github.com/Zapper-fi/studio/issues/1360)) ([ff1e37a](https://github.com/Zapper-fi/studio/commit/ff1e37a86aa37c7da269263c3b62b87ff73857cf))
+* **yearn:** Small refactor to pull out common code ([#1355](https://github.com/Zapper-fi/studio/issues/1355)) ([2fbb187](https://github.com/Zapper-fi/studio/commit/2fbb187b235dc4f91bc8901ceb25f84b82b0d39a))
+
 ## [0.215.0](https://github.com/Zapper-fi/studio/compare/v0.214.1...v0.215.0) (2022-09-06)
 
 
