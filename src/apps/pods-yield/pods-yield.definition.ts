@@ -16,6 +16,12 @@ export const PODS_YIELD_DEFINITION = appDefinition({
       type: GroupType.TOKEN,
       label: 'Strategies',
     },
+
+    queue: {
+      id: 'queue',
+      type: GroupType.POSITION,
+      label: 'Queues',
+    },
   },
 
   tags: [AppTag.ASSET_MANAGEMENT],
