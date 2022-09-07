@@ -1,10 +1,9 @@
-import { Inject } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import BigNumber from 'bignumber.js';
 import { gql } from 'graphql-request';
 import _ from 'lodash';
 
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
-import { Register } from '~app-toolkit/decorators';
 import { DefaultDataProps } from '~position/display.interface';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import {
@@ -37,15 +36,11 @@ export type EnzymeFinanceVaultTokenDataProps = {
   isActive: boolean;
 };
 
-const appId = ENZYME_FINANCE_DEFINITION.id;
-const groupId = ENZYME_FINANCE_DEFINITION.groups.vault.id;
-const network = Network.ETHEREUM_MAINNET;
-
-@Register.TokenPositionFetcher({ appId, groupId, network })
+@Injectable()
 export class EthereumEnzymeFinanceVaultTokenFetcher extends AppTokenTemplatePositionFetcher<EnzymeFinanceVault> {
-  appId = appId;
-  groupId = groupId;
-  network = network;
+  appId = ENZYME_FINANCE_DEFINITION.id;
+  groupId = ENZYME_FINANCE_DEFINITION.groups.vault.id;
+  network = Network.ETHEREUM_MAINNET;
   groupLabel = 'Vaults';
 
   constructor(
@@ -79,7 +74,7 @@ export class EthereumEnzymeFinanceVaultTokenFetcher extends AppTokenTemplatePosi
     const totalAssetUnderManagement = _.sum(
       await Promise.all(
         appToken.tokens.map(async token => {
-          const uTokenContract = this.contractFactory.erc20({ address: token.address, network });
+          const uTokenContract = this.contractFactory.erc20({ address: token.address, network: this.network });
           const tokenAmountRaw = await multicall.wrap(uTokenContract).balanceOf(appToken.address);
           const amount = Number(tokenAmountRaw) / 10 ** token.decimals;
           return token.price * amount;

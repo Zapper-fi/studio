@@ -126,7 +126,7 @@ export abstract class ConvexFarmContractPositionFetcher extends SingleStakingFar
     const rewardTokens = contractPosition.tokens.filter(isClaimable);
     const [, cvxRewardToken, ...extraRewards] = rewardTokens;
 
-    const cvxTokenContract = this.contractFactory.erc20(cvxRewardToken);
+    const cvxTokenContract = multicall.wrap(this.contractFactory.erc20(cvxRewardToken));
     const currentCvxSupply = await cvxTokenContract.totalSupply();
 
     const crvBalanceBN = await contract.earned(address);

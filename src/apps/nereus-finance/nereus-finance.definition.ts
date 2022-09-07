@@ -28,13 +28,6 @@ export const NEREUS_FINANCE_DEFINITION = appDefinition({
       type: GroupType.TOKEN,
       label: 'Lending',
     },
-
-    claimable: {
-      id: 'claimable',
-      type: GroupType.TOKEN,
-      label: 'Reward',
-      isHiddenFromExplore: true,
-    },
   },
   tags: [AppTag.LENDING],
 

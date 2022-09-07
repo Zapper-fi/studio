@@ -1,7 +1,6 @@
-import { Inject } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
-import { Register } from '~app-toolkit/decorators';
 import { getImagesFromToken, getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { MetaType } from '~position/position.interface';
 import { isClaimable, isSupplied } from '~position/position.utils';
@@ -23,16 +22,15 @@ export const ABRACADABRA_WRAPPERS = [
   '0x3ba207c25a278524e1cc7faaea950753049072a4', // stk-cvx3pool
 ];
 
-const appId = CONVEX_DEFINITION.id;
-const groupId = CONVEX_DEFINITION.groups.abracadabraClaimable.id;
-const network = Network.ETHEREUM_MAINNET;
-
-@Register.ContractPositionFetcher({ appId, groupId, network, options: { excludeFromTvl: true } })
+@Injectable()
 export class EthereumConvexAbracadabraClaimableContractPositionFetcher extends ContractPositionTemplatePositionFetcher<ConvexAbracadabraWrapper> {
-  appId = appId;
-  groupId = groupId;
-  network = network;
+  appId = CONVEX_DEFINITION.id;
+  groupId = CONVEX_DEFINITION.groups.abracadabraClaimable.id;
+  network = Network.ETHEREUM_MAINNET;
   groupLabel = 'Abracadabra Rewards';
+
+  isExcludedFromExplore = true;
+  isExcludedFromTvl = true;
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,

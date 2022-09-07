@@ -1,8 +1,7 @@
-import { Inject } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { compact, range } from 'lodash';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
-import { Register } from '~app-toolkit/decorators';
 import { buildDollarDisplayItem } from '~app-toolkit/helpers/presentation/display-item.present';
 import { getTokenImg } from '~app-toolkit/helpers/presentation/image.present';
 import { isMulticallUnderlyingError } from '~multicall/multicall.ethers';
@@ -19,16 +18,14 @@ import { Network } from '~types/network.interface';
 import { GeistContractFactory, GeistStaking } from '../contracts';
 import { GEIST_DEFINITION } from '../geist.definition';
 
-const network = Network.FANTOM_OPERA_MAINNET;
-const appId = GEIST_DEFINITION.id;
-const groupId = GEIST_DEFINITION.groups.platformFees.id;
-
-@Register.ContractPositionFetcher({ appId, network, groupId })
+@Injectable()
 export class FantomGeistPlatformFeesPositionFetcher extends ContractPositionTemplatePositionFetcher<GeistStaking> {
-  network = network;
-  appId = appId;
-  groupId = groupId;
+  network = Network.FANTOM_OPERA_MAINNET;
+  appId = GEIST_DEFINITION.id;
+  groupId = GEIST_DEFINITION.groups.platformFees.id;
   groupLabel = 'Platform Fees';
+
+  isExcludedFromExplore = true;
 
   geistTokenAddress = '0xd8321aa83fb0a4ecd6348d4577431310a6e0814d';
 

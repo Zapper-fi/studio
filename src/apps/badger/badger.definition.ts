@@ -14,7 +14,6 @@ export const BADGER_DEFINITION = appDefinition({
       id: 'claimable',
       type: GroupType.POSITION,
       label: 'Rewards',
-      isHiddenFromExplore: true,
     },
     vault: {
       id: 'vault',

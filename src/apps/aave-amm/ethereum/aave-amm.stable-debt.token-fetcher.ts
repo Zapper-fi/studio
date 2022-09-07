@@ -1,4 +1,5 @@
-import { Register } from '~app-toolkit/decorators';
+import { Injectable } from '@nestjs/common';
+
 import {
   AaveV2LendingTokenDataProps,
   AaveV2ReserveApyData,
@@ -11,11 +12,7 @@ import { AAVE_AMM_DEFINITION } from '../aave-amm.definition';
 import { AaveAmmAToken } from '../contracts';
 import { AaveAmmLendingTemplateTokenFetcher } from '../helpers/aave-amm.lending.template.token-fetcher';
 
-const appId = AAVE_AMM_DEFINITION.id;
-const groupId = AAVE_AMM_DEFINITION.groups.stableDebt.id;
-const network = Network.ETHEREUM_MAINNET;
-
-@Register.TokenPositionFetcher({ appId, groupId, network })
+@Injectable()
 export class EthereumAaveAmmStableDebtTokenFetcher extends AaveAmmLendingTemplateTokenFetcher {
   appId = AAVE_AMM_DEFINITION.id;
   groupId = AAVE_AMM_DEFINITION.groups.stableDebt.id;

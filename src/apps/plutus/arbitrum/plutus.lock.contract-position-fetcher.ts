@@ -1,9 +1,8 @@
-import { Inject } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import BigNumber from 'bignumber.js';
 import { range } from 'lodash';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
-import { Register } from '~app-toolkit/decorators';
 import { GetDisplayPropsParams, GetTokenBalancesParams } from '~position/template/contract-position.template.types';
 import {
   SingleStakingFarmDefinition,
@@ -13,10 +12,6 @@ import { Network } from '~types/network.interface';
 
 import { PlutusContractFactory, PlutusLock } from '../contracts';
 import PLUTUS_DEFINITION from '../plutus.definition';
-
-const appId = PLUTUS_DEFINITION.id;
-const groupId = PLUTUS_DEFINITION.groups.lock.id;
-const network = Network.ARBITRUM_MAINNET;
 
 const PLUTUS_LOCKS = [
   {
@@ -51,7 +46,7 @@ const PLUTUS_LOCKS = [
   },
 ];
 
-@Register.ContractPositionFetcher({ appId, groupId, network })
+@Injectable()
 export class ArbitrumPlutusLockContractPositionFetcher extends SingleStakingFarmTemplateContractPositionFetcher<PlutusLock> {
   appId = PLUTUS_DEFINITION.id;
   groupId = PLUTUS_DEFINITION.groups.lock.id;
@@ -90,7 +85,7 @@ export class ArbitrumPlutusLockContractPositionFetcher extends SingleStakingFarm
     const rewardsAddress = PLUTUS_LOCKS.find(v => v.address === contractPosition.address)!.rewardsDistributor;
     const rewardsContract = this.contractFactory.plutusEpochStakingRewardsRolling({
       address: rewardsAddress,
-      network,
+      network: this.network,
     });
 
     const currentEpoch = await multicall.wrap(contract).currentEpoch();
@@ -108,7 +103,8 @@ export class ArbitrumPlutusLockContractPositionFetcher extends SingleStakingFarm
         const userPlsJonesShare = await multicall
           .wrap(rewardsContract)
           .calculateShare(address, epoch, rewardsForEpoch.plsJones);
-        if (Number(userPlsDpxShare) === 0 && Number(userPlsJonesShare) === 0) return [];
+        if (Number(userPlsDpxShare) === 0 && Number(userPlsJonesShare) === 0)
+          return [new BigNumber(0), new BigNumber(0)];
 
         const now = Date.now() / 1000;
         const vestedDuration =

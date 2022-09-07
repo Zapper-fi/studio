@@ -1,7 +1,6 @@
-import { Inject } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
-import { Register } from '~app-toolkit/decorators';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import { GetPricePerShareParams, GetUnderlyingTokensParams } from '~position/template/app-token.template.types';
 import { Network } from '~types/network.interface';
@@ -10,11 +9,7 @@ import { BEETHOVEN_X_DEFINITION } from '../beethoven-x.definition';
 import { BeethovenXContractFactory } from '../contracts';
 import { BeethovenXBeetsBar } from '../contracts/ethers/BeethovenXBeetsBar';
 
-const appId = BEETHOVEN_X_DEFINITION.id;
-const groupId = BEETHOVEN_X_DEFINITION.groups.fBeets.id;
-const network = Network.FANTOM_OPERA_MAINNET;
-
-@Register.TokenPositionFetcher({ appId, groupId, network })
+@Injectable()
 export class FantomBeethovenXFBeetsTokenFetcher extends AppTokenTemplatePositionFetcher<BeethovenXBeetsBar> {
   appId = BEETHOVEN_X_DEFINITION.id;
   groupId = BEETHOVEN_X_DEFINITION.groups.fBeets.id;

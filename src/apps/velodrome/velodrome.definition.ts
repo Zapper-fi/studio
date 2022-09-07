@@ -8,6 +8,11 @@ export const VELODROME_DEFINITION = appDefinition({
   name: 'Velodrome',
   description: 'The liquidity base-layer of the Optimism ecosystem.',
   url: 'https://app.velodrome.finance',
+  tags: [AppTag.DECENTRALIZED_EXCHANGE, AppTag.LIQUIDITY_POOL],
+  primaryColor: '#fff',
+  keywords: [],
+
+  links: {},
 
   groups: {
     pool: {
@@ -15,23 +20,23 @@ export const VELODROME_DEFINITION = appDefinition({
       type: GroupType.TOKEN,
       label: 'Pools',
     },
+
     farm: {
       id: 'farm',
       type: GroupType.TOKEN,
       label: 'Staking',
     },
-    votingEscrow: { id: 'voting-escrow', type: GroupType.POSITION, label: 'Voting Escrow' },
-  },
 
-  tags: [AppTag.DECENTRALIZED_EXCHANGE, AppTag.LIQUIDITY_POOL],
-  keywords: [],
-  links: {},
+    votingEscrow: {
+      id: 'voting-escrow',
+      type: GroupType.POSITION,
+      label: 'Voting Escrow',
+    },
+  },
 
   supportedNetworks: {
     [Network.OPTIMISM_MAINNET]: [AppAction.VIEW],
   },
-
-  primaryColor: '#fff',
 });
 
 @Register.AppDefinition(VELODROME_DEFINITION.id)

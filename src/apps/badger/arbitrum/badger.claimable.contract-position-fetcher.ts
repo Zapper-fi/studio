@@ -1,4 +1,5 @@
-import { Register } from '~app-toolkit/decorators';
+import { Injectable } from '@nestjs/common';
+
 import { Network } from '~types/network.interface';
 
 import { BADGER_DEFINITION } from '../badger.definition';
@@ -7,16 +8,15 @@ import {
   BadgerClaimableDefinition,
 } from '../common/badger.claimable.contract-position-fetcher';
 
-const appId = BADGER_DEFINITION.id;
-const groupId = BADGER_DEFINITION.groups.claimable.id;
-const network = Network.ARBITRUM_MAINNET;
-
-@Register.ContractPositionFetcher({ appId, groupId, network, options: { excludeFromTvl: true } })
+@Injectable()
 export class ArbitrumBadgerClaimableContractPositionFetcher extends BadgerClaimableContractPositionFetcher {
-  appId = appId;
-  groupId = groupId;
-  network = network;
+  appId = BADGER_DEFINITION.id;
+  groupId = BADGER_DEFINITION.groups.claimable.id;
+  network = Network.ARBITRUM_MAINNET;
   groupLabel = 'Rewards';
+
+  isExcludedFromExplore = true;
+  isExcludedFromTvl = true;
 
   async getDefinitions(): Promise<BadgerClaimableDefinition[]> {
     return [

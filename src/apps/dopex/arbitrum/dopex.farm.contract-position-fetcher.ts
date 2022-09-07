@@ -1,7 +1,6 @@
-import { Inject } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
-import { Register } from '~app-toolkit/decorators';
 import { GetDataPropsParams, GetTokenBalancesParams } from '~position/template/contract-position.template.types';
 import { SingleStakingFarmTemplateContractPositionFetcher } from '~position/template/single-staking.template.contract-position-fetcher';
 import { Network } from '~types/network.interface';
@@ -24,15 +23,11 @@ const FARMS = [
   },
 ];
 
-const appId = DOPEX_DEFINITION.id;
-const groupId = DOPEX_DEFINITION.groups.farm.id;
-const network = Network.ARBITRUM_MAINNET;
-
-@Register.ContractPositionFetcher({ appId, groupId, network })
+@Injectable()
 export class ArbitrumDopexFarmContractPositionFetcher extends SingleStakingFarmTemplateContractPositionFetcher<DopexDualRewardStaking> {
-  appId = appId;
-  groupId = groupId;
-  network = network;
+  appId = DOPEX_DEFINITION.id;
+  groupId = DOPEX_DEFINITION.groups.farm.id;
+  network = Network.ARBITRUM_MAINNET;
   groupLabel = 'Staking';
 
   constructor(
@@ -43,7 +38,7 @@ export class ArbitrumDopexFarmContractPositionFetcher extends SingleStakingFarmT
   }
 
   getContract(address: string): DopexDualRewardStaking {
-    return this.contractFactory.dopexDualRewardStaking({ address, network });
+    return this.contractFactory.dopexDualRewardStaking({ address, network: this.network });
   }
 
   async getFarmDefinitions() {

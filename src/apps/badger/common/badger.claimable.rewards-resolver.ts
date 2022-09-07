@@ -23,8 +23,7 @@ type RewardTreeResponse = {
 @Injectable()
 export class BadgerClaimableRewardsResolver {
   @Cache({
-    key: ({ address, network }: BadgerClaimableContractPositionBalanceHelperParams) =>
-      `studio:badger:${network}:accumulated-rewards:${address}`,
+    key: (network: Network, address: string) => `studio:badger:${network}:accumulated-rewards:${address}`,
     ttl: 5 * 60, // 60 minutes
   })
   private async getCachedAccumulatedRewardsData(_network: Network, address: string) {

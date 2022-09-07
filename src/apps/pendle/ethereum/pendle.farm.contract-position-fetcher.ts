@@ -1,9 +1,8 @@
-import { Inject } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import BigNumber from 'bignumber.js';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { BLOCKS_PER_DAY } from '~app-toolkit/constants/blocks';
-import { Register } from '~app-toolkit/decorators';
 import { GetDataPropsParams, GetTokenBalancesParams } from '~position/template/contract-position.template.types';
 import { SingleStakingFarmTemplateContractPositionFetcher } from '~position/template/single-staking.template.contract-position-fetcher';
 import { Network } from '~types/network.interface';
@@ -20,15 +19,11 @@ const FARMS = [
   },
 ];
 
-const appId = PENDLE_DEFINITION.id;
-const groupId = PENDLE_DEFINITION.groups.farm.id;
-const network = Network.ETHEREUM_MAINNET;
-
-@Register.ContractPositionFetcher({ appId, groupId, network })
+@Injectable()
 export class EthereumPendleFarmContractPositionFetcher extends SingleStakingFarmTemplateContractPositionFetcher<PendleStaking> {
-  appId = appId;
-  groupId = groupId;
-  network = network;
+  appId = PENDLE_DEFINITION.id;
+  groupId = PENDLE_DEFINITION.groups.farm.id;
+  network = Network.ETHEREUM_MAINNET;
   groupLabel = 'Staking';
 
   constructor(
@@ -39,7 +34,7 @@ export class EthereumPendleFarmContractPositionFetcher extends SingleStakingFarm
   }
 
   getContract(address: string): PendleStaking {
-    return this.contractFactory.pendleStaking({ address, network });
+    return this.contractFactory.pendleStaking({ address, network: this.network });
   }
 
   async getFarmDefinitions() {

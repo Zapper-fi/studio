@@ -18,7 +18,7 @@ export class DefaultPositionPresenterFactory {
       constructor(readonly positionFetcherTemplateRegistry: PositionFetcherTemplateRegistry) {}
 
       getBalanceProductGroups(): PositionGroup[] {
-        const templates = this.positionFetcherTemplateRegistry.getTemplatesForApp(appId, network);
+        const templates = this.positionFetcherTemplateRegistry.getTemplatesForAppOnNetwork(appId, network);
 
         const groups = templates.map(template => ({
           label: template.groupLabel,

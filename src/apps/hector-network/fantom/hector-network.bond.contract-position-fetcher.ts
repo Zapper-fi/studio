@@ -1,7 +1,6 @@
-import { Inject } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
-import { Register } from '~app-toolkit/decorators';
 import { getImagesFromToken, getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { MetaType } from '~position/position.interface';
 import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
@@ -15,15 +14,11 @@ import { Network } from '~types';
 import { HectorNetworkBondDepository, HectorNetworkContractFactory } from '../contracts';
 import { HECTOR_NETWORK_DEFINITION } from '../hector-network.definition';
 
-const appId = HECTOR_NETWORK_DEFINITION.id;
-const groupId = HECTOR_NETWORK_DEFINITION.groups.bond.id;
-const network = Network.FANTOM_OPERA_MAINNET;
-
-@Register.ContractPositionFetcher({ appId, groupId, network })
+@Injectable()
 export class FantomHectorNetworkBondContractPositionFetcher extends ContractPositionTemplatePositionFetcher<HectorNetworkBondDepository> {
-  appId = appId;
-  groupId = groupId;
-  network = network;
+  appId = HECTOR_NETWORK_DEFINITION.id;
+  groupId = HECTOR_NETWORK_DEFINITION.groups.bond.id;
+  network = Network.FANTOM_OPERA_MAINNET;
   groupLabel = 'Bonds';
 
   constructor(

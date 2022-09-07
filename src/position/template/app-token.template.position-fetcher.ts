@@ -29,17 +29,22 @@ import {
   GetTokenPropsParams,
   GetUnderlyingTokensParams,
 } from './app-token.template.types';
+import { PositionFetcherTemplateCommons } from './position-fetcher.template.types';
 
 export abstract class AppTokenTemplatePositionFetcher<
   T extends Contract,
   V extends DefaultDataProps = DefaultDataProps,
   R extends DefaultAppTokenDefinition = DefaultAppTokenDefinition,
-> implements PositionFetcher<AppTokenPosition<V>>
+> implements PositionFetcher<AppTokenPosition<V>>, PositionFetcherTemplateCommons
 {
   abstract appId: string;
   abstract groupId: string;
   abstract network: Network;
   abstract groupLabel: string;
+
+  isExcludedFromBalances = false;
+  isExcludedFromExplore = false;
+  isExcludedFromTvl = false;
 
   fromNetwork?: Network;
   minLiquidity = 1000;
@@ -52,7 +57,7 @@ export abstract class AppTokenTemplatePositionFetcher<
   // 2. (Optional) Get token definitions (i.e.: token addresses and additional context)
   async getDefinitions(params: GetDefinitionsParams): Promise<R[]> {
     const addresses = await this.getAddresses({ ...params, definitions: [] });
-    return addresses.map(address => ({ address } as R));
+    return addresses.map(address => ({ address: address.toLowerCase() } as R));
   }
 
   // 3. Get token contract instance
@@ -151,7 +156,7 @@ export abstract class AppTokenTemplatePositionFetcher<
 
     const maybeSkeletons = await Promise.all(
       addresses.map(async address => {
-        const definition = definitions.find(v => v.address === address);
+        const definition = definitions.find(v => v.address.toLowerCase() === address);
         if (!definition) return null;
 
         const contract = multicall.wrap(this.getContract(address));
@@ -255,7 +260,7 @@ export abstract class AppTokenTemplatePositionFetcher<
       );
 
       const positionsSubset = compact(tokens).filter(v => {
-        if (typeof v.dataProps.liquidity === 'number') return Math.abs(v.dataProps.liquidity) > this.minLiquidity;
+        if (typeof v.dataProps.liquidity === 'number') return Math.abs(v.dataProps.liquidity) >= this.minLiquidity;
         return true;
       });
 

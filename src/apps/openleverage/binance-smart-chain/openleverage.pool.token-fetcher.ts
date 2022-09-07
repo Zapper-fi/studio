@@ -1,8 +1,7 @@
-import { Inject } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { gql } from 'graphql-request';
 
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
-import { Register } from '~app-toolkit/decorators';
 import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import {
@@ -16,10 +15,6 @@ import { Network } from '~types/network.interface';
 import { OpenleverageContractFactory, OpenleverageLpool } from '../contracts';
 import { OpenleveragePoolAPYHelper } from '../helpers/openleverage-pool.apy-helper';
 import { OPENLEVERAGE_DEFINITION } from '../openleverage.definition';
-
-const appId = OPENLEVERAGE_DEFINITION.id;
-const groupId = OPENLEVERAGE_DEFINITION.groups.pool.id;
-const network = Network.BINANCE_SMART_CHAIN_MAINNET;
 
 type OpenLeveragePoolsResponse = {
   pools: {
@@ -40,7 +35,7 @@ const query = gql`
   }
 `;
 
-@Register.TokenPositionFetcher({ appId, groupId, network })
+@Injectable()
 export class BinanceSmartChainOpenleveragePoolTokenFetcher extends AppTokenTemplatePositionFetcher<
   OpenleverageLpool,
   OpenLeverageDataProps
@@ -66,7 +61,7 @@ export class BinanceSmartChainOpenleveragePoolTokenFetcher extends AppTokenTempl
   }
 
   getContract(address: string) {
-    return this.contractFactory.openleverageLpool({ address, network });
+    return this.contractFactory.openleverageLpool({ address, network: this.network });
   }
 
   getUnderlyingTokenAddresses({ contract }: GetUnderlyingTokensParams<OpenleverageLpool>) {

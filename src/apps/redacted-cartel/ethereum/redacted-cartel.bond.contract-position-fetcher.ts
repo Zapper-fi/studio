@@ -1,7 +1,6 @@
-import { Inject } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
-import { Register } from '~app-toolkit/decorators';
 import { getImagesFromToken, getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { MetaType } from '~position/position.interface';
 import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
@@ -15,15 +14,11 @@ import { Network } from '~types/network.interface';
 import { RedactedBondDepository, RedactedCartelContractFactory } from '../contracts';
 import { REDACTED_CARTEL_DEFINITION } from '../redacted-cartel.definition';
 
-const appId = REDACTED_CARTEL_DEFINITION.id;
-const groupId = REDACTED_CARTEL_DEFINITION.groups.bond.id;
-const network = Network.ETHEREUM_MAINNET;
-
-@Register.ContractPositionFetcher({ appId, groupId, network })
+@Injectable()
 export class EthereumRedactedCartelBondContractPositionFetcher extends ContractPositionTemplatePositionFetcher<RedactedBondDepository> {
-  appId = appId;
-  groupId = groupId;
-  network = network;
+  appId = REDACTED_CARTEL_DEFINITION.id;
+  groupId = REDACTED_CARTEL_DEFINITION.groups.bond.id;
+  network = Network.ETHEREUM_MAINNET;
   groupLabel = 'Bonds';
 
   constructor(

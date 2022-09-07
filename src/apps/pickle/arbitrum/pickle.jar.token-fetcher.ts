@@ -1,17 +1,14 @@
-import { Register } from '~app-toolkit/decorators';
+import { Injectable } from '@nestjs/common';
+
 import { Network } from '~types/network.interface';
 
 import { PickleJarTokenFetcher } from '../common/pickle.jar.token-fetcher';
 import { PICKLE_DEFINITION } from '../pickle.definition';
 
-const appId = PICKLE_DEFINITION.id;
-const groupId = PICKLE_DEFINITION.groups.jar.id;
-const network = Network.ARBITRUM_MAINNET;
-
-@Register.TokenPositionFetcher({ appId, groupId, network })
+@Injectable()
 export class ArbitrumPickleJarTokenFetcher extends PickleJarTokenFetcher {
-  appId = appId;
-  groupId = groupId;
-  network = network;
+  appId = PICKLE_DEFINITION.id;
+  groupId = PICKLE_DEFINITION.groups.jar.id;
+  network = Network.ARBITRUM_MAINNET;
   groupLabel = 'Jars';
 }

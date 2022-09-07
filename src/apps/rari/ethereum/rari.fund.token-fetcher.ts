@@ -1,8 +1,7 @@
-import { Inject } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { ZERO_ADDRESS } from '~app-toolkit/constants/address';
-import { Register } from '~app-toolkit/decorators';
 import { Erc20 } from '~contract/contracts';
 import { DefaultDataProps } from '~position/display.interface';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
@@ -47,15 +46,11 @@ const RARI_POOL_DEFINITIONS = [
   },
 ];
 
-const appId = RARI_DEFINITION.id;
-const groupId = RARI_DEFINITION.groups.fund.id;
-const network = Network.ETHEREUM_MAINNET;
-
-@Register.TokenPositionFetcher({ appId, groupId, network })
+@Injectable()
 export class EthereumRariFundTokenFetcher extends AppTokenTemplatePositionFetcher<Erc20> {
-  appId = appId;
-  groupId = groupId;
-  network = network;
+  appId = RARI_DEFINITION.id;
+  groupId = RARI_DEFINITION.groups.fund.id;
+  network = Network.ETHEREUM_MAINNET;
   groupLabel = 'Funds';
 
   constructor(

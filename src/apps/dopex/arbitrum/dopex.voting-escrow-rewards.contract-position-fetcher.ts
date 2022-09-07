@@ -1,7 +1,6 @@
-import { Inject } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
-import { Register } from '~app-toolkit/decorators';
 import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { MetaType } from '~position/position.interface';
 import { isClaimable } from '~position/position.utils';
@@ -16,15 +15,11 @@ import { Network } from '~types/network.interface';
 import { DopexContractFactory, DopexVotingEscrowRewards } from '../contracts';
 import { DOPEX_DEFINITION } from '../dopex.definition';
 
-const appId = DOPEX_DEFINITION.id;
-const groupId = DOPEX_DEFINITION.groups.votingEscrowRewards.id;
-const network = Network.ARBITRUM_MAINNET;
-
-@Register.ContractPositionFetcher({ appId, groupId, network })
+@Injectable()
 export class ArbitrumDopexVotingEscrowRewardsContractPositionFetcher extends ContractPositionTemplatePositionFetcher<DopexVotingEscrowRewards> {
-  appId = appId;
-  groupId = groupId;
-  network = network;
+  appId = DOPEX_DEFINITION.id;
+  groupId = DOPEX_DEFINITION.groups.votingEscrowRewards.id;
+  network = Network.ARBITRUM_MAINNET;
   groupLabel = 'Voting Escrow Rewards';
 
   constructor(

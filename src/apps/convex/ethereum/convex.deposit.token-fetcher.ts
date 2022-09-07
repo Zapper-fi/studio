@@ -1,8 +1,7 @@
-import { Inject } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { range } from 'lodash';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
-import { Register } from '~app-toolkit/decorators';
 import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import {
@@ -26,20 +25,19 @@ type ConvexDepositTokenDefinition = {
   poolIndex: number;
 };
 
-const appId = CONVEX_DEFINITION.id;
-const groupId = CONVEX_DEFINITION.groups.deposit.id;
-const network = Network.ETHEREUM_MAINNET;
-
-@Register.TokenPositionFetcher({ appId, groupId, network, options: { excludeFromTvl: true } })
+@Injectable()
 export class EthereumConvexDepositTokenFetcher extends AppTokenTemplatePositionFetcher<
   ConvexDepositToken,
   ConvexDepositTokenDataProps,
   ConvexDepositTokenDefinition
 > {
-  appId = appId;
-  groupId = groupId;
-  network = network;
+  appId = CONVEX_DEFINITION.id;
+  groupId = CONVEX_DEFINITION.groups.deposit.id;
+  network = Network.ETHEREUM_MAINNET;
   groupLabel = 'Liqudity Pool Staking';
+
+  isExcludedFromExplore = true;
+  isExcludedFromTvl = true;
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
@@ -54,7 +52,10 @@ export class EthereumConvexDepositTokenFetcher extends AppTokenTemplatePositionF
 
   async getDefinitions({ multicall }: GetDefinitionsParams): Promise<ConvexDepositTokenDefinition[]> {
     const boosterContractAddress = '0xf403c135812408bfbe8713b5a23a04b3d48aae31';
-    const depositContract = this.contractFactory.convexBooster({ address: boosterContractAddress, network });
+    const depositContract = this.contractFactory.convexBooster({
+      address: boosterContractAddress,
+      network: this.network,
+    });
     const numOfPools = await multicall.wrap(depositContract).poolLength();
 
     const definitions = await Promise.all(
@@ -75,7 +76,10 @@ export class EthereumConvexDepositTokenFetcher extends AppTokenTemplatePositionF
     definition,
   }: GetUnderlyingTokensParams<ConvexDepositToken, ConvexDepositTokenDefinition>) {
     const boosterContractAddress = '0xf403c135812408bfbe8713b5a23a04b3d48aae31';
-    const depositContract = this.contractFactory.convexBooster({ address: boosterContractAddress, network });
+    const depositContract = this.contractFactory.convexBooster({
+      address: boosterContractAddress,
+      network: this.network,
+    });
     const poolInfo = await depositContract.poolInfo(definition.poolIndex);
     return poolInfo.lptoken;
   }
