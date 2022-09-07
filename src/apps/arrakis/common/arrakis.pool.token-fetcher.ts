@@ -75,7 +75,6 @@ export abstract class ArrakisPoolTokenFetcher extends AppTokenTemplatePositionFe
       return r == 0 ? 0 : r / appToken.supply;
     });
     return pricePerShare;
-    return 0;
   }
 
   async getLabel({ appToken }: GetDisplayPropsParams<ArrakisGelatoPool, ArrakisPoolTokenDataProps>): Promise<string> {
