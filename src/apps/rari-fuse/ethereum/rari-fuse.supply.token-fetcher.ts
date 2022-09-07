@@ -11,4 +11,5 @@ export class EthereumRariFuseSupplyTokenFetcher extends RariFuseSupplyTokenFetch
   groupId = RARI_FUSE_DEFINITION.groups.supply.id;
   network = Network.ETHEREUM_MAINNET;
   groupLabel = 'Lending';
+  poolDirectoryAddress = '0x835482fe0532f169024d5e9410199369aad5c77e';
 }

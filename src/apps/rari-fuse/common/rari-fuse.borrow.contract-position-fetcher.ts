@@ -97,7 +97,8 @@ export abstract class RariFuseBorrowContractPositionFetcher extends ContractPosi
     const comptrollerAddress = comptrollerAddressRaw.toLowerCase();
     const blocksPerDay = BLOCKS_PER_DAY[this.network];
     const { marketName } = definition;
-    const apy = Math.pow(1 + (blocksPerDay * Number(borrowRateRaw)) / Number(1e18), 365) - 1;
+    const borrowRate = Number(borrowRateRaw) / 10 ** 18;
+    const apy = (Math.pow(1 + blocksPerDay * borrowRate, 365) - 1) * 100;
     const liquidity = (-1 * Number(totalBorrowsRaw)) / 10 ** contractPosition.tokens[0].decimals;
 
     return { apy, liquidity, marketName, comptrollerAddress };

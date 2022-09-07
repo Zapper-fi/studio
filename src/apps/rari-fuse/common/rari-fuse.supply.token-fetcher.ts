@@ -3,6 +3,7 @@ import { Inject } from '@nestjs/common';
 import { drillBalance } from '~app-toolkit';
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { BLOCKS_PER_DAY } from '~app-toolkit/constants/blocks';
+import { buildDollarDisplayItem } from '~app-toolkit/helpers/presentation/display-item.present';
 import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { IMulticallWrapper } from '~multicall';
 import { isMulticallUnderlyingError } from '~multicall/multicall.ethers';
@@ -37,6 +38,9 @@ export abstract class RariFuseSupplyTokenFetcher extends AppTokenTemplatePositio
   RariFuseSupplyTokenDataProps,
   RariFuseSupplyTokenDefinition
 > {
+  abstract poolDirectoryAddress: string;
+  minLiquidity = 0;
+
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
     @Inject(RariFuseContractFactory) protected readonly contractFactory: RariFuseContractFactory,
@@ -49,9 +53,8 @@ export abstract class RariFuseSupplyTokenFetcher extends AppTokenTemplatePositio
   }
 
   async getDefinitions({ multicall }: GetDefinitionsParams) {
-    const poolDirectoryAddress = '0x835482fe0532f169024d5e9410199369aad5c77e';
     const poolDirectory = this.contractFactory.rariFusePoolsDirectory({
-      address: poolDirectoryAddress,
+      address: this.poolDirectoryAddress,
       network: this.network,
     });
 
@@ -79,7 +82,7 @@ export abstract class RariFuseSupplyTokenFetcher extends AppTokenTemplatePositio
     return definitions.map(v => v.address);
   }
 
-  getUnderlyingTokenAddresses({ contract }: GetUnderlyingTokensParams<RariFuseToken>) {
+  async getUnderlyingTokenAddresses({ contract }: GetUnderlyingTokensParams<RariFuseToken>) {
     return contract.underlying();
   }
 
@@ -87,14 +90,13 @@ export abstract class RariFuseSupplyTokenFetcher extends AppTokenTemplatePositio
     contract,
     appToken,
   }: GetPricePerShareParams<RariFuseToken, RariFuseSupplyTokenDataProps, RariFuseSupplyTokenDefinition>) {
+    const rateRaw = await contract.exchangeRateCurrent().catch(err => {
+      if (isMulticallUnderlyingError(err)) return 0;
+      throw err;
+    });
+
     const mantissa = 18 + appToken.tokens[0]!.decimals - appToken.decimals;
-    return contract
-      .exchangeRateCurrent()
-      .then(v => Number(v) / 10 ** mantissa)
-      .catch(err => {
-        if (isMulticallUnderlyingError(err)) return 0;
-        throw err;
-      });
+    return Number(rateRaw) / 10 ** mantissa;
   }
 
   async getDataProps({
@@ -110,7 +112,8 @@ export abstract class RariFuseSupplyTokenFetcher extends AppTokenTemplatePositio
     const comptrollerAddress = comptrollerAddressRaw.toLowerCase();
     const blocksPerDay = BLOCKS_PER_DAY[this.network];
     const marketName = definition.marketName;
-    const apy = Math.pow(1 + (blocksPerDay * Number(supplyRateRaw)) / Number(1e18), 365) - 1;
+    const supplyRate = Number(supplyRateRaw) / 10 ** 18;
+    const apy = (Math.pow(1 + blocksPerDay * supplyRate, 365) - 1) * 100;
     const liquidity = appToken.price * appToken.supply;
 
     return { apy, liquidity, marketName, comptrollerAddress };
@@ -126,6 +129,12 @@ export abstract class RariFuseSupplyTokenFetcher extends AppTokenTemplatePositio
     appToken,
   }: GetDisplayPropsParams<RariFuseToken, RariFuseSupplyTokenDataProps, RariFuseSupplyTokenDefinition>) {
     return appToken.symbol;
+  }
+
+  async getSecondaryLabel({
+    appToken,
+  }: GetDisplayPropsParams<RariFuseToken, RariFuseSupplyTokenDataProps, RariFuseSupplyTokenDefinition>) {
+    return buildDollarDisplayItem(appToken.tokens[0].price);
   }
 
   async getBalanceDisplayMode() {
