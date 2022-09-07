@@ -3,6 +3,7 @@ import DataLoader from 'dataloader';
 import { range, uniq } from 'lodash';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
+import { BLOCKS_PER_DAY } from '~app-toolkit/constants/blocks';
 import { GetDataPropsParams } from '~position/template/app-token.template.types';
 
 import { UniswapPair, UniswapV2ContractFactory } from '../contracts';
@@ -17,12 +18,13 @@ import {
   DEFAULT_POOLS_QUERY,
   DEFAULT_POOL_VOLUMES_BY_ID_AT_BLOCK_QUERY,
   DEFAULT_POOL_VOLUMES_BY_ID_QUERY,
+  LastBlockSyncedResponse,
   PoolsResponse,
+  PoolVolumesResponse,
 } from './uniswap-v2.pool.subgraph.types';
-import { UniswapV2PoolSubgraphVolumeDataLoader, VolumeData } from './uniswap-v2.pool.subgraph.volume.data-loader';
 
 export abstract class UniswapV2PoolSubgraphTemplateTokenFetcher extends UniswapV2PoolOnChainTemplateTokenFetcher {
-  volumeDataLoader: DataLoader<string, VolumeData>;
+  volumeDataLoader: DataLoader<string, number> | null;
 
   abstract subgraphUrl: string;
 
@@ -34,6 +36,7 @@ export abstract class UniswapV2PoolSubgraphTemplateTokenFetcher extends UniswapV
   requiredPools: string[] = [];
 
   // Volume
+  fee = 0.3;
   skipVolume = false;
   lastBlockSyncedOnGraphQuery = DEFAULT_LAST_BLOCK_SYNCED_ON_GRAPH_QUERY;
   poolVolumesByIdQuery = DEFAULT_POOL_VOLUMES_BY_ID_QUERY;
@@ -48,22 +51,13 @@ export abstract class UniswapV2PoolSubgraphTemplateTokenFetcher extends UniswapV
 
   async getAddresses() {
     // Initialize volume dataloader
-    const builder = new UniswapV2PoolSubgraphVolumeDataLoader();
-    this.volumeDataLoader = builder.generateDataLoader({
-      appToolkit: this.appToolkit,
-      network: this.network,
-      subgraphUrl: this.subgraphUrl,
-      lastBlockSyncedOnGraphQuery: this.lastBlockSyncedOnGraphQuery,
-      poolVolumesByIdQuery: this.poolVolumesByIdQuery,
-      poolVolumesByIdAtBlockQuery: this.poolVolumesByIdAtBlockQuery,
-    });
-
-    const graphHelper = this.appToolkit.helpers.theGraphHelper;
+    const dataLoaderOptions = { cache: false, maxBatchSize: 1000 };
+    this.volumeDataLoader = new DataLoader<string, number>(this.batchGetVolume.bind(this), dataLoaderOptions);
 
     const chunks = await Promise.all(
       range(0, this.first, 1000).map(skip => {
         const count = Math.min(1000, this.first - skip);
-        return graphHelper.request<PoolsResponse>({
+        return this.appToolkit.helpers.theGraphHelper.request<PoolsResponse>({
           endpoint: this.subgraphUrl,
           query: this.poolsQuery,
           variables: { first: count, skip, orderBy: this.orderBy },
@@ -72,7 +66,7 @@ export abstract class UniswapV2PoolSubgraphTemplateTokenFetcher extends UniswapV
     );
 
     const poolsData = chunks.flat();
-    const poolsByIdData = await graphHelper.request<PoolsResponse>({
+    const poolsByIdData = await this.appToolkit.helpers.theGraphHelper.request<PoolsResponse>({
       endpoint: this.subgraphUrl,
       query: this.poolsByIdQuery,
       variables: { ids: this.requiredPools },
@@ -88,11 +82,65 @@ export abstract class UniswapV2PoolSubgraphTemplateTokenFetcher extends UniswapV
 
   async getDataProps(params: GetDataPropsParams<UniswapPair, UniswapV2TokenDataProps>) {
     const dataProps = await super.getDataProps(params);
-    const { volume, volumeChangePercentage } = this.skipVolume
-      ? { volume: 0, volumeChangePercentage: 0 }
-      : await this.volumeDataLoader.load(params.appToken.address);
-    const projectedYearlyVolume = volume * 365;
-    const apy = (projectedYearlyVolume * 100) / dataProps.liquidity;
-    return { ...dataProps, volume, volumeChangePercentage, apy };
+    const volume = this.volumeDataLoader ? await this.volumeDataLoader.load(params.appToken.address) : 0;
+    const fees = volume * this.fee;
+    const projectedYearlyFees = fees * 365;
+    const apy = projectedYearlyFees / dataProps.liquidity;
+    return { ...dataProps, volume, apy };
+  }
+
+  async batchGetVolume(addresses: string[]) {
+    // Get block from 1 day ago
+    const provider = this.appToolkit.getNetworkProvider(this.network);
+    const block = await provider.getBlockNumber();
+    const block1DayAgo = block - BLOCKS_PER_DAY[this.network];
+
+    // Get last block synced on graph; if the graph is not caught up to yesterday, exit early
+    const graphMetaData = await this.appToolkit.helpers.theGraphHelper.request<LastBlockSyncedResponse>({
+      endpoint: this.subgraphUrl,
+      query: this.lastBlockSyncedOnGraphQuery,
+    });
+
+    const blockNumberLastSynced = graphMetaData._meta.block.number;
+    if (block1DayAgo > blockNumberLastSynced) return [];
+
+    // Retrieve volume data from TheGraph (@TODO Cache this)
+    const [volumeByIDData, volumeByIDData1DayAgo] = await Promise.all([
+      this.appToolkit.helpers.theGraphHelper.request<PoolVolumesResponse>({
+        endpoint: this.subgraphUrl,
+        query: this.poolVolumesByIdQuery,
+        variables: { ids: addresses },
+      }),
+      this.appToolkit.helpers.theGraphHelper.request<PoolVolumesResponse>({
+        endpoint: this.subgraphUrl,
+        query: this.poolVolumesByIdAtBlockQuery,
+        variables: { ids: addresses, block: block1DayAgo },
+      }),
+    ]);
+
+    // Merge all volume data for today and merge all volume data for yesterday
+    const poolVolumes = addresses.map(async address => {
+      // Find the matching volume entry from yesterday
+      const pairVolumeToday = volumeByIDData.pairs.find(p => p.id === address);
+      const poolVolumeYesterday = volumeByIDData1DayAgo.pairs.find(p => p.id === address);
+
+      // Calculate volume chnage between yesterday and today wherever applicable
+      let volume: number;
+      if (pairVolumeToday?.volumeUSD && poolVolumeYesterday?.volumeUSD) {
+        const volumeUSDToday = Number(pairVolumeToday.volumeUSD);
+        const volumeUSDYesterday = Number(poolVolumeYesterday.volumeUSD);
+        volume = volumeUSDToday - volumeUSDYesterday;
+      } else if (pairVolumeToday?.untrackedVolumeUSD && poolVolumeYesterday?.untrackedVolumeUSD) {
+        const volumeUSDToday = Number(pairVolumeToday.untrackedVolumeUSD);
+        const volumeUSDYesterday = Number(poolVolumeYesterday.untrackedVolumeUSD);
+        volume = volumeUSDToday - volumeUSDYesterday;
+      } else {
+        volume = 0;
+      }
+
+      return volume;
+    });
+
+    return poolVolumes;
   }
 }
