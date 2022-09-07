@@ -260,7 +260,7 @@ export abstract class AppTokenTemplatePositionFetcher<
       );
 
       const positionsSubset = compact(tokens).filter(v => {
-        if (typeof v.dataProps.liquidity === 'number') return Math.abs(v.dataProps.liquidity) > this.minLiquidity;
+        if (typeof v.dataProps.liquidity === 'number') return Math.abs(v.dataProps.liquidity) >= this.minLiquidity;
         return true;
       });
 
