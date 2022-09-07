@@ -156,7 +156,7 @@ export abstract class AppTokenTemplatePositionFetcher<
 
     const maybeSkeletons = await Promise.all(
       addresses.map(async address => {
-        const definition = definitions.find(v => v.address === address);
+        const definition = definitions.find(v => v.address.toLowerCase() === address);
         if (!definition) return null;
 
         const contract = multicall.wrap(this.getContract(address));
@@ -260,7 +260,7 @@ export abstract class AppTokenTemplatePositionFetcher<
       );
 
       const positionsSubset = compact(tokens).filter(v => {
-        if (typeof v.dataProps.liquidity === 'number') return Math.abs(v.dataProps.liquidity) > this.minLiquidity;
+        if (typeof v.dataProps.liquidity === 'number') return Math.abs(v.dataProps.liquidity) >= this.minLiquidity;
         return true;
       });
 
