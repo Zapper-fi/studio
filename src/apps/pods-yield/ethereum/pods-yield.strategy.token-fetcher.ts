@@ -19,6 +19,10 @@ const appId = PODS_YIELD_DEFINITION.id;
 const groupId = PODS_YIELD_DEFINITION.groups.strategy.id;
 const network = Network.ETHEREUM_MAINNET;
 
+export type PodsYieldStrategyDataProps = {
+  liquidity: number;
+};
+
 @Register.TokenPositionFetcher({ appId, groupId, network })
 export class EthereumPodsYieldStrategyTokenFetcher implements PositionFetcher<AppTokenPosition> {
   constructor(
@@ -71,7 +75,7 @@ export class EthereumPodsYieldStrategyTokenFetcher implements PositionFetcher<Ap
         const images = getImagesFromToken(underlyingToken);
         const secondaryLabel = buildDollarDisplayItem(price);
 
-        const token: AppTokenPosition = {
+        const token: AppTokenPosition<PodsYieldStrategyDataProps> = {
           type: ContractType.APP_TOKEN,
           appId,
           groupId,
