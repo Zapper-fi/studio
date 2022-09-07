@@ -1,4 +1,5 @@
 import { Inject } from '@nestjs/common';
+import { BigNumber, BigNumberish, Contract } from 'ethers';
 
 import { drillBalance } from '~app-toolkit';
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
@@ -18,58 +19,61 @@ import {
   GetDefinitionsParams,
 } from '~position/template/app-token.template.types';
 
-import { RariFuseContractFactory } from '../contracts';
-import { RariFuseToken } from '../contracts/ethers/RariFuseToken';
-
 export type RariFuseSupplyTokenDataProps = {
   apy: number;
   liquidity: number;
   marketName: string;
-  comptrollerAddress: string;
+  comptroller: string;
 };
 
 export type RariFuseSupplyTokenDefinition = {
   address: string;
   marketName: string;
+  comptroller: string;
 };
 
-export abstract class RariFuseSupplyTokenFetcher extends AppTokenTemplatePositionFetcher<
-  RariFuseToken,
-  RariFuseSupplyTokenDataProps,
-  RariFuseSupplyTokenDefinition
-> {
+export abstract class RariFuseSupplyTokenFetcher<
+  T extends Contract,
+  V extends Contract,
+  R extends Contract,
+  S extends Contract,
+> extends AppTokenTemplatePositionFetcher<R, RariFuseSupplyTokenDataProps, RariFuseSupplyTokenDefinition> {
   abstract poolDirectoryAddress: string;
+  abstract lensAddress: string;
+
+  abstract getPoolDirectoryContract(address: string): T;
+  abstract getComptrollerContract(address: string): V;
+  abstract getTokenContract(address: string): R;
+  abstract getLensContract(address: string): S;
+
+  abstract getPools(contract: T): Promise<{ name: string; comptroller: string }[]>;
+  abstract getMarketTokenAddresses(contract: V): Promise<string[]>;
+  abstract getUnderlyingTokenAddress(contract: R): Promise<string>;
+  abstract getSupplyRateRaw(contract: R): Promise<BigNumberish>;
+  abstract getPoolsBySupplier(address: string, contract: S): Promise<[BigNumber[], { comptroller: string }[]]>;
+
   minLiquidity = 0;
 
-  constructor(
-    @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(RariFuseContractFactory) protected readonly contractFactory: RariFuseContractFactory,
-  ) {
+  constructor(@Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit) {
     super(appToolkit);
   }
 
-  getContract(address: string): RariFuseToken {
-    return this.contractFactory.rariFuseToken({ address, network: this.network });
+  getContract(address: string): R {
+    return this.getTokenContract(address);
   }
 
   async getDefinitions({ multicall }: GetDefinitionsParams) {
-    const poolDirectory = this.contractFactory.rariFusePoolsDirectory({
-      address: this.poolDirectoryAddress,
-      network: this.network,
-    });
-
-    const pools = await poolDirectory.getAllPools();
+    const poolDirectory = this.getPoolDirectoryContract(this.poolDirectoryAddress);
+    const pools = await this.getPools(poolDirectory);
 
     const definitions = await Promise.all(
       pools.map(async pool => {
-        const comptroller = this.contractFactory.rariFuseComptroller({
-          address: pool.comptroller,
-          network: this.network,
-        });
+        const comptroller = multicall.wrap(this.getComptrollerContract(pool.comptroller));
+        const marketAddresses = await this.getMarketTokenAddresses(comptroller);
 
-        const marketAddresses = await multicall.wrap(comptroller).getAllMarkets();
         return marketAddresses.map(marketAddress => ({
-          address: marketAddress,
+          address: marketAddress.toLowerCase(),
+          comptroller: pool.comptroller.toLowerCase(),
           marketName: pool.name,
         }));
       }),
@@ -82,58 +86,51 @@ export abstract class RariFuseSupplyTokenFetcher extends AppTokenTemplatePositio
     return definitions.map(v => v.address);
   }
 
-  async getUnderlyingTokenAddresses({ contract }: GetUnderlyingTokensParams<RariFuseToken>) {
-    return contract.underlying();
+  async getUnderlyingTokenAddresses({ contract }: GetUnderlyingTokensParams<R>) {
+    return this.getUnderlyingTokenAddress(contract);
   }
 
   async getPricePerShare({
     contract,
     appToken,
-  }: GetPricePerShareParams<RariFuseToken, RariFuseSupplyTokenDataProps, RariFuseSupplyTokenDefinition>) {
-    const rateRaw = await contract.exchangeRateCurrent().catch(err => {
+  }: GetPricePerShareParams<R, RariFuseSupplyTokenDataProps, RariFuseSupplyTokenDefinition>) {
+    const supplyRateRaw = await this.getSupplyRateRaw(contract).catch(err => {
       if (isMulticallUnderlyingError(err)) return 0;
       throw err;
     });
 
     const mantissa = 18 + appToken.tokens[0]!.decimals - appToken.decimals;
-    return Number(rateRaw) / 10 ** mantissa;
+    return Number(supplyRateRaw) / 10 ** mantissa;
   }
 
   async getDataProps({
     contract,
     definition,
     appToken,
-  }: GetDataPropsParams<RariFuseToken, RariFuseSupplyTokenDataProps, RariFuseSupplyTokenDefinition>) {
-    const [comptrollerAddressRaw, supplyRateRaw] = await Promise.all([
-      contract.comptroller(),
-      contract.supplyRatePerBlock(),
-    ]);
-
-    const comptrollerAddress = comptrollerAddressRaw.toLowerCase();
+  }: GetDataPropsParams<R, RariFuseSupplyTokenDataProps, RariFuseSupplyTokenDefinition>) {
+    const supplyRateRaw = await contract.supplyRatePerBlock();
+    const { marketName, comptroller } = definition;
     const blocksPerDay = BLOCKS_PER_DAY[this.network];
-    const marketName = definition.marketName;
     const supplyRate = Number(supplyRateRaw) / 10 ** 18;
     const apy = (Math.pow(1 + blocksPerDay * supplyRate, 365) - 1) * 100;
     const liquidity = appToken.price * appToken.supply;
 
-    return { apy, liquidity, marketName, comptrollerAddress };
+    return { apy, liquidity, marketName, comptroller };
   }
 
-  async getLabel({
-    appToken,
-  }: GetDisplayPropsParams<RariFuseToken, RariFuseSupplyTokenDataProps, RariFuseSupplyTokenDefinition>) {
+  async getLabel({ appToken }: GetDisplayPropsParams<R, RariFuseSupplyTokenDataProps, RariFuseSupplyTokenDefinition>) {
     return getLabelFromToken(appToken.tokens[0]);
   }
 
   async getLabelDetailed({
     appToken,
-  }: GetDisplayPropsParams<RariFuseToken, RariFuseSupplyTokenDataProps, RariFuseSupplyTokenDefinition>) {
+  }: GetDisplayPropsParams<R, RariFuseSupplyTokenDataProps, RariFuseSupplyTokenDefinition>) {
     return appToken.symbol;
   }
 
   async getSecondaryLabel({
     appToken,
-  }: GetDisplayPropsParams<RariFuseToken, RariFuseSupplyTokenDataProps, RariFuseSupplyTokenDefinition>) {
+  }: GetDisplayPropsParams<R, RariFuseSupplyTokenDataProps, RariFuseSupplyTokenDefinition>) {
     return buildDollarDisplayItem(appToken.tokens[0].price);
   }
 
@@ -142,12 +139,9 @@ export abstract class RariFuseSupplyTokenFetcher extends AppTokenTemplatePositio
   }
 
   async getBalances(address: string): Promise<AppTokenPositionBalance<RariFuseSupplyTokenDataProps>[]> {
-    // @TODO Would be better to call super.getBalances(), but what is the abstraction for the subset of tokens?
-
-    const fuseLensAddress = '0x8da38681826f4abbe089643d2b3fe4c6e4730493';
-    const fuseLens = this.contractFactory.rariFusePoolLens({ address: fuseLensAddress, network: this.network });
-    const poolsBySupplier = await fuseLens.getPoolsBySupplier(address);
-    const participatedComptrollers = poolsBySupplier[1].map(p => p.comptroller.toLowerCase());
+    const lens = this.getLensContract(this.lensAddress);
+    const poolsBySupplier = await this.getPoolsBySupplier(address, lens);
+    const participatedComptrollers = poolsBySupplier[1].map(t => t.comptroller.toLowerCase());
 
     const multicall = this.appToolkit.getMulticall(this.network);
     const appTokens = await this.appToolkit.getAppTokenPositions<RariFuseSupplyTokenDataProps>({
@@ -158,7 +152,7 @@ export abstract class RariFuseSupplyTokenFetcher extends AppTokenTemplatePositio
 
     const balances = await Promise.all(
       appTokens
-        .filter(v => participatedComptrollers.includes(v.dataProps.comptrollerAddress))
+        .filter(v => participatedComptrollers.includes(v.dataProps.comptroller))
         .map(async appToken => {
           const balanceRaw = await this.getBalancePerToken({ multicall, address, appToken });
           const tokenBalance = drillBalance(appToken, balanceRaw.toString());

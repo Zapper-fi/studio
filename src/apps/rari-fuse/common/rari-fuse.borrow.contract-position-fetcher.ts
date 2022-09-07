@@ -1,8 +1,7 @@
-import { Inject } from '@nestjs/common';
+import { BigNumber, BigNumberish, Contract } from 'ethers';
 import { sumBy } from 'lodash';
 
 import { drillBalance } from '~app-toolkit';
-import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { BLOCKS_PER_DAY } from '~app-toolkit/constants/blocks';
 import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { isMulticallUnderlyingError } from '~multicall/multicall.ethers';
@@ -17,56 +16,61 @@ import {
   GetTokenBalancesParams,
 } from '~position/template/contract-position.template.types';
 
-import { RariFuseContractFactory } from '../contracts';
-import { RariFuseToken } from '../contracts/ethers/RariFuseToken';
-
 export type RariFuseBorrowContractPositionDataProps = {
   apy: number;
   liquidity: number;
   marketName: string;
-  comptrollerAddress: string;
+  comptroller: string;
 };
 
 export type RariFuseBorrowContractPositionDefinition = {
   address: string;
   marketName: string;
+  comptroller: string;
 };
 
-export abstract class RariFuseBorrowContractPositionFetcher extends ContractPositionTemplatePositionFetcher<
-  RariFuseToken,
+export abstract class RariFuseBorrowContractPositionFetcher<
+  T extends Contract,
+  V extends Contract,
+  R extends Contract,
+  S extends Contract,
+> extends ContractPositionTemplatePositionFetcher<
+  R,
   RariFuseBorrowContractPositionDataProps,
   RariFuseBorrowContractPositionDefinition
 > {
-  constructor(
-    @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(RariFuseContractFactory) protected readonly contractFactory: RariFuseContractFactory,
-  ) {
-    super(appToolkit);
-  }
+  abstract poolDirectoryAddress: string;
+  abstract lensAddress: string;
 
-  getContract(address: string): RariFuseToken {
-    return this.contractFactory.rariFuseToken({ address, network: this.network });
+  abstract getPoolDirectoryContract(address: string): T;
+  abstract getComptrollerContract(address: string): V;
+  abstract getTokenContract(address: string): R;
+  abstract getLensContract(address: string): S;
+
+  abstract getPools(contract: T): Promise<{ name: string; comptroller: string }[]>;
+  abstract getMarketTokenAddresses(contract: V): Promise<string[]>;
+  abstract getUnderlyingTokenAddress(contract: R): Promise<string>;
+  abstract getBorrowRateRaw(contract: R): Promise<BigNumberish>;
+  abstract getTotalBorrows(contract: R): Promise<BigNumberish>;
+  abstract getBorrowBalance(address: string, contract: R): Promise<BigNumberish>;
+  abstract getPoolsBySupplier(address: string, contract: S): Promise<[BigNumber[], { comptroller: string }[]]>;
+
+  getContract(address: string): R {
+    return this.getTokenContract(address);
   }
 
   async getDefinitions({ multicall }: GetDefinitionsParams): Promise<RariFuseBorrowContractPositionDefinition[]> {
-    const poolDirectoryAddress = '0x835482fe0532f169024d5e9410199369aad5c77e';
-    const poolDirectory = this.contractFactory.rariFusePoolsDirectory({
-      address: poolDirectoryAddress,
-      network: this.network,
-    });
-
-    const pools = await poolDirectory.getAllPools();
+    const poolDirectory = this.getPoolDirectoryContract(this.poolDirectoryAddress);
+    const pools = await this.getPools(poolDirectory);
 
     const definitions = await Promise.all(
       pools.map(async pool => {
-        const comptroller = this.contractFactory.rariFuseComptroller({
-          address: pool.comptroller,
-          network: this.network,
-        });
+        const comptroller = multicall.wrap(this.getComptrollerContract(pool.comptroller));
+        const marketAddresses = await this.getMarketTokenAddresses(comptroller);
 
-        const marketAddresses = await multicall.wrap(comptroller).getAllMarkets();
         return marketAddresses.map(marketAddress => ({
-          address: marketAddress,
+          address: marketAddress.toLowerCase(),
+          comptroller: pool.comptroller.toLowerCase(),
           marketName: pool.name,
         }));
       }),
@@ -75,42 +79,36 @@ export abstract class RariFuseBorrowContractPositionFetcher extends ContractPosi
     return definitions.flat();
   }
 
-  async getTokenDefinitions({ contract }: GetTokenDefinitionsParams<RariFuseToken>) {
-    return [{ metaType: MetaType.BORROWED, address: await contract.underlying() }];
+  async getTokenDefinitions({ contract }: GetTokenDefinitionsParams<R>) {
+    return [{ metaType: MetaType.BORROWED, address: await this.getUnderlyingTokenAddress(contract) }];
   }
 
   async getDataProps({
     contract,
     contractPosition,
     definition,
-  }: GetDataPropsParams<
-    RariFuseToken,
-    RariFuseBorrowContractPositionDataProps,
-    RariFuseBorrowContractPositionDefinition
-  >) {
-    const [comptrollerAddressRaw, totalBorrowsRaw, borrowRateRaw] = await Promise.all([
-      contract.comptroller(),
-      contract.totalBorrows(),
-      contract.borrowRatePerBlock(),
+  }: GetDataPropsParams<R, RariFuseBorrowContractPositionDataProps, RariFuseBorrowContractPositionDefinition>) {
+    const [totalBorrowsRaw, borrowRateRaw] = await Promise.all([
+      this.getTotalBorrows(contract),
+      this.getBorrowRateRaw(contract),
     ]);
 
-    const comptrollerAddress = comptrollerAddressRaw.toLowerCase();
     const blocksPerDay = BLOCKS_PER_DAY[this.network];
-    const { marketName } = definition;
+    const { marketName, comptroller } = definition;
     const borrowRate = Number(borrowRateRaw) / 10 ** 18;
     const apy = (Math.pow(1 + blocksPerDay * borrowRate, 365) - 1) * 100;
     const liquidity = (-1 * Number(totalBorrowsRaw)) / 10 ** contractPosition.tokens[0].decimals;
 
-    return { apy, liquidity, marketName, comptrollerAddress };
+    return { apy, liquidity, marketName, comptroller };
   }
 
-  async getLabel({ contractPosition }: GetDisplayPropsParams<RariFuseToken>) {
+  async getLabel({ contractPosition }: GetDisplayPropsParams<R>) {
     return getLabelFromToken(contractPosition.tokens[0]);
   }
 
-  async getTokenBalancesPerPosition({ address, contract }: GetTokenBalancesParams<RariFuseToken>) {
+  async getTokenBalancesPerPosition({ address, contract }: GetTokenBalancesParams<R>) {
     return [
-      await contract.borrowBalanceCurrent(address).catch(err => {
+      await this.getBorrowBalance(address, contract).catch(err => {
         if (isMulticallUnderlyingError(err)) return 0;
         throw err;
       }),
@@ -118,10 +116,8 @@ export abstract class RariFuseBorrowContractPositionFetcher extends ContractPosi
   }
 
   async getBalances(address: string): Promise<ContractPositionBalance<RariFuseBorrowContractPositionDataProps>[]> {
-    // @TODO Would be better to call super.getBalances(), but what is the abstraction for the subset of tokens?
-    const fuseLensAddress = '0x8da38681826f4abbe089643d2b3fe4c6e4730493';
-    const fuseLens = this.contractFactory.rariFusePoolLens({ address: fuseLensAddress, network: this.network });
-    const poolsBySupplier = await fuseLens.getPoolsBySupplier(address);
+    const lens = this.getLensContract(this.lensAddress);
+    const poolsBySupplier = await this.getPoolsBySupplier(address, lens);
     const participatedComptrollers = poolsBySupplier[1].map(p => p.comptroller.toLowerCase());
 
     const multicall = this.appToolkit.getMulticall(this.network);
@@ -133,7 +129,7 @@ export abstract class RariFuseBorrowContractPositionFetcher extends ContractPosi
 
     const balances = await Promise.all(
       contractPositions
-        .filter(v => participatedComptrollers.includes(v.dataProps.comptrollerAddress))
+        .filter(v => participatedComptrollers.includes(v.dataProps.comptroller))
         .map(async contractPosition => {
           const contract = multicall.wrap(this.getContract(contractPosition.address));
           const balancesRaw = await this.getTokenBalancesPerPosition({

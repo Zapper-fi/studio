@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 
 import { Network } from '~types';
 
-import { RariFusePositionPresenter } from '../common/rari-fuse.balance-presenter';
+import { RariFusePositionPresenter } from '../common/rari-fuse.position-presenter';
 import { RARI_FUSE_DEFINITION } from '../rari-fuse.definition';
 
 @Injectable()
