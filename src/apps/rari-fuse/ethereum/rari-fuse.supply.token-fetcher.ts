@@ -64,6 +64,10 @@ export class EthereumRariFuseSupplyTokenFetcher extends RariFuseSupplyTokenFetch
     return contract.underlying();
   }
 
+  getExchangeRateCurrent(contract: RariFuseToken): Promise<BigNumberish> {
+    return contract.exchangeRateCurrent();
+  }
+
   getSupplyRateRaw(contract: RariFuseToken): Promise<BigNumberish> {
     return contract.supplyRatePerBlock();
   }

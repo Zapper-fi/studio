@@ -49,6 +49,10 @@ export abstract class MarketXyzSupplyTokenFetcher extends RariFuseSupplyTokenFet
     return contract.underlying();
   }
 
+  getExchangeRateCurrent(contract: MarketXyzToken): Promise<BigNumberish> {
+    return contract.exchangeRateCurrent();
+  }
+
   getSupplyRateRaw(contract: MarketXyzToken): Promise<BigNumberish> {
     return contract.supplyRatePerBlock();
   }

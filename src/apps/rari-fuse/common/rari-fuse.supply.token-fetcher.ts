@@ -49,6 +49,7 @@ export abstract class RariFuseSupplyTokenFetcher<
   abstract getPools(contract: T): Promise<{ name: string; comptroller: string }[]>;
   abstract getMarketTokenAddresses(contract: V): Promise<string[]>;
   abstract getUnderlyingTokenAddress(contract: R): Promise<string>;
+  abstract getExchangeRateCurrent(contract: R): Promise<BigNumberish>;
   abstract getSupplyRateRaw(contract: R): Promise<BigNumberish>;
   abstract getPoolsBySupplier(address: string, contract: S): Promise<[BigNumber[], { comptroller: string }[]]>;
 
@@ -94,7 +95,7 @@ export abstract class RariFuseSupplyTokenFetcher<
     contract,
     appToken,
   }: GetPricePerShareParams<R, RariFuseSupplyTokenDataProps, RariFuseSupplyTokenDefinition>) {
-    const supplyRateRaw = await this.getSupplyRateRaw(contract).catch(err => {
+    const supplyRateRaw = await this.getExchangeRateCurrent(contract).catch(err => {
       if (isMulticallUnderlyingError(err)) return 0;
       throw err;
     });
@@ -108,7 +109,7 @@ export abstract class RariFuseSupplyTokenFetcher<
     definition,
     appToken,
   }: GetDataPropsParams<R, RariFuseSupplyTokenDataProps, RariFuseSupplyTokenDefinition>) {
-    const supplyRateRaw = await contract.supplyRatePerBlock();
+    const supplyRateRaw = await this.getSupplyRateRaw(contract);
     const { marketName, comptroller } = definition;
     const blocksPerDay = BLOCKS_PER_DAY[this.network];
     const supplyRate = Number(supplyRateRaw) / 10 ** 18;
