@@ -1,6 +1,8 @@
 import { BigNumberish, Contract } from 'ethers';
 
+import { ETH_ADDR_ALIAS, ZERO_ADDRESS } from '~app-toolkit/constants/address';
 import { BLOCKS_PER_DAY } from '~app-toolkit/constants/blocks';
+import { isMulticallUnderlyingError } from '~multicall/multicall.ethers';
 import { BalanceDisplayMode, DisplayProps } from '~position/display.interface';
 import { ExchangeableAppTokenDataProps } from '~position/position.interface';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
@@ -43,7 +45,13 @@ export abstract class CompoundSupplyTokenFetcher<
   }
 
   async getUnderlyingTokenAddresses({ contract }: GetUnderlyingTokensParams<R>) {
-    return this.getUnderlyingAddress(contract);
+    const underlyingAddressRaw = await this.getUnderlyingAddress(contract).catch(err => {
+      // if the underlying call failed, it's the compound-wrapped native token
+      if (isMulticallUnderlyingError(err)) return ZERO_ADDRESS;
+      throw err;
+    });
+
+    return underlyingAddressRaw.toLowerCase().replace(ETH_ADDR_ALIAS, ZERO_ADDRESS);
   }
 
   protected getDenormalizedRate({

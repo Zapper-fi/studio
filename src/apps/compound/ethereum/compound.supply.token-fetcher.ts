@@ -1,8 +1,6 @@
 import { Inject, Injectable } from '@nestjs/common';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
-import { ZERO_ADDRESS } from '~app-toolkit/constants/address';
-import { isMulticallUnderlyingError } from '~multicall/multicall.ethers';
 import { Network } from '~types/network.interface';
 
 import { CompoundSupplyTokenFetcher } from '../common/compound.supply.token-fetcher';
@@ -40,11 +38,7 @@ export class EthereumCompoundSupplyTokenFetcher extends CompoundSupplyTokenFetch
   }
 
   async getUnderlyingAddress(contract: CompoundCToken) {
-    return contract.underlying().catch(err => {
-      // if the underlying call failed, it's the compound-wrapped native token
-      if (isMulticallUnderlyingError(err)) return ZERO_ADDRESS;
-      throw err;
-    });
+    return contract.underlying();
   }
 
   getExchangeRate(contract: CompoundCToken) {
