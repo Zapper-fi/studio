@@ -1,14 +1,19 @@
 import { Inject, Injectable } from '@nestjs/common';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
+import { ETH_ADDR_ALIAS, ZERO_ADDRESS } from '~app-toolkit/constants/address';
+import { isMulticallUnderlyingError } from '~multicall/multicall.ethers';
 import { Network } from '~types/network.interface';
 
 import { CompoundSupplyTokenFetcher } from '../common/compound.supply.token-fetcher';
 import { COMPOUND_DEFINITION } from '../compound.definition';
-import { CompoundContractFactory } from '../contracts';
+import { CompoundComptroller, CompoundContractFactory, CompoundCToken } from '../contracts';
 
 @Injectable()
-export class EthereumCompoundSupplyTokenFetcher extends CompoundSupplyTokenFetcher {
+export class EthereumCompoundSupplyTokenFetcher extends CompoundSupplyTokenFetcher<
+  CompoundCToken,
+  CompoundComptroller
+> {
   appId = COMPOUND_DEFINITION.id;
   groupId = COMPOUND_DEFINITION.groups.supply.id;
   network = Network.ETHEREUM_MAINNET;
@@ -28,5 +33,27 @@ export class EthereumCompoundSupplyTokenFetcher extends CompoundSupplyTokenFetch
 
   getCompoundComptrollerContract(address: string) {
     return this.contractFactory.compoundComptroller({ address, network: this.network });
+  }
+
+  getMarkets(contract: CompoundComptroller) {
+    return contract.getAllMarkets();
+  }
+
+  async getUnderlyingAddress(contract: CompoundCToken) {
+    const underlyingAddressRaw = await contract.underlying().catch(err => {
+      // if the underlying call failed, it's the compound-wrapped native token
+      if (isMulticallUnderlyingError(err)) return ZERO_ADDRESS;
+      throw err;
+    });
+
+    return underlyingAddressRaw.toLowerCase().replace(ETH_ADDR_ALIAS, ZERO_ADDRESS);
+  }
+
+  getExchangeRate(contract: CompoundCToken) {
+    return contract.exchangeRateCurrent();
+  }
+
+  async getSupplyRate(contract: CompoundCToken) {
+    return contract.supplyRatePerBlock().catch(() => 0);
   }
 }
