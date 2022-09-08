@@ -32,8 +32,8 @@ export class TestHarness {
     });
 
     this.moduleRef = await testModule.compile();
-    this.app = await this.moduleRef.createNestApplication().init();
-    this.request = supertest(this.app.getHttpServer());
+    // this.app = await this.moduleRef.createNestApplication().init();
+    // this.request = supertest(this.app.getHttpServer());
   }
 
   async teardown() {
