@@ -1,4 +1,5 @@
-import { Register } from '~app-toolkit/decorators';
+import { Injectable } from '@nestjs/common';
+
 import { AaveV2AToken } from '~apps/aave-v2/contracts';
 import {
   AaveV2LendingTemplateTokenFetcher,
@@ -6,16 +7,12 @@ import {
   AaveV2ReserveApyData,
   AaveV2ReserveTokenAddressesData,
 } from '~apps/aave-v2/helpers/aave-v2.lending.template.token-fetcher';
-import { DisplayPropsStageParams } from '~position/template/app-token.template.position-fetcher';
+import { GetDisplayPropsParams } from '~position/template/app-token.template.types';
 import { Network } from '~types/network.interface';
 
 import { NEREUS_FINANCE_DEFINITION } from '../nereus-finance.definition';
 
-const appId = NEREUS_FINANCE_DEFINITION.id;
-const groupId = NEREUS_FINANCE_DEFINITION.groups.supply.id;
-const network = Network.AVALANCHE_MAINNET;
-
-@Register.TokenPositionFetcher({ appId, groupId, network })
+@Injectable()
 export class AvalancheNereusFinanceSupplyTokenFetcher extends AaveV2LendingTemplateTokenFetcher {
   appId = NEREUS_FINANCE_DEFINITION.id;
   groupId = NEREUS_FINANCE_DEFINITION.groups.supply.id;
@@ -32,7 +29,7 @@ export class AvalancheNereusFinanceSupplyTokenFetcher extends AaveV2LendingTempl
     return reserveApyData.supplyApy;
   }
 
-  async getTertiaryLabel({ appToken }: DisplayPropsStageParams<AaveV2AToken, AaveV2LendingTokenDataProps>) {
-    return `${(appToken.dataProps.apy * 100).toFixed(3)}% APY`;
+  async getTertiaryLabel({ appToken }: GetDisplayPropsParams<AaveV2AToken, AaveV2LendingTokenDataProps>) {
+    return `${appToken.dataProps.apy.toFixed(3)}% APY`;
   }
 }

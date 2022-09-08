@@ -1,9 +1,8 @@
-import { Inject } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { ZERO_ADDRESS } from '~app-toolkit/constants/address';
-import { Register } from '~app-toolkit/decorators';
-import { GetTokenBalancesPerPositionParams } from '~position/template/contract-position.template.position-fetcher';
+import { GetTokenBalancesParams } from '~position/template/contract-position.template.types';
 import {
   SingleStakingFarmDefinition,
   SingleStakingFarmTemplateContractPositionFetcher,
@@ -22,15 +21,11 @@ const FARMS = [
   },
 ];
 
-const appId = TEDDY_CASH_DEFINITION.id;
-const groupId = TEDDY_CASH_DEFINITION.groups.farm.id;
-const network = Network.ETHEREUM_MAINNET;
-
-@Register.ContractPositionFetcher({ appId, groupId, network })
+@Injectable()
 export class AvalancheTeddyCashFarmContractPositionFetcher extends SingleStakingFarmTemplateContractPositionFetcher<TeddyCashStaking> {
-  appId = appId;
-  groupId = groupId;
-  network = network;
+  appId = TEDDY_CASH_DEFINITION.id;
+  groupId = TEDDY_CASH_DEFINITION.groups.farm.id;
+  network = Network.ETHEREUM_MAINNET;
   groupLabel = 'Farms';
 
   constructor(
@@ -52,11 +47,11 @@ export class AvalancheTeddyCashFarmContractPositionFetcher extends SingleStaking
     return [0, 0];
   }
 
-  async getStakedTokenBalance({ contract, address }: GetTokenBalancesPerPositionParams<TeddyCashStaking>) {
+  async getStakedTokenBalance({ contract, address }: GetTokenBalancesParams<TeddyCashStaking>) {
     return contract.stakes(address);
   }
 
-  async getRewardTokenBalances({ contract, address }: GetTokenBalancesPerPositionParams<TeddyCashStaking>) {
+  async getRewardTokenBalances({ contract, address }: GetTokenBalancesParams<TeddyCashStaking>) {
     return Promise.all([contract.getPendingLUSDGain(address), contract.getPendingETHGain(address)]);
   }
 }

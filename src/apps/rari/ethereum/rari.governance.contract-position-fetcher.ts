@@ -1,11 +1,7 @@
-import { Inject } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
-import { Register } from '~app-toolkit/decorators';
-import {
-  DataPropsStageParams,
-  GetTokenBalancesPerPositionParams,
-} from '~position/template/contract-position.template.position-fetcher';
+import { GetDataPropsParams, GetTokenBalancesParams } from '~position/template/contract-position.template.types';
 import {
   SingleStakingFarmDefinition,
   SingleStakingFarmTemplateContractPositionFetcher,
@@ -24,15 +20,11 @@ const FARMS = [
   },
 ];
 
-const appId = RARI_DEFINITION.id;
-const groupId = RARI_DEFINITION.groups.governance.id;
-const network = Network.ETHEREUM_MAINNET;
-
-@Register.ContractPositionFetcher({ appId, groupId, network })
+@Injectable()
 export class EthereumRariGovernanceContractPositionFetcher extends SingleStakingFarmTemplateContractPositionFetcher<RariGovernanceTokenDistributor> {
-  appId = appId;
-  groupId = groupId;
-  network = network;
+  appId = RARI_DEFINITION.id;
+  groupId = RARI_DEFINITION.groups.governance.id;
+  network = Network.ETHEREUM_MAINNET;
   groupLabel = 'Governance';
 
   constructor(
@@ -50,15 +42,15 @@ export class EthereumRariGovernanceContractPositionFetcher extends SingleStaking
     return FARMS;
   }
 
-  async getRewardRates(_params: DataPropsStageParams<RariGovernanceTokenDistributor>) {
+  async getRewardRates(_params: GetDataPropsParams<RariGovernanceTokenDistributor>) {
     return [0];
   }
 
-  async getStakedTokenBalance(_params: GetTokenBalancesPerPositionParams<RariGovernanceTokenDistributor>) {
+  async getStakedTokenBalance(_params: GetTokenBalancesParams<RariGovernanceTokenDistributor>) {
     return [0];
   }
 
-  getRewardTokenBalances({ address, contract }: GetTokenBalancesPerPositionParams<RariGovernanceTokenDistributor>) {
+  getRewardTokenBalances({ address, contract }: GetTokenBalancesParams<RariGovernanceTokenDistributor>) {
     return contract.getUnclaimedRgt(address);
   }
 }

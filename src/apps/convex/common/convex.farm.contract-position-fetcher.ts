@@ -6,10 +6,10 @@ import { range } from 'lodash';
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { isClaimable } from '~position/position.utils';
 import {
-  TokenStageParams,
-  DataPropsStageParams,
-  GetTokenBalancesPerPositionParams,
-} from '~position/template/contract-position.template.position-fetcher';
+  GetDataPropsParams,
+  GetTokenBalancesParams,
+  GetTokenDefinitionsParams,
+} from '~position/template/contract-position.template.types';
 import {
   SingleStakingFarmDataProps,
   SingleStakingFarmDynamicTemplateContractPositionFetcher,
@@ -55,14 +55,11 @@ export abstract class ConvexFarmContractPositionFetcher extends SingleStakingFar
     return this.contractFactory.convexSingleStakingRewards({ address, network: this.network });
   }
 
-  getStakedTokenAddress({ contract }: TokenStageParams<ConvexSingleStakingRewards, SingleStakingFarmDataProps>) {
+  getStakedTokenAddress({ contract }: GetTokenDefinitionsParams<ConvexSingleStakingRewards>) {
     return contract.stakingToken();
   }
 
-  async getRewardTokenAddresses({
-    multicall,
-    contract,
-  }: TokenStageParams<ConvexSingleStakingRewards, SingleStakingFarmDataProps>) {
+  async getRewardTokenAddresses({ multicall, contract }: GetTokenDefinitionsParams<ConvexSingleStakingRewards>) {
     // CRV rewarded, CVX minted
     const primaryRewardTokenAddresses = [
       '0xd533a949740bb3306d119cc777fa900ba034cd52', // CRV
@@ -86,7 +83,7 @@ export abstract class ConvexFarmContractPositionFetcher extends SingleStakingFar
     contract,
     contractPosition,
     multicall,
-  }: DataPropsStageParams<ConvexSingleStakingRewards, SingleStakingFarmDataProps>) {
+  }: GetDataPropsParams<ConvexSingleStakingRewards, SingleStakingFarmDataProps>) {
     const cvxToken = contractPosition.tokens.find(v => v.symbol === 'CVX')!;
     const cvxTokenContract = this.contractFactory.erc20(cvxToken);
     const cvxSupplyRaw = await multicall.wrap(cvxTokenContract).totalSupply();
@@ -114,7 +111,7 @@ export abstract class ConvexFarmContractPositionFetcher extends SingleStakingFar
   getStakedTokenBalance({
     address,
     contract,
-  }: GetTokenBalancesPerPositionParams<ConvexSingleStakingRewards, SingleStakingFarmDataProps>) {
+  }: GetTokenBalancesParams<ConvexSingleStakingRewards, SingleStakingFarmDataProps>) {
     return contract.balanceOf(address);
   }
 
@@ -123,13 +120,13 @@ export abstract class ConvexFarmContractPositionFetcher extends SingleStakingFar
     contract,
     multicall,
     contractPosition,
-  }: GetTokenBalancesPerPositionParams<ConvexSingleStakingRewards, SingleStakingFarmDataProps>): Promise<
+  }: GetTokenBalancesParams<ConvexSingleStakingRewards, SingleStakingFarmDataProps>): Promise<
     BigNumberish | BigNumberish[]
   > {
     const rewardTokens = contractPosition.tokens.filter(isClaimable);
     const [, cvxRewardToken, ...extraRewards] = rewardTokens;
 
-    const cvxTokenContract = this.contractFactory.erc20(cvxRewardToken);
+    const cvxTokenContract = multicall.wrap(this.contractFactory.erc20(cvxRewardToken));
     const currentCvxSupply = await cvxTokenContract.totalSupply();
 
     const crvBalanceBN = await contract.earned(address);

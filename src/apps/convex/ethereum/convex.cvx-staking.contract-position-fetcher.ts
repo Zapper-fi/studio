@@ -1,11 +1,7 @@
-import { Inject } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
-import { Register } from '~app-toolkit/decorators';
-import {
-  DataPropsStageParams,
-  GetTokenBalancesPerPositionParams,
-} from '~position/template/contract-position.template.position-fetcher';
+import { GetDataPropsParams, GetTokenBalancesParams } from '~position/template/contract-position.template.types';
 import {
   SingleStakingFarmDataProps,
   SingleStakingFarmDefinition,
@@ -24,15 +20,11 @@ const FARMS = [
   },
 ];
 
-const appId = CONVEX_DEFINITION.id;
-const groupId = CONVEX_DEFINITION.groups.cvxStaking.id;
-const network = Network.ETHEREUM_MAINNET;
-
-@Register.ContractPositionFetcher({ appId, groupId, network })
+@Injectable()
 export class EthereumConvexCvxStakingContractPositionFetcher extends SingleStakingFarmTemplateContractPositionFetcher<ConvexCvxStaking> {
-  appId = appId;
-  groupId = groupId;
-  network = network;
+  appId = CONVEX_DEFINITION.id;
+  groupId = CONVEX_DEFINITION.groups.cvxStaking.id;
+  network = Network.ETHEREUM_MAINNET;
   groupLabel = 'CVX Staking';
 
   constructor(
@@ -50,21 +42,15 @@ export class EthereumConvexCvxStakingContractPositionFetcher extends SingleStaki
     return FARMS;
   }
 
-  getRewardRates({ contract }: DataPropsStageParams<ConvexCvxStaking, SingleStakingFarmDataProps>) {
+  getRewardRates({ contract }: GetDataPropsParams<ConvexCvxStaking, SingleStakingFarmDataProps>) {
     return contract.rewardRate();
   }
 
-  getStakedTokenBalance({
-    contract,
-    address,
-  }: GetTokenBalancesPerPositionParams<ConvexCvxStaking, SingleStakingFarmDataProps>) {
+  getStakedTokenBalance({ contract, address }: GetTokenBalancesParams<ConvexCvxStaking, SingleStakingFarmDataProps>) {
     return contract.balanceOf(address);
   }
 
-  getRewardTokenBalances({
-    contract,
-    address,
-  }: GetTokenBalancesPerPositionParams<ConvexCvxStaking, SingleStakingFarmDataProps>) {
+  getRewardTokenBalances({ contract, address }: GetTokenBalancesParams<ConvexCvxStaking, SingleStakingFarmDataProps>) {
     return contract.earned(address);
   }
 }

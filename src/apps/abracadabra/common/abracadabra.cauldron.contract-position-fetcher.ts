@@ -5,12 +5,12 @@ import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.prese
 import { isMulticallUnderlyingError } from '~multicall/multicall.ethers';
 import { MetaType } from '~position/position.interface';
 import { isSupplied } from '~position/position.utils';
+import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
 import {
-  ContractPositionTemplatePositionFetcher,
-  DisplayPropsStageParams,
-  GetTokenBalancesPerPositionParams,
-  TokenStageParams,
-} from '~position/template/contract-position.template.position-fetcher';
+  GetDisplayPropsParams,
+  GetTokenBalancesParams,
+  GetTokenDefinitionsParams,
+} from '~position/template/contract-position.template.types';
 
 import { AbracadabraContractFactory, AbracadabraCauldron } from '../contracts';
 
@@ -28,11 +28,11 @@ export abstract class AbracadabraCauldronContractPositionFetcher extends Contrac
     return this.contractFactory.abracadabraCauldron({ address, network: this.network });
   }
 
-  async getDescriptors() {
+  async getDefinitions() {
     return this.cauldrons.map(address => ({ address }));
   }
 
-  async getTokenDescriptors({ contract, multicall }: TokenStageParams<AbracadabraCauldron>) {
+  async getTokenDefinitions({ contract, multicall }: GetTokenDefinitionsParams<AbracadabraCauldron>) {
     const [collateralAddressRaw, debtAddressRaw] = await Promise.all([
       contract.collateral(),
       contract.magicInternetMoney(),
@@ -60,7 +60,7 @@ export abstract class AbracadabraCauldronContractPositionFetcher extends Contrac
     ];
   }
 
-  async getLabel({ contractPosition }: DisplayPropsStageParams<AbracadabraCauldron>) {
+  async getLabel({ contractPosition }: GetDisplayPropsParams<AbracadabraCauldron>) {
     const suppliedToken = contractPosition.tokens.find(isSupplied)!;
     return `${getLabelFromToken(suppliedToken)} Cauldron`;
   }
@@ -69,7 +69,7 @@ export abstract class AbracadabraCauldronContractPositionFetcher extends Contrac
     address,
     contractPosition,
     contract,
-  }: GetTokenBalancesPerPositionParams<AbracadabraCauldron>) {
+  }: GetTokenBalancesParams<AbracadabraCauldron>) {
     const [borrowPartRaw, totalBorrowRaw, collateralShareRaw, bentoBoxAddressRaw] = await Promise.all([
       contract.userBorrowPart(address),
       contract.totalBorrow(),

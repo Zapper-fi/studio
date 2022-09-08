@@ -1,16 +1,15 @@
-import { Inject } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { ZERO_ADDRESS } from '~app-toolkit/constants/address';
-import { Register } from '~app-toolkit/decorators';
 import { Erc20 } from '~contract/contracts';
 import { DefaultDataProps } from '~position/display.interface';
+import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import {
-  AppTokenTemplatePositionFetcher,
-  DisplayPropsStageParams,
-  PricePerShareStageParams,
-  UnderlyingTokensStageParams,
-} from '~position/template/app-token.template.position-fetcher';
+  GetUnderlyingTokensParams,
+  GetPricePerShareParams,
+  GetDisplayPropsParams,
+} from '~position/template/app-token.template.types';
 import { Network } from '~types';
 
 import { RariContractFactory } from '../contracts';
@@ -47,15 +46,11 @@ const RARI_POOL_DEFINITIONS = [
   },
 ];
 
-const appId = RARI_DEFINITION.id;
-const groupId = RARI_DEFINITION.groups.fund.id;
-const network = Network.ETHEREUM_MAINNET;
-
-@Register.TokenPositionFetcher({ appId, groupId, network })
+@Injectable()
 export class EthereumRariFundTokenFetcher extends AppTokenTemplatePositionFetcher<Erc20> {
-  appId = appId;
-  groupId = groupId;
-  network = network;
+  appId = RARI_DEFINITION.id;
+  groupId = RARI_DEFINITION.groups.fund.id;
+  network = Network.ETHEREUM_MAINNET;
   groupLabel = 'Funds';
 
   constructor(
@@ -73,7 +68,7 @@ export class EthereumRariFundTokenFetcher extends AppTokenTemplatePositionFetche
     return RARI_POOL_DEFINITIONS.map(v => v.poolTokenAddress);
   }
 
-  async getUnderlyingTokenAddresses({ multicall, address }: UnderlyingTokensStageParams<Erc20>) {
+  async getUnderlyingTokenAddresses({ multicall, address }: GetUnderlyingTokensParams<Erc20>) {
     const { poolManagerAddress, isEther } = RARI_POOL_DEFINITIONS.find(v => v.poolTokenAddress === address)!;
     if (isEther) return [ZERO_ADDRESS];
 
@@ -86,7 +81,7 @@ export class EthereumRariFundTokenFetcher extends AppTokenTemplatePositionFetche
     return symbols.map(v => SYMBOL_TO_ADDRESS[v]!);
   }
 
-  async getPricePerShare({ appToken }: PricePerShareStageParams<Erc20>) {
+  async getPricePerShare({ appToken }: GetPricePerShareParams<Erc20>) {
     const { poolManagerAddress } = RARI_POOL_DEFINITIONS.find(v => v.poolTokenAddress === appToken.address)!;
 
     const managerContract = this.contractFactory.rariFundManager({
@@ -102,7 +97,7 @@ export class EthereumRariFundTokenFetcher extends AppTokenTemplatePositionFetche
     return pricePerShare;
   }
 
-  async getLabel({ appToken }: DisplayPropsStageParams<Erc20, DefaultDataProps>) {
+  async getLabel({ appToken }: GetDisplayPropsParams<Erc20, DefaultDataProps>) {
     const { label } = RARI_POOL_DEFINITIONS.find(v => v.poolTokenAddress === appToken.address)!;
     return label;
   }

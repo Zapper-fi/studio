@@ -1,21 +1,18 @@
-import { Register } from '~app-toolkit/decorators';
+import { Injectable } from '@nestjs/common';
+
 import {
   AaveV2LendingTokenDataProps,
   AaveV2ReserveApyData,
   AaveV2ReserveTokenAddressesData,
 } from '~apps/aave-v2/helpers/aave-v2.lending.template.token-fetcher';
-import { DisplayPropsStageParams } from '~position/template/app-token.template.position-fetcher';
+import { GetDisplayPropsParams } from '~position/template/app-token.template.types';
 import { Network } from '~types/network.interface';
 
 import { AAVE_AMM_DEFINITION } from '../aave-amm.definition';
 import { AaveAmmAToken } from '../contracts';
 import { AaveAmmLendingTemplateTokenFetcher } from '../helpers/aave-amm.lending.template.token-fetcher';
 
-const appId = AAVE_AMM_DEFINITION.id;
-const groupId = AAVE_AMM_DEFINITION.groups.stableDebt.id;
-const network = Network.ETHEREUM_MAINNET;
-
-@Register.TokenPositionFetcher({ appId, groupId, network })
+@Injectable()
 export class EthereumAaveAmmStableDebtTokenFetcher extends AaveAmmLendingTemplateTokenFetcher {
   appId = AAVE_AMM_DEFINITION.id;
   groupId = AAVE_AMM_DEFINITION.groups.stableDebt.id;
@@ -32,7 +29,7 @@ export class EthereumAaveAmmStableDebtTokenFetcher extends AaveAmmLendingTemplat
     return reserveApyData.stableBorrowApy;
   }
 
-  async getTertiaryLabel({ appToken }: DisplayPropsStageParams<AaveAmmAToken, AaveV2LendingTokenDataProps>) {
+  async getTertiaryLabel({ appToken }: GetDisplayPropsParams<AaveAmmAToken, AaveV2LendingTokenDataProps>) {
     return `${(appToken.dataProps.apy * 100).toFixed(3)}% APR (stable)`;
   }
 }

@@ -1,12 +1,8 @@
-import { Inject } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { BigNumberish } from 'ethers';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
-import { Register } from '~app-toolkit/decorators';
-import {
-  DataPropsStageParams,
-  GetTokenBalancesPerPositionParams,
-} from '~position/template/contract-position.template.position-fetcher';
+import { GetDataPropsParams, GetTokenBalancesParams } from '~position/template/contract-position.template.types';
 import {
   SingleStakingFarmDataProps,
   SingleStakingFarmTemplateContractPositionFetcher,
@@ -16,15 +12,11 @@ import { Network } from '~types';
 import { BOTTO_DEFINITION } from '../botto.definition';
 import { BottoContractFactory, BottoLiquidityMining } from '../contracts';
 
-const appId = BOTTO_DEFINITION.id;
-const groupId = BOTTO_DEFINITION.groups.farm.id;
-const network = Network.ETHEREUM_MAINNET;
-
-@Register.ContractPositionFetcher({ appId, groupId, network })
+@Injectable()
 export class EthereumBottoFarmContractPositionFetcher extends SingleStakingFarmTemplateContractPositionFetcher<BottoLiquidityMining> {
-  appId = appId;
-  groupId = groupId;
-  network = network;
+  appId = BOTTO_DEFINITION.id;
+  groupId = BOTTO_DEFINITION.groups.farm.id;
+  network = Network.ETHEREUM_MAINNET;
   groupLabel = 'Farms';
 
   constructor(
@@ -48,7 +40,7 @@ export class EthereumBottoFarmContractPositionFetcher extends SingleStakingFarmT
     return this.contractFactory.bottoLiquidityMining({ address, network: this.network });
   }
 
-  async getRewardRates({ contract }: DataPropsStageParams<BottoLiquidityMining, SingleStakingFarmDataProps>) {
+  async getRewardRates({ contract }: GetDataPropsParams<BottoLiquidityMining, SingleStakingFarmDataProps>) {
     const [totalRewards, startTime, endTime] = await Promise.all([
       contract.totalRewards(),
       contract.firstStakeTime(),
@@ -61,16 +53,14 @@ export class EthereumBottoFarmContractPositionFetcher extends SingleStakingFarmT
   async getStakedTokenBalance({
     address,
     contract,
-  }: GetTokenBalancesPerPositionParams<BottoLiquidityMining, SingleStakingFarmDataProps>) {
+  }: GetTokenBalancesParams<BottoLiquidityMining, SingleStakingFarmDataProps>) {
     return contract.totalUserStake(address);
   }
 
   getRewardTokenBalances({
     address,
     contract,
-  }: GetTokenBalancesPerPositionParams<BottoLiquidityMining, SingleStakingFarmDataProps>): Promise<
-    BigNumberish | BigNumberish[]
-  > {
+  }: GetTokenBalancesParams<BottoLiquidityMining, SingleStakingFarmDataProps>): Promise<BigNumberish | BigNumberish[]> {
     return contract.callStatic
       .withdraw({ from: address })
       .then(res => res.reward)

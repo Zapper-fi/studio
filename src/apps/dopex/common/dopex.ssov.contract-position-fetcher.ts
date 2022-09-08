@@ -7,15 +7,15 @@ import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { getImagesFromToken, getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { ContractPosition, MetaType } from '~position/position.interface';
 import { isClaimable, isSupplied } from '~position/position.utils';
+import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
 import {
-  ContractPositionTemplatePositionFetcher,
-  DataPropsStageParams,
-  DescriptorsStageParams,
-  DisplayPropsStageParams,
-  GetTokenBalancesPerPositionParams,
-  TokenStageParams,
-  UnderlyingTokenDescriptor,
-} from '~position/template/contract-position.template.position-fetcher';
+  GetDataPropsParams,
+  GetDefinitionsParams,
+  GetDisplayPropsParams,
+  GetTokenBalancesParams,
+  GetTokenDefinitionsParams,
+  UnderlyingTokenDefinition,
+} from '~position/template/contract-position.template.types';
 
 import { DopexContractFactory } from '../contracts';
 
@@ -30,7 +30,7 @@ export type DopexSsovDataProps = {
   strike: number;
 };
 
-export type DopexSsovDescriptor = {
+export type DopexSsovEpochStrikeDefinition = {
   address: string;
   depositTokenAddress: string;
   extraRewardTokenAddresses?: string[];
@@ -40,13 +40,13 @@ export type DopexSsovDescriptor = {
 
 export abstract class DopexSsovContractPositionFetcher<
   T extends Contract,
-> extends ContractPositionTemplatePositionFetcher<T, DopexSsovDataProps, DopexSsovDescriptor> {
+> extends ContractPositionTemplatePositionFetcher<T, DopexSsovDataProps, DopexSsovEpochStrikeDefinition> {
   abstract getSsovDefinitions(): DopexSsovDefinition[];
   abstract getTotalEpochStrikeDepositBalance(
-    params: GetTokenBalancesPerPositionParams<T, DopexSsovDataProps>,
+    params: GetTokenBalancesParams<T, DopexSsovDataProps>,
   ): Promise<BigNumberish>;
   abstract getTotalEpochStrikeRewardBalances(
-    params: GetTokenBalancesPerPositionParams<T, DopexSsovDataProps>,
+    params: GetTokenBalancesParams<T, DopexSsovDataProps>,
   ): Promise<BigNumberish | BigNumberish[]>;
 
   constructor(
@@ -56,10 +56,10 @@ export abstract class DopexSsovContractPositionFetcher<
     super(appToolkit);
   }
 
-  async getDescriptors({ multicall }: DescriptorsStageParams) {
+  async getDefinitions({ multicall }: GetDefinitionsParams) {
     const ssovDefinitions = this.getSsovDefinitions();
 
-    const descriptorsBySsov = await Promise.all(
+    const definitionsBySsov = await Promise.all(
       ssovDefinitions.map(async ({ address, depositTokenAddress, extraRewardTokenAddresses }) => {
         const _contract = this.contractFactory.dopexDpxSsov({ address, network: this.network });
         const contract = multicall.wrap(_contract);
@@ -69,7 +69,7 @@ export abstract class DopexSsovContractPositionFetcher<
         const nextEpochStartTime = await contract.epochStartTimes(nextEpoch).then(Number);
         const lastValidEpoch = nextEpochStartTime > 0 ? nextEpoch : currentEpoch;
 
-        const descriptors = await Promise.all(
+        const definitions = await Promise.all(
           range(1, lastValidEpoch + 1).map(async epoch => {
             const strikes = await contract.getEpochStrikes(epoch);
             return strikes.map(strike => ({
@@ -82,34 +82,34 @@ export abstract class DopexSsovContractPositionFetcher<
           }),
         );
 
-        return descriptors.flat();
+        return definitions.flat();
       }),
     );
 
-    return descriptorsBySsov.flat();
+    return definitionsBySsov.flat();
   }
 
-  async getDataProps({ descriptor }: DataPropsStageParams<T, DopexSsovDataProps, DopexSsovDescriptor>) {
-    return { epoch: descriptor.epoch, strike: descriptor.strike };
+  async getDataProps({ definition }: GetDataPropsParams<T, DopexSsovDataProps, DopexSsovEpochStrikeDefinition>) {
+    return { epoch: definition.epoch, strike: definition.strike };
   }
 
-  async getLabel({ contractPosition }: DisplayPropsStageParams<T, DopexSsovDataProps>) {
+  async getLabel({ contractPosition }: GetDisplayPropsParams<T, DopexSsovDataProps>) {
     const depositToken = contractPosition.tokens.find(isSupplied)!;
     const { epoch, strike } = contractPosition.dataProps;
     const strikeLabel = Number(strike) / 10 ** 8; // Price in USDC
     return `${getLabelFromToken(depositToken)} SSOV - Epoch ${epoch}, Strike ${strikeLabel}`;
   }
 
-  async getImages({ contractPosition }: DisplayPropsStageParams<T, DopexSsovDataProps>) {
+  async getImages({ contractPosition }: GetDisplayPropsParams<T, DopexSsovDataProps>) {
     return contractPosition.tokens
       .filter(isSupplied)
       .map(v => getImagesFromToken(v))
       .flat();
   }
 
-  async getTokenDescriptors({ descriptor }: TokenStageParams<T, DopexSsovDataProps, DopexSsovDescriptor>) {
-    const tokens: UnderlyingTokenDescriptor[] = [];
-    const { depositTokenAddress, extraRewardTokenAddresses = [] } = descriptor;
+  async getTokenDefinitions({ definition }: GetTokenDefinitionsParams<T, DopexSsovEpochStrikeDefinition>) {
+    const tokens: UnderlyingTokenDefinition[] = [];
+    const { depositTokenAddress, extraRewardTokenAddresses = [] } = definition;
     tokens.push({ metaType: MetaType.SUPPLIED, address: depositTokenAddress });
     tokens.push(...extraRewardTokenAddresses.map(v => ({ metaType: MetaType.CLAIMABLE, address: v })));
     return tokens;
@@ -119,7 +119,7 @@ export abstract class DopexSsovContractPositionFetcher<
     return this.appToolkit.getPositionKey(contractPosition, ['epoch', 'strike']);
   }
 
-  async getDepositBalance(params: GetTokenBalancesPerPositionParams<T, DopexSsovDataProps>) {
+  async getDepositBalance(params: GetTokenBalancesParams<T, DopexSsovDataProps>) {
     const { address, contractPosition, contract } = params;
     const epoch = contractPosition.dataProps.epoch;
     const strike = contractPosition.dataProps.strike;
@@ -141,7 +141,7 @@ export abstract class DopexSsovContractPositionFetcher<
     return balanceRaw;
   }
 
-  async getClaimableBalances(params: GetTokenBalancesPerPositionParams<T, DopexSsovDataProps>) {
+  async getClaimableBalances(params: GetTokenBalancesParams<T, DopexSsovDataProps>) {
     const { address, contractPosition, contract } = params;
     const claimableTokens = contractPosition.tokens.filter(isClaimable);
     const epoch = contractPosition.dataProps.epoch;
@@ -161,7 +161,7 @@ export abstract class DopexSsovContractPositionFetcher<
     return currentBalancesRawArr.map(v => new BigNumber(v.toString()).times(share).toFixed(0));
   }
 
-  async getTokenBalancesPerPosition(params: GetTokenBalancesPerPositionParams<T, DopexSsovDataProps>) {
+  async getTokenBalancesPerPosition(params: GetTokenBalancesParams<T, DopexSsovDataProps>) {
     const [depositBalance, claimableBalances] = await Promise.all([
       this.getDepositBalance(params),
       this.getClaimableBalances(params),
