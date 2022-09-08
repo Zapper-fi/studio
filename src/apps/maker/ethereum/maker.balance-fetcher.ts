@@ -1,7 +1,6 @@
 import { Inject } from '@nestjs/common';
 import { BigNumber } from 'bignumber.js';
 import { compact, padEnd, sumBy } from 'lodash';
-import Web3 from 'web3';
 
 import { drillBalance } from '~app-toolkit';
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
@@ -13,6 +12,7 @@ import { ContractType } from '~position/contract.interface';
 import { ContractPositionBalance } from '~position/position-balance.interface';
 import { isBorrowed, isSupplied } from '~position/position.utils';
 import { Network } from '~types/network.interface';
+import { asciiToHex } from '~utils/web3.utils';
 
 import { MakerContractFactory, MakerGovernance } from '../contracts';
 import { MAKER_DEFINITION } from '../maker.definition';
@@ -82,7 +82,7 @@ export class EthereumMakerBalanceFetcher implements BalanceFetcher {
         const vatContract = this.makerContractFactory.makerVat({ address: vatAddress, network });
         const balances = await Promise.all(
           positions.map(async position => {
-            const ilk = padEnd(Web3.utils.asciiToHex(position.dataProps.ilkName), 66, '0');
+            const ilk = padEnd(asciiToHex(position.dataProps.ilkName), 66, '0');
             const { ink, art } = await multicall.wrap(vatContract).urns(ilk, urn.toLowerCase());
 
             const collateralToken = position.tokens.find(isSupplied);
