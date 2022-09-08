@@ -1,6 +1,3 @@
-import { Inject } from '@nestjs/common';
-
-import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { ETH_ADDR_ALIAS, ZERO_ADDRESS } from '~app-toolkit/constants/address';
 import { BLOCKS_PER_DAY } from '~app-toolkit/constants/blocks';
 import { isMulticallUnderlyingError } from '~multicall/multicall.ethers';
@@ -15,7 +12,7 @@ import {
   GetUnderlyingTokensParams,
 } from '~position/template/app-token.template.types';
 
-import { CompoundContractFactory, CompoundCToken } from '../contracts';
+import { CompoundComptroller, CompoundCToken } from '../contracts';
 
 export type CompoundSupplyTokenDataProps = ExchangeableAppTokenDataProps & {
   apy: number;
@@ -23,24 +20,18 @@ export type CompoundSupplyTokenDataProps = ExchangeableAppTokenDataProps & {
 };
 
 export abstract class CompoundSupplyTokenFetcher extends AppTokenTemplatePositionFetcher<CompoundCToken> {
-  abstract comptrollerAddress: string;
   protected isExchangeable = false;
 
-  constructor(
-    @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(CompoundContractFactory) protected readonly contractFactory: CompoundContractFactory,
-  ) {
-    super(appToolkit);
-  }
+  abstract comptrollerAddress: string;
+  abstract getCompoundCTokenContract(address: string): CompoundCToken;
+  abstract getCompoundComptrollerContract(address: string): CompoundComptroller;
 
   getContract(address: string): CompoundCToken {
-    return this.contractFactory.compoundCToken({ address, network: this.network });
+    return this.getCompoundCTokenContract(address);
   }
 
   async getAddresses({ multicall }: GetAddressesParams) {
-    const comptroller = multicall.wrap(
-      this.contractFactory.compoundComptroller({ address: this.comptrollerAddress, network: this.network }),
-    );
+    const comptroller = multicall.wrap(this.getCompoundComptrollerContract(this.comptrollerAddress));
     return comptroller.getAllMarkets();
   }
 
