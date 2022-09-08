@@ -19,7 +19,7 @@ export class OptimismPikaProtocolV3BalanceFetcher implements BalanceFetcher {
   constructor(
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
     @Inject(PikaProtocolV3ContractFactory) private readonly contractFactory: PikaProtocolV3ContractFactory,
-  ) { }
+  ) {}
 
   async getBalances(address: string) {
     const [vaultBalances] = await Promise.all([this.getFarmBalances(address)]);
@@ -31,7 +31,7 @@ export class OptimismPikaProtocolV3BalanceFetcher implements BalanceFetcher {
     const userShare = await contractInst.getShare(address);
     const vaultBalance = (await contractInst.getVault()).balance;
     const totalShare = await contractInst.getTotalShare();
-    return Number(userShare) * Number(vaultBalance) / Number(totalShare);
+    return (Number(userShare) * Number(vaultBalance)) / Number(totalShare);
   }
 
   async getFarmBalances(address: string) {
