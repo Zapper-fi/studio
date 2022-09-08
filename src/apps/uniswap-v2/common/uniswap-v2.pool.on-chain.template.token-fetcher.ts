@@ -26,7 +26,6 @@ export type UniswapV2TokenDataProps = {
   fee: number;
   apy: number;
   volume: number;
-  volumeChangePercentage: number;
 };
 
 export abstract class UniswapV2PoolOnChainTemplateTokenFetcher extends AppTokenTemplatePositionFetcher<
@@ -89,10 +88,9 @@ export abstract class UniswapV2PoolOnChainTemplateTokenFetcher extends AppTokenT
     const liquidity = appToken.price * appToken.supply;
     const fee = this.fee;
     const volume = 0;
-    const volumeChangePercentage = 0;
     const apy = 0;
 
-    return { liquidity, reserves, apy, fee, volume, volumeChangePercentage };
+    return { liquidity, reserves, apy, fee, volume };
   }
 
   async getLabel({ appToken }: GetDisplayPropsParams<UniswapPair, UniswapV2TokenDataProps>): Promise<string> {

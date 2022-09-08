@@ -36,7 +36,6 @@ export abstract class UniswapV2PoolSubgraphTemplateTokenFetcher extends UniswapV
   requiredPools: string[] = [];
 
   // Volume
-  fee = 0.3;
   skipVolume = false;
   lastBlockSyncedOnGraphQuery = DEFAULT_LAST_BLOCK_SYNCED_ON_GRAPH_QUERY;
   poolVolumesByIdQuery = DEFAULT_POOL_VOLUMES_BY_ID_QUERY;
