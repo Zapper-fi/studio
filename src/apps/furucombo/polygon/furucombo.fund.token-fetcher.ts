@@ -1,22 +1,22 @@
-import { Inject } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import Axios from 'axios';
 
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
-import { Register } from '~app-toolkit/decorators';
-import { getTokenImg } from '~app-toolkit/helpers/presentation/image.present';
+import { getImagesFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { CacheOnInterval } from '~cache/cache-on-interval.decorator';
 import { DisplayProps } from '~position/display.interface';
+import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import {
-  AppTokenTemplatePositionFetcher,
-  DisplayPropsStageParams,
-  DataPropsStageParams,
-  PricePerShareStageParams,
-  UnderlyingTokensStageParams,
-} from '~position/template/app-token.template.position-fetcher';
+  GetUnderlyingTokensParams,
+  GetPricePerShareParams,
+  GetDataPropsParams,
+  GetDisplayPropsParams,
+  GetAddressesParams,
+} from '~position/template/app-token.template.types';
 import { Network, NETWORK_IDS } from '~types/network.interface';
 
 import { FurucomboContractFactory, FurucomboFundShareToken } from '../contracts';
-import { FURUCOMBO_DEFINITION, furucomboToken } from '../furucombo.definition';
+import { FURUCOMBO_DEFINITION } from '../furucombo.definition';
 
 interface FurucomboFund {
   address: string;
@@ -37,6 +37,7 @@ interface FurucomboFund {
   apy: string;
   tokenPrice: string;
   stakingTokenPrice: string;
+  fundVault: string;
 }
 
 type FurucomboFundDataProps = {
@@ -44,19 +45,31 @@ type FurucomboFundDataProps = {
   liquidity: number;
 };
 
+type FurucomboFundDefinition = {
+  address: string;
+  vaultAddress: string;
+  stakingTokenAddress: string;
+  name: string;
+  apy: string;
+  liquidity: string;
+  price: string;
+};
+
 const appId = FURUCOMBO_DEFINITION.id;
 const groupId = FURUCOMBO_DEFINITION.groups.fund.id;
 const network = Network.POLYGON_MAINNET;
 
-@Register.TokenPositionFetcher({ appId, groupId, network })
+@Injectable()
 export class PolygonFurucomboFundTokenFetcher extends AppTokenTemplatePositionFetcher<
   FurucomboFundShareToken,
-  FurucomboFundDataProps
+  FurucomboFundDataProps,
+  FurucomboFundDefinition
 > {
   appId = appId;
   groupId = groupId;
   network = network;
-  furucomboFundMap: Record<string, FurucomboFund> = {};
+  groupLabel = 'Funds';
+  minLiquidity = 0;
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
@@ -75,53 +88,64 @@ export class PolygonFurucomboFundTokenFetcher extends AppTokenTemplatePositionFe
   })
   async getFurucomboFunds() {
     const { data } = await Axios.get<{ investables: FurucomboFund[] }>('https://api.furucombo.app/v1/investables', {
-      params: { chainId: NETWORK_IDS[network], category: 'fund', protocol: 'furucombo' },
+      params: { chainId: NETWORK_IDS[this.network], category: 'fund', protocol: 'furucombo' },
     });
+
     return data.investables;
   }
 
-  async getAddresses(): Promise<string[]> {
+  async getDefinitions(): Promise<FurucomboFundDefinition[]> {
     const funds = await this.getFurucomboFunds();
-    const addresses: string[] = [];
-    for (const fund of funds) {
-      addresses.push(fund.token.address);
-      this.furucomboFundMap[fund.token.address] = fund;
-    }
 
-    return addresses;
+    return funds.map(v => ({
+      address: v.token.address.toLowerCase(),
+      vaultAddress: v.fundVault.toLowerCase(),
+      stakingTokenAddress: v.stakingToken.address.toLowerCase(),
+      name: v.name,
+      apy: v.apy,
+      price: v.tokenPrice,
+      liquidity: v.liquidity,
+    }));
   }
 
-  async getUnderlyingTokenAddresses({ address }: UnderlyingTokensStageParams<FurucomboFundShareToken>) {
-    return this.furucomboFundMap[address].stakingToken.address;
+  async getAddresses({ definitions }: GetAddressesParams<FurucomboFundDefinition>): Promise<string[]> {
+    return definitions.map(v => v.address);
+  }
+
+  async getUnderlyingTokenAddresses({
+    definition,
+  }: GetUnderlyingTokensParams<FurucomboFundShareToken, FurucomboFundDefinition>) {
+    return definition.stakingTokenAddress;
   }
 
   async getPricePerShare({
-    contract,
-  }: PricePerShareStageParams<FurucomboFundShareToken, FurucomboFundDataProps>): Promise<number | number[]> {
-    const fund = this.furucomboFundMap[contract.address];
-    return this.appToolkit
-      .getBigNumber(fund.tokenPrice)
-      .div(this.appToolkit.getBigNumber(fund.stakingTokenPrice))
-      .toNumber();
+    appToken,
+    definition,
+  }: GetPricePerShareParams<FurucomboFundShareToken, FurucomboFundDataProps, FurucomboFundDefinition>) {
+    return Number(definition.price) / appToken.tokens[0].price;
   }
 
   async getDataProps({
-    appToken,
-  }: DataPropsStageParams<FurucomboFundShareToken, FurucomboFundDataProps>): Promise<FurucomboFundDataProps> {
-    const fund = this.furucomboFundMap[appToken.address];
-
-    return { apy: Number(fund.apy) * 100, liquidity: Number(fund.liquidity) };
+    definition,
+  }: GetDataPropsParams<
+    FurucomboFundShareToken,
+    FurucomboFundDataProps,
+    FurucomboFundDefinition
+  >): Promise<FurucomboFundDataProps> {
+    return { apy: Number(definition.apy) * 100, liquidity: Number(definition.liquidity) };
   }
 
   async getLabel({
-    appToken,
-  }: DisplayPropsStageParams<FurucomboFundShareToken, FurucomboFundDataProps>): Promise<DisplayProps['label']> {
-    return this.furucomboFundMap[appToken.address].name;
+    definition,
+  }: GetDisplayPropsParams<FurucomboFundShareToken, FurucomboFundDataProps, FurucomboFundDefinition>): Promise<
+    DisplayProps['label']
+  > {
+    return definition.name;
   }
 
   async getImages({
     appToken,
-  }: DisplayPropsStageParams<FurucomboFundShareToken, FurucomboFundDataProps>): Promise<DisplayProps['images']> {
-    return appToken.tokens.map(() => getTokenImg(furucomboToken.address, furucomboToken.network));
+  }: GetDisplayPropsParams<FurucomboFundShareToken, FurucomboFundDataProps>): Promise<DisplayProps['images']> {
+    return appToken.tokens.flatMap(t => getImagesFromToken(t));
   }
 }

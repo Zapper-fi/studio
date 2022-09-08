@@ -1,30 +1,28 @@
-import { Inject } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 
-import { Register } from '~app-toolkit/decorators';
-import { OlympusBridgeTokenHelper } from '~apps/olympus';
-import { PositionFetcher } from '~position/position-fetcher.interface';
-import { AppTokenPosition } from '~position/position.interface';
-import { Network } from '~types/network.interface';
+import { Erc20 } from '~contract/contracts';
+import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
+import { Network } from '~types';
 
 import { ABRACADABRA_DEFINITION } from '../abracadabra.definition';
 
-const appId = ABRACADABRA_DEFINITION.id;
-const groupId = ABRACADABRA_DEFINITION.groups.stakedSpell.id;
-const network = Network.AVALANCHE_MAINNET;
+@Injectable()
+export class AvalancheAbracadabraStakedSpellTokenFetcher extends AppTokenTemplatePositionFetcher<Erc20> {
+  appId = ABRACADABRA_DEFINITION.id;
+  groupId = ABRACADABRA_DEFINITION.groups.stakedSpell.id;
+  network = Network.AVALANCHE_MAINNET;
+  groupLabel = 'Staked SPELL';
+  fromNetwork = Network.ETHEREUM_MAINNET;
 
-const ETHEREUM_STAKED_SPELL_ADDRESS = '0x26fa3fffb6efe8c1e69103acb4044c26b9a106a9';
-const STAKED_SPELL_ADDRESS = '0x3ee97d514bbef95a2f110e6b9b73824719030f7a';
+  getContract(address: string) {
+    return this.appToolkit.globalContracts.erc20({ address, network: this.network });
+  }
 
-@Register.TokenPositionFetcher({ appId, groupId, network })
-export class AvalancheAbracadabraStakedSpellTokenFetcher implements PositionFetcher<AppTokenPosition> {
-  constructor(@Inject(OlympusBridgeTokenHelper) private readonly bridgeTokenHelper: OlympusBridgeTokenHelper) {}
+  getAddresses() {
+    return ['0x3ee97d514bbef95a2f110e6b9b73824719030f7a'];
+  }
 
-  async getPositions() {
-    return this.bridgeTokenHelper.getPositions({
-      src: { network: Network.ETHEREUM_MAINNET, address: ETHEREUM_STAKED_SPELL_ADDRESS },
-      dest: { network: Network.AVALANCHE_MAINNET, address: STAKED_SPELL_ADDRESS },
-      appId,
-      groupId,
-    });
+  async getUnderlyingTokenAddresses() {
+    return ['0x26fa3fffb6efe8c1e69103acb4044c26b9a106a9'];
   }
 }

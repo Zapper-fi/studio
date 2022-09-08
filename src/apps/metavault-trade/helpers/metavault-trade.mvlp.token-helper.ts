@@ -4,13 +4,15 @@ import { range } from 'lodash';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { buildDollarDisplayItem } from '~app-toolkit/helpers/presentation/display-item.present';
-import { getTokenImg } from '~app-toolkit/helpers/presentation/image.present';
+import { getAppAssetImage } from '~app-toolkit/helpers/presentation/image.present';
 import { ContractType } from '~position/contract.interface';
 import { AppTokenPosition } from '~position/position.interface';
 import { Network } from '~types/network.interface';
 
 import { MetavaultTradeContractFactory } from '../contracts';
 import { METAVAULT_TRADE_DEFINITION } from '../metavault-trade.definition';
+
+const appId = METAVAULT_TRADE_DEFINITION.id;
 
 type GetMetavaultTradeMvlpTokenParams = {
   network: Network;
@@ -72,7 +74,8 @@ export class MetavaultTradeMvlpTokenHelper {
     // Display Props
     const label = symbol;
     const secondaryLabel = buildDollarDisplayItem(price);
-    const images = [getTokenImg(mvlpTokenAddress, network)];
+    const images = [getAppAssetImage(appId, mvlpTokenAddress)];
+
     const statsItems = [{ label: 'Liquidity', value: buildDollarDisplayItem(liquidity) }];
 
     const mvlpToken: AppTokenPosition = {

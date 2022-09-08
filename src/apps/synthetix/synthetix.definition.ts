@@ -24,7 +24,6 @@ export const SYNTHETIX_DEFINITION = appDefinition({
       id: 'farm',
       type: GroupType.POSITION,
       label: 'Staking',
-      groupLabel: 'Farms',
     },
 
     mintr: {

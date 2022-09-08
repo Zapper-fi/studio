@@ -15,28 +15,18 @@ export const NEREUS_FINANCE_DEFINITION = appDefinition({
       id: 'supply',
       type: GroupType.TOKEN,
       label: 'Lending',
-      groupLabel: 'Supply',
     },
 
     stableDebt: {
       id: 'stable-debt',
       type: GroupType.TOKEN,
       label: 'Lending',
-      groupLabel: 'Borrow',
     },
 
     variableDebt: {
       id: 'variable-debt',
       type: GroupType.TOKEN,
       label: 'Lending',
-      groupLabel: 'Borrow',
-    },
-
-    claimable: {
-      id: 'claimable',
-      type: GroupType.TOKEN,
-      label: 'Reward',
-      isHiddenFromExplore: true,
     },
   },
   tags: [AppTag.LENDING],

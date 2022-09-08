@@ -1,11 +1,7 @@
-import { Inject } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
-import { Register } from '~app-toolkit/decorators';
-import {
-  DataPropsStageParams,
-  GetTokenBalancesPerPositionParams,
-} from '~position/template/contract-position.template.position-fetcher';
+import { GetDataPropsParams, GetTokenBalancesParams } from '~position/template/contract-position.template.types';
 import { SingleStakingFarmTemplateContractPositionFetcher } from '~position/template/single-staking.template.contract-position-fetcher';
 import { Network } from '~types/network.interface';
 
@@ -27,15 +23,12 @@ const FARMS = [
   },
 ];
 
-const appId = DOPEX_DEFINITION.id;
-const groupId = DOPEX_DEFINITION.groups.lpFarm.id;
-const network = Network.ARBITRUM_MAINNET;
-
-@Register.ContractPositionFetcher({ appId, groupId, network })
+@Injectable()
 export class ArbitrumDopexLpFarmContractPositionFetcher extends SingleStakingFarmTemplateContractPositionFetcher<DopexSingleRewardStaking> {
-  appId = appId;
-  groupId = groupId;
-  network = network;
+  appId = DOPEX_DEFINITION.id;
+  groupId = DOPEX_DEFINITION.groups.lpFarm.id;
+  network = Network.ARBITRUM_MAINNET;
+  groupLabel = 'LP Staking';
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
@@ -45,22 +38,22 @@ export class ArbitrumDopexLpFarmContractPositionFetcher extends SingleStakingFar
   }
 
   getContract(address: string): DopexSingleRewardStaking {
-    return this.contractFactory.dopexSingleRewardStaking({ address, network });
+    return this.contractFactory.dopexSingleRewardStaking({ address, network: this.network });
   }
 
   async getFarmDefinitions() {
     return FARMS;
   }
 
-  getRewardRates({ contract }: DataPropsStageParams<DopexSingleRewardStaking>) {
+  getRewardRates({ contract }: GetDataPropsParams<DopexSingleRewardStaking>) {
     return contract.rewardRate();
   }
 
-  getStakedTokenBalance({ address, contract }: GetTokenBalancesPerPositionParams<DopexSingleRewardStaking>) {
+  getStakedTokenBalance({ address, contract }: GetTokenBalancesParams<DopexSingleRewardStaking>) {
     return contract.balanceOf(address);
   }
 
-  getRewardTokenBalances({ address, contract }: GetTokenBalancesPerPositionParams<DopexSingleRewardStaking>) {
+  getRewardTokenBalances({ address, contract }: GetTokenBalancesParams<DopexSingleRewardStaking>) {
     return contract.earned(address);
   }
 }

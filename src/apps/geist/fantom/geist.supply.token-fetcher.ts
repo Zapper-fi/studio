@@ -1,4 +1,5 @@
-import { Register } from '~app-toolkit/decorators';
+import { Injectable } from '@nestjs/common';
+
 import { AaveV2AToken } from '~apps/aave-v2/contracts';
 import {
   AaveV2LendingTemplateTokenFetcher,
@@ -6,20 +7,17 @@ import {
   AaveV2ReserveApyData,
   AaveV2ReserveTokenAddressesData,
 } from '~apps/aave-v2/helpers/aave-v2.lending.template.token-fetcher';
-import { DisplayPropsStageParams } from '~position/template/app-token.template.position-fetcher';
+import { GetDisplayPropsParams } from '~position/template/app-token.template.types';
 import { Network } from '~types/network.interface';
 
 import { GEIST_DEFINITION } from '../geist.definition';
 
-const appId = GEIST_DEFINITION.id;
-const groupId = GEIST_DEFINITION.groups.supply.id;
-const network = Network.FANTOM_OPERA_MAINNET;
-
-@Register.TokenPositionFetcher({ appId, groupId, network })
+@Injectable()
 export class FantomGeistSupplyTokenFetcher extends AaveV2LendingTemplateTokenFetcher {
   appId = GEIST_DEFINITION.id;
   groupId = GEIST_DEFINITION.groups.supply.id;
   network = Network.FANTOM_OPERA_MAINNET;
+  groupLabel = 'Lending';
   providerAddress = '0xf3b0611e2e4d2cd6ab4bb3e01ade211c3f42a8c3';
   isDebt = false;
 
@@ -31,7 +29,7 @@ export class FantomGeistSupplyTokenFetcher extends AaveV2LendingTemplateTokenFet
     return reserveApyData.supplyApy;
   }
 
-  async getTertiaryLabel({ appToken }: DisplayPropsStageParams<AaveV2AToken, AaveV2LendingTokenDataProps>) {
-    return `${(appToken.dataProps.apy * 100).toFixed(3)}% APY`;
+  async getTertiaryLabel({ appToken }: GetDisplayPropsParams<AaveV2AToken, AaveV2LendingTokenDataProps>) {
+    return `${appToken.dataProps.apy.toFixed(3)}% APY`;
   }
 }

@@ -28,8 +28,20 @@ export const HECTOR_NETWORK_DEFINITION = appDefinition({
       label: 'Wrapped sHEC V2',
     },
 
+    hec: {
+      id: 'hec',
+      type: GroupType.TOKEN,
+      label: 'Hector Network',
+    },
+
     bond: {
       id: 'bond',
+      type: GroupType.POSITION,
+      label: 'Bonds',
+    },
+
+    bondNoTreasury: {
+      id: 'bond-no-treasury',
       type: GroupType.POSITION,
       label: 'Bonds',
     },
@@ -38,6 +50,12 @@ export const HECTOR_NETWORK_DEFINITION = appDefinition({
       id: 'stake-bond',
       type: GroupType.POSITION,
       label: 'Bonds',
+    },
+
+    farm: {
+      id: 'farm',
+      type: GroupType.POSITION,
+      label: 'Farms',
     },
   },
   links: {
@@ -49,6 +67,7 @@ export const HECTOR_NETWORK_DEFINITION = appDefinition({
   },
   supportedNetworks: {
     [Network.FANTOM_OPERA_MAINNET]: [AppAction.VIEW],
+    [Network.BINANCE_SMART_CHAIN_MAINNET]: [AppAction.VIEW],
   },
 });
 

@@ -13,6 +13,9 @@ import { FantomIronBankBalanceFetcher } from './fantom/iron-bank.balance-fetcher
 import { FantomIronBankBorrowContractPositionFetcher } from './fantom/iron-bank.borrow.contract-position-fetcher';
 import { FantomIronBankSupplyTokenFetcher } from './fantom/iron-bank.supply.token-fetcher';
 import { IronBankAppDefinition, IRON_BANK_DEFINITION } from './iron-bank.definition';
+import { OptimismIronBankBalanceFetcher } from './optimism/iron-bank.balance-fetcher';
+import { OptimismIronBankBorrowContractPositionFetcher } from './optimism/iron-bank.borrow.contract-position-fetcher';
+import { OptimismIronBankSupplyTokenFetcher } from './optimism/iron-bank.supply.token-fetcher';
 
 @Register.AppModule({
   appId: IRON_BANK_DEFINITION.id,
@@ -29,6 +32,9 @@ import { IronBankAppDefinition, IRON_BANK_DEFINITION } from './iron-bank.definit
     AvalancheIronBankBalanceFetcher,
     AvalancheIronBankSupplyTokenFetcher,
     AvalancheIronBankBorrowContractPositionFetcher,
+    OptimismIronBankBalanceFetcher,
+    OptimismIronBankSupplyTokenFetcher,
+    OptimismIronBankBorrowContractPositionFetcher,
     IronBankContractFactory,
   ],
 })

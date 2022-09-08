@@ -1,136 +1,131 @@
-import { Inject } from '@nestjs/common';
-import _ from 'lodash';
+import { Inject, Injectable } from '@nestjs/common';
+import DataLoader from 'dataloader';
+import { gql } from 'graphql-request';
+import { sum } from 'lodash';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
-import { Register } from '~app-toolkit/decorators';
 import {
   buildDollarDisplayItem,
   buildNumberDisplayItem,
   buildPercentageDisplayItem,
 } from '~app-toolkit/helpers/presentation/display-item.present';
-import { getTokenImg } from '~app-toolkit/helpers/presentation/image.present';
-import { ContractType } from '~position/contract.interface';
-import { PositionFetcher } from '~position/position-fetcher.interface';
-import { AppTokenPosition } from '~position/position.interface';
+import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
+import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
+import {
+  GetUnderlyingTokensParams,
+  GetPricePerShareParams,
+  DefaultAppTokenDefinition,
+  GetDataPropsParams,
+  GetDisplayPropsParams,
+} from '~position/template/app-token.template.types';
 import { Network } from '~types/network.interface';
 
 import BALANCER_V1_DEFINITION from '../balancer-v1.definition';
-import { getAllPoolsData } from '../balancer-v1.utils';
+import { BalancerPoolToken, BalancerV1ContractFactory } from '../contracts';
 
-const appId = BALANCER_V1_DEFINITION.id;
-const groupId = BALANCER_V1_DEFINITION.groups.pool.id;
-const network = Network.ETHEREUM_MAINNET;
+import { EthereumBalancerV1PoolSubgraphVolumeDataLoader } from './balancer-v1.volume.data-loader';
 
-@Register.TokenPositionFetcher({
-  appId,
-  groupId,
-  network,
-})
-export class EthereumBalancerV1PoolTokenFetcher implements PositionFetcher<AppTokenPosition> {
-  constructor(@Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit) {}
+type GetAllPoolsData = {
+  pools: {
+    id: string;
+  }[];
+};
 
-  async getPositions() {
-    const baseTokens = await this.appToolkit.getBaseTokenPrices(network);
-    const graphHelper = this.appToolkit.helpers.theGraphHelper;
+const getPoolsQuery = gql`
+  query getPools($tsYesterday: Int) {
+    pools(first: 1000, orderBy: liquidity, orderDirection: desc, where: { active: true, liquidity_gte: 10000 }) {
+      id
+    }
+  }
+`;
 
-    const ts = Math.round(new Date().getTime() / 1000);
-    const tsYesterday = ts - 24 * 3600;
-    const data = await getAllPoolsData(tsYesterday, graphHelper);
+export type BalancerV1PoolTokenDataProps = {
+  liquidity: number;
+  fee: number;
+  volume: number;
+  reserves: number[];
+  weight: number[];
+};
 
-    const validPools = data.pools.filter(pool => {
-      const unavailableTokens = ['cDAI', 'cUSDT', 'cWBTC', 'cBAT', 'cZRX', 'cETH', 'cREP', 'cUSDC', 'YAM'];
-      const hasSomeTokens = pool.tokens.length > 0;
-      const hasValidSupply = Number(pool.totalShares) > 0;
-      const hasAllPrices = pool.tokens.every(t => baseTokens.find(p => p.address === t.address.toLowerCase()));
-      const hasNoUnavailableTokens = pool.tokens.every(t => !unavailableTokens.includes(t.symbol));
-      return hasSomeTokens && hasValidSupply && hasAllPrices && hasNoUnavailableTokens;
+@Injectable()
+export class EthereumBalancerV1PoolTokenFetcher extends AppTokenTemplatePositionFetcher<
+  BalancerPoolToken,
+  BalancerV1PoolTokenDataProps
+> {
+  appId = BALANCER_V1_DEFINITION.id;
+  groupId = BALANCER_V1_DEFINITION.groups.pool.id;
+  network = Network.ETHEREUM_MAINNET;
+  groupLabel = 'Pools';
+
+  volumeDataLoader: DataLoader<string, number>;
+
+  constructor(
+    @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
+    @Inject(BalancerV1ContractFactory) protected readonly contractFactory: BalancerV1ContractFactory,
+    @Inject(EthereumBalancerV1PoolSubgraphVolumeDataLoader)
+    protected readonly volumeDataLoaderBuilder: EthereumBalancerV1PoolSubgraphVolumeDataLoader,
+  ) {
+    super(appToolkit);
+  }
+
+  getContract(address: string): BalancerPoolToken {
+    return this.contractFactory.balancerPoolToken({ address, network: this.network });
+  }
+
+  async getAddresses() {
+    this.volumeDataLoader = this.volumeDataLoaderBuilder.getLoader();
+
+    const poolsFromSubgraph = await this.appToolkit.helpers.theGraphHelper.requestGraph<GetAllPoolsData>({
+      endpoint: 'https://api.thegraph.com/subgraphs/name/balancer-labs/balancer',
+      query: getPoolsQuery,
     });
 
-    const poolTokens = validPools.map(pool => {
-      // Build underlying tokens
-      const tokensRaw = pool.tokens
-        .sort((a, b) => +b.denormWeight / +pool.totalWeight - +a.denormWeight / +pool.totalWeight)
-        .map(token => {
-          const tokenMatch = baseTokens.find(price => token.symbol === price.symbol);
-          if (!tokenMatch) return null;
-          return { ...tokenMatch };
-        });
+    return poolsFromSubgraph.pools.map(v => v.id);
+  }
 
-      if (!tokensRaw) return null;
-      const tokens = _.compact(tokensRaw);
+  async getUnderlyingTokenAddresses({ contract }: GetUnderlyingTokensParams<BalancerPoolToken>) {
+    return contract.getCurrentTokens();
+  }
 
-      const address = pool.id;
-      const decimals = 18;
-      const symbol = tokens.map(t => t.symbol).join(' / ');
-      const label = symbol;
-      const liquidity = Number(pool.liquidity);
-      const supply = Number(pool.totalShares);
-      const weight = pool.tokens.map(t => Number(t.denormWeight) / Number(pool.totalWeight));
-      const reserves = pool.tokens.map(t => Number(t.balance));
-      const price = liquidity / supply;
-      const pricePerShare = reserves.map(r => r / supply);
-      const fee = Number(pool.swapFee);
-      const lastVolume = pool.swaps.length > 0 ? +pool.swaps[0].poolTotalSwapVolume : +pool.totalSwapVolume;
-      const volume = +pool.totalSwapVolume - lastVolume;
-      const ratio = weight.map(p => `${Math.round(p * 100)}%`).join(' / ');
-      const secondaryLabel = ratio;
+  async getPricePerShare({ contract, appToken }: GetPricePerShareParams<BalancerPoolToken>) {
+    const reservesRaw = await Promise.all(appToken.tokens.map(t => contract.getBalance(t.address)));
+    const reserves = reservesRaw.map((r, i) => Number(r) / 10 ** appToken.tokens[i].decimals);
+    const pricePerShare = reserves.map(r => r / appToken.supply);
+    return pricePerShare;
+  }
 
-      const displayProps = {
-        label,
-        secondaryLabel,
-        images: tokens.map(t => getTokenImg(t.address, t.network)),
-        statsItems: [
-          {
-            label: 'Liquidity',
-            value: buildDollarDisplayItem(liquidity),
-          },
-          {
-            label: 'Supply',
-            value: buildNumberDisplayItem(supply),
-          },
-          {
-            label: 'Volume',
-            value: buildDollarDisplayItem(volume),
-          },
-          {
-            label: 'Fee',
-            value: buildPercentageDisplayItem(fee),
-          },
-          {
-            label: 'Ratio',
-            value: ratio,
-          },
-        ],
-      };
+  async getDataProps({ appToken, contract }: GetDataPropsParams<BalancerPoolToken>) {
+    const reserves = (appToken.pricePerShare as number[]).map(pps => pps * appToken.supply);
+    const liquidity = sum(reserves.map((r, i) => r * appToken.tokens[i].price));
+    const fee = (Number(await contract.getSwapFee()) / 10 ** 18) * 100;
+    const weightsRaw = await Promise.all(appToken.tokens.map(t => contract.getNormalizedWeight(t.address)));
+    const weight = weightsRaw.map(w => Number(w) / 10 ** 18);
+    const volume = await this.volumeDataLoader.load(appToken.address);
 
-      const dataProps = {
-        liquidity,
-        fee,
-        volume,
-        lastVolume,
-        reserves,
-        weight,
-      };
+    return { liquidity, fee, volume, reserves, weight };
+  }
 
-      const token: AppTokenPosition = {
-        address,
-        type: ContractType.APP_TOKEN,
-        network,
-        appId,
-        groupId,
-        symbol,
-        decimals,
-        supply,
-        price,
-        pricePerShare,
-        tokens,
-        dataProps,
-        displayProps,
-      };
+  async getLabel({
+    appToken,
+  }: GetDisplayPropsParams<BalancerPoolToken, BalancerV1PoolTokenDataProps>): Promise<string> {
+    return appToken.tokens.map(v => getLabelFromToken(v)).join(' / ');
+  }
 
-      return token;
-    });
+  async getSecondaryLabel({
+    appToken,
+  }: GetDisplayPropsParams<BalancerPoolToken, BalancerV1PoolTokenDataProps, DefaultAppTokenDefinition>) {
+    const { liquidity, reserves } = appToken.dataProps;
+    const reservePercentages = appToken.tokens.map((t, i) => reserves[i] * (t.price / liquidity));
+    return reservePercentages.map(p => `${Math.round(p * 100)}%`).join(' / ');
+  }
 
-    return _.compact(poolTokens);
+  async getStatsItems({ appToken }: GetDisplayPropsParams<BalancerPoolToken, BalancerV1PoolTokenDataProps>) {
+    return [
+      { label: 'Liquidity', value: buildDollarDisplayItem(appToken.dataProps.liquidity) },
+      { label: 'Supply', value: buildNumberDisplayItem(appToken.supply) },
+      { label: 'Volume', value: buildDollarDisplayItem(appToken.dataProps.volume) },
+      { label: 'Fee', value: buildPercentageDisplayItem(appToken.dataProps.fee) },
+      { label: 'Ratio', value: appToken.dataProps.weight.map(p => `${Math.round(p * 100)}%`).join(' / ') },
+    ];
   }
 }

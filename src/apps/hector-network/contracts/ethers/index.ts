@@ -2,9 +2,15 @@
 /* tslint:disable */
 /* eslint-disable */
 export type { HectorNetworkBondDepository } from './HectorNetworkBondDepository';
+export type { HectorNetworkBondNoTreasury } from './HectorNetworkBondNoTreasury';
 export type { HectorNetworkStakeBondDepository } from './HectorNetworkStakeBondDepository';
 export type { HectorNetworkStaked } from './HectorNetworkStaked';
+export type { HectorNetworkStakingRewards } from './HectorNetworkStakingRewards';
+export type { HectorNetworkToken } from './HectorNetworkToken';
 export * as factories from './factories';
 export { HectorNetworkBondDepository__factory } from './factories/HectorNetworkBondDepository__factory';
+export { HectorNetworkBondNoTreasury__factory } from './factories/HectorNetworkBondNoTreasury__factory';
 export { HectorNetworkStakeBondDepository__factory } from './factories/HectorNetworkStakeBondDepository__factory';
 export { HectorNetworkStaked__factory } from './factories/HectorNetworkStaked__factory';
+export { HectorNetworkStakingRewards__factory } from './factories/HectorNetworkStakingRewards__factory';
+export { HectorNetworkToken__factory } from './factories/HectorNetworkToken__factory';

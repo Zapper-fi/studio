@@ -20,14 +20,12 @@ export const DFX_DEFINITION = appDefinition({
       id: 'curve',
       type: GroupType.TOKEN,
       label: 'DFX Curves',
-      groupLabel: 'Pools',
     },
 
     staking: {
       id: 'staking',
       type: GroupType.POSITION,
       label: 'DFX Staking',
-      groupLabel: 'Farms',
     },
   },
   tags: [AppTag.DECENTRALIZED_EXCHANGE, AppTag.LIQUIDITY_POOL, AppTag.STABLECOIN],

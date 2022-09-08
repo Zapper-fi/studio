@@ -7,7 +7,7 @@ import { AppTokenPosition } from '~position/position.interface';
 import { Network } from '~types/network.interface';
 
 import { PolynomialContractFactory, PolynomialVaultToken } from '../contracts';
-import { getVault } from '../helpers/formatters';
+import { getVault, isUnderlyingDenominated } from '../helpers/formatters';
 import { PolynomialApiHelper } from '../helpers/polynomial.api';
 import { POLYNOMIAL_DEFINITION } from '../polynomial.definition';
 
@@ -34,7 +34,7 @@ export class OptimismPolynomialVaultsTokenFetcher implements PositionFetcher<App
       resolveUnderlyingTokenAddress: async ({ multicall, contract }) => {
         const vaultAddress = await multicall.wrap(contract).vault();
         const vault = getVault(vaults, vaultAddress.toLowerCase());
-        if (vault.vaultId.includes('CALL')) {
+        if (isUnderlyingDenominated(vault.vaultId)) {
           const vaultContract = this.contractFactory.polynomialCoveredCall({ address: vaultAddress, network });
           return multicall.wrap(vaultContract).UNDERLYING();
         }

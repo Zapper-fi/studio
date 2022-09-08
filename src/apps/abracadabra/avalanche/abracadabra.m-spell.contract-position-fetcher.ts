@@ -1,36 +1,15 @@
-import { Inject } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 
-import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
-import { Register } from '~app-toolkit/decorators';
-import { PositionFetcher } from '~position/position-fetcher.interface';
-import { ContractPosition } from '~position/position.interface';
-import { Network } from '~types/network.interface';
+import { Network } from '~types';
 
 import { ABRACADABRA_DEFINITION } from '../abracadabra.definition';
-import { AbracadabraContractFactory, AbracadabraMspell } from '../contracts';
+import { AbracadabraMspellContractPositionFetcher } from '../common/abracadabra.m-spell.contract-position-fetcher';
 
-const appId = ABRACADABRA_DEFINITION.id;
-const groupId = ABRACADABRA_DEFINITION.groups.mSpell.id;
-const network = Network.AVALANCHE_MAINNET;
-
-@Register.ContractPositionFetcher({ appId, groupId, network })
-export class AvalancheAbracadabraMspellContractPositionFetcher implements PositionFetcher<ContractPosition> {
-  constructor(
-    @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
-    @Inject(AbracadabraContractFactory)
-    private readonly contractFactory: AbracadabraContractFactory,
-  ) {}
-
-  async getPositions() {
-    return this.appToolkit.helpers.singleStakingFarmContractPositionHelper.getContractPositions<AbracadabraMspell>({
-      appId,
-      groupId,
-      network,
-      resolveFarmAddresses: async () => ['0xbd84472b31d947314fdfa2ea42460a2727f955af'],
-      resolveStakedTokenAddress: async ({ multicall, contract }) => multicall.wrap(contract).spell(),
-      resolveFarmContract: opts => this.contractFactory.abracadabraMspell(opts),
-      resolveRewardTokenAddresses: async ({ multicall, contract }) => multicall.wrap(contract).mim(),
-      resolveRois: () => ({ dailyROI: 0, weeklyROI: 0, yearlyROI: 0 }),
-    });
-  }
+@Injectable()
+export class AvalancheAbracadabraMspellContractPositionFetcher extends AbracadabraMspellContractPositionFetcher {
+  appId = ABRACADABRA_DEFINITION.id;
+  groupId = ABRACADABRA_DEFINITION.groups.mSpell.id;
+  network = Network.AVALANCHE_MAINNET;
+  groupLabel = 'mSPELL';
+  mSpellAddress = '0xbd84472b31d947314fdfa2ea42460a2727f955af';
 }

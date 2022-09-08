@@ -1,14 +1,17 @@
-import { Inject } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { ZERO_ADDRESS } from '~app-toolkit/constants/address';
-import { Register } from '~app-toolkit/decorators';
-import { LiquityContractFactory, LiquityStaking } from '~apps/liquity/contracts';
-import { PositionFetcher } from '~position/position-fetcher.interface';
-import { ContractPosition } from '~position/position.interface';
+import { GetTokenBalancesParams } from '~position/template/contract-position.template.types';
+import {
+  SingleStakingFarmDefinition,
+  SingleStakingFarmTemplateContractPositionFetcher,
+} from '~position/template/single-staking.template.contract-position-fetcher';
 import { Network } from '~types/network.interface';
 
-import { TEDDY_CASH_DEFINITION } from '../teddy-cash.definition';
+import { TeddyCashContractFactory } from '../contracts';
+import { TeddyCashStaking } from '../contracts/ethers/TeddyCashStaking';
+import TEDDY_CASH_DEFINITION from '../teddy-cash.definition';
 
 const FARMS = [
   {
@@ -18,28 +21,37 @@ const FARMS = [
   },
 ];
 
-const appId = TEDDY_CASH_DEFINITION.id;
-const groupId = TEDDY_CASH_DEFINITION.groups.farm.id;
-const network = Network.AVALANCHE_MAINNET;
+@Injectable()
+export class AvalancheTeddyCashFarmContractPositionFetcher extends SingleStakingFarmTemplateContractPositionFetcher<TeddyCashStaking> {
+  appId = TEDDY_CASH_DEFINITION.id;
+  groupId = TEDDY_CASH_DEFINITION.groups.farm.id;
+  network = Network.ETHEREUM_MAINNET;
+  groupLabel = 'Farms';
 
-@Register.ContractPositionFetcher({ appId, groupId, network })
-export class AvalancheTeddyCashFarmContractPositionFetcher implements PositionFetcher<ContractPosition> {
   constructor(
-    @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
-    @Inject(LiquityContractFactory)
-    private readonly liquityContractFactory: LiquityContractFactory,
-  ) {}
+    @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
+    @Inject(TeddyCashContractFactory) protected readonly contractFactory: TeddyCashContractFactory,
+  ) {
+    super(appToolkit);
+  }
 
-  async getPositions() {
-    return this.appToolkit.helpers.singleStakingFarmContractPositionHelper.getContractPositions<LiquityStaking>({
-      network,
-      appId,
-      groupId,
-      dependencies: [],
-      resolveFarmDefinitions: async () => FARMS,
-      resolveFarmContract: ({ network, address }) => this.liquityContractFactory.liquityStaking({ address, network }),
-      resolveIsActive: async () => true,
-      resolveRois: async () => ({ dailyROI: 0, weeklyROI: 0, yearlyROI: 0 }),
-    });
+  getContract(address: string): TeddyCashStaking {
+    return this.contractFactory.teddyCashStaking({ address, network: this.network });
+  }
+
+  async getFarmDefinitions(): Promise<SingleStakingFarmDefinition[]> {
+    return FARMS;
+  }
+
+  async getRewardRates() {
+    return [0, 0];
+  }
+
+  async getStakedTokenBalance({ contract, address }: GetTokenBalancesParams<TeddyCashStaking>) {
+    return contract.stakes(address);
+  }
+
+  async getRewardTokenBalances({ contract, address }: GetTokenBalancesParams<TeddyCashStaking>) {
+    return Promise.all([contract.getPendingLUSDGain(address), contract.getPendingETHGain(address)]);
   }
 }

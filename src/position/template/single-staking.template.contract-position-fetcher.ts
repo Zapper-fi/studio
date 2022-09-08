@@ -6,14 +6,14 @@ import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { getImagesFromToken, getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { MetaType } from '~position/position.interface';
 import { isClaimable, isSupplied } from '~position/position.utils';
+import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
 import {
-  ContractPositionTemplatePositionFetcher,
-  DataPropsStageParams,
-  DisplayPropsStageParams,
-  GetTokenBalancesPerPositionParams,
-  TokenStageParams,
-  UnderlyingTokenDescriptor,
-} from '~position/template/contract-position.template.position-fetcher';
+  GetDataPropsParams,
+  GetDisplayPropsParams,
+  GetTokenBalancesParams,
+  GetTokenDefinitionsParams,
+  UnderlyingTokenDefinition,
+} from '~position/template/contract-position.template.types';
 
 export type SingleStakingFarmDefinition = {
   address: string;
@@ -37,26 +37,24 @@ export abstract class SingleStakingFarmTemplateContractPositionFetcher<
   }
 
   abstract getFarmDefinitions(): Promise<SingleStakingFarmDefinition[]>;
-  abstract getRewardRates(params: DataPropsStageParams<T, V>): Promise<BigNumberish | BigNumberish[]>;
-  abstract getStakedTokenBalance(
-    params: GetTokenBalancesPerPositionParams<T, SingleStakingFarmDataProps>,
-  ): Promise<BigNumberish>;
+  abstract getRewardRates(params: GetDataPropsParams<T, V>): Promise<BigNumberish | BigNumberish[]>;
+  abstract getStakedTokenBalance(params: GetTokenBalancesParams<T, SingleStakingFarmDataProps>): Promise<BigNumberish>;
   abstract getRewardTokenBalances(
-    params: GetTokenBalancesPerPositionParams<T, SingleStakingFarmDataProps>,
+    params: GetTokenBalancesParams<T, SingleStakingFarmDataProps>,
   ): Promise<BigNumberish | BigNumberish[]>;
 
-  async getDescriptors() {
+  async getDefinitions() {
     return this.getFarmDefinitions();
   }
 
-  async getTokenDescriptors({ descriptor }: TokenStageParams<T, V, SingleStakingFarmDefinition>) {
-    const tokens: UnderlyingTokenDescriptor[] = [];
-    tokens.push({ metaType: MetaType.SUPPLIED, address: descriptor.stakedTokenAddress });
-    tokens.push(...descriptor.rewardTokenAddresses.map(v => ({ metaType: MetaType.CLAIMABLE, address: v })));
-    return tokens;
+  async getTokenDefinitions({ definition }: GetTokenDefinitionsParams<T, SingleStakingFarmDefinition>) {
+    const tokenDefinitions: UnderlyingTokenDefinition[] = [];
+    tokenDefinitions.push({ metaType: MetaType.SUPPLIED, address: definition.stakedTokenAddress });
+    tokenDefinitions.push(...definition.rewardTokenAddresses.map(v => ({ metaType: MetaType.CLAIMABLE, address: v })));
+    return tokenDefinitions;
   }
 
-  async getDataProps(params: DataPropsStageParams<T, V, SingleStakingFarmDefinition>): Promise<V> {
+  async getDataProps(params: GetDataPropsParams<T, V, SingleStakingFarmDefinition>): Promise<V> {
     const { contractPosition, multicall } = params;
     const stakedToken = contractPosition.tokens.find(isSupplied)!;
     const rewardTokens = contractPosition.tokens.filter(isClaimable);
@@ -77,16 +75,16 @@ export abstract class SingleStakingFarmTemplateContractPositionFetcher<
     return { liquidity, apy, isActive } as V;
   }
 
-  async getLabel({ contractPosition }: DisplayPropsStageParams<T>) {
+  async getLabel({ contractPosition }: GetDisplayPropsParams<T>) {
     const stakedToken = contractPosition.tokens.find(isSupplied)!;
     return getLabelFromToken(stakedToken);
   }
 
-  async getImages({ contractPosition }: DisplayPropsStageParams<T, V>) {
+  async getImages({ contractPosition }: GetDisplayPropsParams<T, V>) {
     return contractPosition.tokens.filter(isSupplied).flatMap(v => getImagesFromToken(v));
   }
 
-  async getTokenBalancesPerPosition(params: GetTokenBalancesPerPositionParams<T, SingleStakingFarmDataProps>) {
+  async getTokenBalancesPerPosition(params: GetTokenBalancesParams<T, SingleStakingFarmDataProps>) {
     const tokenBalances: BigNumberish[] = [];
 
     const [stakedBalanceRaw, rewardTokenBalancesRaw] = await Promise.all([

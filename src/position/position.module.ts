@@ -5,7 +5,9 @@ import { CacheModule } from '~cache/cache.module';
 
 import { PositionBalanceFetcherRegistry } from './position-balance-fetcher.registry';
 import { PositionFetcherRegistry } from './position-fetcher.registry';
+import { PositionFetcherTemplateRegistry } from './position-fetcher.template-registry';
 import { PositionKeyService } from './position-key.service';
+import { PositionPresenterRegistry } from './position-presenter.registry';
 import { PositionSources } from './position-source';
 import { PositionController } from './position.controller';
 import { PositionService } from './position.service';
@@ -19,7 +21,9 @@ import { TokenDependencySelectorService } from './selectors/token-dependency-sel
     AppTokenSelectorService,
     PositionBalanceFetcherRegistry,
     PositionFetcherRegistry,
+    PositionFetcherTemplateRegistry,
     PositionKeyService,
+    PositionPresenterRegistry,
     PositionService,
     TokenDependencySelectorService,
   ],
@@ -28,7 +32,9 @@ import { TokenDependencySelectorService } from './selectors/token-dependency-sel
     AppTokenSelectorService,
     PositionBalanceFetcherRegistry,
     PositionFetcherRegistry,
+    PositionFetcherTemplateRegistry,
     PositionKeyService,
+    PositionPresenterRegistry,
     PositionService,
     TokenDependencySelectorService,
   ],
