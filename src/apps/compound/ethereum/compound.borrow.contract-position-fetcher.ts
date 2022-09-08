@@ -1,7 +1,7 @@
 import { Inject, Injectable } from '@nestjs/common';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
-import { ETH_ADDR_ALIAS, ZERO_ADDRESS } from '~app-toolkit/constants/address';
+import { ZERO_ADDRESS } from '~app-toolkit/constants/address';
 import { isMulticallUnderlyingError } from '~multicall/multicall.ethers';
 import { Network } from '~types/network.interface';
 
@@ -39,13 +39,11 @@ export class EthereumCompoundBorrowContractPositionFetcher extends CompoundBorro
   }
 
   async getUnderlyingAddress(contract: CompoundCToken) {
-    const underlyingAddressRaw = await contract.underlying().catch(err => {
+    return contract.underlying().catch(err => {
       // if the underlying call failed, it's the compound-wrapped native token
       if (isMulticallUnderlyingError(err)) return ZERO_ADDRESS;
       throw err;
     });
-
-    return underlyingAddressRaw.toLowerCase().replace(ETH_ADDR_ALIAS, ZERO_ADDRESS);
   }
 
   getExchangeRate(contract: CompoundCToken) {
