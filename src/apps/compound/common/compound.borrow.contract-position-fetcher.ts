@@ -1,5 +1,6 @@
 import { BigNumberish, Contract } from 'ethers';
 
+import { ETH_ADDR_ALIAS, ZERO_ADDRESS } from '~app-toolkit/constants/address';
 import { BLOCKS_PER_DAY } from '~app-toolkit/constants/blocks';
 import { buildDollarDisplayItem } from '~app-toolkit/helpers/presentation/display-item.present';
 import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
@@ -53,7 +54,13 @@ export abstract class CompoundBorrowContractPositionFetcher<
   async getTokenDefinitions({
     contract,
   }: GetTokenDefinitionsParams<R, DefaultContractPositionDefinition>): Promise<UnderlyingTokenDefinition[] | null> {
-    const underlyingAddress = await this.getUnderlyingAddress(contract).then(addr => addr.toLowerCase());
+    const underlyingAddressRaw = await this.getUnderlyingAddress(contract).catch(err => {
+      // if the underlying call failed, it's the compound-wrapped native token
+      if (isMulticallUnderlyingError(err)) return ZERO_ADDRESS;
+      throw err;
+    });
+
+    const underlyingAddress = underlyingAddressRaw.toLowerCase().replace(ETH_ADDR_ALIAS, ZERO_ADDRESS);
     return [{ address: underlyingAddress, metaType: MetaType.BORROWED }];
   }
 
