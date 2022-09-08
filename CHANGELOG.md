@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.217.1](https://github.com/Zapper-fi/studio/compare/v0.217.0...v0.217.1) (2022-09-08)
+
+
+### Bug Fixes
+
+* **origin-story:** Migrate Origin Story to template ([#1372](https://github.com/Zapper-fi/studio/issues/1372)) ([3ca2ada](https://github.com/Zapper-fi/studio/commit/3ca2ada58e7f859d16667fd6f325da92845c7dc9))
+
 ## [0.217.0](https://github.com/Zapper-fi/studio/compare/v0.216.0...v0.217.0) (2022-09-08)
 
 
