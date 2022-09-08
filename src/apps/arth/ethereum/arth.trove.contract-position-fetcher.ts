@@ -25,7 +25,7 @@ export class EthereumArthTroveContractPositionFetcher extends ContractPositionTe
   appId = appId;
   groupId = groupId;
   network = network;
-  groupLabel = 'Trove';
+  groupLabel = 'Loan';
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
@@ -50,7 +50,7 @@ export class EthereumArthTroveContractPositionFetcher extends ContractPositionTe
   }
 
   async getLabel({ contractPosition }: DisplayPropsStageParams<TroveManager>): Promise<string> {
-    return `${getLabelFromToken(contractPosition.tokens[0])} Trove`;
+    return `${getLabelFromToken(contractPosition.tokens[0])} Loan`;
   }
 
   getTokenBalancesPerPosition({ address, contract }: GetTokenBalancesPerPositionParams<TroveManager>) {

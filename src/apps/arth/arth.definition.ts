@@ -7,14 +7,14 @@ export const ARTH_DEFINITION = appDefinition({
   id: 'arth',
   name: 'ARTH',
   description:
-    'ARTH is a stablecoin that is designed to appreciate over time against the US dollar while at the same time, it remains relatively stable.',
+    'ARTH is a decentralized stablecoin that is designed to appreciate over time against the US dollar whilst remaining relatively stable.',
   url: 'https://arth.mahadao.com/',
 
   groups: {
     trove: {
       id: 'trove',
       type: GroupType.POSITION,
-      label: 'Trove',
+      label: 'Loans',
     },
 
     stabilityPool: {
@@ -32,7 +32,7 @@ export const ARTH_DEFINITION = appDefinition({
     [Network.ETHEREUM_MAINNET]: [AppAction.VIEW],
   },
 
-  primaryColor: '#fff',
+  primaryColor: '#222',
 });
 
 @Register.AppDefinition(ARTH_DEFINITION.id)
