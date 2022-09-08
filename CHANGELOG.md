@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.217.0](https://github.com/Zapper-fi/studio/compare/v0.216.0...v0.217.0) (2022-09-08)
+
+
+### Features
+
+* **uniswap-v2:** Implement subgraph template abstract class ([#1303](https://github.com/Zapper-fi/studio/issues/1303)) ([d30a334](https://github.com/Zapper-fi/studio/commit/d30a3343847b400d187424f8c6ac2e2e086ce5ac))
+
 ## [0.216.0](https://github.com/Zapper-fi/studio/compare/v0.215.0...v0.216.0) (2022-09-07)
 
 
