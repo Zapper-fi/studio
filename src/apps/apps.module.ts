@@ -90,13 +90,14 @@ export class AppsModule {
     // Find all apps available to be registered
     const allAppIds = readdirSync(__dirname, { withFileTypes: true })
       .filter(dirent => dirent.isDirectory())
+      .filter(dirent => !['__tests__'].includes(dirent.name))
       .map(dirent => dirent.name);
 
     // If we're in prod, or if there is no enabled apps subset configured, enable everything
-    const isProd = process.env.NODE_ENV === 'production';
+    const isProdOrTest = process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'test';
     const configuredAppIds = compact((process.env.ENABLED_APPS ?? '').split(','));
 
-    if (isProd) {
+    if (isProdOrTest) {
       const appModules = await this.resolveModulesByAppIds(allAppIds);
       return this.externalizeAppModuleDependencies(appModules);
     }
@@ -122,7 +123,7 @@ export class AppsModule {
       .map(dirent => dirent.name);
 
     // If we're in prod, or if there is no enabled app helpers subset configured, enable nothing
-    const isProd = process.env.NODE_ENV === 'production';
+    const isProd = process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'test';
     const configuredHelpersAppIds = (process.env.ENABLED_HELPERS ?? '').split(',').filter(Boolean);
     if (isProd || !configuredHelpersAppIds.length) return [];
 
