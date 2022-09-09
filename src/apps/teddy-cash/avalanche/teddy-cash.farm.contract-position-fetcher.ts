@@ -25,7 +25,7 @@ const FARMS = [
 export class AvalancheTeddyCashFarmContractPositionFetcher extends SingleStakingFarmTemplateContractPositionFetcher<TeddyCashStaking> {
   appId = TEDDY_CASH_DEFINITION.id;
   groupId = TEDDY_CASH_DEFINITION.groups.farm.id;
-  network = Network.ETHEREUM_MAINNET;
+  network = Network.AVALANCHE_MAINNET;
   groupLabel = 'Farms';
 
   constructor(

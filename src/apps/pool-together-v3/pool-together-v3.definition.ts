@@ -26,9 +26,21 @@ export const POOL_TOGETHER_V3_DEFINITION = appDefinition({
       type: GroupType.TOKEN,
       label: 'Prize Pools',
     },
-    airdrop: { id: 'airdop', type: GroupType.TOKEN, label: 'Airdrops' },
-    claimable: { id: 'claimable', type: GroupType.TOKEN, label: 'Rewards' },
-    pod: { id: 'pod', type: GroupType.TOKEN, label: 'Prize Pods' },
+    airdrop: {
+      id: 'airdrop',
+      type: GroupType.TOKEN,
+      label: 'Airdrops',
+    },
+    claimable: {
+      id: 'claimable',
+      type: GroupType.TOKEN,
+      label: 'Rewards',
+    },
+    pod: {
+      id: 'pod',
+      type: GroupType.TOKEN,
+      label: 'Prize Pods',
+    },
     communityTicket: {
       id: 'community-ticket',
       type: GroupType.TOKEN,
