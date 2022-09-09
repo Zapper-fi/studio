@@ -6,6 +6,7 @@ import { Register } from '~app-toolkit/decorators';
 import { buildDollarDisplayItem } from '~app-toolkit/helpers/presentation/display-item.present';
 import { getTokenImg } from '~app-toolkit/helpers/presentation/image.present';
 import { AAVE_V2_DEFINITION } from '~apps/aave-v2';
+import { COMPOUND_DEFINITION } from '~apps/compound';
 import { ContractType } from '~position/contract.interface';
 import { PositionFetcher } from '~position/position-fetcher.interface';
 import { AppTokenPosition } from '~position/position.interface';
@@ -16,15 +17,15 @@ import { PHUTURE_DEFINITION } from '../phuture.definition';
 
 const appId = PHUTURE_DEFINITION.id;
 const groupId = PHUTURE_DEFINITION.groups.index.id;
-const network = Network.ETHEREUM_MAINNET;
+const network = Network.AVALANCHE_MAINNET;
 
 const addresses = {
-  PDI: '0x632806bf5c8f062932dd121244c9fbe7becb8b48',
-  vTokenFactory: 'vTokenFactory',
+  CAI: '0x48f88a3fe843ccb0b5003e70b4192c1d7448bef0',
+  vTokenFactory: '0xa654211ae2fac7e029df45fcdc0acfa77e174134',
 };
 
 @Register.TokenPositionFetcher({ appId, groupId, network })
-export class EthereumPhutureIndexTokenFetcher implements PositionFetcher<AppTokenPosition> {
+export class AvalanchePhutureIndexTokenFetcher implements PositionFetcher<AppTokenPosition> {
   constructor(
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
     @Inject(PhutureContractFactory) private readonly phutureContractFactory: PhutureContractFactory,
@@ -32,16 +33,23 @@ export class EthereumPhutureIndexTokenFetcher implements PositionFetcher<AppToke
 
   async getPositions() {
     const multicall = this.appToolkit.getMulticall(network);
-    const appTokens = await this.appToolkit.getAppTokenPositions({
-      appId: AAVE_V2_DEFINITION.id,
-      groupIds: [AAVE_V2_DEFINITION.groups.supply.id],
-      network,
-    });
+    const appTokens = await this.appToolkit.getAppTokenPositions(
+      {
+        appId: AAVE_V2_DEFINITION.id,
+        groupIds: [AAVE_V2_DEFINITION.groups.supply.id],
+        network,
+      },
+      {
+        appId: COMPOUND_DEFINITION.id,
+        groupIds: [COMPOUND_DEFINITION.groups.supply.id],
+        network,
+      },
+    );
 
     const baseTokens = await this.appToolkit.getBaseTokenPrices(network);
     const allTokens = [...baseTokens, ...appTokens];
 
-    const indexContract = this.phutureContractFactory.managedIndex({ network, address: addresses.PDI });
+    const indexContract = this.phutureContractFactory.managedIndex({ network, address: addresses.CAI });
     const vTokenFactoryContract = this.phutureContractFactory.vTokenFactory({
       network,
       address: addresses.vTokenFactory,

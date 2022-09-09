@@ -17,7 +17,7 @@ import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi
 import type { Listener, Provider } from '@ethersproject/providers';
 import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
-export interface PhutureManagedIndexInterface extends utils.Interface {
+export interface ManagedIndexInterface extends utils.Interface {
   functions: {
     'DOMAIN_SEPARATOR()': FunctionFragment;
     'allowance(address,address)': FunctionFragment;
@@ -201,12 +201,12 @@ export type UpdateAnatomyEvent = TypedEvent<[string, number], UpdateAnatomyEvent
 
 export type UpdateAnatomyEventFilter = TypedEventFilter<UpdateAnatomyEvent>;
 
-export interface PhutureManagedIndex extends BaseContract {
+export interface ManagedIndex extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
 
-  interface: PhutureManagedIndexInterface;
+  interface: ManagedIndexInterface;
 
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,
