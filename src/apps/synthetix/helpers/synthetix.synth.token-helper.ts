@@ -1,6 +1,6 @@
 import { Inject, Injectable } from '@nestjs/common';
+import { ethers } from 'ethers';
 import { parseBytes32String } from 'ethers/lib/utils';
-import { padEnd } from 'lodash';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { buildDollarDisplayItem } from '~app-toolkit/helpers/presentation/display-item.present';
@@ -8,7 +8,6 @@ import { getTokenImg } from '~app-toolkit/helpers/presentation/image.present';
 import { ContractType } from '~position/contract.interface';
 import { AppTokenPosition } from '~position/position.interface';
 import { Network } from '~types/network.interface';
-import { asciiToHex } from '~utils/web3.utils';
 
 import { SynthetixContractFactory } from '../contracts';
 import { SYNTHETIX_DEFINITION } from '../synthetix.definition';
@@ -39,7 +38,7 @@ export class SynthetixSynthTokenHelper {
       network,
     });
 
-    const synthUtilName = padEnd(asciiToHex('SynthUtil'), 66, '0');
+    const synthUtilName = ethers.utils.formatBytes32String('SynthUtil');
     const synthUtilAddress = await addressResolverContract.getAddress(synthUtilName);
     const snxUtilsContract = this.contractFactory.synthetixSummaryUtil({ address: synthUtilAddress, network });
     const synthRates = await snxUtilsContract.synthsRates();

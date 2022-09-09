@@ -1,11 +1,11 @@
 import { Inject, Injectable } from '@nestjs/common';
+import { ethers } from 'ethers';
 import { parseBytes32String } from 'ethers/lib/utils';
-import { compact, padEnd } from 'lodash';
+import { compact } from 'lodash';
 
 import { drillBalance } from '~app-toolkit';
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { Network } from '~types/network.interface';
-import { asciiToHex } from '~utils/web3.utils';
 
 import { SynthetixContractFactory } from '../contracts';
 import { SYNTHETIX_DEFINITION } from '../synthetix.definition';
@@ -39,7 +39,7 @@ export class SynthetixSynthTokenBalanceHelper {
     });
 
     // Get synth balances
-    const synthUtilName = padEnd(asciiToHex('SynthUtil'), 66, '0');
+    const synthUtilName = ethers.utils.formatBytes32String('SynthUtil');
     const synthUtilAddress = await multicall.wrap(addressResolverContract).getAddress(synthUtilName);
     const synthUtilContract = this.contractFactory.synthetixSummaryUtil({ address: synthUtilAddress, network });
     const synthBalances = await multicall.wrap(synthUtilContract).synthsBalances(address);
