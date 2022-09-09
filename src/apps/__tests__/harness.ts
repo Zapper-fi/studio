@@ -4,6 +4,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import supertest from 'supertest';
 
 import { AppToolkitModule } from '~app-toolkit/app-toolkit.module';
+import { AppsModule } from '~apps/apps.module';
 
 export class TestHarness {
   moduleRef: TestingModule;
@@ -13,10 +14,9 @@ export class TestHarness {
   async setup() {
     const testModule = Test.createTestingModule({
       imports: [
-        AppToolkitModule,
-        // AppsModule.registerAsync({
-        //   appToolkitModule: AppToolkitModule,
-        // }),
+        AppsModule.registerAsync({
+          appToolkitModule: AppToolkitModule,
+        }),
         ConfigModule.forRoot({
           isGlobal: true,
           load: [

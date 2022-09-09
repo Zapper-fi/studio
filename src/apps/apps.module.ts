@@ -119,7 +119,8 @@ export class AppsModule {
   static async registerAsync(opts: { appToolkitModule: Type }): Promise<DynamicModule> {
     const { appToolkitModule } = opts;
 
-    const appModules = await this.resolveAppModules();
+    // const appModules = await this.resolveAppModules();
+    const appModules = [] as any[];
     // eslint-disable-next-line no-console
     console.log(chalk.yellow(`Enabled app modules: ${appModules.map(v => v.name).join(',')}`));
 
