@@ -4,6 +4,18 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.219.0](https://github.com/Zapper-fi/studio/compare/v0.218.0...v0.219.0) (2022-09-09)
+
+
+### Features
+
+* **aurigami:** Migrate to template ([#1384](https://github.com/Zapper-fi/studio/issues/1384)) ([9d31dc7](https://github.com/Zapper-fi/studio/commit/9d31dc760750c3c7645f19d07392ebbf961b636e))
+
+
+### Bug Fixes
+
+* **pickle:** Fix Master Chef V2 position fetchers ([#1385](https://github.com/Zapper-fi/studio/issues/1385)) ([ac01a66](https://github.com/Zapper-fi/studio/commit/ac01a66159cf8177fac627c215560182185e29d8))
+
 ## [0.218.0](https://github.com/Zapper-fi/studio/compare/v0.217.1...v0.218.0) (2022-09-09)
 
 
