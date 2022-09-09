@@ -88,10 +88,13 @@ export class AppsModule {
 
   static async resolveAppModules() {
     // Find all apps available to be registered
+    console.log('RETRIEVING APP IDS');
     const allAppIds = readdirSync(__dirname, { withFileTypes: true })
       .filter(dirent => dirent.isDirectory())
       .filter(dirent => !['__tests__'].includes(dirent.name))
-      .map(dirent => dirent.name);
+      .map(dirent => dirent.name)
+      .slice(0, 1);
+    console.log('APP IDS: ', allAppIds);
 
     // If we're in prod, or if there is no enabled apps subset configured, enable everything
     const isProdOrTest = process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'test';
@@ -119,8 +122,8 @@ export class AppsModule {
   static async registerAsync(opts: { appToolkitModule: Type }): Promise<DynamicModule> {
     const { appToolkitModule } = opts;
 
-    // const appModules = await this.resolveAppModules();
-    const appModules = [] as any[];
+    const appModules = await this.resolveAppModules();
+    // const appModules = [] as any[];
     // eslint-disable-next-line no-console
     console.log(chalk.yellow(`Enabled app modules: ${appModules.map(v => v.name).join(',')}`));
 
