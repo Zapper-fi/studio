@@ -1,3 +1,4 @@
+import { log } from 'console';
 import { readdirSync } from 'fs';
 
 import { IConfigurableDynamicRootModule } from '@golevelup/nestjs-modules';
@@ -88,13 +89,12 @@ export class AppsModule {
 
   static async resolveAppModules() {
     // Find all apps available to be registered
-    console.log('RETRIEVING APP IDS');
+    log('RETRIEVING APP IDS');
     const allAppIds = readdirSync(__dirname, { withFileTypes: true })
       .filter(dirent => dirent.isDirectory())
       .filter(dirent => !['__tests__'].includes(dirent.name))
-      .map(dirent => dirent.name)
-      .slice(0, 1);
-    console.log('APP IDS: ', allAppIds);
+      .map(dirent => dirent.name);
+    log('APP IDS: ', allAppIds);
 
     // If we're in prod, or if there is no enabled apps subset configured, enable everything
     const isProdOrTest = process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'test';
@@ -125,7 +125,7 @@ export class AppsModule {
     const appModules = await this.resolveAppModules();
     // const appModules = [] as any[];
     // eslint-disable-next-line no-console
-    console.log(chalk.yellow(`Enabled app modules: ${appModules.map(v => v.name).join(',')}`));
+    log(chalk.yellow(`Enabled app modules: ${appModules.map(v => v.name).join(',')}`));
 
     return {
       module: AppsModule,
