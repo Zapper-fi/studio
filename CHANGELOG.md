@@ -4,6 +4,34 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.218.0](https://github.com/Zapper-fi/studio/compare/v0.217.1...v0.218.0) (2022-09-09)
+
+
+### Features
+
+* **atlendis-v1:** Fix balances by hitting TheGraph instead ([#1383](https://github.com/Zapper-fi/studio/issues/1383)) ([2f02554](https://github.com/Zapper-fi/studio/commit/2f025548724182a2a590c798cde3db487940b8e0))
+* **compound:** Migrate to template ([#1370](https://github.com/Zapper-fi/studio/issues/1370)) ([222fa48](https://github.com/Zapper-fi/studio/commit/222fa48ae49b7032e6cae3e3bcb5bb2630f16174))
+* **tests:** Add file conventions test, run tests with @swc/jest ([#1380](https://github.com/Zapper-fi/studio/issues/1380)) ([335905d](https://github.com/Zapper-fi/studio/commit/335905da3cacd41d4d6e04102872d649c7b81797))
+
+
+### Bug Fixes
+
+* **arrakis:** fix arrakis decorator ([#1379](https://github.com/Zapper-fi/studio/issues/1379)) ([7353e07](https://github.com/Zapper-fi/studio/commit/7353e073b83aa602cd4f5a5c76adead6acf98477))
+
+## [0.217.1](https://github.com/Zapper-fi/studio/compare/v0.217.0...v0.217.1) (2022-09-08)
+
+
+### Bug Fixes
+
+* **origin-story:** Migrate Origin Story to template ([#1372](https://github.com/Zapper-fi/studio/issues/1372)) ([3ca2ada](https://github.com/Zapper-fi/studio/commit/3ca2ada58e7f859d16667fd6f325da92845c7dc9))
+
+## [0.217.0](https://github.com/Zapper-fi/studio/compare/v0.216.0...v0.217.0) (2022-09-08)
+
+
+### Features
+
+* **uniswap-v2:** Implement subgraph template abstract class ([#1303](https://github.com/Zapper-fi/studio/issues/1303)) ([d30a334](https://github.com/Zapper-fi/studio/commit/d30a3343847b400d187424f8c6ac2e2e086ce5ac))
+
 ## [0.216.0](https://github.com/Zapper-fi/studio/compare/v0.215.0...v0.216.0) (2022-09-07)
 
 
