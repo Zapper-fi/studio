@@ -3,11 +3,11 @@ import { AbstractApp } from '~app/app.dynamic-module';
 import { CompoundAppModule } from '~apps/compound';
 
 import { AurigamiAppDefinition, AURIGAMI_DEFINITION } from './aurigami.definition';
-import { AuroraAurigamiBalanceFetcher } from './aurora/aurigami.balance-fetcher';
 import { AuroraAurigamiBorrowContractPositionFetcher } from './aurora/aurigami.borrow.contract-position-fetcher';
+import { AuroraAurigamiClaimableContractPositionFetcher } from './aurora/aurigami.claimable.contract-position-fetcher';
+import { AuroraAurigamiPositionPresenter } from './aurora/aurigami.position-presenter';
 import { AuroraAurigamiSupplyTokenFetcher } from './aurora/aurigami.supply.token-fetcher';
 import { AurigamiContractFactory } from './contracts';
-import { AurigamiClaimableBalanceHelper } from './helper/aurigami.claimable.balance-helper';
 
 @Register.AppModule({
   appId: AURIGAMI_DEFINITION.id,
@@ -15,12 +15,10 @@ import { AurigamiClaimableBalanceHelper } from './helper/aurigami.claimable.bala
   providers: [
     AurigamiAppDefinition,
     AurigamiContractFactory,
-    AuroraAurigamiBalanceFetcher,
     AuroraAurigamiBorrowContractPositionFetcher,
+    AuroraAurigamiClaimableContractPositionFetcher,
+    AuroraAurigamiPositionPresenter,
     AuroraAurigamiSupplyTokenFetcher,
-
-    // Helpers
-    AurigamiClaimableBalanceHelper,
   ],
 })
 export class AurigamiAppModule extends AbstractApp() {}

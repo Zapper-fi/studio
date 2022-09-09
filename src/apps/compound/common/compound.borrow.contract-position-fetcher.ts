@@ -78,18 +78,11 @@ export abstract class CompoundBorrowContractPositionFetcher<
     return buildDollarDisplayItem(underlyingToken.price);
   }
 
-  protected getDenormalizedRate({
-    blocksPerDay,
-    rate,
-  }: {
-    rate: BigNumberish;
-    blocksPerDay: number;
-    decimals: number;
-  }): number {
+  getDenormalizedRate({ blocksPerDay, rate }: { rate: BigNumberish; blocksPerDay: number; decimals: number }): number {
     return 100 * (Math.pow(1 + (blocksPerDay * Number(rate)) / Number(1e18), 365) - 1);
   }
 
-  protected async getApy({ contract, contractPosition }: GetDataPropsParams<R, CompoundBorrowTokenDataProps>) {
+  async getApy({ contract, contractPosition }: GetDataPropsParams<R, CompoundBorrowTokenDataProps>) {
     const [underlyingToken] = contractPosition.tokens;
     const borrowRate = await this.getBorrowRate(contract);
     const blocksPerDay = BLOCKS_PER_DAY[this.network];
@@ -100,14 +93,15 @@ export abstract class CompoundBorrowContractPositionFetcher<
     });
   }
 
-  protected async getPricePerShare({
-    contract,
-    contractPosition,
-  }: GetDataPropsParams<R, CompoundBorrowTokenDataProps>) {
+  async getExchangeRateMantissa(opts: GetDataPropsParams<R, CompoundBorrowTokenDataProps>) {
+    const { contractPosition } = opts;
     const [underlyingToken] = contractPosition.tokens;
-    const rateRaw = await this.getExchangeRate(contract);
-    const mantissa = underlyingToken.decimals + 10;
+    return underlyingToken.decimals + 10;
+  }
 
+  async getPricePerShare(opts: GetDataPropsParams<R, CompoundBorrowTokenDataProps>) {
+    const { contract } = opts;
+    const [rateRaw, mantissa] = await Promise.all([this.getExchangeRate(contract), this.getExchangeRateMantissa(opts)]);
     return Number(rateRaw) / 10 ** mantissa;
   }
 
