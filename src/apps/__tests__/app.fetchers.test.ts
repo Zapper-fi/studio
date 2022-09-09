@@ -1,15 +1,17 @@
 import fs from 'fs';
 import { promisify } from 'util';
 
+import { TestHarness } from './harness';
+
 const access = promisify(fs.access);
 
 describe('App Token Fetchers', () => {
-  // let testHarness: TestHarness;
+  let testHarness: TestHarness;
 
-  // beforeAll(async () => {
-  //   testHarness = new TestHarness();
-  //   await testHarness.setup();
-  // }, 30 * 1000);
+  beforeAll(async () => {
+    testHarness = new TestHarness();
+    await testHarness.setup();
+  }, 30 * 1000);
 
   // afterAll(async () => {
   //   await testHarness.teardown();
