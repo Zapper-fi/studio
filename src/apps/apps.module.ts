@@ -42,43 +42,20 @@ export class AppsModule {
   }
 
   static async resolveModulesByAppIds(appIds: string[], requireDefinition = true) {
-    log(`IMPORTING ${appIds.length} MODULES`);
-    const appModules: (IConfigurableDynamicRootModule<any, any> | null)[] = [];
+    const appsModules = await Promise.all(
+      appIds.map(async appId => {
+        if (requireDefinition) {
+          const definition = await importAppDefinition(appId).catch(() => null);
+          if (!definition) console.error(chalk.yellow(`No definition file found for "${appId}"`));
+          if (definition?.deprecated) return null;
+        }
 
-    for (const appId of appIds) {
-      if (requireDefinition) {
-        const definition = await importAppDefinition(appId).catch(() => null);
-        if (!definition) console.error(chalk.yellow(`No definition file found for "${appId}"`));
-        if (definition?.deprecated) continue;
-      }
-
-      try {
         const klass = await importAppModule(appId);
-        appModules.push(klass);
-      } catch (err) {
-        log('Grr: ', err);
-      }
-    }
+        return klass;
+      }),
+    );
 
-    // const appsModules = await Promise.all(
-    //   appIds.map(async appId => {
-    //     if (requireDefinition) {
-    //       const definition = await importAppDefinition(appId).catch(() => null);
-    //       if (!definition) console.error(chalk.yellow(`No definition file found for "${appId}"`));
-    //       if (definition?.deprecated) return null;
-    //     }
-
-    //     const klass = await importAppModule(appId).catch(err => {
-    //       log('Grr: ', err);
-    //       return null;
-    //     });
-    //     return klass;
-    //   }),
-    // );
-
-    log('MODULES: ', appModules);
-
-    return compact(appModules);
+    return compact(appsModules);
   }
 
   static async resolveDependencies(appIds: string[]) {
@@ -112,12 +89,10 @@ export class AppsModule {
 
   static async resolveAppModules() {
     // Find all apps available to be registered
-    log('RETRIEVING APP IDS');
     const allAppIds = readdirSync(__dirname, { withFileTypes: true })
       .filter(dirent => dirent.isDirectory())
       .filter(dirent => !['__tests__'].includes(dirent.name))
       .map(dirent => dirent.name);
-    log('APP IDS: ', allAppIds);
 
     // If we're in prod, or if there is no enabled apps subset configured, enable everything
     const isProdOrTest = process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'test';
@@ -146,7 +121,6 @@ export class AppsModule {
     const { appToolkitModule } = opts;
 
     const appModules = await this.resolveAppModules();
-    // const appModules = [] as any[];
     // eslint-disable-next-line no-console
     log(chalk.yellow(`Enabled app modules: ${appModules.map(v => v.name).join(',')}`));
 
