@@ -78,7 +78,7 @@ export abstract class CompoundBorrowContractPositionFetcher<
     return buildDollarDisplayItem(underlyingToken.price);
   }
 
-  protected getDenormalizedRate({
+  getDenormalizedRate({
     blocksPerDay,
     rate,
   }: {
@@ -89,7 +89,7 @@ export abstract class CompoundBorrowContractPositionFetcher<
     return 100 * (Math.pow(1 + (blocksPerDay * Number(rate)) / Number(1e18), 365) - 1);
   }
 
-  protected async getApy({ contract, contractPosition }: GetDataPropsParams<R, CompoundBorrowTokenDataProps>) {
+  async getApy({ contract, contractPosition }: GetDataPropsParams<R, CompoundBorrowTokenDataProps>) {
     const [underlyingToken] = contractPosition.tokens;
     const borrowRate = await this.getBorrowRate(contract);
     const blocksPerDay = BLOCKS_PER_DAY[this.network];
