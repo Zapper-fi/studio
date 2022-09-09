@@ -82,6 +82,7 @@ export abstract class MasterChefV2TemplateContractPositionFetcher<
     const { contract, definition, multicall } = params;
     const extraRewarderAddress = await this.getExtraRewarder(contract, definition.poolIndex);
     const rewarderContract = multicall.wrap(this.getExtraRewarderContract(extraRewarderAddress));
+    if (extraRewarderAddress === ZERO_ADDRESS) return rewardRates;
 
     const extraRewardRates = await this.getExtraRewardTokenRewardRates({ ...params, rewarderContract });
     return [...rewardRates, ...(Array.isArray(extraRewardRates) ? extraRewardRates : [extraRewardRates])];
