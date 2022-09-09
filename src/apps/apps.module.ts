@@ -43,25 +43,42 @@ export class AppsModule {
 
   static async resolveModulesByAppIds(appIds: string[], requireDefinition = true) {
     log(`IMPORTING ${appIds.length} MODULES`);
-    const appsModules = await Promise.all(
-      appIds.map(async appId => {
-        if (requireDefinition) {
-          const definition = await importAppDefinition(appId).catch(() => null);
-          if (!definition) console.error(chalk.yellow(`No definition file found for "${appId}"`));
-          if (definition?.deprecated) return null;
-        }
+    const appModules: (IConfigurableDynamicRootModule<any, any> | null)[] = [];
 
-        const klass = await importAppModule(appId).catch(err => {
-          log('Grr: ', err);
-          return null;
-        });
-        return klass;
-      }),
-    );
+    for (const appId of appIds) {
+      if (requireDefinition) {
+        const definition = await importAppDefinition(appId).catch(() => null);
+        if (!definition) console.error(chalk.yellow(`No definition file found for "${appId}"`));
+        if (definition?.deprecated) continue;
+      }
 
-    log('MODULES: ', appsModules);
+      try {
+        const klass = await importAppModule(appId);
+        appModules.push(klass);
+      } catch (err) {
+        log('Grr: ', err);
+      }
+    }
 
-    return compact(appsModules);
+    // const appsModules = await Promise.all(
+    //   appIds.map(async appId => {
+    //     if (requireDefinition) {
+    //       const definition = await importAppDefinition(appId).catch(() => null);
+    //       if (!definition) console.error(chalk.yellow(`No definition file found for "${appId}"`));
+    //       if (definition?.deprecated) return null;
+    //     }
+
+    //     const klass = await importAppModule(appId).catch(err => {
+    //       log('Grr: ', err);
+    //       return null;
+    //     });
+    //     return klass;
+    //   }),
+    // );
+
+    log('MODULES: ', appModules);
+
+    return compact(appModules);
   }
 
   static async resolveDependencies(appIds: string[]) {
