@@ -42,6 +42,7 @@ export class AppsModule {
   }
 
   static async resolveModulesByAppIds(appIds: string[], requireDefinition = true) {
+    log(`IMPORTING ${appIds.length} MODULES`);
     const appsModules = await Promise.all(
       appIds.map(async appId => {
         if (requireDefinition) {
@@ -54,6 +55,8 @@ export class AppsModule {
         return klass;
       }),
     );
+
+    log('MODULES: ', appsModules);
 
     return compact(appsModules);
   }
