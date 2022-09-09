@@ -1,12 +1,11 @@
 import { Inject } from '@nestjs/common';
+import { utils } from 'ethers';
 import _ from 'lodash';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
 import { buildDollarDisplayItem } from '~app-toolkit/helpers/presentation/display-item.present';
 import { getTokenImg } from '~app-toolkit/helpers/presentation/image.present';
-import { AAVE_V2_DEFINITION } from '~apps/aave-v2';
-import { COMPOUND_DEFINITION } from '~apps/compound';
 import { ContractType } from '~position/contract.interface';
 import { PositionFetcher } from '~position/position-fetcher.interface';
 import { AppTokenPosition } from '~position/position.interface';
@@ -33,21 +32,8 @@ export class AvalanchePhutureIndexTokenFetcher implements PositionFetcher<AppTok
 
   async getPositions() {
     const multicall = this.appToolkit.getMulticall(network);
-    const appTokens = await this.appToolkit.getAppTokenPositions(
-      {
-        appId: AAVE_V2_DEFINITION.id,
-        groupIds: [AAVE_V2_DEFINITION.groups.supply.id],
-        network,
-      },
-      {
-        appId: COMPOUND_DEFINITION.id,
-        groupIds: [COMPOUND_DEFINITION.groups.supply.id],
-        network,
-      },
-    );
 
     const baseTokens = await this.appToolkit.getBaseTokenPrices(network);
-    const allTokens = [...baseTokens, ...appTokens];
 
     const indexContract = this.phutureContractFactory.managedIndex({ network, address: addresses.CAI });
     const vTokenFactoryContract = this.phutureContractFactory.vTokenFactory({
@@ -67,29 +53,30 @@ export class AvalanchePhutureIndexTokenFetcher implements PositionFetcher<AppTok
       anatomy._assets.map(async underlyingAddressRaw => {
         const underlyingAddress = underlyingAddressRaw.toLowerCase();
 
-        const underlyingToken = allTokens.find(v => v.address === underlyingAddress);
+        const underlyingToken = baseTokens.find(v => v.address === underlyingAddress);
         if (!underlyingToken) return null;
 
         const vTokenAddress = await multicall.wrap(vTokenFactoryContract).vTokenOf(underlyingAddress);
         const vTokenContract = this.phutureContractFactory.vToken({ network, address: vTokenAddress });
-        const balanceOfRaw = await multicall.wrap(vTokenContract).assetBalanceOf(underlyingAddress);
-        const balanceOf = Number(balanceOfRaw) / 10 ** underlyingToken.decimals;
+        const balanceOfRaw = await multicall.wrap(vTokenContract).assetBalanceOf(indexContract.address);
+        const balanceOf = utils.formatUnits(balanceOfRaw, underlyingToken.decimals);
 
         return {
-          liquidity: balanceOf * underlyingToken.price,
+          liquidity: Number(balanceOf) * underlyingToken.price,
           baseToken: underlyingToken,
         };
       }),
     );
 
     const tokensWithLiquidity = _.compact(tokensWithLiquidityRaw);
+
     const tokens = tokensWithLiquidity.map(x => x.baseToken);
     const liquidityPerToken = tokensWithLiquidity.map(x => x.liquidity);
 
-    const price = _.sum(liquidityPerToken);
-    const supply = Number(supplyRaw) / 10 ** decimals;
+    const liquidity = _.sum(liquidityPerToken);
+    const supply = utils.formatEther(supplyRaw);
     const pricePerShare = 1;
-    const liquidity = price * supply;
+    const price = liquidity / Number(supply);
 
     const statsItems = [{ label: 'Liquidity', value: buildDollarDisplayItem(liquidity) }];
 
@@ -99,7 +86,7 @@ export class AvalanchePhutureIndexTokenFetcher implements PositionFetcher<AppTok
       groupId,
       address: indexContract.address,
       network,
-      supply,
+      supply: Number(supply),
       decimals,
       symbol,
       price,
