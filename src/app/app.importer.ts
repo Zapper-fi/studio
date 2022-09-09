@@ -1,3 +1,5 @@
+import { log } from 'console';
+import { existsSync } from 'fs';
 import path from 'path';
 
 import { IConfigurableDynamicRootModule } from '@golevelup/nestjs-modules';
@@ -15,6 +17,8 @@ const buildImporter =
   <T>({ match, filename }: BuildImporterParams) =>
   async (appId: string) => {
     const modulePath = path.resolve(__dirname, '../apps', appId, filename(appId));
+    log('PATH: ', modulePath);
+    log('EXISTS: ', existsSync(`${modulePath}.ts`));
     const mod = await import(modulePath);
     const key = Object.keys(mod).find(v => match.test(v));
     if (!key) throw new Error(`No matched export found in ${modulePath}`);
