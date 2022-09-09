@@ -27,8 +27,6 @@ export class PositionFetcherTemplateRegistry implements OnModuleInit {
   constructor(@Inject(DiscoveryService) private readonly discoveryService: DiscoveryService) {}
 
   onModuleInit() {
-    console.log('CALLED ON MODULE INIT');
-
     this.appTokenTemplateRegistry = buildTemplateRegistry(this.discoveryService, {
       template: AppTokenTemplatePositionFetcher,
       keySelector: t => [t.appId, t.network, t.groupId] as const,
