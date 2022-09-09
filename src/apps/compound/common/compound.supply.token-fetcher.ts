@@ -65,11 +65,15 @@ export abstract class CompoundSupplyTokenFetcher<
     return 100 * (Math.pow(1 + (blocksPerDay * Number(rate)) / Number(1e18), 365) - 1);
   }
 
-  async getPricePerShare({ contract, appToken }: GetPricePerShareParams<R, CompoundSupplyTokenDataProps>) {
+  protected async getExchangeRateMantissa(opts: GetPricePerShareParams<R, CompoundSupplyTokenDataProps>) {
+    const { appToken } = opts;
     const [underlyingToken] = appToken.tokens;
-    const rateRaw = await this.getExchangeRate(contract);
-    const mantissa = underlyingToken.decimals + 10;
+    return underlyingToken.decimals + 10;
+  }
 
+  protected async getPricePerShare(opts: GetPricePerShareParams<R, CompoundSupplyTokenDataProps>) {
+    const { contract } = opts;
+    const [rateRaw, mantissa] = await Promise.all([this.getExchangeRate(contract), this.getExchangeRateMantissa(opts)]);
     return Number(rateRaw) / 10 ** mantissa;
   }
 

@@ -100,14 +100,15 @@ export abstract class CompoundBorrowContractPositionFetcher<
     });
   }
 
-  protected async getPricePerShare({
-    contract,
-    contractPosition,
-  }: GetDataPropsParams<R, CompoundBorrowTokenDataProps>) {
+  async getExchangeRateMantissa(opts: GetDataPropsParams<R, CompoundBorrowTokenDataProps>) {
+    const { contractPosition } = opts;
     const [underlyingToken] = contractPosition.tokens;
-    const rateRaw = await this.getExchangeRate(contract);
-    const mantissa = underlyingToken.decimals + 10;
+    return underlyingToken.decimals + 10;
+  }
 
+  async getPricePerShare(opts: GetDataPropsParams<R, CompoundBorrowTokenDataProps>) {
+    const { contract } = opts;
+    const [rateRaw, mantissa] = await Promise.all([this.getExchangeRate(contract), this.getExchangeRateMantissa(opts)]);
     return Number(rateRaw) / 10 ** mantissa;
   }
 
