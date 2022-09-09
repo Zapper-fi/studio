@@ -54,14 +54,7 @@ export abstract class CompoundSupplyTokenFetcher<
     return underlyingAddressRaw.toLowerCase().replace(ETH_ADDR_ALIAS, ZERO_ADDRESS);
   }
 
-  getDenormalizedRate({
-    blocksPerDay,
-    rate,
-  }: {
-    rate: BigNumberish;
-    blocksPerDay: number;
-    decimals: number;
-  }): number {
+  getDenormalizedRate({ blocksPerDay, rate }: { rate: BigNumberish; blocksPerDay: number; decimals: number }): number {
     return 100 * (Math.pow(1 + (blocksPerDay * Number(rate)) / Number(1e18), 365) - 1);
   }
 

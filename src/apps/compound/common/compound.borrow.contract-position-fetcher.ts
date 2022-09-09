@@ -78,14 +78,7 @@ export abstract class CompoundBorrowContractPositionFetcher<
     return buildDollarDisplayItem(underlyingToken.price);
   }
 
-  getDenormalizedRate({
-    blocksPerDay,
-    rate,
-  }: {
-    rate: BigNumberish;
-    blocksPerDay: number;
-    decimals: number;
-  }): number {
+  getDenormalizedRate({ blocksPerDay, rate }: { rate: BigNumberish; blocksPerDay: number; decimals: number }): number {
     return 100 * (Math.pow(1 + (blocksPerDay * Number(rate)) / Number(1e18), 365) - 1);
   }
 
