@@ -51,7 +51,10 @@ export class AppsModule {
           if (definition?.deprecated) return null;
         }
 
-        const klass = await importAppModule(appId);
+        const klass = await importAppModule(appId).catch(err => {
+          log('Grr: ', err);
+          return null;
+        });
         return klass;
       }),
     );
