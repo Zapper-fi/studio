@@ -81,11 +81,23 @@ export class EthereumMorphoAaveV2SupplyContractPositionFetcher extends BaseEther
     const supply = +formatUnits(supplyRaw, underlyingToken.decimals);
     const supplyUSD = supply * underlyingToken.price;
     const borrowRaw = totalMarketBorrowRaw.p2pBorrowAmount.add(totalMarketBorrowRaw.poolBorrowAmount);
+    const matchedUSD = +formatUnits(borrowRaw, underlyingToken.decimals) * underlyingToken.price;
     const borrow = +formatUnits(borrowRaw, underlyingToken.decimals);
     const borrowUSD = borrow * underlyingToken.price;
     const liquidity = supply * underlyingToken.price;
 
-    return { marketAddress, supplyApy, borrowApy, liquidity, p2pDisabled, supply, supplyUSD, borrow, borrowUSD };
+    return {
+      marketAddress,
+      supplyApy,
+      borrowApy,
+      liquidity,
+      p2pDisabled,
+      supply,
+      supplyUSD,
+      borrow,
+      borrowUSD,
+      matchedUSD,
+    };
   }
 
   async getTokenBalancesPerPosition({ address, contractPosition, multicall }): Promise<BigNumber[]> {
