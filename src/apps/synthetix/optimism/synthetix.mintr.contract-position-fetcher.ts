@@ -20,7 +20,7 @@ export class OptimismSynthetixMintrContractPositionFetcher implements PositionFe
     @Inject(SynthetixMintrContractPositionHelper)
     private readonly synthetixMintrContractPositionHelper: SynthetixMintrContractPositionHelper,
     @Inject(SynthetixHoldersHelper) private readonly synthetixHoldersHelper: SynthetixHoldersHelper,
-  ) {}
+  ) { }
 
   @CacheOnInterval({
     key: `studio:${SYNTHETIX_DEFINITION.id}:${Network.OPTIMISM_MAINNET}:snx-holders`,
