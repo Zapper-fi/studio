@@ -30,7 +30,6 @@ export class BinanceSmartChainPstakeStakeTokenFetcher implements PositionFetcher
     const contract = this.pstakeContractFactory.stakedBnbToken({ address, network });
 
     const baseTokenDependencies = await this.appToolkit.getBaseTokenPrices(network);
-    await new Promise(r => setTimeout(r, 2000));
     const stakedBnbToken = baseTokenDependencies.find(v => v.address === address)!;
 
     const [symbol, decimals, totalSupply] = await Promise.all([
