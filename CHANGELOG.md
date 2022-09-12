@@ -4,6 +4,18 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.221.0](https://github.com/Zapper-fi/studio/compare/v0.220.0...v0.221.0) (2022-09-12)
+
+
+### Features
+
+* **iron-bank:** Migrate to templates ([#1395](https://github.com/Zapper-fi/studio/issues/1395)) ([b6af145](https://github.com/Zapper-fi/studio/commit/b6af145d48b6e1d6250ca757815963d18bd77f01))
+
+
+### Bug Fixes
+
+* **yearn:** Fix off by 100 error for APY ([ab44f98](https://github.com/Zapper-fi/studio/commit/ab44f98bdf2207e56c183260e0ad39ea13af98ef))
+
 ## [0.220.0](https://github.com/Zapper-fi/studio/compare/v0.219.0...v0.220.0) (2022-09-12)
 
 
