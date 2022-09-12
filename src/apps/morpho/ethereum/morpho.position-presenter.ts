@@ -112,7 +112,7 @@ export class EthereumMorphoPositionPresenter extends PositionPresenterTemplate {
       },
       {
         label: 'Utilization Rate',
-        value: liquidationThreshold > 0 ? debt / liquidationThreshold : 0,
+        value: liquidationThreshold > 0 ? (debt / liquidationThreshold) * 100 : 0,
         type: 'pct',
       },
     ];
