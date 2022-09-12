@@ -4,6 +4,18 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.223.0](https://github.com/Zapper-fi/studio/compare/v0.222.0...v0.223.0) (2022-09-12)
+
+
+### Features
+
+* **tectonic:** Migrate to template ([#1402](https://github.com/Zapper-fi/studio/issues/1402)) ([a29cda2](https://github.com/Zapper-fi/studio/commit/a29cda24d70eb797ba7c1743be897a36a73516d1))
+
+
+### Bug Fixes
+
+* **metavault-trade:** Update higher resolution logos ([#1400](https://github.com/Zapper-fi/studio/issues/1400)) ([efc6f6e](https://github.com/Zapper-fi/studio/commit/efc6f6e371189e8fbf965b58d80ffbee861d5141))
+
 ## [0.222.0](https://github.com/Zapper-fi/studio/compare/v0.221.0...v0.222.0) (2022-09-12)
 
 
