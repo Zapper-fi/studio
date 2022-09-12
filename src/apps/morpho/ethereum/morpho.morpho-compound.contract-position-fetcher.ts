@@ -1,4 +1,5 @@
 import { Inject, Injectable } from '@nestjs/common';
+import { formatUnits } from 'ethers/lib/utils';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { BLOCKS_PER_DAY } from '~app-toolkit/constants/blocks';
@@ -81,11 +82,23 @@ export class EthereumMorphoCompoundSupplyContractPositionFetcher extends BaseEth
     const supply = Number(supplyRaw) / 10 ** underlyingToken.decimals;
     const supplyUSD = supply * underlyingToken.price;
     const borrowRaw = totalMarketBorrowRaw.p2pBorrowAmount.add(totalMarketBorrowRaw.poolBorrowAmount);
+    const matchedUSD = +formatUnits(borrowRaw, underlyingToken.decimals) * underlyingToken.price;
     const borrow = Number(borrowRaw) / 10 ** underlyingToken.decimals;
     const borrowUSD = borrow * underlyingToken.price;
     const liquidity = supply * underlyingToken.price;
 
-    return { marketAddress, supplyApy, borrowApy, liquidity, p2pDisabled, supply, supplyUSD, borrow, borrowUSD };
+    return {
+      marketAddress,
+      supplyApy,
+      borrowApy,
+      liquidity,
+      p2pDisabled,
+      supply,
+      supplyUSD,
+      borrow,
+      borrowUSD,
+      matchedUSD,
+    };
   }
 
   async getTokenBalancesPerPosition({ address, contractPosition, multicall }) {

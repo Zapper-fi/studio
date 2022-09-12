@@ -33,6 +33,7 @@ export type MorphoContractPositionDataProps = {
   supplyUSD: number;
   borrow: number;
   borrowUSD: number;
+  matchedUSD: number;
 };
 export abstract class BaseEthereumMorphoSupplyContractPositionFetcher<
   T extends Contract,
@@ -60,7 +61,7 @@ export abstract class BaseEthereumMorphoSupplyContractPositionFetcher<
   }: GetDisplayPropsParams<T, MorphoContractPositionDataProps, DefaultContractPositionDefinition>): Promise<
     StatsItem[] | undefined
   > {
-    const { supplyApy, borrowApy, supply, supplyUSD, borrow, borrowUSD } = contractPosition.dataProps;
+    const { supplyApy, borrowApy, supply, supplyUSD, borrow, borrowUSD, matchedUSD } = contractPosition.dataProps;
 
     return [
       { label: 'Supply APY', value: buildPercentageDisplayItem(supplyApy * 100) },
@@ -69,6 +70,7 @@ export abstract class BaseEthereumMorphoSupplyContractPositionFetcher<
       { label: 'Borrow APY', value: buildPercentageDisplayItem(borrowApy * 100) },
       { label: 'Total Borrow', value: buildNumberDisplayItem(borrow) },
       { label: 'Total Borrow USD', value: buildDollarDisplayItem(borrowUSD) },
+      { label: 'Total USD Value Matched P2P', value: buildDollarDisplayItem(matchedUSD) },
     ];
   }
 

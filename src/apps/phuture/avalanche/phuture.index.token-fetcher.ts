@@ -16,15 +16,15 @@ import { PHUTURE_DEFINITION } from '../phuture.definition';
 
 const appId = PHUTURE_DEFINITION.id;
 const groupId = PHUTURE_DEFINITION.groups.index.id;
-const network = Network.ETHEREUM_MAINNET;
+const network = Network.AVALANCHE_MAINNET;
 
 const addresses = {
-  PDI: '0x632806bf5c8f062932dd121244c9fbe7becb8b48',
-  vTokenFactory: '0x24ad48f31cab5e35d0e9cdfa9213b5451f22fb92',
+  CAI: '0x48f88a3fe843ccb0b5003e70b4192c1d7448bef0',
+  vTokenFactory: '0xa654211ae2fac7e029df45fcdc0acfa77e174134',
 };
 
 @Register.TokenPositionFetcher({ appId, groupId, network })
-export class EthereumPhutureIndexTokenFetcher implements PositionFetcher<AppTokenPosition> {
+export class AvalanchePhutureIndexTokenFetcher implements PositionFetcher<AppTokenPosition> {
   constructor(
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
     @Inject(PhutureContractFactory) private readonly phutureContractFactory: PhutureContractFactory,
@@ -35,7 +35,7 @@ export class EthereumPhutureIndexTokenFetcher implements PositionFetcher<AppToke
 
     const baseTokens = await this.appToolkit.getBaseTokenPrices(network);
 
-    const indexContract = this.phutureContractFactory.managedIndex({ network, address: addresses.PDI });
+    const indexContract = this.phutureContractFactory.managedIndex({ network, address: addresses.CAI });
     const vTokenFactoryContract = this.phutureContractFactory.vTokenFactory({
       network,
       address: addresses.vTokenFactory,
