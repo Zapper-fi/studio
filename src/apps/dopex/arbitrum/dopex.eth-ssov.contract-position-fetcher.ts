@@ -1,7 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { BigNumberish } from 'ethers';
-import { padEnd } from 'lodash';
-import Web3 from 'web3';
+import { BigNumberish, ethers } from 'ethers';
 
 import { GetTokenBalancesParams } from '~position/template/contract-position.template.types';
 import { Network } from '~types/network.interface';
@@ -67,7 +65,7 @@ export class ArbitrumDopexEthSsovContractPositionFetcher extends DopexSsovContra
     multicall,
   }: GetTokenBalancesParams<DopexEthSsov, DopexSsovDataProps>): Promise<BigNumberish | BigNumberish[]> {
     const { epoch } = contractPosition.dataProps;
-    const rewardDistributionName = padEnd(Web3.utils.asciiToHex('RewardsDistribution'), 66, '0');
+    const rewardDistributionName = ethers.utils.formatBytes32String('RewardsDistribution');
     const rewardDistrbutionAddress = await multicall.wrap(contract).getAddress(rewardDistributionName);
     const rewardDistributionContract = this.contractFactory.dopexRewardDistribution({
       address: rewardDistrbutionAddress,
