@@ -4,6 +4,19 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.220.0](https://github.com/Zapper-fi/studio/compare/v0.219.0...v0.220.0) (2022-09-12)
+
+
+### Features
+
+* **cozy-finance:** Migrate to templates ([#1393](https://github.com/Zapper-fi/studio/issues/1393)) ([604f1e0](https://github.com/Zapper-fi/studio/commit/604f1e0675758ef1026553ebad703abbd76e0fe1))
+* **phuture:** Support Avalanche CAI index ([#1382](https://github.com/Zapper-fi/studio/issues/1382)) ([9b46c40](https://github.com/Zapper-fi/studio/commit/9b46c40a9d85a968373ef864d5e604e30d332e07))
+
+
+### Bug Fixes
+
+* **morpho:** Fix utilization rate ([#1390](https://github.com/Zapper-fi/studio/issues/1390)) ([c4d346f](https://github.com/Zapper-fi/studio/commit/c4d346fb7772d592630324707200dca3a20195d5))
+
 ## [0.219.0](https://github.com/Zapper-fi/studio/compare/v0.218.0...v0.219.0) (2022-09-09)
 
 
