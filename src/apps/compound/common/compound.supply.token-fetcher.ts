@@ -54,22 +54,19 @@ export abstract class CompoundSupplyTokenFetcher<
     return underlyingAddressRaw.toLowerCase().replace(ETH_ADDR_ALIAS, ZERO_ADDRESS);
   }
 
-  protected getDenormalizedRate({
-    blocksPerDay,
-    rate,
-  }: {
-    rate: BigNumberish;
-    blocksPerDay: number;
-    decimals: number;
-  }): number {
+  getDenormalizedRate({ blocksPerDay, rate }: { rate: BigNumberish; blocksPerDay: number; decimals: number }): number {
     return 100 * (Math.pow(1 + (blocksPerDay * Number(rate)) / Number(1e18), 365) - 1);
   }
 
-  async getPricePerShare({ contract, appToken }: GetPricePerShareParams<R, CompoundSupplyTokenDataProps>) {
+  async getExchangeRateMantissa(opts: GetPricePerShareParams<R, CompoundSupplyTokenDataProps>) {
+    const { appToken } = opts;
     const [underlyingToken] = appToken.tokens;
-    const rateRaw = await this.getExchangeRate(contract);
-    const mantissa = underlyingToken.decimals + 10;
+    return underlyingToken.decimals + 10;
+  }
 
+  async getPricePerShare(opts: GetPricePerShareParams<R, CompoundSupplyTokenDataProps>) {
+    const { contract } = opts;
+    const [rateRaw, mantissa] = await Promise.all([this.getExchangeRate(contract), this.getExchangeRateMantissa(opts)]);
     return Number(rateRaw) / 10 ** mantissa;
   }
 
@@ -90,7 +87,7 @@ export abstract class CompoundSupplyTokenFetcher<
     return BalanceDisplayMode.UNDERLYING;
   }
 
-  protected async getApy({ contract, appToken }: GetDataPropsParams<R, CompoundSupplyTokenDataProps>) {
+  async getApy({ contract, appToken }: GetDataPropsParams<R, CompoundSupplyTokenDataProps>) {
     const [underlyingToken] = appToken.tokens;
     const supplyRate = await this.getSupplyRate(contract);
     const blocksPerDay = BLOCKS_PER_DAY[this.network];

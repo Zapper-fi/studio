@@ -67,13 +67,4 @@ export class AurigamiAppDefinition extends AppDefinition {
   }
 }
 
-export const AURIGAMI_CONTRACT_ADDRESSES = {
-  [Network.AURORA_MAINNET]: {
-    fairLaunch: '0xc9a848ac73e378516b16e4eebba5ef6afbc0bbc2',
-    lens: '0xffdffbdb966cb84b50e62d70105f2dbf2e0a1e70',
-    ply: '0x09c9d464b58d96837f8d8b6f4d9fe4ad408d3a4f',
-    comptroller: '0x817af6cfaf35bdc1a634d6cc94ee9e4c68369aeb',
-  },
-};
-
 export default AURIGAMI_DEFINITION;
