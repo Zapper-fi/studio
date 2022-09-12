@@ -1,6 +1,6 @@
 import { Inject } from '@nestjs/common';
 
-import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
+import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
 import { presentBalanceFetcherResponse } from '~app-toolkit/helpers/presentation/balance-fetcher-response.present';
 import { BalanceFetcher } from '~balance/balance-fetcher.interface';
@@ -8,10 +8,10 @@ import { Network } from '~types/network.interface';
 
 import { PHUTURE_DEFINITION } from '../phuture.definition';
 
-const network = Network.ETHEREUM_MAINNET;
+const network = Network.AVALANCHE_MAINNET;
 
 @Register.BalanceFetcher(PHUTURE_DEFINITION.id, network)
-export class EthereumPhutureBalanceFetcher implements BalanceFetcher {
+export class AvalanchePhutureBalanceFetcher implements BalanceFetcher {
   constructor(@Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit) {}
 
   async getIndexTokenBalances(address: string) {
