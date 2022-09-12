@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.222.0](https://github.com/Zapper-fi/studio/compare/v0.221.0...v0.222.0) (2022-09-12)
+
+
+### Features
+
+* **redacted:** Update Redacted app definition ([#1398](https://github.com/Zapper-fi/studio/issues/1398)) ([4ed12ef](https://github.com/Zapper-fi/studio/commit/4ed12ef0d872ecf401b8530dd313b032c349429c))
+
 ## [0.221.0](https://github.com/Zapper-fi/studio/compare/v0.220.0...v0.221.0) (2022-09-12)
 
 
