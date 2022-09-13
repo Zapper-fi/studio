@@ -28,17 +28,21 @@ export abstract class VaultTokenFetcher extends AppTokenTemplatePositionFetcher<
     return this.underlyingTokenAddress;
   }
 
-  async getPricePerShare({ multicall, appToken }: GetPricePerShareParams<Erc20, VaultTokenDataProps>) {
+  async getReserve({ multicall, appToken }: GetPricePerShareParams<Erc20, VaultTokenDataProps>) {
     const underlying = multicall.wrap(this.appToolkit.globalContracts.erc20(appToken.tokens[0]));
     const reserveRaw = await underlying.balanceOf(this.reserveAddress ?? this.vaultAddress);
-    const reserve = Number(reserveRaw) / 10 ** appToken.tokens[0].decimals;
+    return Number(reserveRaw) / 10 ** appToken.tokens[0].decimals;
+  }
+
+  async getPricePerShare(opts: GetPricePerShareParams<Erc20, VaultTokenDataProps>) {
+    const { appToken } = opts;
+    const reserve = await this.getReserve(opts);
     return reserve / appToken.supply;
   }
 
-  async getDataProps({ appToken, multicall }: GetDataPropsParams<Erc20, VaultTokenDataProps>) {
-    const underlying = multicall.wrap(this.appToolkit.globalContracts.erc20(appToken.tokens[0]));
-    const reserveRaw = await underlying.balanceOf(this.reserveAddress ?? this.vaultAddress);
-    const reserve = Number(reserveRaw) / 10 ** appToken.tokens[0].decimals;
+  async getDataProps(opts: GetDataPropsParams<Erc20, VaultTokenDataProps>) {
+    const { appToken } = opts;
+    const reserve = await this.getReserve(opts);
     const liquidity = reserve * appToken.tokens[0].price;
     return { reserve, liquidity };
   }

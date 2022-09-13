@@ -5,11 +5,18 @@ import { Network } from '~types/network.interface';
 
 export const REDACTED_CARTEL_DEFINITION = appDefinition({
   id: 'redacted-cartel',
-  name: 'Redacted Cartel',
-  description: `[REDACTED]`,
-  url: 'https://www.redactedcartel.xyz/',
+  name: 'Redacted',
+  description: `The Redacted ecosystem is a product suite of smart contracts empowering on-chain liquidity, governance, and cash flow for DeFi protocols.`,
+  url: 'https://www.redacted.finance/',
+  primaryColor: '#27A5F2',
   tags: [AppTag.ELASTIC_FINANCE],
-  links: {},
+  keywords: ['redacted', 'services', 'real yield'],
+  links: {
+    learn: 'https://docs.redacted.finance/',
+    github: 'https://github.com/redacted-cartel/',
+    twitter: 'https://twitter.com/redactedcartel',
+    discord: 'https://discord.com/invite/RwghRM6Shf',
+  },
 
   groups: {
     bond: {

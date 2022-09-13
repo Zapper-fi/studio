@@ -15,7 +15,6 @@ export const TECTONIC_DEFINITION = appDefinition({
       id: 'claimable',
       type: GroupType.POSITION,
       label: 'Claimable',
-      isHiddenFromExplore: true,
     },
 
     supply: {
