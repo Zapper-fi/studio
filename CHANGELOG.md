@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.223.1](https://github.com/Zapper-fi/studio/compare/v0.223.0...v0.223.1) (2022-09-13)
+
+
+### Bug Fixes
+
+* **contract-position-template:** Fix stat item liquidity for debt ([#1407](https://github.com/Zapper-fi/studio/issues/1407)) ([68639e2](https://github.com/Zapper-fi/studio/commit/68639e2bc8e9884417a100995e7df837dc3c7aef))
+
 ## [0.223.0](https://github.com/Zapper-fi/studio/compare/v0.222.0...v0.223.0) (2022-09-12)
 
 
