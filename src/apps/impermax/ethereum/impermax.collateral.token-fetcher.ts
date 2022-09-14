@@ -1,38 +1,16 @@
-import { Inject } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 
-import { Register } from '~app-toolkit/decorators';
-import { UNISWAP_V2_DEFINITION } from '~apps/uniswap-v2/uniswap-v2.definition';
-import { PositionFetcher } from '~position/position-fetcher.interface';
-import { AppTokenPosition } from '~position/position.interface';
-import { Network } from '~types/network.interface';
+import { Network } from '~types';
 
-import { ImpermaxCollateralTokenHelper } from '../helpers/impermax.collateral.token-fetcher-helper';
+import { ImpermaxCollateralTokenFetcher } from '../helpers/impermax.collateral.token-fetcher';
 import { IMPERMAX_DEFINITION } from '../impermax.definition';
 
-const appId = IMPERMAX_DEFINITION.id;
-const groupId = IMPERMAX_DEFINITION.groups.collateral.id;
-const network = Network.ETHEREUM_MAINNET;
+@Injectable()
+export class EthereumImpermaxCollateralTokenFetcher extends ImpermaxCollateralTokenFetcher {
+  appId = IMPERMAX_DEFINITION.id;
+  groupId = IMPERMAX_DEFINITION.groups.collateral.id;
+  network = Network.ETHEREUM_MAINNET;
+  groupLabel = 'Lending Pool';
 
-const address = '0x8c3736e2fe63cc2cd89ee228d9dbcab6ce5b767b';
-
-@Register.TokenPositionFetcher({ appId, groupId, network })
-export class EthereumImpermaxCollateralTokenFetcher implements PositionFetcher<AppTokenPosition> {
-  constructor(
-    @Inject(ImpermaxCollateralTokenHelper)
-    private readonly impermaxCollateralTokenHelper: ImpermaxCollateralTokenHelper,
-  ) {}
-
-  async getPositions() {
-    return this.impermaxCollateralTokenHelper.getPositions({
-      address,
-      network,
-      dependencies: [
-        {
-          appId: UNISWAP_V2_DEFINITION.id,
-          groupIds: [UNISWAP_V2_DEFINITION.groups.pool.id],
-          network,
-        },
-      ],
-    });
-  }
+  factoryAddress = '0x8c3736e2fe63cc2cd89ee228d9dbcab6ce5b767b';
 }
