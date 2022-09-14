@@ -7,6 +7,12 @@ export type DefaultAppTokenDefinition = {
   address: string;
 };
 
+export type DefaultAppTokenDataProps = {
+  liquidity: number;
+  reserves: number[];
+  apy: number;
+};
+
 // PHASE 1: List addresses and definitions
 export type GetDefinitionsParams = {
   multicall: IMulticallWrapper;

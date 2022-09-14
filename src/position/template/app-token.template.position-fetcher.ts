@@ -12,7 +12,7 @@ import { getImagesFromToken } from '~app-toolkit/helpers/presentation/image.pres
 import { IMulticallWrapper } from '~multicall';
 import { isMulticallUnderlyingError } from '~multicall/multicall.ethers';
 import { ContractType } from '~position/contract.interface';
-import { DefaultDataProps, DisplayProps, StatsItem } from '~position/display.interface';
+import { DisplayProps, StatsItem } from '~position/display.interface';
 import { AppTokenPositionBalance } from '~position/position-balance.interface';
 import { PositionFetcher } from '~position/position-fetcher.interface';
 import { AppTokenPosition } from '~position/position.interface';
@@ -20,6 +20,7 @@ import { Network } from '~types/network.interface';
 
 import {
   DefaultAppTokenDefinition,
+  DefaultAppTokenDataProps,
   GetAddressesParams,
   GetDataPropsParams,
   GetDefinitionsParams,
@@ -33,7 +34,7 @@ import { PositionFetcherTemplateCommons } from './position-fetcher.template.type
 
 export abstract class AppTokenTemplatePositionFetcher<
   T extends Contract,
-  V extends DefaultDataProps = DefaultDataProps,
+  V extends DefaultAppTokenDataProps = DefaultAppTokenDataProps,
   R extends DefaultAppTokenDefinition = DefaultAppTokenDefinition,
 > implements PositionFetcher<AppTokenPosition<V>>, PositionFetcherTemplateCommons
 {
@@ -91,13 +92,23 @@ export abstract class AppTokenTemplatePositionFetcher<
     return 1;
   }
 
+  // 7. Get price using the price per share
   async getPrice({ appToken }: GetPriceParams<T, V, R>): Promise<number> {
     return sum(appToken.tokens.map((v, i) => v.price * appToken.pricePerShare[i]));
   }
 
-  // Data Properties
-  async getDataProps(_params: GetDataPropsParams<T, V, R>): Promise<V> {
-    return {} as V;
+  abstract getLiquidity(params: GetDataPropsParams<T, V, R>): number | Promise<number>;
+  abstract getReserves(params: GetDataPropsParams<T, V, R>): number[] | Promise<number[]>;
+  abstract getApy(params: GetDataPropsParams<T, V, R>): number | Promise<number>;
+
+  async getDataProps(params: GetDataPropsParams<T, V, R>): Promise<V> {
+    const [liquidity, reserves, apy] = await Promise.all([
+      this.getLiquidity(params),
+      this.getReserves(params),
+      this.getApy(params),
+    ]);
+
+    return { liquidity, reserves, apy } as V;
   }
 
   // Display Properties

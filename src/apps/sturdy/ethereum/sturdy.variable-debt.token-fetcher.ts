@@ -25,7 +25,7 @@ export class EthereumSturdyVariableDebtTokenFetcher extends AaveAmmLendingTempla
     return reserveTokenAddressesData.variableDebtTokenAddress;
   }
 
-  getApy(reserveApyData: AaveV2ReserveApyData): number {
+  getApyFromReserveData(reserveApyData: AaveV2ReserveApyData): number {
     return reserveApyData.variableBorrowApy;
   }
 
