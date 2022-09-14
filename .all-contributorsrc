@@ -730,6 +730,26 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "justingreenberg",
+      "name": "Justin Greenberg",
+      "avatar_url": "https://avatars.githubusercontent.com/u/1539088?v=4",
+      "profile": "https://github.com/justingreenberg",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "maximebedard",
+      "name": "Maxime Bedard",
+      "avatar_url": "https://avatars.githubusercontent.com/u/801405?v=4",
+      "profile": "https://github.com/maximebedard",
+      "contributions": [
+        "code",
+        "question",
+        "maintenance"
+      ]
     }
   ],
   "contributorsPerLine": 7

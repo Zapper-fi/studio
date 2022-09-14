@@ -18,7 +18,7 @@
 </div>
 
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-77-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-79-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 ## Description
@@ -238,6 +238,10 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href="https://github.com/bejaxer"><img src="https://avatars.githubusercontent.com/u/37297413?v=4?s=64" width="64px;" alt=""/><br /><sub><b>0x A.K.</b></sub></a><br /><a href="https://github.com/Zapper-fi/studio/commits?author=bejaxer" title="Code">💻</a></td>
     <td align="center"><a href="https://github.com/julien-devatom"><img src="https://avatars.githubusercontent.com/u/61523188?v=4?s=64" width="64px;" alt=""/><br /><sub><b>Julien THOMAS</b></sub></a><br /><a href="https://github.com/Zapper-fi/studio/commits?author=julien-devatom" title="Code">💻</a></td>
     <td align="center"><a href="https://github.com/koffeebot"><img src="https://avatars.githubusercontent.com/u/105685250?v=4?s=64" width="64px;" alt=""/><br /><sub><b>koffeebot</b></sub></a><br /><a href="https://github.com/Zapper-fi/studio/commits?author=koffeebot" title="Code">💻</a></td>
+  </tr>
+  <tr>
+    <td align="center"><a href="https://github.com/justingreenberg"><img src="https://avatars.githubusercontent.com/u/1539088?v=4?s=64" width="64px;" alt=""/><br /><sub><b>Justin Greenberg</b></sub></a><br /><a href="https://github.com/Zapper-fi/studio/commits?author=justingreenberg" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/maximebedard"><img src="https://avatars.githubusercontent.com/u/801405?v=4?s=64" width="64px;" alt=""/><br /><sub><b>Maxime Bedard</b></sub></a><br /><a href="https://github.com/Zapper-fi/studio/commits?author=maximebedard" title="Code">💻</a> <a href="#question-maximebedard" title="Answering Questions">💬</a> <a href="#maintenance-maximebedard" title="Maintenance">🚧</a></td>
   </tr>
 </table>
 
