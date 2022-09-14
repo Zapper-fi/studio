@@ -25,7 +25,7 @@ export class GnosisAgaveStableBorrowTokenFetcher extends AaveV2LendingTemplateTo
     return reserveTokenAddressesData.stableDebtTokenAddress;
   }
 
-  getApy(reserveApyData: AaveV2ReserveApyData): number {
+  getApyFromReserveData(reserveApyData: AaveV2ReserveApyData): number {
     return reserveApyData.stableBorrowApy;
   }
 

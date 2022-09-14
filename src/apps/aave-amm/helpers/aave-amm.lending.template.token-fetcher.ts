@@ -114,9 +114,9 @@ export abstract class AaveAmmLendingTemplateTokenFetcher extends AppTokenTemplat
 
   async getDataProps(params: GetDataPropsParams<AaveAmmAToken, AaveV2LendingTokenDataProps>) {
     const defaultDataProps = await super.getDataProps(params);
-    const reserveConfigData = await this.getReserveConfigDataProps(params);
+    const reserveConfigDataProps = await this.getReserveConfigDataProps(params);
     const isActive = Math.abs(defaultDataProps.liquidity) > 0;
-    return { ...defaultDataProps, ...reserveConfigData, isActive };
+    return { ...defaultDataProps, ...reserveConfigDataProps, isActive };
   }
 
   async getLabel({ appToken }: GetDisplayPropsParams<AaveAmmAToken, AaveV2LendingTokenDataProps>): Promise<string> {

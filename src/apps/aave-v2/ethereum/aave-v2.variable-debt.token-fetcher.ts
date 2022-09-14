@@ -25,7 +25,7 @@ export class EthereumAaveV2VariableDebtTokenFetcher extends AaveV2LendingTemplat
     return reserveTokenAddressesData.variableDebtTokenAddress;
   }
 
-  getApy(reserveApyData: AaveV2ReserveApyData): number {
+  getApyFromReserveData(reserveApyData: AaveV2ReserveApyData): number {
     return reserveApyData.variableBorrowApy;
   }
 

@@ -25,7 +25,7 @@ export class OptimismGranaryFinanceVariableDebtTokenFetcher extends AaveV2Lendin
     return reserveTokenAddressesData.variableDebtTokenAddress;
   }
 
-  getApy(reserveApyData: AaveV2ReserveApyData): number {
+  getApyFromReserveData(reserveApyData: AaveV2ReserveApyData): number {
     return reserveApyData.variableBorrowApy;
   }
 
