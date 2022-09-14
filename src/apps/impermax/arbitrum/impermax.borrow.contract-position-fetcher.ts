@@ -10,7 +10,7 @@ export class ArbitrumImpermaxBorrowContractPositionFetcher extends ImpermaxBorro
   appId = IMPERMAX_DEFINITION.id;
   groupId = IMPERMAX_DEFINITION.groups.borrow.id;
   network = Network.ARBITRUM_MAINNET;
-  groupLabel = 'Borrow';
+  groupLabel = 'Lending Pool';
 
   factoryAddress = '0x8c3736e2fe63cc2cd89ee228d9dbcab6ce5b767b';
 }

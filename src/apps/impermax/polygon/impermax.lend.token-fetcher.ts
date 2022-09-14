@@ -10,7 +10,7 @@ export class PolygonImpermaxLendTokenFetcher extends ImpermaxLendTokenFetcher {
   appId = IMPERMAX_DEFINITION.id;
   groupId = IMPERMAX_DEFINITION.groups.lend.id;
   network = Network.POLYGON_MAINNET;
-  groupLabel = 'Lend';
+  groupLabel = 'Lending Pool';
 
   factoryAddress = '0xbb92270716c8c424849f17ccc12f4f24ad4064d6';
 }

@@ -10,7 +10,7 @@ export class PolygonImpermaxCollateralTokenFetcher extends ImpermaxCollateralTok
   appId = IMPERMAX_DEFINITION.id;
   groupId = IMPERMAX_DEFINITION.groups.collateral.id;
   network = Network.POLYGON_MAINNET;
-  groupLabel = 'Collateral';
+  groupLabel = 'Lending Pool';
 
   factoryAddress = '0xbb92270716c8c424849f17ccc12f4f24ad4064d6';
 }

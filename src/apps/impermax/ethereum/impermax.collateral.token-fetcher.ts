@@ -10,7 +10,7 @@ export class EthereumImpermaxCollateralTokenFetcher extends ImpermaxCollateralTo
   appId = IMPERMAX_DEFINITION.id;
   groupId = IMPERMAX_DEFINITION.groups.collateral.id;
   network = Network.ETHEREUM_MAINNET;
-  groupLabel = 'Collateral';
+  groupLabel = 'Lending Pool';
 
   factoryAddress = '0x8c3736e2fe63cc2cd89ee228d9dbcab6ce5b767b';
 }
