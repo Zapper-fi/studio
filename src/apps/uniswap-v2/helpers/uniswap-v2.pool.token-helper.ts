@@ -2,7 +2,7 @@ import { Inject } from '@nestjs/common';
 import BigNumber from 'bignumber.js';
 import { BigNumberish } from 'ethers';
 import { compact } from 'lodash';
-import { keyBy, sortBy } from 'lodash';
+import { sortBy } from 'lodash';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import {
@@ -13,10 +13,8 @@ import { getImagesFromToken } from '~app-toolkit/helpers/presentation/image.pres
 import { IMulticallWrapper } from '~multicall/multicall.interface';
 import { ContractType } from '~position/contract.interface';
 import { AppTokenPosition, Token } from '~position/position.interface';
-import { AppGroupsDefinition } from '~position/position.service';
+import { TokenDependencySelector } from '~position/selectors/token-dependency-selector.interface';
 import { BaseToken } from '~position/token.interface';
-import { PriceSelector } from '~token/token-price-selector.interface';
-import { BaseTokenPrice } from '~token/token-price-selector.interface';
 import { Network } from '~types/network.interface';
 
 import { UniswapFactory, UniswapPair } from '../contracts';
@@ -42,7 +40,6 @@ export type UniswapV2PoolTokenHelperParams<T = UniswapFactory, V = UniswapPair> 
   minLiquidity?: number;
   hiddenTokens?: string[];
   blockedPools?: string[];
-  appTokenDependencies?: AppGroupsDefinition[];
   priceDerivationWhitelist?: string[];
   resolveFactoryContract(opts: { address: string; network: Network }): T;
   resolvePoolContract(opts: { address: string; network: Network }): V;
@@ -58,7 +55,7 @@ export type UniswapV2PoolTokenHelperParams<T = UniswapFactory, V = UniswapPair> 
     network: Network;
     factoryAddress: string;
     tokenAddress: string;
-    baseTokenPriceSelector: PriceSelector;
+    tokenDependencySelector: TokenDependencySelector;
     resolveFactoryContract(opts: { address: string; network: Network }): T;
     resolvePoolContract(opts: { address: string; network: Network }): V;
     resolvePoolUnderlyingTokenAddresses(opts: {
@@ -96,7 +93,6 @@ export class UniswapV2PoolTokenHelper {
     minLiquidity = 0,
     hiddenTokens = [],
     blockedPools = [],
-    appTokenDependencies = [],
     resolveFactoryContract,
     resolvePoolContract,
     resolveDerivedUnderlyingToken,
@@ -109,10 +105,7 @@ export class UniswapV2PoolTokenHelper {
     resolvePoolVolumes = async () => [],
   }: UniswapV2PoolTokenHelperParams<T, V>) {
     const multicall = this.appToolkit.getMulticall(network);
-    const tokenSelector = this.appToolkit.getBaseTokenPriceSelector({ tags: { network, appId } });
-
-    const appTokens = await this.appToolkit.getAppTokenPositions(...appTokenDependencies);
-    const appTokensByAddress = keyBy(appTokens, p => p.address);
+    const tokenSelector = this.appToolkit.getTokenDependencySelector({ tags: { network, context: appId } });
 
     const poolAddresses: ResolvePoolTokenAddressesResponse = await resolvePoolTokenAddresses({
       appId,
@@ -154,8 +147,7 @@ export class UniswapV2PoolTokenHelper {
 
         const resolvedTokens = await Promise.all(
           [token0Address, token1Address].map(async tokenAddress => {
-            let underlyingToken: AppTokenPosition | BaseTokenPrice | null = appTokensByAddress[tokenAddress];
-            underlyingToken ??= await tokenSelector.getOne({ network, address: tokenAddress });
+            const underlyingToken = await tokenSelector.getOne({ network, address: tokenAddress });
 
             if (underlyingToken) return underlyingToken;
             if (!resolveDerivedUnderlyingToken) return null;
@@ -164,7 +156,7 @@ export class UniswapV2PoolTokenHelper {
               appId,
               factoryAddress,
               network,
-              baseTokenPriceSelector: tokenSelector,
+              tokenDependencySelector: tokenSelector,
               resolveFactoryContract,
               resolvePoolContract,
               resolvePoolReserves,

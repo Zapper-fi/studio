@@ -15,6 +15,11 @@ export const REVERT_FINANCE_DEFINITION = appDefinition({
       type: GroupType.POSITION,
       label: 'Compoundor rewards',
     },
+    compoundingPositions: {
+      id: 'compounding-positions',
+      type: GroupType.TOKEN,
+      label: 'Compounding positions',
+    },
   },
 
   tags: [AppTag.ASSET_MANAGEMENT],

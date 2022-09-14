@@ -5,7 +5,7 @@ import { SingleStakingFarmDefinition } from '~app-toolkit';
 import { CacheOnInterval } from '~cache/cache-on-interval.decorator';
 
 import GOOD_GHOSTING_DEFINITION from '../good-ghosting.definition';
-import { NetworkId } from '../helpers/constants';
+import { NetworkId, getGameVersionType, RewardType, transformRewardArrayToObject } from '../helpers/constants';
 
 import { GamesResponse, PlayerBalance, PlayerResponse, BASE_API_URL } from './constants';
 
@@ -32,7 +32,8 @@ export class GoodGhostingGameConfigFetcherHelper {
 
     for (let i = 0; i < gameContractAddresses.length; i += 1) {
       const gameContractAddress = gameContractAddresses[i];
-      const rewardTokenAddresses: string[] = [];
+      let rewardTokenAddresses: string[] = [];
+      const rewardTokens: Record<string, string> = {};
 
       const {
         depositTokenAddress,
@@ -43,10 +44,22 @@ export class GoodGhostingGameConfigFetcherHelper {
         networkId,
         strategyProvider,
         gameName,
+        rewards,
       } = gameConfigs[gameContractAddress];
 
+      const isV2Game = getGameVersionType(contractVersion);
       const isPolygonGame = NetworkId.PolygonMainnet === networkId;
       const isCeloGame = NetworkId.CeloMainnet === networkId;
+
+      if (isV2Game && rewards) {
+        rewards.map(reward => {
+          rewardTokens[reward.type] = reward.address;
+          rewardTokens[RewardType.Deposit] = depositTokenAddress;
+        });
+
+        const rewardTokenAddress = Object.values(rewardTokens);
+        rewardTokenAddresses = [...rewardTokenAddress];
+      }
 
       if (isPolygonGame && rewardTokenAddress) {
         rewardTokenAddresses.push(rewardTokenAddress);
@@ -96,20 +109,39 @@ export class GoodGhostingGameConfigFetcherHelper {
         rewardAmount,
         totalEarningsConverted,
         gameAPY,
+        rewards,
       } = player[i];
 
+      let playerIncentiveAmount = incentiveAmount;
+      let playerRewardAmount = rewardAmount;
+
+      if (rewards) {
+        const playerRewards = transformRewardArrayToObject(rewards);
+        playerRewardAmount = String(0);
+        playerIncentiveAmount = String(0);
+
+        if (playerRewards[RewardType.Incentive]) {
+          playerIncentiveAmount = playerRewards[RewardType.Incentive].balance;
+        }
+
+        if (playerRewards[RewardType.Reward]) {
+          playerRewardAmount = playerRewards[RewardType.Reward].balance;
+        }
+      }
+
       balances[gameId] = {
-        incentiveAmount: parseFloat(parseFloat(incentiveAmount).toFixed(3)),
+        incentiveAmount: parseFloat(parseFloat(playerIncentiveAmount).toFixed(3)),
         interestAmount: parseFloat(parseFloat(interestAmount).toFixed(3)),
         withdrawn,
         isWinner,
         paidAmount: parseFloat(paidAmount),
-        rewardAmount: parseFloat(parseFloat(rewardAmount).toFixed(3)),
+        rewardAmount: parseFloat(parseFloat(playerRewardAmount).toFixed(3)),
         poolAPY: parseFloat(gameAPY),
         pooltotalEarningsConverted: parseFloat(parseFloat(totalEarningsConverted).toFixed(3)),
         playerId,
       };
     }
+
     return balances;
   }
 }

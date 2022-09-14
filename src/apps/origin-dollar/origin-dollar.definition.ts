@@ -32,7 +32,12 @@ export const ORIGIN_DOLLAR_DEFINITION = appDefinition({
   tags: [AppTag.ELASTIC_FINANCE, AppTag.FARMING, AppTag.STABLECOIN, AppTag.STAKING, AppTag.YIELD_AGGREGATOR],
 
   keywords: [],
-  links: {},
+  links: {
+    discord: 'https://t.me/originprotocol',
+    github: 'https://github.com/OriginProtocol',
+    telegram: 'https://t.me/originprotocol',
+    twitter: 'https://twitter.com/originprotocol',
+  },
 
   supportedNetworks: {
     [Network.ETHEREUM_MAINNET]: [AppAction.VIEW],

@@ -1,163 +1,111 @@
 import { Inject } from '@nestjs/common';
-import { gql } from 'graphql-request';
+import { utils } from 'ethers';
 import _ from 'lodash';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
 import { buildDollarDisplayItem } from '~app-toolkit/helpers/presentation/display-item.present';
-import { getImagesFromToken } from '~app-toolkit/helpers/presentation/image.present';
+import { getTokenImg } from '~app-toolkit/helpers/presentation/image.present';
 import { ContractType } from '~position/contract.interface';
 import { PositionFetcher } from '~position/position-fetcher.interface';
-import { AppTokenPosition, Token } from '~position/position.interface';
+import { AppTokenPosition } from '~position/position.interface';
 import { Network } from '~types/network.interface';
 
+import { PhutureContractFactory } from '../contracts';
 import { PHUTURE_DEFINITION } from '../phuture.definition';
 
 const appId = PHUTURE_DEFINITION.id;
 const groupId = PHUTURE_DEFINITION.groups.index.id;
 const network = Network.ETHEREUM_MAINNET;
 
-type AssetDetails = {
-  id: string;
-  name: string;
-  vTokens: {
-    platformTotalSupply: number;
-    totalAmount: number;
-  }[];
-};
-
-type IndexDetails = {
-  id: string;
-  name: string;
-  totalSupply: number;
-  assets: { shares: number; asset: AssetDetails }[];
-  inactiveAssets: { shares: number; asset: AssetDetails }[];
-};
-
-const phutureSubgraph = 'https://api.thegraph.com/subgraphs/name/phuture-finance/phuture-v1';
-
-const query = gql`
-  query Indexes {
-    indexes {
-      id
-      name
-      totalSupply
-      assets {
-        shares
-        asset {
-          id
-          name
-          vTokens {
-            platformTotalSupply
-            totalAmount
-          }
-        }
-      }
-      inactiveAssets {
-        shares
-        asset {
-          id
-          name
-          vTokens {
-            platformTotalSupply
-            totalAmount
-          }
-        }
-      }
-    }
-  }
-`;
-
-type QueryResult = {
-  indexes: IndexDetails[];
+const addresses = {
+  PDI: '0x632806bf5c8f062932dd121244c9fbe7becb8b48',
+  vTokenFactory: '0x24ad48f31cab5e35d0e9cdfa9213b5451f22fb92',
 };
 
 @Register.TokenPositionFetcher({ appId, groupId, network })
 export class EthereumPhutureIndexTokenFetcher implements PositionFetcher<AppTokenPosition> {
-  constructor(@Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit) {}
+  constructor(
+    @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
+    @Inject(PhutureContractFactory) private readonly phutureContractFactory: PhutureContractFactory,
+  ) {}
 
   async getPositions() {
-    const indexes = await this.getIndexes();
-    const baseTokenDependencies = await this.appToolkit.getBaseTokenPrices(network);
+    const multicall = this.appToolkit.getMulticall(network);
 
-    const indexPositions = indexes.map(({ id, name, totalSupply: supplyRaw, assets: activeAssets, inactiveAssets }) => {
-      const index = baseTokenDependencies.find(({ address }) => address === id);
-      if (index === undefined) return null;
+    const baseTokens = await this.appToolkit.getBaseTokenPrices(network);
 
-      const assets = [...activeAssets, ...inactiveAssets];
-      const pricePerShare = assets.map(
-        ({
-          shares,
-          asset: {
-            vTokens: [{ platformTotalSupply, totalAmount }],
-          },
-        }) => ((totalAmount / platformTotalSupply) * shares) / supplyRaw,
-      );
-      let liquidityRaw = 0;
-
-      const tokens: Token[] = _.compact(
-        assets.map(({ shares, asset: { id, name } }) => {
-          const asset = baseTokenDependencies.find(({ address }) => address === id);
-          if (asset === undefined) return null;
-
-          const { price, symbol, decimals } = asset;
-          liquidityRaw += shares * price;
-
-          return {
-            address: id,
-            network,
-            price,
-            symbol,
-            name,
-            decimals,
-            type: ContractType.BASE_TOKEN,
-          };
-        }),
-      );
-
-      const symbol = index.symbol;
-      const decimals = index.decimals;
-      const price = liquidityRaw / supplyRaw;
-      const liquidity = liquidityRaw / 10 ** decimals;
-      const supply = supplyRaw / 10 ** decimals;
-      const secondaryLabel = buildDollarDisplayItem(price);
-
-      const images = tokens.flatMap(token => getImagesFromToken(token));
-      const indexPosition: AppTokenPosition = {
-        type: ContractType.APP_TOKEN,
-        address: id,
-        appId,
-        groupId,
-        network,
-        decimals,
-        supply,
-        price,
-        pricePerShare,
-        symbol,
-        tokens,
-
-        dataProps: {
-          liquidity,
-        },
-
-        displayProps: {
-          label: name,
-          images,
-          secondaryLabel,
-        },
-      };
-
-      return indexPosition;
+    const indexContract = this.phutureContractFactory.managedIndex({ network, address: addresses.PDI });
+    const vTokenFactoryContract = this.phutureContractFactory.vTokenFactory({
+      network,
+      address: addresses.vTokenFactory,
     });
 
-    return _.compact(indexPositions);
-  }
+    const [label, symbol, decimals, supplyRaw, anatomy] = await Promise.all([
+      multicall.wrap(indexContract).name(),
+      multicall.wrap(indexContract).symbol(),
+      multicall.wrap(indexContract).decimals(),
+      multicall.wrap(indexContract).totalSupply(),
+      multicall.wrap(indexContract).anatomy(),
+    ]);
 
-  private async getIndexes(): Promise<IndexDetails[]> {
-    const { indexes } = await this.appToolkit.helpers.theGraphHelper.request<QueryResult>({
-      endpoint: phutureSubgraph,
-      query,
-    });
-    return indexes;
+    const tokensWithLiquidityRaw = await Promise.all(
+      anatomy._assets.map(async underlyingAddressRaw => {
+        const underlyingAddress = underlyingAddressRaw.toLowerCase();
+
+        const underlyingToken = baseTokens.find(v => v.address === underlyingAddress);
+        if (!underlyingToken) return null;
+
+        const vTokenAddress = await multicall.wrap(vTokenFactoryContract).vTokenOf(underlyingAddress);
+        const vTokenContract = this.phutureContractFactory.vToken({ network, address: vTokenAddress });
+        const balanceOfRaw = await multicall.wrap(vTokenContract).assetBalanceOf(indexContract.address);
+        const balanceOf = utils.formatUnits(balanceOfRaw, underlyingToken.decimals);
+
+        return {
+          liquidity: Number(balanceOf) * underlyingToken.price,
+          baseToken: underlyingToken,
+        };
+      }),
+    );
+
+    const tokensWithLiquidity = _.compact(tokensWithLiquidityRaw);
+
+    const tokens = tokensWithLiquidity.map(x => x.baseToken);
+    const liquidityPerToken = tokensWithLiquidity.map(x => x.liquidity);
+
+    const liquidity = _.sum(liquidityPerToken);
+    const supply = utils.formatEther(supplyRaw);
+    const pricePerShare = 1;
+    const price = liquidity / Number(supply);
+
+    const statsItems = [{ label: 'Liquidity', value: buildDollarDisplayItem(liquidity) }];
+
+    const indexPosition: AppTokenPosition = {
+      type: ContractType.APP_TOKEN,
+      appId,
+      groupId,
+      address: indexContract.address,
+      network,
+      supply: Number(supply),
+      decimals,
+      symbol,
+      price,
+      pricePerShare,
+      tokens,
+
+      dataProps: {
+        liquidity,
+        exchangeable: true,
+      },
+
+      displayProps: {
+        label,
+        secondaryLabel: symbol,
+        images: [getTokenImg(indexContract.address, network)],
+        statsItems,
+      },
+    };
+
+    return [indexPosition];
   }
 }

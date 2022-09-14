@@ -1,46 +1,51 @@
-import { Inject } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
-import { Register } from '~app-toolkit/decorators';
-import { buildDollarDisplayItem } from '~app-toolkit/helpers/presentation/display-item.present';
-import { getImagesFromToken } from '~app-toolkit/helpers/presentation/image.present';
-import { ContractType } from '~position/contract.interface';
-import { PositionFetcher } from '~position/position-fetcher.interface';
-import { ContractPosition } from '~position/position.interface';
+import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
+import { MetaType } from '~position/position.interface';
+import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
+import {
+  GetDisplayPropsParams,
+  GetTokenBalancesParams,
+  GetTokenDefinitionsParams,
+} from '~position/template/contract-position.template.types';
 import { Network } from '~types';
 
+import { PlutusContractFactory, PlutusPrivateTgeVester } from '../contracts';
 import PLUTUS_DEFINITION from '../plutus.definition';
 
-import { ADDRESSES } from './consts';
+@Injectable()
+export class ArbitrumPlutusTgeClaimableContractPositionFetcher extends ContractPositionTemplatePositionFetcher<PlutusPrivateTgeVester> {
+  appId = PLUTUS_DEFINITION.id;
+  groupId = PLUTUS_DEFINITION.groups.tgeClaimable.id;
+  network = Network.ARBITRUM_MAINNET;
+  groupLabel = 'Private TGE Allocation';
 
-const appId = PLUTUS_DEFINITION.id;
-const groupId = PLUTUS_DEFINITION.groups.tgeClaimable.id;
-const network = Network.ARBITRUM_MAINNET;
+  constructor(
+    @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
+    @Inject(PlutusContractFactory) protected readonly contractFactory: PlutusContractFactory,
+  ) {
+    super(appToolkit);
+  }
 
-@Register.ContractPositionFetcher({ appId, groupId, network })
-export class ArbitrumPlutusTgeClaimableContractPositionFetcher implements PositionFetcher<ContractPosition> {
-  constructor(@Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit) {}
+  getContract(address: string): PlutusPrivateTgeVester {
+    return this.contractFactory.plutusPrivateTgeVester({ address, network: this.network });
+  }
 
-  async getPositions() {
-    const baseTokens = await this.appToolkit.getBaseTokenPrices(network);
-    const plsToken = baseTokens.find(v => v.address === ADDRESSES.pls);
-    if (!plsToken) return [];
+  async getDefinitions() {
+    return [{ address: '0x04b724389dd28ffc9a3a91ab4149a77530282f04' }];
+  }
 
-    const position: ContractPosition = {
-      type: ContractType.POSITION,
-      address: '0x04b724389dd28ffc9a3a91ab4149a77530282f04',
-      appId,
-      groupId,
-      network,
-      tokens: [plsToken],
-      dataProps: {},
-      displayProps: {
-        label: `Claimable ${plsToken.symbol}`,
-        secondaryLabel: buildDollarDisplayItem(plsToken.price),
-        images: getImagesFromToken(plsToken),
-      },
-    };
+  async getTokenDefinitions(_params: GetTokenDefinitionsParams<PlutusPrivateTgeVester>) {
+    return [{ metaType: MetaType.CLAIMABLE, address: '0x51318b7d00db7acc4026c88c3952b66278b6a67f' }];
+  }
 
-    return [position];
+  async getLabel({ contractPosition }: GetDisplayPropsParams<PlutusPrivateTgeVester>) {
+    return `Claimable ${getLabelFromToken(contractPosition.tokens[0])}`;
+  }
+
+  async getTokenBalancesPerPosition({ address, contract }: GetTokenBalancesParams<PlutusPrivateTgeVester>) {
+    const pendingClaims = await contract.pendingClaims(address);
+    return [pendingClaims._claimable];
   }
 }

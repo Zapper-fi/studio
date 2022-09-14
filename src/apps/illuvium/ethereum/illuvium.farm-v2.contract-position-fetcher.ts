@@ -1,61 +1,52 @@
-import { Inject } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
-import { Register } from '~app-toolkit/decorators';
-import { PositionFetcher } from '~position/position-fetcher.interface';
-import { ContractPosition } from '~position/position.interface';
+import { GetTokenDefinitionsParams, GetTokenBalancesParams } from '~position/template/contract-position.template.types';
+import { SingleStakingFarmDynamicTemplateContractPositionFetcher } from '~position/template/single-staking.dynamic.template.contract-position-fetcher';
 import { Network } from '~types/network.interface';
 
-import { IlluviumContractFactory, IlluviumSushiLpPoolV2, IlluviumIlvPoolV2 } from '../contracts';
+import { IlluviumContractFactory, IlluviumIlvPoolV2 } from '../contracts';
 import { ILLUVIUM_DEFINITION } from '../illuvium.definition';
 
-const appId = ILLUVIUM_DEFINITION.id;
-const groupId = ILLUVIUM_DEFINITION.groups.farmV2.id;
-const network = Network.ETHEREUM_MAINNET;
-
-@Register.ContractPositionFetcher({ appId, groupId, network })
-export class EthereumIlluviumFarmV2ContractPositionFetcher implements PositionFetcher<ContractPosition> {
-  private readonly ILV_STAKING_ADDRESS = '0x7f5f854ffb6b7701540a00c69c4ab2de2b34291d';
-  private readonly SLP_ILV_ETH_STAKING_ADDRESS = '0xe98477bdc16126bb0877c6e3882e3edd72571cc2';
+@Injectable()
+export class EthereumIlluviumFarmV2ContractPositionFetcher extends SingleStakingFarmDynamicTemplateContractPositionFetcher<IlluviumIlvPoolV2> {
+  appId = ILLUVIUM_DEFINITION.id;
+  groupId = ILLUVIUM_DEFINITION.groups.farmV2.id;
+  network = Network.ETHEREUM_MAINNET;
+  groupLabel = 'Staking';
 
   constructor(
-    @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
-    @Inject(IlluviumContractFactory) private readonly contractFactory: IlluviumContractFactory,
-  ) {}
+    @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
+    @Inject(IlluviumContractFactory) protected readonly contractFactory: IlluviumContractFactory,
+  ) {
+    super(appToolkit);
+  }
 
-  async getPositions() {
-    return Promise.all([
-      // ILV staking
-      this.appToolkit.helpers.singleStakingFarmContractPositionHelper.getContractPositions<IlluviumIlvPoolV2>({
-        appId,
-        groupId,
-        network,
-        resolveFarmAddresses: () => [this.ILV_STAKING_ADDRESS],
-        resolveFarmContract: ({ address, network }) => this.contractFactory.illuviumIlvPoolV2({ address, network }),
-        resolveStakedTokenAddress: ({ contract, multicall }) => multicall.wrap(contract).poolToken(),
-        resolveRewardTokenAddresses: async () => {
-          const baseTokens = await this.appToolkit.getBaseTokenPrices(network);
-          const ilvToken = baseTokens.find(p => p.symbol === 'ILV')!;
-          return [ilvToken.address];
-        },
-        resolveRois: () => ({ dailyROI: 0, weeklyROI: 0, yearlyROI: 0 }),
-      }),
-      // ILV/ETH staking
-      this.appToolkit.helpers.singleStakingFarmContractPositionHelper.getContractPositions<IlluviumSushiLpPoolV2>({
-        appId,
-        groupId,
-        network,
-        dependencies: [{ appId: 'sushiswap', groupIds: ['pool'], network }],
-        resolveFarmAddresses: () => [this.SLP_ILV_ETH_STAKING_ADDRESS],
-        resolveFarmContract: ({ address, network }) => this.contractFactory.illuviumSushiLpPoolV2({ address, network }),
-        resolveStakedTokenAddress: ({ contract, multicall }) => multicall.wrap(contract).poolToken(),
-        resolveRewardTokenAddresses: async () => {
-          const baseTokens = await this.appToolkit.getBaseTokenPrices(network);
-          const ilvToken = baseTokens.find(p => p.symbol === 'ILV')!;
-          return [ilvToken.address];
-        },
-        resolveRois: () => ({ dailyROI: 0, weeklyROI: 0, yearlyROI: 0 }),
-      }),
-    ]).then(v => v.flat());
+  getContract(address: string): IlluviumIlvPoolV2 {
+    return this.contractFactory.illuviumIlvPoolV2({ address, network: this.network });
+  }
+
+  getFarmAddresses() {
+    return ['0x7f5f854ffb6b7701540a00c69c4ab2de2b34291d', '0xe98477bdc16126bb0877c6e3882e3edd72571cc2'];
+  }
+
+  async getStakedTokenAddress({ contract }: GetTokenDefinitionsParams<IlluviumIlvPoolV2>) {
+    return contract.poolToken();
+  }
+
+  async getRewardTokenAddresses() {
+    return '0x767fe9edc9e0df98e07454847909b5e959d7ca0e';
+  }
+
+  async getRewardRates() {
+    return 0;
+  }
+
+  async getStakedTokenBalance({ address, contract }: GetTokenBalancesParams<IlluviumIlvPoolV2>) {
+    return contract.balanceOf(address);
+  }
+
+  async getRewardTokenBalances({ address, contract }: GetTokenBalancesParams<IlluviumIlvPoolV2>) {
+    return (await contract.pendingRewards(address)).pendingYield;
   }
 }

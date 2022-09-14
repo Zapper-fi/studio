@@ -1,4 +1,4 @@
-import { Injectable, OnModuleInit } from '@nestjs/common';
+import { Inject, Injectable, OnModuleInit } from '@nestjs/common';
 import { DiscoveryService } from '@nestjs/core';
 
 import { BALANCE_PRESENTER_APP, BALANCE_PRESENTER_NETWORK } from '~app-toolkit/decorators/balance-presenter.decorator';
@@ -11,7 +11,7 @@ import { BalancePresenter } from './balance-presenter.interface';
 export class BalancePresenterRegistry implements OnModuleInit {
   private registry = new Map<Network, Map<string, BalancePresenter>>();
 
-  constructor(private readonly discoveryService: DiscoveryService) {}
+  constructor(@Inject(DiscoveryService) private readonly discoveryService: DiscoveryService) {}
 
   onModuleInit() {
     this.registry = buildRegistry<[Network, string], BalancePresenter>(this.discoveryService, [
@@ -21,6 +21,6 @@ export class BalancePresenterRegistry implements OnModuleInit {
   }
 
   get(appId: string, network: Network) {
-    return this.registry.get(network)?.get(appId);
+    return this.registry.get(network)?.get(appId) ?? null;
   }
 }

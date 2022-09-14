@@ -1,7 +1,6 @@
 import { Inject } from '@nestjs/common';
 import { BigNumber } from 'bignumber.js';
-import { getAddress } from 'ethers/lib/utils';
-import { sumBy } from 'lodash';
+import { compact, sumBy } from 'lodash';
 
 import { drillBalance } from '~app-toolkit';
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
@@ -18,7 +17,7 @@ import { Network } from '~types/network.interface';
 
 import { ATLENDIS_V_1_DEFINITION } from '../atlendis-v1.definition';
 import { AtlendisV1ContractFactory } from '../contracts';
-import { GET_USER_POSITIONS } from '../graphql/getPositions';
+import { GetUserPositionsResponse, GET_USER_POSITIONS } from '../graphql/getPositions';
 
 const network = Network.POLYGON_MAINNET;
 
@@ -31,20 +30,22 @@ export class PolygonAtlendisV1BalanceFetcher implements BalanceFetcher {
 
   async getPositionBalances(address: string): Promise<ContractPositionBalance<DefaultDataProps>[]> {
     const graphHelper = this.appToolkit.helpers.theGraphHelper;
-    const data = await graphHelper.requestGraph({
-      endpoint: 'https://atlendis.herokuapp.com/graphql',
+    const data = await graphHelper.request<GetUserPositionsResponse>({
+      endpoint: 'https://api.thegraph.com/subgraphs/name/atlendis/atlendis-hosted-service-polygon',
       query: GET_USER_POSITIONS,
-      variables: { address: getAddress(address) },
+      variables: { address },
     });
+
     const baseTokens = await this.appToolkit.getBaseTokenPrices(network);
 
     const positions = await Promise.all(
       data.positions.map(async position => {
         const underlyingToken = baseTokens.find(
-          t => t.address.toLowerCase() === position.pool.parameters.token.address.toLowerCase(),
+          t => t.address.toLowerCase() === position.pool.parameters.underlyingToken.toLowerCase(),
         );
         if (!underlyingToken) return null;
         const positionManagerAddress = '0x55e4e70a725c1439dac6b9412b71fc8372bd73e9';
+        const tokenId = new BigNumber(position.id, 16).toString();
 
         const positionContract: ContractPosition = {
           type: ContractType.POSITION,
@@ -54,7 +55,7 @@ export class PolygonAtlendisV1BalanceFetcher implements BalanceFetcher {
           network,
           tokens: [supplied(underlyingToken)],
           dataProps: {
-            tokenId: new BigNumber(position.tokenId).toString(),
+            tokenId,
           },
           displayProps: {
             label: getLabelFromToken(underlyingToken),
@@ -67,7 +68,7 @@ export class PolygonAtlendisV1BalanceFetcher implements BalanceFetcher {
           network,
         });
 
-        const { bondsQuantity, normalizedDepositedAmount } = await contract.getPositionRepartition(position.tokenId);
+        const { bondsQuantity, normalizedDepositedAmount } = await contract.getPositionRepartition(tokenId);
         const balanceRawWei = new BigNumber(bondsQuantity.toString())
           .plus(normalizedDepositedAmount.toString())
           .toString();
@@ -86,7 +87,8 @@ export class PolygonAtlendisV1BalanceFetcher implements BalanceFetcher {
         return contractPositionBalance;
       }),
     );
-    return positions;
+
+    return compact(positions);
   }
 
   async getBalances(address: string) {

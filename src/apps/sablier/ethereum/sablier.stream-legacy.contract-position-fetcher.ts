@@ -1,20 +1,16 @@
-import { Inject, NotImplementedException } from '@nestjs/common';
+import { Inject, Injectable, NotImplementedException } from '@nestjs/common';
 import { compact } from 'lodash';
 
 import { drillBalance } from '~app-toolkit';
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
-import { Register } from '~app-toolkit/decorators';
 import { buildDollarDisplayItem } from '~app-toolkit/helpers/presentation/display-item.present';
 import { getImagesFromToken, getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { isMulticallUnderlyingError } from '~multicall/multicall.ethers';
 import { ContractType } from '~position/contract.interface';
 import { ContractPositionBalance } from '~position/position-balance.interface';
 import { MetaType } from '~position/position.interface';
-import {
-  ContractPositionTemplatePositionFetcher,
-  DisplayPropsStageParams,
-  TokensStageParams,
-} from '~position/template/contract-position.template.position-fetcher';
+import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
+import { GetDisplayPropsParams, GetTokenDefinitionsParams } from '~position/template/contract-position.template.types';
 import { Network } from '~types';
 
 import { SablierStreamApiClient } from '../common/sablier.stream.api-client';
@@ -26,24 +22,21 @@ export type SablierStreamLegacyContractPositionDataProps = {
   remaining: number;
 };
 
-export type SablierStreamLegacyContractPositionDescriptor = {
+export type SablierStreamLegacyContractPositionDefinition = {
   address: string;
   tokenAddress: string;
 };
 
-const appId = SABLIER_DEFINITION.id;
-const groupId = SABLIER_DEFINITION.groups.streamLegacy.id;
-const network = Network.ETHEREUM_MAINNET;
-
-@Register.ContractPositionFetcher({ appId, groupId, network })
+@Injectable()
 export class EthereumSablierStreamLegacyContractPositionFetcher extends ContractPositionTemplatePositionFetcher<
   SablierStream,
   SablierStreamLegacyContractPositionDataProps,
-  SablierStreamLegacyContractPositionDescriptor
+  SablierStreamLegacyContractPositionDefinition
 > {
   appId = SABLIER_DEFINITION.id;
   groupId = SABLIER_DEFINITION.groups.streamLegacy.id;
   network = Network.ETHEREUM_MAINNET;
+  groupLabel = 'Streams (Legacy)';
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
@@ -53,7 +46,7 @@ export class EthereumSablierStreamLegacyContractPositionFetcher extends Contract
     super(appToolkit);
   }
 
-  async getDescriptors() {
+  async getDefinitions() {
     const tokens = await this.apiClient.getTokens();
     const streamAddress = '0xa4fc358455febe425536fd1878be67ffdbdec59a';
     return tokens.map(v => ({ address: streamAddress, tokenAddress: v }));
@@ -63,14 +56,16 @@ export class EthereumSablierStreamLegacyContractPositionFetcher extends Contract
     return this.contractFactory.sablierStream({ address, network: this.network });
   }
 
-  async getTokenDescriptors({
-    descriptor,
-  }: TokensStageParams<SablierStream, SablierStreamLegacyContractPositionDescriptor>) {
-    return [{ address: descriptor.tokenAddress, metaType: MetaType.SUPPLIED }];
+  async getTokenDefinitions({
+    definition,
+  }: GetTokenDefinitionsParams<SablierStream, SablierStreamLegacyContractPositionDefinition>) {
+    return [{ address: definition.tokenAddress, metaType: MetaType.SUPPLIED }];
   }
 
-  async getLabel({ appToken }: DisplayPropsStageParams<SablierStream, SablierStreamLegacyContractPositionDataProps>) {
-    return `${getLabelFromToken(appToken.tokens[0])} Sablier Stream`;
+  async getLabel({
+    contractPosition,
+  }: GetDisplayPropsParams<SablierStream, SablierStreamLegacyContractPositionDataProps>) {
+    return `${getLabelFromToken(contractPosition.tokens[0])} Sablier Stream`;
   }
 
   getTokenBalancesPerPosition(): never {
@@ -78,19 +73,26 @@ export class EthereumSablierStreamLegacyContractPositionFetcher extends Contract
   }
 
   async getBalances(address: string) {
-    const multicall = this.appToolkit.getMulticall(network);
-    const streams = await this.apiClient.getLegacyStreams(address, network);
+    const multicall = this.appToolkit.getMulticall(this.network);
+    const streams = await this.apiClient.getLegacyStreams(address, this.network);
     if (streams.length === 0) return [];
 
-    const tokenLoader = this.appToolkit.getBaseTokenPriceSelector({ tags: { network, appId } });
-    const appTokenLoader = this.appToolkit.getAppTokenSelector({ tags: { network, context: appId } });
+    const tokenLoader = this.appToolkit.getTokenDependencySelector({
+      tags: { network: this.network, context: this.appId },
+    });
 
     const sablierAddress = '0xa4fc358455febe425536fd1878be67ffdbdec59a';
-    const sablierStreamContract = this.contractFactory.sablierStreamLegacy({ address: sablierAddress, network });
+    const sablierStreamContract = this.contractFactory.sablierStreamLegacy({
+      address: sablierAddress,
+      network: this.network,
+    });
     const sablierStream = multicall.wrap(sablierStreamContract);
 
     const sablierSalaryAddress = '0xbd6a40bb904aea5a49c59050b5395f7484a4203d';
-    const sablierSalaryContract = this.contractFactory.sablierSalary({ address: sablierSalaryAddress, network });
+    const sablierSalaryContract = this.contractFactory.sablierSalary({
+      address: sablierSalaryAddress,
+      network: this.network,
+    });
     const sablierSalary = multicall.wrap(sablierSalaryContract);
 
     const salaries = await Promise.all(
@@ -103,13 +105,11 @@ export class EthereumSablierStreamLegacyContractPositionFetcher extends Contract
     );
 
     const underlyingAddresses = compact(salaries).map(({ tokenAddress }) => ({
-      network,
+      network: this.network,
       address: tokenAddress.toLowerCase(),
     }));
 
-    const baseTokens = await tokenLoader.getMany(underlyingAddresses);
-    const appTokens = await appTokenLoader.getMany(underlyingAddresses);
-    const allTokens = [...compact(appTokens), ...compact(baseTokens)];
+    const tokenDependencies = await tokenLoader.getMany(underlyingAddresses).then(deps => compact(deps));
 
     const positions = await Promise.all(
       streams.map(async stream => {
@@ -124,7 +124,7 @@ export class EthereumSablierStreamLegacyContractPositionFetcher extends Contract
         const salaryBalanceRaw = await sablierStream.balanceOf(stream.streamId, who);
 
         const tokenAddress = salaryRaw.tokenAddress.toLowerCase();
-        const token = allTokens.find(t => t.address === tokenAddress);
+        const token = tokenDependencies.find(t => t.address === tokenAddress);
         if (!token) return null;
 
         const remainingRaw = salaryRaw.remainingBalance.toString();
@@ -138,9 +138,9 @@ export class EthereumSablierStreamLegacyContractPositionFetcher extends Contract
         const position: ContractPositionBalance<SablierStreamLegacyContractPositionDataProps> = {
           type: ContractType.POSITION,
           address: sablierAddress,
-          network,
-          appId,
-          groupId,
+          network: this.network,
+          appId: this.appId,
+          groupId: this.groupId,
           tokens: [tokenBalance],
           balanceUSD: tokenBalance.balanceUSD,
 

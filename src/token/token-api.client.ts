@@ -4,7 +4,7 @@ import Axios, { AxiosInstance } from 'axios';
 
 import { Network } from '~types/network.interface';
 
-import { BaseTokenPrice } from './token-price-selector.interface';
+import { BaseTokenPrice } from './selectors/token-price-selector.interface';
 
 @Injectable()
 export class TokenApiClient {

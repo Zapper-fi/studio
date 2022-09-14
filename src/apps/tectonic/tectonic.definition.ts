@@ -15,28 +15,33 @@ export const TECTONIC_DEFINITION = appDefinition({
       id: 'claimable',
       type: GroupType.POSITION,
       label: 'Claimable',
-      isHiddenFromExplore: true,
     },
 
     supply: {
       id: 'supply',
       type: GroupType.TOKEN,
       label: 'Lending',
-      groupLabel: 'Supply',
     },
 
     borrow: {
       id: 'borrow',
       type: GroupType.POSITION,
       label: 'Lending',
-      groupLabel: 'Borrow',
+    },
+
+    xtonic: {
+      id: 'xtonic',
+      type: GroupType.TOKEN,
+      label: 'xTONIC',
     },
   },
+
   presentationConfig: {
     tabs: [
       {
         label: 'Lending',
         viewType: 'split',
+
         views: [
           {
             viewType: 'list',
@@ -52,6 +57,7 @@ export const TECTONIC_DEFINITION = appDefinition({
       },
     ],
   },
+
   tags: [AppTag.LENDING],
   keywords: [],
   links: {},

@@ -1,44 +1,45 @@
-import { Inject } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
-import { Register } from '~app-toolkit/decorators';
-import { getImagesFromToken } from '~app-toolkit/helpers/presentation/image.present';
-import { ContractType } from '~position/contract.interface';
-import { PositionFetcher } from '~position/position-fetcher.interface';
-import { ContractPosition } from '~position/position.interface';
-import { supplied } from '~position/position.utils';
+import { MetaType } from '~position/position.interface';
+import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
+import { GetTokenBalancesParams } from '~position/template/contract-position.template.types';
 import { Network } from '~types/network.interface';
 
+import { RocketDaoNodeTrusted, RocketPoolContractFactory } from '../contracts';
 import { ROCKET_POOL_DEFINITION } from '../rocket-pool.definition';
 
-const appId = ROCKET_POOL_DEFINITION.id;
-const groupId = ROCKET_POOL_DEFINITION.groups.oracleDaoBond.id;
-const network = Network.ETHEREUM_MAINNET;
-const rocketDAONodeTrustedAddress = '0xb8e783882b11ff4f6cef3c501ea0f4b960152cc9';
-const rocketTokenRPLAddress = '0xd33526068d116ce69f19a9ee46f0bd304f21a51f';
+@Injectable()
+export class EthereumRocketPoolOracleDaoBondContractPositionFetcher extends ContractPositionTemplatePositionFetcher<RocketDaoNodeTrusted> {
+  appId = ROCKET_POOL_DEFINITION.id;
+  groupId = ROCKET_POOL_DEFINITION.groups.oracleDaoBond.id;
+  network = Network.ETHEREUM_MAINNET;
+  groupLabel = 'Oracle DAO Bond';
 
-@Register.ContractPositionFetcher({ appId, groupId, network })
-export class EthereumRocketPoolOracleDaoBondContractPositionFetcher implements PositionFetcher<ContractPosition> {
-  constructor(@Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit) {}
+  constructor(
+    @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
+    @Inject(RocketPoolContractFactory) protected readonly contractFactory: RocketPoolContractFactory,
+  ) {
+    super(appToolkit);
+  }
 
-  async getPositions() {
-    const baseTokens = await this.appToolkit.getBaseTokenPrices(network);
-    const rpl = baseTokens.find(v => v.address === rocketTokenRPLAddress)!;
+  getContract(address: string): RocketDaoNodeTrusted {
+    return this.contractFactory.rocketDaoNodeTrusted({ address, network: this.network });
+  }
 
-    const position: ContractPosition = {
-      type: ContractType.POSITION,
-      address: rocketDAONodeTrustedAddress,
-      network,
-      appId,
-      groupId,
-      tokens: [supplied(rpl)],
-      dataProps: {},
-      displayProps: {
-        label: `Oracle DAO Bond`,
-        images: getImagesFromToken(rpl),
-      },
-    };
+  async getDefinitions() {
+    return [{ address: '0xb8e783882b11ff4f6cef3c501ea0f4b960152cc9' }];
+  }
 
-    return [position];
+  async getTokenDefinitions() {
+    return [{ metaType: MetaType.SUPPLIED, address: '0xd33526068d116ce69f19a9ee46f0bd304f21a51f' }];
+  }
+
+  async getLabel() {
+    return `Oracle DAO Bond`;
+  }
+
+  async getTokenBalancesPerPosition({ address, contract }: GetTokenBalancesParams<RocketDaoNodeTrusted>) {
+    return [await contract.getMemberRPLBondAmount(address)];
   }
 }

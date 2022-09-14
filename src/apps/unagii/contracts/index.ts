@@ -4,6 +4,7 @@ import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { ContractFactory } from '~contract/contracts';
 import { Network } from '~types/network.interface';
 
+import { UnagiiUtoken__factory } from './ethers';
 import { UnagiiV2Vault__factory } from './ethers';
 
 // eslint-disable-next-line
@@ -15,9 +16,13 @@ export class UnagiiContractFactory extends ContractFactory {
     super((network: Network) => appToolkit.getNetworkProvider(network));
   }
 
+  unagiiUtoken({ address, network }: ContractOpts) {
+    return UnagiiUtoken__factory.connect(address, this.appToolkit.getNetworkProvider(network));
+  }
   unagiiV2Vault({ address, network }: ContractOpts) {
     return UnagiiV2Vault__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
 }
 
+export type { UnagiiUtoken } from './ethers';
 export type { UnagiiV2Vault } from './ethers';

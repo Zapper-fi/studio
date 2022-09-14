@@ -673,6 +673,63 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "amikec",
+      "name": "Mickey",
+      "avatar_url": "https://avatars.githubusercontent.com/u/91593430?v=4",
+      "profile": "https://github.com/amikec",
+      "contributions": [
+        "code",
+        "bug"
+      ]
+    },
+    {
+      "login": "crypslato",
+      "name": "crypslato",
+      "avatar_url": "https://avatars.githubusercontent.com/u/77345286?v=4",
+      "profile": "https://github.com/crypslato",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "Msordet",
+      "name": "Msordet",
+      "avatar_url": "https://avatars.githubusercontent.com/u/45397025?v=4",
+      "profile": "https://github.com/Msordet",
+      "contributions": [
+        "code",
+        "question",
+        "maintenance"
+      ]
+    },
+    {
+      "login": "bejaxer",
+      "name": "0x A.K.",
+      "avatar_url": "https://avatars.githubusercontent.com/u/37297413?v=4",
+      "profile": "https://github.com/bejaxer",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "julien-devatom",
+      "name": "Julien THOMAS",
+      "avatar_url": "https://avatars.githubusercontent.com/u/61523188?v=4",
+      "profile": "https://github.com/julien-devatom",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "koffeebot",
+      "name": "koffeebot",
+      "avatar_url": "https://avatars.githubusercontent.com/u/105685250?v=4",
+      "profile": "https://github.com/koffeebot",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7

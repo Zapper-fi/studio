@@ -1,50 +1,98 @@
 import { Inject } from '@nestjs/common';
 import { getAddress } from 'ethers/lib/utils';
 
+import { drillBalance } from '~app-toolkit';
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
 import { presentBalanceFetcherResponse } from '~app-toolkit/helpers/presentation/balance-fetcher-response.present';
+import { UniswapV2ContractFactory } from '~apps/uniswap-v2';
+import { UniswapV3LiquidityTokenHelper } from '~apps/uniswap-v2/helpers/uniswap-v3.liquidity.token-helper';
 import { BalanceFetcher } from '~balance/balance-fetcher.interface';
-import { ContractPositionBalance } from '~position/position-balance.interface';
+import { ContractPositionBalance, TokenBalance } from '~position/position-balance.interface';
+import { claimable } from '~position/position.utils';
 import { Network } from '~types/network.interface';
 
-import { accountBalancesQuery, CompoundorUserPosition } from '../graphql/accountBalancesQuery';
+import { accountBalancesQuery, CompoundorAccountBalances } from '../graphql/accountBalancesQuery';
+import { accountCompoundingTokensQuery, CompoundingAccountTokens } from '../graphql/accountCompoundingTokensQuery';
 import { generateGraphUrlForNetwork } from '../graphql/graphUrlGenerator';
-import { getCompoundorContractPosition } from '../helpers/contractPositionParser';
+import {
+  getCompoundingContractPosition,
+  getCompoundorRewardsContractPosition,
+} from '../helpers/contractPositionParser';
 import { REVERT_FINANCE_DEFINITION } from '../revert-finance.definition';
 
 const network = Network.POLYGON_MAINNET;
 
 @Register.BalanceFetcher(REVERT_FINANCE_DEFINITION.id, network)
 export class PolygonRevertFinanceBalanceFetcher implements BalanceFetcher {
-  constructor(@Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit) {}
+  constructor(
+    @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
+    @Inject(UniswapV2ContractFactory) protected readonly uniswapV2ContractFactory: UniswapV2ContractFactory,
+    @Inject(UniswapV3LiquidityTokenHelper)
+    private readonly uniswapV3LiquidityTokenHelper: UniswapV3LiquidityTokenHelper,
+  ) {}
 
-  async getAccumulatedCompoundorRewards(address: string) {
+  async getCompoundorRewardBalances(address: string) {
     const graphHelper = this.appToolkit.helpers.theGraphHelper;
-    const data = await graphHelper.requestGraph<CompoundorUserPosition>({
+    const data = await graphHelper.requestGraph<CompoundorAccountBalances>({
       endpoint: generateGraphUrlForNetwork(network),
       query: accountBalancesQuery,
       variables: { address: getAddress(address) },
     });
     if (!data) return [];
     const baseTokens = await this.appToolkit.getBaseTokenPrices(network);
-    const rewards: Array<ContractPositionBalance> = [];
-    data.accountBalances.map(({ token, balance }) => {
+    const accountRewardsBalances: Array<TokenBalance> = [];
+    data.accountBalances.forEach(({ token, balance }) => {
       const existingToken = baseTokens.find(item => item.address === token)!;
-      if (!token) return [];
-
-      rewards.push(getCompoundorContractPosition(network, existingToken, balance));
+      if (!existingToken) return;
+      accountRewardsBalances.push({ ...existingToken, ...drillBalance(claimable(existingToken), balance) });
     });
-    return rewards;
+    return [getCompoundorRewardsContractPosition(network, accountRewardsBalances)];
+  }
+
+  async getCompoundingAccountTokens(address: string) {
+    const graphHelper = this.appToolkit.helpers.theGraphHelper;
+    const data = await graphHelper.requestGraph<CompoundingAccountTokens>({
+      endpoint: generateGraphUrlForNetwork(network),
+      query: accountCompoundingTokensQuery,
+      variables: { address: getAddress(address) },
+    });
+    if (!data) return [];
+    const multicall = this.appToolkit.getMulticall(network);
+    const compoundingBalances: Array<ContractPositionBalance> = [];
+    const baseTokens = await this.appToolkit.getBaseTokenPrices(network);
+    await Promise.all(
+      data.tokens.map(async ({ id }) => {
+        const uniV3Token = await this.uniswapV3LiquidityTokenHelper.getLiquidityToken({
+          positionId: id,
+          network,
+          context: { multicall, baseTokens },
+        });
+        if (!uniV3Token) return;
+        const position = getCompoundingContractPosition(network, uniV3Token);
+        compoundingBalances.push({
+          key: this.appToolkit.getPositionKey(position, ['compoundingPositionId']),
+          ...position,
+        });
+      }),
+    );
+    return compoundingBalances;
   }
 
   async getBalances(address: string) {
-    const [accumulatedCompoundorRewards] = await Promise.all([this.getAccumulatedCompoundorRewards(address)]);
+    const [compoundorRewardsBalances, compoundingAccountBalances] = await Promise.all([
+      this.getCompoundorRewardBalances(address),
+      this.getCompoundingAccountTokens(address),
+    ]);
 
     return presentBalanceFetcherResponse([
       {
         label: 'Compoundor rewards',
-        assets: accumulatedCompoundorRewards,
+        assets: compoundorRewardsBalances,
+      },
+      {
+        label: 'Compounding positions',
+        assets: compoundingAccountBalances,
       },
     ]);
   }
