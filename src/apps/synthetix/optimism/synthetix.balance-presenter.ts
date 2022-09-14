@@ -12,7 +12,7 @@ import { SYNTHETIX_DEFINITION } from '../synthetix.definition';
 
 @Register.BalancePresenter({ appId: SYNTHETIX_DEFINITION.id, network: Network.OPTIMISM_MAINNET })
 export class OptimismSynthetixBalancePresenter implements BalancePresenter {
-  constructor(@Inject(SynthetixMintrMetaHelper) private readonly synthetixMintrMetaHelper: SynthetixMintrMetaHelper) {}
+  constructor(@Inject(SynthetixMintrMetaHelper) private readonly synthetixMintrMetaHelper: SynthetixMintrMetaHelper) { }
 
   async present(address: string, balances: PositionBalance<CompoundSupplyTokenDataProps>[]) {
     // Build labelled groups by the labels defined in the app definition
