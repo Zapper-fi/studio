@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 
 import { Network } from '~types/network.interface';
 
-import { ImpermaxLendTokenFetcher } from '../helpers/impermax.lend.token-fetcher';
+import { ImpermaxLendTokenFetcher } from '../common/impermax.lend.token-fetcher';
 import { IMPERMAX_DEFINITION } from '../impermax.definition';
 
 @Injectable()

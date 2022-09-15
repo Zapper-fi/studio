@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 
 import { Network } from '~types/network.interface';
 
-import { ImpermaxBorrowContractPositionFetcher } from '../helpers/impermax.borrow.contract-position-fetcher';
+import { ImpermaxBorrowContractPositionFetcher } from '../common/impermax.borrow.contract-position-fetcher';
 import { IMPERMAX_DEFINITION } from '../impermax.definition';
 
 @Injectable()

@@ -105,7 +105,7 @@ export abstract class ContractPositionTemplatePositionFetcher<
       tags: { network: this.network, context: `${this.appId}__template` },
     });
 
-    const definitions = await this.getDefinitions({ multicall });
+    const definitions = await this.getDefinitions({ multicall, tokenLoader });
 
     const skeletons = await Promise.all(
       definitions.map(async definition => {
