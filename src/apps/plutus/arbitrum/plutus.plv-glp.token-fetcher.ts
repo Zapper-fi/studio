@@ -41,7 +41,7 @@ export class ArbitrumPlutusPlvGlpTokenFetcher extends AppTokenTemplatePositionFe
     return Number(pricePerShareRaw) / 10 ** 18;
   }
 
-  async getLiquidity({ appToken, contract }: GetDataPropsParams<PlutusPlvGlp>): number | Promise<number> {
+  async getLiquidity({ appToken, contract }: GetDataPropsParams<PlutusPlvGlp>) {
     const reserveRaw = await contract.totalAssets();
     const reserve = Number(reserveRaw) / 10 ** appToken.tokens[0].decimals;
     const liquidity = reserve * appToken.tokens[0].price;

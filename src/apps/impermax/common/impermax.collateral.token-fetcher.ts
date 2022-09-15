@@ -3,7 +3,11 @@ import _ from 'lodash';
 
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
-import { GetAddressesParams, GetUnderlyingTokensParams } from '~position/template/app-token.template.types';
+import {
+  GetAddressesParams,
+  GetDataPropsParams,
+  GetUnderlyingTokensParams,
+} from '~position/template/app-token.template.types';
 
 import { ImpermaxContractFactory, Collateral } from '../contracts';
 
@@ -40,5 +44,17 @@ export abstract class ImpermaxCollateralTokenFetcher extends AppTokenTemplatePos
 
   async getUnderlyingTokenAddresses({ contract }: GetUnderlyingTokensParams<Collateral>) {
     return contract.underlying();
+  }
+
+  async getLiquidity({ appToken }: GetDataPropsParams<Collateral>) {
+    return appToken.supply * appToken.price;
+  }
+
+  async getReserves({ appToken }: GetDataPropsParams<Collateral>) {
+    return [appToken.pricePerShare[0] * appToken.supply];
+  }
+
+  async getApy() {
+    return 0;
   }
 }
