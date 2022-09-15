@@ -11,6 +11,7 @@ import {
   GetDataPropsParams,
   GetDisplayPropsParams,
   GetTokenPropsParams,
+  DefaultAppTokenDataProps,
 } from '~position/template/app-token.template.types';
 
 import { BathToken, RubiconContractFactory } from '../contracts';
@@ -24,7 +25,7 @@ export type RubiconPoolDefinition = {
 
 export abstract class RubiconBathTokenFetcher extends AppTokenTemplatePositionFetcher<
   BathToken,
-  DefaultDataProps,
+  DefaultAppTokenDataProps,
   RubiconPoolDefinition
 > {
   constructor(
@@ -78,10 +79,15 @@ export abstract class RubiconBathTokenFetcher extends AppTokenTemplatePositionFe
     return appToken.tokens[0].symbol;
   }
 
-  async getDataProps(opts: GetDataPropsParams<BathToken, DefaultDataProps, RubiconPoolDefinition>) {
-    const { appToken } = opts;
-    const liquidity = appToken.price * appToken.supply;
+  async getLiquidity({ appToken }: GetDataPropsParams<BathToken>) {
+    return appToken.supply * appToken.price;
+  }
 
-    return { liquidity };
+  async getReserves({ appToken }: GetDataPropsParams<BathToken>) {
+    return [appToken.pricePerShare[0] * appToken.supply];
+  }
+
+  async getApy(_params: GetDataPropsParams<BathToken>) {
+    return 0;
   }
 }

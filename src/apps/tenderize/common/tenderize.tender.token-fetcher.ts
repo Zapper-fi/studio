@@ -8,6 +8,7 @@ import {
   GetAddressesParams,
   GetPricePerShareParams,
   GetDataPropsParams,
+  DefaultAppTokenDataProps,
 } from '~position/template/app-token.template.types';
 
 import { TenderizeContractFactory, TenderToken } from '../contracts';
@@ -17,7 +18,7 @@ import { TenderizeTokenDefinitionsResolver } from './tenderize.token-definition-
 
 export abstract class TenderTokenFetcher extends AppTokenTemplatePositionFetcher<
   TenderToken,
-  DefaultDataProps,
+  DefaultAppTokenDataProps,
   TenderizeTokenDefinition
 > {
   constructor(
@@ -60,12 +61,15 @@ export abstract class TenderTokenFetcher extends AppTokenTemplatePositionFetcher
     return pricePerShare;
   }
 
-  async getDataProps(opts: GetDataPropsParams<TenderToken, DefaultDataProps, TenderizeTokenDefinition>) {
-    const { appToken, definition } = opts;
-    const reserve = Number(appToken.pricePerShare) * appToken.supply;
-    const liquidity = reserve * appToken.tokens[0].price;
-    const apy = await this.tokenDefinitionsResolver.getTokenApy(definition.id);
+  async getLiquidity({ appToken }: GetDataPropsParams<TenderToken, DefaultDataProps, TenderizeTokenDefinition>) {
+    return appToken.supply * appToken.price;
+  }
 
-    return { liquidity, apy };
+  async getReserves({ appToken }: GetDataPropsParams<TenderToken, DefaultDataProps, TenderizeTokenDefinition>) {
+    return [appToken.pricePerShare[0] * appToken.supply];
+  }
+
+  async getApy({ definition }: GetDataPropsParams<TenderToken, DefaultDataProps, TenderizeTokenDefinition>) {
+    return this.tokenDefinitionsResolver.getTokenApy(definition.id);
   }
 }

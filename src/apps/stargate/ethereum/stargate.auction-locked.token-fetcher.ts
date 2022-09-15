@@ -8,16 +8,8 @@ import { Network } from '~types/network.interface';
 import { StargateAa, StargateContractFactory } from '../contracts';
 import { STARGATE_DEFINITION } from '../stargate.definition';
 
-type StargateAuctionLockedAppTokenDataProps = {
-  liquidity: number;
-  reserve: number;
-};
-
 @Injectable()
-export class EthereumStargateAuctionLockedTokenFetcher extends AppTokenTemplatePositionFetcher<
-  StargateAa,
-  StargateAuctionLockedAppTokenDataProps
-> {
+export class EthereumStargateAuctionLockedTokenFetcher extends AppTokenTemplatePositionFetcher<StargateAa> {
   appId = STARGATE_DEFINITION.id;
   groupId = STARGATE_DEFINITION.groups.auctionLocked.id;
   network = Network.ETHEREUM_MAINNET;
@@ -46,9 +38,15 @@ export class EthereumStargateAuctionLockedTokenFetcher extends AppTokenTemplateP
     return 4; // 1 aaSTG = 4 STG
   }
 
-  async getDataProps({ appToken }: GetDataPropsParams<StargateAa, StargateAuctionLockedAppTokenDataProps>) {
-    const reserve = appToken.supply; // 1:1
-    const liquidity = appToken.supply * appToken.price;
-    return { reserve, liquidity };
+  async getLiquidity({ appToken }: GetDataPropsParams<StargateAa>) {
+    return appToken.supply * appToken.price;
+  }
+
+  async getReserves({ appToken }: GetDataPropsParams<StargateAa>) {
+    return [appToken.pricePerShare[0] * appToken.supply];
+  }
+
+  async getApy() {
+    return 0;
   }
 }
