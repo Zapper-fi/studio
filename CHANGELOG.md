@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.224.1](https://github.com/Zapper-fi/studio/compare/v0.224.0...v0.224.1) (2022-09-15)
+
+
+### Bug Fixes
+
+* **tarot:** Fix vault price per share ([#1420](https://github.com/Zapper-fi/studio/issues/1420)) ([f24e202](https://github.com/Zapper-fi/studio/commit/f24e2028cb5dc6df5b9043734e3c0a065232b9d9))
+
 ## [0.224.0](https://github.com/Zapper-fi/studio/compare/v0.223.1...v0.224.0) (2022-09-15)
 
 
