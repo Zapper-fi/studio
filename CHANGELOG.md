@@ -4,6 +4,14 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.225.0](https://github.com/Zapper-fi/studio/compare/v0.224.1...v0.225.0) (2022-09-15)
+
+
+### Features
+
+* **template:** Remove common attributes ([#1419](https://github.com/Zapper-fi/studio/issues/1419)) ([87ba656](https://github.com/Zapper-fi/studio/commit/87ba656a0c7e4071b94641f105e781e405046589))
+* **tests:** Add classname test ([#1422](https://github.com/Zapper-fi/studio/issues/1422)) ([cfbc5b5](https://github.com/Zapper-fi/studio/commit/cfbc5b506138d37eda3231ba0a7c84c79710469a))
+
 ## [0.224.1](https://github.com/Zapper-fi/studio/compare/v0.224.0...v0.224.1) (2022-09-15)
 
 
