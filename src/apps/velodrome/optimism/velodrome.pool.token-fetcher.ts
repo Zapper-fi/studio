@@ -25,16 +25,8 @@ export interface VelodromeApiPairData {
   apr: number;
 }
 
-export type VelodromePoolTokenDataProps = {
-  liquidity: number;
-  reserves: number[];
-};
-
 @Injectable()
-export class OptimismVelodromePoolsTokenFetcher extends AppTokenTemplatePositionFetcher<
-  VelodromePool,
-  VelodromePoolTokenDataProps
-> {
+export class OptimismVelodromePoolsTokenFetcher extends AppTokenTemplatePositionFetcher<VelodromePool> {
   appId = VELODROME_DEFINITION.id;
   groupId = VELODROME_DEFINITION.groups.pool.id;
   network = Network.OPTIMISM_MAINNET;
@@ -68,23 +60,29 @@ export class OptimismVelodromePoolsTokenFetcher extends AppTokenTemplatePosition
     return pricePerShare;
   }
 
-  async getDataProps({ appToken }: GetDataPropsParams<VelodromePool, VelodromePoolTokenDataProps>) {
-    const reserves = (appToken.pricePerShare as number[]).map(v => v * appToken.supply);
-    const liquidity = appToken.price * appToken.supply;
-    return { liquidity, reserves };
+  async getLiquidity({ appToken }: GetDataPropsParams<VelodromePool>) {
+    return appToken.supply * appToken.price;
   }
 
-  async getLabel({ appToken }: GetDisplayPropsParams<VelodromePool, VelodromePoolTokenDataProps>): Promise<string> {
+  async getReserves({ appToken }: GetDataPropsParams<VelodromePool>) {
+    return [appToken.pricePerShare[0] * appToken.supply];
+  }
+
+  async getApy() {
+    return 0;
+  }
+
+  async getLabel({ appToken }: GetDisplayPropsParams<VelodromePool>): Promise<string> {
     return appToken.tokens.map(v => getLabelFromToken(v)).join(' / ');
   }
 
-  async getSecondaryLabel({ appToken }: GetDisplayPropsParams<VelodromePool, VelodromePoolTokenDataProps>) {
+  async getSecondaryLabel({ appToken }: GetDisplayPropsParams<VelodromePool>) {
     const { liquidity, reserves } = appToken.dataProps;
     const reservePercentages = appToken.tokens.map((t, i) => reserves[i] * (t.price / liquidity));
     return reservePercentages.map(p => `${Math.round(p * 100)}%`).join(' / ');
   }
 
-  async getStatsItems({ appToken }: GetDisplayPropsParams<VelodromePool, VelodromePoolTokenDataProps>) {
+  async getStatsItems({ appToken }: GetDisplayPropsParams<VelodromePool>) {
     const { reserves, liquidity } = appToken.dataProps;
     const reservesDisplay = reserves.map(v => (v < 0.01 ? '<0.01' : v.toFixed(2))).join(' / ');
 
