@@ -1,29 +1,25 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Inject } from '@nestjs/common';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import {
   GetDataPropsParams,
   GetPricePerShareParams,
   GetUnderlyingTokensParams,
 } from '~position/template/app-token.template.types';
-import { Network } from '~types/network.interface';
 
 import { TarotContractFactory, TarotSupplyVault } from '../contracts';
-import { TAROT_DEFINITION } from '../tarot.definition';
 
 type TarotVaultDataProps = {
   liquidity: number;
 };
 
-@Injectable()
+@PositionTemplate()
 export class FantomTarotVaultTokenFetcher extends AppTokenTemplatePositionFetcher<
   TarotSupplyVault,
   TarotVaultDataProps
 > {
-  appId = TAROT_DEFINITION.id;
-  groupId = TAROT_DEFINITION.groups.vault.id;
-  network = Network.FANTOM_OPERA_MAINNET;
   groupLabel = 'Vaults';
 
   constructor(

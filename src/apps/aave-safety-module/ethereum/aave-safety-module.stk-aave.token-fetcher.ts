@@ -1,12 +1,11 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Inject } from '@nestjs/common';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { ZERO_ADDRESS } from '~app-toolkit/constants/address';
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import { GetDataPropsParams, GetUnderlyingTokensParams } from '~position/template/app-token.template.types';
-import { Network } from '~types/network.interface';
 
-import { AAVE_SAFETY_MODULE_DEFINITION } from '../aave-safety-module.definition';
 import { AaveSafetyModuleContractFactory, AaveStkAave } from '../contracts';
 
 type AaveSafetyModuleStkAaveTokenDataProps = {
@@ -14,14 +13,11 @@ type AaveSafetyModuleStkAaveTokenDataProps = {
   liquidity: number;
 };
 
-@Injectable()
+@PositionTemplate()
 export class EthereumAaveSafetyModuleStkAaveTokenFetcher extends AppTokenTemplatePositionFetcher<
   AaveStkAave,
   AaveSafetyModuleStkAaveTokenDataProps
 > {
-  appId = AAVE_SAFETY_MODULE_DEFINITION.id;
-  groupId = AAVE_SAFETY_MODULE_DEFINITION.groups.stkAave.id;
-  network = Network.ETHEREUM_MAINNET;
   groupLabel = 'stkAAVE';
 
   constructor(

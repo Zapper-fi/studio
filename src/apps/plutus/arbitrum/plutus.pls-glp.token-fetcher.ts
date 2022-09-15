@@ -1,18 +1,14 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Inject } from '@nestjs/common';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import { Erc20 } from '~contract/contracts';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
-import { Network } from '~types/network.interface';
 
 import { PlutusContractFactory } from '../contracts';
-import PLUTUS_DEFINITION from '../plutus.definition';
 
-@Injectable()
+@PositionTemplate()
 export class ArbitrumPlutusPlsGlpTokenFetcher extends AppTokenTemplatePositionFetcher<Erc20> {
-  appId = PLUTUS_DEFINITION.id;
-  groupId = PLUTUS_DEFINITION.groups.plsGlp.id;
-  network = Network.ARBITRUM_MAINNET;
   groupLabel = 'plsGLP';
 
   constructor(

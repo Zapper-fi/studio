@@ -1,8 +1,5 @@
-import { Injectable } from '@nestjs/common';
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 
-import { Network } from '~types/network.interface';
-
-import ACROSS_DEFINITION from '../across.definition';
 import { AcrossPoolTokenDefinition, AcrossPoolTokenFetcher } from '../common/across.pool.token-fetcher';
 
 const v1Pools = [
@@ -66,11 +63,8 @@ const v2Pools = [
   },
 ];
 
-@Injectable()
+@PositionTemplate()
 export class EthereumAcrossPoolTokenFetcher extends AcrossPoolTokenFetcher {
-  appId = ACROSS_DEFINITION.id;
-  groupId = ACROSS_DEFINITION.groups.pool.id;
-  network = Network.ETHEREUM_MAINNET;
   groupLabel = 'Pools';
 
   async getDefinitions(): Promise<AcrossPoolTokenDefinition[]> {

@@ -1,14 +1,8 @@
-import { Injectable } from '@nestjs/common';
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 
-import { Network } from '~types/network.interface';
-
-import { BALANCER_V2_DEFINITION } from '../balancer-v2.definition';
 import { BalancerV2ClaimableContractPositionFetcher } from '../common/balancer-v2.claimable.contract-position-fetcher';
 
-@Injectable()
+@PositionTemplate()
 export class PolygonBalancerV2ClaimableContractPositionFetcher extends BalancerV2ClaimableContractPositionFetcher {
-  appId = BALANCER_V2_DEFINITION.id;
-  groupId = BALANCER_V2_DEFINITION.groups.claimable.id;
-  network = Network.POLYGON_MAINNET;
   groupLabel = 'Claimable';
 }

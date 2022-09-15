@@ -1,29 +1,25 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Inject } from '@nestjs/common';
 
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import {
   GetDataPropsParams,
   GetDisplayPropsParams,
   GetUnderlyingTokensParams,
 } from '~position/template/app-token.template.types';
-import { Network } from '~types/network.interface';
 
 import { HectorNetworkContractFactory, HectorNetworkStaked } from '../contracts';
-import { HECTOR_NETWORK_DEFINITION } from '../hector-network.definition';
 
 type HectorNetworkSHecV2DataProps = {
   liquidity: number;
 };
 
-@Injectable()
+@PositionTemplate()
 export class FantomHectorNetworkSHecV2TokenFetcher extends AppTokenTemplatePositionFetcher<
   HectorNetworkStaked,
   HectorNetworkSHecV2DataProps
 > {
-  appId = HECTOR_NETWORK_DEFINITION.id;
-  groupId = HECTOR_NETWORK_DEFINITION.groups.sHecV2.id;
-  network = Network.FANTOM_OPERA_MAINNET;
   groupLabel = 'Staked HEC V2';
 
   constructor(

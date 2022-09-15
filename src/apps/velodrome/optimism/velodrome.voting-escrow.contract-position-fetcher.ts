@@ -1,19 +1,15 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Inject } from '@nestjs/common';
 import { sum, range } from 'lodash';
 
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import { GetTokenDefinitionsParams, GetTokenBalancesParams } from '~position/template/contract-position.template.types';
 import { VotingEscrowTemplateContractPositionFetcher } from '~position/template/voting-escrow.template.contract-position-fetcher';
-import { Network } from '~types/network.interface';
 
 import { VelodromeContractFactory, VelodromeVe } from '../contracts';
-import { VELODROME_DEFINITION } from '../velodrome.definition';
 
-@Injectable()
+@PositionTemplate()
 export class OptimismVelodromeVotingEscrowContractPositionFetcher extends VotingEscrowTemplateContractPositionFetcher<VelodromeVe> {
-  appId = VELODROME_DEFINITION.id;
-  groupId = VELODROME_DEFINITION.groups.votingEscrow.id;
-  network = Network.OPTIMISM_MAINNET;
   groupLabel = 'Voting Escrow';
   veTokenAddress = '0x9c7305eb78a432ced5c4d14cac27e8ed569a2e26';
 

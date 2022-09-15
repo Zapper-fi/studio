@@ -1,22 +1,18 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Inject } from '@nestjs/common';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import { GetDataPropsParams, GetTokenBalancesParams } from '~position/template/contract-position.template.types';
 import {
   SingleStakingFarmDefinition,
   SingleStakingFarmTemplateContractPositionFetcher,
 } from '~position/template/single-staking.template.contract-position-fetcher';
-import { Network } from '~types/network.interface';
 
 import { YearnContractFactory } from '../contracts';
 import { YearnGovernance } from '../contracts/ethers/YearnGovernance';
-import { YEARN_DEFINITION } from '../yearn.definition';
 
-@Injectable()
+@PositionTemplate()
 export class EthereumYearnGovernanceContractPositionFetcher extends SingleStakingFarmTemplateContractPositionFetcher<YearnGovernance> {
-  appId = YEARN_DEFINITION.id;
-  groupId = YEARN_DEFINITION.groups.governance.id;
-  network = Network.ETHEREUM_MAINNET;
   groupLabel = 'Governance';
 
   isExcludedFromExplore = true;

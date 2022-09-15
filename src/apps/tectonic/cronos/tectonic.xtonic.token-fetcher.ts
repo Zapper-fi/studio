@@ -1,19 +1,15 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Inject } from '@nestjs/common';
 
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import { Erc20 } from '~contract/contracts';
 import { GetPricePerShareParams } from '~position/template/app-token.template.types';
 import { VaultTokenDataProps, VaultTokenFetcher } from '~position/template/vault.template.token-fetcher';
-import { Network } from '~types/network.interface';
 
 import { TectonicContractFactory } from '../contracts';
-import { TECTONIC_DEFINITION } from '../tectonic.definition';
 
-@Injectable()
+@PositionTemplate()
 export class CronosTectonicXTonicTokenFetcher extends VaultTokenFetcher {
-  appId = TECTONIC_DEFINITION.id;
-  groupId = TECTONIC_DEFINITION.groups.xtonic.id;
-  network = Network.CRONOS_MAINNET;
   groupLabel = 'xTONIC';
 
   vaultAddress = '0x1bc9b7d4be47b76965a3f8e910b9ddd83150840f';

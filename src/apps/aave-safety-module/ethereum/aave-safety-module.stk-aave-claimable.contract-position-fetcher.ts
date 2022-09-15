@@ -1,6 +1,7 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Inject } from '@nestjs/common';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { MetaType } from '~position/position.interface';
 import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
@@ -10,16 +11,11 @@ import {
   GetTokenBalancesParams,
   GetTokenDefinitionsParams,
 } from '~position/template/contract-position.template.types';
-import { Network } from '~types';
 
-import { AAVE_SAFETY_MODULE_DEFINITION } from '../aave-safety-module.definition';
 import { AaveSafetyModuleContractFactory, AaveStkAave } from '../contracts';
 
-@Injectable()
+@PositionTemplate()
 export class EthereumAaveSafetyModuleStkAaveClaimableContractPositionFetcher extends ContractPositionTemplatePositionFetcher<AaveStkAave> {
-  appId = AAVE_SAFETY_MODULE_DEFINITION.id;
-  groupId = AAVE_SAFETY_MODULE_DEFINITION.groups.stkAaveClaimable.id;
-  network = Network.ETHEREUM_MAINNET;
   groupLabel = 'stkAAVE Rewards';
 
   constructor(

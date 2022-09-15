@@ -1,15 +1,9 @@
-import { Injectable } from '@nestjs/common';
-
-import { Network } from '~types/network.interface';
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 
 import { MarketXyzBorrowContractPositionFetcher } from '../common/market-xyz.borrow.contract-position-fetcher';
-import { MARKET_XYZ_DEFINITION } from '../market-xyz.definition';
 
-@Injectable()
+@PositionTemplate()
 export class AvalancheMarketXyzBorrowContractPositionFetcher extends MarketXyzBorrowContractPositionFetcher {
-  appId = MARKET_XYZ_DEFINITION.id;
-  groupId = MARKET_XYZ_DEFINITION.groups.borrow.id;
-  network = Network.AVALANCHE_MAINNET;
   groupLabel = 'Lending';
 
   lensAddress = '0x56563ab1740539983ff4d487ea3a3e47e23a19f9';

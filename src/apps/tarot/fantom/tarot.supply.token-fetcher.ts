@@ -1,7 +1,8 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Inject } from '@nestjs/common';
 import _, { compact } from 'lodash';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { DisplayProps } from '~position/display.interface';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
@@ -14,10 +15,8 @@ import {
   GetPricePerShareParams,
   GetUnderlyingTokensParams,
 } from '~position/template/app-token.template.types';
-import { Network } from '~types/network.interface';
 
 import { TarotBorrowable, TarotContractFactory } from '../contracts';
-import { TAROT_DEFINITION } from '../tarot.definition';
 
 type TarotSupplyDataProps = {
   liquidity: number;
@@ -29,15 +28,12 @@ type Definition = DefaultAppTokenDefinition & {
   poolTokenLabel: string;
 };
 
-@Injectable()
+@PositionTemplate()
 export class FantomTarotSupplyTokenFetcher extends AppTokenTemplatePositionFetcher<
   TarotBorrowable,
   TarotSupplyDataProps,
   Definition
 > {
-  appId = TAROT_DEFINITION.id;
-  groupId = TAROT_DEFINITION.groups.supply.id;
-  network = Network.FANTOM_OPERA_MAINNET;
   groupLabel = 'Supply';
   isExcludedFromExplore = true;
 

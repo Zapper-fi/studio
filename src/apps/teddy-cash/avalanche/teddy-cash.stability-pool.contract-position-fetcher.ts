@@ -1,7 +1,8 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Inject } from '@nestjs/common';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { ZERO_ADDRESS } from '~app-toolkit/constants/address';
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { MetaType } from '~position/position.interface';
 import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
@@ -10,17 +11,12 @@ import {
   GetDisplayPropsParams,
   GetTokenBalancesParams,
 } from '~position/template/contract-position.template.types';
-import { Network } from '~types';
 
 import { TeddyCashContractFactory } from '../contracts';
 import { TeddyCashStabilityPool } from '../contracts/ethers';
-import { TEDDY_CASH_DEFINITION } from '../teddy-cash.definition';
 
-@Injectable()
+@PositionTemplate()
 export class AvalancheTeddyCashStabilityPoolContractPositionFetcher extends ContractPositionTemplatePositionFetcher<TeddyCashStabilityPool> {
-  appId = TEDDY_CASH_DEFINITION.id;
-  groupId = TEDDY_CASH_DEFINITION.groups.stabilityPool.id;
-  network = Network.AVALANCHE_MAINNET;
   groupLabel = 'Stability Pool';
 
   constructor(

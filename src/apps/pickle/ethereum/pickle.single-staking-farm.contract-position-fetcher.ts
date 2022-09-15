@@ -1,24 +1,20 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Inject } from '@nestjs/common';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import { GetDataPropsParams, GetTokenBalancesParams } from '~position/template/contract-position.template.types';
 import {
   SingleStakingFarmDataProps,
   SingleStakingFarmDefinition,
   SingleStakingFarmTemplateContractPositionFetcher,
 } from '~position/template/single-staking.template.contract-position-fetcher';
-import { Network } from '~types/network.interface';
 
 import { PickleApiJarRegistry } from '../common/pickle.api.jar-registry';
 import { PickleContractFactory } from '../contracts';
 import { PickleJarSingleRewardStaking } from '../contracts/ethers/PickleJarSingleRewardStaking';
-import { PICKLE_DEFINITION } from '../pickle.definition';
 
-@Injectable()
+@PositionTemplate()
 export class EthereumPickleSingleRewardPositionFetcher extends SingleStakingFarmTemplateContractPositionFetcher<PickleJarSingleRewardStaking> {
-  appId = PICKLE_DEFINITION.id;
-  groupId = PICKLE_DEFINITION.groups.singleStakingFarm.id;
-  network = Network.ETHEREUM_MAINNET;
   groupLabel = 'Farms';
 
   constructor(

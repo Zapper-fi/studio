@@ -1,22 +1,18 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Inject } from '@nestjs/common';
 
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import {
   GetDataPropsParams,
   GetTokenBalancesParams,
   GetTokenDefinitionsParams,
 } from '~position/template/contract-position.template.types';
 import { SingleStakingFarmDynamicTemplateContractPositionFetcher } from '~position/template/single-staking.dynamic.template.contract-position-fetcher';
-import { Network } from '~types/network.interface';
 
 import { SteakHutContractFactory, SteakHutStaking } from '../contracts';
-import { STEAK_HUT_DEFINITION } from '../steak-hut.definition';
 
-@Injectable()
+@PositionTemplate()
 export class AvalancheSteakHutStakingContractPositionFetcher extends SingleStakingFarmDynamicTemplateContractPositionFetcher<SteakHutStaking> {
-  appId = STEAK_HUT_DEFINITION.id;
-  groupId = STEAK_HUT_DEFINITION.groups.staking.id;
-  network = Network.AVALANCHE_MAINNET;
   groupLabel = 'Staking';
 
   constructor(

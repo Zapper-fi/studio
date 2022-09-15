@@ -1,17 +1,11 @@
-import { Injectable } from '@nestjs/common';
-
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import { MetaType } from '~position/position.interface';
 import { DefaultContractPositionDefinition } from '~position/template/contract-position.template.types';
-import { Network } from '~types/network.interface';
 
-import { ARGO_FINANCE_DEFINITION } from '../argo-finance.definition';
 import { ArgoFinancePledgingContractPositionFetcher } from '../common/argo-finance.pledgin.contract-position-fetcher';
 
-@Injectable()
+@PositionTemplate()
 export class CronosArgoFinancePledgingContractPositionFetcher extends ArgoFinancePledgingContractPositionFetcher {
-  appId = ARGO_FINANCE_DEFINITION.id;
-  groupId = ARGO_FINANCE_DEFINITION.groups.pledging.id;
-  network = Network.CRONOS_MAINNET;
   groupLabel = 'Pledging';
 
   async getDefinitions(): Promise<DefaultContractPositionDefinition[]> {

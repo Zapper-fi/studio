@@ -1,8 +1,8 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Inject } from '@nestjs/common';
 import { BigNumberish, BigNumber } from 'ethers';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
-import { Network } from '~types/network.interface';
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 
 import { RariFuseBorrowContractPositionFetcher } from '../common/rari-fuse.borrow.contract-position-fetcher';
 import {
@@ -12,18 +12,14 @@ import {
   RariFusePoolsDirectory,
   RariFuseToken,
 } from '../contracts';
-import { RARI_FUSE_DEFINITION } from '../rari-fuse.definition';
 
-@Injectable()
+@PositionTemplate()
 export class EthereumRariFuseBorrowContractPositionFetcher extends RariFuseBorrowContractPositionFetcher<
   RariFusePoolsDirectory,
   RariFuseComptroller,
   RariFuseToken,
   RariFusePoolLens
 > {
-  appId = RARI_FUSE_DEFINITION.id;
-  groupId = RARI_FUSE_DEFINITION.groups.borrow.id;
-  network = Network.ETHEREUM_MAINNET;
   groupLabel = 'Lending';
 
   poolDirectoryAddress = '0x835482fe0532f169024d5e9410199369aad5c77e';

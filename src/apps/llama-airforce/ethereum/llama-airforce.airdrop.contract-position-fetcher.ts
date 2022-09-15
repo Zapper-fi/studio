@@ -1,21 +1,17 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Inject } from '@nestjs/common';
 
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import { isClaimable } from '~position/position.utils';
 import { GetTokenBalancesParams } from '~position/template/contract-position.template.types';
 import { MerkleTemplateContractPositionFetcher } from '~position/template/merkle.template.contract-position-fetcher';
-import { Network } from '~types/network.interface';
 
 import { LlamaAirforceContractFactory, LlamaAirforceMerkleDistributor } from '../contracts';
-import { LLAMA_AIRFORCE_DEFINITION } from '../llama-airforce.definition';
 
 import { EthereumLlamaAirforceMerkleCache } from './llama-airforce.merkle-cache';
 
-@Injectable()
+@PositionTemplate()
 export class EthereumLlamaAirforceAirdropContractPositionFetcher extends MerkleTemplateContractPositionFetcher<LlamaAirforceMerkleDistributor> {
-  appId = LLAMA_AIRFORCE_DEFINITION.id;
-  groupId = LLAMA_AIRFORCE_DEFINITION.groups.airdrop.id;
-  network = Network.ETHEREUM_MAINNET;
   groupLabel = 'Airdrop';
   merkleAddress = '0xa83043df401346a67eddeb074679b4570b956183';
 

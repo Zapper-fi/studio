@@ -1,23 +1,20 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Inject } from '@nestjs/common';
 import { BigNumber } from 'ethers';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import { buildDollarDisplayItem } from '~app-toolkit/helpers/presentation/display-item.present';
 import { getTokenImg } from '~app-toolkit/helpers/presentation/image.present';
 import { DisplayProps } from '~position/display.interface';
 import { MetaType } from '~position/position.interface';
 import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
 import { GetDisplayPropsParams, GetTokenBalancesParams } from '~position/template/contract-position.template.types';
-import { Network } from '~types/network.interface';
 
 import { GeistContractFactory, GeistRewards } from '../contracts';
 import { GEIST_DEFINITION } from '../geist.definition';
 
-@Injectable()
+@PositionTemplate()
 export class FantomGeistIncentivesPositionFetcher extends ContractPositionTemplatePositionFetcher<GeistRewards> {
-  network = Network.FANTOM_OPERA_MAINNET;
-  appId = GEIST_DEFINITION.id;
-  groupId = GEIST_DEFINITION.groups.incentives.id;
   groupLabel = 'Incentives';
 
   isExcludedFromExplore = true;

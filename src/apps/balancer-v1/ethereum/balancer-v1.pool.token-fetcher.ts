@@ -1,9 +1,10 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Inject } from '@nestjs/common';
 import DataLoader from 'dataloader';
 import { gql } from 'graphql-request';
 import { sum } from 'lodash';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import {
   buildDollarDisplayItem,
   buildNumberDisplayItem,
@@ -18,9 +19,7 @@ import {
   GetDataPropsParams,
   GetDisplayPropsParams,
 } from '~position/template/app-token.template.types';
-import { Network } from '~types/network.interface';
 
-import BALANCER_V1_DEFINITION from '../balancer-v1.definition';
 import { BalancerPoolToken, BalancerV1ContractFactory } from '../contracts';
 
 import { EthereumBalancerV1PoolSubgraphVolumeDataLoader } from './balancer-v1.volume.data-loader';
@@ -47,14 +46,11 @@ export type BalancerV1PoolTokenDataProps = {
   weight: number[];
 };
 
-@Injectable()
+@PositionTemplate()
 export class EthereumBalancerV1PoolTokenFetcher extends AppTokenTemplatePositionFetcher<
   BalancerPoolToken,
   BalancerV1PoolTokenDataProps
 > {
-  appId = BALANCER_V1_DEFINITION.id;
-  groupId = BALANCER_V1_DEFINITION.groups.pool.id;
-  network = Network.ETHEREUM_MAINNET;
   groupLabel = 'Pools';
 
   volumeDataLoader: DataLoader<string, number>;

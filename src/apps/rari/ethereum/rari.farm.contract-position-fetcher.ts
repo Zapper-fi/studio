@@ -1,15 +1,14 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Inject } from '@nestjs/common';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import { GetDataPropsParams, GetTokenBalancesParams } from '~position/template/contract-position.template.types';
 import {
   SingleStakingFarmDefinition,
   SingleStakingFarmTemplateContractPositionFetcher,
 } from '~position/template/single-staking.template.contract-position-fetcher';
-import { Network } from '~types';
 
 import { RariContractFactory, RariUniswapTokenDistributor } from '../contracts';
-import { RARI_DEFINITION } from '../rari.definition';
 
 const FARMS = [
   // SLP ETH/RGT
@@ -20,11 +19,8 @@ const FARMS = [
   },
 ];
 
-@Injectable()
+@PositionTemplate()
 export class EthereumRariFarmContractPositionFetcher extends SingleStakingFarmTemplateContractPositionFetcher<RariUniswapTokenDistributor> {
-  appId = RARI_DEFINITION.id;
-  groupId = RARI_DEFINITION.groups.farm.id;
-  network = Network.ETHEREUM_MAINNET;
   groupLabel = 'Farms';
 
   constructor(

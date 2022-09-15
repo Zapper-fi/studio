@@ -1,8 +1,9 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Inject } from '@nestjs/common';
 import axios from 'axios';
 import { range } from 'lodash';
 
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import { isClaimable } from '~position/position.utils';
 import {
   GetTokenDefinitionsParams,
@@ -13,18 +14,13 @@ import {
   SingleStakingFarmDataProps,
   SingleStakingFarmDynamicTemplateContractPositionFetcher,
 } from '~position/template/single-staking.dynamic.template.contract-position-fetcher';
-import { Network } from '~types/network.interface';
 
 import { VelodromeContractFactory, VelodromeGauge } from '../contracts';
-import { VELODROME_DEFINITION } from '../velodrome.definition';
 
 import { VelodromeApiPairData } from './velodrome.pool.token-fetcher';
 
-@Injectable()
+@PositionTemplate()
 export class OptimismVelodromeStakingContractPositionFetcher extends SingleStakingFarmDynamicTemplateContractPositionFetcher<VelodromeGauge> {
-  appId = VELODROME_DEFINITION.id;
-  groupId = VELODROME_DEFINITION.groups.farm.id;
-  network = Network.OPTIMISM_MAINNET;
   groupLabel = 'Staking';
 
   constructor(
