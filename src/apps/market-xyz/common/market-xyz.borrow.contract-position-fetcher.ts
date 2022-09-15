@@ -2,7 +2,6 @@ import { Inject } from '@nestjs/common';
 import { BigNumberish, BigNumber } from 'ethers';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
-import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import { RariFuseBorrowContractPositionFetcher } from '~apps/rari-fuse/common/rari-fuse.borrow.contract-position-fetcher';
 
 import {
@@ -13,7 +12,6 @@ import {
   MarketXyzToken,
 } from '../contracts';
 
-@PositionTemplate()
 export abstract class MarketXyzBorrowContractPositionFetcher extends RariFuseBorrowContractPositionFetcher<
   MarketXyzPoolDirectory,
   MarketXyzComptroller,
