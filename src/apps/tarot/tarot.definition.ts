@@ -10,7 +10,6 @@ export const TAROT_DEFINITION = appDefinition({
   url: 'https://www.tarot.to/',
   tags: [AppTag.LENDING, AppTag.YIELD_AGGREGATOR],
   groups: {
-    collateral: { id: 'collateral', type: GroupType.TOKEN, label: 'Lending Pools' },
     supply: { id: 'supply', type: GroupType.TOKEN, label: 'Supply', isHiddenFromExplore: true },
     borrow: { id: 'borrow', type: GroupType.POSITION, label: 'Lending Pools' },
     vault: { id: 'vault', type: GroupType.TOKEN, label: 'Vaults' },

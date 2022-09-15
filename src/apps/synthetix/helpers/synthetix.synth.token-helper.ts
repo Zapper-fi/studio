@@ -1,7 +1,6 @@
 import { Inject, Injectable } from '@nestjs/common';
+import { ethers } from 'ethers';
 import { parseBytes32String } from 'ethers/lib/utils';
-import { padEnd } from 'lodash';
-import Web3 from 'web3';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { buildDollarDisplayItem } from '~app-toolkit/helpers/presentation/display-item.present';
@@ -39,7 +38,7 @@ export class SynthetixSynthTokenHelper {
       network,
     });
 
-    const synthUtilName = padEnd(Web3.utils.asciiToHex('SynthUtil'), 66, '0');
+    const synthUtilName = ethers.utils.formatBytes32String('SynthUtil');
     const synthUtilAddress = await addressResolverContract.getAddress(synthUtilName);
     const snxUtilsContract = this.contractFactory.synthetixSummaryUtil({ address: synthUtilAddress, network });
     const synthRates = await snxUtilsContract.synthsRates();

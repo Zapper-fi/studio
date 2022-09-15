@@ -1,16 +1,15 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Inject } from '@nestjs/common';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import { GetDataPropsParams, GetTokenBalancesParams } from '~position/template/contract-position.template.types';
 import {
   SingleStakingFarmDataProps,
   SingleStakingFarmDefinition,
   SingleStakingFarmTemplateContractPositionFetcher,
 } from '~position/template/single-staking.template.contract-position-fetcher';
-import { Network } from '~types/network.interface';
 
 import { ConvexContractFactory, ConvexCvxStaking } from '../contracts';
-import { CONVEX_DEFINITION } from '../convex.definition';
 
 const FARMS = [
   {
@@ -20,11 +19,8 @@ const FARMS = [
   },
 ];
 
-@Injectable()
+@PositionTemplate()
 export class EthereumConvexCvxStakingContractPositionFetcher extends SingleStakingFarmTemplateContractPositionFetcher<ConvexCvxStaking> {
-  appId = CONVEX_DEFINITION.id;
-  groupId = CONVEX_DEFINITION.groups.cvxStaking.id;
-  network = Network.ETHEREUM_MAINNET;
   groupLabel = 'CVX Staking';
 
   constructor(

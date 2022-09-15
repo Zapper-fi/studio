@@ -1,63 +1,22 @@
-import { Inject } from '@nestjs/common';
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
+import { MetaType } from '~position/position.interface';
+import { DefaultContractPositionDefinition } from '~position/template/contract-position.template.types';
 
-import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
-import { Register } from '~app-toolkit/decorators';
-import { buildDollarDisplayItem } from '~app-toolkit/helpers/presentation/display-item.present';
-import { getImagesFromToken } from '~app-toolkit/helpers/presentation/image.present';
-import { ContractType } from '~position/contract.interface';
-import { PositionFetcher } from '~position/position-fetcher.interface';
-import { ContractPosition } from '~position/position.interface';
-import { claimable, supplied } from '~position/position.utils';
-import { Network } from '~types/network.interface';
+import { ArgoFinancePledgingContractPositionFetcher } from '../common/argo-finance.pledgin.contract-position-fetcher';
 
-import { ARGO_FINANCE_DEFINITION } from '../argo-finance.definition';
+@PositionTemplate()
+export class CronosArgoFinancePledgingContractPositionFetcher extends ArgoFinancePledgingContractPositionFetcher {
+  groupLabel = 'Pledging';
 
-import { ADDRESSES } from './consts';
+  async getDefinitions(): Promise<DefaultContractPositionDefinition[]> {
+    return [{ address: '0x1de93ce995d1bc763c2422ba30b1e73de4a45a01' }];
+  }
 
-const appId = ARGO_FINANCE_DEFINITION.id;
-const groupId = ARGO_FINANCE_DEFINITION.groups.pledging.id;
-const network = Network.CRONOS_MAINNET;
-
-@Register.ContractPositionFetcher({ appId, groupId, network })
-export class CronosArgoFinancePledgingContractPositionFetcher implements PositionFetcher<ContractPosition> {
-  constructor(@Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit) {}
-
-  async getPositions() {
-    const multicall = this.appToolkit.getMulticall(network);
-    const baseTokens = await this.appToolkit.getBaseTokenPrices(network);
-    const appTokens = await this.appToolkit.getAppTokenPositions({
-      appId,
-      groupIds: [ARGO_FINANCE_DEFINITION.groups.xArgo.id],
-      network,
-    });
-
-    const xArgoToken = appTokens.find(t => t.symbol === 'xARGO');
-    const croToken = baseTokens.find(t => t.symbol === 'WCRO');
-    if (!xArgoToken || !croToken) return [];
-
-    const veToken = multicall.wrap(this.appToolkit.globalContracts.erc20({ address: ADDRESSES.xargo, network }));
-    const [supplyRaw, decimals] = await Promise.all([veToken.totalSupply(), veToken.decimals()]);
-    const supply = Number(supplyRaw) / 10 ** decimals;
-    const pricePerShare = 1; // Note: Consult liquidity pools for peg once set up
-    const price = xArgoToken.price * pricePerShare;
-    const liquidity = supply * price;
-
-    const tokens = [supplied(xArgoToken), claimable(xArgoToken), claimable(croToken)];
-    const position: ContractPosition = {
-      type: ContractType.POSITION,
-      appId,
-      groupId,
-      address: ADDRESSES.pledging,
-      network,
-      tokens,
-      dataProps: { liquidity },
-      displayProps: {
-        label: 'xARGO Pledging',
-        secondaryLabel: buildDollarDisplayItem(price),
-        images: getImagesFromToken(xArgoToken),
-      },
-    };
-
-    return [position];
+  async getTokenDefinitions() {
+    return [
+      { metaType: MetaType.SUPPLIED, address: '0xb966b5d6a0fcd5b373b180bbe072bbfbbee10552' }, // xArgo
+      { metaType: MetaType.CLAIMABLE, address: '0xb966b5d6a0fcd5b373b180bbe072bbfbbee10552' }, // xArgo
+      { metaType: MetaType.CLAIMABLE, address: '0x5c7f8a570d578ed84e63fdfa7b1ee72deae1ae23' }, // wCRO
+    ];
   }
 }

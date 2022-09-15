@@ -1,9 +1,7 @@
-import { Inject } from '@nestjs/common';
-import { BigNumberish } from 'ethers';
+import { BigNumberish, Contract } from 'ethers';
 
-import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
-import { MetaType } from '~position/position.interface';
+import { ContractPosition, MetaType } from '~position/position.interface';
 import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
 import {
   DefaultContractPositionDefinition,
@@ -14,26 +12,27 @@ import {
   UnderlyingTokenDefinition,
 } from '~position/template/contract-position.template.types';
 
-import { CompoundComptroller, CompoundContractFactory } from '../contracts';
-
 export type CompoundClaimablePositionDataProps = {
   lensAddress: string;
 };
 
-export abstract class CompoundClaimableContractPositionFetcher extends ContractPositionTemplatePositionFetcher<CompoundComptroller> {
+export abstract class CompoundClaimableContractPositionFetcher<
+  R extends Contract,
+  S extends Contract,
+> extends ContractPositionTemplatePositionFetcher<R> {
   abstract lensAddress: string;
   abstract rewardTokenAddress: string;
   abstract comptrollerAddress: string;
 
-  constructor(
-    @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(CompoundContractFactory) private readonly contractFactory: CompoundContractFactory,
-  ) {
-    super(appToolkit);
-  }
+  abstract getCompoundComptrollerContract(address: string): R;
+  abstract getCompoundLensContract(address: string): S;
+  abstract getClaimableBalance(
+    address: string,
+    opts: { contract: S; contractPosition: ContractPosition<CompoundClaimablePositionDataProps> },
+  ): Promise<BigNumberish>;
 
-  getContract(address: string): CompoundComptroller {
-    return this.contractFactory.compoundComptroller({ address, network: this.network });
+  getContract(address: string): R {
+    return this.getCompoundComptrollerContract(address);
   }
 
   async getDefinitions(): Promise<DefaultContractPositionDefinition[]> {
@@ -41,18 +40,18 @@ export abstract class CompoundClaimableContractPositionFetcher extends ContractP
   }
 
   async getTokenDefinitions(
-    _opts: GetTokenDefinitionsParams<CompoundComptroller, DefaultContractPositionDefinition>,
+    _opts: GetTokenDefinitionsParams<R, DefaultContractPositionDefinition>,
   ): Promise<UnderlyingTokenDefinition[] | null> {
     return [{ address: this.rewardTokenAddress, metaType: MetaType.CLAIMABLE }];
   }
 
-  async getLabel({ contractPosition }: GetDisplayPropsParams<CompoundComptroller>) {
+  async getLabel({ contractPosition }: GetDisplayPropsParams<R>) {
     const rewardToken = contractPosition.tokens[0];
     return `Claimable ${getLabelFromToken(rewardToken)}`;
   }
 
   async getDataProps(
-    _params: GetDataPropsParams<CompoundComptroller, CompoundClaimablePositionDataProps>,
+    _params: GetDataPropsParams<R, CompoundClaimablePositionDataProps>,
   ): Promise<CompoundClaimablePositionDataProps> {
     return {
       lensAddress: this.lensAddress,
@@ -62,21 +61,13 @@ export abstract class CompoundClaimableContractPositionFetcher extends ContractP
   async getTokenBalancesPerPosition({
     address,
     contractPosition,
-  }: GetTokenBalancesParams<CompoundComptroller, CompoundClaimablePositionDataProps>): Promise<BigNumberish[]> {
-    const [rewardToken] = contractPosition.tokens;
+  }: GetTokenBalancesParams<R, CompoundClaimablePositionDataProps>): Promise<BigNumberish[]> {
     const {
-      address: comptrollerAddress,
       dataProps: { lensAddress },
     } = contractPosition;
 
-    const lensContract = this.contractFactory.compoundLens({ address: lensAddress, network: this.network });
-    const rewardMetadata = await lensContract.callStatic.getCompBalanceMetadataExt(
-      rewardToken.address,
-      comptrollerAddress,
-      address,
-    );
-
-    const rewardBalanceRaw = rewardMetadata[3];
-    return [rewardBalanceRaw];
+    const lensContract = this.getCompoundLensContract(lensAddress);
+    const claimableBalance = await this.getClaimableBalance(address, { contract: lensContract, contractPosition });
+    return [claimableBalance];
   }
 }

@@ -1,7 +1,8 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Inject } from '@nestjs/common';
 import { gql } from 'graphql-request';
 
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import {
@@ -10,11 +11,9 @@ import {
   GetDataPropsParams,
   GetDisplayPropsParams,
 } from '~position/template/app-token.template.types';
-import { Network } from '~types/network.interface';
 
 import { OpenleverageContractFactory, OpenleverageLpool } from '../contracts';
 import { OpenleveragePoolAPYHelper } from '../helpers/openleverage-pool.apy-helper';
-import { OPENLEVERAGE_DEFINITION } from '../openleverage.definition';
 
 type OpenLeveragePoolsResponse = {
   pools: {
@@ -35,11 +34,8 @@ const query = gql`
   }
 `;
 
-@Injectable()
+@PositionTemplate()
 export class EthereumOpenleveragePoolTokenFetcher extends AppTokenTemplatePositionFetcher<OpenleverageLpool> {
-  appId = OPENLEVERAGE_DEFINITION.id;
-  groupId = OPENLEVERAGE_DEFINITION.groups.pool.id;
-  network = Network.ETHEREUM_MAINNET;
   groupLabel = 'Pools';
 
   constructor(

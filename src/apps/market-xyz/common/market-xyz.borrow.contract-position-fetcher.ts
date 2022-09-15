@@ -1,4 +1,4 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Inject } from '@nestjs/common';
 import { BigNumberish, BigNumber } from 'ethers';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
@@ -12,7 +12,6 @@ import {
   MarketXyzToken,
 } from '../contracts';
 
-@Injectable()
 export abstract class MarketXyzBorrowContractPositionFetcher extends RariFuseBorrowContractPositionFetcher<
   MarketXyzPoolDirectory,
   MarketXyzComptroller,

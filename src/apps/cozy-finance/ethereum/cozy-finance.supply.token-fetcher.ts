@@ -1,45 +1,63 @@
 import { Inject } from '@nestjs/common';
 
-import { Register } from '~app-toolkit/decorators';
-import { CompoundContractFactory, CompoundSupplyTokenHelper } from '~apps/compound';
-import { PositionFetcher } from '~position/position-fetcher.interface';
-import { AppTokenPosition } from '~position/position.interface';
-import { Network } from '~types/network.interface';
+import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
+import {
+  CompoundSupplyTokenDataProps,
+  CompoundSupplyTokenFetcher,
+} from '~apps/compound/common/compound.supply.token-fetcher';
+import { DisplayProps } from '~position/display.interface';
+import { GetDisplayPropsParams } from '~position/template/app-token.template.types';
 
-import COZY_FINANCE_DEFINITION from '../cozy-finance.definition';
+import { CozyFinanceComptroller, CozyFinanceContractFactory, CozyFinanceCToken } from '../contracts';
 
-const appId = COZY_FINANCE_DEFINITION.id;
-const groupId = COZY_FINANCE_DEFINITION.groups.supply.id;
-const network = Network.ETHEREUM_MAINNET;
+@PositionTemplate()
+export class EthereumCozyFinanceSupplyTokenFetcher extends CompoundSupplyTokenFetcher<
+  CozyFinanceCToken,
+  CozyFinanceComptroller
+> {
+  groupLabel = 'Lending';
+  comptrollerAddress = '0x895879b2c1fbb6ccfcd101f2d3f3c76363664f92';
 
-@Register.TokenPositionFetcher({ appId, groupId, network })
-export class EthereumCozyFinanceSupplyTokenFetcher implements PositionFetcher<AppTokenPosition> {
   constructor(
-    @Inject(CompoundContractFactory) private readonly compoundContractFactory: CompoundContractFactory,
-    @Inject(CompoundSupplyTokenHelper) private readonly compoundSupplyTokenHelper: CompoundSupplyTokenHelper,
-  ) {}
+    @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
+    @Inject(CozyFinanceContractFactory) protected readonly contractFactory: CozyFinanceContractFactory,
+  ) {
+    super(appToolkit);
+  }
 
-  async getPositions() {
-    return this.compoundSupplyTokenHelper.getTokens({
-      network,
-      appId,
-      groupId,
-      comptrollerAddress: '0x895879b2c1fbb6ccfcd101f2d3f3c76363664f92',
-      getComptrollerContract: ({ address, network }) =>
-        this.compoundContractFactory.compoundComptroller({ address, network }),
-      getTokenContract: ({ address, network }) => this.compoundContractFactory.compoundCToken({ address, network }),
-      getAllMarkets: ({ contract, multicall }) => multicall.wrap(contract).getAllMarkets(),
-      getExchangeRate: ({ contract, multicall }) => multicall.wrap(contract).exchangeRateCurrent(),
-      getSupplyRate: ({ contract, multicall }) => multicall.wrap(contract).supplyRatePerBlock(),
-      getBorrowRate: ({ contract, multicall }) => multicall.wrap(contract).borrowRatePerBlock(),
-      getUnderlyingAddress: ({ contract, multicall }) => multicall.wrap(contract).underlying(),
-      getExchangeRateMantissa: ({ underlyingTokenDecimals }) => underlyingTokenDecimals + 10,
-      getDisplayLabel: async ({ contract, multicall, underlyingToken }) => {
-        const [symbol, name] = await Promise.all([multicall.wrap(contract).symbol(), multicall.wrap(contract).name()]);
-        if (!name.startsWith(`${symbol}-`)) return underlyingToken.symbol;
-        const triggerLabel = name.replace(`${symbol}-`, '');
-        return `${underlyingToken.symbol} - ${triggerLabel}`;
-      },
-    });
+  getCompoundCTokenContract(address: string) {
+    return this.contractFactory.cozyFinanceCToken({ address, network: this.network });
+  }
+
+  getCompoundComptrollerContract(address: string) {
+    return this.contractFactory.cozyFinanceComptroller({ address, network: this.network });
+  }
+
+  getMarkets(contract: CozyFinanceComptroller) {
+    return contract.getAllMarkets();
+  }
+
+  async getUnderlyingAddress(contract: CozyFinanceCToken) {
+    return contract.underlying();
+  }
+
+  getExchangeRate(contract: CozyFinanceCToken) {
+    return contract.exchangeRateCurrent();
+  }
+
+  async getSupplyRate(contract: CozyFinanceCToken) {
+    return contract.supplyRatePerBlock().catch(() => 0);
+  }
+
+  async getLabel({
+    appToken,
+    contract,
+  }: GetDisplayPropsParams<CozyFinanceCToken, CompoundSupplyTokenDataProps>): Promise<DisplayProps['label']> {
+    const [underlyingToken] = appToken.tokens;
+    const [symbol, name] = await Promise.all([contract.symbol(), contract.name()]);
+    if (!name.startsWith(`${symbol}-`)) return underlyingToken.symbol;
+    const triggerLabel = name.replace(`${symbol}-`, '');
+    return `${underlyingToken.symbol} - ${triggerLabel}`;
   }
 }

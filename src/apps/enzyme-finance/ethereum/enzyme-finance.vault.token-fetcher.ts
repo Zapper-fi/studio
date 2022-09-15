@@ -1,9 +1,10 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Inject } from '@nestjs/common';
 import BigNumber from 'bignumber.js';
 import { gql } from 'graphql-request';
 import _ from 'lodash';
 
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import { DefaultDataProps } from '~position/display.interface';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import {
@@ -12,10 +13,8 @@ import {
   GetPriceParams,
   GetUnderlyingTokensParams,
 } from '~position/template/app-token.template.types';
-import { Network } from '~types/network.interface';
 
 import { EnzymeFinanceContractFactory, EnzymeFinanceVault } from '../contracts';
-import { ENZYME_FINANCE_DEFINITION } from '../enzyme-finance.definition';
 
 const query = gql`
   query fetchEnzymeVaults {
@@ -36,11 +35,8 @@ export type EnzymeFinanceVaultTokenDataProps = {
   isActive: boolean;
 };
 
-@Injectable()
+@PositionTemplate()
 export class EthereumEnzymeFinanceVaultTokenFetcher extends AppTokenTemplatePositionFetcher<EnzymeFinanceVault> {
-  appId = ENZYME_FINANCE_DEFINITION.id;
-  groupId = ENZYME_FINANCE_DEFINITION.groups.vault.id;
-  network = Network.ETHEREUM_MAINNET;
   groupLabel = 'Vaults';
 
   constructor(

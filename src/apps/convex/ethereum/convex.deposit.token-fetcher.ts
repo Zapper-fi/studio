@@ -1,7 +1,8 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Inject } from '@nestjs/common';
 import { range } from 'lodash';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import {
@@ -11,10 +12,8 @@ import {
   GetDisplayPropsParams,
   GetUnderlyingTokensParams,
 } from '~position/template/app-token.template.types';
-import { Network } from '~types/network.interface';
 
 import { ConvexContractFactory, ConvexDepositToken } from '../contracts';
-import { CONVEX_DEFINITION } from '../convex.definition';
 
 type ConvexDepositTokenDataProps = {
   liquidity: number;
@@ -25,15 +24,12 @@ type ConvexDepositTokenDefinition = {
   poolIndex: number;
 };
 
-@Injectable()
+@PositionTemplate()
 export class EthereumConvexDepositTokenFetcher extends AppTokenTemplatePositionFetcher<
   ConvexDepositToken,
   ConvexDepositTokenDataProps,
   ConvexDepositTokenDefinition
 > {
-  appId = CONVEX_DEFINITION.id;
-  groupId = CONVEX_DEFINITION.groups.deposit.id;
-  network = Network.ETHEREUM_MAINNET;
   groupLabel = 'Liqudity Pool Staking';
 
   isExcludedFromExplore = true;

@@ -1,17 +1,16 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Inject } from '@nestjs/common';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { ZERO_ADDRESS } from '~app-toolkit/constants/address';
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import { GetTokenBalancesParams } from '~position/template/contract-position.template.types';
 import {
   SingleStakingFarmDefinition,
   SingleStakingFarmTemplateContractPositionFetcher,
 } from '~position/template/single-staking.template.contract-position-fetcher';
-import { Network } from '~types/network.interface';
 
 import { TeddyCashContractFactory } from '../contracts';
 import { TeddyCashStaking } from '../contracts/ethers/TeddyCashStaking';
-import TEDDY_CASH_DEFINITION from '../teddy-cash.definition';
 
 const FARMS = [
   {
@@ -21,11 +20,8 @@ const FARMS = [
   },
 ];
 
-@Injectable()
+@PositionTemplate()
 export class AvalancheTeddyCashFarmContractPositionFetcher extends SingleStakingFarmTemplateContractPositionFetcher<TeddyCashStaking> {
-  appId = TEDDY_CASH_DEFINITION.id;
-  groupId = TEDDY_CASH_DEFINITION.groups.farm.id;
-  network = Network.AVALANCHE_MAINNET;
   groupLabel = 'Farms';
 
   constructor(

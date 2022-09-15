@@ -1,23 +1,19 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Inject } from '@nestjs/common';
 import { BigNumberish } from 'ethers';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import { RewardRateUnit } from '~app-toolkit/helpers/master-chef/master-chef.contract-position-helper';
 import {
   GetMasterChefDataPropsParams,
   GetMasterChefTokenBalancesParams,
   MasterChefTemplateContractPositionFetcher,
 } from '~position/template/master-chef.template.contract-position-fetcher';
-import { Network } from '~types/network.interface';
 
 import { PickleContractFactory, PickleJarMasterchef } from '../contracts';
-import { PICKLE_DEFINITION } from '../pickle.definition';
 
-@Injectable()
+@PositionTemplate()
 export class EthereumPickleFarmContractPositionFetcher extends MasterChefTemplateContractPositionFetcher<PickleJarMasterchef> {
-  appId = PICKLE_DEFINITION.id;
-  groupId = PICKLE_DEFINITION.groups.masterchefFarm.id;
-  network = Network.ETHEREUM_MAINNET;
   groupLabel = 'Farms';
   chefAddress = '0xbd17b1ce622d73bd438b9e658aca5996dc394b0d';
   rewardRateUnit = RewardRateUnit.BLOCK;

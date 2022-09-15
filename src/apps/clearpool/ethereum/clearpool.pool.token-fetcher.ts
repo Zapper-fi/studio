@@ -1,7 +1,8 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Inject } from '@nestjs/common';
 import Axios from 'axios';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import {
   GetDataPropsParams,
@@ -9,23 +10,19 @@ import {
   GetPricePerShareParams,
   GetUnderlyingTokensParams,
 } from '~position/template/app-token.template.types';
-import { Network, NETWORK_IDS } from '~types';
+import { NETWORK_IDS } from '~types';
 
-import { CLEARPOOL_DEFINITION } from '../clearpool.definition';
 import { ClearpoolContractFactory, ClearpoolPool } from '../contracts';
 
 export type ClearpoolPoolTokenDataProps = {
   liquidity: number;
 };
 
-@Injectable()
+@PositionTemplate()
 export class EthereumClearpoolPoolTokenFetcher extends AppTokenTemplatePositionFetcher<
   ClearpoolPool,
   ClearpoolPoolTokenDataProps
 > {
-  appId = CLEARPOOL_DEFINITION.id;
-  groupId = CLEARPOOL_DEFINITION.groups.pool.id;
-  network = Network.ETHEREUM_MAINNET;
   groupLabel = 'Pool';
 
   constructor(

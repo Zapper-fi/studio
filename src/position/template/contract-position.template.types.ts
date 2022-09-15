@@ -17,6 +17,7 @@ export type UnderlyingTokenDefinition = {
 // PHASE 1: List definitions
 export type GetDefinitionsParams = {
   multicall: IMulticallWrapper;
+  tokenLoader: TokenDependencySelector;
 };
 
 // PHASE 2: Build position objects

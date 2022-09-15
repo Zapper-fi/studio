@@ -1,17 +1,13 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Inject } from '@nestjs/common';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import { VaultTokenFetcher } from '~position/template/vault.template.token-fetcher';
-import { Network } from '~types/network.interface';
 
-import { AELIN_DEFINITION } from '../aelin.definition';
 import { AelinContractFactory } from '../contracts';
 
-@Injectable()
+@PositionTemplate()
 export class OptimismAelinVAelinTokenFetcher extends VaultTokenFetcher {
-  appId = AELIN_DEFINITION.id;
-  groupId = AELIN_DEFINITION.groups.vAelin.id;
-  network = Network.OPTIMISM_MAINNET;
   groupLabel = 'vAELIN';
 
   vaultAddress = '0x780f70882ff4929d1a658a4e8ec8d4316b24748a';

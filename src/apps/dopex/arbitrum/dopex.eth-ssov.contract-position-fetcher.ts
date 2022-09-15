@@ -1,20 +1,13 @@
-import { Injectable } from '@nestjs/common';
-import { BigNumberish } from 'ethers';
-import { padEnd } from 'lodash';
-import Web3 from 'web3';
+import { BigNumberish, ethers } from 'ethers';
 
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import { GetTokenBalancesParams } from '~position/template/contract-position.template.types';
-import { Network } from '~types/network.interface';
 
 import { DopexSsovContractPositionFetcher, DopexSsovDataProps } from '../common/dopex.ssov.contract-position-fetcher';
 import { DopexEthSsov } from '../contracts';
-import { DOPEX_DEFINITION } from '../dopex.definition';
 
-@Injectable()
+@PositionTemplate()
 export class ArbitrumDopexEthSsovContractPositionFetcher extends DopexSsovContractPositionFetcher<DopexEthSsov> {
-  appId = DOPEX_DEFINITION.id;
-  groupId = DOPEX_DEFINITION.groups.ethSsov.id;
-  network = Network.ARBITRUM_MAINNET;
   groupLabel = 'SSOVs';
 
   getContract(address: string): DopexEthSsov {
@@ -67,7 +60,7 @@ export class ArbitrumDopexEthSsovContractPositionFetcher extends DopexSsovContra
     multicall,
   }: GetTokenBalancesParams<DopexEthSsov, DopexSsovDataProps>): Promise<BigNumberish | BigNumberish[]> {
     const { epoch } = contractPosition.dataProps;
-    const rewardDistributionName = padEnd(Web3.utils.asciiToHex('RewardsDistribution'), 66, '0');
+    const rewardDistributionName = ethers.utils.formatBytes32String('RewardsDistribution');
     const rewardDistrbutionAddress = await multicall.wrap(contract).getAddress(rewardDistributionName);
     const rewardDistributionContract = this.contractFactory.dopexRewardDistribution({
       address: rewardDistrbutionAddress,

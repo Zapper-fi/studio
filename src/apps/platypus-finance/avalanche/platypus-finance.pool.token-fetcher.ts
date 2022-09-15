@@ -1,15 +1,9 @@
-import { Injectable } from '@nestjs/common';
-
-import { Network } from '~types/network.interface';
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 
 import { PlatypusFinancePoolTokenFetcher } from '../common/platypus-finance.pool.token-fetcher';
-import { PLATYPUS_FINANCE_DEFINITION } from '../platypus-finance.definition';
 
-@Injectable()
+@PositionTemplate()
 export class AvalanchePlatypusFinancePoolTokenFetcher extends PlatypusFinancePoolTokenFetcher {
-  appId = PLATYPUS_FINANCE_DEFINITION.id;
-  groupId = PLATYPUS_FINANCE_DEFINITION.groups.pool.id;
-  network = Network.AVALANCHE_MAINNET;
   groupLabel = 'Pools';
 
   poolAddresses = [
