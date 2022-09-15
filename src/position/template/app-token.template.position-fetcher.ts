@@ -37,9 +37,9 @@ export abstract class AppTokenTemplatePositionFetcher<
   R extends DefaultAppTokenDefinition = DefaultAppTokenDefinition,
 > implements PositionFetcher<AppTokenPosition<V>>, PositionFetcherTemplateCommons
 {
-  abstract appId: string;
-  abstract groupId: string;
-  abstract network: Network;
+  appId: string;
+  groupId: string;
+  network: Network;
   abstract groupLabel: string;
 
   isExcludedFromBalances = false;
