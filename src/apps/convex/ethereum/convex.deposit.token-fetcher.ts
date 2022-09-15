@@ -5,6 +5,7 @@ import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import {
+  DefaultAppTokenDataProps,
   GetAddressesParams,
   GetDataPropsParams,
   GetDefinitionsParams,
@@ -16,10 +17,6 @@ import { Network } from '~types/network.interface';
 import { ConvexContractFactory, ConvexDepositToken } from '../contracts';
 import { CONVEX_DEFINITION } from '../convex.definition';
 
-type ConvexDepositTokenDataProps = {
-  liquidity: number;
-};
-
 type ConvexDepositTokenDefinition = {
   address: string;
   poolIndex: number;
@@ -28,7 +25,7 @@ type ConvexDepositTokenDefinition = {
 @Injectable()
 export class EthereumConvexDepositTokenFetcher extends AppTokenTemplatePositionFetcher<
   ConvexDepositToken,
-  ConvexDepositTokenDataProps,
+  DefaultAppTokenDataProps,
   ConvexDepositTokenDefinition
 > {
   appId = CONVEX_DEFINITION.id;
@@ -80,16 +77,24 @@ export class EthereumConvexDepositTokenFetcher extends AppTokenTemplatePositionF
       address: boosterContractAddress,
       network: this.network,
     });
+
     const poolInfo = await depositContract.poolInfo(definition.poolIndex);
     return poolInfo.lptoken;
   }
 
-  async getDataProps({ appToken }: GetDataPropsParams<ConvexDepositToken, ConvexDepositTokenDataProps>) {
-    const liquidity = appToken.price * appToken.supply;
-    return { liquidity };
+  async getLiquidity({ appToken }: GetDataPropsParams<ConvexDepositToken>) {
+    return appToken.supply * appToken.price;
   }
 
-  async getLabel({ appToken }: GetDisplayPropsParams<ConvexDepositToken, ConvexDepositTokenDataProps>) {
+  async getReserves({ appToken }: GetDataPropsParams<ConvexDepositToken>) {
+    return [appToken.pricePerShare[0] * appToken.supply];
+  }
+
+  async getApy(_params: GetDataPropsParams<ConvexDepositToken>) {
+    return 0;
+  }
+
+  async getLabel({ appToken }: GetDisplayPropsParams<ConvexDepositToken, DefaultAppTokenDataProps>) {
     return getLabelFromToken(appToken.tokens[0]!);
   }
 }

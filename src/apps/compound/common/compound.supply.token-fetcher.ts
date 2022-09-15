@@ -4,7 +4,6 @@ import { ETH_ADDR_ALIAS, ZERO_ADDRESS } from '~app-toolkit/constants/address';
 import { BLOCKS_PER_DAY } from '~app-toolkit/constants/blocks';
 import { isMulticallUnderlyingError } from '~multicall/multicall.ethers';
 import { BalanceDisplayMode, DisplayProps } from '~position/display.interface';
-import { ExchangeableAppTokenDataProps } from '~position/position.interface';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import {
   GetAddressesParams,
@@ -14,15 +13,10 @@ import {
   GetUnderlyingTokensParams,
 } from '~position/template/app-token.template.types';
 
-export type CompoundSupplyTokenDataProps = ExchangeableAppTokenDataProps & {
-  apy: number;
-  liquidity: number;
-};
-
 export abstract class CompoundSupplyTokenFetcher<
   R extends Contract,
   S extends Contract,
-> extends AppTokenTemplatePositionFetcher<R, CompoundSupplyTokenDataProps> {
+> extends AppTokenTemplatePositionFetcher<R> {
   protected isExchangeable = false;
 
   abstract comptrollerAddress: string;
@@ -54,54 +48,42 @@ export abstract class CompoundSupplyTokenFetcher<
     return underlyingAddressRaw.toLowerCase().replace(ETH_ADDR_ALIAS, ZERO_ADDRESS);
   }
 
-  getDenormalizedRate({ blocksPerDay, rate }: { rate: BigNumberish; blocksPerDay: number; decimals: number }): number {
-    return 100 * (Math.pow(1 + (blocksPerDay * Number(rate)) / Number(1e18), 365) - 1);
-  }
-
-  async getExchangeRateMantissa(opts: GetPricePerShareParams<R, CompoundSupplyTokenDataProps>) {
+  async getExchangeRateMantissa(opts: GetPricePerShareParams<R>) {
     const { appToken } = opts;
     const [underlyingToken] = appToken.tokens;
     return underlyingToken.decimals + 10;
   }
 
-  async getPricePerShare(opts: GetPricePerShareParams<R, CompoundSupplyTokenDataProps>) {
+  async getPricePerShare(opts: GetPricePerShareParams<R>) {
     const { contract } = opts;
     const [rateRaw, mantissa] = await Promise.all([this.getExchangeRate(contract), this.getExchangeRateMantissa(opts)]);
     return Number(rateRaw) / 10 ** mantissa;
   }
 
-  async getLabel({ appToken }: GetDisplayPropsParams<R, CompoundSupplyTokenDataProps>): Promise<DisplayProps['label']> {
+  async getLabel({ appToken }: GetDisplayPropsParams<R>): Promise<DisplayProps['label']> {
     const [underlyingToken] = appToken.tokens;
     return underlyingToken.symbol;
   }
 
-  async getLabelDetailed({
-    appToken,
-  }: GetDisplayPropsParams<R, CompoundSupplyTokenDataProps>): Promise<DisplayProps['labelDetailed']> {
+  async getLabelDetailed({ appToken }: GetDisplayPropsParams<R>): Promise<DisplayProps['labelDetailed']> {
     return appToken.symbol;
   }
 
-  async getBalanceDisplayMode(
-    _params: GetDisplayPropsParams<R, CompoundSupplyTokenDataProps>,
-  ): Promise<DisplayProps['balanceDisplayMode']> {
+  async getBalanceDisplayMode(_params: GetDisplayPropsParams<R>): Promise<DisplayProps['balanceDisplayMode']> {
     return BalanceDisplayMode.UNDERLYING;
   }
 
-  async getApy({ contract, appToken }: GetDataPropsParams<R, CompoundSupplyTokenDataProps>) {
-    const [underlyingToken] = appToken.tokens;
-    const supplyRate = await this.getSupplyRate(contract);
-    const blocksPerDay = BLOCKS_PER_DAY[this.network];
-    return this.getDenormalizedRate({
-      blocksPerDay,
-      rate: supplyRate,
-      decimals: underlyingToken.decimals,
-    });
+  async getLiquidity({ appToken }: GetDataPropsParams<R>) {
+    return appToken.price * appToken.supply;
   }
 
-  async getDataProps(opts: GetDataPropsParams<R, CompoundSupplyTokenDataProps>): Promise<CompoundSupplyTokenDataProps> {
-    const { appToken } = opts;
-    const apy = await this.getApy(opts);
-    const liquidity = appToken.price * appToken.supply;
-    return { apy, liquidity, exchangeable: this.isExchangeable };
+  async getReserves({ appToken }: GetDataPropsParams<R>) {
+    return [appToken.pricePerShare[0] * appToken.supply];
+  }
+
+  async getApy({ contract }: GetDataPropsParams<R>) {
+    const supplyRate = await this.getSupplyRate(contract);
+    const blocksPerDay = BLOCKS_PER_DAY[this.network];
+    return 100 * (Math.pow(1 + (blocksPerDay * Number(supplyRate)) / Number(1e18), 365) - 1);
   }
 }

@@ -1,12 +1,12 @@
 import { Injectable } from '@nestjs/common';
 
-import { VaultTokenFetcher } from '~position/template/vault.template.token-fetcher';
+import { VaultTemplateTokenFetcher } from '~position/template/vault.template.token-fetcher';
 import { Network } from '~types/network.interface';
 
 import { REDACTED_CARTEL_DEFINITION } from '../redacted-cartel.definition';
 
 @Injectable()
-export class EthereumRedactedCartelWxBtrflyV1TokenFetcher extends VaultTokenFetcher {
+export class EthereumRedactedCartelWxBtrflyV1TokenFetcher extends VaultTemplateTokenFetcher {
   appId = REDACTED_CARTEL_DEFINITION.id;
   groupId = REDACTED_CARTEL_DEFINITION.groups.wxBtrflyV1.id;
   network = Network.ETHEREUM_MAINNET;

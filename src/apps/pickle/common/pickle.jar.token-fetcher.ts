@@ -18,7 +18,7 @@ import { PickleApiJarRegistry } from './pickle.api.jar-registry';
 export type PickleJarDataProps = {
   apy: number;
   liquidity: number;
-  reserve: number;
+  reserves: number;
 };
 
 export abstract class PickleJarTokenFetcher extends AppTokenTemplatePositionFetcher<PickleJar, PickleJarDataProps> {
@@ -54,7 +54,7 @@ export abstract class PickleJarTokenFetcher extends AppTokenTemplatePositionFetc
 
     const underlyingToken = appToken.tokens[0]!;
     const reserveRaw = await contract.balance();
-    const reserve = Number(reserveRaw) / 10 ** underlyingToken.decimals;
+    const reserves = Number(reserveRaw) / 10 ** underlyingToken.decimals;
     const liquidity = reserve * underlyingToken.price;
     return { apy, reserve, liquidity };
   }

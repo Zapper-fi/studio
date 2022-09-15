@@ -1,27 +1,21 @@
 import { Inject } from '@nestjs/common';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
-import { buildDollarDisplayItem } from '~app-toolkit/helpers/presentation/display-item.present';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import {
   GetUnderlyingTokensParams,
   GetAddressesParams,
   GetDataPropsParams,
-  GetDisplayPropsParams,
+  DefaultAppTokenDataProps,
 } from '~position/template/app-token.template.types';
 
 import { EulerContractFactory, EulerPtokenContract } from '../contracts';
 
 import { EulerTokenDefinition, EulerTokenDefinitionsResolver, EulerTokenType } from './euler.token-definition-resolver';
 
-export type EulerPTokenDataProps = {
-  liquidity: number;
-  interestRate: number;
-};
-
 export abstract class EulerPTokenTokenFetcher extends AppTokenTemplatePositionFetcher<
   EulerPtokenContract,
-  EulerPTokenDataProps,
+  DefaultAppTokenDataProps,
   EulerTokenDefinition
 > {
   abstract tokenType: EulerTokenType;
@@ -58,17 +52,15 @@ export abstract class EulerPTokenTokenFetcher extends AppTokenTemplatePositionFe
     return `P${market!.symbol}`;
   }
 
-  async getDataProps({
-    appToken,
-  }: GetDataPropsParams<EulerPtokenContract, EulerPTokenDataProps, EulerTokenDefinition>) {
-    const liquidity = appToken.supply * appToken.tokens[0].price * -1;
-    const market = await this.tokenDefinitionsResolver.getMarket(appToken.address, this.tokenType);
-    const interestRate = Number(market!.interestRate) / 10 ** appToken.decimals;
-
-    return { liquidity, interestRate };
+  async getLiquidity({ appToken }: GetDataPropsParams<EulerPtokenContract>) {
+    return appToken.supply * appToken.price;
   }
 
-  async getStatsItems({ appToken }: GetDisplayPropsParams<EulerPtokenContract, EulerPTokenDataProps>) {
-    return [{ label: 'Liquidity', value: buildDollarDisplayItem(appToken.dataProps.liquidity) }];
+  async getReserves({ appToken }: GetDataPropsParams<EulerPtokenContract>) {
+    return [appToken.pricePerShare[0] * appToken.supply];
+  }
+
+  async getApy() {
+    return 0;
   }
 }

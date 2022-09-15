@@ -1,12 +1,12 @@
 import { Injectable } from '@nestjs/common';
 
-import { VaultTokenFetcher } from '~position/template/vault.template.token-fetcher';
+import { VaultTemplateTokenFetcher } from '~position/template/vault.template.token-fetcher';
 import { Network } from '~types/network.interface';
 
 import { ROOK_DEFINITION } from '../rook.definition';
 
 @Injectable()
-export class EthereumRookXRookTokenFetcher extends VaultTokenFetcher {
+export class EthereumRookXRookTokenFetcher extends VaultTemplateTokenFetcher {
   appId = ROOK_DEFINITION.id;
   groupId = ROOK_DEFINITION.groups.xRook.id;
   network = Network.ETHEREUM_MAINNET;
