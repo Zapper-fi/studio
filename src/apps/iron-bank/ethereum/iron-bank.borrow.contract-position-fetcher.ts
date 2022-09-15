@@ -1,20 +1,16 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Inject } from '@nestjs/common';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import { CompoundBorrowContractPositionFetcher } from '~apps/compound/common/compound.borrow.contract-position-fetcher';
-import { Network } from '~types/network.interface';
 
 import { IronBankComptroller, IronBankContractFactory, IronBankCToken } from '../contracts';
-import IRON_BANK_DEFINITION from '../iron-bank.definition';
 
-@Injectable()
+@PositionTemplate()
 export class EthereumIronBankBorrowContractPositionFetcher extends CompoundBorrowContractPositionFetcher<
   IronBankCToken,
   IronBankComptroller
 > {
-  appId = IRON_BANK_DEFINITION.id;
-  groupId = IRON_BANK_DEFINITION.groups.borrow.id;
-  network = Network.ETHEREUM_MAINNET;
   groupLabel = 'Lending';
   comptrollerAddress = '0xab1c342c7bf5ec5f02adea1c2270670bca144cbb';
 

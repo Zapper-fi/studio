@@ -1,21 +1,17 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Inject } from '@nestjs/common';
 import { BigNumber } from 'ethers';
 import { formatUnits } from 'ethers/lib/utils';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { ZERO_ADDRESS } from '~app-toolkit/constants/address';
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import { MorphoAaveV2, MorphoAaveV2Lens, MorphoContractFactory } from '~apps/morpho/contracts';
 import { BaseEthereumMorphoSupplyContractPositionFetcher } from '~apps/morpho/helpers/position-fetcher.common';
-import MORPHO_DEFINITION from '~apps/morpho/morpho.definition';
 import { isMulticallUnderlyingError } from '~multicall/multicall.ethers';
 import { GetDefinitionsParams } from '~position/template/contract-position.template.types';
-import { Network } from '~types';
 
-@Injectable()
+@PositionTemplate()
 export class EthereumMorphoAaveV2SupplyContractPositionFetcher extends BaseEthereumMorphoSupplyContractPositionFetcher<MorphoAaveV2> {
-  appId = MORPHO_DEFINITION.id;
-  groupId = MORPHO_DEFINITION.groups.morphoAaveV2.id;
-  network = Network.ETHEREUM_MAINNET;
   groupLabel = 'Morpho Aave';
 
   morphoAddress = '0x777777c9898d384f785ee44acfe945efdff5f3e0';

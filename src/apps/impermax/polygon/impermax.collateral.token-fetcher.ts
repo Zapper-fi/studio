@@ -1,15 +1,9 @@
-import { Injectable } from '@nestjs/common';
-
-import { Network } from '~types';
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 
 import { ImpermaxCollateralTokenFetcher } from '../common/impermax.collateral.token-fetcher';
-import { IMPERMAX_DEFINITION } from '../impermax.definition';
 
-@Injectable()
+@PositionTemplate()
 export class PolygonImpermaxCollateralTokenFetcher extends ImpermaxCollateralTokenFetcher {
-  appId = IMPERMAX_DEFINITION.id;
-  groupId = IMPERMAX_DEFINITION.groups.collateral.id;
-  network = Network.POLYGON_MAINNET;
   groupLabel = 'Lending Pool';
 
   factoryAddress = '0xbb92270716c8c424849f17ccc12f4f24ad4064d6';

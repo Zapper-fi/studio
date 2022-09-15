@@ -1,23 +1,19 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Inject } from '@nestjs/common';
 import { formatUnits } from 'ethers/lib/utils';
 import { uniq } from 'lodash';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
+import { PresenterTemplate } from '~app-toolkit/decorators/presenter-template.decorator';
 import { MorphoContractPositionDataProps } from '~apps/morpho/helpers/position-fetcher.common';
 import { isMulticallUnderlyingError } from '~multicall/multicall.ethers';
 import { ContractPositionBalance } from '~position/position-balance.interface';
 import { PositionPresenterTemplate, ReadonlyBalances } from '~position/template/position-presenter.template';
-import { Network } from '~types';
 
 import { MorphoContractFactory } from '../contracts';
-import MORPHO_DEFINITION from '../morpho.definition';
 
-@Injectable()
+@PresenterTemplate()
 export class EthereumMorphoPositionPresenter extends PositionPresenterTemplate {
-  network = Network.ETHEREUM_MAINNET;
-  appId = MORPHO_DEFINITION.id;
-
   morphoCompoundLensAddress = '0x930f1b46e1d081ec1524efd95752be3ece51ef67';
   morphoAaveLensAddress = '0x507fa343d0a90786d86c7cd885f5c49263a91ff4';
 

@@ -1,21 +1,17 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Inject } from '@nestjs/common';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import { CompoundBorrowContractPositionFetcher } from '~apps/compound/common/compound.borrow.contract-position-fetcher';
-import { Network } from '~types/network.interface';
 
 import { CozyFinanceContractFactory } from '../contracts';
 import { CozyFinanceComptroller, CozyFinanceCToken } from '../contracts/ethers';
-import { COZY_FINANCE_DEFINITION } from '../cozy-finance.definition';
 
-@Injectable()
+@PositionTemplate()
 export class ArbitrumCozyFinanceBorrowContractPositionFetcher extends CompoundBorrowContractPositionFetcher<
   CozyFinanceCToken,
   CozyFinanceComptroller
 > {
-  appId = COZY_FINANCE_DEFINITION.id;
-  groupId = COZY_FINANCE_DEFINITION.groups.borrow.id;
-  network = Network.ARBITRUM_MAINNET;
   groupLabel = 'Lending';
   comptrollerAddress = '0x895879b2c1fbb6ccfcd101f2d3f3c76363664f92';
 

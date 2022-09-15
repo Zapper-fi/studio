@@ -1,15 +1,9 @@
-import { Injectable } from '@nestjs/common';
-
-import { Network } from '~types/network.interface';
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 
 import { PoolTogetherV3AirdropContractPositionFetcher } from '../common/pool-together-v3.airdrop.contract-position-fetcher';
-import POOL_TOGETHER_V3_DEFINITION from '../pool-together-v3.definition';
 
-@Injectable()
+@PositionTemplate()
 export class EthereumPoolTogetherV3AirdropTokenFetcher extends PoolTogetherV3AirdropContractPositionFetcher {
-  appId = POOL_TOGETHER_V3_DEFINITION.id;
-  groupId = POOL_TOGETHER_V3_DEFINITION.groups.airdrop.id;
-  network = Network.ETHEREUM_MAINNET;
   groupLabel = 'Airdrops';
   isExcludedFromExplore = true;
 

@@ -7,15 +7,10 @@ import {
   SingleStakingFarmDefinition,
   SingleStakingFarmTemplateContractPositionFetcher,
 } from '~position/template/single-staking.template.contract-position-fetcher';
-import { Network } from '~types/network.interface';
 
 import { PlutusContractFactory, PlutusFarmPlsDpx } from '../contracts';
-import PLUTUS_DEFINITION from '../plutus.definition';
 
 export class ArbitrumPlutusFarmPlsDpxContractPositionFetcher extends SingleStakingFarmTemplateContractPositionFetcher<PlutusFarmPlsDpx> {
-  appId = PLUTUS_DEFINITION.id;
-  groupId = PLUTUS_DEFINITION.groups.farmPlsDpx.id;
-  network = Network.ARBITRUM_MAINNET;
   groupLabel = 'plsDPX Farm';
 
   constructor(

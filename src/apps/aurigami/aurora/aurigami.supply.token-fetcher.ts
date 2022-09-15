@@ -1,21 +1,17 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Inject } from '@nestjs/common';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import {
   CompoundSupplyTokenDataProps,
   CompoundSupplyTokenFetcher,
 } from '~apps/compound/common/compound.supply.token-fetcher';
 import { GetPricePerShareParams } from '~position/template/app-token.template.types';
-import { Network } from '~types/network.interface';
 
-import { AURIGAMI_DEFINITION } from '../aurigami.definition';
 import { AurigamiAuToken, AurigamiComptroller, AurigamiContractFactory } from '../contracts';
 
-@Injectable()
+@PositionTemplate()
 export class AuroraAurigamiSupplyTokenFetcher extends CompoundSupplyTokenFetcher<AurigamiAuToken, AurigamiComptroller> {
-  appId = AURIGAMI_DEFINITION.id;
-  groupId = AURIGAMI_DEFINITION.groups.supply.id;
-  network = Network.AURORA_MAINNET;
   groupLabel = 'Lending';
   comptrollerAddress = '0x817af6cfaf35bdc1a634d6cc94ee9e4c68369aeb';
 

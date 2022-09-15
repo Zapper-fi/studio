@@ -1,15 +1,9 @@
-import { Injectable } from '@nestjs/common';
-
-import { Network } from '~types/network.interface';
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 
 import { MarketXyzSupplyTokenFetcher } from '../common/market-xyz.supply.token-fetcher';
-import { MARKET_XYZ_DEFINITION } from '../market-xyz.definition';
 
-@Injectable()
+@PositionTemplate()
 export class FantomMarketXyzSupplyTokenFetcher extends MarketXyzSupplyTokenFetcher {
-  appId = MARKET_XYZ_DEFINITION.id;
-  groupId = MARKET_XYZ_DEFINITION.groups.supply.id;
-  network = Network.FANTOM_OPERA_MAINNET;
   groupLabel = 'Lending';
 
   lensAddress = '0x5ab6215ab8344c28b899efde93bee47b124200fb';

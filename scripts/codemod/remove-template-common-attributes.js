@@ -106,7 +106,7 @@ class CodeMod {
 
 function removeTemplateAttributes(s) {
   return lineModifier(s, line => {
-    const attributes = ['appId', 'groupId', 'network'];
+    const attributes = ['appId', 'network'];
     for (const attr of attributes) {
       const r = new RegExp(`^${attr} =.*;$`);
       if (r.test(line.toString().trim())) line = '';
@@ -120,8 +120,8 @@ function replaceInjects(s) {
   return lineModifier(s, line => {
     if (/^@Injectable\(\)$/.test(line.toString().trim())) {
       line = [
-        "import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';",
-        '@PositionTemplate()',
+        "import { PresenterTemplate } from '~app-toolkit/decorators/presenter-template.decorator';",
+        '@PresenterTemplate()'
       ].join('\n');
     }
 
@@ -134,19 +134,16 @@ function replaceInjects(s) {
 //////////////////////////
 
 glob('src/*/*/*/*.ts', {}, function (er, files) {
-  const maybeTemplates = files.filter(file => file.split('.').length === 4);
+  const maybeTemplates = files.filter(file => file.split('.').length === 3);
   for (const file of maybeTemplates) {
     const contents = fs.readFileSync(file, 'utf-8');
-    if (
-      !contents.includes('extends AppTokenTemplatePositionFetcher') &&
-      !contents.includes('extends ContractPositionTemplatePositionFetcher')
-    )
+    if (!contents.includes('extends PositionPresenterTemplate') && !/extends RariFusePositionPresenter/.test(contents))
       continue;
 
     const strategy = new CodeMod(contents);
-    // strategy.addModifier(removeTemplateAttributes);
+    strategy.addModifier(removeTemplateAttributes);
     strategy.addModifier(replaceInjects);
-    strategy.exec();
-    // fs.writeFileSync(file, strategy.exec(), 'utf-8');
+    // strategy.exec();
+    fs.writeFileSync(file, strategy.exec(), 'utf-8');
   }
 });
