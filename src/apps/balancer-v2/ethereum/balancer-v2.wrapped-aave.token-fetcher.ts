@@ -1,18 +1,14 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Inject } from '@nestjs/common';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import { GetUnderlyingTokensParams } from '~position/template/app-token.template.types';
-import { Network } from '~types/network.interface';
 
-import { BALANCER_V2_DEFINITION } from '../balancer-v2.definition';
 import { BalancerV2ContractFactory, BalancerWrappedAaveToken } from '../contracts';
 
-@Injectable()
+@PositionTemplate()
 export class EthereumBalancerV2WrappedAaveTokenFetcher extends AppTokenTemplatePositionFetcher<BalancerWrappedAaveToken> {
-  appId = BALANCER_V2_DEFINITION.id;
-  groupId = BALANCER_V2_DEFINITION.groups.wrappedAave.id;
-  network = Network.ETHEREUM_MAINNET;
   groupLabel = 'Wrapped Aave';
 
   isExcludedFromExplore = true;

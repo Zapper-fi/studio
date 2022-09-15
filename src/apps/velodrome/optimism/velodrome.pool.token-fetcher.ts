@@ -1,7 +1,8 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Inject } from '@nestjs/common';
 import Axios from 'axios';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import { buildDollarDisplayItem } from '~app-toolkit/helpers/presentation/display-item.present';
 import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { DefaultDataProps } from '~position/display.interface';
@@ -12,10 +13,8 @@ import {
   GetPricePerShareParams,
   GetUnderlyingTokensParams,
 } from '~position/template/app-token.template.types';
-import { Network } from '~types/network.interface';
 
 import { VelodromeContractFactory, VelodromePool } from '../contracts';
-import { VELODROME_DEFINITION } from '../velodrome.definition';
 
 export interface VelodromeApiPairData {
   address: string;
@@ -30,14 +29,11 @@ export type VelodromePoolTokenDataProps = {
   reserves: number[];
 };
 
-@Injectable()
+@PositionTemplate()
 export class OptimismVelodromePoolsTokenFetcher extends AppTokenTemplatePositionFetcher<
   VelodromePool,
   VelodromePoolTokenDataProps
 > {
-  appId = VELODROME_DEFINITION.id;
-  groupId = VELODROME_DEFINITION.groups.pool.id;
-  network = Network.OPTIMISM_MAINNET;
   groupLabel = 'Pools';
 
   constructor(

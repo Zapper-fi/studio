@@ -1,16 +1,10 @@
-import { Injectable } from '@nestjs/common';
-
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import { Erc20 } from '~contract/contracts';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import { Network } from '~types';
 
-import { ABRACADABRA_DEFINITION } from '../abracadabra.definition';
-
-@Injectable()
+@PositionTemplate()
 export class ArbitrumAbracadabraStakedSpellTokenFetcher extends AppTokenTemplatePositionFetcher<Erc20> {
-  appId = ABRACADABRA_DEFINITION.id;
-  groupId = ABRACADABRA_DEFINITION.groups.stakedSpell.id;
-  network = Network.ARBITRUM_MAINNET;
   groupLabel = 'Staked SPELL';
   fromNetwork = Network.ETHEREUM_MAINNET;
 

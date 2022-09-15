@@ -12,15 +12,10 @@ import {
   GetTokenDefinitionsParams,
   UnderlyingTokenDefinition,
 } from '~position/template/contract-position.template.types';
-import { Network } from '~types';
 
-import AURIGAMI_DEFINITION from '../aurigami.definition';
 import { AurigamiComptroller, AurigamiContractFactory } from '../contracts';
 
 export class AuroraAurigamiClaimableContractPositionFetcher extends ContractPositionTemplatePositionFetcher<AurigamiComptroller> {
-  appId = AURIGAMI_DEFINITION.id;
-  groupId = AURIGAMI_DEFINITION.groups.claimable.id;
-  network = Network.AURORA_MAINNET;
   groupLabel = 'Rewards';
 
   private lensAddress = '0xffdffbdb966cb84b50e62d70105f2dbf2e0a1e70';

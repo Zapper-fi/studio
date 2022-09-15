@@ -1,21 +1,17 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Inject } from '@nestjs/common';
 
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { ZERO_ADDRESS } from '~app-toolkit/constants/address';
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { MetaType } from '~position/position.interface';
 import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
 import { GetDisplayPropsParams, GetTokenBalancesParams } from '~position/template/contract-position.template.types';
-import { Network } from '~types/network.interface';
 
 import { RocketMinipoolManager, RocketPoolContractFactory } from '../contracts';
-import { ROCKET_POOL_DEFINITION } from '../rocket-pool.definition';
 
-@Injectable()
+@PositionTemplate()
 export class EthereumRocketPoolMinipoolContractPositionFetcher extends ContractPositionTemplatePositionFetcher<RocketMinipoolManager> {
-  appId = ROCKET_POOL_DEFINITION.id;
-  groupId = ROCKET_POOL_DEFINITION.groups.minipool.id;
-  network = Network.ETHEREUM_MAINNET;
   groupLabel = 'Minipools';
 
   constructor(
