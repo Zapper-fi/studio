@@ -1,6 +1,6 @@
 import { CallSite } from 'callsite';
 
-export function getStack() {
+export const getStack = () => {
   // Save original Error.prepareStackTrace
   const origPrepareStackTrace = Error.prepareStackTrace;
 
@@ -15,4 +15,4 @@ export function getStack() {
 
   // Remove current stack call since redundant
   return stack.slice(1);
-}
+};
