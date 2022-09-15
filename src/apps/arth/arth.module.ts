@@ -15,4 +15,4 @@ import { EthereumArthTroveContractPositionFetcher } from './ethereum/arth.trove.
     EthereumArthTroveContractPositionFetcher,
   ],
 })
-export class ArthAppModule extends AbstractApp() { }
+export class ArthAppModule extends AbstractApp() {}
