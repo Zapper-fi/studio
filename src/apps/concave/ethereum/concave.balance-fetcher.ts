@@ -1,5 +1,4 @@
 import { Inject } from '@nestjs/common';
-import { sumBy } from 'lodash';
 
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
@@ -81,13 +80,15 @@ export class EthereumConcaveBalanceFetcher implements BalanceFetcher {
           stakedToken.network = network;
           tokens.push(drillBalance(supplied(stakedToken), position.dataProps.deposit));
         }
+        let balanceUSD;
         if (rewardToken) {
           rewardToken.network = network;
           const finalToken = drillBalance(claimable(rewardToken), totalRewards.toString());
           finalToken.metaType = 'claimable' as MetaType;
           tokens.push(finalToken);
+          balanceUSD = finalToken.balanceUSD;
         }
-        const balanceUSD = sumBy(tokens, t => t.balanceUSD);
+        // const balanceUSD = sumBy(tokens, t => t.balanceUSD);
 
         const finalPosition: ContractPositionBalance = {
           type: ContractType.POSITION,
