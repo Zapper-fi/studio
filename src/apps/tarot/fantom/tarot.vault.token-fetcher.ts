@@ -50,9 +50,8 @@ export class FantomTarotVaultTokenFetcher extends AppTokenTemplatePositionFetche
     const [underlyingToken] = appToken.tokens;
     const reserveRaw = await contract.getTotalUnderlying();
 
-    const supply = Number(appToken.supply) / 10 ** appToken.decimals;
     const reserve = Number(reserveRaw) / 10 ** underlyingToken.decimals;
-    return supply > 0 ? reserve / supply : 0;
+    return appToken.supply > 0 ? reserve / appToken.supply : 0;
   }
 
   async getDataProps({ appToken, contract }: GetDataPropsParams<TarotSupplyVault, TarotVaultDataProps>) {
