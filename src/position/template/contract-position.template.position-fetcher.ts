@@ -34,9 +34,9 @@ export abstract class ContractPositionTemplatePositionFetcher<
   R extends DefaultContractPositionDefinition = DefaultContractPositionDefinition,
 > implements PositionFetcher<ContractPosition<V>>, PositionFetcherTemplateCommons
 {
-  abstract appId: string;
-  abstract groupId: string;
-  abstract network: Network;
+  appId: string;
+  groupId: string;
+  network: Network;
   abstract groupLabel: string;
 
   isExcludedFromBalances = false;

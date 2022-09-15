@@ -1,17 +1,16 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Inject } from '@nestjs/common';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import { ContractPosition } from '~position/position.interface';
-import { Network } from '~types/network.interface';
 
 import {
   CompoundClaimableContractPositionFetcher,
   CompoundClaimablePositionDataProps,
 } from '../common/compound.claimable.contract-position-fetcher';
-import { COMPOUND_DEFINITION } from '../compound.definition';
 import { CompoundComptroller, CompoundContractFactory, CompoundLens } from '../contracts';
 
-@Injectable()
+@PositionTemplate()
 export class EthereumCompoundClaimableContractPositionFetcher extends CompoundClaimableContractPositionFetcher<
   CompoundComptroller,
   CompoundLens
@@ -24,9 +23,6 @@ export class EthereumCompoundClaimableContractPositionFetcher extends CompoundCl
     super(appToolkit);
   }
 
-  appId = COMPOUND_DEFINITION.id;
-  groupId = COMPOUND_DEFINITION.groups.claimable.id;
-  network = Network.ETHEREUM_MAINNET;
   groupLabel = 'Claimable';
   isExcludedFromExplore = true;
 

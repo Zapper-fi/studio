@@ -1,20 +1,16 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Inject } from '@nestjs/common';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
-import { Network } from '~types/network.interface';
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 
 import { CompoundSupplyTokenFetcher } from '../common/compound.supply.token-fetcher';
-import { COMPOUND_DEFINITION } from '../compound.definition';
 import { CompoundComptroller, CompoundContractFactory, CompoundCToken } from '../contracts';
 
-@Injectable()
+@PositionTemplate()
 export class EthereumCompoundSupplyTokenFetcher extends CompoundSupplyTokenFetcher<
   CompoundCToken,
   CompoundComptroller
 > {
-  appId = COMPOUND_DEFINITION.id;
-  groupId = COMPOUND_DEFINITION.groups.supply.id;
-  network = Network.ETHEREUM_MAINNET;
   groupLabel = 'Lending';
   comptrollerAddress = '0x3d9819210a31b4961b30ef54be2aed79b9c9cd3b';
 
