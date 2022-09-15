@@ -1,14 +1,8 @@
-import { Injectable } from '@nestjs/common';
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 
-import { Network } from '~types';
-
-import { CLEARPOOL_DEFINITION } from '../clearpool.definition';
 import { ClearpoolPoolTokenFetcher } from '../common/clearpool.pool.token-fetcher';
 
-@Injectable()
+@PositionTemplate()
 export class PolygonClearpoolPoolTokenFetcher extends ClearpoolPoolTokenFetcher {
-  appId = CLEARPOOL_DEFINITION.id;
-  groupId = CLEARPOOL_DEFINITION.groups.pool.id;
-  network = Network.POLYGON_MAINNET;
   groupLabel = 'Pool';
 }

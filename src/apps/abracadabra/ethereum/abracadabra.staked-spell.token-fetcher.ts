@@ -1,15 +1,8 @@
-import { Injectable } from '@nestjs/common';
-
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import { VaultTemplateTokenFetcher } from '~position/template/vault.template.token-fetcher';
-import { Network } from '~types/network.interface';
 
-import { ABRACADABRA_DEFINITION } from '../abracadabra.definition';
-
-@Injectable()
+@PositionTemplate()
 export class EthereumAbracadabraStakedSpellTokenFetcher extends VaultTemplateTokenFetcher {
-  appId = ABRACADABRA_DEFINITION.id;
-  groupId = ABRACADABRA_DEFINITION.groups.stakedSpell.id;
-  network = Network.ETHEREUM_MAINNET;
   groupLabel = 'Staked SPELL';
 
   vaultAddress = '0x26fa3fffb6efe8c1e69103acb4044c26b9a106a9';

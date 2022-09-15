@@ -1,5 +1,4 @@
-import { Injectable } from '@nestjs/common';
-
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import { AaveAmmAToken } from '~apps/aave-amm/contracts';
 import { AaveAmmLendingTemplateTokenFetcher } from '~apps/aave-amm/helpers/aave-amm.lending.template.token-fetcher';
 import {
@@ -8,15 +7,9 @@ import {
   AaveV2ReserveTokenAddressesData,
 } from '~apps/aave-v2/helpers/aave-v2.lending.template.token-fetcher';
 import { GetDisplayPropsParams } from '~position/template/app-token.template.types';
-import { Network } from '~types/network.interface';
 
-import { STURDY_DEFINITION } from '../sturdy.definition';
-
-@Injectable()
+@PositionTemplate()
 export class FantomSturdySupplyTokenFetcher extends AaveAmmLendingTemplateTokenFetcher {
-  appId = STURDY_DEFINITION.id;
-  groupId = STURDY_DEFINITION.groups.supply.id;
-  network = Network.FANTOM_OPERA_MAINNET;
   groupLabel = 'Lending';
   providerAddress = '0x7ff2520cd7b76e8c49b5db51505b842d665f3e9a';
   isDebt = false;

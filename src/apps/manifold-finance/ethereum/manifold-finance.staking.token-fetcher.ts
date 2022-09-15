@@ -1,15 +1,8 @@
-import { Injectable } from '@nestjs/common';
-
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import { WrapperTemplateTokenFetcher } from '~position/template/wrapper.template.token-fetcher';
-import { Network } from '~types/network.interface';
 
-import { MANIFOLD_FINANCE_DEFINITION } from '../manifold-finance.definition';
-
-@Injectable()
+@PositionTemplate()
 export class EthereumManifoldFinanceStakingTokenFetcher extends WrapperTemplateTokenFetcher {
-  appId = MANIFOLD_FINANCE_DEFINITION.id;
-  groupId = MANIFOLD_FINANCE_DEFINITION.groups.staking.id;
-  network = Network.ETHEREUM_MAINNET;
   groupLabel = 'xFOLD';
 
   vaultAddress = '0x454bd9e2b29eb5963048cc1a8bd6fd44e89899cb';

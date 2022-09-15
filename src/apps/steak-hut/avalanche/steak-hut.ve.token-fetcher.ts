@@ -1,15 +1,8 @@
-import { Injectable } from '@nestjs/common';
-
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import { WrapperTemplateTokenFetcher } from '~position/template/wrapper.template.token-fetcher';
-import { Network } from '~types/network.interface';
 
-import { STEAK_HUT_DEFINITION } from '../steak-hut.definition';
-
-@Injectable()
+@PositionTemplate()
 export class AvalancheSteakHutVeTokenFetcher extends WrapperTemplateTokenFetcher {
-  appId = STEAK_HUT_DEFINITION.id;
-  groupId = STEAK_HUT_DEFINITION.groups.ve.id;
-  network = Network.AVALANCHE_MAINNET;
   groupLabel = 'Voting Escrow';
 
   vaultAddress = '0xe7250b05bd8dee615ecc681eda1196add5156f2b';

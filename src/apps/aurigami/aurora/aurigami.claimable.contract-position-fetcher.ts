@@ -2,6 +2,7 @@ import { Inject } from '@nestjs/common';
 import { BigNumberish } from 'ethers';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { MetaType } from '~position/position.interface';
 import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
@@ -12,15 +13,11 @@ import {
   GetTokenDefinitionsParams,
   UnderlyingTokenDefinition,
 } from '~position/template/contract-position.template.types';
-import { Network } from '~types';
 
-import AURIGAMI_DEFINITION from '../aurigami.definition';
 import { AurigamiComptroller, AurigamiContractFactory } from '../contracts';
 
+@PositionTemplate()
 export class AuroraAurigamiClaimableContractPositionFetcher extends ContractPositionTemplatePositionFetcher<AurigamiComptroller> {
-  appId = AURIGAMI_DEFINITION.id;
-  groupId = AURIGAMI_DEFINITION.groups.claimable.id;
-  network = Network.AURORA_MAINNET;
   groupLabel = 'Rewards';
 
   private lensAddress = '0xffdffbdb966cb84b50e62d70105f2dbf2e0a1e70';

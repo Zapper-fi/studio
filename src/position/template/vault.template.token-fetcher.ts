@@ -26,8 +26,7 @@ export abstract class VaultTemplateTokenFetcher extends AppTokenTemplatePosition
   async getPricePerShare({ multicall, appToken }: GetPricePerShareParams<Erc20>) {
     const underlying = multicall.wrap(this.appToolkit.globalContracts.erc20(appToken.tokens[0]));
     const reserveRaw = await underlying.balanceOf(this.reserveAddress ?? this.vaultAddress);
-    const reserve = Number(reserveRaw) / 10 ** appToken.tokens[0].decimals;
-    return reserve / appToken.supply;
+    return Number(reserveRaw) / 10 ** appToken.tokens[0].decimals;
   }
 
   async getLiquidity({ multicall, appToken }: GetDataPropsParams<Erc20>) {

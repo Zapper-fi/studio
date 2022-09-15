@@ -1,18 +1,12 @@
-import { Injectable } from '@nestjs/common';
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 
-import { Network } from '~types/network.interface';
-
-import { BADGER_DEFINITION } from '../badger.definition';
 import {
   BadgerClaimableContractPositionFetcher,
   BadgerClaimableDefinition,
 } from '../common/badger.claimable.contract-position-fetcher';
 
-@Injectable()
+@PositionTemplate()
 export class EthereumBadgerClaimableContractPositionFetcher extends BadgerClaimableContractPositionFetcher {
-  appId = BADGER_DEFINITION.id;
-  groupId = BADGER_DEFINITION.groups.claimable.id;
-  network = Network.ETHEREUM_MAINNET;
   groupLabel = 'Rewards';
 
   isExcludedFromExplore = true;

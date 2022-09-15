@@ -15,6 +15,7 @@ export type DefaultAppTokenDataProps = {
 // PHASE 1: List addresses and definitions
 export type GetDefinitionsParams = {
   multicall: IMulticallWrapper;
+  tokenLoader: TokenDependencySelector;
 };
 
 export type GetAddressesParams<R = DefaultAppTokenDefinition> = {

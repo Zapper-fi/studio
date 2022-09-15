@@ -1,15 +1,9 @@
-import { Injectable } from '@nestjs/common';
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 
-import { Network } from '~types/network.interface';
-
-import ACROSS_DEFINITION from '../across.definition';
 import { AcrossPoolTokenFetcher } from '../common/across.pool.token-fetcher';
 
-@Injectable()
+@PositionTemplate()
 export class EthereumAcrossV1PoolTokenFetcher extends AcrossPoolTokenFetcher {
-  appId = ACROSS_DEFINITION.id;
-  groupId = ACROSS_DEFINITION.groups.v1Pool.id;
-  network = Network.ETHEREUM_MAINNET;
   groupLabel = 'Pools';
 
   poolAddresses = [

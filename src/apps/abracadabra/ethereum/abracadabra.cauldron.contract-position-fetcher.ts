@@ -1,15 +1,9 @@
-import { Injectable } from '@nestjs/common';
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 
-import { Network } from '~types/network.interface';
-
-import { ABRACADABRA_DEFINITION } from '../abracadabra.definition';
 import { AbracadabraCauldronContractPositionFetcher } from '../common/abracadabra.cauldron.contract-position-fetcher';
 
-@Injectable()
+@PositionTemplate()
 export class EthereumAbracadabraCauldronContractPositionFetcher extends AbracadabraCauldronContractPositionFetcher {
-  appId = ABRACADABRA_DEFINITION.id;
-  groupId = ABRACADABRA_DEFINITION.groups.cauldron.id;
-  network = Network.ETHEREUM_MAINNET;
   groupLabel = 'Cauldrons';
   cauldrons = [
     '0xc1879bf24917ebe531fbaa20b0d05da027b592ce', // AGLD

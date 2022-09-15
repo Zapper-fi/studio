@@ -34,9 +34,9 @@ export abstract class ContractPositionTemplatePositionFetcher<
   R extends DefaultContractPositionDefinition = DefaultContractPositionDefinition,
 > implements PositionFetcher<ContractPosition<V>>, PositionFetcherTemplateCommons
 {
-  abstract appId: string;
-  abstract groupId: string;
-  abstract network: Network;
+  appId: string;
+  groupId: string;
+  network: Network;
   abstract groupLabel: string;
 
   isExcludedFromBalances = false;
@@ -85,7 +85,7 @@ export abstract class ContractPositionTemplatePositionFetcher<
     const statsItems: StatsItem[] = [];
 
     // Standardized Fields
-    if (typeof contractPosition.dataProps.liquidity === 'number' && contractPosition.dataProps.liquidity > 0)
+    if (typeof contractPosition.dataProps.liquidity === 'number' && Math.abs(contractPosition.dataProps.liquidity) > 0)
       statsItems.push({ label: 'Liquidity', value: buildDollarDisplayItem(contractPosition.dataProps.liquidity) });
     if (typeof contractPosition.dataProps.apy === 'number' && contractPosition.dataProps.apy > 0)
       statsItems.push({ label: 'APY', value: buildPercentageDisplayItem(contractPosition.dataProps.apy) });
@@ -105,7 +105,7 @@ export abstract class ContractPositionTemplatePositionFetcher<
       tags: { network: this.network, context: `${this.appId}__template` },
     });
 
-    const definitions = await this.getDefinitions({ multicall });
+    const definitions = await this.getDefinitions({ multicall, tokenLoader });
 
     const skeletons = await Promise.all(
       definitions.map(async definition => {

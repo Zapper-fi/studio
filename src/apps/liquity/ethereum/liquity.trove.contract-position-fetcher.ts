@@ -1,7 +1,8 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Inject } from '@nestjs/common';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { ZERO_ADDRESS } from '~app-toolkit/constants/address';
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { MetaType } from '~position/position.interface';
 import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
@@ -10,16 +11,11 @@ import {
   GetDisplayPropsParams,
   GetTokenBalancesParams,
 } from '~position/template/contract-position.template.types';
-import { Network } from '~types';
 
 import { LiquityContractFactory, TroveManager } from '../contracts';
-import LIQUITY_DEFINITION from '../liquity.definition';
 
-@Injectable()
+@PositionTemplate()
 export class EthereumLiquityTroveContractPositionFetcher extends ContractPositionTemplatePositionFetcher<TroveManager> {
-  appId = LIQUITY_DEFINITION.id;
-  groupId = LIQUITY_DEFINITION.groups.trove.id;
-  network = Network.ETHEREUM_MAINNET;
   groupLabel = 'Trove';
 
   constructor(

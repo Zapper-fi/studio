@@ -1,16 +1,15 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Inject } from '@nestjs/common';
 
 import { APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { AppToolkit } from '~app-toolkit/app-toolkit.service';
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import { GetDataPropsParams, GetTokenBalancesParams } from '~position/template/contract-position.template.types';
 import {
   SingleStakingFarmDataProps,
   SingleStakingFarmDefinition,
   SingleStakingFarmTemplateContractPositionFetcher,
 } from '~position/template/single-staking.template.contract-position-fetcher';
-import { Network } from '~types/network.interface';
 
-import { AELIN_DEFINITION } from '../aelin.definition';
 import { AelinContractFactory, AelinStaking } from '../contracts';
 
 const FARMS = [
@@ -26,11 +25,8 @@ const FARMS = [
   },
 ];
 
-@Injectable()
+@PositionTemplate()
 export class OptimismAelinFarmContractPositionFetcher extends SingleStakingFarmTemplateContractPositionFetcher<AelinStaking> {
-  appId = AELIN_DEFINITION.id;
-  groupId = AELIN_DEFINITION.groups.farm.id;
-  network = Network.OPTIMISM_MAINNET;
   groupLabel = 'Farms';
 
   constructor(

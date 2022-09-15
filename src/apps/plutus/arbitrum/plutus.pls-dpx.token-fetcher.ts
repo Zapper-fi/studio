@@ -1,15 +1,8 @@
-import { Injectable } from '@nestjs/common';
-
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import { WrapperTemplateTokenFetcher } from '~position/template/wrapper.template.token-fetcher';
-import { Network } from '~types/network.interface';
 
-import PLUTUS_DEFINITION from '../plutus.definition';
-
-@Injectable()
+@PositionTemplate()
 export class ArbitrumPlutusPlsDpxTokenFetcher extends WrapperTemplateTokenFetcher {
-  appId = PLUTUS_DEFINITION.id;
-  groupId = PLUTUS_DEFINITION.groups.plsDpx.id;
-  network = Network.ARBITRUM_MAINNET;
   groupLabel = 'plsDPX';
 
   vaultAddress = '0xf236ea74b515ef96a9898f5a4ed4aa591f253ce1';

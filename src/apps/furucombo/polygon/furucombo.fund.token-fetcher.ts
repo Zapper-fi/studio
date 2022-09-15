@@ -1,7 +1,8 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Inject } from '@nestjs/common';
 import Axios from 'axios';
 
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import { getImagesFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { CacheOnInterval } from '~cache/cache-on-interval.decorator';
 import { DisplayProps } from '~position/display.interface';
@@ -55,15 +56,12 @@ const appId = FURUCOMBO_DEFINITION.id;
 const groupId = FURUCOMBO_DEFINITION.groups.fund.id;
 const network = Network.POLYGON_MAINNET;
 
-@Injectable()
+@PositionTemplate()
 export class PolygonFurucomboFundTokenFetcher extends AppTokenTemplatePositionFetcher<
   FurucomboFundShareToken,
   DefaultAppTokenDataProps,
   FurucomboFundDefinition
 > {
-  appId = appId;
-  groupId = groupId;
-  network = network;
   groupLabel = 'Funds';
   minLiquidity = 0;
 

@@ -1,8 +1,9 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Inject } from '@nestjs/common';
 import { BigNumberish } from 'ethers';
 import { compact, range } from 'lodash';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import { RewardRateUnit } from '~app-toolkit/helpers/master-chef/master-chef.contract-position-helper';
 import { IMulticallWrapper } from '~multicall';
 import { isMulticallUnderlyingError } from '~multicall/multicall.ethers';
@@ -19,19 +20,14 @@ import {
   MasterChefContractPositionDataProps,
   MasterChefContractPositionDefinition,
 } from '~position/template/master-chef.template.contract-position-fetcher';
-import { Network } from '~types/network.interface';
 
 import { VectorFinanceContractFactory, VectorFinanceMasterChef, VectorFinanceMasterChefRewarder } from '../contracts';
-import VECTOR_FINANCE_DEFINITION from '../vector-finance.definition';
 
-@Injectable()
+@PositionTemplate()
 export class VectorFinanceFarmContractPositionFetcher extends MasterChefV2TemplateContractPositionFetcher<
   VectorFinanceMasterChef,
   VectorFinanceMasterChefRewarder
 > {
-  appId = VECTOR_FINANCE_DEFINITION.id;
-  groupId = VECTOR_FINANCE_DEFINITION.groups.farm.id;
-  network = Network.AVALANCHE_MAINNET;
   groupLabel = 'Farms';
   chefAddress = '0x423d0fe33031aa4456a17b150804aa57fc157d97';
   rewardRateUnit = RewardRateUnit.SECOND;

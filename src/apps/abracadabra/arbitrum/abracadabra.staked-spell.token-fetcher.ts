@@ -1,15 +1,10 @@
-import { Injectable } from '@nestjs/common';
-
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import { Network } from '~types';
 
-import { ABRACADABRA_DEFINITION } from '../abracadabra.definition';
 import { AbracadabraBridgedStakedSpellTokenFetcher } from '../common/abracadabra.bridged-staked-spell.token-fetcher';
 
-@Injectable()
+@PositionTemplate()
 export class ArbitrumAbracadabraStakedSpellTokenFetcher extends AbracadabraBridgedStakedSpellTokenFetcher {
-  appId = ABRACADABRA_DEFINITION.id;
-  groupId = ABRACADABRA_DEFINITION.groups.stakedSpell.id;
-  network = Network.ARBITRUM_MAINNET;
   groupLabel = 'Staked SPELL';
 
   vaultAddress = '0xf7428ffcb2581a2804998efbb036a43255c8a8d3';

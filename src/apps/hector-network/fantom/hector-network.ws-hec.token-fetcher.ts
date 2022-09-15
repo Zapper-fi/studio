@@ -1,15 +1,8 @@
-import { Injectable } from '@nestjs/common';
-
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import { VaultTemplateTokenFetcher } from '~position/template/vault.template.token-fetcher';
-import { Network } from '~types/network.interface';
 
-import { HECTOR_NETWORK_DEFINITION } from '../hector-network.definition';
-
-@Injectable()
+@PositionTemplate()
 export class FantomHectorNetworkWsHecTokenFetcher extends VaultTemplateTokenFetcher {
-  appId = HECTOR_NETWORK_DEFINITION.id;
-  groupId = HECTOR_NETWORK_DEFINITION.groups.wsHec.id;
-  network = Network.FANTOM_OPERA_MAINNET;
   groupLabel = 'Wrapped sHEC V2';
 
   vaultAddress = '0x94ccf60f700146bea8ef7832820800e2dfa92eda';

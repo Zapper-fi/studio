@@ -1,24 +1,20 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Inject } from '@nestjs/common';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import {
   CompoundBorrowContractPositionFetcher,
   CompoundBorrowTokenDataProps,
 } from '~apps/compound/common/compound.borrow.contract-position-fetcher';
 import { GetDataPropsParams } from '~position/template/contract-position.template.types';
-import { Network } from '~types/network.interface';
 
-import { AURIGAMI_DEFINITION } from '../aurigami.definition';
 import { AurigamiAuToken, AurigamiComptroller, AurigamiContractFactory } from '../contracts';
 
-@Injectable()
+@PositionTemplate()
 export class AuroraAurigamiBorrowContractPositionFetcher extends CompoundBorrowContractPositionFetcher<
   AurigamiAuToken,
   AurigamiComptroller
 > {
-  appId = AURIGAMI_DEFINITION.id;
-  groupId = AURIGAMI_DEFINITION.groups.borrow.id;
-  network = Network.AURORA_MAINNET;
   groupLabel = 'Lending';
   comptrollerAddress = '0x817af6cfaf35bdc1a634d6cc94ee9e4c68369aeb';
 

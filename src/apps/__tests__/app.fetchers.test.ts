@@ -35,8 +35,8 @@ describe('App Token Fetchers', () => {
     );
 
     const missingFiles = templates
-      .filter((t, i) => !fileExists[i])
-      .map(t => `(${t.appId}, ${t.groupId}, ${t?.network})`);
+      .filter((_t, i) => !fileExists[i])
+      .map(t => `(${t.constructor.name}: ${t.appId}, ${t.groupId}, ${t?.network})`);
 
     expect(missingFiles, `${missingFiles.join(', ')} have incorrect filename conventions`).toHaveLength(0);
   });

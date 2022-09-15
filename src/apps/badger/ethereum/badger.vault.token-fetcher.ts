@@ -1,14 +1,8 @@
-import { Injectable } from '@nestjs/common';
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 
-import { Network } from '~types/network.interface';
-
-import { BADGER_DEFINITION } from '../badger.definition';
 import { BadgerVaultTokenFetcher } from '../common/badger.vault.token-fetcher';
 
-@Injectable()
+@PositionTemplate()
 export class EthereumBadgerVaultTokenFetcher extends BadgerVaultTokenFetcher {
-  appId = BADGER_DEFINITION.id;
-  groupId = BADGER_DEFINITION.groups.vault.id;
-  network = Network.ETHEREUM_MAINNET;
   groupLabel = 'Vaults';
 }

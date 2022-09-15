@@ -1,20 +1,16 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Inject } from '@nestjs/common';
 import { formatUnits } from 'ethers/lib/utils';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { BLOCKS_PER_DAY } from '~app-toolkit/constants/blocks';
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import { MorphoCompound, MorphoContractFactory } from '~apps/morpho/contracts';
 import { BaseEthereumMorphoSupplyContractPositionFetcher } from '~apps/morpho/helpers/position-fetcher.common';
-import MORPHO_DEFINITION from '~apps/morpho/morpho.definition';
 import { isMulticallUnderlyingError } from '~multicall/multicall.ethers';
 import { GetDefinitionsParams } from '~position/template/contract-position.template.types';
-import { Network } from '~types';
 
-@Injectable()
+@PositionTemplate()
 export class EthereumMorphoCompoundSupplyContractPositionFetcher extends BaseEthereumMorphoSupplyContractPositionFetcher<MorphoCompound> {
-  appId = MORPHO_DEFINITION.id;
-  groupId = MORPHO_DEFINITION.groups.morphoCompound.id;
-  network = Network.ETHEREUM_MAINNET;
   groupLabel = 'Morpho Compound';
 
   morphoAddress = '0x8888882f8f843896699869179fb6e4f7e3b58888';

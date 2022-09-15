@@ -1,24 +1,20 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Inject } from '@nestjs/common';
 import { BigNumber } from 'ethers';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import {
   GetDataPropsParams,
   GetPricePerShareParams,
   GetUnderlyingTokensParams,
 } from '~position/template/app-token.template.types';
-import { Network } from '~types/network.interface';
 
 import { PlutusContractFactory } from '../contracts';
 import { PlutusPlvGlp } from '../contracts/ethers/PlutusPlvGlp';
-import { PLUTUS_DEFINITION } from '../plutus.definition';
 
-@Injectable()
+@PositionTemplate()
 export class ArbitrumPlutusPlvGlpTokenFetcher extends AppTokenTemplatePositionFetcher<PlutusPlvGlp> {
-  appId = PLUTUS_DEFINITION.id;
-  groupId = PLUTUS_DEFINITION.groups.plvGlp.id;
-  network = Network.ARBITRUM_MAINNET;
   groupLabel = 'plvGLP';
 
   constructor(
