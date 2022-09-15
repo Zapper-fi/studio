@@ -1,6 +1,7 @@
 import { Inject } from '@nestjs/common';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import { GetDataPropsParams, GetTokenBalancesParams } from '~position/template/contract-position.template.types';
 import {
   SingleStakingFarmDataProps,
@@ -10,6 +11,7 @@ import {
 
 import { PlutusContractFactory, PlutusFarmPlsDpx } from '../contracts';
 
+@PositionTemplate()
 export class ArbitrumPlutusFarmPlsDpxContractPositionFetcher extends SingleStakingFarmTemplateContractPositionFetcher<PlutusFarmPlsDpx> {
   groupLabel = 'plsDPX Farm';
 
