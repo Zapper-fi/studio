@@ -4,6 +4,15 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.224.0](https://github.com/Zapper-fi/studio/compare/v0.223.1...v0.224.0) (2022-09-15)
+
+
+### Features
+
+* **impermax:** Migrate to template ([#1411](https://github.com/Zapper-fi/studio/issues/1411)) ([120b839](https://github.com/Zapper-fi/studio/commit/120b839be4d4f1faf7bbdf3d02b1ee7d1a1494af))
+* **tarot:** Migrate to template ([#1415](https://github.com/Zapper-fi/studio/issues/1415)) ([e07372a](https://github.com/Zapper-fi/studio/commit/e07372ac4b8639e3803316c1613de350b369c205))
+* **template:** Read attributes from template path ([#1416](https://github.com/Zapper-fi/studio/issues/1416)) ([2538a3b](https://github.com/Zapper-fi/studio/commit/2538a3bd94b22a36acd8198a453f7a6107ae3904))
+
 ## [0.223.1](https://github.com/Zapper-fi/studio/compare/v0.223.0...v0.223.1) (2022-09-13)
 
 
