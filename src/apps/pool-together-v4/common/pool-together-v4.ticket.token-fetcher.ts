@@ -1,9 +1,9 @@
 import { Inject } from '@nestjs/common';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
-import { DefaultDataProps } from '~position/display.interface';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import {
+  DefaultAppTokenDataProps,
   DefaultAppTokenDefinition,
   GetAddressesParams,
   GetDefinitionsParams,
@@ -18,13 +18,9 @@ type Definition = DefaultAppTokenDefinition & {
   underlyingTokenAddress: string;
 };
 
-type PoolTogetherV4TicketDataProps = {
-  liquidity: number;
-};
-
 export abstract class PoolTogetherV4TicketTokenFetcher extends AppTokenTemplatePositionFetcher<
   PoolTogetherV4Ticket,
-  DefaultDataProps,
+  DefaultAppTokenDataProps,
   Definition
 > {
   constructor(
@@ -88,15 +84,15 @@ export abstract class PoolTogetherV4TicketTokenFetcher extends AppTokenTemplateP
     return [definition.underlyingTokenAddress];
   }
 
-  async getDataProps({
-    appToken,
-  }: GetDataPropsParams<
-    PoolTogetherV4Ticket,
-    PoolTogetherV4TicketDataProps,
-    Definition
-  >): Promise<PoolTogetherV4TicketDataProps> {
-    const underlyingToken = appToken.tokens[0];
-    const liquidity = appToken.supply * underlyingToken.price;
-    return { liquidity };
+  async getLiquidity({ appToken }: GetDataPropsParams<PoolTogetherV4Ticket>) {
+    return appToken.supply * appToken.price;
+  }
+
+  async getReserves({ appToken }: GetDataPropsParams<PoolTogetherV4Ticket>) {
+    return [appToken.pricePerShare[0] * appToken.supply];
+  }
+
+  async getApy(_params: GetDataPropsParams<PoolTogetherV4Ticket>) {
+    return 0;
   }
 }

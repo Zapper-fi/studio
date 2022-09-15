@@ -14,16 +14,8 @@ import { PlutusContractFactory } from '../contracts';
 import { PlutusPlvGlp } from '../contracts/ethers/PlutusPlvGlp';
 import { PLUTUS_DEFINITION } from '../plutus.definition';
 
-type PlutusPlvGlpTokenDataProps = {
-  reserve: number;
-  liquidity: number;
-};
-
 @Injectable()
-export class ArbitrumPlutusPlvGlpTokenFetcher extends AppTokenTemplatePositionFetcher<
-  PlutusPlvGlp,
-  PlutusPlvGlpTokenDataProps
-> {
+export class ArbitrumPlutusPlvGlpTokenFetcher extends AppTokenTemplatePositionFetcher<PlutusPlvGlp> {
   appId = PLUTUS_DEFINITION.id;
   groupId = PLUTUS_DEFINITION.groups.plvGlp.id;
   network = Network.ARBITRUM_MAINNET;
@@ -53,10 +45,20 @@ export class ArbitrumPlutusPlvGlpTokenFetcher extends AppTokenTemplatePositionFe
     return Number(pricePerShareRaw) / 10 ** 18;
   }
 
-  async getDataProps({ appToken, contract }: GetDataPropsParams<PlutusPlvGlp>) {
+  async getLiquidity({ appToken, contract }: GetDataPropsParams<PlutusPlvGlp>): number | Promise<number> {
     const reserveRaw = await contract.totalAssets();
     const reserve = Number(reserveRaw) / 10 ** appToken.tokens[0].decimals;
     const liquidity = reserve * appToken.tokens[0].price;
-    return { reserve, liquidity };
+    return liquidity;
+  }
+
+  async getReserves({ appToken, contract }: GetDataPropsParams<PlutusPlvGlp>) {
+    const reserveRaw = await contract.totalAssets();
+    const reserve = Number(reserveRaw) / 10 ** appToken.tokens[0].decimals;
+    return [reserve];
+  }
+
+  async getApy(_params: GetDataPropsParams<PlutusPlvGlp>) {
+    return 0;
   }
 }

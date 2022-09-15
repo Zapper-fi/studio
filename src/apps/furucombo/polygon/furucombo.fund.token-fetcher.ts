@@ -41,8 +41,6 @@ interface FurucomboFund {
   fundVault: string;
 }
 
-type FurucomboFundDataProps = DefaultAppTokenDataProps;
-
 type FurucomboFundDefinition = {
   address: string;
   vaultAddress: string;
@@ -60,7 +58,7 @@ const network = Network.POLYGON_MAINNET;
 @Injectable()
 export class PolygonFurucomboFundTokenFetcher extends AppTokenTemplatePositionFetcher<
   FurucomboFundShareToken,
-  FurucomboFundDataProps,
+  DefaultAppTokenDataProps,
   FurucomboFundDefinition
 > {
   appId = appId;
@@ -119,7 +117,7 @@ export class PolygonFurucomboFundTokenFetcher extends AppTokenTemplatePositionFe
   async getPricePerShare({
     appToken,
     definition,
-  }: GetPricePerShareParams<FurucomboFundShareToken, FurucomboFundDataProps, FurucomboFundDefinition>) {
+  }: GetPricePerShareParams<FurucomboFundShareToken, DefaultAppTokenDataProps, FurucomboFundDefinition>) {
     return Number(definition.price) / appToken.tokens[0].price;
   }
 
@@ -144,7 +142,7 @@ export class PolygonFurucomboFundTokenFetcher extends AppTokenTemplatePositionFe
 
   async getLabel({
     definition,
-  }: GetDisplayPropsParams<FurucomboFundShareToken, FurucomboFundDataProps, FurucomboFundDefinition>): Promise<
+  }: GetDisplayPropsParams<FurucomboFundShareToken, DefaultAppTokenDataProps, FurucomboFundDefinition>): Promise<
     DisplayProps['label']
   > {
     return definition.name;
@@ -152,7 +150,7 @@ export class PolygonFurucomboFundTokenFetcher extends AppTokenTemplatePositionFe
 
   async getImages({
     appToken,
-  }: GetDisplayPropsParams<FurucomboFundShareToken, FurucomboFundDataProps>): Promise<DisplayProps['images']> {
+  }: GetDisplayPropsParams<FurucomboFundShareToken, DefaultAppTokenDataProps>): Promise<DisplayProps['images']> {
     return appToken.tokens.flatMap(t => getImagesFromToken(t));
   }
 }

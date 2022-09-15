@@ -14,16 +14,8 @@ import { Network } from '~types';
 import { LlamaAirforceContractFactory, LlamaAirforceUnionVault } from '../contracts';
 import { LLAMA_AIRFORCE_DEFINITION } from '../llama-airforce.definition';
 
-export type LlamaAirforceVaultTokenDataProps = {
-  reserve: number;
-  liquidity: number;
-};
-
 @Injectable()
-export class EthereumLlamaAirforceVaultTokenFetcher extends AppTokenTemplatePositionFetcher<
-  LlamaAirforceUnionVault,
-  LlamaAirforceVaultTokenDataProps
-> {
+export class EthereumLlamaAirforceVaultTokenFetcher extends AppTokenTemplatePositionFetcher<LlamaAirforceUnionVault> {
   appId = LLAMA_AIRFORCE_DEFINITION.id;
   groupId = LLAMA_AIRFORCE_DEFINITION.groups.vault.id;
   network = Network.ETHEREUM_MAINNET;
@@ -79,15 +71,19 @@ export class EthereumLlamaAirforceVaultTokenFetcher extends AppTokenTemplatePosi
     return reserve / appToken.supply;
   }
 
-  async getDataProps({
-    appToken,
-  }: GetDataPropsParams<LlamaAirforceUnionVault>): Promise<LlamaAirforceVaultTokenDataProps> {
-    const reserve = appToken.pricePerShare[0] * appToken.supply;
-    const liquidity = reserve * appToken.price;
-    return { reserve, liquidity };
+  getLiquidity({ appToken }: GetDataPropsParams<LlamaAirforceUnionVault>) {
+    return appToken.supply * appToken.price;
   }
 
-  async getLabel({ appToken }: GetDisplayPropsParams<LlamaAirforceUnionVault, LlamaAirforceVaultTokenDataProps>) {
+  getReserves({ appToken }: GetDataPropsParams<LlamaAirforceUnionVault>) {
+    return [appToken.pricePerShare[0] * appToken.supply];
+  }
+
+  getApy(_params: GetDataPropsParams<LlamaAirforceUnionVault>) {
+    return 0;
+  }
+
+  async getLabel({ appToken }: GetDisplayPropsParams<LlamaAirforceUnionVault>) {
     return `${getLabelFromToken(appToken.tokens[0])} Pounder`;
   }
 }

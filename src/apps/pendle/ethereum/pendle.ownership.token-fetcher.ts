@@ -16,13 +16,14 @@ import {
   DefaultAppTokenDefinition,
   GetDefinitionsParams,
   GetAddressesParams,
+  DefaultAppTokenDataProps,
 } from '~position/template/app-token.template.types';
 import { Network } from '~types/network.interface';
 
 import { PendleContractFactory, PendleOwnershipToken } from '../contracts';
 import { PENDLE_DEFINITION } from '../pendle.definition';
 
-export type PendleOwnershipdTokenDataProps = {
+export type PendleOwnershipTokenDataProps = DefaultAppTokenDataProps & {
   expiry: number;
   marketAddress: string;
   baseTokenAddress: string;
@@ -43,7 +44,7 @@ export type PendleOwnershipTokenDefinition = {
 @Injectable()
 export class EthereumPendleOwnershipTokenFetcher extends AppTokenTemplatePositionFetcher<
   PendleOwnershipToken,
-  PendleOwnershipdTokenDataProps,
+  PendleOwnershipTokenDataProps,
   PendleOwnershipTokenDefinition
 > {
   appId = PENDLE_DEFINITION.id;
@@ -123,7 +124,7 @@ export class EthereumPendleOwnershipTokenFetcher extends AppTokenTemplatePositio
     multicall,
     appToken,
     tokenLoader,
-  }: GetPricePerShareParams<PendleOwnershipToken, PendleOwnershipdTokenDataProps, PendleOwnershipTokenDefinition>) {
+  }: GetPricePerShareParams<PendleOwnershipToken, PendleOwnershipTokenDataProps, PendleOwnershipTokenDefinition>) {
     const { expiry, baseTokenAddress } = definition;
     const baseToken = await tokenLoader.getOne({ address: baseTokenAddress.toLowerCase(), network: this.network });
     if (!baseToken || Date.now() / 1000 > Number(expiry)) return 0;
@@ -152,18 +153,31 @@ export class EthereumPendleOwnershipTokenFetcher extends AppTokenTemplatePositio
     return otPrice / appToken.tokens[0].price;
   }
 
-  async getDataProps({
-    definition,
-  }: GetDataPropsParams<PendleOwnershipToken, PendleOwnershipdTokenDataProps, PendleOwnershipTokenDefinition>) {
-    const { marketAddress, baseTokenAddress, expiry } = definition;
-    return { marketAddress, baseTokenAddress, expiry };
+  getLiquidity({ appToken }: GetDataPropsParams<PendleOwnershipToken>) {
+    return appToken.supply * appToken.price;
+  }
+
+  getReserves({ appToken }: GetDataPropsParams<PendleOwnershipToken>) {
+    return [appToken.pricePerShare[0] * appToken.supply];
+  }
+
+  getApy(_params: GetDataPropsParams<PendleOwnershipToken>) {
+    return 0;
+  }
+
+  async getDataProps(
+    params: GetDataPropsParams<PendleOwnershipToken, PendleOwnershipTokenDataProps, PendleOwnershipTokenDefinition>,
+  ) {
+    const defaultDataProps = await super.getDataProps(params);
+    const { marketAddress, baseTokenAddress, expiry } = params.definition;
+    return { ...defaultDataProps, marketAddress, baseTokenAddress, expiry };
   }
 
   async getLabel({
     appToken,
     definition,
     tokenLoader,
-  }: GetDisplayPropsParams<PendleOwnershipToken, PendleOwnershipdTokenDataProps, PendleOwnershipTokenDefinition>) {
+  }: GetDisplayPropsParams<PendleOwnershipToken, PendleOwnershipTokenDataProps, PendleOwnershipTokenDefinition>) {
     const baseToken = await tokenLoader.getOne({ address: definition.baseTokenAddress, network: this.network });
     return `OT ${getLabelFromToken(appToken.tokens[0])}${baseToken ? ` - ${baseToken.symbol}` : ''}`;
   }
@@ -172,7 +186,7 @@ export class EthereumPendleOwnershipTokenFetcher extends AppTokenTemplatePositio
     appToken,
   }: GetDisplayPropsParams<
     PendleOwnershipToken,
-    PendleOwnershipdTokenDataProps,
+    PendleOwnershipTokenDataProps,
     PendleOwnershipTokenDefinition
   >): Promise<string | number | DollarDisplayItem | PercentageDisplayItem | undefined> {
     const { expiry } = appToken.dataProps;
