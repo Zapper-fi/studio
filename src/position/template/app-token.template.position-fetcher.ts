@@ -150,7 +150,7 @@ export abstract class AppTokenTemplatePositionFetcher<
       tags: { network: this.network, context: `${this.appId}__template` },
     });
 
-    const definitions = await this.getDefinitions({ multicall });
+    const definitions = await this.getDefinitions({ multicall, tokenLoader });
     const addressesRaw = await this.getAddresses({ multicall, definitions });
     const addresses = addressesRaw.map(x => x.toLowerCase());
 
