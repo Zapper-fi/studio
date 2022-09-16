@@ -4,6 +4,15 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.226.0](https://github.com/Zapper-fi/studio/compare/v0.225.0...v0.226.0) (2022-09-16)
+
+
+### Features
+
+* **arth:** Added Arth and MahaDAO integration  ([#1371](https://github.com/Zapper-fi/studio/issues/1371)) ([6c7e4c5](https://github.com/Zapper-fi/studio/commit/6c7e4c540a0ac821b3216635d0b43fac7cffb1ba))
+* **arth:** Update according to new patterns ([b70d05c](https://github.com/Zapper-fi/studio/commit/b70d05c3ca54f2d314ea535cc5c8655b016a0c8f))
+* **positions:** Separate balance fetching from hydration in position fetchers ([#1418](https://github.com/Zapper-fi/studio/issues/1418)) ([7945f76](https://github.com/Zapper-fi/studio/commit/7945f766acc9a01f791b1174697e3ec00355b1f1))
+
 ## [0.225.0](https://github.com/Zapper-fi/studio/compare/v0.224.1...v0.225.0) (2022-09-15)
 
 
