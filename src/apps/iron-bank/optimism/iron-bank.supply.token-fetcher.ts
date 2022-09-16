@@ -1,20 +1,16 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Inject } from '@nestjs/common';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import { CompoundSupplyTokenFetcher } from '~apps/compound/common/compound.supply.token-fetcher';
-import { Network } from '~types/network.interface';
 
 import { IronBankComptroller, IronBankContractFactory, IronBankCToken } from '../contracts';
-import IRON_BANK_DEFINITION from '../iron-bank.definition';
 
-@Injectable()
+@PositionTemplate()
 export class OptimismIronBankSupplyTokenFetcher extends CompoundSupplyTokenFetcher<
   IronBankCToken,
   IronBankComptroller
 > {
-  appId = IRON_BANK_DEFINITION.id;
-  groupId = IRON_BANK_DEFINITION.groups.supply.id;
-  network = Network.OPTIMISM_MAINNET;
   groupLabel = 'Lending';
   comptrollerAddress = '0xe0b57feed45e7d908f2d0dacd26f113cf26715bf';
 

@@ -1,15 +1,9 @@
-import { Injectable } from '@nestjs/common';
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 
-import { Network } from '~types/network.interface';
-
-import { ARGO_FINANCE_DEFINITION } from '../argo-finance.definition';
 import { ArgoFinanceXargoTokenFetcher } from '../common/argo-finance.x-argo.token-fetcher';
 
-@Injectable()
+@PositionTemplate()
 export class CronosArgoFinanceXArgoTokenFetcher extends ArgoFinanceXargoTokenFetcher {
-  appId = ARGO_FINANCE_DEFINITION.id;
-  groupId = ARGO_FINANCE_DEFINITION.groups.xArgo.id;
-  network = Network.CRONOS_MAINNET;
   groupLabel = 'XArgo';
 
   isExcludedFromBalances = true;

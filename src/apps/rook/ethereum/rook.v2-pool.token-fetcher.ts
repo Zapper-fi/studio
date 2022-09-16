@@ -1,15 +1,9 @@
-import { Injectable } from '@nestjs/common';
-
-import { Network } from '~types/network.interface';
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 
 import { RookPoolTokenFetcher } from '../common/rook.pool.token-fetcher';
-import { ROOK_DEFINITION } from '../rook.definition';
 
-@Injectable()
+@PositionTemplate()
 export class EthereumRookV2PoolTokenFetcher extends RookPoolTokenFetcher {
-  appId = ROOK_DEFINITION.id;
-  groupId = ROOK_DEFINITION.groups.v2Pool.id;
-  network = Network.ETHEREUM_MAINNET;
   groupLabel = 'V2 Pools';
 
   isV3 = false;

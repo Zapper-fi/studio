@@ -90,9 +90,9 @@ export type AppDefinitionObject = {
   tags: ArrayOfOneOrMore<AppTag>;
   keywords?: string[];
   description: string;
-  groups: Record<string, AppGroup>;
+  groups?: Record<string, AppGroup>;
   presentationConfig?: PresentationConfig;
-  supportedNetworks: { [N in Network]?: AppAction[] };
+  supportedNetworks?: { [N in Network]?: AppAction[] };
   primaryColor?: string;
   url: string;
   links: AppLinks;

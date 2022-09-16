@@ -1,10 +1,11 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Inject } from '@nestjs/common';
 import BigNumber from 'bignumber.js';
 import { range } from 'lodash';
 import moment from 'moment';
 
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { ZERO_ADDRESS } from '~app-toolkit/constants/address';
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { DollarDisplayItem, PercentageDisplayItem } from '~position/display.interface';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
@@ -17,10 +18,8 @@ import {
   GetDefinitionsParams,
   GetAddressesParams,
 } from '~position/template/app-token.template.types';
-import { Network } from '~types/network.interface';
 
 import { PendleContractFactory, PendleOwnershipToken } from '../contracts';
-import { PENDLE_DEFINITION } from '../pendle.definition';
 
 export type PendleOwnershipdTokenDataProps = {
   expiry: number;
@@ -40,15 +39,12 @@ export type PendleOwnershipTokenDefinition = {
   expiry: number;
 };
 
-@Injectable()
+@PositionTemplate()
 export class EthereumPendleOwnershipTokenFetcher extends AppTokenTemplatePositionFetcher<
   PendleOwnershipToken,
   PendleOwnershipdTokenDataProps,
   PendleOwnershipTokenDefinition
 > {
-  appId = PENDLE_DEFINITION.id;
-  groupId = PENDLE_DEFINITION.groups.ownership.id;
-  network = Network.ETHEREUM_MAINNET;
   groupLabel = 'Ownership';
   pendleDataAddress = '0xe8a6916576832aa5504092c1cccc46e3bb9491d6';
   dexFactoryAddress = '0xc0aee478e3658e2610c5f7a4a2e1777ce9e4f2ac';

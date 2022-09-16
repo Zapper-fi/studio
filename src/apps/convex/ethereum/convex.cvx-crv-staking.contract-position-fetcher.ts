@@ -1,15 +1,9 @@
-import { Injectable } from '@nestjs/common';
-
-import { Network } from '~types/network.interface';
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 
 import { ConvexFarmContractPositionFetcher } from '../common/convex.farm.contract-position-fetcher';
-import { CONVEX_DEFINITION } from '../convex.definition';
 
-@Injectable()
+@PositionTemplate()
 export class EthereumConvexCvxCrvStakingContractPositionFetcher extends ConvexFarmContractPositionFetcher {
-  appId = CONVEX_DEFINITION.id;
-  groupId = CONVEX_DEFINITION.groups.cvxCrvStaking.id;
-  network = Network.ETHEREUM_MAINNET;
   groupLabel = 'cvxCRV Staking';
 
   getFarmAddresses() {

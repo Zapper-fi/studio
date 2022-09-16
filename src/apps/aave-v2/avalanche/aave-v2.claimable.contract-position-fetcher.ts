@@ -1,17 +1,10 @@
-import { Injectable } from '@nestjs/common';
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 
-import { Network } from '~types/network.interface';
-
-import { AAVE_V2_DEFINITION } from '../aave-v2.definition';
 import { AaveV2ClaimableTemplatePositionFetcher } from '../helpers/aave-v2.claimable.template.contract-position-fetcher';
 
-@Injectable()
+@PositionTemplate()
 export class AvalancheAaveV2ClaimableContractPositionFetcher extends AaveV2ClaimableTemplatePositionFetcher {
-  appId = AAVE_V2_DEFINITION.id;
-  network = Network.AVALANCHE_MAINNET;
-  groupId = AAVE_V2_DEFINITION.groups.claimable.id;
   groupLabel = 'Rewards';
-
   isExcludedFromExplore = true;
   isExcludedFromTvl = true;
 

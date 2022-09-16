@@ -1,17 +1,13 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Inject } from '@nestjs/common';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import { CompoundSupplyTokenFetcher } from '~apps/compound/common/compound.supply.token-fetcher';
-import { Network } from '~types/network.interface';
 
 import { IronBankComptroller, IronBankContractFactory, IronBankCToken } from '../contracts';
-import IRON_BANK_DEFINITION from '../iron-bank.definition';
 
-@Injectable()
+@PositionTemplate()
 export class FantomIronBankSupplyTokenFetcher extends CompoundSupplyTokenFetcher<IronBankCToken, IronBankComptroller> {
-  appId = IRON_BANK_DEFINITION.id;
-  groupId = IRON_BANK_DEFINITION.groups.supply.id;
-  network = Network.FANTOM_OPERA_MAINNET;
   groupLabel = 'Lending';
   comptrollerAddress = '0x4250a6d3bd57455d7c6821eecb6206f507576cd2';
 

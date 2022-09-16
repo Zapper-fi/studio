@@ -1,9 +1,10 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Inject } from '@nestjs/common';
 import { BigNumberish } from 'ethers';
 import { range } from 'lodash';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { ZERO_ADDRESS } from '~app-toolkit/constants/address';
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import { isClaimable } from '~position/position.utils';
 import {
   GetDataPropsParams,
@@ -14,18 +15,13 @@ import {
   SingleStakingFarmDataProps,
   SingleStakingFarmDynamicTemplateContractPositionFetcher,
 } from '~position/template/single-staking.dynamic.template.contract-position-fetcher';
-import { Network } from '~types';
 
 import { StakeDaoContractFactory, StakeDaoGauge } from '../contracts';
-import { STAKE_DAO_DEFINITION } from '../stake-dao.definition';
 
 import { LOCKERS } from './stake-dao.locker.token-fetcher';
 
-@Injectable()
+@PositionTemplate()
 export class EthereumStakeDaoGaugeContractPositionFetcher extends SingleStakingFarmDynamicTemplateContractPositionFetcher<StakeDaoGauge> {
-  appId = STAKE_DAO_DEFINITION.id;
-  groupId = STAKE_DAO_DEFINITION.groups.gauge.id;
-  network = Network.ETHEREUM_MAINNET;
   groupLabel = 'Gauges';
 
   constructor(

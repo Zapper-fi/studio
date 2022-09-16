@@ -1,15 +1,9 @@
-import { Injectable } from '@nestjs/common';
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 
-import { Network } from '~types/network.interface';
-
-import BARNBRIDGE_SMART_ALPHA_DEFINITION from '../barnbridge-smart-alpha.definition';
 import { BarnbridgeSmartAlphaJuniorPoolTokenFetcher } from '../common/barnbridge-smart-alpha.junior.pool-token-fetcher';
 
-@Injectable()
+@PositionTemplate()
 export class EthereumBarnbridgeSmartAlphaJuniorTokenFetcher extends BarnbridgeSmartAlphaJuniorPoolTokenFetcher {
-  appId = BARNBRIDGE_SMART_ALPHA_DEFINITION.id;
-  groupId = BARNBRIDGE_SMART_ALPHA_DEFINITION.groups.juniorPool.id;
-  network = Network.ETHEREUM_MAINNET;
   groupLabel = 'Junior pools';
   minLiquidity = 0;
   poolAlphaAddresses = [

@@ -1,15 +1,9 @@
-import { Injectable } from '@nestjs/common';
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 
-import { Network } from '~types/network.interface';
-
-import { ABRACADABRA_DEFINITION } from '../abracadabra.definition';
 import { AbracadabraCauldronContractPositionFetcher } from '../common/abracadabra.cauldron.contract-position-fetcher';
 
-@Injectable()
+@PositionTemplate()
 export class BinanceSmartChainAbracadabraCauldronContractPositionFetcher extends AbracadabraCauldronContractPositionFetcher {
-  appId = ABRACADABRA_DEFINITION.id;
-  groupId = ABRACADABRA_DEFINITION.groups.cauldron.id;
-  network = Network.BINANCE_SMART_CHAIN_MAINNET;
   groupLabel = 'Cauldrons';
   cauldrons = [
     '0x692cf15f80415d83e8c0e139cabcda67fcc12c90', // wBNB

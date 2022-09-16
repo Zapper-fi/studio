@@ -1,17 +1,13 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Inject } from '@nestjs/common';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import { CompoundSupplyTokenFetcher } from '~apps/compound/common/compound.supply.token-fetcher';
-import { Network } from '~types/network.interface';
 
 import { TectonicContractFactory, TectonicCore, TectonicTToken } from '../contracts';
-import { TECTONIC_DEFINITION } from '../tectonic.definition';
 
-@Injectable()
+@PositionTemplate()
 export class CronosTectonicSupplyTokenFetcher extends CompoundSupplyTokenFetcher<TectonicTToken, TectonicCore> {
-  appId = TECTONIC_DEFINITION.id;
-  groupId = TECTONIC_DEFINITION.groups.supply.id;
-  network = Network.CRONOS_MAINNET;
   groupLabel = 'Lending';
   comptrollerAddress = '0xb3831584acb95ed9ccb0c11f677b5ad01deaeec0';
 
