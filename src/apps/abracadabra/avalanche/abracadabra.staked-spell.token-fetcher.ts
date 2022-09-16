@@ -7,7 +7,7 @@ import { AbracadabraBridgedStakedSpellTokenFetcher } from '../common/abracadabra
 export class AvalancheAbracadabraStakedSpellTokenFetcher extends AbracadabraBridgedStakedSpellTokenFetcher {
   groupLabel = 'Staked SPELL';
 
-  vaultAddress: '0x3ee97d514bbef95a2f110e6b9b73824719030f7a';
-  underlyingTokenAddress: '0x26fa3fffb6efe8c1e69103acb4044c26b9a106a9';
+  vaultAddress = '0x3ee97d514bbef95a2f110e6b9b73824719030f7a';
+  underlyingTokenAddress = '0x26fa3fffb6efe8c1e69103acb4044c26b9a106a9';
   fromNetwork = Network.ETHEREUM_MAINNET;
 }

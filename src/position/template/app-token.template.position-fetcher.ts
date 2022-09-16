@@ -125,7 +125,8 @@ export abstract class AppTokenTemplatePositionFetcher<
   }
 
   async getTertiaryLabel({ appToken }: GetDisplayPropsParams<T, V, R>): Promise<DisplayProps['tertiaryLabel']> {
-    if (typeof appToken.dataProps.apy === 'number') return `${appToken.dataProps.apy.toFixed(3)}% APY`;
+    if (typeof appToken.dataProps.apy === 'number' && appToken.dataProps.apy > 0)
+      return `${appToken.dataProps.apy.toFixed(3)}% APY`;
     return undefined;
   }
 
@@ -143,7 +144,7 @@ export abstract class AppTokenTemplatePositionFetcher<
     // Standardized Fields
     if (typeof appToken.dataProps.liquidity === 'number')
       statsItems.push({ label: 'Liquidity', value: buildDollarDisplayItem(appToken.dataProps.liquidity) });
-    if (typeof appToken.dataProps.apy === 'number')
+    if (typeof appToken.dataProps.apy === 'number' && appToken.dataProps.apy > 0)
       statsItems.push({ label: 'APY', value: buildPercentageDisplayItem(appToken.dataProps.apy) });
 
     return statsItems;
