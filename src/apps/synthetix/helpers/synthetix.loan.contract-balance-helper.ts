@@ -71,8 +71,8 @@ export class SynthetixLoanContractBalanceHelper {
         const sETHdebtBalanceRaw = new BigNumber((sETHdebt * 10 ** sETHdebtToken.decimals).toString()).toFixed(0);
 
         const collateralBalance = drillBalance(collateralToken, collateralBalanceRaw);
-        const sUSDdebtBalance = drillBalance(sUSDdebtToken, sUSDdebtBalanceRaw);
-        const sETHdebtBalance = drillBalance(sETHdebtToken, sETHdebtBalanceRaw);
+        const sUSDdebtBalance = drillBalance(sUSDdebtToken, sUSDdebtBalanceRaw, { isDebt: true });
+        const sETHdebtBalance = drillBalance(sETHdebtToken, sETHdebtBalanceRaw, { isDebt: true });
 
         const tokens = [collateralBalance, sUSDdebtBalance, sETHdebtBalance];
         return tokens;
