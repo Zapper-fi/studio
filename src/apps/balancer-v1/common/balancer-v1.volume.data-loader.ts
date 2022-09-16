@@ -34,7 +34,7 @@ export abstract class BalancerV1PoolSubgraphVolumeDataLoader {
   constructor(@Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit) {}
 
   getLoader() {
-    const dataLoaderOptions = { cache: false, maxBatchSize: 1000 };
+    const dataLoaderOptions = { cache: true, maxBatchSize: 1000 };
     return new DataLoader<string, number>(this.batchGetVolume.bind(this), dataLoaderOptions);
   }
 
