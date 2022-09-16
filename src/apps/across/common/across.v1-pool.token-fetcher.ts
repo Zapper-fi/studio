@@ -11,7 +11,7 @@ import {
 
 import { AcrossContractFactory, BadgerPool } from '../contracts';
 
-export abstract class AcrossPoolTokenFetcher extends AppTokenTemplatePositionFetcher<BadgerPool> {
+export abstract class AcrossV1PoolTokenFetcher extends AppTokenTemplatePositionFetcher<BadgerPool> {
   abstract poolAddresses: string[];
 
   constructor(
