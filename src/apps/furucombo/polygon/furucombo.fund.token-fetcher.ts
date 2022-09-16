@@ -135,7 +135,7 @@ export class PolygonFurucomboFundTokenFetcher extends AppTokenTemplatePositionFe
   getApy({
     definition,
   }: GetDataPropsParams<FurucomboFundShareToken, DefaultAppTokenDataProps, FurucomboFundDefinition>) {
-    return Number(definition.apy);
+    return Number(definition.apy) * 100;
   }
 
   async getLabel({

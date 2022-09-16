@@ -27,11 +27,8 @@ export abstract class WrapperTemplateTokenFetcher extends AppTokenTemplatePositi
     return appToken.supply * appToken.price;
   }
 
-  async getReserves({ appToken, multicall }: GetDataPropsParams<Erc20>) {
-    const underlying = multicall.wrap(this.appToolkit.globalContracts.erc20(appToken.tokens[0]));
-    const reserveRaw = await underlying.balanceOf(this.vaultAddress);
-    const reserve = Number(reserveRaw) / 10 ** appToken.tokens[0].decimals;
-    return [reserve];
+  getReserves({ appToken }: GetDataPropsParams<Erc20>) {
+    return [appToken.pricePerShare[0] * appToken.supply];
   }
 
   async getApy() {

@@ -72,7 +72,7 @@ export abstract class OpenleveragePoolTokenFetcher extends AppTokenTemplatePosit
 
   async getApy({ appToken }: GetDataPropsParams<OpenleverageLpool>) {
     const poolDetailMap = await this.openleveragePoolAPYHelper.getApy();
-    return poolDetailMap[appToken.address]?.lendingYieldY || 0;
+    return (poolDetailMap[appToken.address]?.lendingYieldY || 0) * 100;
   }
 
   async getLabel({ appToken }: GetDisplayPropsParams<OpenleverageLpool>) {
