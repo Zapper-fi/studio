@@ -18,7 +18,7 @@
 </div>
 
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-79-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-81-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 ## Description
@@ -242,6 +242,8 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
   <tr>
     <td align="center"><a href="https://github.com/justingreenberg"><img src="https://avatars.githubusercontent.com/u/1539088?v=4?s=64" width="64px;" alt=""/><br /><sub><b>Justin Greenberg</b></sub></a><br /><a href="https://github.com/Zapper-fi/studio/commits?author=justingreenberg" title="Code">💻</a></td>
     <td align="center"><a href="https://github.com/maximebedard"><img src="https://avatars.githubusercontent.com/u/801405?v=4?s=64" width="64px;" alt=""/><br /><sub><b>Maxime Bedard</b></sub></a><br /><a href="https://github.com/Zapper-fi/studio/commits?author=maximebedard" title="Code">💻</a> <a href="#question-maximebedard" title="Answering Questions">💬</a> <a href="#maintenance-maximebedard" title="Maintenance">🚧</a></td>
+    <td align="center"><a href="https://enamakel.com/"><img src="https://avatars.githubusercontent.com/u/31011319?v=4?s=64" width="64px;" alt=""/><br /><sub><b>Steven Enamakel</b></sub></a><br /><a href="https://github.com/Zapper-fi/studio/commits?author=senamakel" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/gdeschryver"><img src="https://avatars.githubusercontent.com/u/70271293?v=4?s=64" width="64px;" alt=""/><br /><sub><b>gauloiseth</b></sub></a><br /><a href="https://github.com/Zapper-fi/studio/commits?author=gdeschryver" title="Code">💻</a></td>
   </tr>
 </table>
 
