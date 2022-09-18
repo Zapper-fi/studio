@@ -46,8 +46,16 @@ export class PositionFetcherTemplateRegistry implements OnModuleInit {
     return this.appTokenTemplateRegistry.get(appId)?.get(network)?.get(groupId) ?? null;
   }
 
+  getAppTokenTemplates({ network, appId }: { network: Network; appId: string }) {
+    return Array.from(this.appTokenTemplateRegistry.get(appId)?.get(network)?.values() ?? []);
+  }
+
   getContractPositionTemplate({ network, appId, groupId }: { network: Network; appId: string; groupId: string }) {
     return this.contractPositionTemplateRegistry.get(appId)?.get(network)?.get(groupId) ?? null;
+  }
+
+  getContractPositionTemplates({ network, appId }: { network: Network; appId: string }) {
+    return Array.from(this.contractPositionTemplateRegistry.get(appId)?.get(network)?.values() ?? []);
   }
 
   getTemplatesForApp(appId: string) {

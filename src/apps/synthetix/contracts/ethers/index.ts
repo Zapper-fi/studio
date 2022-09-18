@@ -2,11 +2,13 @@
 /* tslint:disable */
 /* eslint-disable */
 export type { SynthetixAddressResolver } from './SynthetixAddressResolver';
+export type { SynthetixLoan } from './SynthetixLoan';
 export type { SynthetixNetworkToken } from './SynthetixNetworkToken';
 export type { SynthetixRewards } from './SynthetixRewards';
 export type { SynthetixSummaryUtil } from './SynthetixSummaryUtil';
 export * as factories from './factories';
 export { SynthetixAddressResolver__factory } from './factories/SynthetixAddressResolver__factory';
+export { SynthetixLoan__factory } from './factories/SynthetixLoan__factory';
 export { SynthetixNetworkToken__factory } from './factories/SynthetixNetworkToken__factory';
 export { SynthetixRewards__factory } from './factories/SynthetixRewards__factory';
 export { SynthetixSummaryUtil__factory } from './factories/SynthetixSummaryUtil__factory';
