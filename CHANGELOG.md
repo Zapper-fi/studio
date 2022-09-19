@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.230.0](https://github.com/Zapper-fi/studio/compare/v0.229.0...v0.230.0) (2022-09-19)
+
+
+### Features
+
+* **template:** Add liquidity, reserves, and APY as first class data props ([#1410](https://github.com/Zapper-fi/studio/issues/1410)) ([dee6c41](https://github.com/Zapper-fi/studio/commit/dee6c418c7d9e3622a0d2a776a8fc0700fbaefa6))
+
 ## [0.229.0](https://github.com/Zapper-fi/studio/compare/v0.228.0...v0.229.0) (2022-09-16)
 
 
