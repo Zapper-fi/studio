@@ -8,15 +8,12 @@ import {
   GetPriceParams,
   GetUnderlyingTokensParams,
   GetAddressesParams,
+  DefaultAppTokenDataProps,
 } from '~position/template/app-token.template.types';
 
 import { BadgerContractFactory, BadgerSett } from '../contracts';
 
 import { BadgerVaultTokenDefinitionsResolver } from './badger.vault.token-definition-resolver';
-
-export type BadgerVaultTokenDataProps = {
-  liquidity: number;
-};
 
 export type BadgerVaultTokenDefinition = {
   address: string;
@@ -25,7 +22,7 @@ export type BadgerVaultTokenDefinition = {
 
 export abstract class BadgerVaultTokenFetcher extends AppTokenTemplatePositionFetcher<
   BadgerSett,
-  BadgerVaultTokenDataProps,
+  DefaultAppTokenDataProps,
   BadgerVaultTokenDefinition
 > {
   constructor(
@@ -81,11 +78,15 @@ export abstract class BadgerVaultTokenFetcher extends AppTokenTemplatePositionFe
     return price;
   }
 
-  async getDataProps(opts: GetDataPropsParams<BadgerSett, BadgerVaultTokenDataProps>) {
-    const { appToken } = opts;
-    const reserve = Number(appToken.pricePerShare) * appToken.supply;
-    const liquidity = reserve * appToken.tokens[0].price;
+  async getReserves({ appToken }: GetDataPropsParams<BadgerSett>) {
+    return [Number(appToken.pricePerShare[0]) * appToken.supply];
+  }
 
-    return { liquidity };
+  async getLiquidity({ appToken }: GetDataPropsParams<BadgerSett>) {
+    return appToken.supply * appToken.price;
+  }
+
+  async getApy(_params: GetDataPropsParams<BadgerSett>) {
+    return 0;
   }
 }

@@ -2,10 +2,10 @@ import { Inject } from '@nestjs/common';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { isMulticallUnderlyingError } from '~multicall/multicall.ethers';
-import { GetDataPropsParams, GetPricePerShareParams } from '~position/template/app-token.template.types';
+import { GetPricePerShareParams } from '~position/template/app-token.template.types';
 
 import { YearnVaultTokenDefinitionsResolver } from '../common/yearn.vault.token-definitions-resolver';
-import { YearnVaultTokenDataProps, YearnVaultTokenFetcher } from '../common/yearn.vault.token-fetcher';
+import { YearnVaultTokenFetcher } from '../common/yearn.vault.token-fetcher';
 import { YearnContractFactory, YearnVaultV2 } from '../contracts';
 
 export abstract class YearnV2VaultTokenFetcher extends YearnVaultTokenFetcher<YearnVaultV2> {
@@ -30,20 +30,5 @@ export abstract class YearnV2VaultTokenFetcher extends YearnVaultTokenFetcher<Ye
       throw err;
     });
     return Number(pricePerShareRaw) / 10 ** appToken.decimals;
-  }
-
-  async getDataProps(
-    opts: GetDataPropsParams<YearnVaultV2, YearnVaultTokenDataProps>,
-  ): Promise<YearnVaultTokenDataProps> {
-    const { appToken } = opts;
-    const vault = await this.selectVault(appToken.address);
-    if (!vault) throw new Error('Cannot find specified vault');
-
-    const liquidity = appToken.price * appToken.supply;
-    const apy = vault.apy?.net_apy;
-    const isBlocked = !!(vault.emergencyShutdown || vault.migration?.available);
-    const reserve = appToken.pricePerShare[0] * appToken.supply;
-
-    return { liquidity, apy, isBlocked, reserve };
   }
 }

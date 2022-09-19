@@ -1,9 +1,10 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Inject } from '@nestjs/common';
 import DataLoader from 'dataloader';
 import { gql } from 'graphql-request';
 import { sum } from 'lodash';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import {
   buildDollarDisplayItem,
   buildNumberDisplayItem,
@@ -17,10 +18,9 @@ import {
   DefaultAppTokenDefinition,
   GetDataPropsParams,
   GetDisplayPropsParams,
+  DefaultAppTokenDataProps,
 } from '~position/template/app-token.template.types';
-import { Network } from '~types/network.interface';
 
-import BALANCER_V1_DEFINITION from '../balancer-v1.definition';
 import { BalancerPoolToken, BalancerV1ContractFactory } from '../contracts';
 
 import { EthereumBalancerV1PoolSubgraphVolumeDataLoader } from './balancer-v1.volume.data-loader';
@@ -39,22 +39,17 @@ const getPoolsQuery = gql`
   }
 `;
 
-export type BalancerV1PoolTokenDataProps = {
-  liquidity: number;
+export type BalancerV1PoolTokenDataProps = DefaultAppTokenDataProps & {
   fee: number;
   volume: number;
-  reserves: number[];
   weight: number[];
 };
 
-@Injectable()
+@PositionTemplate()
 export class EthereumBalancerV1PoolTokenFetcher extends AppTokenTemplatePositionFetcher<
   BalancerPoolToken,
   BalancerV1PoolTokenDataProps
 > {
-  appId = BALANCER_V1_DEFINITION.id;
-  groupId = BALANCER_V1_DEFINITION.groups.pool.id;
-  network = Network.ETHEREUM_MAINNET;
   groupLabel = 'Pools';
 
   volumeDataLoader: DataLoader<string, number>;
@@ -94,15 +89,36 @@ export class EthereumBalancerV1PoolTokenFetcher extends AppTokenTemplatePosition
     return pricePerShare;
   }
 
-  async getDataProps({ appToken, contract }: GetDataPropsParams<BalancerPoolToken>) {
+  async getReserves({ appToken }: GetDataPropsParams<BalancerPoolToken, BalancerV1PoolTokenDataProps>) {
+    return (appToken.pricePerShare as number[]).map(pps => pps * appToken.supply);
+  }
+
+  async getLiquidity({ appToken }: GetDataPropsParams<BalancerPoolToken, BalancerV1PoolTokenDataProps>) {
     const reserves = (appToken.pricePerShare as number[]).map(pps => pps * appToken.supply);
     const liquidity = sum(reserves.map((r, i) => r * appToken.tokens[i].price));
+    return liquidity;
+  }
+
+  async getApy({ appToken, contract }: GetDataPropsParams<BalancerPoolToken>) {
+    const fee = (Number(await contract.getSwapFee()) / 10 ** 18) * 100;
+    const volume = await this.volumeDataLoader.load(appToken.address);
+    const yearlyFees = volume * fee * 365;
+    const reserves = (appToken.pricePerShare as number[]).map(pps => pps * appToken.supply);
+    const liquidity = sum(reserves.map((r, i) => r * appToken.tokens[i].price));
+    const apy = yearlyFees / liquidity;
+    return apy;
+  }
+
+  async getDataProps(params: GetDataPropsParams<BalancerPoolToken>) {
+    const defaultDataProps = await super.getDataProps(params);
+
+    const { appToken, contract } = params;
     const fee = (Number(await contract.getSwapFee()) / 10 ** 18) * 100;
     const weightsRaw = await Promise.all(appToken.tokens.map(t => contract.getNormalizedWeight(t.address)));
     const weight = weightsRaw.map(w => Number(w) / 10 ** 18);
     const volume = await this.volumeDataLoader.load(appToken.address);
 
-    return { liquidity, fee, volume, reserves, weight };
+    return { ...defaultDataProps, fee, volume, weight };
   }
 
   async getLabel({

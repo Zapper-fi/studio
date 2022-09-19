@@ -14,15 +14,7 @@ import {
 
 import { StargatePool, StargateContractFactory } from '../contracts';
 
-export type StargatePoolTokenDataProps = {
-  liquidity: number;
-  reserve: number;
-};
-
-export abstract class StargatePoolTokenFetcher extends AppTokenTemplatePositionFetcher<
-  StargatePool,
-  StargatePoolTokenDataProps
-> {
+export abstract class StargatePoolTokenFetcher extends AppTokenTemplatePositionFetcher<StargatePool> {
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
     @Inject(StargateContractFactory) protected readonly contractFactory: StargateContractFactory,
@@ -66,15 +58,15 @@ export abstract class StargatePoolTokenFetcher extends AppTokenTemplatePositionF
     return pricePerShare;
   }
 
-  async getDataProps({
-    appToken,
-    multicall,
-  }: GetDataPropsParams<StargatePool, StargatePoolTokenDataProps>): Promise<StargatePoolTokenDataProps> {
-    const underlyingToken = appToken.tokens[0]!;
-    const underlying = this.contractFactory.erc20(underlyingToken);
-    const reserveRaw = await multicall.wrap(underlying).balanceOf(appToken.address);
-    const reserve = Number(reserveRaw) / 10 ** underlyingToken.decimals;
-    const liquidity = reserve * underlyingToken.price;
-    return { reserve, liquidity };
+  async getLiquidity({ appToken }: GetDataPropsParams<StargatePool>) {
+    return appToken.supply * appToken.price;
+  }
+
+  async getReserves({ appToken }: GetDataPropsParams<StargatePool>) {
+    return [appToken.pricePerShare[0] * appToken.supply];
+  }
+
+  async getApy() {
+    return 0;
   }
 }

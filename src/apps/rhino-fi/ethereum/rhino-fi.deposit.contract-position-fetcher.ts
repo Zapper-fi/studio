@@ -1,9 +1,10 @@
 // '0xed9d63a96c27f87b07115b56b2e3572827f21646';
-import { Inject, Injectable } from '@nestjs/common';
+import { Inject } from '@nestjs/common';
 import BigNumber from 'bignumber.js';
 import { compact, sumBy } from 'lodash';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import { drillBalance } from '~app-toolkit/helpers/balance/token-balance.helper';
 import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { DefaultDataProps } from '~position/display.interface';
@@ -11,27 +12,22 @@ import { ContractPositionBalance } from '~position/position-balance.interface';
 import { MetaType } from '~position/position.interface';
 import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
 import { GetDisplayPropsParams, GetTokenDefinitionsParams } from '~position/template/contract-position.template.types';
-import { Network } from '~types/network.interface';
 
 import { RhinoFiApiClient } from '../common/rhino-fi.api-client';
 import { RhinoFiCacheManager } from '../common/rhino-fi.cache-manager';
 import { RhinoFiContractFactory, RhinoFiStarkEx } from '../contracts';
-import { RHINO_FI_DEFINITION } from '../rhino-fi.definition';
 
 type RhinoFiDepositDefinition = {
   address: string;
   tokenAddress: string;
 };
 
-@Injectable()
+@PositionTemplate()
 export class EthereumRhinoFiDepositContractPositionFetcher extends ContractPositionTemplatePositionFetcher<
   RhinoFiStarkEx,
   DefaultDataProps,
   RhinoFiDepositDefinition
 > {
-  appId = RHINO_FI_DEFINITION.id;
-  groupId = RHINO_FI_DEFINITION.groups.deposit.id;
-  network = Network.ETHEREUM_MAINNET;
   groupLabel = 'Deposits';
 
   constructor(

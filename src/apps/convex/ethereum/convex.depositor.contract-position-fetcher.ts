@@ -1,21 +1,17 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Inject } from '@nestjs/common';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { MetaType } from '~position/position.interface';
 import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
 import { GetDisplayPropsParams, GetTokenDefinitionsParams } from '~position/template/contract-position.template.types';
-import { Network } from '~types/network.interface';
 
 import { ConvexContractFactory } from '../contracts';
 import { ConvexDepositor } from '../contracts/ethers/ConvexDepositor';
-import { CONVEX_DEFINITION } from '../convex.definition';
 
-@Injectable()
+@PositionTemplate()
 export class EthereumConvexDepositorContractPositionFetcher extends ContractPositionTemplatePositionFetcher<ConvexDepositor> {
-  appId = CONVEX_DEFINITION.id;
-  groupId = CONVEX_DEFINITION.groups.depositor.id;
-  network = Network.ETHEREUM_MAINNET;
   groupLabel = 'Depositor';
 
   isExcludedFromExplore = true;

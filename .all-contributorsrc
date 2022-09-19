@@ -730,6 +730,44 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "justingreenberg",
+      "name": "Justin Greenberg",
+      "avatar_url": "https://avatars.githubusercontent.com/u/1539088?v=4",
+      "profile": "https://github.com/justingreenberg",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "maximebedard",
+      "name": "Maxime Bedard",
+      "avatar_url": "https://avatars.githubusercontent.com/u/801405?v=4",
+      "profile": "https://github.com/maximebedard",
+      "contributions": [
+        "code",
+        "question",
+        "maintenance"
+      ]
+    },
+    {
+      "login": "senamakel",
+      "name": "Steven Enamakel",
+      "avatar_url": "https://avatars.githubusercontent.com/u/31011319?v=4",
+      "profile": "https://enamakel.com/",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "gdeschryver",
+      "name": "gauloiseth",
+      "avatar_url": "https://avatars.githubusercontent.com/u/70271293?v=4",
+      "profile": "https://github.com/gdeschryver",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7

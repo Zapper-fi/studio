@@ -1,14 +1,17 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Inject } from '@nestjs/common';
 import BigNumber from 'bignumber.js';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import { Erc20 } from '~contract/contracts';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
-import { GetUnderlyingTokensParams, GetPricePerShareParams } from '~position/template/app-token.template.types';
-import { Network } from '~types';
+import {
+  GetUnderlyingTokensParams,
+  GetPricePerShareParams,
+  GetDataPropsParams,
+} from '~position/template/app-token.template.types';
 
 import { StakeDaoContractFactory } from '../contracts';
-import { STAKE_DAO_DEFINITION } from '../stake-dao.definition';
 
 export const LOCKERS = [
   {
@@ -36,11 +39,8 @@ export const LOCKERS = [
   },
 ];
 
-@Injectable()
+@PositionTemplate()
 export class EthereumStakeDaoLockerTokenFetcher extends AppTokenTemplatePositionFetcher<Erc20> {
-  appId = STAKE_DAO_DEFINITION.id;
-  groupId = STAKE_DAO_DEFINITION.groups.locker.id;
-  network = Network.ETHEREUM_MAINNET;
   groupLabel = 'Lockers';
 
   constructor(
@@ -74,5 +74,17 @@ export class EthereumStakeDaoLockerTokenFetcher extends AppTokenTemplatePosition
 
     const pricePerShareRaw = await multicall.wrap(pool).get_dy(1 - knownIndex, knownIndex, amount);
     return Number(pricePerShareRaw) / 10 ** 18;
+  }
+
+  async getLiquidity({ appToken }: GetDataPropsParams<Erc20>) {
+    return appToken.supply * appToken.price;
+  }
+
+  async getReserves({ appToken }: GetDataPropsParams<Erc20>) {
+    return [appToken.pricePerShare[0] * appToken.supply];
+  }
+
+  async getApy() {
+    return 0;
   }
 }

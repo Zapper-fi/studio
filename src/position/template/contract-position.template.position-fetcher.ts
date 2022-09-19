@@ -1,4 +1,5 @@
 import { Inject } from '@nestjs/common';
+import { notStrictEqual } from 'assert';
 import { BigNumberish, Contract } from 'ethers/lib/ethers';
 import { compact, sumBy } from 'lodash';
 
@@ -10,11 +11,17 @@ import {
 } from '~app-toolkit/helpers/presentation/display-item.present';
 import { getImagesFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { ContractType } from '~position/contract.interface';
-import { DefaultDataProps, DisplayProps, StatsItem } from '~position/display.interface';
-import { ContractPositionBalance } from '~position/position-balance.interface';
+import { DefaultDataProps, DisplayProps, StatsItem, WithMetaType } from '~position/display.interface';
+import {
+  AppTokenPositionBalance,
+  BaseTokenBalance,
+  ContractPositionBalance,
+  RawContractPositionBalance,
+} from '~position/position-balance.interface';
 import { PositionFetcher } from '~position/position-fetcher.interface';
-import { ContractPosition, MetaType } from '~position/position.interface';
+import { ContractPosition, MetaType, Token } from '~position/position.interface';
 import { metatyped } from '~position/position.utils';
+import { TokenService } from '~token/token.service';
 import { Network } from '~types/network.interface';
 
 import {
@@ -34,9 +41,9 @@ export abstract class ContractPositionTemplatePositionFetcher<
   R extends DefaultContractPositionDefinition = DefaultContractPositionDefinition,
 > implements PositionFetcher<ContractPosition<V>>, PositionFetcherTemplateCommons
 {
-  abstract appId: string;
-  abstract groupId: string;
-  abstract network: Network;
+  appId: string;
+  groupId: string;
+  network: Network;
   abstract groupLabel: string;
 
   isExcludedFromBalances = false;
@@ -85,7 +92,7 @@ export abstract class ContractPositionTemplatePositionFetcher<
     const statsItems: StatsItem[] = [];
 
     // Standardized Fields
-    if (typeof contractPosition.dataProps.liquidity === 'number' && contractPosition.dataProps.liquidity > 0)
+    if (typeof contractPosition.dataProps.liquidity === 'number' && Math.abs(contractPosition.dataProps.liquidity) > 0)
       statsItems.push({ label: 'Liquidity', value: buildDollarDisplayItem(contractPosition.dataProps.liquidity) });
     if (typeof contractPosition.dataProps.apy === 'number' && contractPosition.dataProps.apy > 0)
       statsItems.push({ label: 'APY', value: buildPercentageDisplayItem(contractPosition.dataProps.apy) });
@@ -105,7 +112,7 @@ export abstract class ContractPositionTemplatePositionFetcher<
       tags: { network: this.network, context: `${this.appId}__template` },
     });
 
-    const definitions = await this.getDefinitions({ multicall });
+    const definitions = await this.getDefinitions({ multicall, tokenLoader });
 
     const skeletons = await Promise.all(
       definitions.map(async definition => {
@@ -214,5 +221,56 @@ export abstract class ContractPositionTemplatePositionFetcher<
     );
 
     return balances;
+  }
+
+  async getRawBalances(address: string): Promise<RawContractPositionBalance[]> {
+    const multicall = this.appToolkit.getMulticall(this.network);
+    const contractPositions = await this.appToolkit.getAppContractPositions<V>({
+      appId: this.appId,
+      network: this.network,
+      groupIds: [this.groupId],
+    });
+
+    return Promise.all(
+      contractPositions.map(async contractPosition => {
+        const contract = multicall.wrap(this.getContract(contractPosition.address));
+        const balancesRaw = await this.getTokenBalancesPerPosition({ address, contract, contractPosition, multicall });
+
+        return {
+          key: this.appToolkit.getPositionKey(contractPosition),
+          tokens: contractPosition.tokens.map((token, i) => ({
+            key: this.appToolkit.getPositionKey(token),
+            balance: balancesRaw[i].toString(),
+          })),
+        };
+      }),
+    );
+  }
+
+  async drillRawBalances(balances: RawContractPositionBalance[]): Promise<ContractPositionBalance<V>[]> {
+    const contractPositions = await this.appToolkit.getAppContractPositions<V>({
+      appId: this.appId,
+      network: this.network,
+      groupIds: [this.groupId],
+    });
+
+    return compact(
+      contractPositions.map(contractPosition => {
+        const positionBalances = balances.find(b => b.key === this.appToolkit.getPositionKey(contractPosition));
+        if (!positionBalances) return null;
+
+        const allTokens = contractPosition.tokens.map(token => {
+          const tokenBalance = positionBalances.tokens.find(b => b.key === this.appToolkit.getPositionKey(token));
+          if (!tokenBalance) return null;
+
+          return drillBalance<typeof token, V>(token, tokenBalance.balance);
+        });
+
+        const tokens = compact(allTokens).filter(t => Math.abs(t.balanceUSD) > 0.01);
+        const balanceUSD = sumBy(tokens, t => t.balanceUSD);
+
+        return { ...contractPosition, tokens, balanceUSD };
+      }),
+    );
   }
 }

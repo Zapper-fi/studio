@@ -4,6 +4,146 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.230.0](https://github.com/Zapper-fi/studio/compare/v0.229.0...v0.230.0) (2022-09-19)
+
+
+### Features
+
+* **template:** Add liquidity, reserves, and APY as first class data props ([#1410](https://github.com/Zapper-fi/studio/issues/1410)) ([dee6c41](https://github.com/Zapper-fi/studio/commit/dee6c418c7d9e3622a0d2a776a8fc0700fbaefa6))
+
+## [0.229.0](https://github.com/Zapper-fi/studio/compare/v0.228.0...v0.229.0) (2022-09-16)
+
+
+### Features
+
+* **synthetix:** Fix debt balance ([174a89c](https://github.com/Zapper-fi/studio/commit/174a89c7d1ef632d74ac28fa098c63dee60c33d2))
+* **synthetix:** Update label in mintr ([db145fa](https://github.com/Zapper-fi/studio/commit/db145fa214312fd30861063b6837a28741d603b9))
+
+## [0.228.0](https://github.com/Zapper-fi/studio/compare/v0.227.0...v0.228.0) (2022-09-16)
+
+
+### Features
+
+* **synthetix:** Add support for loans ([#1428](https://github.com/Zapper-fi/studio/issues/1428)) ([6db2334](https://github.com/Zapper-fi/studio/commit/6db2334229424c8013522a6d244a51a6a66d9d42))
+* **synthetix:** Fix linting ([b58e7e5](https://github.com/Zapper-fi/studio/commit/b58e7e571e96e48b4c054f833678d1883f91065e))
+
+## [0.227.0](https://github.com/Zapper-fi/studio/compare/v0.226.0...v0.227.0) (2022-09-16)
+
+
+### Features
+
+* **app-definitions:** Make `groups` and `supportedNetworks` optional ([#1429](https://github.com/Zapper-fi/studio/issues/1429)) ([9d7bf45](https://github.com/Zapper-fi/studio/commit/9d7bf45dfab9acc6e8a66d3144823f4206a0296f))
+
+## [0.226.0](https://github.com/Zapper-fi/studio/compare/v0.225.0...v0.226.0) (2022-09-16)
+
+
+### Features
+
+* **arth:** Added Arth and MahaDAO integration  ([#1371](https://github.com/Zapper-fi/studio/issues/1371)) ([6c7e4c5](https://github.com/Zapper-fi/studio/commit/6c7e4c540a0ac821b3216635d0b43fac7cffb1ba))
+* **arth:** Update according to new patterns ([b70d05c](https://github.com/Zapper-fi/studio/commit/b70d05c3ca54f2d314ea535cc5c8655b016a0c8f))
+* **positions:** Separate balance fetching from hydration in position fetchers ([#1418](https://github.com/Zapper-fi/studio/issues/1418)) ([7945f76](https://github.com/Zapper-fi/studio/commit/7945f766acc9a01f791b1174697e3ec00355b1f1))
+
+## [0.225.0](https://github.com/Zapper-fi/studio/compare/v0.224.1...v0.225.0) (2022-09-15)
+
+
+### Features
+
+* **template:** Remove common attributes ([#1419](https://github.com/Zapper-fi/studio/issues/1419)) ([87ba656](https://github.com/Zapper-fi/studio/commit/87ba656a0c7e4071b94641f105e781e405046589))
+* **tests:** Add classname test ([#1422](https://github.com/Zapper-fi/studio/issues/1422)) ([cfbc5b5](https://github.com/Zapper-fi/studio/commit/cfbc5b506138d37eda3231ba0a7c84c79710469a))
+
+## [0.224.1](https://github.com/Zapper-fi/studio/compare/v0.224.0...v0.224.1) (2022-09-15)
+
+
+### Bug Fixes
+
+* **tarot:** Fix vault price per share ([#1420](https://github.com/Zapper-fi/studio/issues/1420)) ([f24e202](https://github.com/Zapper-fi/studio/commit/f24e2028cb5dc6df5b9043734e3c0a065232b9d9))
+
+## [0.224.0](https://github.com/Zapper-fi/studio/compare/v0.223.1...v0.224.0) (2022-09-15)
+
+
+### Features
+
+* **impermax:** Migrate to template ([#1411](https://github.com/Zapper-fi/studio/issues/1411)) ([120b839](https://github.com/Zapper-fi/studio/commit/120b839be4d4f1faf7bbdf3d02b1ee7d1a1494af))
+* **tarot:** Migrate to template ([#1415](https://github.com/Zapper-fi/studio/issues/1415)) ([e07372a](https://github.com/Zapper-fi/studio/commit/e07372ac4b8639e3803316c1613de350b369c205))
+* **template:** Read attributes from template path ([#1416](https://github.com/Zapper-fi/studio/issues/1416)) ([2538a3b](https://github.com/Zapper-fi/studio/commit/2538a3bd94b22a36acd8198a453f7a6107ae3904))
+
+## [0.223.1](https://github.com/Zapper-fi/studio/compare/v0.223.0...v0.223.1) (2022-09-13)
+
+
+### Bug Fixes
+
+* **contract-position-template:** Fix stat item liquidity for debt ([#1407](https://github.com/Zapper-fi/studio/issues/1407)) ([68639e2](https://github.com/Zapper-fi/studio/commit/68639e2bc8e9884417a100995e7df837dc3c7aef))
+
+## [0.223.0](https://github.com/Zapper-fi/studio/compare/v0.222.0...v0.223.0) (2022-09-12)
+
+
+### Features
+
+* **tectonic:** Migrate to template ([#1402](https://github.com/Zapper-fi/studio/issues/1402)) ([a29cda2](https://github.com/Zapper-fi/studio/commit/a29cda24d70eb797ba7c1743be897a36a73516d1))
+
+
+### Bug Fixes
+
+* **metavault-trade:** Update higher resolution logos ([#1400](https://github.com/Zapper-fi/studio/issues/1400)) ([efc6f6e](https://github.com/Zapper-fi/studio/commit/efc6f6e371189e8fbf965b58d80ffbee861d5141))
+
+## [0.222.0](https://github.com/Zapper-fi/studio/compare/v0.221.0...v0.222.0) (2022-09-12)
+
+
+### Features
+
+* **redacted:** Update Redacted app definition ([#1398](https://github.com/Zapper-fi/studio/issues/1398)) ([4ed12ef](https://github.com/Zapper-fi/studio/commit/4ed12ef0d872ecf401b8530dd313b032c349429c))
+
+## [0.221.0](https://github.com/Zapper-fi/studio/compare/v0.220.0...v0.221.0) (2022-09-12)
+
+
+### Features
+
+* **iron-bank:** Migrate to templates ([#1395](https://github.com/Zapper-fi/studio/issues/1395)) ([b6af145](https://github.com/Zapper-fi/studio/commit/b6af145d48b6e1d6250ca757815963d18bd77f01))
+
+
+### Bug Fixes
+
+* **yearn:** Fix off by 100 error for APY ([ab44f98](https://github.com/Zapper-fi/studio/commit/ab44f98bdf2207e56c183260e0ad39ea13af98ef))
+
+## [0.220.0](https://github.com/Zapper-fi/studio/compare/v0.219.0...v0.220.0) (2022-09-12)
+
+
+### Features
+
+* **cozy-finance:** Migrate to templates ([#1393](https://github.com/Zapper-fi/studio/issues/1393)) ([604f1e0](https://github.com/Zapper-fi/studio/commit/604f1e0675758ef1026553ebad703abbd76e0fe1))
+* **phuture:** Support Avalanche CAI index ([#1382](https://github.com/Zapper-fi/studio/issues/1382)) ([9b46c40](https://github.com/Zapper-fi/studio/commit/9b46c40a9d85a968373ef864d5e604e30d332e07))
+
+
+### Bug Fixes
+
+* **morpho:** Fix utilization rate ([#1390](https://github.com/Zapper-fi/studio/issues/1390)) ([c4d346f](https://github.com/Zapper-fi/studio/commit/c4d346fb7772d592630324707200dca3a20195d5))
+
+## [0.219.0](https://github.com/Zapper-fi/studio/compare/v0.218.0...v0.219.0) (2022-09-09)
+
+
+### Features
+
+* **aurigami:** Migrate to template ([#1384](https://github.com/Zapper-fi/studio/issues/1384)) ([9d31dc7](https://github.com/Zapper-fi/studio/commit/9d31dc760750c3c7645f19d07392ebbf961b636e))
+
+
+### Bug Fixes
+
+* **pickle:** Fix Master Chef V2 position fetchers ([#1385](https://github.com/Zapper-fi/studio/issues/1385)) ([ac01a66](https://github.com/Zapper-fi/studio/commit/ac01a66159cf8177fac627c215560182185e29d8))
+
+## [0.218.0](https://github.com/Zapper-fi/studio/compare/v0.217.1...v0.218.0) (2022-09-09)
+
+
+### Features
+
+* **atlendis-v1:** Fix balances by hitting TheGraph instead ([#1383](https://github.com/Zapper-fi/studio/issues/1383)) ([2f02554](https://github.com/Zapper-fi/studio/commit/2f025548724182a2a590c798cde3db487940b8e0))
+* **compound:** Migrate to template ([#1370](https://github.com/Zapper-fi/studio/issues/1370)) ([222fa48](https://github.com/Zapper-fi/studio/commit/222fa48ae49b7032e6cae3e3bcb5bb2630f16174))
+* **tests:** Add file conventions test, run tests with @swc/jest ([#1380](https://github.com/Zapper-fi/studio/issues/1380)) ([335905d](https://github.com/Zapper-fi/studio/commit/335905da3cacd41d4d6e04102872d649c7b81797))
+
+
+### Bug Fixes
+
+* **arrakis:** fix arrakis decorator ([#1379](https://github.com/Zapper-fi/studio/issues/1379)) ([7353e07](https://github.com/Zapper-fi/studio/commit/7353e073b83aa602cd4f5a5c76adead6acf98477))
+
 ## [0.217.1](https://github.com/Zapper-fi/studio/compare/v0.217.0...v0.217.1) (2022-09-08)
 
 
