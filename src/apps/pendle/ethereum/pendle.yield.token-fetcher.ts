@@ -16,11 +16,12 @@ import {
   DefaultAppTokenDefinition,
   GetDefinitionsParams,
   GetAddressesParams,
+  DefaultAppTokenDataProps,
 } from '~position/template/app-token.template.types';
 
 import { PendleContractFactory, PendleYieldToken } from '../contracts';
 
-export type PendleYieldTokenDataProps = {
+export type PendleYieldTokenDataProps = DefaultAppTokenDataProps & {
   expiry: number;
   baseTokenAddress: string;
   marketAddress: string;
@@ -136,11 +137,24 @@ export class EthereumPendleYieldTokenFetcher extends AppTokenTemplatePositionFet
     return price / appToken.tokens[0].price;
   }
 
-  async getDataProps({
-    definition,
-  }: GetDataPropsParams<PendleYieldToken, PendleYieldTokenDataProps, PendleYieldTokenDefinition>) {
-    const { marketAddress, expiry, baseTokenAddress } = definition;
-    return { marketAddress, baseTokenAddress, expiry };
+  getLiquidity({ appToken }: GetDataPropsParams<PendleYieldToken>) {
+    return appToken.supply * appToken.price;
+  }
+
+  getReserves({ appToken }: GetDataPropsParams<PendleYieldToken>) {
+    return [appToken.pricePerShare[0] * appToken.supply];
+  }
+
+  getApy(_params: GetDataPropsParams<PendleYieldToken>) {
+    return 0;
+  }
+
+  async getDataProps(
+    params: GetDataPropsParams<PendleYieldToken, PendleYieldTokenDataProps, PendleYieldTokenDefinition>,
+  ) {
+    const defaultDataProps = await super.getDataProps(params);
+    const { marketAddress, expiry, baseTokenAddress } = params.definition;
+    return { ...defaultDataProps, marketAddress, baseTokenAddress, expiry };
   }
 
   async getLabel({

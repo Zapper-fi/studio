@@ -9,7 +9,11 @@ export const ACROSS_DEFINITION = appDefinition({
   description: 'Across is the fastest, cheapest and most secure cross-chain bridge.',
   url: 'https://across.to',
   groups: {
-    pool: { id: 'pool', type: GroupType.TOKEN, label: 'Pool' },
+    v1Pool: {
+      id: 'v1-pool',
+      type: GroupType.TOKEN,
+      label: 'V1 Pools',
+    },
   },
   tags: [AppTag.BRIDGE, AppTag.CROSS_CHAIN],
   links: {

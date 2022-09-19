@@ -7,6 +7,7 @@ import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.prese
 import { DisplayProps } from '~position/display.interface';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import {
+  DefaultAppTokenDataProps,
   DefaultAppTokenDefinition,
   GetAddressesParams,
   GetDataPropsParams,
@@ -18,8 +19,7 @@ import {
 
 import { TarotBorrowable, TarotContractFactory } from '../contracts';
 
-type TarotSupplyDataProps = {
-  liquidity: number;
+type TarotSupplyDataProps = DefaultAppTokenDataProps & {
   poolTokenLabel: string;
 };
 
@@ -143,9 +143,20 @@ export class FantomTarotSupplyTokenFetcher extends AppTokenTemplatePositionFetch
     return `${getLabelFromToken(underlyingToken)} in ${appToken.dataProps.poolTokenLabel} Lending Pool`;
   }
 
-  async getDataProps({ appToken, definition }: GetDataPropsParams<TarotBorrowable, TarotSupplyDataProps, Definition>) {
-    const [underlyingToken] = appToken.tokens;
-    const liquidity = underlyingToken.price * appToken.supply;
-    return { liquidity, poolTokenLabel: definition.poolTokenLabel };
+  async getLiquidity({ appToken }: GetDataPropsParams<TarotBorrowable>) {
+    return appToken.supply * appToken.price;
+  }
+
+  async getReserves({ appToken }: GetDataPropsParams<TarotBorrowable>) {
+    return [appToken.pricePerShare[0] * appToken.supply];
+  }
+
+  async getApy() {
+    return 0;
+  }
+
+  async getDataProps(params: GetDataPropsParams<TarotBorrowable, TarotSupplyDataProps, Definition>) {
+    const defaultDataProps = await super.getDataProps(params);
+    return { ...defaultDataProps, poolTokenLabel: params.definition.poolTokenLabel };
   }
 }

@@ -2,10 +2,7 @@ import { Inject } from '@nestjs/common';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
-import {
-  CompoundSupplyTokenDataProps,
-  CompoundSupplyTokenFetcher,
-} from '~apps/compound/common/compound.supply.token-fetcher';
+import { CompoundSupplyTokenFetcher } from '~apps/compound/common/compound.supply.token-fetcher';
 import { GetPricePerShareParams } from '~position/template/app-token.template.types';
 
 import { AurigamiAuToken, AurigamiComptroller, AurigamiContractFactory } from '../contracts';
@@ -42,7 +39,7 @@ export class AuroraAurigamiSupplyTokenFetcher extends CompoundSupplyTokenFetcher
     return contract.callStatic.exchangeRateCurrent();
   }
 
-  async getExchangeRateMantissa({ appToken }: GetPricePerShareParams<AurigamiAuToken, CompoundSupplyTokenDataProps>) {
+  async getExchangeRateMantissa({ appToken }: GetPricePerShareParams<AurigamiAuToken>) {
     const [underlyingToken] = appToken.tokens;
     return 18 + underlyingToken.decimals - appToken.decimals;
   }

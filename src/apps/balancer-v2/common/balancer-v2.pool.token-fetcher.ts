@@ -8,6 +8,7 @@ import { isMulticallUnderlyingError } from '~multicall/multicall.ethers';
 import { DefaultDataProps } from '~position/display.interface';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import {
+  DefaultAppTokenDataProps,
   GetDataPropsParams,
   GetDisplayPropsParams,
   GetPricePerShareParams,
@@ -37,10 +38,8 @@ const GET_POOLS_QUERY = gql`
   }
 `;
 
-export type BalancerV2PoolTokenDataProps = {
-  liquidity: number;
+export type BalancerV2PoolTokenDataProps = DefaultAppTokenDataProps & {
   fee: number;
-  reserves: number[];
   weights: number[];
   volume: number;
   poolId: string;
@@ -112,10 +111,24 @@ export abstract class BalancerV2PoolTokenFetcher extends AppTokenTemplatePositio
     return reserves.map(r => r / appToken.supply);
   }
 
-  async getDataProps({
-    appToken,
-    contract,
-  }: GetDataPropsParams<BalancerPool, BalancerV2PoolTokenDataProps>): Promise<BalancerV2PoolTokenDataProps> {
+  async getLiquidity({ appToken }: GetDataPropsParams<BalancerPool, BalancerV2PoolTokenDataProps>) {
+    return appToken.supply * appToken.price;
+  }
+
+  async getReserves({ appToken }: GetDataPropsParams<BalancerPool, BalancerV2PoolTokenDataProps>) {
+    return (appToken.pricePerShare as number[]).map(v => v * appToken.supply);
+  }
+
+  async getApy(_params: GetDataPropsParams<BalancerPool, BalancerV2PoolTokenDataProps>) {
+    return 0;
+  }
+
+  async getDataProps(
+    params: GetDataPropsParams<BalancerPool, BalancerV2PoolTokenDataProps>,
+  ): Promise<BalancerV2PoolTokenDataProps> {
+    const defaultDataProps = await super.getDataProps(params);
+
+    const { appToken, contract } = params;
     const [poolId, feeRaw, weightsRaw] = await Promise.all([
       contract.getPoolId(),
       contract.getSwapFeePercentage().catch(err => {
@@ -129,21 +142,12 @@ export abstract class BalancerV2PoolTokenFetcher extends AppTokenTemplatePositio
     ]);
 
     const fee = Number(feeRaw) / 10 ** 18;
-    const reserves = (appToken.pricePerShare as number[]).map(v => v * appToken.supply);
-    const liquidity = appToken.supply * appToken.price;
     const volume = 0; // TBD
     const weights = isEmpty(weightsRaw)
       ? appToken.tokens.map(() => 1 / appToken.tokens.length)
       : appToken.tokens.map((_, i) => Number(weightsRaw[i]) / 10 ** 18);
 
-    return {
-      poolId,
-      fee,
-      liquidity,
-      reserves,
-      weights,
-      volume,
-    };
+    return { ...defaultDataProps, poolId, fee, weights, volume };
   }
 
   async getLabel({ appToken }: GetDisplayPropsParams<BalancerPool, BalancerV2PoolTokenDataProps>): Promise<string> {

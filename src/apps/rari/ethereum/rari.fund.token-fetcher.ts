@@ -10,6 +10,7 @@ import {
   GetUnderlyingTokensParams,
   GetPricePerShareParams,
   GetDisplayPropsParams,
+  GetDataPropsParams,
 } from '~position/template/app-token.template.types';
 
 import { RariContractFactory } from '../contracts';
@@ -91,6 +92,18 @@ export class EthereumRariFundTokenFetcher extends AppTokenTemplatePositionFetche
     const pricePerShare = reserves.map(v => v / appToken.supply);
 
     return pricePerShare;
+  }
+
+  getLiquidity({ appToken }: GetDataPropsParams<Erc20>) {
+    return appToken.supply * appToken.price;
+  }
+
+  getReserves({ appToken }: GetDataPropsParams<Erc20>) {
+    return (appToken.pricePerShare as number[]).map(t => t * appToken.supply);
+  }
+
+  getApy(_params: GetDataPropsParams<Erc20>) {
+    return 0;
   }
 
   async getLabel({ appToken }: GetDisplayPropsParams<Erc20, DefaultDataProps>) {

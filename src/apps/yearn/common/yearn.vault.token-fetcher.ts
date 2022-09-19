@@ -3,21 +3,11 @@ import { Contract } from 'ethers';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
-import { GetUnderlyingTokensParams } from '~position/template/app-token.template.types';
+import { GetDataPropsParams, GetUnderlyingTokensParams } from '~position/template/app-token.template.types';
 
 import { YearnVaultTokenDefinitionsResolver } from './yearn.vault.token-definitions-resolver';
 
-export type YearnVaultTokenDataProps = {
-  liquidity: number;
-  reserve: number;
-  isBlocked: boolean;
-  apy: number;
-};
-
-export abstract class YearnVaultTokenFetcher<T extends Contract> extends AppTokenTemplatePositionFetcher<
-  T,
-  YearnVaultTokenDataProps
-> {
+export abstract class YearnVaultTokenFetcher<T extends Contract> extends AppTokenTemplatePositionFetcher<T> {
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
     @Inject(YearnVaultTokenDefinitionsResolver)
@@ -52,5 +42,21 @@ export abstract class YearnVaultTokenFetcher<T extends Contract> extends AppToke
     if (!vault) throw new Error('Cannot find specified vault');
 
     return [vault.token.address.toLowerCase()];
+  }
+
+  async getLiquidity({ appToken }: GetDataPropsParams<T>) {
+    return appToken.supply * appToken.price;
+  }
+
+  async getReserves({ appToken }: GetDataPropsParams<T>) {
+    return [appToken.pricePerShare[0] * appToken.supply];
+  }
+
+  async getApy({ appToken }: GetDataPropsParams<T>) {
+    const vault = await this.selectVault(appToken.address);
+    if (!vault) throw new Error('Cannot find specified vault');
+
+    const apy = vault.apy?.net_apy * 100;
+    return apy;
   }
 }

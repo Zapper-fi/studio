@@ -18,7 +18,7 @@ export class GnosisAgaveDepositTokenFetcher extends AaveV2LendingTemplateTokenFe
     return reserveTokenAddressesData.aTokenAddress;
   }
 
-  getApy(reserveApyData: AaveV2ReserveApyData): number {
+  getApyFromReserveData(reserveApyData: AaveV2ReserveApyData): number {
     return reserveApyData.supplyApy;
   }
 

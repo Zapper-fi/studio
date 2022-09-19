@@ -1,6 +1,6 @@
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 
-import { BarnbridgeSmartAlphaJuniorPoolTokenFetcher } from '../common/barnbridge-smart-alpha.junior.pool-token-fetcher';
+import { BarnbridgeSmartAlphaJuniorPoolTokenFetcher } from '../common/barnbridge-smart-alpha.junior-pool.token-fetcher';
 
 @PositionTemplate()
 export class EthereumBarnbridgeSmartAlphaJuniorTokenFetcher extends BarnbridgeSmartAlphaJuniorPoolTokenFetcher {

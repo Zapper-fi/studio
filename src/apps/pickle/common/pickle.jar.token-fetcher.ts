@@ -15,13 +15,7 @@ import { PickleContractFactory, PickleJar } from '../contracts';
 
 import { PickleApiJarRegistry } from './pickle.api.jar-registry';
 
-export type PickleJarDataProps = {
-  apy: number;
-  liquidity: number;
-  reserve: number;
-};
-
-export abstract class PickleJarTokenFetcher extends AppTokenTemplatePositionFetcher<PickleJar, PickleJarDataProps> {
+export abstract class PickleJarTokenFetcher extends AppTokenTemplatePositionFetcher<PickleJar> {
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
     @Inject(PickleContractFactory) protected readonly contractFactory: PickleContractFactory,
@@ -47,16 +41,22 @@ export abstract class PickleJarTokenFetcher extends AppTokenTemplatePositionFetc
     return contract.getRatio().then(v => Number(v) / 10 ** 18);
   }
 
-  async getDataProps({ contract, appToken }: GetDataPropsParams<PickleJar, PickleJarDataProps>) {
+  async getLiquidity({ appToken, contract }: GetDataPropsParams<PickleJar>) {
+    const reserveRaw = await contract.balance();
+    const reserve = Number(reserveRaw) / 10 ** appToken.tokens[0].decimals;
+    return reserve * appToken.tokens[0].price;
+  }
+
+  async getReserves({ appToken, contract }: GetDataPropsParams<PickleJar>) {
+    const reserveRaw = await contract.balance();
+    const reserve = Number(reserveRaw) / 10 ** appToken.tokens[0].decimals;
+    return [reserve];
+  }
+
+  async getApy({ appToken }: GetDataPropsParams<PickleJar>) {
     const vaultDefinitions = await this.jarRegistry.getJarDefinitions({ network: this.network });
     const vaultDefinition = vaultDefinitions.find(v => v.vaultAddress === appToken.address);
-    const apy = vaultDefinition?.apy ?? 0;
-
-    const underlyingToken = appToken.tokens[0]!;
-    const reserveRaw = await contract.balance();
-    const reserve = Number(reserveRaw) / 10 ** underlyingToken.decimals;
-    const liquidity = reserve * underlyingToken.price;
-    return { apy, reserve, liquidity };
+    return vaultDefinition?.apy ?? 0;
   }
 
   async getLabel({ appToken }: GetDisplayPropsParams<PickleJar, DefaultDataProps>) {

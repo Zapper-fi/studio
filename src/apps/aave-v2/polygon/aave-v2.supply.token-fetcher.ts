@@ -19,7 +19,7 @@ export class PolygonAaveV2SupplyTokenFetcher extends AaveV2LendingTemplateTokenF
     return reserveTokenAddressesData.aTokenAddress;
   }
 
-  getApy(reserveApyData: AaveV2ReserveApyData): number {
+  getApyFromReserveData(reserveApyData: AaveV2ReserveApyData): number {
     return reserveApyData.supplyApy;
   }
 

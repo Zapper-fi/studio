@@ -18,7 +18,7 @@ export class EthereumGranaryFinanceSupplyTokenFetcher extends AaveV2LendingTempl
     return reserveTokenAddressesData.aTokenAddress;
   }
 
-  getApy(reserveApyData: AaveV2ReserveApyData): number {
+  getApyFromReserveData(reserveApyData: AaveV2ReserveApyData): number {
     return reserveApyData.supplyApy;
   }
 

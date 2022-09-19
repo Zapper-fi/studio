@@ -14,16 +14,8 @@ import { YearnContractFactory, YearnVault } from '../contracts';
 
 import { Y_TOKENS } from './yearn.yield.token-definitions';
 
-type YearnYieldTokenDataProps = {
-  liquidity: number;
-  reserve: number;
-};
-
 @PositionTemplate()
-export class EthereumYearnYieldTokenFetcher extends AppTokenTemplatePositionFetcher<
-  YearnVault,
-  YearnYieldTokenDataProps
-> {
+export class EthereumYearnYieldTokenFetcher extends AppTokenTemplatePositionFetcher<YearnVault> {
   groupLabel = 'Yield Tokens';
 
   constructor(
@@ -48,7 +40,7 @@ export class EthereumYearnYieldTokenFetcher extends AppTokenTemplatePositionFetc
     return [match.underlyingAddress];
   }
 
-  async getPricePerShare({ contract }: GetPricePerShareParams<YearnVault, YearnYieldTokenDataProps>): Promise<number> {
+  async getPricePerShare({ contract }: GetPricePerShareParams<YearnVault>): Promise<number> {
     return contract
       .getPricePerFullShare()
       .catch(err => {
@@ -58,13 +50,15 @@ export class EthereumYearnYieldTokenFetcher extends AppTokenTemplatePositionFetc
       .then(pps => Number(pps) / 10 ** 18);
   }
 
-  async getDataProps(
-    opts: GetDataPropsParams<YearnVault, YearnYieldTokenDataProps>,
-  ): Promise<YearnYieldTokenDataProps> {
-    const { appToken } = opts;
-    const reserve = appToken.supply * appToken.pricePerShare[0];
-    const liquidity = reserve * appToken.tokens[0].price;
+  async getLiquidity({ appToken }: GetDataPropsParams<YearnVault>) {
+    return appToken.supply * appToken.price;
+  }
 
-    return { liquidity, reserve };
+  async getReserves({ appToken }: GetDataPropsParams<YearnVault>) {
+    return [appToken.pricePerShare[0] * appToken.supply];
+  }
+
+  async getApy(_params: GetDataPropsParams<YearnVault>) {
+    return 0;
   }
 }

@@ -30,11 +30,6 @@ type EnzymeFinanceVaultsResponse = {
   }[];
 };
 
-export type EnzymeFinanceVaultTokenDataProps = {
-  liquidity: number;
-  isActive: boolean;
-};
-
 @PositionTemplate()
 export class EthereumEnzymeFinanceVaultTokenFetcher extends AppTokenTemplatePositionFetcher<EnzymeFinanceVault> {
   groupLabel = 'Vaults';
@@ -56,9 +51,7 @@ export class EthereumEnzymeFinanceVaultTokenFetcher extends AppTokenTemplatePosi
     return this.contractFactory.enzymeFinanceVault({ network: this.network, address });
   }
 
-  async getLabel({
-    contract,
-  }: GetDisplayPropsParams<EnzymeFinanceVault, EnzymeFinanceVaultTokenDataProps>): Promise<string> {
+  async getLabel({ contract }: GetDisplayPropsParams<EnzymeFinanceVault>): Promise<string> {
     return contract.name();
   }
 
@@ -83,11 +76,15 @@ export class EthereumEnzymeFinanceVaultTokenFetcher extends AppTokenTemplatePosi
       : 0;
   }
 
-  async getDataProps(opts: GetDataPropsParams<EnzymeFinanceVault, DefaultDataProps>): Promise<DefaultDataProps> {
-    const { appToken } = opts;
-    const liquidity = appToken.price * appToken.supply;
-    const isActive = appToken.supply > 0 ? true : false;
+  getLiquidity({ appToken }: GetDataPropsParams<EnzymeFinanceVault>) {
+    return appToken.supply * appToken.price;
+  }
 
-    return { liquidity, isActive };
+  getReserves({ appToken }: GetDataPropsParams<EnzymeFinanceVault>) {
+    return [appToken.pricePerShare[0] * appToken.supply];
+  }
+
+  getApy(_params: GetDataPropsParams<EnzymeFinanceVault>) {
+    return 0;
   }
 }
