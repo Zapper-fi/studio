@@ -13,7 +13,7 @@ import { IMulticallWrapper } from '~multicall';
 import { isMulticallUnderlyingError } from '~multicall/multicall.ethers';
 import { ContractType } from '~position/contract.interface';
 import { DisplayProps, StatsItem } from '~position/display.interface';
-import { AppTokenPositionBalance } from '~position/position-balance.interface';
+import { AppTokenPositionBalance, RawAppTokenBalance } from '~position/position-balance.interface';
 import { PositionFetcher } from '~position/position-fetcher.interface';
 import { AppTokenPosition } from '~position/position.interface';
 import { Network } from '~types/network.interface';
@@ -291,7 +291,7 @@ export abstract class AppTokenTemplatePositionFetcher<
     multicall,
   }: {
     address: string;
-    appToken: AppTokenPosition<V>;
+    appToken: AppTokenPosition;
     multicall: IMulticallWrapper;
   }): Promise<BigNumberish> {
     return multicall.wrap(this.getContract(appToken.address)).balanceOf(address);
@@ -314,5 +314,39 @@ export abstract class AppTokenTemplatePositionFetcher<
     );
 
     return balances as AppTokenPositionBalance<V>[];
+  }
+
+  async getRawBalances(address: string): Promise<RawAppTokenBalance[]> {
+    const multicall = this.appToolkit.getMulticall(this.network);
+    const appTokens = await this.appToolkit.getAppTokenPositions({
+      appId: this.appId,
+      network: this.network,
+      groupIds: [this.groupId],
+    });
+
+    return Promise.all(
+      appTokens.map(async appToken => ({
+        key: this.appToolkit.getPositionKey(appToken),
+        balance: (await this.getBalancePerToken({ multicall, address, appToken })).toString(),
+      })),
+    );
+  }
+
+  async drillRawBalances(balances: RawAppTokenBalance[]): Promise<AppTokenPositionBalance<V>[]> {
+    const appTokens = await this.appToolkit.getAppTokenPositions<V>({
+      appId: this.appId,
+      network: this.network,
+      groupIds: [this.groupId],
+    });
+
+    const appTokenBalances = appTokens.map(token => {
+      const tokenBalance = balances.find(b => b.key === this.appToolkit.getPositionKey(token));
+      if (!tokenBalance) return null;
+
+      const result = drillBalance<typeof token, V>(token, tokenBalance.balance);
+      return result;
+    });
+
+    return compact(appTokenBalances);
   }
 }

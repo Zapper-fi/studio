@@ -4,6 +4,38 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.229.0](https://github.com/Zapper-fi/studio/compare/v0.228.0...v0.229.0) (2022-09-16)
+
+
+### Features
+
+* **synthetix:** Fix debt balance ([174a89c](https://github.com/Zapper-fi/studio/commit/174a89c7d1ef632d74ac28fa098c63dee60c33d2))
+* **synthetix:** Update label in mintr ([db145fa](https://github.com/Zapper-fi/studio/commit/db145fa214312fd30861063b6837a28741d603b9))
+
+## [0.228.0](https://github.com/Zapper-fi/studio/compare/v0.227.0...v0.228.0) (2022-09-16)
+
+
+### Features
+
+* **synthetix:** Add support for loans ([#1428](https://github.com/Zapper-fi/studio/issues/1428)) ([6db2334](https://github.com/Zapper-fi/studio/commit/6db2334229424c8013522a6d244a51a6a66d9d42))
+* **synthetix:** Fix linting ([b58e7e5](https://github.com/Zapper-fi/studio/commit/b58e7e571e96e48b4c054f833678d1883f91065e))
+
+## [0.227.0](https://github.com/Zapper-fi/studio/compare/v0.226.0...v0.227.0) (2022-09-16)
+
+
+### Features
+
+* **app-definitions:** Make `groups` and `supportedNetworks` optional ([#1429](https://github.com/Zapper-fi/studio/issues/1429)) ([9d7bf45](https://github.com/Zapper-fi/studio/commit/9d7bf45dfab9acc6e8a66d3144823f4206a0296f))
+
+## [0.226.0](https://github.com/Zapper-fi/studio/compare/v0.225.0...v0.226.0) (2022-09-16)
+
+
+### Features
+
+* **arth:** Added Arth and MahaDAO integration  ([#1371](https://github.com/Zapper-fi/studio/issues/1371)) ([6c7e4c5](https://github.com/Zapper-fi/studio/commit/6c7e4c540a0ac821b3216635d0b43fac7cffb1ba))
+* **arth:** Update according to new patterns ([b70d05c](https://github.com/Zapper-fi/studio/commit/b70d05c3ca54f2d314ea535cc5c8655b016a0c8f))
+* **positions:** Separate balance fetching from hydration in position fetchers ([#1418](https://github.com/Zapper-fi/studio/issues/1418)) ([7945f76](https://github.com/Zapper-fi/studio/commit/7945f766acc9a01f791b1174697e3ec00355b1f1))
+
 ## [0.225.0](https://github.com/Zapper-fi/studio/compare/v0.224.1...v0.225.0) (2022-09-15)
 
 
