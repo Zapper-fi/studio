@@ -82,7 +82,7 @@ export abstract class UniswapV2PoolSubgraphTemplateTokenFetcher extends UniswapV
   async getApy({ appToken }: GetDataPropsParams<UniswapPair, UniswapV2TokenDataProps>) {
     const liquidity = appToken.supply * appToken.price;
     const volume = this.volumeDataLoader ? await this.volumeDataLoader.load(appToken.address) : 0;
-    const yearlyFees = volume * this.fee * 365;
+    const yearlyFees = volume * (this.fee / 100) * 365;
     const apy = yearlyFees / liquidity;
     return apy;
   }

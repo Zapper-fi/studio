@@ -21,7 +21,7 @@ export const POOL_QUERY = gql`
 `;
 
 @Injectable()
-export class RubiconPoolDefinitionsResolver {
+export class RubiconBathTokenDefinitionResolver {
   constructor(@Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit) {}
 
   @Cache({

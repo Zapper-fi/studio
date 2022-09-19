@@ -1,8 +1,8 @@
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
-import { WrapperTemplateTokenFetcher } from '~position/template/wrapper.template.token-fetcher';
+import { WrapperWithReserveTemplateTokenFetcher } from '~position/template/wrapper-with-reserve.template.token-fetcher';
 
 @PositionTemplate()
-export class EthereumRedactedCartelXBtrflyTokenFetcher extends WrapperTemplateTokenFetcher {
+export class EthereumRedactedCartelXBtrflyTokenFetcher extends WrapperWithReserveTemplateTokenFetcher {
   groupLabel = 'xBTRFLY';
 
   vaultAddress = '0xcc94faf235cc5d3bf4bed3a30db5984306c86abc';

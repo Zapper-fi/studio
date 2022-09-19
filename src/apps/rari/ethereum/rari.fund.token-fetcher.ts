@@ -99,7 +99,7 @@ export class EthereumRariFundTokenFetcher extends AppTokenTemplatePositionFetche
   }
 
   getReserves({ appToken }: GetDataPropsParams<Erc20>) {
-    return [appToken.pricePerShare[0] * appToken.supply];
+    return (appToken.pricePerShare as number[]).map(t => t * appToken.supply);
   }
 
   getApy(_params: GetDataPropsParams<Erc20>) {

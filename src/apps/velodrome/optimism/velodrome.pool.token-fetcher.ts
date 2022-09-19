@@ -61,7 +61,7 @@ export class OptimismVelodromePoolsTokenFetcher extends AppTokenTemplatePosition
   }
 
   async getReserves({ appToken }: GetDataPropsParams<VelodromePool>) {
-    return [appToken.pricePerShare[0] * appToken.supply];
+    return (appToken.pricePerShare as number[]).map(v => v * appToken.supply);
   }
 
   async getApy() {
