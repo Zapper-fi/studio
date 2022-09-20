@@ -14,7 +14,7 @@ import type {
 } from 'ethers';
 import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
 import type { Listener, Provider } from '@ethersproject/providers';
-import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
 export interface PickleRegistryInterface extends utils.Interface {
   functions: {
@@ -46,17 +46,17 @@ export interface PickleRegistryInterface extends utils.Interface {
       | 'setGovernance',
   ): FunctionFragment;
 
-  encodeFunctionData(functionFragment: 'addCurators', values: [string[]]): string;
-  encodeFunctionData(functionFragment: 'curators', values: [string]): string;
-  encodeFunctionData(functionFragment: 'demoteVault', values: [string]): string;
+  encodeFunctionData(functionFragment: 'addCurators', values: [PromiseOrValue<string>[]]): string;
+  encodeFunctionData(functionFragment: 'curators', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'demoteVault', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'developmentVaults', values?: undefined): string;
   encodeFunctionData(functionFragment: 'governance', values?: undefined): string;
   encodeFunctionData(functionFragment: 'productionVaults', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'promoteVault', values: [string]): string;
-  encodeFunctionData(functionFragment: 'registerVault', values: [string]): string;
-  encodeFunctionData(functionFragment: 'removeCurators', values: [string[]]): string;
-  encodeFunctionData(functionFragment: 'removeVault', values: [string]): string;
-  encodeFunctionData(functionFragment: 'setGovernance', values: [string]): string;
+  encodeFunctionData(functionFragment: 'promoteVault', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'registerVault', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'removeCurators', values: [PromiseOrValue<string>[]]): string;
+  encodeFunctionData(functionFragment: 'removeVault', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'setGovernance', values: [PromiseOrValue<string>]): string;
 
   decodeFunctionResult(functionFragment: 'addCurators', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'curators', data: BytesLike): Result;
@@ -135,15 +135,15 @@ export interface PickleRegistry extends BaseContract {
 
   functions: {
     addCurators(
-      _curators: string[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _curators: PromiseOrValue<string>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    curators(arg0: string, overrides?: CallOverrides): Promise<[boolean]>;
+    curators(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[boolean]>;
 
     demoteVault(
-      _vault: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _vault: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     developmentVaults(overrides?: CallOverrides): Promise<[string[]]>;
@@ -153,41 +153,41 @@ export interface PickleRegistry extends BaseContract {
     productionVaults(overrides?: CallOverrides): Promise<[string[]]>;
 
     promoteVault(
-      _vault: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _vault: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     registerVault(
-      _vault: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _vault: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     removeCurators(
-      _curators: string[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _curators: PromiseOrValue<string>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     removeVault(
-      _vault: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _vault: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setGovernance(
-      _governance: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _governance: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
   };
 
   addCurators(
-    _curators: string[],
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _curators: PromiseOrValue<string>[],
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  curators(arg0: string, overrides?: CallOverrides): Promise<boolean>;
+  curators(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
   demoteVault(
-    _vault: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _vault: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   developmentVaults(overrides?: CallOverrides): Promise<string[]>;
@@ -197,36 +197,36 @@ export interface PickleRegistry extends BaseContract {
   productionVaults(overrides?: CallOverrides): Promise<string[]>;
 
   promoteVault(
-    _vault: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _vault: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   registerVault(
-    _vault: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _vault: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   removeCurators(
-    _curators: string[],
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _curators: PromiseOrValue<string>[],
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   removeVault(
-    _vault: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _vault: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setGovernance(
-    _governance: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _governance: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   callStatic: {
-    addCurators(_curators: string[], overrides?: CallOverrides): Promise<void>;
+    addCurators(_curators: PromiseOrValue<string>[], overrides?: CallOverrides): Promise<void>;
 
-    curators(arg0: string, overrides?: CallOverrides): Promise<boolean>;
+    curators(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
-    demoteVault(_vault: string, overrides?: CallOverrides): Promise<void>;
+    demoteVault(_vault: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     developmentVaults(overrides?: CallOverrides): Promise<string[]>;
 
@@ -234,15 +234,15 @@ export interface PickleRegistry extends BaseContract {
 
     productionVaults(overrides?: CallOverrides): Promise<string[]>;
 
-    promoteVault(_vault: string, overrides?: CallOverrides): Promise<void>;
+    promoteVault(_vault: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    registerVault(_vault: string, overrides?: CallOverrides): Promise<void>;
+    registerVault(_vault: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    removeCurators(_curators: string[], overrides?: CallOverrides): Promise<void>;
+    removeCurators(_curators: PromiseOrValue<string>[], overrides?: CallOverrides): Promise<void>;
 
-    removeVault(_vault: string, overrides?: CallOverrides): Promise<void>;
+    removeVault(_vault: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    setGovernance(_governance: string, overrides?: CallOverrides): Promise<void>;
+    setGovernance(_governance: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
   };
 
   filters: {
@@ -260,11 +260,17 @@ export interface PickleRegistry extends BaseContract {
   };
 
   estimateGas: {
-    addCurators(_curators: string[], overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    addCurators(
+      _curators: PromiseOrValue<string>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
-    curators(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    curators(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    demoteVault(_vault: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    demoteVault(
+      _vault: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     developmentVaults(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -272,31 +278,43 @@ export interface PickleRegistry extends BaseContract {
 
     productionVaults(overrides?: CallOverrides): Promise<BigNumber>;
 
-    promoteVault(_vault: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
-
-    registerVault(_vault: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
-
-    removeCurators(
-      _curators: string[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+    promoteVault(
+      _vault: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    removeVault(_vault: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    registerVault(
+      _vault: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
-    setGovernance(_governance: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    removeCurators(
+      _curators: PromiseOrValue<string>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
+
+    removeVault(
+      _vault: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
+
+    setGovernance(
+      _governance: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
   };
 
   populateTransaction: {
     addCurators(
-      _curators: string[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _curators: PromiseOrValue<string>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    curators(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    curators(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     demoteVault(
-      _vault: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _vault: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     developmentVaults(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -306,28 +324,28 @@ export interface PickleRegistry extends BaseContract {
     productionVaults(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     promoteVault(
-      _vault: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _vault: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     registerVault(
-      _vault: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _vault: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     removeCurators(
-      _curators: string[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _curators: PromiseOrValue<string>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     removeVault(
-      _vault: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _vault: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setGovernance(
-      _governance: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _governance: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
   };
 }

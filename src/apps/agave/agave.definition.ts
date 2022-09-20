@@ -5,7 +5,7 @@ import { Network } from '~types/network.interface';
 
 export const AGAVE_DEFINITION = appDefinition({
   id: 'agave',
-  name: 'agave',
+  name: 'Agave',
   description:
     'Agave rewards depositors with passive income and lets them use their deposits as collateral to borrow and lend digital assets.',
   url: 'https://agave.finance/',
@@ -14,26 +14,57 @@ export const AGAVE_DEFINITION = appDefinition({
     deposit: {
       id: 'deposit',
       type: GroupType.TOKEN,
-      label: 'Deposit',
+      label: 'Lending',
     },
 
     stableBorrow: {
       id: 'stable-borrow',
       type: GroupType.TOKEN,
-      label: 'Borrow',
+      label: 'Lending',
     },
 
     variableBorrow: {
       id: 'variable-borrow',
       type: GroupType.TOKEN,
-      label: 'Borrow',
+      label: 'Lending',
     },
 
     claimable: {
       id: 'claimable',
       type: GroupType.POSITION,
-      label: 'Reward',
+      label: 'Rewards',
     },
+  },
+  presentationConfig: {
+    tabs: [
+      {
+        label: 'Lending',
+        viewType: 'split',
+        views: [
+          {
+            viewType: 'list',
+            label: 'Deposit',
+            groupIds: ['deposit'],
+          },
+          {
+            viewType: 'split',
+            label: 'Borrow',
+            views: [
+              {
+                viewType: 'list',
+                label: 'Variable',
+                groupIds: ['variable-borrow'],
+              },
+              {
+                viewType: 'list',
+                label: 'Stable',
+                groupIds: ['stable-borrow'],
+              },
+            ],
+          },
+        ],
+      },
+    ],
   },
 
   tags: [AppTag.LENDING],

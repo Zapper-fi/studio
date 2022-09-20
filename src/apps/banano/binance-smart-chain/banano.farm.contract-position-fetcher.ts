@@ -12,7 +12,7 @@ const appId = BANANO_DEFINITION.id;
 const groupId = BANANO_DEFINITION.groups.farm.id;
 const network = Network.BINANCE_SMART_CHAIN_MAINNET;
 
-const BENIS = '0x1E30E12e82956540bf870A40FD1215fC083a3751';
+const BENIS = '0x1e30e12e82956540bf870a40fd1215fc083a3751';
 
 @Register.ContractPositionFetcher({ appId, groupId, network })
 export class BinanceSmartChainBananoFarmContractPositionFetcher implements PositionFetcher<ContractPosition> {

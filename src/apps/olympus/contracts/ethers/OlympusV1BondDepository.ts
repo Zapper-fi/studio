@@ -15,7 +15,7 @@ import type {
 } from 'ethers';
 import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
 import type { Listener, Provider } from '@ethersproject/providers';
-import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
 export interface OlympusV1BondDepositoryInterface extends utils.Interface {
   functions: {
@@ -99,36 +99,55 @@ export interface OlympusV1BondDepositoryInterface extends utils.Interface {
   encodeFunctionData(functionFragment: 'OHM', values?: undefined): string;
   encodeFunctionData(functionFragment: 'adjustment', values?: undefined): string;
   encodeFunctionData(functionFragment: 'bondCalculator', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'bondInfo', values: [string]): string;
+  encodeFunctionData(functionFragment: 'bondInfo', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'bondPrice', values?: undefined): string;
   encodeFunctionData(functionFragment: 'bondPriceInUSD', values?: undefined): string;
   encodeFunctionData(functionFragment: 'currentDebt', values?: undefined): string;
   encodeFunctionData(functionFragment: 'debtDecay', values?: undefined): string;
   encodeFunctionData(functionFragment: 'debtRatio', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'deposit', values: [BigNumberish, BigNumberish, string]): string;
+  encodeFunctionData(
+    functionFragment: 'deposit',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>, PromiseOrValue<string>],
+  ): string;
   encodeFunctionData(
     functionFragment: 'initializeBondTerms',
-    values: [BigNumberish, BigNumberish, BigNumberish, BigNumberish, BigNumberish, BigNumberish, BigNumberish],
+    values: [
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+    ],
   ): string;
   encodeFunctionData(functionFragment: 'isLiquidityBond', values?: undefined): string;
   encodeFunctionData(functionFragment: 'lastDecay', values?: undefined): string;
   encodeFunctionData(functionFragment: 'maxPayout', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'payoutFor', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'pendingPayoutFor', values: [string]): string;
-  encodeFunctionData(functionFragment: 'percentVestedFor', values: [string]): string;
+  encodeFunctionData(functionFragment: 'payoutFor', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'pendingPayoutFor', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'percentVestedFor', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'policy', values?: undefined): string;
   encodeFunctionData(functionFragment: 'principle', values?: undefined): string;
   encodeFunctionData(functionFragment: 'pullManagement', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'pushManagement', values: [string]): string;
-  encodeFunctionData(functionFragment: 'recoverLostToken', values: [string]): string;
-  encodeFunctionData(functionFragment: 'redeem', values: [string, boolean]): string;
+  encodeFunctionData(functionFragment: 'pushManagement', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'recoverLostToken', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'redeem', values: [PromiseOrValue<string>, PromiseOrValue<boolean>]): string;
   encodeFunctionData(functionFragment: 'renounceManagement', values?: undefined): string;
   encodeFunctionData(
     functionFragment: 'setAdjustment',
-    values: [boolean, BigNumberish, BigNumberish, BigNumberish],
+    values: [
+      PromiseOrValue<boolean>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+    ],
   ): string;
-  encodeFunctionData(functionFragment: 'setBondTerms', values: [BigNumberish, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'setStaking', values: [string, boolean]): string;
+  encodeFunctionData(
+    functionFragment: 'setBondTerms',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'setStaking', values: [PromiseOrValue<string>, PromiseOrValue<boolean>]): string;
   encodeFunctionData(functionFragment: 'staking', values?: undefined): string;
   encodeFunctionData(functionFragment: 'stakingHelper', values?: undefined): string;
   encodeFunctionData(functionFragment: 'standardizedDebtRatio', values?: undefined): string;
@@ -287,7 +306,7 @@ export interface OlympusV1BondDepository extends BaseContract {
     bondCalculator(overrides?: CallOverrides): Promise<[string]>;
 
     bondInfo(
-      arg0: string,
+      arg0: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<
       [BigNumber, BigNumber, BigNumber, BigNumber] & {
@@ -309,21 +328,21 @@ export interface OlympusV1BondDepository extends BaseContract {
     debtRatio(overrides?: CallOverrides): Promise<[BigNumber] & { debtRatio_: BigNumber }>;
 
     deposit(
-      _amount: BigNumberish,
-      _maxPrice: BigNumberish,
-      _depositor: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _amount: PromiseOrValue<BigNumberish>,
+      _maxPrice: PromiseOrValue<BigNumberish>,
+      _depositor: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     initializeBondTerms(
-      _controlVariable: BigNumberish,
-      _vestingTerm: BigNumberish,
-      _minimumPrice: BigNumberish,
-      _maxPayout: BigNumberish,
-      _fee: BigNumberish,
-      _maxDebt: BigNumberish,
-      _initialDebt: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _controlVariable: PromiseOrValue<BigNumberish>,
+      _vestingTerm: PromiseOrValue<BigNumberish>,
+      _minimumPrice: PromiseOrValue<BigNumberish>,
+      _maxPayout: PromiseOrValue<BigNumberish>,
+      _fee: PromiseOrValue<BigNumberish>,
+      _maxDebt: PromiseOrValue<BigNumberish>,
+      _initialDebt: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     isLiquidityBond(overrides?: CallOverrides): Promise<[boolean]>;
@@ -332,15 +351,15 @@ export interface OlympusV1BondDepository extends BaseContract {
 
     maxPayout(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    payoutFor(_value: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber]>;
+    payoutFor(_value: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     pendingPayoutFor(
-      _depositor: string,
+      _depositor: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber] & { pendingPayout_: BigNumber }>;
 
     percentVestedFor(
-      _depositor: string,
+      _depositor: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber] & { percentVested_: BigNumber }>;
 
@@ -348,44 +367,44 @@ export interface OlympusV1BondDepository extends BaseContract {
 
     principle(overrides?: CallOverrides): Promise<[string]>;
 
-    pullManagement(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    pullManagement(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     pushManagement(
-      newOwner_: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner_: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     recoverLostToken(
-      _token: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _token: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     redeem(
-      _recipient: string,
-      _stake: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _recipient: PromiseOrValue<string>,
+      _stake: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    renounceManagement(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    renounceManagement(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     setAdjustment(
-      _addition: boolean,
-      _increment: BigNumberish,
-      _target: BigNumberish,
-      _buffer: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _addition: PromiseOrValue<boolean>,
+      _increment: PromiseOrValue<BigNumberish>,
+      _target: PromiseOrValue<BigNumberish>,
+      _buffer: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setBondTerms(
-      _parameter: BigNumberish,
-      _input: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _parameter: PromiseOrValue<BigNumberish>,
+      _input: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setStaking(
-      _staking: string,
-      _helper: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _staking: PromiseOrValue<string>,
+      _helper: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     staking(overrides?: CallOverrides): Promise<[string]>;
@@ -429,7 +448,7 @@ export interface OlympusV1BondDepository extends BaseContract {
   bondCalculator(overrides?: CallOverrides): Promise<string>;
 
   bondInfo(
-    arg0: string,
+    arg0: PromiseOrValue<string>,
     overrides?: CallOverrides,
   ): Promise<
     [BigNumber, BigNumber, BigNumber, BigNumber] & {
@@ -451,21 +470,21 @@ export interface OlympusV1BondDepository extends BaseContract {
   debtRatio(overrides?: CallOverrides): Promise<BigNumber>;
 
   deposit(
-    _amount: BigNumberish,
-    _maxPrice: BigNumberish,
-    _depositor: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _amount: PromiseOrValue<BigNumberish>,
+    _maxPrice: PromiseOrValue<BigNumberish>,
+    _depositor: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   initializeBondTerms(
-    _controlVariable: BigNumberish,
-    _vestingTerm: BigNumberish,
-    _minimumPrice: BigNumberish,
-    _maxPayout: BigNumberish,
-    _fee: BigNumberish,
-    _maxDebt: BigNumberish,
-    _initialDebt: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _controlVariable: PromiseOrValue<BigNumberish>,
+    _vestingTerm: PromiseOrValue<BigNumberish>,
+    _minimumPrice: PromiseOrValue<BigNumberish>,
+    _maxPayout: PromiseOrValue<BigNumberish>,
+    _fee: PromiseOrValue<BigNumberish>,
+    _maxDebt: PromiseOrValue<BigNumberish>,
+    _initialDebt: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   isLiquidityBond(overrides?: CallOverrides): Promise<boolean>;
@@ -474,54 +493,54 @@ export interface OlympusV1BondDepository extends BaseContract {
 
   maxPayout(overrides?: CallOverrides): Promise<BigNumber>;
 
-  payoutFor(_value: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+  payoutFor(_value: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  pendingPayoutFor(_depositor: string, overrides?: CallOverrides): Promise<BigNumber>;
+  pendingPayoutFor(_depositor: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  percentVestedFor(_depositor: string, overrides?: CallOverrides): Promise<BigNumber>;
+  percentVestedFor(_depositor: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   policy(overrides?: CallOverrides): Promise<string>;
 
   principle(overrides?: CallOverrides): Promise<string>;
 
-  pullManagement(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  pullManagement(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   pushManagement(
-    newOwner_: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    newOwner_: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   recoverLostToken(
-    _token: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _token: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   redeem(
-    _recipient: string,
-    _stake: boolean,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _recipient: PromiseOrValue<string>,
+    _stake: PromiseOrValue<boolean>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  renounceManagement(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  renounceManagement(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   setAdjustment(
-    _addition: boolean,
-    _increment: BigNumberish,
-    _target: BigNumberish,
-    _buffer: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _addition: PromiseOrValue<boolean>,
+    _increment: PromiseOrValue<BigNumberish>,
+    _target: PromiseOrValue<BigNumberish>,
+    _buffer: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setBondTerms(
-    _parameter: BigNumberish,
-    _input: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _parameter: PromiseOrValue<BigNumberish>,
+    _input: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setStaking(
-    _staking: string,
-    _helper: boolean,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _staking: PromiseOrValue<string>,
+    _helper: PromiseOrValue<boolean>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   staking(overrides?: CallOverrides): Promise<string>;
@@ -565,7 +584,7 @@ export interface OlympusV1BondDepository extends BaseContract {
     bondCalculator(overrides?: CallOverrides): Promise<string>;
 
     bondInfo(
-      arg0: string,
+      arg0: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<
       [BigNumber, BigNumber, BigNumber, BigNumber] & {
@@ -587,20 +606,20 @@ export interface OlympusV1BondDepository extends BaseContract {
     debtRatio(overrides?: CallOverrides): Promise<BigNumber>;
 
     deposit(
-      _amount: BigNumberish,
-      _maxPrice: BigNumberish,
-      _depositor: string,
+      _amount: PromiseOrValue<BigNumberish>,
+      _maxPrice: PromiseOrValue<BigNumberish>,
+      _depositor: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     initializeBondTerms(
-      _controlVariable: BigNumberish,
-      _vestingTerm: BigNumberish,
-      _minimumPrice: BigNumberish,
-      _maxPayout: BigNumberish,
-      _fee: BigNumberish,
-      _maxDebt: BigNumberish,
-      _initialDebt: BigNumberish,
+      _controlVariable: PromiseOrValue<BigNumberish>,
+      _vestingTerm: PromiseOrValue<BigNumberish>,
+      _minimumPrice: PromiseOrValue<BigNumberish>,
+      _maxPayout: PromiseOrValue<BigNumberish>,
+      _fee: PromiseOrValue<BigNumberish>,
+      _maxDebt: PromiseOrValue<BigNumberish>,
+      _initialDebt: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
@@ -610,11 +629,11 @@ export interface OlympusV1BondDepository extends BaseContract {
 
     maxPayout(overrides?: CallOverrides): Promise<BigNumber>;
 
-    payoutFor(_value: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    payoutFor(_value: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    pendingPayoutFor(_depositor: string, overrides?: CallOverrides): Promise<BigNumber>;
+    pendingPayoutFor(_depositor: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    percentVestedFor(_depositor: string, overrides?: CallOverrides): Promise<BigNumber>;
+    percentVestedFor(_depositor: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     policy(overrides?: CallOverrides): Promise<string>;
 
@@ -622,25 +641,37 @@ export interface OlympusV1BondDepository extends BaseContract {
 
     pullManagement(overrides?: CallOverrides): Promise<void>;
 
-    pushManagement(newOwner_: string, overrides?: CallOverrides): Promise<void>;
+    pushManagement(newOwner_: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    recoverLostToken(_token: string, overrides?: CallOverrides): Promise<boolean>;
+    recoverLostToken(_token: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
-    redeem(_recipient: string, _stake: boolean, overrides?: CallOverrides): Promise<BigNumber>;
+    redeem(
+      _recipient: PromiseOrValue<string>,
+      _stake: PromiseOrValue<boolean>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     renounceManagement(overrides?: CallOverrides): Promise<void>;
 
     setAdjustment(
-      _addition: boolean,
-      _increment: BigNumberish,
-      _target: BigNumberish,
-      _buffer: BigNumberish,
+      _addition: PromiseOrValue<boolean>,
+      _increment: PromiseOrValue<BigNumberish>,
+      _target: PromiseOrValue<BigNumberish>,
+      _buffer: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
-    setBondTerms(_parameter: BigNumberish, _input: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    setBondTerms(
+      _parameter: PromiseOrValue<BigNumberish>,
+      _input: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    setStaking(_staking: string, _helper: boolean, overrides?: CallOverrides): Promise<void>;
+    setStaking(
+      _staking: PromiseOrValue<string>,
+      _helper: PromiseOrValue<boolean>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
     staking(overrides?: CallOverrides): Promise<string>;
 
@@ -669,34 +700,34 @@ export interface OlympusV1BondDepository extends BaseContract {
   filters: {
     'BondCreated(uint256,uint256,uint256,uint256)'(
       deposit?: null,
-      payout?: BigNumberish | null,
-      expires?: BigNumberish | null,
-      priceInUSD?: BigNumberish | null,
+      payout?: PromiseOrValue<BigNumberish> | null,
+      expires?: PromiseOrValue<BigNumberish> | null,
+      priceInUSD?: PromiseOrValue<BigNumberish> | null,
     ): BondCreatedEventFilter;
     BondCreated(
       deposit?: null,
-      payout?: BigNumberish | null,
-      expires?: BigNumberish | null,
-      priceInUSD?: BigNumberish | null,
+      payout?: PromiseOrValue<BigNumberish> | null,
+      expires?: PromiseOrValue<BigNumberish> | null,
+      priceInUSD?: PromiseOrValue<BigNumberish> | null,
     ): BondCreatedEventFilter;
 
     'BondPriceChanged(uint256,uint256,uint256)'(
-      priceInUSD?: BigNumberish | null,
-      internalPrice?: BigNumberish | null,
-      debtRatio?: BigNumberish | null,
+      priceInUSD?: PromiseOrValue<BigNumberish> | null,
+      internalPrice?: PromiseOrValue<BigNumberish> | null,
+      debtRatio?: PromiseOrValue<BigNumberish> | null,
     ): BondPriceChangedEventFilter;
     BondPriceChanged(
-      priceInUSD?: BigNumberish | null,
-      internalPrice?: BigNumberish | null,
-      debtRatio?: BigNumberish | null,
+      priceInUSD?: PromiseOrValue<BigNumberish> | null,
+      internalPrice?: PromiseOrValue<BigNumberish> | null,
+      debtRatio?: PromiseOrValue<BigNumberish> | null,
     ): BondPriceChangedEventFilter;
 
     'BondRedeemed(address,uint256,uint256)'(
-      recipient?: string | null,
+      recipient?: PromiseOrValue<string> | null,
       payout?: null,
       remaining?: null,
     ): BondRedeemedEventFilter;
-    BondRedeemed(recipient?: string | null, payout?: null, remaining?: null): BondRedeemedEventFilter;
+    BondRedeemed(recipient?: PromiseOrValue<string> | null, payout?: null, remaining?: null): BondRedeemedEventFilter;
 
     'ControlVariableAdjustment(uint256,uint256,uint256,bool)'(
       initialBCV?: null,
@@ -712,16 +743,22 @@ export interface OlympusV1BondDepository extends BaseContract {
     ): ControlVariableAdjustmentEventFilter;
 
     'OwnershipPulled(address,address)'(
-      previousOwner?: string | null,
-      newOwner?: string | null,
+      previousOwner?: PromiseOrValue<string> | null,
+      newOwner?: PromiseOrValue<string> | null,
     ): OwnershipPulledEventFilter;
-    OwnershipPulled(previousOwner?: string | null, newOwner?: string | null): OwnershipPulledEventFilter;
+    OwnershipPulled(
+      previousOwner?: PromiseOrValue<string> | null,
+      newOwner?: PromiseOrValue<string> | null,
+    ): OwnershipPulledEventFilter;
 
     'OwnershipPushed(address,address)'(
-      previousOwner?: string | null,
-      newOwner?: string | null,
+      previousOwner?: PromiseOrValue<string> | null,
+      newOwner?: PromiseOrValue<string> | null,
     ): OwnershipPushedEventFilter;
-    OwnershipPushed(previousOwner?: string | null, newOwner?: string | null): OwnershipPushedEventFilter;
+    OwnershipPushed(
+      previousOwner?: PromiseOrValue<string> | null,
+      newOwner?: PromiseOrValue<string> | null,
+    ): OwnershipPushedEventFilter;
   };
 
   estimateGas: {
@@ -733,7 +770,7 @@ export interface OlympusV1BondDepository extends BaseContract {
 
     bondCalculator(overrides?: CallOverrides): Promise<BigNumber>;
 
-    bondInfo(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    bondInfo(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     bondPrice(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -746,21 +783,21 @@ export interface OlympusV1BondDepository extends BaseContract {
     debtRatio(overrides?: CallOverrides): Promise<BigNumber>;
 
     deposit(
-      _amount: BigNumberish,
-      _maxPrice: BigNumberish,
-      _depositor: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _amount: PromiseOrValue<BigNumberish>,
+      _maxPrice: PromiseOrValue<BigNumberish>,
+      _depositor: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     initializeBondTerms(
-      _controlVariable: BigNumberish,
-      _vestingTerm: BigNumberish,
-      _minimumPrice: BigNumberish,
-      _maxPayout: BigNumberish,
-      _fee: BigNumberish,
-      _maxDebt: BigNumberish,
-      _initialDebt: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _controlVariable: PromiseOrValue<BigNumberish>,
+      _vestingTerm: PromiseOrValue<BigNumberish>,
+      _minimumPrice: PromiseOrValue<BigNumberish>,
+      _maxPayout: PromiseOrValue<BigNumberish>,
+      _fee: PromiseOrValue<BigNumberish>,
+      _maxDebt: PromiseOrValue<BigNumberish>,
+      _initialDebt: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     isLiquidityBond(overrides?: CallOverrides): Promise<BigNumber>;
@@ -769,48 +806,54 @@ export interface OlympusV1BondDepository extends BaseContract {
 
     maxPayout(overrides?: CallOverrides): Promise<BigNumber>;
 
-    payoutFor(_value: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    payoutFor(_value: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    pendingPayoutFor(_depositor: string, overrides?: CallOverrides): Promise<BigNumber>;
+    pendingPayoutFor(_depositor: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    percentVestedFor(_depositor: string, overrides?: CallOverrides): Promise<BigNumber>;
+    percentVestedFor(_depositor: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     policy(overrides?: CallOverrides): Promise<BigNumber>;
 
     principle(overrides?: CallOverrides): Promise<BigNumber>;
 
-    pullManagement(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    pullManagement(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
-    pushManagement(newOwner_: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
-
-    recoverLostToken(_token: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
-
-    redeem(
-      _recipient: string,
-      _stake: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+    pushManagement(
+      newOwner_: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    renounceManagement(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    recoverLostToken(
+      _token: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
+
+    redeem(
+      _recipient: PromiseOrValue<string>,
+      _stake: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
+
+    renounceManagement(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     setAdjustment(
-      _addition: boolean,
-      _increment: BigNumberish,
-      _target: BigNumberish,
-      _buffer: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _addition: PromiseOrValue<boolean>,
+      _increment: PromiseOrValue<BigNumberish>,
+      _target: PromiseOrValue<BigNumberish>,
+      _buffer: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setBondTerms(
-      _parameter: BigNumberish,
-      _input: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _parameter: PromiseOrValue<BigNumberish>,
+      _input: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setStaking(
-      _staking: string,
-      _helper: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _staking: PromiseOrValue<string>,
+      _helper: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     staking(overrides?: CallOverrides): Promise<BigNumber>;
@@ -837,7 +880,7 @@ export interface OlympusV1BondDepository extends BaseContract {
 
     bondCalculator(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    bondInfo(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    bondInfo(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     bondPrice(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
@@ -850,21 +893,21 @@ export interface OlympusV1BondDepository extends BaseContract {
     debtRatio(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     deposit(
-      _amount: BigNumberish,
-      _maxPrice: BigNumberish,
-      _depositor: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _amount: PromiseOrValue<BigNumberish>,
+      _maxPrice: PromiseOrValue<BigNumberish>,
+      _depositor: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     initializeBondTerms(
-      _controlVariable: BigNumberish,
-      _vestingTerm: BigNumberish,
-      _minimumPrice: BigNumberish,
-      _maxPayout: BigNumberish,
-      _fee: BigNumberish,
-      _maxDebt: BigNumberish,
-      _initialDebt: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _controlVariable: PromiseOrValue<BigNumberish>,
+      _vestingTerm: PromiseOrValue<BigNumberish>,
+      _minimumPrice: PromiseOrValue<BigNumberish>,
+      _maxPayout: PromiseOrValue<BigNumberish>,
+      _fee: PromiseOrValue<BigNumberish>,
+      _maxDebt: PromiseOrValue<BigNumberish>,
+      _initialDebt: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     isLiquidityBond(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -873,54 +916,54 @@ export interface OlympusV1BondDepository extends BaseContract {
 
     maxPayout(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    payoutFor(_value: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    payoutFor(_value: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    pendingPayoutFor(_depositor: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    pendingPayoutFor(_depositor: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    percentVestedFor(_depositor: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    percentVestedFor(_depositor: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     policy(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     principle(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    pullManagement(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    pullManagement(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     pushManagement(
-      newOwner_: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner_: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     recoverLostToken(
-      _token: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _token: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     redeem(
-      _recipient: string,
-      _stake: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _recipient: PromiseOrValue<string>,
+      _stake: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    renounceManagement(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    renounceManagement(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     setAdjustment(
-      _addition: boolean,
-      _increment: BigNumberish,
-      _target: BigNumberish,
-      _buffer: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _addition: PromiseOrValue<boolean>,
+      _increment: PromiseOrValue<BigNumberish>,
+      _target: PromiseOrValue<BigNumberish>,
+      _buffer: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setBondTerms(
-      _parameter: BigNumberish,
-      _input: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _parameter: PromiseOrValue<BigNumberish>,
+      _input: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setStaking(
-      _staking: string,
-      _helper: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _staking: PromiseOrValue<string>,
+      _helper: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     staking(overrides?: CallOverrides): Promise<PopulatedTransaction>;

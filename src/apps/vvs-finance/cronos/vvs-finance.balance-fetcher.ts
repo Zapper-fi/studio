@@ -132,6 +132,15 @@ export class CronosVvsFinanceBalanceFetcher implements BalanceFetcher {
     });
   }
 
+  private async getXvvsBalances(address: string) {
+    return this.appToolkit.helpers.tokenBalanceHelper.getTokenBalances({
+      address,
+      appId,
+      network,
+      groupId: VVS_FINANCE_DEFINITION.groups.xvvs.id,
+    });
+  }
+
   private async getXvvsVaultBalances(address: string) {
     const multicall = this.appToolkit.getMulticall(network);
     const contractPositions = await this.appToolkit.getAppContractPositions<XvvsVaultContractPositionDataProps>({
@@ -176,15 +185,23 @@ export class CronosVvsFinanceBalanceFetcher implements BalanceFetcher {
   }
 
   async getBalances(address: string) {
-    const [poolBalances, farmBalances, farmV2Balances, autoVvsMineBalances, mineBalances, xvvsVaultBalances] =
-      await Promise.all([
-        this.getPoolBalances(address),
-        this.getFarmBalances(address),
-        this.getFarmV2Balances(address),
-        this.getAutoVvsMineBalances(address),
-        this.getMineBalances(address),
-        this.getXvvsVaultBalances(address),
-      ]);
+    const [
+      poolBalances,
+      farmBalances,
+      farmV2Balances,
+      autoVvsMineBalances,
+      mineBalances,
+      xvvsBalances,
+      xvvsVaultBalances,
+    ] = await Promise.all([
+      this.getPoolBalances(address),
+      this.getFarmBalances(address),
+      this.getFarmV2Balances(address),
+      this.getAutoVvsMineBalances(address),
+      this.getMineBalances(address),
+      this.getXvvsBalances(address),
+      this.getXvvsVaultBalances(address),
+    ]);
 
     return presentBalanceFetcherResponse([
       {
@@ -208,7 +225,11 @@ export class CronosVvsFinanceBalanceFetcher implements BalanceFetcher {
         assets: mineBalances,
       },
       {
-        label: 'xVVS Vault',
+        label: 'xVVS',
+        assets: xvvsBalances,
+      },
+      {
+        label: 'xVVS Vaults',
         assets: xvvsVaultBalances,
       },
     ]);

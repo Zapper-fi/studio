@@ -4,7 +4,7 @@ import { compact, isArray } from 'lodash';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { ZERO_ADDRESS } from '~app-toolkit/constants/address';
-import { EthersMulticall as Multicall } from '~multicall/multicall.ethers';
+import { IMulticallWrapper } from '~multicall/multicall.interface';
 import { ContractType } from '~position/contract.interface';
 import { WithMetaType } from '~position/display.interface';
 import { ContractPosition, Token } from '~position/position.interface';
@@ -43,14 +43,14 @@ export type SingleStakingFarmResolveLiquidityParams<T> = (opts: {
   address: string;
   network: Network;
   stakedToken: WithMetaType<Token>;
-  multicall: Multicall;
+  multicall: IMulticallWrapper;
 }) => Promise<BigNumberish>;
 
 export type SingleStakingFarmResolveIsActiveParams<T> = (opts: {
   address: string;
   network: Network;
   contract: T;
-  multicall: Multicall;
+  multicall: IMulticallWrapper;
   stakedToken: WithMetaType<Token>;
   rewardTokens: WithMetaType<Token>[];
 }) => boolean | Promise<boolean>;
@@ -59,7 +59,7 @@ export type SingleStakingFarmResolveRoisParams<T> = (opts: {
   address: string;
   network: Network;
   contract: T;
-  multicall: Multicall;
+  multicall: IMulticallWrapper;
   stakedToken: WithMetaType<Token>;
   rewardTokens: WithMetaType<Token>[];
   liquidity: number;
@@ -78,8 +78,8 @@ export type SingleStakingFarmContractPositionHelperParams<T> = {
   resolveImplementation?: () => string;
   resolveLabel?: (definition: string | SingleStakingFarmDefinition) => string;
   resolveFarmAddresses?: (opts: { network: Network }) => (string | null)[] | Promise<(string | null)[]>;
-  resolveStakedTokenAddress?: (opts: { contract: T; multicall: Multicall; index: number }) => Promise<string>;
-  resolveRewardTokenAddresses?: (opts: { contract: T; multicall: Multicall }) => Promise<string | string[]>;
+  resolveStakedTokenAddress?: (opts: { contract: T; multicall: IMulticallWrapper; index: number }) => Promise<string>;
+  resolveRewardTokenAddresses?: (opts: { contract: T; multicall: IMulticallWrapper }) => Promise<string | string[]>;
   resolveLiquidity?: SingleStakingFarmResolveLiquidityParams<T>;
   resolveIsActive?: SingleStakingFarmResolveIsActiveParams<T>;
   resolveRois: SingleStakingFarmResolveRoisParams<T>;
@@ -203,7 +203,7 @@ export class SingleStakingFarmContractPositionHelper {
           const secondaryLabel = buildDollarDisplayItem(stakedToken.price);
           const images = [getTokenImg(stakedToken.address, network)];
           const statsItems = [
-            { label: 'APY', value: buildPercentageDisplayItem(rois.yearlyROI * 100) },
+            { label: 'APR', value: buildPercentageDisplayItem(rois.yearlyROI * 100) },
             { label: 'Liquidity', value: buildDollarDisplayItem(liquidity) },
           ];
           const displayProps = { label, secondaryLabel, images, statsItems };

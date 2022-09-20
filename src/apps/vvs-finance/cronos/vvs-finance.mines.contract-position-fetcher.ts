@@ -5,6 +5,7 @@ import request, { gql } from 'graphql-request';
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
 import { RewardRateUnit } from '~app-toolkit/helpers/master-chef/master-chef.contract-position-helper';
+import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { PositionFetcher } from '~position/position-fetcher.interface';
 import { ContractPosition } from '~position/position.interface';
 import { Network } from '~types/network.interface';
@@ -93,6 +94,8 @@ export class CronosVvsFinanceMinesContractPositionFetcher implements PositionFet
           return multicall.wrap(contract).rewardPerBlock();
         },
       }),
+      resolveLabel: ({ stakedToken, rewardTokens }) =>
+        `Staked ${getLabelFromToken(stakedToken)} for ${rewardTokens.map(getLabelFromToken).join(', ')} mine`,
     });
   }
 }

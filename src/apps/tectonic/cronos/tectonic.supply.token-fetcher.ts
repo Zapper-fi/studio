@@ -1,40 +1,44 @@
 import { Inject } from '@nestjs/common';
 
-import { Register } from '~app-toolkit/decorators';
-import { PositionFetcher } from '~position/position-fetcher.interface';
-import { AppTokenPosition } from '~position/position.interface';
-import { Network } from '~types/network.interface';
+import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
+import { CompoundSupplyTokenFetcher } from '~apps/compound/common/compound.supply.token-fetcher';
 
-import { TectonicContractFactory } from '../contracts';
-import { TectonicSupplyTokenHelper } from '../helper/tectonic.supply.token-helper';
-import { TECTONIC_DEFINITION } from '../tectonic.definition';
+import { TectonicContractFactory, TectonicCore, TectonicTToken } from '../contracts';
 
-const appId = TECTONIC_DEFINITION.id;
-const groupId = TECTONIC_DEFINITION.groups.supply.id;
-const network = Network.CRONOS_MAINNET;
+@PositionTemplate()
+export class CronosTectonicSupplyTokenFetcher extends CompoundSupplyTokenFetcher<TectonicTToken, TectonicCore> {
+  groupLabel = 'Lending';
+  comptrollerAddress = '0xb3831584acb95ed9ccb0c11f677b5ad01deaeec0';
 
-@Register.TokenPositionFetcher({ appId, groupId, network })
-export class CronosTectonicSupplyTokenFetcher implements PositionFetcher<AppTokenPosition> {
   constructor(
-    @Inject(TectonicContractFactory) private readonly tectonicContractFactory: TectonicContractFactory,
-    @Inject(TectonicSupplyTokenHelper) private readonly tectonicSupplyTokenHelper: TectonicSupplyTokenHelper,
-  ) {}
+    @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
+    @Inject(TectonicContractFactory) protected readonly contractFactory: TectonicContractFactory,
+  ) {
+    super(appToolkit);
+  }
 
-  async getPositions() {
-    return this.tectonicSupplyTokenHelper.getTokens({
-      network,
-      appId,
-      groupId,
-      tectonicCoreAddress: '0xb3831584acb95ed9ccb0c11f677b5ad01deaeec0',
-      getTectonicCoreContract: ({ address, network }) =>
-        this.tectonicContractFactory.tectonicCore({ address, network }),
-      getTokenContract: ({ address, network }) => this.tectonicContractFactory.tectonicTToken({ address, network }),
-      getAllMarkets: ({ contract }) => contract.getAllMarkets(),
-      getExchangeRate: ({ contract }) => contract.callStatic.exchangeRateCurrent(),
-      getSupplyRate: ({ contract }) => contract.supplyRatePerBlock(),
-      getBorrowRate: ({ contract }) => contract.borrowRatePerBlock(),
-      getUnderlyingAddress: ({ contract }) => contract.underlying(),
-      getExchangeRateMantissa: ({ underlyingTokenDecimals }) => underlyingTokenDecimals + 10,
-    });
+  getCompoundCTokenContract(address: string) {
+    return this.contractFactory.tectonicTToken({ address, network: this.network });
+  }
+
+  getCompoundComptrollerContract(address: string) {
+    return this.contractFactory.tectonicCore({ address, network: this.network });
+  }
+
+  getMarkets(contract: TectonicCore) {
+    return contract.getAllMarkets();
+  }
+
+  async getUnderlyingAddress(contract: TectonicTToken) {
+    return contract.underlying();
+  }
+
+  getExchangeRate(contract: TectonicTToken) {
+    return contract.callStatic.exchangeRateCurrent();
+  }
+
+  async getSupplyRate(contract: TectonicTToken) {
+    return contract.supplyRatePerBlock().catch(() => 0);
   }
 }

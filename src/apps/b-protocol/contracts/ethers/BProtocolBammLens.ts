@@ -4,7 +4,7 @@
 import type { BaseContract, BigNumber, BytesLike, CallOverrides, PopulatedTransaction, Signer, utils } from 'ethers';
 import type { FunctionFragment, Result } from '@ethersproject/abi';
 import type { Listener, Provider } from '@ethersproject/providers';
-import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
 export interface BProtocolBammLensInterface extends utils.Interface {
   functions: {
@@ -13,7 +13,10 @@ export interface BProtocolBammLensInterface extends utils.Interface {
 
   getFunction(nameOrSignatureOrTopic: 'getUserDeposit'): FunctionFragment;
 
-  encodeFunctionData(functionFragment: 'getUserDeposit', values: [string, string]): string;
+  encodeFunctionData(
+    functionFragment: 'getUserDeposit',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>],
+  ): string;
 
   decodeFunctionResult(functionFragment: 'getUserDeposit', data: BytesLike): Result;
 
@@ -44,22 +47,22 @@ export interface BProtocolBammLens extends BaseContract {
 
   functions: {
     getUserDeposit(
-      user: string,
-      bamm: string,
+      user: PromiseOrValue<string>,
+      bamm: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber, BigNumber] & { lusd: BigNumber; eth: BigNumber }>;
   };
 
   getUserDeposit(
-    user: string,
-    bamm: string,
+    user: PromiseOrValue<string>,
+    bamm: PromiseOrValue<string>,
     overrides?: CallOverrides,
   ): Promise<[BigNumber, BigNumber] & { lusd: BigNumber; eth: BigNumber }>;
 
   callStatic: {
     getUserDeposit(
-      user: string,
-      bamm: string,
+      user: PromiseOrValue<string>,
+      bamm: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber, BigNumber] & { lusd: BigNumber; eth: BigNumber }>;
   };
@@ -67,10 +70,18 @@ export interface BProtocolBammLens extends BaseContract {
   filters: {};
 
   estimateGas: {
-    getUserDeposit(user: string, bamm: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getUserDeposit(
+      user: PromiseOrValue<string>,
+      bamm: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
   };
 
   populateTransaction: {
-    getUserDeposit(user: string, bamm: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getUserDeposit(
+      user: PromiseOrValue<string>,
+      bamm: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
   };
 }

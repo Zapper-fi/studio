@@ -1,6 +1,5 @@
 import { Inject } from '@nestjs/common';
 
-import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
 import { UniswapV2PoolTokenHelper, UniswapV2TheGraphPoolTokenAddressStrategy } from '~apps/uniswap-v2';
 import { PositionFetcher } from '~position/position-fetcher.interface';
@@ -17,7 +16,6 @@ const network = Network.POLYGON_MAINNET;
 @Register.TokenPositionFetcher({ appId, groupId, network })
 export class PolygonHoneyswapPoolTokenFetcher implements PositionFetcher<AppTokenPosition> {
   constructor(
-    @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
     @Inject(HoneyswapContractFactory) private readonly honeyswapContractFactory: HoneyswapContractFactory,
     @Inject(UniswapV2PoolTokenHelper)
     private readonly uniswapV2PoolTokenHelper: UniswapV2PoolTokenHelper,

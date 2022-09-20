@@ -1,16 +1,23 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { partition, groupBy, map, compact } from 'lodash';
+import Cache from 'file-system-cache';
+import { partition, groupBy, map, compact, uniq } from 'lodash';
 
 import { ContractType } from '~position/contract.interface';
-import { PositionFetcherRegistry } from '~position/position-fetcher.registry';
-import { AbstractPosition } from '~position/position.interface';
+import { buildAppPositionsCacheKey, PositionFetcherRegistry } from '~position/position-fetcher.registry';
+import { AbstractPosition, AppTokenPosition } from '~position/position.interface';
 import { AppGroupsDefinition } from '~position/position.service';
+import { AppTokenSelectorKey } from '~position/selectors/app-token-selector.interface';
 
 import { PositionSource } from './position-source.interface';
 
 @Injectable()
 export class RegistryPositionSource implements PositionSource {
+  private cacheManager = Cache({
+    basePath: './.cache',
+    ns: '@CacheOnInterval',
+  });
+
   constructor(
     @Inject(ConfigService) private readonly configService: ConfigService,
     @Inject(PositionFetcherRegistry) private readonly positionFetcherRegistry: PositionFetcherRegistry,
@@ -18,6 +25,23 @@ export class RegistryPositionSource implements PositionSource {
 
   private getApiResolvedPositions(): string[] {
     return this.configService.get('apiResolvedPositions') ?? [];
+  }
+
+  async getTokenDependenciesBatch(queries: AppTokenSelectorKey[]) {
+    const networks = uniq(queries.map(query => query.network));
+    const groups = this.positionFetcherRegistry.getRegisteredTokenGroups();
+    const networkGroups = groups.filter(({ network }) => networks.includes(network));
+
+    const cacheKeys = networkGroups.map(group => buildAppPositionsCacheKey({ type: ContractType.APP_TOKEN, ...group }));
+    const cachedTokenResults = await Promise.all(
+      uniq(cacheKeys).map(async key => {
+        const cachedData = await this.cacheManager.get(key);
+        return (cachedData as any as AppTokenPosition[]) ?? [];
+      }),
+    );
+
+    const allTokens = cachedTokenResults.flat();
+    return queries.map(q => allTokens.find(t => t.network === q.network && t.address === q.address) ?? null);
   }
 
   getSupported(definitions: AppGroupsDefinition[], contractType: ContractType) {
@@ -78,6 +102,7 @@ export class RegistryPositionSource implements PositionSource {
     const positions = (await Promise.all(
       validFetchers.map(async fetcher => (await fetcher.getPositions()) ?? []),
     )) as T[][];
+
     return positions.flat();
   }
 }

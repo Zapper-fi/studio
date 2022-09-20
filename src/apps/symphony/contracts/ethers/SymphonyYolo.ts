@@ -16,20 +16,20 @@ import type {
 } from 'ethers';
 import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
 import type { Listener, Provider } from '@ethersproject/providers';
-import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
 export declare namespace IOrderStructs {
   export type OrderStruct = {
-    creator: string;
-    recipient: string;
-    inputToken: string;
-    outputToken: string;
-    inputAmount: BigNumberish;
-    minReturnAmount: BigNumberish;
-    stoplossAmount: BigNumberish;
-    shares: BigNumberish;
-    executor: string;
-    executionFee: BigNumberish;
+    creator: PromiseOrValue<string>;
+    recipient: PromiseOrValue<string>;
+    inputToken: PromiseOrValue<string>;
+    outputToken: PromiseOrValue<string>;
+    inputAmount: PromiseOrValue<BigNumberish>;
+    minReturnAmount: PromiseOrValue<BigNumberish>;
+    stoplossAmount: PromiseOrValue<BigNumberish>;
+    shares: PromiseOrValue<BigNumberish>;
+    executor: PromiseOrValue<string>;
+    executionFee: PromiseOrValue<BigNumberish>;
   };
 
   export type OrderStructOutput = [
@@ -153,73 +153,122 @@ export interface SymphonyYoloInterface extends utils.Interface {
       | 'whitelistedTokens',
   ): FunctionFragment;
 
-  encodeFunctionData(functionFragment: 'addHandler', values: [string]): string;
-  encodeFunctionData(functionFragment: 'addWhitelistToken', values: [string]): string;
-  encodeFunctionData(functionFragment: 'allowedExecutors', values: [string, string]): string;
-  encodeFunctionData(functionFragment: 'allowedHandlers', values: [string]): string;
-  encodeFunctionData(functionFragment: 'approveExecutor', values: [string]): string;
-  encodeFunctionData(functionFragment: 'cancelOrder', values: [BytesLike, BytesLike]): string;
+  encodeFunctionData(functionFragment: 'addHandler', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'addWhitelistToken', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'allowedExecutors',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>],
+  ): string;
+  encodeFunctionData(functionFragment: 'allowedHandlers', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'approveExecutor', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'cancelOrder',
+    values: [PromiseOrValue<BytesLike>, PromiseOrValue<BytesLike>],
+  ): string;
   encodeFunctionData(functionFragment: 'cancellationFeePercent', values?: undefined): string;
   encodeFunctionData(
     functionFragment: 'createNativeOrder',
-    values: [string, string, BigNumberish, BigNumberish, string, BigNumberish],
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+    ],
   ): string;
   encodeFunctionData(
     functionFragment: 'createOrder',
-    values: [string, string, string, BigNumberish, BigNumberish, BigNumberish, string, BigNumberish],
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+    ],
   ): string;
-  encodeFunctionData(functionFragment: 'decodeOrder', values: [BytesLike]): string;
+  encodeFunctionData(functionFragment: 'decodeOrder', values: [PromiseOrValue<BytesLike>]): string;
   encodeFunctionData(functionFragment: 'emergencyAdmin', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'emergencyWithdrawFromStrategy', values: [string[]]): string;
-  encodeFunctionData(functionFragment: 'executeOrder', values: [BytesLike, BytesLike, string, BytesLike]): string;
-  encodeFunctionData(functionFragment: 'fillOrder', values: [BytesLike, BytesLike, BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'emergencyWithdrawFromStrategy', values: [PromiseOrValue<string>[]]): string;
+  encodeFunctionData(
+    functionFragment: 'executeOrder',
+    values: [PromiseOrValue<BytesLike>, PromiseOrValue<BytesLike>, PromiseOrValue<string>, PromiseOrValue<BytesLike>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'fillOrder',
+    values: [PromiseOrValue<BytesLike>, PromiseOrValue<BytesLike>, PromiseOrValue<BigNumberish>],
+  ): string;
   encodeFunctionData(
     functionFragment: 'getOrderId',
     values: [
-      string,
-      string,
-      string,
-      string,
-      BigNumberish,
-      BigNumberish,
-      BigNumberish,
-      string,
-      BigNumberish,
-      BigNumberish,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
     ],
   ): string;
-  encodeFunctionData(functionFragment: 'getTotalTokens', values: [string, BigNumberish, string]): string;
-  encodeFunctionData(functionFragment: 'initialize', values: [string, string, string]): string;
-  encodeFunctionData(functionFragment: 'migrateStrategy', values: [string, string]): string;
+  encodeFunctionData(
+    functionFragment: 'getTotalTokens',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>, PromiseOrValue<string>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'initialize',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<string>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'migrateStrategy',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>],
+  ): string;
   encodeFunctionData(functionFragment: 'oracle', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'orderHash', values: [BytesLike]): string;
+  encodeFunctionData(functionFragment: 'orderHash', values: [PromiseOrValue<BytesLike>]): string;
   encodeFunctionData(functionFragment: 'owner', values?: undefined): string;
   encodeFunctionData(functionFragment: 'pause', values?: undefined): string;
   encodeFunctionData(functionFragment: 'paused', values?: undefined): string;
   encodeFunctionData(functionFragment: 'protocolFeePercent', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'rebalanceTokens', values: [string[]]): string;
-  encodeFunctionData(functionFragment: 'removeHandler', values: [string]): string;
-  encodeFunctionData(functionFragment: 'removeWhitelistToken', values: [string]): string;
+  encodeFunctionData(functionFragment: 'rebalanceTokens', values: [PromiseOrValue<string>[]]): string;
+  encodeFunctionData(functionFragment: 'removeHandler', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'removeWhitelistToken', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'renounceOwnership', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'revokeExecutor', values: [string]): string;
-  encodeFunctionData(functionFragment: 'setStrategy', values: [string, string]): string;
-  encodeFunctionData(functionFragment: 'strategy', values: [string]): string;
-  encodeFunctionData(functionFragment: 'tokenBuffer', values: [string]): string;
-  encodeFunctionData(functionFragment: 'totalTokenShares', values: [string]): string;
-  encodeFunctionData(functionFragment: 'transferOwnership', values: [string]): string;
+  encodeFunctionData(functionFragment: 'revokeExecutor', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'setStrategy', values: [PromiseOrValue<string>, PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'strategy', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'tokenBuffer', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'totalTokenShares', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'transferOwnership', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'treasury', values?: undefined): string;
   encodeFunctionData(functionFragment: 'unpause', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'updateCancellationFee', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'updateEmergencyAdmin', values: [string]): string;
-  encodeFunctionData(functionFragment: 'updateOracle', values: [string]): string;
+  encodeFunctionData(functionFragment: 'updateCancellationFee', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'updateEmergencyAdmin', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'updateOracle', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(
     functionFragment: 'updateOrder',
-    values: [BytesLike, BytesLike, string, string, BigNumberish, BigNumberish, string, BigNumberish],
+    values: [
+      PromiseOrValue<BytesLike>,
+      PromiseOrValue<BytesLike>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+    ],
   ): string;
-  encodeFunctionData(functionFragment: 'updateProtocolFee', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'updateTokenBuffer', values: [string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'updateTreasury', values: [string]): string;
-  encodeFunctionData(functionFragment: 'whitelistedTokens', values: [string]): string;
+  encodeFunctionData(functionFragment: 'updateProtocolFee', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(
+    functionFragment: 'updateTokenBuffer',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'updateTreasury', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'whitelistedTokens', values: [PromiseOrValue<string>]): string;
 
   decodeFunctionResult(functionFragment: 'addHandler', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'addWhitelistToken', data: BytesLike): Result;
@@ -466,56 +515,60 @@ export interface SymphonyYolo extends BaseContract {
 
   functions: {
     addHandler(
-      _handler: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _handler: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     addWhitelistToken(
-      _token: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _token: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    allowedExecutors(arg0: string, arg1: string, overrides?: CallOverrides): Promise<[boolean]>;
+    allowedExecutors(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<[boolean]>;
 
-    allowedHandlers(arg0: string, overrides?: CallOverrides): Promise<[boolean]>;
+    allowedHandlers(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[boolean]>;
 
     approveExecutor(
-      executor: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      executor: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     cancelOrder(
-      orderId: BytesLike,
-      orderData: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      orderId: PromiseOrValue<BytesLike>,
+      orderData: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     cancellationFeePercent(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     createNativeOrder(
-      recipient: string,
-      outputToken: string,
-      minReturnAmount: BigNumberish,
-      stoplossAmount: BigNumberish,
-      executor: string,
-      executionFee: BigNumberish,
-      overrides?: PayableOverrides & { from?: string | Promise<string> },
+      recipient: PromiseOrValue<string>,
+      outputToken: PromiseOrValue<string>,
+      minReturnAmount: PromiseOrValue<BigNumberish>,
+      stoplossAmount: PromiseOrValue<BigNumberish>,
+      executor: PromiseOrValue<string>,
+      executionFee: PromiseOrValue<BigNumberish>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     createOrder(
-      recipient: string,
-      inputToken: string,
-      outputToken: string,
-      inputAmount: BigNumberish,
-      minReturnAmount: BigNumberish,
-      stoplossAmount: BigNumberish,
-      executor: string,
-      executionFee: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      recipient: PromiseOrValue<string>,
+      inputToken: PromiseOrValue<string>,
+      outputToken: PromiseOrValue<string>,
+      inputAmount: PromiseOrValue<BigNumberish>,
+      minReturnAmount: PromiseOrValue<BigNumberish>,
+      stoplossAmount: PromiseOrValue<BigNumberish>,
+      executor: PromiseOrValue<string>,
+      executionFee: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     decodeOrder(
-      orderData: BytesLike,
+      orderData: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides,
     ): Promise<
       [IOrderStructs.OrderStructOutput] & {
@@ -526,453 +579,480 @@ export interface SymphonyYolo extends BaseContract {
     emergencyAdmin(overrides?: CallOverrides): Promise<[string]>;
 
     emergencyWithdrawFromStrategy(
-      _tokens: string[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _tokens: PromiseOrValue<string>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     executeOrder(
-      orderId: BytesLike,
-      orderData: BytesLike,
-      handler: string,
-      handlerData: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      orderId: PromiseOrValue<BytesLike>,
+      orderData: PromiseOrValue<BytesLike>,
+      handler: PromiseOrValue<string>,
+      handlerData: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     fillOrder(
-      orderId: BytesLike,
-      orderData: BytesLike,
-      quoteAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      orderId: PromiseOrValue<BytesLike>,
+      orderData: PromiseOrValue<BytesLike>,
+      quoteAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     getOrderId(
-      creator: string,
-      recipient: string,
-      inputToken: string,
-      outputToken: string,
-      amount: BigNumberish,
-      minReturnAmount: BigNumberish,
-      stoplossAmount: BigNumberish,
-      executor: string,
-      executionFee: BigNumberish,
-      blockTimestamp: BigNumberish,
+      creator: PromiseOrValue<string>,
+      recipient: PromiseOrValue<string>,
+      inputToken: PromiseOrValue<string>,
+      outputToken: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      minReturnAmount: PromiseOrValue<BigNumberish>,
+      stoplossAmount: PromiseOrValue<BigNumberish>,
+      executor: PromiseOrValue<string>,
+      executionFee: PromiseOrValue<BigNumberish>,
+      blockTimestamp: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<[string]>;
 
     getTotalTokens(
-      token: string,
-      contractBalance: BigNumberish,
-      tokenStrategy: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      token: PromiseOrValue<string>,
+      contractBalance: PromiseOrValue<BigNumberish>,
+      tokenStrategy: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     initialize(
-      _owner: string,
-      _emergencyAdmin: string,
-      _oracle: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _owner: PromiseOrValue<string>,
+      _emergencyAdmin: PromiseOrValue<string>,
+      _oracle: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     migrateStrategy(
-      _token: string,
-      _newStrategy: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _token: PromiseOrValue<string>,
+      _newStrategy: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     oracle(overrides?: CallOverrides): Promise<[string]>;
 
-    orderHash(arg0: BytesLike, overrides?: CallOverrides): Promise<[string]>;
+    orderHash(arg0: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<[string]>;
 
     owner(overrides?: CallOverrides): Promise<[string]>;
 
-    pause(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    pause(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     paused(overrides?: CallOverrides): Promise<[boolean]>;
 
     protocolFeePercent(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     rebalanceTokens(
-      tokens: string[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      tokens: PromiseOrValue<string>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     removeHandler(
-      _handler: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _handler: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     removeWhitelistToken(
-      _token: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _token: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     revokeExecutor(
-      executor: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      executor: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setStrategy(
-      _token: string,
-      _strategy: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _token: PromiseOrValue<string>,
+      _strategy: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    strategy(arg0: string, overrides?: CallOverrides): Promise<[string]>;
+    strategy(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[string]>;
 
-    tokenBuffer(arg0: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    tokenBuffer(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    totalTokenShares(arg0: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    totalTokenShares(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     treasury(overrides?: CallOverrides): Promise<[string]>;
 
-    unpause(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    unpause(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     updateCancellationFee(
-      _feePercent: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _feePercent: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     updateEmergencyAdmin(
-      _emergencyAdmin: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _emergencyAdmin: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     updateOracle(
-      _oracle: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _oracle: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     updateOrder(
-      orderId: BytesLike,
-      orderData: BytesLike,
-      recipient: string,
-      outputToken: string,
-      minReturnAmount: BigNumberish,
-      stoplossAmount: BigNumberish,
-      executor: string,
-      executionFee: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      orderId: PromiseOrValue<BytesLike>,
+      orderData: PromiseOrValue<BytesLike>,
+      recipient: PromiseOrValue<string>,
+      outputToken: PromiseOrValue<string>,
+      minReturnAmount: PromiseOrValue<BigNumberish>,
+      stoplossAmount: PromiseOrValue<BigNumberish>,
+      executor: PromiseOrValue<string>,
+      executionFee: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     updateProtocolFee(
-      _feePercent: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _feePercent: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     updateTokenBuffer(
-      _token: string,
-      _bufferPercent: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _token: PromiseOrValue<string>,
+      _bufferPercent: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     updateTreasury(
-      _treasury: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _treasury: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    whitelistedTokens(arg0: string, overrides?: CallOverrides): Promise<[boolean]>;
+    whitelistedTokens(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[boolean]>;
   };
 
   addHandler(
-    _handler: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _handler: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   addWhitelistToken(
-    _token: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _token: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  allowedExecutors(arg0: string, arg1: string, overrides?: CallOverrides): Promise<boolean>;
+  allowedExecutors(
+    arg0: PromiseOrValue<string>,
+    arg1: PromiseOrValue<string>,
+    overrides?: CallOverrides,
+  ): Promise<boolean>;
 
-  allowedHandlers(arg0: string, overrides?: CallOverrides): Promise<boolean>;
+  allowedHandlers(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
   approveExecutor(
-    executor: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    executor: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   cancelOrder(
-    orderId: BytesLike,
-    orderData: BytesLike,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    orderId: PromiseOrValue<BytesLike>,
+    orderData: PromiseOrValue<BytesLike>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   cancellationFeePercent(overrides?: CallOverrides): Promise<BigNumber>;
 
   createNativeOrder(
-    recipient: string,
-    outputToken: string,
-    minReturnAmount: BigNumberish,
-    stoplossAmount: BigNumberish,
-    executor: string,
-    executionFee: BigNumberish,
-    overrides?: PayableOverrides & { from?: string | Promise<string> },
+    recipient: PromiseOrValue<string>,
+    outputToken: PromiseOrValue<string>,
+    minReturnAmount: PromiseOrValue<BigNumberish>,
+    stoplossAmount: PromiseOrValue<BigNumberish>,
+    executor: PromiseOrValue<string>,
+    executionFee: PromiseOrValue<BigNumberish>,
+    overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   createOrder(
-    recipient: string,
-    inputToken: string,
-    outputToken: string,
-    inputAmount: BigNumberish,
-    minReturnAmount: BigNumberish,
-    stoplossAmount: BigNumberish,
-    executor: string,
-    executionFee: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    recipient: PromiseOrValue<string>,
+    inputToken: PromiseOrValue<string>,
+    outputToken: PromiseOrValue<string>,
+    inputAmount: PromiseOrValue<BigNumberish>,
+    minReturnAmount: PromiseOrValue<BigNumberish>,
+    stoplossAmount: PromiseOrValue<BigNumberish>,
+    executor: PromiseOrValue<string>,
+    executionFee: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  decodeOrder(orderData: BytesLike, overrides?: CallOverrides): Promise<IOrderStructs.OrderStructOutput>;
+  decodeOrder(
+    orderData: PromiseOrValue<BytesLike>,
+    overrides?: CallOverrides,
+  ): Promise<IOrderStructs.OrderStructOutput>;
 
   emergencyAdmin(overrides?: CallOverrides): Promise<string>;
 
   emergencyWithdrawFromStrategy(
-    _tokens: string[],
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _tokens: PromiseOrValue<string>[],
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   executeOrder(
-    orderId: BytesLike,
-    orderData: BytesLike,
-    handler: string,
-    handlerData: BytesLike,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    orderId: PromiseOrValue<BytesLike>,
+    orderData: PromiseOrValue<BytesLike>,
+    handler: PromiseOrValue<string>,
+    handlerData: PromiseOrValue<BytesLike>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   fillOrder(
-    orderId: BytesLike,
-    orderData: BytesLike,
-    quoteAmount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    orderId: PromiseOrValue<BytesLike>,
+    orderData: PromiseOrValue<BytesLike>,
+    quoteAmount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   getOrderId(
-    creator: string,
-    recipient: string,
-    inputToken: string,
-    outputToken: string,
-    amount: BigNumberish,
-    minReturnAmount: BigNumberish,
-    stoplossAmount: BigNumberish,
-    executor: string,
-    executionFee: BigNumberish,
-    blockTimestamp: BigNumberish,
+    creator: PromiseOrValue<string>,
+    recipient: PromiseOrValue<string>,
+    inputToken: PromiseOrValue<string>,
+    outputToken: PromiseOrValue<string>,
+    amount: PromiseOrValue<BigNumberish>,
+    minReturnAmount: PromiseOrValue<BigNumberish>,
+    stoplossAmount: PromiseOrValue<BigNumberish>,
+    executor: PromiseOrValue<string>,
+    executionFee: PromiseOrValue<BigNumberish>,
+    blockTimestamp: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides,
   ): Promise<string>;
 
   getTotalTokens(
-    token: string,
-    contractBalance: BigNumberish,
-    tokenStrategy: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    token: PromiseOrValue<string>,
+    contractBalance: PromiseOrValue<BigNumberish>,
+    tokenStrategy: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   initialize(
-    _owner: string,
-    _emergencyAdmin: string,
-    _oracle: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _owner: PromiseOrValue<string>,
+    _emergencyAdmin: PromiseOrValue<string>,
+    _oracle: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   migrateStrategy(
-    _token: string,
-    _newStrategy: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _token: PromiseOrValue<string>,
+    _newStrategy: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   oracle(overrides?: CallOverrides): Promise<string>;
 
-  orderHash(arg0: BytesLike, overrides?: CallOverrides): Promise<string>;
+  orderHash(arg0: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<string>;
 
   owner(overrides?: CallOverrides): Promise<string>;
 
-  pause(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  pause(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   paused(overrides?: CallOverrides): Promise<boolean>;
 
   protocolFeePercent(overrides?: CallOverrides): Promise<BigNumber>;
 
   rebalanceTokens(
-    tokens: string[],
-    overrides?: Overrides & { from?: string | Promise<string> },
+    tokens: PromiseOrValue<string>[],
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   removeHandler(
-    _handler: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _handler: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   removeWhitelistToken(
-    _token: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _token: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   revokeExecutor(
-    executor: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    executor: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setStrategy(
-    _token: string,
-    _strategy: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _token: PromiseOrValue<string>,
+    _strategy: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  strategy(arg0: string, overrides?: CallOverrides): Promise<string>;
+  strategy(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<string>;
 
-  tokenBuffer(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+  tokenBuffer(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  totalTokenShares(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+  totalTokenShares(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   transferOwnership(
-    newOwner: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    newOwner: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   treasury(overrides?: CallOverrides): Promise<string>;
 
-  unpause(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  unpause(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   updateCancellationFee(
-    _feePercent: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _feePercent: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   updateEmergencyAdmin(
-    _emergencyAdmin: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _emergencyAdmin: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   updateOracle(
-    _oracle: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _oracle: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   updateOrder(
-    orderId: BytesLike,
-    orderData: BytesLike,
-    recipient: string,
-    outputToken: string,
-    minReturnAmount: BigNumberish,
-    stoplossAmount: BigNumberish,
-    executor: string,
-    executionFee: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    orderId: PromiseOrValue<BytesLike>,
+    orderData: PromiseOrValue<BytesLike>,
+    recipient: PromiseOrValue<string>,
+    outputToken: PromiseOrValue<string>,
+    minReturnAmount: PromiseOrValue<BigNumberish>,
+    stoplossAmount: PromiseOrValue<BigNumberish>,
+    executor: PromiseOrValue<string>,
+    executionFee: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   updateProtocolFee(
-    _feePercent: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _feePercent: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   updateTokenBuffer(
-    _token: string,
-    _bufferPercent: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _token: PromiseOrValue<string>,
+    _bufferPercent: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   updateTreasury(
-    _treasury: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _treasury: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  whitelistedTokens(arg0: string, overrides?: CallOverrides): Promise<boolean>;
+  whitelistedTokens(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
   callStatic: {
-    addHandler(_handler: string, overrides?: CallOverrides): Promise<void>;
+    addHandler(_handler: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    addWhitelistToken(_token: string, overrides?: CallOverrides): Promise<void>;
+    addWhitelistToken(_token: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    allowedExecutors(arg0: string, arg1: string, overrides?: CallOverrides): Promise<boolean>;
+    allowedExecutors(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
 
-    allowedHandlers(arg0: string, overrides?: CallOverrides): Promise<boolean>;
+    allowedHandlers(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
-    approveExecutor(executor: string, overrides?: CallOverrides): Promise<void>;
+    approveExecutor(executor: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    cancelOrder(orderId: BytesLike, orderData: BytesLike, overrides?: CallOverrides): Promise<BigNumber>;
+    cancelOrder(
+      orderId: PromiseOrValue<BytesLike>,
+      orderData: PromiseOrValue<BytesLike>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     cancellationFeePercent(overrides?: CallOverrides): Promise<BigNumber>;
 
     createNativeOrder(
-      recipient: string,
-      outputToken: string,
-      minReturnAmount: BigNumberish,
-      stoplossAmount: BigNumberish,
-      executor: string,
-      executionFee: BigNumberish,
+      recipient: PromiseOrValue<string>,
+      outputToken: PromiseOrValue<string>,
+      minReturnAmount: PromiseOrValue<BigNumberish>,
+      stoplossAmount: PromiseOrValue<BigNumberish>,
+      executor: PromiseOrValue<string>,
+      executionFee: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<[string, string] & { orderId: string; orderData: string }>;
 
     createOrder(
-      recipient: string,
-      inputToken: string,
-      outputToken: string,
-      inputAmount: BigNumberish,
-      minReturnAmount: BigNumberish,
-      stoplossAmount: BigNumberish,
-      executor: string,
-      executionFee: BigNumberish,
+      recipient: PromiseOrValue<string>,
+      inputToken: PromiseOrValue<string>,
+      outputToken: PromiseOrValue<string>,
+      inputAmount: PromiseOrValue<BigNumberish>,
+      minReturnAmount: PromiseOrValue<BigNumberish>,
+      stoplossAmount: PromiseOrValue<BigNumberish>,
+      executor: PromiseOrValue<string>,
+      executionFee: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<[string, string] & { orderId: string; orderData: string }>;
 
-    decodeOrder(orderData: BytesLike, overrides?: CallOverrides): Promise<IOrderStructs.OrderStructOutput>;
+    decodeOrder(
+      orderData: PromiseOrValue<BytesLike>,
+      overrides?: CallOverrides,
+    ): Promise<IOrderStructs.OrderStructOutput>;
 
     emergencyAdmin(overrides?: CallOverrides): Promise<string>;
 
-    emergencyWithdrawFromStrategy(_tokens: string[], overrides?: CallOverrides): Promise<void>;
+    emergencyWithdrawFromStrategy(_tokens: PromiseOrValue<string>[], overrides?: CallOverrides): Promise<void>;
 
     executeOrder(
-      orderId: BytesLike,
-      orderData: BytesLike,
-      handler: string,
-      handlerData: BytesLike,
+      orderId: PromiseOrValue<BytesLike>,
+      orderData: PromiseOrValue<BytesLike>,
+      handler: PromiseOrValue<string>,
+      handlerData: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
     fillOrder(
-      orderId: BytesLike,
-      orderData: BytesLike,
-      quoteAmount: BigNumberish,
+      orderId: PromiseOrValue<BytesLike>,
+      orderData: PromiseOrValue<BytesLike>,
+      quoteAmount: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
     getOrderId(
-      creator: string,
-      recipient: string,
-      inputToken: string,
-      outputToken: string,
-      amount: BigNumberish,
-      minReturnAmount: BigNumberish,
-      stoplossAmount: BigNumberish,
-      executor: string,
-      executionFee: BigNumberish,
-      blockTimestamp: BigNumberish,
+      creator: PromiseOrValue<string>,
+      recipient: PromiseOrValue<string>,
+      inputToken: PromiseOrValue<string>,
+      outputToken: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      minReturnAmount: PromiseOrValue<BigNumberish>,
+      stoplossAmount: PromiseOrValue<BigNumberish>,
+      executor: PromiseOrValue<string>,
+      executionFee: PromiseOrValue<BigNumberish>,
+      blockTimestamp: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<string>;
 
     getTotalTokens(
-      token: string,
-      contractBalance: BigNumberish,
-      tokenStrategy: string,
+      token: PromiseOrValue<string>,
+      contractBalance: PromiseOrValue<BigNumberish>,
+      tokenStrategy: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
-    initialize(_owner: string, _emergencyAdmin: string, _oracle: string, overrides?: CallOverrides): Promise<void>;
+    initialize(
+      _owner: PromiseOrValue<string>,
+      _emergencyAdmin: PromiseOrValue<string>,
+      _oracle: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    migrateStrategy(_token: string, _newStrategy: string, overrides?: CallOverrides): Promise<void>;
+    migrateStrategy(
+      _token: PromiseOrValue<string>,
+      _newStrategy: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
     oracle(overrides?: CallOverrides): Promise<string>;
 
-    orderHash(arg0: BytesLike, overrides?: CallOverrides): Promise<string>;
+    orderHash(arg0: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<string>;
 
     owner(overrides?: CallOverrides): Promise<string>;
 
@@ -982,55 +1062,63 @@ export interface SymphonyYolo extends BaseContract {
 
     protocolFeePercent(overrides?: CallOverrides): Promise<BigNumber>;
 
-    rebalanceTokens(tokens: string[], overrides?: CallOverrides): Promise<void>;
+    rebalanceTokens(tokens: PromiseOrValue<string>[], overrides?: CallOverrides): Promise<void>;
 
-    removeHandler(_handler: string, overrides?: CallOverrides): Promise<void>;
+    removeHandler(_handler: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    removeWhitelistToken(_token: string, overrides?: CallOverrides): Promise<void>;
+    removeWhitelistToken(_token: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     renounceOwnership(overrides?: CallOverrides): Promise<void>;
 
-    revokeExecutor(executor: string, overrides?: CallOverrides): Promise<void>;
+    revokeExecutor(executor: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    setStrategy(_token: string, _strategy: string, overrides?: CallOverrides): Promise<void>;
+    setStrategy(
+      _token: PromiseOrValue<string>,
+      _strategy: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    strategy(arg0: string, overrides?: CallOverrides): Promise<string>;
+    strategy(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<string>;
 
-    tokenBuffer(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    tokenBuffer(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    totalTokenShares(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    totalTokenShares(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    transferOwnership(newOwner: string, overrides?: CallOverrides): Promise<void>;
+    transferOwnership(newOwner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     treasury(overrides?: CallOverrides): Promise<string>;
 
     unpause(overrides?: CallOverrides): Promise<void>;
 
-    updateCancellationFee(_feePercent: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    updateCancellationFee(_feePercent: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
-    updateEmergencyAdmin(_emergencyAdmin: string, overrides?: CallOverrides): Promise<void>;
+    updateEmergencyAdmin(_emergencyAdmin: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    updateOracle(_oracle: string, overrides?: CallOverrides): Promise<void>;
+    updateOracle(_oracle: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     updateOrder(
-      orderId: BytesLike,
-      orderData: BytesLike,
-      recipient: string,
-      outputToken: string,
-      minReturnAmount: BigNumberish,
-      stoplossAmount: BigNumberish,
-      executor: string,
-      executionFee: BigNumberish,
+      orderId: PromiseOrValue<BytesLike>,
+      orderData: PromiseOrValue<BytesLike>,
+      recipient: PromiseOrValue<string>,
+      outputToken: PromiseOrValue<string>,
+      minReturnAmount: PromiseOrValue<BigNumberish>,
+      stoplossAmount: PromiseOrValue<BigNumberish>,
+      executor: PromiseOrValue<string>,
+      executionFee: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<[string, string] & { newOrderId: string; newOrderData: string }>;
 
-    updateProtocolFee(_feePercent: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    updateProtocolFee(_feePercent: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
-    updateTokenBuffer(_token: string, _bufferPercent: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    updateTokenBuffer(
+      _token: PromiseOrValue<string>,
+      _bufferPercent: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    updateTreasury(_treasury: string, overrides?: CallOverrides): Promise<void>;
+    updateTreasury(_treasury: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    whitelistedTokens(arg0: string, overrides?: CallOverrides): Promise<boolean>;
+    whitelistedTokens(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
   };
 
   filters: {
@@ -1069,10 +1157,13 @@ export interface SymphonyYolo extends BaseContract {
     OrderUpdated(oldOrderId?: null, newOrderId?: null, data?: null): OrderUpdatedEventFilter;
 
     'OwnershipTransferred(address,address)'(
-      previousOwner?: string | null,
-      newOwner?: string | null,
+      previousOwner?: PromiseOrValue<string> | null,
+      newOwner?: PromiseOrValue<string> | null,
     ): OwnershipTransferredEventFilter;
-    OwnershipTransferred(previousOwner?: string | null, newOwner?: string | null): OwnershipTransferredEventFilter;
+    OwnershipTransferred(
+      previousOwner?: PromiseOrValue<string> | null,
+      newOwner?: PromiseOrValue<string> | null,
+    ): OwnershipTransferredEventFilter;
 
     'Paused(address)'(account?: null): PausedEventFilter;
     Paused(account?: null): PausedEventFilter;
@@ -1097,396 +1188,428 @@ export interface SymphonyYolo extends BaseContract {
   };
 
   estimateGas: {
-    addHandler(_handler: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    addHandler(
+      _handler: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
-    addWhitelistToken(_token: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    addWhitelistToken(
+      _token: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
-    allowedExecutors(arg0: string, arg1: string, overrides?: CallOverrides): Promise<BigNumber>;
+    allowedExecutors(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    allowedHandlers(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    allowedHandlers(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    approveExecutor(executor: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    approveExecutor(
+      executor: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     cancelOrder(
-      orderId: BytesLike,
-      orderData: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      orderId: PromiseOrValue<BytesLike>,
+      orderData: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     cancellationFeePercent(overrides?: CallOverrides): Promise<BigNumber>;
 
     createNativeOrder(
-      recipient: string,
-      outputToken: string,
-      minReturnAmount: BigNumberish,
-      stoplossAmount: BigNumberish,
-      executor: string,
-      executionFee: BigNumberish,
-      overrides?: PayableOverrides & { from?: string | Promise<string> },
+      recipient: PromiseOrValue<string>,
+      outputToken: PromiseOrValue<string>,
+      minReturnAmount: PromiseOrValue<BigNumberish>,
+      stoplossAmount: PromiseOrValue<BigNumberish>,
+      executor: PromiseOrValue<string>,
+      executionFee: PromiseOrValue<BigNumberish>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     createOrder(
-      recipient: string,
-      inputToken: string,
-      outputToken: string,
-      inputAmount: BigNumberish,
-      minReturnAmount: BigNumberish,
-      stoplossAmount: BigNumberish,
-      executor: string,
-      executionFee: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      recipient: PromiseOrValue<string>,
+      inputToken: PromiseOrValue<string>,
+      outputToken: PromiseOrValue<string>,
+      inputAmount: PromiseOrValue<BigNumberish>,
+      minReturnAmount: PromiseOrValue<BigNumberish>,
+      stoplossAmount: PromiseOrValue<BigNumberish>,
+      executor: PromiseOrValue<string>,
+      executionFee: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    decodeOrder(orderData: BytesLike, overrides?: CallOverrides): Promise<BigNumber>;
+    decodeOrder(orderData: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<BigNumber>;
 
     emergencyAdmin(overrides?: CallOverrides): Promise<BigNumber>;
 
     emergencyWithdrawFromStrategy(
-      _tokens: string[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _tokens: PromiseOrValue<string>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     executeOrder(
-      orderId: BytesLike,
-      orderData: BytesLike,
-      handler: string,
-      handlerData: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      orderId: PromiseOrValue<BytesLike>,
+      orderData: PromiseOrValue<BytesLike>,
+      handler: PromiseOrValue<string>,
+      handlerData: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     fillOrder(
-      orderId: BytesLike,
-      orderData: BytesLike,
-      quoteAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      orderId: PromiseOrValue<BytesLike>,
+      orderData: PromiseOrValue<BytesLike>,
+      quoteAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     getOrderId(
-      creator: string,
-      recipient: string,
-      inputToken: string,
-      outputToken: string,
-      amount: BigNumberish,
-      minReturnAmount: BigNumberish,
-      stoplossAmount: BigNumberish,
-      executor: string,
-      executionFee: BigNumberish,
-      blockTimestamp: BigNumberish,
+      creator: PromiseOrValue<string>,
+      recipient: PromiseOrValue<string>,
+      inputToken: PromiseOrValue<string>,
+      outputToken: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      minReturnAmount: PromiseOrValue<BigNumberish>,
+      stoplossAmount: PromiseOrValue<BigNumberish>,
+      executor: PromiseOrValue<string>,
+      executionFee: PromiseOrValue<BigNumberish>,
+      blockTimestamp: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     getTotalTokens(
-      token: string,
-      contractBalance: BigNumberish,
-      tokenStrategy: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      token: PromiseOrValue<string>,
+      contractBalance: PromiseOrValue<BigNumberish>,
+      tokenStrategy: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     initialize(
-      _owner: string,
-      _emergencyAdmin: string,
-      _oracle: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _owner: PromiseOrValue<string>,
+      _emergencyAdmin: PromiseOrValue<string>,
+      _oracle: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     migrateStrategy(
-      _token: string,
-      _newStrategy: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _token: PromiseOrValue<string>,
+      _newStrategy: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     oracle(overrides?: CallOverrides): Promise<BigNumber>;
 
-    orderHash(arg0: BytesLike, overrides?: CallOverrides): Promise<BigNumber>;
+    orderHash(arg0: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<BigNumber>;
 
     owner(overrides?: CallOverrides): Promise<BigNumber>;
 
-    pause(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    pause(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     paused(overrides?: CallOverrides): Promise<BigNumber>;
 
     protocolFeePercent(overrides?: CallOverrides): Promise<BigNumber>;
 
-    rebalanceTokens(tokens: string[], overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    rebalanceTokens(
+      tokens: PromiseOrValue<string>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
-    removeHandler(_handler: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    removeHandler(
+      _handler: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     removeWhitelistToken(
-      _token: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _token: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
-    revokeExecutor(executor: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    revokeExecutor(
+      executor: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     setStrategy(
-      _token: string,
-      _strategy: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _token: PromiseOrValue<string>,
+      _strategy: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    strategy(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    strategy(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    tokenBuffer(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    tokenBuffer(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    totalTokenShares(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    totalTokenShares(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     treasury(overrides?: CallOverrides): Promise<BigNumber>;
 
-    unpause(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    unpause(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     updateCancellationFee(
-      _feePercent: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _feePercent: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     updateEmergencyAdmin(
-      _emergencyAdmin: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _emergencyAdmin: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    updateOracle(_oracle: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    updateOracle(
+      _oracle: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     updateOrder(
-      orderId: BytesLike,
-      orderData: BytesLike,
-      recipient: string,
-      outputToken: string,
-      minReturnAmount: BigNumberish,
-      stoplossAmount: BigNumberish,
-      executor: string,
-      executionFee: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      orderId: PromiseOrValue<BytesLike>,
+      orderData: PromiseOrValue<BytesLike>,
+      recipient: PromiseOrValue<string>,
+      outputToken: PromiseOrValue<string>,
+      minReturnAmount: PromiseOrValue<BigNumberish>,
+      stoplossAmount: PromiseOrValue<BigNumberish>,
+      executor: PromiseOrValue<string>,
+      executionFee: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     updateProtocolFee(
-      _feePercent: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _feePercent: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     updateTokenBuffer(
-      _token: string,
-      _bufferPercent: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _token: PromiseOrValue<string>,
+      _bufferPercent: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    updateTreasury(_treasury: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    updateTreasury(
+      _treasury: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
-    whitelistedTokens(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    whitelistedTokens(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
   };
 
   populateTransaction: {
     addHandler(
-      _handler: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _handler: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     addWhitelistToken(
-      _token: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _token: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    allowedExecutors(arg0: string, arg1: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    allowedExecutors(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
-    allowedHandlers(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    allowedHandlers(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     approveExecutor(
-      executor: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      executor: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     cancelOrder(
-      orderId: BytesLike,
-      orderData: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      orderId: PromiseOrValue<BytesLike>,
+      orderData: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     cancellationFeePercent(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     createNativeOrder(
-      recipient: string,
-      outputToken: string,
-      minReturnAmount: BigNumberish,
-      stoplossAmount: BigNumberish,
-      executor: string,
-      executionFee: BigNumberish,
-      overrides?: PayableOverrides & { from?: string | Promise<string> },
+      recipient: PromiseOrValue<string>,
+      outputToken: PromiseOrValue<string>,
+      minReturnAmount: PromiseOrValue<BigNumberish>,
+      stoplossAmount: PromiseOrValue<BigNumberish>,
+      executor: PromiseOrValue<string>,
+      executionFee: PromiseOrValue<BigNumberish>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     createOrder(
-      recipient: string,
-      inputToken: string,
-      outputToken: string,
-      inputAmount: BigNumberish,
-      minReturnAmount: BigNumberish,
-      stoplossAmount: BigNumberish,
-      executor: string,
-      executionFee: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      recipient: PromiseOrValue<string>,
+      inputToken: PromiseOrValue<string>,
+      outputToken: PromiseOrValue<string>,
+      inputAmount: PromiseOrValue<BigNumberish>,
+      minReturnAmount: PromiseOrValue<BigNumberish>,
+      stoplossAmount: PromiseOrValue<BigNumberish>,
+      executor: PromiseOrValue<string>,
+      executionFee: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    decodeOrder(orderData: BytesLike, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    decodeOrder(orderData: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     emergencyAdmin(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     emergencyWithdrawFromStrategy(
-      _tokens: string[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _tokens: PromiseOrValue<string>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     executeOrder(
-      orderId: BytesLike,
-      orderData: BytesLike,
-      handler: string,
-      handlerData: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      orderId: PromiseOrValue<BytesLike>,
+      orderData: PromiseOrValue<BytesLike>,
+      handler: PromiseOrValue<string>,
+      handlerData: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     fillOrder(
-      orderId: BytesLike,
-      orderData: BytesLike,
-      quoteAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      orderId: PromiseOrValue<BytesLike>,
+      orderData: PromiseOrValue<BytesLike>,
+      quoteAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     getOrderId(
-      creator: string,
-      recipient: string,
-      inputToken: string,
-      outputToken: string,
-      amount: BigNumberish,
-      minReturnAmount: BigNumberish,
-      stoplossAmount: BigNumberish,
-      executor: string,
-      executionFee: BigNumberish,
-      blockTimestamp: BigNumberish,
+      creator: PromiseOrValue<string>,
+      recipient: PromiseOrValue<string>,
+      inputToken: PromiseOrValue<string>,
+      outputToken: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      minReturnAmount: PromiseOrValue<BigNumberish>,
+      stoplossAmount: PromiseOrValue<BigNumberish>,
+      executor: PromiseOrValue<string>,
+      executionFee: PromiseOrValue<BigNumberish>,
+      blockTimestamp: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     getTotalTokens(
-      token: string,
-      contractBalance: BigNumberish,
-      tokenStrategy: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      token: PromiseOrValue<string>,
+      contractBalance: PromiseOrValue<BigNumberish>,
+      tokenStrategy: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     initialize(
-      _owner: string,
-      _emergencyAdmin: string,
-      _oracle: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _owner: PromiseOrValue<string>,
+      _emergencyAdmin: PromiseOrValue<string>,
+      _oracle: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     migrateStrategy(
-      _token: string,
-      _newStrategy: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _token: PromiseOrValue<string>,
+      _newStrategy: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     oracle(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    orderHash(arg0: BytesLike, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    orderHash(arg0: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    pause(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    pause(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     paused(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     protocolFeePercent(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     rebalanceTokens(
-      tokens: string[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      tokens: PromiseOrValue<string>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     removeHandler(
-      _handler: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _handler: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     removeWhitelistToken(
-      _token: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _token: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     revokeExecutor(
-      executor: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      executor: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setStrategy(
-      _token: string,
-      _strategy: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _token: PromiseOrValue<string>,
+      _strategy: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    strategy(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    strategy(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    tokenBuffer(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    tokenBuffer(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    totalTokenShares(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    totalTokenShares(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     treasury(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    unpause(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    unpause(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     updateCancellationFee(
-      _feePercent: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _feePercent: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     updateEmergencyAdmin(
-      _emergencyAdmin: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _emergencyAdmin: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     updateOracle(
-      _oracle: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _oracle: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     updateOrder(
-      orderId: BytesLike,
-      orderData: BytesLike,
-      recipient: string,
-      outputToken: string,
-      minReturnAmount: BigNumberish,
-      stoplossAmount: BigNumberish,
-      executor: string,
-      executionFee: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      orderId: PromiseOrValue<BytesLike>,
+      orderData: PromiseOrValue<BytesLike>,
+      recipient: PromiseOrValue<string>,
+      outputToken: PromiseOrValue<string>,
+      minReturnAmount: PromiseOrValue<BigNumberish>,
+      stoplossAmount: PromiseOrValue<BigNumberish>,
+      executor: PromiseOrValue<string>,
+      executionFee: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     updateProtocolFee(
-      _feePercent: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _feePercent: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     updateTokenBuffer(
-      _token: string,
-      _bufferPercent: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _token: PromiseOrValue<string>,
+      _bufferPercent: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     updateTreasury(
-      _treasury: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _treasury: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    whitelistedTokens(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    whitelistedTokens(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
   };
 }

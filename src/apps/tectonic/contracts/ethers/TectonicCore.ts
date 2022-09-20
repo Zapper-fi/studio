@@ -15,7 +15,7 @@ import type {
 } from 'ethers';
 import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
 import type { Listener, Provider } from '@ethersproject/providers';
-import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
 export interface TectonicCoreInterface extends utils.Interface {
   functions: {
@@ -193,105 +193,229 @@ export interface TectonicCoreInterface extends utils.Interface {
       | 'whitelistedAddresses',
   ): FunctionFragment;
 
-  encodeFunctionData(functionFragment: '_addToWhitelistProtect', values: [string[]]): string;
-  encodeFunctionData(functionFragment: '_become', values: [string]): string;
+  encodeFunctionData(functionFragment: '_addToWhitelistProtect', values: [PromiseOrValue<string>[]]): string;
+  encodeFunctionData(functionFragment: '_become', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: '_borrowGuardianPaused', values?: undefined): string;
-  encodeFunctionData(functionFragment: '_grantTonic', values: [string, BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: '_grantTonic',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
   encodeFunctionData(functionFragment: '_mintGuardianPaused', values?: undefined): string;
-  encodeFunctionData(functionFragment: '_removeFromWhitelistProtect', values: [string]): string;
-  encodeFunctionData(functionFragment: '_setBorrowCapGuardian', values: [string]): string;
-  encodeFunctionData(functionFragment: '_setBorrowPaused', values: [string, boolean]): string;
-  encodeFunctionData(functionFragment: '_setCloseFactor', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: '_setCollateralFactor', values: [string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: '_setContributorTonicSpeed', values: [string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: '_setLiquidationIncentive', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: '_setMarketBorrowCaps', values: [string[], BigNumberish[]]): string;
-  encodeFunctionData(functionFragment: '_setMintPaused', values: [string, boolean]): string;
-  encodeFunctionData(functionFragment: '_setPauseGuardian', values: [string]): string;
-  encodeFunctionData(functionFragment: '_setPriceOracle', values: [string]): string;
-  encodeFunctionData(functionFragment: '_setSeizePaused', values: [boolean]): string;
-  encodeFunctionData(functionFragment: '_setTonicSpeed', values: [string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: '_setTransferPaused', values: [boolean]): string;
-  encodeFunctionData(functionFragment: '_setWhitelistProtect', values: [boolean]): string;
-  encodeFunctionData(functionFragment: '_supportMarket', values: [string]): string;
-  encodeFunctionData(functionFragment: '_updateTvlProtectLimit', values: [string[], BigNumberish[]]): string;
-  encodeFunctionData(functionFragment: 'accountAssets', values: [string, BigNumberish]): string;
+  encodeFunctionData(functionFragment: '_removeFromWhitelistProtect', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: '_setBorrowCapGuardian', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: '_setBorrowPaused',
+    values: [PromiseOrValue<string>, PromiseOrValue<boolean>],
+  ): string;
+  encodeFunctionData(functionFragment: '_setCloseFactor', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(
+    functionFragment: '_setCollateralFactor',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: '_setContributorTonicSpeed',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: '_setLiquidationIncentive', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(
+    functionFragment: '_setMarketBorrowCaps',
+    values: [PromiseOrValue<string>[], PromiseOrValue<BigNumberish>[]],
+  ): string;
+  encodeFunctionData(
+    functionFragment: '_setMintPaused',
+    values: [PromiseOrValue<string>, PromiseOrValue<boolean>],
+  ): string;
+  encodeFunctionData(functionFragment: '_setPauseGuardian', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: '_setPriceOracle', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: '_setSeizePaused', values: [PromiseOrValue<boolean>]): string;
+  encodeFunctionData(
+    functionFragment: '_setTonicSpeed',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: '_setTransferPaused', values: [PromiseOrValue<boolean>]): string;
+  encodeFunctionData(functionFragment: '_setWhitelistProtect', values: [PromiseOrValue<boolean>]): string;
+  encodeFunctionData(functionFragment: '_supportMarket', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: '_updateTvlProtectLimit',
+    values: [PromiseOrValue<string>[], PromiseOrValue<BigNumberish>[]],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'accountAssets',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
   encodeFunctionData(functionFragment: 'admin', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'allMarkets', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'borrowAllowed', values: [string, string, BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'allMarkets', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(
+    functionFragment: 'borrowAllowed',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
   encodeFunctionData(functionFragment: 'borrowCapGuardian', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'borrowCaps', values: [string]): string;
-  encodeFunctionData(functionFragment: 'borrowGuardianPaused', values: [string]): string;
-  encodeFunctionData(functionFragment: 'borrowVerify', values: [string, string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'checkMembership', values: [string, string]): string;
+  encodeFunctionData(functionFragment: 'borrowCaps', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'borrowGuardianPaused', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'borrowVerify',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'checkMembership',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>],
+  ): string;
   encodeFunctionData(
     functionFragment: 'claimTonic(address[],address[],bool,bool)',
-    values: [string[], string[], boolean, boolean],
+    values: [PromiseOrValue<string>[], PromiseOrValue<string>[], PromiseOrValue<boolean>, PromiseOrValue<boolean>],
   ): string;
-  encodeFunctionData(functionFragment: 'claimTonic(address)', values: [string]): string;
-  encodeFunctionData(functionFragment: 'claimTonic(address,address[])', values: [string, string[]]): string;
+  encodeFunctionData(functionFragment: 'claimTonic(address)', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'claimTonic(address,address[])',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>[]],
+  ): string;
   encodeFunctionData(functionFragment: 'closeFactorMantissa', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'enterMarkets', values: [string[]]): string;
-  encodeFunctionData(functionFragment: 'exitMarket', values: [string]): string;
-  encodeFunctionData(functionFragment: 'getAccountLiquidity', values: [string]): string;
+  encodeFunctionData(functionFragment: 'enterMarkets', values: [PromiseOrValue<string>[]]): string;
+  encodeFunctionData(functionFragment: 'exitMarket', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'getAccountLiquidity', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'getAllMarkets', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'getAssetsIn', values: [string]): string;
+  encodeFunctionData(functionFragment: 'getAssetsIn', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'getBlockNumber', values?: undefined): string;
   encodeFunctionData(
     functionFragment: 'getHypotheticalAccountLiquidity',
-    values: [string, string, BigNumberish, BigNumberish],
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+    ],
   ): string;
   encodeFunctionData(functionFragment: 'getTonicAddress', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'isDeprecated', values: [string]): string;
+  encodeFunctionData(functionFragment: 'isDeprecated', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'isTectonicCore', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'lastContributorBlock', values: [string]): string;
+  encodeFunctionData(functionFragment: 'lastContributorBlock', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(
     functionFragment: 'liquidateBorrowAllowed',
-    values: [string, string, string, string, BigNumberish],
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+    ],
   ): string;
   encodeFunctionData(
     functionFragment: 'liquidateBorrowVerify',
-    values: [string, string, string, string, BigNumberish, BigNumberish],
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+    ],
   ): string;
-  encodeFunctionData(functionFragment: 'liquidateCalculateSeizeTokens', values: [string, string, BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'liquidateCalculateSeizeTokens',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
   encodeFunctionData(functionFragment: 'liquidationIncentiveMantissa', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'markets', values: [string]): string;
+  encodeFunctionData(functionFragment: 'markets', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'maxAssets', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'mintAllowed', values: [string, string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'mintGuardianPaused', values: [string]): string;
-  encodeFunctionData(functionFragment: 'mintVerify', values: [string, string, BigNumberish, BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'mintAllowed',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'mintGuardianPaused', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'mintVerify',
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+    ],
+  ): string;
   encodeFunctionData(functionFragment: 'oracle', values?: undefined): string;
   encodeFunctionData(functionFragment: 'pauseGuardian', values?: undefined): string;
   encodeFunctionData(functionFragment: 'pendingAdmin', values?: undefined): string;
   encodeFunctionData(functionFragment: 'pendingTectonicCoreImplementation', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'redeemAllowed', values: [string, string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'redeemVerify', values: [string, string, BigNumberish, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'repayBorrowAllowed', values: [string, string, string, BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'redeemAllowed',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'redeemVerify',
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+    ],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'repayBorrowAllowed',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
   encodeFunctionData(
     functionFragment: 'repayBorrowVerify',
-    values: [string, string, string, BigNumberish, BigNumberish],
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+    ],
   ): string;
-  encodeFunctionData(functionFragment: 'seizeAllowed', values: [string, string, string, string, BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'seizeAllowed',
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+    ],
+  ): string;
   encodeFunctionData(functionFragment: 'seizeGuardianPaused', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'seizeVerify', values: [string, string, string, string, BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'seizeVerify',
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+    ],
+  ): string;
   encodeFunctionData(functionFragment: 'tectonicCoreImplementation', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'tokenToPerUserTvlProtectLimit', values: [string]): string;
-  encodeFunctionData(functionFragment: 'tonicAccrued', values: [string]): string;
-  encodeFunctionData(functionFragment: 'tonicBorrowState', values: [string]): string;
-  encodeFunctionData(functionFragment: 'tonicBorrowerIndex', values: [string, string]): string;
-  encodeFunctionData(functionFragment: 'tonicContributorSpeeds', values: [string]): string;
+  encodeFunctionData(functionFragment: 'tokenToPerUserTvlProtectLimit', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'tonicAccrued', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'tonicBorrowState', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'tonicBorrowerIndex',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>],
+  ): string;
+  encodeFunctionData(functionFragment: 'tonicContributorSpeeds', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'tonicInitialIndex', values?: undefined): string;
   encodeFunctionData(functionFragment: 'tonicRate', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'tonicSpeeds', values: [string]): string;
-  encodeFunctionData(functionFragment: 'tonicSupplierIndex', values: [string, string]): string;
-  encodeFunctionData(functionFragment: 'tonicSupplyState', values: [string]): string;
-  encodeFunctionData(functionFragment: 'transferAllowed', values: [string, string, string, BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'tonicSpeeds', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'tonicSupplierIndex',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>],
+  ): string;
+  encodeFunctionData(functionFragment: 'tonicSupplyState', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'transferAllowed',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
   encodeFunctionData(functionFragment: 'transferGuardianPaused', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'transferVerify', values: [string, string, string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'updateContributorRewards', values: [string]): string;
-  encodeFunctionData(functionFragment: 'utilizedTvlAmount', values: [string, string]): string;
+  encodeFunctionData(
+    functionFragment: 'transferVerify',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'updateContributorRewards', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'utilizedTvlAmount',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>],
+  ): string;
   encodeFunctionData(functionFragment: 'whitelistProtectEnabled', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'whitelistedAddresses', values: [string]): string;
+  encodeFunctionData(functionFragment: 'whitelistedAddresses', values: [PromiseOrValue<string>]): string;
 
   decodeFunctionResult(functionFragment: '_addToWhitelistProtect', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: '_become', data: BytesLike): Result;
@@ -379,7 +503,6 @@ export interface TectonicCoreInterface extends utils.Interface {
   decodeFunctionResult(functionFragment: 'whitelistedAddresses', data: BytesLike): Result;
 
   events: {
-    'ActionPaused(string,bool)': EventFragment;
     'ActionPaused(address,string,bool)': EventFragment;
     'ContributorTonicSpeedUpdated(address,uint256)': EventFragment;
     'DistributedBorrowerTonic(address,address,uint256,uint256)': EventFragment;
@@ -403,8 +526,7 @@ export interface TectonicCoreInterface extends utils.Interface {
     'WhitelistStatusChanged(bool)': EventFragment;
   };
 
-  getEvent(nameOrSignatureOrTopic: 'ActionPaused(string,bool)'): EventFragment;
-  getEvent(nameOrSignatureOrTopic: 'ActionPaused(address,string,bool)'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'ActionPaused'): EventFragment;
   getEvent(nameOrSignatureOrTopic: 'ContributorTonicSpeedUpdated'): EventFragment;
   getEvent(nameOrSignatureOrTopic: 'DistributedBorrowerTonic'): EventFragment;
   getEvent(nameOrSignatureOrTopic: 'DistributedSupplierTonic'): EventFragment;
@@ -427,25 +549,14 @@ export interface TectonicCoreInterface extends utils.Interface {
   getEvent(nameOrSignatureOrTopic: 'WhitelistStatusChanged'): EventFragment;
 }
 
-export interface ActionPaused_string_bool_EventObject {
-  action: string;
-  pauseState: boolean;
-}
-export type ActionPaused_string_bool_Event = TypedEvent<[string, boolean], ActionPaused_string_bool_EventObject>;
-
-export type ActionPaused_string_bool_EventFilter = TypedEventFilter<ActionPaused_string_bool_Event>;
-
-export interface ActionPaused_address_string_bool_EventObject {
+export interface ActionPausedEventObject {
   tToken: string;
   action: string;
   pauseState: boolean;
 }
-export type ActionPaused_address_string_bool_Event = TypedEvent<
-  [string, string, boolean],
-  ActionPaused_address_string_bool_EventObject
->;
+export type ActionPausedEvent = TypedEvent<[string, string, boolean], ActionPausedEventObject>;
 
-export type ActionPaused_address_string_bool_EventFilter = TypedEventFilter<ActionPaused_address_string_bool_Event>;
+export type ActionPausedEventFilter = TypedEventFilter<ActionPausedEvent>;
 
 export interface ContributorTonicSpeedUpdatedEventObject {
   contributor: string;
@@ -642,230 +753,241 @@ export interface TectonicCore extends BaseContract {
 
   functions: {
     _addToWhitelistProtect(
-      accounts: string[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      accounts: PromiseOrValue<string>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     _become(
-      unitroller: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      unitroller: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     _borrowGuardianPaused(overrides?: CallOverrides): Promise<[boolean]>;
 
     _grantTonic(
-      recipient: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      recipient: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     _mintGuardianPaused(overrides?: CallOverrides): Promise<[boolean]>;
 
     _removeFromWhitelistProtect(
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     _setBorrowCapGuardian(
-      newBorrowCapGuardian: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newBorrowCapGuardian: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     _setBorrowPaused(
-      tToken: string,
-      state: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      tToken: PromiseOrValue<string>,
+      state: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     _setCloseFactor(
-      newCloseFactorMantissa: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newCloseFactorMantissa: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     _setCollateralFactor(
-      tToken: string,
-      newCollateralFactorMantissa: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      tToken: PromiseOrValue<string>,
+      newCollateralFactorMantissa: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     _setContributorTonicSpeed(
-      contributor: string,
-      tonicSpeed: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      contributor: PromiseOrValue<string>,
+      tonicSpeed: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     _setLiquidationIncentive(
-      newLiquidationIncentiveMantissa: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newLiquidationIncentiveMantissa: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     _setMarketBorrowCaps(
-      tTokens: string[],
-      newBorrowCaps: BigNumberish[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      tTokens: PromiseOrValue<string>[],
+      newBorrowCaps: PromiseOrValue<BigNumberish>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     _setMintPaused(
-      tToken: string,
-      state: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      tToken: PromiseOrValue<string>,
+      state: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     _setPauseGuardian(
-      newPauseGuardian: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newPauseGuardian: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     _setPriceOracle(
-      newOracle: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOracle: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     _setSeizePaused(
-      state: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      state: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     _setTonicSpeed(
-      tToken: string,
-      tonicSpeed: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      tToken: PromiseOrValue<string>,
+      tonicSpeed: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     _setTransferPaused(
-      state: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      state: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     _setWhitelistProtect(
-      whitelistStatus: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      whitelistStatus: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     _supportMarket(
-      tToken: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      tToken: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     _updateTvlProtectLimit(
-      tTokens: string[],
-      newLimitPerUser: BigNumberish[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      tTokens: PromiseOrValue<string>[],
+      newLimitPerUser: PromiseOrValue<BigNumberish>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    accountAssets(arg0: string, arg1: BigNumberish, overrides?: CallOverrides): Promise<[string]>;
+    accountAssets(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<[string]>;
 
     admin(overrides?: CallOverrides): Promise<[string]>;
 
-    allMarkets(arg0: BigNumberish, overrides?: CallOverrides): Promise<[string]>;
+    allMarkets(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[string]>;
 
     borrowAllowed(
-      tToken: string,
-      borrower: string,
-      borrowAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      tToken: PromiseOrValue<string>,
+      borrower: PromiseOrValue<string>,
+      borrowAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     borrowCapGuardian(overrides?: CallOverrides): Promise<[string]>;
 
-    borrowCaps(arg0: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    borrowCaps(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    borrowGuardianPaused(arg0: string, overrides?: CallOverrides): Promise<[boolean]>;
+    borrowGuardianPaused(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[boolean]>;
 
     borrowVerify(
-      tToken: string,
-      borrower: string,
-      borrowAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      tToken: PromiseOrValue<string>,
+      borrower: PromiseOrValue<string>,
+      borrowAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    checkMembership(account: string, tToken: string, overrides?: CallOverrides): Promise<[boolean]>;
+    checkMembership(
+      account: PromiseOrValue<string>,
+      tToken: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<[boolean]>;
 
     'claimTonic(address[],address[],bool,bool)'(
-      holders: string[],
-      tTokens: string[],
-      borrowers: boolean,
-      suppliers: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      holders: PromiseOrValue<string>[],
+      tTokens: PromiseOrValue<string>[],
+      borrowers: PromiseOrValue<boolean>,
+      suppliers: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     'claimTonic(address)'(
-      holder: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      holder: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     'claimTonic(address,address[])'(
-      holder: string,
-      tTokens: string[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      holder: PromiseOrValue<string>,
+      tTokens: PromiseOrValue<string>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     closeFactorMantissa(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     enterMarkets(
-      tTokens: string[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      tTokens: PromiseOrValue<string>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     exitMarket(
-      tTokenAddress: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      tTokenAddress: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    getAccountLiquidity(account: string, overrides?: CallOverrides): Promise<[BigNumber, BigNumber, BigNumber]>;
+    getAccountLiquidity(
+      account: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber, BigNumber, BigNumber]>;
 
     getAllMarkets(overrides?: CallOverrides): Promise<[string[]]>;
 
-    getAssetsIn(account: string, overrides?: CallOverrides): Promise<[string[]]>;
+    getAssetsIn(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[string[]]>;
 
     getBlockNumber(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     getHypotheticalAccountLiquidity(
-      account: string,
-      tTokenModify: string,
-      redeemTokens: BigNumberish,
-      borrowAmount: BigNumberish,
+      account: PromiseOrValue<string>,
+      tTokenModify: PromiseOrValue<string>,
+      redeemTokens: PromiseOrValue<BigNumberish>,
+      borrowAmount: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber, BigNumber, BigNumber]>;
 
     getTonicAddress(overrides?: CallOverrides): Promise<[string]>;
 
-    isDeprecated(tToken: string, overrides?: CallOverrides): Promise<[boolean]>;
+    isDeprecated(tToken: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[boolean]>;
 
     isTectonicCore(overrides?: CallOverrides): Promise<[boolean]>;
 
-    lastContributorBlock(arg0: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    lastContributorBlock(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     liquidateBorrowAllowed(
-      tTokenBorrowed: string,
-      tTokenCollateral: string,
-      liquidator: string,
-      borrower: string,
-      repayAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      tTokenBorrowed: PromiseOrValue<string>,
+      tTokenCollateral: PromiseOrValue<string>,
+      liquidator: PromiseOrValue<string>,
+      borrower: PromiseOrValue<string>,
+      repayAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     liquidateBorrowVerify(
-      tTokenBorrowed: string,
-      tTokenCollateral: string,
-      liquidator: string,
-      borrower: string,
-      actualRepayAmount: BigNumberish,
-      seizeTokens: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      tTokenBorrowed: PromiseOrValue<string>,
+      tTokenCollateral: PromiseOrValue<string>,
+      liquidator: PromiseOrValue<string>,
+      borrower: PromiseOrValue<string>,
+      actualRepayAmount: PromiseOrValue<BigNumberish>,
+      seizeTokens: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     liquidateCalculateSeizeTokens(
-      tTokenBorrowed: string,
-      tTokenCollateral: string,
-      actualRepayAmount: BigNumberish,
+      tTokenBorrowed: PromiseOrValue<string>,
+      tTokenCollateral: PromiseOrValue<string>,
+      actualRepayAmount: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber, BigNumber]>;
 
     liquidationIncentiveMantissa(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     markets(
-      arg0: string,
+      arg0: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<
       [boolean, BigNumber, boolean] & {
@@ -878,20 +1000,20 @@ export interface TectonicCore extends BaseContract {
     maxAssets(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     mintAllowed(
-      tToken: string,
-      minter: string,
-      mintAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      tToken: PromiseOrValue<string>,
+      minter: PromiseOrValue<string>,
+      mintAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    mintGuardianPaused(arg0: string, overrides?: CallOverrides): Promise<[boolean]>;
+    mintGuardianPaused(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[boolean]>;
 
     mintVerify(
-      tToken: string,
-      minter: string,
-      actualMintAmount: BigNumberish,
-      mintTokens: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      tToken: PromiseOrValue<string>,
+      minter: PromiseOrValue<string>,
+      actualMintAmount: PromiseOrValue<BigNumberish>,
+      mintTokens: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     oracle(overrides?: CallOverrides): Promise<[string]>;
@@ -903,340 +1025,363 @@ export interface TectonicCore extends BaseContract {
     pendingTectonicCoreImplementation(overrides?: CallOverrides): Promise<[string]>;
 
     redeemAllowed(
-      tToken: string,
-      redeemer: string,
-      redeemTokens: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      tToken: PromiseOrValue<string>,
+      redeemer: PromiseOrValue<string>,
+      redeemTokens: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     redeemVerify(
-      tToken: string,
-      redeemer: string,
-      redeemAmount: BigNumberish,
-      redeemTokens: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      tToken: PromiseOrValue<string>,
+      redeemer: PromiseOrValue<string>,
+      redeemAmount: PromiseOrValue<BigNumberish>,
+      redeemTokens: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     repayBorrowAllowed(
-      tToken: string,
-      payer: string,
-      borrower: string,
-      repayAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      tToken: PromiseOrValue<string>,
+      payer: PromiseOrValue<string>,
+      borrower: PromiseOrValue<string>,
+      repayAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     repayBorrowVerify(
-      tToken: string,
-      payer: string,
-      borrower: string,
-      actualRepayAmount: BigNumberish,
-      borrowerIndex: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      tToken: PromiseOrValue<string>,
+      payer: PromiseOrValue<string>,
+      borrower: PromiseOrValue<string>,
+      actualRepayAmount: PromiseOrValue<BigNumberish>,
+      borrowerIndex: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     seizeAllowed(
-      tTokenCollateral: string,
-      tTokenBorrowed: string,
-      liquidator: string,
-      borrower: string,
-      seizeTokens: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      tTokenCollateral: PromiseOrValue<string>,
+      tTokenBorrowed: PromiseOrValue<string>,
+      liquidator: PromiseOrValue<string>,
+      borrower: PromiseOrValue<string>,
+      seizeTokens: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     seizeGuardianPaused(overrides?: CallOverrides): Promise<[boolean]>;
 
     seizeVerify(
-      tTokenCollateral: string,
-      tTokenBorrowed: string,
-      liquidator: string,
-      borrower: string,
-      seizeTokens: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      tTokenCollateral: PromiseOrValue<string>,
+      tTokenBorrowed: PromiseOrValue<string>,
+      liquidator: PromiseOrValue<string>,
+      borrower: PromiseOrValue<string>,
+      seizeTokens: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     tectonicCoreImplementation(overrides?: CallOverrides): Promise<[string]>;
 
-    tokenToPerUserTvlProtectLimit(arg0: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    tokenToPerUserTvlProtectLimit(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    tonicAccrued(arg0: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    tonicAccrued(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     tonicBorrowState(
-      arg0: string,
+      arg0: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber, number] & { index: BigNumber; block: number }>;
 
-    tonicBorrowerIndex(arg0: string, arg1: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    tonicBorrowerIndex(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber]>;
 
-    tonicContributorSpeeds(arg0: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    tonicContributorSpeeds(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     tonicInitialIndex(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     tonicRate(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    tonicSpeeds(arg0: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    tonicSpeeds(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    tonicSupplierIndex(arg0: string, arg1: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    tonicSupplierIndex(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber]>;
 
     tonicSupplyState(
-      arg0: string,
+      arg0: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber, number] & { index: BigNumber; block: number }>;
 
     transferAllowed(
-      tToken: string,
-      src: string,
-      dst: string,
-      transferTokens: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      tToken: PromiseOrValue<string>,
+      src: PromiseOrValue<string>,
+      dst: PromiseOrValue<string>,
+      transferTokens: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     transferGuardianPaused(overrides?: CallOverrides): Promise<[boolean]>;
 
     transferVerify(
-      tToken: string,
-      src: string,
-      dst: string,
-      transferTokens: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      tToken: PromiseOrValue<string>,
+      src: PromiseOrValue<string>,
+      dst: PromiseOrValue<string>,
+      transferTokens: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     updateContributorRewards(
-      contributor: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      contributor: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    utilizedTvlAmount(arg0: string, arg1: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    utilizedTvlAmount(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber]>;
 
     whitelistProtectEnabled(overrides?: CallOverrides): Promise<[boolean]>;
 
-    whitelistedAddresses(arg0: string, overrides?: CallOverrides): Promise<[boolean]>;
+    whitelistedAddresses(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[boolean]>;
   };
 
   _addToWhitelistProtect(
-    accounts: string[],
-    overrides?: Overrides & { from?: string | Promise<string> },
+    accounts: PromiseOrValue<string>[],
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   _become(
-    unitroller: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    unitroller: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   _borrowGuardianPaused(overrides?: CallOverrides): Promise<boolean>;
 
   _grantTonic(
-    recipient: string,
-    amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    recipient: PromiseOrValue<string>,
+    amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   _mintGuardianPaused(overrides?: CallOverrides): Promise<boolean>;
 
   _removeFromWhitelistProtect(
-    account: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    account: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   _setBorrowCapGuardian(
-    newBorrowCapGuardian: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    newBorrowCapGuardian: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   _setBorrowPaused(
-    tToken: string,
-    state: boolean,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    tToken: PromiseOrValue<string>,
+    state: PromiseOrValue<boolean>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   _setCloseFactor(
-    newCloseFactorMantissa: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    newCloseFactorMantissa: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   _setCollateralFactor(
-    tToken: string,
-    newCollateralFactorMantissa: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    tToken: PromiseOrValue<string>,
+    newCollateralFactorMantissa: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   _setContributorTonicSpeed(
-    contributor: string,
-    tonicSpeed: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    contributor: PromiseOrValue<string>,
+    tonicSpeed: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   _setLiquidationIncentive(
-    newLiquidationIncentiveMantissa: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    newLiquidationIncentiveMantissa: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   _setMarketBorrowCaps(
-    tTokens: string[],
-    newBorrowCaps: BigNumberish[],
-    overrides?: Overrides & { from?: string | Promise<string> },
+    tTokens: PromiseOrValue<string>[],
+    newBorrowCaps: PromiseOrValue<BigNumberish>[],
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   _setMintPaused(
-    tToken: string,
-    state: boolean,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    tToken: PromiseOrValue<string>,
+    state: PromiseOrValue<boolean>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   _setPauseGuardian(
-    newPauseGuardian: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    newPauseGuardian: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   _setPriceOracle(
-    newOracle: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    newOracle: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   _setSeizePaused(
-    state: boolean,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    state: PromiseOrValue<boolean>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   _setTonicSpeed(
-    tToken: string,
-    tonicSpeed: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    tToken: PromiseOrValue<string>,
+    tonicSpeed: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   _setTransferPaused(
-    state: boolean,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    state: PromiseOrValue<boolean>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   _setWhitelistProtect(
-    whitelistStatus: boolean,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    whitelistStatus: PromiseOrValue<boolean>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   _supportMarket(
-    tToken: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    tToken: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   _updateTvlProtectLimit(
-    tTokens: string[],
-    newLimitPerUser: BigNumberish[],
-    overrides?: Overrides & { from?: string | Promise<string> },
+    tTokens: PromiseOrValue<string>[],
+    newLimitPerUser: PromiseOrValue<BigNumberish>[],
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  accountAssets(arg0: string, arg1: BigNumberish, overrides?: CallOverrides): Promise<string>;
+  accountAssets(
+    arg0: PromiseOrValue<string>,
+    arg1: PromiseOrValue<BigNumberish>,
+    overrides?: CallOverrides,
+  ): Promise<string>;
 
   admin(overrides?: CallOverrides): Promise<string>;
 
-  allMarkets(arg0: BigNumberish, overrides?: CallOverrides): Promise<string>;
+  allMarkets(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
 
   borrowAllowed(
-    tToken: string,
-    borrower: string,
-    borrowAmount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    tToken: PromiseOrValue<string>,
+    borrower: PromiseOrValue<string>,
+    borrowAmount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   borrowCapGuardian(overrides?: CallOverrides): Promise<string>;
 
-  borrowCaps(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+  borrowCaps(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  borrowGuardianPaused(arg0: string, overrides?: CallOverrides): Promise<boolean>;
+  borrowGuardianPaused(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
   borrowVerify(
-    tToken: string,
-    borrower: string,
-    borrowAmount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    tToken: PromiseOrValue<string>,
+    borrower: PromiseOrValue<string>,
+    borrowAmount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  checkMembership(account: string, tToken: string, overrides?: CallOverrides): Promise<boolean>;
+  checkMembership(
+    account: PromiseOrValue<string>,
+    tToken: PromiseOrValue<string>,
+    overrides?: CallOverrides,
+  ): Promise<boolean>;
 
   'claimTonic(address[],address[],bool,bool)'(
-    holders: string[],
-    tTokens: string[],
-    borrowers: boolean,
-    suppliers: boolean,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    holders: PromiseOrValue<string>[],
+    tTokens: PromiseOrValue<string>[],
+    borrowers: PromiseOrValue<boolean>,
+    suppliers: PromiseOrValue<boolean>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   'claimTonic(address)'(
-    holder: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    holder: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   'claimTonic(address,address[])'(
-    holder: string,
-    tTokens: string[],
-    overrides?: Overrides & { from?: string | Promise<string> },
+    holder: PromiseOrValue<string>,
+    tTokens: PromiseOrValue<string>[],
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   closeFactorMantissa(overrides?: CallOverrides): Promise<BigNumber>;
 
   enterMarkets(
-    tTokens: string[],
-    overrides?: Overrides & { from?: string | Promise<string> },
+    tTokens: PromiseOrValue<string>[],
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   exitMarket(
-    tTokenAddress: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    tTokenAddress: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  getAccountLiquidity(account: string, overrides?: CallOverrides): Promise<[BigNumber, BigNumber, BigNumber]>;
+  getAccountLiquidity(
+    account: PromiseOrValue<string>,
+    overrides?: CallOverrides,
+  ): Promise<[BigNumber, BigNumber, BigNumber]>;
 
   getAllMarkets(overrides?: CallOverrides): Promise<string[]>;
 
-  getAssetsIn(account: string, overrides?: CallOverrides): Promise<string[]>;
+  getAssetsIn(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<string[]>;
 
   getBlockNumber(overrides?: CallOverrides): Promise<BigNumber>;
 
   getHypotheticalAccountLiquidity(
-    account: string,
-    tTokenModify: string,
-    redeemTokens: BigNumberish,
-    borrowAmount: BigNumberish,
+    account: PromiseOrValue<string>,
+    tTokenModify: PromiseOrValue<string>,
+    redeemTokens: PromiseOrValue<BigNumberish>,
+    borrowAmount: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides,
   ): Promise<[BigNumber, BigNumber, BigNumber]>;
 
   getTonicAddress(overrides?: CallOverrides): Promise<string>;
 
-  isDeprecated(tToken: string, overrides?: CallOverrides): Promise<boolean>;
+  isDeprecated(tToken: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
   isTectonicCore(overrides?: CallOverrides): Promise<boolean>;
 
-  lastContributorBlock(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+  lastContributorBlock(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   liquidateBorrowAllowed(
-    tTokenBorrowed: string,
-    tTokenCollateral: string,
-    liquidator: string,
-    borrower: string,
-    repayAmount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    tTokenBorrowed: PromiseOrValue<string>,
+    tTokenCollateral: PromiseOrValue<string>,
+    liquidator: PromiseOrValue<string>,
+    borrower: PromiseOrValue<string>,
+    repayAmount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   liquidateBorrowVerify(
-    tTokenBorrowed: string,
-    tTokenCollateral: string,
-    liquidator: string,
-    borrower: string,
-    actualRepayAmount: BigNumberish,
-    seizeTokens: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    tTokenBorrowed: PromiseOrValue<string>,
+    tTokenCollateral: PromiseOrValue<string>,
+    liquidator: PromiseOrValue<string>,
+    borrower: PromiseOrValue<string>,
+    actualRepayAmount: PromiseOrValue<BigNumberish>,
+    seizeTokens: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   liquidateCalculateSeizeTokens(
-    tTokenBorrowed: string,
-    tTokenCollateral: string,
-    actualRepayAmount: BigNumberish,
+    tTokenBorrowed: PromiseOrValue<string>,
+    tTokenCollateral: PromiseOrValue<string>,
+    actualRepayAmount: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides,
   ): Promise<[BigNumber, BigNumber]>;
 
   liquidationIncentiveMantissa(overrides?: CallOverrides): Promise<BigNumber>;
 
   markets(
-    arg0: string,
+    arg0: PromiseOrValue<string>,
     overrides?: CallOverrides,
   ): Promise<
     [boolean, BigNumber, boolean] & {
@@ -1249,20 +1394,20 @@ export interface TectonicCore extends BaseContract {
   maxAssets(overrides?: CallOverrides): Promise<BigNumber>;
 
   mintAllowed(
-    tToken: string,
-    minter: string,
-    mintAmount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    tToken: PromiseOrValue<string>,
+    minter: PromiseOrValue<string>,
+    mintAmount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  mintGuardianPaused(arg0: string, overrides?: CallOverrides): Promise<boolean>;
+  mintGuardianPaused(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
   mintVerify(
-    tToken: string,
-    minter: string,
-    actualMintAmount: BigNumberish,
-    mintTokens: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    tToken: PromiseOrValue<string>,
+    minter: PromiseOrValue<string>,
+    actualMintAmount: PromiseOrValue<BigNumberish>,
+    mintTokens: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   oracle(overrides?: CallOverrides): Promise<string>;
@@ -1274,270 +1419,324 @@ export interface TectonicCore extends BaseContract {
   pendingTectonicCoreImplementation(overrides?: CallOverrides): Promise<string>;
 
   redeemAllowed(
-    tToken: string,
-    redeemer: string,
-    redeemTokens: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    tToken: PromiseOrValue<string>,
+    redeemer: PromiseOrValue<string>,
+    redeemTokens: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   redeemVerify(
-    tToken: string,
-    redeemer: string,
-    redeemAmount: BigNumberish,
-    redeemTokens: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    tToken: PromiseOrValue<string>,
+    redeemer: PromiseOrValue<string>,
+    redeemAmount: PromiseOrValue<BigNumberish>,
+    redeemTokens: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   repayBorrowAllowed(
-    tToken: string,
-    payer: string,
-    borrower: string,
-    repayAmount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    tToken: PromiseOrValue<string>,
+    payer: PromiseOrValue<string>,
+    borrower: PromiseOrValue<string>,
+    repayAmount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   repayBorrowVerify(
-    tToken: string,
-    payer: string,
-    borrower: string,
-    actualRepayAmount: BigNumberish,
-    borrowerIndex: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    tToken: PromiseOrValue<string>,
+    payer: PromiseOrValue<string>,
+    borrower: PromiseOrValue<string>,
+    actualRepayAmount: PromiseOrValue<BigNumberish>,
+    borrowerIndex: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   seizeAllowed(
-    tTokenCollateral: string,
-    tTokenBorrowed: string,
-    liquidator: string,
-    borrower: string,
-    seizeTokens: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    tTokenCollateral: PromiseOrValue<string>,
+    tTokenBorrowed: PromiseOrValue<string>,
+    liquidator: PromiseOrValue<string>,
+    borrower: PromiseOrValue<string>,
+    seizeTokens: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   seizeGuardianPaused(overrides?: CallOverrides): Promise<boolean>;
 
   seizeVerify(
-    tTokenCollateral: string,
-    tTokenBorrowed: string,
-    liquidator: string,
-    borrower: string,
-    seizeTokens: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    tTokenCollateral: PromiseOrValue<string>,
+    tTokenBorrowed: PromiseOrValue<string>,
+    liquidator: PromiseOrValue<string>,
+    borrower: PromiseOrValue<string>,
+    seizeTokens: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   tectonicCoreImplementation(overrides?: CallOverrides): Promise<string>;
 
-  tokenToPerUserTvlProtectLimit(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+  tokenToPerUserTvlProtectLimit(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  tonicAccrued(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+  tonicAccrued(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   tonicBorrowState(
-    arg0: string,
+    arg0: PromiseOrValue<string>,
     overrides?: CallOverrides,
   ): Promise<[BigNumber, number] & { index: BigNumber; block: number }>;
 
-  tonicBorrowerIndex(arg0: string, arg1: string, overrides?: CallOverrides): Promise<BigNumber>;
+  tonicBorrowerIndex(
+    arg0: PromiseOrValue<string>,
+    arg1: PromiseOrValue<string>,
+    overrides?: CallOverrides,
+  ): Promise<BigNumber>;
 
-  tonicContributorSpeeds(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+  tonicContributorSpeeds(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   tonicInitialIndex(overrides?: CallOverrides): Promise<BigNumber>;
 
   tonicRate(overrides?: CallOverrides): Promise<BigNumber>;
 
-  tonicSpeeds(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+  tonicSpeeds(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  tonicSupplierIndex(arg0: string, arg1: string, overrides?: CallOverrides): Promise<BigNumber>;
+  tonicSupplierIndex(
+    arg0: PromiseOrValue<string>,
+    arg1: PromiseOrValue<string>,
+    overrides?: CallOverrides,
+  ): Promise<BigNumber>;
 
   tonicSupplyState(
-    arg0: string,
+    arg0: PromiseOrValue<string>,
     overrides?: CallOverrides,
   ): Promise<[BigNumber, number] & { index: BigNumber; block: number }>;
 
   transferAllowed(
-    tToken: string,
-    src: string,
-    dst: string,
-    transferTokens: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    tToken: PromiseOrValue<string>,
+    src: PromiseOrValue<string>,
+    dst: PromiseOrValue<string>,
+    transferTokens: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   transferGuardianPaused(overrides?: CallOverrides): Promise<boolean>;
 
   transferVerify(
-    tToken: string,
-    src: string,
-    dst: string,
-    transferTokens: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    tToken: PromiseOrValue<string>,
+    src: PromiseOrValue<string>,
+    dst: PromiseOrValue<string>,
+    transferTokens: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   updateContributorRewards(
-    contributor: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    contributor: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  utilizedTvlAmount(arg0: string, arg1: string, overrides?: CallOverrides): Promise<BigNumber>;
+  utilizedTvlAmount(
+    arg0: PromiseOrValue<string>,
+    arg1: PromiseOrValue<string>,
+    overrides?: CallOverrides,
+  ): Promise<BigNumber>;
 
   whitelistProtectEnabled(overrides?: CallOverrides): Promise<boolean>;
 
-  whitelistedAddresses(arg0: string, overrides?: CallOverrides): Promise<boolean>;
+  whitelistedAddresses(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
   callStatic: {
-    _addToWhitelistProtect(accounts: string[], overrides?: CallOverrides): Promise<void>;
+    _addToWhitelistProtect(accounts: PromiseOrValue<string>[], overrides?: CallOverrides): Promise<void>;
 
-    _become(unitroller: string, overrides?: CallOverrides): Promise<void>;
+    _become(unitroller: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     _borrowGuardianPaused(overrides?: CallOverrides): Promise<boolean>;
 
-    _grantTonic(recipient: string, amount: BigNumberish, overrides?: CallOverrides): Promise<void>;
-
-    _mintGuardianPaused(overrides?: CallOverrides): Promise<boolean>;
-
-    _removeFromWhitelistProtect(account: string, overrides?: CallOverrides): Promise<void>;
-
-    _setBorrowCapGuardian(newBorrowCapGuardian: string, overrides?: CallOverrides): Promise<void>;
-
-    _setBorrowPaused(tToken: string, state: boolean, overrides?: CallOverrides): Promise<boolean>;
-
-    _setCloseFactor(newCloseFactorMantissa: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
-
-    _setCollateralFactor(
-      tToken: string,
-      newCollateralFactorMantissa: BigNumberish,
-      overrides?: CallOverrides,
-    ): Promise<BigNumber>;
-
-    _setContributorTonicSpeed(contributor: string, tonicSpeed: BigNumberish, overrides?: CallOverrides): Promise<void>;
-
-    _setLiquidationIncentive(
-      newLiquidationIncentiveMantissa: BigNumberish,
-      overrides?: CallOverrides,
-    ): Promise<BigNumber>;
-
-    _setMarketBorrowCaps(tTokens: string[], newBorrowCaps: BigNumberish[], overrides?: CallOverrides): Promise<void>;
-
-    _setMintPaused(tToken: string, state: boolean, overrides?: CallOverrides): Promise<boolean>;
-
-    _setPauseGuardian(newPauseGuardian: string, overrides?: CallOverrides): Promise<BigNumber>;
-
-    _setPriceOracle(newOracle: string, overrides?: CallOverrides): Promise<BigNumber>;
-
-    _setSeizePaused(state: boolean, overrides?: CallOverrides): Promise<boolean>;
-
-    _setTonicSpeed(tToken: string, tonicSpeed: BigNumberish, overrides?: CallOverrides): Promise<void>;
-
-    _setTransferPaused(state: boolean, overrides?: CallOverrides): Promise<boolean>;
-
-    _setWhitelistProtect(whitelistStatus: boolean, overrides?: CallOverrides): Promise<void>;
-
-    _supportMarket(tToken: string, overrides?: CallOverrides): Promise<BigNumber>;
-
-    _updateTvlProtectLimit(
-      tTokens: string[],
-      newLimitPerUser: BigNumberish[],
+    _grantTonic(
+      recipient: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
-    accountAssets(arg0: string, arg1: BigNumberish, overrides?: CallOverrides): Promise<string>;
+    _mintGuardianPaused(overrides?: CallOverrides): Promise<boolean>;
+
+    _removeFromWhitelistProtect(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
+
+    _setBorrowCapGuardian(newBorrowCapGuardian: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
+
+    _setBorrowPaused(
+      tToken: PromiseOrValue<string>,
+      state: PromiseOrValue<boolean>,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
+
+    _setCloseFactor(
+      newCloseFactorMantissa: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
+
+    _setCollateralFactor(
+      tToken: PromiseOrValue<string>,
+      newCollateralFactorMantissa: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
+
+    _setContributorTonicSpeed(
+      contributor: PromiseOrValue<string>,
+      tonicSpeed: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
+
+    _setLiquidationIncentive(
+      newLiquidationIncentiveMantissa: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
+
+    _setMarketBorrowCaps(
+      tTokens: PromiseOrValue<string>[],
+      newBorrowCaps: PromiseOrValue<BigNumberish>[],
+      overrides?: CallOverrides,
+    ): Promise<void>;
+
+    _setMintPaused(
+      tToken: PromiseOrValue<string>,
+      state: PromiseOrValue<boolean>,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
+
+    _setPauseGuardian(newPauseGuardian: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
+
+    _setPriceOracle(newOracle: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
+
+    _setSeizePaused(state: PromiseOrValue<boolean>, overrides?: CallOverrides): Promise<boolean>;
+
+    _setTonicSpeed(
+      tToken: PromiseOrValue<string>,
+      tonicSpeed: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
+
+    _setTransferPaused(state: PromiseOrValue<boolean>, overrides?: CallOverrides): Promise<boolean>;
+
+    _setWhitelistProtect(whitelistStatus: PromiseOrValue<boolean>, overrides?: CallOverrides): Promise<void>;
+
+    _supportMarket(tToken: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
+
+    _updateTvlProtectLimit(
+      tTokens: PromiseOrValue<string>[],
+      newLimitPerUser: PromiseOrValue<BigNumberish>[],
+      overrides?: CallOverrides,
+    ): Promise<void>;
+
+    accountAssets(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<string>;
 
     admin(overrides?: CallOverrides): Promise<string>;
 
-    allMarkets(arg0: BigNumberish, overrides?: CallOverrides): Promise<string>;
+    allMarkets(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
 
     borrowAllowed(
-      tToken: string,
-      borrower: string,
-      borrowAmount: BigNumberish,
+      tToken: PromiseOrValue<string>,
+      borrower: PromiseOrValue<string>,
+      borrowAmount: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     borrowCapGuardian(overrides?: CallOverrides): Promise<string>;
 
-    borrowCaps(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    borrowCaps(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    borrowGuardianPaused(arg0: string, overrides?: CallOverrides): Promise<boolean>;
+    borrowGuardianPaused(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
     borrowVerify(
-      tToken: string,
-      borrower: string,
-      borrowAmount: BigNumberish,
+      tToken: PromiseOrValue<string>,
+      borrower: PromiseOrValue<string>,
+      borrowAmount: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
-    checkMembership(account: string, tToken: string, overrides?: CallOverrides): Promise<boolean>;
+    checkMembership(
+      account: PromiseOrValue<string>,
+      tToken: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
 
     'claimTonic(address[],address[],bool,bool)'(
-      holders: string[],
-      tTokens: string[],
-      borrowers: boolean,
-      suppliers: boolean,
+      holders: PromiseOrValue<string>[],
+      tTokens: PromiseOrValue<string>[],
+      borrowers: PromiseOrValue<boolean>,
+      suppliers: PromiseOrValue<boolean>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
-    'claimTonic(address)'(holder: string, overrides?: CallOverrides): Promise<void>;
+    'claimTonic(address)'(holder: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    'claimTonic(address,address[])'(holder: string, tTokens: string[], overrides?: CallOverrides): Promise<void>;
+    'claimTonic(address,address[])'(
+      holder: PromiseOrValue<string>,
+      tTokens: PromiseOrValue<string>[],
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
     closeFactorMantissa(overrides?: CallOverrides): Promise<BigNumber>;
 
-    enterMarkets(tTokens: string[], overrides?: CallOverrides): Promise<BigNumber[]>;
+    enterMarkets(tTokens: PromiseOrValue<string>[], overrides?: CallOverrides): Promise<BigNumber[]>;
 
-    exitMarket(tTokenAddress: string, overrides?: CallOverrides): Promise<BigNumber>;
+    exitMarket(tTokenAddress: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    getAccountLiquidity(account: string, overrides?: CallOverrides): Promise<[BigNumber, BigNumber, BigNumber]>;
+    getAccountLiquidity(
+      account: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber, BigNumber, BigNumber]>;
 
     getAllMarkets(overrides?: CallOverrides): Promise<string[]>;
 
-    getAssetsIn(account: string, overrides?: CallOverrides): Promise<string[]>;
+    getAssetsIn(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<string[]>;
 
     getBlockNumber(overrides?: CallOverrides): Promise<BigNumber>;
 
     getHypotheticalAccountLiquidity(
-      account: string,
-      tTokenModify: string,
-      redeemTokens: BigNumberish,
-      borrowAmount: BigNumberish,
+      account: PromiseOrValue<string>,
+      tTokenModify: PromiseOrValue<string>,
+      redeemTokens: PromiseOrValue<BigNumberish>,
+      borrowAmount: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber, BigNumber, BigNumber]>;
 
     getTonicAddress(overrides?: CallOverrides): Promise<string>;
 
-    isDeprecated(tToken: string, overrides?: CallOverrides): Promise<boolean>;
+    isDeprecated(tToken: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
     isTectonicCore(overrides?: CallOverrides): Promise<boolean>;
 
-    lastContributorBlock(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    lastContributorBlock(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     liquidateBorrowAllowed(
-      tTokenBorrowed: string,
-      tTokenCollateral: string,
-      liquidator: string,
-      borrower: string,
-      repayAmount: BigNumberish,
+      tTokenBorrowed: PromiseOrValue<string>,
+      tTokenCollateral: PromiseOrValue<string>,
+      liquidator: PromiseOrValue<string>,
+      borrower: PromiseOrValue<string>,
+      repayAmount: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     liquidateBorrowVerify(
-      tTokenBorrowed: string,
-      tTokenCollateral: string,
-      liquidator: string,
-      borrower: string,
-      actualRepayAmount: BigNumberish,
-      seizeTokens: BigNumberish,
+      tTokenBorrowed: PromiseOrValue<string>,
+      tTokenCollateral: PromiseOrValue<string>,
+      liquidator: PromiseOrValue<string>,
+      borrower: PromiseOrValue<string>,
+      actualRepayAmount: PromiseOrValue<BigNumberish>,
+      seizeTokens: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
     liquidateCalculateSeizeTokens(
-      tTokenBorrowed: string,
-      tTokenCollateral: string,
-      actualRepayAmount: BigNumberish,
+      tTokenBorrowed: PromiseOrValue<string>,
+      tTokenCollateral: PromiseOrValue<string>,
+      actualRepayAmount: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber, BigNumber]>;
 
     liquidationIncentiveMantissa(overrides?: CallOverrides): Promise<BigNumber>;
 
     markets(
-      arg0: string,
+      arg0: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<
       [boolean, BigNumber, boolean] & {
@@ -1550,19 +1749,19 @@ export interface TectonicCore extends BaseContract {
     maxAssets(overrides?: CallOverrides): Promise<BigNumber>;
 
     mintAllowed(
-      tToken: string,
-      minter: string,
-      mintAmount: BigNumberish,
+      tToken: PromiseOrValue<string>,
+      minter: PromiseOrValue<string>,
+      mintAmount: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
-    mintGuardianPaused(arg0: string, overrides?: CallOverrides): Promise<boolean>;
+    mintGuardianPaused(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
     mintVerify(
-      tToken: string,
-      minter: string,
-      actualMintAmount: BigNumberish,
-      mintTokens: BigNumberish,
+      tToken: PromiseOrValue<string>,
+      minter: PromiseOrValue<string>,
+      actualMintAmount: PromiseOrValue<BigNumberish>,
+      mintTokens: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
@@ -1575,148 +1774,159 @@ export interface TectonicCore extends BaseContract {
     pendingTectonicCoreImplementation(overrides?: CallOverrides): Promise<string>;
 
     redeemAllowed(
-      tToken: string,
-      redeemer: string,
-      redeemTokens: BigNumberish,
+      tToken: PromiseOrValue<string>,
+      redeemer: PromiseOrValue<string>,
+      redeemTokens: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     redeemVerify(
-      tToken: string,
-      redeemer: string,
-      redeemAmount: BigNumberish,
-      redeemTokens: BigNumberish,
+      tToken: PromiseOrValue<string>,
+      redeemer: PromiseOrValue<string>,
+      redeemAmount: PromiseOrValue<BigNumberish>,
+      redeemTokens: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
     repayBorrowAllowed(
-      tToken: string,
-      payer: string,
-      borrower: string,
-      repayAmount: BigNumberish,
+      tToken: PromiseOrValue<string>,
+      payer: PromiseOrValue<string>,
+      borrower: PromiseOrValue<string>,
+      repayAmount: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     repayBorrowVerify(
-      tToken: string,
-      payer: string,
-      borrower: string,
-      actualRepayAmount: BigNumberish,
-      borrowerIndex: BigNumberish,
+      tToken: PromiseOrValue<string>,
+      payer: PromiseOrValue<string>,
+      borrower: PromiseOrValue<string>,
+      actualRepayAmount: PromiseOrValue<BigNumberish>,
+      borrowerIndex: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
     seizeAllowed(
-      tTokenCollateral: string,
-      tTokenBorrowed: string,
-      liquidator: string,
-      borrower: string,
-      seizeTokens: BigNumberish,
+      tTokenCollateral: PromiseOrValue<string>,
+      tTokenBorrowed: PromiseOrValue<string>,
+      liquidator: PromiseOrValue<string>,
+      borrower: PromiseOrValue<string>,
+      seizeTokens: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     seizeGuardianPaused(overrides?: CallOverrides): Promise<boolean>;
 
     seizeVerify(
-      tTokenCollateral: string,
-      tTokenBorrowed: string,
-      liquidator: string,
-      borrower: string,
-      seizeTokens: BigNumberish,
+      tTokenCollateral: PromiseOrValue<string>,
+      tTokenBorrowed: PromiseOrValue<string>,
+      liquidator: PromiseOrValue<string>,
+      borrower: PromiseOrValue<string>,
+      seizeTokens: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
     tectonicCoreImplementation(overrides?: CallOverrides): Promise<string>;
 
-    tokenToPerUserTvlProtectLimit(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    tokenToPerUserTvlProtectLimit(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    tonicAccrued(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    tonicAccrued(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     tonicBorrowState(
-      arg0: string,
+      arg0: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber, number] & { index: BigNumber; block: number }>;
 
-    tonicBorrowerIndex(arg0: string, arg1: string, overrides?: CallOverrides): Promise<BigNumber>;
+    tonicBorrowerIndex(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    tonicContributorSpeeds(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    tonicContributorSpeeds(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     tonicInitialIndex(overrides?: CallOverrides): Promise<BigNumber>;
 
     tonicRate(overrides?: CallOverrides): Promise<BigNumber>;
 
-    tonicSpeeds(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    tonicSpeeds(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    tonicSupplierIndex(arg0: string, arg1: string, overrides?: CallOverrides): Promise<BigNumber>;
+    tonicSupplierIndex(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     tonicSupplyState(
-      arg0: string,
+      arg0: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber, number] & { index: BigNumber; block: number }>;
 
     transferAllowed(
-      tToken: string,
-      src: string,
-      dst: string,
-      transferTokens: BigNumberish,
+      tToken: PromiseOrValue<string>,
+      src: PromiseOrValue<string>,
+      dst: PromiseOrValue<string>,
+      transferTokens: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     transferGuardianPaused(overrides?: CallOverrides): Promise<boolean>;
 
     transferVerify(
-      tToken: string,
-      src: string,
-      dst: string,
-      transferTokens: BigNumberish,
+      tToken: PromiseOrValue<string>,
+      src: PromiseOrValue<string>,
+      dst: PromiseOrValue<string>,
+      transferTokens: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
-    updateContributorRewards(contributor: string, overrides?: CallOverrides): Promise<void>;
+    updateContributorRewards(contributor: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    utilizedTvlAmount(arg0: string, arg1: string, overrides?: CallOverrides): Promise<BigNumber>;
+    utilizedTvlAmount(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     whitelistProtectEnabled(overrides?: CallOverrides): Promise<boolean>;
 
-    whitelistedAddresses(arg0: string, overrides?: CallOverrides): Promise<boolean>;
+    whitelistedAddresses(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
   };
 
   filters: {
-    'ActionPaused(string,bool)'(action?: null, pauseState?: null): ActionPaused_string_bool_EventFilter;
-    'ActionPaused(address,string,bool)'(
-      tToken?: null,
-      action?: null,
-      pauseState?: null,
-    ): ActionPaused_address_string_bool_EventFilter;
+    'ActionPaused(address,string,bool)'(tToken?: null, action?: null, pauseState?: null): ActionPausedEventFilter;
+    ActionPaused(tToken?: null, action?: null, pauseState?: null): ActionPausedEventFilter;
 
     'ContributorTonicSpeedUpdated(address,uint256)'(
-      contributor?: string | null,
+      contributor?: PromiseOrValue<string> | null,
       newSpeed?: null,
     ): ContributorTonicSpeedUpdatedEventFilter;
-    ContributorTonicSpeedUpdated(contributor?: string | null, newSpeed?: null): ContributorTonicSpeedUpdatedEventFilter;
+    ContributorTonicSpeedUpdated(
+      contributor?: PromiseOrValue<string> | null,
+      newSpeed?: null,
+    ): ContributorTonicSpeedUpdatedEventFilter;
 
     'DistributedBorrowerTonic(address,address,uint256,uint256)'(
-      tToken?: string | null,
-      borrower?: string | null,
+      tToken?: PromiseOrValue<string> | null,
+      borrower?: PromiseOrValue<string> | null,
       tonicDelta?: null,
       tonicBorrowIndex?: null,
     ): DistributedBorrowerTonicEventFilter;
     DistributedBorrowerTonic(
-      tToken?: string | null,
-      borrower?: string | null,
+      tToken?: PromiseOrValue<string> | null,
+      borrower?: PromiseOrValue<string> | null,
       tonicDelta?: null,
       tonicBorrowIndex?: null,
     ): DistributedBorrowerTonicEventFilter;
 
     'DistributedSupplierTonic(address,address,uint256,uint256)'(
-      tToken?: string | null,
-      supplier?: string | null,
+      tToken?: PromiseOrValue<string> | null,
+      supplier?: PromiseOrValue<string> | null,
       tonicDelta?: null,
       tonicSupplyIndex?: null,
     ): DistributedSupplierTonicEventFilter;
     DistributedSupplierTonic(
-      tToken?: string | null,
-      supplier?: string | null,
+      tToken?: PromiseOrValue<string> | null,
+      supplier?: PromiseOrValue<string> | null,
       tonicDelta?: null,
       tonicSupplyIndex?: null,
     ): DistributedSupplierTonicEventFilter;
@@ -1733,8 +1943,11 @@ export interface TectonicCore extends BaseContract {
     'MarketListed(address)'(tToken?: null): MarketListedEventFilter;
     MarketListed(tToken?: null): MarketListedEventFilter;
 
-    'NewBorrowCap(address,uint256)'(tToken?: string | null, newBorrowCap?: null): NewBorrowCapEventFilter;
-    NewBorrowCap(tToken?: string | null, newBorrowCap?: null): NewBorrowCapEventFilter;
+    'NewBorrowCap(address,uint256)'(
+      tToken?: PromiseOrValue<string> | null,
+      newBorrowCap?: null,
+    ): NewBorrowCapEventFilter;
+    NewBorrowCap(tToken?: PromiseOrValue<string> | null, newBorrowCap?: null): NewBorrowCapEventFilter;
 
     'NewBorrowCapGuardian(address,address)'(
       oldBorrowCapGuardian?: null,
@@ -1775,16 +1988,22 @@ export interface TectonicCore extends BaseContract {
     NewPriceOracle(oldPriceOracle?: null, newPriceOracle?: null): NewPriceOracleEventFilter;
 
     'TVLProtectLimitUpdated(address,uint256)'(
-      tToken?: string | null,
+      tToken?: PromiseOrValue<string> | null,
       newLimitPerUser?: null,
     ): TVLProtectLimitUpdatedEventFilter;
-    TVLProtectLimitUpdated(tToken?: string | null, newLimitPerUser?: null): TVLProtectLimitUpdatedEventFilter;
+    TVLProtectLimitUpdated(
+      tToken?: PromiseOrValue<string> | null,
+      newLimitPerUser?: null,
+    ): TVLProtectLimitUpdatedEventFilter;
 
     'TonicGranted(address,uint256)'(recipient?: null, amount?: null): TonicGrantedEventFilter;
     TonicGranted(recipient?: null, amount?: null): TonicGrantedEventFilter;
 
-    'TonicSpeedUpdated(address,uint256)'(tToken?: string | null, newSpeed?: null): TonicSpeedUpdatedEventFilter;
-    TonicSpeedUpdated(tToken?: string | null, newSpeed?: null): TonicSpeedUpdatedEventFilter;
+    'TonicSpeedUpdated(address,uint256)'(
+      tToken?: PromiseOrValue<string> | null,
+      newSpeed?: null,
+    ): TonicSpeedUpdatedEventFilter;
+    TonicSpeedUpdated(tToken?: PromiseOrValue<string> | null, newSpeed?: null): TonicSpeedUpdatedEventFilter;
 
     'WhitelistAccountAdded(address)'(account?: null): WhitelistAccountAddedEventFilter;
     WhitelistAccountAdded(account?: null): WhitelistAccountAddedEventFilter;
@@ -1798,226 +2017,255 @@ export interface TectonicCore extends BaseContract {
 
   estimateGas: {
     _addToWhitelistProtect(
-      accounts: string[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      accounts: PromiseOrValue<string>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    _become(unitroller: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    _become(
+      unitroller: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     _borrowGuardianPaused(overrides?: CallOverrides): Promise<BigNumber>;
 
     _grantTonic(
-      recipient: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      recipient: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     _mintGuardianPaused(overrides?: CallOverrides): Promise<BigNumber>;
 
     _removeFromWhitelistProtect(
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     _setBorrowCapGuardian(
-      newBorrowCapGuardian: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newBorrowCapGuardian: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     _setBorrowPaused(
-      tToken: string,
-      state: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      tToken: PromiseOrValue<string>,
+      state: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     _setCloseFactor(
-      newCloseFactorMantissa: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newCloseFactorMantissa: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     _setCollateralFactor(
-      tToken: string,
-      newCollateralFactorMantissa: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      tToken: PromiseOrValue<string>,
+      newCollateralFactorMantissa: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     _setContributorTonicSpeed(
-      contributor: string,
-      tonicSpeed: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      contributor: PromiseOrValue<string>,
+      tonicSpeed: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     _setLiquidationIncentive(
-      newLiquidationIncentiveMantissa: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newLiquidationIncentiveMantissa: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     _setMarketBorrowCaps(
-      tTokens: string[],
-      newBorrowCaps: BigNumberish[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      tTokens: PromiseOrValue<string>[],
+      newBorrowCaps: PromiseOrValue<BigNumberish>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     _setMintPaused(
-      tToken: string,
-      state: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      tToken: PromiseOrValue<string>,
+      state: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     _setPauseGuardian(
-      newPauseGuardian: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newPauseGuardian: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    _setPriceOracle(newOracle: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    _setPriceOracle(
+      newOracle: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
-    _setSeizePaused(state: boolean, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    _setSeizePaused(
+      state: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     _setTonicSpeed(
-      tToken: string,
-      tonicSpeed: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      tToken: PromiseOrValue<string>,
+      tonicSpeed: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    _setTransferPaused(state: boolean, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    _setTransferPaused(
+      state: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     _setWhitelistProtect(
-      whitelistStatus: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      whitelistStatus: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    _supportMarket(tToken: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    _supportMarket(
+      tToken: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     _updateTvlProtectLimit(
-      tTokens: string[],
-      newLimitPerUser: BigNumberish[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      tTokens: PromiseOrValue<string>[],
+      newLimitPerUser: PromiseOrValue<BigNumberish>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    accountAssets(arg0: string, arg1: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    accountAssets(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     admin(overrides?: CallOverrides): Promise<BigNumber>;
 
-    allMarkets(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    allMarkets(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     borrowAllowed(
-      tToken: string,
-      borrower: string,
-      borrowAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      tToken: PromiseOrValue<string>,
+      borrower: PromiseOrValue<string>,
+      borrowAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     borrowCapGuardian(overrides?: CallOverrides): Promise<BigNumber>;
 
-    borrowCaps(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    borrowCaps(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    borrowGuardianPaused(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    borrowGuardianPaused(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     borrowVerify(
-      tToken: string,
-      borrower: string,
-      borrowAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      tToken: PromiseOrValue<string>,
+      borrower: PromiseOrValue<string>,
+      borrowAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    checkMembership(account: string, tToken: string, overrides?: CallOverrides): Promise<BigNumber>;
+    checkMembership(
+      account: PromiseOrValue<string>,
+      tToken: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     'claimTonic(address[],address[],bool,bool)'(
-      holders: string[],
-      tTokens: string[],
-      borrowers: boolean,
-      suppliers: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      holders: PromiseOrValue<string>[],
+      tTokens: PromiseOrValue<string>[],
+      borrowers: PromiseOrValue<boolean>,
+      suppliers: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     'claimTonic(address)'(
-      holder: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      holder: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     'claimTonic(address,address[])'(
-      holder: string,
-      tTokens: string[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      holder: PromiseOrValue<string>,
+      tTokens: PromiseOrValue<string>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     closeFactorMantissa(overrides?: CallOverrides): Promise<BigNumber>;
 
-    enterMarkets(tTokens: string[], overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    enterMarkets(
+      tTokens: PromiseOrValue<string>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
-    exitMarket(tTokenAddress: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    exitMarket(
+      tTokenAddress: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
-    getAccountLiquidity(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getAccountLiquidity(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     getAllMarkets(overrides?: CallOverrides): Promise<BigNumber>;
 
-    getAssetsIn(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getAssetsIn(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     getBlockNumber(overrides?: CallOverrides): Promise<BigNumber>;
 
     getHypotheticalAccountLiquidity(
-      account: string,
-      tTokenModify: string,
-      redeemTokens: BigNumberish,
-      borrowAmount: BigNumberish,
+      account: PromiseOrValue<string>,
+      tTokenModify: PromiseOrValue<string>,
+      redeemTokens: PromiseOrValue<BigNumberish>,
+      borrowAmount: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     getTonicAddress(overrides?: CallOverrides): Promise<BigNumber>;
 
-    isDeprecated(tToken: string, overrides?: CallOverrides): Promise<BigNumber>;
+    isDeprecated(tToken: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     isTectonicCore(overrides?: CallOverrides): Promise<BigNumber>;
 
-    lastContributorBlock(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    lastContributorBlock(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     liquidateBorrowAllowed(
-      tTokenBorrowed: string,
-      tTokenCollateral: string,
-      liquidator: string,
-      borrower: string,
-      repayAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      tTokenBorrowed: PromiseOrValue<string>,
+      tTokenCollateral: PromiseOrValue<string>,
+      liquidator: PromiseOrValue<string>,
+      borrower: PromiseOrValue<string>,
+      repayAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     liquidateBorrowVerify(
-      tTokenBorrowed: string,
-      tTokenCollateral: string,
-      liquidator: string,
-      borrower: string,
-      actualRepayAmount: BigNumberish,
-      seizeTokens: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      tTokenBorrowed: PromiseOrValue<string>,
+      tTokenCollateral: PromiseOrValue<string>,
+      liquidator: PromiseOrValue<string>,
+      borrower: PromiseOrValue<string>,
+      actualRepayAmount: PromiseOrValue<BigNumberish>,
+      seizeTokens: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     liquidateCalculateSeizeTokens(
-      tTokenBorrowed: string,
-      tTokenCollateral: string,
-      actualRepayAmount: BigNumberish,
+      tTokenBorrowed: PromiseOrValue<string>,
+      tTokenCollateral: PromiseOrValue<string>,
+      actualRepayAmount: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     liquidationIncentiveMantissa(overrides?: CallOverrides): Promise<BigNumber>;
 
-    markets(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    markets(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     maxAssets(overrides?: CallOverrides): Promise<BigNumber>;
 
     mintAllowed(
-      tToken: string,
-      minter: string,
-      mintAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      tToken: PromiseOrValue<string>,
+      minter: PromiseOrValue<string>,
+      mintAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    mintGuardianPaused(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    mintGuardianPaused(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     mintVerify(
-      tToken: string,
-      minter: string,
-      actualMintAmount: BigNumberish,
-      mintTokens: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      tToken: PromiseOrValue<string>,
+      minter: PromiseOrValue<string>,
+      actualMintAmount: PromiseOrValue<BigNumberish>,
+      mintTokens: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     oracle(overrides?: CallOverrides): Promise<BigNumber>;
@@ -2029,352 +2277,372 @@ export interface TectonicCore extends BaseContract {
     pendingTectonicCoreImplementation(overrides?: CallOverrides): Promise<BigNumber>;
 
     redeemAllowed(
-      tToken: string,
-      redeemer: string,
-      redeemTokens: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      tToken: PromiseOrValue<string>,
+      redeemer: PromiseOrValue<string>,
+      redeemTokens: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     redeemVerify(
-      tToken: string,
-      redeemer: string,
-      redeemAmount: BigNumberish,
-      redeemTokens: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      tToken: PromiseOrValue<string>,
+      redeemer: PromiseOrValue<string>,
+      redeemAmount: PromiseOrValue<BigNumberish>,
+      redeemTokens: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     repayBorrowAllowed(
-      tToken: string,
-      payer: string,
-      borrower: string,
-      repayAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      tToken: PromiseOrValue<string>,
+      payer: PromiseOrValue<string>,
+      borrower: PromiseOrValue<string>,
+      repayAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     repayBorrowVerify(
-      tToken: string,
-      payer: string,
-      borrower: string,
-      actualRepayAmount: BigNumberish,
-      borrowerIndex: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      tToken: PromiseOrValue<string>,
+      payer: PromiseOrValue<string>,
+      borrower: PromiseOrValue<string>,
+      actualRepayAmount: PromiseOrValue<BigNumberish>,
+      borrowerIndex: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     seizeAllowed(
-      tTokenCollateral: string,
-      tTokenBorrowed: string,
-      liquidator: string,
-      borrower: string,
-      seizeTokens: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      tTokenCollateral: PromiseOrValue<string>,
+      tTokenBorrowed: PromiseOrValue<string>,
+      liquidator: PromiseOrValue<string>,
+      borrower: PromiseOrValue<string>,
+      seizeTokens: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     seizeGuardianPaused(overrides?: CallOverrides): Promise<BigNumber>;
 
     seizeVerify(
-      tTokenCollateral: string,
-      tTokenBorrowed: string,
-      liquidator: string,
-      borrower: string,
-      seizeTokens: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      tTokenCollateral: PromiseOrValue<string>,
+      tTokenBorrowed: PromiseOrValue<string>,
+      liquidator: PromiseOrValue<string>,
+      borrower: PromiseOrValue<string>,
+      seizeTokens: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     tectonicCoreImplementation(overrides?: CallOverrides): Promise<BigNumber>;
 
-    tokenToPerUserTvlProtectLimit(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    tokenToPerUserTvlProtectLimit(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    tonicAccrued(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    tonicAccrued(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    tonicBorrowState(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    tonicBorrowState(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    tonicBorrowerIndex(arg0: string, arg1: string, overrides?: CallOverrides): Promise<BigNumber>;
+    tonicBorrowerIndex(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    tonicContributorSpeeds(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    tonicContributorSpeeds(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     tonicInitialIndex(overrides?: CallOverrides): Promise<BigNumber>;
 
     tonicRate(overrides?: CallOverrides): Promise<BigNumber>;
 
-    tonicSpeeds(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    tonicSpeeds(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    tonicSupplierIndex(arg0: string, arg1: string, overrides?: CallOverrides): Promise<BigNumber>;
+    tonicSupplierIndex(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    tonicSupplyState(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    tonicSupplyState(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     transferAllowed(
-      tToken: string,
-      src: string,
-      dst: string,
-      transferTokens: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      tToken: PromiseOrValue<string>,
+      src: PromiseOrValue<string>,
+      dst: PromiseOrValue<string>,
+      transferTokens: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     transferGuardianPaused(overrides?: CallOverrides): Promise<BigNumber>;
 
     transferVerify(
-      tToken: string,
-      src: string,
-      dst: string,
-      transferTokens: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      tToken: PromiseOrValue<string>,
+      src: PromiseOrValue<string>,
+      dst: PromiseOrValue<string>,
+      transferTokens: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     updateContributorRewards(
-      contributor: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      contributor: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    utilizedTvlAmount(arg0: string, arg1: string, overrides?: CallOverrides): Promise<BigNumber>;
+    utilizedTvlAmount(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     whitelistProtectEnabled(overrides?: CallOverrides): Promise<BigNumber>;
 
-    whitelistedAddresses(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    whitelistedAddresses(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
   };
 
   populateTransaction: {
     _addToWhitelistProtect(
-      accounts: string[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      accounts: PromiseOrValue<string>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     _become(
-      unitroller: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      unitroller: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     _borrowGuardianPaused(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     _grantTonic(
-      recipient: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      recipient: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     _mintGuardianPaused(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     _removeFromWhitelistProtect(
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     _setBorrowCapGuardian(
-      newBorrowCapGuardian: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newBorrowCapGuardian: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     _setBorrowPaused(
-      tToken: string,
-      state: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      tToken: PromiseOrValue<string>,
+      state: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     _setCloseFactor(
-      newCloseFactorMantissa: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newCloseFactorMantissa: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     _setCollateralFactor(
-      tToken: string,
-      newCollateralFactorMantissa: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      tToken: PromiseOrValue<string>,
+      newCollateralFactorMantissa: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     _setContributorTonicSpeed(
-      contributor: string,
-      tonicSpeed: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      contributor: PromiseOrValue<string>,
+      tonicSpeed: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     _setLiquidationIncentive(
-      newLiquidationIncentiveMantissa: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newLiquidationIncentiveMantissa: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     _setMarketBorrowCaps(
-      tTokens: string[],
-      newBorrowCaps: BigNumberish[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      tTokens: PromiseOrValue<string>[],
+      newBorrowCaps: PromiseOrValue<BigNumberish>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     _setMintPaused(
-      tToken: string,
-      state: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      tToken: PromiseOrValue<string>,
+      state: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     _setPauseGuardian(
-      newPauseGuardian: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newPauseGuardian: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     _setPriceOracle(
-      newOracle: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOracle: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     _setSeizePaused(
-      state: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      state: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     _setTonicSpeed(
-      tToken: string,
-      tonicSpeed: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      tToken: PromiseOrValue<string>,
+      tonicSpeed: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     _setTransferPaused(
-      state: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      state: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     _setWhitelistProtect(
-      whitelistStatus: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      whitelistStatus: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     _supportMarket(
-      tToken: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      tToken: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     _updateTvlProtectLimit(
-      tTokens: string[],
-      newLimitPerUser: BigNumberish[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      tTokens: PromiseOrValue<string>[],
+      newLimitPerUser: PromiseOrValue<BigNumberish>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    accountAssets(arg0: string, arg1: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    accountAssets(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
     admin(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    allMarkets(arg0: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    allMarkets(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     borrowAllowed(
-      tToken: string,
-      borrower: string,
-      borrowAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      tToken: PromiseOrValue<string>,
+      borrower: PromiseOrValue<string>,
+      borrowAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     borrowCapGuardian(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    borrowCaps(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    borrowCaps(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    borrowGuardianPaused(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    borrowGuardianPaused(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     borrowVerify(
-      tToken: string,
-      borrower: string,
-      borrowAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      tToken: PromiseOrValue<string>,
+      borrower: PromiseOrValue<string>,
+      borrowAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    checkMembership(account: string, tToken: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    checkMembership(
+      account: PromiseOrValue<string>,
+      tToken: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
     'claimTonic(address[],address[],bool,bool)'(
-      holders: string[],
-      tTokens: string[],
-      borrowers: boolean,
-      suppliers: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      holders: PromiseOrValue<string>[],
+      tTokens: PromiseOrValue<string>[],
+      borrowers: PromiseOrValue<boolean>,
+      suppliers: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     'claimTonic(address)'(
-      holder: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      holder: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     'claimTonic(address,address[])'(
-      holder: string,
-      tTokens: string[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      holder: PromiseOrValue<string>,
+      tTokens: PromiseOrValue<string>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     closeFactorMantissa(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     enterMarkets(
-      tTokens: string[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      tTokens: PromiseOrValue<string>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     exitMarket(
-      tTokenAddress: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      tTokenAddress: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    getAccountLiquidity(account: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getAccountLiquidity(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     getAllMarkets(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    getAssetsIn(account: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getAssetsIn(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     getBlockNumber(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     getHypotheticalAccountLiquidity(
-      account: string,
-      tTokenModify: string,
-      redeemTokens: BigNumberish,
-      borrowAmount: BigNumberish,
+      account: PromiseOrValue<string>,
+      tTokenModify: PromiseOrValue<string>,
+      redeemTokens: PromiseOrValue<BigNumberish>,
+      borrowAmount: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     getTonicAddress(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    isDeprecated(tToken: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    isDeprecated(tToken: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     isTectonicCore(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    lastContributorBlock(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    lastContributorBlock(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     liquidateBorrowAllowed(
-      tTokenBorrowed: string,
-      tTokenCollateral: string,
-      liquidator: string,
-      borrower: string,
-      repayAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      tTokenBorrowed: PromiseOrValue<string>,
+      tTokenCollateral: PromiseOrValue<string>,
+      liquidator: PromiseOrValue<string>,
+      borrower: PromiseOrValue<string>,
+      repayAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     liquidateBorrowVerify(
-      tTokenBorrowed: string,
-      tTokenCollateral: string,
-      liquidator: string,
-      borrower: string,
-      actualRepayAmount: BigNumberish,
-      seizeTokens: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      tTokenBorrowed: PromiseOrValue<string>,
+      tTokenCollateral: PromiseOrValue<string>,
+      liquidator: PromiseOrValue<string>,
+      borrower: PromiseOrValue<string>,
+      actualRepayAmount: PromiseOrValue<BigNumberish>,
+      seizeTokens: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     liquidateCalculateSeizeTokens(
-      tTokenBorrowed: string,
-      tTokenCollateral: string,
-      actualRepayAmount: BigNumberish,
+      tTokenBorrowed: PromiseOrValue<string>,
+      tTokenCollateral: PromiseOrValue<string>,
+      actualRepayAmount: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     liquidationIncentiveMantissa(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    markets(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    markets(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     maxAssets(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     mintAllowed(
-      tToken: string,
-      minter: string,
-      mintAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      tToken: PromiseOrValue<string>,
+      minter: PromiseOrValue<string>,
+      mintAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    mintGuardianPaused(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    mintGuardianPaused(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     mintVerify(
-      tToken: string,
-      minter: string,
-      actualMintAmount: BigNumberish,
-      mintTokens: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      tToken: PromiseOrValue<string>,
+      minter: PromiseOrValue<string>,
+      actualMintAmount: PromiseOrValue<BigNumberish>,
+      mintTokens: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     oracle(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -2386,106 +2654,121 @@ export interface TectonicCore extends BaseContract {
     pendingTectonicCoreImplementation(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     redeemAllowed(
-      tToken: string,
-      redeemer: string,
-      redeemTokens: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      tToken: PromiseOrValue<string>,
+      redeemer: PromiseOrValue<string>,
+      redeemTokens: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     redeemVerify(
-      tToken: string,
-      redeemer: string,
-      redeemAmount: BigNumberish,
-      redeemTokens: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      tToken: PromiseOrValue<string>,
+      redeemer: PromiseOrValue<string>,
+      redeemAmount: PromiseOrValue<BigNumberish>,
+      redeemTokens: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     repayBorrowAllowed(
-      tToken: string,
-      payer: string,
-      borrower: string,
-      repayAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      tToken: PromiseOrValue<string>,
+      payer: PromiseOrValue<string>,
+      borrower: PromiseOrValue<string>,
+      repayAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     repayBorrowVerify(
-      tToken: string,
-      payer: string,
-      borrower: string,
-      actualRepayAmount: BigNumberish,
-      borrowerIndex: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      tToken: PromiseOrValue<string>,
+      payer: PromiseOrValue<string>,
+      borrower: PromiseOrValue<string>,
+      actualRepayAmount: PromiseOrValue<BigNumberish>,
+      borrowerIndex: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     seizeAllowed(
-      tTokenCollateral: string,
-      tTokenBorrowed: string,
-      liquidator: string,
-      borrower: string,
-      seizeTokens: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      tTokenCollateral: PromiseOrValue<string>,
+      tTokenBorrowed: PromiseOrValue<string>,
+      liquidator: PromiseOrValue<string>,
+      borrower: PromiseOrValue<string>,
+      seizeTokens: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     seizeGuardianPaused(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     seizeVerify(
-      tTokenCollateral: string,
-      tTokenBorrowed: string,
-      liquidator: string,
-      borrower: string,
-      seizeTokens: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      tTokenCollateral: PromiseOrValue<string>,
+      tTokenBorrowed: PromiseOrValue<string>,
+      liquidator: PromiseOrValue<string>,
+      borrower: PromiseOrValue<string>,
+      seizeTokens: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     tectonicCoreImplementation(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    tokenToPerUserTvlProtectLimit(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    tokenToPerUserTvlProtectLimit(
+      arg0: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
-    tonicAccrued(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    tonicAccrued(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    tonicBorrowState(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    tonicBorrowState(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    tonicBorrowerIndex(arg0: string, arg1: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    tonicBorrowerIndex(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
-    tonicContributorSpeeds(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    tonicContributorSpeeds(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     tonicInitialIndex(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     tonicRate(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    tonicSpeeds(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    tonicSpeeds(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    tonicSupplierIndex(arg0: string, arg1: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    tonicSupplierIndex(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
-    tonicSupplyState(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    tonicSupplyState(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     transferAllowed(
-      tToken: string,
-      src: string,
-      dst: string,
-      transferTokens: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      tToken: PromiseOrValue<string>,
+      src: PromiseOrValue<string>,
+      dst: PromiseOrValue<string>,
+      transferTokens: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     transferGuardianPaused(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     transferVerify(
-      tToken: string,
-      src: string,
-      dst: string,
-      transferTokens: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      tToken: PromiseOrValue<string>,
+      src: PromiseOrValue<string>,
+      dst: PromiseOrValue<string>,
+      transferTokens: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     updateContributorRewards(
-      contributor: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      contributor: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    utilizedTvlAmount(arg0: string, arg1: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    utilizedTvlAmount(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
     whitelistProtectEnabled(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    whitelistedAddresses(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    whitelistedAddresses(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
   };
 }

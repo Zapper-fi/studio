@@ -1,32 +1,29 @@
-import { Inject } from '@nestjs/common';
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
+import { GetDisplayPropsParams } from '~position/template/app-token.template.types';
 
-import { Register } from '~app-toolkit/decorators';
-import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
-import { PositionFetcher } from '~position/position-fetcher.interface';
-import { AppTokenPosition } from '~position/position.interface';
-import { Network } from '~types/network.interface';
+import { AaveV2AToken } from '../contracts/ethers/AaveV2AToken';
+import {
+  AaveV2ReserveApyData,
+  AaveV2ReserveTokenAddressesData,
+  AaveV2LendingTemplateTokenFetcher,
+  AaveV2LendingTokenDataProps,
+} from '../helpers/aave-v2.lending.template.token-fetcher';
 
-import { AAVE_V2_DEFINITION } from '../aave-v2.definition';
-import { AaveV2LendingTokenHelper } from '../helpers/aave-v2.lending.token-helper';
+@PositionTemplate()
+export class EthereumAaveV2SupplyTokenFetcher extends AaveV2LendingTemplateTokenFetcher {
+  groupLabel = 'Lending';
+  providerAddress = '0x057835ad21a177dbdd3090bb1cae03eacf78fc6d';
+  isDebt = false;
 
-const appId = AAVE_V2_DEFINITION.id;
-const groupId = AAVE_V2_DEFINITION.groups.supply.id;
-const network = Network.ETHEREUM_MAINNET;
+  getTokenAddress(reserveTokenAddressesData: AaveV2ReserveTokenAddressesData): string {
+    return reserveTokenAddressesData.aTokenAddress;
+  }
 
-@Register.TokenPositionFetcher({ appId, groupId, network, options: { includeInTvl: true } })
-export class EthereumAaveV2SupplyTokenFetcher implements PositionFetcher<AppTokenPosition> {
-  constructor(@Inject(AaveV2LendingTokenHelper) private readonly aaveV2LendingTokenHelper: AaveV2LendingTokenHelper) {}
+  getApyFromReserveData(reserveApyData: AaveV2ReserveApyData): number {
+    return reserveApyData.supplyApy;
+  }
 
-  async getPositions() {
-    return await this.aaveV2LendingTokenHelper.getTokens({
-      appId,
-      groupId,
-      network,
-      protocolDataProviderAddress: '0x057835ad21a177dbdd3090bb1cae03eacf78fc6d',
-      resolveTokenAddress: ({ reserveTokenAddressesData }) => reserveTokenAddressesData.aTokenAddress,
-      resolveLendingRate: ({ reserveData }) => reserveData.liquidityRate,
-      resolveLabel: ({ reserveToken }) => getLabelFromToken(reserveToken),
-      resolveApyLabel: ({ apy }) => `${apy.toFixed(3)}% APY`,
-    });
+  async getTertiaryLabel({ appToken }: GetDisplayPropsParams<AaveV2AToken, AaveV2LendingTokenDataProps>) {
+    return `${appToken.dataProps.apy.toFixed(3)}% APY`;
   }
 }

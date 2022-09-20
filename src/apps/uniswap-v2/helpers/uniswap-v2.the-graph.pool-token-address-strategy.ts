@@ -4,7 +4,6 @@ import { range, uniq } from 'lodash';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { Cache } from '~cache/cache.decorator';
-import { Network } from '~types/network.interface';
 
 import { UniswapFactory, UniswapPair } from '../contracts';
 
@@ -46,8 +45,10 @@ export class UniswapV2TheGraphPoolTokenAddressStrategy {
   constructor(@Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit) {}
 
   @Cache({
-    key: (network: Network, appId: string, groupId: string) =>
-      `studio-the-graph-pool-token-addresses:${network}:${appId}:${groupId}`,
+    key: (subgraphUrl: string) => {
+      const [namespace, name] = subgraphUrl.split('/').slice(-2);
+      return `studio:uniswap-v2-fork:pool-token-addresses:${namespace}:${name}`;
+    },
     ttl: 5 * 60,
   })
   async getPoolAddresses(

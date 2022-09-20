@@ -12,13 +12,33 @@ export const COSLEND_DEFINITION = appDefinition({
     supply: {
       id: 'supply',
       type: GroupType.TOKEN,
-      label: 'Supply',
+      label: 'Lending',
     },
     borrow: {
       id: 'borrow',
       type: GroupType.POSITION,
-      label: 'Borrow',
+      label: 'Lending',
     },
+  },
+  presentationConfig: {
+    tabs: [
+      {
+        label: 'Lending',
+        viewType: 'split',
+        views: [
+          {
+            viewType: 'list',
+            label: 'Supply',
+            groupIds: ['supply'],
+          },
+          {
+            viewType: 'list',
+            label: 'Borrow',
+            groupIds: ['borrow'],
+          },
+        ],
+      },
+    ],
   },
   tags: [AppTag.LENDING],
   keywords: ['lending', 'defi', 'evmos', 'ethereum', 'cosmos', 'decentralized finance', 'coslend'],

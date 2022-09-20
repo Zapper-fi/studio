@@ -16,7 +16,7 @@ import type {
 } from 'ethers';
 import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
 import type { Listener, Provider } from '@ethersproject/providers';
-import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
 export interface StethInterface extends utils.Interface {
   functions: {
@@ -160,21 +160,39 @@ export interface StethInterface extends utils.Interface {
   encodeFunctionData(functionFragment: 'name', values?: undefined): string;
   encodeFunctionData(functionFragment: 'stop', values?: undefined): string;
   encodeFunctionData(functionFragment: 'hasInitialized', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'approve', values: [string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'initialize', values: [string, string, string, string, string]): string;
+  encodeFunctionData(
+    functionFragment: 'approve',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'initialize',
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+    ],
+  ): string;
   encodeFunctionData(functionFragment: 'getInsuranceFund', values?: undefined): string;
   encodeFunctionData(functionFragment: 'totalSupply', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'getSharesByPooledEth', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'transferFrom', values: [string, string, BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'getSharesByPooledEth', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(
+    functionFragment: 'transferFrom',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
   encodeFunctionData(functionFragment: 'getOperators', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'getEVMScriptExecutor', values: [BytesLike]): string;
+  encodeFunctionData(functionFragment: 'getEVMScriptExecutor', values: [PromiseOrValue<BytesLike>]): string;
   encodeFunctionData(functionFragment: 'decimals', values?: undefined): string;
   encodeFunctionData(functionFragment: 'getRecoveryVault', values?: undefined): string;
   encodeFunctionData(functionFragment: 'DEPOSIT_ROLE', values?: undefined): string;
   encodeFunctionData(functionFragment: 'DEPOSIT_SIZE', values?: undefined): string;
   encodeFunctionData(functionFragment: 'getTotalPooledEther', values?: undefined): string;
   encodeFunctionData(functionFragment: 'PAUSE_ROLE', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'increaseAllowance', values: [string, BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'increaseAllowance',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
   encodeFunctionData(functionFragment: 'getTreasury', values?: undefined): string;
   encodeFunctionData(functionFragment: 'SET_ORACLE', values?: undefined): string;
   encodeFunctionData(functionFragment: 'isStopped', values?: undefined): string;
@@ -182,48 +200,66 @@ export interface StethInterface extends utils.Interface {
   encodeFunctionData(functionFragment: 'getBufferedEther', values?: undefined): string;
   encodeFunctionData(functionFragment: 'SIGNATURE_LENGTH', values?: undefined): string;
   encodeFunctionData(functionFragment: 'getWithdrawalCredentials', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'balanceOf', values: [string]): string;
+  encodeFunctionData(functionFragment: 'balanceOf', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'getFeeDistribution', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'getPooledEthByShares', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'setOracle', values: [string]): string;
-  encodeFunctionData(functionFragment: 'allowRecoverability', values: [string]): string;
+  encodeFunctionData(functionFragment: 'getPooledEthByShares', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'setOracle', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'allowRecoverability', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'appId', values?: undefined): string;
   encodeFunctionData(functionFragment: 'getOracle', values?: undefined): string;
   encodeFunctionData(functionFragment: 'getInitializationBlock', values?: undefined): string;
   encodeFunctionData(
     functionFragment: 'setFeeDistribution',
-    values: [BigNumberish, BigNumberish, BigNumberish],
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
   ): string;
-  encodeFunctionData(functionFragment: 'setFee', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'depositBufferedEther(uint256)', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'setFee', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'depositBufferedEther(uint256)', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'depositBufferedEther()', values?: undefined): string;
   encodeFunctionData(functionFragment: 'symbol', values?: undefined): string;
   encodeFunctionData(functionFragment: 'MANAGE_FEE', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'transferToVault', values: [string]): string;
+  encodeFunctionData(functionFragment: 'transferToVault', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'SET_TREASURY', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'canPerform', values: [string, BytesLike, BigNumberish[]]): string;
-  encodeFunctionData(functionFragment: 'submit', values: [string]): string;
+  encodeFunctionData(
+    functionFragment: 'canPerform',
+    values: [PromiseOrValue<string>, PromiseOrValue<BytesLike>, PromiseOrValue<BigNumberish>[]],
+  ): string;
+  encodeFunctionData(functionFragment: 'submit', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'WITHDRAWAL_CREDENTIALS_LENGTH', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'decreaseAllowance', values: [string, BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'decreaseAllowance',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
   encodeFunctionData(functionFragment: 'getEVMScriptRegistry', values?: undefined): string;
   encodeFunctionData(functionFragment: 'PUBKEY_LENGTH', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'withdraw', values: [BigNumberish, BytesLike]): string;
-  encodeFunctionData(functionFragment: 'transfer', values: [string, BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'withdraw',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BytesLike>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'transfer',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
   encodeFunctionData(functionFragment: 'getDepositContract', values?: undefined): string;
   encodeFunctionData(functionFragment: 'getBeaconStat', values?: undefined): string;
   encodeFunctionData(functionFragment: 'BURN_ROLE', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'setInsuranceFund', values: [string]): string;
+  encodeFunctionData(functionFragment: 'setInsuranceFund', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'getFee', values?: undefined): string;
   encodeFunctionData(functionFragment: 'SET_INSURANCE_FUND', values?: undefined): string;
   encodeFunctionData(functionFragment: 'kernel', values?: undefined): string;
   encodeFunctionData(functionFragment: 'getTotalShares', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'allowance', values: [string, string]): string;
+  encodeFunctionData(functionFragment: 'allowance', values: [PromiseOrValue<string>, PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'isPetrified', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'setWithdrawalCredentials', values: [BytesLike]): string;
-  encodeFunctionData(functionFragment: 'burnShares', values: [string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'setTreasury', values: [string]): string;
-  encodeFunctionData(functionFragment: 'pushBeacon', values: [BigNumberish, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'sharesOf', values: [string]): string;
+  encodeFunctionData(functionFragment: 'setWithdrawalCredentials', values: [PromiseOrValue<BytesLike>]): string;
+  encodeFunctionData(
+    functionFragment: 'burnShares',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'setTreasury', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'pushBeacon',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'sharesOf', values: [PromiseOrValue<string>]): string;
 
   decodeFunctionResult(functionFragment: 'resume', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'name', data: BytesLike): Result;
@@ -440,45 +476,45 @@ export interface Steth extends BaseContract {
   removeListener: OnEvent<this>;
 
   functions: {
-    resume(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    resume(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     name(overrides?: CallOverrides): Promise<[string]>;
 
-    stop(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    stop(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     hasInitialized(overrides?: CallOverrides): Promise<[boolean]>;
 
     approve(
-      _spender: string,
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _spender: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     initialize(
-      depositContract: string,
-      _oracle: string,
-      _operators: string,
-      _treasury: string,
-      _insuranceFund: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      depositContract: PromiseOrValue<string>,
+      _oracle: PromiseOrValue<string>,
+      _operators: PromiseOrValue<string>,
+      _treasury: PromiseOrValue<string>,
+      _insuranceFund: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     getInsuranceFund(overrides?: CallOverrides): Promise<[string]>;
 
     totalSupply(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    getSharesByPooledEth(_ethAmount: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber]>;
+    getSharesByPooledEth(_ethAmount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     transferFrom(
-      _sender: string,
-      _recipient: string,
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _sender: PromiseOrValue<string>,
+      _recipient: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     getOperators(overrides?: CallOverrides): Promise<[string]>;
 
-    getEVMScriptExecutor(_script: BytesLike, overrides?: CallOverrides): Promise<[string]>;
+    getEVMScriptExecutor(_script: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<[string]>;
 
     decimals(overrides?: CallOverrides): Promise<[number]>;
 
@@ -493,9 +529,9 @@ export interface Steth extends BaseContract {
     PAUSE_ROLE(overrides?: CallOverrides): Promise<[string]>;
 
     increaseAllowance(
-      _spender: string,
-      _addedValue: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _spender: PromiseOrValue<string>,
+      _addedValue: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     getTreasury(overrides?: CallOverrides): Promise<[string]>;
@@ -512,7 +548,7 @@ export interface Steth extends BaseContract {
 
     getWithdrawalCredentials(overrides?: CallOverrides): Promise<[string]>;
 
-    balanceOf(_account: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    balanceOf(_account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     getFeeDistribution(overrides?: CallOverrides): Promise<
       [number, number, number] & {
@@ -522,14 +558,14 @@ export interface Steth extends BaseContract {
       }
     >;
 
-    getPooledEthByShares(_sharesAmount: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber]>;
+    getPooledEthByShares(_sharesAmount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     setOracle(
-      _oracle: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _oracle: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    allowRecoverability(token: string, overrides?: CallOverrides): Promise<[boolean]>;
+    allowRecoverability(token: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[boolean]>;
 
     appId(overrides?: CallOverrides): Promise<[string]>;
 
@@ -538,53 +574,53 @@ export interface Steth extends BaseContract {
     getInitializationBlock(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     setFeeDistribution(
-      _treasuryFeeBasisPoints: BigNumberish,
-      _insuranceFeeBasisPoints: BigNumberish,
-      _operatorsFeeBasisPoints: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _treasuryFeeBasisPoints: PromiseOrValue<BigNumberish>,
+      _insuranceFeeBasisPoints: PromiseOrValue<BigNumberish>,
+      _operatorsFeeBasisPoints: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setFee(
-      _feeBasisPoints: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _feeBasisPoints: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     'depositBufferedEther(uint256)'(
-      _maxDeposits: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _maxDeposits: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    'depositBufferedEther()'(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    'depositBufferedEther()'(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     symbol(overrides?: CallOverrides): Promise<[string]>;
 
     MANAGE_FEE(overrides?: CallOverrides): Promise<[string]>;
 
     transferToVault(
-      _token: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _token: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     SET_TREASURY(overrides?: CallOverrides): Promise<[string]>;
 
     canPerform(
-      _sender: string,
-      _role: BytesLike,
-      _params: BigNumberish[],
+      _sender: PromiseOrValue<string>,
+      _role: PromiseOrValue<BytesLike>,
+      _params: PromiseOrValue<BigNumberish>[],
       overrides?: CallOverrides,
     ): Promise<[boolean]>;
 
     submit(
-      _referral: string,
-      overrides?: PayableOverrides & { from?: string | Promise<string> },
+      _referral: PromiseOrValue<string>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     WITHDRAWAL_CREDENTIALS_LENGTH(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     decreaseAllowance(
-      _spender: string,
-      _subtractedValue: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _spender: PromiseOrValue<string>,
+      _subtractedValue: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     getEVMScriptRegistry(overrides?: CallOverrides): Promise<[string]>;
@@ -592,15 +628,15 @@ export interface Steth extends BaseContract {
     PUBKEY_LENGTH(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     withdraw(
-      _amount: BigNumberish,
-      _pubkeyHash: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _amount: PromiseOrValue<BigNumberish>,
+      _pubkeyHash: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     transfer(
-      _recipient: string,
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _recipient: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     getDepositContract(overrides?: CallOverrides): Promise<[string]>;
@@ -616,8 +652,8 @@ export interface Steth extends BaseContract {
     BURN_ROLE(overrides?: CallOverrides): Promise<[string]>;
 
     setInsuranceFund(
-      _insuranceFund: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _insuranceFund: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     getFee(overrides?: CallOverrides): Promise<[number] & { feeBasisPoints: number }>;
@@ -628,74 +664,78 @@ export interface Steth extends BaseContract {
 
     getTotalShares(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    allowance(_owner: string, _spender: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    allowance(
+      _owner: PromiseOrValue<string>,
+      _spender: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber]>;
 
     isPetrified(overrides?: CallOverrides): Promise<[boolean]>;
 
     setWithdrawalCredentials(
-      _withdrawalCredentials: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _withdrawalCredentials: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     burnShares(
-      _account: string,
-      _sharesAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _account: PromiseOrValue<string>,
+      _sharesAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setTreasury(
-      _treasury: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _treasury: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     pushBeacon(
-      _beaconValidators: BigNumberish,
-      _beaconBalance: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _beaconValidators: PromiseOrValue<BigNumberish>,
+      _beaconBalance: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    sharesOf(_account: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    sharesOf(_account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
   };
 
-  resume(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  resume(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   name(overrides?: CallOverrides): Promise<string>;
 
-  stop(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  stop(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   hasInitialized(overrides?: CallOverrides): Promise<boolean>;
 
   approve(
-    _spender: string,
-    _amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _spender: PromiseOrValue<string>,
+    _amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   initialize(
-    depositContract: string,
-    _oracle: string,
-    _operators: string,
-    _treasury: string,
-    _insuranceFund: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    depositContract: PromiseOrValue<string>,
+    _oracle: PromiseOrValue<string>,
+    _operators: PromiseOrValue<string>,
+    _treasury: PromiseOrValue<string>,
+    _insuranceFund: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   getInsuranceFund(overrides?: CallOverrides): Promise<string>;
 
   totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
-  getSharesByPooledEth(_ethAmount: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+  getSharesByPooledEth(_ethAmount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
   transferFrom(
-    _sender: string,
-    _recipient: string,
-    _amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _sender: PromiseOrValue<string>,
+    _recipient: PromiseOrValue<string>,
+    _amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   getOperators(overrides?: CallOverrides): Promise<string>;
 
-  getEVMScriptExecutor(_script: BytesLike, overrides?: CallOverrides): Promise<string>;
+  getEVMScriptExecutor(_script: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<string>;
 
   decimals(overrides?: CallOverrides): Promise<number>;
 
@@ -710,9 +750,9 @@ export interface Steth extends BaseContract {
   PAUSE_ROLE(overrides?: CallOverrides): Promise<string>;
 
   increaseAllowance(
-    _spender: string,
-    _addedValue: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _spender: PromiseOrValue<string>,
+    _addedValue: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   getTreasury(overrides?: CallOverrides): Promise<string>;
@@ -729,7 +769,7 @@ export interface Steth extends BaseContract {
 
   getWithdrawalCredentials(overrides?: CallOverrides): Promise<string>;
 
-  balanceOf(_account: string, overrides?: CallOverrides): Promise<BigNumber>;
+  balanceOf(_account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   getFeeDistribution(overrides?: CallOverrides): Promise<
     [number, number, number] & {
@@ -739,11 +779,14 @@ export interface Steth extends BaseContract {
     }
   >;
 
-  getPooledEthByShares(_sharesAmount: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+  getPooledEthByShares(_sharesAmount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  setOracle(_oracle: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  setOracle(
+    _oracle: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
+  ): Promise<ContractTransaction>;
 
-  allowRecoverability(token: string, overrides?: CallOverrides): Promise<boolean>;
+  allowRecoverability(token: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
   appId(overrides?: CallOverrides): Promise<string>;
 
@@ -752,48 +795,53 @@ export interface Steth extends BaseContract {
   getInitializationBlock(overrides?: CallOverrides): Promise<BigNumber>;
 
   setFeeDistribution(
-    _treasuryFeeBasisPoints: BigNumberish,
-    _insuranceFeeBasisPoints: BigNumberish,
-    _operatorsFeeBasisPoints: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _treasuryFeeBasisPoints: PromiseOrValue<BigNumberish>,
+    _insuranceFeeBasisPoints: PromiseOrValue<BigNumberish>,
+    _operatorsFeeBasisPoints: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setFee(
-    _feeBasisPoints: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _feeBasisPoints: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   'depositBufferedEther(uint256)'(
-    _maxDeposits: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _maxDeposits: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  'depositBufferedEther()'(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  'depositBufferedEther()'(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   symbol(overrides?: CallOverrides): Promise<string>;
 
   MANAGE_FEE(overrides?: CallOverrides): Promise<string>;
 
   transferToVault(
-    _token: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _token: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   SET_TREASURY(overrides?: CallOverrides): Promise<string>;
 
-  canPerform(_sender: string, _role: BytesLike, _params: BigNumberish[], overrides?: CallOverrides): Promise<boolean>;
+  canPerform(
+    _sender: PromiseOrValue<string>,
+    _role: PromiseOrValue<BytesLike>,
+    _params: PromiseOrValue<BigNumberish>[],
+    overrides?: CallOverrides,
+  ): Promise<boolean>;
 
   submit(
-    _referral: string,
-    overrides?: PayableOverrides & { from?: string | Promise<string> },
+    _referral: PromiseOrValue<string>,
+    overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   WITHDRAWAL_CREDENTIALS_LENGTH(overrides?: CallOverrides): Promise<BigNumber>;
 
   decreaseAllowance(
-    _spender: string,
-    _subtractedValue: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _spender: PromiseOrValue<string>,
+    _subtractedValue: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   getEVMScriptRegistry(overrides?: CallOverrides): Promise<string>;
@@ -801,15 +849,15 @@ export interface Steth extends BaseContract {
   PUBKEY_LENGTH(overrides?: CallOverrides): Promise<BigNumber>;
 
   withdraw(
-    _amount: BigNumberish,
-    _pubkeyHash: BytesLike,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _amount: PromiseOrValue<BigNumberish>,
+    _pubkeyHash: PromiseOrValue<BytesLike>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   transfer(
-    _recipient: string,
-    _amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _recipient: PromiseOrValue<string>,
+    _amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   getDepositContract(overrides?: CallOverrides): Promise<string>;
@@ -825,8 +873,8 @@ export interface Steth extends BaseContract {
   BURN_ROLE(overrides?: CallOverrides): Promise<string>;
 
   setInsuranceFund(
-    _insuranceFund: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _insuranceFund: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   getFee(overrides?: CallOverrides): Promise<number>;
@@ -837,33 +885,37 @@ export interface Steth extends BaseContract {
 
   getTotalShares(overrides?: CallOverrides): Promise<BigNumber>;
 
-  allowance(_owner: string, _spender: string, overrides?: CallOverrides): Promise<BigNumber>;
+  allowance(
+    _owner: PromiseOrValue<string>,
+    _spender: PromiseOrValue<string>,
+    overrides?: CallOverrides,
+  ): Promise<BigNumber>;
 
   isPetrified(overrides?: CallOverrides): Promise<boolean>;
 
   setWithdrawalCredentials(
-    _withdrawalCredentials: BytesLike,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _withdrawalCredentials: PromiseOrValue<BytesLike>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   burnShares(
-    _account: string,
-    _sharesAmount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _account: PromiseOrValue<string>,
+    _sharesAmount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setTreasury(
-    _treasury: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _treasury: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   pushBeacon(
-    _beaconValidators: BigNumberish,
-    _beaconBalance: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _beaconValidators: PromiseOrValue<BigNumberish>,
+    _beaconBalance: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  sharesOf(_account: string, overrides?: CallOverrides): Promise<BigNumber>;
+  sharesOf(_account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   callStatic: {
     resume(overrides?: CallOverrides): Promise<void>;
@@ -874,14 +926,18 @@ export interface Steth extends BaseContract {
 
     hasInitialized(overrides?: CallOverrides): Promise<boolean>;
 
-    approve(_spender: string, _amount: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+    approve(
+      _spender: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
 
     initialize(
-      depositContract: string,
-      _oracle: string,
-      _operators: string,
-      _treasury: string,
-      _insuranceFund: string,
+      depositContract: PromiseOrValue<string>,
+      _oracle: PromiseOrValue<string>,
+      _operators: PromiseOrValue<string>,
+      _treasury: PromiseOrValue<string>,
+      _insuranceFund: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
@@ -889,18 +945,18 @@ export interface Steth extends BaseContract {
 
     totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
-    getSharesByPooledEth(_ethAmount: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    getSharesByPooledEth(_ethAmount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     transferFrom(
-      _sender: string,
-      _recipient: string,
-      _amount: BigNumberish,
+      _sender: PromiseOrValue<string>,
+      _recipient: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<boolean>;
 
     getOperators(overrides?: CallOverrides): Promise<string>;
 
-    getEVMScriptExecutor(_script: BytesLike, overrides?: CallOverrides): Promise<string>;
+    getEVMScriptExecutor(_script: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<string>;
 
     decimals(overrides?: CallOverrides): Promise<number>;
 
@@ -914,7 +970,11 @@ export interface Steth extends BaseContract {
 
     PAUSE_ROLE(overrides?: CallOverrides): Promise<string>;
 
-    increaseAllowance(_spender: string, _addedValue: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+    increaseAllowance(
+      _spender: PromiseOrValue<string>,
+      _addedValue: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
 
     getTreasury(overrides?: CallOverrides): Promise<string>;
 
@@ -930,7 +990,7 @@ export interface Steth extends BaseContract {
 
     getWithdrawalCredentials(overrides?: CallOverrides): Promise<string>;
 
-    balanceOf(_account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    balanceOf(_account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     getFeeDistribution(overrides?: CallOverrides): Promise<
       [number, number, number] & {
@@ -940,11 +1000,11 @@ export interface Steth extends BaseContract {
       }
     >;
 
-    getPooledEthByShares(_sharesAmount: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    getPooledEthByShares(_sharesAmount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    setOracle(_oracle: string, overrides?: CallOverrides): Promise<void>;
+    setOracle(_oracle: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    allowRecoverability(token: string, overrides?: CallOverrides): Promise<boolean>;
+    allowRecoverability(token: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
     appId(overrides?: CallOverrides): Promise<string>;
 
@@ -953,15 +1013,18 @@ export interface Steth extends BaseContract {
     getInitializationBlock(overrides?: CallOverrides): Promise<BigNumber>;
 
     setFeeDistribution(
-      _treasuryFeeBasisPoints: BigNumberish,
-      _insuranceFeeBasisPoints: BigNumberish,
-      _operatorsFeeBasisPoints: BigNumberish,
+      _treasuryFeeBasisPoints: PromiseOrValue<BigNumberish>,
+      _insuranceFeeBasisPoints: PromiseOrValue<BigNumberish>,
+      _operatorsFeeBasisPoints: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
-    setFee(_feeBasisPoints: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    setFee(_feeBasisPoints: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
-    'depositBufferedEther(uint256)'(_maxDeposits: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    'depositBufferedEther(uint256)'(
+      _maxDeposits: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
     'depositBufferedEther()'(overrides?: CallOverrides): Promise<void>;
 
@@ -969,25 +1032,42 @@ export interface Steth extends BaseContract {
 
     MANAGE_FEE(overrides?: CallOverrides): Promise<string>;
 
-    transferToVault(_token: string, overrides?: CallOverrides): Promise<void>;
+    transferToVault(_token: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     SET_TREASURY(overrides?: CallOverrides): Promise<string>;
 
-    canPerform(_sender: string, _role: BytesLike, _params: BigNumberish[], overrides?: CallOverrides): Promise<boolean>;
+    canPerform(
+      _sender: PromiseOrValue<string>,
+      _role: PromiseOrValue<BytesLike>,
+      _params: PromiseOrValue<BigNumberish>[],
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
 
-    submit(_referral: string, overrides?: CallOverrides): Promise<BigNumber>;
+    submit(_referral: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     WITHDRAWAL_CREDENTIALS_LENGTH(overrides?: CallOverrides): Promise<BigNumber>;
 
-    decreaseAllowance(_spender: string, _subtractedValue: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+    decreaseAllowance(
+      _spender: PromiseOrValue<string>,
+      _subtractedValue: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
 
     getEVMScriptRegistry(overrides?: CallOverrides): Promise<string>;
 
     PUBKEY_LENGTH(overrides?: CallOverrides): Promise<BigNumber>;
 
-    withdraw(_amount: BigNumberish, _pubkeyHash: BytesLike, overrides?: CallOverrides): Promise<void>;
+    withdraw(
+      _amount: PromiseOrValue<BigNumberish>,
+      _pubkeyHash: PromiseOrValue<BytesLike>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    transfer(_recipient: string, _amount: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+    transfer(
+      _recipient: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
 
     getDepositContract(overrides?: CallOverrides): Promise<string>;
 
@@ -1001,7 +1081,7 @@ export interface Steth extends BaseContract {
 
     BURN_ROLE(overrides?: CallOverrides): Promise<string>;
 
-    setInsuranceFund(_insuranceFund: string, overrides?: CallOverrides): Promise<void>;
+    setInsuranceFund(_insuranceFund: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     getFee(overrides?: CallOverrides): Promise<number>;
 
@@ -1011,36 +1091,60 @@ export interface Steth extends BaseContract {
 
     getTotalShares(overrides?: CallOverrides): Promise<BigNumber>;
 
-    allowance(_owner: string, _spender: string, overrides?: CallOverrides): Promise<BigNumber>;
+    allowance(
+      _owner: PromiseOrValue<string>,
+      _spender: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     isPetrified(overrides?: CallOverrides): Promise<boolean>;
 
-    setWithdrawalCredentials(_withdrawalCredentials: BytesLike, overrides?: CallOverrides): Promise<void>;
+    setWithdrawalCredentials(
+      _withdrawalCredentials: PromiseOrValue<BytesLike>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    burnShares(_account: string, _sharesAmount: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    burnShares(
+      _account: PromiseOrValue<string>,
+      _sharesAmount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    setTreasury(_treasury: string, overrides?: CallOverrides): Promise<void>;
+    setTreasury(_treasury: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    pushBeacon(_beaconValidators: BigNumberish, _beaconBalance: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    pushBeacon(
+      _beaconValidators: PromiseOrValue<BigNumberish>,
+      _beaconBalance: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    sharesOf(_account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    sharesOf(_account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
   };
 
   filters: {
     'ScriptResult(address,bytes,bytes,bytes)'(
-      executor?: string | null,
+      executor?: PromiseOrValue<string> | null,
       script?: null,
       input?: null,
       returnData?: null,
     ): ScriptResultEventFilter;
-    ScriptResult(executor?: string | null, script?: null, input?: null, returnData?: null): ScriptResultEventFilter;
+    ScriptResult(
+      executor?: PromiseOrValue<string> | null,
+      script?: null,
+      input?: null,
+      returnData?: null,
+    ): ScriptResultEventFilter;
 
     'RecoverToVault(address,address,uint256)'(
-      vault?: string | null,
-      token?: string | null,
+      vault?: PromiseOrValue<string> | null,
+      token?: PromiseOrValue<string> | null,
       amount?: null,
     ): RecoverToVaultEventFilter;
-    RecoverToVault(vault?: string | null, token?: string | null, amount?: null): RecoverToVaultEventFilter;
+    RecoverToVault(
+      vault?: PromiseOrValue<string> | null,
+      token?: PromiseOrValue<string> | null,
+      amount?: null,
+    ): RecoverToVaultEventFilter;
 
     'Stopped()'(): StoppedEventFilter;
     Stopped(): StoppedEventFilter;
@@ -1048,15 +1152,27 @@ export interface Steth extends BaseContract {
     'Resumed()'(): ResumedEventFilter;
     Resumed(): ResumedEventFilter;
 
-    'Transfer(address,address,uint256)'(from?: string | null, to?: string | null, value?: null): TransferEventFilter;
-    Transfer(from?: string | null, to?: string | null, value?: null): TransferEventFilter;
+    'Transfer(address,address,uint256)'(
+      from?: PromiseOrValue<string> | null,
+      to?: PromiseOrValue<string> | null,
+      value?: null,
+    ): TransferEventFilter;
+    Transfer(
+      from?: PromiseOrValue<string> | null,
+      to?: PromiseOrValue<string> | null,
+      value?: null,
+    ): TransferEventFilter;
 
     'Approval(address,address,uint256)'(
-      owner?: string | null,
-      spender?: string | null,
+      owner?: PromiseOrValue<string> | null,
+      spender?: PromiseOrValue<string> | null,
       value?: null,
     ): ApprovalEventFilter;
-    Approval(owner?: string | null, spender?: string | null, value?: null): ApprovalEventFilter;
+    Approval(
+      owner?: PromiseOrValue<string> | null,
+      spender?: PromiseOrValue<string> | null,
+      value?: null,
+    ): ApprovalEventFilter;
 
     'FeeSet(uint16)'(feeBasisPoints?: null): FeeSetEventFilter;
     FeeSet(feeBasisPoints?: null): FeeSetEventFilter;
@@ -1075,68 +1191,72 @@ export interface Steth extends BaseContract {
     'WithdrawalCredentialsSet(bytes32)'(withdrawalCredentials?: null): WithdrawalCredentialsSetEventFilter;
     WithdrawalCredentialsSet(withdrawalCredentials?: null): WithdrawalCredentialsSetEventFilter;
 
-    'Submitted(address,uint256,address)'(sender?: string | null, amount?: null, referral?: null): SubmittedEventFilter;
-    Submitted(sender?: string | null, amount?: null, referral?: null): SubmittedEventFilter;
+    'Submitted(address,uint256,address)'(
+      sender?: PromiseOrValue<string> | null,
+      amount?: null,
+      referral?: null,
+    ): SubmittedEventFilter;
+    Submitted(sender?: PromiseOrValue<string> | null, amount?: null, referral?: null): SubmittedEventFilter;
 
     'Unbuffered(uint256)'(amount?: null): UnbufferedEventFilter;
     Unbuffered(amount?: null): UnbufferedEventFilter;
 
     'Withdrawal(address,uint256,uint256,bytes32,uint256)'(
-      sender?: string | null,
+      sender?: PromiseOrValue<string> | null,
       tokenAmount?: null,
       sentFromBuffer?: null,
-      pubkeyHash?: BytesLike | null,
+      pubkeyHash?: PromiseOrValue<BytesLike> | null,
       etherAmount?: null,
     ): WithdrawalEventFilter;
     Withdrawal(
-      sender?: string | null,
+      sender?: PromiseOrValue<string> | null,
       tokenAmount?: null,
       sentFromBuffer?: null,
-      pubkeyHash?: BytesLike | null,
+      pubkeyHash?: PromiseOrValue<BytesLike> | null,
       etherAmount?: null,
     ): WithdrawalEventFilter;
   };
 
   estimateGas: {
-    resume(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    resume(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     name(overrides?: CallOverrides): Promise<BigNumber>;
 
-    stop(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    stop(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     hasInitialized(overrides?: CallOverrides): Promise<BigNumber>;
 
     approve(
-      _spender: string,
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _spender: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     initialize(
-      depositContract: string,
-      _oracle: string,
-      _operators: string,
-      _treasury: string,
-      _insuranceFund: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      depositContract: PromiseOrValue<string>,
+      _oracle: PromiseOrValue<string>,
+      _operators: PromiseOrValue<string>,
+      _treasury: PromiseOrValue<string>,
+      _insuranceFund: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     getInsuranceFund(overrides?: CallOverrides): Promise<BigNumber>;
 
     totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
-    getSharesByPooledEth(_ethAmount: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    getSharesByPooledEth(_ethAmount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     transferFrom(
-      _sender: string,
-      _recipient: string,
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _sender: PromiseOrValue<string>,
+      _recipient: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     getOperators(overrides?: CallOverrides): Promise<BigNumber>;
 
-    getEVMScriptExecutor(_script: BytesLike, overrides?: CallOverrides): Promise<BigNumber>;
+    getEVMScriptExecutor(_script: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<BigNumber>;
 
     decimals(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -1151,9 +1271,9 @@ export interface Steth extends BaseContract {
     PAUSE_ROLE(overrides?: CallOverrides): Promise<BigNumber>;
 
     increaseAllowance(
-      _spender: string,
-      _addedValue: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _spender: PromiseOrValue<string>,
+      _addedValue: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     getTreasury(overrides?: CallOverrides): Promise<BigNumber>;
@@ -1170,15 +1290,18 @@ export interface Steth extends BaseContract {
 
     getWithdrawalCredentials(overrides?: CallOverrides): Promise<BigNumber>;
 
-    balanceOf(_account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    balanceOf(_account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     getFeeDistribution(overrides?: CallOverrides): Promise<BigNumber>;
 
-    getPooledEthByShares(_sharesAmount: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    getPooledEthByShares(_sharesAmount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    setOracle(_oracle: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    setOracle(
+      _oracle: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
-    allowRecoverability(token: string, overrides?: CallOverrides): Promise<BigNumber>;
+    allowRecoverability(token: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     appId(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -1187,47 +1310,53 @@ export interface Steth extends BaseContract {
     getInitializationBlock(overrides?: CallOverrides): Promise<BigNumber>;
 
     setFeeDistribution(
-      _treasuryFeeBasisPoints: BigNumberish,
-      _insuranceFeeBasisPoints: BigNumberish,
-      _operatorsFeeBasisPoints: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _treasuryFeeBasisPoints: PromiseOrValue<BigNumberish>,
+      _insuranceFeeBasisPoints: PromiseOrValue<BigNumberish>,
+      _operatorsFeeBasisPoints: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setFee(
-      _feeBasisPoints: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _feeBasisPoints: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     'depositBufferedEther(uint256)'(
-      _maxDeposits: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _maxDeposits: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    'depositBufferedEther()'(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    'depositBufferedEther()'(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     symbol(overrides?: CallOverrides): Promise<BigNumber>;
 
     MANAGE_FEE(overrides?: CallOverrides): Promise<BigNumber>;
 
-    transferToVault(_token: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    transferToVault(
+      _token: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     SET_TREASURY(overrides?: CallOverrides): Promise<BigNumber>;
 
     canPerform(
-      _sender: string,
-      _role: BytesLike,
-      _params: BigNumberish[],
+      _sender: PromiseOrValue<string>,
+      _role: PromiseOrValue<BytesLike>,
+      _params: PromiseOrValue<BigNumberish>[],
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
-    submit(_referral: string, overrides?: PayableOverrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    submit(
+      _referral: PromiseOrValue<string>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     WITHDRAWAL_CREDENTIALS_LENGTH(overrides?: CallOverrides): Promise<BigNumber>;
 
     decreaseAllowance(
-      _spender: string,
-      _subtractedValue: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _spender: PromiseOrValue<string>,
+      _subtractedValue: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     getEVMScriptRegistry(overrides?: CallOverrides): Promise<BigNumber>;
@@ -1235,15 +1364,15 @@ export interface Steth extends BaseContract {
     PUBKEY_LENGTH(overrides?: CallOverrides): Promise<BigNumber>;
 
     withdraw(
-      _amount: BigNumberish,
-      _pubkeyHash: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _amount: PromiseOrValue<BigNumberish>,
+      _pubkeyHash: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     transfer(
-      _recipient: string,
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _recipient: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     getDepositContract(overrides?: CallOverrides): Promise<BigNumber>;
@@ -1253,8 +1382,8 @@ export interface Steth extends BaseContract {
     BURN_ROLE(overrides?: CallOverrides): Promise<BigNumber>;
 
     setInsuranceFund(
-      _insuranceFund: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _insuranceFund: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     getFee(overrides?: CallOverrides): Promise<BigNumber>;
@@ -1265,72 +1394,82 @@ export interface Steth extends BaseContract {
 
     getTotalShares(overrides?: CallOverrides): Promise<BigNumber>;
 
-    allowance(_owner: string, _spender: string, overrides?: CallOverrides): Promise<BigNumber>;
+    allowance(
+      _owner: PromiseOrValue<string>,
+      _spender: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     isPetrified(overrides?: CallOverrides): Promise<BigNumber>;
 
     setWithdrawalCredentials(
-      _withdrawalCredentials: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _withdrawalCredentials: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     burnShares(
-      _account: string,
-      _sharesAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _account: PromiseOrValue<string>,
+      _sharesAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    setTreasury(_treasury: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    setTreasury(
+      _treasury: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     pushBeacon(
-      _beaconValidators: BigNumberish,
-      _beaconBalance: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _beaconValidators: PromiseOrValue<BigNumberish>,
+      _beaconBalance: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    sharesOf(_account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    sharesOf(_account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
   };
 
   populateTransaction: {
-    resume(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    resume(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     name(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    stop(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    stop(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     hasInitialized(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     approve(
-      _spender: string,
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _spender: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     initialize(
-      depositContract: string,
-      _oracle: string,
-      _operators: string,
-      _treasury: string,
-      _insuranceFund: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      depositContract: PromiseOrValue<string>,
+      _oracle: PromiseOrValue<string>,
+      _operators: PromiseOrValue<string>,
+      _treasury: PromiseOrValue<string>,
+      _insuranceFund: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     getInsuranceFund(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     totalSupply(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    getSharesByPooledEth(_ethAmount: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getSharesByPooledEth(
+      _ethAmount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
     transferFrom(
-      _sender: string,
-      _recipient: string,
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _sender: PromiseOrValue<string>,
+      _recipient: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     getOperators(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    getEVMScriptExecutor(_script: BytesLike, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getEVMScriptExecutor(_script: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     decimals(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
@@ -1345,9 +1484,9 @@ export interface Steth extends BaseContract {
     PAUSE_ROLE(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     increaseAllowance(
-      _spender: string,
-      _addedValue: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _spender: PromiseOrValue<string>,
+      _addedValue: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     getTreasury(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -1364,18 +1503,21 @@ export interface Steth extends BaseContract {
 
     getWithdrawalCredentials(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    balanceOf(_account: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    balanceOf(_account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     getFeeDistribution(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    getPooledEthByShares(_sharesAmount: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    setOracle(
-      _oracle: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+    getPooledEthByShares(
+      _sharesAmount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
-    allowRecoverability(token: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    setOracle(
+      _oracle: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<PopulatedTransaction>;
+
+    allowRecoverability(token: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     appId(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
@@ -1384,55 +1526,53 @@ export interface Steth extends BaseContract {
     getInitializationBlock(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     setFeeDistribution(
-      _treasuryFeeBasisPoints: BigNumberish,
-      _insuranceFeeBasisPoints: BigNumberish,
-      _operatorsFeeBasisPoints: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _treasuryFeeBasisPoints: PromiseOrValue<BigNumberish>,
+      _insuranceFeeBasisPoints: PromiseOrValue<BigNumberish>,
+      _operatorsFeeBasisPoints: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setFee(
-      _feeBasisPoints: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _feeBasisPoints: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     'depositBufferedEther(uint256)'(
-      _maxDeposits: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _maxDeposits: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    'depositBufferedEther()'(
-      overrides?: Overrides & { from?: string | Promise<string> },
-    ): Promise<PopulatedTransaction>;
+    'depositBufferedEther()'(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     symbol(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     MANAGE_FEE(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     transferToVault(
-      _token: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _token: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     SET_TREASURY(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     canPerform(
-      _sender: string,
-      _role: BytesLike,
-      _params: BigNumberish[],
+      _sender: PromiseOrValue<string>,
+      _role: PromiseOrValue<BytesLike>,
+      _params: PromiseOrValue<BigNumberish>[],
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     submit(
-      _referral: string,
-      overrides?: PayableOverrides & { from?: string | Promise<string> },
+      _referral: PromiseOrValue<string>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     WITHDRAWAL_CREDENTIALS_LENGTH(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     decreaseAllowance(
-      _spender: string,
-      _subtractedValue: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _spender: PromiseOrValue<string>,
+      _subtractedValue: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     getEVMScriptRegistry(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -1440,15 +1580,15 @@ export interface Steth extends BaseContract {
     PUBKEY_LENGTH(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     withdraw(
-      _amount: BigNumberish,
-      _pubkeyHash: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _amount: PromiseOrValue<BigNumberish>,
+      _pubkeyHash: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     transfer(
-      _recipient: string,
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _recipient: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     getDepositContract(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -1458,8 +1598,8 @@ export interface Steth extends BaseContract {
     BURN_ROLE(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     setInsuranceFund(
-      _insuranceFund: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _insuranceFund: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     getFee(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -1470,32 +1610,36 @@ export interface Steth extends BaseContract {
 
     getTotalShares(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    allowance(_owner: string, _spender: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    allowance(
+      _owner: PromiseOrValue<string>,
+      _spender: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
     isPetrified(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     setWithdrawalCredentials(
-      _withdrawalCredentials: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _withdrawalCredentials: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     burnShares(
-      _account: string,
-      _sharesAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _account: PromiseOrValue<string>,
+      _sharesAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setTreasury(
-      _treasury: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _treasury: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     pushBeacon(
-      _beaconValidators: BigNumberish,
-      _beaconBalance: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _beaconValidators: PromiseOrValue<BigNumberish>,
+      _beaconBalance: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    sharesOf(_account: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    sharesOf(_account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
   };
 }

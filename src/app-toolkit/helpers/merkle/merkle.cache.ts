@@ -1,5 +1,6 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { entries } from 'lodash';
+import moment from 'moment';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { Schedule } from '~scheduler/scheduler.decorator';
@@ -29,7 +30,7 @@ export abstract class MerkleCache<T = any> {
   }
 
   @Schedule({
-    every: 15 * 60 * 1000,
+    every: moment.duration('5', 'minutes').asMilliseconds(),
   })
   async cacheMerkleData() {
     const data = await this.resolveMerkleData();
@@ -40,7 +41,7 @@ export abstract class MerkleCache<T = any> {
       });
     });
 
-    await this.appToolkit.msetToCache(cacheable);
+    await this.appToolkit.setManyToCache(cacheable, moment.duration('30', 'minutes').asSeconds());
   }
 
   async getClaim(rewardTokenAddress: string, walletAddress: string) {

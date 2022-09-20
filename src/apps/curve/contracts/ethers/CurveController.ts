@@ -15,7 +15,7 @@ import type {
 } from 'ethers';
 import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
 import type { Listener, Provider } from '@ethersproject/providers';
-import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
 export interface CurveControllerInterface extends utils.Interface {
   functions: {
@@ -103,54 +103,87 @@ export interface CurveControllerInterface extends utils.Interface {
       | 'time_type_weight',
   ): FunctionFragment;
 
-  encodeFunctionData(functionFragment: 'commit_transfer_ownership', values: [string]): string;
+  encodeFunctionData(functionFragment: 'commit_transfer_ownership', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'apply_transfer_ownership', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'gauge_types', values: [string]): string;
-  encodeFunctionData(functionFragment: 'add_gauge(address,int128)', values: [string, BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'gauge_types', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'add_gauge(address,int128)',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
   encodeFunctionData(
     functionFragment: 'add_gauge(address,int128,uint256)',
-    values: [string, BigNumberish, BigNumberish],
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
   ): string;
   encodeFunctionData(functionFragment: 'checkpoint', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'checkpoint_gauge', values: [string]): string;
-  encodeFunctionData(functionFragment: 'gauge_relative_weight(address)', values: [string]): string;
+  encodeFunctionData(functionFragment: 'checkpoint_gauge', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'gauge_relative_weight(address)', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(
     functionFragment: 'gauge_relative_weight(address,uint256)',
-    values: [string, BigNumberish],
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
   ): string;
-  encodeFunctionData(functionFragment: 'gauge_relative_weight_write(address)', values: [string]): string;
+  encodeFunctionData(
+    functionFragment: 'gauge_relative_weight_write(address)',
+    values: [PromiseOrValue<string>],
+  ): string;
   encodeFunctionData(
     functionFragment: 'gauge_relative_weight_write(address,uint256)',
-    values: [string, BigNumberish],
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
   ): string;
-  encodeFunctionData(functionFragment: 'add_type(string)', values: [string]): string;
-  encodeFunctionData(functionFragment: 'add_type(string,uint256)', values: [string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'change_type_weight', values: [BigNumberish, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'change_gauge_weight', values: [string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'vote_for_gauge_weights', values: [string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'get_gauge_weight', values: [string]): string;
-  encodeFunctionData(functionFragment: 'get_type_weight', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'add_type(string)', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'add_type(string,uint256)',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'change_type_weight',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'change_gauge_weight',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'vote_for_gauge_weights',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'get_gauge_weight', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'get_type_weight', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'get_total_weight', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'get_weights_sum_per_type', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'get_weights_sum_per_type', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'admin', values?: undefined): string;
   encodeFunctionData(functionFragment: 'future_admin', values?: undefined): string;
   encodeFunctionData(functionFragment: 'token', values?: undefined): string;
   encodeFunctionData(functionFragment: 'voting_escrow', values?: undefined): string;
   encodeFunctionData(functionFragment: 'n_gauge_types', values?: undefined): string;
   encodeFunctionData(functionFragment: 'n_gauges', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'gauge_type_names', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'gauges', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'vote_user_slopes', values: [string, string]): string;
-  encodeFunctionData(functionFragment: 'vote_user_power', values: [string]): string;
-  encodeFunctionData(functionFragment: 'last_user_vote', values: [string, string]): string;
-  encodeFunctionData(functionFragment: 'points_weight', values: [string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'time_weight', values: [string]): string;
-  encodeFunctionData(functionFragment: 'points_sum', values: [BigNumberish, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'time_sum', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'points_total', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'gauge_type_names', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'gauges', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(
+    functionFragment: 'vote_user_slopes',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>],
+  ): string;
+  encodeFunctionData(functionFragment: 'vote_user_power', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'last_user_vote',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'points_weight',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'time_weight', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'points_sum',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'time_sum', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'points_total', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'time_total', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'points_type_weight', values: [BigNumberish, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'time_type_weight', values: [BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'points_type_weight',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'time_type_weight', values: [PromiseOrValue<BigNumberish>]): string;
 
   decodeFunctionResult(functionFragment: 'commit_transfer_ownership', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'apply_transfer_ownership', data: BytesLike): Result;
@@ -296,89 +329,89 @@ export interface CurveController extends BaseContract {
 
   functions: {
     commit_transfer_ownership(
-      addr: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      addr: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    apply_transfer_ownership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    apply_transfer_ownership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
-    gauge_types(_addr: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    gauge_types(_addr: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     'add_gauge(address,int128)'(
-      addr: string,
-      gauge_type: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      addr: PromiseOrValue<string>,
+      gauge_type: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     'add_gauge(address,int128,uint256)'(
-      addr: string,
-      gauge_type: BigNumberish,
-      weight: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      addr: PromiseOrValue<string>,
+      gauge_type: PromiseOrValue<BigNumberish>,
+      weight: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    checkpoint(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    checkpoint(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     checkpoint_gauge(
-      addr: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      addr: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    'gauge_relative_weight(address)'(addr: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    'gauge_relative_weight(address)'(addr: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     'gauge_relative_weight(address,uint256)'(
-      addr: string,
-      time: BigNumberish,
+      addr: PromiseOrValue<string>,
+      time: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber]>;
 
     'gauge_relative_weight_write(address)'(
-      addr: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      addr: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     'gauge_relative_weight_write(address,uint256)'(
-      addr: string,
-      time: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      addr: PromiseOrValue<string>,
+      time: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     'add_type(string)'(
-      _name: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _name: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     'add_type(string,uint256)'(
-      _name: string,
-      weight: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _name: PromiseOrValue<string>,
+      weight: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     change_type_weight(
-      type_id: BigNumberish,
-      weight: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      type_id: PromiseOrValue<BigNumberish>,
+      weight: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     change_gauge_weight(
-      addr: string,
-      weight: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      addr: PromiseOrValue<string>,
+      weight: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     vote_for_gauge_weights(
-      _gauge_addr: string,
-      _user_weight: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _gauge_addr: PromiseOrValue<string>,
+      _user_weight: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    get_gauge_weight(addr: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    get_gauge_weight(addr: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    get_type_weight(type_id: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber]>;
+    get_type_weight(type_id: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     get_total_weight(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    get_weights_sum_per_type(type_id: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber]>;
+    get_weights_sum_per_type(type_id: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     admin(overrides?: CallOverrides): Promise<[string]>;
 
@@ -392,13 +425,13 @@ export interface CurveController extends BaseContract {
 
     n_gauges(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    gauge_type_names(arg0: BigNumberish, overrides?: CallOverrides): Promise<[string]>;
+    gauge_type_names(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[string]>;
 
-    gauges(arg0: BigNumberish, overrides?: CallOverrides): Promise<[string]>;
+    gauges(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[string]>;
 
     vote_user_slopes(
-      arg0: string,
-      arg1: string,
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<
       [BigNumber, BigNumber, BigNumber] & {
@@ -408,119 +441,127 @@ export interface CurveController extends BaseContract {
       }
     >;
 
-    vote_user_power(arg0: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    vote_user_power(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    last_user_vote(arg0: string, arg1: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    last_user_vote(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber]>;
 
     points_weight(
-      arg0: string,
-      arg1: BigNumberish,
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber, BigNumber] & { bias: BigNumber; slope: BigNumber }>;
 
-    time_weight(arg0: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    time_weight(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     points_sum(
-      arg0: BigNumberish,
-      arg1: BigNumberish,
+      arg0: PromiseOrValue<BigNumberish>,
+      arg1: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber, BigNumber] & { bias: BigNumber; slope: BigNumber }>;
 
-    time_sum(arg0: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber]>;
+    time_sum(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    points_total(arg0: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber]>;
+    points_total(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     time_total(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    points_type_weight(arg0: BigNumberish, arg1: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber]>;
+    points_type_weight(
+      arg0: PromiseOrValue<BigNumberish>,
+      arg1: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber]>;
 
-    time_type_weight(arg0: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber]>;
+    time_type_weight(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[BigNumber]>;
   };
 
   commit_transfer_ownership(
-    addr: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    addr: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  apply_transfer_ownership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  apply_transfer_ownership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
-  gauge_types(_addr: string, overrides?: CallOverrides): Promise<BigNumber>;
+  gauge_types(_addr: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   'add_gauge(address,int128)'(
-    addr: string,
-    gauge_type: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    addr: PromiseOrValue<string>,
+    gauge_type: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   'add_gauge(address,int128,uint256)'(
-    addr: string,
-    gauge_type: BigNumberish,
-    weight: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    addr: PromiseOrValue<string>,
+    gauge_type: PromiseOrValue<BigNumberish>,
+    weight: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  checkpoint(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  checkpoint(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   checkpoint_gauge(
-    addr: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    addr: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  'gauge_relative_weight(address)'(addr: string, overrides?: CallOverrides): Promise<BigNumber>;
+  'gauge_relative_weight(address)'(addr: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   'gauge_relative_weight(address,uint256)'(
-    addr: string,
-    time: BigNumberish,
+    addr: PromiseOrValue<string>,
+    time: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides,
   ): Promise<BigNumber>;
 
   'gauge_relative_weight_write(address)'(
-    addr: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    addr: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   'gauge_relative_weight_write(address,uint256)'(
-    addr: string,
-    time: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    addr: PromiseOrValue<string>,
+    time: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   'add_type(string)'(
-    _name: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _name: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   'add_type(string,uint256)'(
-    _name: string,
-    weight: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _name: PromiseOrValue<string>,
+    weight: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   change_type_weight(
-    type_id: BigNumberish,
-    weight: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    type_id: PromiseOrValue<BigNumberish>,
+    weight: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   change_gauge_weight(
-    addr: string,
-    weight: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    addr: PromiseOrValue<string>,
+    weight: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   vote_for_gauge_weights(
-    _gauge_addr: string,
-    _user_weight: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _gauge_addr: PromiseOrValue<string>,
+    _user_weight: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  get_gauge_weight(addr: string, overrides?: CallOverrides): Promise<BigNumber>;
+  get_gauge_weight(addr: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  get_type_weight(type_id: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+  get_type_weight(type_id: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
   get_total_weight(overrides?: CallOverrides): Promise<BigNumber>;
 
-  get_weights_sum_per_type(type_id: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+  get_weights_sum_per_type(type_id: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
   admin(overrides?: CallOverrides): Promise<string>;
 
@@ -534,13 +575,13 @@ export interface CurveController extends BaseContract {
 
   n_gauges(overrides?: CallOverrides): Promise<BigNumber>;
 
-  gauge_type_names(arg0: BigNumberish, overrides?: CallOverrides): Promise<string>;
+  gauge_type_names(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
 
-  gauges(arg0: BigNumberish, overrides?: CallOverrides): Promise<string>;
+  gauges(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
 
   vote_user_slopes(
-    arg0: string,
-    arg1: string,
+    arg0: PromiseOrValue<string>,
+    arg1: PromiseOrValue<string>,
     overrides?: CallOverrides,
   ): Promise<
     [BigNumber, BigNumber, BigNumber] & {
@@ -550,87 +591,115 @@ export interface CurveController extends BaseContract {
     }
   >;
 
-  vote_user_power(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+  vote_user_power(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  last_user_vote(arg0: string, arg1: string, overrides?: CallOverrides): Promise<BigNumber>;
+  last_user_vote(
+    arg0: PromiseOrValue<string>,
+    arg1: PromiseOrValue<string>,
+    overrides?: CallOverrides,
+  ): Promise<BigNumber>;
 
   points_weight(
-    arg0: string,
-    arg1: BigNumberish,
+    arg0: PromiseOrValue<string>,
+    arg1: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides,
   ): Promise<[BigNumber, BigNumber] & { bias: BigNumber; slope: BigNumber }>;
 
-  time_weight(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+  time_weight(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   points_sum(
-    arg0: BigNumberish,
-    arg1: BigNumberish,
+    arg0: PromiseOrValue<BigNumberish>,
+    arg1: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides,
   ): Promise<[BigNumber, BigNumber] & { bias: BigNumber; slope: BigNumber }>;
 
-  time_sum(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+  time_sum(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  points_total(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+  points_total(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
   time_total(overrides?: CallOverrides): Promise<BigNumber>;
 
-  points_type_weight(arg0: BigNumberish, arg1: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+  points_type_weight(
+    arg0: PromiseOrValue<BigNumberish>,
+    arg1: PromiseOrValue<BigNumberish>,
+    overrides?: CallOverrides,
+  ): Promise<BigNumber>;
 
-  time_type_weight(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+  time_type_weight(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
   callStatic: {
-    commit_transfer_ownership(addr: string, overrides?: CallOverrides): Promise<void>;
+    commit_transfer_ownership(addr: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     apply_transfer_ownership(overrides?: CallOverrides): Promise<void>;
 
-    gauge_types(_addr: string, overrides?: CallOverrides): Promise<BigNumber>;
+    gauge_types(_addr: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    'add_gauge(address,int128)'(addr: string, gauge_type: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    'add_gauge(address,int128)'(
+      addr: PromiseOrValue<string>,
+      gauge_type: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
     'add_gauge(address,int128,uint256)'(
-      addr: string,
-      gauge_type: BigNumberish,
-      weight: BigNumberish,
+      addr: PromiseOrValue<string>,
+      gauge_type: PromiseOrValue<BigNumberish>,
+      weight: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
     checkpoint(overrides?: CallOverrides): Promise<void>;
 
-    checkpoint_gauge(addr: string, overrides?: CallOverrides): Promise<void>;
+    checkpoint_gauge(addr: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    'gauge_relative_weight(address)'(addr: string, overrides?: CallOverrides): Promise<BigNumber>;
+    'gauge_relative_weight(address)'(addr: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     'gauge_relative_weight(address,uint256)'(
-      addr: string,
-      time: BigNumberish,
+      addr: PromiseOrValue<string>,
+      time: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
-    'gauge_relative_weight_write(address)'(addr: string, overrides?: CallOverrides): Promise<BigNumber>;
+    'gauge_relative_weight_write(address)'(addr: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     'gauge_relative_weight_write(address,uint256)'(
-      addr: string,
-      time: BigNumberish,
+      addr: PromiseOrValue<string>,
+      time: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
-    'add_type(string)'(_name: string, overrides?: CallOverrides): Promise<void>;
+    'add_type(string)'(_name: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    'add_type(string,uint256)'(_name: string, weight: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    'add_type(string,uint256)'(
+      _name: PromiseOrValue<string>,
+      weight: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    change_type_weight(type_id: BigNumberish, weight: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    change_type_weight(
+      type_id: PromiseOrValue<BigNumberish>,
+      weight: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    change_gauge_weight(addr: string, weight: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    change_gauge_weight(
+      addr: PromiseOrValue<string>,
+      weight: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    vote_for_gauge_weights(_gauge_addr: string, _user_weight: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    vote_for_gauge_weights(
+      _gauge_addr: PromiseOrValue<string>,
+      _user_weight: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    get_gauge_weight(addr: string, overrides?: CallOverrides): Promise<BigNumber>;
+    get_gauge_weight(addr: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    get_type_weight(type_id: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    get_type_weight(type_id: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     get_total_weight(overrides?: CallOverrides): Promise<BigNumber>;
 
-    get_weights_sum_per_type(type_id: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    get_weights_sum_per_type(type_id: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     admin(overrides?: CallOverrides): Promise<string>;
 
@@ -644,13 +713,13 @@ export interface CurveController extends BaseContract {
 
     n_gauges(overrides?: CallOverrides): Promise<BigNumber>;
 
-    gauge_type_names(arg0: BigNumberish, overrides?: CallOverrides): Promise<string>;
+    gauge_type_names(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
 
-    gauges(arg0: BigNumberish, overrides?: CallOverrides): Promise<string>;
+    gauges(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
 
     vote_user_slopes(
-      arg0: string,
-      arg1: string,
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<
       [BigNumber, BigNumber, BigNumber] & {
@@ -660,33 +729,41 @@ export interface CurveController extends BaseContract {
       }
     >;
 
-    vote_user_power(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    vote_user_power(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    last_user_vote(arg0: string, arg1: string, overrides?: CallOverrides): Promise<BigNumber>;
+    last_user_vote(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     points_weight(
-      arg0: string,
-      arg1: BigNumberish,
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber, BigNumber] & { bias: BigNumber; slope: BigNumber }>;
 
-    time_weight(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    time_weight(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     points_sum(
-      arg0: BigNumberish,
-      arg1: BigNumberish,
+      arg0: PromiseOrValue<BigNumberish>,
+      arg1: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber, BigNumber] & { bias: BigNumber; slope: BigNumber }>;
 
-    time_sum(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    time_sum(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    points_total(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    points_total(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     time_total(overrides?: CallOverrides): Promise<BigNumber>;
 
-    points_type_weight(arg0: BigNumberish, arg1: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    points_type_weight(
+      arg0: PromiseOrValue<BigNumberish>,
+      arg1: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    time_type_weight(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    time_type_weight(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
   };
 
   filters: {
@@ -729,83 +806,89 @@ export interface CurveController extends BaseContract {
 
   estimateGas: {
     commit_transfer_ownership(
-      addr: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      addr: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    apply_transfer_ownership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    apply_transfer_ownership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
-    gauge_types(_addr: string, overrides?: CallOverrides): Promise<BigNumber>;
+    gauge_types(_addr: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     'add_gauge(address,int128)'(
-      addr: string,
-      gauge_type: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      addr: PromiseOrValue<string>,
+      gauge_type: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     'add_gauge(address,int128,uint256)'(
-      addr: string,
-      gauge_type: BigNumberish,
-      weight: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      addr: PromiseOrValue<string>,
+      gauge_type: PromiseOrValue<BigNumberish>,
+      weight: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    checkpoint(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    checkpoint(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
-    checkpoint_gauge(addr: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    checkpoint_gauge(
+      addr: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
-    'gauge_relative_weight(address)'(addr: string, overrides?: CallOverrides): Promise<BigNumber>;
+    'gauge_relative_weight(address)'(addr: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     'gauge_relative_weight(address,uint256)'(
-      addr: string,
-      time: BigNumberish,
+      addr: PromiseOrValue<string>,
+      time: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     'gauge_relative_weight_write(address)'(
-      addr: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      addr: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     'gauge_relative_weight_write(address,uint256)'(
-      addr: string,
-      time: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      addr: PromiseOrValue<string>,
+      time: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    'add_type(string)'(_name: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    'add_type(string)'(
+      _name: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     'add_type(string,uint256)'(
-      _name: string,
-      weight: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _name: PromiseOrValue<string>,
+      weight: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     change_type_weight(
-      type_id: BigNumberish,
-      weight: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      type_id: PromiseOrValue<BigNumberish>,
+      weight: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     change_gauge_weight(
-      addr: string,
-      weight: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      addr: PromiseOrValue<string>,
+      weight: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     vote_for_gauge_weights(
-      _gauge_addr: string,
-      _user_weight: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _gauge_addr: PromiseOrValue<string>,
+      _user_weight: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    get_gauge_weight(addr: string, overrides?: CallOverrides): Promise<BigNumber>;
+    get_gauge_weight(addr: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    get_type_weight(type_id: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    get_type_weight(type_id: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     get_total_weight(overrides?: CallOverrides): Promise<BigNumber>;
 
-    get_weights_sum_per_type(type_id: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    get_weights_sum_per_type(type_id: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     admin(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -819,120 +902,144 @@ export interface CurveController extends BaseContract {
 
     n_gauges(overrides?: CallOverrides): Promise<BigNumber>;
 
-    gauge_type_names(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    gauge_type_names(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    gauges(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    gauges(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    vote_user_slopes(arg0: string, arg1: string, overrides?: CallOverrides): Promise<BigNumber>;
+    vote_user_slopes(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    vote_user_power(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    vote_user_power(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    last_user_vote(arg0: string, arg1: string, overrides?: CallOverrides): Promise<BigNumber>;
+    last_user_vote(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    points_weight(arg0: string, arg1: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    points_weight(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    time_weight(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    time_weight(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    points_sum(arg0: BigNumberish, arg1: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    points_sum(
+      arg0: PromiseOrValue<BigNumberish>,
+      arg1: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    time_sum(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    time_sum(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    points_total(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    points_total(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     time_total(overrides?: CallOverrides): Promise<BigNumber>;
 
-    points_type_weight(arg0: BigNumberish, arg1: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    points_type_weight(
+      arg0: PromiseOrValue<BigNumberish>,
+      arg1: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    time_type_weight(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    time_type_weight(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
   };
 
   populateTransaction: {
     commit_transfer_ownership(
-      addr: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      addr: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    apply_transfer_ownership(
-      overrides?: Overrides & { from?: string | Promise<string> },
-    ): Promise<PopulatedTransaction>;
+    apply_transfer_ownership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
-    gauge_types(_addr: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    gauge_types(_addr: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     'add_gauge(address,int128)'(
-      addr: string,
-      gauge_type: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      addr: PromiseOrValue<string>,
+      gauge_type: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     'add_gauge(address,int128,uint256)'(
-      addr: string,
-      gauge_type: BigNumberish,
-      weight: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      addr: PromiseOrValue<string>,
+      gauge_type: PromiseOrValue<BigNumberish>,
+      weight: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    checkpoint(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    checkpoint(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     checkpoint_gauge(
-      addr: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      addr: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    'gauge_relative_weight(address)'(addr: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    'gauge_relative_weight(address)'(
+      addr: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
     'gauge_relative_weight(address,uint256)'(
-      addr: string,
-      time: BigNumberish,
+      addr: PromiseOrValue<string>,
+      time: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     'gauge_relative_weight_write(address)'(
-      addr: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      addr: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     'gauge_relative_weight_write(address,uint256)'(
-      addr: string,
-      time: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      addr: PromiseOrValue<string>,
+      time: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     'add_type(string)'(
-      _name: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _name: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     'add_type(string,uint256)'(
-      _name: string,
-      weight: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _name: PromiseOrValue<string>,
+      weight: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     change_type_weight(
-      type_id: BigNumberish,
-      weight: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      type_id: PromiseOrValue<BigNumberish>,
+      weight: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     change_gauge_weight(
-      addr: string,
-      weight: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      addr: PromiseOrValue<string>,
+      weight: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     vote_for_gauge_weights(
-      _gauge_addr: string,
-      _user_weight: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _gauge_addr: PromiseOrValue<string>,
+      _user_weight: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    get_gauge_weight(addr: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    get_gauge_weight(addr: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    get_type_weight(type_id: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    get_type_weight(type_id: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     get_total_weight(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    get_weights_sum_per_type(type_id: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    get_weights_sum_per_type(
+      type_id: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
     admin(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
@@ -946,34 +1053,50 @@ export interface CurveController extends BaseContract {
 
     n_gauges(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    gauge_type_names(arg0: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    gauge_type_names(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    gauges(arg0: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    gauges(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    vote_user_slopes(arg0: string, arg1: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    vote_user_slopes(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
-    vote_user_power(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    vote_user_power(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    last_user_vote(arg0: string, arg1: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    last_user_vote(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
-    points_weight(arg0: string, arg1: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    points_weight(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
-    time_weight(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    time_weight(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    points_sum(arg0: BigNumberish, arg1: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    points_sum(
+      arg0: PromiseOrValue<BigNumberish>,
+      arg1: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
-    time_sum(arg0: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    time_sum(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    points_total(arg0: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    points_total(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     time_total(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     points_type_weight(
-      arg0: BigNumberish,
-      arg1: BigNumberish,
+      arg0: PromiseOrValue<BigNumberish>,
+      arg1: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
-    time_type_weight(arg0: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    time_type_weight(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
   };
 }

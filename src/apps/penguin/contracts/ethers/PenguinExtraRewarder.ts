@@ -15,7 +15,7 @@ import type {
 } from 'ethers';
 import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
 import type { Listener, Provider } from '@ethersproject/providers';
-import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
 export interface PenguinExtraRewarderInterface extends utils.Interface {
   functions: {
@@ -86,35 +86,63 @@ export interface PenguinExtraRewarderInterface extends utils.Interface {
   ): FunctionFragment;
 
   encodeFunctionData(functionFragment: 'AVAX', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'checkReward', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'deposit', values: [string, string, BigNumberish, BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'checkReward', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(
+    functionFragment: 'deposit',
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+    ],
+  ): string;
   encodeFunctionData(functionFragment: 'depositToken', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'harvested', values: [string, string]): string;
+  encodeFunctionData(functionFragment: 'harvested', values: [PromiseOrValue<string>, PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'iglooMaster', values?: undefined): string;
   encodeFunctionData(functionFragment: 'iglooStrategyStorage', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'inCaseTokensGetStuck', values: [string, string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'migrate', values: [string]): string;
+  encodeFunctionData(
+    functionFragment: 'inCaseTokensGetStuck',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'migrate', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'numberRewardTokens', values?: undefined): string;
   encodeFunctionData(functionFragment: 'onMigration', values?: undefined): string;
   encodeFunctionData(functionFragment: 'owner', values?: undefined): string;
   encodeFunctionData(functionFragment: 'pangolinMiniChef', values?: undefined): string;
   encodeFunctionData(functionFragment: 'pangolinPid', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'pendingRewards', values: [string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'pendingTokens', values: [BigNumberish, string, BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'pendingRewards',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'pendingTokens',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
   encodeFunctionData(functionFragment: 'performanceFeeBips', values?: undefined): string;
   encodeFunctionData(functionFragment: 'pid', values?: undefined): string;
   encodeFunctionData(functionFragment: 'previousIglooStorage', values?: undefined): string;
   encodeFunctionData(functionFragment: 'previousRewardToken', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'previousRewardsClaimed', values: [string]): string;
+  encodeFunctionData(functionFragment: 'previousRewardsClaimed', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'renounceOwnership', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'revokeAllowance', values: [string, string]): string;
+  encodeFunctionData(
+    functionFragment: 'revokeAllowance',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>],
+  ): string;
   encodeFunctionData(functionFragment: 'rewardTokens', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'rewardTokensArray', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'rewardTokensArray', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'setAllowances', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'setPerformanceFeeBips', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'totalHarvested', values: [string]): string;
-  encodeFunctionData(functionFragment: 'transferOwnership', values: [string]): string;
-  encodeFunctionData(functionFragment: 'withdraw', values: [string, string, BigNumberish, BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'setPerformanceFeeBips', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'totalHarvested', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'transferOwnership', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'withdraw',
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+    ],
+  ): string;
 
   decodeFunctionResult(functionFragment: 'AVAX', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'checkReward', data: BytesLike): Result;
@@ -199,39 +227,43 @@ export interface PenguinExtraRewarder extends BaseContract {
   functions: {
     AVAX(overrides?: CallOverrides): Promise<[string]>;
 
-    checkReward(tokenIndex: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber]>;
+    checkReward(tokenIndex: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     deposit(
-      caller: string,
-      to: string,
-      tokenAmount: BigNumberish,
-      shareAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      caller: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      tokenAmount: PromiseOrValue<BigNumberish>,
+      shareAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     depositToken(overrides?: CallOverrides): Promise<[string]>;
 
-    harvested(arg0: string, arg1: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    harvested(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber]>;
 
     iglooMaster(overrides?: CallOverrides): Promise<[string]>;
 
     iglooStrategyStorage(overrides?: CallOverrides): Promise<[string]>;
 
     inCaseTokensGetStuck(
-      token: string,
-      to: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      token: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     migrate(
-      newStrategy: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newStrategy: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     numberRewardTokens(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    onMigration(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    onMigration(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     owner(overrides?: CallOverrides): Promise<[string]>;
 
@@ -239,12 +271,16 @@ export interface PenguinExtraRewarder extends BaseContract {
 
     pangolinPid(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    pendingRewards(user: string, rewardTokenIndex: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber]>;
+    pendingRewards(
+      user: PromiseOrValue<string>,
+      rewardTokenIndex: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber]>;
 
     pendingTokens(
-      arg0: BigNumberish,
-      user: string,
-      arg2: BigNumberish,
+      arg0: PromiseOrValue<BigNumberish>,
+      user: PromiseOrValue<string>,
+      arg2: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<[string[], BigNumber[]]>;
 
@@ -256,78 +292,78 @@ export interface PenguinExtraRewarder extends BaseContract {
 
     previousRewardToken(overrides?: CallOverrides): Promise<[string]>;
 
-    previousRewardsClaimed(arg0: string, overrides?: CallOverrides): Promise<[boolean]>;
+    previousRewardsClaimed(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[boolean]>;
 
-    renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     revokeAllowance(
-      token: string,
-      spender: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      token: PromiseOrValue<string>,
+      spender: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     rewardTokens(overrides?: CallOverrides): Promise<[string[]]>;
 
-    rewardTokensArray(arg0: BigNumberish, overrides?: CallOverrides): Promise<[string]>;
+    rewardTokensArray(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[string]>;
 
-    setAllowances(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    setAllowances(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     setPerformanceFeeBips(
-      newPerformanceFeeBips: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newPerformanceFeeBips: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    totalHarvested(arg0: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    totalHarvested(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     withdraw(
-      caller: string,
-      to: string,
-      tokenAmount: BigNumberish,
-      shareAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      caller: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      tokenAmount: PromiseOrValue<BigNumberish>,
+      shareAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
   };
 
   AVAX(overrides?: CallOverrides): Promise<string>;
 
-  checkReward(tokenIndex: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+  checkReward(tokenIndex: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
   deposit(
-    caller: string,
-    to: string,
-    tokenAmount: BigNumberish,
-    shareAmount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    caller: PromiseOrValue<string>,
+    to: PromiseOrValue<string>,
+    tokenAmount: PromiseOrValue<BigNumberish>,
+    shareAmount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   depositToken(overrides?: CallOverrides): Promise<string>;
 
-  harvested(arg0: string, arg1: string, overrides?: CallOverrides): Promise<BigNumber>;
+  harvested(arg0: PromiseOrValue<string>, arg1: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   iglooMaster(overrides?: CallOverrides): Promise<string>;
 
   iglooStrategyStorage(overrides?: CallOverrides): Promise<string>;
 
   inCaseTokensGetStuck(
-    token: string,
-    to: string,
-    amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    token: PromiseOrValue<string>,
+    to: PromiseOrValue<string>,
+    amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   migrate(
-    newStrategy: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    newStrategy: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   numberRewardTokens(overrides?: CallOverrides): Promise<BigNumber>;
 
-  onMigration(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  onMigration(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   owner(overrides?: CallOverrides): Promise<string>;
 
@@ -335,12 +371,16 @@ export interface PenguinExtraRewarder extends BaseContract {
 
   pangolinPid(overrides?: CallOverrides): Promise<BigNumber>;
 
-  pendingRewards(user: string, rewardTokenIndex: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+  pendingRewards(
+    user: PromiseOrValue<string>,
+    rewardTokenIndex: PromiseOrValue<BigNumberish>,
+    overrides?: CallOverrides,
+  ): Promise<BigNumber>;
 
   pendingTokens(
-    arg0: BigNumberish,
-    user: string,
-    arg2: BigNumberish,
+    arg0: PromiseOrValue<BigNumberish>,
+    user: PromiseOrValue<string>,
+    arg2: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides,
   ): Promise<[string[], BigNumber[]]>;
 
@@ -352,66 +392,75 @@ export interface PenguinExtraRewarder extends BaseContract {
 
   previousRewardToken(overrides?: CallOverrides): Promise<string>;
 
-  previousRewardsClaimed(arg0: string, overrides?: CallOverrides): Promise<boolean>;
+  previousRewardsClaimed(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
-  renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   revokeAllowance(
-    token: string,
-    spender: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    token: PromiseOrValue<string>,
+    spender: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   rewardTokens(overrides?: CallOverrides): Promise<string[]>;
 
-  rewardTokensArray(arg0: BigNumberish, overrides?: CallOverrides): Promise<string>;
+  rewardTokensArray(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
 
-  setAllowances(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  setAllowances(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   setPerformanceFeeBips(
-    newPerformanceFeeBips: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    newPerformanceFeeBips: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  totalHarvested(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+  totalHarvested(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   transferOwnership(
-    newOwner: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    newOwner: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   withdraw(
-    caller: string,
-    to: string,
-    tokenAmount: BigNumberish,
-    shareAmount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    caller: PromiseOrValue<string>,
+    to: PromiseOrValue<string>,
+    tokenAmount: PromiseOrValue<BigNumberish>,
+    shareAmount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   callStatic: {
     AVAX(overrides?: CallOverrides): Promise<string>;
 
-    checkReward(tokenIndex: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    checkReward(tokenIndex: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     deposit(
-      caller: string,
-      to: string,
-      tokenAmount: BigNumberish,
-      shareAmount: BigNumberish,
+      caller: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      tokenAmount: PromiseOrValue<BigNumberish>,
+      shareAmount: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
     depositToken(overrides?: CallOverrides): Promise<string>;
 
-    harvested(arg0: string, arg1: string, overrides?: CallOverrides): Promise<BigNumber>;
+    harvested(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     iglooMaster(overrides?: CallOverrides): Promise<string>;
 
     iglooStrategyStorage(overrides?: CallOverrides): Promise<string>;
 
-    inCaseTokensGetStuck(token: string, to: string, amount: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    inCaseTokensGetStuck(
+      token: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    migrate(newStrategy: string, overrides?: CallOverrides): Promise<void>;
+    migrate(newStrategy: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     numberRewardTokens(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -423,12 +472,16 @@ export interface PenguinExtraRewarder extends BaseContract {
 
     pangolinPid(overrides?: CallOverrides): Promise<BigNumber>;
 
-    pendingRewards(user: string, rewardTokenIndex: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    pendingRewards(
+      user: PromiseOrValue<string>,
+      rewardTokenIndex: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     pendingTokens(
-      arg0: BigNumberish,
-      user: string,
-      arg2: BigNumberish,
+      arg0: PromiseOrValue<BigNumberish>,
+      user: PromiseOrValue<string>,
+      arg2: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<[string[], BigNumber[]]>;
 
@@ -440,87 +493,104 @@ export interface PenguinExtraRewarder extends BaseContract {
 
     previousRewardToken(overrides?: CallOverrides): Promise<string>;
 
-    previousRewardsClaimed(arg0: string, overrides?: CallOverrides): Promise<boolean>;
+    previousRewardsClaimed(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
     renounceOwnership(overrides?: CallOverrides): Promise<void>;
 
-    revokeAllowance(token: string, spender: string, overrides?: CallOverrides): Promise<void>;
+    revokeAllowance(
+      token: PromiseOrValue<string>,
+      spender: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
     rewardTokens(overrides?: CallOverrides): Promise<string[]>;
 
-    rewardTokensArray(arg0: BigNumberish, overrides?: CallOverrides): Promise<string>;
+    rewardTokensArray(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
 
     setAllowances(overrides?: CallOverrides): Promise<void>;
 
-    setPerformanceFeeBips(newPerformanceFeeBips: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    setPerformanceFeeBips(
+      newPerformanceFeeBips: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    totalHarvested(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    totalHarvested(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    transferOwnership(newOwner: string, overrides?: CallOverrides): Promise<void>;
+    transferOwnership(newOwner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     withdraw(
-      caller: string,
-      to: string,
-      tokenAmount: BigNumberish,
-      shareAmount: BigNumberish,
+      caller: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      tokenAmount: PromiseOrValue<BigNumberish>,
+      shareAmount: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<void>;
   };
 
   filters: {
     'Harvest(address,address,address,uint256)'(
-      caller?: string | null,
-      to?: string | null,
-      rewardToken?: string | null,
+      caller?: PromiseOrValue<string> | null,
+      to?: PromiseOrValue<string> | null,
+      rewardToken?: PromiseOrValue<string> | null,
       harvestedAmount?: null,
     ): HarvestEventFilter;
     Harvest(
-      caller?: string | null,
-      to?: string | null,
-      rewardToken?: string | null,
+      caller?: PromiseOrValue<string> | null,
+      to?: PromiseOrValue<string> | null,
+      rewardToken?: PromiseOrValue<string> | null,
       harvestedAmount?: null,
     ): HarvestEventFilter;
 
     'OwnershipTransferred(address,address)'(
-      previousOwner?: string | null,
-      newOwner?: string | null,
+      previousOwner?: PromiseOrValue<string> | null,
+      newOwner?: PromiseOrValue<string> | null,
     ): OwnershipTransferredEventFilter;
-    OwnershipTransferred(previousOwner?: string | null, newOwner?: string | null): OwnershipTransferredEventFilter;
+    OwnershipTransferred(
+      previousOwner?: PromiseOrValue<string> | null,
+      newOwner?: PromiseOrValue<string> | null,
+    ): OwnershipTransferredEventFilter;
   };
 
   estimateGas: {
     AVAX(overrides?: CallOverrides): Promise<BigNumber>;
 
-    checkReward(tokenIndex: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    checkReward(tokenIndex: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     deposit(
-      caller: string,
-      to: string,
-      tokenAmount: BigNumberish,
-      shareAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      caller: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      tokenAmount: PromiseOrValue<BigNumberish>,
+      shareAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     depositToken(overrides?: CallOverrides): Promise<BigNumber>;
 
-    harvested(arg0: string, arg1: string, overrides?: CallOverrides): Promise<BigNumber>;
+    harvested(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     iglooMaster(overrides?: CallOverrides): Promise<BigNumber>;
 
     iglooStrategyStorage(overrides?: CallOverrides): Promise<BigNumber>;
 
     inCaseTokensGetStuck(
-      token: string,
-      to: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      token: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    migrate(newStrategy: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    migrate(
+      newStrategy: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     numberRewardTokens(overrides?: CallOverrides): Promise<BigNumber>;
 
-    onMigration(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    onMigration(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     owner(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -528,9 +598,18 @@ export interface PenguinExtraRewarder extends BaseContract {
 
     pangolinPid(overrides?: CallOverrides): Promise<BigNumber>;
 
-    pendingRewards(user: string, rewardTokenIndex: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    pendingRewards(
+      user: PromiseOrValue<string>,
+      rewardTokenIndex: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    pendingTokens(arg0: BigNumberish, user: string, arg2: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    pendingTokens(
+      arg0: PromiseOrValue<BigNumberish>,
+      user: PromiseOrValue<string>,
+      arg2: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     performanceFeeBips(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -540,79 +619,83 @@ export interface PenguinExtraRewarder extends BaseContract {
 
     previousRewardToken(overrides?: CallOverrides): Promise<BigNumber>;
 
-    previousRewardsClaimed(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    previousRewardsClaimed(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     revokeAllowance(
-      token: string,
-      spender: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      token: PromiseOrValue<string>,
+      spender: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     rewardTokens(overrides?: CallOverrides): Promise<BigNumber>;
 
-    rewardTokensArray(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    rewardTokensArray(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    setAllowances(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    setAllowances(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     setPerformanceFeeBips(
-      newPerformanceFeeBips: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newPerformanceFeeBips: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    totalHarvested(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    totalHarvested(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     withdraw(
-      caller: string,
-      to: string,
-      tokenAmount: BigNumberish,
-      shareAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      caller: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      tokenAmount: PromiseOrValue<BigNumberish>,
+      shareAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
   };
 
   populateTransaction: {
     AVAX(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    checkReward(tokenIndex: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    checkReward(tokenIndex: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     deposit(
-      caller: string,
-      to: string,
-      tokenAmount: BigNumberish,
-      shareAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      caller: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      tokenAmount: PromiseOrValue<BigNumberish>,
+      shareAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     depositToken(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    harvested(arg0: string, arg1: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    harvested(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
     iglooMaster(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     iglooStrategyStorage(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     inCaseTokensGetStuck(
-      token: string,
-      to: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      token: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     migrate(
-      newStrategy: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newStrategy: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     numberRewardTokens(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    onMigration(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    onMigration(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
@@ -621,15 +704,15 @@ export interface PenguinExtraRewarder extends BaseContract {
     pangolinPid(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     pendingRewards(
-      user: string,
-      rewardTokenIndex: BigNumberish,
+      user: PromiseOrValue<string>,
+      rewardTokenIndex: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     pendingTokens(
-      arg0: BigNumberish,
-      user: string,
-      arg2: BigNumberish,
+      arg0: PromiseOrValue<BigNumberish>,
+      user: PromiseOrValue<string>,
+      arg2: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
@@ -641,40 +724,40 @@ export interface PenguinExtraRewarder extends BaseContract {
 
     previousRewardToken(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    previousRewardsClaimed(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    previousRewardsClaimed(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     revokeAllowance(
-      token: string,
-      spender: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      token: PromiseOrValue<string>,
+      spender: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     rewardTokens(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    rewardTokensArray(arg0: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    rewardTokensArray(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    setAllowances(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    setAllowances(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     setPerformanceFeeBips(
-      newPerformanceFeeBips: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newPerformanceFeeBips: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    totalHarvested(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    totalHarvested(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     withdraw(
-      caller: string,
-      to: string,
-      tokenAmount: BigNumberish,
-      shareAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      caller: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      tokenAmount: PromiseOrValue<BigNumberish>,
+      shareAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
   };
 }

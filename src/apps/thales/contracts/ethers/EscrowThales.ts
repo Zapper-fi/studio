@@ -15,7 +15,7 @@ import type {
 } from 'ethers';
 import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
 import type { Listener, Provider } from '@ethersproject/providers';
-import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
 export interface EscrowThalesInterface extends utils.Interface {
   functions: {
@@ -100,41 +100,56 @@ export interface EscrowThalesInterface extends utils.Interface {
   encodeFunctionData(functionFragment: 'NUM_PERIODS', values?: undefined): string;
   encodeFunctionData(functionFragment: 'ThalesStakingRewardsPool', values?: undefined): string;
   encodeFunctionData(functionFragment: 'acceptOwnership', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'addToEscrow', values: [string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'addTotalEscrowBalanceNotIncludedInStaking', values: [BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'addToEscrow',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'addTotalEscrowBalanceNotIncludedInStaking',
+    values: [PromiseOrValue<BigNumberish>],
+  ): string;
   encodeFunctionData(functionFragment: 'airdropContract', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'claimable', values: [string]): string;
+  encodeFunctionData(functionFragment: 'claimable', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'currentVestingPeriod', values?: undefined): string;
   encodeFunctionData(functionFragment: 'enableTestMode', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'fixEscrowEntry', values: [string]): string;
-  encodeFunctionData(functionFragment: 'getStakedEscrowedBalanceForRewards', values: [string]): string;
-  encodeFunctionData(functionFragment: 'getStakerAmounts', values: [string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'getStakerPeriod', values: [string, BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'fixEscrowEntry', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'getStakedEscrowedBalanceForRewards', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'getStakerAmounts',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'getStakerPeriod',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
   encodeFunctionData(functionFragment: 'iStakingThales', values?: undefined): string;
   encodeFunctionData(functionFragment: 'initNonReentrant', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'initialize', values: [string, string]): string;
+  encodeFunctionData(functionFragment: 'initialize', values: [PromiseOrValue<string>, PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'lastPauseTime', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'lastPeriodAddedReward', values: [string]): string;
-  encodeFunctionData(functionFragment: 'nominateNewOwner', values: [string]): string;
+  encodeFunctionData(functionFragment: 'lastPeriodAddedReward', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'nominateNewOwner', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'nominatedOwner', values?: undefined): string;
   encodeFunctionData(functionFragment: 'owner', values?: undefined): string;
   encodeFunctionData(functionFragment: 'paused', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'setAirdropContract', values: [string]): string;
-  encodeFunctionData(functionFragment: 'setOwner', values: [string]): string;
-  encodeFunctionData(functionFragment: 'setPaused', values: [boolean]): string;
-  encodeFunctionData(functionFragment: 'setStakingThalesContract', values: [string]): string;
-  encodeFunctionData(functionFragment: 'setThalesStakingRewardsPool', values: [string]): string;
+  encodeFunctionData(functionFragment: 'setAirdropContract', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'setOwner', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'setPaused', values: [PromiseOrValue<boolean>]): string;
+  encodeFunctionData(functionFragment: 'setStakingThalesContract', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'setThalesStakingRewardsPool', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(
     functionFragment: 'subtractTotalEscrowBalanceNotIncludedInStaking',
-    values: [BigNumberish],
+    values: [PromiseOrValue<BigNumberish>],
   ): string;
-  encodeFunctionData(functionFragment: 'totalAccountEscrowedAmount', values: [string]): string;
+  encodeFunctionData(functionFragment: 'totalAccountEscrowedAmount', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'totalEscrowBalanceNotIncludedInStaking', values?: undefined): string;
   encodeFunctionData(functionFragment: 'totalEscrowedRewards', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'transferOwnershipAtInit', values: [string]): string;
+  encodeFunctionData(functionFragment: 'transferOwnershipAtInit', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'updateCurrentPeriod', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'vest', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'vestingEntries', values: [string, BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'vest', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(
+    functionFragment: 'vestingEntries',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
   encodeFunctionData(functionFragment: 'vestingToken', values?: undefined): string;
 
   decodeFunctionResult(functionFragment: 'NUM_PERIODS', data: BytesLike): Result;
@@ -281,55 +296,66 @@ export interface EscrowThales extends BaseContract {
 
     ThalesStakingRewardsPool(overrides?: CallOverrides): Promise<[string]>;
 
-    acceptOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    acceptOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     addToEscrow(
-      account: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      account: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     addTotalEscrowBalanceNotIncludedInStaking(
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     airdropContract(overrides?: CallOverrides): Promise<[string]>;
 
-    claimable(account: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    claimable(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     currentVestingPeriod(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    enableTestMode(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    enableTestMode(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     fixEscrowEntry(
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    getStakedEscrowedBalanceForRewards(account: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    getStakedEscrowedBalanceForRewards(
+      account: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber]>;
 
-    getStakerAmounts(account: string, index: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber]>;
+    getStakerAmounts(
+      account: PromiseOrValue<string>,
+      index: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber]>;
 
-    getStakerPeriod(account: string, index: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber]>;
+    getStakerPeriod(
+      account: PromiseOrValue<string>,
+      index: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber]>;
 
     iStakingThales(overrides?: CallOverrides): Promise<[string]>;
 
-    initNonReentrant(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    initNonReentrant(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     initialize(
-      _owner: string,
-      _vestingToken: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _owner: PromiseOrValue<string>,
+      _vestingToken: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     lastPauseTime(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    lastPeriodAddedReward(arg0: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    lastPeriodAddedReward(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     nominateNewOwner(
-      _owner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _owner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     nominatedOwner(overrides?: CallOverrides): Promise<[string]>;
@@ -339,53 +365,56 @@ export interface EscrowThales extends BaseContract {
     paused(overrides?: CallOverrides): Promise<[boolean]>;
 
     setAirdropContract(
-      AirdropContract: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      AirdropContract: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    setOwner(_owner: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    setOwner(
+      _owner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<ContractTransaction>;
 
     setPaused(
-      _paused: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _paused: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setStakingThalesContract(
-      StakingThalesContract: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      StakingThalesContract: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setThalesStakingRewardsPool(
-      _thalesStakingRewardsPool: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _thalesStakingRewardsPool: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     subtractTotalEscrowBalanceNotIncludedInStaking(
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    totalAccountEscrowedAmount(arg0: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    totalAccountEscrowedAmount(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     totalEscrowBalanceNotIncludedInStaking(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     totalEscrowedRewards(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     transferOwnershipAtInit(
-      proxyAddress: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      proxyAddress: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    updateCurrentPeriod(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    updateCurrentPeriod(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     vest(
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     vestingEntries(
-      arg0: string,
-      arg1: BigNumberish,
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber, BigNumber] & { amount: BigNumber; vesting_period: BigNumber }>;
 
@@ -396,55 +425,63 @@ export interface EscrowThales extends BaseContract {
 
   ThalesStakingRewardsPool(overrides?: CallOverrides): Promise<string>;
 
-  acceptOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  acceptOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   addToEscrow(
-    account: string,
-    amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    account: PromiseOrValue<string>,
+    amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   addTotalEscrowBalanceNotIncludedInStaking(
-    amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   airdropContract(overrides?: CallOverrides): Promise<string>;
 
-  claimable(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+  claimable(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   currentVestingPeriod(overrides?: CallOverrides): Promise<BigNumber>;
 
-  enableTestMode(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  enableTestMode(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   fixEscrowEntry(
-    account: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    account: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  getStakedEscrowedBalanceForRewards(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+  getStakedEscrowedBalanceForRewards(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  getStakerAmounts(account: string, index: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+  getStakerAmounts(
+    account: PromiseOrValue<string>,
+    index: PromiseOrValue<BigNumberish>,
+    overrides?: CallOverrides,
+  ): Promise<BigNumber>;
 
-  getStakerPeriod(account: string, index: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+  getStakerPeriod(
+    account: PromiseOrValue<string>,
+    index: PromiseOrValue<BigNumberish>,
+    overrides?: CallOverrides,
+  ): Promise<BigNumber>;
 
   iStakingThales(overrides?: CallOverrides): Promise<string>;
 
-  initNonReentrant(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  initNonReentrant(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   initialize(
-    _owner: string,
-    _vestingToken: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _owner: PromiseOrValue<string>,
+    _vestingToken: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   lastPauseTime(overrides?: CallOverrides): Promise<BigNumber>;
 
-  lastPeriodAddedReward(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+  lastPeriodAddedReward(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   nominateNewOwner(
-    _owner: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _owner: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   nominatedOwner(overrides?: CallOverrides): Promise<string>;
@@ -454,50 +491,56 @@ export interface EscrowThales extends BaseContract {
   paused(overrides?: CallOverrides): Promise<boolean>;
 
   setAirdropContract(
-    AirdropContract: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    AirdropContract: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  setOwner(_owner: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  setOwner(
+    _owner: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
+  ): Promise<ContractTransaction>;
 
   setPaused(
-    _paused: boolean,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _paused: PromiseOrValue<boolean>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setStakingThalesContract(
-    StakingThalesContract: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    StakingThalesContract: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setThalesStakingRewardsPool(
-    _thalesStakingRewardsPool: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _thalesStakingRewardsPool: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   subtractTotalEscrowBalanceNotIncludedInStaking(
-    amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  totalAccountEscrowedAmount(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+  totalAccountEscrowedAmount(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   totalEscrowBalanceNotIncludedInStaking(overrides?: CallOverrides): Promise<BigNumber>;
 
   totalEscrowedRewards(overrides?: CallOverrides): Promise<BigNumber>;
 
   transferOwnershipAtInit(
-    proxyAddress: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    proxyAddress: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  updateCurrentPeriod(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  updateCurrentPeriod(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
-  vest(amount: BigNumberish, overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  vest(
+    amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
+  ): Promise<ContractTransaction>;
 
   vestingEntries(
-    arg0: string,
-    arg1: BigNumberish,
+    arg0: PromiseOrValue<string>,
+    arg1: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides,
   ): Promise<[BigNumber, BigNumber] & { amount: BigNumber; vesting_period: BigNumber }>;
 
@@ -510,37 +553,56 @@ export interface EscrowThales extends BaseContract {
 
     acceptOwnership(overrides?: CallOverrides): Promise<void>;
 
-    addToEscrow(account: string, amount: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    addToEscrow(
+      account: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    addTotalEscrowBalanceNotIncludedInStaking(amount: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    addTotalEscrowBalanceNotIncludedInStaking(
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
     airdropContract(overrides?: CallOverrides): Promise<string>;
 
-    claimable(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    claimable(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     currentVestingPeriod(overrides?: CallOverrides): Promise<BigNumber>;
 
     enableTestMode(overrides?: CallOverrides): Promise<void>;
 
-    fixEscrowEntry(account: string, overrides?: CallOverrides): Promise<void>;
+    fixEscrowEntry(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    getStakedEscrowedBalanceForRewards(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getStakedEscrowedBalanceForRewards(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    getStakerAmounts(account: string, index: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    getStakerAmounts(
+      account: PromiseOrValue<string>,
+      index: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    getStakerPeriod(account: string, index: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    getStakerPeriod(
+      account: PromiseOrValue<string>,
+      index: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     iStakingThales(overrides?: CallOverrides): Promise<string>;
 
     initNonReentrant(overrides?: CallOverrides): Promise<void>;
 
-    initialize(_owner: string, _vestingToken: string, overrides?: CallOverrides): Promise<void>;
+    initialize(
+      _owner: PromiseOrValue<string>,
+      _vestingToken: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
     lastPauseTime(overrides?: CallOverrides): Promise<BigNumber>;
 
-    lastPeriodAddedReward(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    lastPeriodAddedReward(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    nominateNewOwner(_owner: string, overrides?: CallOverrides): Promise<void>;
+    nominateNewOwner(_owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     nominatedOwner(overrides?: CallOverrides): Promise<string>;
 
@@ -548,33 +610,39 @@ export interface EscrowThales extends BaseContract {
 
     paused(overrides?: CallOverrides): Promise<boolean>;
 
-    setAirdropContract(AirdropContract: string, overrides?: CallOverrides): Promise<void>;
+    setAirdropContract(AirdropContract: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    setOwner(_owner: string, overrides?: CallOverrides): Promise<void>;
+    setOwner(_owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    setPaused(_paused: boolean, overrides?: CallOverrides): Promise<void>;
+    setPaused(_paused: PromiseOrValue<boolean>, overrides?: CallOverrides): Promise<void>;
 
-    setStakingThalesContract(StakingThalesContract: string, overrides?: CallOverrides): Promise<void>;
+    setStakingThalesContract(StakingThalesContract: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    setThalesStakingRewardsPool(_thalesStakingRewardsPool: string, overrides?: CallOverrides): Promise<void>;
+    setThalesStakingRewardsPool(
+      _thalesStakingRewardsPool: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    subtractTotalEscrowBalanceNotIncludedInStaking(amount: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    subtractTotalEscrowBalanceNotIncludedInStaking(
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    totalAccountEscrowedAmount(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    totalAccountEscrowedAmount(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     totalEscrowBalanceNotIncludedInStaking(overrides?: CallOverrides): Promise<BigNumber>;
 
     totalEscrowedRewards(overrides?: CallOverrides): Promise<BigNumber>;
 
-    transferOwnershipAtInit(proxyAddress: string, overrides?: CallOverrides): Promise<void>;
+    transferOwnershipAtInit(proxyAddress: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     updateCurrentPeriod(overrides?: CallOverrides): Promise<boolean>;
 
-    vest(amount: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+    vest(amount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<boolean>;
 
     vestingEntries(
-      arg0: string,
-      arg1: BigNumberish,
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber, BigNumber] & { amount: BigNumber; vesting_period: BigNumber }>;
 
@@ -614,50 +682,64 @@ export interface EscrowThales extends BaseContract {
 
     ThalesStakingRewardsPool(overrides?: CallOverrides): Promise<BigNumber>;
 
-    acceptOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    acceptOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     addToEscrow(
-      account: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      account: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     addTotalEscrowBalanceNotIncludedInStaking(
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     airdropContract(overrides?: CallOverrides): Promise<BigNumber>;
 
-    claimable(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    claimable(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     currentVestingPeriod(overrides?: CallOverrides): Promise<BigNumber>;
 
-    enableTestMode(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    enableTestMode(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
-    fixEscrowEntry(account: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    fixEscrowEntry(
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
-    getStakedEscrowedBalanceForRewards(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getStakedEscrowedBalanceForRewards(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    getStakerAmounts(account: string, index: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    getStakerAmounts(
+      account: PromiseOrValue<string>,
+      index: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    getStakerPeriod(account: string, index: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    getStakerPeriod(
+      account: PromiseOrValue<string>,
+      index: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     iStakingThales(overrides?: CallOverrides): Promise<BigNumber>;
 
-    initNonReentrant(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    initNonReentrant(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     initialize(
-      _owner: string,
-      _vestingToken: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _owner: PromiseOrValue<string>,
+      _vestingToken: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     lastPauseTime(overrides?: CallOverrides): Promise<BigNumber>;
 
-    lastPeriodAddedReward(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    lastPeriodAddedReward(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    nominateNewOwner(_owner: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    nominateNewOwner(
+      _owner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     nominatedOwner(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -666,45 +748,58 @@ export interface EscrowThales extends BaseContract {
     paused(overrides?: CallOverrides): Promise<BigNumber>;
 
     setAirdropContract(
-      AirdropContract: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      AirdropContract: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    setOwner(_owner: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    setOwner(
+      _owner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
-    setPaused(_paused: boolean, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    setPaused(
+      _paused: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     setStakingThalesContract(
-      StakingThalesContract: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      StakingThalesContract: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setThalesStakingRewardsPool(
-      _thalesStakingRewardsPool: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _thalesStakingRewardsPool: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     subtractTotalEscrowBalanceNotIncludedInStaking(
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    totalAccountEscrowedAmount(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    totalAccountEscrowedAmount(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     totalEscrowBalanceNotIncludedInStaking(overrides?: CallOverrides): Promise<BigNumber>;
 
     totalEscrowedRewards(overrides?: CallOverrides): Promise<BigNumber>;
 
     transferOwnershipAtInit(
-      proxyAddress: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      proxyAddress: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    updateCurrentPeriod(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    updateCurrentPeriod(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
-    vest(amount: BigNumberish, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    vest(
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
-    vestingEntries(arg0: string, arg1: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    vestingEntries(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     vestingToken(overrides?: CallOverrides): Promise<BigNumber>;
   };
@@ -714,55 +809,66 @@ export interface EscrowThales extends BaseContract {
 
     ThalesStakingRewardsPool(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    acceptOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    acceptOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     addToEscrow(
-      account: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      account: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     addTotalEscrowBalanceNotIncludedInStaking(
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     airdropContract(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    claimable(account: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    claimable(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     currentVestingPeriod(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    enableTestMode(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    enableTestMode(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     fixEscrowEntry(
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    getStakedEscrowedBalanceForRewards(account: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getStakedEscrowedBalanceForRewards(
+      account: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
-    getStakerAmounts(account: string, index: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getStakerAmounts(
+      account: PromiseOrValue<string>,
+      index: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
-    getStakerPeriod(account: string, index: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getStakerPeriod(
+      account: PromiseOrValue<string>,
+      index: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
     iStakingThales(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    initNonReentrant(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    initNonReentrant(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     initialize(
-      _owner: string,
-      _vestingToken: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _owner: PromiseOrValue<string>,
+      _vestingToken: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     lastPauseTime(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    lastPeriodAddedReward(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    lastPeriodAddedReward(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     nominateNewOwner(
-      _owner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _owner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     nominatedOwner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -772,54 +878,58 @@ export interface EscrowThales extends BaseContract {
     paused(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     setAirdropContract(
-      AirdropContract: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      AirdropContract: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setOwner(
-      _owner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _owner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setPaused(
-      _paused: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _paused: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setStakingThalesContract(
-      StakingThalesContract: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      StakingThalesContract: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setThalesStakingRewardsPool(
-      _thalesStakingRewardsPool: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _thalesStakingRewardsPool: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     subtractTotalEscrowBalanceNotIncludedInStaking(
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    totalAccountEscrowedAmount(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    totalAccountEscrowedAmount(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     totalEscrowBalanceNotIncludedInStaking(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     totalEscrowedRewards(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     transferOwnershipAtInit(
-      proxyAddress: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      proxyAddress: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    updateCurrentPeriod(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    updateCurrentPeriod(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     vest(
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    vestingEntries(arg0: string, arg1: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    vestingEntries(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
     vestingToken(overrides?: CallOverrides): Promise<PopulatedTransaction>;
   };

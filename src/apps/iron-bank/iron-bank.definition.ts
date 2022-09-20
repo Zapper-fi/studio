@@ -6,11 +6,32 @@ import { Network } from '~types/network.interface';
 export const IRON_BANK_DEFINITION = appDefinition({
   id: 'iron-bank',
   name: 'Iron Bank',
-  description: 'iron',
+  description:
+    'Iron Bank is a decentralized protocol to protocol lending platform. It allows trusted protocols to borrow funds without posting collateral via whitelisting.',
   url: 'https://app.ib.xyz/',
   groups: {
-    supply: { id: 'supply', type: GroupType.TOKEN, label: 'Supply' },
-    borrow: { id: 'borrow', type: GroupType.POSITION, label: 'Borrow' },
+    supply: { id: 'supply', type: GroupType.TOKEN, label: 'Lending' },
+    borrow: { id: 'borrow', type: GroupType.POSITION, label: 'Lending' },
+  },
+  presentationConfig: {
+    tabs: [
+      {
+        label: 'Lending',
+        viewType: 'split',
+        views: [
+          {
+            viewType: 'list',
+            label: 'Supply',
+            groupIds: ['supply'],
+          },
+          {
+            viewType: 'list',
+            label: 'Borrow',
+            groupIds: ['borrow'],
+          },
+        ],
+      },
+    ],
   },
   tags: [AppTag.LENDING],
   keywords: [],
@@ -20,6 +41,7 @@ export const IRON_BANK_DEFINITION = appDefinition({
     [Network.ETHEREUM_MAINNET]: [AppAction.VIEW],
     [Network.FANTOM_OPERA_MAINNET]: [AppAction.VIEW],
     [Network.AVALANCHE_MAINNET]: [AppAction.VIEW],
+    [Network.OPTIMISM_MAINNET]: [AppAction.VIEW],
   },
 
   primaryColor: '#fff',

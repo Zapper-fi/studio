@@ -9,7 +9,7 @@ import {
   buildPercentageDisplayItem,
 } from '~app-toolkit/helpers/presentation/display-item.present';
 import { getTokenImg } from '~app-toolkit/helpers/presentation/image.present';
-import { EthersMulticall as Multicall } from '~multicall/multicall.ethers';
+import { IMulticallWrapper } from '~multicall/multicall.interface';
 import { ContractType } from '~position/contract.interface';
 import { BalanceDisplayMode } from '~position/display.interface';
 import { AppTokenPosition, Token } from '~position/position.interface';
@@ -37,15 +37,15 @@ type CoslendSupplyTokenHelperParams<T = CoslendComptroller, V = CoslendCToken> =
   marketName?: string;
   getComptrollerContract: (opts: { address: string; network: Network }) => T;
   getTokenContract: (opts: { address: string; network: Network }) => V;
-  getAllMarkets: (opts: { contract: T; multicall: Multicall }) => string[] | Promise<string[]>;
-  getExchangeRate: (opts: { contract: V; multicall: Multicall }) => Promise<BigNumberish>;
-  getSupplyRate: (opts: { contract: V; multicall: Multicall }) => Promise<BigNumberish>;
-  getBorrowRate: (opts: { contract: V; multicall: Multicall }) => Promise<BigNumberish>;
-  getUnderlyingAddress: (opts: { contract: V; multicall: Multicall }) => Promise<string>;
+  getAllMarkets: (opts: { contract: T; multicall: IMulticallWrapper }) => string[] | Promise<string[]>;
+  getExchangeRate: (opts: { contract: V; multicall: IMulticallWrapper }) => Promise<BigNumberish>;
+  getSupplyRate: (opts: { contract: V; multicall: IMulticallWrapper }) => Promise<BigNumberish>;
+  getBorrowRate: (opts: { contract: V; multicall: IMulticallWrapper }) => Promise<BigNumberish>;
+  getUnderlyingAddress: (opts: { contract: V; multicall: IMulticallWrapper }) => Promise<string>;
   getExchangeRateMantissa: (opts: { tokenDecimals: number; underlyingTokenDecimals: number }) => number;
-  getDisplayLabel?: (opts: { contract: V; multicall: Multicall; underlyingToken: Token }) => Promise<string>;
+  getDisplayLabel?: (opts: { contract: V; multicall: IMulticallWrapper; underlyingToken: Token }) => Promise<string>;
   getDenormalizedRate?: (opts: { rate: BigNumberish; secondsPerDay: number; decimals: number }) => number;
-  oracle: (opts: { contract: T; multicall: Multicall }) => Promise<string>;
+  oracle: (opts: { contract: T; multicall: IMulticallWrapper }) => Promise<string>;
 };
 
 @Injectable()
@@ -164,11 +164,10 @@ export class CoslendSupplyTokenHelper {
           ? await getDisplayLabel({ contract, multicall, underlyingToken })
           : underlyingToken.symbol;
         const secondaryLabel = buildDollarDisplayItem(underlyingToken.price);
-        const tertiaryLabel = `${(supplyApy * 100).toFixed(3)}% APY`;
         const images = [getTokenImg(underlyingToken.address, network)];
         const balanceDisplayMode = BalanceDisplayMode.UNDERLYING;
         const statsItems = [
-          { label: 'Supply APY', value: buildPercentageDisplayItem(supplyApy) },
+          { label: 'APY', value: buildPercentageDisplayItem(supplyApy * 100) },
           { label: 'Liquidity', value: buildDollarDisplayItem(liquidity) },
         ];
 
@@ -196,7 +195,6 @@ export class CoslendSupplyTokenHelper {
           displayProps: {
             label,
             secondaryLabel,
-            tertiaryLabel,
             images,
             statsItems,
             balanceDisplayMode,

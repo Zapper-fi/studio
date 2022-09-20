@@ -1,40 +1,47 @@
 import { Inject } from '@nestjs/common';
 
-import { Register } from '~app-toolkit/decorators';
-import { PositionFetcher } from '~position/position-fetcher.interface';
-import { AppTokenPosition } from '~position/position.interface';
-import { Network } from '~types/network.interface';
+import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 
-import { COMPOUND_DEFINITION } from '../compound.definition';
-import { CompoundContractFactory } from '../contracts';
-import { CompoundSupplyTokenHelper } from '../helper/compound.supply.token-helper';
+import { CompoundSupplyTokenFetcher } from '../common/compound.supply.token-fetcher';
+import { CompoundComptroller, CompoundContractFactory, CompoundCToken } from '../contracts';
 
-const appId = COMPOUND_DEFINITION.id;
-const groupId = COMPOUND_DEFINITION.groups.supply.id;
-const network = Network.ETHEREUM_MAINNET;
+@PositionTemplate()
+export class EthereumCompoundSupplyTokenFetcher extends CompoundSupplyTokenFetcher<
+  CompoundCToken,
+  CompoundComptroller
+> {
+  groupLabel = 'Lending';
+  comptrollerAddress = '0x3d9819210a31b4961b30ef54be2aed79b9c9cd3b';
 
-@Register.TokenPositionFetcher({ appId, groupId, network })
-export class EthereumCompoundSupplyTokenFetcher implements PositionFetcher<AppTokenPosition> {
   constructor(
-    @Inject(CompoundContractFactory) private readonly compoundContractFactory: CompoundContractFactory,
-    @Inject(CompoundSupplyTokenHelper) private readonly compoundSupplyTokenHelper: CompoundSupplyTokenHelper,
-  ) {}
+    @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
+    @Inject(CompoundContractFactory) protected readonly contractFactory: CompoundContractFactory,
+  ) {
+    super(appToolkit);
+  }
 
-  async getPositions() {
-    return this.compoundSupplyTokenHelper.getTokens({
-      network,
-      appId,
-      groupId,
-      comptrollerAddress: '0x3d9819210a31b4961b30ef54be2aed79b9c9cd3b',
-      getComptrollerContract: ({ address, network }) =>
-        this.compoundContractFactory.compoundComptroller({ address, network }),
-      getTokenContract: ({ address, network }) => this.compoundContractFactory.compoundCToken({ address, network }),
-      getAllMarkets: ({ contract, multicall }) => multicall.wrap(contract).getAllMarkets(),
-      getExchangeRate: ({ contract, multicall }) => multicall.wrap(contract).exchangeRateCurrent(),
-      getSupplyRate: ({ contract, multicall }) => multicall.wrap(contract).supplyRatePerBlock(),
-      getBorrowRate: ({ contract, multicall }) => multicall.wrap(contract).borrowRatePerBlock(),
-      getUnderlyingAddress: ({ contract, multicall }) => multicall.wrap(contract).underlying(),
-      getExchangeRateMantissa: ({ underlyingTokenDecimals }) => underlyingTokenDecimals + 10,
-    });
+  getCompoundCTokenContract(address: string) {
+    return this.contractFactory.compoundCToken({ address, network: this.network });
+  }
+
+  getCompoundComptrollerContract(address: string) {
+    return this.contractFactory.compoundComptroller({ address, network: this.network });
+  }
+
+  getMarkets(contract: CompoundComptroller) {
+    return contract.getAllMarkets();
+  }
+
+  async getUnderlyingAddress(contract: CompoundCToken) {
+    return contract.underlying();
+  }
+
+  getExchangeRate(contract: CompoundCToken) {
+    return contract.exchangeRateCurrent();
+  }
+
+  async getSupplyRate(contract: CompoundCToken) {
+    return contract.supplyRatePerBlock().catch(() => 0);
   }
 }

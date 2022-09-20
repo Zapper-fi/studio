@@ -2,44 +2,52 @@ import { Inject } from '@nestjs/common';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { ZERO_ADDRESS } from '~app-toolkit/constants/address';
-import { Register } from '~app-toolkit/decorators';
-import { LiquityContractFactory, LiquityStaking } from '~apps/liquity/contracts';
-import { PositionFetcher } from '~position/position-fetcher.interface';
-import { ContractPosition } from '~position/position.interface';
-import { Network } from '~types/network.interface';
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
+import { GetTokenBalancesParams } from '~position/template/contract-position.template.types';
+import {
+  SingleStakingFarmDefinition,
+  SingleStakingFarmTemplateContractPositionFetcher,
+} from '~position/template/single-staking.template.contract-position-fetcher';
 
-import { TEDDY_CASH_DEFINITION } from '../teddy-cash.definition';
+import { TeddyCashContractFactory } from '../contracts';
+import { TeddyCashStaking } from '../contracts/ethers/TeddyCashStaking';
 
 const FARMS = [
   {
     address: '0xb4387d93b5a9392f64963cd44389e7d9d2e1053c',
-    stakedTokenAddress: '0x094bd7B2D99711A1486FB94d4395801C6d0fdDcC',
-    rewardTokenAddresses: ['0x4fbf0429599460D327BD5F55625E30E4fC066095', ZERO_ADDRESS], // TSD and AVAX
+    stakedTokenAddress: '0x094bd7b2d99711a1486fb94d4395801c6d0fddcc',
+    rewardTokenAddresses: ['0x4fbf0429599460d327bd5f55625e30e4fc066095', ZERO_ADDRESS], // TSD and AVAX
   },
 ];
 
-const appId = TEDDY_CASH_DEFINITION.id;
-const groupId = TEDDY_CASH_DEFINITION.groups.farm.id;
-const network = Network.AVALANCHE_MAINNET;
+@PositionTemplate()
+export class AvalancheTeddyCashFarmContractPositionFetcher extends SingleStakingFarmTemplateContractPositionFetcher<TeddyCashStaking> {
+  groupLabel = 'Farms';
 
-@Register.ContractPositionFetcher({ appId, groupId, network })
-export class AvalancheTeddyCashFarmContractPositionFetcher implements PositionFetcher<ContractPosition> {
   constructor(
-    @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
-    @Inject(LiquityContractFactory)
-    private readonly liquityContractFactory: LiquityContractFactory,
-  ) {}
+    @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
+    @Inject(TeddyCashContractFactory) protected readonly contractFactory: TeddyCashContractFactory,
+  ) {
+    super(appToolkit);
+  }
 
-  async getPositions() {
-    return this.appToolkit.helpers.singleStakingFarmContractPositionHelper.getContractPositions<LiquityStaking>({
-      network,
-      appId,
-      groupId,
-      dependencies: [],
-      resolveFarmDefinitions: async () => FARMS,
-      resolveFarmContract: ({ network, address }) => this.liquityContractFactory.liquityStaking({ address, network }),
-      resolveIsActive: async () => true,
-      resolveRois: async () => ({ dailyROI: 0, weeklyROI: 0, yearlyROI: 0 }),
-    });
+  getContract(address: string): TeddyCashStaking {
+    return this.contractFactory.teddyCashStaking({ address, network: this.network });
+  }
+
+  async getFarmDefinitions(): Promise<SingleStakingFarmDefinition[]> {
+    return FARMS;
+  }
+
+  async getRewardRates() {
+    return [0, 0];
+  }
+
+  async getStakedTokenBalance({ contract, address }: GetTokenBalancesParams<TeddyCashStaking>) {
+    return contract.stakes(address);
+  }
+
+  async getRewardTokenBalances({ contract, address }: GetTokenBalancesParams<TeddyCashStaking>) {
+    return Promise.all([contract.getPendingLUSDGain(address), contract.getPendingETHGain(address)]);
   }
 }

@@ -15,13 +15,13 @@ import type {
 } from 'ethers';
 import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
 import type { Listener, Provider } from '@ethersproject/providers';
-import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
 export declare namespace MerkleRedeem {
   export type ClaimStruct = {
-    week: BigNumberish;
-    balance: BigNumberish;
-    merkleProof: BytesLike[];
+    week: PromiseOrValue<BigNumberish>;
+    balance: PromiseOrValue<BigNumberish>;
+    merkleProof: PromiseOrValue<BytesLike>[];
   };
 
   export type ClaimStructOutput = [BigNumber, BigNumber, string[]] & {
@@ -63,21 +63,49 @@ export interface BalancerMerkleRedeemInterface extends utils.Interface {
       | 'weekMerkleRoots',
   ): FunctionFragment;
 
-  encodeFunctionData(functionFragment: 'claimStatus', values: [string, BigNumberish, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'claimWeek', values: [string, BigNumberish, BigNumberish, BytesLike[]]): string;
-  encodeFunctionData(functionFragment: 'claimWeeks', values: [string, MerkleRedeem.ClaimStruct[]]): string;
-  encodeFunctionData(functionFragment: 'claimed', values: [BigNumberish, string]): string;
-  encodeFunctionData(functionFragment: 'merkleRoots', values: [BigNumberish, BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'claimStatus',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'claimWeek',
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BytesLike>[],
+    ],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'claimWeeks',
+    values: [PromiseOrValue<string>, MerkleRedeem.ClaimStruct[]],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'claimed',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'merkleRoots',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+  ): string;
   encodeFunctionData(functionFragment: 'owner', values?: undefined): string;
   encodeFunctionData(functionFragment: 'renounceOwnership', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'seedAllocations', values: [BigNumberish, BytesLike, BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'seedAllocations',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BytesLike>, PromiseOrValue<BigNumberish>],
+  ): string;
   encodeFunctionData(functionFragment: 'token', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'transferOwnership', values: [string]): string;
+  encodeFunctionData(functionFragment: 'transferOwnership', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(
     functionFragment: 'verifyClaim',
-    values: [string, BigNumberish, BigNumberish, BytesLike[]],
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BytesLike>[],
+    ],
   ): string;
-  encodeFunctionData(functionFragment: 'weekMerkleRoots', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'weekMerkleRoots', values: [PromiseOrValue<BigNumberish>]): string;
 
   decodeFunctionResult(functionFragment: 'claimStatus', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'claimWeek', data: BytesLike): Result;
@@ -141,162 +169,186 @@ export interface BalancerMerkleRedeem extends BaseContract {
 
   functions: {
     claimStatus(
-      _liquidityProvider: string,
-      _begin: BigNumberish,
-      _end: BigNumberish,
+      _liquidityProvider: PromiseOrValue<string>,
+      _begin: PromiseOrValue<BigNumberish>,
+      _end: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<[boolean[]]>;
 
     claimWeek(
-      _liquidityProvider: string,
-      _week: BigNumberish,
-      _claimedBalance: BigNumberish,
-      _merkleProof: BytesLike[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _liquidityProvider: PromiseOrValue<string>,
+      _week: PromiseOrValue<BigNumberish>,
+      _claimedBalance: PromiseOrValue<BigNumberish>,
+      _merkleProof: PromiseOrValue<BytesLike>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     claimWeeks(
-      _liquidityProvider: string,
+      _liquidityProvider: PromiseOrValue<string>,
       claims: MerkleRedeem.ClaimStruct[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    claimed(arg0: BigNumberish, arg1: string, overrides?: CallOverrides): Promise<[boolean]>;
+    claimed(
+      arg0: PromiseOrValue<BigNumberish>,
+      arg1: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<[boolean]>;
 
-    merkleRoots(_begin: BigNumberish, _end: BigNumberish, overrides?: CallOverrides): Promise<[string[]]>;
+    merkleRoots(
+      _begin: PromiseOrValue<BigNumberish>,
+      _end: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<[string[]]>;
 
     owner(overrides?: CallOverrides): Promise<[string]>;
 
-    renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     seedAllocations(
-      _week: BigNumberish,
-      _merkleRoot: BytesLike,
-      _totalAllocation: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _week: PromiseOrValue<BigNumberish>,
+      _merkleRoot: PromiseOrValue<BytesLike>,
+      _totalAllocation: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     token(overrides?: CallOverrides): Promise<[string]>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     verifyClaim(
-      _liquidityProvider: string,
-      _week: BigNumberish,
-      _claimedBalance: BigNumberish,
-      _merkleProof: BytesLike[],
+      _liquidityProvider: PromiseOrValue<string>,
+      _week: PromiseOrValue<BigNumberish>,
+      _claimedBalance: PromiseOrValue<BigNumberish>,
+      _merkleProof: PromiseOrValue<BytesLike>[],
       overrides?: CallOverrides,
     ): Promise<[boolean] & { valid: boolean }>;
 
-    weekMerkleRoots(arg0: BigNumberish, overrides?: CallOverrides): Promise<[string]>;
+    weekMerkleRoots(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[string]>;
   };
 
   claimStatus(
-    _liquidityProvider: string,
-    _begin: BigNumberish,
-    _end: BigNumberish,
+    _liquidityProvider: PromiseOrValue<string>,
+    _begin: PromiseOrValue<BigNumberish>,
+    _end: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides,
   ): Promise<boolean[]>;
 
   claimWeek(
-    _liquidityProvider: string,
-    _week: BigNumberish,
-    _claimedBalance: BigNumberish,
-    _merkleProof: BytesLike[],
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _liquidityProvider: PromiseOrValue<string>,
+    _week: PromiseOrValue<BigNumberish>,
+    _claimedBalance: PromiseOrValue<BigNumberish>,
+    _merkleProof: PromiseOrValue<BytesLike>[],
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   claimWeeks(
-    _liquidityProvider: string,
+    _liquidityProvider: PromiseOrValue<string>,
     claims: MerkleRedeem.ClaimStruct[],
-    overrides?: Overrides & { from?: string | Promise<string> },
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  claimed(arg0: BigNumberish, arg1: string, overrides?: CallOverrides): Promise<boolean>;
+  claimed(
+    arg0: PromiseOrValue<BigNumberish>,
+    arg1: PromiseOrValue<string>,
+    overrides?: CallOverrides,
+  ): Promise<boolean>;
 
-  merkleRoots(_begin: BigNumberish, _end: BigNumberish, overrides?: CallOverrides): Promise<string[]>;
+  merkleRoots(
+    _begin: PromiseOrValue<BigNumberish>,
+    _end: PromiseOrValue<BigNumberish>,
+    overrides?: CallOverrides,
+  ): Promise<string[]>;
 
   owner(overrides?: CallOverrides): Promise<string>;
 
-  renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   seedAllocations(
-    _week: BigNumberish,
-    _merkleRoot: BytesLike,
-    _totalAllocation: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _week: PromiseOrValue<BigNumberish>,
+    _merkleRoot: PromiseOrValue<BytesLike>,
+    _totalAllocation: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   token(overrides?: CallOverrides): Promise<string>;
 
   transferOwnership(
-    newOwner: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    newOwner: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   verifyClaim(
-    _liquidityProvider: string,
-    _week: BigNumberish,
-    _claimedBalance: BigNumberish,
-    _merkleProof: BytesLike[],
+    _liquidityProvider: PromiseOrValue<string>,
+    _week: PromiseOrValue<BigNumberish>,
+    _claimedBalance: PromiseOrValue<BigNumberish>,
+    _merkleProof: PromiseOrValue<BytesLike>[],
     overrides?: CallOverrides,
   ): Promise<boolean>;
 
-  weekMerkleRoots(arg0: BigNumberish, overrides?: CallOverrides): Promise<string>;
+  weekMerkleRoots(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
 
   callStatic: {
     claimStatus(
-      _liquidityProvider: string,
-      _begin: BigNumberish,
-      _end: BigNumberish,
+      _liquidityProvider: PromiseOrValue<string>,
+      _begin: PromiseOrValue<BigNumberish>,
+      _end: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<boolean[]>;
 
     claimWeek(
-      _liquidityProvider: string,
-      _week: BigNumberish,
-      _claimedBalance: BigNumberish,
-      _merkleProof: BytesLike[],
+      _liquidityProvider: PromiseOrValue<string>,
+      _week: PromiseOrValue<BigNumberish>,
+      _claimedBalance: PromiseOrValue<BigNumberish>,
+      _merkleProof: PromiseOrValue<BytesLike>[],
       overrides?: CallOverrides,
     ): Promise<void>;
 
     claimWeeks(
-      _liquidityProvider: string,
+      _liquidityProvider: PromiseOrValue<string>,
       claims: MerkleRedeem.ClaimStruct[],
       overrides?: CallOverrides,
     ): Promise<void>;
 
-    claimed(arg0: BigNumberish, arg1: string, overrides?: CallOverrides): Promise<boolean>;
+    claimed(
+      arg0: PromiseOrValue<BigNumberish>,
+      arg1: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
 
-    merkleRoots(_begin: BigNumberish, _end: BigNumberish, overrides?: CallOverrides): Promise<string[]>;
+    merkleRoots(
+      _begin: PromiseOrValue<BigNumberish>,
+      _end: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<string[]>;
 
     owner(overrides?: CallOverrides): Promise<string>;
 
     renounceOwnership(overrides?: CallOverrides): Promise<void>;
 
     seedAllocations(
-      _week: BigNumberish,
-      _merkleRoot: BytesLike,
-      _totalAllocation: BigNumberish,
+      _week: PromiseOrValue<BigNumberish>,
+      _merkleRoot: PromiseOrValue<BytesLike>,
+      _totalAllocation: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
     token(overrides?: CallOverrides): Promise<string>;
 
-    transferOwnership(newOwner: string, overrides?: CallOverrides): Promise<void>;
+    transferOwnership(newOwner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     verifyClaim(
-      _liquidityProvider: string,
-      _week: BigNumberish,
-      _claimedBalance: BigNumberish,
-      _merkleProof: BytesLike[],
+      _liquidityProvider: PromiseOrValue<string>,
+      _week: PromiseOrValue<BigNumberish>,
+      _claimedBalance: PromiseOrValue<BigNumberish>,
+      _merkleProof: PromiseOrValue<BytesLike>[],
       overrides?: CallOverrides,
     ): Promise<boolean>;
 
-    weekMerkleRoots(arg0: BigNumberish, overrides?: CallOverrides): Promise<string>;
+    weekMerkleRoots(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
   };
 
   filters: {
@@ -304,119 +356,138 @@ export interface BalancerMerkleRedeem extends BaseContract {
     Claimed(_claimant?: null, _balance?: null): ClaimedEventFilter;
 
     'OwnershipTransferred(address,address)'(
-      previousOwner?: string | null,
-      newOwner?: string | null,
+      previousOwner?: PromiseOrValue<string> | null,
+      newOwner?: PromiseOrValue<string> | null,
     ): OwnershipTransferredEventFilter;
-    OwnershipTransferred(previousOwner?: string | null, newOwner?: string | null): OwnershipTransferredEventFilter;
+    OwnershipTransferred(
+      previousOwner?: PromiseOrValue<string> | null,
+      newOwner?: PromiseOrValue<string> | null,
+    ): OwnershipTransferredEventFilter;
   };
 
   estimateGas: {
     claimStatus(
-      _liquidityProvider: string,
-      _begin: BigNumberish,
-      _end: BigNumberish,
+      _liquidityProvider: PromiseOrValue<string>,
+      _begin: PromiseOrValue<BigNumberish>,
+      _end: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     claimWeek(
-      _liquidityProvider: string,
-      _week: BigNumberish,
-      _claimedBalance: BigNumberish,
-      _merkleProof: BytesLike[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _liquidityProvider: PromiseOrValue<string>,
+      _week: PromiseOrValue<BigNumberish>,
+      _claimedBalance: PromiseOrValue<BigNumberish>,
+      _merkleProof: PromiseOrValue<BytesLike>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     claimWeeks(
-      _liquidityProvider: string,
+      _liquidityProvider: PromiseOrValue<string>,
       claims: MerkleRedeem.ClaimStruct[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    claimed(arg0: BigNumberish, arg1: string, overrides?: CallOverrides): Promise<BigNumber>;
+    claimed(
+      arg0: PromiseOrValue<BigNumberish>,
+      arg1: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    merkleRoots(_begin: BigNumberish, _end: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    merkleRoots(
+      _begin: PromiseOrValue<BigNumberish>,
+      _end: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     owner(overrides?: CallOverrides): Promise<BigNumber>;
 
-    renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     seedAllocations(
-      _week: BigNumberish,
-      _merkleRoot: BytesLike,
-      _totalAllocation: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _week: PromiseOrValue<BigNumberish>,
+      _merkleRoot: PromiseOrValue<BytesLike>,
+      _totalAllocation: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     token(overrides?: CallOverrides): Promise<BigNumber>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     verifyClaim(
-      _liquidityProvider: string,
-      _week: BigNumberish,
-      _claimedBalance: BigNumberish,
-      _merkleProof: BytesLike[],
+      _liquidityProvider: PromiseOrValue<string>,
+      _week: PromiseOrValue<BigNumberish>,
+      _claimedBalance: PromiseOrValue<BigNumberish>,
+      _merkleProof: PromiseOrValue<BytesLike>[],
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
-    weekMerkleRoots(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    weekMerkleRoots(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
   };
 
   populateTransaction: {
     claimStatus(
-      _liquidityProvider: string,
-      _begin: BigNumberish,
-      _end: BigNumberish,
+      _liquidityProvider: PromiseOrValue<string>,
+      _begin: PromiseOrValue<BigNumberish>,
+      _end: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     claimWeek(
-      _liquidityProvider: string,
-      _week: BigNumberish,
-      _claimedBalance: BigNumberish,
-      _merkleProof: BytesLike[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _liquidityProvider: PromiseOrValue<string>,
+      _week: PromiseOrValue<BigNumberish>,
+      _claimedBalance: PromiseOrValue<BigNumberish>,
+      _merkleProof: PromiseOrValue<BytesLike>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     claimWeeks(
-      _liquidityProvider: string,
+      _liquidityProvider: PromiseOrValue<string>,
       claims: MerkleRedeem.ClaimStruct[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    claimed(arg0: BigNumberish, arg1: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    claimed(
+      arg0: PromiseOrValue<BigNumberish>,
+      arg1: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
-    merkleRoots(_begin: BigNumberish, _end: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    merkleRoots(
+      _begin: PromiseOrValue<BigNumberish>,
+      _end: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
     owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     seedAllocations(
-      _week: BigNumberish,
-      _merkleRoot: BytesLike,
-      _totalAllocation: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _week: PromiseOrValue<BigNumberish>,
+      _merkleRoot: PromiseOrValue<BytesLike>,
+      _totalAllocation: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     token(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     verifyClaim(
-      _liquidityProvider: string,
-      _week: BigNumberish,
-      _claimedBalance: BigNumberish,
-      _merkleProof: BytesLike[],
+      _liquidityProvider: PromiseOrValue<string>,
+      _week: PromiseOrValue<BigNumberish>,
+      _claimedBalance: PromiseOrValue<BigNumberish>,
+      _merkleProof: PromiseOrValue<BytesLike>[],
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
-    weekMerkleRoots(arg0: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    weekMerkleRoots(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
   };
 }

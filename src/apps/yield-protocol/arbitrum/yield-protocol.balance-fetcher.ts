@@ -26,7 +26,7 @@ export const CAULDRON = '0x23cc87fbebdd67cce167fa9ec6ad3b7fe3892e30';
 export const LADLE = '0x16e25cf364cecc305590128335b8f327975d0560';
 
 type YieldVaultRes = {
-  vaultOwner?: {
+  account?: {
     id: string;
     vaults: {
       debtAmount: number;
@@ -58,7 +58,7 @@ type YieldVaultContractPositionDataProps = {
 
 const vaultsQuery = gql`
   query ($address: ID!) {
-    vaultOwner(id: $address) {
+    account(id: $address) {
       id
       vaults {
         debtAmount
@@ -96,12 +96,12 @@ export class ArbitrumYieldProtocolBalanceFetcher implements BalanceFetcher {
       query: vaultsQuery,
       variables: { address },
     });
-    const vaultOwner = data.vaultOwner;
+    const account = data.account;
 
-    if (!vaultOwner) return [];
+    if (!account) return [];
 
     const positions = await Promise.all(
-      vaultOwner.vaults.map(async vault => {
+      account.vaults.map(async vault => {
         const {
           debtAmount,
           collateralAmount,

@@ -15,7 +15,7 @@ import type {
 } from 'ethers';
 import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
 import type { Listener, Provider } from '@ethersproject/providers';
-import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
 export interface MaplePoolInterface extends utils.Interface {
   functions: {
@@ -161,37 +161,64 @@ export interface MaplePoolInterface extends utils.Interface {
       | 'withdrawnFundsOf',
   ): FunctionFragment;
 
-  encodeFunctionData(functionFragment: 'BPTVal', values: [string, string, string, string]): string;
+  encodeFunctionData(
+    functionFragment: 'BPTVal',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<string>],
+  ): string;
   encodeFunctionData(functionFragment: 'DL_FACTORY', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'accumulativeFundsOf', values: [string]): string;
-  encodeFunctionData(functionFragment: 'accumulativeLossesOf', values: [string]): string;
-  encodeFunctionData(functionFragment: 'allowance', values: [string, string]): string;
-  encodeFunctionData(functionFragment: 'allowedLiquidityProviders', values: [string]): string;
-  encodeFunctionData(functionFragment: 'approve', values: [string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'balanceOf', values: [string]): string;
+  encodeFunctionData(functionFragment: 'accumulativeFundsOf', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'accumulativeLossesOf', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'allowance', values: [PromiseOrValue<string>, PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'allowedLiquidityProviders', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'approve',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'balanceOf', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'cancelWithdraw', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'claim', values: [string, string]): string;
-  encodeFunctionData(functionFragment: 'custodyAllowance', values: [string, string]): string;
+  encodeFunctionData(functionFragment: 'claim', values: [PromiseOrValue<string>, PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'custodyAllowance',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>],
+  ): string;
   encodeFunctionData(functionFragment: 'deactivate', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'debtLockers', values: [string, string]): string;
+  encodeFunctionData(functionFragment: 'debtLockers', values: [PromiseOrValue<string>, PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'decimals', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'decreaseAllowance', values: [string, BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'decreaseAllowance',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
   encodeFunctionData(functionFragment: 'delegateFee', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'deposit', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'depositDate', values: [string]): string;
+  encodeFunctionData(functionFragment: 'deposit', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'depositDate', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'finalize', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'fundLoan', values: [string, string, BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'fundLoan',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
   encodeFunctionData(functionFragment: 'getInitialStakeRequirements', values?: undefined): string;
   encodeFunctionData(
     functionFragment: 'getPoolSharesRequired',
-    values: [string, string, string, string, BigNumberish],
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+    ],
   ): string;
-  encodeFunctionData(functionFragment: 'increaseAllowance', values: [string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'increaseCustodyAllowance', values: [string, BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'increaseAllowance',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'increaseCustodyAllowance',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
   encodeFunctionData(functionFragment: 'intendToWithdraw', values?: undefined): string;
   encodeFunctionData(functionFragment: 'interestBalance', values?: undefined): string;
   encodeFunctionData(functionFragment: 'interestSum', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'isDepositAllowed', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'isDepositAllowed', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'isPoolFinalized', values?: undefined): string;
   encodeFunctionData(functionFragment: 'liquidityAsset', values?: undefined): string;
   encodeFunctionData(functionFragment: 'liquidityCap', values?: undefined): string;
@@ -200,38 +227,56 @@ export interface MaplePoolInterface extends utils.Interface {
   encodeFunctionData(functionFragment: 'lossesBalance', values?: undefined): string;
   encodeFunctionData(functionFragment: 'name', values?: undefined): string;
   encodeFunctionData(functionFragment: 'openToPublic', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'poolAdmins', values: [string]): string;
+  encodeFunctionData(functionFragment: 'poolAdmins', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'poolDelegate', values?: undefined): string;
   encodeFunctionData(functionFragment: 'poolLosses', values?: undefined): string;
   encodeFunctionData(functionFragment: 'poolState', values?: undefined): string;
   encodeFunctionData(functionFragment: 'principalOut', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'reclaimERC20', values: [string]): string;
-  encodeFunctionData(functionFragment: 'recognizableLossesOf', values: [string]): string;
-  encodeFunctionData(functionFragment: 'recognizedLossesOf', values: [string]): string;
-  encodeFunctionData(functionFragment: 'setAllowList', values: [string, boolean]): string;
-  encodeFunctionData(functionFragment: 'setLiquidityCap', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'setLockupPeriod', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'setOpenToPublic', values: [boolean]): string;
-  encodeFunctionData(functionFragment: 'setPoolAdmin', values: [string, boolean]): string;
-  encodeFunctionData(functionFragment: 'setStakingFee', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'reclaimERC20', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'recognizableLossesOf', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'recognizedLossesOf', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'setAllowList',
+    values: [PromiseOrValue<string>, PromiseOrValue<boolean>],
+  ): string;
+  encodeFunctionData(functionFragment: 'setLiquidityCap', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'setLockupPeriod', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'setOpenToPublic', values: [PromiseOrValue<boolean>]): string;
+  encodeFunctionData(
+    functionFragment: 'setPoolAdmin',
+    values: [PromiseOrValue<string>, PromiseOrValue<boolean>],
+  ): string;
+  encodeFunctionData(functionFragment: 'setStakingFee', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'stakeAsset', values?: undefined): string;
   encodeFunctionData(functionFragment: 'stakeLocker', values?: undefined): string;
   encodeFunctionData(functionFragment: 'stakingFee', values?: undefined): string;
   encodeFunctionData(functionFragment: 'superFactory', values?: undefined): string;
   encodeFunctionData(functionFragment: 'symbol', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'totalCustodyAllowance', values: [string]): string;
+  encodeFunctionData(functionFragment: 'totalCustodyAllowance', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'totalSupply', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'transfer', values: [string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'transferByCustodian', values: [string, string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'transferFrom', values: [string, string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'triggerDefault', values: [string, string]): string;
+  encodeFunctionData(
+    functionFragment: 'transfer',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'transferByCustodian',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'transferFrom',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'triggerDefault',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>],
+  ): string;
   encodeFunctionData(functionFragment: 'updateFundsReceived', values?: undefined): string;
   encodeFunctionData(functionFragment: 'updateLossesReceived', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'withdraw', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'withdrawCooldown', values: [string]): string;
+  encodeFunctionData(functionFragment: 'withdraw', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'withdrawCooldown', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'withdrawFunds', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'withdrawableFundsOf', values: [string]): string;
-  encodeFunctionData(functionFragment: 'withdrawnFundsOf', values: [string]): string;
+  encodeFunctionData(functionFragment: 'withdrawableFundsOf', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'withdrawnFundsOf', values: [PromiseOrValue<string>]): string;
 
   decodeFunctionResult(functionFragment: 'BPTVal', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'DL_FACTORY', data: BytesLike): Result;
@@ -610,69 +655,81 @@ export interface MaplePool extends BaseContract {
 
   functions: {
     BPTVal(
-      _bPool: string,
-      _liquidityAsset: string,
-      _staker: string,
-      _stakeLocker: string,
+      _bPool: PromiseOrValue<string>,
+      _liquidityAsset: PromiseOrValue<string>,
+      _staker: PromiseOrValue<string>,
+      _stakeLocker: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber]>;
 
     DL_FACTORY(overrides?: CallOverrides): Promise<[number]>;
 
-    accumulativeFundsOf(_owner: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    accumulativeFundsOf(_owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    accumulativeLossesOf(_owner: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    accumulativeLossesOf(_owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    allowance(owner: string, spender: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    allowance(
+      owner: PromiseOrValue<string>,
+      spender: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber]>;
 
-    allowedLiquidityProviders(arg0: string, overrides?: CallOverrides): Promise<[boolean]>;
+    allowedLiquidityProviders(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[boolean]>;
 
     approve(
-      spender: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      spender: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    balanceOf(account: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    balanceOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    cancelWithdraw(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    cancelWithdraw(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     claim(
-      loan: string,
-      dlFactory: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      loan: PromiseOrValue<string>,
+      dlFactory: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    custodyAllowance(arg0: string, arg1: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    custodyAllowance(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber]>;
 
-    deactivate(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    deactivate(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
-    debtLockers(arg0: string, arg1: string, overrides?: CallOverrides): Promise<[string]>;
+    debtLockers(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<[string]>;
 
     decimals(overrides?: CallOverrides): Promise<[number]>;
 
     decreaseAllowance(
-      spender: string,
-      subtractedValue: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      spender: PromiseOrValue<string>,
+      subtractedValue: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     delegateFee(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     deposit(
-      amt: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      amt: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    depositDate(arg0: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    depositDate(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    finalize(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    finalize(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     fundLoan(
-      loan: string,
-      dlFactory: string,
-      amt: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      loan: PromiseOrValue<string>,
+      dlFactory: PromiseOrValue<string>,
+      amt: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     getInitialStakeRequirements(
@@ -680,33 +737,33 @@ export interface MaplePool extends BaseContract {
     ): Promise<[BigNumber, BigNumber, boolean, BigNumber, BigNumber]>;
 
     getPoolSharesRequired(
-      _bPool: string,
-      _liquidityAsset: string,
-      _staker: string,
-      _stakeLocker: string,
-      _liquidityAssetAmountRequired: BigNumberish,
+      _bPool: PromiseOrValue<string>,
+      _liquidityAsset: PromiseOrValue<string>,
+      _staker: PromiseOrValue<string>,
+      _stakeLocker: PromiseOrValue<string>,
+      _liquidityAssetAmountRequired: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber, BigNumber]>;
 
     increaseAllowance(
-      spender: string,
-      addedValue: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      spender: PromiseOrValue<string>,
+      addedValue: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     increaseCustodyAllowance(
-      custodian: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      custodian: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    intendToWithdraw(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    intendToWithdraw(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     interestBalance(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     interestSum(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    isDepositAllowed(depositAmt: BigNumberish, overrides?: CallOverrides): Promise<[boolean]>;
+    isDepositAllowed(depositAmt: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[boolean]>;
 
     isPoolFinalized(overrides?: CallOverrides): Promise<[boolean]>;
 
@@ -724,7 +781,7 @@ export interface MaplePool extends BaseContract {
 
     openToPublic(overrides?: CallOverrides): Promise<[boolean]>;
 
-    poolAdmins(arg0: string, overrides?: CallOverrides): Promise<[boolean]>;
+    poolAdmins(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[boolean]>;
 
     poolDelegate(overrides?: CallOverrides): Promise<[string]>;
 
@@ -735,44 +792,44 @@ export interface MaplePool extends BaseContract {
     principalOut(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     reclaimERC20(
-      token: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      token: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    recognizableLossesOf(_owner: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    recognizableLossesOf(_owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    recognizedLossesOf(_owner: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    recognizedLossesOf(_owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     setAllowList(
-      account: string,
-      status: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      account: PromiseOrValue<string>,
+      status: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setLiquidityCap(
-      newLiquidityCap: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newLiquidityCap: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setLockupPeriod(
-      newLockupPeriod: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newLockupPeriod: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setOpenToPublic(
-      open: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      open: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setPoolAdmin(
-      poolAdmin: string,
-      allowed: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      poolAdmin: PromiseOrValue<string>,
+      allowed: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setStakingFee(
-      newStakingFee: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newStakingFee: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     stakeAsset(overrides?: CallOverrides): Promise<[string]>;
@@ -785,115 +842,126 @@ export interface MaplePool extends BaseContract {
 
     symbol(overrides?: CallOverrides): Promise<[string]>;
 
-    totalCustodyAllowance(arg0: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    totalCustodyAllowance(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     totalSupply(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     transfer(
-      recipient: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      recipient: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     transferByCustodian(
-      from: string,
-      to: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     transferFrom(
-      sender: string,
-      recipient: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      sender: PromiseOrValue<string>,
+      recipient: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     triggerDefault(
-      loan: string,
-      dlFactory: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      loan: PromiseOrValue<string>,
+      dlFactory: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    updateFundsReceived(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    updateFundsReceived(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
-    updateLossesReceived(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    updateLossesReceived(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     withdraw(
-      amt: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      amt: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    withdrawCooldown(arg0: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    withdrawCooldown(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    withdrawFunds(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    withdrawFunds(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
-    withdrawableFundsOf(_owner: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    withdrawableFundsOf(_owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    withdrawnFundsOf(_owner: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    withdrawnFundsOf(_owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
   };
 
   BPTVal(
-    _bPool: string,
-    _liquidityAsset: string,
-    _staker: string,
-    _stakeLocker: string,
+    _bPool: PromiseOrValue<string>,
+    _liquidityAsset: PromiseOrValue<string>,
+    _staker: PromiseOrValue<string>,
+    _stakeLocker: PromiseOrValue<string>,
     overrides?: CallOverrides,
   ): Promise<BigNumber>;
 
   DL_FACTORY(overrides?: CallOverrides): Promise<number>;
 
-  accumulativeFundsOf(_owner: string, overrides?: CallOverrides): Promise<BigNumber>;
+  accumulativeFundsOf(_owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  accumulativeLossesOf(_owner: string, overrides?: CallOverrides): Promise<BigNumber>;
+  accumulativeLossesOf(_owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  allowance(owner: string, spender: string, overrides?: CallOverrides): Promise<BigNumber>;
+  allowance(
+    owner: PromiseOrValue<string>,
+    spender: PromiseOrValue<string>,
+    overrides?: CallOverrides,
+  ): Promise<BigNumber>;
 
-  allowedLiquidityProviders(arg0: string, overrides?: CallOverrides): Promise<boolean>;
+  allowedLiquidityProviders(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
   approve(
-    spender: string,
-    amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    spender: PromiseOrValue<string>,
+    amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  balanceOf(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+  balanceOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  cancelWithdraw(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  cancelWithdraw(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   claim(
-    loan: string,
-    dlFactory: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    loan: PromiseOrValue<string>,
+    dlFactory: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  custodyAllowance(arg0: string, arg1: string, overrides?: CallOverrides): Promise<BigNumber>;
+  custodyAllowance(
+    arg0: PromiseOrValue<string>,
+    arg1: PromiseOrValue<string>,
+    overrides?: CallOverrides,
+  ): Promise<BigNumber>;
 
-  deactivate(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  deactivate(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
-  debtLockers(arg0: string, arg1: string, overrides?: CallOverrides): Promise<string>;
+  debtLockers(arg0: PromiseOrValue<string>, arg1: PromiseOrValue<string>, overrides?: CallOverrides): Promise<string>;
 
   decimals(overrides?: CallOverrides): Promise<number>;
 
   decreaseAllowance(
-    spender: string,
-    subtractedValue: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    spender: PromiseOrValue<string>,
+    subtractedValue: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   delegateFee(overrides?: CallOverrides): Promise<BigNumber>;
 
-  deposit(amt: BigNumberish, overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  deposit(
+    amt: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
+  ): Promise<ContractTransaction>;
 
-  depositDate(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+  depositDate(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  finalize(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  finalize(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   fundLoan(
-    loan: string,
-    dlFactory: string,
-    amt: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    loan: PromiseOrValue<string>,
+    dlFactory: PromiseOrValue<string>,
+    amt: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   getInitialStakeRequirements(
@@ -901,33 +969,33 @@ export interface MaplePool extends BaseContract {
   ): Promise<[BigNumber, BigNumber, boolean, BigNumber, BigNumber]>;
 
   getPoolSharesRequired(
-    _bPool: string,
-    _liquidityAsset: string,
-    _staker: string,
-    _stakeLocker: string,
-    _liquidityAssetAmountRequired: BigNumberish,
+    _bPool: PromiseOrValue<string>,
+    _liquidityAsset: PromiseOrValue<string>,
+    _staker: PromiseOrValue<string>,
+    _stakeLocker: PromiseOrValue<string>,
+    _liquidityAssetAmountRequired: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides,
   ): Promise<[BigNumber, BigNumber]>;
 
   increaseAllowance(
-    spender: string,
-    addedValue: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    spender: PromiseOrValue<string>,
+    addedValue: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   increaseCustodyAllowance(
-    custodian: string,
-    amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    custodian: PromiseOrValue<string>,
+    amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  intendToWithdraw(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  intendToWithdraw(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   interestBalance(overrides?: CallOverrides): Promise<BigNumber>;
 
   interestSum(overrides?: CallOverrides): Promise<BigNumber>;
 
-  isDepositAllowed(depositAmt: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+  isDepositAllowed(depositAmt: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<boolean>;
 
   isPoolFinalized(overrides?: CallOverrides): Promise<boolean>;
 
@@ -945,7 +1013,7 @@ export interface MaplePool extends BaseContract {
 
   openToPublic(overrides?: CallOverrides): Promise<boolean>;
 
-  poolAdmins(arg0: string, overrides?: CallOverrides): Promise<boolean>;
+  poolAdmins(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
   poolDelegate(overrides?: CallOverrides): Promise<string>;
 
@@ -956,44 +1024,44 @@ export interface MaplePool extends BaseContract {
   principalOut(overrides?: CallOverrides): Promise<BigNumber>;
 
   reclaimERC20(
-    token: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    token: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  recognizableLossesOf(_owner: string, overrides?: CallOverrides): Promise<BigNumber>;
+  recognizableLossesOf(_owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  recognizedLossesOf(_owner: string, overrides?: CallOverrides): Promise<BigNumber>;
+  recognizedLossesOf(_owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   setAllowList(
-    account: string,
-    status: boolean,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    account: PromiseOrValue<string>,
+    status: PromiseOrValue<boolean>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setLiquidityCap(
-    newLiquidityCap: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    newLiquidityCap: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setLockupPeriod(
-    newLockupPeriod: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    newLockupPeriod: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setOpenToPublic(
-    open: boolean,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    open: PromiseOrValue<boolean>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setPoolAdmin(
-    poolAdmin: string,
-    allowed: boolean,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    poolAdmin: PromiseOrValue<string>,
+    allowed: PromiseOrValue<boolean>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setStakingFee(
-    newStakingFee: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    newStakingFee: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   stakeAsset(overrides?: CallOverrides): Promise<string>;
@@ -1006,116 +1074,149 @@ export interface MaplePool extends BaseContract {
 
   symbol(overrides?: CallOverrides): Promise<string>;
 
-  totalCustodyAllowance(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+  totalCustodyAllowance(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
   transfer(
-    recipient: string,
-    amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    recipient: PromiseOrValue<string>,
+    amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   transferByCustodian(
-    from: string,
-    to: string,
-    amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    from: PromiseOrValue<string>,
+    to: PromiseOrValue<string>,
+    amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   transferFrom(
-    sender: string,
-    recipient: string,
-    amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    sender: PromiseOrValue<string>,
+    recipient: PromiseOrValue<string>,
+    amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   triggerDefault(
-    loan: string,
-    dlFactory: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    loan: PromiseOrValue<string>,
+    dlFactory: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  updateFundsReceived(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  updateFundsReceived(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
-  updateLossesReceived(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  updateLossesReceived(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   withdraw(
-    amt: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    amt: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  withdrawCooldown(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+  withdrawCooldown(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  withdrawFunds(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  withdrawFunds(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
-  withdrawableFundsOf(_owner: string, overrides?: CallOverrides): Promise<BigNumber>;
+  withdrawableFundsOf(_owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  withdrawnFundsOf(_owner: string, overrides?: CallOverrides): Promise<BigNumber>;
+  withdrawnFundsOf(_owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   callStatic: {
     BPTVal(
-      _bPool: string,
-      _liquidityAsset: string,
-      _staker: string,
-      _stakeLocker: string,
+      _bPool: PromiseOrValue<string>,
+      _liquidityAsset: PromiseOrValue<string>,
+      _staker: PromiseOrValue<string>,
+      _stakeLocker: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     DL_FACTORY(overrides?: CallOverrides): Promise<number>;
 
-    accumulativeFundsOf(_owner: string, overrides?: CallOverrides): Promise<BigNumber>;
+    accumulativeFundsOf(_owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    accumulativeLossesOf(_owner: string, overrides?: CallOverrides): Promise<BigNumber>;
+    accumulativeLossesOf(_owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    allowance(owner: string, spender: string, overrides?: CallOverrides): Promise<BigNumber>;
+    allowance(
+      owner: PromiseOrValue<string>,
+      spender: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    allowedLiquidityProviders(arg0: string, overrides?: CallOverrides): Promise<boolean>;
+    allowedLiquidityProviders(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
-    approve(spender: string, amount: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+    approve(
+      spender: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
 
-    balanceOf(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    balanceOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     cancelWithdraw(overrides?: CallOverrides): Promise<void>;
 
-    claim(loan: string, dlFactory: string, overrides?: CallOverrides): Promise<BigNumber[]>;
+    claim(
+      loan: PromiseOrValue<string>,
+      dlFactory: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber[]>;
 
-    custodyAllowance(arg0: string, arg1: string, overrides?: CallOverrides): Promise<BigNumber>;
+    custodyAllowance(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     deactivate(overrides?: CallOverrides): Promise<void>;
 
-    debtLockers(arg0: string, arg1: string, overrides?: CallOverrides): Promise<string>;
+    debtLockers(arg0: PromiseOrValue<string>, arg1: PromiseOrValue<string>, overrides?: CallOverrides): Promise<string>;
 
     decimals(overrides?: CallOverrides): Promise<number>;
 
-    decreaseAllowance(spender: string, subtractedValue: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+    decreaseAllowance(
+      spender: PromiseOrValue<string>,
+      subtractedValue: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
 
     delegateFee(overrides?: CallOverrides): Promise<BigNumber>;
 
-    deposit(amt: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    deposit(amt: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
-    depositDate(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    depositDate(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     finalize(overrides?: CallOverrides): Promise<void>;
 
-    fundLoan(loan: string, dlFactory: string, amt: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    fundLoan(
+      loan: PromiseOrValue<string>,
+      dlFactory: PromiseOrValue<string>,
+      amt: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
     getInitialStakeRequirements(
       overrides?: CallOverrides,
     ): Promise<[BigNumber, BigNumber, boolean, BigNumber, BigNumber]>;
 
     getPoolSharesRequired(
-      _bPool: string,
-      _liquidityAsset: string,
-      _staker: string,
-      _stakeLocker: string,
-      _liquidityAssetAmountRequired: BigNumberish,
+      _bPool: PromiseOrValue<string>,
+      _liquidityAsset: PromiseOrValue<string>,
+      _staker: PromiseOrValue<string>,
+      _stakeLocker: PromiseOrValue<string>,
+      _liquidityAssetAmountRequired: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber, BigNumber]>;
 
-    increaseAllowance(spender: string, addedValue: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+    increaseAllowance(
+      spender: PromiseOrValue<string>,
+      addedValue: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
 
-    increaseCustodyAllowance(custodian: string, amount: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    increaseCustodyAllowance(
+      custodian: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
     intendToWithdraw(overrides?: CallOverrides): Promise<void>;
 
@@ -1123,7 +1224,7 @@ export interface MaplePool extends BaseContract {
 
     interestSum(overrides?: CallOverrides): Promise<BigNumber>;
 
-    isDepositAllowed(depositAmt: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+    isDepositAllowed(depositAmt: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<boolean>;
 
     isPoolFinalized(overrides?: CallOverrides): Promise<boolean>;
 
@@ -1141,7 +1242,7 @@ export interface MaplePool extends BaseContract {
 
     openToPublic(overrides?: CallOverrides): Promise<boolean>;
 
-    poolAdmins(arg0: string, overrides?: CallOverrides): Promise<boolean>;
+    poolAdmins(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
     poolDelegate(overrides?: CallOverrides): Promise<string>;
 
@@ -1151,23 +1252,31 @@ export interface MaplePool extends BaseContract {
 
     principalOut(overrides?: CallOverrides): Promise<BigNumber>;
 
-    reclaimERC20(token: string, overrides?: CallOverrides): Promise<void>;
+    reclaimERC20(token: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    recognizableLossesOf(_owner: string, overrides?: CallOverrides): Promise<BigNumber>;
+    recognizableLossesOf(_owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    recognizedLossesOf(_owner: string, overrides?: CallOverrides): Promise<BigNumber>;
+    recognizedLossesOf(_owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    setAllowList(account: string, status: boolean, overrides?: CallOverrides): Promise<void>;
+    setAllowList(
+      account: PromiseOrValue<string>,
+      status: PromiseOrValue<boolean>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    setLiquidityCap(newLiquidityCap: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    setLiquidityCap(newLiquidityCap: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
-    setLockupPeriod(newLockupPeriod: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    setLockupPeriod(newLockupPeriod: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
-    setOpenToPublic(open: boolean, overrides?: CallOverrides): Promise<void>;
+    setOpenToPublic(open: PromiseOrValue<boolean>, overrides?: CallOverrides): Promise<void>;
 
-    setPoolAdmin(poolAdmin: string, allowed: boolean, overrides?: CallOverrides): Promise<void>;
+    setPoolAdmin(
+      poolAdmin: PromiseOrValue<string>,
+      allowed: PromiseOrValue<boolean>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    setStakingFee(newStakingFee: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    setStakingFee(newStakingFee: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
     stakeAsset(overrides?: CallOverrides): Promise<string>;
 
@@ -1179,50 +1288,76 @@ export interface MaplePool extends BaseContract {
 
     symbol(overrides?: CallOverrides): Promise<string>;
 
-    totalCustodyAllowance(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    totalCustodyAllowance(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
-    transfer(recipient: string, amount: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+    transfer(
+      recipient: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
 
-    transferByCustodian(from: string, to: string, amount: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    transferByCustodian(
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    transferFrom(sender: string, recipient: string, amount: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+    transferFrom(
+      sender: PromiseOrValue<string>,
+      recipient: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
 
-    triggerDefault(loan: string, dlFactory: string, overrides?: CallOverrides): Promise<void>;
+    triggerDefault(
+      loan: PromiseOrValue<string>,
+      dlFactory: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
     updateFundsReceived(overrides?: CallOverrides): Promise<void>;
 
     updateLossesReceived(overrides?: CallOverrides): Promise<void>;
 
-    withdraw(amt: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    withdraw(amt: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
-    withdrawCooldown(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    withdrawCooldown(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     withdrawFunds(overrides?: CallOverrides): Promise<void>;
 
-    withdrawableFundsOf(_owner: string, overrides?: CallOverrides): Promise<BigNumber>;
+    withdrawableFundsOf(_owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    withdrawnFundsOf(_owner: string, overrides?: CallOverrides): Promise<BigNumber>;
+    withdrawnFundsOf(_owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
   };
 
   filters: {
     'Approval(address,address,uint256)'(
-      owner?: string | null,
-      spender?: string | null,
+      owner?: PromiseOrValue<string> | null,
+      spender?: PromiseOrValue<string> | null,
       value?: null,
     ): ApprovalEventFilter;
-    Approval(owner?: string | null, spender?: string | null, value?: null): ApprovalEventFilter;
+    Approval(
+      owner?: PromiseOrValue<string> | null,
+      spender?: PromiseOrValue<string> | null,
+      value?: null,
+    ): ApprovalEventFilter;
 
     'BalanceUpdated(address,address,uint256)'(
-      liquidityProvider?: string | null,
-      token?: string | null,
+      liquidityProvider?: PromiseOrValue<string> | null,
+      token?: PromiseOrValue<string> | null,
       balance?: null,
     ): BalanceUpdatedEventFilter;
-    BalanceUpdated(liquidityProvider?: string | null, token?: string | null, balance?: null): BalanceUpdatedEventFilter;
+    BalanceUpdated(
+      liquidityProvider?: PromiseOrValue<string> | null,
+      token?: PromiseOrValue<string> | null,
+      balance?: null,
+    ): BalanceUpdatedEventFilter;
 
     'Claim(address,uint256,uint256,uint256,uint256,uint256)'(
-      loan?: string | null,
+      loan?: PromiseOrValue<string> | null,
       interest?: null,
       principal?: null,
       fee?: null,
@@ -1230,7 +1365,7 @@ export interface MaplePool extends BaseContract {
       poolDelegatePortion?: null,
     ): ClaimEventFilter;
     Claim(
-      loan?: string | null,
+      loan?: PromiseOrValue<string> | null,
       interest?: null,
       principal?: null,
       fee?: null,
@@ -1238,44 +1373,47 @@ export interface MaplePool extends BaseContract {
       poolDelegatePortion?: null,
     ): ClaimEventFilter;
 
-    'Cooldown(address,uint256)'(liquidityProvider?: string | null, cooldown?: null): CooldownEventFilter;
-    Cooldown(liquidityProvider?: string | null, cooldown?: null): CooldownEventFilter;
+    'Cooldown(address,uint256)'(
+      liquidityProvider?: PromiseOrValue<string> | null,
+      cooldown?: null,
+    ): CooldownEventFilter;
+    Cooldown(liquidityProvider?: PromiseOrValue<string> | null, cooldown?: null): CooldownEventFilter;
 
     'CustodyAllowanceChanged(address,address,uint256,uint256)'(
-      liquidityProvider?: string | null,
-      custodian?: string | null,
+      liquidityProvider?: PromiseOrValue<string> | null,
+      custodian?: PromiseOrValue<string> | null,
       oldAllowance?: null,
       newAllowance?: null,
     ): CustodyAllowanceChangedEventFilter;
     CustodyAllowanceChanged(
-      liquidityProvider?: string | null,
-      custodian?: string | null,
+      liquidityProvider?: PromiseOrValue<string> | null,
+      custodian?: PromiseOrValue<string> | null,
       oldAllowance?: null,
       newAllowance?: null,
     ): CustodyAllowanceChangedEventFilter;
 
     'CustodyTransfer(address,address,address,uint256)'(
-      custodian?: string | null,
-      from?: string | null,
-      to?: string | null,
+      custodian?: PromiseOrValue<string> | null,
+      from?: PromiseOrValue<string> | null,
+      to?: PromiseOrValue<string> | null,
       amount?: null,
     ): CustodyTransferEventFilter;
     CustodyTransfer(
-      custodian?: string | null,
-      from?: string | null,
-      to?: string | null,
+      custodian?: PromiseOrValue<string> | null,
+      from?: PromiseOrValue<string> | null,
+      to?: PromiseOrValue<string> | null,
       amount?: null,
     ): CustodyTransferEventFilter;
 
     'DefaultSuffered(address,uint256,uint256,uint256,uint256)'(
-      loan?: string | null,
+      loan?: PromiseOrValue<string> | null,
       defaultSuffered?: null,
       bptsBurned?: null,
       bptsReturned?: null,
       liquidityAssetRecoveredFromBurn?: null,
     ): DefaultSufferedEventFilter;
     DefaultSuffered(
-      loan?: string | null,
+      loan?: PromiseOrValue<string> | null,
       defaultSuffered?: null,
       bptsBurned?: null,
       bptsReturned?: null,
@@ -1283,71 +1421,93 @@ export interface MaplePool extends BaseContract {
     ): DefaultSufferedEventFilter;
 
     'DepositDateUpdated(address,uint256)'(
-      liquidityProvider?: string | null,
+      liquidityProvider?: PromiseOrValue<string> | null,
       depositDate?: null,
     ): DepositDateUpdatedEventFilter;
-    DepositDateUpdated(liquidityProvider?: string | null, depositDate?: null): DepositDateUpdatedEventFilter;
+    DepositDateUpdated(
+      liquidityProvider?: PromiseOrValue<string> | null,
+      depositDate?: null,
+    ): DepositDateUpdatedEventFilter;
 
-    'FundsDistributed(address,uint256)'(by?: string | null, fundsDistributed?: null): FundsDistributedEventFilter;
-    FundsDistributed(by?: string | null, fundsDistributed?: null): FundsDistributedEventFilter;
+    'FundsDistributed(address,uint256)'(
+      by?: PromiseOrValue<string> | null,
+      fundsDistributed?: null,
+    ): FundsDistributedEventFilter;
+    FundsDistributed(by?: PromiseOrValue<string> | null, fundsDistributed?: null): FundsDistributedEventFilter;
 
     'FundsWithdrawn(address,uint256,uint256)'(
-      by?: string | null,
+      by?: PromiseOrValue<string> | null,
       fundsWithdrawn?: null,
       totalWithdrawn?: null,
     ): FundsWithdrawnEventFilter;
-    FundsWithdrawn(by?: string | null, fundsWithdrawn?: null, totalWithdrawn?: null): FundsWithdrawnEventFilter;
+    FundsWithdrawn(
+      by?: PromiseOrValue<string> | null,
+      fundsWithdrawn?: null,
+      totalWithdrawn?: null,
+    ): FundsWithdrawnEventFilter;
 
-    'LPStatusChanged(address,bool)'(liquidityProvider?: string | null, status?: null): LPStatusChangedEventFilter;
-    LPStatusChanged(liquidityProvider?: string | null, status?: null): LPStatusChangedEventFilter;
+    'LPStatusChanged(address,bool)'(
+      liquidityProvider?: PromiseOrValue<string> | null,
+      status?: null,
+    ): LPStatusChangedEventFilter;
+    LPStatusChanged(liquidityProvider?: PromiseOrValue<string> | null, status?: null): LPStatusChangedEventFilter;
 
     'LiquidityCapSet(uint256)'(newLiquidityCap?: null): LiquidityCapSetEventFilter;
     LiquidityCapSet(newLiquidityCap?: null): LiquidityCapSetEventFilter;
 
     'LoanFunded(address,address,uint256)'(
-      loan?: string | null,
+      loan?: PromiseOrValue<string> | null,
       debtLocker?: null,
       amountFunded?: null,
     ): LoanFundedEventFilter;
-    LoanFunded(loan?: string | null, debtLocker?: null, amountFunded?: null): LoanFundedEventFilter;
+    LoanFunded(loan?: PromiseOrValue<string> | null, debtLocker?: null, amountFunded?: null): LoanFundedEventFilter;
 
     'LockupPeriodSet(uint256)'(newLockupPeriod?: null): LockupPeriodSetEventFilter;
     LockupPeriodSet(newLockupPeriod?: null): LockupPeriodSetEventFilter;
 
     'LossesCorrectionUpdated(address,int256)'(
-      account?: string | null,
+      account?: PromiseOrValue<string> | null,
       lossesCorrection?: null,
     ): LossesCorrectionUpdatedEventFilter;
-    LossesCorrectionUpdated(account?: string | null, lossesCorrection?: null): LossesCorrectionUpdatedEventFilter;
+    LossesCorrectionUpdated(
+      account?: PromiseOrValue<string> | null,
+      lossesCorrection?: null,
+    ): LossesCorrectionUpdatedEventFilter;
 
-    'LossesDistributed(address,uint256)'(by?: string | null, lossesDistributed?: null): LossesDistributedEventFilter;
-    LossesDistributed(by?: string | null, lossesDistributed?: null): LossesDistributedEventFilter;
+    'LossesDistributed(address,uint256)'(
+      by?: PromiseOrValue<string> | null,
+      lossesDistributed?: null,
+    ): LossesDistributedEventFilter;
+    LossesDistributed(by?: PromiseOrValue<string> | null, lossesDistributed?: null): LossesDistributedEventFilter;
 
     'LossesPerShareUpdated(uint256)'(lossesPerShare?: null): LossesPerShareUpdatedEventFilter;
     LossesPerShareUpdated(lossesPerShare?: null): LossesPerShareUpdatedEventFilter;
 
     'LossesRecognized(address,uint256,uint256)'(
-      by?: string | null,
+      by?: PromiseOrValue<string> | null,
       lossesRecognized?: null,
       totalLossesRecognized?: null,
     ): LossesRecognizedEventFilter;
     LossesRecognized(
-      by?: string | null,
+      by?: PromiseOrValue<string> | null,
       lossesRecognized?: null,
       totalLossesRecognized?: null,
     ): LossesRecognizedEventFilter;
 
     'PointsCorrectionUpdated(address,int256)'(
-      account?: string | null,
+      account?: PromiseOrValue<string> | null,
       pointsCorrection?: null,
     ): PointsCorrectionUpdatedEventFilter;
-    PointsCorrectionUpdated(account?: string | null, pointsCorrection?: null): PointsCorrectionUpdatedEventFilter;
+    PointsCorrectionUpdated(
+      account?: PromiseOrValue<string> | null,
+      pointsCorrection?: null,
+    ): PointsCorrectionUpdatedEventFilter;
 
     'PointsPerShareUpdated(uint256)'(pointsPerShare?: null): PointsPerShareUpdatedEventFilter;
     PointsPerShareUpdated(pointsPerShare?: null): PointsPerShareUpdatedEventFilter;
 
-    'PoolAdminSet(address,bool)'(poolAdmin?: string | null, allowed?: null): PoolAdminSetEventFilter;
-    PoolAdminSet(poolAdmin?: string | null, allowed?: null): PoolAdminSetEventFilter;
+    'PoolAdminSet(address,bool)'(poolAdmin?: PromiseOrValue<string> | null, allowed?: null): PoolAdminSetEventFilter;
+    PoolAdminSet(poolAdmin?: PromiseOrValue<string> | null, allowed?: null): PoolAdminSetEventFilter;
 
     'PoolOpenedToPublic(bool)'(isOpen?: null): PoolOpenedToPublicEventFilter;
     PoolOpenedToPublic(isOpen?: null): PoolOpenedToPublicEventFilter;
@@ -1359,112 +1519,135 @@ export interface MaplePool extends BaseContract {
     StakingFeeSet(newStakingFee?: null): StakingFeeSetEventFilter;
 
     'TotalCustodyAllowanceUpdated(address,uint256)'(
-      liquidityProvider?: string | null,
+      liquidityProvider?: PromiseOrValue<string> | null,
       newTotalAllowance?: null,
     ): TotalCustodyAllowanceUpdatedEventFilter;
     TotalCustodyAllowanceUpdated(
-      liquidityProvider?: string | null,
+      liquidityProvider?: PromiseOrValue<string> | null,
       newTotalAllowance?: null,
     ): TotalCustodyAllowanceUpdatedEventFilter;
 
-    'Transfer(address,address,uint256)'(from?: string | null, to?: string | null, value?: null): TransferEventFilter;
-    Transfer(from?: string | null, to?: string | null, value?: null): TransferEventFilter;
+    'Transfer(address,address,uint256)'(
+      from?: PromiseOrValue<string> | null,
+      to?: PromiseOrValue<string> | null,
+      value?: null,
+    ): TransferEventFilter;
+    Transfer(
+      from?: PromiseOrValue<string> | null,
+      to?: PromiseOrValue<string> | null,
+      value?: null,
+    ): TransferEventFilter;
   };
 
   estimateGas: {
     BPTVal(
-      _bPool: string,
-      _liquidityAsset: string,
-      _staker: string,
-      _stakeLocker: string,
+      _bPool: PromiseOrValue<string>,
+      _liquidityAsset: PromiseOrValue<string>,
+      _staker: PromiseOrValue<string>,
+      _stakeLocker: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     DL_FACTORY(overrides?: CallOverrides): Promise<BigNumber>;
 
-    accumulativeFundsOf(_owner: string, overrides?: CallOverrides): Promise<BigNumber>;
+    accumulativeFundsOf(_owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    accumulativeLossesOf(_owner: string, overrides?: CallOverrides): Promise<BigNumber>;
+    accumulativeLossesOf(_owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    allowance(owner: string, spender: string, overrides?: CallOverrides): Promise<BigNumber>;
+    allowance(
+      owner: PromiseOrValue<string>,
+      spender: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    allowedLiquidityProviders(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    allowedLiquidityProviders(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     approve(
-      spender: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      spender: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    balanceOf(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    balanceOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    cancelWithdraw(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    cancelWithdraw(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     claim(
-      loan: string,
-      dlFactory: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      loan: PromiseOrValue<string>,
+      dlFactory: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    custodyAllowance(arg0: string, arg1: string, overrides?: CallOverrides): Promise<BigNumber>;
+    custodyAllowance(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    deactivate(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    deactivate(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
-    debtLockers(arg0: string, arg1: string, overrides?: CallOverrides): Promise<BigNumber>;
+    debtLockers(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     decimals(overrides?: CallOverrides): Promise<BigNumber>;
 
     decreaseAllowance(
-      spender: string,
-      subtractedValue: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      spender: PromiseOrValue<string>,
+      subtractedValue: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     delegateFee(overrides?: CallOverrides): Promise<BigNumber>;
 
-    deposit(amt: BigNumberish, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    deposit(
+      amt: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
-    depositDate(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    depositDate(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    finalize(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    finalize(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     fundLoan(
-      loan: string,
-      dlFactory: string,
-      amt: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      loan: PromiseOrValue<string>,
+      dlFactory: PromiseOrValue<string>,
+      amt: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     getInitialStakeRequirements(overrides?: CallOverrides): Promise<BigNumber>;
 
     getPoolSharesRequired(
-      _bPool: string,
-      _liquidityAsset: string,
-      _staker: string,
-      _stakeLocker: string,
-      _liquidityAssetAmountRequired: BigNumberish,
+      _bPool: PromiseOrValue<string>,
+      _liquidityAsset: PromiseOrValue<string>,
+      _staker: PromiseOrValue<string>,
+      _stakeLocker: PromiseOrValue<string>,
+      _liquidityAssetAmountRequired: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     increaseAllowance(
-      spender: string,
-      addedValue: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      spender: PromiseOrValue<string>,
+      addedValue: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     increaseCustodyAllowance(
-      custodian: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      custodian: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    intendToWithdraw(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    intendToWithdraw(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     interestBalance(overrides?: CallOverrides): Promise<BigNumber>;
 
     interestSum(overrides?: CallOverrides): Promise<BigNumber>;
 
-    isDepositAllowed(depositAmt: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    isDepositAllowed(depositAmt: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     isPoolFinalized(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -1482,7 +1665,7 @@ export interface MaplePool extends BaseContract {
 
     openToPublic(overrides?: CallOverrides): Promise<BigNumber>;
 
-    poolAdmins(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    poolAdmins(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     poolDelegate(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -1492,39 +1675,45 @@ export interface MaplePool extends BaseContract {
 
     principalOut(overrides?: CallOverrides): Promise<BigNumber>;
 
-    reclaimERC20(token: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    reclaimERC20(
+      token: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
-    recognizableLossesOf(_owner: string, overrides?: CallOverrides): Promise<BigNumber>;
+    recognizableLossesOf(_owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    recognizedLossesOf(_owner: string, overrides?: CallOverrides): Promise<BigNumber>;
+    recognizedLossesOf(_owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     setAllowList(
-      account: string,
-      status: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      account: PromiseOrValue<string>,
+      status: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setLiquidityCap(
-      newLiquidityCap: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newLiquidityCap: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setLockupPeriod(
-      newLockupPeriod: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newLockupPeriod: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    setOpenToPublic(open: boolean, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    setOpenToPublic(
+      open: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     setPoolAdmin(
-      poolAdmin: string,
-      allowed: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      poolAdmin: PromiseOrValue<string>,
+      allowed: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setStakingFee(
-      newStakingFee: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newStakingFee: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     stakeAsset(overrides?: CallOverrides): Promise<BigNumber>;
@@ -1537,148 +1726,166 @@ export interface MaplePool extends BaseContract {
 
     symbol(overrides?: CallOverrides): Promise<BigNumber>;
 
-    totalCustodyAllowance(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    totalCustodyAllowance(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
     transfer(
-      recipient: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      recipient: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     transferByCustodian(
-      from: string,
-      to: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     transferFrom(
-      sender: string,
-      recipient: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      sender: PromiseOrValue<string>,
+      recipient: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     triggerDefault(
-      loan: string,
-      dlFactory: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      loan: PromiseOrValue<string>,
+      dlFactory: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    updateFundsReceived(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    updateFundsReceived(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
-    updateLossesReceived(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    updateLossesReceived(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
-    withdraw(amt: BigNumberish, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    withdraw(
+      amt: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
-    withdrawCooldown(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    withdrawCooldown(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    withdrawFunds(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    withdrawFunds(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
-    withdrawableFundsOf(_owner: string, overrides?: CallOverrides): Promise<BigNumber>;
+    withdrawableFundsOf(_owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    withdrawnFundsOf(_owner: string, overrides?: CallOverrides): Promise<BigNumber>;
+    withdrawnFundsOf(_owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
   };
 
   populateTransaction: {
     BPTVal(
-      _bPool: string,
-      _liquidityAsset: string,
-      _staker: string,
-      _stakeLocker: string,
+      _bPool: PromiseOrValue<string>,
+      _liquidityAsset: PromiseOrValue<string>,
+      _staker: PromiseOrValue<string>,
+      _stakeLocker: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     DL_FACTORY(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    accumulativeFundsOf(_owner: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    accumulativeFundsOf(_owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    accumulativeLossesOf(_owner: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    accumulativeLossesOf(_owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    allowance(owner: string, spender: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    allowance(
+      owner: PromiseOrValue<string>,
+      spender: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
-    allowedLiquidityProviders(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    allowedLiquidityProviders(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     approve(
-      spender: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      spender: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    balanceOf(account: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    balanceOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    cancelWithdraw(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    cancelWithdraw(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     claim(
-      loan: string,
-      dlFactory: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      loan: PromiseOrValue<string>,
+      dlFactory: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    custodyAllowance(arg0: string, arg1: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    custodyAllowance(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
-    deactivate(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    deactivate(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
-    debtLockers(arg0: string, arg1: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    debtLockers(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
     decimals(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     decreaseAllowance(
-      spender: string,
-      subtractedValue: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      spender: PromiseOrValue<string>,
+      subtractedValue: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     delegateFee(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     deposit(
-      amt: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      amt: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    depositDate(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    depositDate(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    finalize(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    finalize(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     fundLoan(
-      loan: string,
-      dlFactory: string,
-      amt: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      loan: PromiseOrValue<string>,
+      dlFactory: PromiseOrValue<string>,
+      amt: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     getInitialStakeRequirements(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     getPoolSharesRequired(
-      _bPool: string,
-      _liquidityAsset: string,
-      _staker: string,
-      _stakeLocker: string,
-      _liquidityAssetAmountRequired: BigNumberish,
+      _bPool: PromiseOrValue<string>,
+      _liquidityAsset: PromiseOrValue<string>,
+      _staker: PromiseOrValue<string>,
+      _stakeLocker: PromiseOrValue<string>,
+      _liquidityAssetAmountRequired: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     increaseAllowance(
-      spender: string,
-      addedValue: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      spender: PromiseOrValue<string>,
+      addedValue: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     increaseCustodyAllowance(
-      custodian: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      custodian: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    intendToWithdraw(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    intendToWithdraw(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     interestBalance(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     interestSum(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    isDepositAllowed(depositAmt: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    isDepositAllowed(
+      depositAmt: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
     isPoolFinalized(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
@@ -1696,7 +1903,7 @@ export interface MaplePool extends BaseContract {
 
     openToPublic(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    poolAdmins(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    poolAdmins(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     poolDelegate(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
@@ -1707,44 +1914,44 @@ export interface MaplePool extends BaseContract {
     principalOut(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     reclaimERC20(
-      token: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      token: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    recognizableLossesOf(_owner: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    recognizableLossesOf(_owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    recognizedLossesOf(_owner: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    recognizedLossesOf(_owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     setAllowList(
-      account: string,
-      status: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      account: PromiseOrValue<string>,
+      status: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setLiquidityCap(
-      newLiquidityCap: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newLiquidityCap: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setLockupPeriod(
-      newLockupPeriod: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newLockupPeriod: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setOpenToPublic(
-      open: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      open: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setPoolAdmin(
-      poolAdmin: string,
-      allowed: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      poolAdmin: PromiseOrValue<string>,
+      allowed: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setStakingFee(
-      newStakingFee: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newStakingFee: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     stakeAsset(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -1757,51 +1964,51 @@ export interface MaplePool extends BaseContract {
 
     symbol(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    totalCustodyAllowance(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    totalCustodyAllowance(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     totalSupply(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     transfer(
-      recipient: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      recipient: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     transferByCustodian(
-      from: string,
-      to: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     transferFrom(
-      sender: string,
-      recipient: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      sender: PromiseOrValue<string>,
+      recipient: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     triggerDefault(
-      loan: string,
-      dlFactory: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      loan: PromiseOrValue<string>,
+      dlFactory: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    updateFundsReceived(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    updateFundsReceived(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
-    updateLossesReceived(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    updateLossesReceived(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     withdraw(
-      amt: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      amt: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    withdrawCooldown(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    withdrawCooldown(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    withdrawFunds(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    withdrawFunds(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
-    withdrawableFundsOf(_owner: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    withdrawableFundsOf(_owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    withdrawnFundsOf(_owner: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    withdrawnFundsOf(_owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
   };
 }

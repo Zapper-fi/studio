@@ -4,7 +4,7 @@ import _ from 'lodash';
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
 import { buildDollarDisplayItem } from '~app-toolkit/helpers/presentation/display-item.present';
-import { getAppImg } from '~app-toolkit/helpers/presentation/image.present';
+import { getImagesFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { ContractType } from '~position/contract.interface';
 import { PositionFetcher } from '~position/position-fetcher.interface';
 import { AppTokenPosition } from '~position/position.interface';
@@ -18,7 +18,7 @@ const appId = DFX_DEFINITION.id;
 const groupId = DFX_DEFINITION.groups.dfxCurve.id;
 const network = Network.ETHEREUM_MAINNET;
 
-@Register.TokenPositionFetcher({ appId, groupId, network, options: { includeInTvl: true } })
+@Register.TokenPositionFetcher({ appId, groupId, network })
 export class EthereumDfxCurveTokenFetcher implements PositionFetcher<AppTokenPosition> {
   constructor(
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
@@ -74,9 +74,9 @@ export class EthereumDfxCurveTokenFetcher implements PositionFetcher<AppTokenPos
 
         // Prepare display props
         const [, baseToken, quoteToken] = name.split('-');
-        const label = `DFX LP ${baseToken.toUpperCase()}/${quoteToken.toUpperCase()}`;
+        const label = `${baseToken.toUpperCase()}/${quoteToken.toUpperCase()}`;
         const secondaryLabel = buildDollarDisplayItem(price);
-        const images = [getAppImg(appId)];
+        const images = tokens.map(v => getImagesFromToken(v)).flat();
 
         // Create token object
         const lpToken: AppTokenPosition = {

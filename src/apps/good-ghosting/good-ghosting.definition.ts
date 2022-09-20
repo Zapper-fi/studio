@@ -15,7 +15,6 @@ export const GOOD_GHOSTING_DEFINITION = appDefinition({
       id: 'game',
       type: GroupType.POSITION,
       label: 'Games',
-      groupLabel: 'Farms',
     },
   },
 

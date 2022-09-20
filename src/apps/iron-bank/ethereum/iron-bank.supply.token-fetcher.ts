@@ -1,41 +1,47 @@
 import { Inject } from '@nestjs/common';
 
-import { Register } from '~app-toolkit/decorators';
-import { CompoundSupplyTokenHelper } from '~apps/compound/helper/compound.supply.token-helper';
-import { PositionFetcher } from '~position/position-fetcher.interface';
-import { AppTokenPosition } from '~position/position.interface';
-import { Network } from '~types/network.interface';
+import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
+import { CompoundSupplyTokenFetcher } from '~apps/compound/common/compound.supply.token-fetcher';
 
-import { IronBankContractFactory } from '../contracts';
-import { IRON_BANK_DEFINITION } from '../iron-bank.definition';
+import { IronBankComptroller, IronBankContractFactory, IronBankCToken } from '../contracts';
 
-const appId = IRON_BANK_DEFINITION.id;
-const groupId = IRON_BANK_DEFINITION.groups.supply.id;
-const network = Network.ETHEREUM_MAINNET;
+@PositionTemplate()
+export class EthereumIronBankSupplyTokenFetcher extends CompoundSupplyTokenFetcher<
+  IronBankCToken,
+  IronBankComptroller
+> {
+  groupLabel = 'Lending';
+  comptrollerAddress = '0xab1c342c7bf5ec5f02adea1c2270670bca144cbb';
 
-@Register.TokenPositionFetcher({ appId, groupId, network })
-export class EthereumIronBankSupplyTokenFetcher implements PositionFetcher<AppTokenPosition> {
   constructor(
-    @Inject(IronBankContractFactory) private readonly ironBankContractFactory: IronBankContractFactory,
-    @Inject(CompoundSupplyTokenHelper) private readonly compoundSupplyTokenHelper: CompoundSupplyTokenHelper,
-  ) {}
+    @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
+    @Inject(IronBankContractFactory) protected readonly contractFactory: IronBankContractFactory,
+  ) {
+    super(appToolkit);
+  }
 
-  async getPositions() {
-    return this.compoundSupplyTokenHelper.getTokens({
-      network,
-      appId,
-      groupId,
-      comptrollerAddress: '0xAB1c342C7bf5Ec5F02ADEA1c2270670bCa144CbB',
-      getComptrollerContract: ({ address, network }) =>
-        this.ironBankContractFactory.ironBankComptroller({ address, network }),
-      getTokenContract: ({ address, network }) => this.ironBankContractFactory.ironBankCToken({ address, network }),
-      getAllMarkets: ({ contract, multicall }) => multicall.wrap(contract).getAllMarkets(),
-      getExchangeRate: ({ contract, multicall }) => multicall.wrap(contract).exchangeRateCurrent(),
-      getSupplyRate: ({ contract, multicall }) => multicall.wrap(contract).supplyRatePerBlock(),
-      getBorrowRate: ({ contract, multicall }) => multicall.wrap(contract).borrowRatePerBlock(),
-      getBorrowRateLabel: () => 'Borrow APY',
-      getUnderlyingAddress: ({ contract, multicall }) => multicall.wrap(contract).underlying(),
-      getExchangeRateMantissa: ({ underlyingTokenDecimals }) => underlyingTokenDecimals + 10,
-    });
+  getCompoundCTokenContract(address: string) {
+    return this.contractFactory.ironBankCToken({ address, network: this.network });
+  }
+
+  getCompoundComptrollerContract(address: string) {
+    return this.contractFactory.ironBankComptroller({ address, network: this.network });
+  }
+
+  getMarkets(contract: IronBankComptroller) {
+    return contract.getAllMarkets();
+  }
+
+  async getUnderlyingAddress(contract: IronBankCToken) {
+    return contract.underlying();
+  }
+
+  getExchangeRate(contract: IronBankCToken) {
+    return contract.exchangeRateCurrent();
+  }
+
+  async getSupplyRate(contract: IronBankCToken) {
+    return contract.supplyRatePerBlock().catch(() => 0);
   }
 }

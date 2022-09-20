@@ -4,11 +4,10 @@ import { AaveV2AppModule } from '~apps/aave-v2';
 
 import { AgaveAppDefinition, AGAVE_DEFINITION } from './agave.definition';
 import { AgaveContractFactory } from './contracts';
-import { GnosisAgaveBalanceFetcher } from './gnosis/agave.balance-fetcher';
 import { GnosisAgaveClaimableContractPositionFetcher } from './gnosis/agave.claimable.contract-position-fetcher';
 import { GnosisAgaveDepositTokenFetcher } from './gnosis/agave.deposit.token-fetcher';
+import { GnosisAgavePositionPresenter } from './gnosis/agave.position-presenter';
 import { GnosisAgaveStableBorrowTokenFetcher } from './gnosis/agave.stable-borrow.token-fetcher';
-import { GnosisAgaveTvlFetcher } from './gnosis/agave.tvl-fetcher';
 import { GnosisAgaveVariableBorrowTokenFetcher } from './gnosis/agave.variable-borrow.token-fetcher';
 
 @Register.AppModule({
@@ -17,11 +16,10 @@ import { GnosisAgaveVariableBorrowTokenFetcher } from './gnosis/agave.variable-b
   providers: [
     AgaveAppDefinition,
     AgaveContractFactory,
-    GnosisAgaveBalanceFetcher,
     GnosisAgaveClaimableContractPositionFetcher,
     GnosisAgaveDepositTokenFetcher,
+    GnosisAgavePositionPresenter,
     GnosisAgaveStableBorrowTokenFetcher,
-    GnosisAgaveTvlFetcher,
     GnosisAgaveVariableBorrowTokenFetcher,
   ],
 })

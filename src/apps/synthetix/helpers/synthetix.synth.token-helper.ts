@@ -1,13 +1,12 @@
 import { Inject, Injectable } from '@nestjs/common';
+import { ethers } from 'ethers';
 import { parseBytes32String } from 'ethers/lib/utils';
-import { padEnd } from 'lodash';
-import Web3 from 'web3';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { buildDollarDisplayItem } from '~app-toolkit/helpers/presentation/display-item.present';
 import { getTokenImg } from '~app-toolkit/helpers/presentation/image.present';
 import { ContractType } from '~position/contract.interface';
-import { AppTokenPosition, ExchangeableAppTokenDataProps } from '~position/position.interface';
+import { AppTokenPosition } from '~position/position.interface';
 import { Network } from '~types/network.interface';
 
 import { SynthetixContractFactory } from '../contracts';
@@ -17,6 +16,11 @@ export type SynthetixSynthTokenHelperParams = {
   network: Network;
   resolverAddress: string;
   exchangeable?: boolean;
+};
+
+export type SynthetixAppTokenDataProps = {
+  exchangeable: boolean;
+  liquidity: number;
 };
 
 @Injectable()
@@ -34,7 +38,7 @@ export class SynthetixSynthTokenHelper {
       network,
     });
 
-    const synthUtilName = padEnd(Web3.utils.asciiToHex('SynthUtil'), 66, '0');
+    const synthUtilName = ethers.utils.formatBytes32String('SynthUtil');
     const synthUtilAddress = await addressResolverContract.getAddress(synthUtilName);
     const snxUtilsContract = this.contractFactory.synthetixSummaryUtil({ address: synthUtilAddress, network });
     const synthRates = await snxUtilsContract.synthsRates();
@@ -55,17 +59,19 @@ export class SynthetixSynthTokenHelper {
         const price = Number(synthPrices[i]) / 10 ** 18;
         const pricePerShare = 1;
         const tokens = [];
+        const liquidity = supply * price;
 
         // Display Props
         const label = symbol;
         const secondaryLabel = buildDollarDisplayItem(price);
         const images = [getTokenImg(address, network)];
+        const statsItems = [{ label: 'Liquidity', value: buildDollarDisplayItem(liquidity) }];
 
-        const token: AppTokenPosition<ExchangeableAppTokenDataProps> = {
+        const token: AppTokenPosition<SynthetixAppTokenDataProps> = {
           type: ContractType.APP_TOKEN,
           appId: SYNTHETIX_DEFINITION.id,
           groupId: SYNTHETIX_DEFINITION.groups.synth.id,
-          network: network,
+          network,
           address,
           symbol,
           decimals,
@@ -74,12 +80,16 @@ export class SynthetixSynthTokenHelper {
           pricePerShare,
           tokens,
 
-          dataProps: { exchangeable },
+          dataProps: {
+            exchangeable,
+            liquidity,
+          },
 
           displayProps: {
             label,
             secondaryLabel,
             images,
+            statsItems,
           },
         };
 

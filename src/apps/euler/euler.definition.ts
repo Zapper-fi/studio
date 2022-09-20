@@ -14,22 +14,42 @@ export const EULER_DEFINITION = appDefinition({
     eToken: {
       id: 'e-token',
       type: GroupType.TOKEN,
-      label: 'E Token',
+      label: 'Lending',
     },
 
     dToken: {
       id: 'd-token',
       type: GroupType.TOKEN,
-      label: 'D Token',
+      label: 'Lending',
     },
 
     pToken: {
       id: 'p-token',
       type: GroupType.TOKEN,
       label: 'P Token',
+      isHiddenFromExplore: true,
     },
   },
-
+  presentationConfig: {
+    tabs: [
+      {
+        label: 'Lending',
+        viewType: 'split',
+        views: [
+          {
+            viewType: 'list',
+            label: 'Supply',
+            groupIds: ['e-token'],
+          },
+          {
+            viewType: 'list',
+            label: 'Borrow',
+            groupIds: ['d-token'],
+          },
+        ],
+      },
+    ],
+  },
   tags: [AppTag.LENDING],
   keywords: [],
   links: {

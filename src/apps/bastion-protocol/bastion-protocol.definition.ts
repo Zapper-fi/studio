@@ -5,21 +5,57 @@ import { Network } from '~types/network.interface';
 
 export const BASTION_PROTOCOL_DEFINITION = appDefinition({
   id: 'bastion-protocol',
-  name: 'bastion protocol',
+  name: 'Bastion',
   description: 'Liquidity Foundation of Aurora',
   url: 'https://bastionprotocol.com/',
 
   groups: {
-    supply: {
-      id: 'supply',
+    supplyMainHub: {
+      id: 'supply-main-hub',
       type: GroupType.TOKEN,
-      label: 'Supply',
+      label: 'Main Hub',
     },
 
-    borrow: {
-      id: 'borrow',
+    borrowMainHub: {
+      id: 'borrow-main-hub',
       type: GroupType.TOKEN,
-      label: 'Borrow',
+      label: 'Main Hub',
+    },
+
+    supplyStakedNear: {
+      id: 'supply-staked-near',
+      type: GroupType.TOKEN,
+      label: 'Staked NEAR',
+    },
+
+    borrowStakedNear: {
+      id: 'borrow-staked-near',
+      type: GroupType.TOKEN,
+      label: 'Staked NEAR',
+    },
+
+    supplyAuroraEcosystem: {
+      id: 'supply-aurora-ecosystem',
+      type: GroupType.TOKEN,
+      label: 'Aurora Ecosystem',
+    },
+
+    borrowAuroraEcosystem: {
+      id: 'borrow-aurora-ecosystem',
+      type: GroupType.TOKEN,
+      label: 'Aurora Ecosystem',
+    },
+
+    supplyMultichain: {
+      id: 'supply-multichain',
+      type: GroupType.TOKEN,
+      label: 'Multichain Realm',
+    },
+
+    borrowMultichain: {
+      id: 'borrow-multichain',
+      type: GroupType.TOKEN,
+      label: 'Multichain Realm',
     },
 
     swap: {
@@ -28,7 +64,75 @@ export const BASTION_PROTOCOL_DEFINITION = appDefinition({
       label: 'Stableswap Pools',
     },
   },
-
+  presentationConfig: {
+    tabs: [
+      {
+        label: 'Main Hub',
+        viewType: 'split',
+        views: [
+          {
+            viewType: 'list',
+            label: 'Supply',
+            groupIds: ['supply-main-hub'],
+          },
+          {
+            viewType: 'list',
+            label: 'Borrow',
+            groupIds: ['borrow-main-hub'],
+          },
+        ],
+      },
+      {
+        label: 'Staked Near',
+        viewType: 'split',
+        views: [
+          {
+            viewType: 'list',
+            label: 'Supply',
+            groupIds: ['supply-staked-near'],
+          },
+          {
+            viewType: 'list',
+            label: 'Borrow',
+            groupIds: ['borrow-staked-near'],
+          },
+        ],
+      },
+      {
+        label: 'Aurora Ecosystem',
+        viewType: 'split',
+        views: [
+          {
+            viewType: 'list',
+            label: 'Supply',
+            groupIds: ['supply-aurora-ecosystem'],
+          },
+          {
+            viewType: 'list',
+            label: 'Borrow',
+            groupIds: ['borrow-aurora-ecosystem'],
+          },
+        ],
+      },
+      {
+        label: 'Multichain Realm',
+        viewType: 'split',
+        views: [
+          {
+            viewType: 'list',
+            label: 'Supply',
+            groupIds: ['supply-multichain'],
+          },
+          {
+            viewType: 'list',
+            label: 'Borrow',
+            groupIds: ['borrow-multichain'],
+          },
+        ],
+      },
+      { label: 'Stableswap Pools', viewType: 'list', groupIds: ['swap'] },
+    ],
+  },
   tags: [AppTag.LENDING, AppTag.LIQUIDITY_POOL],
   keywords: [],
   links: {},

@@ -15,7 +15,7 @@ import type {
 } from 'ethers';
 import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
 import type { Listener, Provider } from '@ethersproject/providers';
-import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
 export interface VvsSmartCraftInitializableInterface extends utils.Interface {
   functions: {
@@ -83,32 +83,49 @@ export interface VvsSmartCraftInitializableInterface extends utils.Interface {
   encodeFunctionData(functionFragment: 'SMART_CRAFT_FACTORY', values?: undefined): string;
   encodeFunctionData(functionFragment: 'accTokenPerShare', values?: undefined): string;
   encodeFunctionData(functionFragment: 'bonusEndBlock', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'deposit', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'emergencyRewardWithdraw', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'deposit', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'emergencyRewardWithdraw', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'emergencyWithdraw', values?: undefined): string;
   encodeFunctionData(functionFragment: 'hasUserLimit', values?: undefined): string;
   encodeFunctionData(
     functionFragment: 'initialize',
-    values: [string, string, BigNumberish, BigNumberish, BigNumberish, BigNumberish, string],
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<string>,
+    ],
   ): string;
   encodeFunctionData(functionFragment: 'isInitialized', values?: undefined): string;
   encodeFunctionData(functionFragment: 'lastRewardBlock', values?: undefined): string;
   encodeFunctionData(functionFragment: 'owner', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'pendingReward', values: [string]): string;
+  encodeFunctionData(functionFragment: 'pendingReward', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'poolLimitPerUser', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'recoverWrongTokens', values: [string, BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'recoverWrongTokens',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
   encodeFunctionData(functionFragment: 'renounceOwnership', values?: undefined): string;
   encodeFunctionData(functionFragment: 'rewardPerBlock', values?: undefined): string;
   encodeFunctionData(functionFragment: 'rewardToken', values?: undefined): string;
   encodeFunctionData(functionFragment: 'stakedToken', values?: undefined): string;
   encodeFunctionData(functionFragment: 'startBlock', values?: undefined): string;
   encodeFunctionData(functionFragment: 'stopReward', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'transferOwnership', values: [string]): string;
-  encodeFunctionData(functionFragment: 'updatePoolLimitPerUser', values: [boolean, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'updateRewardPerBlock', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'updateStartAndEndBlocks', values: [BigNumberish, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'userInfo', values: [string]): string;
-  encodeFunctionData(functionFragment: 'withdraw', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'transferOwnership', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'updatePoolLimitPerUser',
+    values: [PromiseOrValue<boolean>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'updateRewardPerBlock', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(
+    functionFragment: 'updateStartAndEndBlocks',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'userInfo', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'withdraw', values: [PromiseOrValue<BigNumberish>]): string;
 
   decodeFunctionResult(functionFragment: 'PRECISION_FACTOR', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'SMART_CRAFT_FACTORY', data: BytesLike): Result;
@@ -272,28 +289,28 @@ export interface VvsSmartCraftInitializable extends BaseContract {
     bonusEndBlock(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     deposit(
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     emergencyRewardWithdraw(
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    emergencyWithdraw(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    emergencyWithdraw(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     hasUserLimit(overrides?: CallOverrides): Promise<[boolean]>;
 
     initialize(
-      _stakedToken: string,
-      _rewardToken: string,
-      _rewardPerBlock: BigNumberish,
-      _startBlock: BigNumberish,
-      _bonusEndBlock: BigNumberish,
-      _poolLimitPerUser: BigNumberish,
-      _admin: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _stakedToken: PromiseOrValue<string>,
+      _rewardToken: PromiseOrValue<string>,
+      _rewardPerBlock: PromiseOrValue<BigNumberish>,
+      _startBlock: PromiseOrValue<BigNumberish>,
+      _bonusEndBlock: PromiseOrValue<BigNumberish>,
+      _poolLimitPerUser: PromiseOrValue<BigNumberish>,
+      _admin: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     isInitialized(overrides?: CallOverrides): Promise<[boolean]>;
@@ -302,17 +319,17 @@ export interface VvsSmartCraftInitializable extends BaseContract {
 
     owner(overrides?: CallOverrides): Promise<[string]>;
 
-    pendingReward(_user: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    pendingReward(_user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     poolLimitPerUser(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     recoverWrongTokens(
-      _tokenAddress: string,
-      _tokenAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _tokenAddress: PromiseOrValue<string>,
+      _tokenAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     rewardPerBlock(overrides?: CallOverrides): Promise<[BigNumber]>;
 
@@ -322,38 +339,38 @@ export interface VvsSmartCraftInitializable extends BaseContract {
 
     startBlock(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    stopReward(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    stopReward(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     updatePoolLimitPerUser(
-      _hasUserLimit: boolean,
-      _poolLimitPerUser: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _hasUserLimit: PromiseOrValue<boolean>,
+      _poolLimitPerUser: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     updateRewardPerBlock(
-      _rewardPerBlock: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _rewardPerBlock: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     updateStartAndEndBlocks(
-      _startBlock: BigNumberish,
-      _bonusEndBlock: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _startBlock: PromiseOrValue<BigNumberish>,
+      _bonusEndBlock: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     userInfo(
-      arg0: string,
+      arg0: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber, BigNumber] & { amount: BigNumber; rewardDebt: BigNumber }>;
 
     withdraw(
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
   };
 
@@ -366,28 +383,28 @@ export interface VvsSmartCraftInitializable extends BaseContract {
   bonusEndBlock(overrides?: CallOverrides): Promise<BigNumber>;
 
   deposit(
-    _amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   emergencyRewardWithdraw(
-    _amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  emergencyWithdraw(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  emergencyWithdraw(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   hasUserLimit(overrides?: CallOverrides): Promise<boolean>;
 
   initialize(
-    _stakedToken: string,
-    _rewardToken: string,
-    _rewardPerBlock: BigNumberish,
-    _startBlock: BigNumberish,
-    _bonusEndBlock: BigNumberish,
-    _poolLimitPerUser: BigNumberish,
-    _admin: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _stakedToken: PromiseOrValue<string>,
+    _rewardToken: PromiseOrValue<string>,
+    _rewardPerBlock: PromiseOrValue<BigNumberish>,
+    _startBlock: PromiseOrValue<BigNumberish>,
+    _bonusEndBlock: PromiseOrValue<BigNumberish>,
+    _poolLimitPerUser: PromiseOrValue<BigNumberish>,
+    _admin: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   isInitialized(overrides?: CallOverrides): Promise<boolean>;
@@ -396,17 +413,17 @@ export interface VvsSmartCraftInitializable extends BaseContract {
 
   owner(overrides?: CallOverrides): Promise<string>;
 
-  pendingReward(_user: string, overrides?: CallOverrides): Promise<BigNumber>;
+  pendingReward(_user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   poolLimitPerUser(overrides?: CallOverrides): Promise<BigNumber>;
 
   recoverWrongTokens(
-    _tokenAddress: string,
-    _tokenAmount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _tokenAddress: PromiseOrValue<string>,
+    _tokenAmount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   rewardPerBlock(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -416,38 +433,38 @@ export interface VvsSmartCraftInitializable extends BaseContract {
 
   startBlock(overrides?: CallOverrides): Promise<BigNumber>;
 
-  stopReward(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  stopReward(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   transferOwnership(
-    newOwner: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    newOwner: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   updatePoolLimitPerUser(
-    _hasUserLimit: boolean,
-    _poolLimitPerUser: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _hasUserLimit: PromiseOrValue<boolean>,
+    _poolLimitPerUser: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   updateRewardPerBlock(
-    _rewardPerBlock: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _rewardPerBlock: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   updateStartAndEndBlocks(
-    _startBlock: BigNumberish,
-    _bonusEndBlock: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _startBlock: PromiseOrValue<BigNumberish>,
+    _bonusEndBlock: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   userInfo(
-    arg0: string,
+    arg0: PromiseOrValue<string>,
     overrides?: CallOverrides,
   ): Promise<[BigNumber, BigNumber] & { amount: BigNumber; rewardDebt: BigNumber }>;
 
   withdraw(
-    _amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   callStatic: {
@@ -459,22 +476,22 @@ export interface VvsSmartCraftInitializable extends BaseContract {
 
     bonusEndBlock(overrides?: CallOverrides): Promise<BigNumber>;
 
-    deposit(_amount: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    deposit(_amount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
-    emergencyRewardWithdraw(_amount: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    emergencyRewardWithdraw(_amount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
     emergencyWithdraw(overrides?: CallOverrides): Promise<void>;
 
     hasUserLimit(overrides?: CallOverrides): Promise<boolean>;
 
     initialize(
-      _stakedToken: string,
-      _rewardToken: string,
-      _rewardPerBlock: BigNumberish,
-      _startBlock: BigNumberish,
-      _bonusEndBlock: BigNumberish,
-      _poolLimitPerUser: BigNumberish,
-      _admin: string,
+      _stakedToken: PromiseOrValue<string>,
+      _rewardToken: PromiseOrValue<string>,
+      _rewardPerBlock: PromiseOrValue<BigNumberish>,
+      _startBlock: PromiseOrValue<BigNumberish>,
+      _bonusEndBlock: PromiseOrValue<BigNumberish>,
+      _poolLimitPerUser: PromiseOrValue<BigNumberish>,
+      _admin: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
@@ -484,11 +501,15 @@ export interface VvsSmartCraftInitializable extends BaseContract {
 
     owner(overrides?: CallOverrides): Promise<string>;
 
-    pendingReward(_user: string, overrides?: CallOverrides): Promise<BigNumber>;
+    pendingReward(_user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     poolLimitPerUser(overrides?: CallOverrides): Promise<BigNumber>;
 
-    recoverWrongTokens(_tokenAddress: string, _tokenAmount: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    recoverWrongTokens(
+      _tokenAddress: PromiseOrValue<string>,
+      _tokenAmount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
     renounceOwnership(overrides?: CallOverrides): Promise<void>;
 
@@ -502,42 +523,48 @@ export interface VvsSmartCraftInitializable extends BaseContract {
 
     stopReward(overrides?: CallOverrides): Promise<void>;
 
-    transferOwnership(newOwner: string, overrides?: CallOverrides): Promise<void>;
+    transferOwnership(newOwner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     updatePoolLimitPerUser(
-      _hasUserLimit: boolean,
-      _poolLimitPerUser: BigNumberish,
+      _hasUserLimit: PromiseOrValue<boolean>,
+      _poolLimitPerUser: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
-    updateRewardPerBlock(_rewardPerBlock: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    updateRewardPerBlock(_rewardPerBlock: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
     updateStartAndEndBlocks(
-      _startBlock: BigNumberish,
-      _bonusEndBlock: BigNumberish,
+      _startBlock: PromiseOrValue<BigNumberish>,
+      _bonusEndBlock: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
     userInfo(
-      arg0: string,
+      arg0: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber, BigNumber] & { amount: BigNumber; rewardDebt: BigNumber }>;
 
-    withdraw(_amount: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    withdraw(_amount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
   };
 
   filters: {
     'AdminTokenRecovery(address,uint256)'(tokenRecovered?: null, amount?: null): AdminTokenRecoveryEventFilter;
     AdminTokenRecovery(tokenRecovered?: null, amount?: null): AdminTokenRecoveryEventFilter;
 
-    'Deposit(address,uint256)'(user?: string | null, amount?: null): DepositEventFilter;
-    Deposit(user?: string | null, amount?: null): DepositEventFilter;
+    'Deposit(address,uint256)'(user?: PromiseOrValue<string> | null, amount?: null): DepositEventFilter;
+    Deposit(user?: PromiseOrValue<string> | null, amount?: null): DepositEventFilter;
 
-    'EmergencyRewardWithdraw(address,uint256)'(user?: string | null, amount?: null): EmergencyRewardWithdrawEventFilter;
-    EmergencyRewardWithdraw(user?: string | null, amount?: null): EmergencyRewardWithdrawEventFilter;
+    'EmergencyRewardWithdraw(address,uint256)'(
+      user?: PromiseOrValue<string> | null,
+      amount?: null,
+    ): EmergencyRewardWithdrawEventFilter;
+    EmergencyRewardWithdraw(user?: PromiseOrValue<string> | null, amount?: null): EmergencyRewardWithdrawEventFilter;
 
-    'EmergencyWithdraw(address,uint256)'(user?: string | null, amount?: null): EmergencyWithdrawEventFilter;
-    EmergencyWithdraw(user?: string | null, amount?: null): EmergencyWithdrawEventFilter;
+    'EmergencyWithdraw(address,uint256)'(
+      user?: PromiseOrValue<string> | null,
+      amount?: null,
+    ): EmergencyWithdrawEventFilter;
+    EmergencyWithdraw(user?: PromiseOrValue<string> | null, amount?: null): EmergencyWithdrawEventFilter;
 
     'NewPoolLimit(uint256)'(poolLimitPerUser?: null): NewPoolLimitEventFilter;
     NewPoolLimit(poolLimitPerUser?: null): NewPoolLimitEventFilter;
@@ -549,16 +576,19 @@ export interface VvsSmartCraftInitializable extends BaseContract {
     NewStartAndEndBlocks(startBlock?: null, endBlock?: null): NewStartAndEndBlocksEventFilter;
 
     'OwnershipTransferred(address,address)'(
-      previousOwner?: string | null,
-      newOwner?: string | null,
+      previousOwner?: PromiseOrValue<string> | null,
+      newOwner?: PromiseOrValue<string> | null,
     ): OwnershipTransferredEventFilter;
-    OwnershipTransferred(previousOwner?: string | null, newOwner?: string | null): OwnershipTransferredEventFilter;
+    OwnershipTransferred(
+      previousOwner?: PromiseOrValue<string> | null,
+      newOwner?: PromiseOrValue<string> | null,
+    ): OwnershipTransferredEventFilter;
 
     'RewardsStop(uint256)'(blockNumber?: null): RewardsStopEventFilter;
     RewardsStop(blockNumber?: null): RewardsStopEventFilter;
 
-    'Withdraw(address,uint256)'(user?: string | null, amount?: null): WithdrawEventFilter;
-    Withdraw(user?: string | null, amount?: null): WithdrawEventFilter;
+    'Withdraw(address,uint256)'(user?: PromiseOrValue<string> | null, amount?: null): WithdrawEventFilter;
+    Withdraw(user?: PromiseOrValue<string> | null, amount?: null): WithdrawEventFilter;
   };
 
   estimateGas: {
@@ -570,26 +600,29 @@ export interface VvsSmartCraftInitializable extends BaseContract {
 
     bonusEndBlock(overrides?: CallOverrides): Promise<BigNumber>;
 
-    deposit(_amount: BigNumberish, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
-
-    emergencyRewardWithdraw(
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+    deposit(
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    emergencyWithdraw(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    emergencyRewardWithdraw(
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
+
+    emergencyWithdraw(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     hasUserLimit(overrides?: CallOverrides): Promise<BigNumber>;
 
     initialize(
-      _stakedToken: string,
-      _rewardToken: string,
-      _rewardPerBlock: BigNumberish,
-      _startBlock: BigNumberish,
-      _bonusEndBlock: BigNumberish,
-      _poolLimitPerUser: BigNumberish,
-      _admin: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _stakedToken: PromiseOrValue<string>,
+      _rewardToken: PromiseOrValue<string>,
+      _rewardPerBlock: PromiseOrValue<BigNumberish>,
+      _startBlock: PromiseOrValue<BigNumberish>,
+      _bonusEndBlock: PromiseOrValue<BigNumberish>,
+      _poolLimitPerUser: PromiseOrValue<BigNumberish>,
+      _admin: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     isInitialized(overrides?: CallOverrides): Promise<BigNumber>;
@@ -598,17 +631,17 @@ export interface VvsSmartCraftInitializable extends BaseContract {
 
     owner(overrides?: CallOverrides): Promise<BigNumber>;
 
-    pendingReward(_user: string, overrides?: CallOverrides): Promise<BigNumber>;
+    pendingReward(_user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     poolLimitPerUser(overrides?: CallOverrides): Promise<BigNumber>;
 
     recoverWrongTokens(
-      _tokenAddress: string,
-      _tokenAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _tokenAddress: PromiseOrValue<string>,
+      _tokenAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     rewardPerBlock(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -618,33 +651,36 @@ export interface VvsSmartCraftInitializable extends BaseContract {
 
     startBlock(overrides?: CallOverrides): Promise<BigNumber>;
 
-    stopReward(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    stopReward(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     updatePoolLimitPerUser(
-      _hasUserLimit: boolean,
-      _poolLimitPerUser: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _hasUserLimit: PromiseOrValue<boolean>,
+      _poolLimitPerUser: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     updateRewardPerBlock(
-      _rewardPerBlock: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _rewardPerBlock: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     updateStartAndEndBlocks(
-      _startBlock: BigNumberish,
-      _bonusEndBlock: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _startBlock: PromiseOrValue<BigNumberish>,
+      _bonusEndBlock: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    userInfo(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    userInfo(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    withdraw(_amount: BigNumberish, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    withdraw(
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
   };
 
   populateTransaction: {
@@ -657,28 +693,28 @@ export interface VvsSmartCraftInitializable extends BaseContract {
     bonusEndBlock(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     deposit(
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     emergencyRewardWithdraw(
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    emergencyWithdraw(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    emergencyWithdraw(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     hasUserLimit(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     initialize(
-      _stakedToken: string,
-      _rewardToken: string,
-      _rewardPerBlock: BigNumberish,
-      _startBlock: BigNumberish,
-      _bonusEndBlock: BigNumberish,
-      _poolLimitPerUser: BigNumberish,
-      _admin: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _stakedToken: PromiseOrValue<string>,
+      _rewardToken: PromiseOrValue<string>,
+      _rewardPerBlock: PromiseOrValue<BigNumberish>,
+      _startBlock: PromiseOrValue<BigNumberish>,
+      _bonusEndBlock: PromiseOrValue<BigNumberish>,
+      _poolLimitPerUser: PromiseOrValue<BigNumberish>,
+      _admin: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     isInitialized(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -687,17 +723,17 @@ export interface VvsSmartCraftInitializable extends BaseContract {
 
     owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    pendingReward(_user: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    pendingReward(_user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     poolLimitPerUser(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     recoverWrongTokens(
-      _tokenAddress: string,
-      _tokenAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _tokenAddress: PromiseOrValue<string>,
+      _tokenAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     rewardPerBlock(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
@@ -707,35 +743,35 @@ export interface VvsSmartCraftInitializable extends BaseContract {
 
     startBlock(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    stopReward(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    stopReward(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     updatePoolLimitPerUser(
-      _hasUserLimit: boolean,
-      _poolLimitPerUser: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _hasUserLimit: PromiseOrValue<boolean>,
+      _poolLimitPerUser: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     updateRewardPerBlock(
-      _rewardPerBlock: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _rewardPerBlock: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     updateStartAndEndBlocks(
-      _startBlock: BigNumberish,
-      _bonusEndBlock: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _startBlock: PromiseOrValue<BigNumberish>,
+      _bonusEndBlock: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    userInfo(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    userInfo(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     withdraw(
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
   };
 }

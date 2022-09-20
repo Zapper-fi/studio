@@ -14,13 +14,14 @@ export const MAPLE_DEFINITION = appDefinition({
       id: 'farm',
       type: GroupType.POSITION,
       label: 'Farms',
+      isHiddenFromExplore: true,
     },
 
     stakedBpt: {
       id: 'staked-bpt',
       type: GroupType.TOKEN,
       label: 'Staked BPT',
-      groupLabel: 'Farms',
+      isHiddenFromExplore: true,
     },
 
     pool: {

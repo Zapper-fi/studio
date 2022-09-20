@@ -1,30 +1,11 @@
-import { Inject } from '@nestjs/common';
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 
-import { Register } from '~app-toolkit/decorators';
-import { CompoundBorrowContractPositionHelper } from '~apps/compound/helper/compound.borrow.contract-position-helper';
-import { PositionFetcher } from '~position/position-fetcher.interface';
-import { ContractPosition } from '~position/position.interface';
-import { Network } from '~types/network.interface';
+import { MarketXyzBorrowContractPositionFetcher } from '../common/market-xyz.borrow.contract-position-fetcher';
 
-import { MARKET_XYZ_DEFINITION } from '../market-xyz.definition';
+@PositionTemplate()
+export class AvalancheMarketXyzBorrowContractPositionFetcher extends MarketXyzBorrowContractPositionFetcher {
+  groupLabel = 'Lending';
 
-const appId = MARKET_XYZ_DEFINITION.id;
-const groupId = MARKET_XYZ_DEFINITION.groups.borrow.id;
-const network = Network.AVALANCHE_MAINNET;
-
-@Register.ContractPositionFetcher({ appId, groupId, network })
-export class AvalancheMarketXyzBorrowContractPositionFetcher implements PositionFetcher<ContractPosition> {
-  constructor(
-    @Inject(CompoundBorrowContractPositionHelper)
-    private readonly compoundBorrowContractPositionHelper: CompoundBorrowContractPositionHelper,
-  ) {}
-
-  async getPositions() {
-    return this.compoundBorrowContractPositionHelper.getPositions({
-      network,
-      appId,
-      groupId,
-      supplyGroupId: MARKET_XYZ_DEFINITION.groups.supply.id,
-    });
-  }
+  lensAddress = '0x56563ab1740539983ff4d487ea3a3e47e23a19f9';
+  poolDirectoryAddress = '0x1c4d63bda492d69f2d6b02fb622fb6c49cc401d2';
 }

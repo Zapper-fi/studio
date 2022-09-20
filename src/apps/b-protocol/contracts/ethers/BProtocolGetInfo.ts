@@ -15,17 +15,17 @@ import type {
 } from 'ethers';
 import type { FunctionFragment, Result } from '@ethersproject/abi';
 import type { Listener, Provider } from '@ethersproject/providers';
-import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
 export declare namespace UserInfoStorage {
   export type CdpInfoStruct = {
-    hasCdp: boolean;
-    bitten: boolean;
-    cdp: BigNumberish;
-    ethDeposit: BigNumberish;
-    daiDebt: BigNumberish;
-    maxDaiDebt: BigNumberish;
-    minEthDeposit: BigNumberish;
+    hasCdp: PromiseOrValue<boolean>;
+    bitten: PromiseOrValue<boolean>;
+    cdp: PromiseOrValue<BigNumberish>;
+    ethDeposit: PromiseOrValue<BigNumberish>;
+    daiDebt: PromiseOrValue<BigNumberish>;
+    maxDaiDebt: PromiseOrValue<BigNumberish>;
+    minEthDeposit: PromiseOrValue<BigNumberish>;
   };
 
   export type CdpInfoStructOutput = [boolean, boolean, BigNumber, BigNumber, BigNumber, BigNumber, BigNumber] & {
@@ -38,7 +38,10 @@ export declare namespace UserInfoStorage {
     minEthDeposit: BigNumber;
   };
 
-  export type ProxyInfoStruct = { hasProxy: boolean; userProxy: string };
+  export type ProxyInfoStruct = {
+    hasProxy: PromiseOrValue<boolean>;
+    userProxy: PromiseOrValue<string>;
+  };
 
   export type ProxyInfoStructOutput = [boolean, string] & {
     hasProxy: boolean;
@@ -46,11 +49,11 @@ export declare namespace UserInfoStorage {
   };
 
   export type UserRatingInfoStruct = {
-    userRating: BigNumberish;
-    userRatingProgressPerSec: BigNumberish;
-    totalRating: BigNumberish;
-    totalRatingProgressPerSec: BigNumberish;
-    jarBalance: BigNumberish;
+    userRating: PromiseOrValue<BigNumberish>;
+    userRatingProgressPerSec: PromiseOrValue<BigNumberish>;
+    totalRating: PromiseOrValue<BigNumberish>;
+    totalRatingProgressPerSec: PromiseOrValue<BigNumberish>;
+    jarBalance: PromiseOrValue<BigNumberish>;
   };
 
   export type UserRatingInfoStructOutput = [BigNumber, BigNumber, BigNumber, BigNumber, BigNumber] & {
@@ -62,9 +65,9 @@ export declare namespace UserInfoStorage {
   };
 
   export type MiscInfoStruct = {
-    spotPrice: BigNumberish;
-    dustInWei: BigNumberish;
-    blockNumber: BigNumberish;
+    spotPrice: PromiseOrValue<BigNumberish>;
+    dustInWei: PromiseOrValue<BigNumberish>;
+    blockNumber: PromiseOrValue<BigNumberish>;
   };
 
   export type MiscInfoStructOutput = [BigNumber, BigNumber, BigNumber] & {
@@ -74,9 +77,9 @@ export declare namespace UserInfoStorage {
   };
 
   export type UserWalletInfoStruct = {
-    ethBalance: BigNumberish;
-    daiBalance: BigNumberish;
-    daiAllowance: BigNumberish;
+    ethBalance: PromiseOrValue<BigNumberish>;
+    daiBalance: PromiseOrValue<BigNumberish>;
+    daiAllowance: PromiseOrValue<BigNumberish>;
   };
 
   export type UserWalletInfoStructOutput = [BigNumber, BigNumber, BigNumber] & {
@@ -197,20 +200,52 @@ export interface BProtocolGetInfoInterface extends utils.Interface {
   encodeFunctionData(functionFragment: 'ethDeposit', values?: undefined): string;
   encodeFunctionData(
     functionFragment: 'findFirstNonZeroInkCdp',
-    values: [string, string, BytesLike, string, string],
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BytesLike>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+    ],
   ): string;
   encodeFunctionData(
     functionFragment: 'getCdpInfo',
-    values: [string, string, BytesLike, string, string, boolean],
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BytesLike>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<boolean>,
+    ],
   ): string;
   encodeFunctionData(
     functionFragment: 'getInfo',
-    values: [string, BytesLike, string, string, string, string, string, string, string],
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<BytesLike>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+    ],
   ): string;
-  encodeFunctionData(functionFragment: 'getProxyInfo', values: [string, string]): string;
+  encodeFunctionData(
+    functionFragment: 'getProxyInfo',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>],
+  ): string;
   encodeFunctionData(
     functionFragment: 'getUserRatingInfo',
-    values: [BytesLike, string, string, BigNumberish, string],
+    values: [
+      PromiseOrValue<BytesLike>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<string>,
+    ],
   ): string;
   encodeFunctionData(functionFragment: 'hasCdp', values?: undefined): string;
   encodeFunctionData(functionFragment: 'hasProxy', values?: undefined): string;
@@ -224,7 +259,17 @@ export interface BProtocolGetInfoInterface extends utils.Interface {
   encodeFunctionData(functionFragment: 'set', values: [UserInfoStorage.UserStateStruct]): string;
   encodeFunctionData(
     functionFragment: 'setInfo',
-    values: [string, BytesLike, string, string, string, string, string, string, string],
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<BytesLike>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+    ],
   ): string;
   encodeFunctionData(functionFragment: 'spotPrice', values?: undefined): string;
   encodeFunctionData(functionFragment: 'totalRating', values?: undefined): string;
@@ -315,21 +360,21 @@ export interface BProtocolGetInfo extends BaseContract {
     ethDeposit(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     findFirstNonZeroInkCdp(
-      manager: string,
-      guy: string,
-      ilk: BytesLike,
-      vat: string,
-      getCdp: string,
+      manager: PromiseOrValue<string>,
+      guy: PromiseOrValue<string>,
+      ilk: PromiseOrValue<BytesLike>,
+      vat: PromiseOrValue<string>,
+      getCdp: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber]>;
 
     getCdpInfo(
-      guy: string,
-      manager: string,
-      ilk: BytesLike,
-      vat: string,
-      getCdp: string,
-      b: boolean,
+      guy: PromiseOrValue<string>,
+      manager: PromiseOrValue<string>,
+      ilk: PromiseOrValue<BytesLike>,
+      vat: PromiseOrValue<string>,
+      getCdp: PromiseOrValue<string>,
+      b: PromiseOrValue<boolean>,
       overrides?: CallOverrides,
     ): Promise<
       [UserInfoStorage.CdpInfoStructOutput] & {
@@ -338,21 +383,21 @@ export interface BProtocolGetInfo extends BaseContract {
     >;
 
     getInfo(
-      user: string,
-      ilk: BytesLike,
-      manager: string,
-      makerDAOManager: string,
-      getCdp: string,
-      vat: string,
-      spot: string,
-      registry: string,
-      jar: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      user: PromiseOrValue<string>,
+      ilk: PromiseOrValue<BytesLike>,
+      manager: PromiseOrValue<string>,
+      makerDAOManager: PromiseOrValue<string>,
+      getCdp: PromiseOrValue<string>,
+      vat: PromiseOrValue<string>,
+      spot: PromiseOrValue<string>,
+      registry: PromiseOrValue<string>,
+      jar: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     getProxyInfo(
-      registry: string,
-      user: string,
+      registry: PromiseOrValue<string>,
+      user: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<
       [UserInfoStorage.ProxyInfoStructOutput] & {
@@ -361,11 +406,11 @@ export interface BProtocolGetInfo extends BaseContract {
     >;
 
     getUserRatingInfo(
-      ilk: BytesLike,
-      urn: string,
-      vat: string,
-      cdp: BigNumberish,
-      jar: string,
+      ilk: PromiseOrValue<BytesLike>,
+      urn: PromiseOrValue<string>,
+      vat: PromiseOrValue<string>,
+      cdp: PromiseOrValue<BigNumberish>,
+      jar: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<
       [UserInfoStorage.UserRatingInfoStructOutput] & {
@@ -393,20 +438,20 @@ export interface BProtocolGetInfo extends BaseContract {
 
     set(
       state: UserInfoStorage.UserStateStruct,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setInfo(
-      user: string,
-      ilk: BytesLike,
-      manager: string,
-      makerDAOManager: string,
-      getCdp: string,
-      vat: string,
-      spot: string,
-      registry: string,
-      jar: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      user: PromiseOrValue<string>,
+      ilk: PromiseOrValue<BytesLike>,
+      manager: PromiseOrValue<string>,
+      makerDAOManager: PromiseOrValue<string>,
+      getCdp: PromiseOrValue<string>,
+      vat: PromiseOrValue<string>,
+      spot: PromiseOrValue<string>,
+      registry: PromiseOrValue<string>,
+      jar: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     spotPrice(overrides?: CallOverrides): Promise<[BigNumber]>;
@@ -445,49 +490,49 @@ export interface BProtocolGetInfo extends BaseContract {
   ethDeposit(overrides?: CallOverrides): Promise<BigNumber>;
 
   findFirstNonZeroInkCdp(
-    manager: string,
-    guy: string,
-    ilk: BytesLike,
-    vat: string,
-    getCdp: string,
+    manager: PromiseOrValue<string>,
+    guy: PromiseOrValue<string>,
+    ilk: PromiseOrValue<BytesLike>,
+    vat: PromiseOrValue<string>,
+    getCdp: PromiseOrValue<string>,
     overrides?: CallOverrides,
   ): Promise<BigNumber>;
 
   getCdpInfo(
-    guy: string,
-    manager: string,
-    ilk: BytesLike,
-    vat: string,
-    getCdp: string,
-    b: boolean,
+    guy: PromiseOrValue<string>,
+    manager: PromiseOrValue<string>,
+    ilk: PromiseOrValue<BytesLike>,
+    vat: PromiseOrValue<string>,
+    getCdp: PromiseOrValue<string>,
+    b: PromiseOrValue<boolean>,
     overrides?: CallOverrides,
   ): Promise<UserInfoStorage.CdpInfoStructOutput>;
 
   getInfo(
-    user: string,
-    ilk: BytesLike,
-    manager: string,
-    makerDAOManager: string,
-    getCdp: string,
-    vat: string,
-    spot: string,
-    registry: string,
-    jar: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    user: PromiseOrValue<string>,
+    ilk: PromiseOrValue<BytesLike>,
+    manager: PromiseOrValue<string>,
+    makerDAOManager: PromiseOrValue<string>,
+    getCdp: PromiseOrValue<string>,
+    vat: PromiseOrValue<string>,
+    spot: PromiseOrValue<string>,
+    registry: PromiseOrValue<string>,
+    jar: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   getProxyInfo(
-    registry: string,
-    user: string,
+    registry: PromiseOrValue<string>,
+    user: PromiseOrValue<string>,
     overrides?: CallOverrides,
   ): Promise<UserInfoStorage.ProxyInfoStructOutput>;
 
   getUserRatingInfo(
-    ilk: BytesLike,
-    urn: string,
-    vat: string,
-    cdp: BigNumberish,
-    jar: string,
+    ilk: PromiseOrValue<BytesLike>,
+    urn: PromiseOrValue<string>,
+    vat: PromiseOrValue<string>,
+    cdp: PromiseOrValue<BigNumberish>,
+    jar: PromiseOrValue<string>,
     overrides?: CallOverrides,
   ): Promise<UserInfoStorage.UserRatingInfoStructOutput>;
 
@@ -511,20 +556,20 @@ export interface BProtocolGetInfo extends BaseContract {
 
   set(
     state: UserInfoStorage.UserStateStruct,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setInfo(
-    user: string,
-    ilk: BytesLike,
-    manager: string,
-    makerDAOManager: string,
-    getCdp: string,
-    vat: string,
-    spot: string,
-    registry: string,
-    jar: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    user: PromiseOrValue<string>,
+    ilk: PromiseOrValue<BytesLike>,
+    manager: PromiseOrValue<string>,
+    makerDAOManager: PromiseOrValue<string>,
+    getCdp: PromiseOrValue<string>,
+    vat: PromiseOrValue<string>,
+    spot: PromiseOrValue<string>,
+    registry: PromiseOrValue<string>,
+    jar: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   spotPrice(overrides?: CallOverrides): Promise<BigNumber>;
@@ -563,49 +608,49 @@ export interface BProtocolGetInfo extends BaseContract {
     ethDeposit(overrides?: CallOverrides): Promise<BigNumber>;
 
     findFirstNonZeroInkCdp(
-      manager: string,
-      guy: string,
-      ilk: BytesLike,
-      vat: string,
-      getCdp: string,
+      manager: PromiseOrValue<string>,
+      guy: PromiseOrValue<string>,
+      ilk: PromiseOrValue<BytesLike>,
+      vat: PromiseOrValue<string>,
+      getCdp: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     getCdpInfo(
-      guy: string,
-      manager: string,
-      ilk: BytesLike,
-      vat: string,
-      getCdp: string,
-      b: boolean,
+      guy: PromiseOrValue<string>,
+      manager: PromiseOrValue<string>,
+      ilk: PromiseOrValue<BytesLike>,
+      vat: PromiseOrValue<string>,
+      getCdp: PromiseOrValue<string>,
+      b: PromiseOrValue<boolean>,
       overrides?: CallOverrides,
     ): Promise<UserInfoStorage.CdpInfoStructOutput>;
 
     getInfo(
-      user: string,
-      ilk: BytesLike,
-      manager: string,
-      makerDAOManager: string,
-      getCdp: string,
-      vat: string,
-      spot: string,
-      registry: string,
-      jar: string,
+      user: PromiseOrValue<string>,
+      ilk: PromiseOrValue<BytesLike>,
+      manager: PromiseOrValue<string>,
+      makerDAOManager: PromiseOrValue<string>,
+      getCdp: PromiseOrValue<string>,
+      vat: PromiseOrValue<string>,
+      spot: PromiseOrValue<string>,
+      registry: PromiseOrValue<string>,
+      jar: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<UserInfoStorage.UserStateStructOutput>;
 
     getProxyInfo(
-      registry: string,
-      user: string,
+      registry: PromiseOrValue<string>,
+      user: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<UserInfoStorage.ProxyInfoStructOutput>;
 
     getUserRatingInfo(
-      ilk: BytesLike,
-      urn: string,
-      vat: string,
-      cdp: BigNumberish,
-      jar: string,
+      ilk: PromiseOrValue<BytesLike>,
+      urn: PromiseOrValue<string>,
+      vat: PromiseOrValue<string>,
+      cdp: PromiseOrValue<BigNumberish>,
+      jar: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<UserInfoStorage.UserRatingInfoStructOutput>;
 
@@ -630,15 +675,15 @@ export interface BProtocolGetInfo extends BaseContract {
     set(state: UserInfoStorage.UserStateStruct, overrides?: CallOverrides): Promise<void>;
 
     setInfo(
-      user: string,
-      ilk: BytesLike,
-      manager: string,
-      makerDAOManager: string,
-      getCdp: string,
-      vat: string,
-      spot: string,
-      registry: string,
-      jar: string,
+      user: PromiseOrValue<string>,
+      ilk: PromiseOrValue<BytesLike>,
+      manager: PromiseOrValue<string>,
+      makerDAOManager: PromiseOrValue<string>,
+      getCdp: PromiseOrValue<string>,
+      vat: PromiseOrValue<string>,
+      spot: PromiseOrValue<string>,
+      registry: PromiseOrValue<string>,
+      jar: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
@@ -681,45 +726,49 @@ export interface BProtocolGetInfo extends BaseContract {
     ethDeposit(overrides?: CallOverrides): Promise<BigNumber>;
 
     findFirstNonZeroInkCdp(
-      manager: string,
-      guy: string,
-      ilk: BytesLike,
-      vat: string,
-      getCdp: string,
+      manager: PromiseOrValue<string>,
+      guy: PromiseOrValue<string>,
+      ilk: PromiseOrValue<BytesLike>,
+      vat: PromiseOrValue<string>,
+      getCdp: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     getCdpInfo(
-      guy: string,
-      manager: string,
-      ilk: BytesLike,
-      vat: string,
-      getCdp: string,
-      b: boolean,
+      guy: PromiseOrValue<string>,
+      manager: PromiseOrValue<string>,
+      ilk: PromiseOrValue<BytesLike>,
+      vat: PromiseOrValue<string>,
+      getCdp: PromiseOrValue<string>,
+      b: PromiseOrValue<boolean>,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     getInfo(
-      user: string,
-      ilk: BytesLike,
-      manager: string,
-      makerDAOManager: string,
-      getCdp: string,
-      vat: string,
-      spot: string,
-      registry: string,
-      jar: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      user: PromiseOrValue<string>,
+      ilk: PromiseOrValue<BytesLike>,
+      manager: PromiseOrValue<string>,
+      makerDAOManager: PromiseOrValue<string>,
+      getCdp: PromiseOrValue<string>,
+      vat: PromiseOrValue<string>,
+      spot: PromiseOrValue<string>,
+      registry: PromiseOrValue<string>,
+      jar: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    getProxyInfo(registry: string, user: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getProxyInfo(
+      registry: PromiseOrValue<string>,
+      user: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     getUserRatingInfo(
-      ilk: BytesLike,
-      urn: string,
-      vat: string,
-      cdp: BigNumberish,
-      jar: string,
+      ilk: PromiseOrValue<BytesLike>,
+      urn: PromiseOrValue<string>,
+      vat: PromiseOrValue<string>,
+      cdp: PromiseOrValue<BigNumberish>,
+      jar: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
@@ -743,20 +792,20 @@ export interface BProtocolGetInfo extends BaseContract {
 
     set(
       state: UserInfoStorage.UserStateStruct,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setInfo(
-      user: string,
-      ilk: BytesLike,
-      manager: string,
-      makerDAOManager: string,
-      getCdp: string,
-      vat: string,
-      spot: string,
-      registry: string,
-      jar: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      user: PromiseOrValue<string>,
+      ilk: PromiseOrValue<BytesLike>,
+      manager: PromiseOrValue<string>,
+      makerDAOManager: PromiseOrValue<string>,
+      getCdp: PromiseOrValue<string>,
+      vat: PromiseOrValue<string>,
+      spot: PromiseOrValue<string>,
+      registry: PromiseOrValue<string>,
+      jar: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     spotPrice(overrides?: CallOverrides): Promise<BigNumber>;
@@ -796,45 +845,49 @@ export interface BProtocolGetInfo extends BaseContract {
     ethDeposit(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     findFirstNonZeroInkCdp(
-      manager: string,
-      guy: string,
-      ilk: BytesLike,
-      vat: string,
-      getCdp: string,
+      manager: PromiseOrValue<string>,
+      guy: PromiseOrValue<string>,
+      ilk: PromiseOrValue<BytesLike>,
+      vat: PromiseOrValue<string>,
+      getCdp: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     getCdpInfo(
-      guy: string,
-      manager: string,
-      ilk: BytesLike,
-      vat: string,
-      getCdp: string,
-      b: boolean,
+      guy: PromiseOrValue<string>,
+      manager: PromiseOrValue<string>,
+      ilk: PromiseOrValue<BytesLike>,
+      vat: PromiseOrValue<string>,
+      getCdp: PromiseOrValue<string>,
+      b: PromiseOrValue<boolean>,
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     getInfo(
-      user: string,
-      ilk: BytesLike,
-      manager: string,
-      makerDAOManager: string,
-      getCdp: string,
-      vat: string,
-      spot: string,
-      registry: string,
-      jar: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      user: PromiseOrValue<string>,
+      ilk: PromiseOrValue<BytesLike>,
+      manager: PromiseOrValue<string>,
+      makerDAOManager: PromiseOrValue<string>,
+      getCdp: PromiseOrValue<string>,
+      vat: PromiseOrValue<string>,
+      spot: PromiseOrValue<string>,
+      registry: PromiseOrValue<string>,
+      jar: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    getProxyInfo(registry: string, user: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getProxyInfo(
+      registry: PromiseOrValue<string>,
+      user: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
     getUserRatingInfo(
-      ilk: BytesLike,
-      urn: string,
-      vat: string,
-      cdp: BigNumberish,
-      jar: string,
+      ilk: PromiseOrValue<BytesLike>,
+      urn: PromiseOrValue<string>,
+      vat: PromiseOrValue<string>,
+      cdp: PromiseOrValue<BigNumberish>,
+      jar: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
@@ -858,20 +911,20 @@ export interface BProtocolGetInfo extends BaseContract {
 
     set(
       state: UserInfoStorage.UserStateStruct,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setInfo(
-      user: string,
-      ilk: BytesLike,
-      manager: string,
-      makerDAOManager: string,
-      getCdp: string,
-      vat: string,
-      spot: string,
-      registry: string,
-      jar: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      user: PromiseOrValue<string>,
+      ilk: PromiseOrValue<BytesLike>,
+      manager: PromiseOrValue<string>,
+      makerDAOManager: PromiseOrValue<string>,
+      getCdp: PromiseOrValue<string>,
+      vat: PromiseOrValue<string>,
+      spot: PromiseOrValue<string>,
+      registry: PromiseOrValue<string>,
+      jar: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     spotPrice(overrides?: CallOverrides): Promise<PopulatedTransaction>;

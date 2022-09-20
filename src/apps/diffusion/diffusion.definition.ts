@@ -11,8 +11,8 @@ export const DIFFUSION_DEFINITION = appDefinition({
 
   groups: {
     pool: { id: 'pool', type: GroupType.TOKEN, label: 'Pools' },
-    farm: { id: 'farm', type: GroupType.TOKEN, label: 'Staked', groupLabel: 'Farms' },
-    diffStaking: { id: 'diff-staking', type: GroupType.TOKEN, label: 'xDiff Pools', groupLabel: 'Pools' },
+    farm: { id: 'farm', type: GroupType.TOKEN, label: 'Staked' },
+    diffStaking: { id: 'diff-staking', type: GroupType.TOKEN, label: 'xDiff Pools' },
   },
 
   tags: [AppTag.DECENTRALIZED_EXCHANGE, AppTag.FARMING, AppTag.LIQUIDITY_POOL, AppTag.STAKING],

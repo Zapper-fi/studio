@@ -1,47 +1,85 @@
 import { Inject } from '@nestjs/common';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
-import { Register } from '~app-toolkit/decorators';
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
-import { CURVE_DEFINITION } from '~apps/curve';
-import { PositionFetcher } from '~position/position-fetcher.interface';
-import { AppTokenPosition } from '~position/position.interface';
-import { Network } from '~types';
+import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
+import {
+  GetDataPropsParams,
+  GetDisplayPropsParams,
+  GetPricePerShareParams,
+  GetUnderlyingTokensParams,
+} from '~position/template/app-token.template.types';
 
 import { LlamaAirforceContractFactory, LlamaAirforceUnionVault } from '../contracts';
-import { LLAMA_AIRFORCE_DEFINITION } from '../llama-airforce.definition';
 
-const appId = LLAMA_AIRFORCE_DEFINITION.id;
-const groupId = LLAMA_AIRFORCE_DEFINITION.groups.vault.id;
-const network = Network.ETHEREUM_MAINNET;
+@PositionTemplate()
+export class EthereumLlamaAirforceVaultTokenFetcher extends AppTokenTemplatePositionFetcher<LlamaAirforceUnionVault> {
+  groupLabel = 'Vaults';
 
-@Register.TokenPositionFetcher({ appId, groupId, network, options: { includeInTvl: true } })
-export class EthereumLlamaAirforceVaultTokenFetcher implements PositionFetcher<AppTokenPosition> {
   constructor(
-    @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
-    @Inject(LlamaAirforceContractFactory) private readonly llamaAirforceContractFactory: LlamaAirforceContractFactory,
-  ) {}
+    @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
+    @Inject(LlamaAirforceContractFactory) protected readonly contractFactory: LlamaAirforceContractFactory,
+  ) {
+    super(appToolkit);
+  }
 
-  async getPositions() {
-    return await this.appToolkit.helpers.vaultTokenHelper.getTokens<LlamaAirforceUnionVault>({
-      appId,
-      groupId,
-      network,
-      dependencies: [{ appId: CURVE_DEFINITION.id, groupIds: [CURVE_DEFINITION.groups.pool.id], network }],
-      resolveContract: ({ address, network }) =>
-        this.llamaAirforceContractFactory.llamaAirforceUnionVault({ address, network }),
-      resolveVaultAddresses: async () => [
-        '0x83507cc8c8b67ed48badd1f59f684d5d02884c81', // uCRV
-        '0xf964b0e3ffdea659c44a5a52bc0b82a24b89ce0e', // uFXS
-      ],
-      resolveUnderlyingTokenAddress: ({ multicall, contract }) => multicall.wrap(contract).underlying(),
-      resolvePricePerShare: async ({ reserve, supply }) => reserve / supply,
-      resolveReserve: async ({ multicall, contract, underlyingToken }) =>
-        multicall
-          .wrap(contract)
-          .totalUnderlying()
-          .then(v => Number(v) / 10 ** underlyingToken.decimals),
-      resolvePrimaryLabel: ({ underlyingToken }) => `${getLabelFromToken(underlyingToken)} Pounder`,
-    });
+  getContract(address: string): LlamaAirforceUnionVault {
+    return this.contractFactory.llamaAirforceUnionVault({ address, network: this.network });
+  }
+
+  getAddresses() {
+    return [
+      '0x83507cc8c8b67ed48badd1f59f684d5d02884c81', // uCRV
+      '0xf964b0e3ffdea659c44a5a52bc0b82a24b89ce0e', // uFXS
+      '0x8659fc767cad6005de79af65dafe4249c57927af', // uCVX
+      '0xd6fc1ecd9965ba9cac895654979564a291c74c29', // uauraBAL
+    ];
+  }
+
+  async getUnderlyingTokenAddresses({
+    address,
+    contract,
+    multicall,
+  }: GetUnderlyingTokensParams<LlamaAirforceUnionVault>) {
+    if (address === '0x8659fc767cad6005de79af65dafe4249c57927af') {
+      const pirexContract = this.contractFactory.llamaAirforceUnionVaultPirex({ address, network: this.network });
+      return multicall.wrap(pirexContract).asset();
+    }
+
+    return contract.underlying();
+  }
+
+  async getPricePerShare({ contract, appToken, multicall }: GetPricePerShareParams<LlamaAirforceUnionVault>) {
+    if (appToken.address === '0x8659fc767cad6005de79af65dafe4249c57927af') {
+      const pirexContract = this.contractFactory.llamaAirforceUnionVaultPirex({
+        address: appToken.address,
+        network: this.network,
+      });
+
+      const reserveRaw = await multicall.wrap(pirexContract).totalAssets();
+      const reserve = Number(reserveRaw) / 10 ** appToken.tokens[0].decimals;
+      return reserve / appToken.supply;
+    }
+
+    const reserveRaw = await contract.totalUnderlying();
+    const reserve = Number(reserveRaw) / 10 ** appToken.tokens[0].decimals;
+    return reserve / appToken.supply;
+  }
+
+  getLiquidity({ appToken }: GetDataPropsParams<LlamaAirforceUnionVault>) {
+    return appToken.supply * appToken.price;
+  }
+
+  getReserves({ appToken }: GetDataPropsParams<LlamaAirforceUnionVault>) {
+    return [appToken.pricePerShare[0] * appToken.supply];
+  }
+
+  getApy(_params: GetDataPropsParams<LlamaAirforceUnionVault>) {
+    return 0;
+  }
+
+  async getLabel({ appToken }: GetDisplayPropsParams<LlamaAirforceUnionVault>) {
+    return `${getLabelFromToken(appToken.tokens[0])} Pounder`;
   }
 }

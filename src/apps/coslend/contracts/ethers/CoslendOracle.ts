@@ -4,7 +4,7 @@
 import type { BaseContract, BigNumber, BytesLike, CallOverrides, PopulatedTransaction, Signer, utils } from 'ethers';
 import type { FunctionFragment, Result } from '@ethersproject/abi';
 import type { Listener, Provider } from '@ethersproject/providers';
-import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
 export interface CoslendOracleInterface extends utils.Interface {
   functions: {
@@ -13,7 +13,7 @@ export interface CoslendOracleInterface extends utils.Interface {
 
   getFunction(nameOrSignatureOrTopic: 'getUnderlyingPrice'): FunctionFragment;
 
-  encodeFunctionData(functionFragment: 'getUnderlyingPrice', values: [string]): string;
+  encodeFunctionData(functionFragment: 'getUnderlyingPrice', values: [PromiseOrValue<string>]): string;
 
   decodeFunctionResult(functionFragment: 'getUnderlyingPrice', data: BytesLike): Result;
 
@@ -43,22 +43,22 @@ export interface CoslendOracle extends BaseContract {
   removeListener: OnEvent<this>;
 
   functions: {
-    getUnderlyingPrice(marketToken: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    getUnderlyingPrice(marketToken: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
   };
 
-  getUnderlyingPrice(marketToken: string, overrides?: CallOverrides): Promise<BigNumber>;
+  getUnderlyingPrice(marketToken: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   callStatic: {
-    getUnderlyingPrice(marketToken: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getUnderlyingPrice(marketToken: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
   };
 
   filters: {};
 
   estimateGas: {
-    getUnderlyingPrice(marketToken: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getUnderlyingPrice(marketToken: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
   };
 
   populateTransaction: {
-    getUnderlyingPrice(marketToken: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getUnderlyingPrice(marketToken: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
   };
 }

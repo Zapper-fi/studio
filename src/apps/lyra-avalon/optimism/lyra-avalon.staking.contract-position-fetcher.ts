@@ -2,12 +2,13 @@ import { Inject } from '@nestjs/common';
 
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
+import { ARRAKIS_DEFINITION } from '~apps/arrakis/arrakis.definition';
 import { SynthetixSingleStakingIsActiveStrategy, SynthetixSingleStakingRoiStrategy } from '~apps/synthetix';
 import { PositionFetcher } from '~position/position-fetcher.interface';
 import { ContractPosition } from '~position/position.interface';
 import { Network } from '~types/network.interface';
 
-import { LyraAvalonContractFactory, StakingRewards } from '../contracts';
+import { LyraAvalonContractFactory, LyraLpStaking } from '../contracts';
 import { LYRA_AVALON_DEFINITION } from '../lyra-avalon.definition';
 
 const appId = LYRA_AVALON_DEFINITION.id;
@@ -32,12 +33,12 @@ export class OptimismLyraAvalonStakingContractPositionFetcher implements Positio
   ) {}
 
   async getPositions() {
-    return await this.appToolkit.helpers.singleStakingFarmContractPositionHelper.getContractPositions<StakingRewards>({
+    return await this.appToolkit.helpers.singleStakingFarmContractPositionHelper.getContractPositions<LyraLpStaking>({
       network,
       appId,
       groupId,
-      dependencies: [{ appId: 'sorbet', groupIds: ['pool'], network }],
-      resolveFarmContract: ({ network, address }) => this.lyraContractFactory.stakingRewards({ network, address }),
+      dependencies: [{ appId: ARRAKIS_DEFINITION.id, groupIds: [ARRAKIS_DEFINITION.groups.pool.id], network }],
+      resolveFarmContract: ({ network, address }) => this.lyraContractFactory.lyraLpStaking({ network, address }),
       resolveIsActive: this.synthetixSingleStakingIsActiveStrategy.build({
         resolvePeriodFinish: ({ contract, multicall }) => multicall.wrap(contract).periodFinish(),
       }),

@@ -1,36 +1,32 @@
 import { Register } from '~app-toolkit/decorators';
 import { AbstractApp } from '~app/app.dynamic-module';
-import { SynthetixAppModule } from '~apps/synthetix';
 
-import { ArbitrumYearnBalanceFetcher } from './arbitrum/yearn.balance-fetcher';
-import { ArbitrumYearnVaultTokenFetcher } from './arbitrum/yearn.vault.token-fetcher';
+import { ArbitrumYearnV2VaultTokenFetcher } from './arbitrum/yearn.v2-vault.token-fetcher';
+import { YearnVaultTokenDefinitionsResolver } from './common/yearn.vault.token-definitions-resolver';
 import { YearnContractFactory } from './contracts';
-import { EthereumYearnBalanceFetcher } from './ethereum/yearn.balance-fetcher';
-import { EthereumYearnFarmContractPositionFetcher } from './ethereum/yearn.farm.contract-position-fetcher';
-import { EthereumYearnVaultTokenFetcher } from './ethereum/yearn.vault.token-fetcher';
+import { EthereumYearnGovernanceContractPositionFetcher } from './ethereum/yearn.governance.contract-position-fetcher';
+import { EthereumYearnV1VaultTokenFetcher } from './ethereum/yearn.v1-vault.token-fetcher';
+import { EthereumYearnV2VaultTokenFetcher } from './ethereum/yearn.v2-vault.token-fetcher';
 import { EthereumYearnYieldTokenFetcher } from './ethereum/yearn.yield.token-fetcher';
-import { FantomYearnBalanceFetcher } from './fantom/yearn.balance-fetcher';
-import { FantomYearnVaultTokenFetcher } from './fantom/yearn.vault.token-fetcher';
-import { YearnVaultTokenDefinitionsResolver } from './helpers/yearn.vault.token-definitions-resolver';
-import { YearnVaultTokenHelper } from './helpers/yearn.vault.token-helper';
+import { FantomYearnV2VaultTokenFetcher } from './fantom/yearn.v2-vault.token-fetcher';
 import { YearnAppDefinition, YEARN_DEFINITION } from './yearn.definition';
 
 @Register.AppModule({
   appId: YEARN_DEFINITION.id,
-  imports: [SynthetixAppModule],
   providers: [
     YearnAppDefinition,
     YearnContractFactory,
-    YearnVaultTokenHelper,
+    // Helpers
     YearnVaultTokenDefinitionsResolver,
-    EthereumYearnBalanceFetcher,
-    EthereumYearnFarmContractPositionFetcher,
-    EthereumYearnVaultTokenFetcher,
+    // Ethereum
+    EthereumYearnGovernanceContractPositionFetcher,
+    EthereumYearnV1VaultTokenFetcher,
+    EthereumYearnV2VaultTokenFetcher,
     EthereumYearnYieldTokenFetcher,
-    FantomYearnBalanceFetcher,
-    FantomYearnVaultTokenFetcher,
-    ArbitrumYearnBalanceFetcher,
-    ArbitrumYearnVaultTokenFetcher,
+    // Fantom
+    FantomYearnV2VaultTokenFetcher,
+    // Arbitrum
+    ArbitrumYearnV2VaultTokenFetcher,
   ],
   exports: [YearnContractFactory],
 })

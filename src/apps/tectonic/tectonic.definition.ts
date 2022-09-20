@@ -5,7 +5,7 @@ import { Network } from '~types/network.interface';
 
 export const TECTONIC_DEFINITION = appDefinition({
   id: 'tectonic',
-  name: 'tectonic',
+  name: 'Tectonic',
   description:
     'Tectonic is the first DeFi protocol designed to maximize capital efficiency, benefiting liquidity providers, traders, and borrowers.',
   url: 'https://tectonic.finance/',
@@ -20,14 +20,42 @@ export const TECTONIC_DEFINITION = appDefinition({
     supply: {
       id: 'supply',
       type: GroupType.TOKEN,
-      label: 'Supply',
+      label: 'Lending',
     },
 
     borrow: {
       id: 'borrow',
       type: GroupType.POSITION,
-      label: 'Borrow',
+      label: 'Lending',
     },
+
+    xtonic: {
+      id: 'xtonic',
+      type: GroupType.TOKEN,
+      label: 'xTONIC',
+    },
+  },
+
+  presentationConfig: {
+    tabs: [
+      {
+        label: 'Lending',
+        viewType: 'split',
+
+        views: [
+          {
+            viewType: 'list',
+            label: 'Supply',
+            groupIds: ['supply'],
+          },
+          {
+            viewType: 'list',
+            label: 'Borrow',
+            groupIds: ['borrow'],
+          },
+        ],
+      },
+    ],
   },
 
   tags: [AppTag.LENDING],

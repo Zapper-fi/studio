@@ -1,33 +1,29 @@
-import { Inject } from '@nestjs/common';
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
+import { GetDisplayPropsParams } from '~position/template/app-token.template.types';
 
-import { Register } from '~app-toolkit/decorators';
-import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
-import { PositionFetcher } from '~position/position-fetcher.interface';
-import { AppTokenPosition } from '~position/position.interface';
-import { Network } from '~types/network.interface';
+import { AaveV2AToken } from '../contracts/ethers/AaveV2AToken';
+import {
+  AaveV2ReserveApyData,
+  AaveV2ReserveTokenAddressesData,
+  AaveV2LendingTemplateTokenFetcher,
+  AaveV2LendingTokenDataProps,
+} from '../helpers/aave-v2.lending.template.token-fetcher';
 
-import { AAVE_V2_DEFINITION } from '../aave-v2.definition';
-import { AaveV2LendingTokenHelper } from '../helpers/aave-v2.lending.token-helper';
+@PositionTemplate()
+export class PolygonAaveV2StableDebtTokenFetcher extends AaveV2LendingTemplateTokenFetcher {
+  groupLabel = 'Lending';
+  providerAddress = '0x7551b5d2763519d4e37e8b81929d336de671d46d';
+  isDebt = true;
 
-const appId = AAVE_V2_DEFINITION.id;
-const groupId = AAVE_V2_DEFINITION.groups.stableDebt.id;
-const network = Network.POLYGON_MAINNET;
+  getTokenAddress(reserveTokenAddressesData: AaveV2ReserveTokenAddressesData): string {
+    return reserveTokenAddressesData.stableDebtTokenAddress;
+  }
 
-@Register.TokenPositionFetcher({ appId, groupId, network, options: { includeInTvl: true } })
-export class PolygonAaveV2StableDebtTokenFetcher implements PositionFetcher<AppTokenPosition> {
-  constructor(@Inject(AaveV2LendingTokenHelper) private readonly aaveV2LendingTokenHelper: AaveV2LendingTokenHelper) {}
+  getApyFromReserveData(reserveApyData: AaveV2ReserveApyData): number {
+    return reserveApyData.stableBorrowApy;
+  }
 
-  async getPositions() {
-    return this.aaveV2LendingTokenHelper.getTokens({
-      appId,
-      groupId,
-      network,
-      isDebt: true,
-      protocolDataProviderAddress: '0x7551b5d2763519d4e37e8b81929d336de671d46d',
-      resolveTokenAddress: ({ reserveTokenAddressesData }) => reserveTokenAddressesData.stableDebtTokenAddress,
-      resolveLendingRate: ({ reserveData }) => reserveData.stableBorrowRate,
-      resolveLabel: ({ reserveToken }) => `Borrowed ${getLabelFromToken(reserveToken)}`,
-      resolveApyLabel: ({ apy }) => `${(apy * 100).toFixed(3)}% APR (stable)`,
-    });
+  async getTertiaryLabel({ appToken }: GetDisplayPropsParams<AaveV2AToken, AaveV2LendingTokenDataProps>) {
+    return `${appToken.dataProps.apy.toFixed(3)}% APR (stable)`;
   }
 }

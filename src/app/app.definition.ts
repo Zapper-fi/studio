@@ -4,7 +4,15 @@ import { uniq, keys, mapValues, zipObject } from 'lodash';
 import { Network } from '~types/network.interface';
 import { ArrayOfOneOrMore } from '~types/utils';
 
-import { AddressFormat, AppDefinitionObject, AppGroup, AppLinks, AppAction, AppTag } from './app.interface';
+import {
+  AddressFormat,
+  AppDefinitionObject,
+  AppGroup,
+  AppLinks,
+  AppAction,
+  AppTag,
+  PresentationConfig,
+} from './app.interface';
 
 function toNetworkWithActionsArray(
   supportedNetworks: Record<string, AppAction[]>,
@@ -15,13 +23,7 @@ function toNetworkWithActionsArray(
   }));
 }
 
-export const appDefinition = <T>(
-  definition: Omit<AppDefinitionObject, 'groups'> & {
-    groups: {
-      [K in keyof T]: AppGroup;
-    };
-  },
-) => definition;
+export const appDefinition = <T extends AppDefinitionObject>(definition: T) => definition;
 
 class AppDefinitionToken {
   address: string;
@@ -48,7 +50,10 @@ export class AppDefinition {
     this.links = definitionRaw.links;
     this.description = definitionRaw.description ?? '';
     this.groups = definitionRaw.groups;
-    this.supportedNetworks = toNetworkWithActionsArray(definitionRaw.supportedNetworks);
+    this.presentationConfig = definitionRaw.presentationConfig;
+    this.supportedNetworks = definitionRaw.supportedNetworks
+      ? toNetworkWithActionsArray(definitionRaw.supportedNetworks)
+      : undefined;
     this.primaryColor = definitionRaw.primaryColor ?? '';
     this.token = definitionRaw.token ?? null;
     this.compatibleAddressFormats = mapValues(
@@ -67,13 +72,14 @@ export class AppDefinition {
   readonly id: string;
   readonly name: string;
   readonly description?: string;
-  readonly groups: Record<string, AppGroup>;
+  readonly groups?: Record<string, AppGroup>;
+  readonly presentationConfig?: PresentationConfig;
   readonly url: string;
   readonly links: AppLinks;
   readonly deprecated?: boolean;
   readonly tags: ArrayOfOneOrMore<AppTag>;
   readonly keywords: string[];
-  readonly supportedNetworks: AppSupportedNetwork[];
+  readonly supportedNetworks?: AppSupportedNetwork[];
   readonly compatibleAddressFormats?: { [N in Network]?: AddressFormat };
   readonly primaryColor: string;
   readonly token: AppDefinitionToken | null;

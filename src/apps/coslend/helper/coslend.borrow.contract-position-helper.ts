@@ -82,7 +82,10 @@ export class CoslendBorrowContractPositionHelper {
       const tertiaryLabel = isNumber(borrowApy) ? `${(borrowApy * 100).toFixed(3)}% APR` : '';
       const images = appToken.displayProps.images;
       const statsItems = isNumber(borrowApy)
-        ? [{ label: 'Borrow APR', value: buildPercentageDisplayItem(borrowApy) }]
+        ? [
+            { label: 'APR', value: buildPercentageDisplayItem(borrowApy) },
+            { label: 'Liquidity', value: buildDollarDisplayItem(borrowLiquidity) },
+          ]
         : [];
 
       const contractPosition: ContractPosition<CoslendSupplyTokenDataProps> = {

@@ -1,5 +1,5 @@
 import { Inject } from '@nestjs/common';
-import _, { sumBy } from 'lodash';
+import _ from 'lodash';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
@@ -36,7 +36,7 @@ const appId = QI_DAO_DEFINITION.id;
 const groupId = QI_DAO_DEFINITION.groups.anchorVault.id;
 const network = Network.POLYGON_MAINNET;
 
-@Register.ContractPositionFetcher({ appId, groupId, network, options: { includeInTvl: true } })
+@Register.ContractPositionFetcher({ appId, groupId, network })
 export class PolygonQiDaoAnchorVaultPositionFetcher implements PositionFetcher<ContractPosition> {
   constructor(
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
@@ -85,11 +85,6 @@ export class PolygonQiDaoAnchorVaultPositionFetcher implements PositionFetcher<C
 
         return contractPosition;
       }),
-    );
-
-    console.log(
-      'anchor',
-      sumBy(_.compact(anchorVaultContractPositions), v => v.dataProps.liquidity),
     );
 
     return _.compact(anchorVaultContractPositions);
