@@ -43,7 +43,8 @@ export class EthereumStakefishStakingContractPositionFetcher extends ContractPos
     ];
   }
 
-  async getStakedBalances(address: string) {
+  async getStakedBalances(address: string, isStaked: number) {
+    if (!isStaked) return [0, 0];
     const response = await axios.get(
       `https://fee-pool-api-mainnet.oracle.ethereum.fish/validators?depositor=${address}`,
     );
@@ -53,8 +54,8 @@ export class EthereumStakefishStakingContractPositionFetcher extends ContractPos
   }
 
   async getTokenBalancesPerPosition({ address, contract }: GetTokenBalancesParams<StakefishFeePool>) {
-    const [staked, total] = await this.getStakedBalances(address);
-    const [pending] = await contract.pendingReward(address);
+    const [pending, claimed] = await contract.pendingReward(address);
+    const [staked, total] = await this.getStakedBalances(address, Number(pending) + Number(claimed));
     return [staked, total - staked, pending];
   }
 }
