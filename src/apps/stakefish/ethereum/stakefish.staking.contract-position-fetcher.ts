@@ -37,7 +37,8 @@ export class EthereumStakefishStakingContractPositionFetcher extends ContractPos
 
   async getTokenDefinitions() {
     return [
-      { metaType: MetaType.LOCKED, address: ZERO_ADDRESS },
+      { metaType: MetaType.SUPPLIED, address: ZERO_ADDRESS },
+      { metaType: MetaType.VESTING, address: ZERO_ADDRESS },
       { metaType: MetaType.CLAIMABLE, address: ZERO_ADDRESS },
     ];
   }
@@ -46,13 +47,14 @@ export class EthereumStakefishStakingContractPositionFetcher extends ContractPos
     const response = await axios.get(
       `https://fee-pool-api-mainnet.oracle.ethereum.fish/validators?depositor=${address}`,
     );
-    const balance = sumBy(response.data.results, 'balance');
-    return Number(balance) * 1e9;
+    const staked = sumBy(response.data.results, 'effective_balance');
+    const total = sumBy(response.data.results, 'balance');
+    return [staked, total].map(x => Number(x) * 1e9);
   }
 
   async getTokenBalancesPerPosition({ address, contract }: GetTokenBalancesParams<StakefishFeePool>) {
-    const staked = await this.getStakedBalances(address);
+    const [staked, total] = await this.getStakedBalances(address);
     const [pending] = await contract.pendingReward(address);
-    return [staked, pending];
+    return [staked, total - staked, pending];
   }
 }
