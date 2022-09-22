@@ -5,6 +5,8 @@ import { ContractFactory } from '~contract/contracts';
 import { Network } from '~types/network.interface';
 
 import { MyceliumAumManager__factory } from './ethers';
+import { MyceliumPerpFarm__factory } from './ethers';
+import { MyceliumPerpToken__factory } from './ethers';
 import { MyceliumPositionReader__factory } from './ethers';
 import { MyceliumRewardReader__factory } from './ethers';
 import { MyceliumRewardTracker__factory } from './ethers';
@@ -22,6 +24,12 @@ export class MyceliumContractFactory extends ContractFactory {
   myceliumAumManager({ address, network }: ContractOpts) {
     return MyceliumAumManager__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
+  myceliumPerpFarm({ address, network }: ContractOpts) {
+    return MyceliumPerpFarm__factory.connect(address, this.appToolkit.getNetworkProvider(network));
+  }
+  myceliumPerpToken({ address, network }: ContractOpts) {
+    return MyceliumPerpToken__factory.connect(address, this.appToolkit.getNetworkProvider(network));
+  }
   myceliumPositionReader({ address, network }: ContractOpts) {
     return MyceliumPositionReader__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
@@ -37,6 +45,8 @@ export class MyceliumContractFactory extends ContractFactory {
 }
 
 export type { MyceliumAumManager } from './ethers';
+export type { MyceliumPerpFarm } from './ethers';
+export type { MyceliumPerpToken } from './ethers';
 export type { MyceliumPositionReader } from './ethers';
 export type { MyceliumRewardReader } from './ethers';
 export type { MyceliumRewardTracker } from './ethers';

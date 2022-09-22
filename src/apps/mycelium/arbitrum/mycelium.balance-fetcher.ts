@@ -7,6 +7,7 @@ import { BalanceFetcher } from '~balance/balance-fetcher.interface';
 import { Network } from '~types/network.interface';
 
 import { MyceliumLevTradesBalanceHelper } from '../helpers/mycelium.lev-trades.balance-helper';
+import { MyceliumPerpTokensFarmBalanceHelper } from '../helpers/mycelium.perp-tokens-farm.balance-helper';
 import { MYCELIUM_DEFINITION } from '../mycelium.definition';
 
 const network = Network.ARBITRUM_MAINNET;
@@ -16,6 +17,8 @@ export class ArbitrumMyceliumBalanceFetcher implements BalanceFetcher {
   constructor(
     @Inject(TokenBalanceHelper) private readonly tokenBalanceHelper: TokenBalanceHelper,
     @Inject(MyceliumLevTradesBalanceHelper) private readonly levTradesBalanceHelper: MyceliumLevTradesBalanceHelper,
+    @Inject(MyceliumPerpTokensFarmBalanceHelper)
+    private readonly perpFarmsBalanceHelper: MyceliumPerpTokensFarmBalanceHelper,
   ) {}
 
   private async getEsMycTokenBalances(address: string) {
@@ -40,11 +43,26 @@ export class ArbitrumMyceliumBalanceFetcher implements BalanceFetcher {
     return this.levTradesBalanceHelper.getBalance({ address, network });
   }
 
+  private async getPerpTokens(address: string) {
+    return this.tokenBalanceHelper.getTokenBalances({
+      address,
+      appId: MYCELIUM_DEFINITION.id,
+      groupId: MYCELIUM_DEFINITION.groups.perpTokens.id,
+      network,
+    });
+  }
+
+  private async getPerpTokensFarms(address: string) {
+    return this.perpFarmsBalanceHelper.getBalance({ address, network });
+  }
+
   async getBalances(address: string) {
-    const [mlpTokenBalances, esMycTokenBalances, levTradesPositions] = await Promise.all([
+    const [mlpTokenBalances, esMycTokenBalances, levTradesPositions, perpTokens] = await Promise.all([
       this.getMlpTokenBalances(address),
       this.getEsMycTokenBalances(address),
       this.getLevTradesPositions(address),
+      this.getPerpTokens(address),
+      this.getPerpTokensFarms(address),
     ]);
 
     return presentBalanceFetcherResponse([
@@ -59,6 +77,10 @@ export class ArbitrumMyceliumBalanceFetcher implements BalanceFetcher {
       {
         label: 'Leveraged trades',
         assets: [...levTradesPositions],
+      },
+      {
+        label: 'Perpetual pools tokens',
+        assets: [...perpTokens],
       },
     ]);
   }
