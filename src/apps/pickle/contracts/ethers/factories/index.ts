@@ -9,3 +9,4 @@ export { PickleRegistry__factory } from './PickleRegistry__factory';
 export { PickleRewarder__factory } from './PickleRewarder__factory';
 export { PickleVotingEscrow__factory } from './PickleVotingEscrow__factory';
 export { PickleVotingEscrowReward__factory } from './PickleVotingEscrowReward__factory';
+export { PickleVotingEscrowRewardV2__factory } from './PickleVotingEscrowRewardV2__factory';
