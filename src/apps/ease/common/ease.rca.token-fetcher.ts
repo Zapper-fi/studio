@@ -1,17 +1,12 @@
 import { Inject } from '@nestjs/common';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
-import {
-  buildDollarDisplayItem,
-  buildNumberDisplayItem,
-  buildPercentageDisplayItem,
-} from '~app-toolkit/helpers/presentation/display-item.present';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import {
   GetDataPropsParams,
   GetUnderlyingTokensParams,
   GetAddressesParams,
-  GetDisplayPropsParams,
+  DefaultAppTokenDataProps,
 } from '~position/template/app-token.template.types';
 
 import { EaseContractFactory, EaseRcaShield } from '../contracts';
@@ -23,15 +18,9 @@ export type EaseRcaTokenDefinition = {
   underlyingTokenAddress: string;
 };
 
-export type EaseRcaDataProps = {
-  liquidity: number;
-  reserve: number;
-  apy: number;
-};
-
 export abstract class EaseRcaTokenFetcher extends AppTokenTemplatePositionFetcher<
   EaseRcaShield,
-  EaseRcaDataProps,
+  DefaultAppTokenDataProps,
   EaseRcaTokenDefinition
 > {
   constructor(
@@ -59,19 +48,15 @@ export abstract class EaseRcaTokenFetcher extends AppTokenTemplatePositionFetche
     return definition.underlyingTokenAddress;
   }
 
-  async getDataProps({ appToken }: GetDataPropsParams<EaseRcaShield, EaseRcaDataProps, EaseRcaTokenDefinition>) {
-    const reserve = Number(appToken.pricePerShare) * appToken.supply;
-    const liquidity = reserve * appToken.tokens[0].price;
-    const apy = await this.vaultDefinitionsResolver.getRcaApy(appToken.address);
-
-    return { liquidity, reserve, apy };
+  async getLiquidity({ appToken }: GetDataPropsParams<EaseRcaShield>) {
+    return appToken.supply * appToken.price;
   }
 
-  async getStatsItems({ appToken }: GetDisplayPropsParams<EaseRcaShield, EaseRcaDataProps>) {
-    return [
-      { label: 'Liquidity', value: buildDollarDisplayItem(appToken.dataProps.liquidity) },
-      { label: 'Reserve', value: buildNumberDisplayItem(appToken.dataProps.reserve) },
-      { label: 'APY', value: buildPercentageDisplayItem(appToken.dataProps.apy) },
-    ];
+  async getReserves({ appToken }: GetDataPropsParams<EaseRcaShield>) {
+    return [appToken.pricePerShare[0] * appToken.supply];
+  }
+
+  async getApy({ appToken }: GetDataPropsParams<EaseRcaShield>) {
+    return this.vaultDefinitionsResolver.getRcaApy(appToken.address);
   }
 }

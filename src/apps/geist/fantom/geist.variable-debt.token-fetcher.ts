@@ -18,7 +18,7 @@ export class FantomGeistVariableDebtTokenFetcher extends AaveV2LendingTemplateTo
     return reserveTokenAddressesData.variableDebtTokenAddress;
   }
 
-  getApy(reserveApyData: AaveV2ReserveApyData): number {
+  getApyFromReserveData(reserveApyData: AaveV2ReserveApyData): number {
     return reserveApyData.variableBorrowApy;
   }
 

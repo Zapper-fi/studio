@@ -18,7 +18,7 @@ export class AvalancheNereusFinanceStableDebtTokenFetcher extends AaveV2LendingT
     return reserveTokenAddressesData.stableDebtTokenAddress;
   }
 
-  getApy(reserveApyData: AaveV2ReserveApyData): number {
+  getApyFromReserveData(reserveApyData: AaveV2ReserveApyData): number {
     return reserveApyData.stableBorrowApy;
   }
 

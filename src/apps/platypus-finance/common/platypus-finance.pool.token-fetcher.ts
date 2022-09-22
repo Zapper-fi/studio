@@ -12,15 +12,7 @@ import {
 
 import { PlatypusFinanceContractFactory, PlatypusFinancePoolToken } from '../contracts';
 
-export type PlatypusFinancePoolTokenDataProps = {
-  liquidity: number;
-  reserves: number[];
-};
-
-export abstract class PlatypusFinancePoolTokenFetcher extends AppTokenTemplatePositionFetcher<
-  PlatypusFinancePoolToken,
-  PlatypusFinancePoolTokenDataProps
-> {
+export abstract class PlatypusFinancePoolTokenFetcher extends AppTokenTemplatePositionFetcher<PlatypusFinancePoolToken> {
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
     @Inject(PlatypusFinanceContractFactory) protected readonly contractFactory: PlatypusFinanceContractFactory,
@@ -64,9 +56,15 @@ export abstract class PlatypusFinancePoolTokenFetcher extends AppTokenTemplatePo
     return Number(pricePerShareRaw.amount) / 10 ** appToken.decimals;
   }
 
-  async getDataProps({ appToken }: GetDataPropsParams<PlatypusFinancePoolToken>) {
-    const liquidity = appToken.price * appToken.supply;
-    const reserves = (appToken.pricePerShare as number[]).map(v => v * appToken.supply);
-    return { liquidity, reserves };
+  getLiquidity({ appToken }: GetDataPropsParams<PlatypusFinancePoolToken>) {
+    return appToken.supply * appToken.price;
+  }
+
+  getReserves({ appToken }: GetDataPropsParams<PlatypusFinancePoolToken>) {
+    return [appToken.pricePerShare[0] * appToken.supply];
+  }
+
+  getApy(_params: GetDataPropsParams<PlatypusFinancePoolToken>) {
+    return 0;
   }
 }

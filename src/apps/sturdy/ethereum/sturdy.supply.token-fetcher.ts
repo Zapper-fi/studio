@@ -18,7 +18,7 @@ export class EthereumSturdySupplyTokenFetcher extends AaveAmmLendingTemplateToke
     return reserveTokenAddressesData.aTokenAddress;
   }
 
-  getApy(reserveApyData: AaveV2ReserveApyData): number {
+  getApyFromReserveData(reserveApyData: AaveV2ReserveApyData): number {
     return reserveApyData.supplyApy;
   }
 

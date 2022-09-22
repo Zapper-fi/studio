@@ -3,6 +3,7 @@ import { Inject } from '@nestjs/common';
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import {
+  DefaultAppTokenDataProps,
   GetAddressesParams,
   GetDataPropsParams,
   GetPricePerShareParams,
@@ -12,10 +13,6 @@ import {
 import { BeefyContractFactory, BeefyVaultToken } from '../contracts';
 
 import { BeefyVaultTokenDefinitionsResolver } from './beefy.vault.token-definition-resolver';
-
-export type BeefyVaultTokenDataProps = {
-  liquidity: number;
-};
 
 export type BeefyVaultTokenDefinition = {
   address: string;
@@ -27,7 +24,7 @@ export type BeefyVaultTokenDefinition = {
 
 export abstract class BeefyVaultTokenFetcher extends AppTokenTemplatePositionFetcher<
   BeefyVaultToken,
-  BeefyVaultTokenDataProps,
+  DefaultAppTokenDataProps,
   BeefyVaultTokenDefinition
 > {
   constructor(
@@ -68,11 +65,15 @@ export abstract class BeefyVaultTokenFetcher extends AppTokenTemplatePositionFet
     return Number(ratioRaw) / 10 ** decimals;
   }
 
-  async getDataProps(opts: GetDataPropsParams<BeefyVaultToken, BeefyVaultTokenDataProps>) {
-    const { appToken } = opts;
-    const reserve = Number(appToken.pricePerShare) * appToken.supply;
-    const liquidity = reserve * appToken.tokens[0].price;
+  getLiquidity({ appToken }: GetDataPropsParams<BeefyVaultToken>) {
+    return appToken.supply * appToken.price;
+  }
 
-    return { liquidity };
+  getReserves({ appToken }: GetDataPropsParams<BeefyVaultToken>) {
+    return [appToken.pricePerShare[0] * appToken.supply];
+  }
+
+  getApy(_params: GetDataPropsParams<BeefyVaultToken>) {
+    return 0;
   }
 }

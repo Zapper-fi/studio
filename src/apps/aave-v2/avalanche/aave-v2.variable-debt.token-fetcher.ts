@@ -19,7 +19,7 @@ export class AvalancheAaveV2VariableDebtTokenFetcher extends AaveV2LendingTempla
     return reserveTokenAddressesData.variableDebtTokenAddress;
   }
 
-  getApy(reserveApyData: AaveV2ReserveApyData): number {
+  getApyFromReserveData(reserveApyData: AaveV2ReserveApyData): number {
     return reserveApyData.variableBorrowApy;
   }
 

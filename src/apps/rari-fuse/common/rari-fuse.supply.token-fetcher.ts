@@ -17,11 +17,10 @@ import {
   GetDataPropsParams,
   GetDisplayPropsParams,
   GetDefinitionsParams,
+  DefaultAppTokenDataProps,
 } from '~position/template/app-token.template.types';
 
-export type RariFuseSupplyTokenDataProps = {
-  apy: number;
-  liquidity: number;
+export type RariFuseSupplyTokenDataProps = DefaultAppTokenDataProps & {
   marketName: string;
   comptroller: string;
 };
@@ -104,19 +103,26 @@ export abstract class RariFuseSupplyTokenFetcher<
     return Number(supplyRateRaw) / 10 ** mantissa;
   }
 
-  async getDataProps({
-    contract,
-    definition,
-    appToken,
-  }: GetDataPropsParams<R, RariFuseSupplyTokenDataProps, RariFuseSupplyTokenDefinition>) {
+  async getLiquidity({ appToken }: GetDataPropsParams<R>) {
+    return appToken.supply * appToken.price;
+  }
+
+  async getReserves({ appToken }: GetDataPropsParams<R>) {
+    return [appToken.pricePerShare[0] * appToken.supply];
+  }
+
+  async getApy({ contract }: GetDataPropsParams<R>) {
     const supplyRateRaw = await this.getSupplyRateRaw(contract);
-    const { marketName, comptroller } = definition;
     const blocksPerDay = BLOCKS_PER_DAY[this.network];
     const supplyRate = Number(supplyRateRaw) / 10 ** 18;
     const apy = (Math.pow(1 + blocksPerDay * supplyRate, 365) - 1) * 100;
-    const liquidity = appToken.price * appToken.supply;
+    return apy;
+  }
 
-    return { apy, liquidity, marketName, comptroller };
+  async getDataProps(params: GetDataPropsParams<R, RariFuseSupplyTokenDataProps, RariFuseSupplyTokenDefinition>) {
+    const defaultDataProps = await super.getDataProps(params);
+    const { marketName, comptroller } = params.definition;
+    return { ...defaultDataProps, marketName, comptroller };
   }
 
   async getLabel({ appToken }: GetDisplayPropsParams<R, RariFuseSupplyTokenDataProps, RariFuseSupplyTokenDefinition>) {

@@ -18,6 +18,7 @@ import {
   DefaultAppTokenDefinition,
   GetDataPropsParams,
   GetDisplayPropsParams,
+  DefaultAppTokenDataProps,
 } from '~position/template/app-token.template.types';
 
 import { BalancerPoolToken, BalancerV1ContractFactory } from '../contracts';
@@ -38,11 +39,9 @@ const getPoolsQuery = gql`
   }
 `;
 
-export type BalancerV1PoolTokenDataProps = {
-  liquidity: number;
+export type BalancerV1PoolTokenDataProps = DefaultAppTokenDataProps & {
   fee: number;
   volume: number;
-  reserves: number[];
   weight: number[];
 };
 
@@ -90,15 +89,36 @@ export class EthereumBalancerV1PoolTokenFetcher extends AppTokenTemplatePosition
     return pricePerShare;
   }
 
-  async getDataProps({ appToken, contract }: GetDataPropsParams<BalancerPoolToken>) {
+  async getReserves({ appToken }: GetDataPropsParams<BalancerPoolToken, BalancerV1PoolTokenDataProps>) {
+    return (appToken.pricePerShare as number[]).map(pps => pps * appToken.supply);
+  }
+
+  async getLiquidity({ appToken }: GetDataPropsParams<BalancerPoolToken, BalancerV1PoolTokenDataProps>) {
     const reserves = (appToken.pricePerShare as number[]).map(pps => pps * appToken.supply);
     const liquidity = sum(reserves.map((r, i) => r * appToken.tokens[i].price));
+    return liquidity;
+  }
+
+  async getApy({ appToken, contract }: GetDataPropsParams<BalancerPoolToken>) {
+    const fee = (Number(await contract.getSwapFee()) / 10 ** 18) * 100;
+    const volume = await this.volumeDataLoader.load(appToken.address);
+    const yearlyFees = volume * fee * 365;
+    const reserves = (appToken.pricePerShare as number[]).map(pps => pps * appToken.supply);
+    const liquidity = sum(reserves.map((r, i) => r * appToken.tokens[i].price));
+    const apy = yearlyFees / liquidity;
+    return apy;
+  }
+
+  async getDataProps(params: GetDataPropsParams<BalancerPoolToken>) {
+    const defaultDataProps = await super.getDataProps(params);
+
+    const { appToken, contract } = params;
     const fee = (Number(await contract.getSwapFee()) / 10 ** 18) * 100;
     const weightsRaw = await Promise.all(appToken.tokens.map(t => contract.getNormalizedWeight(t.address)));
     const weight = weightsRaw.map(w => Number(w) / 10 ** 18);
     const volume = await this.volumeDataLoader.load(appToken.address);
 
-    return { liquidity, fee, volume, reserves, weight };
+    return { ...defaultDataProps, fee, volume, weight };
   }
 
   async getLabel({

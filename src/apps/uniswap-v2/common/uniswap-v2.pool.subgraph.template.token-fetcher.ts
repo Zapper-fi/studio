@@ -50,7 +50,7 @@ export abstract class UniswapV2PoolSubgraphTemplateTokenFetcher extends UniswapV
 
   async getAddresses() {
     // Initialize volume dataloader
-    const dataLoaderOptions = { cache: false, maxBatchSize: 1000 };
+    const dataLoaderOptions = { cache: true, maxBatchSize: 1000 };
     this.volumeDataLoader = new DataLoader<string, number>(this.batchGetVolume.bind(this), dataLoaderOptions);
 
     const chunks = await Promise.all(
@@ -79,13 +79,18 @@ export abstract class UniswapV2PoolSubgraphTemplateTokenFetcher extends UniswapV
     return uniquepoolIds;
   }
 
+  async getApy({ appToken }: GetDataPropsParams<UniswapPair, UniswapV2TokenDataProps>) {
+    const liquidity = appToken.supply * appToken.price;
+    const volume = this.volumeDataLoader ? await this.volumeDataLoader.load(appToken.address) : 0;
+    const yearlyFees = volume * (this.fee / 100) * 365;
+    const apy = yearlyFees / liquidity;
+    return apy;
+  }
+
   async getDataProps(params: GetDataPropsParams<UniswapPair, UniswapV2TokenDataProps>) {
-    const dataProps = await super.getDataProps(params);
+    const defaultDataProps = await super.getDataProps(params);
     const volume = this.volumeDataLoader ? await this.volumeDataLoader.load(params.appToken.address) : 0;
-    const fees = volume * this.fee;
-    const projectedYearlyFees = fees * 365;
-    const apy = projectedYearlyFees / dataProps.liquidity;
-    return { ...dataProps, volume, apy };
+    return { ...defaultDataProps, volume };
   }
 
   async batchGetVolume(addresses: string[]) {
