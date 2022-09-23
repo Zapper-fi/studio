@@ -2,6 +2,7 @@
 /* tslint:disable */
 /* eslint-disable */
 export { MyceliumAumManager__factory } from './MyceliumAumManager__factory';
+export { MyceliumLending__factory } from './MyceliumLending__factory';
 export { MyceliumPerpFarm__factory } from './MyceliumPerpFarm__factory';
 export { MyceliumPerpToken__factory } from './MyceliumPerpToken__factory';
 export { MyceliumPositionReader__factory } from './MyceliumPositionReader__factory';

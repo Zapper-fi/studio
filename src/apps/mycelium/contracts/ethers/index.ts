@@ -2,6 +2,7 @@
 /* tslint:disable */
 /* eslint-disable */
 export type { MyceliumAumManager } from './MyceliumAumManager';
+export type { MyceliumLending } from './MyceliumLending';
 export type { MyceliumPerpFarm } from './MyceliumPerpFarm';
 export type { MyceliumPerpToken } from './MyceliumPerpToken';
 export type { MyceliumPositionReader } from './MyceliumPositionReader';
@@ -10,6 +11,7 @@ export type { MyceliumRewardTracker } from './MyceliumRewardTracker';
 export type { MyceliumVault } from './MyceliumVault';
 export * as factories from './factories';
 export { MyceliumAumManager__factory } from './factories/MyceliumAumManager__factory';
+export { MyceliumLending__factory } from './factories/MyceliumLending__factory';
 export { MyceliumPerpFarm__factory } from './factories/MyceliumPerpFarm__factory';
 export { MyceliumPerpToken__factory } from './factories/MyceliumPerpToken__factory';
 export { MyceliumPositionReader__factory } from './factories/MyceliumPositionReader__factory';

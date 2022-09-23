@@ -10,7 +10,7 @@ import { Network } from '~types/network.interface';
 import { MyceliumContractFactory } from '../contracts';
 import { MYCELIUM_DEFINITION } from '../mycelium.definition';
 
-import { ES_MYC_TOKEN_ADDRESS } from './mycelium.constants';
+import { ES_MYC_TOKEN_ADDRESS, MYC_TOKEN_ADDRESS } from './mycelium.constants';
 
 type MyceliumEsMycTokenParams = {
   network: Network;
@@ -26,7 +26,7 @@ export class MyceliumEsMycTokenHelper {
   async getTokens({ network }: MyceliumEsMycTokenParams) {
     const multicall = this.appToolkit.getMulticall(network);
     const baseTokens = await this.appToolkit.getBaseTokenPrices(network);
-    const underlyingToken = baseTokens.find(p => p.symbol === 'MYC')!;
+    const underlyingToken = baseTokens.find(p => p.address === MYC_TOKEN_ADDRESS)!;
     if (!underlyingToken) return [];
 
     const esMycContract = this.contractFactory.erc20({ address: ES_MYC_TOKEN_ADDRESS, network });
