@@ -1,9 +1,9 @@
 import { Inject } from '@nestjs/common';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
-import { DefaultDataProps } from '~position/display.interface';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import {
+  DefaultAppTokenDataProps,
   DefaultAppTokenDefinition,
   GetAddressesParams,
   GetDisplayPropsParams,
@@ -13,18 +13,14 @@ import { GetUnderlyingTokensParams, GetDataPropsParams } from '~position/templat
 
 import { PoolTogetherV3ContractFactory, PoolTogetherV3Pod } from '../contracts';
 
-type Definition = DefaultAppTokenDefinition & {
+type PoolTogetherV3PodDefinition = DefaultAppTokenDefinition & {
   underlyingTokenAddress: string;
-};
-
-type PoolTogetherV3PodDataProps = {
-  liquidity: number;
 };
 
 export abstract class PoolTogetherV3PodTokenFetcher extends AppTokenTemplatePositionFetcher<
   PoolTogetherV3Pod,
-  DefaultDataProps,
-  Definition
+  DefaultAppTokenDataProps,
+  PoolTogetherV3PodDefinition
 > {
   abstract registryAddress: string;
 
@@ -50,25 +46,27 @@ export abstract class PoolTogetherV3PodTokenFetcher extends AppTokenTemplatePosi
     return contract.name();
   }
 
-  async getPricePerShare({
-    contract,
-    appToken,
-  }: GetPricePerShareParams<PoolTogetherV3Pod, PoolTogetherV3PodDataProps>) {
+  async getPricePerShare({ contract, appToken }: GetPricePerShareParams<PoolTogetherV3Pod>) {
     const pricePerShareRaw = await contract.getPricePerShare();
     return Number(pricePerShareRaw) / 10 ** appToken.decimals;
   }
 
   async getUnderlyingTokenAddresses({
     contract,
-  }: GetUnderlyingTokensParams<PoolTogetherV3Pod, Definition>): Promise<string | string[]> {
+  }: GetUnderlyingTokensParams<PoolTogetherV3Pod, PoolTogetherV3PodDefinition>): Promise<string | string[]> {
     const underlyingTokenAddress = await contract.token().then(addr => addr.toLowerCase());
     return [underlyingTokenAddress];
   }
 
-  async getDataProps({
-    appToken,
-  }: GetDataPropsParams<PoolTogetherV3Pod, PoolTogetherV3PodDataProps>): Promise<PoolTogetherV3PodDataProps> {
-    const liquidity = appToken.price * appToken.supply;
-    return { liquidity };
+  getLiquidity({ appToken }: GetDataPropsParams<PoolTogetherV3Pod>) {
+    return appToken.supply * appToken.price;
+  }
+
+  getReserves({ appToken }: GetDataPropsParams<PoolTogetherV3Pod>) {
+    return [appToken.pricePerShare[0] * appToken.supply];
+  }
+
+  getApy(_params: GetDataPropsParams<PoolTogetherV3Pod>) {
+    return 0;
   }
 }

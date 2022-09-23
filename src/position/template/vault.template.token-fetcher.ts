@@ -6,12 +6,7 @@ import {
   GetUnderlyingTokensParams,
 } from '~position/template/app-token.template.types';
 
-export type VaultTokenDataProps = {
-  liquidity: number;
-  reserve: number;
-};
-
-export abstract class VaultTokenFetcher extends AppTokenTemplatePositionFetcher<Erc20, VaultTokenDataProps> {
+export abstract class VaultTemplateTokenFetcher extends AppTokenTemplatePositionFetcher<Erc20> {
   abstract vaultAddress: string;
   abstract underlyingTokenAddress: string;
   reserveAddress?: string;
@@ -28,22 +23,29 @@ export abstract class VaultTokenFetcher extends AppTokenTemplatePositionFetcher<
     return this.underlyingTokenAddress;
   }
 
-  async getReserve({ multicall, appToken }: GetPricePerShareParams<Erc20, VaultTokenDataProps>) {
+  async getPricePerShare({ multicall, appToken }: GetPricePerShareParams<Erc20>) {
     const underlying = multicall.wrap(this.appToolkit.globalContracts.erc20(appToken.tokens[0]));
     const reserveRaw = await underlying.balanceOf(this.reserveAddress ?? this.vaultAddress);
-    return Number(reserveRaw) / 10 ** appToken.tokens[0].decimals;
-  }
-
-  async getPricePerShare(opts: GetPricePerShareParams<Erc20, VaultTokenDataProps>) {
-    const { appToken } = opts;
-    const reserve = await this.getReserve(opts);
+    const reserve = Number(reserveRaw) / 10 ** appToken.tokens[0].decimals;
     return reserve / appToken.supply;
   }
 
-  async getDataProps(opts: GetDataPropsParams<Erc20, VaultTokenDataProps>) {
-    const { appToken } = opts;
-    const reserve = await this.getReserve(opts);
+  async getLiquidity({ multicall, appToken }: GetDataPropsParams<Erc20>) {
+    const underlying = multicall.wrap(this.appToolkit.globalContracts.erc20(appToken.tokens[0]));
+    const reserveRaw = await underlying.balanceOf(this.reserveAddress ?? this.vaultAddress);
+    const reserve = Number(reserveRaw) / 10 ** appToken.tokens[0].decimals;
     const liquidity = reserve * appToken.tokens[0].price;
-    return { reserve, liquidity };
+    return liquidity;
+  }
+
+  async getReserves({ multicall, appToken }: GetDataPropsParams<Erc20>) {
+    const underlying = multicall.wrap(this.appToolkit.globalContracts.erc20(appToken.tokens[0]));
+    const reserveRaw = await underlying.balanceOf(this.reserveAddress ?? this.vaultAddress);
+    const reserve = Number(reserveRaw) / 10 ** appToken.tokens[0].decimals;
+    return [reserve];
+  }
+
+  async getApy(_params: GetDataPropsParams<Erc20>) {
+    return 0;
   }
 }

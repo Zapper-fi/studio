@@ -1,16 +1,15 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Inject } from '@nestjs/common';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { ZERO_ADDRESS } from '~app-toolkit/constants/address';
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import { GetTokenBalancesParams } from '~position/template/contract-position.template.types';
 import {
   SingleStakingFarmDefinition,
   SingleStakingFarmTemplateContractPositionFetcher,
 } from '~position/template/single-staking.template.contract-position-fetcher';
-import { Network } from '~types/network.interface';
 
 import { LiquityContractFactory, LiquityStaking } from '../contracts';
-import LIQUITY_DEFINITION from '../liquity.definition';
 
 const FARMS = [
   {
@@ -20,11 +19,8 @@ const FARMS = [
   },
 ];
 
-@Injectable()
+@PositionTemplate()
 export class EthereumLiquityStakingContractPositionFetcher extends SingleStakingFarmTemplateContractPositionFetcher<LiquityStaking> {
-  appId = LIQUITY_DEFINITION.id;
-  groupId = LIQUITY_DEFINITION.groups.staking.id;
-  network = Network.ETHEREUM_MAINNET;
   groupLabel = 'Staked';
 
   constructor(

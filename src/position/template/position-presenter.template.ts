@@ -8,8 +8,8 @@ export interface PositionPresenter {
 }
 
 export abstract class PositionPresenterTemplate implements PositionPresenter {
-  abstract network: Network;
-  abstract appId: string;
+  network: Network;
+  appId: string;
 
   positionGroups?: PositionGroup[];
   explorePresentationConfig?: PresentationConfig;

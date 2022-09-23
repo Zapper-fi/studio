@@ -1,25 +1,18 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Inject } from '@nestjs/common';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
-import {
-  CompoundSupplyTokenDataProps,
-  CompoundSupplyTokenFetcher,
-} from '~apps/compound/common/compound.supply.token-fetcher';
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
+import { CompoundSupplyTokenFetcher } from '~apps/compound/common/compound.supply.token-fetcher';
 import { DisplayProps } from '~position/display.interface';
 import { GetDisplayPropsParams } from '~position/template/app-token.template.types';
-import { Network } from '~types/network.interface';
 
 import { CozyFinanceComptroller, CozyFinanceContractFactory, CozyFinanceCToken } from '../contracts';
-import COZY_FINANCE_DEFINITION from '../cozy-finance.definition';
 
-@Injectable()
+@PositionTemplate()
 export class ArbitrumCozyFinanceSupplyTokenFetcher extends CompoundSupplyTokenFetcher<
   CozyFinanceCToken,
   CozyFinanceComptroller
 > {
-  appId = COZY_FINANCE_DEFINITION.id;
-  groupId = COZY_FINANCE_DEFINITION.groups.supply.id;
-  network = Network.ARBITRUM_MAINNET;
   groupLabel = 'Lending';
   comptrollerAddress = '0x895879b2c1fbb6ccfcd101f2d3f3c76363664f92';
 
@@ -54,10 +47,7 @@ export class ArbitrumCozyFinanceSupplyTokenFetcher extends CompoundSupplyTokenFe
     return contract.supplyRatePerBlock().catch(() => 0);
   }
 
-  async getLabel({
-    appToken,
-    contract,
-  }: GetDisplayPropsParams<CozyFinanceCToken, CompoundSupplyTokenDataProps>): Promise<DisplayProps['label']> {
+  async getLabel({ appToken, contract }: GetDisplayPropsParams<CozyFinanceCToken>): Promise<DisplayProps['label']> {
     const [underlyingToken] = appToken.tokens;
     const [symbol, name] = await Promise.all([contract.symbol(), contract.name()]);
     if (!name.startsWith(`${symbol}-`)) return underlyingToken.symbol;

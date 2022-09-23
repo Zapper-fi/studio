@@ -15,6 +15,7 @@ import {
   GetDisplayPropsParams,
   GetPricePerShareParams,
   GetDataPropsParams,
+  DefaultAppTokenDataProps,
 } from '~position/template/app-token.template.types';
 
 import { ArrakisContractFactory, ArrakisGelatoPool } from '../contracts';
@@ -27,10 +28,8 @@ export type ArrakisPoolDefinition = {
   underlyingTokenAddress1: string;
 };
 
-export type ArrakisPoolTokenDataProps = {
-  liquidity: number;
+export type ArrakisPoolTokenDataProps = DefaultAppTokenDataProps & {
   fee: number;
-  reserves: number[];
 };
 
 export abstract class ArrakisPoolTokenFetcher extends AppTokenTemplatePositionFetcher<
@@ -89,28 +88,50 @@ export abstract class ArrakisPoolTokenFetcher extends AppTokenTemplatePositionFe
     return reservePercentages.map(p => `${Math.round(p * 100)}%`).join(' / ');
   }
 
-  async getDataProps({
+  async getReserves({
+    appToken,
+  }: GetDataPropsParams<ArrakisGelatoPool, ArrakisPoolTokenDataProps, ArrakisPoolDefinition>) {
+    return (appToken.pricePerShare as number[]).map(v => v * appToken.supply);
+  }
+
+  async getLiquidity({
+    appToken,
+  }: GetDataPropsParams<ArrakisGelatoPool, ArrakisPoolTokenDataProps, ArrakisPoolDefinition>) {
+    return appToken.price * appToken.supply;
+  }
+
+  getApy(_params: GetDataPropsParams<ArrakisGelatoPool, ArrakisPoolTokenDataProps, ArrakisPoolDefinition>) {
+    return 0;
+  }
+
+  async getFee({
+    multicall,
     appToken,
     contract,
-    multicall,
   }: GetDataPropsParams<ArrakisGelatoPool, ArrakisPoolTokenDataProps, ArrakisPoolDefinition>) {
-    const reserves = (appToken.pricePerShare as number[]).map(v => v * appToken.supply);
-    const liquidity = appToken.price * appToken.supply;
     const gelatoFeeRaw = await contract.gelatoFeeBPS().catch(e => {
       if (isMulticallUnderlyingError(e)) return null;
       throw e;
     });
+
+    const arrakisPool = this.contractFactory.arrakisPool(appToken);
     const arrakisFeeRaw = await multicall
-      .wrap(this.contractFactory.arrakisPool({ network: this.network, address: appToken.address }))
+      .wrap(arrakisPool)
       .arrakisFeeBPS()
       .catch(e => {
         if (isMulticallUnderlyingError(e)) return null;
         throw e;
       });
+
     const feeRaw = gelatoFeeRaw ?? arrakisFeeRaw ?? 0;
     const fee = feeRaw / 10 ** 4;
+    return fee;
+  }
 
-    return { liquidity, fee, reserves };
+  async getDataProps(params: GetDataPropsParams<ArrakisGelatoPool, ArrakisPoolTokenDataProps, ArrakisPoolDefinition>) {
+    const defaultDataProps = await super.getDataProps(params);
+    const fee = await this.getFee(params);
+    return { ...defaultDataProps, fee };
   }
 
   async getStatsItems({

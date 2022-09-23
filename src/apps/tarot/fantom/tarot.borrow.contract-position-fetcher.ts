@@ -1,7 +1,8 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Inject } from '@nestjs/common';
 import _, { compact } from 'lodash';
 
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import { buildDollarDisplayItem } from '~app-toolkit/helpers/presentation/display-item.present';
 import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { DisplayProps } from '~position/display.interface';
@@ -9,16 +10,11 @@ import { MetaType } from '~position/position.interface';
 import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
 import { GetDisplayPropsParams, GetTokenBalancesParams } from '~position/template/contract-position.template.types';
 import { GetDefinitionsParams, GetTokenDefinitionsParams } from '~position/template/contract-position.template.types';
-import { Network } from '~types';
 
 import { TarotBorrowable, TarotContractFactory } from '../contracts';
-import { TAROT_DEFINITION } from '../tarot.definition';
 
-@Injectable()
+@PositionTemplate()
 export class FantomTarotBorrowContractPositionFetcher extends ContractPositionTemplatePositionFetcher<TarotBorrowable> {
-  appId = TAROT_DEFINITION.id;
-  groupId = TAROT_DEFINITION.groups.borrow.id;
-  network = Network.FANTOM_OPERA_MAINNET;
   groupLabel = 'Lending Pools';
 
   private tarotFactoryAddresses = [

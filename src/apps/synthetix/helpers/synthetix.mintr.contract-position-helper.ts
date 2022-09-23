@@ -35,7 +35,7 @@ export class SynthetixMintrContractPositionHelper {
     const tokens = [supplied(snxToken), borrowed(susdToken)];
 
     // Display Props
-    const label = susdToken.symbol;
+    const label = 'SNX Staking';
     const secondaryLabel = buildDollarDisplayItem(snxToken.price);
     const images = [getTokenImg(snxToken.address, network), getTokenImg(susdToken.address, network)];
     const liquidity = sumBy(holders, v => (Number(v.collateral) - Number(v.transferable)) * snxToken.price);

@@ -1,21 +1,17 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Inject } from '@nestjs/common';
 import { BigNumberish } from 'ethers';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import { VotingEscrowWithRewardsTemplateContractPositionFetcher } from '~position/template/voting-escrow-with-rewards.template.contract-position-fetcher';
-import { Network } from '~types/network.interface';
 
 import { PickleContractFactory, PickleVotingEscrow, PickleVotingEscrowReward } from '../contracts';
-import { PICKLE_DEFINITION } from '../pickle.definition';
 
-@Injectable()
+@PositionTemplate()
 export class EthereumPickleVotingEscrowContractPositionFetcher extends VotingEscrowWithRewardsTemplateContractPositionFetcher<
   PickleVotingEscrow,
   PickleVotingEscrowReward
 > {
-  appId = PICKLE_DEFINITION.id;
-  groupId = PICKLE_DEFINITION.groups.votingEscrow.id;
-  network = Network.ETHEREUM_MAINNET;
   groupLabel = 'Voting Escrow';
 
   veTokenAddress = '0xbbcf169ee191a1ba7371f30a1c344bfc498b29cf';

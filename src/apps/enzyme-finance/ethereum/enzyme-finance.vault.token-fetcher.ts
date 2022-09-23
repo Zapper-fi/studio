@@ -1,9 +1,10 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Inject } from '@nestjs/common';
 import BigNumber from 'bignumber.js';
 import { gql } from 'graphql-request';
 import _ from 'lodash';
 
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import { DefaultDataProps } from '~position/display.interface';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import {
@@ -12,10 +13,8 @@ import {
   GetPriceParams,
   GetUnderlyingTokensParams,
 } from '~position/template/app-token.template.types';
-import { Network } from '~types/network.interface';
 
 import { EnzymeFinanceContractFactory, EnzymeFinanceVault } from '../contracts';
-import { ENZYME_FINANCE_DEFINITION } from '../enzyme-finance.definition';
 
 const query = gql`
   query fetchEnzymeVaults {
@@ -31,16 +30,8 @@ type EnzymeFinanceVaultsResponse = {
   }[];
 };
 
-export type EnzymeFinanceVaultTokenDataProps = {
-  liquidity: number;
-  isActive: boolean;
-};
-
-@Injectable()
+@PositionTemplate()
 export class EthereumEnzymeFinanceVaultTokenFetcher extends AppTokenTemplatePositionFetcher<EnzymeFinanceVault> {
-  appId = ENZYME_FINANCE_DEFINITION.id;
-  groupId = ENZYME_FINANCE_DEFINITION.groups.vault.id;
-  network = Network.ETHEREUM_MAINNET;
   groupLabel = 'Vaults';
 
   constructor(
@@ -60,9 +51,7 @@ export class EthereumEnzymeFinanceVaultTokenFetcher extends AppTokenTemplatePosi
     return this.contractFactory.enzymeFinanceVault({ network: this.network, address });
   }
 
-  async getLabel({
-    contract,
-  }: GetDisplayPropsParams<EnzymeFinanceVault, EnzymeFinanceVaultTokenDataProps>): Promise<string> {
+  async getLabel({ contract }: GetDisplayPropsParams<EnzymeFinanceVault>): Promise<string> {
     return contract.name();
   }
 
@@ -87,11 +76,15 @@ export class EthereumEnzymeFinanceVaultTokenFetcher extends AppTokenTemplatePosi
       : 0;
   }
 
-  async getDataProps(opts: GetDataPropsParams<EnzymeFinanceVault, DefaultDataProps>): Promise<DefaultDataProps> {
-    const { appToken } = opts;
-    const liquidity = appToken.price * appToken.supply;
-    const isActive = appToken.supply > 0 ? true : false;
+  getLiquidity({ appToken }: GetDataPropsParams<EnzymeFinanceVault>) {
+    return appToken.supply * appToken.price;
+  }
 
-    return { liquidity, isActive };
+  getReserves({ appToken }: GetDataPropsParams<EnzymeFinanceVault>) {
+    return [appToken.pricePerShare[0] * appToken.supply];
+  }
+
+  getApy(_params: GetDataPropsParams<EnzymeFinanceVault>) {
+    return 0;
   }
 }

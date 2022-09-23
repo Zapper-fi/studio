@@ -1,17 +1,16 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Inject } from '@nestjs/common';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import {
   CompoundClaimableContractPositionFetcher,
   CompoundClaimablePositionDataProps,
 } from '~apps/compound/common/compound.claimable.contract-position-fetcher';
 import { ContractPosition } from '~position/position.interface';
-import { Network } from '~types/network.interface';
 
 import { TectonicContractFactory, TectonicCore, TectonicLens } from '../contracts';
-import TECTONIC_DEFINITION from '../tectonic.definition';
 
-@Injectable()
+@PositionTemplate()
 export class CronosTectonicClaimableContractPositionFetcher extends CompoundClaimableContractPositionFetcher<
   TectonicCore,
   TectonicLens
@@ -24,9 +23,6 @@ export class CronosTectonicClaimableContractPositionFetcher extends CompoundClai
     super(appToolkit);
   }
 
-  appId = TECTONIC_DEFINITION.id;
-  groupId = TECTONIC_DEFINITION.groups.claimable.id;
-  network = Network.CRONOS_MAINNET;
   groupLabel = 'Claimable';
   isExcludedFromExplore = true;
 

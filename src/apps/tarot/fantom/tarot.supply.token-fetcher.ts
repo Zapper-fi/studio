@@ -1,11 +1,13 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Inject } from '@nestjs/common';
 import _, { compact } from 'lodash';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { DisplayProps } from '~position/display.interface';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import {
+  DefaultAppTokenDataProps,
   DefaultAppTokenDefinition,
   GetAddressesParams,
   GetDataPropsParams,
@@ -14,13 +16,10 @@ import {
   GetPricePerShareParams,
   GetUnderlyingTokensParams,
 } from '~position/template/app-token.template.types';
-import { Network } from '~types/network.interface';
 
 import { TarotBorrowable, TarotContractFactory } from '../contracts';
-import { TAROT_DEFINITION } from '../tarot.definition';
 
-type TarotSupplyDataProps = {
-  liquidity: number;
+type TarotSupplyDataProps = DefaultAppTokenDataProps & {
   poolTokenLabel: string;
 };
 
@@ -29,15 +28,12 @@ type Definition = DefaultAppTokenDefinition & {
   poolTokenLabel: string;
 };
 
-@Injectable()
+@PositionTemplate()
 export class FantomTarotSupplyTokenFetcher extends AppTokenTemplatePositionFetcher<
   TarotBorrowable,
   TarotSupplyDataProps,
   Definition
 > {
-  appId = TAROT_DEFINITION.id;
-  groupId = TAROT_DEFINITION.groups.supply.id;
-  network = Network.FANTOM_OPERA_MAINNET;
   groupLabel = 'Supply';
   isExcludedFromExplore = true;
 
@@ -147,9 +143,20 @@ export class FantomTarotSupplyTokenFetcher extends AppTokenTemplatePositionFetch
     return `${getLabelFromToken(underlyingToken)} in ${appToken.dataProps.poolTokenLabel} Lending Pool`;
   }
 
-  async getDataProps({ appToken, definition }: GetDataPropsParams<TarotBorrowable, TarotSupplyDataProps, Definition>) {
-    const [underlyingToken] = appToken.tokens;
-    const liquidity = underlyingToken.price * appToken.supply;
-    return { liquidity, poolTokenLabel: definition.poolTokenLabel };
+  async getLiquidity({ appToken }: GetDataPropsParams<TarotBorrowable>) {
+    return appToken.supply * appToken.price;
+  }
+
+  async getReserves({ appToken }: GetDataPropsParams<TarotBorrowable>) {
+    return [appToken.pricePerShare[0] * appToken.supply];
+  }
+
+  async getApy() {
+    return 0;
+  }
+
+  async getDataProps(params: GetDataPropsParams<TarotBorrowable, TarotSupplyDataProps, Definition>) {
+    const defaultDataProps = await super.getDataProps(params);
+    return { ...defaultDataProps, poolTokenLabel: params.definition.poolTokenLabel };
   }
 }

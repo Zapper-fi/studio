@@ -1,19 +1,15 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Inject } from '@nestjs/common';
 
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import { MetaType } from '~position/position.interface';
 import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
 import { GetTokenBalancesParams } from '~position/template/contract-position.template.types';
-import { Network } from '~types/network.interface';
 
 import { RocketDaoNodeTrusted, RocketPoolContractFactory } from '../contracts';
-import { ROCKET_POOL_DEFINITION } from '../rocket-pool.definition';
 
-@Injectable()
+@PositionTemplate()
 export class EthereumRocketPoolOracleDaoBondContractPositionFetcher extends ContractPositionTemplatePositionFetcher<RocketDaoNodeTrusted> {
-  appId = ROCKET_POOL_DEFINITION.id;
-  groupId = ROCKET_POOL_DEFINITION.groups.oracleDaoBond.id;
-  network = Network.ETHEREUM_MAINNET;
   groupLabel = 'Oracle DAO Bond';
 
   constructor(

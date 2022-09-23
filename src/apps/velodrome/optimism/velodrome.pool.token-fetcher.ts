@@ -1,7 +1,8 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Inject } from '@nestjs/common';
 import Axios from 'axios';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import { buildDollarDisplayItem } from '~app-toolkit/helpers/presentation/display-item.present';
 import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { DefaultDataProps } from '~position/display.interface';
@@ -12,10 +13,8 @@ import {
   GetPricePerShareParams,
   GetUnderlyingTokensParams,
 } from '~position/template/app-token.template.types';
-import { Network } from '~types/network.interface';
 
 import { VelodromeContractFactory, VelodromePool } from '../contracts';
-import { VELODROME_DEFINITION } from '../velodrome.definition';
 
 export interface VelodromeApiPairData {
   address: string;
@@ -25,19 +24,8 @@ export interface VelodromeApiPairData {
   apr: number;
 }
 
-export type VelodromePoolTokenDataProps = {
-  liquidity: number;
-  reserves: number[];
-};
-
-@Injectable()
-export class OptimismVelodromePoolsTokenFetcher extends AppTokenTemplatePositionFetcher<
-  VelodromePool,
-  VelodromePoolTokenDataProps
-> {
-  appId = VELODROME_DEFINITION.id;
-  groupId = VELODROME_DEFINITION.groups.pool.id;
-  network = Network.OPTIMISM_MAINNET;
+@PositionTemplate()
+export class OptimismVelodromePoolsTokenFetcher extends AppTokenTemplatePositionFetcher<VelodromePool> {
   groupLabel = 'Pools';
 
   constructor(
@@ -68,23 +56,29 @@ export class OptimismVelodromePoolsTokenFetcher extends AppTokenTemplatePosition
     return pricePerShare;
   }
 
-  async getDataProps({ appToken }: GetDataPropsParams<VelodromePool, VelodromePoolTokenDataProps>) {
-    const reserves = (appToken.pricePerShare as number[]).map(v => v * appToken.supply);
-    const liquidity = appToken.price * appToken.supply;
-    return { liquidity, reserves };
+  async getLiquidity({ appToken }: GetDataPropsParams<VelodromePool>) {
+    return appToken.supply * appToken.price;
   }
 
-  async getLabel({ appToken }: GetDisplayPropsParams<VelodromePool, VelodromePoolTokenDataProps>): Promise<string> {
+  async getReserves({ appToken }: GetDataPropsParams<VelodromePool>) {
+    return (appToken.pricePerShare as number[]).map(v => v * appToken.supply);
+  }
+
+  async getApy() {
+    return 0;
+  }
+
+  async getLabel({ appToken }: GetDisplayPropsParams<VelodromePool>): Promise<string> {
     return appToken.tokens.map(v => getLabelFromToken(v)).join(' / ');
   }
 
-  async getSecondaryLabel({ appToken }: GetDisplayPropsParams<VelodromePool, VelodromePoolTokenDataProps>) {
+  async getSecondaryLabel({ appToken }: GetDisplayPropsParams<VelodromePool>) {
     const { liquidity, reserves } = appToken.dataProps;
     const reservePercentages = appToken.tokens.map((t, i) => reserves[i] * (t.price / liquidity));
     return reservePercentages.map(p => `${Math.round(p * 100)}%`).join(' / ');
   }
 
-  async getStatsItems({ appToken }: GetDisplayPropsParams<VelodromePool, VelodromePoolTokenDataProps>) {
+  async getStatsItems({ appToken }: GetDisplayPropsParams<VelodromePool>) {
     const { reserves, liquidity } = appToken.dataProps;
     const reservesDisplay = reserves.map(v => (v < 0.01 ? '<0.01' : v.toFixed(2))).join(' / ');
 
