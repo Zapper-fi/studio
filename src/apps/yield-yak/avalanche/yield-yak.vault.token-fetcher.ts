@@ -3,7 +3,6 @@ import { Inject } from '@nestjs/common';
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
-import { DefaultDataProps } from '~position/display.interface';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import {
   GetUnderlyingTokensParams,
@@ -52,14 +51,19 @@ export class AvalancheYieldyakVaultTokenFetcher extends AppTokenTemplatePosition
     return [vault.depositToken.id.toLowerCase()];
   }
 
-  async getLabel({ appToken }: GetDisplayPropsParams<YieldYakVault, DefaultDataProps>): Promise<string> {
+  async getLabel({ appToken }: GetDisplayPropsParams<YieldYakVault>): Promise<string> {
     return appToken.tokens.map(v => getLabelFromToken(v)).join(' / ');
   }
 
-  async getDataProps(opts: GetDataPropsParams<YieldYakVault, DefaultDataProps>): Promise<DefaultDataProps> {
-    const { appToken } = opts;
-    const liquidity = appToken.price * appToken.supply;
+  async getLiquidity({ appToken }: GetDataPropsParams<YieldYakVault>) {
+    return appToken.supply * appToken.price;
+  }
 
-    return { liquidity };
+  async getReserves({ appToken }: GetDataPropsParams<YieldYakVault>) {
+    return [appToken.pricePerShare[0] * appToken.supply];
+  }
+
+  async getApy() {
+    return 0;
   }
 }

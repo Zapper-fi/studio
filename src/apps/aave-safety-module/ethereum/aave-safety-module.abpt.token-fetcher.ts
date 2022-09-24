@@ -6,6 +6,7 @@ import { PositionTemplate } from '~app-toolkit/decorators/position-template.deco
 import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import {
+  DefaultAppTokenDataProps,
   GetDataPropsParams,
   GetDisplayPropsParams,
   GetPricePerShareParams,
@@ -14,9 +15,7 @@ import {
 
 import { AaveAbpt, AaveSafetyModuleContractFactory } from '../contracts';
 
-type AaveSafetyModuleAbptTokenDataProps = {
-  reserves: number[];
-  liquidity: number;
+type AaveSafetyModuleAbptTokenDataProps = DefaultAppTokenDataProps & {
   fee: number;
 };
 
@@ -70,11 +69,23 @@ export class EthereumAaveSafetyModuleAbptTokenFetcher extends AppTokenTemplatePo
     return [aaveReserve / appToken.supply, wethReserve / appToken.supply];
   }
 
-  async getDataProps({ appToken }: GetDataPropsParams<AaveAbpt, AaveSafetyModuleAbptTokenDataProps>) {
-    const fee = 0.003;
+  getLiquidity({ appToken }: GetDataPropsParams<AaveAbpt, AaveSafetyModuleAbptTokenDataProps>) {
     const reserves = (appToken.pricePerShare as number[]).map(v => v * appToken.supply);
     const liquidity = sum(reserves.map((v, i) => v * appToken.tokens[i].price));
-    return { fee, reserves, liquidity };
+    return liquidity;
+  }
+
+  getReserves({ appToken }: GetDataPropsParams<AaveAbpt, AaveSafetyModuleAbptTokenDataProps>) {
+    return (appToken.pricePerShare as number[]).map(v => v * appToken.supply);
+  }
+
+  getApy(): number | Promise<number> {
+    return 0;
+  }
+
+  async getDataProps(params: GetDataPropsParams<AaveAbpt, AaveSafetyModuleAbptTokenDataProps>) {
+    const defaultDataProps = await super.getDataProps(params);
+    return { ...defaultDataProps, fee: 0.003 };
   }
 
   async getLabel({ appToken }: GetDisplayPropsParams<AaveAbpt, AaveSafetyModuleAbptTokenDataProps>) {

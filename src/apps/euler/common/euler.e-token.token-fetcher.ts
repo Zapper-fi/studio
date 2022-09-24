@@ -1,31 +1,21 @@
 import { Inject } from '@nestjs/common';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
-import {
-  buildDollarDisplayItem,
-  buildPercentageDisplayItem,
-} from '~app-toolkit/helpers/presentation/display-item.present';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import {
   GetUnderlyingTokensParams,
   GetAddressesParams,
   GetDataPropsParams,
-  GetDisplayPropsParams,
+  DefaultAppTokenDataProps,
 } from '~position/template/app-token.template.types';
 
 import { EulerContractFactory, EulerEtokenContract } from '../contracts';
 
 import { EulerTokenDefinition, EulerTokenDefinitionsResolver, EulerTokenType } from './euler.token-definition-resolver';
 
-export type EulerETokenDataProps = {
-  liquidity: number;
-  interestRate: number;
-  supplyAPY: number;
-};
-
 export abstract class EulerETokenTokenFetcher extends AppTokenTemplatePositionFetcher<
   EulerEtokenContract,
-  EulerETokenDataProps,
+  DefaultAppTokenDataProps,
   EulerTokenDefinition
 > {
   abstract tokenType: EulerTokenType;
@@ -62,21 +52,16 @@ export abstract class EulerETokenTokenFetcher extends AppTokenTemplatePositionFe
     return `E${market!.symbol}`;
   }
 
-  async getDataProps({
-    appToken,
-  }: GetDataPropsParams<EulerEtokenContract, EulerETokenDataProps, EulerTokenDefinition>) {
-    const liquidity = appToken.supply * appToken.tokens[0].price * -1;
-    const market = await this.tokenDefinitionsResolver.getMarket(appToken.address, this.tokenType);
-    const interestRate = Number(market!.interestRate) / 10 ** appToken.decimals;
-    const supplyAPY = (Number(market!.supplyAPY) * 100) / 1e27;
-
-    return { liquidity, interestRate, supplyAPY };
+  async getLiquidity({ appToken }: GetDataPropsParams<EulerEtokenContract>) {
+    return appToken.supply * appToken.price;
   }
 
-  async getStatsItems({ appToken }: GetDisplayPropsParams<EulerEtokenContract, EulerETokenDataProps>) {
-    return [
-      { label: 'Liquidity', value: buildDollarDisplayItem(appToken.dataProps.liquidity) },
-      { label: 'APY', value: buildPercentageDisplayItem(appToken.dataProps.supplyAPY) },
-    ];
+  async getReserves({ appToken }: GetDataPropsParams<EulerEtokenContract>) {
+    return [appToken.pricePerShare[0] * appToken.supply];
+  }
+
+  async getApy({ appToken }: GetDataPropsParams<EulerEtokenContract>) {
+    const market = await this.tokenDefinitionsResolver.getMarket(appToken.address, this.tokenType);
+    return (Number(market!.supplyAPY) * 100) / 1e27;
   }
 }

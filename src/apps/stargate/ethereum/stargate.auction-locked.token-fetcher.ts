@@ -7,16 +7,8 @@ import { GetUnderlyingTokensParams, GetDataPropsParams } from '~position/templat
 
 import { StargateAa, StargateContractFactory } from '../contracts';
 
-type StargateAuctionLockedAppTokenDataProps = {
-  liquidity: number;
-  reserve: number;
-};
-
 @PositionTemplate()
-export class EthereumStargateAuctionLockedTokenFetcher extends AppTokenTemplatePositionFetcher<
-  StargateAa,
-  StargateAuctionLockedAppTokenDataProps
-> {
+export class EthereumStargateAuctionLockedTokenFetcher extends AppTokenTemplatePositionFetcher<StargateAa> {
   groupLabel = 'Auction Locked';
 
   constructor(
@@ -42,9 +34,15 @@ export class EthereumStargateAuctionLockedTokenFetcher extends AppTokenTemplateP
     return 4; // 1 aaSTG = 4 STG
   }
 
-  async getDataProps({ appToken }: GetDataPropsParams<StargateAa, StargateAuctionLockedAppTokenDataProps>) {
-    const reserve = appToken.supply; // 1:1
-    const liquidity = appToken.supply * appToken.price;
-    return { reserve, liquidity };
+  async getLiquidity({ appToken }: GetDataPropsParams<StargateAa>) {
+    return appToken.supply * appToken.price;
+  }
+
+  async getReserves({ appToken }: GetDataPropsParams<StargateAa>) {
+    return [appToken.pricePerShare[0] * appToken.supply];
+  }
+
+  async getApy() {
+    return 0;
   }
 }

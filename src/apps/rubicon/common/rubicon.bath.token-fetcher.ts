@@ -11,11 +11,12 @@ import {
   GetDataPropsParams,
   GetDisplayPropsParams,
   GetTokenPropsParams,
+  DefaultAppTokenDataProps,
 } from '~position/template/app-token.template.types';
 
 import { BathToken, RubiconContractFactory } from '../contracts';
 
-import { RubiconPoolDefinitionsResolver } from './rubicon.pool-definition-resolver';
+import { RubiconBathTokenDefinitionResolver } from './rubicon.bath.token-definition-resolver';
 
 export type RubiconPoolDefinition = {
   address: string;
@@ -24,13 +25,13 @@ export type RubiconPoolDefinition = {
 
 export abstract class RubiconBathTokenFetcher extends AppTokenTemplatePositionFetcher<
   BathToken,
-  DefaultDataProps,
+  DefaultAppTokenDataProps,
   RubiconPoolDefinition
 > {
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(RubiconPoolDefinitionsResolver)
-    private readonly poolDefinitionsResolver: RubiconPoolDefinitionsResolver,
+    @Inject(RubiconBathTokenDefinitionResolver)
+    private readonly bathTokenDefinitionResolver: RubiconBathTokenDefinitionResolver,
     @Inject(RubiconContractFactory) private readonly contractFactory: RubiconContractFactory,
   ) {
     super(appToolkit);
@@ -41,7 +42,7 @@ export abstract class RubiconBathTokenFetcher extends AppTokenTemplatePositionFe
   }
 
   async getDefinitions(): Promise<RubiconPoolDefinition[]> {
-    return this.poolDefinitionsResolver.getPoolDefinitions();
+    return this.bathTokenDefinitionResolver.getPoolDefinitions();
   }
 
   async getAddresses({ definitions }: GetAddressesParams<RubiconPoolDefinition>): Promise<string[]> {
@@ -78,10 +79,15 @@ export abstract class RubiconBathTokenFetcher extends AppTokenTemplatePositionFe
     return appToken.tokens[0].symbol;
   }
 
-  async getDataProps(opts: GetDataPropsParams<BathToken, DefaultDataProps, RubiconPoolDefinition>) {
-    const { appToken } = opts;
-    const liquidity = appToken.price * appToken.supply;
+  async getLiquidity({ appToken }: GetDataPropsParams<BathToken>) {
+    return appToken.supply * appToken.price;
+  }
 
-    return { liquidity };
+  async getReserves({ appToken }: GetDataPropsParams<BathToken>) {
+    return [appToken.pricePerShare[0] * appToken.supply];
+  }
+
+  async getApy(_params: GetDataPropsParams<BathToken>) {
+    return 0;
   }
 }

@@ -1,7 +1,5 @@
 import { Register } from '~app-toolkit/decorators';
 import { AbstractApp } from '~app/app.dynamic-module';
-import { OlympusAppModule } from '~apps/olympus';
-import { SushiSwapBentoBoxAppModule } from '~apps/sushiswap-bentobox';
 
 import { AbracadabraAppDefinition, ABRACADABRA_DEFINITION } from './abracadabra.definition';
 import { ArbitrumAbracadabraCauldronContractPositionFetcher } from './arbitrum/abracadabra.cauldron.contract-position-fetcher';
@@ -25,7 +23,6 @@ import { FantomAbracadabraStakedSpellTokenFetcher } from './fantom/abracadabra.s
 
 @Register.AppModule({
   appId: ABRACADABRA_DEFINITION.id,
-  imports: [OlympusAppModule, SushiSwapBentoBoxAppModule],
   providers: [
     AbracadabraAppDefinition,
     AbracadabraContractFactory,

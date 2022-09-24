@@ -1,22 +1,13 @@
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
-import { Erc20 } from '~contract/contracts';
-import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import { Network } from '~types';
 
+import { AbracadabraBridgedStakedSpellTokenFetcher } from '../common/abracadabra.bridged-staked-spell.token-fetcher';
+
 @PositionTemplate()
-export class ArbitrumAbracadabraStakedSpellTokenFetcher extends AppTokenTemplatePositionFetcher<Erc20> {
+export class ArbitrumAbracadabraStakedSpellTokenFetcher extends AbracadabraBridgedStakedSpellTokenFetcher {
   groupLabel = 'Staked SPELL';
+
+  vaultAddress = '0xf7428ffcb2581a2804998efbb036a43255c8a8d3';
+  underlyingTokenAddress = '0x26fa3fffb6efe8c1e69103acb4044c26b9a106a9';
   fromNetwork = Network.ETHEREUM_MAINNET;
-
-  getContract(address: string) {
-    return this.appToolkit.globalContracts.erc20({ address, network: this.network });
-  }
-
-  getAddresses() {
-    return ['0xf7428ffcb2581a2804998efbb036a43255c8a8d3'];
-  }
-
-  async getUnderlyingTokenAddresses() {
-    return ['0x26fa3fffb6efe8c1e69103acb4044c26b9a106a9'];
-  }
 }

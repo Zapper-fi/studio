@@ -11,15 +11,8 @@ import {
 
 import { TarotContractFactory, TarotSupplyVault } from '../contracts';
 
-type TarotVaultDataProps = {
-  liquidity: number;
-};
-
 @PositionTemplate()
-export class FantomTarotVaultTokenFetcher extends AppTokenTemplatePositionFetcher<
-  TarotSupplyVault,
-  TarotVaultDataProps
-> {
+export class FantomTarotVaultTokenFetcher extends AppTokenTemplatePositionFetcher<TarotSupplyVault> {
   groupLabel = 'Vaults';
 
   constructor(
@@ -54,12 +47,20 @@ export class FantomTarotVaultTokenFetcher extends AppTokenTemplatePositionFetche
     return appToken.supply > 0 ? reserve / appToken.supply : 0;
   }
 
-  async getDataProps({ appToken, contract }: GetDataPropsParams<TarotSupplyVault, TarotVaultDataProps>) {
-    const [underlyingToken] = appToken.tokens;
+  async getLiquidity({ contract, appToken }: GetDataPropsParams<TarotSupplyVault>) {
     const reserveRaw = await contract.getTotalUnderlying();
+    const reserve = Number(reserveRaw) / 10 ** appToken.tokens[0].decimals;
+    const liquidity = appToken.tokens[0].price * reserve;
+    return liquidity;
+  }
 
-    const reserve = Number(reserveRaw) / 10 ** underlyingToken.decimals;
-    const liquidity = underlyingToken.price * reserve;
-    return { liquidity };
+  async getReserves({ contract, appToken }: GetDataPropsParams<TarotSupplyVault>) {
+    const reserveRaw = await contract.getTotalUnderlying();
+    const reserve = Number(reserveRaw) / 10 ** appToken.tokens[0].decimals;
+    return [reserve];
+  }
+
+  async getApy() {
+    return 0;
   }
 }

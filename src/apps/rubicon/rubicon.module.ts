@@ -1,7 +1,7 @@
 import { Register } from '~app-toolkit/decorators';
 import { AbstractApp } from '~app/app.dynamic-module';
 
-import { RubiconPoolDefinitionsResolver } from './common/rubicon.pool-definition-resolver';
+import { RubiconBathTokenDefinitionResolver } from './common/rubicon.bath.token-definition-resolver';
 import { RubiconContractFactory } from './contracts';
 import { OptimismRubiconBathTokenFetcher } from './optimism/rubicon.bath.token-fetcher';
 import { RubiconAppDefinition, RUBICON_DEFINITION } from './rubicon.definition';
@@ -11,7 +11,7 @@ import { RubiconAppDefinition, RUBICON_DEFINITION } from './rubicon.definition';
   providers: [
     RubiconAppDefinition,
     RubiconContractFactory,
-    RubiconPoolDefinitionsResolver,
+    RubiconBathTokenDefinitionResolver,
     OptimismRubiconBathTokenFetcher,
   ],
 })

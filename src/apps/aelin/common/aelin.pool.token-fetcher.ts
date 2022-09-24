@@ -12,10 +12,6 @@ import {
 
 import { AelinContractFactory, AelinPool } from '../contracts';
 
-type AelinPoolTokenDataProps = {
-  liquidity: number;
-};
-
 type AelinPoolsResponse = {
   poolCreateds: {
     id: string;
@@ -30,10 +26,7 @@ const query = gql`
   }
 `;
 
-export abstract class AelinPoolTokenFetcher extends AppTokenTemplatePositionFetcher<
-  AelinPool,
-  AelinPoolTokenDataProps
-> {
+export abstract class AelinPoolTokenFetcher extends AppTokenTemplatePositionFetcher<AelinPool> {
   abstract subgraphUrl: string;
   minLiquidity = 0;
 
@@ -60,9 +53,16 @@ export abstract class AelinPoolTokenFetcher extends AppTokenTemplatePositionFetc
     return contract.purchaseToken();
   }
 
-  async getDataProps({ appToken }: GetDataPropsParams<AelinPool>): Promise<AelinPoolTokenDataProps> {
-    const liquidity = appToken.supply * appToken.price;
-    return { liquidity };
+  async getLiquidity({ appToken }: GetDataPropsParams<AelinPool>) {
+    return appToken.supply * appToken.price;
+  }
+
+  async getReserves({ appToken }: GetDataPropsParams<AelinPool>) {
+    return [appToken.supply]; // 1:1
+  }
+
+  async getApy() {
+    return 0;
   }
 
   async getLabel({ contract }: GetDisplayPropsParams<AelinPool>) {

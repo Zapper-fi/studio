@@ -8,17 +8,11 @@ import { GetDataPropsParams, GetUnderlyingTokensParams } from '~position/templat
 
 import { AaveSafetyModuleContractFactory, AaveStkAave } from '../contracts';
 
-type AaveSafetyModuleStkAaveTokenDataProps = {
-  apy: number;
-  liquidity: number;
-};
-
 @PositionTemplate()
-export class EthereumAaveSafetyModuleStkAaveTokenFetcher extends AppTokenTemplatePositionFetcher<
-  AaveStkAave,
-  AaveSafetyModuleStkAaveTokenDataProps
-> {
+export class EthereumAaveSafetyModuleStkAaveTokenFetcher extends AppTokenTemplatePositionFetcher<AaveStkAave> {
   groupLabel = 'stkAAVE';
+
+  stkApyHelperAddress = '0xa82247b44750ae23076d6746a9b5b8dc0ecbb646';
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
@@ -39,16 +33,22 @@ export class EthereumAaveSafetyModuleStkAaveTokenFetcher extends AppTokenTemplat
     return ['0x7fc66500c84a76ad7e9c93437bfc5ac33e2ddae9'];
   }
 
-  async getDataProps({ multicall, appToken }: GetDataPropsParams<AaveStkAave, AaveSafetyModuleStkAaveTokenDataProps>) {
-    const helperAddress = '0xa82247b44750ae23076d6746a9b5b8dc0ecbb646';
+  getLiquidity({ appToken }: GetDataPropsParams<AaveStkAave>) {
+    return appToken.price * appToken.supply;
+  }
+
+  getReserves({ appToken }: GetDataPropsParams<AaveStkAave>) {
+    return [appToken.pricePerShare[0] * appToken.supply];
+  }
+
+  async getApy({ multicall }: GetDataPropsParams<AaveStkAave>) {
     const stkApyHelperContract = this.contractFactory.aaveStkApyHelper({
+      address: this.stkApyHelperAddress,
       network: this.network,
-      address: helperAddress,
     });
 
     const stkAaveData = await multicall.wrap(stkApyHelperContract).getStkAaveData(ZERO_ADDRESS);
-    const liquidity = appToken.price * appToken.supply;
     const apy = (+stkAaveData[5] / 1e4) * 100;
-    return { liquidity, apy };
+    return apy;
   }
 }

@@ -13,12 +13,7 @@ import {
 import { RookContractFactory } from '../contracts';
 import { RookKToken } from '../contracts';
 
-export type RookPoolTokenDataProps = {
-  reserve: number;
-  liquidity: number;
-};
-
-export abstract class RookPoolTokenFetcher extends AppTokenTemplatePositionFetcher<RookKToken, RookPoolTokenDataProps> {
+export abstract class RookPoolTokenFetcher extends AppTokenTemplatePositionFetcher<RookKToken> {
   abstract kTokenAddresses: string[];
   abstract liquidityPoolAddress: string;
   abstract isV3: boolean;
@@ -43,7 +38,7 @@ export abstract class RookPoolTokenFetcher extends AppTokenTemplatePositionFetch
     return underlying.toLowerCase().replace(ETH_ADDR_ALIAS, ZERO_ADDRESS);
   }
 
-  async getPricePerShare({ appToken, multicall }: GetPricePerShareParams<RookKToken, RookPoolTokenDataProps>) {
+  async getPricePerShare({ appToken, multicall }: GetPricePerShareParams<RookKToken>) {
     let reserveRaw: BigNumber;
 
     if (this.isV3) {
@@ -66,9 +61,15 @@ export abstract class RookPoolTokenFetcher extends AppTokenTemplatePositionFetch
     return reserve / appToken.supply;
   }
 
-  async getDataProps({ appToken }: GetDataPropsParams<RookKToken>) {
-    const reserve = appToken.pricePerShare[0] * appToken.supply;
-    const liquidity = appToken.supply * appToken.price;
-    return { reserve, liquidity };
+  async getLiquidity({ appToken }: GetDataPropsParams<RookKToken>) {
+    return appToken.supply * appToken.price;
+  }
+
+  async getReserves({ appToken }: GetDataPropsParams<RookKToken>) {
+    return [appToken.pricePerShare[0] * appToken.supply];
+  }
+
+  async getApy() {
+    return 0;
   }
 }

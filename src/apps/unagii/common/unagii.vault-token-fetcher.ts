@@ -5,6 +5,7 @@ import { ETH_ADDR_ALIAS, ZERO_ADDRESS } from '~app-toolkit/constants/address';
 import { DefaultDataProps } from '~position/display.interface';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import {
+  DefaultAppTokenDataProps,
   DefaultAppTokenDefinition,
   GetAddressesParams,
   GetDataPropsParams,
@@ -22,7 +23,7 @@ export type UnagiiTokenDefinition = {
 
 export abstract class UnagiiVaultTokenFetcher extends AppTokenTemplatePositionFetcher<
   UnagiiUtoken,
-  DefaultDataProps,
+  DefaultAppTokenDataProps,
   UnagiiTokenDefinition
 > {
   abstract vaultManagerAddresses: string[];
@@ -86,10 +87,15 @@ export abstract class UnagiiVaultTokenFetcher extends AppTokenTemplatePositionFe
     return [underlyingTokenAddress];
   }
 
-  async getDataProps(opts: GetDataPropsParams<UnagiiUtoken, DefaultDataProps>): Promise<DefaultDataProps> {
-    const { appToken } = opts;
-    const liquidity = appToken.price * appToken.supply;
+  async getLiquidity({ appToken }: GetDataPropsParams<UnagiiUtoken, DefaultDataProps, UnagiiTokenDefinition>) {
+    return appToken.supply * appToken.price;
+  }
 
-    return { liquidity };
+  async getReserves({ appToken }: GetDataPropsParams<UnagiiUtoken, DefaultDataProps, UnagiiTokenDefinition>) {
+    return [appToken.pricePerShare[0] * appToken.supply];
+  }
+
+  async getApy() {
+    return 0;
   }
 }

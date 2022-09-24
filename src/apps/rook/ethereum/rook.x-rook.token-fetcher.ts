@@ -1,8 +1,8 @@
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
-import { VaultTokenFetcher } from '~position/template/vault.template.token-fetcher';
+import { VaultTemplateTokenFetcher } from '~position/template/vault.template.token-fetcher';
 
 @PositionTemplate()
-export class EthereumRookXRookTokenFetcher extends VaultTokenFetcher {
+export class EthereumRookXRookTokenFetcher extends VaultTemplateTokenFetcher {
   groupLabel = 'xROOK';
 
   vaultAddress = '0x8ac32f0a635a0896a8428a9c31fbf1ab06ecf489';
