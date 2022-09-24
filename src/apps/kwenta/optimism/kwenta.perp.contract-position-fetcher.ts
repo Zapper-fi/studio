@@ -1,6 +1,9 @@
 import { Inject, Injectable } from '@nestjs/common';
+import { gql } from 'graphql-request';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
+import { getAppAssetImage } from '~app-toolkit/helpers/presentation/image.present';
+import { MetaType } from '~position/position.interface';
 import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
 import {
   DefaultContractPositionDefinition,
@@ -8,9 +11,6 @@ import {
   GetTokenBalancesParams,
 } from '~position/template/contract-position.template.types';
 import { Network } from '~types';
-import { gql } from 'graphql-request';
-import { MetaType } from '~position/position.interface';
-import { getAppAssetImage } from '~app-toolkit/helpers/presentation/image.present';
 
 import { KwentaContractFactory, KwentaFutures } from '../contracts';
 import KWENTA_DEFINITION from '../kwenta.definition';
@@ -22,14 +22,14 @@ type GetContracts = {
 };
 
 const getContractsQuery = gql`
-query MyQuery {
-  futuresMarkets {
-    id
+  query MyQuery {
+    futuresMarkets {
+      id
+    }
   }
-}
 `;
 
-let marketName = new Map<string, string>([
+const marketName = new Map<string, string>([
   ['0x001b7876f567f0b3a639332ed1e363839c6d85e2', 'AAVE'],
   ['0x10305c1854d6db8a1060df60bdf8a8b2981249cf', 'DYDX'],
   ['0x1228c7d8bbc5bc53db181bd7b1fce765aa83bf8a', 'LINK'],
@@ -47,7 +47,7 @@ let marketName = new Map<string, string>([
   ['0xee8804d8ad10b0c3ad1bd57ac3737242ad24bb95', 'BTC'],
   ['0xf86048dff23cf130107dfb4e6386f574231a5c65', 'ETH'],
   ['0x4aa0dabd22bc0894975324bec293443c8538bd08', 'BNB'],
-  ['0xfe00395ec846240dc693e92ab2dd720f94765aa3', 'APE']
+  ['0xfe00395ec846240dc693e92ab2dd720f94765aa3', 'APE'],
 ]);
 
 @Injectable()
@@ -78,7 +78,7 @@ export class OptimismKwentaPerpContractPositionFetcher extends ContractPositionT
 
   async getTokenDefinitions() {
     return [
-      { metaType: MetaType.SUPPLIED, address: '0x8c6f28f2F1A3C87F0f938b96d27520d9751ec8d9' }, // sUSD
+      { metaType: MetaType.SUPPLIED, address: '0x8c6f28f2f1a3c87f0f938b96d27520d9751ec8d9' }, // sUSD
     ];
   }
 

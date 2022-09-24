@@ -10,10 +10,10 @@ export const CONCAVE_DEFINITION = appDefinition({
   url: 'https://concave.lol',
 
   groups: {
-    lsdcnv: {
-      id: 'lsdcnv',
+    liquidStaking: {
+      id: 'liquid-staking',
       type: GroupType.TOKEN,
-      label: 'LSDCNV',
+      label: 'Liquid Staking',
     },
   },
 

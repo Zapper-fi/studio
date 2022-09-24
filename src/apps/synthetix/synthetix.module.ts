@@ -5,8 +5,8 @@ import { SynthetixContractFactory } from './contracts';
 import { EthereumSynthetixBalancePresenter } from './ethereum/synthetix.balance-presenter';
 import { EthereumSynthetixFarmContractPositionBalanceFetcher } from './ethereum/synthetix.farm.contract-position-balance-fetcher';
 import { EthereumSynthetixFarmContractPositionFetcher } from './ethereum/synthetix.farm.contract-position-fetcher';
-import { EthereumSynthetixLoanContractPositionFetcher } from './ethereum/synthetix.loan.contract-position-fetcher';
 import { EthereumSynthetixLoanContractBalanceFetcher } from './ethereum/synthetix.loan.contract-balance-fetcher';
+import { EthereumSynthetixLoanContractPositionFetcher } from './ethereum/synthetix.loan.contract-position-fetcher';
 import { EthereumSynthetixMintrContractPositionBalanceFetcher } from './ethereum/synthetix.mintr.contract-position-balance-fetcher';
 import { EthereumSynthetixMintrContractPositionFetcher } from './ethereum/synthetix.mintr.contract-position-fetcher';
 import { EthereumSynthetixSynthTokenBalanceFetcher } from './ethereum/synthetix.synth.token-balance-fetcher';
@@ -14,10 +14,10 @@ import { EthereumSynthetixSynthTokenFetcher } from './ethereum/synthetix.synth.t
 import { EthereumSynthetixTransferableSnxBalanceFetcher } from './ethereum/synthetix.transferable-snx.token-balance-fetcher';
 import { EthereumSynthetixTransferableSnxTokenFetcher } from './ethereum/synthetix.transferable-snx.token-fetcher';
 import { SynthetixHoldersHelper } from './helpers/synthetix.holders.helpers';
+import { SynthetixLoanContractBalanceHelper } from './helpers/synthetix.loan.contract-balance-helper';
+import { SynthetixLoanContractPositionHelper } from './helpers/synthetix.loan.contract-position-helper';
 import { SynthetixMintrContractPositionBalanceHelper } from './helpers/synthetix.mintr.contract-position-balance-helper';
 import { SynthetixMintrContractPositionHelper } from './helpers/synthetix.mintr.contract-position-helper';
-import { SynthetixLoanContractPositionHelper } from './helpers/synthetix.loan.contract-position-helper';
-import { SynthetixLoanContractBalanceHelper } from './helpers/synthetix.loan.contract-balance-helper';
 import { SynthetixMintrMetaHelper } from './helpers/synthetix.mintr.meta-helper';
 import { SynthetixSingleStakingFarmContractPositionBalanceHelper } from './helpers/synthetix.single-staking-farm-contract-position-balance-helper';
 import { SynthetixSingleStakingFarmContractPositionHelper } from './helpers/synthetix.single-staking-farm-contract-position-helper';
@@ -27,9 +27,9 @@ import { SynthetixSynthTokenBalanceHelper } from './helpers/synthetix.synth.toke
 import { SynthetixSynthTokenHelper } from './helpers/synthetix.synth.token-helper';
 import { SynthetixTransferrableSnxTokenBalanceHelper } from './helpers/synthetix.transferable-snx.token-balance-helper';
 import { SynthetixTransferrableSnxTokenHelper } from './helpers/synthetix.transferable-snx.token-helper';
+import { OptimismSynthetixBalancePresenter } from './optimism/synthetix.balance-presenter';
 import { OptimismSynthetixLoanContractBalanceFetcher } from './optimism/synthetix.loan.contract-balance-fetcher';
 import { OptimismSynthetixLoanContractPositionFetcher } from './optimism/synthetix.loan.contract-position-fetcher';
-import { OptimismSynthetixBalancePresenter } from './optimism/synthetix.balance-presenter';
 import { OptimismSynthetixMintrContractPositionBalanceFetcher } from './optimism/synthetix.mintr.contract-position-balance-fetcher';
 import { OptimismSynthetixMintrContractPositionFetcher } from './optimism/synthetix.mintr.contract-position-fetcher';
 import { OptimismSynthetixSynthTokenBalanceFetcher } from './optimism/synthetix.synth.token-balance-fetcher';
@@ -88,4 +88,4 @@ import { SynthetixAppDefinition, SYNTHETIX_DEFINITION } from './synthetix.defini
     SynthetixSingleStakingFarmContractPositionBalanceHelper,
   ],
 })
-export class SynthetixAppModule extends AbstractApp() { }
+export class SynthetixAppModule extends AbstractApp() {}
