@@ -18,7 +18,7 @@ import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi
 import type { Listener, Provider } from '@ethersproject/providers';
 import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
-export interface MyceliumLendingInterface extends utils.Interface {
+export interface MyceliumStakingInterface extends utils.Interface {
   functions: {
     'admin()': FunctionFragment;
     'allowance(address,address)': FunctionFragment;
@@ -602,12 +602,12 @@ export type UpgradedEvent = TypedEvent<[string], UpgradedEventObject>;
 
 export type UpgradedEventFilter = TypedEventFilter<UpgradedEvent>;
 
-export interface MyceliumLending extends BaseContract {
+export interface MyceliumStaking extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
 
-  interface: MyceliumLendingInterface;
+  interface: MyceliumStakingInterface;
 
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,

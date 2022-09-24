@@ -7,34 +7,35 @@ import { Network } from '~types/network.interface';
 import { MyceliumContractFactory } from '../contracts';
 import MYCELIUM_DEFINITION from '../mycelium.definition';
 
-import { MYC_LENDING_ADDRESS, MYC_TOKEN_ADDRESS, WETH_TOKEN_ADDRESS } from './mycelium.constants';
+import { MYC_STAKING_ADDRESS, MYC_TOKEN_ADDRESS, WETH_TOKEN_ADDRESS } from './mycelium.constants';
 
-type MyceliumLendingContractPositionHelperParams = {
+type MyceliumStakingContractPositionHelperParams = {
   address: string;
   network: Network;
 };
 
 const appId = MYCELIUM_DEFINITION.id;
-const groupId = MYCELIUM_DEFINITION.groups.lending.id;
+const groupId = MYCELIUM_DEFINITION.groups.staking.id;
 
 @Injectable()
-export class MyceliumLendingBalanceHelper {
+export class MyceliumStakingBalanceHelper {
   constructor(
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
     @Inject(MyceliumContractFactory) private readonly myceliumContractFactory: MyceliumContractFactory,
   ) {}
 
-  async getBalance({ address, network }: MyceliumLendingContractPositionHelperParams) {
-    const position = this.appToolkit.helpers.contractPositionBalanceHelper.getContractPositionBalances({
+  async getBalance({ address, network }: MyceliumStakingContractPositionHelperParams) {
+    return this.appToolkit.helpers.contractPositionBalanceHelper.getContractPositionBalances({
       address,
       appId,
       groupId,
       network,
       resolveBalances: async ({ address, multicall }) => {
-        const lendingContract = this.myceliumContractFactory.myceliumLending({
-          address: MYC_LENDING_ADDRESS,
+        const stakingContract = this.myceliumContractFactory.myceliumStaking({
+          address: MYC_STAKING_ADDRESS,
           network,
         });
+
         const baseTokens = await this.appToolkit.getBaseTokenPrices(network);
 
         const suppliedToken = baseTokens.find(token => token.address === MYC_TOKEN_ADDRESS);
@@ -43,10 +44,11 @@ export class MyceliumLendingBalanceHelper {
         if (!suppliedToken || !rewardToken) return [];
 
         const [balanceRaw, cumulativeRewardsRaw, claimedRewardsRaw] = await Promise.all([
-          multicall.wrap(lendingContract).balanceOf(address),
-          multicall.wrap(lendingContract).userCumulativeEthRewards(address),
-          multicall.wrap(lendingContract).userEthRewardsClaimed(address),
+          multicall.wrap(stakingContract).balanceOf(address),
+          multicall.wrap(stakingContract).userCumulativeEthRewards(address),
+          multicall.wrap(stakingContract).userEthRewardsClaimed(address),
         ]);
+
         const cumulativeRewards = Number(cumulativeRewardsRaw) / 10 ** suppliedToken.decimals;
         const claimedRewards = Number(claimedRewardsRaw) / 10 ** rewardToken.decimals;
 
@@ -56,6 +58,5 @@ export class MyceliumLendingBalanceHelper {
         ];
       },
     });
-    return position;
   }
 }

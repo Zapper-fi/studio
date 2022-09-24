@@ -6,9 +6,9 @@ import { presentBalanceFetcherResponse } from '~app-toolkit/helpers/presentation
 import { BalanceFetcher } from '~balance/balance-fetcher.interface';
 import { Network } from '~types/network.interface';
 
-import { MyceliumLendingBalanceHelper } from '../helpers/mycelium.lending-balance-helper';
 import { MyceliumLevTradesBalanceHelper } from '../helpers/mycelium.lev-trades.balance-helper';
 import { MyceliumPerpTokensFarmBalanceHelper } from '../helpers/mycelium.perp-tokens-farm.balance-helper';
+import { MyceliumStakingBalanceHelper } from '../helpers/mycelium.staking-balance-helper';
 import { MYCELIUM_DEFINITION } from '../mycelium.definition';
 
 const network = Network.ARBITRUM_MAINNET;
@@ -20,8 +20,8 @@ export class ArbitrumMyceliumBalanceFetcher implements BalanceFetcher {
     @Inject(MyceliumLevTradesBalanceHelper) private readonly levTradesBalanceHelper: MyceliumLevTradesBalanceHelper,
     @Inject(MyceliumPerpTokensFarmBalanceHelper)
     private readonly perpFarmsBalanceHelper: MyceliumPerpTokensFarmBalanceHelper,
-    @Inject(MyceliumLendingBalanceHelper)
-    private readonly lendingBalanceHelper: MyceliumLendingBalanceHelper,
+    @Inject(MyceliumStakingBalanceHelper)
+    private readonly stakingBalanceHelper: MyceliumStakingBalanceHelper,
   ) {}
 
   private async getEsMycTokenBalances(address: string) {
@@ -59,19 +59,19 @@ export class ArbitrumMyceliumBalanceFetcher implements BalanceFetcher {
     return this.perpFarmsBalanceHelper.getBalance({ address, network });
   }
 
-  private async getLendingPosition(address: string) {
-    return this.lendingBalanceHelper.getBalance({ address, network });
+  private async getStakingPosition(address: string) {
+    return this.stakingBalanceHelper.getBalance({ address, network });
   }
 
   async getBalances(address: string) {
-    const [mlpTokenBalances, esMycTokenBalances, levTradesPositions, perpTokens, perpTokensFarms, lendingPosition] =
+    const [mlpTokenBalances, esMycTokenBalances, levTradesPositions, stakingPosition, perpTokens, perpTokensFarms] =
       await Promise.all([
         this.getMlpTokenBalances(address),
         this.getEsMycTokenBalances(address),
         this.getLevTradesPositions(address),
+        this.getStakingPosition(address),
         this.getPerpTokens(address),
         this.getPerpTokensFarms(address),
-        this.getLendingPosition(address),
       ]);
 
     return presentBalanceFetcherResponse([
@@ -88,12 +88,12 @@ export class ArbitrumMyceliumBalanceFetcher implements BalanceFetcher {
         assets: [...levTradesPositions],
       },
       {
-        label: 'Perpetual pools tokens',
-        assets: [...perpTokens],
+        label: 'Staking',
+        assets: [...stakingPosition],
       },
       {
-        label: 'Lending',
-        assets: [...lendingPosition],
+        label: 'Perpetual pools tokens',
+        assets: [...perpTokens],
       },
     ]);
   }

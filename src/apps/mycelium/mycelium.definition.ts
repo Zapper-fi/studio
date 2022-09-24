@@ -41,10 +41,10 @@ export const MYCELIUM_DEFINITION = appDefinition({
       label: 'Perpetual pools farms',
     },
 
-    lending: {
-      id: 'lending',
+    staking: {
+      id: 'staking',
       type: GroupType.POSITION,
-      label: 'Lending',
+      label: 'Staking',
     },
   },
 

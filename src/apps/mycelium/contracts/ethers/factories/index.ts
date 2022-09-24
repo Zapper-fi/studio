@@ -2,10 +2,10 @@
 /* tslint:disable */
 /* eslint-disable */
 export { MyceliumAumManager__factory } from './MyceliumAumManager__factory';
-export { MyceliumLending__factory } from './MyceliumLending__factory';
 export { MyceliumPerpFarm__factory } from './MyceliumPerpFarm__factory';
 export { MyceliumPerpToken__factory } from './MyceliumPerpToken__factory';
 export { MyceliumPositionReader__factory } from './MyceliumPositionReader__factory';
 export { MyceliumRewardReader__factory } from './MyceliumRewardReader__factory';
 export { MyceliumRewardTracker__factory } from './MyceliumRewardTracker__factory';
+export { MyceliumStaking__factory } from './MyceliumStaking__factory';
 export { MyceliumVault__factory } from './MyceliumVault__factory';

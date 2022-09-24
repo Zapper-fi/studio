@@ -5,12 +5,12 @@ import { ContractFactory } from '~contract/contracts';
 import { Network } from '~types/network.interface';
 
 import { MyceliumAumManager__factory } from './ethers';
-import { MyceliumLending__factory } from './ethers';
 import { MyceliumPerpFarm__factory } from './ethers';
 import { MyceliumPerpToken__factory } from './ethers';
 import { MyceliumPositionReader__factory } from './ethers';
 import { MyceliumRewardReader__factory } from './ethers';
 import { MyceliumRewardTracker__factory } from './ethers';
+import { MyceliumStaking__factory } from './ethers';
 import { MyceliumVault__factory } from './ethers';
 
 // eslint-disable-next-line
@@ -24,9 +24,6 @@ export class MyceliumContractFactory extends ContractFactory {
 
   myceliumAumManager({ address, network }: ContractOpts) {
     return MyceliumAumManager__factory.connect(address, this.appToolkit.getNetworkProvider(network));
-  }
-  myceliumLending({ address, network }: ContractOpts) {
-    return MyceliumLending__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
   myceliumPerpFarm({ address, network }: ContractOpts) {
     return MyceliumPerpFarm__factory.connect(address, this.appToolkit.getNetworkProvider(network));
@@ -43,16 +40,19 @@ export class MyceliumContractFactory extends ContractFactory {
   myceliumRewardTracker({ address, network }: ContractOpts) {
     return MyceliumRewardTracker__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
+  myceliumStaking({ address, network }: ContractOpts) {
+    return MyceliumStaking__factory.connect(address, this.appToolkit.getNetworkProvider(network));
+  }
   myceliumVault({ address, network }: ContractOpts) {
     return MyceliumVault__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
 }
 
 export type { MyceliumAumManager } from './ethers';
-export type { MyceliumLending } from './ethers';
 export type { MyceliumPerpFarm } from './ethers';
 export type { MyceliumPerpToken } from './ethers';
 export type { MyceliumPositionReader } from './ethers';
 export type { MyceliumRewardReader } from './ethers';
 export type { MyceliumRewardTracker } from './ethers';
+export type { MyceliumStaking } from './ethers';
 export type { MyceliumVault } from './ethers';
