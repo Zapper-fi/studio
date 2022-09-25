@@ -16,8 +16,8 @@ export const BEND_DAO_DEFINITION = appDefinition({
       label: 'Lending',
     },
 
-    borrow: {
-      id: 'borrow',
+    variableDebt: {
+      id: 'variable-debt',
       type: GroupType.TOKEN,
       label: 'Lending',
     },
@@ -56,7 +56,7 @@ export const BEND_DAO_DEFINITION = appDefinition({
 
   primaryColor: '#0057ff',
   token: {
-    address: '0x0d02755a5700414B26FF040e1dE35D337DF56218',
+    address: '0x0d02755a5700414b26ff040e1de35d337df56218',
     network: Network.ETHEREUM_MAINNET,
   },
 });
