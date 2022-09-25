@@ -1,91 +1,63 @@
 import { Inject } from '@nestjs/common';
-import _ from 'lodash';
 
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
-import { Register } from '~app-toolkit/decorators';
-import { buildDollarDisplayItem } from '~app-toolkit/helpers/presentation/display-item.present';
-import { getImagesFromToken } from '~app-toolkit/helpers/presentation/image.present';
-import { ContractType } from '~position/contract.interface';
-import { PositionFetcher } from '~position/position-fetcher.interface';
-import { ContractPosition } from '~position/position.interface';
-import { Network } from '~types/network.interface';
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
+import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
+import { MetaType } from '~position/position.interface';
+import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
+import {
+  GetDataPropsParams,
+  GetDisplayPropsParams,
+  GetTokenBalancesParams,
+  GetTokenDefinitionsParams,
+} from '~position/template/contract-position.template.types';
 
-import { PodsYieldContractFactory } from '../contracts';
-import { PODS_YIELD_DEFINITION } from '../pods-yield.definition';
+import { PodsYieldContractFactory, PodsYieldVault } from '../contracts';
 
 import { strategyAddresses, strategyDetails } from './config';
 
-const appId = PODS_YIELD_DEFINITION.id;
-const groupId = PODS_YIELD_DEFINITION.groups.queue.id;
-const network = Network.ETHEREUM_MAINNET;
-
-export type PodsYieldQueueContractPositionDataProps = {
+export type PodsYieldQueueDataProps = {
   totalValueQueued: number;
 };
 
-@Register.ContractPositionFetcher({ appId, groupId, network })
-export class EthereumPodsYieldQueueContractPositionFetcher implements PositionFetcher<ContractPosition> {
+@PositionTemplate()
+export class EthereumPodsYieldQueueContractPositionFetcher extends ContractPositionTemplatePositionFetcher<
+  PodsYieldVault,
+  PodsYieldQueueDataProps
+> {
+  groupLabel = 'Queues';
+
   constructor(
-    @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
-    @Inject(PodsYieldContractFactory) private readonly podsYieldContractFactory: PodsYieldContractFactory,
-  ) {}
+    @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
+    @Inject(PodsYieldContractFactory) protected readonly contractFactory: PodsYieldContractFactory,
+  ) {
+    super(appToolkit);
+  }
 
-  async getPositions() {
-    const multicall = this.appToolkit.getMulticall(network);
+  getContract(address: string): PodsYieldVault {
+    return this.contractFactory.podsYieldVault({ address, network: this.network });
+  }
 
-    const baseTokenDependencies = await this.appToolkit.getBaseTokenPrices(network);
+  async getDefinitions() {
+    return strategyAddresses.map(address => ({ address }));
+  }
 
-    const positions = await Promise.all(
-      strategyAddresses.map(async strategyAddress => {
-        const contract = this.podsYieldContractFactory.vault({
-          address: strategyAddress,
-          network,
-        });
+  async getTokenDefinitions({ contract }: GetTokenDefinitionsParams<PodsYieldVault>) {
+    return [{ metaType: MetaType.SUPPLIED, address: await contract.asset() }];
+  }
 
-        // Find the underlying asset, usually stETH
-        const [underlyingTokenAddressRaw] = await Promise.all([
-          multicall
-            .wrap(contract)
-            .asset()
-            .catch(() => ''),
-        ]);
+  async getDataProps({ contract }: GetDataPropsParams<PodsYieldVault>): Promise<PodsYieldQueueDataProps> {
+    const [queuedAssets] = await Promise.all([contract.totalIdleAssets()]);
+    const totalValueQueued = Number(queuedAssets) / 10 ** 18;
+    return { totalValueQueued };
+  }
 
-        // Get the market price of this token
-        const underlyingTokenAddress = underlyingTokenAddressRaw.toLowerCase();
-        const underlyingToken = baseTokenDependencies.find(v => v.address === underlyingTokenAddress);
-        if (!underlyingToken) return null;
-        const tokens = [underlyingToken];
+  async getLabel({ contractPosition }: GetDisplayPropsParams<PodsYieldVault>) {
+    const details = strategyDetails[contractPosition.address] || strategyDetails.standard;
+    return `Queued ${getLabelFromToken(contractPosition.tokens[0])} in ${details.title}`;
+  }
 
-        const [queuedAssets] = await Promise.all([multicall.wrap(contract).totalIdleAssets()]);
-        const totalValueQueued = Number(queuedAssets) / 10 ** 18;
-
-        const details = strategyDetails[strategyAddress.toLowerCase()] || strategyDetails.standard;
-
-        const label = `Queued ${underlyingToken.symbol} in ${details.title}`;
-        const images = getImagesFromToken(underlyingToken);
-        const secondaryLabel = buildDollarDisplayItem(underlyingToken.price);
-
-        const position: ContractPosition<PodsYieldQueueContractPositionDataProps> = {
-          type: ContractType.POSITION,
-          appId,
-          groupId,
-          address: strategyAddress,
-          network,
-          tokens,
-          dataProps: {
-            totalValueQueued,
-          },
-          displayProps: {
-            label,
-            images,
-            secondaryLabel,
-          },
-        };
-
-        return position;
-      }),
-    );
-
-    return _.compact(positions);
+  async getTokenBalancesPerPosition({ address, contract }: GetTokenBalancesParams<PodsYieldVault>) {
+    return Promise.all([contract.idleAssetsOf(address)]);
   }
 }

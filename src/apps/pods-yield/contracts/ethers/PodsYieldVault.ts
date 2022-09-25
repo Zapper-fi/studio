@@ -17,7 +17,7 @@ import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi
 import type { Listener, Provider } from '@ethersproject/providers';
 import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
-export interface VaultInterface extends utils.Interface {
+export interface PodsYieldVaultInterface extends utils.Interface {
   functions: {
     'DENOMINATOR()': FunctionFragment;
     'DOMAIN_SEPARATOR()': FunctionFragment;
@@ -399,12 +399,12 @@ export type WithdrawEvent = TypedEvent<[string, string, string, BigNumber, BigNu
 
 export type WithdrawEventFilter = TypedEventFilter<WithdrawEvent>;
 
-export interface Vault extends BaseContract {
+export interface PodsYieldVault extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
 
-  interface: VaultInterface;
+  interface: PodsYieldVaultInterface;
 
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,

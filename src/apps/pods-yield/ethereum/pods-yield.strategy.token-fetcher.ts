@@ -1,106 +1,65 @@
 import { Inject } from '@nestjs/common';
-import _ from 'lodash';
 
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
-import { Register } from '~app-toolkit/decorators';
-import { buildDollarDisplayItem } from '~app-toolkit/helpers/presentation/display-item.present';
-import { getImagesFromToken } from '~app-toolkit/helpers/presentation/image.present';
-import { ContractType } from '~position/contract.interface';
-import { PositionFetcher } from '~position/position-fetcher.interface';
-import { AppTokenPosition } from '~position/position.interface';
-import { Network } from '~types/network.interface';
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
+import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
+import {
+  GetDataPropsParams,
+  GetDisplayPropsParams,
+  GetPricePerShareParams,
+  GetUnderlyingTokensParams,
+} from '~position/template/app-token.template.types';
 
-import { PodsYieldContractFactory } from '../contracts';
-import { PODS_YIELD_DEFINITION } from '../pods-yield.definition';
+import { PodsYieldContractFactory, PodsYieldVault } from '../contracts';
 
 import { strategyAddresses, strategyDetails } from './config';
 
-const appId = PODS_YIELD_DEFINITION.id;
-const groupId = PODS_YIELD_DEFINITION.groups.strategy.id;
-const network = Network.ETHEREUM_MAINNET;
+@PositionTemplate()
+export class EthereumPodsYieldStrategyTokenFetcher extends AppTokenTemplatePositionFetcher<PodsYieldVault> {
+  groupLabel = 'Strategies';
 
-export type PodsYieldStrategyDataProps = {
-  liquidity: number;
-};
-
-@Register.TokenPositionFetcher({ appId, groupId, network })
-export class EthereumPodsYieldStrategyTokenFetcher implements PositionFetcher<AppTokenPosition> {
   constructor(
-    @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
-    @Inject(PodsYieldContractFactory) private readonly podsYieldContractFactory: PodsYieldContractFactory,
-  ) {}
+    @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
+    @Inject(PodsYieldContractFactory) protected readonly contractFactory: PodsYieldContractFactory,
+  ) {
+    super(appToolkit);
+  }
 
-  async getPositions() {
-    const multicall = this.appToolkit.getMulticall(network);
+  getContract(address: string) {
+    return this.contractFactory.podsYieldVault({ address, network: this.network });
+  }
 
-    const baseTokenDependencies = await this.appToolkit.getBaseTokenPrices(network);
+  async getAddresses() {
+    return strategyAddresses;
+  }
 
-    const tokens = await Promise.all(
-      strategyAddresses.map(async strategyAddress => {
-        const contract = this.podsYieldContractFactory.vault({
-          address: strategyAddress,
-          network,
-        });
+  async getUnderlyingTokenAddresses({ contract }: GetUnderlyingTokensParams<PodsYieldVault>) {
+    return contract.asset();
+  }
 
-        // Find the underlying asset, usually stETH
-        const [underlyingTokenAddressRaw] = await Promise.all([
-          multicall
-            .wrap(contract)
-            .asset()
-            .catch(() => ''),
-        ]);
+  async getPricePerShare({ contract, appToken }: GetPricePerShareParams<PodsYieldVault>) {
+    const [assetsRaw, supplyRaw] = await Promise.all([contract.totalAssets(), contract.totalSupply()]);
+    const supply = Number(supplyRaw) / 10 ** appToken.decimals;
+    const assets = Number(assetsRaw) / 10 ** appToken.tokens[0].decimals;
 
-        // Get the market price of this token
-        const underlyingTokenAddress = underlyingTokenAddressRaw.toLowerCase();
-        const underlyingToken = baseTokenDependencies.find(v => v.address === underlyingTokenAddress);
-        if (!underlyingToken) return null;
-        const tokens = [underlyingToken];
+    const pricePerShare = assets / supply;
+    return [pricePerShare];
+  }
 
-        const [symbol, decimals, supplyRaw, assetsRaw] = await Promise.all([
-          multicall.wrap(contract).symbol(),
-          multicall.wrap(contract).decimals(),
-          multicall.wrap(contract).totalSupply(),
-          multicall.wrap(contract).totalAssets(),
-        ]);
+  async getLiquidity({ appToken }: GetDataPropsParams<PodsYieldVault>) {
+    return appToken.supply * appToken.price;
+  }
 
-        const supply = Number(supplyRaw) / 10 ** decimals;
-        const assets = Number(assetsRaw) / 10 ** decimals;
+  async getReserves({ appToken }: GetDataPropsParams<PodsYieldVault>) {
+    return [appToken.pricePerShare[0] * appToken.supply];
+  }
 
-        const pricePerShare = assets / supply;
-        const price = pricePerShare * underlyingToken.price;
+  async getApy() {
+    return 0;
+  }
 
-        const details = strategyDetails[strategyAddress.toLowerCase()] || strategyDetails.standard;
-
-        const label = details.title;
-        const images = getImagesFromToken(underlyingToken);
-        const secondaryLabel = buildDollarDisplayItem(price);
-
-        const token: AppTokenPosition<PodsYieldStrategyDataProps> = {
-          type: ContractType.APP_TOKEN,
-          appId,
-          groupId,
-          address: strategyAddress,
-          network,
-          symbol,
-          decimals,
-          supply,
-          tokens,
-          price,
-          pricePerShare,
-          dataProps: {
-            liquidity: assets,
-          },
-          displayProps: {
-            label,
-            images,
-            secondaryLabel,
-          },
-        };
-
-        return token;
-      }),
-    );
-
-    return _.compact(tokens);
+  async getLabel({ appToken }: GetDisplayPropsParams<PodsYieldVault>) {
+    const details = strategyDetails[appToken.address] || strategyDetails.standard;
+    return details.title;
   }
 }
