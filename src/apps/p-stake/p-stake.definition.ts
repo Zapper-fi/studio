@@ -3,15 +3,15 @@ import { appDefinition, AppDefinition } from '~app/app.definition';
 import { AppAction, AppTag, GroupType } from '~app/app.interface';
 import { Network } from '~types/network.interface';
 
-export const PSTAKE_DEFINITION = appDefinition({
-  id: 'pstake',
+export const P_STAKE_DEFINITION = appDefinition({
+  id: 'p-stake',
   name: 'pSTAKE',
   description: 'pSTAKE is a liquid staking protocol unlocking the liquidity of staked assets. ',
   url: 'https://pstake.finance/',
 
   groups: {
     stake: {
-      id: 'Stake',
+      id: 'stake',
       type: GroupType.TOKEN,
       label: 'Stake',
     },
@@ -28,11 +28,11 @@ export const PSTAKE_DEFINITION = appDefinition({
   primaryColor: '#fff',
 });
 
-@Register.AppDefinition(PSTAKE_DEFINITION.id)
-export class PstakeAppDefinition extends AppDefinition {
+@Register.AppDefinition(P_STAKE_DEFINITION.id)
+export class PStakeAppDefinition extends AppDefinition {
   constructor() {
-    super(PSTAKE_DEFINITION);
+    super(P_STAKE_DEFINITION);
   }
 }
 
-export default PSTAKE_DEFINITION;
+export default P_STAKE_DEFINITION;

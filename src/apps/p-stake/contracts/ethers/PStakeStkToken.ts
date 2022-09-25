@@ -17,7 +17,7 @@ import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi
 import type { Listener, Provider } from '@ethersproject/providers';
 import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
-export interface StakedBnbTokenInterface extends utils.Interface {
+export interface PStakeStkTokenInterface extends utils.Interface {
   functions: {
     'addressStore()': FunctionFragment;
     'allowance(address,address)': FunctionFragment;
@@ -289,12 +289,12 @@ export type UnpausedEvent = TypedEvent<[string], UnpausedEventObject>;
 
 export type UnpausedEventFilter = TypedEventFilter<UnpausedEvent>;
 
-export interface StakedBnbToken extends BaseContract {
+export interface PStakeStkToken extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
 
-  interface: StakedBnbTokenInterface;
+  interface: PStakeStkTokenInterface;
 
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,
