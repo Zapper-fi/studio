@@ -27,7 +27,7 @@ export declare namespace TokenRegistry {
   };
 }
 
-export interface TokenRegistryInterface extends utils.Interface {
+export interface OokiTokenRegistryInterface extends utils.Interface {
   functions: {
     'bZxContract()': FunctionFragment;
     'getTokens(uint256,uint256)': FunctionFragment;
@@ -47,12 +47,12 @@ export interface TokenRegistryInterface extends utils.Interface {
   events: {};
 }
 
-export interface TokenRegistry extends BaseContract {
+export interface OokiTokenRegistry extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
 
-  interface: TokenRegistryInterface;
+  interface: OokiTokenRegistryInterface;
 
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,

@@ -4,11 +4,8 @@ import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { ContractFactory } from '~contract/contracts';
 import { Network } from '~types/network.interface';
 
-import { IPriceFeeds__factory } from './ethers';
-import { IStakingV2__factory } from './ethers';
-import { IToken__factory } from './ethers';
-import { IbZx__factory } from './ethers';
-import { TokenRegistry__factory } from './ethers';
+import { OokiIToken__factory } from './ethers';
+import { OokiTokenRegistry__factory } from './ethers';
 
 // eslint-disable-next-line
 type ContractOpts = { address: string; network: Network };
@@ -19,25 +16,13 @@ export class OokiContractFactory extends ContractFactory {
     super((network: Network) => appToolkit.getNetworkProvider(network));
   }
 
-  iPriceFeeds({ address, network }: ContractOpts) {
-    return IPriceFeeds__factory.connect(address, this.appToolkit.getNetworkProvider(network));
+  ookiIToken({ address, network }: ContractOpts) {
+    return OokiIToken__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
-  iStakingV2({ address, network }: ContractOpts) {
-    return IStakingV2__factory.connect(address, this.appToolkit.getNetworkProvider(network));
-  }
-  iToken({ address, network }: ContractOpts) {
-    return IToken__factory.connect(address, this.appToolkit.getNetworkProvider(network));
-  }
-  ibZx({ address, network }: ContractOpts) {
-    return IbZx__factory.connect(address, this.appToolkit.getNetworkProvider(network));
-  }
-  tokenRegistry({ address, network }: ContractOpts) {
-    return TokenRegistry__factory.connect(address, this.appToolkit.getNetworkProvider(network));
+  ookiTokenRegistry({ address, network }: ContractOpts) {
+    return OokiTokenRegistry__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
 }
 
-export type { IPriceFeeds } from './ethers';
-export type { IStakingV2 } from './ethers';
-export type { IToken } from './ethers';
-export type { IbZx } from './ethers';
-export type { TokenRegistry } from './ethers';
+export type { OokiIToken } from './ethers';
+export type { OokiTokenRegistry } from './ethers';

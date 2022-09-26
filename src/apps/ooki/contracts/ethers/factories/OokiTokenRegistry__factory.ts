@@ -4,7 +4,7 @@
 import { Signer, utils, Contract, ContractFactory, Overrides } from 'ethers';
 import type { Provider, TransactionRequest } from '@ethersproject/providers';
 import type { PromiseOrValue } from '../common';
-import type { TokenRegistry, TokenRegistryInterface } from '../TokenRegistry';
+import type { OokiTokenRegistry, OokiTokenRegistryInterface } from '../OokiTokenRegistry';
 
 const _abi = [
   {
@@ -65,13 +65,13 @@ const _abi = [
 const _bytecode =
   '0x608060405234801561001057600080fd5b50610584806100206000396000f3fe608060405234801561001057600080fd5b50600436106100365760003560e01c8063494cfc6c1461003b578063995363d314610064575b600080fd5b61004e610049366004610388565b610079565b60405161005b919061047f565b60405180910390f35b61006c610263565b60405161005b9190610471565b60405163402946b960e01b8152606090819073d8ee69652e4e4838f2531732a46d1f7f584f0b7f90819063402946b9906100b99088908890600401610497565b60006040518083038186803b1580156100d157600080fd5b505afa1580156100e5573d6000803e3d6000fd5b505050506040513d6000823e601f3d908101601f1916820160405261010d9190810190610353565b9150815160405190808252806020026020018201604052801561014a57816020015b61013761027b565b81526020019060019003908161012f5790505b50925060005b825181101561025a5782818151811061016557fe5b602002602001015184828151811061017957fe5b6020026020010151600001906001600160a01b031690816001600160a01b031681525050816001600160a01b0316638dc48ba58483815181106101b857fe5b60200260200101516040518263ffffffff1660e01b81526004016101dc9190610471565b60206040518083038186803b1580156101f457600080fd5b505afa158015610208573d6000803e3d6000fd5b505050506040513d601f19601f8201168201806040525061022c919081019061032d565b84828151811061023857fe5b6020908102919091018101516001600160a01b03909216910152600101610150565b50505092915050565b73d8ee69652e4e4838f2531732a46d1f7f584f0b7f81565b604080518082019091526000808252602082015290565b805161029d81610521565b92915050565b600082601f8301126102b457600080fd5b81516102c76102c2826104d9565b6104b2565b915081818352602084019350602081019050838560208402820111156102ec57600080fd5b60005b8381101561031857816103028882610292565b84525060209283019291909101906001016102ef565b5050505092915050565b803561029d81610538565b60006020828403121561033f57600080fd5b600061034b8484610292565b949350505050565b60006020828403121561036557600080fd5b815167ffffffffffffffff81111561037c57600080fd5b61034b848285016102a3565b6000806040838503121561039b57600080fd5b60006103a78585610322565b92505060206103b885828601610322565b9150509250929050565b60006103ce838361043e565b505060400190565b6103df8161050d565b82525050565b60006103f082610500565b6103fa8185610504565b9350610405836104fa565b8060005b8381101561043357815161041d88826103c2565b9750610428836104fa565b925050600101610409565b509495945050505050565b8051604083019061044f84826103d6565b50602082015161046260208501826103d6565b50505050565b6103df8161051e565b6020810161029d82846103d6565b6020808252810161049081846103e5565b9392505050565b604081016104a58285610468565b6104906020830184610468565b60405181810167ffffffffffffffff811182821017156104d157600080fd5b604052919050565b600067ffffffffffffffff8211156104f057600080fd5b5060209081020190565b60200190565b5190565b90815260200190565b60006001600160a01b03821661029d565b90565b61052a8161050d565b811461053557600080fd5b50565b61052a8161051e56fea365627a7a723158203260bcfc77e5180e08a775831e585a36b277ffe8841390ee264eb73756e59bfb6c6578706572696d656e74616cf564736f6c63430005110040';
 
-type TokenRegistryConstructorParams = [signer?: Signer] | ConstructorParameters<typeof ContractFactory>;
+type OokiTokenRegistryConstructorParams = [signer?: Signer] | ConstructorParameters<typeof ContractFactory>;
 
-const isSuperArgs = (xs: TokenRegistryConstructorParams): xs is ConstructorParameters<typeof ContractFactory> =>
+const isSuperArgs = (xs: OokiTokenRegistryConstructorParams): xs is ConstructorParameters<typeof ContractFactory> =>
   xs.length > 1;
 
-export class TokenRegistry__factory extends ContractFactory {
-  constructor(...args: TokenRegistryConstructorParams) {
+export class OokiTokenRegistry__factory extends ContractFactory {
+  constructor(...args: OokiTokenRegistryConstructorParams) {
     if (isSuperArgs(args)) {
       super(...args);
     } else {
@@ -79,25 +79,25 @@ export class TokenRegistry__factory extends ContractFactory {
     }
   }
 
-  override deploy(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<TokenRegistry> {
-    return super.deploy(overrides || {}) as Promise<TokenRegistry>;
+  override deploy(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<OokiTokenRegistry> {
+    return super.deploy(overrides || {}) as Promise<OokiTokenRegistry>;
   }
   override getDeployTransaction(overrides?: Overrides & { from?: PromiseOrValue<string> }): TransactionRequest {
     return super.getDeployTransaction(overrides || {});
   }
-  override attach(address: string): TokenRegistry {
-    return super.attach(address) as TokenRegistry;
+  override attach(address: string): OokiTokenRegistry {
+    return super.attach(address) as OokiTokenRegistry;
   }
-  override connect(signer: Signer): TokenRegistry__factory {
-    return super.connect(signer) as TokenRegistry__factory;
+  override connect(signer: Signer): OokiTokenRegistry__factory {
+    return super.connect(signer) as OokiTokenRegistry__factory;
   }
 
   static readonly bytecode = _bytecode;
   static readonly abi = _abi;
-  static createInterface(): TokenRegistryInterface {
-    return new utils.Interface(_abi) as TokenRegistryInterface;
+  static createInterface(): OokiTokenRegistryInterface {
+    return new utils.Interface(_abi) as OokiTokenRegistryInterface;
   }
-  static connect(address: string, signerOrProvider: Signer | Provider): TokenRegistry {
-    return new Contract(address, _abi, signerOrProvider) as TokenRegistry;
+  static connect(address: string, signerOrProvider: Signer | Provider): OokiTokenRegistry {
+    return new Contract(address, _abi, signerOrProvider) as OokiTokenRegistry;
   }
 }

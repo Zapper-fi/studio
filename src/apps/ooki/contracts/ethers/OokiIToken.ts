@@ -32,7 +32,7 @@ export declare namespace IToken {
   };
 }
 
-export interface ITokenInterface extends utils.Interface {
+export interface OokiITokenInterface extends utils.Interface {
   functions: {
     '_isPaused(bytes4)': FunctionFragment;
     'allowance(address,address)': FunctionFragment;
@@ -316,12 +316,12 @@ export type TransferEvent = TypedEvent<[string, string, BigNumber], TransferEven
 
 export type TransferEventFilter = TypedEventFilter<TransferEvent>;
 
-export interface IToken extends BaseContract {
+export interface OokiIToken extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
 
-  interface: ITokenInterface;
+  interface: OokiITokenInterface;
 
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,
