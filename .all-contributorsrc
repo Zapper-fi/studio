@@ -768,6 +768,42 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "eugenesh1",
+      "name": "Eugene",
+      "avatar_url": "https://avatars.githubusercontent.com/u/81377977?v=4",
+      "profile": "https://ooki.com/",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "Robsonsjre",
+      "name": "Rob",
+      "avatar_url": "https://avatars.githubusercontent.com/u/11945073?v=4",
+      "profile": "https://github.com/Robsonsjre",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "vedantd",
+      "name": "Vedant Dalvi",
+      "avatar_url": "https://avatars.githubusercontent.com/u/29754152?v=4",
+      "profile": "https://github.com/vedantd",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "ibeandyy",
+      "name": "ibeandyy",
+      "avatar_url": "https://avatars.githubusercontent.com/u/16962763?v=4",
+      "profile": "https://github.com/ibeandyy",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7
