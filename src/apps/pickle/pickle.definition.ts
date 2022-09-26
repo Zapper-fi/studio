@@ -28,6 +28,12 @@ export const PICKLE_DEFINITION = appDefinition({
     [Network.ETHEREUM_MAINNET]: [AppAction.VIEW],
     [Network.ARBITRUM_MAINNET]: [AppAction.VIEW],
     [Network.POLYGON_MAINNET]: [AppAction.VIEW],
+    [Network.OPTIMISM_MAINNET]: [AppAction.VIEW],
+    [Network.FANTOM_OPERA_MAINNET]: [AppAction.VIEW],
+    [Network.GNOSIS_MAINNET]: [AppAction.VIEW],
+    [Network.AURORA_MAINNET]: [AppAction.VIEW],
+    [Network.CRONOS_MAINNET]: [AppAction.VIEW],
+    [Network.MOONRIVER_MAINNET]: [AppAction.VIEW],
   },
   token: {
     address: '0x429881672b9ae42b8eba0e26cd9c73711b891ca5',
