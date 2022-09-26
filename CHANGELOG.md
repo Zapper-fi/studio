@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.233.0](https://github.com/Zapper-fi/studio/compare/v0.232.0...v0.233.0) (2022-09-26)
+
+
+### Features
+
+* **trader-joe:** Convert all of Trader Joe to templates ([#1449](https://github.com/Zapper-fi/studio/issues/1449)) ([3f05620](https://github.com/Zapper-fi/studio/commit/3f05620a1c362d1ee913bb3b0a7c5482b6518359))
+
 ## [0.232.0](https://github.com/Zapper-fi/studio/compare/v0.231.0...v0.232.0) (2022-09-26)
 
 
