@@ -6,6 +6,7 @@ import _ from 'lodash';
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
 import { CURVE_DEFINITION } from '~apps/curve';
+import { GMX_DEFINITION } from '~apps/gmx';
 import { TRADER_JOE_DEFINITION } from '~apps/trader-joe';
 import { ContractType } from '~position/contract.interface';
 import { PositionFetcher } from '~position/position-fetcher.interface';
@@ -44,9 +45,9 @@ export class AvalancheYieldyakFarmsTokenFetcher implements PositionFetcher<AppTo
     const appTokenDependencies = await this.appToolkit.getAppTokenPositions(
       { appId: TRADER_JOE_DEFINITION.id, groupIds: [TRADER_JOE_DEFINITION.groups.pool.id], network },
       { appId: CURVE_DEFINITION.id, groupIds: [CURVE_DEFINITION.groups.pool.id], network },
+      { appId: GMX_DEFINITION.id, groupIds: [GMX_DEFINITION.groups.glp.id], network },
       { appId: 'pangolin', groupIds: ['pool'], network },
       { appId: 'benqi', groupIds: ['s-avax'], network },
-      { appId: 'gmx', groupIds: [], network },
       { appId: 'lydia', groupIds: ['pool'], network },
       { appId: 'stargate', groupIds: ['pool'], network },
     );
