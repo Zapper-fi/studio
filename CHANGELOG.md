@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.232.0](https://github.com/Zapper-fi/studio/compare/v0.231.0...v0.232.0) (2022-09-26)
+
+
+### Features
+
+* **kwenta:** Add user-specific stats items ([#1446](https://github.com/Zapper-fi/studio/issues/1446)) ([ca7fae1](https://github.com/Zapper-fi/studio/commit/ca7fae130493e52bc698db137e8c840bc8c8cd28))
+
 ## [0.231.0](https://github.com/Zapper-fi/studio/compare/v0.230.0...v0.231.0) (2022-09-26)
 
 
