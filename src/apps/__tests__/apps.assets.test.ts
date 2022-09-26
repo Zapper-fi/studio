@@ -1,33 +1,24 @@
 import fs from 'fs';
-import { readdir } from 'fs/promises';
 import { promisify } from 'util';
+
+import { getAllAppIds } from './common';
 
 const access = promisify(fs.access);
 
-describe('App Assets', () => {
-  it('All apps should have a "logo.png"', async () => {
-    const getDirectories = async (source: string) =>
-      (await readdir(source, { withFileTypes: true }))
-        .filter((dirent: { isDirectory: () => any }) => dirent.isDirectory())
-        .map((dirent: { name: any }) => dirent.name);
-
-    const appsDirectoriesRaw = await getDirectories('./src/apps');
-    const appsDirectories = appsDirectoriesRaw.filter(app => app != '__tests__');
-
-    const accesses = await Promise.all(
-      appsDirectories.map(async app => {
+describe('Apps', () => {
+  it('should have a "logo.png"', async () => {
+    const appIds = getAllAppIds();
+    const logoExists = await Promise.all(
+      appIds.map(async app => {
         const path = 'src/apps/' + app + '/assets/logo.png';
-        try {
-          await access(path);
-          return { appId: app, result: true };
-        } catch (error) {
-          return { appId: app, result: false };
-        }
+        return access(path)
+          .then(() => true)
+          .catch(() => false);
       }),
     );
 
-    const allAppsHaveLogo = accesses.every(acces => acces.result == true);
-    const appsWithoutLogo = accesses.filter(x => !x.result).map(x => `"${x.appId}"`);
-    expect(allAppsHaveLogo, `${appsWithoutLogo.join(', ')} do not have "logo.png"`).toBeTruthy();
+    const appsMissingLogos = appIds.filter((t, i) => !logoExists[i]);
+
+    expect(appsMissingLogos, `${appsMissingLogos.join(', ')} do not have "logo.png"`).toHaveLength(0);
   });
 });

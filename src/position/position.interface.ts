@@ -22,6 +22,7 @@ export interface AbstractPosition<T = DefaultDataProps> extends Contract {
   tokens: WithMetaType<Token>[];
   dataProps: T;
   displayProps: DisplayProps;
+  groupLabel?: string;
   key?: string;
 }
 
@@ -50,6 +51,7 @@ export interface NonFungibleToken extends AbstractToken {
   }[];
   collection?: {
     id: string;
+    name: string;
     floorPrice: number;
     floorPriceUSD: number;
     img: string;

@@ -1,7 +1,7 @@
 import { Inject } from '@nestjs/common';
+import { ethers } from 'ethers';
 import _ from 'lodash';
 import { range } from 'lodash';
-import Web3 from 'web3';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
@@ -57,7 +57,7 @@ export class EthereumMakerVaultContractPositionFetcher implements PositionFetche
           multicall.wrap(ilkRegContract).join(ilk),
         ]);
 
-        const ilkName = Web3.utils.hexToAscii(ilk).replace(/\0/g, '');
+        const ilkName = ethers.utils.parseBytes32String(ilk);
 
         const contractAddress = join.toLowerCase();
         const collateralTokenAddress = gem.toLowerCase();

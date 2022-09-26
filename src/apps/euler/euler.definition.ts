@@ -15,14 +15,12 @@ export const EULER_DEFINITION = appDefinition({
       id: 'e-token',
       type: GroupType.TOKEN,
       label: 'Lending',
-      groupLabel: 'Supply',
     },
 
     dToken: {
       id: 'd-token',
       type: GroupType.TOKEN,
       label: 'Lending',
-      groupLabel: 'Borrow',
     },
 
     pToken: {

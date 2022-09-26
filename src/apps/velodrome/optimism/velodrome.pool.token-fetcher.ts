@@ -1,65 +1,90 @@
 import { Inject } from '@nestjs/common';
 import Axios from 'axios';
-import { BigNumber } from 'ethers';
 
-import { Register } from '~app-toolkit/decorators';
-import { CurvePoolTokenHelper } from '~apps/curve';
-import { CacheOnInterval } from '~cache/cache-on-interval.decorator';
-import { PositionFetcher } from '~position/position-fetcher.interface';
-import { AppTokenPosition } from '~position/position.interface';
-import { Network } from '~types/network.interface';
+import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
+import { buildDollarDisplayItem } from '~app-toolkit/helpers/presentation/display-item.present';
+import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
+import { DefaultDataProps } from '~position/display.interface';
+import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
+import {
+  GetDataPropsParams,
+  GetDisplayPropsParams,
+  GetPricePerShareParams,
+  GetUnderlyingTokensParams,
+} from '~position/template/app-token.template.types';
 
 import { VelodromeContractFactory, VelodromePool } from '../contracts';
-import { VELODROME_DEFINITION } from '../velodrome.definition';
 
-const appId = VELODROME_DEFINITION.id;
-const groupId = VELODROME_DEFINITION.groups.pool.id;
-const network = Network.OPTIMISM_MAINNET;
-
-interface PairData {
+export interface VelodromeApiPairData {
   address: string;
   gauge_address: string;
   token0_address: string;
   token1_address: string;
+  apr: number;
 }
 
-@Register.TokenPositionFetcher({ appId, groupId, network })
-export class OptimismVelodromePoolsTokenFetcher implements PositionFetcher<AppTokenPosition> {
-  constructor(
-    @Inject(CurvePoolTokenHelper)
-    private readonly curvePoolTokenHelper: CurvePoolTokenHelper,
-    @Inject(VelodromeContractFactory) private readonly contractFactory: VelodromeContractFactory,
-  ) {}
+@PositionTemplate()
+export class OptimismVelodromePoolsTokenFetcher extends AppTokenTemplatePositionFetcher<VelodromePool> {
+  groupLabel = 'Pools';
 
-  @CacheOnInterval({
-    key: `studio:${network}:${appId}:${groupId}:definitions`,
-    timeout: 15 * 60 * 1000,
-  })
-  async getDefinitions() {
-    const { data } = await Axios.get<{ data: PairData[] }>('https://api.velodrome.finance/api/v1/pairs');
-    return data;
+  constructor(
+    @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
+    @Inject(VelodromeContractFactory) private readonly contractFactory: VelodromeContractFactory,
+  ) {
+    super(appToolkit);
   }
 
-  async getPositions() {
-    const { data } = await this.getDefinitions();
-    const tokens = await this.curvePoolTokenHelper.getTokens<VelodromePool>({
-      network,
-      appId,
-      groupId,
-      poolDefinitions: data.map(pool => ({
-        swapAddress: pool.address.toLowerCase(),
-        tokenAddress: pool.address.toLowerCase(),
-        gaugeAddress: pool.gauge_address.toLowerCase(),
-      })),
-      resolvePoolContract: ({ network, address }) => this.contractFactory.velodromePool({ network, address }),
-      resolvePoolCoinAddresses: async ({ multicall, poolContract }) =>
-        Promise.all([multicall.wrap(poolContract).token0(), multicall.wrap(poolContract).token1()]),
-      resolvePoolReserves: async ({ multicall, poolContract }) =>
-        Promise.all([multicall.wrap(poolContract).reserve0(), multicall.wrap(poolContract).reserve1()]),
-      resolvePoolFee: async () => BigNumber.from(0), // TODO: get actual value
-      resolvePoolTokenPrice: async ({ tokens, reserves, supply }) =>
-        (tokens[0].price * reserves[0] + tokens[1].price * reserves[1]) / supply,
-    });
-    return tokens;
+  getContract(address: string): VelodromePool {
+    return this.contractFactory.velodromePool({ address, network: this.network });
+  }
+
+  async getAddresses() {
+    const { data } = await Axios.get<{ data: VelodromeApiPairData[] }>('https://api.velodrome.finance/api/v1/pairs');
+    return data.data.map(pool => pool.address);
+  }
+
+  async getUnderlyingTokenAddresses({ contract }: GetUnderlyingTokensParams<VelodromePool>) {
+    return Promise.all([contract.token0(), contract.token1()]);
+  }
+
+  async getPricePerShare({ appToken, contract }: GetPricePerShareParams<VelodromePool, DefaultDataProps>) {
+    const [token0, token1] = appToken.tokens;
+    const [reserve0, reserve1] = await Promise.all([contract.reserve0(), contract.reserve1()]);
+    const reserves = [Number(reserve0) / 10 ** token0.decimals, Number(reserve1) / 10 ** token1.decimals];
+    const pricePerShare = reserves.map(r => r / appToken.supply);
+    return pricePerShare;
+  }
+
+  async getLiquidity({ appToken }: GetDataPropsParams<VelodromePool>) {
+    return appToken.supply * appToken.price;
+  }
+
+  async getReserves({ appToken }: GetDataPropsParams<VelodromePool>) {
+    return (appToken.pricePerShare as number[]).map(v => v * appToken.supply);
+  }
+
+  async getApy() {
+    return 0;
+  }
+
+  async getLabel({ appToken }: GetDisplayPropsParams<VelodromePool>): Promise<string> {
+    return appToken.tokens.map(v => getLabelFromToken(v)).join(' / ');
+  }
+
+  async getSecondaryLabel({ appToken }: GetDisplayPropsParams<VelodromePool>) {
+    const { liquidity, reserves } = appToken.dataProps;
+    const reservePercentages = appToken.tokens.map((t, i) => reserves[i] * (t.price / liquidity));
+    return reservePercentages.map(p => `${Math.round(p * 100)}%`).join(' / ');
+  }
+
+  async getStatsItems({ appToken }: GetDisplayPropsParams<VelodromePool>) {
+    const { reserves, liquidity } = appToken.dataProps;
+    const reservesDisplay = reserves.map(v => (v < 0.01 ? '<0.01' : v.toFixed(2))).join(' / ');
+
+    return [
+      { label: 'Liquidity', value: buildDollarDisplayItem(liquidity) },
+      { label: 'Reserves', value: reservesDisplay },
+    ];
   }
 }

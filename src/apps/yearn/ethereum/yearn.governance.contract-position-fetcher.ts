@@ -1,61 +1,52 @@
 import { Inject } from '@nestjs/common';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
-import { Register } from '~app-toolkit/decorators';
-import { CURVE_DEFINITION } from '~apps/curve/curve.definition';
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
+import { GetDataPropsParams, GetTokenBalancesParams } from '~position/template/contract-position.template.types';
 import {
-  SynthetixContractFactory,
-  SynthetixRewards,
-  SynthetixSingleStakingIsActiveStrategy,
-  SynthetixSingleStakingRoiStrategy,
-} from '~apps/synthetix';
-import { PositionFetcher } from '~position/position-fetcher.interface';
-import { ContractPosition } from '~position/position.interface';
-import { Network } from '~types/network.interface';
+  SingleStakingFarmDefinition,
+  SingleStakingFarmTemplateContractPositionFetcher,
+} from '~position/template/single-staking.template.contract-position-fetcher';
 
-import { YEARN_DEFINITION } from '../yearn.definition';
+import { YearnContractFactory } from '../contracts';
+import { YearnGovernance } from '../contracts/ethers/YearnGovernance';
 
-const FARMS = [
-  // YFI
-  {
-    address: '0xba37b002abafdd8e89a1995da52740bbc013d992',
-    stakedTokenAddress: '0x0bc529c00c6401aef6d220be8c6ea1667f6ad93e',
-    rewardTokenAddresses: ['0xdf5e0e81dff6faf3a7e52ba697820c5e32d806a8'],
-  },
-];
+@PositionTemplate()
+export class EthereumYearnGovernanceContractPositionFetcher extends SingleStakingFarmTemplateContractPositionFetcher<YearnGovernance> {
+  groupLabel = 'Governance';
 
-const appId = YEARN_DEFINITION.id;
-const groupId = YEARN_DEFINITION.groups.governance.id;
-const network = Network.ETHEREUM_MAINNET;
+  isExcludedFromExplore = true;
 
-@Register.ContractPositionFetcher({ appId, groupId, network })
-export class EthereumYearnGovernanceContractPositionFetcher implements PositionFetcher<ContractPosition> {
   constructor(
-    @Inject(APP_TOOLKIT)
-    private readonly appToolkit: IAppToolkit,
-    @Inject(SynthetixContractFactory)
-    private readonly synthetixContractFactory: SynthetixContractFactory,
-    @Inject(SynthetixSingleStakingIsActiveStrategy)
-    private readonly synthetixSingleStakingIsActiveStrategy: SynthetixSingleStakingIsActiveStrategy,
-    @Inject(SynthetixSingleStakingRoiStrategy)
-    private readonly synthetixSingleStakingRoiStrategy: SynthetixSingleStakingRoiStrategy,
-  ) {}
+    @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
+    @Inject(YearnContractFactory) protected readonly contractFactory: YearnContractFactory,
+  ) {
+    super(appToolkit);
+  }
 
-  async getPositions() {
-    return this.appToolkit.helpers.singleStakingFarmContractPositionHelper.getContractPositions<SynthetixRewards>({
-      appId,
-      groupId,
-      network,
-      resolveFarmDefinitions: async () => FARMS,
-      dependencies: [{ appId: CURVE_DEFINITION.id, groupIds: [CURVE_DEFINITION.groups.pool.id], network }],
-      resolveFarmContract: ({ network, address }) =>
-        this.synthetixContractFactory.synthetixRewards({ network, address }),
-      resolveIsActive: this.synthetixSingleStakingIsActiveStrategy.build({
-        resolvePeriodFinish: ({ contract, multicall }) => multicall.wrap(contract).periodFinish(),
-      }),
-      resolveRois: this.synthetixSingleStakingRoiStrategy.build({
-        resolveRewardRates: ({ contract, multicall }) => multicall.wrap(contract).rewardRate(),
-      }),
-    });
+  getContract(address: string): YearnGovernance {
+    return this.contractFactory.yearnGovernance({ address, network: this.network });
+  }
+
+  async getFarmDefinitions(): Promise<SingleStakingFarmDefinition[]> {
+    return [
+      {
+        address: '0xba37b002abafdd8e89a1995da52740bbc013d992',
+        stakedTokenAddress: '0x0bc529c00c6401aef6d220be8c6ea1667f6ad93e',
+        rewardTokenAddresses: ['0xdf5e0e81dff6faf3a7e52ba697820c5e32d806a8'],
+      },
+    ];
+  }
+
+  async getRewardRates({ contract }: GetDataPropsParams<YearnGovernance>) {
+    return contract.rewardRate();
+  }
+
+  async getStakedTokenBalance({ contract, address }: GetTokenBalancesParams<YearnGovernance>) {
+    return contract.balanceOf(address);
+  }
+
+  async getRewardTokenBalances({ contract, address }: GetTokenBalancesParams<YearnGovernance>) {
+    return contract.rewards(address);
   }
 }

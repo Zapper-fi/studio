@@ -3,11 +3,10 @@ import { AbstractApp } from '~app/app.dynamic-module';
 
 import { AcrossAppDefinition, ACROSS_DEFINITION } from './across.definition';
 import { AcrossContractFactory } from './contracts';
-import { EthereumAcrossBalanceFetcher } from './ethereum/across.pool.balance-fetcher';
-import { EthereumAcrossPoolTokenFetcher } from './ethereum/across.pool.token-fetcher';
+import { EthereumAcrossV1PoolTokenFetcher } from './ethereum/across.v1-pool.token-fetcher';
 
 @Register.AppModule({
   appId: ACROSS_DEFINITION.id,
-  providers: [AcrossAppDefinition, AcrossContractFactory, EthereumAcrossBalanceFetcher, EthereumAcrossPoolTokenFetcher],
+  providers: [AcrossAppDefinition, AcrossContractFactory, EthereumAcrossV1PoolTokenFetcher],
 })
 export class AcrossAppModule extends AbstractApp() {}

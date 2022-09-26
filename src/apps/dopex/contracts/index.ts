@@ -5,12 +5,13 @@ import { ContractFactory } from '~contract/contracts';
 import { Network } from '~types/network.interface';
 
 import { DopexDpxSsov__factory } from './ethers';
+import { DopexDualRewardStaking__factory } from './ethers';
 import { DopexEthSsov__factory } from './ethers';
 import { DopexGOhmSsov__factory } from './ethers';
 import { DopexGmxSsov__factory } from './ethers';
 import { DopexRdpxSsov__factory } from './ethers';
 import { DopexRewardDistribution__factory } from './ethers';
-import { DopexStaking__factory } from './ethers';
+import { DopexSingleRewardStaking__factory } from './ethers';
 import { DopexVotingEscrow__factory } from './ethers';
 import { DopexVotingEscrowRewards__factory } from './ethers';
 
@@ -25,6 +26,9 @@ export class DopexContractFactory extends ContractFactory {
 
   dopexDpxSsov({ address, network }: ContractOpts) {
     return DopexDpxSsov__factory.connect(address, this.appToolkit.getNetworkProvider(network));
+  }
+  dopexDualRewardStaking({ address, network }: ContractOpts) {
+    return DopexDualRewardStaking__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
   dopexEthSsov({ address, network }: ContractOpts) {
     return DopexEthSsov__factory.connect(address, this.appToolkit.getNetworkProvider(network));
@@ -41,8 +45,8 @@ export class DopexContractFactory extends ContractFactory {
   dopexRewardDistribution({ address, network }: ContractOpts) {
     return DopexRewardDistribution__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
-  dopexStaking({ address, network }: ContractOpts) {
-    return DopexStaking__factory.connect(address, this.appToolkit.getNetworkProvider(network));
+  dopexSingleRewardStaking({ address, network }: ContractOpts) {
+    return DopexSingleRewardStaking__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
   dopexVotingEscrow({ address, network }: ContractOpts) {
     return DopexVotingEscrow__factory.connect(address, this.appToolkit.getNetworkProvider(network));
@@ -53,11 +57,12 @@ export class DopexContractFactory extends ContractFactory {
 }
 
 export type { DopexDpxSsov } from './ethers';
+export type { DopexDualRewardStaking } from './ethers';
 export type { DopexEthSsov } from './ethers';
 export type { DopexGOhmSsov } from './ethers';
 export type { DopexGmxSsov } from './ethers';
 export type { DopexRdpxSsov } from './ethers';
 export type { DopexRewardDistribution } from './ethers';
-export type { DopexStaking } from './ethers';
+export type { DopexSingleRewardStaking } from './ethers';
 export type { DopexVotingEscrow } from './ethers';
 export type { DopexVotingEscrowRewards } from './ethers';

@@ -78,7 +78,7 @@ export class CurvePoolRegistry {
       }),
     ];
 
-    if (network === Network.ETHEREUM_MAINNET) {
+    if (network === Network.ETHEREUM_MAINNET || network === Network.POLYGON_MAINNET) {
       poolDefinitionPromises.push(
         // Crypto Swap Factory
         this.retrieveFromSource<CurveCryptoFactory>({

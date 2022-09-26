@@ -18,37 +18,53 @@ type TargetContract = Pick<Contract, 'functions' | 'interface' | 'callStatic' | 
 
 export const isMulticallUnderlyingError = (err: Error) => err.message.includes('Multicall call failed for');
 
+export type MulticallCallbackHooks = {
+  beforeCallHook?: (calls: ContractCall[], callRequests: Multicall.CallStruct[]) => void;
+};
+
+const DEFAULT_DATALOADER_OPTIONS = { cache: false, maxBatchSize: 250 };
+
 export class EthersMulticall implements IMulticallWrapper {
   private multicall: Multicall;
   private dataLoader: DataLoader<ContractCall, any>;
+  private beforeCallHook?: (calls: ContractCall[], callRequests: Multicall.CallStruct[]) => void;
 
   constructor(
     multicall: Multicall,
-    dataLoaderOptions: DataLoader.Options<ContractCall, any> = { cache: false, maxBatchSize: 250 },
+    dataLoaderOptions: DataLoader.Options<ContractCall, any> = DEFAULT_DATALOADER_OPTIONS,
+    { beforeCallHook }: MulticallCallbackHooks = {},
   ) {
     this.multicall = multicall;
     this.dataLoader = new DataLoader(this.doCalls.bind(this), dataLoaderOptions);
+    this.beforeCallHook = beforeCallHook;
   }
 
   get contract() {
     return this.multicall;
   }
 
-  private async doCalls(calls: readonly ContractCall[]) {
+  private async doCalls(calls: ContractCall[]) {
     const callRequests = calls.map(call => ({
       target: call.address,
       callData: new Interface([]).encodeFunctionData(call.fragment, call.params),
     }));
 
-    const response = await this.multicall.callStatic.aggregate(callRequests, false);
+    if (this.beforeCallHook) this.beforeCallHook(calls, callRequests);
+    const res = await this.multicall.callStatic.aggregate(callRequests, false);
+
+    if (res.returnData.length !== callRequests.length) {
+      throw new Error(`Unexpected response length: received ${res.returnData.length}; expected ${callRequests.length}`);
+    }
 
     const result = calls.map((call, i) => {
       const signature = FunctionFragment.from(call.fragment).format();
       const callIdentifier = [call.address, signature].join(':');
-      const [success, data] = response.returnData[i];
+      const [success, data] = res.returnData[i];
 
       if (!success) {
-        return new Error(`Multicall call failed for ${callIdentifier}\n${call.stack}`);
+        const error = new Error(`Multicall call failed for ${callIdentifier}`);
+        error.stack = call.stack;
+        return error;
       }
 
       try {
@@ -56,7 +72,9 @@ export class EthersMulticall implements IMulticallWrapper {
         const result = new Interface([]).decodeFunctionResult(call.fragment, data);
         return outputs.length === 1 ? result[0] : result;
       } catch (err) {
-        return new Error(`Multicall call failed for ${callIdentifier}\n${call.stack}`);
+        const error = new Error(`Multicall call failed for ${callIdentifier}: ${err.message} (decode)`);
+        error.stack = call.stack;
+        return error;
       }
     });
 

@@ -1,5 +1,0 @@
-export const tectonicConst = {
-  ETH_MANTISSA: '1000000000000000000',
-  BLOCKS_PER_DAY: 14400,
-  DAYS_PER_YEAR: 365,
-};

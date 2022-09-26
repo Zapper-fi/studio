@@ -9,6 +9,7 @@ import { Network } from '~types/network.interface';
 
 import { GmxContractFactory, GmxRewardTracker } from '../contracts';
 import { GMX_DEFINITION } from '../gmx.definition';
+import { GmxOptionBalanceHelper } from '../helpers/gmx.option.balance-helper';
 
 import { FARMS } from './gmx.farm.contract-position-fetcher';
 
@@ -21,6 +22,7 @@ export class AvalancheGmxBalanceFetcher implements BalanceFetcher {
     private readonly singleStakingContractPositionBalanceHelper: SingleStakingContractPositionBalanceHelper,
     @Inject(GmxContractFactory) private readonly gmxContractFactory: GmxContractFactory,
     @Inject(TokenBalanceHelper) private readonly tokenBalanceHelper: TokenBalanceHelper,
+    @Inject(GmxOptionBalanceHelper) private readonly gmxOptionBalanceHelper: GmxOptionBalanceHelper,
   ) {}
 
   private async getGlpTokenBalances(address: string) {
@@ -72,11 +74,17 @@ export class AvalancheGmxBalanceFetcher implements BalanceFetcher {
     });
   }
 
+  private async getOptionBalances(address: string) {
+    const vaultAddress = '0x9ab2de34a33fb459b538c43f251eb825645e8595';
+    return this.gmxOptionBalanceHelper.getBalance({ address, network, vaultAddress });
+  }
+
   async getBalances(address: string) {
-    const [glpTokenBalances, esGmxTokenBalances, stakedBalances] = await Promise.all([
+    const [glpTokenBalances, esGmxTokenBalances, stakedBalances, optionBalances] = await Promise.all([
       this.getGlpTokenBalances(address),
       this.getEsGmxTokenBalances(address),
       this.getStakedBalances(address),
+      this.getOptionBalances(address),
     ]);
 
     return presentBalanceFetcherResponse([
@@ -87,6 +95,10 @@ export class AvalancheGmxBalanceFetcher implements BalanceFetcher {
       {
         label: 'esGMX',
         assets: [...esGmxTokenBalances],
+      },
+      {
+        label: 'Options',
+        assets: [...optionBalances],
       },
       {
         label: 'Farms',

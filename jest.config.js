@@ -15,7 +15,7 @@ module.exports = {
     '^~(.*)$': '<rootDir>/src/$1',
   },
   transform: {
-    '^.+\\.(ts|js|html)$': 'ts-jest',
+    '^.+\\.(ts|js|html)$': '@swc/jest',
   },
-  setupFilesAfterEnv: ["@alex_neo/jest-expect-message"]
+  setupFilesAfterEnv: ['@alex_neo/jest-expect-message'],
 };

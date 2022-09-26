@@ -11,7 +11,7 @@ export const EVMOSWAP_DEFINITION = appDefinition({
   url: 'https://app.evmoswap.org',
   groups: {
     pool: { id: 'pool', type: GroupType.TOKEN, label: 'Pools' },
-    farm: { id: 'farm', type: GroupType.TOKEN, label: 'Staked', groupLabel: 'Farms' },
+    farm: { id: 'farm', type: GroupType.TOKEN, label: 'Staked' },
   },
 
   tags: [AppTag.DECENTRALIZED_EXCHANGE, AppTag.FARMING, AppTag.LIQUIDITY_POOL, AppTag.STAKING],
