@@ -9,13 +9,47 @@ export const TRADER_JOE_DEFINITION = appDefinition({
   name: 'Trader Joe',
   description: `Trader Joe is your one-stop decentralized trading platform on the Avalanche network.`,
   groups: {
-    pool: { id: 'pool', type: GroupType.TOKEN, label: 'Pools' },
-    xJoe: { id: 'x-joe', type: GroupType.TOKEN, label: 'xJoe' },
-    sJoe: { id: 's-joe', type: GroupType.POSITION, label: 'sJoe' },
-    veJoe: { id: 've-joe', type: GroupType.POSITION, label: 'veJoe' },
-    chefV2Farm: { id: 'chef-v2-farm', type: GroupType.POSITION, label: 'Farms' },
-    chefV3Farm: { id: 'chef-v3-farm', type: GroupType.POSITION, label: 'Farms' },
-    chefBoostedFarm: { id: 'chef-boosted-farm', type: GroupType.POSITION, label: 'Boost' },
+    pool: {
+      id: 'pool',
+      type: GroupType.TOKEN,
+      label: 'Pools',
+    },
+
+    xJoe: {
+      id: 'x-joe',
+      type: GroupType.TOKEN,
+      label: 'xJOE',
+    },
+
+    sJoe: {
+      id: 's-joe',
+      type: GroupType.POSITION,
+      label: 'sJOE',
+    },
+
+    veJoe: {
+      id: 've-joe',
+      type: GroupType.POSITION,
+      label: 'veJOE',
+    },
+
+    chefV2Farm: {
+      id: 'chef-v2-farm',
+      type: GroupType.POSITION,
+      label: 'Farms',
+    },
+
+    chefV3Farm: {
+      id: 'chef-v3-farm',
+      type: GroupType.POSITION,
+      label: 'Farms',
+    },
+
+    chefBoostedFarm: {
+      id: 'chef-boosted-farm',
+      type: GroupType.POSITION,
+      label: 'Boost',
+    },
   },
   url: 'https://traderjoexyz.com/',
   links: {
