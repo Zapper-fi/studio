@@ -11,6 +11,13 @@ import {
   GetTokenBalancesParams,
 } from '~position/template/contract-position.template.types';
 import { Network } from '~types';
+import {
+  buildDollarDisplayItem,
+  buildNumberDisplayItem,
+  buildStringDisplayItem,
+} from '~app-toolkit/helpers/presentation/display-item.present';
+import { drillBalance } from '~app-toolkit';
+import { sumBy } from 'lodash';
 
 import { KwentaContractFactory, KwentaFutures } from '../contracts';
 import KWENTA_DEFINITION from '../kwenta.definition';
@@ -86,6 +93,13 @@ export class OptimismKwentaPerpContractPositionFetcher extends ContractPositionT
     return `${marketName.get(contractPosition.address)}-PERP`;
   }
 
+  async getStatsItems({ contractPosition }) {
+    const multicall = this.appToolkit.getMulticall(this.network);
+    const contract = multicall.wrap(this.getContract(contractPosition.address));
+    const currentFundingRateRaw = await contract.currentFundingRate();
+    return [{ label: 'Funding Rate', value: buildNumberDisplayItem(Number(currentFundingRateRaw) / 10 ** 18) }];
+  }
+
   async getImages({ contractPosition }: GetDisplayPropsParams<KwentaFutures>) {
     return [getAppAssetImage(this.appId, contractPosition.address)];
   }
@@ -94,4 +108,46 @@ export class OptimismKwentaPerpContractPositionFetcher extends ContractPositionT
     const remainingMargin = await contract.remainingMargin(address);
     return [remainingMargin.marginRemaining];
   }
+
+  async getBalances(address: string) {
+    const multicall = this.appToolkit.getMulticall(this.network);
+    const contractPositions = await this.appToolkit.getAppContractPositions({
+      appId: this.appId,
+      network: this.network,
+      groupIds: [this.groupId],
+    });
+
+    const balances = await Promise.all(
+      contractPositions.map(async contractPosition => {
+        const contract = multicall.wrap(this.getContract(contractPosition.address));
+        const balancesRaw = await this.getTokenBalancesPerPosition({ address, contract, contractPosition, multicall });
+        const allTokens = contractPosition.tokens.map((cp, idx) =>
+          drillBalance(cp, balancesRaw[idx]?.toString() ?? '0', { isDebt: cp.metaType === MetaType.BORROWED }),
+        );
+
+        const tokens = allTokens.filter(v => Math.abs(v.balanceUSD) > 0.01);
+        const balanceUSD = sumBy(tokens, t => t.balanceUSD);
+        const enrichedDisplayItems = await this.getEnrichedDisplayItems({ address, contract });
+        return { ...contractPosition, tokens, balanceUSD, displayItems: enrichedDisplayItems };
+      }),
+    );
+
+    return balances;
+  }
+
+  private async getEnrichedDisplayItems({ address, contract }) {
+    const position = await contract.positions(address);
+    const liquidationPriceRaw = await contract.liquidationPrice(address);
+    const pnlRaw = await contract.profitLoss(address);
+    const notionalValueRaw = await contract.notionalValue(address);
+    return [
+      { label: 'Side', ...buildStringDisplayItem(Number(position.size) > 0 ? 'LONG' : 'SHORT') },
+      { label: 'Size', ...buildNumberDisplayItem(Number(position.size) / 10 ** 18) },
+      { label: 'Notional Value', ...buildDollarDisplayItem(Number(notionalValueRaw.value) / 10 ** 18) },
+      { label: 'PnL', ...buildDollarDisplayItem(Number(pnlRaw.pnl) / 10 ** 18) },
+      { label: 'Last Price', ...buildDollarDisplayItem(Number(position.lastPrice) / 10 ** 18) },
+      { label: 'Liquidation Price', ...buildDollarDisplayItem(Number(liquidationPriceRaw.price) / 10 ** 18) },
+    ];
+  }
+
 }
