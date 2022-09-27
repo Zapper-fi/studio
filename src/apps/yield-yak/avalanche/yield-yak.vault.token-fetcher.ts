@@ -1,4 +1,5 @@
 import { Inject } from '@nestjs/common';
+import { ethers, BigNumber } from 'ethers';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
@@ -8,6 +9,7 @@ import {
   GetUnderlyingTokensParams,
   GetDisplayPropsParams,
   GetDataPropsParams,
+  GetPricePerShareParams,
 } from '~position/template/app-token.template.types';
 
 import { YieldYakContractFactory, YieldYakVault } from '../contracts';
@@ -27,7 +29,7 @@ export class AvalancheYieldyakVaultTokenFetcher extends AppTokenTemplatePosition
   }
 
   private getVaultDefinitions() {
-    return this.tokenDefinitionsResolver.getVaultDefinitionsData();
+    return this.tokenDefinitionsResolver.getVaultDefinitionsData(this.network);
   }
 
   private async selectVault(vaultAddress: string) {
@@ -65,5 +67,16 @@ export class AvalancheYieldyakVaultTokenFetcher extends AppTokenTemplatePosition
 
   async getApy() {
     return 0;
+  }
+
+  async getPricePerShare(_params: GetPricePerShareParams<YieldYakVault>): Promise<number | number[]> {
+    const one_receipt_token = BigNumber.from(10).pow(_params.appToken.decimals);
+    try {
+      const underlying = await _params.contract.getDepositTokensForShares(one_receipt_token);
+      const pps = ethers.utils.formatUnits(underlying, _params.appToken.decimals);
+      return +pps;
+    } catch (err) {
+      return 1;
+    }
   }
 }

@@ -6,7 +6,7 @@ import { Network } from '~types/network.interface';
 export const YIELD_YAK_DEFINITION = appDefinition({
   id: 'yield-yak',
   name: 'Yield Yak',
-  description: `Earn more yield. Tools for defi users on $AVAX. Use at your own risk.`,
+  description: `Yield Yak provides tools for DeFi users on Avalanche. Discover a huge selection of autocompounding farms and make your life easier.`,
   url: 'https://yieldyak.com/',
   groups: {
     farm: { id: 'farm', type: GroupType.POSITION, label: 'Farms' },
@@ -19,7 +19,7 @@ export const YIELD_YAK_DEFINITION = appDefinition({
     medium: 'https://yieldyak.medium.com/',
     telegram: 'https://t.me/yieldyak',
   },
-  tags: [AppTag.YIELD_AGGREGATOR],
+  tags: [AppTag.YIELD_AGGREGATOR, AppTag.FARMING],
   supportedNetworks: { [Network.AVALANCHE_MAINNET]: [AppAction.VIEW] },
 });
 
