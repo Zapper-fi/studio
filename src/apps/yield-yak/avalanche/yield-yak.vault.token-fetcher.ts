@@ -18,6 +18,7 @@ import { YieldYakVaultTokenDefinitionsResolver } from '../helpers/yield-yak.vaul
 @PositionTemplate()
 export class AvalancheYieldyakVaultTokenFetcher extends AppTokenTemplatePositionFetcher<YieldYakVault> {
   groupLabel = 'Vaults';
+  minLiquidity = 0;
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
