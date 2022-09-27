@@ -57,20 +57,12 @@ export class YieldYakVaultTokenDefinitionsResolver {
   })
   async getVaultDefinitionsData(network: Network): Promise<FarmsResponse['farms']> {
     const farms = await Axios.get<YieldYakFarmDetails[]>('https://staging-api.yieldyak.com/farms').then(x => x.data);
-
-    const endpoint = 'https://api.thegraph.com/subgraphs/name/yieldyak/reinvest-tracker';
-    const data = await this.appToolkit.helpers.theGraphHelper.request<FarmsResponse>({ endpoint, query });
-
-    const allFarms = _.union(
-      farms.map(farm => farm.address.toLowerCase()),
-      data.farms.map(farm => farm.id.toLowerCase()),
-    );
-
     const multicall = this.appToolkit.getMulticall(network);
+
     const response = await Promise.all(
-      allFarms.map(async farm => {
+      farms.map(async farm => {
         const farmContract = this.yieldyakContractFactory.yieldYakVault({
-          address: farm,
+          address: farm.address,
           network: Network.AVALANCHE_MAINNET,
         });
 
@@ -86,7 +78,7 @@ export class YieldYakVaultTokenDefinitionsResolver {
               id: depositToken,
             },
             depositTokenBalance: depositTokenBalance.toString(),
-            id: farm,
+            id: farm.address.toLowerCase(),
             name,
           };
         } catch (err) {
