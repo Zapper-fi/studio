@@ -91,7 +91,8 @@ export class EthereumMakerVaultContractPositionFetcher implements PositionFetche
           },
         };
 
-        return position;
+        const key = this.appToolkit.getPositionKey(position, ['ilkName']);
+        return { key, ...position };
       }),
     );
 

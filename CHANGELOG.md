@@ -4,6 +4,53 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.233.1](https://github.com/Zapper-fi/studio/compare/v0.233.0...v0.233.1) (2022-09-27)
+
+
+### Bug Fixes
+
+* **kwenta:** display when no position open ([#1453](https://github.com/Zapper-fi/studio/issues/1453)) ([3770fb1](https://github.com/Zapper-fi/studio/commit/3770fb16089b182e61d1dc750998039a596b0c37))
+
+## [0.233.0](https://github.com/Zapper-fi/studio/compare/v0.232.0...v0.233.0) (2022-09-26)
+
+
+### Features
+
+* **trader-joe:** Convert all of Trader Joe to templates ([#1449](https://github.com/Zapper-fi/studio/issues/1449)) ([3f05620](https://github.com/Zapper-fi/studio/commit/3f05620a1c362d1ee913bb3b0a7c5482b6518359))
+
+## [0.232.0](https://github.com/Zapper-fi/studio/compare/v0.231.0...v0.232.0) (2022-09-26)
+
+
+### Features
+
+* **kwenta:** Add user-specific stats items ([#1446](https://github.com/Zapper-fi/studio/issues/1446)) ([ca7fae1](https://github.com/Zapper-fi/studio/commit/ca7fae130493e52bc698db137e8c840bc8c8cd28))
+
+## [0.231.0](https://github.com/Zapper-fi/studio/compare/v0.230.0...v0.231.0) (2022-09-26)
+
+
+### Features
+
+* **bend-dao:** Add BendDAO integration ([#1417](https://github.com/Zapper-fi/studio/issues/1417)) ([82feca1](https://github.com/Zapper-fi/studio/commit/82feca11da7c9219dd23222aa52d0ebd0990e2ad))
+* **bend-dao:** Clean-up and fixes ([f6d95b6](https://github.com/Zapper-fi/studio/commit/f6d95b6479cffe777587761afecb703196735f23))
+* **concave:** Add Concave LSDCNV Integration ([#1424](https://github.com/Zapper-fi/studio/issues/1424)) ([c14d1d3](https://github.com/Zapper-fi/studio/commit/c14d1d397188df8c6a582cbd524893e3a80471cb))
+* **concave:** Convert Concave to templates, reduce calls to Hasura ([866b703](https://github.com/Zapper-fi/studio/commit/866b7030d13d8028dd25831835fd8a17792f6505))
+* **euler:** Add getBalancePerToken for EToken based on convertBalanceToUnderlying ([#1438](https://github.com/Zapper-fi/studio/issues/1438)) ([0bff135](https://github.com/Zapper-fi/studio/commit/0bff135f94f13c3b9b4cda245327d31908b05f29))
+* **kwenta:** Integrate perpetuals from Kwenta ([#1435](https://github.com/Zapper-fi/studio/issues/1435)) ([af081a2](https://github.com/Zapper-fi/studio/commit/af081a29b9adf9ec4c1197e2bc905b15764ba070))
+* **logos:** Add missing logos ([bddef03](https://github.com/Zapper-fi/studio/commit/bddef0301822941fc14c1cde1190dd0f56ef819f))
+* **ooki:** Add lend tokens ([#1096](https://github.com/Zapper-fi/studio/issues/1096)) ([9bbec2c](https://github.com/Zapper-fi/studio/commit/9bbec2ca17d0010dcd7c84127633039386b8de44))
+* **ooki:** Convert to template ([6952dee](https://github.com/Zapper-fi/studio/commit/6952dee573906595d96af74421a42103aa6fdd5d))
+* **p-stake:** Convert PStake integration to templates ([3b4c140](https://github.com/Zapper-fi/studio/commit/3b4c140c101013b5742a85757b411643f3da1106))
+* **pods-yield:** Convert to template ([d71399d](https://github.com/Zapper-fi/studio/commit/d71399d02ba97e7ecf55cb67b73857591b04fbf7))
+* **pods:** Add support for Pods finance yield product ([#1414](https://github.com/Zapper-fi/studio/issues/1414)) ([a11d6ec](https://github.com/Zapper-fi/studio/commit/a11d6ec1a8b3b2d287be4de6ed599de8927802bd))
+* **pSTAKE:** Add new app pSTAKE with token fetcher ([#1381](https://github.com/Zapper-fi/studio/issues/1381)) ([9907adf](https://github.com/Zapper-fi/studio/commit/9907adfd5a5af984212c68e91378adf58309bb60))
+* **stakefish:** Add staking balance and rewards ([#1440](https://github.com/Zapper-fi/studio/issues/1440)) ([76e2c8f](https://github.com/Zapper-fi/studio/commit/76e2c8fa0886ddf0083d0e412628d73e7312ccab))
+
+
+### Bug Fixes
+
+* **maker:** Add property to key to distinguish better ([3400b48](https://github.com/Zapper-fi/studio/commit/3400b48fa54c37a82f8204deeb41b8e206ebdf1b))
+* Revert pnpm lock ([648ec6c](https://github.com/Zapper-fi/studio/commit/648ec6c9148aa2f21e359860e3b5372d2f94137e))
+
 ## [0.230.0](https://github.com/Zapper-fi/studio/compare/v0.229.0...v0.230.0) (2022-09-19)
 
 
