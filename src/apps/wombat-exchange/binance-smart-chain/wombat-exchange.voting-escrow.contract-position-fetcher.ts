@@ -10,7 +10,7 @@ import { WombatExchangeContractFactory, WombatExchangeVotingEscrow } from '../co
 @PositionTemplate()
 export class BinanceSmartChainWombatExchangeVotingEscrowContractPositionFetcher extends VotingEscrowTemplateContractPositionFetcher<WombatExchangeVotingEscrow> {
   groupLabel = 'Voting Escrow';
-  veTokenAddress = '0x5857019c749147eee22b1fe63500f237f3c1b692';
+  veTokenAddress = '0x3da62816dd31c56d9cdf22c6771ddb892cb5b0cc';
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
