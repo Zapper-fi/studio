@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.234.1](https://github.com/Zapper-fi/studio/compare/v0.234.0...v0.234.1) (2022-09-28)
+
+
+### Bug Fixes
+
+* **dhedge-v2:** Fix Polygon vaults underlying tokens ([#1463](https://github.com/Zapper-fi/studio/issues/1463)) ([6096b80](https://github.com/Zapper-fi/studio/commit/6096b80a1e4ebfc6987d36cef39d00a6ba4c60d7))
+
 ## [0.234.0](https://github.com/Zapper-fi/studio/compare/v0.233.1...v0.234.0) (2022-09-28)
 
 
