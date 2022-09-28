@@ -25,7 +25,7 @@ export class EthereumBendDaoPositionPresenter extends PositionPresenterTemplate 
           {
             viewType: 'list',
             label: 'Borrow',
-            groupIds: ['borrow'],
+            groupIds: ['variable-debt'],
           },
         ],
       },

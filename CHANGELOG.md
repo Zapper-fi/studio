@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.233.1](https://github.com/Zapper-fi/studio/compare/v0.233.0...v0.233.1) (2022-09-27)
+
+
+### Bug Fixes
+
+* **kwenta:** display when no position open ([#1453](https://github.com/Zapper-fi/studio/issues/1453)) ([3770fb1](https://github.com/Zapper-fi/studio/commit/3770fb16089b182e61d1dc750998039a596b0c37))
+
 ## [0.233.0](https://github.com/Zapper-fi/studio/compare/v0.232.0...v0.233.0) (2022-09-26)
 
 

@@ -5,8 +5,9 @@ import { Network } from '~types/network.interface';
 
 export const CONCAVE_DEFINITION = appDefinition({
   id: 'concave',
-  name: 'concave',
-  description: 'Test',
+  name: 'Concave',
+  description:
+    'A capital efficient, low slippage and high liquidity AMM, Concave Exchange offers traders deeper liquidity and allows LPs to earn more with less capital.',
   url: 'https://concave.lol',
 
   groups: {
