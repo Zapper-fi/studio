@@ -50,7 +50,6 @@ export const GET_STAKING_V1_LOCK_EVENTS = gql`
 
 export type ConcaveLsdcnvContractPositionDataProps = {
   poolID: number;
-  deposit: string;
   unlockTime: number;
   tokenId: number;
 };
@@ -121,7 +120,8 @@ export class EthereumConcaveLiquidStakingContractPositionFetcher extends Contrac
         const stakedToken = lsdCnv.tokens.find(isSupplied)!;
         const rewardToken = lsdCnv.tokens.find(isClaimable)!;
         const stakedTokenBalance = drillBalance(stakedToken, positionInfo.deposit.toString());
-        const rewardTokenBalance = drillBalance(rewardToken, positionRewardInfo.totalRewards.toString());
+        const rewardBalanceRaw = positionRewardInfo.totalRewards.sub(positionRewardInfo.amountDeposited).toString();
+        const rewardTokenBalance = drillBalance(rewardToken, rewardBalanceRaw);
         const tokens = [stakedTokenBalance, rewardTokenBalance];
         const balanceUSD = sumBy(tokens, v => v.balanceUSD);
 
@@ -135,7 +135,6 @@ export class EthereumConcaveLiquidStakingContractPositionFetcher extends Contrac
           balanceUSD,
           dataProps: {
             poolID: event.poolID,
-            deposit: event.deposit,
             tokenId: event.positionID,
             unlockTime: event.maturity,
           },
