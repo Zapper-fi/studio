@@ -7,11 +7,4 @@ import { EulerTokenType } from '../common/euler.token-definition-resolver';
 export class EthereumEulerETokenTokenFetcher extends EulerETokenTokenFetcher {
   groupLabel = 'Lending';
   tokenType = EulerTokenType.E_TOKEN;
-
-  async getBalancePerToken({ address, appToken, multicall }) {
-    const contract = this.getContract(appToken.address);
-    const balance = await multicall.wrap(contract).balanceOf(address);
-
-    return multicall.wrap(contract).convertBalanceToUnderlying(balance);
-  }
 }
