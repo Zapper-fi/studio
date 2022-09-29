@@ -5,6 +5,7 @@ import { ContractFactory } from '~contract/contracts';
 import { Network } from '~types/network.interface';
 
 import { MakerCdpManager__factory } from './ethers';
+import { MakerGemJoin__factory } from './ethers';
 import { MakerGovernance__factory } from './ethers';
 import { MakerIlkRegistry__factory } from './ethers';
 import { MakerProxyRegistry__factory } from './ethers';
@@ -22,6 +23,9 @@ export class MakerContractFactory extends ContractFactory {
   makerCdpManager({ address, network }: ContractOpts) {
     return MakerCdpManager__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
+  makerGemJoin({ address, network }: ContractOpts) {
+    return MakerGemJoin__factory.connect(address, this.appToolkit.getNetworkProvider(network));
+  }
   makerGovernance({ address, network }: ContractOpts) {
     return MakerGovernance__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
@@ -37,6 +41,7 @@ export class MakerContractFactory extends ContractFactory {
 }
 
 export type { MakerCdpManager } from './ethers';
+export type { MakerGemJoin } from './ethers';
 export type { MakerGovernance } from './ethers';
 export type { MakerIlkRegistry } from './ethers';
 export type { MakerProxyRegistry } from './ethers';

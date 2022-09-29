@@ -4,7 +4,7 @@ import { parseBytes32String } from 'ethers/lib/utils';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { buildDollarDisplayItem } from '~app-toolkit/helpers/presentation/display-item.present';
-import { getTokenImg } from '~app-toolkit/helpers/presentation/image.present';
+import { getAppAssetImage } from '~app-toolkit/helpers/presentation/image.present';
 import { ContractType } from '~position/contract.interface';
 import { AppTokenPosition } from '~position/position.interface';
 import { Network } from '~types/network.interface';
@@ -23,12 +23,14 @@ export type SynthetixAppTokenDataProps = {
   liquidity: number;
 };
 
+const appId = SYNTHETIX_DEFINITION.id;
+
 @Injectable()
 export class SynthetixSynthTokenHelper {
   constructor(
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
     @Inject(SynthetixContractFactory) private readonly contractFactory: SynthetixContractFactory,
-  ) {}
+  ) { }
 
   async getTokens({ network, resolverAddress, exchangeable = false }: SynthetixSynthTokenHelperParams) {
     const multicall = this.appToolkit.getMulticall(network);
@@ -56,7 +58,7 @@ export class SynthetixSynthTokenHelper {
         const supplyRaw = await multicall.wrap(synthContract).totalSupply();
         const address = addressRaw.toLowerCase();
         const supply = Number(supplyRaw) / 10 ** decimals;
-        const price = Number(synthPrices[i]) / 10 ** 18;
+        const price = Number(synthPrices[i]) / 10 ** decimals;
         const pricePerShare = 1;
         const tokens = [];
         const liquidity = supply * price;
@@ -64,7 +66,7 @@ export class SynthetixSynthTokenHelper {
         // Display Props
         const label = symbol;
         const secondaryLabel = buildDollarDisplayItem(price);
-        const images = [getTokenImg(address, network)];
+        const images = [getAppAssetImage(appId, symbol)];
         const statsItems = [{ label: 'Liquidity', value: buildDollarDisplayItem(liquidity) }];
 
         const token: AppTokenPosition<SynthetixAppTokenDataProps> = {

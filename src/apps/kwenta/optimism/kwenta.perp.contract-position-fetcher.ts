@@ -137,12 +137,16 @@ export class OptimismKwentaPerpContractPositionFetcher extends ContractPositionT
 
   private async getEnrichedDisplayItems({ address, contract }) {
     const position = await contract.positions(address);
+    const positionSizeRaw = Number(position.size);
+    if (positionSizeRaw === 0) {
+      return [];
+    }
     const liquidationPriceRaw = await contract.liquidationPrice(address);
     const pnlRaw = await contract.profitLoss(address);
     const notionalValueRaw = await contract.notionalValue(address);
     return [
-      { label: 'Side', ...buildStringDisplayItem(Number(position.size) > 0 ? 'LONG' : 'SHORT') },
-      { label: 'Size', ...buildNumberDisplayItem(Number(position.size) / 10 ** 18) },
+      { label: 'Side', ...buildStringDisplayItem(positionSizeRaw > 0 ? 'LONG' : 'SHORT') },
+      { label: 'Size', ...buildNumberDisplayItem(positionSizeRaw / 10 ** 18) },
       { label: 'Notional Value', ...buildDollarDisplayItem(Number(notionalValueRaw.value) / 10 ** 18) },
       { label: 'PnL', ...buildDollarDisplayItem(Number(pnlRaw.pnl) / 10 ** 18) },
       { label: 'Last Price', ...buildDollarDisplayItem(Number(position.lastPrice) / 10 ** 18) },

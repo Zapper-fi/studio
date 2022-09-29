@@ -4,6 +4,35 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.234.1](https://github.com/Zapper-fi/studio/compare/v0.234.0...v0.234.1) (2022-09-28)
+
+
+### Bug Fixes
+
+* **dhedge-v2:** Fix Polygon vaults underlying tokens ([#1463](https://github.com/Zapper-fi/studio/issues/1463)) ([6096b80](https://github.com/Zapper-fi/studio/commit/6096b80a1e4ebfc6987d36cef39d00a6ba4c60d7))
+
+## [0.234.0](https://github.com/Zapper-fi/studio/compare/v0.233.1...v0.234.0) (2022-09-28)
+
+
+### Features
+
+* add yield-yak farms ([#1444](https://github.com/Zapper-fi/studio/issues/1444)) ([acc1e93](https://github.com/Zapper-fi/studio/commit/acc1e939f837dca59018aba069f361b5d958f9f2))
+* **bend-dao:** Fix display of borrowed assets on explore page ([0f78ec5](https://github.com/Zapper-fi/studio/commit/0f78ec501fd2a1b2d7218581b18350f8fd48ef22))
+* **maker:** Convert to templates, fix key by including CDP ID ([#1462](https://github.com/Zapper-fi/studio/issues/1462)) ([6853147](https://github.com/Zapper-fi/studio/commit/6853147cd76e8cdd31bed5ffb36baca45db134f3))
+
+
+### Bug Fixes
+
+* **concave:** Fix rewards balance, fix description and label ([#1460](https://github.com/Zapper-fi/studio/issues/1460)) ([c68f877](https://github.com/Zapper-fi/studio/commit/c68f877244a407a8213c1a1aa9b8f3017350b723))
+* **synthetix:** Add logos for all synths ([#1459](https://github.com/Zapper-fi/studio/issues/1459)) ([147a73b](https://github.com/Zapper-fi/studio/commit/147a73b0061363e3de845d6722c4e844ee9c726b))
+
+## [0.233.1](https://github.com/Zapper-fi/studio/compare/v0.233.0...v0.233.1) (2022-09-27)
+
+
+### Bug Fixes
+
+* **kwenta:** display when no position open ([#1453](https://github.com/Zapper-fi/studio/issues/1453)) ([3770fb1](https://github.com/Zapper-fi/studio/commit/3770fb16089b182e61d1dc750998039a596b0c37))
+
 ## [0.233.0](https://github.com/Zapper-fi/studio/compare/v0.232.0...v0.233.0) (2022-09-26)
 
 

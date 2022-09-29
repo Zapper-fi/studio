@@ -44,7 +44,7 @@ export const BEND_DAO_DEFINITION = appDefinition({
           {
             viewType: 'list',
             label: 'Borrow',
-            groupIds: ['borrow'],
+            groupIds: ['variable-debt'],
           },
         ],
       },
