@@ -804,6 +804,33 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "0xdapper",
+      "name": "0xdapper",
+      "avatar_url": "https://avatars.githubusercontent.com/u/94534135?v=4",
+      "profile": "https://github.com/0xdapper",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "OlehX",
+      "name": "Oleh Vovnianko",
+      "avatar_url": "https://avatars.githubusercontent.com/u/16556962?v=4",
+      "profile": "https://github.com/OlehX",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "akashiceth",
+      "name": "akashiceth",
+      "avatar_url": "https://avatars.githubusercontent.com/u/96811933?v=4",
+      "profile": "https://github.com/akashiceth",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7
