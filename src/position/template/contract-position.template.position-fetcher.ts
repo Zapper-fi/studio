@@ -1,5 +1,4 @@
 import { Inject } from '@nestjs/common';
-import { notStrictEqual } from 'assert';
 import { BigNumberish, Contract } from 'ethers/lib/ethers';
 import { compact, sumBy } from 'lodash';
 
@@ -11,17 +10,11 @@ import {
 } from '~app-toolkit/helpers/presentation/display-item.present';
 import { getImagesFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { ContractType } from '~position/contract.interface';
-import { DefaultDataProps, DisplayProps, StatsItem, WithMetaType } from '~position/display.interface';
-import {
-  AppTokenPositionBalance,
-  BaseTokenBalance,
-  ContractPositionBalance,
-  RawContractPositionBalance,
-} from '~position/position-balance.interface';
+import { DefaultDataProps, DisplayProps, StatsItem } from '~position/display.interface';
+import { ContractPositionBalance, RawContractPositionBalance } from '~position/position-balance.interface';
 import { PositionFetcher } from '~position/position-fetcher.interface';
-import { ContractPosition, MetaType, Token } from '~position/position.interface';
+import { ContractPosition, MetaType } from '~position/position.interface';
 import { metatyped } from '~position/position.utils';
-import { TokenService } from '~token/token.service';
 import { Network } from '~types/network.interface';
 
 import {
