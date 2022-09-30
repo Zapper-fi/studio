@@ -12,6 +12,7 @@ import { WithMetaType } from '~position/display.interface';
 import { BaseTokenBalance, ContractPositionBalance } from '~position/position-balance.interface';
 import { claimable } from '~position/position.utils';
 import { Network } from '~types/network.interface';
+import { HUB_ADDRESS, POSITIONS_VERSIONS, PositionVersions } from '../helpers/addresses';
 
 import { getUserPositions } from '../helpers/graph';
 import { STRING_SWAP_INTERVALS } from '../helpers/intervals';
@@ -21,26 +22,30 @@ const network = Network.POLYGON_MAINNET;
 
 @Register.BalanceFetcher(MEAN_FINANCE_DEFINITION.id, network)
 export class PolygonMeanFinanceBalanceFetcher implements BalanceFetcher {
-  constructor(@Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit) {}
+  constructor(@Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit) { }
 
-  async getUserPositions(address: string) {
+  async getUserPositions(address: string, version: PositionVersions) {
     const graphHelper = this.appToolkit.helpers.theGraphHelper;
-    const data = await getUserPositions(address.toLocaleLowerCase(), Network.POLYGON_MAINNET, graphHelper);
+    const data = await getUserPositions(address.toLocaleLowerCase(), Network.POLYGON_MAINNET, graphHelper, version);
     return data.positions;
   }
 
-  async getBalances(address: string) {
-    const positions = await this.getUserPositions(address);
-    const dcaHubAddress = '0x059d306a25c4ce8d7437d25743a8b94520536bd5';
+  async getBalanceForVersion(address: string, version: PositionVersions) {
+    const positions = await this.getUserPositions(address, version);
+    const dcaHubAddress = HUB_ADDRESS[version][network];
+
+    if (!dcaHubAddress) {
+      return Promise.resolve([]);
+    }
 
     const baseTokens = await this.appToolkit.getBaseTokenPrices(network);
 
-    const contractPositionBalances: ContractPositionBalance[] = positions.map(dcaPosition => {
-      const toWithdraw = dcaPosition.current.idleSwapped;
-      const remainingLiquidity = dcaPosition.current.remainingLiquidity;
-      const remainingSwaps = Number(dcaPosition.current.remainingSwaps);
+    return positions.map(dcaPosition => {
+      const toWithdraw = dcaPosition.toWithdraw;
+      const remainingLiquidity = dcaPosition.remainingLiquidity;
+      const remainingSwaps = Number(dcaPosition.remainingSwaps);
       const swapInterval = Number(dcaPosition.swapInterval.interval) as keyof typeof STRING_SWAP_INTERVALS;
-      const rawRate = dcaPosition.current.rate;
+      const rawRate = dcaPosition.rate;
       const rate = Number(rawRate) / 10 ** Number(dcaPosition.from.decimals);
       let formattedRate = rate.toFixed(3);
 
@@ -65,18 +70,15 @@ export class PolygonMeanFinanceBalanceFetcher implements BalanceFetcher {
       }
 
       const balanceUSD = sumBy(tokens, t => t.balanceUSD);
-
       const swapIntervalAdverb = STRING_SWAP_INTERVALS[swapInterval].adverb;
       let label = '';
 
       if (remainingSwaps > 0) {
-        label = `Swapping ~${formattedRate} ${from?.symbol || dcaPosition.from.symbol} ${swapIntervalAdverb} to ${
-          to?.symbol || dcaPosition.from.symbol
-        }`;
+        label = `Swapping ~${formattedRate} ${from?.symbol || dcaPosition.from.symbol} ${swapIntervalAdverb} to ${to?.symbol || dcaPosition.from.symbol
+          }`;
       } else {
         label = `Swapping ${from?.symbol || dcaPosition.from.symbol} to ${to?.symbol || dcaPosition.from.symbol}`;
       }
-
       const secondaryLabel =
         remainingSwaps && STRING_SWAP_INTERVALS[swapInterval]
           ? `${STRING_SWAP_INTERVALS[swapInterval].plural(remainingSwaps)} left`
@@ -91,7 +93,8 @@ export class PolygonMeanFinanceBalanceFetcher implements BalanceFetcher {
         tokens,
         balanceUSD,
         dataProps: {
-          id: dcaPosition.id,
+          id: `${dcaPosition.id}-v${version}`,
+          positionId: dcaPosition.id,
           toWithdraw,
           remainingLiquidity,
           remainingSwaps,
@@ -107,10 +110,16 @@ export class PolygonMeanFinanceBalanceFetcher implements BalanceFetcher {
       position.key = this.appToolkit.getPositionKey(position, ['id']);
       return position;
     });
+  }
+
+  async getBalances(address: string) {
+    const positionResults = await Promise.all(POSITIONS_VERSIONS.map(version => this.getBalanceForVersion(address, version)));
+
+    const contractPositionBalances: ContractPositionBalance[] = positionResults.reduce((acc, positionBalances) => [...acc, ...positionBalances], []);
 
     return presentBalanceFetcherResponse([
       {
-        label: 'Mean Finance Positions',
+        label: 'DCA Positions',
         assets: contractPositionBalances,
       },
     ]);

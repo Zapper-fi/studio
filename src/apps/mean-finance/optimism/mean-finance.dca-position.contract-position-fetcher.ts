@@ -9,6 +9,7 @@ import { PositionFetcher } from '~position/position-fetcher.interface';
 import { ContractPosition } from '~position/position.interface';
 import { claimable, supplied } from '~position/position.utils';
 import { Network } from '~types/network.interface';
+import { HUB_ADDRESS, POSITIONS_VERSIONS, PositionVersions } from '../helpers/addresses';
 
 import { getPositions } from '../helpers/graph';
 import { MEAN_FINANCE_DEFINITION } from '../mean-finance.definition';
@@ -21,16 +22,22 @@ type MeanFinanceDcaPositionContractPositionDataProps = {
   liquidity: number;
   from: string;
   to: string;
+  positionId: string;
 };
 
 @Register.ContractPositionFetcher({ appId, groupId, network })
 export class OptimismMeanFinanceDcaPositionContractPositionFetcher implements PositionFetcher<ContractPosition> {
-  constructor(@Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit) {}
+  constructor(@Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit) { }
 
-  async getPositions() {
-    const dcaHubAddress = '0x059d306a25c4ce8d7437d25743a8b94520536bd5';
+  async getPositionsForVersion(version: PositionVersions) {
+    const dcaHubAddress = HUB_ADDRESS[version][network];
+
+    if (!dcaHubAddress) {
+      return Promise.resolve([]);
+    }
+
     const graphHelper = this.appToolkit.helpers.theGraphHelper;
-    const positionsData = await getPositions(network, graphHelper);
+    const positionsData = await getPositions(network, graphHelper, version);
     const baseTokens = await this.appToolkit.getBaseTokenPrices(network);
     const positions = positionsData.positions;
 
@@ -40,8 +47,8 @@ export class OptimismMeanFinanceDcaPositionContractPositionFetcher implements Po
       if (!from || !to) return null;
 
       const tokens = [supplied(from), claimable(to)];
-      const liquidityToSwapRaw = dcaPosition.current.remainingLiquidity;
-      const liquidityToWithdrawRaw = dcaPosition.current.idleSwapped;
+      const liquidityToSwapRaw = dcaPosition.remainingLiquidity;
+      const liquidityToWithdrawRaw = dcaPosition.toWithdraw;
       const liquidityToSwap = (Number(liquidityToSwapRaw) / 10 ** from.decimals) * from.price;
       const liquidityToWithdraw = (Number(liquidityToWithdrawRaw) / 10 ** to.decimals) * to.price;
       const liquidity = liquidityToSwap + liquidityToWithdraw;
@@ -60,6 +67,7 @@ export class OptimismMeanFinanceDcaPositionContractPositionFetcher implements Po
           from: from.address,
           to: to.address,
           liquidity,
+          positionId: dcaPosition.id,
         },
         displayProps: {
           label,
@@ -89,6 +97,7 @@ export class OptimismMeanFinanceDcaPositionContractPositionFetcher implements Po
           from: anyPosition.dataProps.from,
           to: anyPosition.dataProps.to,
           liquidity: totalLiquidity,
+          positionId: anyPosition.dataProps.positionId,
         },
         displayProps: {
           label: anyPosition.displayProps.label,
@@ -101,5 +110,13 @@ export class OptimismMeanFinanceDcaPositionContractPositionFetcher implements Po
     });
 
     return mergedPositions;
+  }
+
+  async getPositions() {
+    const positionResults = await Promise.all(POSITIONS_VERSIONS.map(version => this.getPositionsForVersion(version)));
+
+    const contractPositionBalances = positionResults.reduce((acc, positions) => [...acc, ...positions], []);
+
+    return contractPositionBalances;
   }
 }

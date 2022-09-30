@@ -4,7 +4,7 @@ export const GET_POSITIONS = gql`
   query getPositions($first: Int, $lastId: String) {
     positions(where: { status_in: [ACTIVE, COMPLETED], id_gt: $lastId }, first: $first) {
       id
-      executedSwaps
+      totalExecutedSwaps
       user
       from {
         address: id
@@ -22,12 +22,10 @@ export const GET_POSITIONS = gql`
       swapInterval {
         interval
       }
-      current {
-        rate
-        remainingSwaps
-        remainingLiquidity
-        idleSwapped
-      }
+      rate
+      remainingSwaps
+      remainingLiquidity
+      toWithdraw
     }
   }
 `;
