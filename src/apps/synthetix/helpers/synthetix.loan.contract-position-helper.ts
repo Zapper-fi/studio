@@ -2,7 +2,7 @@ import { Inject, Injectable } from '@nestjs/common';
 
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { ZERO_ADDRESS } from '~app-toolkit/constants/address';
-import { getTokenImg } from '~app-toolkit/helpers/presentation/image.present';
+import { getTokenImg, getAppAssetImage } from '~app-toolkit/helpers/presentation/image.present';
 import { ContractType } from '~position/contract.interface';
 import { ContractPosition } from '~position/position.interface';
 import { borrowed, supplied } from '~position/position.utils';
@@ -15,9 +15,11 @@ export type SynthetixLoanContractPositionHelperParams = {
   network: Network;
 };
 
+const appId = SYNTHETIX_DEFINITION.id;
+
 @Injectable()
 export class SynthetixLoanContractPositionHelper {
-  constructor(@Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit) {}
+  constructor(@Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit) { }
 
   async getPositions({ loanContractAddress, network }: SynthetixLoanContractPositionHelperParams) {
     const baseTokens = await this.appToolkit.getBaseTokenPrices(network);
@@ -31,8 +33,8 @@ export class SynthetixLoanContractPositionHelper {
     const label = SYNTHETIX_DEFINITION.groups.loan.label;
     const images = [
       getTokenImg(ethToken.address, network),
-      getTokenImg(susdToken.address, network),
-      getTokenImg(sethToken.address, network),
+      getAppAssetImage(appId, susdToken.symbol),
+      getAppAssetImage(appId, sethToken.symbol)
     ];
 
     const position: ContractPosition = {
