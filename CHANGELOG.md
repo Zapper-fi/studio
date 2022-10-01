@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.236.0](https://github.com/Zapper-fi/studio/compare/v0.235.0...v0.236.0) (2022-10-01)
+
+
+### Features
+
+* **bancor-v3:** Move to templates, fix price per share ([#1478](https://github.com/Zapper-fi/studio/issues/1478)) ([cd16cc2](https://github.com/Zapper-fi/studio/commit/cd16cc2a731882775be4bf17fdce01cc3b03cb69))
+
 ## [0.235.0](https://github.com/Zapper-fi/studio/compare/v0.234.1...v0.235.0) (2022-09-30)
 
 
