@@ -14,6 +14,13 @@ export const BANCOR_V3_DEFINITION = appDefinition({
       type: GroupType.TOKEN,
       label: 'Pools',
     },
+
+    bntPool: {
+      id: 'bnt-pool',
+      type: GroupType.TOKEN,
+      label: 'Pools',
+    },
+
     farm: {
       id: 'farm',
       type: GroupType.POSITION,

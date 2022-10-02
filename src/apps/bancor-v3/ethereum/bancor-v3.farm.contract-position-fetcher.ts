@@ -1,49 +1,69 @@
 import { Inject } from '@nestjs/common';
+import { BigNumberish } from 'ethers';
 
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
-import { Register } from '~app-toolkit/decorators';
-import { PositionFetcher } from '~position/position-fetcher.interface';
-import { ContractPosition } from '~position/position.interface';
-import { Network } from '~types/network.interface';
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
+import {
+  GetMasterChefDataPropsParams,
+  GetMasterChefTokenBalancesParams,
+  MasterChefTemplateContractPositionFetcher,
+} from '~position/template/master-chef.template.contract-position-fetcher';
 
-import { BANCOR_V3_DEFINITION } from '../bancor-v3.definition';
 import { BancorV3ContractFactory, StandardRewards } from '../contracts';
 
-const appId = BANCOR_V3_DEFINITION.id;
-const groupId = BANCOR_V3_DEFINITION.groups.farm.id;
-const network = Network.ETHEREUM_MAINNET;
-const address = '0xb0b958398abb0b5db4ce4d7598fb868f5a00f372';
+@PositionTemplate()
+export class EthereumBancorV3FarmContractPositionFetcher extends MasterChefTemplateContractPositionFetcher<StandardRewards> {
+  chefAddress = '0xb0b958398abb0b5db4ce4d7598fb868f5a00f372';
+  groupLabel = 'Farms';
 
-@Register.ContractPositionFetcher({ appId, groupId, network })
-export class EthereumBancorV3ContractPositionFetcher implements PositionFetcher<ContractPosition> {
   constructor(
-    @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
-    @Inject(BancorV3ContractFactory) private readonly contractFactory: BancorV3ContractFactory,
-  ) {}
+    @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
+    @Inject(BancorV3ContractFactory) protected readonly contractFactory: BancorV3ContractFactory,
+  ) {
+    super(appToolkit);
+  }
 
-  async getPositions() {
-    return this.appToolkit.helpers.masterChefContractPositionHelper.getContractPositions<StandardRewards>({
-      address,
-      appId,
-      groupId,
-      network,
-      dependencies: [{ appId, groupIds: [BANCOR_V3_DEFINITION.groups.pool.id], network }],
-      resolveContract: ({ address, network }) => this.contractFactory.standardRewards({ address, network }),
-      resolvePoolLength: ({ multicall, contract }) =>
-        multicall
-          .wrap(contract)
-          .programIds()
-          .then(ids => ids.length),
-      resolveDepositTokenAddress: ({ poolIndex, contract, multicall }) =>
-        multicall
-          .wrap(contract)
-          .programs([poolIndex + 1])
-          .then(v => v[0][2]),
-      resolveRewardTokenAddresses: ({ poolIndex, contract, multicall }) =>
-        multicall
-          .wrap(contract)
-          .programs([poolIndex + 1])
-          .then(v => v[0][3]),
-    });
+  getContract(address: string): StandardRewards {
+    return this.contractFactory.standardRewards({ address, network: this.network });
+  }
+
+  async getPoolLength(contract: StandardRewards) {
+    return contract.programIds().then(ids => ids.length);
+  }
+
+  async getStakedTokenAddress(contract: StandardRewards, poolIndex: number) {
+    return contract.programs([poolIndex + 1]).then(v => v[0][2]);
+  }
+
+  async getRewardTokenAddress(contract: StandardRewards, poolIndex: number) {
+    return contract.programs([poolIndex + 1]).then(v => v[0][3]);
+  }
+
+  async getTotalAllocPoints(_params: GetMasterChefDataPropsParams<StandardRewards>) {
+    return 1;
+  }
+
+  async getTotalRewardRate(_params: GetMasterChefDataPropsParams<StandardRewards>) {
+    return 0;
+  }
+
+  async getPoolAllocPoints(_params: GetMasterChefDataPropsParams<StandardRewards>) {
+    return 0;
+  }
+
+  getStakedTokenBalance({
+    address,
+    contract,
+    contractPosition,
+  }: GetMasterChefTokenBalancesParams<StandardRewards>): Promise<BigNumberish> {
+    return contract.providerStake(address, contractPosition.dataProps.poolIndex + 1);
+  }
+
+  getRewardTokenBalance({
+    address,
+    contract,
+    contractPosition,
+  }: GetMasterChefTokenBalancesParams<StandardRewards>): Promise<BigNumberish> {
+    return contract.pendingRewards(address, [contractPosition.dataProps.poolIndex + 1]);
   }
 }
