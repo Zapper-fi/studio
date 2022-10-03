@@ -18,6 +18,7 @@ import {
 } from '~app-toolkit/helpers/presentation/display-item.present';
 import { drillBalance } from '~app-toolkit';
 import { sumBy } from 'lodash';
+import { SYNTHETIX_DEFINITION } from '~apps/synthetix/synthetix.definition';
 
 import { KwentaContractFactory, KwentaFutures } from '../contracts';
 import KWENTA_DEFINITION from '../kwenta.definition';
@@ -101,7 +102,7 @@ export class OptimismKwentaPerpContractPositionFetcher extends ContractPositionT
   }
 
   async getImages({ contractPosition }: GetDisplayPropsParams<KwentaFutures>) {
-    return [getAppAssetImage(this.appId, contractPosition.address)];
+    return [getAppAssetImage(SYNTHETIX_DEFINITION.id, `s${marketName.get(contractPosition.address)}`)];
   }
 
   async getTokenBalancesPerPosition({ address, contract }: GetTokenBalancesParams<KwentaFutures>) {
