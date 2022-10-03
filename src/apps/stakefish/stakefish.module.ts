@@ -7,10 +7,6 @@ import { StakefishAppDefinition, STAKEFISH_DEFINITION } from './stakefish.defini
 
 @Register.AppModule({
   appId: STAKEFISH_DEFINITION.id,
-  providers: [
-    EthereumStakefishStakingContractPositionFetcher,
-    StakefishAppDefinition,
-    StakefishContractFactory,
-  ],
+  providers: [EthereumStakefishStakingContractPositionFetcher, StakefishAppDefinition, StakefishContractFactory],
 })
-export class StakefishAppModule extends AbstractApp() { }
+export class StakefishAppModule extends AbstractApp() {}
