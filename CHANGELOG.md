@@ -4,6 +4,28 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.236.0](https://github.com/Zapper-fi/studio/compare/v0.235.0...v0.236.0) (2022-10-01)
+
+
+### Features
+
+* **bancor-v3:** Move to templates, fix price per share ([#1478](https://github.com/Zapper-fi/studio/issues/1478)) ([cd16cc2](https://github.com/Zapper-fi/studio/commit/cd16cc2a731882775be4bf17fdce01cc3b03cb69))
+
+## [0.235.0](https://github.com/Zapper-fi/studio/compare/v0.234.1...v0.235.0) (2022-09-30)
+
+
+### Features
+
+* **dystopia:** Implement Dystopia app ([#1467](https://github.com/Zapper-fi/studio/issues/1467)) ([e9c09a6](https://github.com/Zapper-fi/studio/commit/e9c09a6de94f74d352b65dfdb4793a1c553ebced))
+* **ooki:** Add other networks for Ooki Lend ([#1468](https://github.com/Zapper-fi/studio/issues/1468)) ([9c1e93b](https://github.com/Zapper-fi/studio/commit/9c1e93b215ed443a9e918db4bbda2781e5620dae))
+
+
+### Bug Fixes
+
+* **euler:** fix euler underlying balances + update pricePerShare using exchangeRate between eToken and underlying ([#1469](https://github.com/Zapper-fi/studio/issues/1469)) ([ad937ef](https://github.com/Zapper-fi/studio/commit/ad937effa3d622a8060d55429a14aca5c81a8677))
+* **synthetix:** Fix price of synths according to sUSD market price ([#1472](https://github.com/Zapper-fi/studio/issues/1472)) ([9ce15d6](https://github.com/Zapper-fi/studio/commit/9ce15d65bdbbd81d7e1ce4741da3c6b3f64a333d))
+* **synthetix:** Use new synths logos ([#1465](https://github.com/Zapper-fi/studio/issues/1465)) ([47d9081](https://github.com/Zapper-fi/studio/commit/47d90819b96d9f270433e78295a00241aab1027d))
+
 ## [0.234.1](https://github.com/Zapper-fi/studio/compare/v0.234.0...v0.234.1) (2022-09-28)
 
 

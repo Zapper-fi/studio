@@ -6,6 +6,7 @@ import { Network } from '~types/network.interface';
 
 import { VelodromeGauge__factory } from './ethers';
 import { VelodromePool__factory } from './ethers';
+import { VelodromeRewards__factory } from './ethers';
 import { VelodromeVe__factory } from './ethers';
 
 // eslint-disable-next-line
@@ -23,6 +24,9 @@ export class VelodromeContractFactory extends ContractFactory {
   velodromePool({ address, network }: ContractOpts) {
     return VelodromePool__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
+  velodromeRewards({ address, network }: ContractOpts) {
+    return VelodromeRewards__factory.connect(address, this.appToolkit.getNetworkProvider(network));
+  }
   velodromeVe({ address, network }: ContractOpts) {
     return VelodromeVe__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
@@ -30,4 +34,5 @@ export class VelodromeContractFactory extends ContractFactory {
 
 export type { VelodromeGauge } from './ethers';
 export type { VelodromePool } from './ethers';
+export type { VelodromeRewards } from './ethers';
 export type { VelodromeVe } from './ethers';

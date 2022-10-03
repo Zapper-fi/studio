@@ -3,7 +3,7 @@ import { sumBy } from 'lodash';
 
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { buildDollarDisplayItem } from '~app-toolkit/helpers/presentation/display-item.present';
-import { getTokenImg } from '~app-toolkit/helpers/presentation/image.present';
+import { getTokenImg, getAppAssetImage } from '~app-toolkit/helpers/presentation/image.present';
 import { ContractType } from '~position/contract.interface';
 import { ContractPosition } from '~position/position.interface';
 import { borrowed, supplied } from '~position/position.utils';
@@ -23,9 +23,11 @@ export type SynthetixMintrContractPositionHelperParams = {
   network: Network;
 };
 
+const appId = SYNTHETIX_DEFINITION.id;
+
 @Injectable()
 export class SynthetixMintrContractPositionHelper {
-  constructor(@Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit) {}
+  constructor(@Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit) { }
 
   async getPositions({ holders, network }: SynthetixMintrContractPositionHelperParams) {
     const baseTokens = await this.appToolkit.getBaseTokenPrices(network);
@@ -37,7 +39,7 @@ export class SynthetixMintrContractPositionHelper {
     // Display Props
     const label = 'SNX Staking';
     const secondaryLabel = buildDollarDisplayItem(snxToken.price);
-    const images = [getTokenImg(snxToken.address, network), getTokenImg(susdToken.address, network)];
+    const images = [getTokenImg(snxToken.address, network), getAppAssetImage(appId, susdToken.symbol)];
     const liquidity = sumBy(holders, v => (Number(v.collateral) - Number(v.transferable)) * snxToken.price);
 
     const position: ContractPosition = {

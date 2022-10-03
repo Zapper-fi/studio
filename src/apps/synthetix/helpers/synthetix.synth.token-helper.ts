@@ -46,6 +46,9 @@ export class SynthetixSynthTokenHelper {
     const synthRates = await snxUtilsContract.synthsRates();
     const synthSymbolBytes = synthRates[0];
     const synthPrices = synthRates[1];
+    const baseTokens = await this.appToolkit.getBaseTokenPrices(network);
+    const susdToken = baseTokens.find(p => p.symbol === 'sUSD')!;
+    const susdMarketPice = susdToken.price;
 
     const tokens = await Promise.all(
       synthSymbolBytes.map(async (byte, i) => {
@@ -58,7 +61,7 @@ export class SynthetixSynthTokenHelper {
         const supplyRaw = await multicall.wrap(synthContract).totalSupply();
         const address = addressRaw.toLowerCase();
         const supply = Number(supplyRaw) / 10 ** decimals;
-        const price = Number(synthPrices[i]) / 10 ** decimals;
+        const price = Number(synthPrices[i]) * susdMarketPice / 10 ** decimals;
         const pricePerShare = 1;
         const tokens = [];
         const liquidity = supply * price;
