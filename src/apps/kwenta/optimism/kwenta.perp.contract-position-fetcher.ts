@@ -19,6 +19,7 @@ import {
   GetTokenBalancesParams,
 } from '~position/template/contract-position.template.types';
 import { Network } from '~types';
+import { parseBytes32String } from 'ethers/lib/utils';
 
 import { KwentaContractFactory, KwentaFutures } from '../contracts';
 import KWENTA_DEFINITION from '../kwenta.definition';
@@ -36,27 +37,6 @@ const getContractsQuery = gql`
     }
   }
 `;
-
-const marketName = new Map<string, string>([
-  ['0x001b7876f567f0b3a639332ed1e363839c6d85e2', 'AAVE'],
-  ['0x10305c1854d6db8a1060df60bdf8a8b2981249cf', 'DYDX'],
-  ['0x1228c7d8bbc5bc53db181bd7b1fce765aa83bf8a', 'LINK'],
-  ['0x3ed04ceff4c91872f19b1da35740c0be9ca21558', 'XMR'],
-  ['0x4434f56ddbde28fab08c4ae71970a06b300f8881', 'XAU'],
-  ['0x4ff54624d5fb61c34c634c3314ed3bfe4dbb665a', 'AVAX'],
-  ['0x5af0072617f7f2aeb0e314e2fad1de0231ba97cd', 'UNI'],
-  ['0x9f1c2f0071bc3b31447aeda9fa3a68d651eb4632', 'OP'],
-  ['0x9f231dbe53d460f359b2b8cc47574493caa5b7bf', 'DOGE'],
-  ['0xad44873632840144ffc97b2d1de716f6e2cf0366', 'EUR'],
-  ['0xb147c69bee211f57290a6cde9d1babfd0dcf3ea3', 'XAG'],
-  ['0xbcb2d435045e16b059b2130b28be70b5ca47bfe5', 'MATIC'],
-  ['0xcf853f7f8f78b2b801095b66f8ba9c5f04db1640', 'SOL'],
-  ['0xd325b17d5c9c3f2b6853a760afcf81945b0184d3', 'DEBT'],
-  ['0xee8804d8ad10b0c3ad1bd57ac3737242ad24bb95', 'BTC'],
-  ['0xf86048dff23cf130107dfb4e6386f574231a5c65', 'ETH'],
-  ['0x4aa0dabd22bc0894975324bec293443c8538bd08', 'BNB'],
-  ['0xfe00395ec846240dc693e92ab2dd720f94765aa3', 'APE'],
-]);
 
 @Injectable()
 export class OptimismKwentaPerpContractPositionFetcher extends ContractPositionTemplatePositionFetcher<KwentaFutures> {
@@ -90,8 +70,21 @@ export class OptimismKwentaPerpContractPositionFetcher extends ContractPositionT
     ];
   }
 
+  private async getBaseAsset({ contractPosition }) {
+    const multicall = this.appToolkit.getMulticall(this.network);
+    const contract = multicall.wrap(this.getContract(contractPosition.address));
+    const baseAssetRaw = await contract.baseAsset();
+    let baseAsset = parseBytes32String(baseAssetRaw);
+    //some market use legacy naming starting with an "s"
+    if (baseAsset.charAt(0) === 's') {
+      baseAsset = baseAsset.substring(1);
+    }
+    return baseAsset;
+  }
+
   async getLabel({ contractPosition }: GetDisplayPropsParams<KwentaFutures>): Promise<string> {
-    return `${marketName.get(contractPosition.address)}-PERP`;
+    const baseAsset = await this.getBaseAsset({ contractPosition });
+    return `${baseAsset}-PERP`;
   }
 
   async getStatsItems({ contractPosition }) {
@@ -102,7 +95,8 @@ export class OptimismKwentaPerpContractPositionFetcher extends ContractPositionT
   }
 
   async getImages({ contractPosition }: GetDisplayPropsParams<KwentaFutures>) {
-    return [getAppAssetImage(SYNTHETIX_DEFINITION.id, `s${marketName.get(contractPosition.address)}`)];
+    const baseAsset = await this.getBaseAsset({ contractPosition });
+    return [getAppAssetImage(SYNTHETIX_DEFINITION.id, `s${baseAsset}`)];
   }
 
   async getTokenBalancesPerPosition({ address, contract }: GetTokenBalancesParams<KwentaFutures>) {
