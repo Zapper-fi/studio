@@ -46,7 +46,7 @@ export class PolygonDhedgeV2PoolTokenFetcher implements PositionFetcher<AppToken
   constructor(
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
     @Inject(DhedgeV2ContractFactory) private readonly contractFactory: DhedgeV2ContractFactory,
-  ) { }
+  ) {}
 
   async getPositions() {
     const endpoint = 'https://api.thegraph.com/subgraphs/name/dhedge/dhedge-v2-polygon';
@@ -69,7 +69,7 @@ export class PolygonDhedgeV2PoolTokenFetcher implements PositionFetcher<AppToken
         ]);
         const supply = Number(supplyRaw) / 10 ** decimals;
         const tokens = filter(
-          pool.assets.map(asset => baseTokens.find(t => t.address === asset.id.toLowerCase().split("-").pop())),
+          pool.assets.map(asset => baseTokens.find(t => t.address === asset.id.toLowerCase().split('-').pop())),
         ) as BaseToken[];
         const pricePerShare = Number(pool.tokenPrice) / 10 ** decimals;
         const price = pricePerShare * dUSD.price;

@@ -1,18 +1,21 @@
 import { Inject } from '@nestjs/common';
+import { BigNumberish } from 'ethers';
 import { sum, range } from 'lodash';
 
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import { VotingEscrowWithRewardsTemplateContractPositionFetcher } from '~position/template/voting-escrow-with-rewards.template.contract-position-fetcher';
-import { BigNumberish } from 'ethers';
 
 import { VelodromeContractFactory, VelodromeVe, VelodromeRewards } from '../contracts';
 
 @PositionTemplate()
-export class OptimismVelodromeVotingEscrowContractPositionFetcher extends VotingEscrowWithRewardsTemplateContractPositionFetcher<VelodromeVe, VelodromeRewards> {
+export class OptimismVelodromeVotingEscrowContractPositionFetcher extends VotingEscrowWithRewardsTemplateContractPositionFetcher<
+  VelodromeVe,
+  VelodromeRewards
+> {
   groupLabel = 'Voting Escrow';
   veTokenAddress = '0x9c7305eb78a432ced5c4d14cac27e8ed569a2e26';
-  rewardAddress = '0x5d5bea9f0fc13d967511668a60a3369fd53f784f'
+  rewardAddress = '0x5d5bea9f0fc13d967511668a60a3369fd53f784f';
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
