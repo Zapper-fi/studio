@@ -9,6 +9,8 @@ import { EthereumPickleJarTokenFetcher } from './ethereum/pickle.jar.token-fetch
 import { EthereumPickleFarmContractPositionFetcher } from './ethereum/pickle.masterchef-farm.contract-position-fetcher';
 import { EthereumPickleSingleRewardPositionFetcher } from './ethereum/pickle.single-staking-farm.contract-position-fetcher';
 import { EthereumPickleVotingEscrowContractPositionFetcher } from './ethereum/pickle.voting-escrow.contract-position-fetcher';
+import { OptimismPickleJarTokenFetcher } from './optimism/pickle.jar.token-fetcher';
+import { OptimismPickleFarmContractPositionFetcher } from './optimism/pickle.masterchef-v2-farm.contract-position-fetcher';
 import { PickleAppDefinition, PICKLE_DEFINITION } from './pickle.definition';
 import { PolygonPickleJarTokenFetcher } from './polygon/pickle.jar.token-fetcher';
 import { PolygonPickleFarmContractPositionFetcher } from './polygon/pickle.masterchef-v2-farm.contract-position-fetcher';
@@ -30,6 +32,9 @@ import { PolygonPickleFarmContractPositionFetcher } from './polygon/pickle.maste
     // Polygon
     PolygonPickleJarTokenFetcher,
     PolygonPickleFarmContractPositionFetcher,
+    // Optimism
+    OptimismPickleJarTokenFetcher,
+    OptimismPickleFarmContractPositionFetcher,
   ],
 })
 export class PickleAppModule extends AbstractApp() {}

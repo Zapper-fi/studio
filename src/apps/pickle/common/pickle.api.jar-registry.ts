@@ -25,6 +25,7 @@ const NETWORK_MAPPING = {
   [Network.ARBITRUM_MAINNET]: 'arbitrum',
   [Network.HARMONY_MAINNET]: 'harmony',
   [Network.MOONRIVER_MAINNET]: 'moonriver',
+  [Network.OPTIMISM_MAINNET]: 'optimism',
 };
 
 @Injectable()
