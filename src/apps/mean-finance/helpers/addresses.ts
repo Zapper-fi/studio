@@ -69,7 +69,7 @@ export const MEAN_GRAPHQL_URL: AddressMap<PositionVersions> = {
   },
 };
 
-// Mean Finance Wrapped-4626 -> Unwrapped 4626
+// Mean Finance Wrapped-4626 -> Unwrapped yield-bearing token
 export const ERC4626WRAP_ADDRESSES = {
   [Network.POLYGON_MAINNET]: {
     '0x021c618f299e0f55e8a684898b03b027eb51df5c': '0x6d80113e533a2C0fe82EaBD35f1875DcEA89Ea97', // AAVE_V3_WMATIC
