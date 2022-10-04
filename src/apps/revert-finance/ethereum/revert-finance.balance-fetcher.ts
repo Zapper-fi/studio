@@ -69,6 +69,7 @@ export class EthereumRevertFinanceBalanceFetcher implements BalanceFetcher {
           network,
           multicall,
           tokenLoader,
+          collapseClaimable: true,
         });
 
         if (!uniV3Token) return;

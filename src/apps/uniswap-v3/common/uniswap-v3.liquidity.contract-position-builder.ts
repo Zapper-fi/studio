@@ -1,4 +1,5 @@
 import { Inject } from '@nestjs/common';
+import BigNumber from 'bignumber.js';
 import { BigNumberish } from 'ethers';
 import { sumBy } from 'lodash';
 
@@ -25,6 +26,7 @@ type UniswapV3LiquidityContractPositionHelperParams = {
   tokenLoader: TokenDependencySelector;
   positionId: BigNumberish;
   network: Network;
+  collapseClaimable?: boolean;
 };
 
 export class UniswapV3LiquidityContractPositionBuilder {
@@ -36,7 +38,13 @@ export class UniswapV3LiquidityContractPositionBuilder {
     @Inject(UniswapV3ContractFactory) protected readonly contractFactory: UniswapV3ContractFactory,
   ) {}
 
-  async buildPosition({ multicall, positionId, tokenLoader, network }: UniswapV3LiquidityContractPositionHelperParams) {
+  async buildPosition({
+    multicall,
+    positionId,
+    tokenLoader,
+    network,
+    collapseClaimable,
+  }: UniswapV3LiquidityContractPositionHelperParams) {
     const positionManager = this.contractFactory.uniswapV3PositionManager({ address: this.managerAddress, network });
     const factoryContract = this.contractFactory.uniswapV3Factory({ address: this.factoryAddress, network });
     const position = await multicall.wrap(positionManager).positions(positionId);
@@ -69,6 +77,7 @@ export class UniswapV3LiquidityContractPositionBuilder {
     // Retrieve underlying reserves, both supplied and claimable
     const range = getRange({ position, slot, token0, token1, network, liquidity });
     const suppliedBalances = getSupplied({ position, slot, token0, token1, network, liquidity });
+
     const suppliedTokens = [token0, token1].map(v => supplied(v));
     const suppliedTokenBalances = suppliedTokens.map((t, i) => drillBalance(t, suppliedBalances[i]));
     const claimableBalances = getClaimable({ position, slot, ticksLower, ticksUpper, feeGrowth0, feeGrowth1 });
@@ -76,12 +85,18 @@ export class UniswapV3LiquidityContractPositionBuilder {
     const claimableTokenBalances = claimableTokens.map((t, i) => drillBalance(t, claimableBalances[i]));
 
     // Build position price according to underlying reserves
-    const tokens = [...suppliedTokenBalances, ...claimableTokenBalances].filter(t => t.balanceUSD > 0.01);
+    let tokens = [...suppliedTokenBalances, ...claimableTokenBalances].filter(t => t.balanceUSD > 0.01);
     const balanceUSD = sumBy(tokens, v => v.balanceUSD);
 
     const reservesRaw = [reserveRaw0, reserveRaw1];
     const reserves = reservesRaw.map((r, i) => Number(r) / 10 ** suppliedTokens[i].decimals);
     const totalLiquidity = reserves[0] * suppliedTokens[0].price + reserves[1] * suppliedTokens[1].price;
+
+    if (collapseClaimable) {
+      tokens = [token0, token1].map((t, i) =>
+        drillBalance(t, new BigNumber(suppliedBalances[i]).plus(claimableBalances[i]).toFixed(0)),
+      );
+    }
 
     const dataProps: UniswapV3LiquidityPositionDataProps = {
       feeTier: Number(fee) / 10 ** 4,

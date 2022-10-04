@@ -69,6 +69,7 @@ export class ArbitrumRevertFinanceBalanceFetcher implements BalanceFetcher {
           network,
           multicall,
           tokenLoader,
+          collapseClaimable: true,
         });
 
         if (!uniV3Token) return;
