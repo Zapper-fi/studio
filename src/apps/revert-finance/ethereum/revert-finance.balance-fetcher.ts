@@ -6,7 +6,7 @@ import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
 import { presentBalanceFetcherResponse } from '~app-toolkit/helpers/presentation/balance-fetcher-response.present';
 import { UniswapV2ContractFactory } from '~apps/uniswap-v2';
-import { UniswapV3LiquidityTokenHelper } from '~apps/uniswap-v2/helpers/uniswap-v3.liquidity.token-helper';
+import { UniswapV3LiquidityContractPositionBuilder } from '~apps/uniswap-v3/common/uniswap-v3.liquidity.contract-position-builder';
 import { BalanceFetcher } from '~balance/balance-fetcher.interface';
 import { ContractPositionBalance, TokenBalance } from '~position/position-balance.interface';
 import { claimable } from '~position/position.utils';
@@ -28,8 +28,8 @@ export class EthereumRevertFinanceBalanceFetcher implements BalanceFetcher {
   constructor(
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
     @Inject(UniswapV2ContractFactory) protected readonly uniswapV2ContractFactory: UniswapV2ContractFactory,
-    @Inject(UniswapV3LiquidityTokenHelper)
-    private readonly uniswapV3LiquidityTokenHelper: UniswapV3LiquidityTokenHelper,
+    @Inject(UniswapV3LiquidityContractPositionBuilder)
+    private readonly uniswapV3LiquidityContractPositionBuilder: UniswapV3LiquidityContractPositionBuilder,
   ) {}
 
   async getCompoundorRewardBalances(address: string) {
@@ -60,14 +60,17 @@ export class EthereumRevertFinanceBalanceFetcher implements BalanceFetcher {
     if (!data) return [];
     const multicall = this.appToolkit.getMulticall(network);
     const compoundingBalances: Array<ContractPositionBalance> = [];
-    const baseTokens = await this.appToolkit.getBaseTokenPrices(network);
+    const tokenLoader = this.appToolkit.getTokenDependencySelector();
+
     await Promise.all(
       data.tokens.map(async ({ id }) => {
-        const uniV3Token = await this.uniswapV3LiquidityTokenHelper.getLiquidityToken({
+        const uniV3Token = await this.uniswapV3LiquidityContractPositionBuilder.buildPosition({
           positionId: id,
           network,
-          context: { multicall, baseTokens },
+          multicall,
+          tokenLoader,
         });
+
         if (!uniV3Token) return;
         const position = getCompoundingContractPosition(network, uniV3Token);
         compoundingBalances.push({
