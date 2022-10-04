@@ -5,7 +5,6 @@ import { drillBalance } from '~app-toolkit';
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
 import { presentBalanceFetcherResponse } from '~app-toolkit/helpers/presentation/balance-fetcher-response.present';
-import { UniswapV2ContractFactory } from '~apps/uniswap-v2';
 import { UniswapV3LiquidityContractPositionBuilder } from '~apps/uniswap-v3/common/uniswap-v3.liquidity.contract-position-builder';
 import { BalanceFetcher } from '~balance/balance-fetcher.interface';
 import { ContractPositionBalance, TokenBalance } from '~position/position-balance.interface';
@@ -27,7 +26,6 @@ const network = Network.POLYGON_MAINNET;
 export class PolygonRevertFinanceBalanceFetcher implements BalanceFetcher {
   constructor(
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
-    @Inject(UniswapV2ContractFactory) protected readonly uniswapV2ContractFactory: UniswapV2ContractFactory,
     @Inject(UniswapV3LiquidityContractPositionBuilder)
     private readonly uniswapV3LiquidityContractPositionBuilder: UniswapV3LiquidityContractPositionBuilder,
   ) {}
@@ -45,7 +43,7 @@ export class PolygonRevertFinanceBalanceFetcher implements BalanceFetcher {
     data.accountBalances.forEach(({ token, balance }) => {
       const existingToken = baseTokens.find(item => item.address === token)!;
       if (!existingToken) return;
-      accountRewardsBalances.push({ ...existingToken, ...drillBalance(claimable(existingToken), balance) });
+      accountRewardsBalances.push(drillBalance(claimable(existingToken), balance));
     });
     return [getCompoundorRewardsContractPosition(network, accountRewardsBalances)];
   }
