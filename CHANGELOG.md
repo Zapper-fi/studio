@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.238.0](https://github.com/Zapper-fi/studio/compare/v0.237.0...v0.238.0) (2022-10-04)
+
+
+### Features
+
+* **dhedge-v2:** Fix price per share and refactor to templates ([#1489](https://github.com/Zapper-fi/studio/issues/1489)) ([49f2935](https://github.com/Zapper-fi/studio/commit/49f293526f1512659a3abacc5a045b3ba33d567e))
+
 ## [0.237.0](https://github.com/Zapper-fi/studio/compare/v0.236.1...v0.237.0) (2022-10-04)
 
 
