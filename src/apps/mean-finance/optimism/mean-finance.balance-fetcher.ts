@@ -31,7 +31,7 @@ export class OptimismMeanFinanceBalanceFetcher implements BalanceFetcher {
 
   async getUserPositions(address: string, version: PositionVersions) {
     const graphHelper = this.appToolkit.helpers.theGraphHelper;
-    const data = await getUserPositions(address.toLocaleLowerCase(), Network.OPTIMISM_MAINNET, graphHelper, version);
+    const data = await getUserPositions(address.toLowerCase(), Network.OPTIMISM_MAINNET, graphHelper, version);
     return data.positions;
   }
 
