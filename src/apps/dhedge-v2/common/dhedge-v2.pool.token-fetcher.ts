@@ -2,6 +2,7 @@ import { Inject } from '@nestjs/common';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { getAppAssetImage, getAppImg } from '~app-toolkit/helpers/presentation/image.present';
+import { isMulticallUnderlyingError } from '~multicall/multicall.ethers';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import {
   DefaultAppTokenDataProps,
@@ -42,7 +43,10 @@ export abstract class DhedgeV2PoolTokenFetcher extends AppTokenTemplatePositionF
   }
 
   async getPricePerShare({ contract }: GetPricePerShareParams<DhedgeV2Token>) {
-    const pricePerShareRaw = await contract.tokenPrice();
+    const pricePerShareRaw = await contract.tokenPrice().catch(err => {
+      if (isMulticallUnderlyingError(err)) return 0;
+      throw err;
+    });
     return Number(pricePerShareRaw) / 10 ** 18;
   }
 
