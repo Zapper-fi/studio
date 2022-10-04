@@ -1,21 +1,16 @@
-import { Register } from '~app-toolkit/decorators';
-import { PositionFetcher } from '~position/position-fetcher.interface';
-import { AppTokenPosition } from '~position/position.interface';
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import { Network } from '~types/network.interface';
+
+import { DhedgeV2PoolTokenFetcher } from '../common/dhedge-v2.pool.token-fetcher';
 import { DHEDGE_V_2_DEFINITION } from '../dhedge-v2.definition';
-import { DhedgeV2PoolTokenFetcherHelper } from '../helpers/dhedge-v2.pool.token-fetcher-helper'
 
-const appId = DHEDGE_V_2_DEFINITION.id;
-const groupId = DHEDGE_V_2_DEFINITION.groups.pool.id;
-const network = Network.OPTIMISM_MAINNET;
+@PositionTemplate()
+export class OptimismDhedgeV2PoolTokenFetcher extends DhedgeV2PoolTokenFetcher {
+  appId = DHEDGE_V_2_DEFINITION.id;
+  groupId = DHEDGE_V_2_DEFINITION.groups.pool.id;
+  network = Network.OPTIMISM_MAINNET;
+  groupLabel = 'Pools';
 
-@Register.TokenPositionFetcher({ appId, groupId, network })
-export class OptimismDhedgeV2PoolTokenFetcher implements PositionFetcher<AppTokenPosition> {
-  constructor(
-    private readonly dhedgeV2PoolTokenFetcherHelper: DhedgeV2PoolTokenFetcherHelper,
-  ) { }
-
-  async getPositions() {
-    return this.dhedgeV2PoolTokenFetcherHelper.getPositions({ network });
-  }
+  factoryAddress = '0x5e61a079a178f0e5784107a4963baae0c5a680c6';
+  underlyingTokenAddress = '0x8c6f28f2f1a3c87f0f938b96d27520d9751ec8d9';
 }
