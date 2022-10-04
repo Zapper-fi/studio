@@ -11,21 +11,37 @@ export const GET_USER_POSITIONS = gql`
         decimals
         name
         symbol
+        underlyingTokens {
+          address: id
+          decimals
+          name
+          symbol
+          type
+        }
       }
       to {
         address: id
         decimals
         name
         symbol
+        underlyingTokens {
+          address: id
+          decimals
+          name
+          symbol
+          type
+        }
       }
       status
       swapInterval {
         interval
       }
       rate
+      depositedRateUnderlying
       remainingSwaps
       remainingLiquidity
       toWithdraw
+      toWithdrawUnderlyingAccum
     }
   }
 `;

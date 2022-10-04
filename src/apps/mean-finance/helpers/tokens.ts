@@ -9,3 +9,7 @@ export const sortTokens = (tokenA: string, tokenB: string) => {
 
   return [token0, token1];
 };
+
+export const TOKEN_TYPE_BASE = 'BASE';
+export const TOKEN_TYPE_WRAPPED = 'WRAPPED_PROTOCOL_TOKEN';
+export const TOKEN_TYPE_YIELD_BEARING_SHARES = 'YIELD_BEARING_SHARES';

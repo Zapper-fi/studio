@@ -15,12 +15,24 @@ type MeanFinancePosition = {
       decimals: string;
       name: string;
       symbol: string;
+      underlyingTokens: {
+        address: string;
+        decimals: string;
+        name: string;
+        symbol: string;
+      }[]
     };
     to: {
       address: string;
       decimals: string;
       name: string;
       symbol: string;
+      underlyingTokens: {
+        address: string;
+        decimals: string;
+        name: string;
+        symbol: string;
+      }[]
     };
     status: string;
     swapInterval: {
@@ -30,6 +42,8 @@ type MeanFinancePosition = {
     rate: string;
     remainingSwaps: string;
     remainingLiquidity: string;
+    depositedRateUnderlying: string;
+    toWithdrawUnderlyingAccum: string;
     toWithdraw: string;
   }[];
 };
