@@ -102,12 +102,12 @@ export type VaultTokenHelperParams<T> = {
    * How do we resolve the images that will be displayed on the frontend.
    * By default, we will attempt to use the underlying token's image.
    */
-  resolveImages?: (opts: { underlyingToken: Token }) => string[];
+  resolveImages?: (opts: { underlyingToken: Token; symbol: string }) => string[];
 };
 
 @Injectable()
 export class VaultTokenHelper {
-  constructor(@Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit) {}
+  constructor(@Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit) { }
 
   /**
    * Retrieve all tokens within a given vault.
@@ -134,7 +134,7 @@ export class VaultTokenHelper {
     const allTokens = [...appTokens, ...baseTokens];
     const vaultAddresses = await resolveVaultAddresses({ multicall, network });
 
-    const curvePoolTokens = await Promise.all(
+    const tokens = await Promise.all(
       vaultAddresses.map(async vaultAddress => {
         const type = ContractType.APP_TOKEN;
         const erc20Contract = this.appToolkit.globalContracts.erc20({ address: vaultAddress, network });
@@ -170,7 +170,7 @@ export class VaultTokenHelper {
         const label = resolvePrimaryLabel({ vaultAddress, symbol, underlyingToken });
         const secondaryLabel = buildDollarDisplayItem(price);
         const tertiaryLabel = resolveApy ? `${(apy * 100).toFixed(3)}% APY` : '';
-        const images = resolveImages({ underlyingToken });
+        const images = resolveImages({ underlyingToken, symbol });
         const statsItems: StatsItem[] = [{ label: 'Liquidity', value: buildDollarDisplayItem(liquidity) }];
         if (reserve > 0) statsItems.push({ label: 'Reserve', value: buildNumberDisplayItem(reserve) });
         if (resolveApy) statsItems.push({ label: 'APY', value: buildPercentageDisplayItem(apy) });
@@ -207,6 +207,6 @@ export class VaultTokenHelper {
       }),
     );
 
-    return compact(curvePoolTokens).filter(v => v.price > 0 && v.supply > 0);
+    return compact(tokens).filter(v => v.price > 0 && v.supply > 0);
   }
 }
