@@ -4,6 +4,15 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.237.0](https://github.com/Zapper-fi/studio/compare/v0.236.1...v0.237.0) (2022-10-04)
+
+
+### Features
+
+* **dhedge-v2:** Refactor and add logos ([#1482](https://github.com/Zapper-fi/studio/issues/1482)) ([c8c6b55](https://github.com/Zapper-fi/studio/commit/c8c6b55550fcf66b871655394e4e6654b2884c67))
+* **uniswap-v3:** Extract Uniswap V3, use helper class in Revert finance ([#1486](https://github.com/Zapper-fi/studio/issues/1486)) ([760fdf0](https://github.com/Zapper-fi/studio/commit/760fdf0014eca92014ee4fc63bba19fe068b1e7a))
+* **zip-swap:** Add ZipSwap pools ([#1484](https://github.com/Zapper-fi/studio/issues/1484)) ([e135094](https://github.com/Zapper-fi/studio/commit/e1350945b9529e351223f3fef9c207aaaf338589))
+
 ## [0.236.1](https://github.com/Zapper-fi/studio/compare/v0.236.0...v0.236.1) (2022-10-03)
 
 
