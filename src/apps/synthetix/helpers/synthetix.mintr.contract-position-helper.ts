@@ -27,7 +27,7 @@ const appId = SYNTHETIX_DEFINITION.id;
 
 @Injectable()
 export class SynthetixMintrContractPositionHelper {
-  constructor(@Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit) { }
+  constructor(@Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit) {}
 
   async getPositions({ holders, network }: SynthetixMintrContractPositionHelperParams) {
     const baseTokens = await this.appToolkit.getBaseTokenPrices(network);

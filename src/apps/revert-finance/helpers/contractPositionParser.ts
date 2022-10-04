@@ -1,10 +1,8 @@
 import { getAddress } from 'ethers/lib/utils';
 
-import { drillBalance } from '~app-toolkit';
 import { getAppImg, getTokenImg } from '~app-toolkit/helpers/presentation/image.present';
 import { ContractType } from '~position/contract.interface';
 import { ContractPositionBalance, TokenBalance } from '~position/position-balance.interface';
-import { AppTokenPosition } from '~position/position.interface';
 import { Network } from '~types';
 
 import REVERT_FINANCE_DEFINITION from '../revert-finance.definition';
@@ -32,15 +30,15 @@ export const getCompoundorRewardsContractPosition = (
 
 export const getCompoundingContractPosition = (
   network: Network,
-  uniV3Lp: AppTokenPosition,
+  uniV3Lp: ContractPositionBalance,
 ): ContractPositionBalance => ({
   address: CompoundorContractAddress,
   type: ContractType.POSITION,
   network,
   appId: REVERT_FINANCE_DEFINITION.id,
   groupId: REVERT_FINANCE_DEFINITION.groups.compoundingPositions.id,
-  tokens: [{ ...uniV3Lp, ...drillBalance(uniV3Lp, '1') }],
-  balanceUSD: drillBalance(uniV3Lp, '1').balanceUSD,
+  tokens: uniV3Lp.tokens,
+  balanceUSD: uniV3Lp.balanceUSD,
   dataProps: {
     compoundingPositionId: uniV3Lp.dataProps.id,
   },

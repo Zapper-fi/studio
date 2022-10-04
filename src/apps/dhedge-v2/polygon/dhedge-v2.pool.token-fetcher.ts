@@ -13,7 +13,7 @@ const network = Network.POLYGON_MAINNET;
 export class PolygonDhedgeV2PoolTokenFetcher implements PositionFetcher<AppTokenPosition> {
   constructor(
     private readonly dhedgeV2PoolTokenFetcherHelper: DhedgeV2PoolTokenFetcherHelper,
-  ) { }
+  ) {}
 
   async getPositions() {
     return this.dhedgeV2PoolTokenFetcherHelper.getPositions({ network });

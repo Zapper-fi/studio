@@ -30,7 +30,7 @@ export class SynthetixSynthTokenHelper {
   constructor(
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
     @Inject(SynthetixContractFactory) private readonly contractFactory: SynthetixContractFactory,
-  ) { }
+  ) {}
 
   async getTokens({ network, resolverAddress, exchangeable = false }: SynthetixSynthTokenHelperParams) {
     const multicall = this.appToolkit.getMulticall(network);
@@ -61,7 +61,7 @@ export class SynthetixSynthTokenHelper {
         const supplyRaw = await multicall.wrap(synthContract).totalSupply();
         const address = addressRaw.toLowerCase();
         const supply = Number(supplyRaw) / 10 ** decimals;
-        const price = Number(synthPrices[i]) * susdMarketPice / 10 ** decimals;
+        const price = (Number(synthPrices[i]) * susdMarketPice) / 10 ** decimals;
         const pricePerShare = 1;
         const tokens = [];
         const liquidity = supply * price;

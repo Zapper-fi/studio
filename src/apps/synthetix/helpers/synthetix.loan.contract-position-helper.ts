@@ -19,7 +19,7 @@ const appId = SYNTHETIX_DEFINITION.id;
 
 @Injectable()
 export class SynthetixLoanContractPositionHelper {
-  constructor(@Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit) { }
+  constructor(@Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit) {}
 
   async getPositions({ loanContractAddress, network }: SynthetixLoanContractPositionHelperParams) {
     const baseTokens = await this.appToolkit.getBaseTokenPrices(network);
@@ -34,7 +34,7 @@ export class SynthetixLoanContractPositionHelper {
     const images = [
       getTokenImg(ethToken.address, network),
       getAppAssetImage(appId, susdToken.symbol),
-      getAppAssetImage(appId, sethToken.symbol)
+      getAppAssetImage(appId, sethToken.symbol),
     ];
 
     const position: ContractPosition = {

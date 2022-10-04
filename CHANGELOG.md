@@ -4,6 +4,14 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.236.1](https://github.com/Zapper-fi/studio/compare/v0.236.0...v0.236.1) (2022-10-03)
+
+
+### Bug Fixes
+
+* **kwenta:** Get token images from Synthetix app ([#1481](https://github.com/Zapper-fi/studio/issues/1481)) ([b5be5ea](https://github.com/Zapper-fi/studio/commit/b5be5eac59b4e22fd7ef6a03740afd3ac6096a7a))
+* **velodrome:** Add claimable VELO from veNFT ([#1473](https://github.com/Zapper-fi/studio/issues/1473)) ([cb1854e](https://github.com/Zapper-fi/studio/commit/cb1854e97d6b5be8aa50488dab3b748dac0ce48d))
+
 ## [0.236.0](https://github.com/Zapper-fi/studio/compare/v0.235.0...v0.236.0) (2022-10-01)
 
 

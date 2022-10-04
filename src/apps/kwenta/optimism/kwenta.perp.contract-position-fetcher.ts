@@ -1,8 +1,16 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { gql } from 'graphql-request';
+import { sumBy } from 'lodash';
 
+import { drillBalance } from '~app-toolkit';
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
+import {
+  buildDollarDisplayItem,
+  buildNumberDisplayItem,
+  buildStringDisplayItem,
+} from '~app-toolkit/helpers/presentation/display-item.present';
 import { getAppAssetImage } from '~app-toolkit/helpers/presentation/image.present';
+import { SYNTHETIX_DEFINITION } from '~apps/synthetix/synthetix.definition';
 import { MetaType } from '~position/position.interface';
 import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
 import {
@@ -11,14 +19,6 @@ import {
   GetTokenBalancesParams,
 } from '~position/template/contract-position.template.types';
 import { Network } from '~types';
-import {
-  buildDollarDisplayItem,
-  buildNumberDisplayItem,
-  buildStringDisplayItem,
-} from '~app-toolkit/helpers/presentation/display-item.present';
-import { drillBalance } from '~app-toolkit';
-import { sumBy } from 'lodash';
-import { SYNTHETIX_DEFINITION } from '~apps/synthetix/synthetix.definition';
 
 import { KwentaContractFactory, KwentaFutures } from '../contracts';
 import KWENTA_DEFINITION from '../kwenta.definition';
@@ -154,5 +154,4 @@ export class OptimismKwentaPerpContractPositionFetcher extends ContractPositionT
       { label: 'Liquidation Price', ...buildDollarDisplayItem(Number(liquidationPriceRaw.price) / 10 ** 18) },
     ];
   }
-
 }

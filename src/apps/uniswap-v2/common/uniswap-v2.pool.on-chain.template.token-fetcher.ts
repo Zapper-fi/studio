@@ -7,6 +7,7 @@ import {
   buildPercentageDisplayItem,
 } from '~app-toolkit/helpers/presentation/display-item.present';
 import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
+import { isMulticallUnderlyingError } from '~multicall/multicall.ethers';
 import { StatsItem } from '~position/display.interface';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import {
@@ -56,12 +57,15 @@ export abstract class UniswapV2PoolOnChainTemplateTokenFetcher extends AppTokenT
     );
 
     const poolsLength = await factoryContract.allPairsLength();
-
     const poolAddresses = await Promise.all(
       range(0, Number(poolsLength)).map(async poolIndex => {
-        const poolAddressRaw = await factoryContract.allPairs(poolIndex);
-        const poolAddress = poolAddressRaw.toLowerCase();
-        return poolAddress;
+        const poolAddressRaw = await factoryContract.allPairs(poolIndex).catch(e => {
+          if (isMulticallUnderlyingError(e)) return null;
+          throw e;
+        });
+
+        if (!poolAddressRaw) return null;
+        return poolAddressRaw.toLowerCase();
       }),
     );
 
