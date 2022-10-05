@@ -1,5 +1,6 @@
 import { Register } from '~app-toolkit/decorators';
 import { AbstractApp } from '~app/app.dynamic-module';
+import { UniswapV2ContractFactory } from '~apps/uniswap-v2';
 
 import { KyberDmmContractFactory } from './contracts';
 import { EthereumKyberDmmFarmContractPositionFetcher } from './ethereum/kyber-dmm.farm.contract-position-fetcher';
@@ -13,6 +14,7 @@ import { PolygonKyberDmmPoolTokenFetcher } from './polygon/kyber-dmm.pool.token-
   providers: [
     KyberDmmAppDefinition,
     KyberDmmContractFactory,
+    UniswapV2ContractFactory,
     EthereumKyberDmmPoolTokenFetcher,
     EthereumKyberDmmFarmContractPositionFetcher,
     PolygonKyberDmmPoolTokenFetcher,

@@ -1,12 +1,9 @@
-import { Inject } from '@nestjs/common';
 import DataLoader from 'dataloader';
+import { BigNumberish, Contract } from 'ethers';
 import { range, uniq } from 'lodash';
 
-import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { BLOCKS_PER_DAY } from '~app-toolkit/constants/blocks';
 import { GetDataPropsParams } from '~position/template/app-token.template.types';
-
-import { UniswapPair, UniswapV2ContractFactory } from '../contracts';
 
 import {
   UniswapV2PoolOnChainTemplateTokenFetcher,
@@ -23,7 +20,9 @@ import {
   PoolVolumesResponse,
 } from './uniswap-v2.pool.subgraph.types';
 
-export abstract class UniswapV2PoolSubgraphTemplateTokenFetcher extends UniswapV2PoolOnChainTemplateTokenFetcher {
+export abstract class UniswapV2PoolSubgraphTemplateTokenFetcher<
+  T extends Contract,
+> extends UniswapV2PoolOnChainTemplateTokenFetcher<T, any> {
   volumeDataLoader: DataLoader<string, number> | null;
 
   abstract subgraphUrl: string;
@@ -40,13 +39,6 @@ export abstract class UniswapV2PoolSubgraphTemplateTokenFetcher extends UniswapV
   lastBlockSyncedOnGraphQuery = DEFAULT_LAST_BLOCK_SYNCED_ON_GRAPH_QUERY;
   poolVolumesByIdQuery = DEFAULT_POOL_VOLUMES_BY_ID_QUERY;
   poolVolumesByIdAtBlockQuery = DEFAULT_POOL_VOLUMES_BY_ID_AT_BLOCK_QUERY;
-
-  constructor(
-    @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(UniswapV2ContractFactory) protected readonly contractFactory: UniswapV2ContractFactory,
-  ) {
-    super(appToolkit, contractFactory);
-  }
 
   async getAddresses() {
     // Initialize volume dataloader
@@ -79,7 +71,19 @@ export abstract class UniswapV2PoolSubgraphTemplateTokenFetcher extends UniswapV
     return uniquepoolIds;
   }
 
-  async getApy({ appToken }: GetDataPropsParams<UniswapPair, UniswapV2TokenDataProps>) {
+  getPoolFactoryContract(_address: string) {
+    throw new Error('Method not implemented.');
+  }
+
+  getPoolsLength(_contract: any): Promise<BigNumberish> {
+    throw new Error('Method not implemented.');
+  }
+
+  getPoolAddress(_contract: any, _index: number): Promise<string> {
+    throw new Error('Method not implemented.');
+  }
+
+  async getApy({ appToken }: GetDataPropsParams<T, UniswapV2TokenDataProps>) {
     const liquidity = appToken.supply * appToken.price;
     const volume = this.volumeDataLoader ? await this.volumeDataLoader.load(appToken.address) : 0;
     const yearlyFees = volume * (this.fee / 100) * 365;
@@ -87,7 +91,7 @@ export abstract class UniswapV2PoolSubgraphTemplateTokenFetcher extends UniswapV
     return apy;
   }
 
-  async getDataProps(params: GetDataPropsParams<UniswapPair, UniswapV2TokenDataProps>) {
+  async getDataProps(params: GetDataPropsParams<T, UniswapV2TokenDataProps>) {
     const defaultDataProps = await super.getDataProps(params);
     const volume = this.volumeDataLoader ? await this.volumeDataLoader.load(params.appToken.address) : 0;
     return { ...defaultDataProps, volume };
