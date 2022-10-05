@@ -17,6 +17,7 @@ export const PICKLE_DEFINITION = appDefinition({
   },
   groups: {
     jar: { id: 'jar', type: GroupType.TOKEN, label: 'Jars' },
+    jarUniV3: { id: 'jar-univ3', type: GroupType.TOKEN, label: 'UniV3 Jars' },
     votingEscrow: { id: 'voting-escrow', type: GroupType.POSITION, label: 'Dill' },
     masterchefFarm: { id: 'masterchef-farm', type: GroupType.POSITION, label: 'Farms' },
     masterchefV2Farm: { id: 'masterchef-v2-farm', type: GroupType.POSITION, label: 'Farms' },
