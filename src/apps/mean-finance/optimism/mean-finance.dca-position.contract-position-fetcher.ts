@@ -9,8 +9,8 @@ import { PositionFetcher } from '~position/position-fetcher.interface';
 import { ContractPosition } from '~position/position.interface';
 import { claimable, supplied } from '~position/position.utils';
 import { Network } from '~types/network.interface';
-import { HUB_ADDRESS, POSITIONS_VERSIONS, PositionVersions } from '../helpers/addresses';
 
+import { HUB_ADDRESS, POSITIONS_VERSIONS, PositionVersions } from '../helpers/addresses';
 import { getPositions } from '../helpers/graph';
 import { MEAN_FINANCE_DEFINITION } from '../mean-finance.definition';
 
@@ -27,7 +27,7 @@ type MeanFinanceDcaPositionContractPositionDataProps = {
 
 @Register.ContractPositionFetcher({ appId, groupId, network })
 export class OptimismMeanFinanceDcaPositionContractPositionFetcher implements PositionFetcher<ContractPosition> {
-  constructor(@Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit) { }
+  constructor(@Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit) {}
 
   async getPositionsForVersion(version: PositionVersions) {
     const dcaHubAddress = HUB_ADDRESS[version][network];

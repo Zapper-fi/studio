@@ -3,6 +3,7 @@ import { Network } from '~types';
 
 import { GET_POSITIONS } from '../graphql/getPositions';
 import { GET_USER_POSITIONS } from '../graphql/getUserPositions';
+
 import { MEAN_GRAPHQL_URL, PositionVersions } from './addresses';
 
 type MeanFinancePosition = {
@@ -20,7 +21,7 @@ type MeanFinancePosition = {
         decimals: string;
         name: string;
         symbol: string;
-      }[]
+      }[];
     };
     to: {
       address: string;
@@ -32,7 +33,7 @@ type MeanFinancePosition = {
         decimals: string;
         name: string;
         symbol: string;
-      }[]
+      }[];
     };
     status: string;
     swapInterval: {
@@ -48,10 +49,15 @@ type MeanFinancePosition = {
   }[];
 };
 
-export const getUserPositions = (address: string, network: Network, graphHelper: TheGraphHelper, version: PositionVersions) => {
+export const getUserPositions = (
+  address: string,
+  network: Network,
+  graphHelper: TheGraphHelper,
+  version: PositionVersions,
+) => {
   const endpoint = MEAN_GRAPHQL_URL[version][network];
   if (!endpoint) {
-    return Promise.resolve({ positions: [] })
+    return Promise.resolve({ positions: [] });
   }
   return graphHelper.gqlFetchAll<MeanFinancePosition>({
     endpoint,
@@ -64,7 +70,7 @@ export const getUserPositions = (address: string, network: Network, graphHelper:
 export const getPositions = (network: string, graphHelper: TheGraphHelper, version: PositionVersions) => {
   const endpoint = MEAN_GRAPHQL_URL[version][network];
   if (!endpoint) {
-    return Promise.resolve({ positions: [] })
+    return Promise.resolve({ positions: [] });
   }
   return graphHelper.gqlFetchAll<MeanFinancePosition>({
     endpoint,
