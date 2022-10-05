@@ -23,7 +23,7 @@ export class PolygonPickleFarmContractPositionFetcher extends MasterChefV2Templa
   PickleRewarder
 > {
   groupLabel = 'Farms';
-  chefAddresses = ['0x20b2a3fc7b13ca0ccf7af81a68a14cb3116e8749'];
+  chefAddress = '0x20b2a3fc7b13ca0ccf7af81a68a14cb3116e8749';
   rewardRateUnit = RewardRateUnit.SECOND;
 
   constructor(

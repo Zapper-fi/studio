@@ -14,7 +14,7 @@ import { BiswapContractFactory, BiswapMasterchef } from '../contracts';
 @PositionTemplate()
 export class BinanceSmartChainBiswapContractPositionFetcher extends MasterChefTemplateContractPositionFetcher<BiswapMasterchef> {
   groupLabel = 'Farms';
-  chefAddresses = ['0xdbc1a13490deef9c3c12b44fe77b503c1b061739'];
+  chefAddress = '0xdbc1a13490deef9c3c12b44fe77b503c1b061739';
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,

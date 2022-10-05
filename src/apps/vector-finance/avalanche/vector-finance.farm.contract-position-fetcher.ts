@@ -29,7 +29,7 @@ export class VectorFinanceFarmContractPositionFetcher extends MasterChefV2Templa
   VectorFinanceMasterChefRewarder
 > {
   groupLabel = 'Farms';
-  chefAddresses = ['0x423d0fe33031aa4456a17b150804aa57fc157d97'];
+  chefAddress = '0x423d0fe33031aa4456a17b150804aa57fc157d97';
   rewardRateUnit = RewardRateUnit.SECOND;
 
   constructor(

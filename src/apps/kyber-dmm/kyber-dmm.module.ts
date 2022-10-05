@@ -7,6 +7,7 @@ import { EthereumKyberDmmFarmContractPositionFetcher } from './ethereum/kyber-dm
 import { EthereumKyberDmmPoolTokenFetcher } from './ethereum/kyber-dmm.pool.token-fetcher';
 import { KyberDmmAppDefinition, KYBER_DMM_DEFINITION } from './kyber-dmm.definition';
 import { PolygonKyberDmmFarmContractPositionFetcher } from './polygon/kyber-dmm.farm.contract-position-fetcher';
+import { PolygonKyberDmmLegacyFarmContractPositionFetcher } from './polygon/kyber-dmm.legacy-farm.contract-position-fetcher';
 import { PolygonKyberDmmPoolTokenFetcher } from './polygon/kyber-dmm.pool.token-fetcher';
 
 @Register.AppModule({
@@ -19,6 +20,7 @@ import { PolygonKyberDmmPoolTokenFetcher } from './polygon/kyber-dmm.pool.token-
     EthereumKyberDmmFarmContractPositionFetcher,
     PolygonKyberDmmPoolTokenFetcher,
     PolygonKyberDmmFarmContractPositionFetcher,
+    PolygonKyberDmmLegacyFarmContractPositionFetcher,
   ],
 })
 export class KyberDmmAppModule extends AbstractApp() {}

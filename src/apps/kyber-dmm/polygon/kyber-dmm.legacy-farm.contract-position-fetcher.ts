@@ -3,7 +3,7 @@ import { PositionTemplate } from '~app-toolkit/decorators/position-template.deco
 import { KyberDmmFarmContractPositionFetcher } from '../common/kyber-dmm.farm.contract-position-fetcher';
 
 @PositionTemplate()
-export class EthereumKyberDmmFarmContractPositionFetcher extends KyberDmmFarmContractPositionFetcher {
+export class PolygonKyberDmmLegacyFarmContractPositionFetcher extends KyberDmmFarmContractPositionFetcher {
   groupLabel = 'Farms';
-  chefAddress = '0x31de05f28568e3d3d612bfa6a78b356676367470';
+  chefAddress = '0x829c27fd3013b944cbe76e92c3d6c45767c0c789';
 }

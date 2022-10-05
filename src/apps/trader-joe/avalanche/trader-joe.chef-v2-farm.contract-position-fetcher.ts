@@ -21,7 +21,7 @@ export class AvalancheTraderJoeChefV2FarmContractPositionFetcher extends MasterC
   TraderJoeChefV2Rewarder
 > {
   groupLabel = 'Farms';
-  chefAddresses = ['0xd6a4f121ca35509af06a0be99093d08462f53052'];
+  chefAddress = '0xd6a4f121ca35509af06a0be99093d08462f53052';
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,

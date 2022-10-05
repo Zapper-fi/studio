@@ -5,5 +5,5 @@ import { AbracadabraFarmContractPositionFetcher } from '../common/abracadabra.fa
 @PositionTemplate()
 export class AvalancheAbracadabraFarmContractPositionFetcher extends AbracadabraFarmContractPositionFetcher {
   groupLabel = 'Farms';
-  chefAddresses = ['0x06408571e0ad5e8f52ead01450bde74e5074dc74'];
+  chefAddress = '0x06408571e0ad5e8f52ead01450bde74e5074dc74';
 }

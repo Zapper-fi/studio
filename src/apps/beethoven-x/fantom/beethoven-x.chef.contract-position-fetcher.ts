@@ -5,5 +5,5 @@ import { BeethovenXChefContractPositionFetcher } from '../common/beethoven-x.che
 @PositionTemplate()
 export class FantomBeethovenXChefContractPositionFetcher extends BeethovenXChefContractPositionFetcher {
   groupLabel = 'Chef Farms';
-  chefAddresses = ['0x8166994d9ebbe5829ec86bd81258149b87facfd3'];
+  chefAddress = '0x8166994d9ebbe5829ec86bd81258149b87facfd3';
 }

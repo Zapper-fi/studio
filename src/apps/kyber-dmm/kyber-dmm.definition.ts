@@ -19,6 +19,13 @@ export const KYBER_DMM_DEFINITION = appDefinition({
       groupLabel: 'Pools',
     },
 
+    legacyFarm: {
+      id: 'legacy-farm',
+      type: GroupType.POSITION,
+      label: 'Kyber DMM',
+      groupLabel: 'Farms',
+    },
+
     farm: {
       id: 'farm',
       type: GroupType.POSITION,

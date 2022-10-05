@@ -5,5 +5,5 @@ import { NaosFarmContractPositionFetcher } from '../common/naos.farm.contract-po
 @PositionTemplate()
 export class EthereumNaosFarmContractPositionFetcher extends NaosFarmContractPositionFetcher {
   groupLabel = 'Staking';
-  chefAddresses = ['0x99e4ea9ef6bf396c49b35ff9478ebb8890aef581'];
+  chefAddress = '0x99e4ea9ef6bf396c49b35ff9478ebb8890aef581';
 }
