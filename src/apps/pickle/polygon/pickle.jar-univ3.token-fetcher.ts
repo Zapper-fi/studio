@@ -3,6 +3,6 @@ import { PositionTemplate } from '~app-toolkit/decorators/position-template.deco
 import { PickleJarUniv3TokenFetcher } from '../common/pickle.jar-univ3.token-fetcher';
 
 @PositionTemplate()
-export class OptimismUniV3PickleJarTokenFetcher extends PickleJarUniv3TokenFetcher {
+export class PolygonUniV3PickleJarTokenFetcher extends PickleJarUniv3TokenFetcher {
   groupLabel = 'Jars';
 }

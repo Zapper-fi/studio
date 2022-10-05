@@ -68,7 +68,13 @@ export abstract class PickleJarUniv3TokenFetcher extends AppTokenTemplatePositio
           this.contractFactory.pickleStrategyUniv3({ address: strategyAddr, network: this.network }),
         );
 
-        const tokenId = await strategy.tokenId().then(x => x?.toString());
+        const tokenId = await strategy
+          .tokenId()
+          .then(x => x?.toString())
+          .catch(err => {
+            if (isMulticallUnderlyingError(err)) return null;
+            throw err;
+          });
         if (!tokenId) return null;
 
         return { address, definition, underlyingTokenAddress, tokenId };

@@ -9,6 +9,7 @@ import { AuroraPickleJarTokenFetcher } from './aurora/pickle.jar.token-fetcher';
 import { PickleApiJarRegistry } from './common/pickle.api.jar-registry';
 import { PickleContractFactory } from './contracts';
 import { CronosPickleJarTokenFetcher } from './cronos/pickle.jar.token-fetcher';
+import { EthereumUniV3PickleJarTokenFetcher } from './ethereum/pickle.jar-univ3.token-fetcher';
 import { EthereumPickleJarTokenFetcher } from './ethereum/pickle.jar.token-fetcher';
 import { EthereumPickleFarmContractPositionFetcher } from './ethereum/pickle.masterchef-farm.contract-position-fetcher';
 import { EthereumPickleSingleRewardPositionFetcher } from './ethereum/pickle.single-staking-farm.contract-position-fetcher';
@@ -16,10 +17,11 @@ import { EthereumPickleVotingEscrowContractPositionFetcher } from './ethereum/pi
 import { FantomPickleJarTokenFetcher } from './fantom/pickle.jar.token-fetcher';
 import { GnosisPickleJarTokenFetcher } from './gnosis/pickle.jar.token-fetcher';
 import { MoonriverPickleJarTokenFetcher } from './moonriver/pickle.jar.token-fetcher';
-import { OptimismPickleJarTokenFetcher } from './optimism/pickle.jar.token-fetcher';
 import { OptimismUniV3PickleJarTokenFetcher } from './optimism/pickle.jar-univ3.token-fetcher';
+import { OptimismPickleJarTokenFetcher } from './optimism/pickle.jar.token-fetcher';
 import { OptimismPickleFarmContractPositionFetcher } from './optimism/pickle.masterchef-v2-farm.contract-position-fetcher';
 import { PickleAppDefinition, PICKLE_DEFINITION } from './pickle.definition';
+import { PolygonUniV3PickleJarTokenFetcher } from './polygon/pickle.jar-univ3.token-fetcher';
 import { PolygonPickleJarTokenFetcher } from './polygon/pickle.jar.token-fetcher';
 import { PolygonPickleFarmContractPositionFetcher } from './polygon/pickle.masterchef-v2-farm.contract-position-fetcher';
 
@@ -34,6 +36,7 @@ import { PolygonPickleFarmContractPositionFetcher } from './polygon/pickle.maste
     EthereumPickleJarTokenFetcher,
     EthereumPickleSingleRewardPositionFetcher,
     EthereumPickleVotingEscrowContractPositionFetcher,
+    EthereumUniV3PickleJarTokenFetcher,
     FantomPickleJarTokenFetcher,
     GnosisPickleJarTokenFetcher,
     MoonriverPickleJarTokenFetcher,
@@ -45,6 +48,7 @@ import { PolygonPickleFarmContractPositionFetcher } from './polygon/pickle.maste
     PickleContractFactory,
     PolygonPickleFarmContractPositionFetcher,
     PolygonPickleJarTokenFetcher,
+    PolygonUniV3PickleJarTokenFetcher,
     UniswapV3ContractFactory,
     UniswapV3LiquidityContractPositionBuilder,
   ],
