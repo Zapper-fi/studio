@@ -50,7 +50,7 @@ export abstract class MasterChefTemplateContractPositionFetcher<
     super(appToolkit);
   }
 
-  abstract chefAddress: string;
+  abstract chefAddresses: string[];
   abstract getPoolLength(contract: T): Promise<BigNumberish>;
 
   // Tokens
@@ -68,9 +68,13 @@ export abstract class MasterChefTemplateContractPositionFetcher<
   abstract getRewardTokenBalance(params: GetMasterChefTokenBalancesParams<T>): Promise<BigNumberish>;
 
   async getDefinitions() {
-    const contract = this.getContract(this.chefAddress);
-    const poolLength = await this.getPoolLength(contract);
-    return range(0, Number(poolLength)).map(poolIndex => ({ address: this.chefAddress, poolIndex }));
+    return Promise.all(
+      this.chefAddresses.map(async chefAddress => {
+        const contract = this.getContract(chefAddress);
+        const poolLength = await this.getPoolLength(contract);
+        return range(0, Number(poolLength)).map(poolIndex => ({ address: chefAddress, poolIndex }));
+      }),
+    ).then(v => v.flat());
   }
 
   async getTokenDefinitions({

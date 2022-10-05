@@ -15,7 +15,7 @@ import { PickleContractFactory, PickleJarMasterchef } from '../contracts';
 @PositionTemplate()
 export class EthereumPickleFarmContractPositionFetcher extends MasterChefTemplateContractPositionFetcher<PickleJarMasterchef> {
   groupLabel = 'Farms';
-  chefAddress = '0xbd17b1ce622d73bd438b9e658aca5996dc394b0d';
+  chefAddresses = ['0xbd17b1ce622d73bd438b9e658aca5996dc394b0d'];
   rewardRateUnit = RewardRateUnit.BLOCK;
 
   constructor(

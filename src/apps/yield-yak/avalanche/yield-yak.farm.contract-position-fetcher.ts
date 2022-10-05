@@ -16,7 +16,7 @@ import { YieldYakChef, YieldYakContractFactory } from '../contracts';
 @PositionTemplate()
 export class AvalancheYieldyakFarmContractPositionFetcher extends MasterChefTemplateContractPositionFetcher<YieldYakChef> {
   groupLabel = 'Farms';
-  chefAddress = '0x0cf605484a512d3f3435fed77ab5ddc0525daf5f';
+  chefAddresses = ['0x0cf605484a512d3f3435fed77ab5ddc0525daf5f'];
   rewardRateUnit = RewardRateUnit.BLOCK;
 
   constructor(

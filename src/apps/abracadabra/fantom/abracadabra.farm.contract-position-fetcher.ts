@@ -5,5 +5,5 @@ import { AbracadabraFarmContractPositionFetcher } from '../common/abracadabra.fa
 @PositionTemplate()
 export class FantomAbracadabraFarmContractPositionFetcher extends AbracadabraFarmContractPositionFetcher {
   groupLabel = 'Farms';
-  chefAddress = '0x37cf490255082ee50845ea4ff783eb9b6d1622ce';
+  chefAddresses = ['0x37cf490255082ee50845ea4ff783eb9b6d1622ce'];
 }

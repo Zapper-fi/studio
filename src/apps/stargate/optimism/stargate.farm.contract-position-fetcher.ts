@@ -5,5 +5,5 @@ import { StargateFarmContractPositionFetcher } from '../common/stargate.farm.con
 @PositionTemplate()
 export class OptimismStargateFarmContractPositionFetcher extends StargateFarmContractPositionFetcher {
   groupLabel = 'Farms';
-  chefAddress = '0x4a364f8c717caad9a442737eb7b8a55cc6cf18d8';
+  chefAddresses = ['0x4a364f8c717caad9a442737eb7b8a55cc6cf18d8'];
 }

@@ -13,7 +13,7 @@ import { SteakHutPool, SteakHutContractFactory } from '../contracts';
 @PositionTemplate()
 export class AvalancheSteakHutPoolContractPositionFetcher extends MasterChefTemplateContractPositionFetcher<SteakHutPool> {
   groupLabel = 'Pools';
-  chefAddress = '0xddbfbd5dc3ba0feb96cb513b689966b2176d4c09';
+  chefAddresses = ['0xddbfbd5dc3ba0feb96cb513b689966b2176d4c09'];
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,

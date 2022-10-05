@@ -21,7 +21,7 @@ export class AvalancheTraderJoeChefBoostedFarmContractPositionFetcher extends Ma
   TraderJoeChefBoostedRewarder
 > {
   groupLabel = 'Boost';
-  chefAddress = '0x4483f0b6e2f5486d06958c20f8c39a7abe87bf8f';
+  chefAddresses = ['0x4483f0b6e2f5486d06958c20f8c39a7abe87bf8f'];
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,

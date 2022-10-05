@@ -13,7 +13,7 @@ import { BancorV3ContractFactory, StandardRewards } from '../contracts';
 
 @PositionTemplate()
 export class EthereumBancorV3FarmContractPositionFetcher extends MasterChefTemplateContractPositionFetcher<StandardRewards> {
-  chefAddress = '0xb0b958398abb0b5db4ce4d7598fb868f5a00f372';
+  chefAddresses = ['0xb0b958398abb0b5db4ce4d7598fb868f5a00f372'];
   groupLabel = 'Farms';
 
   constructor(

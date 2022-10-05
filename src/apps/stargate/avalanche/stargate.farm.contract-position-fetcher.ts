@@ -5,5 +5,5 @@ import { StargateFarmContractPositionFetcher } from '../common/stargate.farm.con
 @PositionTemplate()
 export class AvalancheStargateFarmContractPositionFetcher extends StargateFarmContractPositionFetcher {
   groupLabel = 'Farms';
-  chefAddress = '0x8731d54e9d02c286767d56ac03e8037c07e01e98';
+  chefAddresses = ['0x8731d54e9d02c286767d56ac03e8037c07e01e98'];
 }

@@ -14,7 +14,7 @@ import { PlatypusFinanceContractFactory, PlatypusFinanceMasterPlatypusV2 } from 
 @PositionTemplate()
 export class AvalanchePlatypusFinanceChefContractPositionFetcher extends MasterChefTemplateContractPositionFetcher<PlatypusFinanceMasterPlatypusV2> {
   groupLabel = 'Farms';
-  chefAddress = '0x68c5f4374228beedfa078e77b5ed93c28a2f713e';
+  chefAddresses = ['0x68c5f4374228beedfa078e77b5ed93c28a2f713e'];
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,

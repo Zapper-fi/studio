@@ -14,7 +14,7 @@ import { TraderJoeVeJoeStaking, TraderJoeContractFactory } from '../contracts';
 @PositionTemplate()
 export class AvalancheTraderJoeVeJoeContractPositionFetcher extends MasterChefTemplateContractPositionFetcher<TraderJoeVeJoeStaking> {
   groupLabel = 'veJOE';
-  chefAddress = '0x25d85e17dd9e544f6e9f8d44f99602dbf5a97341';
+  chefAddresses = ['0x25d85e17dd9e544f6e9f8d44f99602dbf5a97341'];
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,

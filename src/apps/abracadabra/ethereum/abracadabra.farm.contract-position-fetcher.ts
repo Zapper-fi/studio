@@ -5,5 +5,5 @@ import { AbracadabraFarmContractPositionFetcher } from '../common/abracadabra.fa
 @PositionTemplate()
 export class EthereumAbracadabraFarmContractPositionFetcher extends AbracadabraFarmContractPositionFetcher {
   groupLabel = 'Farms';
-  chefAddress = '0xf43480afe9863da4acbd4419a47d9cc7d25a647f';
+  chefAddresses = ['0xf43480afe9863da4acbd4419a47d9cc7d25a647f'];
 }

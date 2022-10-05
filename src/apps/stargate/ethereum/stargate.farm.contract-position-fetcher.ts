@@ -5,5 +5,5 @@ import { StargateFarmContractPositionFetcher } from '../common/stargate.farm.con
 @PositionTemplate()
 export class EthereumStargateFarmContractPositionFetcher extends StargateFarmContractPositionFetcher {
   groupLabel = 'Farms';
-  chefAddress = '0xb0d502e938ed5f4df2e681fe6e419ff29631d62b';
+  chefAddresses = ['0xb0d502e938ed5f4df2e681fe6e419ff29631d62b'];
 }
