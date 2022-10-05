@@ -4,6 +4,14 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.239.0](https://github.com/Zapper-fi/studio/compare/v0.238.0...v0.239.0) (2022-10-05)
+
+
+### Features
+
+* **beefy:** add boost vault positions ([#1497](https://github.com/Zapper-fi/studio/issues/1497)) ([6a90c09](https://github.com/Zapper-fi/studio/commit/6a90c0991afd5f551e134b986b18af450a3c8fae))
+* **kyber-dmm:** Extract Kyber DMM for Kyber team ([#1492](https://github.com/Zapper-fi/studio/issues/1492)) ([5ea0430](https://github.com/Zapper-fi/studio/commit/5ea0430b10a7f18fb265b775364472a27f127f31))
+
 ## [0.238.0](https://github.com/Zapper-fi/studio/compare/v0.237.0...v0.238.0) (2022-10-04)
 
 
