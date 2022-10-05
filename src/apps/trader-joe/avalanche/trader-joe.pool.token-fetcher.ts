@@ -1,8 +1,8 @@
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
-import { UniswapV2PoolSubgraphTemplateTokenFetcher } from '~apps/uniswap-v2/common/uniswap-v2.pool.subgraph.template.token-fetcher';
+import { UniswapV2DefaultPoolSubgraphTemplateTokenFetcher } from '~apps/uniswap-v2/common/uniswap-v2.default.subgraph.template.token-fetcher';
 
 @PositionTemplate()
-export class AvalancheTraderJoePoolTokenFetcher extends UniswapV2PoolSubgraphTemplateTokenFetcher {
+export class AvalancheTraderJoePoolTokenFetcher extends UniswapV2DefaultPoolSubgraphTemplateTokenFetcher {
   groupLabel = 'Pools';
 
   factoryAddress = '0x9ad6c38be94206ca50bb0d90783181662f0cfa10';
