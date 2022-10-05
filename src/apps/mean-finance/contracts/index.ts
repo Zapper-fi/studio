@@ -6,6 +6,7 @@ import { Network } from '~types/network.interface';
 
 import { MeanFinanceHub__factory } from './ethers';
 import { MeanFinancePermissionManager__factory } from './ethers';
+import { MeanFinanceTransformerRegistry__factory } from './ethers';
 
 // eslint-disable-next-line
 type ContractOpts = { address: string; network: Network };
@@ -22,7 +23,11 @@ export class MeanFinanceContractFactory extends ContractFactory {
   meanFinancePermissionManager({ address, network }: ContractOpts) {
     return MeanFinancePermissionManager__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
+  meanFinanceTransformerRegistry({ address, network }: ContractOpts) {
+    return MeanFinanceTransformerRegistry__factory.connect(address, this.appToolkit.getNetworkProvider(network));
+  }
 }
 
 export type { MeanFinanceHub } from './ethers';
 export type { MeanFinancePermissionManager } from './ethers';
+export type { MeanFinanceTransformerRegistry } from './ethers';
