@@ -11,6 +11,7 @@ export const BEEFY_DEFINITION = appDefinition({
   tags: [AppTag.YIELD_AGGREGATOR],
   groups: {
     vault: { id: 'vault', type: GroupType.TOKEN, label: 'Vault' },
+    boostVault: { id: 'boost-vault', type: GroupType.POSITION, label: 'Boost Vault' },
   },
   links: {
     github: 'https://github.com/beefyfinance',
