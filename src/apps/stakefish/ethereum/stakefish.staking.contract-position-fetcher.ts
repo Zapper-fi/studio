@@ -28,7 +28,7 @@ export class EthereumStakefishStakingContractPositionFetcher extends ContractPos
   }
 
   async getDefinitions() {
-    return [{ address: '0x54cd0e6771b6487c721ec620c4de1240d3b07696' }];
+    return [{ address: '0xffee087852cb4898e6c3532e776e68bc68b1143b' }];
   }
 
   async getLabel({ contractPosition }: GetDisplayPropsParams<StakefishFeePool>) {
