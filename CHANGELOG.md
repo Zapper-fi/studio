@@ -4,6 +4,22 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.240.0](https://github.com/Zapper-fi/studio/compare/v0.239.0...v0.240.0) (2022-10-06)
+
+
+### Features
+
+* **clever:** Implement AladdinDAO CLever ([#1476](https://github.com/Zapper-fi/studio/issues/1476)) ([0c60404](https://github.com/Zapper-fi/studio/commit/0c6040425065f6f47be9b3f0c3f1b03e5974e7a7))
+* **mean-finance:** Fix linting ([f39738e](https://github.com/Zapper-fi/studio/commit/f39738e4f7755fe35aa77e1a2c6af6450ffa44f9))
+* **mean-finance:** Update integration to support yield bearing tokens in DCA positions ([#1487](https://github.com/Zapper-fi/studio/issues/1487)) ([c972019](https://github.com/Zapper-fi/studio/commit/c972019ae2f347e8f90b17418350d62e7242167a))
+
+
+### Bug Fixes
+
+* **clever:** Fix formatting and remove log ([4cff23e](https://github.com/Zapper-fi/studio/commit/4cff23e255df3c4c74f0c08ba2efb372f2dbce37))
+* **curve:** Fix price resolution strategy to fix 4pool prices ([#1500](https://github.com/Zapper-fi/studio/issues/1500)) ([301b042](https://github.com/Zapper-fi/studio/commit/301b042ee4cc373a71327af90700ede44e5517ec))
+* **kwenta:** Get market name from contract ([#1488](https://github.com/Zapper-fi/studio/issues/1488)) ([b73dbb4](https://github.com/Zapper-fi/studio/commit/b73dbb4d00bf7f799b0f7e1cc752799c50ed4448))
+
 ## [0.239.0](https://github.com/Zapper-fi/studio/compare/v0.238.0...v0.239.0) (2022-10-05)
 
 
