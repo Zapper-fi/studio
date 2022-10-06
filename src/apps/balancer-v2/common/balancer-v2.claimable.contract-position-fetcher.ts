@@ -13,6 +13,7 @@ import { ContractPositionTemplatePositionFetcher } from '~position/template/cont
 import {
   DefaultContractPositionDefinition,
   GetDisplayPropsParams,
+  UnderlyingTokenDefinition,
 } from '~position/template/contract-position.template.types';
 
 import { BalancerMerkleOrchard, BalancerV2ContractFactory } from '../contracts';
@@ -34,6 +35,10 @@ export abstract class BalancerV2ClaimableContractPositionFetcher extends Contrac
   }
 
   async getDefinitions(): Promise<DefaultContractPositionDefinition[]> {
+    return [];
+  }
+
+  async getTokenDefinitions(): Promise<UnderlyingTokenDefinition[] | null> {
     return [];
   }
 
