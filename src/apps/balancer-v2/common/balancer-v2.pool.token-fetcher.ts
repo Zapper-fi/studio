@@ -30,7 +30,7 @@ type GetPoolsResponse = {
 
 const GET_POOLS_QUERY = gql`
   query getPools($minLiquidity: Int) {
-    pools(first: 250, skip: 0, orderBy: totalLiquidity, orderDirection: desc, where: { totalShares_gt: 0.01 }) {
+    pools(first: 1000, skip: 0, orderBy: totalLiquidity, orderDirection: desc, where: { totalShares_gt: 0.01 }) {
       address
       poolType
       totalSwapVolume
