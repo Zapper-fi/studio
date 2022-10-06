@@ -4,6 +4,19 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.242.0](https://github.com/Zapper-fi/studio/compare/v0.241.0...v0.242.0) (2022-10-06)
+
+
+### Features
+
+* **ethereum-staking:** Rename application to ethereum-staking ([00ab47f](https://github.com/Zapper-fi/studio/commit/00ab47f686ffbf85e2b8f6b00a4bdd529979a922))
+* **polygon-staking:** Rename Polygon to Polygon Staking and convert to templates ([f1dbf3a](https://github.com/Zapper-fi/studio/commit/f1dbf3a5c1c85412971d7dd3f4a38930a7391dec))
+
+
+### Bug Fixes
+
+* **ethereum-staking:** Fix typing error ([a4ca1fd](https://github.com/Zapper-fi/studio/commit/a4ca1fd143c43e9a362a216b27c71da5e8d3781d))
+
 ## [0.241.0](https://github.com/Zapper-fi/studio/compare/v0.240.0...v0.241.0) (2022-10-06)
 
 
