@@ -6,7 +6,7 @@ import { Network } from '~types/network.interface';
 export const ETHEREUM_STAKING_DEFINITION = appDefinition({
   id: 'ethereum-staking',
   name: 'Ethereum Staking',
-  description: `Ethereum is open access to digital money and data-friendly services for everyone - no matter your background or location. It's a community-built technology behind the cryptocurrency ether (ETH) and thousands of applications you can use today.`,
+  description: `Staking is a public good for the Ethereum ecosystem. Any user with any amount of ETH can help secure the network and earn rewards in the process.`,
   groups: {
     deposit: {
       id: 'deposit',

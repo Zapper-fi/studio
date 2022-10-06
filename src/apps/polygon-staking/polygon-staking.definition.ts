@@ -3,17 +3,17 @@ import { appDefinition, AppDefinition } from '~app/app.definition';
 import { AppAction, AppTag, GroupType } from '~app/app.interface';
 import { Network } from '~types/network.interface';
 
-export const POLYGON_DEFINITION = appDefinition({
-  id: 'polygon',
-  name: 'Polygon',
+export const POLYGON_STAKING_DEFINITION = appDefinition({
+  id: 'polygon-staking',
+  name: 'Polygon Staking',
   description:
-    'Polygon believes in Web3 for all. Polygon is a decentralised Ethereum scaling platform that enables developers to build scalable user-friendly dApps with low transaction fees without ever sacrificing on security.',
+    'Anyone can become a validator on the Polygon PoS mainnet and share the non-inflationary network rewards, supporting the next wave of adoption. ',
   url: 'https://polygon.technology/',
   groups: {
-    staking: {
-      id: 'staking',
+    deposit: {
+      id: 'deposit',
       type: GroupType.POSITION,
-      label: 'Staking',
+      label: 'Deposits',
     },
   },
   tags: [AppTag.STAKING],
@@ -27,11 +27,11 @@ export const POLYGON_DEFINITION = appDefinition({
   primaryColor: '#fff',
 });
 
-@Register.AppDefinition(POLYGON_DEFINITION.id)
-export class PolygonAppDefinition extends AppDefinition {
+@Register.AppDefinition(POLYGON_STAKING_DEFINITION.id)
+export class PolygonStakingAppDefinition extends AppDefinition {
   constructor() {
-    super(POLYGON_DEFINITION);
+    super(POLYGON_STAKING_DEFINITION);
   }
 }
 
-export default POLYGON_DEFINITION;
+export default POLYGON_STAKING_DEFINITION;
