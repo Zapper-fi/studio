@@ -52,9 +52,7 @@ export abstract class ContractPositionTemplatePositionFetcher<
   abstract getContract(address: string): T;
 
   // 3. Get token definitions (supplied tokens, borrowed tokens, claimable tokens, etc.)
-  async getTokenDefinitions(_params: GetTokenDefinitionsParams<T, R>): Promise<UnderlyingTokenDefinition[] | null> {
-    return [];
-  }
+  abstract getTokenDefinitions(_params: GetTokenDefinitionsParams<T, R>): Promise<UnderlyingTokenDefinition[] | null>;
 
   // 4. Get additional data properties
   async getDataProps(_params: GetDataPropsParams<T, V, R>): Promise<V> {
