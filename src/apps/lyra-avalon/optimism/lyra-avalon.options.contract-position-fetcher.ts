@@ -41,6 +41,8 @@ export class OptimismLyraAvalonOptionsContractPositionFetcher implements Positio
     const markets = response.markets.map(market => {
       const quoteToken = baseTokens.find(t => t.address === market.quoteAddress.toLowerCase())!;
       const baseToken = baseTokens.find(t => t.address === market.baseAddress.toLowerCase())!;
+      if (!quoteToken || !baseToken) return null;
+
       const boards = market.boards.map(board => {
         const strikes = board.strikes.map(strike => {
           const position = {
@@ -79,12 +81,13 @@ export class OptimismLyraAvalonOptionsContractPositionFetcher implements Positio
             key: this.appToolkit.getPositionKey(p, ['optionType', 'strikeId']),
             ...p,
           }));
+
           return positionsWithKey;
         });
         return _.flatten(strikes);
       });
       return _.flatten(boards);
     });
-    return _.flatten(markets);
+    return _.compact(_.flatten(markets));
   }
 }
