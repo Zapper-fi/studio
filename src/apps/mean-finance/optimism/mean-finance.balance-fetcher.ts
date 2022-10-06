@@ -38,7 +38,7 @@ export class OptimismMeanFinanceBalanceFetcher implements BalanceFetcher {
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
     @Inject(MeanFinanceContractFactory)
     private readonly meanFinanceContractFactory: MeanFinanceContractFactory,
-  ) {}
+  ) { }
 
   async getUserPositions(address: string, version: PositionVersions) {
     const graphHelper = this.appToolkit.helpers.theGraphHelper;
@@ -61,7 +61,7 @@ export class OptimismMeanFinanceBalanceFetcher implements BalanceFetcher {
       network,
     });
 
-    const allTokens = [...baseTokens, ...appTokens];
+    const allTokens = [...appTokens, ...baseTokens];
 
     const amountsToFetch: { tokenFrom: string; tokenTo: string; amount: string; positionId: string }[] = [];
 
@@ -133,9 +133,8 @@ export class OptimismMeanFinanceBalanceFetcher implements BalanceFetcher {
       let label = '';
 
       if (remainingSwaps > 0) {
-        label = `Swapping ~${formattedRate} ${fromToUse.symbol}${
-          hasYieldFrom ? ' + yield' : ''
-        } ${swapIntervalAdverb} to ${toToUse.symbol}`;
+        label = `Swapping ~${formattedRate} ${fromToUse.symbol}${hasYieldFrom ? ' + yield' : ''
+          } ${swapIntervalAdverb} to ${toToUse.symbol}`;
       } else {
         label = `Swapping ${fromToUse.symbol} to ${toToUse.symbol}`;
       }
