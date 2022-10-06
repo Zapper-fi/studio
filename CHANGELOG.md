@@ -4,6 +4,19 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.243.0](https://github.com/Zapper-fi/studio/compare/v0.242.0...v0.243.0) (2022-10-06)
+
+
+### Features
+
+* **pickle:** Add new chains, rewards distributor, Master Chef V2, and Uniswap V3 vaults 🥒 ([#1474](https://github.com/Zapper-fi/studio/issues/1474)) ([78ffcc4](https://github.com/Zapper-fi/studio/commit/78ffcc4cfa9f44c4af506e86d95bde909db703e2))
+
+
+### Bug Fixes
+
+* **curve:** Fix failing claimable reward error on edge case ([a2cc80e](https://github.com/Zapper-fi/studio/commit/a2cc80e6d4812eb9cbf7d9605688f50adc38a082))
+* **mean-finance:** Resolve app tokens in priority over base tokens ([#1506](https://github.com/Zapper-fi/studio/issues/1506)) ([96bf6ec](https://github.com/Zapper-fi/studio/commit/96bf6ec4642cba5926d62ff788eb62fce5bef231))
+
 ## [0.242.0](https://github.com/Zapper-fi/studio/compare/v0.241.0...v0.242.0) (2022-10-06)
 
 
