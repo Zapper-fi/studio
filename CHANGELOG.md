@@ -4,6 +4,22 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.241.0](https://github.com/Zapper-fi/studio/compare/v0.240.0...v0.241.0) (2022-10-06)
+
+
+### Features
+
+* **balancer-v2:** Retrieve all pools because of missing rETH/ETH and rETH/RPL pools in graph with 0 total liquidity ([bbd3717](https://github.com/Zapper-fi/studio/commit/bbd3717a02a42901bf929e5fd310b80aa2c22b97))
+
+
+### Bug Fixes
+
+* **arth:** Fix missing override to token definitions ([#1503](https://github.com/Zapper-fi/studio/issues/1503)) ([ad9d866](https://github.com/Zapper-fi/studio/commit/ad9d866b5a3651f5af36585d8af812ab6fd74278))
+* **ease:** Fix API and add label ([4c7a331](https://github.com/Zapper-fi/studio/commit/4c7a331fb73d47e7550c6f94bc6f7ddbe475115b))
+* **lyra-avalon:** Fix missing markets ([8bb8650](https://github.com/Zapper-fi/studio/commit/8bb86503761dfdf0f14faefc7253ed77b4165cdb))
+* **stakefish:** Fix fee recipient address ([c1d84c6](https://github.com/Zapper-fi/studio/commit/c1d84c673a382a2f56ca558f2bf827a91572935c))
+* **stargate:** Fix division by zero ([691fe95](https://github.com/Zapper-fi/studio/commit/691fe959d6056c09265713cbb56302747191ac7c))
+
 ## [0.240.0](https://github.com/Zapper-fi/studio/compare/v0.239.0...v0.240.0) (2022-10-06)
 
 
