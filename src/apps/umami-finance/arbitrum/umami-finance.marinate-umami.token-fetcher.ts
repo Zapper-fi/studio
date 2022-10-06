@@ -10,11 +10,11 @@ import {
 } from '~position/template/app-token.template.types';
 
 import { UmamiFinanceYieldResolver } from '../common/umami-finance.marinate.token-definition-resolver';
-import { UmamiFinanceCompound, UmamiFinanceContractFactory } from '../contracts';
+import { UmamiFinanceContractFactory, UmamiFinanceMarinate } from '../contracts';
 
 @PositionTemplate()
-export class ArbitrumUmamiFinanceCompoundTokenFetcher extends AppTokenTemplatePositionFetcher<
-  UmamiFinanceCompound,
+export class ArbitrumUmamiFinanceMarinateUmamiTokenFetcher extends AppTokenTemplatePositionFetcher<
+  UmamiFinanceMarinate,
   DefaultAppTokenDataProps,
   DefaultAppTokenDefinition
 > {
@@ -26,37 +26,31 @@ export class ArbitrumUmamiFinanceCompoundTokenFetcher extends AppTokenTemplatePo
   ) {
     super(appToolkit);
   }
-  groupLabel = 'Compounding Marinating UMAMI';
+  groupLabel = 'mUMAMI';
+  isExcludedFromBalances = true;
 
-  getContract(address: string): UmamiFinanceCompound {
-    return this.contractFactory.umamiFinanceCompound({ network: this.network, address });
+  getContract(address: string): UmamiFinanceMarinate {
+    return this.contractFactory.umamiFinanceMarinate({ network: this.network, address });
   }
 
   async getAddresses(): Promise<string[]> {
-    return ['0x1922c36f3bc762ca300b4a46bb2102f84b1684ab'];
+    return ['0x2adabd6e8ce3e82f52d9998a7f64a90d294a92a4'];
   }
 
   async getUnderlyingTokenAddresses(): Promise<string> {
-    return '0x2adabd6e8ce3e82f52d9998a7f64a90d294a92a4';
+    return '0x1622bf67e6e5747b81866fe0b85178a93c7f86e3';
   }
 
-  async getReserves({ appToken }: GetDataPropsParams<UmamiFinanceCompound>) {
-    const underlyingTokenContract = this.contractFactory.umamiFinanceMarinate({
-      address: appToken.tokens[0].address,
-      network: this.network,
-    });
-
-    const balanceRaw = await underlyingTokenContract.balanceOf(appToken.address);
-    const reserve = Number(balanceRaw) / 10 ** appToken.decimals;
-    return [reserve];
+  async getReserves({ appToken }: GetDataPropsParams<UmamiFinanceMarinate>) {
+    return [Number(appToken.pricePerShare[0]) * appToken.supply];
   }
 
-  async getLiquidity({ appToken }: GetDataPropsParams<UmamiFinanceCompound>) {
+  async getLiquidity({ appToken }: GetDataPropsParams<UmamiFinanceMarinate>) {
     return appToken.supply * appToken.price;
   }
 
-  async getApy(_params: GetDataPropsParams<UmamiFinanceCompound>) {
+  async getApy(_params: GetDataPropsParams<UmamiFinanceMarinate>) {
     const { marinate } = await this.yieldResolver.getYield();
-    return Number(marinate.apy);
+    return Number(marinate.apr);
   }
 }
