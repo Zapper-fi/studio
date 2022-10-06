@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.243.1](https://github.com/Zapper-fi/studio/compare/v0.243.0...v0.243.1) (2022-10-06)
+
+
+### Bug Fixes
+
+* **stargate:** Fix failing balances for farms ([fefb583](https://github.com/Zapper-fi/studio/commit/fefb583296ce161cba090ff9879b13035cbd0e88))
+
 ## [0.243.0](https://github.com/Zapper-fi/studio/compare/v0.242.0...v0.243.0) (2022-10-06)
 
 
