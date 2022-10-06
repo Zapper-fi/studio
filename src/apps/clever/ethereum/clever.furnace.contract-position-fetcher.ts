@@ -42,7 +42,6 @@ export class EthereumCleverFurnaceContractPositionFetcher extends ContractPositi
 
   async getTokenBalancesPerPosition({ address, contract }: GetTokenBalancesParams<CleverFurnace>) {
     const userInfo = await contract.userInfo(address);
-    console.warn('here', userInfo);
     return [userInfo.unrealised, userInfo.realised];
   }
 }

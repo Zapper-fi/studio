@@ -3,8 +3,8 @@ import { AbstractApp } from '~app/app.dynamic-module';
 
 import { CleverAppDefinition, CLEVER_DEFINITION } from './clever.definition';
 import { CleverContractFactory } from './contracts';
-import { EthereumCleverLeverTokenFetcher } from './ethereum/clever.lever.token-fetcher';
 import { EthereumCleverFurnaceContractPositionFetcher } from './ethereum/clever.furnace.contract-position-fetcher';
+import { EthereumCleverLeverTokenFetcher } from './ethereum/clever.lever.token-fetcher';
 import { EthereumCleverLockContractPositionFetcher } from './ethereum/clever.lock.contract-position-fetcher';
 
 @Register.AppModule({
@@ -17,4 +17,4 @@ import { EthereumCleverLockContractPositionFetcher } from './ethereum/clever.loc
     EthereumCleverLockContractPositionFetcher,
   ],
 })
-export class CleverAppModule extends AbstractApp() { }
+export class CleverAppModule extends AbstractApp() {}
