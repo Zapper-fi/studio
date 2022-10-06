@@ -9,6 +9,7 @@ import type {
   CallOverrides,
   ContractTransaction,
   Overrides,
+  PayableOverrides,
   PopulatedTransaction,
   Signer,
   utils,
@@ -17,74 +18,82 @@ import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi
 import type { Listener, Provider } from '@ethersproject/providers';
 import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
-export interface PickleJarInterface extends utils.Interface {
+export interface PickleJarUniv3Interface extends utils.Interface {
   functions: {
     'allowance(address,address)': FunctionFragment;
     'approve(address,uint256)': FunctionFragment;
-    'available()': FunctionFragment;
-    'balance()': FunctionFragment;
     'balanceOf(address)': FunctionFragment;
     'controller()': FunctionFragment;
     'decimals()': FunctionFragment;
     'decreaseAllowance(address,uint256)': FunctionFragment;
-    'deposit(uint256)': FunctionFragment;
-    'depositAll()': FunctionFragment;
+    'deposit(uint256,uint256)': FunctionFragment;
     'earn()': FunctionFragment;
+    'getLowerTick()': FunctionFragment;
+    'getProportion()': FunctionFragment;
     'getRatio()': FunctionFragment;
+    'getUpperTick()': FunctionFragment;
     'governance()': FunctionFragment;
-    'harvest(address,uint256)': FunctionFragment;
     'increaseAllowance(address,uint256)': FunctionFragment;
-    'max()': FunctionFragment;
-    'min()': FunctionFragment;
+    'liquidityOfThis()': FunctionFragment;
     'name()': FunctionFragment;
+    'onERC721Received(address,address,uint256,bytes)': FunctionFragment;
+    'paused()': FunctionFragment;
+    'pool()': FunctionFragment;
     'setController(address)': FunctionFragment;
     'setGovernance(address)': FunctionFragment;
-    'setMin(uint256)': FunctionFragment;
+    'setPaused(bool)': FunctionFragment;
     'setTimelock(address)': FunctionFragment;
     'symbol()': FunctionFragment;
     'timelock()': FunctionFragment;
-    'token()': FunctionFragment;
-    'pool()': FunctionFragment;
+    'token0()': FunctionFragment;
+    'token1()': FunctionFragment;
+    'totalLiquidity()': FunctionFragment;
     'totalSupply()': FunctionFragment;
     'transfer(address,uint256)': FunctionFragment;
     'transferFrom(address,address,uint256)': FunctionFragment;
+    'univ3Router()': FunctionFragment;
     'withdraw(uint256)': FunctionFragment;
     'withdrawAll()': FunctionFragment;
+    'wmatic()': FunctionFragment;
   };
 
   getFunction(
     nameOrSignatureOrTopic:
       | 'allowance'
       | 'approve'
-      | 'available'
-      | 'balance'
       | 'balanceOf'
       | 'controller'
       | 'decimals'
       | 'decreaseAllowance'
       | 'deposit'
-      | 'depositAll'
       | 'earn'
+      | 'getLowerTick'
+      | 'getProportion'
       | 'getRatio'
+      | 'getUpperTick'
       | 'governance'
-      | 'harvest'
       | 'increaseAllowance'
-      | 'max'
-      | 'min'
+      | 'liquidityOfThis'
       | 'name'
+      | 'onERC721Received'
+      | 'paused'
+      | 'pool'
       | 'setController'
       | 'setGovernance'
-      | 'setMin'
+      | 'setPaused'
       | 'setTimelock'
       | 'symbol'
       | 'timelock'
-      | 'token'
-      | 'pool'
+      | 'token0'
+      | 'token1'
+      | 'totalLiquidity'
       | 'totalSupply'
       | 'transfer'
       | 'transferFrom'
+      | 'univ3Router'
       | 'withdraw'
-      | 'withdrawAll',
+      | 'withdrawAll'
+      | 'wmatic',
   ): FunctionFragment;
 
   encodeFunctionData(functionFragment: 'allowance', values: [PromiseOrValue<string>, PromiseOrValue<string>]): string;
@@ -92,8 +101,6 @@ export interface PickleJarInterface extends utils.Interface {
     functionFragment: 'approve',
     values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
   ): string;
-  encodeFunctionData(functionFragment: 'available', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'balance', values?: undefined): string;
   encodeFunctionData(functionFragment: 'balanceOf', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'controller', values?: undefined): string;
   encodeFunctionData(functionFragment: 'decimals', values?: undefined): string;
@@ -101,30 +108,37 @@ export interface PickleJarInterface extends utils.Interface {
     functionFragment: 'decreaseAllowance',
     values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
   ): string;
-  encodeFunctionData(functionFragment: 'deposit', values: [PromiseOrValue<BigNumberish>]): string;
-  encodeFunctionData(functionFragment: 'depositAll', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'earn', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'getRatio', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'governance', values?: undefined): string;
   encodeFunctionData(
-    functionFragment: 'harvest',
-    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+    functionFragment: 'deposit',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
   ): string;
+  encodeFunctionData(functionFragment: 'earn', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'getLowerTick', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'getProportion', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'getRatio', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'getUpperTick', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'governance', values?: undefined): string;
   encodeFunctionData(
     functionFragment: 'increaseAllowance',
     values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
   ): string;
-  encodeFunctionData(functionFragment: 'max', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'min', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'liquidityOfThis', values?: undefined): string;
   encodeFunctionData(functionFragment: 'name', values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: 'onERC721Received',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<BigNumberish>, PromiseOrValue<BytesLike>],
+  ): string;
+  encodeFunctionData(functionFragment: 'paused', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'pool', values?: undefined): string;
   encodeFunctionData(functionFragment: 'setController', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'setGovernance', values: [PromiseOrValue<string>]): string;
-  encodeFunctionData(functionFragment: 'setMin', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'setPaused', values: [PromiseOrValue<boolean>]): string;
   encodeFunctionData(functionFragment: 'setTimelock', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'symbol', values?: undefined): string;
   encodeFunctionData(functionFragment: 'timelock', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'token', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'pool', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'token0', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'token1', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'totalLiquidity', values?: undefined): string;
   encodeFunctionData(functionFragment: 'totalSupply', values?: undefined): string;
   encodeFunctionData(
     functionFragment: 'transfer',
@@ -134,47 +148,55 @@ export interface PickleJarInterface extends utils.Interface {
     functionFragment: 'transferFrom',
     values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
   ): string;
+  encodeFunctionData(functionFragment: 'univ3Router', values?: undefined): string;
   encodeFunctionData(functionFragment: 'withdraw', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'withdrawAll', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'wmatic', values?: undefined): string;
 
   decodeFunctionResult(functionFragment: 'allowance', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'approve', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'available', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'balance', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'balanceOf', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'controller', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'decimals', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'decreaseAllowance', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'deposit', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'depositAll', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'earn', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'getLowerTick', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'getProportion', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'getRatio', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'getUpperTick', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'governance', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'harvest', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'increaseAllowance', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'max', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'min', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'liquidityOfThis', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'name', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'onERC721Received', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'paused', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'pool', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'setController', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'setGovernance', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'setMin', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'setPaused', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'setTimelock', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'symbol', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'timelock', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'token', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'pool', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'token0', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'token1', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'totalLiquidity', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'totalSupply', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'transfer', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'transferFrom', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'univ3Router', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'withdraw', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'withdrawAll', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'wmatic', data: BytesLike): Result;
 
   events: {
     'Approval(address,address,uint256)': EventFragment;
+    'JarPaused(uint256,uint256)': EventFragment;
     'Transfer(address,address,uint256)': EventFragment;
   };
 
   getEvent(nameOrSignatureOrTopic: 'Approval'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'JarPaused'): EventFragment;
   getEvent(nameOrSignatureOrTopic: 'Transfer'): EventFragment;
 }
 
@@ -187,6 +209,14 @@ export type ApprovalEvent = TypedEvent<[string, string, BigNumber], ApprovalEven
 
 export type ApprovalEventFilter = TypedEventFilter<ApprovalEvent>;
 
+export interface JarPausedEventObject {
+  block: BigNumber;
+  timestamp: BigNumber;
+}
+export type JarPausedEvent = TypedEvent<[BigNumber, BigNumber], JarPausedEventObject>;
+
+export type JarPausedEventFilter = TypedEventFilter<JarPausedEvent>;
+
 export interface TransferEventObject {
   from: string;
   to: string;
@@ -196,12 +226,12 @@ export type TransferEvent = TypedEvent<[string, string, BigNumber], TransferEven
 
 export type TransferEventFilter = TypedEventFilter<TransferEvent>;
 
-export interface PickleJar extends BaseContract {
+export interface PickleJarUniv3 extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
 
-  interface: PickleJarInterface;
+  interface: PickleJarUniv3Interface;
 
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,
@@ -231,10 +261,6 @@ export interface PickleJar extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    available(overrides?: CallOverrides): Promise<[BigNumber]>;
-
-    balance(overrides?: CallOverrides): Promise<[BigNumber]>;
-
     balanceOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     controller(overrides?: CallOverrides): Promise<[string]>;
@@ -248,23 +274,22 @@ export interface PickleJar extends BaseContract {
     ): Promise<ContractTransaction>;
 
     deposit(
-      _amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
+      token0Amount: PromiseOrValue<BigNumberish>,
+      token1Amount: PromiseOrValue<BigNumberish>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
-
-    depositAll(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     earn(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
+    getLowerTick(overrides?: CallOverrides): Promise<[number]>;
+
+    getProportion(overrides?: CallOverrides): Promise<[BigNumber]>;
+
     getRatio(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    governance(overrides?: CallOverrides): Promise<[string]>;
+    getUpperTick(overrides?: CallOverrides): Promise<[number]>;
 
-    harvest(
-      reserve: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<ContractTransaction>;
+    governance(overrides?: CallOverrides): Promise<[string]>;
 
     increaseAllowance(
       spender: PromiseOrValue<string>,
@@ -272,11 +297,21 @@ export interface PickleJar extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    max(overrides?: CallOverrides): Promise<[BigNumber]>;
-
-    min(overrides?: CallOverrides): Promise<[BigNumber]>;
+    liquidityOfThis(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     name(overrides?: CallOverrides): Promise<[string]>;
+
+    onERC721Received(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
+      arg2: PromiseOrValue<BigNumberish>,
+      arg3: PromiseOrValue<BytesLike>,
+      overrides?: CallOverrides,
+    ): Promise<[string]>;
+
+    paused(overrides?: CallOverrides): Promise<[boolean]>;
+
+    pool(overrides?: CallOverrides): Promise<[string]>;
 
     setController(
       _controller: PromiseOrValue<string>,
@@ -288,8 +323,8 @@ export interface PickleJar extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    setMin(
-      _min: PromiseOrValue<BigNumberish>,
+    setPaused(
+      _paused: PromiseOrValue<boolean>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
@@ -302,9 +337,11 @@ export interface PickleJar extends BaseContract {
 
     timelock(overrides?: CallOverrides): Promise<[string]>;
 
-    token(overrides?: CallOverrides): Promise<[string]>;
+    token0(overrides?: CallOverrides): Promise<[string]>;
 
-    pool(overrides?: CallOverrides): Promise<[string]>;
+    token1(overrides?: CallOverrides): Promise<[string]>;
+
+    totalLiquidity(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     totalSupply(overrides?: CallOverrides): Promise<[BigNumber]>;
 
@@ -321,12 +358,16 @@ export interface PickleJar extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
+    univ3Router(overrides?: CallOverrides): Promise<[string]>;
+
     withdraw(
       _shares: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     withdrawAll(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
+
+    wmatic(overrides?: CallOverrides): Promise<[string]>;
   };
 
   allowance(
@@ -341,10 +382,6 @@ export interface PickleJar extends BaseContract {
     overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  available(overrides?: CallOverrides): Promise<BigNumber>;
-
-  balance(overrides?: CallOverrides): Promise<BigNumber>;
-
   balanceOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   controller(overrides?: CallOverrides): Promise<string>;
@@ -358,23 +395,22 @@ export interface PickleJar extends BaseContract {
   ): Promise<ContractTransaction>;
 
   deposit(
-    _amount: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> },
+    token0Amount: PromiseOrValue<BigNumberish>,
+    token1Amount: PromiseOrValue<BigNumberish>,
+    overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
-
-  depositAll(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   earn(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
+  getLowerTick(overrides?: CallOverrides): Promise<number>;
+
+  getProportion(overrides?: CallOverrides): Promise<BigNumber>;
+
   getRatio(overrides?: CallOverrides): Promise<BigNumber>;
 
-  governance(overrides?: CallOverrides): Promise<string>;
+  getUpperTick(overrides?: CallOverrides): Promise<number>;
 
-  harvest(
-    reserve: PromiseOrValue<string>,
-    amount: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> },
-  ): Promise<ContractTransaction>;
+  governance(overrides?: CallOverrides): Promise<string>;
 
   increaseAllowance(
     spender: PromiseOrValue<string>,
@@ -382,11 +418,21 @@ export interface PickleJar extends BaseContract {
     overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  max(overrides?: CallOverrides): Promise<BigNumber>;
-
-  min(overrides?: CallOverrides): Promise<BigNumber>;
+  liquidityOfThis(overrides?: CallOverrides): Promise<BigNumber>;
 
   name(overrides?: CallOverrides): Promise<string>;
+
+  onERC721Received(
+    arg0: PromiseOrValue<string>,
+    arg1: PromiseOrValue<string>,
+    arg2: PromiseOrValue<BigNumberish>,
+    arg3: PromiseOrValue<BytesLike>,
+    overrides?: CallOverrides,
+  ): Promise<string>;
+
+  paused(overrides?: CallOverrides): Promise<boolean>;
+
+  pool(overrides?: CallOverrides): Promise<string>;
 
   setController(
     _controller: PromiseOrValue<string>,
@@ -398,8 +444,8 @@ export interface PickleJar extends BaseContract {
     overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  setMin(
-    _min: PromiseOrValue<BigNumberish>,
+  setPaused(
+    _paused: PromiseOrValue<boolean>,
     overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
@@ -412,9 +458,11 @@ export interface PickleJar extends BaseContract {
 
   timelock(overrides?: CallOverrides): Promise<string>;
 
-  token(overrides?: CallOverrides): Promise<string>;
+  token0(overrides?: CallOverrides): Promise<string>;
 
-  pool(overrides?: CallOverrides): Promise<string>;
+  token1(overrides?: CallOverrides): Promise<string>;
+
+  totalLiquidity(overrides?: CallOverrides): Promise<BigNumber>;
 
   totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -431,12 +479,16 @@ export interface PickleJar extends BaseContract {
     overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
+  univ3Router(overrides?: CallOverrides): Promise<string>;
+
   withdraw(
     _shares: PromiseOrValue<BigNumberish>,
     overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   withdrawAll(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
+
+  wmatic(overrides?: CallOverrides): Promise<string>;
 
   callStatic: {
     allowance(
@@ -451,10 +503,6 @@ export interface PickleJar extends BaseContract {
       overrides?: CallOverrides,
     ): Promise<boolean>;
 
-    available(overrides?: CallOverrides): Promise<BigNumber>;
-
-    balance(overrides?: CallOverrides): Promise<BigNumber>;
-
     balanceOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     controller(overrides?: CallOverrides): Promise<string>;
@@ -467,21 +515,23 @@ export interface PickleJar extends BaseContract {
       overrides?: CallOverrides,
     ): Promise<boolean>;
 
-    deposit(_amount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
-
-    depositAll(overrides?: CallOverrides): Promise<void>;
+    deposit(
+      token0Amount: PromiseOrValue<BigNumberish>,
+      token1Amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
     earn(overrides?: CallOverrides): Promise<void>;
 
+    getLowerTick(overrides?: CallOverrides): Promise<number>;
+
+    getProportion(overrides?: CallOverrides): Promise<BigNumber>;
+
     getRatio(overrides?: CallOverrides): Promise<BigNumber>;
 
-    governance(overrides?: CallOverrides): Promise<string>;
+    getUpperTick(overrides?: CallOverrides): Promise<number>;
 
-    harvest(
-      reserve: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides,
-    ): Promise<void>;
+    governance(overrides?: CallOverrides): Promise<string>;
 
     increaseAllowance(
       spender: PromiseOrValue<string>,
@@ -489,17 +539,27 @@ export interface PickleJar extends BaseContract {
       overrides?: CallOverrides,
     ): Promise<boolean>;
 
-    max(overrides?: CallOverrides): Promise<BigNumber>;
-
-    min(overrides?: CallOverrides): Promise<BigNumber>;
+    liquidityOfThis(overrides?: CallOverrides): Promise<BigNumber>;
 
     name(overrides?: CallOverrides): Promise<string>;
+
+    onERC721Received(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
+      arg2: PromiseOrValue<BigNumberish>,
+      arg3: PromiseOrValue<BytesLike>,
+      overrides?: CallOverrides,
+    ): Promise<string>;
+
+    paused(overrides?: CallOverrides): Promise<boolean>;
+
+    pool(overrides?: CallOverrides): Promise<string>;
 
     setController(_controller: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     setGovernance(_governance: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    setMin(_min: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
+    setPaused(_paused: PromiseOrValue<boolean>, overrides?: CallOverrides): Promise<void>;
 
     setTimelock(_timelock: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
@@ -507,9 +567,11 @@ export interface PickleJar extends BaseContract {
 
     timelock(overrides?: CallOverrides): Promise<string>;
 
-    token(overrides?: CallOverrides): Promise<string>;
+    token0(overrides?: CallOverrides): Promise<string>;
 
-    pool(overrides?: CallOverrides): Promise<string>;
+    token1(overrides?: CallOverrides): Promise<string>;
+
+    totalLiquidity(overrides?: CallOverrides): Promise<BigNumber>;
 
     totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -526,9 +588,13 @@ export interface PickleJar extends BaseContract {
       overrides?: CallOverrides,
     ): Promise<boolean>;
 
+    univ3Router(overrides?: CallOverrides): Promise<string>;
+
     withdraw(_shares: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
     withdrawAll(overrides?: CallOverrides): Promise<void>;
+
+    wmatic(overrides?: CallOverrides): Promise<string>;
   };
 
   filters: {
@@ -542,6 +608,9 @@ export interface PickleJar extends BaseContract {
       spender?: PromiseOrValue<string> | null,
       value?: null,
     ): ApprovalEventFilter;
+
+    'JarPaused(uint256,uint256)'(block?: null, timestamp?: null): JarPausedEventFilter;
+    JarPaused(block?: null, timestamp?: null): JarPausedEventFilter;
 
     'Transfer(address,address,uint256)'(
       from?: PromiseOrValue<string> | null,
@@ -568,10 +637,6 @@ export interface PickleJar extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    available(overrides?: CallOverrides): Promise<BigNumber>;
-
-    balance(overrides?: CallOverrides): Promise<BigNumber>;
-
     balanceOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     controller(overrides?: CallOverrides): Promise<BigNumber>;
@@ -585,23 +650,22 @@ export interface PickleJar extends BaseContract {
     ): Promise<BigNumber>;
 
     deposit(
-      _amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
+      token0Amount: PromiseOrValue<BigNumberish>,
+      token1Amount: PromiseOrValue<BigNumberish>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
-
-    depositAll(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     earn(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
+    getLowerTick(overrides?: CallOverrides): Promise<BigNumber>;
+
+    getProportion(overrides?: CallOverrides): Promise<BigNumber>;
+
     getRatio(overrides?: CallOverrides): Promise<BigNumber>;
 
-    governance(overrides?: CallOverrides): Promise<BigNumber>;
+    getUpperTick(overrides?: CallOverrides): Promise<BigNumber>;
 
-    harvest(
-      reserve: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<BigNumber>;
+    governance(overrides?: CallOverrides): Promise<BigNumber>;
 
     increaseAllowance(
       spender: PromiseOrValue<string>,
@@ -609,11 +673,21 @@ export interface PickleJar extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    max(overrides?: CallOverrides): Promise<BigNumber>;
-
-    min(overrides?: CallOverrides): Promise<BigNumber>;
+    liquidityOfThis(overrides?: CallOverrides): Promise<BigNumber>;
 
     name(overrides?: CallOverrides): Promise<BigNumber>;
+
+    onERC721Received(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
+      arg2: PromiseOrValue<BigNumberish>,
+      arg3: PromiseOrValue<BytesLike>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
+
+    paused(overrides?: CallOverrides): Promise<BigNumber>;
+
+    pool(overrides?: CallOverrides): Promise<BigNumber>;
 
     setController(
       _controller: PromiseOrValue<string>,
@@ -625,8 +699,8 @@ export interface PickleJar extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    setMin(
-      _min: PromiseOrValue<BigNumberish>,
+    setPaused(
+      _paused: PromiseOrValue<boolean>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
@@ -639,9 +713,11 @@ export interface PickleJar extends BaseContract {
 
     timelock(overrides?: CallOverrides): Promise<BigNumber>;
 
-    token(overrides?: CallOverrides): Promise<BigNumber>;
+    token0(overrides?: CallOverrides): Promise<BigNumber>;
 
-    pool(overrides?: CallOverrides): Promise<BigNumber>;
+    token1(overrides?: CallOverrides): Promise<BigNumber>;
+
+    totalLiquidity(overrides?: CallOverrides): Promise<BigNumber>;
 
     totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -658,12 +734,16 @@ export interface PickleJar extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
+    univ3Router(overrides?: CallOverrides): Promise<BigNumber>;
+
     withdraw(
       _shares: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     withdrawAll(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
+
+    wmatic(overrides?: CallOverrides): Promise<BigNumber>;
   };
 
   populateTransaction: {
@@ -679,10 +759,6 @@ export interface PickleJar extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    available(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    balance(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
     balanceOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     controller(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -696,23 +772,22 @@ export interface PickleJar extends BaseContract {
     ): Promise<PopulatedTransaction>;
 
     deposit(
-      _amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
+      token0Amount: PromiseOrValue<BigNumberish>,
+      token1Amount: PromiseOrValue<BigNumberish>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
-
-    depositAll(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     earn(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
+    getLowerTick(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    getProportion(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
     getRatio(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    governance(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getUpperTick(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    harvest(
-      reserve: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<PopulatedTransaction>;
+    governance(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     increaseAllowance(
       spender: PromiseOrValue<string>,
@@ -720,11 +795,21 @@ export interface PickleJar extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    max(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    min(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    liquidityOfThis(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     name(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    onERC721Received(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
+      arg2: PromiseOrValue<BigNumberish>,
+      arg3: PromiseOrValue<BytesLike>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
+
+    paused(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    pool(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     setController(
       _controller: PromiseOrValue<string>,
@@ -736,8 +821,8 @@ export interface PickleJar extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    setMin(
-      _min: PromiseOrValue<BigNumberish>,
+    setPaused(
+      _paused: PromiseOrValue<boolean>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
@@ -750,9 +835,11 @@ export interface PickleJar extends BaseContract {
 
     timelock(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    token(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    token0(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    pool(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    token1(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    totalLiquidity(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     totalSupply(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
@@ -769,11 +856,15 @@ export interface PickleJar extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
+    univ3Router(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
     withdraw(
       _shares: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     withdrawAll(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
+
+    wmatic(overrides?: CallOverrides): Promise<PopulatedTransaction>;
   };
 }

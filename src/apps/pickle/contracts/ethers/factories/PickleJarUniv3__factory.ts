@@ -4,14 +4,24 @@
 
 import { Contract, Signer, utils } from 'ethers';
 import type { Provider } from '@ethersproject/providers';
-import type { PickleJar, PickleJarInterface } from '../PickleJar';
+import type { PickleJarUniv3, PickleJarUniv3Interface } from '../PickleJarUniv3';
 
 const _abi = [
   {
     inputs: [
       {
+        internalType: 'string',
+        name: '_name',
+        type: 'string',
+      },
+      {
+        internalType: 'string',
+        name: '_symbol',
+        type: 'string',
+      },
+      {
         internalType: 'address',
-        name: '_token',
+        name: '_pool',
         type: 'address',
       },
       {
@@ -62,6 +72,25 @@ const _abi = [
     anonymous: false,
     inputs: [
       {
+        indexed: false,
+        internalType: 'uint256',
+        name: 'block',
+        type: 'uint256',
+      },
+      {
+        indexed: false,
+        internalType: 'uint256',
+        name: 'timestamp',
+        type: 'uint256',
+      },
+    ],
+    name: 'JarPaused',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
         indexed: true,
         internalType: 'address',
         name: 'from',
@@ -82,6 +111,10 @@ const _abi = [
     ],
     name: 'Transfer',
     type: 'event',
+  },
+  {
+    stateMutability: 'payable',
+    type: 'fallback',
   },
   {
     inputs: [
@@ -129,32 +162,6 @@ const _abi = [
       },
     ],
     stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'available',
-    outputs: [
-      {
-        internalType: 'uint256',
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'balance',
-    outputs: [
-      {
-        internalType: 'uint256',
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
     type: 'function',
   },
   {
@@ -230,20 +237,18 @@ const _abi = [
     inputs: [
       {
         internalType: 'uint256',
-        name: '_amount',
+        name: 'token0Amount',
+        type: 'uint256',
+      },
+      {
+        internalType: 'uint256',
+        name: 'token1Amount',
         type: 'uint256',
       },
     ],
     name: 'deposit',
     outputs: [],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'depositAll',
-    outputs: [],
-    stateMutability: 'nonpayable',
+    stateMutability: 'payable',
     type: 'function',
   },
   {
@@ -251,6 +256,32 @@ const _abi = [
     name: 'earn',
     outputs: [],
     stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'getLowerTick',
+    outputs: [
+      {
+        internalType: 'int24',
+        name: '',
+        type: 'int24',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'getProportion',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
     type: 'function',
   },
   {
@@ -268,6 +299,19 @@ const _abi = [
   },
   {
     inputs: [],
+    name: 'getUpperTick',
+    outputs: [
+      {
+        internalType: 'int24',
+        name: '',
+        type: 'int24',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
     name: 'governance',
     outputs: [
       {
@@ -277,24 +321,6 @@ const _abi = [
       },
     ],
     stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        internalType: 'address',
-        name: 'reserve',
-        type: 'address',
-      },
-      {
-        internalType: 'uint256',
-        name: 'amount',
-        type: 'uint256',
-      },
-    ],
-    name: 'harvest',
-    outputs: [],
-    stateMutability: 'nonpayable',
     type: 'function',
   },
   {
@@ -323,20 +349,7 @@ const _abi = [
   },
   {
     inputs: [],
-    name: 'max',
-    outputs: [
-      {
-        internalType: 'uint256',
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'min',
+    name: 'liquidityOfThis',
     outputs: [
       {
         internalType: 'uint256',
@@ -355,6 +368,66 @@ const _abi = [
         internalType: 'string',
         name: '',
         type: 'string',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'address',
+        name: '',
+        type: 'address',
+      },
+      {
+        internalType: 'address',
+        name: '',
+        type: 'address',
+      },
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
+      },
+      {
+        internalType: 'bytes',
+        name: '',
+        type: 'bytes',
+      },
+    ],
+    name: 'onERC721Received',
+    outputs: [
+      {
+        internalType: 'bytes4',
+        name: '',
+        type: 'bytes4',
+      },
+    ],
+    stateMutability: 'pure',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'paused',
+    outputs: [
+      {
+        internalType: 'bool',
+        name: '',
+        type: 'bool',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'pool',
+    outputs: [
+      {
+        internalType: 'contract IUniswapV3Pool',
+        name: '',
+        type: 'address',
       },
     ],
     stateMutability: 'view',
@@ -389,12 +462,12 @@ const _abi = [
   {
     inputs: [
       {
-        internalType: 'uint256',
-        name: '_min',
-        type: 'uint256',
+        internalType: 'bool',
+        name: '_paused',
+        type: 'bool',
       },
     ],
-    name: 'setMin',
+    name: 'setPaused',
     outputs: [],
     stateMutability: 'nonpayable',
     type: 'function',
@@ -440,7 +513,7 @@ const _abi = [
   },
   {
     inputs: [],
-    name: 'token',
+    name: 'token0',
     outputs: [
       {
         internalType: 'contract IERC20',
@@ -453,12 +526,25 @@ const _abi = [
   },
   {
     inputs: [],
-    name: 'pool',
+    name: 'token1',
     outputs: [
       {
-        internalType: 'contract IUniswapV3Pool',
+        internalType: 'contract IERC20',
         name: '',
         type: 'address',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'totalLiquidity',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
       },
     ],
     stateMutability: 'view',
@@ -531,6 +617,19 @@ const _abi = [
     type: 'function',
   },
   {
+    inputs: [],
+    name: 'univ3Router',
+    outputs: [
+      {
+        internalType: 'address',
+        name: '',
+        type: 'address',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
     inputs: [
       {
         internalType: 'uint256',
@@ -550,14 +649,27 @@ const _abi = [
     stateMutability: 'nonpayable',
     type: 'function',
   },
+  {
+    inputs: [],
+    name: 'wmatic',
+    outputs: [
+      {
+        internalType: 'address',
+        name: '',
+        type: 'address',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
 ];
 
-export class PickleJar__factory {
+export class PickleJarUniv3__factory {
   static readonly abi = _abi;
-  static createInterface(): PickleJarInterface {
-    return new utils.Interface(_abi) as PickleJarInterface;
+  static createInterface(): PickleJarUniv3Interface {
+    return new utils.Interface(_abi) as PickleJarUniv3Interface;
   }
-  static connect(address: string, signerOrProvider: Signer | Provider): PickleJar {
-    return new Contract(address, _abi, signerOrProvider) as PickleJar;
+  static connect(address: string, signerOrProvider: Signer | Provider): PickleJarUniv3 {
+    return new Contract(address, _abi, signerOrProvider) as PickleJarUniv3;
   }
 }
