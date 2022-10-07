@@ -56,7 +56,6 @@ export abstract class AaveV2LendingTemplateTokenFetcher extends AppTokenTemplate
     super(appToolkit);
   }
 
-  abstract isDebt: boolean;
   abstract providerAddress: string;
   abstract getTokenAddress(reserveTokenAddressesData: AaveV2ReserveTokenAddressesData): string;
   abstract getApyFromReserveData(reserveApyData: AaveV2ReserveApyData): number;
@@ -149,24 +148,5 @@ export abstract class AaveV2LendingTemplateTokenFetcher extends AppTokenTemplate
     appToken,
   }: GetDisplayPropsParams<AaveV2AToken, AaveV2LendingTokenDataProps>): Promise<string> {
     return appToken.symbol;
-  }
-
-  async getBalances(address: string): Promise<AppTokenPositionBalance<AaveV2LendingTokenDataProps>[]> {
-    const multicall = this.appToolkit.getMulticall(this.network);
-    const appTokens = await this.appToolkit.getAppTokenPositions<AaveV2LendingTokenDataProps>({
-      appId: this.appId,
-      network: this.network,
-      groupIds: [this.groupId],
-    });
-
-    const balances = await Promise.all(
-      appTokens.map(async appToken => {
-        const balanceRaw = await this.getBalancePerToken({ multicall, address, appToken });
-        const tokenBalance = drillBalance(appToken, balanceRaw.toString(), { isDebt: this.isDebt });
-        return tokenBalance;
-      }),
-    );
-
-    return balances as AppTokenPositionBalance<AaveV2LendingTokenDataProps>[];
   }
 }
