@@ -41,6 +41,7 @@ export abstract class AppTokenTemplatePositionFetcher<
   appId: string;
   groupId: string;
   network: Network;
+  isDebt: boolean = false;
   abstract groupLabel: string;
 
   isExcludedFromBalances = false;
@@ -308,7 +309,7 @@ export abstract class AppTokenTemplatePositionFetcher<
     const balances = await Promise.all(
       appTokens.map(async appToken => {
         const balanceRaw = await this.getBalancePerToken({ multicall, address, appToken });
-        const tokenBalance = drillBalance(appToken, balanceRaw.toString());
+        const tokenBalance = drillBalance(appToken, balanceRaw.toString(), { isDebt: this.isDebt });
         return tokenBalance;
       }),
     );
@@ -343,7 +344,7 @@ export abstract class AppTokenTemplatePositionFetcher<
       const tokenBalance = balances.find(b => b.key === this.appToolkit.getPositionKey(token));
       if (!tokenBalance) return null;
 
-      const result = drillBalance<typeof token, V>(token, tokenBalance.balance);
+      const result = drillBalance<typeof token, V>(token, tokenBalance.balance, { isDebt: this.isDebt });
       return result;
     });
 
