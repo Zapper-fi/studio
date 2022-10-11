@@ -4,6 +4,14 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.244.0](https://github.com/Zapper-fi/studio/compare/v0.243.1...v0.244.0) (2022-10-11)
+
+
+### Features
+
+* **debt:** Add ability to define debt for app token positions ([#1515](https://github.com/Zapper-fi/studio/issues/1515)) ([056ac90](https://github.com/Zapper-fi/studio/commit/056ac9088400ed4bd5ab0d70084c873dd78b6211))
+* **wombat:** Add Wombat Exchange integration ([#1466](https://github.com/Zapper-fi/studio/issues/1466)) ([f31e798](https://github.com/Zapper-fi/studio/commit/f31e798b4d2a814a0d9feeae19bc005a19771e9f))
+
 ## [0.243.1](https://github.com/Zapper-fi/studio/compare/v0.243.0...v0.243.1) (2022-10-06)
 
 
