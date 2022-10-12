@@ -4,6 +4,14 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.245.0](https://github.com/Zapper-fi/studio/compare/v0.244.0...v0.245.0) (2022-10-12)
+
+
+### Features
+
+* **kyber-elastic:** Fix logo and types ([0ec8bce](https://github.com/Zapper-fi/studio/commit/0ec8bce70dc4ebd82f5568b083c8d630a52e6c2b))
+* **kyber-elastic:** Kyber Elastic integration ([#1524](https://github.com/Zapper-fi/studio/issues/1524)) ([e1b3383](https://github.com/Zapper-fi/studio/commit/e1b3383e4a9f08ef2c7a81ba2db6929352100977))
+
 ## [0.244.0](https://github.com/Zapper-fi/studio/compare/v0.243.1...v0.244.0) (2022-10-11)
 
 
