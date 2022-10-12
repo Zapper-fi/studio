@@ -6,7 +6,8 @@ import { Network } from '~types/network.interface';
 export const KYBER_ELASTIC_DEFINITION = appDefinition({
   id: 'kyber-elastic',
   name: 'Kyber Elastic',
-  description: 'KyberSwap’s newest protocol, dubbed KyberSwap Elastic, is a tick-based AMM with concentrated liquidity.',
+  description:
+    'KyberSwap’s newest protocol, dubbed KyberSwap Elastic, is a tick-based AMM with concentrated liquidity.',
   url: 'https://kyberswap.com',
 
   groups: {
@@ -24,6 +25,11 @@ export const KYBER_ELASTIC_DEFINITION = appDefinition({
   supportedNetworks: {
     [Network.ETHEREUM_MAINNET]: [AppAction.VIEW],
     [Network.BINANCE_SMART_CHAIN_MAINNET]: [AppAction.VIEW],
+    [Network.OPTIMISM_MAINNET]: [AppAction.VIEW],
+    [Network.ARBITRUM_MAINNET]: [AppAction.VIEW],
+    [Network.CRONOS_MAINNET]: [AppAction.VIEW],
+    [Network.FANTOM_OPERA_MAINNET]: [AppAction.VIEW],
+    [Network.POLYGON_MAINNET]: [AppAction.VIEW],
     [Network.AVALANCHE_MAINNET]: [AppAction.VIEW],
   },
 
