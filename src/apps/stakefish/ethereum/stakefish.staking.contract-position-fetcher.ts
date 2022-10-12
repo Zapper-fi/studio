@@ -45,11 +45,9 @@ export class EthereumStakefishStakingContractPositionFetcher extends ContractPos
 
   async getStakedBalances(address: string, isStaked: number) {
     if (!isStaked) return [0, 0];
-    const response = await axios.get(
-      `https://fee-pool-api-mainnet.oracle.ethereum.fish/validators?depositor=${address}`,
-    );
+    const response = await axios.get(`https://fee-pool-api-mainnet.prod.ethereum.fish/balances/${address}`);
     const staked = sumBy(response.data.results, 'effective_balance');
-    const total = sumBy(response.data.results, 'balance');
+    const total = sumBy(response.data.results, 'total_balance');
     return [staked, total].map(x => Number(x) * 1e9);
   }
 
