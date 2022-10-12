@@ -19,6 +19,5 @@ import { KyberElasticAppDefinition } from './kyber-elastic.definition';
     BinanceSmartChainKyberElasticLiquidityContractPositionFetcher,
     AvalancheKyberElasticLiquidityContractPositionFetcher,
   ],
-  exports: [KyberElasticContractFactory],
 })
 export class KyberElasticAppModule extends AbstractApp() {}

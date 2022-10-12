@@ -26,7 +26,15 @@ export const getSupplied = ({
   const networkId = NETWORK_IDS[network]!;
   const t0 = new KsToken(networkId, token0.address, token0.decimals, token0.symbol);
   const t1 = new KsToken(networkId, token1.address, token1.decimals, token1.symbol);
-  const pool = new Pool(t0, t1, feeBips, state.sqrtPriceX96, state.liquidity, state.reinvestL, state.currentTick);
+  const pool = new Pool(
+    t0,
+    t1,
+    feeBips,
+    state.sqrtPriceX96.toString(),
+    state.liquidity.toString(),
+    state.reinvestL.toString(),
+    state.currentTick,
+  );
   const pos = new Position({ pool, liquidity: position.liquidity.toString(), tickLower, tickUpper });
 
   const token0BalanceRaw = pos.amount0.multiply(10 ** token0.decimals).toFixed(0);
@@ -62,7 +70,7 @@ export const getRange = ({
     t1Wrapper,
     feeBips,
     sqrtPriceX96.toString(),
-    state.liquidity,
+    state.liquidity.toString(),
     state.reinvestL.toString(),
     tickCurrent,
   );
