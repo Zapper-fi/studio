@@ -29,6 +29,5 @@ import { PolygonKyberElasticLiquidityContractPositionFetcher } from './polygon/k
     ArbitrumKyberElasticLiquidityContractPositionFetcher,
     PolygonKyberElasticLiquidityContractPositionFetcher,
   ],
-  exports: [KyberElasticContractFactory],
 })
-export class KyberElasticAppModule extends AbstractApp() {}
+export class KyberElasticAppModule extends AbstractApp() { }

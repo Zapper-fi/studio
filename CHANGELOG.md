@@ -4,6 +4,22 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.245.0](https://github.com/Zapper-fi/studio/compare/v0.244.0...v0.245.0) (2022-10-12)
+
+
+### Features
+
+* **kyber-elastic:** Fix logo and types ([0ec8bce](https://github.com/Zapper-fi/studio/commit/0ec8bce70dc4ebd82f5568b083c8d630a52e6c2b))
+* **kyber-elastic:** Kyber Elastic integration ([#1524](https://github.com/Zapper-fi/studio/issues/1524)) ([e1b3383](https://github.com/Zapper-fi/studio/commit/e1b3383e4a9f08ef2c7a81ba2db6929352100977))
+
+## [0.244.0](https://github.com/Zapper-fi/studio/compare/v0.243.1...v0.244.0) (2022-10-11)
+
+
+### Features
+
+* **debt:** Add ability to define debt for app token positions ([#1515](https://github.com/Zapper-fi/studio/issues/1515)) ([056ac90](https://github.com/Zapper-fi/studio/commit/056ac9088400ed4bd5ab0d70084c873dd78b6211))
+* **wombat:** Add Wombat Exchange integration ([#1466](https://github.com/Zapper-fi/studio/issues/1466)) ([f31e798](https://github.com/Zapper-fi/studio/commit/f31e798b4d2a814a0d9feeae19bc005a19771e9f))
+
 ## [0.243.1](https://github.com/Zapper-fi/studio/compare/v0.243.0...v0.243.1) (2022-10-06)
 
 
