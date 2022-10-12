@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.246.0](https://github.com/Zapper-fi/studio/compare/v0.245.0...v0.246.0) (2022-10-12)
+
+
+### Features
+
+* **stakefish:** Fix stakefish balance ([#1544](https://github.com/Zapper-fi/studio/issues/1544)) ([0cab2a9](https://github.com/Zapper-fi/studio/commit/0cab2a9788eda339e512edb90c337b47323ba2b4))
+
 ## [0.245.0](https://github.com/Zapper-fi/studio/compare/v0.244.0...v0.245.0) (2022-10-12)
 
 
