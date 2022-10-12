@@ -4,6 +4,14 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.247.0](https://github.com/Zapper-fi/studio/compare/v0.246.0...v0.247.0) (2022-10-12)
+
+
+### Features
+
+* **debt:** Add support for debt in drillRawBalance ([#1525](https://github.com/Zapper-fi/studio/issues/1525)) ([20c72f7](https://github.com/Zapper-fi/studio/commit/20c72f7188ca4795d8d796ab19befce042616588))
+* **kyber-elastic:** Kyber Elastic Integration for 5 chains (Polygon, Cronos, Arbitrum, Optimism, Fantom) ([#1546](https://github.com/Zapper-fi/studio/issues/1546)) ([1d04474](https://github.com/Zapper-fi/studio/commit/1d04474f0a88bfc9138d30b5ec583825a84d2bfd))
+
 ## [0.246.0](https://github.com/Zapper-fi/studio/compare/v0.245.0...v0.246.0) (2022-10-12)
 
 
