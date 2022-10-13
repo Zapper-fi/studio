@@ -254,7 +254,9 @@ export abstract class ContractPositionTemplatePositionFetcher<
           const tokenBalance = positionBalances.tokens.find(b => b.key === this.appToolkit.getPositionKey(token));
           if (!tokenBalance) return null;
 
-          return drillBalance<typeof token, V>(token, tokenBalance.balance);
+          return drillBalance<typeof token, V>(token, tokenBalance.balance, {
+            isDebt: token.metaType === MetaType.BORROWED,
+          });
         });
 
         const tokens = compact(allTokens).filter(t => Math.abs(t.balanceUSD) > 0.01);

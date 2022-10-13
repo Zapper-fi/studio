@@ -109,7 +109,7 @@ export abstract class UniswapV2PoolSubgraphTemplateTokenFetcher<
       query: this.lastBlockSyncedOnGraphQuery,
     });
 
-    const blockNumberLastSynced = graphMetaData._meta.block.number;
+    const blockNumberLastSynced = graphMetaData._meta?.block.number;
     if (block1DayAgo > blockNumberLastSynced) return [];
 
     // Retrieve volume data from TheGraph (@TODO Cache this)
