@@ -4,6 +4,14 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.248.1](https://github.com/Zapper-fi/studio/compare/v0.248.0...v0.248.1) (2022-10-13)
+
+
+### Bug Fixes
+
+* **balance-service:** Fix isExcludedFromBalances when multiple positions have the same groupId ([#1514](https://github.com/Zapper-fi/studio/issues/1514)) ([2e14b65](https://github.com/Zapper-fi/studio/commit/2e14b65fd6134216d1b02b13dfda2bc6b14ee307))
+* **balancer-v2:** Fix supply for composable stable pools ([#1558](https://github.com/Zapper-fi/studio/issues/1558)) ([72e77aa](https://github.com/Zapper-fi/studio/commit/72e77aa8c0b3eb0c2c562c8516fd99ed708f3d88))
+
 ## [0.248.0](https://github.com/Zapper-fi/studio/compare/v0.247.0...v0.248.0) (2022-10-13)
 
 
