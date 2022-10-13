@@ -108,9 +108,11 @@ export abstract class UniswapV2PoolSubgraphTemplateTokenFetcher<
 
     // Get last block synced on graph; if the graph is not caught up to yesterday, exit early
     if (this.subgraphUrl.includes('api.fura.org')) {
+      const subgraphName = this.subgraphUrl.substring(this.subgraphUrl.lastIndexOf('/') + 1);
       const graphMetaData = await this.appToolkit.helpers.theGraphHelper.request<LastBlockSyncedFuraResponse>({
         endpoint: this.subgraphUrl,
         query: FURA_LAST_BLOCK_SYNCED_ON_GRAPH_QUERY,
+        variables: { subgraphName },
       });
 
       blockNumberLastSynced = graphMetaData.indexingStatusForCurrentVersion.chains[0].latestBlock.number;

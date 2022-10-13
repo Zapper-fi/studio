@@ -27,8 +27,8 @@ export const DEFAULT_LAST_BLOCK_SYNCED_ON_GRAPH_QUERY = gql`
 `;
 
 export const FURA_LAST_BLOCK_SYNCED_ON_GRAPH_QUERY = gql`
-  {
-    indexingStatusForCurrentVersion(subgraphName: "quickswap") {
+  query getFuraLatestBlockNumber($subgraphName: String) {
+    indexingStatusForCurrentVersion(subgraphName: $subgraphName) {
       chains {
         latestBlock {
           number
