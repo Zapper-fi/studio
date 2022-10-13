@@ -21,7 +21,6 @@ export const NETWORK_IDS: Record<Network, number | null> = {
   [Network.BINANCE_SMART_CHAIN_MAINNET]: 56,
   [Network.GNOSIS_MAINNET]: 100,
   [Network.POLYGON_MAINNET]: 137,
-  [Network.ETHEREUM_MAINNET]: 1,
   [Network.OPTIMISM_MAINNET]: 10,
   [Network.FANTOM_OPERA_MAINNET]: 250,
   [Network.AVALANCHE_MAINNET]: 43114,

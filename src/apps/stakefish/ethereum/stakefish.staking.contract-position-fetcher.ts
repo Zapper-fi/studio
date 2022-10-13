@@ -1,6 +1,5 @@
 import { Inject } from '@nestjs/common';
 import axios from 'axios';
-import { sumBy } from 'lodash';
 
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { ZERO_ADDRESS } from '~app-toolkit/constants/address';
@@ -11,6 +10,15 @@ import { ContractPositionTemplatePositionFetcher } from '~position/template/cont
 import { GetDisplayPropsParams, GetTokenBalancesParams } from '~position/template/contract-position.template.types';
 
 import { StakefishFeePool, StakefishContractFactory } from '../contracts';
+
+type StakeFishApiResponse = {
+  effective_balance: string;
+  total_balance: string;
+  protocol_rewards: string;
+  annual_reward_rate: string;
+  protocol_reward_rate: string;
+  tip_reward_rate: string;
+};
 
 @PositionTemplate()
 export class EthereumStakefishStakingContractPositionFetcher extends ContractPositionTemplatePositionFetcher<StakefishFeePool> {
@@ -45,12 +53,11 @@ export class EthereumStakefishStakingContractPositionFetcher extends ContractPos
 
   async getStakedBalances(address: string, isStaked: number) {
     if (!isStaked) return [0, 0];
-    const response = await axios.get(
-      `https://fee-pool-api-mainnet.oracle.ethereum.fish/validators?depositor=${address}`,
+    const response = await axios.get<StakeFishApiResponse>(
+      `https://fee-pool-api-mainnet.prod.ethereum.fish/balances/${address}`,
     );
-    const staked = sumBy(response.data.results, 'effective_balance');
-    const total = sumBy(response.data.results, 'balance');
-    return [staked, total].map(x => Number(x) * 1e9);
+
+    return [response.data.effective_balance, response.data.total_balance].map(x => Number(x) * 1e9);
   }
 
   async getTokenBalancesPerPosition({ address, contract }: GetTokenBalancesParams<StakefishFeePool>) {
