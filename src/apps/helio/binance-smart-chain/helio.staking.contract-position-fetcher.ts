@@ -1,5 +1,4 @@
 import { Inject } from '@nestjs/common';
-import { compact } from 'lodash';
 
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
@@ -31,7 +30,7 @@ export class BinanceSmartChainHelioStakingContractPositionFetcher implements Pos
   async getPositions() {
     const baseTokens = await this.appToolkit.getBaseTokenPrices(network);
     const hayToken = baseTokens.find(v => v.address.toLowerCase() === HAY_TOKEN);
-    if (!hayToken) return null;
+    if (!hayToken) return [];
 
     const multicall = this.appToolkit.getMulticall(network);
 
@@ -40,7 +39,7 @@ export class BinanceSmartChainHelioStakingContractPositionFetcher implements Pos
       address: HAY_TOKEN,
       network,
     });
-    const [balanceRaw] = await Promise.all([multicall.wrap(contract).balanceOf(HAY_JAR)]);
+    const balanceRaw = await Promise.all([multicall.wrap(contract).balanceOf(HAY_JAR)]);
     const totalValueLocked = Number(balanceRaw) / 10 ** hayToken.decimals;
 
     const label = `Staked ${getLabelFromToken(hayToken)}`;
@@ -65,6 +64,6 @@ export class BinanceSmartChainHelioStakingContractPositionFetcher implements Pos
       },
     };
 
-    return compact([position]);
+    return [position];
   }
 }
