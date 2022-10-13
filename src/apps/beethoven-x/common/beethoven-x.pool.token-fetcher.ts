@@ -30,7 +30,9 @@ export abstract class BeethovenXPoolTokenFetcher extends BalancerV2PoolTokenFetc
       headers: { 'Content-Type': 'application/json' },
     });
 
-    return poolsResponse.pools.map(({ address, poolType }) => ({ address, poolType }));
+    return poolsResponse.pools
+      .filter(v => Number(v.totalLiquidity) > 10_000)
+      .map(({ address, poolType }) => ({ address, poolType }));
   }
 
   async getLabel({ contract }: GetDisplayPropsParams<BalancerPool>) {
