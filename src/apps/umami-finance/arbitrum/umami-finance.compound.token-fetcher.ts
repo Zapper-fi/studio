@@ -7,6 +7,7 @@ import {
   GetDataPropsParams,
   DefaultAppTokenDataProps,
   DefaultAppTokenDefinition,
+  GetPricePerShareParams,
 } from '~position/template/app-token.template.types';
 
 import { UmamiFinanceYieldResolver } from '../common/umami-finance.marinate.token-definition-resolver';
@@ -38,6 +39,22 @@ export class ArbitrumUmamiFinanceCompoundTokenFetcher extends AppTokenTemplatePo
 
   async getUnderlyingTokenAddresses(): Promise<string> {
     return '0x2adabd6e8ce3e82f52d9998a7f64a90d294a92a4';
+  }
+
+  async getPricePerShare({
+    appToken,
+  }: GetPricePerShareParams<UmamiFinanceCompound, DefaultAppTokenDataProps, DefaultAppTokenDefinition>): Promise<
+    number | number[]
+  > {
+    const underlyingTokenContract = this.contractFactory.umamiFinanceMarinate({
+      address: appToken.tokens[0].address,
+      network: this.network,
+    });
+
+    const balanceRaw = await underlyingTokenContract.balanceOf(appToken.address);
+    const reserve = Number(balanceRaw) / 10 ** appToken.decimals;
+    const pricePerShare = reserve / appToken.supply;
+    return pricePerShare;
   }
 
   async getReserves({ appToken }: GetDataPropsParams<UmamiFinanceCompound>) {
