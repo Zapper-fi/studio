@@ -143,7 +143,7 @@ export abstract class KyberElasticLiquidityContractPositionFetcher extends Contr
     KyberElasticLiquidityPositionDefinition
   >): Promise<string> {
     const symbolLabel = contractPosition.tokens.map(t => getLabelFromToken(t)).join(' / ');
-    const label = `${symbolLabel} (${definition.feeTier.toFixed(2)}%)`;
+    const label = `${symbolLabel} (${definition.feeTier.toFixed(4)}%)`;
     return label;
   }
 
