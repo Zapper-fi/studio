@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.249.0](https://github.com/Zapper-fi/studio/compare/v0.248.1...v0.249.0) (2022-10-13)
+
+
+### Features
+
+* **beethoven-x:** Filter small pools ([7afc117](https://github.com/Zapper-fi/studio/commit/7afc117c266126fe8ff9c18fa75fc9affc64dff1))
+
 ## [0.248.1](https://github.com/Zapper-fi/studio/compare/v0.248.0...v0.248.1) (2022-10-13)
 
 
