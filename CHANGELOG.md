@@ -4,6 +4,19 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.248.0](https://github.com/Zapper-fi/studio/compare/v0.247.0...v0.248.0) (2022-10-13)
+
+
+### Features
+
+* **helio:** Add Helio integration ([#1461](https://github.com/Zapper-fi/studio/issues/1461)) ([a71d06b](https://github.com/Zapper-fi/studio/commit/a71d06bd7b88b51298e811dc235b64f47b06b217))
+* **uniswap-v2:** Implemented fetching latest block when using a subgraph from Fura ([#1554](https://github.com/Zapper-fi/studio/issues/1554)) ([7711dc6](https://github.com/Zapper-fi/studio/commit/7711dc64e63f86f1b3740a3f9f293f0e5c457538))
+
+
+### Bug Fixes
+
+* **uniswap-v2:** Providing a subgraph url from Fura would throw since it doesn't have the _meta attribute ([#1548](https://github.com/Zapper-fi/studio/issues/1548)) ([7bec98b](https://github.com/Zapper-fi/studio/commit/7bec98b41b4c6d9083871d7613e4ad5f9d4a3587))
+
 ## [0.247.0](https://github.com/Zapper-fi/studio/compare/v0.246.0...v0.247.0) (2022-10-12)
 
 
