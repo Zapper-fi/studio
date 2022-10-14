@@ -23,7 +23,7 @@ export class OptimismPickleFarmContractPositionFetcher extends MasterChefV2Templ
   PickleRewarder
 > {
   groupLabel = 'Farms';
-  chefAddress = '0x849C283375A156A6632E8eE928308Fcb61306b7B';
+  chefAddress = '0x849c283375a156a6632e8ee928308fcb61306b7b';
   rewardRateUnit = RewardRateUnit.SECOND;
 
   constructor(

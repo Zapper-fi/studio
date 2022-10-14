@@ -41,7 +41,7 @@ export abstract class AppTokenTemplatePositionFetcher<
   appId: string;
   groupId: string;
   network: Network;
-  isDebt: boolean = false;
+  isDebt = false;
   abstract groupLabel: string;
 
   isExcludedFromBalances = false;
