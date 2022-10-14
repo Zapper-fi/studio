@@ -24,7 +24,7 @@ export class EthereumPickleVotingEscrowContractPositionFetcher extends VotingEsc
 
   veTokenAddress = '0xbbcf169ee191a1ba7371f30a1c344bfc498b29cf';
   rewardAddress = '0x74c6cade3ef61d64dcc9b97490d9fbb231e4bdcc';
-  rewardV2Address = '0x2c6C87E7E6195ab7A4f19d3CF31D867580Bb2a1b';
+  rewardV2Address = '0x2c6c87e7e6195ab7a4f19d3cf31d867580bb2a1b';
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,

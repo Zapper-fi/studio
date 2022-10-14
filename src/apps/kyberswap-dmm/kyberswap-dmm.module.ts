@@ -23,4 +23,4 @@ import { PolygonKyberSwapDmmPoolTokenFetcher } from './polygon/kyberswap-dmm.poo
     PolygonKyberSwapDmmLegacyFarmContractPositionFetcher,
   ],
 })
-export class KyberSwapDmmAppModule extends AbstractApp() { }
+export class KyberSwapDmmAppModule extends AbstractApp() {}
