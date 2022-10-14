@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.249.1](https://github.com/Zapper-fi/studio/compare/v0.249.0...v0.249.1) (2022-10-14)
+
+
+### Bug Fixes
+
+* **aave-v2:** Fix empty stable debt positions ([#1562](https://github.com/Zapper-fi/studio/issues/1562)) ([e666598](https://github.com/Zapper-fi/studio/commit/e66659830cc0aff04dfa5bb55e0f159304718014))
+
 ## [0.249.0](https://github.com/Zapper-fi/studio/compare/v0.248.1...v0.249.0) (2022-10-13)
 
 
