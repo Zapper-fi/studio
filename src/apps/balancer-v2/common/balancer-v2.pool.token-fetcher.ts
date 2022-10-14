@@ -24,6 +24,7 @@ type GetPoolsResponse = {
   pools: {
     address: string;
     poolType: PoolType;
+    factory: string;
     totalSwapVolume: string;
   }[];
 };
@@ -33,6 +34,7 @@ const GET_POOLS_QUERY = gql`
     pools(first: 1000, skip: 0, orderBy: totalLiquidity, orderDirection: desc, where: { totalShares_gt: 0.01 }) {
       address
       poolType
+      factory
       totalSwapVolume
     }
   }
@@ -49,6 +51,7 @@ export type BalancerV2PoolTokenDataProps = DefaultAppTokenDataProps & {
 export type BalancerV2PoolTokenDefinition = {
   poolType: string;
   address: string;
+  factory: string;
 };
 
 export abstract class BalancerV2PoolTokenFetcher extends AppTokenTemplatePositionFetcher<
@@ -76,7 +79,7 @@ export abstract class BalancerV2PoolTokenFetcher extends AppTokenTemplatePositio
       query: GET_POOLS_QUERY,
     });
 
-    return poolsResponse.pools.map(({ address, poolType }) => ({ address, poolType }));
+    return poolsResponse.pools.map(({ address, factory, poolType }) => ({ address, factory, poolType }));
   }
 
   async getAddresses({ definitions }: GetAddressesParams<BalancerV2PoolTokenDefinition>) {
