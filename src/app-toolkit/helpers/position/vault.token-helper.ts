@@ -107,7 +107,7 @@ export type VaultTokenHelperParams<T> = {
 
 @Injectable()
 export class VaultTokenHelper {
-  constructor(@Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit) { }
+  constructor(@Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit) {}
 
   /**
    * Retrieve all tokens within a given vault.

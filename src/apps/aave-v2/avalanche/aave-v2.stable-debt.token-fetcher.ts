@@ -14,6 +14,7 @@ export class AvalancheAaveV2StableDebtTokenFetcher extends AaveV2LendingTemplate
   groupLabel = 'Lending';
   providerAddress = '0x65285e9dfab318f57051ab2b139cccf232945451';
   isDebt = true;
+  isExcludedFromBalances = true;
 
   getTokenAddress(reserveTokenAddressesData: AaveV2ReserveTokenAddressesData): string {
     return reserveTokenAddressesData.stableDebtTokenAddress;
