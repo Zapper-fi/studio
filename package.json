@@ -32,6 +32,7 @@
     "@uniswap/sdk-core": "^3.0.1",
     "@uniswap/v3-sdk": "^3.9.0",
     "bitcoin-address-validation": "^2.2.1",
+    "dayjs": "^1.11.5",
     "esbuild": "^0.14.27",
     "esbuild-runner": "^2.2.1",
     "file-system-cache": "^1.0.5",

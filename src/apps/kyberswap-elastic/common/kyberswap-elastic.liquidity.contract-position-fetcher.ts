@@ -1,5 +1,4 @@
 import { Inject, NotImplementedException } from '@nestjs/common';
-import { gql } from 'graphql-request';
 import { compact, range } from 'lodash';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
@@ -16,6 +15,20 @@ import {
 import { KyberSwapElasticContractFactory, PositionManager } from '../contracts';
 
 import { KyberSwapElasticLiquidityContractPositionBuilder } from './kyberswap-elastic.liquidity.contract-position-builder';
+import { KyberSwapElasticPoolStats } from './kyberswap-elastic.liquidity.types';
+import { getTimeDayAgo } from './kyberswap-elastic.liquidity.utils';
+import {
+  POOLs_FEE_HISTORY,
+  GET_BLOCKS,
+  GET_TOP_POOLS_QUERY,
+  GET_POOL_INFO,
+} from './kyberswap-elastic.pool.subgraph.types';
+export type PoolsFeeResponse = {
+  pools?: {
+    id: string;
+    feesUSD: string;
+  }[];
+};
 
 export type KyberSwapElasticLiquidityPositionDataProps = {
   feeTier: number;
@@ -25,6 +38,7 @@ export type KyberSwapElasticLiquidityPositionDataProps = {
   assetStandard: Standard.ERC_721;
   rangeStart?: number;
   rangeEnd?: number;
+  apy?: number;
 };
 
 export type KyberSwapElasticLiquidityPositionDefinition = {
@@ -47,21 +61,19 @@ type GetTopPoolsResponse = {
     };
   }[];
 };
+type GetBlockOneDayAgoResponse = {
+  blocks: {
+    number: number;
+  }[];
+};
 
-const GET_TOP_POOLS_QUERY = gql`
-  query topPools {
-    pools(first: 50, orderBy: totalValueLockedUSD, orderDirection: desc, subgraphError: allow) {
-      id
-      feeTier
-      token0 {
-        id
-      }
-      token1 {
-        id
-      }
-    }
-  }
-`;
+type GetPoolInfoResponse = {
+  pool: {
+    id: string;
+    feesUSD: number;
+    totalValueLockedUSD: number;
+  };
+};
 
 export abstract class KyberSwapElasticLiquidityContractPositionFetcher extends ContractPositionTemplatePositionFetcher<
   PositionManager,
@@ -71,6 +83,8 @@ export abstract class KyberSwapElasticLiquidityContractPositionFetcher extends C
   abstract subgraphUrl: string;
   abstract positionManagerAddress: string;
   abstract factoryAddress: string;
+  abstract blockSubgraphUrl: string;
+  protected poolFeeMapping: Record<string, number> | null;
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
@@ -130,8 +144,72 @@ export abstract class KyberSwapElasticLiquidityContractPositionFetcher extends C
     const reserves = reservesRaw.map((r, i) => Number(r) / 10 ** tokens[i].decimals);
     const liquidity = reserves[0] * tokens[0].price + reserves[1] * tokens[1].price;
     const assetStandard = Standard.ERC_721;
+    const apy = await this.getPoolAPY(poolAddress);
+    return { feeTier, reserves, liquidity, poolAddress, assetStandard, apy };
+  }
 
-    return { feeTier, reserves, liquidity, poolAddress, assetStandard };
+  async getPoolAPY(poolAddress: string): Promise<number> {
+    const feeUSD24h = await this.getPoolFee24h(poolAddress);
+    const poolStats = await this.getPoolStats(poolAddress);
+
+    if (poolStats.feesUSD > 0 && poolStats.tvl > 0) {
+      const pool24hFee = poolStats.feesUSD - feeUSD24h;
+
+      return (pool24hFee * 100 * 365) / poolStats.tvl;
+    }
+    return 0;
+  }
+
+  async getPoolStats(poolAddress: string): Promise<KyberSwapElasticPoolStats> {
+    const response = await this.appToolkit.helpers.theGraphHelper.request<GetPoolInfoResponse>({
+      endpoint: this.subgraphUrl,
+      query: GET_POOL_INFO,
+      variables: {
+        id: poolAddress,
+      },
+    });
+
+    return {
+      feesUSD: response.pool.feesUSD,
+      tvl: response.pool.totalValueLockedUSD,
+    };
+  }
+  async getBlockOneDayAgo(): Promise<number> {
+    const query = GET_BLOCKS([getTimeDayAgo()]);
+    const response = await this.appToolkit.helpers.theGraphHelper.request<GetBlockOneDayAgoResponse>({
+      endpoint: this.blockSubgraphUrl,
+      query: query,
+    });
+
+    return Number(response.blocks[0].number);
+  }
+
+  async getPoolFee24h(poolAddress: string): Promise<number> {
+    if (this.poolFeeMapping == null || this.poolFeeMapping.length === 0) {
+      await this.initPoolsFeeLast24h();
+    }
+    return this.poolFeeMapping ? this.poolFeeMapping[poolAddress] : 0;
+  }
+
+  async initPoolsFeeLast24h() {
+    const blockNumberOneDayAgo = await this.getBlockOneDayAgo();
+
+    const poolsFeeResponse = await this.appToolkit.helpers.theGraphHelper.request<PoolsFeeResponse>({
+      endpoint: this.subgraphUrl,
+      query: POOLs_FEE_HISTORY,
+      variables: {
+        block: blockNumberOneDayAgo,
+      },
+    });
+
+    const poolFees = poolsFeeResponse.pools ?? [];
+    const poolFeeMap = poolFees.reduce((acc: { [id: string]: number }, cur: { id: string; feesUSD: string }) => {
+      return {
+        ...acc,
+        [cur.id]: Number(cur.feesUSD),
+      };
+    }, {} as { [id: string]: number });
+    this.poolFeeMapping = poolFeeMap;
   }
 
   async getLabel({
