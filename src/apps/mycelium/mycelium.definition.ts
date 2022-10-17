@@ -34,18 +34,6 @@ export const MYCELIUM_DEFINITION = appDefinition({
       type: GroupType.TOKEN,
       label: 'Perpetual pools tokens',
     },
-
-    perpFarms: {
-      id: 'perp-farms',
-      type: GroupType.POSITION,
-      label: 'Perpetual pools farms',
-    },
-
-    staking: {
-      id: 'staking',
-      type: GroupType.POSITION,
-      label: 'Staking',
-    },
   },
 
   token: {

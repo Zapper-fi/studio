@@ -59,14 +59,3 @@ export interface MyceliumPoolPrices {
   longTokenPrice: number;
   shortTokenPrice: number;
 }
-
-export type PerpPoolFarm = {
-  address: string;
-  pool: string;
-  name?: string;
-  isBPTFarm?: boolean;
-  balancerPoolId?: string;
-  link?: string;
-  rewardsEnded?: boolean;
-  type?: 'short' | 'long';
-};

@@ -117,7 +117,7 @@ export class MyceliumPerpTokensHelper {
           liquidity: longSupply * poolPrices.longTokenPrice,
         },
         displayProps: {
-          label: shortToken.symbol,
+          label: longToken.symbol,
           images,
           secondaryLabel: buildDollarDisplayItem(poolPrices.longTokenPrice),
           statsItems: [

@@ -15,7 +15,7 @@ import {
 } from './mycelium.interface';
 
 const appId = MYCELIUM_DEFINITION.id;
-const groupId = MYCELIUM_DEFINITION.groups.perpFarms.id;
+const groupId = MYCELIUM_DEFINITION.groups.perpTokens.id;
 const network = Network.ARBITRUM_MAINNET;
 
 @Injectable()
