@@ -12,7 +12,6 @@ import { UMAMI_FINANCE_DEFINITION } from '~apps/umami-finance';
 import { ContractType } from '~position/contract.interface';
 import { PositionFetcher } from '~position/position-fetcher.interface';
 import { ContractPosition } from '~position/position.interface';
-import { borrowed, supplied } from '~position/position.utils';
 import { Network } from '~types/network.interface';
 
 import { VendorFinanceContractFactory } from '../contracts';
@@ -57,27 +56,29 @@ export class ArbitrumVendorFinancePoolContractPositionFetcher implements Positio
         const statsItems = [
           {
             label: 'Lending APR',
-            value: buildPercentageDisplayItem(parseInt(_feeRate, 10) / 10000),
-          },
-          {
-            label: 'LTV',
-            value: parseInt(_mintRatio, 10) / 10 ** 18,
+            value: buildPercentageDisplayItem(parseInt(_feeRate) / 10000),
           },
           {
             label: 'Repayment date',
-            value: new Date(parseInt(_expiry, 10) * 1000).toDateString(),
+            value: new Date(parseInt(_expiry) * 1000).toDateString(),
           },
           {
             label: 'Available',
-            value: buildDollarDisplayItem((parseInt(_lendBalance, 10) / 10 ** lentToken.decimals) * lentToken.price),
+            value: buildDollarDisplayItem((parseInt(_lendBalance) / 10 ** lentToken.decimals) * lentToken.price),
           },
           {
             label: 'Borrowed',
-            value: buildDollarDisplayItem((parseInt(_totalBorrowed, 10) / 10 ** lentToken.decimals) * lentToken.price),
+            value: buildDollarDisplayItem((parseInt(_totalBorrowed) / 10 ** lentToken.decimals) * lentToken.price),
+          },
+          {
+            label: 'Lend ratio',
+            value: parseInt(_mintRatio) / 10 ** 18,
           },
         ];
 
-        const dateString = new Date(parseInt(_expiry, 10) * 1000).toLocaleDateString('en-US', {
+        const totalDeposited = parseInt(_lendBalance) + parseInt(_totalBorrowed);
+
+        const dateString = new Date(parseInt(_expiry) * 1000).toLocaleDateString('en-US', {
           year: 'numeric',
           month: 'long',
           day: 'numeric',
@@ -91,9 +92,10 @@ export class ArbitrumVendorFinancePoolContractPositionFetcher implements Positio
           network,
           appId: VENDOR_FINANCE_DEFINITION.id,
           groupId: VENDOR_FINANCE_DEFINITION.groups.pools.id,
-          tokens: [supplied(collateralToken), borrowed(lentToken)],
+          tokens: [collateralToken, lentToken],
           dataProps: {
             deployer: _deployer,
+            totalDeposited,
           },
           displayProps: {
             label: `${collateralToken.symbol}/${lentToken.symbol} lending pool - ${dateString}`,
