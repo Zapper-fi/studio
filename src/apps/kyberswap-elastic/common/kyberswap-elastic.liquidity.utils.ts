@@ -1,5 +1,6 @@
 import { Token as KsToken } from '@kyberswap/ks-sdk-core';
 import { Pool, Position } from '@kyberswap/ks-sdk-elastic';
+import dayjs from 'dayjs';
 
 import { Token } from '~position/position.interface';
 import { Network, NETWORK_IDS } from '~types';
@@ -82,3 +83,8 @@ export const getRange = ({
   const positionUpperBound = Number(positionZ.token0PriceUpper.toFixed(4));
   return [positionLowerBound, positionUpperBound];
 };
+
+export function getTimeDayAgo() {
+  const utcCurrentTime = dayjs();
+  return utcCurrentTime.subtract(1, 'day').startOf('minute').unix();
+}
