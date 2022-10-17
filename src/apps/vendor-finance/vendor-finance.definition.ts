@@ -6,7 +6,8 @@ import { Network } from '~types/network.interface';
 export const VENDOR_FINANCE_DEFINITION = appDefinition({
   id: 'vendor-finance',
   name: 'Vendor Finance',
-  description: 'Vendor Finance is an isolated lending market.',
+  description:
+    'Vendor Finance allows for permission-less, isolated, fixed-rate, fixed-term, and zero liquidation loan markets to be created. Lenders create fully customizable loans by setting all their own terms ! Borrowers obtain non-liquidatable, fixed rate, and fixed terms loans.',
   url: 'https://vendor.finance/borrow',
 
   groups: {
