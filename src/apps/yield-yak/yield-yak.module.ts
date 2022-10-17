@@ -4,7 +4,6 @@ import { AbstractApp } from '~app/app.dynamic-module';
 import { AvalancheYieldyakFarmContractPositionFetcher } from './avalanche/yield-yak.farm.contract-position-fetcher';
 import { AvalancheYieldyakVaultTokenFetcher } from './avalanche/yield-yak.vault.token-fetcher';
 import { YieldYakContractFactory } from './contracts';
-import { YieldYakVaultTokenDefinitionsResolver } from './helpers/yield-yak.vault.token-definitions-resolver';
 import { YieldYakAppDefinition, YIELD_YAK_DEFINITION } from './yield-yak.definition';
 
 @Register.AppModule({
@@ -12,7 +11,6 @@ import { YieldYakAppDefinition, YIELD_YAK_DEFINITION } from './yield-yak.definit
   providers: [
     YieldYakAppDefinition,
     YieldYakContractFactory,
-    YieldYakVaultTokenDefinitionsResolver,
     AvalancheYieldyakVaultTokenFetcher,
     AvalancheYieldyakFarmContractPositionFetcher,
   ],

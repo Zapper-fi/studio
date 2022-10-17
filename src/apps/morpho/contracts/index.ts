@@ -4,8 +4,11 @@ import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { ContractFactory } from '~contract/contracts';
 import { Network } from '~types/network.interface';
 
-import { Morpho__factory } from './ethers';
+import { MorphoAToken__factory } from './ethers';
+import { MorphoAaveV2__factory } from './ethers';
+import { MorphoAaveV2Lens__factory } from './ethers';
 import { MorphoCToken__factory } from './ethers';
+import { MorphoCompound__factory } from './ethers';
 import { MorphoCompoundLens__factory } from './ethers';
 
 // eslint-disable-next-line
@@ -17,17 +20,29 @@ export class MorphoContractFactory extends ContractFactory {
     super((network: Network) => appToolkit.getNetworkProvider(network));
   }
 
-  morpho({ address, network }: ContractOpts) {
-    return Morpho__factory.connect(address, this.appToolkit.getNetworkProvider(network));
+  morphoAToken({ address, network }: ContractOpts) {
+    return MorphoAToken__factory.connect(address, this.appToolkit.getNetworkProvider(network));
+  }
+  morphoAaveV2({ address, network }: ContractOpts) {
+    return MorphoAaveV2__factory.connect(address, this.appToolkit.getNetworkProvider(network));
+  }
+  morphoAaveV2Lens({ address, network }: ContractOpts) {
+    return MorphoAaveV2Lens__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
   morphoCToken({ address, network }: ContractOpts) {
     return MorphoCToken__factory.connect(address, this.appToolkit.getNetworkProvider(network));
+  }
+  morphoCompound({ address, network }: ContractOpts) {
+    return MorphoCompound__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
   morphoCompoundLens({ address, network }: ContractOpts) {
     return MorphoCompoundLens__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
 }
 
-export type { Morpho } from './ethers';
+export type { MorphoAToken } from './ethers';
+export type { MorphoAaveV2 } from './ethers';
+export type { MorphoAaveV2Lens } from './ethers';
 export type { MorphoCToken } from './ethers';
+export type { MorphoCompound } from './ethers';
 export type { MorphoCompoundLens } from './ethers';

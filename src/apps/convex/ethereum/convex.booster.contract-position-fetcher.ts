@@ -1,19 +1,15 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Inject } from '@nestjs/common';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
-import { Network } from '~types/network.interface';
 
 import { ConvexBooster, ConvexContractFactory } from '../contracts';
-import { CONVEX_DEFINITION } from '../convex.definition';
 
 export const CONVEX_BOOSTERS = ['0xf403c135812408bfbe8713b5a23a04b3d48aae31'];
 
-@Injectable()
+@PositionTemplate()
 export class EthereumConvexBoosterContractPositionFetcher extends ContractPositionTemplatePositionFetcher<ConvexBooster> {
-  appId = CONVEX_DEFINITION.id;
-  groupId = CONVEX_DEFINITION.groups.booster.id;
-  network = Network.ETHEREUM_MAINNET;
   groupLabel = 'Booster';
 
   isExcludedFromExplore = true;
@@ -32,6 +28,10 @@ export class EthereumConvexBoosterContractPositionFetcher extends ContractPositi
 
   async getDefinitions() {
     return [{ address: '0xf403c135812408bfbe8713b5a23a04b3d48aae31' }];
+  }
+
+  async getTokenDefinitions() {
+    return [];
   }
 
   async getLabel(): Promise<string> {

@@ -1,13 +1,16 @@
 import { Inject } from '@nestjs/common';
 
-import { Register } from '~app-toolkit/decorators';
-import { ARRAKIS_DEFINITION } from '~apps/arrakis/arrakis.definition';
-import { SynthetixSingleStakingFarmContractPositionHelper } from '~apps/synthetix/helpers/synthetix.single-staking-farm-contract-position-helper';
-import { PositionFetcher } from '~position/position-fetcher.interface';
-import { ContractPosition } from '~position/position.interface';
-import { Network } from '~types/network.interface';
+import { APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
+import { AppToolkit } from '~app-toolkit/app-toolkit.service';
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
+import { GetDataPropsParams, GetTokenBalancesParams } from '~position/template/contract-position.template.types';
+import {
+  SingleStakingFarmDataProps,
+  SingleStakingFarmDefinition,
+  SingleStakingFarmTemplateContractPositionFetcher,
+} from '~position/template/single-staking.template.contract-position-fetcher';
 
-import { AELIN_DEFINITION } from '../aelin.definition';
+import { AelinContractFactory, AelinStaking } from '../contracts';
 
 const FARMS = [
   {
@@ -22,24 +25,34 @@ const FARMS = [
   },
 ];
 
-const appId = AELIN_DEFINITION.id;
-const groupId = AELIN_DEFINITION.groups.farm.id;
-const network = Network.OPTIMISM_MAINNET;
+@PositionTemplate()
+export class OptimismAelinFarmContractPositionFetcher extends SingleStakingFarmTemplateContractPositionFetcher<AelinStaking> {
+  groupLabel = 'Farms';
 
-@Register.ContractPositionFetcher({ appId, groupId, network })
-export class OptimismAelinFarmContractPositionFetcher implements PositionFetcher<ContractPosition> {
   constructor(
-    @Inject(SynthetixSingleStakingFarmContractPositionHelper)
-    private readonly synthetixSingleStakingFarmContractPositionHelper: SynthetixSingleStakingFarmContractPositionHelper,
-  ) {}
+    @Inject(APP_TOOLKIT) protected readonly appToolkit: AppToolkit,
+    @Inject(AelinContractFactory) protected readonly contractFactory: AelinContractFactory,
+  ) {
+    super(appToolkit);
+  }
 
-  async getPositions() {
-    return this.synthetixSingleStakingFarmContractPositionHelper.getContractPositions({
-      appId,
-      groupId,
-      network,
-      dependencies: [{ appId: ARRAKIS_DEFINITION.id, groupIds: [ARRAKIS_DEFINITION.groups.pool.id], network }],
-      farmDefinitions: FARMS,
-    });
+  getContract(address: string): AelinStaking {
+    return this.contractFactory.aelinStaking({ address, network: this.network });
+  }
+
+  async getFarmDefinitions(): Promise<SingleStakingFarmDefinition[]> {
+    return FARMS;
+  }
+
+  getRewardRates({ contract }: GetDataPropsParams<AelinStaking, SingleStakingFarmDataProps>) {
+    return contract.rewardRate();
+  }
+
+  getStakedTokenBalance({ address, contract }: GetTokenBalancesParams<AelinStaking, SingleStakingFarmDataProps>) {
+    return contract.balanceOf(address);
+  }
+
+  getRewardTokenBalances({ address, contract }: GetTokenBalancesParams<AelinStaking, SingleStakingFarmDataProps>) {
+    return contract.earned(address);
   }
 }

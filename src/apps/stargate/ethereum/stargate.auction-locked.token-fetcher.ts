@@ -1,26 +1,14 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Inject } from '@nestjs/common';
 
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import { GetUnderlyingTokensParams, GetDataPropsParams } from '~position/template/app-token.template.types';
-import { Network } from '~types/network.interface';
 
 import { StargateAa, StargateContractFactory } from '../contracts';
-import { STARGATE_DEFINITION } from '../stargate.definition';
 
-type StargateAuctionLockedAppTokenDataProps = {
-  liquidity: number;
-  reserve: number;
-};
-
-@Injectable()
-export class EthereumStargateAuctionLockedTokenFetcher extends AppTokenTemplatePositionFetcher<
-  StargateAa,
-  StargateAuctionLockedAppTokenDataProps
-> {
-  appId = STARGATE_DEFINITION.id;
-  groupId = STARGATE_DEFINITION.groups.auctionLocked.id;
-  network = Network.ETHEREUM_MAINNET;
+@PositionTemplate()
+export class EthereumStargateAuctionLockedTokenFetcher extends AppTokenTemplatePositionFetcher<StargateAa> {
   groupLabel = 'Auction Locked';
 
   constructor(
@@ -46,9 +34,15 @@ export class EthereumStargateAuctionLockedTokenFetcher extends AppTokenTemplateP
     return 4; // 1 aaSTG = 4 STG
   }
 
-  async getDataProps({ appToken }: GetDataPropsParams<StargateAa, StargateAuctionLockedAppTokenDataProps>) {
-    const reserve = appToken.supply; // 1:1
-    const liquidity = appToken.supply * appToken.price;
-    return { reserve, liquidity };
+  async getLiquidity({ appToken }: GetDataPropsParams<StargateAa>) {
+    return appToken.supply * appToken.price;
+  }
+
+  async getReserves({ appToken }: GetDataPropsParams<StargateAa>) {
+    return [appToken.pricePerShare[0] * appToken.supply];
+  }
+
+  async getApy() {
+    return 0;
   }
 }

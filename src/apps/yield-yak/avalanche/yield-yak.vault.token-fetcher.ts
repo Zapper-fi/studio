@@ -1,43 +1,42 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Inject } from '@nestjs/common';
+import Axios from 'axios';
+import { ethers, BigNumber } from 'ethers';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
-import { DefaultDataProps } from '~position/display.interface';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import {
   GetUnderlyingTokensParams,
   GetDisplayPropsParams,
   GetDataPropsParams,
+  GetPricePerShareParams,
 } from '~position/template/app-token.template.types';
-import { Network } from '~types/network.interface';
 
 import { YieldYakContractFactory, YieldYakVault } from '../contracts';
-import { YieldYakVaultTokenDefinitionsResolver } from '../helpers/yield-yak.vault.token-definitions-resolver';
-import { YIELD_YAK_DEFINITION } from '../yield-yak.definition';
 
-@Injectable()
+export type YieldYakFarmDetails = {
+  address: string;
+  deployed: number;
+  name: string;
+  depositToken: {
+    address: string;
+    symbol: string;
+    decimals: number;
+  };
+  totalDeposits: string;
+};
+
+@PositionTemplate()
 export class AvalancheYieldyakVaultTokenFetcher extends AppTokenTemplatePositionFetcher<YieldYakVault> {
-  appId = YIELD_YAK_DEFINITION.id;
-  groupId = YIELD_YAK_DEFINITION.groups.vault.id;
-  network = Network.AVALANCHE_MAINNET;
   groupLabel = 'Vaults';
+  minLiquidity = 0;
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
     @Inject(YieldYakContractFactory) private readonly contractFactory: YieldYakContractFactory,
-    @Inject(YieldYakVaultTokenDefinitionsResolver)
-    protected readonly tokenDefinitionsResolver: YieldYakVaultTokenDefinitionsResolver,
   ) {
     super(appToolkit);
-  }
-
-  private getVaultDefinitions() {
-    return this.tokenDefinitionsResolver.getVaultDefinitionsData();
-  }
-
-  private async selectVault(vaultAddress: string) {
-    const vaultDefinitions = await this.getVaultDefinitions();
-    return vaultDefinitions.find(v => v.id.toLowerCase() === vaultAddress) ?? null;
   }
 
   getContract(address: string): YieldYakVault {
@@ -45,25 +44,38 @@ export class AvalancheYieldyakVaultTokenFetcher extends AppTokenTemplatePosition
   }
 
   async getAddresses(): Promise<string[]> {
-    const vaultDefinitions = await this.getVaultDefinitions();
-    return vaultDefinitions.map(address => address.id.toLowerCase());
+    const farms = await Axios.get<YieldYakFarmDetails[]>('https://staging-api.yieldyak.com/farms').then(x => x.data);
+    return farms.map(farm => farm.address.toLowerCase());
   }
 
   async getUnderlyingTokenAddresses({ contract }: GetUnderlyingTokensParams<YieldYakVault>) {
-    const vault = await this.selectVault(contract.address.toLowerCase());
-    if (!vault) throw new Error('Cannot find specified vault');
-
-    return [vault.depositToken.id.toLowerCase()];
+    return contract.depositToken().then(addr => addr.toLowerCase());
   }
 
-  async getLabel({ appToken }: GetDisplayPropsParams<YieldYakVault, DefaultDataProps>): Promise<string> {
+  async getLabel({ appToken }: GetDisplayPropsParams<YieldYakVault>): Promise<string> {
     return appToken.tokens.map(v => getLabelFromToken(v)).join(' / ');
   }
 
-  async getDataProps(opts: GetDataPropsParams<YieldYakVault, DefaultDataProps>): Promise<DefaultDataProps> {
-    const { appToken } = opts;
-    const liquidity = appToken.price * appToken.supply;
+  async getLiquidity({ appToken }: GetDataPropsParams<YieldYakVault>) {
+    return appToken.supply * appToken.price;
+  }
 
-    return { liquidity };
+  async getReserves({ appToken }: GetDataPropsParams<YieldYakVault>) {
+    return [appToken.pricePerShare[0] * appToken.supply];
+  }
+
+  async getApy() {
+    return 0;
+  }
+
+  async getPricePerShare(_params: GetPricePerShareParams<YieldYakVault>): Promise<number | number[]> {
+    const one_receipt_token = BigNumber.from(10).pow(_params.appToken.decimals);
+    try {
+      const underlying = await _params.contract.getDepositTokensForShares(one_receipt_token);
+      const pps = ethers.utils.formatUnits(underlying, _params.appToken.decimals);
+      return +pps;
+    } catch (err) {
+      return 1;
+    }
   }
 }

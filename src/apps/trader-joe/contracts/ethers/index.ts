@@ -2,6 +2,7 @@
 /* tslint:disable */
 /* eslint-disable */
 export type { TraderJoeChefBoosted } from './TraderJoeChefBoosted';
+export type { TraderJoeChefBoostedRewarder } from './TraderJoeChefBoostedRewarder';
 export type { TraderJoeChefV2 } from './TraderJoeChefV2';
 export type { TraderJoeChefV2Rewarder } from './TraderJoeChefV2Rewarder';
 export type { TraderJoeChefV3 } from './TraderJoeChefV3';
@@ -10,6 +11,7 @@ export type { TraderJoeStableStaking } from './TraderJoeStableStaking';
 export type { TraderJoeVeJoeStaking } from './TraderJoeVeJoeStaking';
 export type { TraderJoeXJoe } from './TraderJoeXJoe';
 export * as factories from './factories';
+export { TraderJoeChefBoostedRewarder__factory } from './factories/TraderJoeChefBoostedRewarder__factory';
 export { TraderJoeChefBoosted__factory } from './factories/TraderJoeChefBoosted__factory';
 export { TraderJoeChefV2Rewarder__factory } from './factories/TraderJoeChefV2Rewarder__factory';
 export { TraderJoeChefV2__factory } from './factories/TraderJoeChefV2__factory';

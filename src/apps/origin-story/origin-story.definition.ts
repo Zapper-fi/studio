@@ -19,7 +19,12 @@ export const ORIGIN_STORY_DEFINITION = appDefinition({
 
   tags: [AppTag.FARMING, AppTag.NFT_MARKETPLACE, AppTag.STAKING],
   keywords: [],
-  links: {},
+  links: {
+    discord: 'https://t.me/originprotocol',
+    github: 'https://github.com/OriginProtocol',
+    telegram: 'https://t.me/originprotocol',
+    twitter: 'https://twitter.com/originprotocol',
+  },
 
   supportedNetworks: {
     [Network.ETHEREUM_MAINNET]: [AppAction.VIEW],

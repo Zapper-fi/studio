@@ -2,6 +2,7 @@
 /* tslint:disable */
 /* eslint-disable */
 export { MakerCdpManager__factory } from './MakerCdpManager__factory';
+export { MakerGemJoin__factory } from './MakerGemJoin__factory';
 export { MakerGovernance__factory } from './MakerGovernance__factory';
 export { MakerIlkRegistry__factory } from './MakerIlkRegistry__factory';
 export { MakerProxyRegistry__factory } from './MakerProxyRegistry__factory';

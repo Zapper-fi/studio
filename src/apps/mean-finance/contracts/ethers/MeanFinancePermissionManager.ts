@@ -27,14 +27,26 @@ export declare namespace IDCAPermissionManager {
     operator: string;
     permissions: number[];
   };
+
+  export type PositionPermissionsStruct = {
+    tokenId: PromiseOrValue<BigNumberish>;
+    permissionSets: IDCAPermissionManager.PermissionSetStruct[];
+  };
+
+  export type PositionPermissionsStructOutput = [BigNumber, IDCAPermissionManager.PermissionSetStructOutput[]] & {
+    tokenId: BigNumber;
+    permissionSets: IDCAPermissionManager.PermissionSetStructOutput[];
+  };
 }
 
 export interface MeanFinancePermissionManagerInterface extends utils.Interface {
   functions: {
     'DOMAIN_SEPARATOR()': FunctionFragment;
+    'MULTI_PERMISSION_PERMIT_TYPEHASH()': FunctionFragment;
     'PERMISSION_PERMIT_TYPEHASH()': FunctionFragment;
     'PERMISSION_SET_TYPEHASH()': FunctionFragment;
     'PERMIT_TYPEHASH()': FunctionFragment;
+    'POSITION_PERMISSIONS_TYPEHASH()': FunctionFragment;
     'acceptPendingGovernor()': FunctionFragment;
     'approve(address,uint256)': FunctionFragment;
     'balanceOf(address)': FunctionFragment;
@@ -50,6 +62,8 @@ export interface MeanFinancePermissionManagerInterface extends utils.Interface {
     'lastOwnershipChange(uint256)': FunctionFragment;
     'mint(uint256,address,(address,uint8[])[])': FunctionFragment;
     'modify(uint256,(address,uint8[])[])': FunctionFragment;
+    'modifyMany((uint256,(address,uint8[])[])[])': FunctionFragment;
+    'multiPermissionPermit((uint256,(address,uint8[])[])[],uint256,uint8,bytes32,bytes32)': FunctionFragment;
     'name()': FunctionFragment;
     'nftDescriptor()': FunctionFragment;
     'nonces(address)': FunctionFragment;
@@ -74,9 +88,11 @@ export interface MeanFinancePermissionManagerInterface extends utils.Interface {
   getFunction(
     nameOrSignatureOrTopic:
       | 'DOMAIN_SEPARATOR'
+      | 'MULTI_PERMISSION_PERMIT_TYPEHASH'
       | 'PERMISSION_PERMIT_TYPEHASH'
       | 'PERMISSION_SET_TYPEHASH'
       | 'PERMIT_TYPEHASH'
+      | 'POSITION_PERMISSIONS_TYPEHASH'
       | 'acceptPendingGovernor'
       | 'approve'
       | 'balanceOf'
@@ -92,6 +108,8 @@ export interface MeanFinancePermissionManagerInterface extends utils.Interface {
       | 'lastOwnershipChange'
       | 'mint'
       | 'modify'
+      | 'modifyMany'
+      | 'multiPermissionPermit'
       | 'name'
       | 'nftDescriptor'
       | 'nonces'
@@ -114,9 +132,11 @@ export interface MeanFinancePermissionManagerInterface extends utils.Interface {
   ): FunctionFragment;
 
   encodeFunctionData(functionFragment: 'DOMAIN_SEPARATOR', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'MULTI_PERMISSION_PERMIT_TYPEHASH', values?: undefined): string;
   encodeFunctionData(functionFragment: 'PERMISSION_PERMIT_TYPEHASH', values?: undefined): string;
   encodeFunctionData(functionFragment: 'PERMISSION_SET_TYPEHASH', values?: undefined): string;
   encodeFunctionData(functionFragment: 'PERMIT_TYPEHASH', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'POSITION_PERMISSIONS_TYPEHASH', values?: undefined): string;
   encodeFunctionData(functionFragment: 'acceptPendingGovernor', values?: undefined): string;
   encodeFunctionData(
     functionFragment: 'approve',
@@ -149,6 +169,20 @@ export interface MeanFinancePermissionManagerInterface extends utils.Interface {
   encodeFunctionData(
     functionFragment: 'modify',
     values: [PromiseOrValue<BigNumberish>, IDCAPermissionManager.PermissionSetStruct[]],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'modifyMany',
+    values: [IDCAPermissionManager.PositionPermissionsStruct[]],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'multiPermissionPermit',
+    values: [
+      IDCAPermissionManager.PositionPermissionsStruct[],
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BytesLike>,
+      PromiseOrValue<BytesLike>,
+    ],
   ): string;
   encodeFunctionData(functionFragment: 'name', values?: undefined): string;
   encodeFunctionData(functionFragment: 'nftDescriptor', values?: undefined): string;
@@ -206,9 +240,11 @@ export interface MeanFinancePermissionManagerInterface extends utils.Interface {
   ): string;
 
   decodeFunctionResult(functionFragment: 'DOMAIN_SEPARATOR', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'MULTI_PERMISSION_PERMIT_TYPEHASH', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'PERMISSION_PERMIT_TYPEHASH', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'PERMISSION_SET_TYPEHASH', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'PERMIT_TYPEHASH', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'POSITION_PERMISSIONS_TYPEHASH', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'acceptPendingGovernor', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'approve', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'balanceOf', data: BytesLike): Result;
@@ -224,6 +260,8 @@ export interface MeanFinancePermissionManagerInterface extends utils.Interface {
   decodeFunctionResult(functionFragment: 'lastOwnershipChange', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'mint', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'modify', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'modifyMany', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'multiPermissionPermit', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'name', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'nftDescriptor', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'nonces', data: BytesLike): Result;
@@ -345,11 +383,15 @@ export interface MeanFinancePermissionManager extends BaseContract {
   functions: {
     DOMAIN_SEPARATOR(overrides?: CallOverrides): Promise<[string]>;
 
+    MULTI_PERMISSION_PERMIT_TYPEHASH(overrides?: CallOverrides): Promise<[string]>;
+
     PERMISSION_PERMIT_TYPEHASH(overrides?: CallOverrides): Promise<[string]>;
 
     PERMISSION_SET_TYPEHASH(overrides?: CallOverrides): Promise<[string]>;
 
     PERMIT_TYPEHASH(overrides?: CallOverrides): Promise<[string]>;
+
+    POSITION_PERMISSIONS_TYPEHASH(overrides?: CallOverrides): Promise<[string]>;
 
     acceptPendingGovernor(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
@@ -417,6 +459,20 @@ export interface MeanFinancePermissionManager extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
+    modifyMany(
+      _permissions: IDCAPermissionManager.PositionPermissionsStruct[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<ContractTransaction>;
+
+    multiPermissionPermit(
+      _permissions: IDCAPermissionManager.PositionPermissionsStruct[],
+      _deadline: PromiseOrValue<BigNumberish>,
+      _v: PromiseOrValue<BigNumberish>,
+      _r: PromiseOrValue<BytesLike>,
+      _s: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<ContractTransaction>;
+
     name(overrides?: CallOverrides): Promise<[string]>;
 
     nftDescriptor(overrides?: CallOverrides): Promise<[string]>;
@@ -458,7 +514,7 @@ export interface MeanFinancePermissionManager extends BaseContract {
       from: PromiseOrValue<string>,
       to: PromiseOrValue<string>,
       tokenId: PromiseOrValue<BigNumberish>,
-      _data: PromiseOrValue<BytesLike>,
+      data: PromiseOrValue<BytesLike>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
@@ -507,11 +563,15 @@ export interface MeanFinancePermissionManager extends BaseContract {
 
   DOMAIN_SEPARATOR(overrides?: CallOverrides): Promise<string>;
 
+  MULTI_PERMISSION_PERMIT_TYPEHASH(overrides?: CallOverrides): Promise<string>;
+
   PERMISSION_PERMIT_TYPEHASH(overrides?: CallOverrides): Promise<string>;
 
   PERMISSION_SET_TYPEHASH(overrides?: CallOverrides): Promise<string>;
 
   PERMIT_TYPEHASH(overrides?: CallOverrides): Promise<string>;
+
+  POSITION_PERMISSIONS_TYPEHASH(overrides?: CallOverrides): Promise<string>;
 
   acceptPendingGovernor(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
@@ -573,6 +633,20 @@ export interface MeanFinancePermissionManager extends BaseContract {
     overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
+  modifyMany(
+    _permissions: IDCAPermissionManager.PositionPermissionsStruct[],
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
+  ): Promise<ContractTransaction>;
+
+  multiPermissionPermit(
+    _permissions: IDCAPermissionManager.PositionPermissionsStruct[],
+    _deadline: PromiseOrValue<BigNumberish>,
+    _v: PromiseOrValue<BigNumberish>,
+    _r: PromiseOrValue<BytesLike>,
+    _s: PromiseOrValue<BytesLike>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
+  ): Promise<ContractTransaction>;
+
   name(overrides?: CallOverrides): Promise<string>;
 
   nftDescriptor(overrides?: CallOverrides): Promise<string>;
@@ -614,7 +688,7 @@ export interface MeanFinancePermissionManager extends BaseContract {
     from: PromiseOrValue<string>,
     to: PromiseOrValue<string>,
     tokenId: PromiseOrValue<BigNumberish>,
-    _data: PromiseOrValue<BytesLike>,
+    data: PromiseOrValue<BytesLike>,
     overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
@@ -663,11 +737,15 @@ export interface MeanFinancePermissionManager extends BaseContract {
   callStatic: {
     DOMAIN_SEPARATOR(overrides?: CallOverrides): Promise<string>;
 
+    MULTI_PERMISSION_PERMIT_TYPEHASH(overrides?: CallOverrides): Promise<string>;
+
     PERMISSION_PERMIT_TYPEHASH(overrides?: CallOverrides): Promise<string>;
 
     PERMISSION_SET_TYPEHASH(overrides?: CallOverrides): Promise<string>;
 
     PERMIT_TYPEHASH(overrides?: CallOverrides): Promise<string>;
+
+    POSITION_PERMISSIONS_TYPEHASH(overrides?: CallOverrides): Promise<string>;
 
     acceptPendingGovernor(overrides?: CallOverrides): Promise<void>;
 
@@ -726,6 +804,20 @@ export interface MeanFinancePermissionManager extends BaseContract {
       overrides?: CallOverrides,
     ): Promise<void>;
 
+    modifyMany(
+      _permissions: IDCAPermissionManager.PositionPermissionsStruct[],
+      overrides?: CallOverrides,
+    ): Promise<void>;
+
+    multiPermissionPermit(
+      _permissions: IDCAPermissionManager.PositionPermissionsStruct[],
+      _deadline: PromiseOrValue<BigNumberish>,
+      _v: PromiseOrValue<BigNumberish>,
+      _r: PromiseOrValue<BytesLike>,
+      _s: PromiseOrValue<BytesLike>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
+
     name(overrides?: CallOverrides): Promise<string>;
 
     nftDescriptor(overrides?: CallOverrides): Promise<string>;
@@ -767,7 +859,7 @@ export interface MeanFinancePermissionManager extends BaseContract {
       from: PromiseOrValue<string>,
       to: PromiseOrValue<string>,
       tokenId: PromiseOrValue<BigNumberish>,
-      _data: PromiseOrValue<BytesLike>,
+      data: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
@@ -855,11 +947,15 @@ export interface MeanFinancePermissionManager extends BaseContract {
   estimateGas: {
     DOMAIN_SEPARATOR(overrides?: CallOverrides): Promise<BigNumber>;
 
+    MULTI_PERMISSION_PERMIT_TYPEHASH(overrides?: CallOverrides): Promise<BigNumber>;
+
     PERMISSION_PERMIT_TYPEHASH(overrides?: CallOverrides): Promise<BigNumber>;
 
     PERMISSION_SET_TYPEHASH(overrides?: CallOverrides): Promise<BigNumber>;
 
     PERMIT_TYPEHASH(overrides?: CallOverrides): Promise<BigNumber>;
+
+    POSITION_PERMISSIONS_TYPEHASH(overrides?: CallOverrides): Promise<BigNumber>;
 
     acceptPendingGovernor(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
@@ -921,6 +1017,20 @@ export interface MeanFinancePermissionManager extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
+    modifyMany(
+      _permissions: IDCAPermissionManager.PositionPermissionsStruct[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
+
+    multiPermissionPermit(
+      _permissions: IDCAPermissionManager.PositionPermissionsStruct[],
+      _deadline: PromiseOrValue<BigNumberish>,
+      _v: PromiseOrValue<BigNumberish>,
+      _r: PromiseOrValue<BytesLike>,
+      _s: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
+
     name(overrides?: CallOverrides): Promise<BigNumber>;
 
     nftDescriptor(overrides?: CallOverrides): Promise<BigNumber>;
@@ -962,7 +1072,7 @@ export interface MeanFinancePermissionManager extends BaseContract {
       from: PromiseOrValue<string>,
       to: PromiseOrValue<string>,
       tokenId: PromiseOrValue<BigNumberish>,
-      _data: PromiseOrValue<BytesLike>,
+      data: PromiseOrValue<BytesLike>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
@@ -1009,11 +1119,15 @@ export interface MeanFinancePermissionManager extends BaseContract {
   populateTransaction: {
     DOMAIN_SEPARATOR(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
+    MULTI_PERMISSION_PERMIT_TYPEHASH(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
     PERMISSION_PERMIT_TYPEHASH(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     PERMISSION_SET_TYPEHASH(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     PERMIT_TYPEHASH(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    POSITION_PERMISSIONS_TYPEHASH(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     acceptPendingGovernor(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
@@ -1075,6 +1189,20 @@ export interface MeanFinancePermissionManager extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
+    modifyMany(
+      _permissions: IDCAPermissionManager.PositionPermissionsStruct[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<PopulatedTransaction>;
+
+    multiPermissionPermit(
+      _permissions: IDCAPermissionManager.PositionPermissionsStruct[],
+      _deadline: PromiseOrValue<BigNumberish>,
+      _v: PromiseOrValue<BigNumberish>,
+      _r: PromiseOrValue<BytesLike>,
+      _s: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<PopulatedTransaction>;
+
     name(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     nftDescriptor(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -1116,7 +1244,7 @@ export interface MeanFinancePermissionManager extends BaseContract {
       from: PromiseOrValue<string>,
       to: PromiseOrValue<string>,
       tokenId: PromiseOrValue<BigNumberish>,
-      _data: PromiseOrValue<BytesLike>,
+      data: PromiseOrValue<BytesLike>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 

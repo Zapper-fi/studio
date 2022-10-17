@@ -1,0 +1,475 @@
+[
+  { "inputs": [], "stateMutability": "nonpayable", "type": "constructor" },
+  { "inputs": [], "name": "BNBTransferToUserFailed", "type": "error" },
+  { "inputs": [], "name": "CantBeMoreThan1e18", "type": "error" },
+  { "inputs": [], "name": "CantClaimBeforeDeadline", "type": "error" },
+  { "inputs": [], "name": "CantSetMoreThan30PercentFee", "type": "error" },
+  { "inputs": [], "name": "CooldownPeriodCantBeMoreThan30Days", "type": "error" },
+  {
+    "inputs": [{ "internalType": "uint256", "name": "dust", "type": "uint256" }],
+    "name": "DustNotAllowed",
+    "type": "error"
+  },
+  {
+    "inputs": [{ "internalType": "uint256", "name": "index", "type": "uint256" }],
+    "name": "IndexOutOfBounds",
+    "type": "error"
+  },
+  { "inputs": [], "name": "InsufficientClaimReserve", "type": "error" },
+  { "inputs": [], "name": "InsufficientFundsToSatisfyClaim", "type": "error" },
+  {
+    "inputs": [
+      { "internalType": "string", "name": "tag", "type": "string" },
+      { "internalType": "uint256", "name": "expected", "type": "uint256" },
+      { "internalType": "uint256", "name": "got", "type": "uint256" }
+    ],
+    "name": "LessThanMinimum",
+    "type": "error"
+  },
+  { "inputs": [], "name": "MustBeGreaterThanZero", "type": "error" },
+  { "inputs": [], "name": "NumeratorMoreThanBasis", "type": "error" },
+  { "inputs": [], "name": "PausableNotPaused", "type": "error" },
+  { "inputs": [], "name": "PausablePaused", "type": "error" },
+  { "inputs": [], "name": "ReentrancyGuardReentrantCall", "type": "error" },
+  {
+    "inputs": [
+      { "internalType": "uint256", "name": "from", "type": "uint256" },
+      { "internalType": "uint256", "name": "to", "type": "uint256" }
+    ],
+    "name": "ToIndexMustBeGreaterThanFromIndex",
+    "type": "error"
+  },
+  { "inputs": [], "name": "TokenMintingToSelfNotAllowed", "type": "error" },
+  { "inputs": [], "name": "TokenTransferToSelfNotAllowed", "type": "error" },
+  { "inputs": [], "name": "TransferOutFailed", "type": "error" },
+  {
+    "inputs": [{ "internalType": "address", "name": "to", "type": "address" }],
+    "name": "UnexpectedlyReceivedTokensForSomeoneElse",
+    "type": "error"
+  },
+  { "inputs": [], "name": "UnknownSender", "type": "error" },
+  {
+    "anonymous": false,
+    "inputs": [
+      { "indexed": true, "internalType": "address", "name": "user", "type": "address" },
+      {
+        "components": [
+          { "internalType": "uint256", "name": "weiToReturn", "type": "uint256" },
+          { "internalType": "uint256", "name": "createdAt", "type": "uint256" }
+        ],
+        "indexed": false,
+        "internalType": "struct StakePool.ClaimRequest",
+        "name": "req",
+        "type": "tuple"
+      },
+      { "indexed": false, "internalType": "uint256", "name": "timestamp", "type": "uint256" }
+    ],
+    "name": "Claim",
+    "type": "event"
+  },
+  { "anonymous": false, "inputs": [], "name": "ConfigUpdated", "type": "event" },
+  {
+    "anonymous": false,
+    "inputs": [
+      { "indexed": true, "internalType": "address", "name": "user", "type": "address" },
+      { "indexed": false, "internalType": "uint256", "name": "bnbAmount", "type": "uint256" },
+      { "indexed": false, "internalType": "uint256", "name": "poolTokenAmount", "type": "uint256" },
+      { "indexed": false, "internalType": "uint256", "name": "timestamp", "type": "uint256" }
+    ],
+    "name": "Deposit",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      { "indexed": false, "internalType": "uint256", "name": "bnbRewards", "type": "uint256" },
+      { "indexed": false, "internalType": "uint256", "name": "feeTokens", "type": "uint256" }
+    ],
+    "name": "EpochUpdate",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [{ "indexed": false, "internalType": "uint8", "name": "version", "type": "uint8" }],
+    "name": "Initialized",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [{ "indexed": false, "internalType": "uint256", "name": "shortCircuitAmount", "type": "uint256" }],
+    "name": "InitiateDelegation_ShortCircuit",
+    "type": "event"
+  },
+  { "anonymous": false, "inputs": [], "name": "InitiateDelegation_Success", "type": "event" },
+  {
+    "anonymous": false,
+    "inputs": [{ "indexed": false, "internalType": "uint256", "name": "transferOutAmount", "type": "uint256" }],
+    "name": "InitiateDelegation_TransferOut",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [{ "indexed": false, "internalType": "address", "name": "account", "type": "address" }],
+    "name": "Paused",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      { "indexed": true, "internalType": "bytes32", "name": "role", "type": "bytes32" },
+      { "indexed": true, "internalType": "bytes32", "name": "previousAdminRole", "type": "bytes32" },
+      { "indexed": true, "internalType": "bytes32", "name": "newAdminRole", "type": "bytes32" }
+    ],
+    "name": "RoleAdminChanged",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      { "indexed": true, "internalType": "bytes32", "name": "role", "type": "bytes32" },
+      { "indexed": true, "internalType": "address", "name": "account", "type": "address" },
+      { "indexed": true, "internalType": "address", "name": "sender", "type": "address" }
+    ],
+    "name": "RoleGranted",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      { "indexed": true, "internalType": "bytes32", "name": "role", "type": "bytes32" },
+      { "indexed": true, "internalType": "address", "name": "account", "type": "address" },
+      { "indexed": true, "internalType": "address", "name": "sender", "type": "address" }
+    ],
+    "name": "RoleRevoked",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [{ "indexed": false, "internalType": "uint256", "name": "unbondedAmount", "type": "uint256" }],
+    "name": "UnbondingFinished",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [{ "indexed": false, "internalType": "uint256", "name": "bnbUnbonding", "type": "uint256" }],
+    "name": "UnbondingInitiated",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [{ "indexed": false, "internalType": "address", "name": "account", "type": "address" }],
+    "name": "Unpaused",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      { "indexed": true, "internalType": "address", "name": "user", "type": "address" },
+      { "indexed": false, "internalType": "uint256", "name": "poolTokenAmount", "type": "uint256" },
+      { "indexed": false, "internalType": "uint256", "name": "bnbAmount", "type": "uint256" },
+      { "indexed": false, "internalType": "uint256", "name": "timestamp", "type": "uint256" }
+    ],
+    "name": "Withdraw",
+    "type": "event"
+  },
+  {
+    "inputs": [],
+    "name": "BOT_ROLE",
+    "outputs": [{ "internalType": "bytes32", "name": "", "type": "bytes32" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "DEFAULT_ADMIN_ROLE",
+    "outputs": [{ "internalType": "bytes32", "name": "", "type": "bytes32" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "addressStore",
+    "outputs": [{ "internalType": "contract IAddressStore", "name": "", "type": "address" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "bnbToUnbond",
+    "outputs": [{ "internalType": "int256", "name": "", "type": "int256" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "bnbUnbonding",
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [{ "internalType": "uint256", "name": "index", "type": "uint256" }],
+    "name": "claim",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  { "inputs": [], "name": "claimAll", "outputs": [], "stateMutability": "nonpayable", "type": "function" },
+  {
+    "inputs": [
+      { "internalType": "address", "name": "", "type": "address" },
+      { "internalType": "uint256", "name": "", "type": "uint256" }
+    ],
+    "name": "claimReqs",
+    "outputs": [
+      { "internalType": "uint256", "name": "weiToReturn", "type": "uint256" },
+      { "internalType": "uint256", "name": "createdAt", "type": "uint256" }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "claimReserve",
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "config",
+    "outputs": [
+      { "internalType": "address", "name": "bcStakingWallet", "type": "address" },
+      { "internalType": "uint256", "name": "minCrossChainTransfer", "type": "uint256" },
+      { "internalType": "uint256", "name": "transferOutTimeout", "type": "uint256" },
+      { "internalType": "uint256", "name": "minBNBDeposit", "type": "uint256" },
+      { "internalType": "uint256", "name": "minTokenWithdrawal", "type": "uint256" },
+      { "internalType": "uint256", "name": "cooldownPeriod", "type": "uint256" },
+      {
+        "components": [
+          { "internalType": "uint256", "name": "reward", "type": "uint256" },
+          { "internalType": "uint256", "name": "deposit", "type": "uint256" },
+          { "internalType": "uint256", "name": "withdraw", "type": "uint256" }
+        ],
+        "internalType": "struct FeeDistribution.Data",
+        "name": "fee",
+        "type": "tuple"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  { "inputs": [], "name": "deposit", "outputs": [], "stateMutability": "payable", "type": "function" },
+  {
+    "inputs": [{ "internalType": "uint256", "name": "bnbRewards", "type": "uint256" }],
+    "name": "epochUpdate",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "exchangeRate",
+    "outputs": [
+      { "internalType": "uint256", "name": "totalWei", "type": "uint256" },
+      { "internalType": "uint256", "name": "poolTokenSupply", "type": "uint256" }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [{ "internalType": "address", "name": "user", "type": "address" }],
+    "name": "getClaimRequestCount",
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "address", "name": "user", "type": "address" },
+      { "internalType": "uint256", "name": "from", "type": "uint256" },
+      { "internalType": "uint256", "name": "to", "type": "uint256" }
+    ],
+    "name": "getPaginatedClaimRequests",
+    "outputs": [
+      {
+        "components": [
+          { "internalType": "uint256", "name": "weiToReturn", "type": "uint256" },
+          { "internalType": "uint256", "name": "createdAt", "type": "uint256" }
+        ],
+        "internalType": "struct StakePool.ClaimRequest[]",
+        "name": "",
+        "type": "tuple[]"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [{ "internalType": "bytes32", "name": "role", "type": "bytes32" }],
+    "name": "getRoleAdmin",
+    "outputs": [{ "internalType": "bytes32", "name": "", "type": "bytes32" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "bytes32", "name": "role", "type": "bytes32" },
+      { "internalType": "uint256", "name": "index", "type": "uint256" }
+    ],
+    "name": "getRoleMember",
+    "outputs": [{ "internalType": "address", "name": "", "type": "address" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [{ "internalType": "bytes32", "name": "role", "type": "bytes32" }],
+    "name": "getRoleMemberCount",
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "bytes32", "name": "role", "type": "bytes32" },
+      { "internalType": "address", "name": "account", "type": "address" }
+    ],
+    "name": "grantRole",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "bytes32", "name": "role", "type": "bytes32" },
+      { "internalType": "address", "name": "account", "type": "address" }
+    ],
+    "name": "hasRole",
+    "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "contract IAddressStore", "name": "addressStore_", "type": "address" },
+      {
+        "components": [
+          { "internalType": "address", "name": "bcStakingWallet", "type": "address" },
+          { "internalType": "uint256", "name": "minCrossChainTransfer", "type": "uint256" },
+          { "internalType": "uint256", "name": "transferOutTimeout", "type": "uint256" },
+          { "internalType": "uint256", "name": "minBNBDeposit", "type": "uint256" },
+          { "internalType": "uint256", "name": "minTokenWithdrawal", "type": "uint256" },
+          { "internalType": "uint256", "name": "cooldownPeriod", "type": "uint256" },
+          {
+            "components": [
+              { "internalType": "uint256", "name": "reward", "type": "uint256" },
+              { "internalType": "uint256", "name": "deposit", "type": "uint256" },
+              { "internalType": "uint256", "name": "withdraw", "type": "uint256" }
+            ],
+            "internalType": "struct FeeDistribution.Data",
+            "name": "fee",
+            "type": "tuple"
+          }
+        ],
+        "internalType": "struct Config.Data",
+        "name": "config_",
+        "type": "tuple"
+      }
+    ],
+    "name": "initialize",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  { "inputs": [], "name": "initiateDelegation", "outputs": [], "stateMutability": "nonpayable", "type": "function" },
+  { "inputs": [], "name": "pause", "outputs": [], "stateMutability": "nonpayable", "type": "function" },
+  {
+    "inputs": [],
+    "name": "paused",
+    "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "bytes32", "name": "role", "type": "bytes32" },
+      { "internalType": "address", "name": "account", "type": "address" }
+    ],
+    "name": "renounceRole",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "bytes32", "name": "role", "type": "bytes32" },
+      { "internalType": "address", "name": "account", "type": "address" }
+    ],
+    "name": "revokeRole",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [{ "internalType": "bytes4", "name": "interfaceId", "type": "bytes4" }],
+    "name": "supportsInterface",
+    "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "address", "name": "", "type": "address" },
+      { "internalType": "address", "name": "from", "type": "address" },
+      { "internalType": "address", "name": "to", "type": "address" },
+      { "internalType": "uint256", "name": "amount", "type": "uint256" },
+      { "internalType": "bytes", "name": "", "type": "bytes" },
+      { "internalType": "bytes", "name": "", "type": "bytes" }
+    ],
+    "name": "tokensReceived",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  { "inputs": [], "name": "unbondingFinished", "outputs": [], "stateMutability": "nonpayable", "type": "function" },
+  {
+    "inputs": [{ "internalType": "uint256", "name": "bnbUnbonding_", "type": "uint256" }],
+    "name": "unbondingInitiated",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  { "inputs": [], "name": "unpause", "outputs": [], "stateMutability": "nonpayable", "type": "function" },
+  {
+    "inputs": [
+      {
+        "components": [
+          { "internalType": "address", "name": "bcStakingWallet", "type": "address" },
+          { "internalType": "uint256", "name": "minCrossChainTransfer", "type": "uint256" },
+          { "internalType": "uint256", "name": "transferOutTimeout", "type": "uint256" },
+          { "internalType": "uint256", "name": "minBNBDeposit", "type": "uint256" },
+          { "internalType": "uint256", "name": "minTokenWithdrawal", "type": "uint256" },
+          { "internalType": "uint256", "name": "cooldownPeriod", "type": "uint256" },
+          {
+            "components": [
+              { "internalType": "uint256", "name": "reward", "type": "uint256" },
+              { "internalType": "uint256", "name": "deposit", "type": "uint256" },
+              { "internalType": "uint256", "name": "withdraw", "type": "uint256" }
+            ],
+            "internalType": "struct FeeDistribution.Data",
+            "name": "fee",
+            "type": "tuple"
+          }
+        ],
+        "internalType": "struct Config.Data",
+        "name": "config_",
+        "type": "tuple"
+      }
+    ],
+    "name": "updateConfig",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  { "stateMutability": "payable", "type": "receive" }
+]

@@ -1,11 +1,10 @@
 import { Inject, Injectable } from '@nestjs/common';
+import { ethers } from 'ethers';
 import { parseBytes32String } from 'ethers/lib/utils';
-import { padEnd } from 'lodash';
-import Web3 from 'web3';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { buildDollarDisplayItem } from '~app-toolkit/helpers/presentation/display-item.present';
-import { getTokenImg } from '~app-toolkit/helpers/presentation/image.present';
+import { getAppAssetImage } from '~app-toolkit/helpers/presentation/image.present';
 import { ContractType } from '~position/contract.interface';
 import { AppTokenPosition } from '~position/position.interface';
 import { Network } from '~types/network.interface';
@@ -24,6 +23,8 @@ export type SynthetixAppTokenDataProps = {
   liquidity: number;
 };
 
+const appId = SYNTHETIX_DEFINITION.id;
+
 @Injectable()
 export class SynthetixSynthTokenHelper {
   constructor(
@@ -39,12 +40,15 @@ export class SynthetixSynthTokenHelper {
       network,
     });
 
-    const synthUtilName = padEnd(Web3.utils.asciiToHex('SynthUtil'), 66, '0');
+    const synthUtilName = ethers.utils.formatBytes32String('SynthUtil');
     const synthUtilAddress = await addressResolverContract.getAddress(synthUtilName);
     const snxUtilsContract = this.contractFactory.synthetixSummaryUtil({ address: synthUtilAddress, network });
     const synthRates = await snxUtilsContract.synthsRates();
     const synthSymbolBytes = synthRates[0];
     const synthPrices = synthRates[1];
+    const baseTokens = await this.appToolkit.getBaseTokenPrices(network);
+    const susdToken = baseTokens.find(p => p.symbol === 'sUSD')!;
+    const susdMarketPice = susdToken.price;
 
     const tokens = await Promise.all(
       synthSymbolBytes.map(async (byte, i) => {
@@ -57,7 +61,7 @@ export class SynthetixSynthTokenHelper {
         const supplyRaw = await multicall.wrap(synthContract).totalSupply();
         const address = addressRaw.toLowerCase();
         const supply = Number(supplyRaw) / 10 ** decimals;
-        const price = Number(synthPrices[i]) / 10 ** 18;
+        const price = (Number(synthPrices[i]) * susdMarketPice) / 10 ** decimals;
         const pricePerShare = 1;
         const tokens = [];
         const liquidity = supply * price;
@@ -65,7 +69,7 @@ export class SynthetixSynthTokenHelper {
         // Display Props
         const label = symbol;
         const secondaryLabel = buildDollarDisplayItem(price);
-        const images = [getTokenImg(address, network)];
+        const images = [getAppAssetImage(appId, symbol)];
         const statsItems = [{ label: 'Liquidity', value: buildDollarDisplayItem(liquidity) }];
 
         const token: AppTokenPosition<SynthetixAppTokenDataProps> = {

@@ -1,21 +1,21 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Inject } from '@nestjs/common';
+import { BigNumberish } from 'ethers';
 import { sum, range } from 'lodash';
 
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
-import { GetTokenDefinitionsParams, GetTokenBalancesParams } from '~position/template/contract-position.template.types';
-import { VotingEscrowTemplateContractPositionFetcher } from '~position/template/voting-escrow.template.contract-position-fetcher';
-import { Network } from '~types/network.interface';
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
+import { VotingEscrowWithRewardsTemplateContractPositionFetcher } from '~position/template/voting-escrow-with-rewards.template.contract-position-fetcher';
 
-import { VelodromeContractFactory, VelodromeVe } from '../contracts';
-import { VELODROME_DEFINITION } from '../velodrome.definition';
+import { VelodromeContractFactory, VelodromeVe, VelodromeRewards } from '../contracts';
 
-@Injectable()
-export class OptimismVelodromeVotingEscrowContractPositionFetcher extends VotingEscrowTemplateContractPositionFetcher<VelodromeVe> {
-  appId = VELODROME_DEFINITION.id;
-  groupId = VELODROME_DEFINITION.groups.votingEscrow.id;
-  network = Network.OPTIMISM_MAINNET;
+@PositionTemplate()
+export class OptimismVelodromeVotingEscrowContractPositionFetcher extends VotingEscrowWithRewardsTemplateContractPositionFetcher<
+  VelodromeVe,
+  VelodromeRewards
+> {
   groupLabel = 'Voting Escrow';
   veTokenAddress = '0x9c7305eb78a432ced5c4d14cac27e8ed569a2e26';
+  rewardAddress = '0x5d5bea9f0fc13d967511668a60a3369fd53f784f';
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
@@ -28,11 +28,35 @@ export class OptimismVelodromeVotingEscrowContractPositionFetcher extends Voting
     return this.contractFactory.velodromeVe({ address, network: this.network });
   }
 
-  getEscrowedTokenAddress({ contract }: GetTokenDefinitionsParams<VelodromeVe>) {
+  getRewardContract(address: string): VelodromeRewards {
+    return this.contractFactory.velodromeRewards({ address, network: this.network });
+  }
+
+  getEscrowedTokenAddress(contract: VelodromeVe): Promise<string> {
     return contract.token();
   }
 
-  async getEscrowedTokenBalance({ contract, address }: GetTokenBalancesParams<VelodromeVe>) {
+  async getRewardTokenBalance(address: string, contract: VelodromeRewards): Promise<BigNumberish> {
+    const multicall = this.appToolkit.getMulticall(this.network);
+    const escrow = multicall.wrap(this.getEscrowContract(this.veTokenAddress));
+    const veCount = Number(await escrow.balanceOf(address));
+
+    const balances = await Promise.all(
+      range(veCount).map(async i => {
+        const tokenId = await escrow.tokenOfOwnerByIndex(address, i);
+        const balance = await contract.claimable(tokenId);
+        return Number(balance);
+      }),
+    );
+
+    return sum(balances);
+  }
+
+  getRewardTokenAddress(contract: VelodromeRewards): Promise<string> {
+    return contract.token();
+  }
+
+  async getEscrowedTokenBalance(address: string, contract: VelodromeVe): Promise<BigNumberish> {
     const veCount = Number(await contract.balanceOf(address));
 
     const balances = await Promise.all(

@@ -1,6 +1,6 @@
 import { Inject } from '@nestjs/common';
 import { BigNumberish, Contract } from 'ethers/lib/ethers';
-import { compact, intersection, isArray, partition, sum } from 'lodash';
+import { compact, intersection, isArray, partition, sortBy, sum } from 'lodash';
 
 import { drillBalance } from '~app-toolkit';
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
@@ -12,14 +12,15 @@ import { getImagesFromToken } from '~app-toolkit/helpers/presentation/image.pres
 import { IMulticallWrapper } from '~multicall';
 import { isMulticallUnderlyingError } from '~multicall/multicall.ethers';
 import { ContractType } from '~position/contract.interface';
-import { DefaultDataProps, DisplayProps, StatsItem } from '~position/display.interface';
-import { AppTokenPositionBalance } from '~position/position-balance.interface';
+import { DisplayProps, StatsItem } from '~position/display.interface';
+import { AppTokenPositionBalance, RawAppTokenBalance } from '~position/position-balance.interface';
 import { PositionFetcher } from '~position/position-fetcher.interface';
 import { AppTokenPosition } from '~position/position.interface';
 import { Network } from '~types/network.interface';
 
 import {
   DefaultAppTokenDefinition,
+  DefaultAppTokenDataProps,
   GetAddressesParams,
   GetDataPropsParams,
   GetDefinitionsParams,
@@ -33,13 +34,14 @@ import { PositionFetcherTemplateCommons } from './position-fetcher.template.type
 
 export abstract class AppTokenTemplatePositionFetcher<
   T extends Contract,
-  V extends DefaultDataProps = DefaultDataProps,
+  V extends DefaultAppTokenDataProps = DefaultAppTokenDataProps,
   R extends DefaultAppTokenDefinition = DefaultAppTokenDefinition,
 > implements PositionFetcher<AppTokenPosition<V>>, PositionFetcherTemplateCommons
 {
-  abstract appId: string;
-  abstract groupId: string;
-  abstract network: Network;
+  appId: string;
+  groupId: string;
+  network: Network;
+  isDebt = false;
   abstract groupLabel: string;
 
   isExcludedFromBalances = false;
@@ -91,13 +93,23 @@ export abstract class AppTokenTemplatePositionFetcher<
     return 1;
   }
 
+  // 7. Get price using the price per share
   async getPrice({ appToken }: GetPriceParams<T, V, R>): Promise<number> {
     return sum(appToken.tokens.map((v, i) => v.price * appToken.pricePerShare[i]));
   }
 
-  // Data Properties
-  async getDataProps(_params: GetDataPropsParams<T, V, R>): Promise<V> {
-    return {} as V;
+  abstract getLiquidity(params: GetDataPropsParams<T, V, R>): number | Promise<number>;
+  abstract getReserves(params: GetDataPropsParams<T, V, R>): number[] | Promise<number[]>;
+  abstract getApy(params: GetDataPropsParams<T, V, R>): number | Promise<number>;
+
+  async getDataProps(params: GetDataPropsParams<T, V, R>): Promise<V> {
+    const [liquidity, reserves, apy] = await Promise.all([
+      this.getLiquidity(params),
+      this.getReserves(params),
+      this.getApy(params),
+    ]);
+
+    return { liquidity, reserves, apy } as V;
   }
 
   // Display Properties
@@ -114,7 +126,8 @@ export abstract class AppTokenTemplatePositionFetcher<
   }
 
   async getTertiaryLabel({ appToken }: GetDisplayPropsParams<T, V, R>): Promise<DisplayProps['tertiaryLabel']> {
-    if (typeof appToken.dataProps.apy === 'number') return `${appToken.dataProps.apy.toFixed(3)}% APY`;
+    if (typeof appToken.dataProps.apy === 'number' && appToken.dataProps.apy > 0)
+      return `${appToken.dataProps.apy.toFixed(3)}% APY`;
     return undefined;
   }
 
@@ -132,7 +145,7 @@ export abstract class AppTokenTemplatePositionFetcher<
     // Standardized Fields
     if (typeof appToken.dataProps.liquidity === 'number')
       statsItems.push({ label: 'Liquidity', value: buildDollarDisplayItem(appToken.dataProps.liquidity) });
-    if (typeof appToken.dataProps.apy === 'number')
+    if (typeof appToken.dataProps.apy === 'number' && appToken.dataProps.apy > 0)
       statsItems.push({ label: 'APY', value: buildPercentageDisplayItem(appToken.dataProps.apy) });
 
     return statsItems;
@@ -150,13 +163,13 @@ export abstract class AppTokenTemplatePositionFetcher<
       tags: { network: this.network, context: `${this.appId}__template` },
     });
 
-    const definitions = await this.getDefinitions({ multicall });
+    const definitions = await this.getDefinitions({ multicall, tokenLoader });
     const addressesRaw = await this.getAddresses({ multicall, definitions });
     const addresses = addressesRaw.map(x => x.toLowerCase());
 
     const maybeSkeletons = await Promise.all(
       addresses.map(async address => {
-        const definition = definitions.find(v => v.address === address);
+        const definition = definitions.find(v => v.address.toLowerCase() === address);
         if (!definition) return null;
 
         const contract = multicall.wrap(this.getContract(address));
@@ -259,15 +272,14 @@ export abstract class AppTokenTemplatePositionFetcher<
         }),
       );
 
-      const positionsSubset = compact(tokens).filter(v => {
-        if (typeof v.dataProps.liquidity === 'number') return Math.abs(v.dataProps.liquidity) > this.minLiquidity;
-        return true;
-      });
-
+      const positionsSubset = compact(tokens);
       currentTokens.push(...positionsSubset);
     }
 
-    return currentTokens;
+    return sortBy(currentTokens, t => {
+      if (typeof t.dataProps.liquidity === 'number') return -t.dataProps.liquidity;
+      return 1;
+    });
   }
 
   getBalancePerToken({
@@ -276,7 +288,7 @@ export abstract class AppTokenTemplatePositionFetcher<
     multicall,
   }: {
     address: string;
-    appToken: AppTokenPosition<V>;
+    appToken: AppTokenPosition;
     multicall: IMulticallWrapper;
   }): Promise<BigNumberish> {
     return multicall.wrap(this.getContract(appToken.address)).balanceOf(address);
@@ -293,11 +305,45 @@ export abstract class AppTokenTemplatePositionFetcher<
     const balances = await Promise.all(
       appTokens.map(async appToken => {
         const balanceRaw = await this.getBalancePerToken({ multicall, address, appToken });
-        const tokenBalance = drillBalance(appToken, balanceRaw.toString());
+        const tokenBalance = drillBalance(appToken, balanceRaw.toString(), { isDebt: this.isDebt });
         return tokenBalance;
       }),
     );
 
     return balances as AppTokenPositionBalance<V>[];
+  }
+
+  async getRawBalances(address: string): Promise<RawAppTokenBalance[]> {
+    const multicall = this.appToolkit.getMulticall(this.network);
+    const appTokens = await this.appToolkit.getAppTokenPositions({
+      appId: this.appId,
+      network: this.network,
+      groupIds: [this.groupId],
+    });
+
+    return Promise.all(
+      appTokens.map(async appToken => ({
+        key: this.appToolkit.getPositionKey(appToken),
+        balance: (await this.getBalancePerToken({ multicall, address, appToken })).toString(),
+      })),
+    );
+  }
+
+  async drillRawBalances(balances: RawAppTokenBalance[]): Promise<AppTokenPositionBalance<V>[]> {
+    const appTokens = await this.appToolkit.getAppTokenPositions<V>({
+      appId: this.appId,
+      network: this.network,
+      groupIds: [this.groupId],
+    });
+
+    const appTokenBalances = appTokens.map(token => {
+      const tokenBalance = balances.find(b => b.key === this.appToolkit.getPositionKey(token));
+      if (!tokenBalance) return null;
+
+      const result = drillBalance<typeof token, V>(token, tokenBalance.balance, { isDebt: this.isDebt });
+      return result;
+    });
+
+    return compact(appTokenBalances);
   }
 }

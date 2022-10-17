@@ -1,62 +1,42 @@
 import { Inject } from '@nestjs/common';
 
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
-import { ZERO_ADDRESS } from '~app-toolkit/constants/address';
-import { Register } from '~app-toolkit/decorators';
-import { getImagesFromToken } from '~app-toolkit/helpers/presentation/image.present';
-import { ContractType } from '~position/contract.interface';
-import { PositionFetcher } from '~position/position-fetcher.interface';
-import { ContractPosition } from '~position/position.interface';
-import { supplied } from '~position/position.utils';
-import { Network } from '~types/network.interface';
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
+import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
+import { MetaType } from '~position/position.interface';
+import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
+import { GetDisplayPropsParams, GetTokenBalancesParams } from '~position/template/contract-position.template.types';
 
-import { ROCKET_POOL_DEFINITION } from '../rocket-pool.definition';
+import { RocketNodeStaking, RocketPoolContractFactory } from '../contracts';
 
-export const rocketNodeStakingAddress = '0x3019227b2b8493e45bf5d25302139c9a2713bf15';
-export const rocketMinipoolManagerAddress = '0x6293b8abc1f36afb22406be5f96d893072a8cf3a';
-export const rocketTokenRPLAddress = '0xd33526068d116ce69f19a9ee46f0bd304f21a51f';
+@PositionTemplate()
+export class EthereumRocketPoolStakingContractPositionFetcher extends ContractPositionTemplatePositionFetcher<RocketNodeStaking> {
+  groupLabel = 'Staking';
 
-const appId = ROCKET_POOL_DEFINITION.id;
-const groupId = ROCKET_POOL_DEFINITION.groups.staking.id;
-const network = Network.ETHEREUM_MAINNET;
+  constructor(
+    @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
+    @Inject(RocketPoolContractFactory) protected readonly contractFactory: RocketPoolContractFactory,
+  ) {
+    super(appToolkit);
+  }
 
-@Register.ContractPositionFetcher({ appId, groupId, network })
-export class EthereumRocketPoolStakingContractPositionFetcher implements PositionFetcher<ContractPosition> {
-  constructor(@Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit) {}
+  getContract(address: string): RocketNodeStaking {
+    return this.contractFactory.rocketNodeStaking({ address, network: this.network });
+  }
 
-  async getPositions() {
-    const baseTokens = await this.appToolkit.getBaseTokenPrices(network);
-    const eth = baseTokens.find(v => v.address === ZERO_ADDRESS)!;
-    const rpl = baseTokens.find(v => v.address === rocketTokenRPLAddress)!;
+  async getDefinitions() {
+    return [{ address: '0x3019227b2b8493e45bf5d25302139c9a2713bf15' }];
+  }
 
-    const ethposition: ContractPosition = {
-      type: ContractType.POSITION,
-      address: rocketMinipoolManagerAddress,
-      network,
-      appId,
-      groupId,
-      tokens: [supplied(eth)],
-      dataProps: {},
-      displayProps: {
-        label: `Staked ETH`,
-        images: getImagesFromToken(eth),
-      },
-    };
+  async getTokenDefinitions() {
+    return [{ metaType: MetaType.SUPPLIED, address: '0xd33526068d116ce69f19a9ee46f0bd304f21a51f' }];
+  }
 
-    const rplposition: ContractPosition = {
-      type: ContractType.POSITION,
-      address: rocketNodeStakingAddress,
-      network,
-      appId,
-      groupId,
-      tokens: [supplied(rpl)],
-      dataProps: {},
-      displayProps: {
-        label: `Staked ${rpl.symbol}`,
-        images: getImagesFromToken(rpl),
-      },
-    };
+  async getLabel({ contractPosition }: GetDisplayPropsParams<RocketNodeStaking>) {
+    return `Staked ${getLabelFromToken(contractPosition.tokens[0])}`;
+  }
 
-    return [ethposition, rplposition];
+  async getTokenBalancesPerPosition({ address, contract }: GetTokenBalancesParams<RocketNodeStaking>) {
+    return [await contract.getNodeRPLStake(address)];
   }
 }

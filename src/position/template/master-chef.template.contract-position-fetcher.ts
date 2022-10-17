@@ -117,6 +117,7 @@ export abstract class MasterChefTemplateContractPositionFetcher<
       this.getPoolAllocPoints(params),
     ]);
 
+    if (Number(totalAllocPoints) === 0) return [0];
     const rewardRate = BigNumber.from(totalRewardRateRaw).mul(poolAllocPoints).div(totalAllocPoints);
 
     return [rewardRate];

@@ -47,14 +47,18 @@ export declare namespace IDCAHubSwapHandler {
   export type PairInSwapStruct = {
     tokenA: PromiseOrValue<string>;
     tokenB: PromiseOrValue<string>;
+    totalAmountToSwapTokenA: PromiseOrValue<BigNumberish>;
+    totalAmountToSwapTokenB: PromiseOrValue<BigNumberish>;
     ratioAToB: PromiseOrValue<BigNumberish>;
     ratioBToA: PromiseOrValue<BigNumberish>;
     intervalsInSwap: PromiseOrValue<BytesLike>;
   };
 
-  export type PairInSwapStructOutput = [string, string, BigNumber, BigNumber, string] & {
+  export type PairInSwapStructOutput = [string, string, BigNumber, BigNumber, BigNumber, BigNumber, string] & {
     tokenA: string;
     tokenB: string;
+    totalAmountToSwapTokenA: BigNumber;
+    totalAmountToSwapTokenB: BigNumber;
     ratioAToB: BigNumber;
     ratioBToA: BigNumber;
     intervalsInSwap: string;
@@ -130,42 +134,6 @@ export declare namespace IDCAHubPositionHandler {
   };
 }
 
-export declare namespace IDCAHubParameters {
-  export type AccumRatioStruct = {
-    accumRatioAToB: PromiseOrValue<BigNumberish>;
-    accumRatioBToA: PromiseOrValue<BigNumberish>;
-  };
-
-  export type AccumRatioStructOutput = [BigNumber, BigNumber] & {
-    accumRatioAToB: BigNumber;
-    accumRatioBToA: BigNumber;
-  };
-
-  export type SwapDeltaStruct = {
-    swapDeltaAToB: PromiseOrValue<BigNumberish>;
-    swapDeltaBToA: PromiseOrValue<BigNumberish>;
-  };
-
-  export type SwapDeltaStructOutput = [BigNumber, BigNumber] & {
-    swapDeltaAToB: BigNumber;
-    swapDeltaBToA: BigNumber;
-  };
-
-  export type SwapDataStruct = {
-    performedSwaps: PromiseOrValue<BigNumberish>;
-    nextAmountToSwapAToB: PromiseOrValue<BigNumberish>;
-    lastSwappedAt: PromiseOrValue<BigNumberish>;
-    nextAmountToSwapBToA: PromiseOrValue<BigNumberish>;
-  };
-
-  export type SwapDataStructOutput = [number, BigNumber, number, BigNumber] & {
-    performedSwaps: number;
-    nextAmountToSwapAToB: BigNumber;
-    lastSwappedAt: number;
-    nextAmountToSwapBToA: BigNumber;
-  };
-}
-
 export interface MeanFinanceHubInterface extends utils.Interface {
   functions: {
     'DEFAULT_ADMIN_ROLE()': FunctionFragment;
@@ -173,6 +141,7 @@ export interface MeanFinanceHubInterface extends utils.Interface {
     'MAX_FEE()': FunctionFragment;
     'MAX_PLATFORM_FEE_RATIO()': FunctionFragment;
     'PLATFORM_WITHDRAW_ROLE()': FunctionFragment;
+    'PRIVILEGED_SWAPPER_ROLE()': FunctionFragment;
     'TIME_LOCKED_ROLE()': FunctionFragment;
     'accumRatio(address,address,bytes1,uint32)': FunctionFragment;
     'activeSwapIntervals(address,address)': FunctionFragment;
@@ -181,7 +150,7 @@ export interface MeanFinanceHubInterface extends utils.Interface {
     'allowedTokens(address)': FunctionFragment;
     'deposit(address,address,uint256,uint32,uint32,address,(address,uint8[])[])': FunctionFragment;
     'deposit(address,address,uint256,uint32,uint32,address,(address,uint8[])[],bytes)': FunctionFragment;
-    'getNextSwapInfo(address[],(uint8,uint8)[])': FunctionFragment;
+    'getNextSwapInfo(address[],(uint8,uint8)[],bool,bytes)': FunctionFragment;
     'getRoleAdmin(bytes32)': FunctionFragment;
     'grantRole(bytes32,address)': FunctionFragment;
     'hasRole(bytes32,address)': FunctionFragment;
@@ -201,7 +170,7 @@ export interface MeanFinanceHubInterface extends utils.Interface {
     'setPlatformFeeRatio(uint16)': FunctionFragment;
     'setSwapFee(uint32)': FunctionFragment;
     'supportsInterface(bytes4)': FunctionFragment;
-    'swap(address[],(uint8,uint8)[],address,address,uint256[],bytes)': FunctionFragment;
+    'swap(address[],(uint8,uint8)[],address,address,uint256[],bytes,bytes)': FunctionFragment;
     'swapAmountDelta(address,address,bytes1,uint32)': FunctionFragment;
     'swapData(address,address,bytes1)': FunctionFragment;
     'swapFee()': FunctionFragment;
@@ -222,6 +191,7 @@ export interface MeanFinanceHubInterface extends utils.Interface {
       | 'MAX_FEE'
       | 'MAX_PLATFORM_FEE_RATIO'
       | 'PLATFORM_WITHDRAW_ROLE'
+      | 'PRIVILEGED_SWAPPER_ROLE'
       | 'TIME_LOCKED_ROLE'
       | 'accumRatio'
       | 'activeSwapIntervals'
@@ -269,6 +239,7 @@ export interface MeanFinanceHubInterface extends utils.Interface {
   encodeFunctionData(functionFragment: 'MAX_FEE', values?: undefined): string;
   encodeFunctionData(functionFragment: 'MAX_PLATFORM_FEE_RATIO', values?: undefined): string;
   encodeFunctionData(functionFragment: 'PLATFORM_WITHDRAW_ROLE', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'PRIVILEGED_SWAPPER_ROLE', values?: undefined): string;
   encodeFunctionData(functionFragment: 'TIME_LOCKED_ROLE', values?: undefined): string;
   encodeFunctionData(
     functionFragment: 'accumRatio',
@@ -311,7 +282,12 @@ export interface MeanFinanceHubInterface extends utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: 'getNextSwapInfo',
-    values: [PromiseOrValue<string>[], IDCAHubSwapHandler.PairIndexesStruct[]],
+    values: [
+      PromiseOrValue<string>[],
+      IDCAHubSwapHandler.PairIndexesStruct[],
+      PromiseOrValue<boolean>,
+      PromiseOrValue<BytesLike>,
+    ],
   ): string;
   encodeFunctionData(functionFragment: 'getRoleAdmin', values: [PromiseOrValue<BytesLike>]): string;
   encodeFunctionData(
@@ -367,6 +343,7 @@ export interface MeanFinanceHubInterface extends utils.Interface {
       PromiseOrValue<string>,
       PromiseOrValue<BigNumberish>[],
       PromiseOrValue<BytesLike>,
+      PromiseOrValue<BytesLike>,
     ],
   ): string;
   encodeFunctionData(
@@ -404,6 +381,7 @@ export interface MeanFinanceHubInterface extends utils.Interface {
   decodeFunctionResult(functionFragment: 'MAX_FEE', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'MAX_PLATFORM_FEE_RATIO', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'PLATFORM_WITHDRAW_ROLE', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'PRIVILEGED_SWAPPER_ROLE', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'TIME_LOCKED_ROLE', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'accumRatio', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'activeSwapIntervals', data: BytesLike): Result;
@@ -544,7 +522,7 @@ export type ModifiedEvent = TypedEvent<[string, BigNumber, BigNumber, number, nu
 export type ModifiedEventFilter = TypedEventFilter<ModifiedEvent>;
 
 export interface OracleSetEventObject {
-  _oracle: string;
+  oracle: string;
 }
 export type OracleSetEvent = TypedEvent<[string], OracleSetEventObject>;
 
@@ -558,7 +536,7 @@ export type PausedEvent = TypedEvent<[string], PausedEventObject>;
 export type PausedEventFilter = TypedEventFilter<PausedEvent>;
 
 export interface PlatformFeeRatioSetEventObject {
-  _platformFeeRatio: number;
+  platformFeeRatio: number;
 }
 export type PlatformFeeRatioSetEvent = TypedEvent<[number], PlatformFeeRatioSetEventObject>;
 
@@ -592,21 +570,21 @@ export type RoleRevokedEvent = TypedEvent<[string, string, string], RoleRevokedE
 export type RoleRevokedEventFilter = TypedEventFilter<RoleRevokedEvent>;
 
 export interface SwapFeeSetEventObject {
-  _feeSet: number;
+  feeSet: number;
 }
 export type SwapFeeSetEvent = TypedEvent<[number], SwapFeeSetEventObject>;
 
 export type SwapFeeSetEventFilter = TypedEventFilter<SwapFeeSetEvent>;
 
 export interface SwapIntervalsAllowedEventObject {
-  _swapIntervals: number[];
+  swapIntervals: number[];
 }
 export type SwapIntervalsAllowedEvent = TypedEvent<[number[]], SwapIntervalsAllowedEventObject>;
 
 export type SwapIntervalsAllowedEventFilter = TypedEventFilter<SwapIntervalsAllowedEvent>;
 
 export interface SwapIntervalsForbiddenEventObject {
-  _swapIntervals: number[];
+  swapIntervals: number[];
 }
 export type SwapIntervalsForbiddenEvent = TypedEvent<[number[]], SwapIntervalsForbiddenEventObject>;
 
@@ -643,8 +621,8 @@ export type TerminatedEvent = TypedEvent<
 export type TerminatedEventFilter = TypedEventFilter<TerminatedEvent>;
 
 export interface TokensAllowedUpdatedEventObject {
-  _tokens: string[];
-  _allowed: boolean[];
+  tokens: string[];
+  allowed: boolean[];
 }
 export type TokensAllowedUpdatedEvent = TypedEvent<[string[], boolean[]], TokensAllowedUpdatedEventObject>;
 
@@ -726,15 +704,22 @@ export interface MeanFinanceHub extends BaseContract {
 
     PLATFORM_WITHDRAW_ROLE(overrides?: CallOverrides): Promise<[string]>;
 
+    PRIVILEGED_SWAPPER_ROLE(overrides?: CallOverrides): Promise<[string]>;
+
     TIME_LOCKED_ROLE(overrides?: CallOverrides): Promise<[string]>;
 
     accumRatio(
-      _tokenA: PromiseOrValue<string>,
-      _tokenB: PromiseOrValue<string>,
-      _swapIntervalMask: PromiseOrValue<BytesLike>,
-      _swapNumber: PromiseOrValue<BigNumberish>,
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
+      arg2: PromiseOrValue<BytesLike>,
+      arg3: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
-    ): Promise<[IDCAHubParameters.AccumRatioStructOutput]>;
+    ): Promise<
+      [BigNumber, BigNumber] & {
+        accumRatioAToB: BigNumber;
+        accumRatioBToA: BigNumber;
+      }
+    >;
 
     activeSwapIntervals(
       arg0: PromiseOrValue<string>,
@@ -777,6 +762,8 @@ export interface MeanFinanceHub extends BaseContract {
     getNextSwapInfo(
       _tokens: PromiseOrValue<string>[],
       _pairs: IDCAHubSwapHandler.PairIndexesStruct[],
+      _calculatePrivilegedAvailability: PromiseOrValue<boolean>,
+      _oracleData: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides,
     ): Promise<
       [IDCAHubSwapHandler.SwapInfoStructOutput] & {
@@ -871,24 +858,37 @@ export interface MeanFinanceHub extends BaseContract {
       _rewardRecipient: PromiseOrValue<string>,
       _callbackHandler: PromiseOrValue<string>,
       _borrow: PromiseOrValue<BigNumberish>[],
-      _data: PromiseOrValue<BytesLike>,
+      _callbackData: PromiseOrValue<BytesLike>,
+      _oracleData: PromiseOrValue<BytesLike>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     swapAmountDelta(
-      _tokenA: PromiseOrValue<string>,
-      _tokenB: PromiseOrValue<string>,
-      _swapIntervalMask: PromiseOrValue<BytesLike>,
-      _swapNumber: PromiseOrValue<BigNumberish>,
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
+      arg2: PromiseOrValue<BytesLike>,
+      arg3: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
-    ): Promise<[IDCAHubParameters.SwapDeltaStructOutput]>;
+    ): Promise<
+      [BigNumber, BigNumber] & {
+        swapDeltaAToB: BigNumber;
+        swapDeltaBToA: BigNumber;
+      }
+    >;
 
     swapData(
-      _tokenA: PromiseOrValue<string>,
-      _tokenB: PromiseOrValue<string>,
-      _swapIntervalMask: PromiseOrValue<BytesLike>,
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
+      arg2: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides,
-    ): Promise<[IDCAHubParameters.SwapDataStructOutput]>;
+    ): Promise<
+      [number, BigNumber, number, BigNumber] & {
+        performedSwaps: number;
+        nextAmountToSwapAToB: BigNumber;
+        lastSwappedAt: number;
+        nextAmountToSwapBToA: BigNumber;
+      }
+    >;
 
     swapFee(overrides?: CallOverrides): Promise<[number]>;
 
@@ -943,15 +943,22 @@ export interface MeanFinanceHub extends BaseContract {
 
   PLATFORM_WITHDRAW_ROLE(overrides?: CallOverrides): Promise<string>;
 
+  PRIVILEGED_SWAPPER_ROLE(overrides?: CallOverrides): Promise<string>;
+
   TIME_LOCKED_ROLE(overrides?: CallOverrides): Promise<string>;
 
   accumRatio(
-    _tokenA: PromiseOrValue<string>,
-    _tokenB: PromiseOrValue<string>,
-    _swapIntervalMask: PromiseOrValue<BytesLike>,
-    _swapNumber: PromiseOrValue<BigNumberish>,
+    arg0: PromiseOrValue<string>,
+    arg1: PromiseOrValue<string>,
+    arg2: PromiseOrValue<BytesLike>,
+    arg3: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides,
-  ): Promise<IDCAHubParameters.AccumRatioStructOutput>;
+  ): Promise<
+    [BigNumber, BigNumber] & {
+      accumRatioAToB: BigNumber;
+      accumRatioBToA: BigNumber;
+    }
+  >;
 
   activeSwapIntervals(
     arg0: PromiseOrValue<string>,
@@ -994,6 +1001,8 @@ export interface MeanFinanceHub extends BaseContract {
   getNextSwapInfo(
     _tokens: PromiseOrValue<string>[],
     _pairs: IDCAHubSwapHandler.PairIndexesStruct[],
+    _calculatePrivilegedAvailability: PromiseOrValue<boolean>,
+    _oracleData: PromiseOrValue<BytesLike>,
     overrides?: CallOverrides,
   ): Promise<IDCAHubSwapHandler.SwapInfoStructOutput>;
 
@@ -1084,24 +1093,37 @@ export interface MeanFinanceHub extends BaseContract {
     _rewardRecipient: PromiseOrValue<string>,
     _callbackHandler: PromiseOrValue<string>,
     _borrow: PromiseOrValue<BigNumberish>[],
-    _data: PromiseOrValue<BytesLike>,
+    _callbackData: PromiseOrValue<BytesLike>,
+    _oracleData: PromiseOrValue<BytesLike>,
     overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   swapAmountDelta(
-    _tokenA: PromiseOrValue<string>,
-    _tokenB: PromiseOrValue<string>,
-    _swapIntervalMask: PromiseOrValue<BytesLike>,
-    _swapNumber: PromiseOrValue<BigNumberish>,
+    arg0: PromiseOrValue<string>,
+    arg1: PromiseOrValue<string>,
+    arg2: PromiseOrValue<BytesLike>,
+    arg3: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides,
-  ): Promise<IDCAHubParameters.SwapDeltaStructOutput>;
+  ): Promise<
+    [BigNumber, BigNumber] & {
+      swapDeltaAToB: BigNumber;
+      swapDeltaBToA: BigNumber;
+    }
+  >;
 
   swapData(
-    _tokenA: PromiseOrValue<string>,
-    _tokenB: PromiseOrValue<string>,
-    _swapIntervalMask: PromiseOrValue<BytesLike>,
+    arg0: PromiseOrValue<string>,
+    arg1: PromiseOrValue<string>,
+    arg2: PromiseOrValue<BytesLike>,
     overrides?: CallOverrides,
-  ): Promise<IDCAHubParameters.SwapDataStructOutput>;
+  ): Promise<
+    [number, BigNumber, number, BigNumber] & {
+      performedSwaps: number;
+      nextAmountToSwapAToB: BigNumber;
+      lastSwappedAt: number;
+      nextAmountToSwapBToA: BigNumber;
+    }
+  >;
 
   swapFee(overrides?: CallOverrides): Promise<number>;
 
@@ -1152,15 +1174,22 @@ export interface MeanFinanceHub extends BaseContract {
 
     PLATFORM_WITHDRAW_ROLE(overrides?: CallOverrides): Promise<string>;
 
+    PRIVILEGED_SWAPPER_ROLE(overrides?: CallOverrides): Promise<string>;
+
     TIME_LOCKED_ROLE(overrides?: CallOverrides): Promise<string>;
 
     accumRatio(
-      _tokenA: PromiseOrValue<string>,
-      _tokenB: PromiseOrValue<string>,
-      _swapIntervalMask: PromiseOrValue<BytesLike>,
-      _swapNumber: PromiseOrValue<BigNumberish>,
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
+      arg2: PromiseOrValue<BytesLike>,
+      arg3: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
-    ): Promise<IDCAHubParameters.AccumRatioStructOutput>;
+    ): Promise<
+      [BigNumber, BigNumber] & {
+        accumRatioAToB: BigNumber;
+        accumRatioBToA: BigNumber;
+      }
+    >;
 
     activeSwapIntervals(
       arg0: PromiseOrValue<string>,
@@ -1203,6 +1232,8 @@ export interface MeanFinanceHub extends BaseContract {
     getNextSwapInfo(
       _tokens: PromiseOrValue<string>[],
       _pairs: IDCAHubSwapHandler.PairIndexesStruct[],
+      _calculatePrivilegedAvailability: PromiseOrValue<boolean>,
+      _oracleData: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides,
     ): Promise<IDCAHubSwapHandler.SwapInfoStructOutput>;
 
@@ -1284,24 +1315,37 @@ export interface MeanFinanceHub extends BaseContract {
       _rewardRecipient: PromiseOrValue<string>,
       _callbackHandler: PromiseOrValue<string>,
       _borrow: PromiseOrValue<BigNumberish>[],
-      _data: PromiseOrValue<BytesLike>,
+      _callbackData: PromiseOrValue<BytesLike>,
+      _oracleData: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides,
     ): Promise<IDCAHubSwapHandler.SwapInfoStructOutput>;
 
     swapAmountDelta(
-      _tokenA: PromiseOrValue<string>,
-      _tokenB: PromiseOrValue<string>,
-      _swapIntervalMask: PromiseOrValue<BytesLike>,
-      _swapNumber: PromiseOrValue<BigNumberish>,
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
+      arg2: PromiseOrValue<BytesLike>,
+      arg3: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
-    ): Promise<IDCAHubParameters.SwapDeltaStructOutput>;
+    ): Promise<
+      [BigNumber, BigNumber] & {
+        swapDeltaAToB: BigNumber;
+        swapDeltaBToA: BigNumber;
+      }
+    >;
 
     swapData(
-      _tokenA: PromiseOrValue<string>,
-      _tokenB: PromiseOrValue<string>,
-      _swapIntervalMask: PromiseOrValue<BytesLike>,
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
+      arg2: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides,
-    ): Promise<IDCAHubParameters.SwapDataStructOutput>;
+    ): Promise<
+      [number, BigNumber, number, BigNumber] & {
+        performedSwaps: number;
+        nextAmountToSwapAToB: BigNumber;
+        lastSwappedAt: number;
+        nextAmountToSwapBToA: BigNumber;
+      }
+    >;
 
     swapFee(overrides?: CallOverrides): Promise<number>;
 
@@ -1386,14 +1430,14 @@ export interface MeanFinanceHub extends BaseContract {
       lastSwap?: null,
     ): ModifiedEventFilter;
 
-    'OracleSet(address)'(_oracle?: null): OracleSetEventFilter;
-    OracleSet(_oracle?: null): OracleSetEventFilter;
+    'OracleSet(address)'(oracle?: null): OracleSetEventFilter;
+    OracleSet(oracle?: null): OracleSetEventFilter;
 
     'Paused(address)'(account?: null): PausedEventFilter;
     Paused(account?: null): PausedEventFilter;
 
-    'PlatformFeeRatioSet(uint16)'(_platformFeeRatio?: null): PlatformFeeRatioSetEventFilter;
-    PlatformFeeRatioSet(_platformFeeRatio?: null): PlatformFeeRatioSetEventFilter;
+    'PlatformFeeRatioSet(uint16)'(platformFeeRatio?: null): PlatformFeeRatioSetEventFilter;
+    PlatformFeeRatioSet(platformFeeRatio?: null): PlatformFeeRatioSetEventFilter;
 
     'RoleAdminChanged(bytes32,bytes32,bytes32)'(
       role?: PromiseOrValue<BytesLike> | null,
@@ -1428,14 +1472,14 @@ export interface MeanFinanceHub extends BaseContract {
       sender?: PromiseOrValue<string> | null,
     ): RoleRevokedEventFilter;
 
-    'SwapFeeSet(uint32)'(_feeSet?: null): SwapFeeSetEventFilter;
-    SwapFeeSet(_feeSet?: null): SwapFeeSetEventFilter;
+    'SwapFeeSet(uint32)'(feeSet?: null): SwapFeeSetEventFilter;
+    SwapFeeSet(feeSet?: null): SwapFeeSetEventFilter;
 
-    'SwapIntervalsAllowed(uint32[])'(_swapIntervals?: null): SwapIntervalsAllowedEventFilter;
-    SwapIntervalsAllowed(_swapIntervals?: null): SwapIntervalsAllowedEventFilter;
+    'SwapIntervalsAllowed(uint32[])'(swapIntervals?: null): SwapIntervalsAllowedEventFilter;
+    SwapIntervalsAllowed(swapIntervals?: null): SwapIntervalsAllowedEventFilter;
 
-    'SwapIntervalsForbidden(uint32[])'(_swapIntervals?: null): SwapIntervalsForbiddenEventFilter;
-    SwapIntervalsForbidden(_swapIntervals?: null): SwapIntervalsForbiddenEventFilter;
+    'SwapIntervalsForbidden(uint32[])'(swapIntervals?: null): SwapIntervalsForbiddenEventFilter;
+    SwapIntervalsForbidden(swapIntervals?: null): SwapIntervalsForbiddenEventFilter;
 
     'Swapped(address,address,address,tuple,uint256[],uint32)'(
       sender?: PromiseOrValue<string> | null,
@@ -1471,8 +1515,8 @@ export interface MeanFinanceHub extends BaseContract {
       returnedSwapped?: null,
     ): TerminatedEventFilter;
 
-    'TokensAllowedUpdated(address[],bool[])'(_tokens?: null, _allowed?: null): TokensAllowedUpdatedEventFilter;
-    TokensAllowedUpdated(_tokens?: null, _allowed?: null): TokensAllowedUpdatedEventFilter;
+    'TokensAllowedUpdated(address[],bool[])'(tokens?: null, allowed?: null): TokensAllowedUpdatedEventFilter;
+    TokensAllowedUpdated(tokens?: null, allowed?: null): TokensAllowedUpdatedEventFilter;
 
     'Unpaused(address)'(account?: null): UnpausedEventFilter;
     Unpaused(account?: null): UnpausedEventFilter;
@@ -1528,13 +1572,15 @@ export interface MeanFinanceHub extends BaseContract {
 
     PLATFORM_WITHDRAW_ROLE(overrides?: CallOverrides): Promise<BigNumber>;
 
+    PRIVILEGED_SWAPPER_ROLE(overrides?: CallOverrides): Promise<BigNumber>;
+
     TIME_LOCKED_ROLE(overrides?: CallOverrides): Promise<BigNumber>;
 
     accumRatio(
-      _tokenA: PromiseOrValue<string>,
-      _tokenB: PromiseOrValue<string>,
-      _swapIntervalMask: PromiseOrValue<BytesLike>,
-      _swapNumber: PromiseOrValue<BigNumberish>,
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
+      arg2: PromiseOrValue<BytesLike>,
+      arg3: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
@@ -1579,6 +1625,8 @@ export interface MeanFinanceHub extends BaseContract {
     getNextSwapInfo(
       _tokens: PromiseOrValue<string>[],
       _pairs: IDCAHubSwapHandler.PairIndexesStruct[],
+      _calculatePrivilegedAvailability: PromiseOrValue<boolean>,
+      _oracleData: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
@@ -1669,22 +1717,23 @@ export interface MeanFinanceHub extends BaseContract {
       _rewardRecipient: PromiseOrValue<string>,
       _callbackHandler: PromiseOrValue<string>,
       _borrow: PromiseOrValue<BigNumberish>[],
-      _data: PromiseOrValue<BytesLike>,
+      _callbackData: PromiseOrValue<BytesLike>,
+      _oracleData: PromiseOrValue<BytesLike>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     swapAmountDelta(
-      _tokenA: PromiseOrValue<string>,
-      _tokenB: PromiseOrValue<string>,
-      _swapIntervalMask: PromiseOrValue<BytesLike>,
-      _swapNumber: PromiseOrValue<BigNumberish>,
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
+      arg2: PromiseOrValue<BytesLike>,
+      arg3: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     swapData(
-      _tokenA: PromiseOrValue<string>,
-      _tokenB: PromiseOrValue<string>,
-      _swapIntervalMask: PromiseOrValue<BytesLike>,
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
+      arg2: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
@@ -1735,13 +1784,15 @@ export interface MeanFinanceHub extends BaseContract {
 
     PLATFORM_WITHDRAW_ROLE(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
+    PRIVILEGED_SWAPPER_ROLE(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
     TIME_LOCKED_ROLE(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     accumRatio(
-      _tokenA: PromiseOrValue<string>,
-      _tokenB: PromiseOrValue<string>,
-      _swapIntervalMask: PromiseOrValue<BytesLike>,
-      _swapNumber: PromiseOrValue<BigNumberish>,
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
+      arg2: PromiseOrValue<BytesLike>,
+      arg3: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
@@ -1786,6 +1837,8 @@ export interface MeanFinanceHub extends BaseContract {
     getNextSwapInfo(
       _tokens: PromiseOrValue<string>[],
       _pairs: IDCAHubSwapHandler.PairIndexesStruct[],
+      _calculatePrivilegedAvailability: PromiseOrValue<boolean>,
+      _oracleData: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
@@ -1876,22 +1929,23 @@ export interface MeanFinanceHub extends BaseContract {
       _rewardRecipient: PromiseOrValue<string>,
       _callbackHandler: PromiseOrValue<string>,
       _borrow: PromiseOrValue<BigNumberish>[],
-      _data: PromiseOrValue<BytesLike>,
+      _callbackData: PromiseOrValue<BytesLike>,
+      _oracleData: PromiseOrValue<BytesLike>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     swapAmountDelta(
-      _tokenA: PromiseOrValue<string>,
-      _tokenB: PromiseOrValue<string>,
-      _swapIntervalMask: PromiseOrValue<BytesLike>,
-      _swapNumber: PromiseOrValue<BigNumberish>,
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
+      arg2: PromiseOrValue<BytesLike>,
+      arg3: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     swapData(
-      _tokenA: PromiseOrValue<string>,
-      _tokenB: PromiseOrValue<string>,
-      _swapIntervalMask: PromiseOrValue<BytesLike>,
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
+      arg2: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 

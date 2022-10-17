@@ -1,14 +1,12 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Inject } from '@nestjs/common';
 import { gql } from 'graphql-request';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
-import { DefaultDataProps } from '~position/display.interface';
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import { GetUnderlyingTokensParams, GetDataPropsParams } from '~position/template/app-token.template.types';
-import { Network } from '~types/network.interface';
 
 import { SuperfluidContractFactory, VaultToken } from '../contracts';
-import { SUPERFLUID_DEFINITION } from '../superfluid.definition';
 
 const ALL_TOKENS_QUERY = gql`
   {
@@ -28,11 +26,8 @@ type TokensResponse = {
   }[];
 };
 
-@Injectable()
+@PositionTemplate()
 export class PolygonSuperfluidVaultTokenFetcher extends AppTokenTemplatePositionFetcher<VaultToken> {
-  appId = SUPERFLUID_DEFINITION.id;
-  groupId = SUPERFLUID_DEFINITION.groups.vault.id;
-  network = Network.POLYGON_MAINNET;
   groupLabel = 'Vaults';
 
   readonly brokenAddresses = [
@@ -67,10 +62,15 @@ export class PolygonSuperfluidVaultTokenFetcher extends AppTokenTemplatePosition
     return await contract.getUnderlyingToken();
   }
 
-  async getDataProps(opts: GetDataPropsParams<VaultToken, DefaultDataProps>): Promise<DefaultDataProps> {
-    const { appToken } = opts;
-    const liquidity = appToken.price * appToken.supply;
+  async getLiquidity({ appToken }: GetDataPropsParams<VaultToken>) {
+    return appToken.supply * appToken.price;
+  }
 
-    return { liquidity };
+  async getReserves({ appToken }: GetDataPropsParams<VaultToken>) {
+    return [appToken.pricePerShare[0] * appToken.supply];
+  }
+
+  async getApy() {
+    return 0;
   }
 }

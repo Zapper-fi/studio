@@ -1,9 +1,6 @@
-import { Injectable } from '@nestjs/common';
-
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import { GetDisplayPropsParams } from '~position/template/app-token.template.types';
-import { Network } from '~types/network.interface';
 
-import { AAVE_V2_DEFINITION } from '../aave-v2.definition';
 import { AaveV2AToken } from '../contracts/ethers/AaveV2AToken';
 import {
   AaveV2ReserveApyData,
@@ -12,11 +9,8 @@ import {
   AaveV2LendingTokenDataProps,
 } from '../helpers/aave-v2.lending.template.token-fetcher';
 
-@Injectable()
+@PositionTemplate()
 export class PolygonAaveV2VariableDebtTokenFetcher extends AaveV2LendingTemplateTokenFetcher {
-  appId = AAVE_V2_DEFINITION.id;
-  groupId = AAVE_V2_DEFINITION.groups.variableDebt.id;
-  network = Network.POLYGON_MAINNET;
   groupLabel = 'Lending';
   providerAddress = '0x7551b5d2763519d4e37e8b81929d336de671d46d';
   isDebt = true;
@@ -25,7 +19,7 @@ export class PolygonAaveV2VariableDebtTokenFetcher extends AaveV2LendingTemplate
     return reserveTokenAddressesData.variableDebtTokenAddress;
   }
 
-  getApy(reserveApyData: AaveV2ReserveApyData): number {
+  getApyFromReserveData(reserveApyData: AaveV2ReserveApyData): number {
     return reserveApyData.variableBorrowApy;
   }
 

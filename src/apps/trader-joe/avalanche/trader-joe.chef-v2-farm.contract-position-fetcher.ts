@@ -1,84 +1,107 @@
 import { Inject } from '@nestjs/common';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
-import { Register } from '~app-toolkit/decorators';
-import { PositionFetcher } from '~position/position-fetcher.interface';
-import { ContractPosition } from '~position/position.interface';
-import { Network } from '~types/network.interface';
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
+import { isMulticallUnderlyingError } from '~multicall/multicall.ethers';
+import {
+  GetMasterChefV2ExtraRewardTokenBalancesParams,
+  GetMasterChefV2ExtraRewardTokenRewardRates,
+  MasterChefV2TemplateContractPositionFetcher,
+} from '~position/template/master-chef-v2.template.contract-position-fetcher';
+import {
+  GetMasterChefDataPropsParams,
+  GetMasterChefTokenBalancesParams,
+} from '~position/template/master-chef.template.contract-position-fetcher';
 
 import { TraderJoeChefV2, TraderJoeChefV2Rewarder, TraderJoeContractFactory } from '../contracts';
-import { TRADER_JOE_DEFINITION } from '../trader-joe.definition';
 
-const appId = TRADER_JOE_DEFINITION.id;
-const groupId = TRADER_JOE_DEFINITION.groups.chefV2Farm.id;
-const network = Network.AVALANCHE_MAINNET;
+@PositionTemplate()
+export class AvalancheTraderJoeChefV2FarmContractPositionFetcher extends MasterChefV2TemplateContractPositionFetcher<
+  TraderJoeChefV2,
+  TraderJoeChefV2Rewarder
+> {
+  groupLabel = 'Farms';
+  chefAddress = '0xd6a4f121ca35509af06a0be99093d08462f53052';
 
-@Register.ContractPositionFetcher({ appId, groupId, network })
-export class AvalancheTraderJoeChefV2FarmContractPositionFetcher implements PositionFetcher<ContractPosition> {
   constructor(
-    @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
-    @Inject(TraderJoeContractFactory) private readonly traderJoeContractFactory: TraderJoeContractFactory,
-  ) {}
+    @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
+    @Inject(TraderJoeContractFactory) protected readonly traderJoeContractFactory: TraderJoeContractFactory,
+  ) {
+    super(appToolkit);
+  }
 
-  async getPositions() {
-    return this.appToolkit.helpers.masterChefContractPositionHelper.getContractPositions<TraderJoeChefV2>({
-      address: '0xd6a4f121ca35509af06a0be99093d08462f53052',
-      appId,
-      groupId,
-      network,
-      dependencies: [
-        {
-          appId: TRADER_JOE_DEFINITION.id,
-          groupIds: [TRADER_JOE_DEFINITION.groups.pool.id, TRADER_JOE_DEFINITION.groups.xJoe.id],
-          network,
-        },
-      ],
-      resolveContract: ({ address, network }) => this.traderJoeContractFactory.traderJoeChefV2({ address, network }),
-      resolvePoolLength: ({ multicall, contract }) => multicall.wrap(contract).poolLength(),
-      resolveDepositTokenAddress: ({ poolIndex, contract, multicall }) =>
-        multicall
-          .wrap(contract)
-          .poolInfo(poolIndex)
-          .then(v => v.lpToken),
-      resolveRewardTokenAddresses: this.appToolkit.helpers.masterChefV2ClaimableTokenStrategy.build<
-        TraderJoeChefV2,
-        TraderJoeChefV2Rewarder
-      >({
-        resolvePrimaryClaimableToken: ({ multicall, contract }) => multicall.wrap(contract).joe(),
-        resolveRewarderAddress: ({ multicall, contract, poolIndex }) =>
-          multicall
-            .wrap(contract)
-            .poolInfo(poolIndex)
-            .then(v => v.rewarder),
-        resolveRewarderContract: ({ network, rewarderAddress }) =>
-          this.traderJoeContractFactory.traderJoeChefV2Rewarder({ address: rewarderAddress, network }),
-        resolveSecondaryClaimableToken: ({ multicall, rewarderContract }) =>
-          multicall.wrap(rewarderContract).rewardToken(),
+  getContract(address: string): TraderJoeChefV2 {
+    return this.traderJoeContractFactory.traderJoeChefV2({ address, network: this.network });
+  }
+
+  getExtraRewarderContract(address: string): TraderJoeChefV2Rewarder {
+    return this.traderJoeContractFactory.traderJoeChefV2Rewarder({ address, network: this.network });
+  }
+
+  async getPoolLength(contract: TraderJoeChefV2) {
+    return contract.poolLength();
+  }
+
+  async getStakedTokenAddress(contract: TraderJoeChefV2, poolIndex: number) {
+    return contract.poolInfo(poolIndex).then(v => v.lpToken);
+  }
+
+  async getRewardTokenAddress(contract: TraderJoeChefV2) {
+    return contract.joe();
+  }
+
+  async getTotalAllocPoints({ contract }: GetMasterChefDataPropsParams<TraderJoeChefV2>) {
+    return contract.totalAllocPoint();
+  }
+
+  async getTotalRewardRate({ contract }: GetMasterChefDataPropsParams<TraderJoeChefV2>) {
+    return contract.joePerSec();
+  }
+
+  async getPoolAllocPoints({ contract, definition }: GetMasterChefDataPropsParams<TraderJoeChefV2>) {
+    return contract.poolInfo(definition.poolIndex).then(v => v.allocPoint);
+  }
+
+  async getExtraRewarder(contract: TraderJoeChefV2, poolIndex: number) {
+    return contract.poolInfo(poolIndex).then(v => v.rewarder);
+  }
+
+  async getExtraRewardTokenAddresses(contract: TraderJoeChefV2Rewarder): Promise<string[]> {
+    return [await contract.rewardToken()];
+  }
+
+  async getExtraRewardTokenRewardRates({
+    rewarderContract,
+  }: GetMasterChefV2ExtraRewardTokenRewardRates<TraderJoeChefV2, TraderJoeChefV2Rewarder>) {
+    return [
+      await rewarderContract.rewardPerSecond().catch(err => {
+        if (isMulticallUnderlyingError(err)) return 0;
+        throw err;
       }),
-      resolveRewardRate: this.appToolkit.helpers.masterChefV2RewardRateStrategy.build<
-        TraderJoeChefV2,
-        TraderJoeChefV2Rewarder
-      >({
-        resolvePoolAllocPoints: async ({ poolIndex, contract, multicall }) =>
-          multicall
-            .wrap(contract)
-            .poolInfo(poolIndex)
-            .then(v => v.allocPoint),
-        resolveTotalAllocPoints: ({ multicall, contract }) => multicall.wrap(contract).totalAllocPoint(),
-        resolvePrimaryTotalRewardRate: async ({ multicall, contract }) => multicall.wrap(contract).joePerSec(),
-        resolveRewarderAddress: ({ multicall, contract, poolIndex }) =>
-          multicall
-            .wrap(contract)
-            .poolInfo(poolIndex)
-            .then(v => v.rewarder),
-        resolveRewarderContract: ({ network, rewarderAddress }) =>
-          this.traderJoeContractFactory.traderJoeChefV2Rewarder({ address: rewarderAddress, network }),
-        resolveSecondaryTotalRewardRate: async ({ multicall, rewarderContract }) =>
-          multicall
-            .wrap(rewarderContract)
-            .rewardPerSecond()
-            .catch(() => '0'),
-      }),
-    });
+    ];
+  }
+
+  async getStakedTokenBalance({
+    address,
+    contract,
+    contractPosition,
+  }: GetMasterChefTokenBalancesParams<TraderJoeChefV2>) {
+    return contract.userInfo(contractPosition.dataProps.poolIndex, address).then(v => v.amount);
+  }
+
+  async getRewardTokenBalance({
+    address,
+    contract,
+    contractPosition,
+  }: GetMasterChefTokenBalancesParams<TraderJoeChefV2>) {
+    return contract.pendingTokens(contractPosition.dataProps.poolIndex, address).then(v => v.pendingJoe);
+  }
+
+  async getExtraRewardTokenBalances({
+    address,
+    contract,
+    contractPosition,
+  }: GetMasterChefV2ExtraRewardTokenBalancesParams<TraderJoeChefV2, TraderJoeChefV2Rewarder>) {
+    return contract.pendingTokens(contractPosition.dataProps.poolIndex, address).then(v => v.pendingBonusToken);
   }
 }

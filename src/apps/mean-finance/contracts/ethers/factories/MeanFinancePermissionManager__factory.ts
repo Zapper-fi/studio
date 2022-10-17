@@ -18,7 +18,7 @@ const _abi = [
         type: 'address',
       },
       {
-        internalType: 'contract IDCATokenDescriptor',
+        internalType: 'contract IDCAHubPositionDescriptor',
         name: '_descriptor',
         type: 'address',
       },
@@ -142,7 +142,7 @@ const _abi = [
     inputs: [
       {
         indexed: false,
-        internalType: 'contract IDCATokenDescriptor',
+        internalType: 'contract IDCAHubPositionDescriptor',
         name: 'descriptor',
         type: 'address',
       },
@@ -209,6 +209,19 @@ const _abi = [
   },
   {
     inputs: [],
+    name: 'MULTI_PERMISSION_PERMIT_TYPEHASH',
+    outputs: [
+      {
+        internalType: 'bytes32',
+        name: '',
+        type: 'bytes32',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
     name: 'PERMISSION_PERMIT_TYPEHASH',
     outputs: [
       {
@@ -236,6 +249,19 @@ const _abi = [
   {
     inputs: [],
     name: 'PERMIT_TYPEHASH',
+    outputs: [
+      {
+        internalType: 'bytes32',
+        name: '',
+        type: 'bytes32',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'POSITION_PERMISSIONS_TYPEHASH',
     outputs: [
       {
         internalType: 'bytes32',
@@ -553,6 +579,100 @@ const _abi = [
     type: 'function',
   },
   {
+    inputs: [
+      {
+        components: [
+          {
+            internalType: 'uint256',
+            name: 'tokenId',
+            type: 'uint256',
+          },
+          {
+            components: [
+              {
+                internalType: 'address',
+                name: 'operator',
+                type: 'address',
+              },
+              {
+                internalType: 'enum IDCAPermissionManager.Permission[]',
+                name: 'permissions',
+                type: 'uint8[]',
+              },
+            ],
+            internalType: 'struct IDCAPermissionManager.PermissionSet[]',
+            name: 'permissionSets',
+            type: 'tuple[]',
+          },
+        ],
+        internalType: 'struct IDCAPermissionManager.PositionPermissions[]',
+        name: '_permissions',
+        type: 'tuple[]',
+      },
+    ],
+    name: 'modifyMany',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        components: [
+          {
+            internalType: 'uint256',
+            name: 'tokenId',
+            type: 'uint256',
+          },
+          {
+            components: [
+              {
+                internalType: 'address',
+                name: 'operator',
+                type: 'address',
+              },
+              {
+                internalType: 'enum IDCAPermissionManager.Permission[]',
+                name: 'permissions',
+                type: 'uint8[]',
+              },
+            ],
+            internalType: 'struct IDCAPermissionManager.PermissionSet[]',
+            name: 'permissionSets',
+            type: 'tuple[]',
+          },
+        ],
+        internalType: 'struct IDCAPermissionManager.PositionPermissions[]',
+        name: '_permissions',
+        type: 'tuple[]',
+      },
+      {
+        internalType: 'uint256',
+        name: '_deadline',
+        type: 'uint256',
+      },
+      {
+        internalType: 'uint8',
+        name: '_v',
+        type: 'uint8',
+      },
+      {
+        internalType: 'bytes32',
+        name: '_r',
+        type: 'bytes32',
+      },
+      {
+        internalType: 'bytes32',
+        name: '_s',
+        type: 'bytes32',
+      },
+    ],
+    name: 'multiPermissionPermit',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
     inputs: [],
     name: 'name',
     outputs: [
@@ -570,7 +690,7 @@ const _abi = [
     name: 'nftDescriptor',
     outputs: [
       {
-        internalType: 'contract IDCATokenDescriptor',
+        internalType: 'contract IDCAHubPositionDescriptor',
         name: '',
         type: 'address',
       },
@@ -759,7 +879,7 @@ const _abi = [
       },
       {
         internalType: 'bytes',
-        name: '_data',
+        name: 'data',
         type: 'bytes',
       },
     ],
@@ -802,7 +922,7 @@ const _abi = [
   {
     inputs: [
       {
-        internalType: 'contract IDCATokenDescriptor',
+        internalType: 'contract IDCAHubPositionDescriptor',
         name: '_descriptor',
         type: 'address',
       },

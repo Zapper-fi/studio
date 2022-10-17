@@ -5,6 +5,7 @@ import { ContractFactory } from '~contract/contracts';
 import { Network } from '~types/network.interface';
 
 import { TraderJoeChefBoosted__factory } from './ethers';
+import { TraderJoeChefBoostedRewarder__factory } from './ethers';
 import { TraderJoeChefV2__factory } from './ethers';
 import { TraderJoeChefV2Rewarder__factory } from './ethers';
 import { TraderJoeChefV3__factory } from './ethers';
@@ -24,6 +25,9 @@ export class TraderJoeContractFactory extends ContractFactory {
 
   traderJoeChefBoosted({ address, network }: ContractOpts) {
     return TraderJoeChefBoosted__factory.connect(address, this.appToolkit.getNetworkProvider(network));
+  }
+  traderJoeChefBoostedRewarder({ address, network }: ContractOpts) {
+    return TraderJoeChefBoostedRewarder__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
   traderJoeChefV2({ address, network }: ContractOpts) {
     return TraderJoeChefV2__factory.connect(address, this.appToolkit.getNetworkProvider(network));
@@ -49,6 +53,7 @@ export class TraderJoeContractFactory extends ContractFactory {
 }
 
 export type { TraderJoeChefBoosted } from './ethers';
+export type { TraderJoeChefBoostedRewarder } from './ethers';
 export type { TraderJoeChefV2 } from './ethers';
 export type { TraderJoeChefV2Rewarder } from './ethers';
 export type { TraderJoeChefV3 } from './ethers';

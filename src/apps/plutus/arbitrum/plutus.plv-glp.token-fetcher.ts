@@ -1,32 +1,20 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Inject } from '@nestjs/common';
 import { BigNumber } from 'ethers';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import {
   GetDataPropsParams,
   GetPricePerShareParams,
   GetUnderlyingTokensParams,
 } from '~position/template/app-token.template.types';
-import { Network } from '~types/network.interface';
 
 import { PlutusContractFactory } from '../contracts';
 import { PlutusPlvGlp } from '../contracts/ethers/PlutusPlvGlp';
-import { PLUTUS_DEFINITION } from '../plutus.definition';
 
-type PlutusPlvGlpTokenDataProps = {
-  reserve: number;
-  liquidity: number;
-};
-
-@Injectable()
-export class ArbitrumPlutusPlvGlpTokenFetcher extends AppTokenTemplatePositionFetcher<
-  PlutusPlvGlp,
-  PlutusPlvGlpTokenDataProps
-> {
-  appId = PLUTUS_DEFINITION.id;
-  groupId = PLUTUS_DEFINITION.groups.plvGlp.id;
-  network = Network.ARBITRUM_MAINNET;
+@PositionTemplate()
+export class ArbitrumPlutusPlvGlpTokenFetcher extends AppTokenTemplatePositionFetcher<PlutusPlvGlp> {
   groupLabel = 'plvGLP';
 
   constructor(
@@ -53,10 +41,20 @@ export class ArbitrumPlutusPlvGlpTokenFetcher extends AppTokenTemplatePositionFe
     return Number(pricePerShareRaw) / 10 ** 18;
   }
 
-  async getDataProps({ appToken, contract }: GetDataPropsParams<PlutusPlvGlp>) {
+  async getLiquidity({ appToken, contract }: GetDataPropsParams<PlutusPlvGlp>) {
     const reserveRaw = await contract.totalAssets();
     const reserve = Number(reserveRaw) / 10 ** appToken.tokens[0].decimals;
     const liquidity = reserve * appToken.tokens[0].price;
-    return { reserve, liquidity };
+    return liquidity;
+  }
+
+  async getReserves({ appToken, contract }: GetDataPropsParams<PlutusPlvGlp>) {
+    const reserveRaw = await contract.totalAssets();
+    const reserve = Number(reserveRaw) / 10 ** appToken.tokens[0].decimals;
+    return [reserve];
+  }
+
+  async getApy(_params: GetDataPropsParams<PlutusPlvGlp>) {
+    return 0;
   }
 }

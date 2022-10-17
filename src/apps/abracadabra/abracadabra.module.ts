@@ -1,7 +1,5 @@
 import { Register } from '~app-toolkit/decorators';
 import { AbstractApp } from '~app/app.dynamic-module';
-import { OlympusAppModule } from '~apps/olympus';
-import { SushiSwapBentoBoxAppModule } from '~apps/sushiswap-bentobox';
 
 import { AbracadabraAppDefinition, ABRACADABRA_DEFINITION } from './abracadabra.definition';
 import { ArbitrumAbracadabraCauldronContractPositionFetcher } from './arbitrum/abracadabra.cauldron.contract-position-fetcher';
@@ -19,13 +17,12 @@ import { EthereumAbracadabraFarmContractPositionFetcher } from './ethereum/abrac
 import { EthereumAbracadabraMspellContractPositionFetcher } from './ethereum/abracadabra.m-spell.contract-position-fetcher';
 import { EthereumAbracadabraStakedSpellTokenFetcher } from './ethereum/abracadabra.staked-spell.token-fetcher';
 import { FantomAbracadabraCauldronContractPositionFetcher } from './fantom/abracadabra.cauldron.contract-position-fetcher';
+import { FantomAbracadabraFarmContractPositionFetcher } from './fantom/abracadabra.farm.contract-position-fetcher';
 import { FantomAbracadabraMspellContractPositionFetcher } from './fantom/abracadabra.m-spell.contract-position-fetcher';
-import { FantomAbracadabraFarmContractPositionFetcher } from './fantom/abracadbra.farm.contract-position-fetcher';
-import { FantomAbracadabraStakedSpellTokenFetcher } from './fantom/abracadbra.staked-spell.token-fetcher';
+import { FantomAbracadabraStakedSpellTokenFetcher } from './fantom/abracadabra.staked-spell.token-fetcher';
 
 @Register.AppModule({
   appId: ABRACADABRA_DEFINITION.id,
-  imports: [OlympusAppModule, SushiSwapBentoBoxAppModule],
   providers: [
     AbracadabraAppDefinition,
     AbracadabraContractFactory,
