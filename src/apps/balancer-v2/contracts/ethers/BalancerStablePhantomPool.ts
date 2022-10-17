@@ -53,7 +53,7 @@ export declare namespace IPoolSwapStructs {
   };
 }
 
-export interface BalancerAaveLinearPoolInterface extends utils.Interface {
+export interface BalancerStablePhantomPoolInterface extends utils.Interface {
   functions: {
     'DOMAIN_SEPARATOR()': FunctionFragment;
     'allowance(address,address)': FunctionFragment;
@@ -367,12 +367,12 @@ export type TransferEvent = TypedEvent<[string, string, BigNumber], TransferEven
 
 export type TransferEventFilter = TypedEventFilter<TransferEvent>;
 
-export interface BalancerAaveLinearPool extends BaseContract {
+export interface BalancerStablePhantomPool extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
 
-  interface: BalancerAaveLinearPoolInterface;
+  interface: BalancerStablePhantomPoolInterface;
 
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,

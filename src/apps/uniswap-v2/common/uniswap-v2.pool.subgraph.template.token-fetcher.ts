@@ -15,6 +15,8 @@ import {
   DEFAULT_POOLS_QUERY,
   DEFAULT_POOL_VOLUMES_BY_ID_AT_BLOCK_QUERY,
   DEFAULT_POOL_VOLUMES_BY_ID_QUERY,
+  FURA_LAST_BLOCK_SYNCED_ON_GRAPH_QUERY,
+  LastBlockSyncedFuraResponse,
   LastBlockSyncedResponse,
   PoolsResponse,
   PoolVolumesResponse,
@@ -102,14 +104,27 @@ export abstract class UniswapV2PoolSubgraphTemplateTokenFetcher<
     const provider = this.appToolkit.getNetworkProvider(this.network);
     const block = await provider.getBlockNumber();
     const block1DayAgo = block - BLOCKS_PER_DAY[this.network];
+    let blockNumberLastSynced = 0;
 
     // Get last block synced on graph; if the graph is not caught up to yesterday, exit early
-    const graphMetaData = await this.appToolkit.helpers.theGraphHelper.request<LastBlockSyncedResponse>({
-      endpoint: this.subgraphUrl,
-      query: this.lastBlockSyncedOnGraphQuery,
-    });
+    if (this.subgraphUrl.includes('api.fura.org')) {
+      const subgraphName = this.subgraphUrl.substring(this.subgraphUrl.lastIndexOf('/') + 1);
+      const graphMetaData = await this.appToolkit.helpers.theGraphHelper.request<LastBlockSyncedFuraResponse>({
+        endpoint: this.subgraphUrl,
+        query: FURA_LAST_BLOCK_SYNCED_ON_GRAPH_QUERY,
+        variables: { subgraphName },
+      });
 
-    const blockNumberLastSynced = graphMetaData._meta?.block.number;
+      blockNumberLastSynced = graphMetaData.indexingStatusForCurrentVersion.chains[0].latestBlock.number;
+    } else {
+      const graphMetaData = await this.appToolkit.helpers.theGraphHelper.request<LastBlockSyncedResponse>({
+        endpoint: this.subgraphUrl,
+        query: this.lastBlockSyncedOnGraphQuery,
+      });
+
+      blockNumberLastSynced = graphMetaData._meta.block.number;
+    }
+
     if (block1DayAgo > blockNumberLastSynced) return [];
 
     // Retrieve volume data from TheGraph (@TODO Cache this)

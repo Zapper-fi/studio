@@ -4,6 +4,48 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.250.0](https://github.com/Zapper-fi/studio/compare/v0.249.1...v0.250.0) (2022-10-14)
+
+
+### Features
+
+* **reaper:** Extract Reaper, add Optimism, fix supplies for Beethoven X ([#1564](https://github.com/Zapper-fi/studio/issues/1564)) ([f86a2d8](https://github.com/Zapper-fi/studio/commit/f86a2d82be1fb74215e8865b57113b5fe430ff0c))
+
+## [0.249.1](https://github.com/Zapper-fi/studio/compare/v0.249.0...v0.249.1) (2022-10-14)
+
+
+### Bug Fixes
+
+* **aave-v2:** Fix empty stable debt positions ([#1562](https://github.com/Zapper-fi/studio/issues/1562)) ([e666598](https://github.com/Zapper-fi/studio/commit/e66659830cc0aff04dfa5bb55e0f159304718014))
+
+## [0.249.0](https://github.com/Zapper-fi/studio/compare/v0.248.1...v0.249.0) (2022-10-13)
+
+
+### Features
+
+* **beethoven-x:** Filter small pools ([7afc117](https://github.com/Zapper-fi/studio/commit/7afc117c266126fe8ff9c18fa75fc9affc64dff1))
+
+## [0.248.1](https://github.com/Zapper-fi/studio/compare/v0.248.0...v0.248.1) (2022-10-13)
+
+
+### Bug Fixes
+
+* **balance-service:** Fix isExcludedFromBalances when multiple positions have the same groupId ([#1514](https://github.com/Zapper-fi/studio/issues/1514)) ([2e14b65](https://github.com/Zapper-fi/studio/commit/2e14b65fd6134216d1b02b13dfda2bc6b14ee307))
+* **balancer-v2:** Fix supply for composable stable pools ([#1558](https://github.com/Zapper-fi/studio/issues/1558)) ([72e77aa](https://github.com/Zapper-fi/studio/commit/72e77aa8c0b3eb0c2c562c8516fd99ed708f3d88))
+
+## [0.248.0](https://github.com/Zapper-fi/studio/compare/v0.247.0...v0.248.0) (2022-10-13)
+
+
+### Features
+
+* **helio:** Add Helio integration ([#1461](https://github.com/Zapper-fi/studio/issues/1461)) ([a71d06b](https://github.com/Zapper-fi/studio/commit/a71d06bd7b88b51298e811dc235b64f47b06b217))
+* **uniswap-v2:** Implemented fetching latest block when using a subgraph from Fura ([#1554](https://github.com/Zapper-fi/studio/issues/1554)) ([7711dc6](https://github.com/Zapper-fi/studio/commit/7711dc64e63f86f1b3740a3f9f293f0e5c457538))
+
+
+### Bug Fixes
+
+* **uniswap-v2:** Providing a subgraph url from Fura would throw since it doesn't have the _meta attribute ([#1548](https://github.com/Zapper-fi/studio/issues/1548)) ([7bec98b](https://github.com/Zapper-fi/studio/commit/7bec98b41b4c6d9083871d7613e4ad5f9d4a3587))
+
 ## [0.247.0](https://github.com/Zapper-fi/studio/compare/v0.246.0...v0.247.0) (2022-10-12)
 
 

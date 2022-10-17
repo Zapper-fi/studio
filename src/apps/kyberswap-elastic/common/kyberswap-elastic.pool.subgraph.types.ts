@@ -48,19 +48,3 @@ export const GET_POOL_INFO = gql`
     }
   }
 `;
-
-export type PoolVolumesResponse = {
-  pairs: {
-    id: string;
-    volumeUSD: string;
-    untrackedVolumeUSD: string;
-  }[];
-};
-
-export type SinglePoolVolumeResponse = {
-  pair: {
-    id: string;
-    volumeUSD: string;
-    untrackedVolumeUSD: string;
-  };
-};

@@ -1,4 +1,5 @@
 import { Inject, Injectable } from '@nestjs/common';
+import { parseBytes32String } from 'ethers/lib/utils';
 import { gql } from 'graphql-request';
 import { sumBy } from 'lodash';
 
@@ -19,7 +20,6 @@ import {
   GetTokenBalancesParams,
 } from '~position/template/contract-position.template.types';
 import { Network } from '~types';
-import { parseBytes32String } from 'ethers/lib/utils';
 
 import { KwentaContractFactory, KwentaFutures } from '../contracts';
 import KWENTA_DEFINITION from '../kwenta.definition';
