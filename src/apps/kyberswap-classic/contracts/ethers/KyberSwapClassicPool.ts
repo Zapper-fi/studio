@@ -17,7 +17,7 @@ import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi
 import type { Listener, Provider } from '@ethersproject/providers';
 import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
-export interface KyberSwapDmmPoolInterface extends utils.Interface {
+export interface KyberSwapClassicPoolInterface extends utils.Interface {
   functions: {
     'MINIMUM_LIQUIDITY()': FunctionFragment;
     'PERMIT_TYPEHASH()': FunctionFragment;
@@ -276,12 +276,12 @@ export type UpdateEMAEvent = TypedEvent<[BigNumber, BigNumber, BigNumber, BigNum
 
 export type UpdateEMAEventFilter = TypedEventFilter<UpdateEMAEvent>;
 
-export interface KyberSwapDmmPool extends BaseContract {
+export interface KyberSwapClassicPool extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
 
-  interface: KyberSwapDmmPoolInterface;
+  interface: KyberSwapClassicPoolInterface;
 
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,

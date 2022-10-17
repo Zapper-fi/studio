@@ -17,7 +17,7 @@ import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi
 import type { Listener, Provider } from '@ethersproject/providers';
 import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
-export interface KyberSwapDmmMasterchefInterface extends utils.Interface {
+export interface KyberSwapClassicMasterchefInterface extends utils.Interface {
   functions: {
     'addPool(address,uint32,uint32,uint256[])': FunctionFragment;
     'admin()': FunctionFragment;
@@ -268,12 +268,12 @@ export type WithdrawEvent = TypedEvent<[string, BigNumber, BigNumber, BigNumber]
 
 export type WithdrawEventFilter = TypedEventFilter<WithdrawEvent>;
 
-export interface KyberSwapDmmMasterchef extends BaseContract {
+export interface KyberSwapClassicMasterchef extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
 
-  interface: KyberSwapDmmMasterchefInterface;
+  interface: KyberSwapClassicMasterchefInterface;
 
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,

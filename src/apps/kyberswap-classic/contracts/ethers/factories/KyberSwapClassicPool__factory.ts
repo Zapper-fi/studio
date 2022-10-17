@@ -4,7 +4,7 @@
 
 import { Contract, Signer, utils } from 'ethers';
 import type { Provider } from '@ethersproject/providers';
-import type { KyberSwapDmmPool, KyberSwapDmmPoolInterface } from '../KyberSwapDmmPool';
+import type { KyberSwapClassicPool, KyberSwapClassicPoolInterface } from '../KyberSwapClassicPool';
 
 const _abi = [
   {
@@ -810,12 +810,12 @@ const _abi = [
   },
 ];
 
-export class KyberSwapDmmPool__factory {
+export class KyberSwapClassicPool__factory {
   static readonly abi = _abi;
-  static createInterface(): KyberSwapDmmPoolInterface {
-    return new utils.Interface(_abi) as KyberSwapDmmPoolInterface;
+  static createInterface(): KyberSwapClassicPoolInterface {
+    return new utils.Interface(_abi) as KyberSwapClassicPoolInterface;
   }
-  static connect(address: string, signerOrProvider: Signer | Provider): KyberSwapDmmPool {
-    return new Contract(address, _abi, signerOrProvider) as KyberSwapDmmPool;
+  static connect(address: string, signerOrProvider: Signer | Provider): KyberSwapClassicPool {
+    return new Contract(address, _abi, signerOrProvider) as KyberSwapClassicPool;
   }
 }

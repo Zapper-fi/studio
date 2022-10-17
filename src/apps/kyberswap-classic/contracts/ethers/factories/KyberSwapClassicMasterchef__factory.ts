@@ -4,7 +4,7 @@
 
 import { Contract, Signer, utils } from 'ethers';
 import type { Provider } from '@ethersproject/providers';
-import type { KyberSwapDmmMasterchef, KyberSwapDmmMasterchefInterface } from '../KyberSwapDmmMasterchef';
+import type { KyberSwapClassicMasterchef, KyberSwapClassicMasterchefInterface } from '../KyberSwapClassicMasterchef';
 
 const _abi = [
   {
@@ -729,12 +729,12 @@ const _abi = [
   },
 ];
 
-export class KyberSwapDmmMasterchef__factory {
+export class KyberSwapClassicMasterchef__factory {
   static readonly abi = _abi;
-  static createInterface(): KyberSwapDmmMasterchefInterface {
-    return new utils.Interface(_abi) as KyberSwapDmmMasterchefInterface;
+  static createInterface(): KyberSwapClassicMasterchefInterface {
+    return new utils.Interface(_abi) as KyberSwapClassicMasterchefInterface;
   }
-  static connect(address: string, signerOrProvider: Signer | Provider): KyberSwapDmmMasterchef {
-    return new Contract(address, _abi, signerOrProvider) as KyberSwapDmmMasterchef;
+  static connect(address: string, signerOrProvider: Signer | Provider): KyberSwapClassicMasterchef {
+    return new Contract(address, _abi, signerOrProvider) as KyberSwapClassicMasterchef;
   }
 }

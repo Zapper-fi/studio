@@ -17,7 +17,7 @@ import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi
 import type { Listener, Provider } from '@ethersproject/providers';
 import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
-export interface KyberSwapDmmFactoryInterface extends utils.Interface {
+export interface KyberSwapClassicFactoryInterface extends utils.Interface {
   functions: {
     'allPools(uint256)': FunctionFragment;
     'allPoolsLength()': FunctionFragment;
@@ -130,12 +130,12 @@ export type SetFeeToSetterEvent = TypedEvent<[string], SetFeeToSetterEventObject
 
 export type SetFeeToSetterEventFilter = TypedEventFilter<SetFeeToSetterEvent>;
 
-export interface KyberSwapDmmFactory extends BaseContract {
+export interface KyberSwapClassicFactory extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
 
-  interface: KyberSwapDmmFactoryInterface;
+  interface: KyberSwapClassicFactoryInterface;
 
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,
