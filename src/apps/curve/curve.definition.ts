@@ -46,7 +46,6 @@ export const CURVE_DEFINITION = appDefinition({
     [Network.ETHEREUM_MAINNET]: [AppAction.VIEW],
     [Network.FANTOM_OPERA_MAINNET]: [AppAction.VIEW],
     [Network.GNOSIS_MAINNET]: [AppAction.VIEW],
-    [Network.HARMONY_MAINNET]: [AppAction.VIEW],
     [Network.OPTIMISM_MAINNET]: [AppAction.VIEW],
     [Network.POLYGON_MAINNET]: [AppAction.VIEW],
   },

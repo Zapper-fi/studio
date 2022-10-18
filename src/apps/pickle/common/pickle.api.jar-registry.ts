@@ -23,7 +23,6 @@ const NETWORK_MAPPING = {
   [Network.ETHEREUM_MAINNET]: 'eth',
   [Network.POLYGON_MAINNET]: 'polygon',
   [Network.ARBITRUM_MAINNET]: 'arbitrum',
-  [Network.HARMONY_MAINNET]: 'harmony',
   [Network.MOONRIVER_MAINNET]: 'moonriver',
 };
 
