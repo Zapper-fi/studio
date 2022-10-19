@@ -36,7 +36,7 @@ export class OptimismVelodromeVotingEscrowContractPositionFetcher extends Voting
     return contract.token();
   }
 
-  async getRewardTokenBalance(address: string, contract: VelodromeRewards): Promise<BigNumberish> {
+  async getRewardTokenBalance(address: string): Promise<BigNumberish> {
     const multicall = this.appToolkit.getMulticall(this.network);
     const escrow = multicall.wrap(this.getEscrowContract(this.veTokenAddress));
     const veCount = Number(await escrow.balanceOf(address));
@@ -44,7 +44,7 @@ export class OptimismVelodromeVotingEscrowContractPositionFetcher extends Voting
     const balances = await Promise.all(
       range(veCount).map(async i => {
         const tokenId = await escrow.tokenOfOwnerByIndex(address, i);
-        const balance = await contract.claimable(tokenId);
+        const balance = await escrow.balanceOfNFT(tokenId);
         return Number(balance);
       }),
     );
@@ -62,8 +62,8 @@ export class OptimismVelodromeVotingEscrowContractPositionFetcher extends Voting
     const balances = await Promise.all(
       range(veCount).map(async i => {
         const tokenId = await contract.tokenOfOwnerByIndex(address, i);
-        const balance = await contract.balanceOfNFT(tokenId);
-        return Number(balance);
+        const balance = await contract.locked(tokenId);
+        return Number(balance.amount);
       }),
     );
 
