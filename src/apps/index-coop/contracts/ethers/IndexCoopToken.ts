@@ -35,7 +35,7 @@ export declare namespace ISetToken {
   };
 }
 
-export interface IndexTokenInterface extends utils.Interface {
+export interface IndexCoopTokenInterface extends utils.Interface {
   functions: {
     'addComponent(address)': FunctionFragment;
     'addExternalPositionModule(address,address)': FunctionFragment;
@@ -453,12 +453,12 @@ export type TransferEvent = TypedEvent<[string, string, BigNumber], TransferEven
 
 export type TransferEventFilter = TypedEventFilter<TransferEvent>;
 
-export interface IndexToken extends BaseContract {
+export interface IndexCoopToken extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
 
-  interface: IndexTokenInterface;
+  interface: IndexCoopTokenInterface;
 
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,

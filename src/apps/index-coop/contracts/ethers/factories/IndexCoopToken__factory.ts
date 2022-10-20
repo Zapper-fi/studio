@@ -4,7 +4,7 @@
 
 import { Contract, Signer, utils } from 'ethers';
 import type { Provider } from '@ethersproject/providers';
-import type { IndexToken, IndexTokenInterface } from '../IndexToken';
+import type { IndexCoopToken, IndexCoopTokenInterface } from '../IndexCoopToken';
 
 const _abi = [
   {
@@ -1223,12 +1223,12 @@ const _abi = [
   },
 ];
 
-export class IndexToken__factory {
+export class IndexCoopToken__factory {
   static readonly abi = _abi;
-  static createInterface(): IndexTokenInterface {
-    return new utils.Interface(_abi) as IndexTokenInterface;
+  static createInterface(): IndexCoopTokenInterface {
+    return new utils.Interface(_abi) as IndexCoopTokenInterface;
   }
-  static connect(address: string, signerOrProvider: Signer | Provider): IndexToken {
-    return new Contract(address, _abi, signerOrProvider) as IndexToken;
+  static connect(address: string, signerOrProvider: Signer | Provider): IndexCoopToken {
+    return new Contract(address, _abi, signerOrProvider) as IndexCoopToken;
   }
 }
