@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.253.0](https://github.com/Zapper-fi/studio/compare/v0.252.0...v0.253.0) (2022-10-20)
+
+
+### Features
+
+* **kyberswap-elastic:** Decrease calls to subgraph with a dataloader for the APYs ([#1601](https://github.com/Zapper-fi/studio/issues/1601)) ([ea102d9](https://github.com/Zapper-fi/studio/commit/ea102d9168489630fe816ae47dfdef363155f9f1))
+
 ## [0.252.0](https://github.com/Zapper-fi/studio/compare/v0.251.0...v0.252.0) (2022-10-20)
 
 
