@@ -7,7 +7,7 @@ export const HEDGEFARM_DEFINITION = appDefinition({
   id: 'hedgefarm',
   name: 'HedgeFarm',
   description: 'A DeFi protocol that provides alpha yield vaults for your crypto.',
-  url: 'hedgefarm.finance',
+  url: 'https://www.hedgefarm.finance',
 
   groups: {
     alphaOne: {
