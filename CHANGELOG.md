@@ -4,6 +4,19 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.251.0](https://github.com/Zapper-fi/studio/compare/v0.250.0...v0.251.0) (2022-10-20)
+
+
+### Features
+
+* **bancor-v3:** Fix null prices on Balancer V1 and Bancor V3 ([38d7463](https://github.com/Zapper-fi/studio/commit/38d74635e1d9da841ce2b5345b0c301babc196b6))
+
+
+### Bug Fixes
+
+* **1inch:** Fix APY/APR on single/dual reward farms ([#1570](https://github.com/Zapper-fi/studio/issues/1570)) ([5f11aa4](https://github.com/Zapper-fi/studio/commit/5f11aa4960916d3138c97ebce8ff0bbdd2225a32))
+* **ci:** Fix when assets are deleted ([#1593](https://github.com/Zapper-fi/studio/issues/1593)) ([eac5852](https://github.com/Zapper-fi/studio/commit/eac5852506bfd78e38b24927da04bd9d9ce240d0))
+
 ## [0.250.0](https://github.com/Zapper-fi/studio/compare/v0.249.1...v0.250.0) (2022-10-14)
 
 
