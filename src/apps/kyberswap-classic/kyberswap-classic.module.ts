@@ -5,8 +5,8 @@ import { UniswapV2ContractFactory } from '~apps/uniswap-v2';
 import { ArbitrumKyberSwapClassicPoolTokenFetcher } from './arbitrum/kyberswap-classic.pool.token-fetcher';
 import { AvalancheKyberSwapClassicFarmContractPositionFetcher } from './avalanche/kyberswap-classic.farm.contract-position-fetcher';
 import { AvalancheKyberSwapClassicPoolTokenFetcher } from './avalanche/kyberswap-classic.pool.token-fetcher';
-import { BSCKyberSwapClassicFarmContractPositionFetcher } from './binance-smart-chain/kyberswap-classic.farm.contract-position-fetcher';
-import { BSCKyberSwapClassicPoolTokenFetcher } from './binance-smart-chain/kyberswap-classic.pool.token-fetcher';
+import { BinanceSmartChainKyberSwapClassicFarmContractPositionFetcher } from './binance-smart-chain/kyberswap-classic.farm.contract-position-fetcher';
+import { BinanceSmartChainKyberSwapClassicPoolTokenFetcher } from './binance-smart-chain/kyberswap-classic.pool.token-fetcher';
 import { KyberswapClassicContractFactory } from './contracts';
 import { CronosKyberSwapClassicPoolTokenFetcher } from './cronos/kyberswap-classic.pool.token-fetcher';
 import { EthereumKyberSwapClassicFarmContractPositionFetcher } from './ethereum/kyberswap-classic.farm.contract-position-fetcher';
@@ -34,8 +34,8 @@ import { PolygonKyberSwapClassicPoolTokenFetcher } from './polygon/kyberswap-cla
     CronosKyberSwapClassicPoolTokenFetcher,
     FantomKyberSwapClassicPoolTokenFetcher,
     ArbitrumKyberSwapClassicPoolTokenFetcher,
-    BSCKyberSwapClassicFarmContractPositionFetcher,
-    BSCKyberSwapClassicPoolTokenFetcher,
+    BinanceSmartChainKyberSwapClassicFarmContractPositionFetcher,
+    BinanceSmartChainKyberSwapClassicPoolTokenFetcher,
     OptimismKyberSwapClassicPoolTokenFetcher,
   ],
 })

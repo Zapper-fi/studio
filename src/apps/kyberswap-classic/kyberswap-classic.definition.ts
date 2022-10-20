@@ -15,21 +15,21 @@ export const KYBERSWAP_CLASSIC_DEFINITION = appDefinition({
     pool: {
       id: 'pool',
       type: GroupType.TOKEN,
-      label: 'KyberSwap Classic',
+      label: 'Pools',
       groupLabel: 'Pools',
     },
 
     legacyFarm: {
       id: 'legacy-farm',
       type: GroupType.POSITION,
-      label: 'KyberSwap Classic',
+      label: 'Farms',
       groupLabel: 'Farms',
     },
 
     farm: {
       id: 'farm',
       type: GroupType.POSITION,
-      label: 'KyberSwap Classic',
+      label: 'Farms',
       groupLabel: 'Farms',
     },
   },
