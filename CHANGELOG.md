@@ -4,6 +4,25 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.252.0](https://github.com/Zapper-fi/studio/compare/v0.251.0...v0.252.0) (2022-10-20)
+
+
+### Features
+
+* **hedgefarm:** Add HedgeFarm ([#1597](https://github.com/Zapper-fi/studio/issues/1597)) ([eee87fb](https://github.com/Zapper-fi/studio/commit/eee87fbd8efc3074a3e4522dd30bd8a30776f8af))
+* **homora-v2:** Add Homora V2 integration ([#1596](https://github.com/Zapper-fi/studio/issues/1596)) ([7fbd35e](https://github.com/Zapper-fi/studio/commit/7fbd35e71a57df168bdd710147c6f875303b6122))
+* **kyberswap:** Add APY Dataprops for Elastic (all chains), change `dmm` -> `classic` ([#1569](https://github.com/Zapper-fi/studio/issues/1569)) ([d649c9b](https://github.com/Zapper-fi/studio/commit/d649c9bc755bc8a30671fe6b6fd2df89bfeea388))
+* **vendor-finance:** Vendor Finance integration ([#1568](https://github.com/Zapper-fi/studio/issues/1568)) ([a9138e7](https://github.com/Zapper-fi/studio/commit/a9138e7aaaf5675c4b9f4b2035ebd45454341814))
+
+
+### Bug Fixes
+
+* **hedgefarm:** Convert to templates and add logo ([bc8ff00](https://github.com/Zapper-fi/studio/commit/bc8ff00afa59fa16bc21e82fa00928df92cc1fb2))
+* **homora-v2:** Logo ([248e32b](https://github.com/Zapper-fi/studio/commit/248e32b28c569b774fb359dffbf9d860db2e886a))
+* **kyberswap-classic:** Rename classes ([3c0b3aa](https://github.com/Zapper-fi/studio/commit/3c0b3aa694c1118c997df54f0ddcf8227f11528d))
+* **main:** Revert removal of Harmony & Evmos static values ([#1599](https://github.com/Zapper-fi/studio/issues/1599)) ([608253f](https://github.com/Zapper-fi/studio/commit/608253f7e52c1cc1541a993977c54ecdab4f76c9))
+* **velodrome:** Fix supplied and claimable  token balances in the voting-escrow position ([#1594](https://github.com/Zapper-fi/studio/issues/1594)) ([ec90500](https://github.com/Zapper-fi/studio/commit/ec90500f80dbd77676ae8f46ed6d89f8ae028780))
+
 ## [0.251.0](https://github.com/Zapper-fi/studio/compare/v0.250.0...v0.251.0) (2022-10-20)
 
 
