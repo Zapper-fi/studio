@@ -1,8 +1,12 @@
 import { Inject, NotImplementedException } from '@nestjs/common';
+import { compact, sumBy } from 'lodash';
 
+import { drillBalance } from '~app-toolkit';
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { ZERO_ADDRESS } from '~app-toolkit/constants/address';
+import { ContractPositionBalance } from '~position/position-balance.interface';
 import { ContractPosition, MetaType } from '~position/position.interface';
+import { isBorrowed } from '~position/position.utils';
 import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
 import {
   GetDataPropsParams,
@@ -14,7 +18,12 @@ import { NETWORK_IDS } from '~types';
 import { HomoraBank, HomoraV2ContractFactory } from '../contracts';
 import httpClient from '../helpers/httpClient';
 import { Exchange, Poolstatus } from '../interfaces/enums';
-import { HomoraV2FarmingPositionDataProps, HomoraV2FarmingPositionDefinition, Pool } from '../interfaces/interfaces';
+import {
+  HomoraV2FarmingPositionDataProps,
+  HomoraV2FarmingPositionDefinition,
+  Pool,
+  PoolPosition,
+} from '../interfaces/interfaces';
 
 export abstract class HomoraV2FarmContractPositionFetcher extends ContractPositionTemplatePositionFetcher<
   HomoraBank,
@@ -36,7 +45,7 @@ export abstract class HomoraV2FarmContractPositionFetcher extends ContractPositi
 
   async getDefinitions(): Promise<HomoraV2FarmingPositionDefinition[]> {
     const pools = await this.getPools();
-    const tradingVolumes = await this.getTradingVolumns();
+    const tradingVolumes = await this.getTradingVolumes();
 
     return pools
       .filter(
@@ -45,6 +54,7 @@ export abstract class HomoraV2FarmContractPositionFetcher extends ContractPositi
           !pool.migrateTo,
       )
       .map(pool => ({
+        key: pool.key,
         address: this.homoraBankAddress,
         exchange: pool.exchange.name,
         poolAddress: pool.lpTokenAddress.toLowerCase(),
@@ -58,7 +68,10 @@ export abstract class HomoraV2FarmContractPositionFetcher extends ContractPositi
   }
 
   async getTokenDefinitions({ definition }: GetTokenDefinitionsParams<HomoraBank, HomoraV2FarmingPositionDefinition>) {
-    return definition.tokenAddresses.map((token: string) => ({ metaType: MetaType.SUPPLIED, address: token }));
+    return [
+      { metaType: MetaType.SUPPLIED, address: definition.poolAddress },
+      ...definition.tokenAddresses.map(token => ({ metaType: MetaType.BORROWED, address: token })),
+    ];
   }
 
   // second label -> pool weight
@@ -70,9 +83,10 @@ export abstract class HomoraV2FarmContractPositionFetcher extends ContractPositi
     HomoraV2FarmingPositionDataProps,
     HomoraV2FarmingPositionDefinition
   >): Promise<HomoraV2FarmingPositionDataProps> {
-    const { poolAddress, feeTier } = definition;
+    const { poolAddress, feeTier, key } = definition;
 
     return {
+      key,
       poolAddress,
       tradingVolume: definition.tradingVolume,
       feeTier,
@@ -111,7 +125,7 @@ export abstract class HomoraV2FarmContractPositionFetcher extends ContractPositi
     return data;
   }
 
-  async getTradingVolumns() {
+  async getTradingVolumes() {
     const chainId = NETWORK_IDS[this.network];
     const { data } = await httpClient.get<Record<string, string>>(`${chainId}/trading-volumes`);
     return data;
@@ -120,5 +134,55 @@ export abstract class HomoraV2FarmContractPositionFetcher extends ContractPositi
   // @ts-ignore
   async getTokenBalancesPerPosition() {
     throw new NotImplementedException();
+  }
+
+  async getBalances(address: string) {
+    const chainId = NETWORK_IDS[this.network];
+    const { data } = await httpClient.get<PoolPosition[]>(`${chainId}/positions`);
+    const userPositions = data.filter(v => v.owner === address);
+    if (!userPositions.length) return [];
+
+    const bankContract = this.contractFactory.homoraBank({ address: this.homoraBankAddress, network: this.network });
+    const multicall = this.appToolkit.getMulticall(this.network);
+    const contractPositions = await this.appToolkit.getAppContractPositions<HomoraV2FarmingPositionDataProps>({
+      appId: this.appId,
+      network: this.network,
+      groupIds: [this.groupId],
+    });
+
+    const balances = await Promise.all(
+      userPositions.map(async position => {
+        const contractPosition = contractPositions.find(v => v.dataProps.key === position.pool.key);
+        if (!contractPosition) return null;
+
+        const [positionInfo, positionDebt] = await Promise.all([
+          multicall.wrap(bankContract).getPositionInfo(position.id),
+          multicall.wrap(bankContract).getPositionDebts(position.id),
+        ]);
+
+        const collateralAmount = positionInfo.collateralSize;
+        const debtAmounts = contractPosition.tokens.filter(isBorrowed).map(t => {
+          const debtArrayIndex = positionDebt.tokens.findIndex(dt => dt.toLowerCase() === t.address);
+          return debtArrayIndex >= 0 ? positionDebt.debts[debtArrayIndex].toString() : '0';
+        });
+
+        const amounts = [collateralAmount, ...debtAmounts];
+        const allTokens = contractPosition.tokens.map((t, i) =>
+          drillBalance(t, amounts[i]?.toString() ?? '0', { isDebt: t.metaType === MetaType.BORROWED }),
+        );
+
+        const tokens = allTokens.filter(v => Math.abs(v.balanceUSD) > 0.01);
+        const balanceUSD = sumBy(tokens, t => t.balanceUSD);
+        const balance: ContractPositionBalance<HomoraV2FarmingPositionDataProps> = {
+          ...contractPosition,
+          tokens,
+          balanceUSD,
+        };
+
+        return balance;
+      }),
+    );
+
+    return compact(balances);
   }
 }
