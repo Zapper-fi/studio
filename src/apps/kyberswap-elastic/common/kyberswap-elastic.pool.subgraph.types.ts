@@ -1,6 +1,6 @@
 import { gql } from 'graphql-request';
 
-export const POOLs_FEE_HISTORY = gql`
+export const POOLS_FEE_HISTORY = gql`
   query poolFees($block: Int!) {
     pools(block: { number: $block }) {
       id
