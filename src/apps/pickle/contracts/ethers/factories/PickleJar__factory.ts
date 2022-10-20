@@ -453,6 +453,19 @@ const _abi = [
   },
   {
     inputs: [],
+    name: 'pool',
+    outputs: [
+      {
+        internalType: 'contract IUniswapV3Pool',
+        name: '',
+        type: 'address',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
     name: 'totalSupply',
     outputs: [
       {

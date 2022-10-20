@@ -1,12 +1,14 @@
 import { Inject } from '@nestjs/common';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
+import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import {
   GetDataPropsParams,
   GetUnderlyingTokensParams,
   GetAddressesParams,
   DefaultAppTokenDataProps,
+  GetDisplayPropsParams,
 } from '~position/template/app-token.template.types';
 
 import { EaseContractFactory, EaseRcaShield } from '../contracts';
@@ -58,5 +60,9 @@ export abstract class EaseRcaTokenFetcher extends AppTokenTemplatePositionFetche
 
   async getApy({ appToken }: GetDataPropsParams<EaseRcaShield>) {
     return this.vaultDefinitionsResolver.getRcaApy(appToken.address);
+  }
+
+  async getLabel({ appToken }: GetDisplayPropsParams<EaseRcaShield>) {
+    return `${getLabelFromToken(appToken.tokens[0])} Ease Vault`;
   }
 }

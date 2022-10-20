@@ -34,7 +34,13 @@ export abstract class PickleJarTokenFetcher extends AppTokenTemplatePositionFetc
   }
 
   async getUnderlyingTokenAddresses({ contract }: GetUnderlyingTokensParams<PickleJar>) {
-    return contract.token();
+    // If jar doesn't have the pool property, it's a "legacy" deposit token (e.g. UniV2 LP)
+    try {
+      const pool = await contract.pool();
+      return pool;
+    } catch {
+      return contract.token();
+    }
   }
 
   async getPricePerShare({ contract }: GetPricePerShareParams<PickleJar, DefaultDataProps>): Promise<number> {

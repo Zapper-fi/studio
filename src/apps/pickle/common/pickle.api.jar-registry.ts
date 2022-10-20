@@ -23,8 +23,12 @@ const NETWORK_MAPPING = {
   [Network.ETHEREUM_MAINNET]: 'eth',
   [Network.POLYGON_MAINNET]: 'polygon',
   [Network.ARBITRUM_MAINNET]: 'arbitrum',
-  [Network.HARMONY_MAINNET]: 'harmony',
   [Network.MOONRIVER_MAINNET]: 'moonriver',
+  [Network.OPTIMISM_MAINNET]: 'optimism',
+  [Network.FANTOM_OPERA_MAINNET]: 'fantom',
+  [Network.CRONOS_MAINNET]: 'cronos',
+  [Network.GNOSIS_MAINNET]: 'gnosis',
+  [Network.AURORA_MAINNET]: 'aurora',
 };
 
 @Injectable()
@@ -43,7 +47,7 @@ export class PickleApiJarRegistry {
     const definitionsData = await this.getJarDefinitionsData();
 
     return definitionsData
-      .filter(({ network, liquidity_locked }) => network === NETWORK_MAPPING[opts.network] && liquidity_locked > 5000)
+      .filter(({ network, liquidity_locked }) => network === NETWORK_MAPPING[opts.network] && liquidity_locked > 1000)
       .map(({ tokenAddress, jarAddress, gaugeAddress, apy = 0 }) => ({
         tokenAddress: tokenAddress.toLowerCase(),
         vaultAddress: jarAddress.toLowerCase(),

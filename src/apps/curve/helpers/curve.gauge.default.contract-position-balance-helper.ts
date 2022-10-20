@@ -1,6 +1,8 @@
 import { Inject, Injectable } from '@nestjs/common';
+import { BigNumber } from 'ethers';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
+import { isMulticallUnderlyingError } from '~multicall/multicall.ethers';
 import { isClaimable } from '~position/position.utils';
 import { Network } from '~types/network.interface';
 
@@ -116,7 +118,13 @@ export class CurveGaugeDefaultContractPositionBalanceHelper {
         const rewardBalances = [primaryRewardBalance];
 
         if (rewardTokens.length > 1) {
-          const secondaryRewardBalance = await wrappedContract.claimable_reward(address, rewardTokens[1].address);
+          const secondaryRewardBalance = await wrappedContract
+            .claimable_reward(address, rewardTokens[1].address)
+            .catch(err => {
+              if (isMulticallUnderlyingError(err)) return BigNumber.from(0);
+              throw err;
+            });
+
           rewardBalances.push(secondaryRewardBalance);
         }
 

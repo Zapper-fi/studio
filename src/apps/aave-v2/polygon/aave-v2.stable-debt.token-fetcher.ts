@@ -14,6 +14,7 @@ export class PolygonAaveV2StableDebtTokenFetcher extends AaveV2LendingTemplateTo
   groupLabel = 'Lending';
   providerAddress = '0x7551b5d2763519d4e37e8b81929d336de671d46d';
   isDebt = true;
+  isExcludedFromBalances = true;
 
   getTokenAddress(reserveTokenAddressesData: AaveV2ReserveTokenAddressesData): string {
     return reserveTokenAddressesData.stableDebtTokenAddress;

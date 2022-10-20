@@ -30,6 +30,10 @@ export class EthereumConvexBoosterContractPositionFetcher extends ContractPositi
     return [{ address: '0xf403c135812408bfbe8713b5a23a04b3d48aae31' }];
   }
 
+  async getTokenDefinitions() {
+    return [];
+  }
+
   async getLabel(): Promise<string> {
     return 'Convex Booster';
   }

@@ -1,133 +1,79 @@
 import { Inject } from '@nestjs/common';
-import axios from 'axios';
 
-import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
-import { Register } from '~app-toolkit/decorators';
+import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
+import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import {
-  buildDollarDisplayItem,
-  buildPercentageDisplayItem,
-} from '~app-toolkit/helpers/presentation/display-item.present';
-import { getImagesFromToken } from '~app-toolkit/helpers/presentation/image.present';
-import { CacheOnInterval } from '~cache/cache-on-interval.decorator';
-import { ContractType } from '~position/contract.interface';
-import { PositionFetcher } from '~position/position-fetcher.interface';
-import { AppTokenPosition } from '~position/position.interface';
-import { Network } from '~types/network.interface';
+  GetDataPropsParams,
+  DefaultAppTokenDataProps,
+  DefaultAppTokenDefinition,
+  GetPricePerShareParams,
+} from '~position/template/app-token.template.types';
 
-import { UmamiFinanceContractFactory } from '../contracts';
-import { UMAMI_FINANCE_DEFINITION } from '../umami-finance.definition';
+import { UmamiFinanceYieldResolver } from '../common/umami-finance.marinate.token-definition-resolver';
+import { UmamiFinanceCompound, UmamiFinanceContractFactory } from '../contracts';
 
-const appId = UMAMI_FINANCE_DEFINITION.id;
-const groupId = UMAMI_FINANCE_DEFINITION.groups.compound.id;
-const network = Network.ARBITRUM_MAINNET;
-
-type UmamiMarinateApiObject = {
-  apy: string;
-};
-
-type UmamiCompounderApiObject = {
-  tvl: number;
-};
-
-export type UmamiApiDatas = {
-  marinate: UmamiMarinateApiObject;
-  mUmamiCompounder: UmamiCompounderApiObject;
-};
-
-@Register.TokenPositionFetcher({ appId, groupId, network })
-export class ArbitrumUmamiFinanceCompoundTokenFetcher implements PositionFetcher<AppTokenPosition> {
+@PositionTemplate()
+export class ArbitrumUmamiFinanceCompoundTokenFetcher extends AppTokenTemplatePositionFetcher<
+  UmamiFinanceCompound,
+  DefaultAppTokenDataProps,
+  DefaultAppTokenDefinition
+> {
   constructor(
-    @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
-    @Inject(UmamiFinanceContractFactory) private readonly contractFactory: UmamiFinanceContractFactory,
-  ) {}
+    @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
+    @Inject(UmamiFinanceYieldResolver)
+    private readonly yieldResolver: UmamiFinanceYieldResolver,
+    @Inject(UmamiFinanceContractFactory) protected readonly contractFactory: UmamiFinanceContractFactory,
+  ) {
+    super(appToolkit);
+  }
+  groupLabel = 'Compounding Marinating UMAMI';
 
-  @CacheOnInterval({
-    key: `studio:${network}:${appId}:${groupId}:informations`,
-    timeout: 5 * 60 * 1000,
-  })
-  async getUmamiInformations() {
-    try {
-      const data = await axios.get<UmamiApiDatas>('https://api.umami.finance/api/v1/marinate').then(v => v.data);
-      return parseFloat(data.marinate.apy);
-    } catch (err) {
-      return 0;
-    }
+  getContract(address: string): UmamiFinanceCompound {
+    return this.contractFactory.umamiFinanceCompound({ network: this.network, address });
   }
 
-  async getPositions() {
-    const M_UMAMI_ADDESS = '0x2adabd6e8ce3e82f52d9998a7f64a90d294a92a4';
-    const CM_UMAMI_ADDRESS = '0x1922c36f3bc762ca300b4a46bb2102f84b1684ab';
-    const multicall = this.appToolkit.getMulticall(network);
+  async getAddresses(): Promise<string[]> {
+    return ['0x1922c36f3bc762ca300b4a46bb2102f84b1684ab'];
+  }
 
+  async getUnderlyingTokenAddresses(): Promise<string> {
+    return '0x2adabd6e8ce3e82f52d9998a7f64a90d294a92a4';
+  }
+
+  async getPricePerShare({
+    appToken,
+  }: GetPricePerShareParams<UmamiFinanceCompound, DefaultAppTokenDataProps, DefaultAppTokenDefinition>): Promise<
+    number | number[]
+  > {
     const underlyingTokenContract = this.contractFactory.umamiFinanceMarinate({
-      address: M_UMAMI_ADDESS,
-      network,
-    });
-    const contract = this.contractFactory.umamiFinanceCompound({
-      address: CM_UMAMI_ADDRESS,
-      network,
+      address: appToken.tokens[0].address,
+      network: this.network,
     });
 
-    const appTokens = await this.appToolkit.getAppTokenPositions({
-      appId: UMAMI_FINANCE_DEFINITION.id,
-      groupIds: [UMAMI_FINANCE_DEFINITION.groups.marinate.id],
-      network,
+    const balanceRaw = await underlyingTokenContract.balanceOf(appToken.address);
+    const reserve = Number(balanceRaw) / 10 ** appToken.decimals;
+    const pricePerShare = reserve / appToken.supply;
+    return pricePerShare;
+  }
+
+  async getReserves({ appToken }: GetDataPropsParams<UmamiFinanceCompound>) {
+    const underlyingTokenContract = this.contractFactory.umamiFinanceMarinate({
+      address: appToken.tokens[0].address,
+      network: this.network,
     });
 
-    const [symbol, decimals, supplyRaw, balanceRaw] = await Promise.all([
-      multicall.wrap(contract).symbol(),
-      multicall.wrap(contract).decimals(),
-      multicall.wrap(contract).totalSupply(),
-      multicall.wrap(underlyingTokenContract).balanceOf(CM_UMAMI_ADDRESS),
-    ]);
+    const balanceRaw = await underlyingTokenContract.balanceOf(appToken.address);
+    const reserve = Number(balanceRaw) / 10 ** appToken.decimals;
+    return [reserve];
+  }
 
-    const underlyingToken = appTokens.find(v => v.address === M_UMAMI_ADDESS);
-    if (!underlyingToken) return [];
+  async getLiquidity({ appToken }: GetDataPropsParams<UmamiFinanceCompound>) {
+    return appToken.supply * appToken.price;
+  }
 
-    const apy = await this.getUmamiInformations();
-    const supply = Number(supplyRaw) / 10 ** decimals;
-    const reserve = Number(balanceRaw) / 10 ** decimals;
-    const pricePerShare = reserve / supply;
-    const price = pricePerShare * underlyingToken.price;
-    const liquidity = supply * price;
-    const tokens = [underlyingToken];
-    const label = `Compounding Marinating UMAMI`;
-    const images = getImagesFromToken(underlyingToken);
-    const secondaryLabel = buildDollarDisplayItem(price);
-
-    const statsItems = [
-      {
-        label: 'Liquidity',
-        value: buildDollarDisplayItem(liquidity),
-      },
-      {
-        label: 'APY',
-        value: buildPercentageDisplayItem(apy),
-      },
-    ];
-
-    const token: AppTokenPosition = {
-      type: ContractType.APP_TOKEN,
-      appId,
-      groupId,
-      address: CM_UMAMI_ADDRESS,
-      network,
-      symbol,
-      decimals,
-      supply,
-      pricePerShare,
-      price,
-      tokens,
-      dataProps: {
-        liquidity,
-      },
-      displayProps: {
-        label,
-        images,
-        secondaryLabel,
-        statsItems,
-      },
-    };
-    return [token];
+  async getApy(_params: GetDataPropsParams<UmamiFinanceCompound>) {
+    const { marinate } = await this.yieldResolver.getYield();
+    return Number(marinate.apy);
   }
 }
