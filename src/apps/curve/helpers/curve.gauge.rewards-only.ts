@@ -77,16 +77,6 @@ export const REWARDS_ONLY_GAUGES: Partial<Record<Network, { swapAddress: string;
       gaugeAddress: '0x78cf256256c8089d68cde634cf7cdefb39286470',
     },
   ],
-  [Network.HARMONY_MAINNET]: [
-    {
-      swapAddress: '0xc5cfada84e902ad92dd40194f0883ad49639b023',
-      gaugeAddress: '0xbf7e49483881c76487b0989cd7d9a8239b20ca41',
-    },
-    {
-      swapAddress: '0x0e3dc2bcbfea84072a0c794b7653d3db364154e0',
-      gaugeAddress: '0xf98450b5602fa59cc66e1379dffb6fddc724cfc4',
-    },
-  ],
   [Network.OPTIMISM_MAINNET]: [
     {
       swapAddress: '0x1337bedc9d22ecbe766df105c9623922a27963ec',
