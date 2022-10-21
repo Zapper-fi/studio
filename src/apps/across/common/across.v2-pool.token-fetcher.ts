@@ -51,7 +51,6 @@ export abstract class AcrossV2PoolTokenFetcher extends AppTokenTemplatePositionF
       underlyingTokenAddress: c,
     }));
 
-    console.log(definitions);
     return definitions;
   }
 
