@@ -29,7 +29,7 @@ export class EthereumArthTroveContractPositionFetcher extends ContractPositionTe
     return [{ address: '0xf4ed5d0c3c977b57382fabbea441a63faaf843d3' }];
   }
 
-  async getTokenDescriptors() {
+  async getTokenDefinitions() {
     return [
       { metaType: MetaType.SUPPLIED, address: ZERO_ADDRESS }, // ETH
       { metaType: MetaType.BORROWED, address: '0x8cc0f052fff7ead7f2edcccac895502e884a8a71' }, // ARTH

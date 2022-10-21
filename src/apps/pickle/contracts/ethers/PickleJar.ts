@@ -44,6 +44,7 @@ export interface PickleJarInterface extends utils.Interface {
     'symbol()': FunctionFragment;
     'timelock()': FunctionFragment;
     'token()': FunctionFragment;
+    'pool()': FunctionFragment;
     'totalSupply()': FunctionFragment;
     'transfer(address,uint256)': FunctionFragment;
     'transferFrom(address,address,uint256)': FunctionFragment;
@@ -78,6 +79,7 @@ export interface PickleJarInterface extends utils.Interface {
       | 'symbol'
       | 'timelock'
       | 'token'
+      | 'pool'
       | 'totalSupply'
       | 'transfer'
       | 'transferFrom'
@@ -122,6 +124,7 @@ export interface PickleJarInterface extends utils.Interface {
   encodeFunctionData(functionFragment: 'symbol', values?: undefined): string;
   encodeFunctionData(functionFragment: 'timelock', values?: undefined): string;
   encodeFunctionData(functionFragment: 'token', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'pool', values?: undefined): string;
   encodeFunctionData(functionFragment: 'totalSupply', values?: undefined): string;
   encodeFunctionData(
     functionFragment: 'transfer',
@@ -159,6 +162,7 @@ export interface PickleJarInterface extends utils.Interface {
   decodeFunctionResult(functionFragment: 'symbol', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'timelock', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'token', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'pool', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'totalSupply', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'transfer', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'transferFrom', data: BytesLike): Result;
@@ -300,6 +304,8 @@ export interface PickleJar extends BaseContract {
 
     token(overrides?: CallOverrides): Promise<[string]>;
 
+    pool(overrides?: CallOverrides): Promise<[string]>;
+
     totalSupply(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     transfer(
@@ -408,6 +414,8 @@ export interface PickleJar extends BaseContract {
 
   token(overrides?: CallOverrides): Promise<string>;
 
+  pool(overrides?: CallOverrides): Promise<string>;
+
   totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
   transfer(
@@ -500,6 +508,8 @@ export interface PickleJar extends BaseContract {
     timelock(overrides?: CallOverrides): Promise<string>;
 
     token(overrides?: CallOverrides): Promise<string>;
+
+    pool(overrides?: CallOverrides): Promise<string>;
 
     totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -631,6 +641,8 @@ export interface PickleJar extends BaseContract {
 
     token(overrides?: CallOverrides): Promise<BigNumber>;
 
+    pool(overrides?: CallOverrides): Promise<BigNumber>;
+
     totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
     transfer(
@@ -739,6 +751,8 @@ export interface PickleJar extends BaseContract {
     timelock(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     token(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    pool(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     totalSupply(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 

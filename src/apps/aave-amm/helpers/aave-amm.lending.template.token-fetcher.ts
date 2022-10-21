@@ -1,6 +1,5 @@
 import { Inject } from '@nestjs/common';
 
-import { drillBalance } from '~app-toolkit';
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import {
@@ -8,7 +7,6 @@ import {
   AaveV2ReserveApyData,
   AaveV2ReserveTokenAddressesData,
 } from '~apps/aave-v2/helpers/aave-v2.lending.template.token-fetcher';
-import { AppTokenPositionBalance } from '~position/position-balance.interface';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import {
   GetDataPropsParams,
@@ -33,7 +31,6 @@ export abstract class AaveAmmLendingTemplateTokenFetcher extends AppTokenTemplat
     super(appToolkit);
   }
 
-  abstract isDebt: boolean;
   abstract providerAddress: string;
   abstract getTokenAddress(reserveTokenAddressesData: AaveV2ReserveTokenAddressesData): string;
   abstract getApyFromReserveData(reserveApyData: AaveV2ReserveApyData): number;
@@ -127,24 +124,5 @@ export abstract class AaveAmmLendingTemplateTokenFetcher extends AppTokenTemplat
     appToken,
   }: GetDisplayPropsParams<AaveAmmAToken, AaveV2LendingTokenDataProps>): Promise<string> {
     return appToken.symbol;
-  }
-
-  async getBalances(address: string): Promise<AppTokenPositionBalance<AaveV2LendingTokenDataProps>[]> {
-    const multicall = this.appToolkit.getMulticall(this.network);
-    const appTokens = await this.appToolkit.getAppTokenPositions<AaveV2LendingTokenDataProps>({
-      appId: this.appId,
-      network: this.network,
-      groupIds: [this.groupId],
-    });
-
-    const balances = await Promise.all(
-      appTokens.map(async appToken => {
-        const balanceRaw = await this.getBalancePerToken({ multicall, address, appToken });
-        const tokenBalance = drillBalance(appToken, balanceRaw.toString(), { isDebt: this.isDebt });
-        return tokenBalance;
-      }),
-    );
-
-    return balances as AppTokenPositionBalance<AaveV2LendingTokenDataProps>[];
   }
 }

@@ -1,61 +1,61 @@
 import { Inject } from '@nestjs/common';
 
-import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
-import { Register } from '~app-toolkit/decorators';
-import { buildDollarDisplayItem } from '~app-toolkit/helpers/presentation/display-item.present';
-import { getImagesFromToken, getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
-import { ContractType } from '~position/contract.interface';
-import { PositionFetcher } from '~position/position-fetcher.interface';
-import { ContractPosition } from '~position/position.interface';
-import { claimable, supplied } from '~position/position.utils';
-import { Network } from '~types/network.interface';
+import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
+import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
+import { MetaType } from '~position/position.interface';
+import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
+import {
+  DefaultContractPositionDefinition,
+  GetDisplayPropsParams,
+  GetTokenBalancesParams,
+  GetTokenDefinitionsParams,
+} from '~position/template/contract-position.template.types';
 
-import { UMAMI_FINANCE_DEFINITION } from '../umami-finance.definition';
+import { UmamiFinanceContractFactory, UmamiFinanceMarinate } from '../contracts';
 
-const appId = UMAMI_FINANCE_DEFINITION.id;
-const groupId = UMAMI_FINANCE_DEFINITION.groups.marinate.id;
-const network = Network.ARBITRUM_MAINNET;
+@PositionTemplate()
+export class ArbitrumUmamiFinanceMarinateContractPositionFetcher extends ContractPositionTemplatePositionFetcher<UmamiFinanceMarinate> {
+  groupLabel = 'Marinating UMAMI';
 
-@Register.ContractPositionFetcher({ appId, groupId, network })
-export class ArbitrumUmamiFinanceMarinateContractPositionFetcher implements PositionFetcher<ContractPosition> {
-  constructor(@Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit) {}
+  constructor(
+    @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
+    @Inject(UmamiFinanceContractFactory) protected readonly contractFactory: UmamiFinanceContractFactory,
+  ) {
+    super(appToolkit);
+  }
 
-  async getPositions() {
-    const WETH_ADDRESS = '0x82af49447d8a07e3bd95bd0d56f35241523fbab1';
-    const M_UMAMI_ADDRESS = '0x2adabd6e8ce3e82f52d9998a7f64a90d294a92a4';
+  getContract(address: string): UmamiFinanceMarinate {
+    return this.contractFactory.umamiFinanceMarinate({ address, network: this.network });
+  }
 
-    const baseTokens = await this.appToolkit.getBaseTokenPrices(network);
-    const appTokens = await this.appToolkit.getAppTokenPositions({
-      appId: UMAMI_FINANCE_DEFINITION.id,
-      groupIds: [UMAMI_FINANCE_DEFINITION.groups.marinate.id],
-      network,
-    });
+  async getDefinitions(): Promise<DefaultContractPositionDefinition[]> {
+    return [{ address: '0x2adabd6e8ce3e82f52d9998a7f64a90d294a92a4' }];
+  }
 
-    const allTokens = [...baseTokens, ...appTokens];
-    const stakedToken = allTokens.find(v => v.address === M_UMAMI_ADDRESS);
-    const rewardToken = allTokens.find(v => v.address === WETH_ADDRESS);
-    if (!stakedToken || !rewardToken) return [];
+  async getTokenDefinitions(_params: GetTokenDefinitionsParams<UmamiFinanceMarinate>) {
+    return [
+      { metaType: MetaType.SUPPLIED, address: '0x2adabd6e8ce3e82f52d9998a7f64a90d294a92a4' },
+      { metaType: MetaType.CLAIMABLE, address: '0x82af49447d8a07e3bd95bd0d56f35241523fbab1' },
+    ];
+  }
 
-    const tokens = [supplied(stakedToken), claimable(rewardToken)];
-    const label = getLabelFromToken(stakedToken);
-    const images = getImagesFromToken(stakedToken);
-    const secondaryLabel = buildDollarDisplayItem(stakedToken.price);
+  async getLabel({ contractPosition }: GetDisplayPropsParams<UmamiFinanceMarinate>) {
+    return `${getLabelFromToken(contractPosition.tokens[0])}`;
+  }
 
-    const position: ContractPosition = {
-      type: ContractType.POSITION,
-      appId,
-      groupId,
-      address: M_UMAMI_ADDRESS,
-      network,
-      tokens,
-      displayProps: {
-        label,
-        secondaryLabel,
-        images,
-      },
-      dataProps: {},
-    };
+  async getTokenBalancesPerPosition({
+    address,
+    contractPosition,
+    contract,
+  }: GetTokenBalancesParams<UmamiFinanceMarinate>) {
+    const rewardToken = contractPosition.tokens[1];
 
-    return [position];
+    const [stakedBalanceRaw, rewardBalanceRaw] = await Promise.all([
+      contract.balanceOf(address),
+      contract.getAvailableTokenRewards(address, rewardToken.address),
+    ]);
+
+    return [stakedBalanceRaw, rewardBalanceRaw];
   }
 }

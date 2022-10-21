@@ -61,7 +61,7 @@ export class PolygonMeanFinanceBalanceFetcher implements BalanceFetcher {
       network,
     });
 
-    const allTokens = [...baseTokens, ...appTokens];
+    const allTokens = [...appTokens, ...baseTokens];
 
     const amountsToFetch: { tokenFrom: string; tokenTo: string; amount: string; positionId: string }[] = [];
 

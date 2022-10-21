@@ -52,9 +52,7 @@ export abstract class ContractPositionTemplatePositionFetcher<
   abstract getContract(address: string): T;
 
   // 3. Get token definitions (supplied tokens, borrowed tokens, claimable tokens, etc.)
-  async getTokenDefinitions(_params: GetTokenDefinitionsParams<T, R>): Promise<UnderlyingTokenDefinition[] | null> {
-    return [];
-  }
+  abstract getTokenDefinitions(_params: GetTokenDefinitionsParams<T, R>): Promise<UnderlyingTokenDefinition[] | null>;
 
   // 4. Get additional data properties
   async getDataProps(_params: GetDataPropsParams<T, V, R>): Promise<V> {
@@ -256,7 +254,9 @@ export abstract class ContractPositionTemplatePositionFetcher<
           const tokenBalance = positionBalances.tokens.find(b => b.key === this.appToolkit.getPositionKey(token));
           if (!tokenBalance) return null;
 
-          return drillBalance<typeof token, V>(token, tokenBalance.balance);
+          return drillBalance<typeof token, V>(token, tokenBalance.balance, {
+            isDebt: token.metaType === MetaType.BORROWED,
+          });
         });
 
         const tokens = compact(allTokens).filter(t => Math.abs(t.balanceUSD) > 0.01);

@@ -13,6 +13,18 @@ export type IExchange = {
   };
 };
 
+export type PoolPosition = {
+  id: number;
+  owner: string;
+  borrowCredit: string;
+  collateralCredit: string;
+  collateralSize: string;
+  debtRatio: string;
+  pool: {
+    key: string;
+  };
+};
+
 export type Pool = {
   key: string; // /utils/poolKey/ getPoolId(Pool)
   name: string;
@@ -111,6 +123,7 @@ export interface UniswapV3PoolInfo extends PriceRangeInfo {
 }
 
 export type HomoraV2FarmingPositionDefinition = {
+  key: string;
   address: string;
   poolAddress: string;
   tokenAddresses: string[];
@@ -125,6 +138,7 @@ export type HomoraV2FarmingPositionDataProps = {
   tradingVolume: number;
   poolAddress: string;
   feeTier?: number;
+  key: string;
 };
 
 export type HomoraV2LendingPositionDefinition = {

@@ -20,10 +20,12 @@ export class DefaultPositionPresenterFactory {
       getBalanceProductGroups(): PositionGroup[] {
         const templates = this.positionFetcherTemplateRegistry.getTemplatesForAppOnNetwork(appId, network);
 
-        const groups = templates.map(template => ({
-          label: template.groupLabel,
-          groupIds: [template.groupId],
-        }));
+        const groups = templates
+          .filter(template => !template.isExcludedFromBalances)
+          .map(template => ({
+            label: template.groupLabel,
+            groupIds: [template.groupId],
+          }));
 
         const groupedByLabel = groupBy(groups, group => group.label);
         return map(groupedByLabel, (groups, label) => ({
