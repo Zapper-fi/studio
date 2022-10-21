@@ -4,6 +4,18 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.255.0](https://github.com/Zapper-fi/studio/compare/v0.254.0...v0.255.0) (2022-10-21)
+
+
+### Features
+
+* **across-v2:** Integrate Across V2 pools ([#1613](https://github.com/Zapper-fi/studio/issues/1613)) ([4bf37ba](https://github.com/Zapper-fi/studio/commit/4bf37baf2736da66bf1fb7397a8ec8303b90879a))
+
+
+### Bug Fixes
+
+* **velodrome:** Revert a veVelo balances fix ([#1610](https://github.com/Zapper-fi/studio/issues/1610)) ([110db0e](https://github.com/Zapper-fi/studio/commit/110db0e3984cdeb64ad603f0f3cf9c7a21591a4b))
+
 ## [0.254.0](https://github.com/Zapper-fi/studio/compare/v0.253.0...v0.254.0) (2022-10-21)
 
 
