@@ -1,5 +1,4 @@
 import { Injectable } from '@nestjs/common';
-import { Logger } from '@nestjs/common';
 import Axios from 'axios';
 
 import { CacheOnInterval } from '~cache/cache-on-interval.decorator';
@@ -24,7 +23,6 @@ const NETWORK_MAPPING = {
   [Network.ETHEREUM_MAINNET]: 'eth',
   [Network.POLYGON_MAINNET]: 'polygon',
   [Network.ARBITRUM_MAINNET]: 'arbitrum',
-  [Network.HARMONY_MAINNET]: 'harmony',
   [Network.MOONRIVER_MAINNET]: 'moonriver',
   [Network.OPTIMISM_MAINNET]: 'optimism',
   [Network.FANTOM_OPERA_MAINNET]: 'fantom',

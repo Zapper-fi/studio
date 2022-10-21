@@ -41,7 +41,7 @@ export abstract class AppTokenTemplatePositionFetcher<
   appId: string;
   groupId: string;
   network: Network;
-  isDebt: boolean = false;
+  isDebt = false;
   abstract groupLabel: string;
 
   isExcludedFromBalances = false;
@@ -272,11 +272,7 @@ export abstract class AppTokenTemplatePositionFetcher<
         }),
       );
 
-      const positionsSubset = compact(tokens).filter(v => {
-        if (typeof v.dataProps.liquidity === 'number') return Math.abs(v.dataProps.liquidity) >= this.minLiquidity;
-        return true;
-      });
-
+      const positionsSubset = compact(tokens);
       currentTokens.push(...positionsSubset);
     }
 

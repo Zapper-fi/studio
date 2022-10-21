@@ -14,15 +14,19 @@ export const ACROSS_DEFINITION = appDefinition({
       type: GroupType.TOKEN,
       label: 'V1 Pools',
     },
+    v2Pool: {
+      id: 'v2-pool',
+      type: GroupType.TOKEN,
+      label: 'V2 Pools',
+    },
   },
   tags: [AppTag.BRIDGE, AppTag.CROSS_CHAIN],
   links: {
     learn: 'https://docs.across.to/bridge/',
     github: 'https://github.com/across-protocol',
-    twitter: '',
-    telegram: '',
+    twitter: 'https://twitter.com/AcrossProtocol',
     discord: 'https://discord.gg/across',
-    medium: '',
+    medium: 'https://medium.com/across-protocol',
   },
   supportedNetworks: {
     [Network.ETHEREUM_MAINNET]: [AppAction.VIEW],

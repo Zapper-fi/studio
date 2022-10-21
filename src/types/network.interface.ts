@@ -30,6 +30,6 @@ export const NETWORK_IDS: Record<Network, number | null> = {
   [Network.MOONRIVER_MAINNET]: 1285,
   [Network.CRONOS_MAINNET]: 25,
   [Network.AURORA_MAINNET]: 1313161554,
-  [Network.EVMOS_MAINNET]: 9001,
   [Network.BITCOIN_MAINNET]: 1285,
+  [Network.EVMOS_MAINNET]: 9001,
 };
