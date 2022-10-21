@@ -14,6 +14,11 @@ export const ACROSS_DEFINITION = appDefinition({
       type: GroupType.TOKEN,
       label: 'V1 Pools',
     },
+    v2Pool: {
+      id: 'v2-pool',
+      type: GroupType.TOKEN,
+      label: 'V2 Pools',
+    },
   },
   tags: [AppTag.BRIDGE, AppTag.CROSS_CHAIN],
   links: {
@@ -26,6 +31,9 @@ export const ACROSS_DEFINITION = appDefinition({
   },
   supportedNetworks: {
     [Network.ETHEREUM_MAINNET]: [AppAction.VIEW],
+    [Network.OPTIMISM_MAINNET]: [AppAction.VIEW],
+    [Network.POLYGON_MAINNET]: [AppAction.VIEW],
+    [Network.ARBITRUM_MAINNET]: [AppAction.VIEW],
   },
   primaryColor: '#fff',
 });
