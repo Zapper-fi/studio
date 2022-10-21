@@ -4,6 +4,20 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.254.0](https://github.com/Zapper-fi/studio/compare/v0.253.0...v0.254.0) (2022-10-21)
+
+
+### Features
+
+* **homora-v2:** Add missing balances ([#1603](https://github.com/Zapper-fi/studio/issues/1603)) ([8d46a19](https://github.com/Zapper-fi/studio/commit/8d46a192be85bab22da04186a7be173b7c33042f))
+
+
+### Bug Fixes
+
+* **homora-v2:** Unique on key ([6a5b347](https://github.com/Zapper-fi/studio/commit/6a5b347ffbd1ad23a816c37b6eaf2a5bbe48d391))
+* **homora-v2:** update logo  ([#1607](https://github.com/Zapper-fi/studio/issues/1607)) ([22acfe2](https://github.com/Zapper-fi/studio/commit/22acfe2e05bde77b74c083e46a16d7fc69d05c59))
+* **vendor-finance:** Debt is getting added to net worth instead of subtracting ([#1606](https://github.com/Zapper-fi/studio/issues/1606)) ([0bdf084](https://github.com/Zapper-fi/studio/commit/0bdf084c8bf73a120b57824047f3fd011ec6a926))
+
 ## [0.253.0](https://github.com/Zapper-fi/studio/compare/v0.252.0...v0.253.0) (2022-10-20)
 
 
