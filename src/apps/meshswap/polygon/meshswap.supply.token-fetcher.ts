@@ -1,116 +1,126 @@
 import { Inject } from '@nestjs/common';
 import _ from 'lodash';
 
+import { drillBalance } from '~app-toolkit';
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
-import { Register } from '~app-toolkit/decorators';
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import { buildDollarDisplayItem } from '~app-toolkit/helpers/presentation/display-item.present';
-import { getTokenImg } from '~app-toolkit/helpers/presentation/image.present';
-import { ContractType } from '~position/contract.interface';
-import { PositionFetcher } from '~position/position-fetcher.interface';
-import { AppTokenPosition } from '~position/position.interface';
-import { Network } from '~types/network.interface';
+import { StatsItem } from '~position/display.interface';
+import { AppTokenPositionBalance } from '~position/position-balance.interface';
+import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
+import {
+  DefaultAppTokenDataProps,
+  GetDataPropsParams,
+  GetDisplayPropsParams,
+  GetUnderlyingTokensParams,
+} from '~position/template/app-token.template.types';
 
-import { MeshswapContractFactory } from '../contracts';
-import { MESHSWAP_DEFINITION } from '../meshswap.definition';
+import { MeshswapContractFactory, MeshswapSinglePool } from '../contracts';
 
-const appId = MESHSWAP_DEFINITION.id;
-const groupId = MESHSWAP_DEFINITION.groups.supply.id;
-const network = Network.POLYGON_MAINNET;
+export type MeshswapContractPositionDataProps = {
+  liquidity: number;
+  exchangeRate: number;
+};
 
-@Register.TokenPositionFetcher({ appId, groupId, network })
-export class PolygonMeshswapSupplyTokenFetcher implements PositionFetcher<AppTokenPosition> {
+@PositionTemplate()
+export class PolygonMeshswapSupplyTokenFetcher extends AppTokenTemplatePositionFetcher<MeshswapSinglePool> {
+  groupLabel = 'Supply';
+
   constructor(
-    @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
-    @Inject(MeshswapContractFactory) private readonly meshswapContractFactory: MeshswapContractFactory,
-  ) {}
+    @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
+    @Inject(MeshswapContractFactory) private readonly contractFactory: MeshswapContractFactory,
+  ) {
+    super(appToolkit);
+  }
 
-  async getPositions() {
-    const multicall = this.appToolkit.getMulticall(network);
-    const baseTokens = await this.appToolkit.getBaseTokenPrices(network);
+  getContract(address: string): MeshswapSinglePool {
+    return this.contractFactory.meshswapSinglePool({ network: this.network, address });
+  }
 
-    const singlePoolFactoryContract = this.meshswapContractFactory.meshswapSinglePoolFactory({
-      network,
+  async getAddresses(): Promise<string[]> {
+    const multicall = this.appToolkit.getMulticall(this.network);
+    const singlePoolFactoryContract = this.contractFactory.meshswapSinglePoolFactory({
+      network: this.network,
       address: '0x504722a6eabb3d1573bada9abd585ae177d52e7a',
     });
 
     const poolCountRaw = await multicall.wrap(singlePoolFactoryContract).getPoolCount();
     const poolCount = Number(poolCountRaw);
 
-    const positions = await Promise.all(
+    const poolAddresses = await Promise.all(
       _.range(0, poolCount).map(async index => {
-        const addressRaw = await multicall.wrap(singlePoolFactoryContract).getPoolAddressByIndex(index);
-        const address = addressRaw.toLowerCase();
-        const singlePoolContract = this.meshswapContractFactory.meshswapSinglePool({
-          network,
-          address,
-        });
+        return await multicall.wrap(singlePoolFactoryContract).getPoolAddressByIndex(index);
+      }),
+    );
+    return poolAddresses;
+  }
 
-        const [
-          totalSupplyRaw,
-          decimals,
-          underlyingTokenAddressRaw,
-          symbol,
-          label,
-          cashRaw,
-          borrowAmountRaw,
-          exchangeRateRaw,
-        ] = await Promise.all([
-          multicall.wrap(singlePoolContract).totalSupply(),
-          multicall.wrap(singlePoolContract).decimals(),
-          multicall.wrap(singlePoolContract).token(),
-          multicall.wrap(singlePoolContract).symbol(),
-          multicall.wrap(singlePoolContract).name(),
-          multicall.wrap(singlePoolContract).getCash(),
-          multicall.wrap(singlePoolContract).totalBorrows(),
-          multicall.wrap(singlePoolContract).exchangeRateStored(),
-        ]);
+  async getUnderlyingTokenAddresses({ contract }: GetUnderlyingTokensParams<MeshswapSinglePool>) {
+    return contract.token();
+  }
 
-        const underlyingTokenAddress = underlyingTokenAddressRaw.toLowerCase();
+  async getPricePerShare() {
+    return 1;
+  }
 
-        const tokens = baseTokens.find(x => x.address == underlyingTokenAddress);
-        if (!tokens) return null;
+  async getLabel({ contract }: GetDisplayPropsParams<MeshswapSinglePool>): Promise<string> {
+    return contract.name();
+  }
 
-        const exchangeRate = Number(exchangeRateRaw) / 10 ** 18;
-        const cash = Number(cashRaw) / 10 ** decimals;
-        const borrowAmount = Number(borrowAmountRaw) / 10 ** decimals;
+  async getReserves({ appToken }: GetDataPropsParams<MeshswapSinglePool>) {
+    return (appToken.pricePerShare as number[]).map(v => v * appToken.supply);
+  }
 
-        const liquidity = borrowAmount + cash;
-        const supply = Number(totalSupplyRaw) / 10 ** decimals;
-        const pricePerShare = 1;
-        const price = tokens.price;
+  async getLiquidity({ appToken, contract }: GetDataPropsParams<MeshswapSinglePool>) {
+    const cashRaw = await contract.getCash();
+    const borrowAmountRaw = await contract.totalBorrows();
+    const cash = Number(cashRaw) / 10 ** appToken.decimals;
+    const borrowAmount = Number(borrowAmountRaw) / 10 ** appToken.decimals;
 
-        const statsItems = [{ label: 'Liquidity', value: buildDollarDisplayItem(liquidity) }];
+    return borrowAmount + cash;
+  }
 
-        const poolToken: AppTokenPosition = {
-          type: ContractType.APP_TOKEN,
-          appId,
-          groupId,
-          address,
-          network,
-          supply,
-          decimals,
-          symbol,
-          price,
-          pricePerShare,
-          tokens: [tokens],
+  getApy(_params: GetDataPropsParams<MeshswapSinglePool>) {
+    return 0;
+  }
 
-          dataProps: {
-            liquidity,
-            exchangeRate,
-          },
+  async getDataProps(params: GetDataPropsParams<MeshswapSinglePool>) {
+    const [liquidity, reserves, apy] = await Promise.all([
+      this.getLiquidity(params),
+      this.getReserves(params),
+      this.getApy(params),
+    ]);
 
-          displayProps: {
-            label,
-            secondaryLabel: symbol,
-            images: [getTokenImg(tokens.address, network)],
-            statsItems,
-          },
-        };
+    const exchangeRateRaw = await params.contract.exchangeRateStored();
+    const exchangeRate = Number(exchangeRateRaw) / 10 ** 18;
 
-        return poolToken;
+    return { liquidity, reserves, apy, exchangeRate };
+  }
+
+  async getStatsItems({ appToken }: GetDisplayPropsParams<MeshswapSinglePool>): Promise<StatsItem[] | undefined> {
+    const { liquidity } = appToken.dataProps;
+
+    return [{ label: 'Liquidity', value: buildDollarDisplayItem(liquidity) }];
+  }
+
+  async getBalances(address: string): Promise<AppTokenPositionBalance<DefaultAppTokenDataProps>[]> {
+    const multicall = this.appToolkit.getMulticall(this.network);
+
+    const appTokens = await this.appToolkit.getAppTokenPositions<MeshswapContractPositionDataProps>({
+      appId: this.appId,
+      network: this.network,
+      groupIds: [this.groupId],
+    });
+
+    const balances = await Promise.all(
+      appTokens.map(async appToken => {
+        const balanceRaw = await multicall.wrap(this.getContract(appToken.address)).balanceOf(address);
+        const balance = Number(balanceRaw) * appToken.dataProps.exchangeRate;
+
+        return drillBalance(appToken, balance.toString());
       }),
     );
 
-    return _.compact(positions);
+    return balances as AppTokenPositionBalance<DefaultAppTokenDataProps>[];
   }
 }

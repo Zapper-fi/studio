@@ -51,7 +51,7 @@ export class ArbitrumVendorFinanceBalanceFetcher implements BalanceFetcher {
         const borrowedBalance = parseInt(borrowerPosition.totalBorrowed);
         const balances = [
           drillBalance(supplied(collateralToken), suppliedBalance.toString()),
-          drillBalance(borrowed(lentToken), borrowedBalance.toString()),
+          drillBalance(borrowed(lentToken), borrowedBalance.toString(), { isDebt: true }),
         ];
 
         return balances;
