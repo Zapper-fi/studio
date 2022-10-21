@@ -109,7 +109,7 @@ export abstract class HomoraV2FarmContractPositionFetcher extends ContractPositi
   }
 
   getKey({ contractPosition }: { contractPosition: ContractPosition<HomoraV2FarmingPositionDataProps> }) {
-    return this.appToolkit.getPositionKey(contractPosition, ['feeTier']);
+    return this.appToolkit.getPositionKey(contractPosition, ['key']);
   }
 
   async getNativeToken() {
