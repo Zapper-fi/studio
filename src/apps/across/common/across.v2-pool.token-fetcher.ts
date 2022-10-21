@@ -3,12 +3,14 @@ import { uniq } from 'lodash';
 import 'moment-duration-format';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
+import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import {
   DefaultAppTokenDataProps,
   GetAddressesParams,
   GetDataPropsParams,
   GetDefinitionsParams,
+  GetDisplayPropsParams,
   GetPricePerShareParams,
   GetUnderlyingTokensParams,
 } from '~position/template/app-token.template.types';
@@ -81,5 +83,11 @@ export abstract class AcrossV2PoolTokenFetcher extends AppTokenTemplatePositionF
 
   async getApy(_params: GetDataPropsParams<AcrossV2PoolToken>) {
     return 0;
+  }
+
+  async getLabel({
+    appToken,
+  }: GetDisplayPropsParams<AcrossV2PoolToken, DefaultAppTokenDataProps, AcrossV2PoolTokenDefinition>): Promise<string> {
+    return `${getLabelFromToken(appToken.tokens[0])} Pool`;
   }
 }
