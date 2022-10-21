@@ -49,6 +49,7 @@ export abstract class AcrossV2PoolTokenFetcher extends AppTokenTemplatePositionF
       underlyingTokenAddress: c,
     }));
 
+    console.log(definitions);
     return definitions;
   }
 
@@ -59,7 +60,7 @@ export abstract class AcrossV2PoolTokenFetcher extends AppTokenTemplatePositionF
   async getUnderlyingTokenAddresses({
     definition,
   }: GetUnderlyingTokensParams<AcrossV2PoolToken, AcrossV2PoolTokenDefinition>) {
-    return [definition.address];
+    return [definition.underlyingTokenAddress];
   }
 
   async getPricePerShare({ appToken, multicall }: GetPricePerShareParams<AcrossV2PoolToken>) {
@@ -70,15 +71,15 @@ export abstract class AcrossV2PoolTokenFetcher extends AppTokenTemplatePositionF
     return [reserve / appToken.supply];
   }
 
-  getLiquidity({ appToken }: GetDataPropsParams<AcrossV2PoolToken>) {
+  async getLiquidity({ appToken }: GetDataPropsParams<AcrossV2PoolToken>) {
     return appToken.supply * appToken.price;
   }
 
-  getReserves({ appToken }: GetDataPropsParams<AcrossV2PoolToken>) {
+  async getReserves({ appToken }: GetDataPropsParams<AcrossV2PoolToken>) {
     return [appToken.pricePerShare[0] * appToken.supply];
   }
 
-  getApy(_params: GetDataPropsParams<AcrossV2PoolToken>) {
+  async getApy(_params: GetDataPropsParams<AcrossV2PoolToken>) {
     return 0;
   }
 }
