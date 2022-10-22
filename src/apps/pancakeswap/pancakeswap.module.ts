@@ -3,6 +3,7 @@ import { AbstractApp } from '~app/app.dynamic-module';
 import { UniswapV2AppModule } from '~apps/uniswap-v2';
 
 import { BinanceSmartChainPancakeswapAutoCakeContractPositionFetcher } from './binance-smart-chain/pancakeswap.auto-cake.contract-position-fetcher';
+import { BinanceSmartChainPancakeSwapBoostedFarmV2ContractPositionFetcher } from './binance-smart-chain/pancakeswap.boosted-farm-v2.contract-position-fetcher';
 import { BinanceSmartChainPancakeswapFarmV2ContractPositionFetcher } from './binance-smart-chain/pancakeswap.farm-v2.cotract-position-fetcher';
 import { BinanceSmartChainPancakeswapFarmContractPositionFetcher } from './binance-smart-chain/pancakeswap.farm.contract-position-fetcher';
 import { BinanceSmartChainPancakeswapIfoCakeContractPositionFetcher } from './binance-smart-chain/pancakeswap.ifo-cake.contract-position-fetcher';
@@ -23,6 +24,7 @@ import { PancakeswapAppDefinition, PANCAKESWAP_DEFINITION } from './pancakeswap.
     BinanceSmartChainPancakeswapIfoCakeContractPositionFetcher,
     BinanceSmartChainPancakeswapFarmContractPositionFetcher,
     BinanceSmartChainPancakeswapFarmV2ContractPositionFetcher,
+    BinanceSmartChainPancakeSwapBoostedFarmV2ContractPositionFetcher,
     BinanceSmartChainPancakeswapSyrupCakeContractPositionFetcher,
     BinanceSmartChainPancakeswapSyrupStakingContractPositionFetcher,
     BinanceSmartChainPancakeSwapPoolTokenFetcher,
