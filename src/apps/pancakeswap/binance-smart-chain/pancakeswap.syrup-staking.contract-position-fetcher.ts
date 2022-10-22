@@ -326,7 +326,7 @@ export class BinanceSmartChainPancakeswapSyrupStakingContractPositionFetcher ext
         const wrapped = multicall.wrap(contract);
 
         const factoryAddress = await wrapped.SMART_CHEF_FACTORY().catch(() => null);
-        return factoryAddress;
+        return factoryAddress ? farmAddress : null;
       }),
     );
 
