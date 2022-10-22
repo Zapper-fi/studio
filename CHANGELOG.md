@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.256.0](https://github.com/Zapper-fi/studio/compare/v0.255.1...v0.256.0) (2022-10-22)
+
+
+### Features
+
+* **pancakeswap:** Migrate to templates and add boosted farms ([#1616](https://github.com/Zapper-fi/studio/issues/1616)) ([f8c3823](https://github.com/Zapper-fi/studio/commit/f8c38235bd6e41d3abb0d3c15f6dfd3ae0e5bcb8))
+
 ## [0.255.1](https://github.com/Zapper-fi/studio/compare/v0.255.0...v0.255.1) (2022-10-22)
 
 
