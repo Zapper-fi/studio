@@ -1,16 +1,18 @@
 import { Inject } from '@nestjs/common';
-import { BigNumber } from 'ethers';
+import { compact } from 'lodash';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
-import { Register } from '~app-toolkit/decorators';
-import { RewardRateUnit } from '~app-toolkit/helpers/master-chef/master-chef.contract-position-helper';
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
-import { PositionFetcher } from '~position/position-fetcher.interface';
-import { ContractPosition } from '~position/position.interface';
-import { Network } from '~types/network.interface';
+import {
+  GetTokenDefinitionsParams,
+  GetDataPropsParams,
+  GetTokenBalancesParams,
+  GetDisplayPropsParams,
+} from '~position/template/contract-position.template.types';
+import { SingleStakingFarmDynamicTemplateContractPositionFetcher } from '~position/template/single-staking.dynamic.template.contract-position-fetcher';
 
-import { PancakeswapContractFactory } from '../contracts';
-import { PANCAKESWAP_DEFINITION } from '../pancakeswap.definition';
+import { PancakeswapContractFactory, PancakeswapSmartChef } from '../contracts';
 
 // @TODO: Should be indexed from BQ events or logs
 // https://github.com/pancakeswap/pancake-frontend/blob/develop/src/config/constants/pools.tsx
@@ -292,67 +294,63 @@ const FARMS = [
   '0xdc37a2b2a6a62008beee029e36153df8055a8ada',
 ];
 
-const appId = PANCAKESWAP_DEFINITION.id;
-const groupId = PANCAKESWAP_DEFINITION.groups.syrupStaking.id;
-const network = Network.BINANCE_SMART_CHAIN_MAINNET;
+@PositionTemplate()
+export class BinanceSmartChainPancakeswapSyrupStakingContractPositionFetcher extends SingleStakingFarmDynamicTemplateContractPositionFetcher<PancakeswapSmartChef> {
+  groupLabel = 'Syrup Staking';
+  currentBlock = 0;
 
-@Register.ContractPositionFetcher({ appId, groupId, network })
-export class BinanceSmartChainPancakeswapSyrupStakingContractPositionFetcher
-  implements PositionFetcher<ContractPosition>
-{
   constructor(
-    @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
-    @Inject(PancakeswapContractFactory) private readonly contractFactory: PancakeswapContractFactory,
-  ) {}
+    @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
+    @Inject(PancakeswapContractFactory) protected readonly contractFactory: PancakeswapContractFactory,
+  ) {
+    super(appToolkit);
+  }
 
-  async getPositions() {
-    // Syrup Pools (single staking)
-    return this.appToolkit.helpers.masterChefContractPositionHelper.getContractPositions<null>({
-      network,
-      appId,
-      minimumTvl: 10000,
-      groupId,
-      address: '',
-      resolveAddress: async ({ poolIndex }) => FARMS[poolIndex],
-      resolvePoolIndexIsValid: async ({ poolIndex, multicall }) => {
-        // Filter out any legacy SmartChef addresses that weren't deployed by the SmartChef contract
-        const smartChefAddress = FARMS[poolIndex];
-        const contract = this.contractFactory.pancakeswapSmartChef({ network, address: smartChefAddress });
+  getContract(address: string) {
+    return this.contractFactory.pancakeswapSmartChef({ address, network: this.network });
+  }
+
+  async getFarmAddresses() {
+    const multicall = this.appToolkit.getMulticall(this.network);
+    const provider = this.appToolkit.getNetworkProvider(this.network);
+    this.currentBlock = await provider.getBlockNumber();
+
+    const validFarms = await Promise.all(
+      FARMS.map(async farmAddress => {
+        const contract = this.contractFactory.pancakeswapSmartChef({ address: farmAddress, network: this.network });
         const wrapped = multicall.wrap(contract);
+
         const factoryAddress = await wrapped.SMART_CHEF_FACTORY().catch(() => null);
-        return !!factoryAddress;
-      },
-      resolveContract: () => null,
-      resolvePoolLength: async () => BigNumber.from(FARMS.length),
-      resolveRewardTokenAddresses: ({ multicall, poolIndex }) => {
-        const smartChefAddress = FARMS[poolIndex];
-        const contract = this.contractFactory.pancakeswapSmartChef({ network, address: smartChefAddress });
-        return multicall.wrap(contract).rewardToken();
-      },
-      resolveDepositTokenAddress: ({ multicall, poolIndex }) => {
-        const smartChefAddress = FARMS[poolIndex];
-        const contract = this.contractFactory.pancakeswapSmartChef({ network, address: smartChefAddress });
-        return multicall.wrap(contract).stakedToken();
-      },
-      resolveEndBlock: async ({ multicall, poolIndex }) => {
-        const smartChefAddress = FARMS[poolIndex];
-        const contract = this.contractFactory.pancakeswapSmartChef({ network, address: smartChefAddress });
-        return multicall
-          .wrap(contract)
-          .bonusEndBlock()
-          .then(v => v.toNumber());
-      },
-      rewardRateUnit: RewardRateUnit.BLOCK,
-      resolveRewardRate: this.appToolkit.helpers.masterChefDefaultRewardsPerBlockStrategy.build({
-        resolvePoolAllocPoints: async () => '1',
-        resolveTotalAllocPoints: async () => '1',
-        resolveTotalRewardRate: ({ multicall, poolIndex }) => {
-          const smartChefAddress = FARMS[poolIndex];
-          const contract = this.contractFactory.pancakeswapSmartChef({ network, address: smartChefAddress });
-          return multicall.wrap(contract).rewardPerBlock();
-        },
+        return factoryAddress ? farmAddress : null;
       }),
-      resolveLabel: ({ rewardTokens }) => `Earn ${getLabelFromToken(rewardTokens[0])}`,
-    });
+    );
+
+    return compact(validFarms);
+  }
+
+  async getStakedTokenAddress({ contract }: GetTokenDefinitionsParams<PancakeswapSmartChef>) {
+    return contract.stakedToken();
+  }
+
+  async getRewardTokenAddresses({ contract }: GetTokenDefinitionsParams<PancakeswapSmartChef>) {
+    return [await contract.rewardToken()];
+  }
+
+  async getRewardRates({ contract }: GetDataPropsParams<PancakeswapSmartChef>) {
+    const end = await contract.bonusEndBlock();
+    if (Number(end) > this.currentBlock) return [0];
+    return [await contract.rewardPerBlock()];
+  }
+
+  async getLabel({ contractPosition }: GetDisplayPropsParams<PancakeswapSmartChef>) {
+    return `Earn ${getLabelFromToken(contractPosition.tokens[1])}`;
+  }
+
+  async getStakedTokenBalance({ contract, address }: GetTokenBalancesParams<PancakeswapSmartChef>) {
+    return contract.userInfo(address).then(v => v.amount);
+  }
+
+  async getRewardTokenBalances({ contract, address }: GetTokenBalancesParams<PancakeswapSmartChef>) {
+    return contract.pendingReward(address);
   }
 }
