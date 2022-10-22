@@ -11,16 +11,11 @@ import {
   GetMasterChefTokenBalancesParams,
   MasterChefTemplateContractPositionFetcher,
 } from '~position/template/master-chef.template.contract-position-fetcher';
-import { Network } from '~types/network.interface';
 
 import { PancakeswapContractFactory, PancakeswapSyrupCake } from '../contracts';
-import { PANCAKESWAP_DEFINITION } from '../pancakeswap.definition';
 
 @PositionTemplate()
 export class BinanceSmartChainPancakeswapSyrupCakeContractPositionFetcher extends MasterChefTemplateContractPositionFetcher<PancakeswapSyrupCake> {
-  appId = PANCAKESWAP_DEFINITION.id;
-  groupId = PANCAKESWAP_DEFINITION.groups.syrupCake.id;
-  network = Network.BINANCE_SMART_CHAIN_MAINNET;
   groupLabel = 'Syrup Pools';
 
   chefAddress = '0x45c54210128a065de780c4b0df3d16664f7f859e';

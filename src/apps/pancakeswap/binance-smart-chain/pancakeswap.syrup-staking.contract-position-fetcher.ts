@@ -11,10 +11,8 @@ import {
   GetDisplayPropsParams,
 } from '~position/template/contract-position.template.types';
 import { SingleStakingFarmDynamicTemplateContractPositionFetcher } from '~position/template/single-staking.dynamic.template.contract-position-fetcher';
-import { Network } from '~types/network.interface';
 
 import { PancakeswapContractFactory, PancakeswapSmartChef } from '../contracts';
-import { PANCAKESWAP_DEFINITION } from '../pancakeswap.definition';
 
 // @TODO: Should be indexed from BQ events or logs
 // https://github.com/pancakeswap/pancake-frontend/blob/develop/src/config/constants/pools.tsx
@@ -298,9 +296,6 @@ const FARMS = [
 
 @PositionTemplate()
 export class BinanceSmartChainPancakeswapSyrupStakingContractPositionFetcher extends SingleStakingFarmDynamicTemplateContractPositionFetcher<PancakeswapSmartChef> {
-  appId = PANCAKESWAP_DEFINITION.id;
-  groupId = PANCAKESWAP_DEFINITION.groups.syrupStaking.id;
-  network = Network.BINANCE_SMART_CHAIN_MAINNET;
   groupLabel = 'Syrup Staking';
   currentBlock = 0;
 

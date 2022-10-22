@@ -10,16 +10,11 @@ import {
   GetMasterChefTokenBalancesParams,
   MasterChefTemplateContractPositionFetcher,
 } from '~position/template/master-chef.template.contract-position-fetcher';
-import { Network } from '~types/network.interface';
 
 import { PancakeswapContractFactory, PancakeswapIfoChef } from '../contracts';
-import { PANCAKESWAP_DEFINITION } from '../pancakeswap.definition';
 
 @PositionTemplate()
 export class BinanceSmartChainPancakeswapIfoCakeContractPositionFetcher extends MasterChefTemplateContractPositionFetcher<PancakeswapIfoChef> {
-  appId = PANCAKESWAP_DEFINITION.id;
-  groupId = PANCAKESWAP_DEFINITION.groups.ifoCake.id;
-  network = Network.BINANCE_SMART_CHAIN_MAINNET;
   isExcludedFromTvl = true;
   groupLabel = 'Farms';
 
