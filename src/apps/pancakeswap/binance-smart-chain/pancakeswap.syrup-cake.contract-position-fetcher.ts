@@ -1,59 +1,90 @@
 // 0xa5f8c5dbd5f286960b9d90548680ae5ebff07652 => LP Staking
 
 import { Inject } from '@nestjs/common';
-import { BigNumber } from 'ethers';
+import BigNumber from 'bignumber.js';
+import { BigNumberish } from 'ethers';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
-import { Register } from '~app-toolkit/decorators';
-import { RewardRateUnit } from '~app-toolkit/helpers/master-chef/master-chef.contract-position-helper';
-import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
-import { PositionFetcher } from '~position/position-fetcher.interface';
-import { ContractPosition } from '~position/position.interface';
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
+import {
+  GetMasterChefDataPropsParams,
+  GetMasterChefTokenBalancesParams,
+  MasterChefTemplateContractPositionFetcher,
+} from '~position/template/master-chef.template.contract-position-fetcher';
 import { Network } from '~types/network.interface';
 
 import { PancakeswapContractFactory, PancakeswapSyrupCake } from '../contracts';
 import { PANCAKESWAP_DEFINITION } from '../pancakeswap.definition';
 
-const appId = PANCAKESWAP_DEFINITION.id;
-const groupId = PANCAKESWAP_DEFINITION.groups.syrupCake.id;
-const network = Network.BINANCE_SMART_CHAIN_MAINNET;
+@PositionTemplate()
+export class BinanceSmartChainPancakeswapSyrupCakeContractPositionFetcher extends MasterChefTemplateContractPositionFetcher<PancakeswapSyrupCake> {
+  appId = PANCAKESWAP_DEFINITION.id;
+  groupId = PANCAKESWAP_DEFINITION.groups.syrupCake.id;
+  network = Network.BINANCE_SMART_CHAIN_MAINNET;
+  groupLabel = 'Syrup Pools';
 
-@Register.ContractPositionFetcher({ appId, groupId, network })
-export class BinanceSmartChainPancakeswapSyrupCakeContractPositionFetcher implements PositionFetcher<ContractPosition> {
+  chefAddress = '0x45c54210128a065de780c4b0df3d16664f7f859e';
+  chefV2Address = '0xa5f8c5dbd5f286960b9d90548680ae5ebff07652';
+
   constructor(
-    @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
-    @Inject(PancakeswapContractFactory)
-    private readonly contractFactory: PancakeswapContractFactory,
-  ) {}
+    @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
+    @Inject(PancakeswapContractFactory) protected readonly contractFactory: PancakeswapContractFactory,
+  ) {
+    super(appToolkit);
+  }
 
-  getPositions() {
-    return this.appToolkit.helpers.masterChefContractPositionHelper.getContractPositions<PancakeswapSyrupCake>({
-      network,
-      groupId,
-      appId,
-      address: '0x45c54210128a065de780c4b0df3d16664f7f859e',
-      rewardRateUnit: RewardRateUnit.BLOCK,
-      resolveContract: opts => this.contractFactory.pancakeswapSyrupCake(opts),
-      resolvePoolLength: async () => BigNumber.from(1),
-      resolveDepositTokenAddress: ({ multicall, contract }) => multicall.wrap(contract).token(),
-      resolveRewardTokenAddresses: ({ multicall, contract }) => multicall.wrap(contract).token(),
-      resolveLiquidity: ({ multicall, contract }) => multicall.wrap(contract).available(),
-      resolveRewardRate: async ({ multicall, network }) => {
-        // The auto-compounding CAKE rewards are harvested from the main MasterChef V2 contract on PID 0
-        const masterChefV2Address = '0xa5f8c5dbd5f286960b9d90548680ae5ebff07652';
-        const masterChefV2Contract = this.contractFactory.pancakeswapChefV2({ address: masterChefV2Address, network });
-        const poolInfo = await multicall.wrap(masterChefV2Contract).poolInfo(0);
-        const cakePerBlock = await multicall.wrap(masterChefV2Contract).cakePerBlock(poolInfo.isRegular);
-        const poolAllocPoints = poolInfo.allocPoint;
-        const totalAllocPoints = await (poolInfo.isRegular
-          ? masterChefV2Contract.totalRegularAllocPoint()
-          : masterChefV2Contract.totalSpecialAllocPoint());
+  getContract(address: string) {
+    return this.contractFactory.pancakeswapSyrupCake({ address, network: this.network });
+  }
 
-        const poolShare = Number(poolAllocPoints) / Number(totalAllocPoints);
-        const rewardPerBlock = poolShare * Number(cakePerBlock);
-        return rewardPerBlock;
-      },
-      resolveLabel: ({ rewardTokens }) => `Earn ${getLabelFromToken(rewardTokens[0])}`,
-    });
+  async getPoolLength() {
+    return 1;
+  }
+
+  async getStakedTokenAddress(contract: PancakeswapSyrupCake) {
+    return contract.token();
+  }
+
+  async getRewardTokenAddress(contract: PancakeswapSyrupCake) {
+    return contract.token();
+  }
+
+  async getTotalAllocPoints({ multicall }: GetMasterChefDataPropsParams<PancakeswapSyrupCake>): Promise<BigNumberish> {
+    const chefV2 = this.contractFactory.pancakeswapChefV2({ address: this.chefV2Address, network: this.network });
+    const poolInfo = await multicall.wrap(chefV2).poolInfo(0);
+    const totalAllocPoints = await (poolInfo.isRegular
+      ? chefV2.totalRegularAllocPoint()
+      : chefV2.totalSpecialAllocPoint());
+    return totalAllocPoints;
+  }
+
+  async getPoolAllocPoints({ multicall }: GetMasterChefDataPropsParams<PancakeswapSyrupCake>) {
+    const chefV2 = this.contractFactory.pancakeswapChefV2({ address: this.chefV2Address, network: this.network });
+    const poolInfo = await multicall.wrap(chefV2).poolInfo(0);
+    const poolAllocPoints = poolInfo.allocPoint;
+    return poolAllocPoints;
+  }
+
+  async getTotalRewardRate({ multicall }: GetMasterChefDataPropsParams<PancakeswapSyrupCake>): Promise<BigNumberish> {
+    const chefV2 = this.contractFactory.pancakeswapChefV2({ address: this.chefV2Address, network: this.network });
+    const poolInfo = await multicall.wrap(chefV2).poolInfo(0);
+    const cakePerBlock = await multicall.wrap(chefV2).cakePerBlock(poolInfo.isRegular);
+    return cakePerBlock;
+  }
+
+  async getStakedTokenBalance({ address, contract }: GetMasterChefTokenBalancesParams<PancakeswapSyrupCake>) {
+    const [userInfo, pricePerShareRaw] = await Promise.all([
+      contract.userInfo(address),
+      contract.getPricePerFullShare(),
+    ]);
+
+    const shares = userInfo.shares.toString();
+    const userBoostedShare = userInfo.userBoostedShare.toString();
+    const pricePerShare = Number(pricePerShareRaw) / 10 ** 18;
+    return new BigNumber(shares).times(pricePerShare).minus(userBoostedShare).toFixed(0);
+  }
+
+  async getRewardTokenBalance() {
+    return 0;
   }
 }
