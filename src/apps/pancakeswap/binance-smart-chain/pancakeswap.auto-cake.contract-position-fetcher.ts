@@ -4,6 +4,8 @@ import { BigNumberish } from 'ethers';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
+import { isSupplied } from '~position/position.utils';
+import { GetDataPropsParams } from '~position/template/contract-position.template.types';
 import {
   GetMasterChefDataPropsParams,
   GetMasterChefTokenBalancesParams,
@@ -41,6 +43,14 @@ export class BinanceSmartChainPancakeswapAutoCakeContractPositionFetcher extends
 
   async getRewardTokenAddress(contract: PancakeswapCakeChef) {
     return contract.token();
+  }
+
+  async getReserve({ contractPosition, multicall }: GetDataPropsParams<PancakeswapCakeChef>) {
+    const stakedToken = contractPosition.tokens.find(isSupplied)!;
+    const mainChef = this.contractFactory.pancakeswapChef({ address: this.mainChefAddress, network: this.network });
+    const userInfo = await multicall.wrap(mainChef).userInfo(0, contractPosition.address);
+    const reserve = Number(userInfo.amount) / 10 ** stakedToken.decimals;
+    return reserve;
   }
 
   async getTotalAllocPoints({ multicall }: GetMasterChefDataPropsParams<PancakeswapCakeChef>): Promise<BigNumberish> {
