@@ -4,6 +4,7 @@ import { compact, sumBy } from 'lodash';
 import { drillBalance } from '~app-toolkit';
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { ZERO_ADDRESS } from '~app-toolkit/constants/address';
+import { Cache } from '~cache/cache.decorator';
 import { ContractPositionBalance } from '~position/position-balance.interface';
 import { ContractPosition, MetaType } from '~position/position.interface';
 import { isBorrowed } from '~position/position.utils';
@@ -13,10 +14,11 @@ import {
   GetDisplayPropsParams,
   GetTokenDefinitionsParams,
 } from '~position/template/contract-position.template.types';
-import { NETWORK_IDS } from '~types';
+import { Network, NETWORK_IDS } from '~types';
 
 import { HomoraBank, HomoraV2ContractFactory } from '../contracts';
 import httpClient from '../helpers/httpClient';
+import HOMORA_V_2_DEFINITION from '../homora-v2.definition';
 import { Exchange, Poolstatus } from '../interfaces/enums';
 import {
   HomoraV2FarmingPositionDataProps,
@@ -136,9 +138,19 @@ export abstract class HomoraV2FarmContractPositionFetcher extends ContractPositi
     throw new NotImplementedException();
   }
 
-  async getBalances(address: string) {
-    const chainId = NETWORK_IDS[this.network];
+  @Cache({
+    instance: 'business',
+    key: (network: Network) => `studio:${HOMORA_V_2_DEFINITION.id}:${network}:positions-data`,
+    ttl: 3 * 60,
+  })
+  private async getPositionsData(network: Network) {
+    const chainId = NETWORK_IDS[network];
     const { data } = await httpClient.get<PoolPosition[]>(`${chainId}/positions`);
+    return data;
+  }
+
+  async getBalances(address: string) {
+    const data = await this.getPositionsData(this.network);
     const userPositions = data.filter(v => v.owner === address);
     if (!userPositions.length) return [];
 

@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.255.1](https://github.com/Zapper-fi/studio/compare/v0.255.0...v0.255.1) (2022-10-22)
+
+
+### Bug Fixes
+
+* **homora-v2:** Cache positions, remove duplicate tokens from Iron Bank ([#1614](https://github.com/Zapper-fi/studio/issues/1614)) ([665e7b8](https://github.com/Zapper-fi/studio/commit/665e7b8278d93d8c363a6dbe1872d1549f35e4de))
+
 ## [0.255.0](https://github.com/Zapper-fi/studio/compare/v0.254.0...v0.255.0) (2022-10-21)
 
 
