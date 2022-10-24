@@ -1,5 +1,5 @@
 import { Inject, NotImplementedException } from '@nestjs/common';
-import { gql } from 'graphql-request';
+import DataLoader from 'dataloader';
 import { compact, range } from 'lodash';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
@@ -15,7 +15,9 @@ import {
 
 import { KyberSwapElasticContractFactory, PositionManager } from '../contracts';
 
+import { KyberSwapElasticApyDataLoader } from './kyberswap-elastic.apy.data-loader';
 import { KyberSwapElasticLiquidityContractPositionBuilder } from './kyberswap-elastic.liquidity.contract-position-builder';
+import { GET_TOP_POOLS_QUERY } from './kyberswap-elastic.pool.subgraph.types';
 
 export type KyberSwapElasticLiquidityPositionDataProps = {
   feeTier: number;
@@ -25,6 +27,7 @@ export type KyberSwapElasticLiquidityPositionDataProps = {
   assetStandard: Standard.ERC_721;
   rangeStart?: number;
   rangeEnd?: number;
+  apy?: number;
 };
 
 export type KyberSwapElasticLiquidityPositionDefinition = {
@@ -48,21 +51,6 @@ type GetTopPoolsResponse = {
   }[];
 };
 
-const GET_TOP_POOLS_QUERY = gql`
-  query topPools {
-    pools(first: 50, orderBy: totalValueLockedUSD, orderDirection: desc, subgraphError: allow) {
-      id
-      feeTier
-      token0 {
-        id
-      }
-      token1 {
-        id
-      }
-    }
-  }
-`;
-
 export abstract class KyberSwapElasticLiquidityContractPositionFetcher extends ContractPositionTemplatePositionFetcher<
   PositionManager,
   KyberSwapElasticLiquidityPositionDataProps,
@@ -71,12 +59,18 @@ export abstract class KyberSwapElasticLiquidityContractPositionFetcher extends C
   abstract subgraphUrl: string;
   abstract positionManagerAddress: string;
   abstract factoryAddress: string;
+  abstract blockSubgraphUrl: string;
+  protected poolFeeMapping: Record<string, number> | null;
+
+  apyDataLoader: DataLoader<string, number>;
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
     @Inject(KyberSwapElasticContractFactory) protected readonly contractFactory: KyberSwapElasticContractFactory,
     @Inject(KyberSwapElasticLiquidityContractPositionBuilder)
     protected readonly kyberElasticLiquidityContractPositionBuilder: KyberSwapElasticLiquidityContractPositionBuilder,
+    @Inject(KyberSwapElasticApyDataLoader)
+    protected readonly apyDataLoaderBuilder: KyberSwapElasticApyDataLoader,
   ) {
     super(appToolkit);
   }
@@ -86,6 +80,11 @@ export abstract class KyberSwapElasticLiquidityContractPositionFetcher extends C
   }
 
   async getDefinitions(): Promise<KyberSwapElasticLiquidityPositionDefinition[]> {
+    this.apyDataLoader = this.apyDataLoaderBuilder.getLoader({
+      subgraphUrl: this.subgraphUrl,
+      blockSubgraphUrl: this.blockSubgraphUrl,
+    });
+
     const data = await this.appToolkit.helpers.theGraphHelper.requestGraph<GetTopPoolsResponse>({
       endpoint: this.subgraphUrl,
       query: GET_TOP_POOLS_QUERY,
@@ -130,8 +129,9 @@ export abstract class KyberSwapElasticLiquidityContractPositionFetcher extends C
     const reserves = reservesRaw.map((r, i) => Number(r) / 10 ** tokens[i].decimals);
     const liquidity = reserves[0] * tokens[0].price + reserves[1] * tokens[1].price;
     const assetStandard = Standard.ERC_721;
+    const apy = await this.apyDataLoader.load(poolAddress);
 
-    return { feeTier, reserves, liquidity, poolAddress, assetStandard };
+    return { feeTier, reserves, liquidity, poolAddress, assetStandard, apy };
   }
 
   async getLabel({

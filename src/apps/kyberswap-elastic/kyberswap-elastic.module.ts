@@ -4,6 +4,7 @@ import { AbstractApp } from '~app/app.dynamic-module';
 import { ArbitrumKyberSwapElasticLiquidityContractPositionFetcher } from './arbitrum/kyberswap-elastic.liquidity.contract-position-fetcher';
 import { AvalancheKyberSwapElasticLiquidityContractPositionFetcher } from './avalanche/kyberswap-elastic.liquidity.contract-position-fetcher';
 import { BinanceSmartChainKyberSwapElasticLiquidityContractPositionFetcher } from './binance-smart-chain/kyberswap-elastic.liquidity.contract-position-fetcher';
+import { KyberSwapElasticApyDataLoader } from './common/kyberswap-elastic.apy.data-loader';
 import { KyberSwapElasticLiquidityContractPositionBuilder } from './common/kyberswap-elastic.liquidity.contract-position-builder';
 import { KyberSwapElasticContractFactory } from './contracts';
 import { CronosKyberSwapElasticLiquidityContractPositionFetcher } from './cronos/kyberswap-elastic.liquidity.contract-position-fetcher';
@@ -19,6 +20,7 @@ import { PolygonKyberSwapElasticLiquidityContractPositionFetcher } from './polyg
   providers: [
     KyberSwapElasticAppDefinition,
     KyberSwapElasticContractFactory,
+    KyberSwapElasticApyDataLoader,
     KyberSwapElasticLiquidityContractPositionBuilder,
     EthereumKyberSwapElasticLiquidityContractPositionFetcher,
     BinanceSmartChainKyberSwapElasticLiquidityContractPositionFetcher,

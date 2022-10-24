@@ -20,3 +20,8 @@ export type KyberSwapElasticPoolStateData = {
   currentTick: number;
   liquidity: BigNumber;
 };
+
+export type KyberSwapElasticPoolStats = {
+  tvl: number;
+  feesUSD: number;
+};
