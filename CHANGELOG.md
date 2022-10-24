@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.256.1](https://github.com/Zapper-fi/studio/compare/v0.256.0...v0.256.1) (2022-10-24)
+
+
+### Bug Fixes
+
+* **curve:** Fix broken gauges on ethereum ([2aae14c](https://github.com/Zapper-fi/studio/commit/2aae14ce9f2b0dce1292dc001dc9ec704cf1c262))
+
 ## [0.256.0](https://github.com/Zapper-fi/studio/compare/v0.255.1...v0.256.0) (2022-10-22)
 
 
