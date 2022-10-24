@@ -21,6 +21,7 @@ jobs:
           node-version: 'lts/gallium'
       - name: Compile new apps images
         run: |
+          mkdir -p tmp/assets/apps
           node ./scripts/compile-app-assets.js tmp/assets/apps
       - name: Upload new app images to GCS
         uses: google-github-actions/upload-cloud-storage@main

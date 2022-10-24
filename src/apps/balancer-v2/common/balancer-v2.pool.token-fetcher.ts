@@ -5,10 +5,10 @@ import { isEmpty } from 'lodash';
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { isMulticallUnderlyingError } from '~multicall/multicall.ethers';
-import { DefaultDataProps } from '~position/display.interface';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import {
   DefaultAppTokenDataProps,
+  GetAddressesParams,
   GetDataPropsParams,
   GetDisplayPropsParams,
   GetPricePerShareParams,
@@ -24,6 +24,7 @@ type GetPoolsResponse = {
   pools: {
     address: string;
     poolType: PoolType;
+    factory: string;
     totalSwapVolume: string;
   }[];
 };
@@ -33,6 +34,7 @@ const GET_POOLS_QUERY = gql`
     pools(first: 1000, skip: 0, orderBy: totalLiquidity, orderDirection: desc, where: { totalShares_gt: 0.01 }) {
       address
       poolType
+      factory
       totalSwapVolume
     }
   }
@@ -43,11 +45,19 @@ export type BalancerV2PoolTokenDataProps = DefaultAppTokenDataProps & {
   weights: number[];
   volume: number;
   poolId: string;
+  poolType: string;
+};
+
+export type BalancerV2PoolTokenDefinition = {
+  poolType: string;
+  address: string;
+  factory: string;
 };
 
 export abstract class BalancerV2PoolTokenFetcher extends AppTokenTemplatePositionFetcher<
   BalancerPool,
-  BalancerV2PoolTokenDataProps
+  BalancerV2PoolTokenDataProps,
+  BalancerV2PoolTokenDefinition
 > {
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
@@ -63,23 +73,41 @@ export abstract class BalancerV2PoolTokenFetcher extends AppTokenTemplatePositio
     return this.contractFactory.balancerPool({ address, network: this.network });
   }
 
-  async getAddresses() {
+  async getDefinitions(): Promise<BalancerV2PoolTokenDefinition[]> {
     const poolsResponse = await this.appToolkit.helpers.theGraphHelper.requestGraph<GetPoolsResponse>({
       endpoint: this.subgraphUrl,
       query: GET_POOLS_QUERY,
     });
 
-    return poolsResponse.pools.map(v => v.address);
+    return poolsResponse.pools.map(({ address, factory, poolType }) => ({ address, factory, poolType }));
   }
 
-  async getSupply({ address, contract, multicall }: GetTokenPropsParams<BalancerPool>) {
-    const supply = await contract.totalSupply();
-    if (supply.toHexString() !== '0xffffffffffffffffffffffffffff') return supply;
+  async getAddresses({ definitions }: GetAddressesParams<BalancerV2PoolTokenDefinition>) {
+    return definitions.map(v => v.address);
+  }
 
-    // Linear and Phantom pools are minted with maximum supply; use the virtual supply instead
-    const _phantomPoolContract = this.contractFactory.balancerAaveLinearPool({ address, network: this.network });
-    const phantomPoolContract = multicall.wrap(_phantomPoolContract);
-    return phantomPoolContract.getVirtualSupply();
+  async getSupply({
+    address,
+    contract,
+    definition,
+    multicall,
+  }: GetTokenPropsParams<BalancerPool, BalancerV2PoolTokenDefinition>) {
+    // Logic derived from https://github.com/balancer-labs/frontend-v2/blob/f22a7bf8f7adfbf1158178322ce9aa12034b5894/src/services/balancer/contracts/contracts/vault.ts#L86-L93
+    if (
+      definition.poolType === 'StablePhantom' ||
+      definition.poolType === 'AaveLinear' ||
+      definition.poolType === 'Linear'
+    ) {
+      const phantomPoolContract = this.contractFactory.balancerStablePhantomPool({ address, network: this.network });
+      return multicall.wrap(phantomPoolContract).getVirtualSupply();
+    }
+
+    if (definition.poolType === 'ComposableStable') {
+      const phantomPoolContract = this.contractFactory.balancerComposableStablePool({ address, network: this.network });
+      return multicall.wrap(phantomPoolContract).getActualSupply();
+    }
+
+    return contract.totalSupply();
   }
 
   async getUnderlyingTokenAddresses({ address, contract, multicall }: GetUnderlyingTokensParams<BalancerPool>) {
@@ -96,7 +124,7 @@ export abstract class BalancerV2PoolTokenFetcher extends AppTokenTemplatePositio
     return tokenAddresses;
   }
 
-  async getPricePerShare({ appToken, contract, multicall }: GetPricePerShareParams<BalancerPool, DefaultDataProps>) {
+  async getPricePerShare({ appToken, contract, multicall }: GetPricePerShareParams<BalancerPool>) {
     const _vault = this.contractFactory.balancerVault({ address: this.vaultAddress, network: this.network });
     const vault = multicall.wrap(_vault);
 
@@ -111,24 +139,24 @@ export abstract class BalancerV2PoolTokenFetcher extends AppTokenTemplatePositio
     return reserves.map(r => r / appToken.supply);
   }
 
-  async getLiquidity({ appToken }: GetDataPropsParams<BalancerPool, BalancerV2PoolTokenDataProps>) {
+  async getLiquidity({ appToken }: GetDataPropsParams<BalancerPool>) {
     return appToken.supply * appToken.price;
   }
 
-  async getReserves({ appToken }: GetDataPropsParams<BalancerPool, BalancerV2PoolTokenDataProps>) {
+  async getReserves({ appToken }: GetDataPropsParams<BalancerPool>) {
     return (appToken.pricePerShare as number[]).map(v => v * appToken.supply);
   }
 
-  async getApy(_params: GetDataPropsParams<BalancerPool, BalancerV2PoolTokenDataProps>) {
+  async getApy(_params: GetDataPropsParams<BalancerPool>) {
     return 0;
   }
 
   async getDataProps(
-    params: GetDataPropsParams<BalancerPool, BalancerV2PoolTokenDataProps>,
+    params: GetDataPropsParams<BalancerPool, BalancerV2PoolTokenDataProps, BalancerV2PoolTokenDefinition>,
   ): Promise<BalancerV2PoolTokenDataProps> {
     const defaultDataProps = await super.getDataProps(params);
 
-    const { appToken, contract } = params;
+    const { appToken, contract, definition } = params;
     const [poolId, feeRaw, weightsRaw] = await Promise.all([
       contract.getPoolId(),
       contract.getSwapFeePercentage().catch(err => {
@@ -143,11 +171,12 @@ export abstract class BalancerV2PoolTokenFetcher extends AppTokenTemplatePositio
 
     const fee = Number(feeRaw) / 10 ** 18;
     const volume = 0; // TBD
+    const poolType = definition.poolType;
     const weights = isEmpty(weightsRaw)
       ? appToken.tokens.map(() => 1 / appToken.tokens.length)
       : appToken.tokens.map((_, i) => Number(weightsRaw[i]) / 10 ** 18);
 
-    return { ...defaultDataProps, poolId, fee, weights, volume };
+    return { ...defaultDataProps, poolId, poolType, fee, weights, volume };
   }
 
   async getLabel({ appToken }: GetDisplayPropsParams<BalancerPool, BalancerV2PoolTokenDataProps>): Promise<string> {
