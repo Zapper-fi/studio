@@ -20,7 +20,12 @@ export class CurveApiClient {
         .filter(([id]) => {
           const curveNetwork = this.toCurveNetwork(network);
           if (network !== Network.ETHEREUM_MAINNET) return id.startsWith(curveNetwork);
-          const otherNetworks = Object.values(TO_CURVE_NETWORK).filter(v => v !== curveNetwork);
+          // @TODO Super dangerous check... if Curve adds another network, this will break.
+          // Or, when we removed networks, this will break. BAD.
+          // Downstream, we do match on the `swapAddress` to attempt to filter out anything unwanted
+          // ...but the problem is that swap addresses also exist across networks!
+          const curveAltNetworks = [...Object.values(TO_CURVE_NETWORK), 'harmony'];
+          const otherNetworks = curveAltNetworks.filter(v => v !== curveNetwork);
           return !otherNetworks.some(v => id.startsWith(v));
         })
         .filter(([_, v]) => !v.is_killed)
