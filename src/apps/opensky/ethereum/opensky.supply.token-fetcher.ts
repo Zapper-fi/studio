@@ -61,13 +61,13 @@ export class EthereumOpenskySupplyTokenFetcher implements PositionFetcher<AppTok
     });
 
     const reservesDataFromABI = await Promise.all(
-      reserves.map((item, index) => {
+      reserves.map(item => {
         return multicall.wrap(OpenSkyDataProvider).getReserveData(item.id);
       }),
     );
 
     const moneyMarketSupplyRates = await Promise.all(
-      reserves.map((item) => {
+      reserves.map(item => {
         return multicall.wrap(OpenSkyDataProvider).getMoneyMarketSupplyRateInstant(item.id);
       }),
     );
@@ -106,6 +106,14 @@ export class EthereumOpenskySupplyTokenFetcher implements PositionFetcher<AppTok
           network,
         });
 
+        const baseTokenDependencies = await this.appToolkit.getBaseTokenPrices(network);
+
+        const allTokenDependencies = [...baseTokenDependencies];
+
+        const underlyingToken = allTokenDependencies.find(v => v.address === item.underlyingAsset);
+
+        if (!underlyingToken) return null;
+
         // Request the symbol, decimals, ands supply for the token
         const [symbol, decimals] = await Promise.all([
           multicall.wrap(contract).symbol(),
@@ -114,6 +122,14 @@ export class EthereumOpenskySupplyTokenFetcher implements PositionFetcher<AppTok
 
         // Denormalize the supply
         const supply = Number(item.totalDeposits) / 10 ** decimals;
+        const price = underlyingToken.price;
+
+        //displayProps
+        const label = `${getLabelFromToken(underlyingToken)}`;
+        // For images, we'll use the underlying token images as well
+        const images = getTokenImg(underlyingToken.address);
+        const secondaryLabel = buildDollarDisplayItem(price);
+        const tertiaryLabel = `${((Number(item.supplyRate) / 10 ** 27) * 100).toFixed(3)}% APY`;
 
         // Create the token object
         const tokenInfo: any = {
@@ -124,40 +140,21 @@ export class EthereumOpenskySupplyTokenFetcher implements PositionFetcher<AppTok
           symbol,
           decimals,
           supply,
+          price,
           pricePerShare: 1,
           address: item.oTokenAddress.toLowerCase(),
-        };
-
-        const baseTokenDependencies = await this.appToolkit.getBaseTokenPrices(network);
-
-        const allTokenDependencies = [...baseTokenDependencies];
-
-        const underlyingToken = allTokenDependencies.find(v => v.address === item.underlyingAsset);
-
-        tokenInfo.tokens = [underlyingToken];
-        tokenInfo.price = underlyingToken?.price;
-        tokenInfo.pricePerShare = 1;
-
-        tokenInfo.dataProps = {
-          apy: (Number(item.supplyRate) / 10 ** 27) * 100,
-          liquidity: supply * tokenInfo.price,
-        };
-        //displayProps
-        if (underlyingToken) {
-          const label = `${getLabelFromToken(underlyingToken)}`;
-          // For images, we'll use the underlying token images as well
-          const images = getTokenImg(underlyingToken.address);
-          const secondaryLabel = buildDollarDisplayItem(tokenInfo.price);
-          const tertiaryLabel = `${((Number(item.supplyRate) / 10 ** 27) * 100).toFixed(3)}% APY`;
-
-          tokenInfo.displayProps = {
+          tokens: [underlyingToken],
+          dataProps: {
+            apy: (Number(item.supplyRate) / 10 ** 27) * 100,
+            liquidity: supply * price,
+          },
+          displayProps: {
             label,
             images,
             secondaryLabel,
             tertiaryLabel,
-          };
-        }
-
+          },
+        };
         return tokenInfo;
       }),
     );

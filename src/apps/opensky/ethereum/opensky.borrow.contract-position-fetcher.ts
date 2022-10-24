@@ -62,13 +62,13 @@ export class EthereumOpenskyBorrowContractPositionFetcher implements PositionFet
     });
 
     const reservesDataFromABI = await Promise.all(
-      reserves.map((item, index) => {
+      reserves.map(item => {
         return multicall.wrap(OpenSkyDataProvider).getReserveData(item.id);
       }),
     );
 
     const moneyMarketSupplyRates = await Promise.all(
-      reserves.map((item) => {
+      reserves.map(item => {
         return multicall.wrap(OpenSkyDataProvider).getMoneyMarketSupplyRateInstant(item.id);
       }),
     );
@@ -111,56 +111,51 @@ export class EthereumOpenskyBorrowContractPositionFetcher implements PositionFet
           network,
         });
 
-        // Request the symbol, decimals, ands supply for the jar token
-        const [decimals] = await Promise.all([multicall.wrap(contract).decimals()]);
-
-        // Denormalize the borrow
-        const borrow = Number(item.totalBorrows) / 10 ** decimals;
-
-        // Create the token object
-        const tokenInfo: any = {
-          type: ContractType.POSITION,
-          appId,
-          groupId,
-          network,
-          // supply,
-          borrow,
-          pricePerShare: 1,
-          address: this.OpenSkyPoolAddress,
-        };
-
         const baseTokenDependencies = await this.appToolkit.getBaseTokenPrices(network);
 
         const allTokenDependencies = [...baseTokenDependencies];
 
         const underlyingToken = allTokenDependencies.find(v => v.address === item.underlyingAsset);
 
-        tokenInfo.tokens = [underlyingToken];
-        tokenInfo.price = underlyingToken?.price;
-        tokenInfo.pricePerShare = 1;
+        if (!underlyingToken) return null;
 
-        tokenInfo.dataProps = {
-          apy: (Number(item.borrowRate) / 10 ** 27) * 100,
-          liquidity: borrow * tokenInfo.price,
-        };
+        // one-to-one
+        const tokens = [underlyingToken];
 
-        //displayProps
-        if (underlyingToken) {
-          const label = `${getLabelFromToken(underlyingToken)}`;
-          // For images, we'll use the underlying token images as well
-          const images = getTokenImg(underlyingToken.address);
-          const secondaryLabel = buildDollarDisplayItem(underlyingToken.price);
-          const tertiaryLabel = `${((Number(item.borrowRate) / 10 ** 27) * 100).toFixed(3)}% APY`;
+        // Request decimals for openSkyOToken and underlyingToken, which is always the same
+        const [decimals] = await Promise.all([multicall.wrap(contract).decimals()]);
 
-          tokenInfo.displayProps = {
+        // for dataProps
+        const borrow = Number(item.totalBorrows) / 10 ** decimals;
+
+        //for displayProps
+        const label = `${getLabelFromToken(underlyingToken)}`;
+        // For images, we'll use the underlying token images as well
+        const images = getTokenImg(underlyingToken.address);
+        const secondaryLabel = buildDollarDisplayItem(underlyingToken.price);
+        const tertiaryLabel = `${((Number(item.borrowRate) / 10 ** 27) * 100).toFixed(3)}% APY`;
+
+        // Create the position object
+        const position: any = {
+          type: ContractType.POSITION,
+          appId,
+          groupId,
+          address: this.OpenSkyPoolAddress,
+          network,
+          tokens,
+          dataProps: {
+            apy: (Number(item.borrowRate) / 10 ** 27) * 100,
+            liquidity: borrow * underlyingToken.price,
+          },
+          displayProps: {
             label,
             images,
             secondaryLabel,
             tertiaryLabel,
-          };
-        }
+          },
+        };
 
-        return tokenInfo;
+        return position;
       }),
     );
     return compact(tokens);
