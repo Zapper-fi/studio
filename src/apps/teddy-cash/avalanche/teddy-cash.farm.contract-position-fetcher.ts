@@ -43,6 +43,10 @@ export class AvalancheTeddyCashFarmContractPositionFetcher extends SingleStaking
     return [0, 0];
   }
 
+  async getActivePeriod(): Promise<boolean> {
+    return true;
+  }
+
   async getStakedTokenBalance({ contract, address }: GetTokenBalancesParams<TeddyCashStaking>) {
     return contract.stakes(address);
   }

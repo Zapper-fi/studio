@@ -42,6 +42,15 @@ export class EthereumRariGovernanceContractPositionFetcher extends SingleStaking
     return [0];
   }
 
+  async getActivePeriod({ contract }: GetDataPropsParams<RariGovernanceTokenDistributor>): Promise<boolean> {
+    const provider = this.appToolkit.getNetworkProvider(this.network);
+    const currentBlockNumber = await provider.getBlockNumber();
+    const distributionEndBlockRaw = await contract.distributionEndBlock();
+    const distributionEndBlock = Number(distributionEndBlockRaw);
+
+    return distributionEndBlock > currentBlockNumber ? true : false;
+  }
+
   async getStakedTokenBalance(_params: GetTokenBalancesParams<RariGovernanceTokenDistributor>) {
     return [0];
   }

@@ -42,6 +42,10 @@ export class ArbitrumPlutusFarmPlsDpxLpContractPositionFetcher extends SingleSta
     return contract.plsPerSecond();
   }
 
+  async getActivePeriod({ contract }: GetDataPropsParams<PlutusFarmPlsDpxLp>): Promise<boolean> {
+    return contract.paused();
+  }
+
   async getStakedTokenBalance({ contract, address }: GetTokenBalancesParams<PlutusFarmPlsDpxLp>) {
     return contract.userInfo(address).then(v => v.amount);
   }

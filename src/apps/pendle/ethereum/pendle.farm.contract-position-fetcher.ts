@@ -48,6 +48,10 @@ export class EthereumPendleFarmContractPositionFetcher extends SingleStakingFarm
     return new BigNumber(rewardRate.toString()).times(BLOCKS_PER_DAY[this.network] / 86_400).toString();
   }
 
+  async getActivePeriod(): Promise<boolean> {
+    return true;
+  }
+
   async getStakedTokenBalance({ address, contract }: GetTokenBalancesParams<PendleStaking>) {
     return contract.balances(address);
   }

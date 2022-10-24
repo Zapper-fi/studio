@@ -1,4 +1,5 @@
 import { Inject } from '@nestjs/common';
+import moment from 'moment';
 
 import { APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { AppToolkit } from '~app-toolkit/app-toolkit.service';
@@ -46,6 +47,14 @@ export class OptimismAelinFarmContractPositionFetcher extends SingleStakingFarmT
 
   getRewardRates({ contract }: GetDataPropsParams<AelinStaking, SingleStakingFarmDataProps>) {
     return contract.rewardRate();
+  }
+
+  async getActivePeriod({ contract }: GetDataPropsParams<AelinStaking>): Promise<boolean> {
+    const periodFinishRaw = await contract.periodFinish();
+    const epochNow = moment().unix();
+    const periodFinish = Number(periodFinishRaw);
+
+    return epochNow < periodFinish ? true : false;
   }
 
   getStakedTokenBalance({ address, contract }: GetTokenBalancesParams<AelinStaking, SingleStakingFarmDataProps>) {

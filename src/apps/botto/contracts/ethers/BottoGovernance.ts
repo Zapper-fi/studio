@@ -20,65 +20,117 @@ import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrVal
 export interface BottoGovernanceInterface extends utils.Interface {
   functions: {
     'botto()': FunctionFragment;
+    'deposit(uint256,uint256,uint256)': FunctionFragment;
+    'endRewardsTime()': FunctionFragment;
+    'firstStakeRewardsTime()': FunctionFragment;
+    'init(address)': FunctionFragment;
     'initialize(address)': FunctionFragment;
     'owner()': FunctionFragment;
+    'payout()': FunctionFragment;
     'recover(address,address)': FunctionFragment;
     'renounceOwnership()': FunctionFragment;
     'stake(uint256)': FunctionFragment;
+    'startRewardsTime()': FunctionFragment;
+    'totalClaimedRewards()': FunctionFragment;
+    'totalRewards()': FunctionFragment;
     'totalStaked()': FunctionFragment;
     'transferOwnership(address)': FunctionFragment;
     'unstake()': FunctionFragment;
+    'userClaimedRewards(address)': FunctionFragment;
     'userStakes(address)': FunctionFragment;
   };
 
   getFunction(
     nameOrSignatureOrTopic:
       | 'botto'
+      | 'deposit'
+      | 'endRewardsTime'
+      | 'firstStakeRewardsTime'
+      | 'init'
       | 'initialize'
       | 'owner'
+      | 'payout'
       | 'recover'
       | 'renounceOwnership'
       | 'stake'
+      | 'startRewardsTime'
+      | 'totalClaimedRewards'
+      | 'totalRewards'
       | 'totalStaked'
       | 'transferOwnership'
       | 'unstake'
+      | 'userClaimedRewards'
       | 'userStakes',
   ): FunctionFragment;
 
   encodeFunctionData(functionFragment: 'botto', values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: 'deposit',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'endRewardsTime', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'firstStakeRewardsTime', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'init', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'initialize', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'owner', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'payout', values?: undefined): string;
   encodeFunctionData(functionFragment: 'recover', values: [PromiseOrValue<string>, PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'renounceOwnership', values?: undefined): string;
   encodeFunctionData(functionFragment: 'stake', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'startRewardsTime', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'totalClaimedRewards', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'totalRewards', values?: undefined): string;
   encodeFunctionData(functionFragment: 'totalStaked', values?: undefined): string;
   encodeFunctionData(functionFragment: 'transferOwnership', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'unstake', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'userClaimedRewards', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'userStakes', values: [PromiseOrValue<string>]): string;
 
   decodeFunctionResult(functionFragment: 'botto', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'deposit', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'endRewardsTime', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'firstStakeRewardsTime', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'init', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'initialize', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'owner', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'payout', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'recover', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'renounceOwnership', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'stake', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'startRewardsTime', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'totalClaimedRewards', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'totalRewards', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'totalStaked', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'transferOwnership', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'unstake', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'userClaimedRewards', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'userStakes', data: BytesLike): Result;
 
   events: {
+    'Deposit(uint256,uint256,uint256)': EventFragment;
     'OwnershipTransferred(address,address)': EventFragment;
+    'Payout(address,uint256)': EventFragment;
     'RecoveryTransfer(address,uint256,address)': EventFragment;
     'Staked(address,uint256)': EventFragment;
     'Unstaked(address,uint256)': EventFragment;
   };
 
+  getEvent(nameOrSignatureOrTopic: 'Deposit'): EventFragment;
   getEvent(nameOrSignatureOrTopic: 'OwnershipTransferred'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'Payout'): EventFragment;
   getEvent(nameOrSignatureOrTopic: 'RecoveryTransfer'): EventFragment;
   getEvent(nameOrSignatureOrTopic: 'Staked'): EventFragment;
   getEvent(nameOrSignatureOrTopic: 'Unstaked'): EventFragment;
 }
+
+export interface DepositEventObject {
+  totalRewards: BigNumber;
+  startTime: BigNumber;
+  endTime: BigNumber;
+}
+export type DepositEvent = TypedEvent<[BigNumber, BigNumber, BigNumber], DepositEventObject>;
+
+export type DepositEventFilter = TypedEventFilter<DepositEvent>;
 
 export interface OwnershipTransferredEventObject {
   previousOwner: string;
@@ -87,6 +139,14 @@ export interface OwnershipTransferredEventObject {
 export type OwnershipTransferredEvent = TypedEvent<[string, string], OwnershipTransferredEventObject>;
 
 export type OwnershipTransferredEventFilter = TypedEventFilter<OwnershipTransferredEvent>;
+
+export interface PayoutEventObject {
+  staker: string;
+  reward: BigNumber;
+}
+export type PayoutEvent = TypedEvent<[string, BigNumber], PayoutEventObject>;
+
+export type PayoutEventFilter = TypedEventFilter<PayoutEvent>;
 
 export interface RecoveryTransferEventObject {
   token: string;
@@ -138,6 +198,22 @@ export interface BottoGovernance extends BaseContract {
   functions: {
     botto(overrides?: CallOverrides): Promise<[string]>;
 
+    deposit(
+      _totalRewards: PromiseOrValue<BigNumberish>,
+      _startTime: PromiseOrValue<BigNumberish>,
+      _endTime: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<ContractTransaction>;
+
+    endRewardsTime(overrides?: CallOverrides): Promise<[BigNumber]>;
+
+    firstStakeRewardsTime(overrides?: CallOverrides): Promise<[BigNumber]>;
+
+    init(
+      _botto: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<ContractTransaction>;
+
     initialize(
       botto_: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
@@ -145,18 +221,26 @@ export interface BottoGovernance extends BaseContract {
 
     owner(overrides?: CallOverrides): Promise<[string]>;
 
+    payout(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
+
     recover(
-      token_: PromiseOrValue<string>,
-      recipient_: PromiseOrValue<string>,
+      _token: PromiseOrValue<string>,
+      _recipient: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     stake(
-      amount_: PromiseOrValue<BigNumberish>,
+      _botto: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
+
+    startRewardsTime(overrides?: CallOverrides): Promise<[BigNumber]>;
+
+    totalClaimedRewards(overrides?: CallOverrides): Promise<[BigNumber]>;
+
+    totalRewards(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     totalStaked(overrides?: CallOverrides): Promise<[BigNumber]>;
 
@@ -167,10 +251,28 @@ export interface BottoGovernance extends BaseContract {
 
     unstake(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
+    userClaimedRewards(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
+
     userStakes(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
   };
 
   botto(overrides?: CallOverrides): Promise<string>;
+
+  deposit(
+    _totalRewards: PromiseOrValue<BigNumberish>,
+    _startTime: PromiseOrValue<BigNumberish>,
+    _endTime: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
+  ): Promise<ContractTransaction>;
+
+  endRewardsTime(overrides?: CallOverrides): Promise<BigNumber>;
+
+  firstStakeRewardsTime(overrides?: CallOverrides): Promise<BigNumber>;
+
+  init(
+    _botto: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
+  ): Promise<ContractTransaction>;
 
   initialize(
     botto_: PromiseOrValue<string>,
@@ -179,18 +281,26 @@ export interface BottoGovernance extends BaseContract {
 
   owner(overrides?: CallOverrides): Promise<string>;
 
+  payout(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
+
   recover(
-    token_: PromiseOrValue<string>,
-    recipient_: PromiseOrValue<string>,
+    _token: PromiseOrValue<string>,
+    _recipient: PromiseOrValue<string>,
     overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   stake(
-    amount_: PromiseOrValue<BigNumberish>,
+    _botto: PromiseOrValue<BigNumberish>,
     overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
+
+  startRewardsTime(overrides?: CallOverrides): Promise<BigNumber>;
+
+  totalClaimedRewards(overrides?: CallOverrides): Promise<BigNumber>;
+
+  totalRewards(overrides?: CallOverrides): Promise<BigNumber>;
 
   totalStaked(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -201,24 +311,47 @@ export interface BottoGovernance extends BaseContract {
 
   unstake(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
+  userClaimedRewards(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
+
   userStakes(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   callStatic: {
     botto(overrides?: CallOverrides): Promise<string>;
 
+    deposit(
+      _totalRewards: PromiseOrValue<BigNumberish>,
+      _startTime: PromiseOrValue<BigNumberish>,
+      _endTime: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
+
+    endRewardsTime(overrides?: CallOverrides): Promise<BigNumber>;
+
+    firstStakeRewardsTime(overrides?: CallOverrides): Promise<BigNumber>;
+
+    init(_botto: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
+
     initialize(botto_: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     owner(overrides?: CallOverrides): Promise<string>;
 
+    payout(overrides?: CallOverrides): Promise<BigNumber>;
+
     recover(
-      token_: PromiseOrValue<string>,
-      recipient_: PromiseOrValue<string>,
+      _token: PromiseOrValue<string>,
+      _recipient: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
     renounceOwnership(overrides?: CallOverrides): Promise<void>;
 
-    stake(amount_: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
+    stake(_botto: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
+
+    startRewardsTime(overrides?: CallOverrides): Promise<BigNumber>;
+
+    totalClaimedRewards(overrides?: CallOverrides): Promise<BigNumber>;
+
+    totalRewards(overrides?: CallOverrides): Promise<BigNumber>;
 
     totalStaked(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -226,10 +359,15 @@ export interface BottoGovernance extends BaseContract {
 
     unstake(overrides?: CallOverrides): Promise<void>;
 
+    userClaimedRewards(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
+
     userStakes(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
   };
 
   filters: {
+    'Deposit(uint256,uint256,uint256)'(totalRewards?: null, startTime?: null, endTime?: null): DepositEventFilter;
+    Deposit(totalRewards?: null, startTime?: null, endTime?: null): DepositEventFilter;
+
     'OwnershipTransferred(address,address)'(
       previousOwner?: PromiseOrValue<string> | null,
       newOwner?: PromiseOrValue<string> | null,
@@ -238,6 +376,9 @@ export interface BottoGovernance extends BaseContract {
       previousOwner?: PromiseOrValue<string> | null,
       newOwner?: PromiseOrValue<string> | null,
     ): OwnershipTransferredEventFilter;
+
+    'Payout(address,uint256)'(staker?: PromiseOrValue<string> | null, reward?: null): PayoutEventFilter;
+    Payout(staker?: PromiseOrValue<string> | null, reward?: null): PayoutEventFilter;
 
     'RecoveryTransfer(address,uint256,address)'(
       token?: null,
@@ -256,6 +397,19 @@ export interface BottoGovernance extends BaseContract {
   estimateGas: {
     botto(overrides?: CallOverrides): Promise<BigNumber>;
 
+    deposit(
+      _totalRewards: PromiseOrValue<BigNumberish>,
+      _startTime: PromiseOrValue<BigNumberish>,
+      _endTime: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
+
+    endRewardsTime(overrides?: CallOverrides): Promise<BigNumber>;
+
+    firstStakeRewardsTime(overrides?: CallOverrides): Promise<BigNumber>;
+
+    init(_botto: PromiseOrValue<string>, overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
+
     initialize(
       botto_: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
@@ -263,18 +417,26 @@ export interface BottoGovernance extends BaseContract {
 
     owner(overrides?: CallOverrides): Promise<BigNumber>;
 
+    payout(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
+
     recover(
-      token_: PromiseOrValue<string>,
-      recipient_: PromiseOrValue<string>,
+      _token: PromiseOrValue<string>,
+      _recipient: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     stake(
-      amount_: PromiseOrValue<BigNumberish>,
+      _botto: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
+
+    startRewardsTime(overrides?: CallOverrides): Promise<BigNumber>;
+
+    totalClaimedRewards(overrides?: CallOverrides): Promise<BigNumber>;
+
+    totalRewards(overrides?: CallOverrides): Promise<BigNumber>;
 
     totalStaked(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -285,11 +447,29 @@ export interface BottoGovernance extends BaseContract {
 
     unstake(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
+    userClaimedRewards(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
+
     userStakes(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
   };
 
   populateTransaction: {
     botto(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    deposit(
+      _totalRewards: PromiseOrValue<BigNumberish>,
+      _startTime: PromiseOrValue<BigNumberish>,
+      _endTime: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<PopulatedTransaction>;
+
+    endRewardsTime(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    firstStakeRewardsTime(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    init(
+      _botto: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<PopulatedTransaction>;
 
     initialize(
       botto_: PromiseOrValue<string>,
@@ -298,18 +478,26 @@ export interface BottoGovernance extends BaseContract {
 
     owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
+    payout(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
+
     recover(
-      token_: PromiseOrValue<string>,
-      recipient_: PromiseOrValue<string>,
+      _token: PromiseOrValue<string>,
+      _recipient: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     stake(
-      amount_: PromiseOrValue<BigNumberish>,
+      _botto: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
+
+    startRewardsTime(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    totalClaimedRewards(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    totalRewards(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     totalStaked(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
@@ -319,6 +507,8 @@ export interface BottoGovernance extends BaseContract {
     ): Promise<PopulatedTransaction>;
 
     unstake(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
+
+    userClaimedRewards(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     userStakes(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
   };

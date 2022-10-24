@@ -38,6 +38,7 @@ export abstract class SingleStakingFarmTemplateContractPositionFetcher<
 
   abstract getFarmDefinitions(): Promise<SingleStakingFarmDefinition[]>;
   abstract getRewardRates(params: GetDataPropsParams<T, V>): Promise<BigNumberish | BigNumberish[]>;
+  abstract getActivePeriod(params: GetDataPropsParams<T, V>): Promise<boolean>;
   abstract getStakedTokenBalance(params: GetTokenBalancesParams<T, SingleStakingFarmDataProps>): Promise<BigNumberish>;
   abstract getRewardTokenBalances(
     params: GetTokenBalancesParams<T, SingleStakingFarmDataProps>,
@@ -69,8 +70,9 @@ export abstract class SingleStakingFarmTemplateContractPositionFetcher<
     const rewardRatesUSD = sum(rewardRates.map((v, i) => v * rewardTokens[i].price));
     const dailyRewardRateUSD = rewardRatesUSD * 86_400;
     const dailyReturn = (dailyRewardRateUSD + liquidity) / liquidity - 1;
-    const apy = dailyReturn * 365 * 100;
-    const isActive = apy > 0;
+    const isPositionActive = await this.getActivePeriod(params);
+    const apy = isPositionActive === true ? dailyReturn * 365 * 100 : 0;
+    const isActive = isPositionActive && apy > 0;
 
     return { liquidity, apy, isActive } as V;
   }

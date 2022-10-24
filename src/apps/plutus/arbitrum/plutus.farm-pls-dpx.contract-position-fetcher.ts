@@ -53,6 +53,10 @@ export class ArbitrumPlutusFarmPlsDpxContractPositionFetcher extends SingleStaki
     return [emissions.pls_, emissions.plsDpx_, emissions.plsJones_, emissions.dpx_, emissions.rdpx_];
   }
 
+  async getActivePeriod(): Promise<boolean> {
+    return true;
+  }
+
   async getStakedTokenBalance({ contract, address }: GetTokenBalancesParams<PlutusFarmPlsDpx>) {
     return contract.userInfo(address).then(v => v.amount);
   }

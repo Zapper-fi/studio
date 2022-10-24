@@ -4,7 +4,11 @@ import { range } from 'lodash';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
-import { GetDisplayPropsParams, GetTokenBalancesParams } from '~position/template/contract-position.template.types';
+import {
+  GetDataPropsParams,
+  GetDisplayPropsParams,
+  GetTokenBalancesParams,
+} from '~position/template/contract-position.template.types';
 import {
   SingleStakingFarmDefinition,
   SingleStakingFarmTemplateContractPositionFetcher,
@@ -66,6 +70,10 @@ export class ArbitrumPlutusLockContractPositionFetcher extends SingleStakingFarm
 
   async getRewardRates() {
     return [0, 0];
+  }
+
+  async getActivePeriod({ contract }: GetDataPropsParams<PlutusLock>): Promise<boolean> {
+    return contract.paused();
   }
 
   async getLabel({ contractPosition }: GetDisplayPropsParams<PlutusLock>) {

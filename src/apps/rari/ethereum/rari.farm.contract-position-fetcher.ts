@@ -42,6 +42,15 @@ export class EthereumRariFarmContractPositionFetcher extends SingleStakingFarmTe
     return [0];
   }
 
+  async getActivePeriod({ contract }: GetDataPropsParams<RariUniswapTokenDistributor>): Promise<boolean> {
+    const provider = this.appToolkit.getNetworkProvider(this.network);
+    const currentBlockNumber = await provider.getBlockNumber();
+    const distributionEndBlockRaw = await contract.distributionEndBlock();
+    const distributionEndBlock = Number(distributionEndBlockRaw);
+
+    return distributionEndBlock > currentBlockNumber ? true : false;
+  }
+
   getStakedTokenBalance({ contract, address }: GetTokenBalancesParams<RariUniswapTokenDistributor>) {
     return contract.stakingBalances(address);
   }

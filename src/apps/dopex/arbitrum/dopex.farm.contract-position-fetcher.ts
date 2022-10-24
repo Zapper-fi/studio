@@ -1,4 +1,5 @@
 import { Inject } from '@nestjs/common';
+import moment from 'moment';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
@@ -43,6 +44,14 @@ export class ArbitrumDopexFarmContractPositionFetcher extends SingleStakingFarmT
 
   getRewardRates({ contract }: GetDataPropsParams<DopexDualRewardStaking>) {
     return Promise.all([contract.rewardRateDPX(), contract.rewardRateRDPX()]);
+  }
+
+  async getActivePeriod({ contract }: GetDataPropsParams<DopexDualRewardStaking>): Promise<boolean> {
+    const periodFinishRaw = await contract.periodFinish();
+    const epochNow = moment().unix();
+    const periodFinish = Number(periodFinishRaw);
+
+    return epochNow < periodFinish ? true : false;
   }
 
   getStakedTokenBalance({ address, contract }: GetTokenBalancesParams<DopexDualRewardStaking>) {

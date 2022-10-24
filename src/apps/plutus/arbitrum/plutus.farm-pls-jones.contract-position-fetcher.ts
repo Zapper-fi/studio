@@ -52,6 +52,10 @@ export class ArbitrumPlutusFarmPlsJonesContractPositionFetcher extends SingleSta
     return [emissions.pls_, emissions.plsDpx_, emissions.plsJones_, emissions.jones_];
   }
 
+  async getActivePeriod(): Promise<boolean> {
+    return true;
+  }
+
   async getStakedTokenBalance({ contract, address }: GetTokenBalancesParams<PlutusFarmPlsJones>) {
     return contract.userInfo(address).then(v => v.amount);
   }

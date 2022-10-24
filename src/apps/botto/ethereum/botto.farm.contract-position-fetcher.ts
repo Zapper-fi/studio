@@ -1,5 +1,6 @@
 import { Inject } from '@nestjs/common';
 import { BigNumberish } from 'ethers';
+import moment from 'moment';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
@@ -44,6 +45,14 @@ export class EthereumBottoFarmContractPositionFetcher extends SingleStakingFarmT
     ]);
 
     return totalRewards.div(endTime.sub(startTime));
+  }
+
+  async getActivePeriod({ contract }: GetDataPropsParams<BottoLiquidityMining>): Promise<boolean> {
+    const periodFinishRaw = await contract.endTime();
+    const epochNow = moment().unix();
+    const periodFinish = Number(periodFinishRaw);
+
+    return epochNow < periodFinish ? true : false;
   }
 
   async getStakedTokenBalance({

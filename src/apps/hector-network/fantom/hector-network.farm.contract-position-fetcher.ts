@@ -1,4 +1,5 @@
 import { Inject } from '@nestjs/common';
+import moment from 'moment';
 
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
@@ -41,6 +42,14 @@ export class FantomHectorNetworkFarmContractPositionFetcher extends SingleStakin
 
   getRewardRates({ contract }: GetDataPropsParams<HectorNetworkStakingRewards>) {
     return contract.rewardRate();
+  }
+
+  async getActivePeriod({ contract }: GetDataPropsParams<HectorNetworkStakingRewards>): Promise<boolean> {
+    const periodFinishRaw = await contract.periodFinish();
+    const epochNow = moment().unix();
+    const periodFinish = Number(periodFinishRaw);
+
+    return epochNow < periodFinish ? true : false;
   }
 
   getStakedTokenBalance({ address, contract }: GetTokenBalancesParams<HectorNetworkStakingRewards>) {

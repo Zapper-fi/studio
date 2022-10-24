@@ -1,8 +1,9 @@
 import { Inject } from '@nestjs/common';
+import moment from 'moment';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
-import { GetTokenBalancesParams } from '~position/template/contract-position.template.types';
+import { GetDataPropsParams, GetTokenBalancesParams } from '~position/template/contract-position.template.types';
 import { SingleStakingFarmDataProps } from '~position/template/single-staking.dynamic.template.contract-position-fetcher';
 import { SingleStakingFarmTemplateContractPositionFetcher } from '~position/template/single-staking.template.contract-position-fetcher';
 
@@ -35,6 +36,14 @@ export class EthereumBottoGovernanceContractPositionFetcher extends SingleStakin
 
   async getRewardRates() {
     return [0];
+  }
+
+  async getActivePeriod({ contract }: GetDataPropsParams<BottoGovernance>): Promise<boolean> {
+    const periodFinishRaw = await contract.endRewardsTime();
+    const epochNow = moment().unix();
+    const periodFinish = Number(periodFinishRaw);
+
+    return epochNow < periodFinish ? true : false;
   }
 
   async getStakedTokenBalance({

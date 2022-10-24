@@ -1,19 +1,22 @@
 import { Inject } from '@nestjs/common';
+import { BigNumberish } from 'ethers';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
-import { GetDataPropsParams, GetTokenBalancesParams } from '~position/template/contract-position.template.types';
+import { RewardRateUnit } from '~app-toolkit/helpers/master-chef/master-chef.contract-position-helper';
 import {
-  SingleStakingFarmDataProps,
-  SingleStakingFarmDefinition,
-  SingleStakingFarmTemplateContractPositionFetcher,
-} from '~position/template/single-staking.template.contract-position-fetcher';
+  GetMasterChefDataPropsParams,
+  GetMasterChefTokenBalancesParams,
+  MasterChefTemplateContractPositionFetcher,
+} from '~position/template/master-chef.template.contract-position-fetcher';
 
 import { PlutusContractFactory, PlutusFarmPls } from '../contracts';
 
 @PositionTemplate()
-export class ArbitrumPlutusFarmPlsContractPositionFetcher extends SingleStakingFarmTemplateContractPositionFetcher<PlutusFarmPls> {
+export class ArbitrumPlutusFarmPlsContractPositionFetcher extends MasterChefTemplateContractPositionFetcher<PlutusFarmPls> {
   groupLabel = 'PLS Farm';
+  chefAddress = '0x5593473e318f0314eb2518239c474e183c4cbed5';
+  rewardRateUnit = RewardRateUnit.SECOND;
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
@@ -26,27 +29,44 @@ export class ArbitrumPlutusFarmPlsContractPositionFetcher extends SingleStakingF
     return this.contractFactory.plutusFarmPls({ address, network: this.network });
   }
 
-  async getFarmDefinitions(): Promise<SingleStakingFarmDefinition[]> {
-    return [
-      {
-        address: '0x5593473e318f0314eb2518239c474e183c4cbed5',
-        stakedTokenAddress: '0x6cc0d643c7b8709f468f58f363d73af6e4971515',
-        rewardTokenAddresses: [
-          '0x51318b7d00db7acc4026c88c3952b66278b6a67f', // PLS
-        ],
-      },
-    ];
+  async getPoolLength(contract: PlutusFarmPls): Promise<BigNumberish> {
+    return contract.poolLength();
   }
 
-  async getRewardRates({ contract }: GetDataPropsParams<PlutusFarmPls, SingleStakingFarmDataProps>) {
+  async getStakedTokenAddress(contract: PlutusFarmPls, poolIndex: number): Promise<string> {
+    return contract.poolInfo(poolIndex).then(x => x.lpToken);
+  }
+
+  async getRewardTokenAddress(contract: PlutusFarmPls): Promise<string> {
+    return contract.PLS();
+  }
+
+  async getTotalAllocPoints({ contract }: GetMasterChefDataPropsParams<PlutusFarmPls>): Promise<BigNumberish> {
+    return contract.totalAllocPoint();
+  }
+
+  async getTotalRewardRate({ contract }: GetMasterChefDataPropsParams<PlutusFarmPls>): Promise<BigNumberish> {
     return contract.plsPerSecond();
   }
 
-  async getStakedTokenBalance({ contract, address }: GetTokenBalancesParams<PlutusFarmPls>) {
+  async getPoolAllocPoints({
+    contract,
+    definition,
+  }: GetMasterChefDataPropsParams<PlutusFarmPls>): Promise<BigNumberish> {
+    return contract.poolInfo(definition.poolIndex).then(v => v.allocPoint);
+  }
+
+  async getStakedTokenBalance({
+    address,
+    contract,
+  }: GetMasterChefTokenBalancesParams<PlutusFarmPls>): Promise<BigNumberish> {
     return contract.userInfo(0, address).then(v => v.amount);
   }
 
-  async getRewardTokenBalances({ contract, address }: GetTokenBalancesParams<PlutusFarmPls>) {
+  async getRewardTokenBalance({
+    address,
+    contract,
+  }: GetMasterChefTokenBalancesParams<PlutusFarmPls>): Promise<BigNumberish> {
     return contract.pendingPls(0, address);
   }
 }
