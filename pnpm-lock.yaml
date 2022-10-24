@@ -52,6 +52,7 @@ specifiers:
   conventional-changelog-conventionalcommits: ^4.6.3
   copyfiles: ^2.4.1
   dataloader: ^2.1.0
+  dayjs: ^1.11.5
   dedent: ^0.7.0
   dotenv: ^16.0.0
   esbuild: ^0.14.27
@@ -106,6 +107,7 @@ dependencies:
   '@uniswap/sdk-core': 3.0.1
   '@uniswap/v3-sdk': 3.9.0
   bitcoin-address-validation: 2.2.1
+  dayjs: 1.11.5
   esbuild: 0.14.54
   esbuild-runner: 2.2.1_esbuild@0.14.54
   file-system-cache: 1.0.5
@@ -4851,6 +4853,10 @@ packages:
   /dataloader/2.1.0:
     resolution: {integrity: sha512-qTcEYLen3r7ojZNgVUaRggOI+KM7jrKxXeSHhogh/TWxYMeONEMqY+hmkobiYQozsGIyg9OYVzO4ZIfoB4I0pQ==}
     dev: true
+
+  /dayjs/1.11.5:
+    resolution: {integrity: sha512-CAdX5Q3YW3Gclyo5Vpqkgpj8fSdLQcRuzfX6mC6Phy0nfJ0eGYOeS7m4mt2plDWLAtA4TqTakvbboHvUxfe4iA==}
+    dev: false
 
   /death/1.1.0:
     resolution: {integrity: sha512-vsV6S4KVHvTGxbEcij7hkWRv0It+sGGWVOM67dQde/o5Xjnr+KmLjxWJii2uEObIrt1CcM9w0Yaovx+iOlIL+w==}
