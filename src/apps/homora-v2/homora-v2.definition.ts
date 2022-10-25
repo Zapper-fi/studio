@@ -10,7 +10,6 @@ export const HOMORA_V_2_DEFINITION = appDefinition({
     'Homora V2 is DeFi’s first multi-chain leveraged yield farming and lending protocol. Your home of yield boosting is now available on Ethereum, Fantom, Avalanche, and Optimism.',
   url: 'https://homora-v2.alphaventuredao.io/',
   groups: {
-    lending: { id: 'lending', type: GroupType.TOKEN, label: 'Lending' },
     farm: {
       id: 'farm',
       type: GroupType.POSITION,
