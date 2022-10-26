@@ -4,6 +4,14 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.256.2](https://github.com/Zapper-fi/studio/compare/v0.256.1...v0.256.2) (2022-10-26)
+
+
+### Bug Fixes
+
+* **tokemak:** Fix claimable token ([c83822d](https://github.com/Zapper-fi/studio/commit/c83822d1c8882513a3aab609f0b69c0e845abe5e))
+* **yield-yak:** Fix pricePerShare ([#1625](https://github.com/Zapper-fi/studio/issues/1625)) ([25d6fe9](https://github.com/Zapper-fi/studio/commit/25d6fe970be1677a583e96211d10a6baeb8c3754))
+
 ## [0.256.1](https://github.com/Zapper-fi/studio/compare/v0.256.0...v0.256.1) (2022-10-24)
 
 
