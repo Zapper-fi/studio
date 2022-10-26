@@ -99,7 +99,7 @@ export class EthereumTokemakBalanceFetcher implements BalanceFetcher {
     if (!payload) return [];
 
     const prices = await this.appToolkit.getBaseTokenPrices(network);
-    const tokeToken = prices.find(p => p.symbol === 'TOKE')!;
+    const tokeToken = prices.find(p => p.address === '0x2e9d63788249371f1dfc918a52f8d799f4a38c94')!;
     const { chainId, cycle, wallet, amount } = payload;
 
     const rewardContract = this.tokemakContractFactory.tokemakRewards({ network, address: rewardContractAddress });
