@@ -1,108 +1,59 @@
 import { Inject } from '@nestjs/common';
-import { gql } from 'graphql-request';
-import { compact } from 'lodash';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
-import { Register } from '~app-toolkit/decorators';
-import { getImagesFromToken, getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
-import { BALANCER_V2_DEFINITION } from '~apps/balancer-v2';
-import { ContractType } from '~position/contract.interface';
-import { PositionFetcher } from '~position/position-fetcher.interface';
-import { AppTokenPosition } from '~position/position.interface';
-import { Network } from '~types/network.interface';
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
+import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
+import { GetDataPropsParams, GetPriceParams } from '~position/template/app-token.template.types';
 
-import { AURA_DEFINITION } from '../aura.definition';
+import { AuraLockerRewardResolver } from '../common/aura.locker.reward-resolver';
+import { AuraContractFactory } from '../contracts';
+import { AuraDeposit } from '../contracts/ethers/AuraDeposit';
 
-type Pools = {
-  pools: {
-    depositToken: {
-      id: string;
-      symbol: string;
-      name: string;
-      decimals: number;
-    };
-    lpToken: {
-      id: string;
-      symbol: string;
-      name: string;
-      decimals: number;
-    };
-    totalSupply: string;
-  }[];
+export type AuraBalTokenDefinition = {
+  address: string;
 };
 
-const appId = AURA_DEFINITION.id;
-const groupId = AURA_DEFINITION.groups.deposit.id;
-const network = Network.ETHEREUM_MAINNET;
+@PositionTemplate()
+export class EthereumAuraDepositTokenFetcher extends AppTokenTemplatePositionFetcher<AuraDeposit> {
+  groupLabel = 'Deposit';
 
-const QUERY = gql`
-  {
-    pools(where: { isFactoryPool: true }) {
-      depositToken {
-        id
-        symbol
-        name
-        decimals
-      }
-      lpToken {
-        id
-        symbol
-        decimals
-        name
-      }
-      totalSupply
-      rewardPool
-    }
+  constructor(
+    @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
+    @Inject(AuraContractFactory) protected readonly contractFactory: AuraContractFactory,
+    @Inject(AuraLockerRewardResolver)
+    private readonly lockerRewardResolver: AuraLockerRewardResolver,
+  ) {
+    super(appToolkit);
   }
-`;
 
-@Register.TokenPositionFetcher({ appId, groupId, network })
-export class EthereumAuraDepositTokenFetcher implements PositionFetcher<AppTokenPosition> {
-  constructor(@Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit) {}
+  getContract(address: string): AuraDeposit {
+    return this.contractFactory.auraDeposit({ network: this.network, address });
+  }
 
-  async getPositions() {
-    const appTokens = await this.appToolkit.getAppTokenPositions(
-      { appId: BALANCER_V2_DEFINITION.id, groupIds: [BALANCER_V2_DEFINITION.groups.pool.id], network },
-      { appId: AURA_DEFINITION.id, groupIds: [AURA_DEFINITION.groups.chef.id], network },
-    );
+  async getAddresses(): Promise<string[]> {
+    return ['0x3fa73f1e5d8a792c80f426fc8f84fbf7ce9bbcac'];
+  }
 
-    const { pools } = await this.appToolkit.helpers.theGraphHelper.request<Pools>({
-      endpoint: 'https://api.thegraph.com/subgraphs/name/aurafinance/aura',
-      query: QUERY,
-    });
+  async getUnderlyingTokenAddresses(): Promise<string[]> {
+    const auraLocker = await this.lockerRewardResolver.getAuraLockerData();
+    const rewardTokenAddress = auraLocker.rewardData.map(x => x.address);
 
-    // Aura platform deposit tokens (e.g. aBPT tokens)
-    const depositTokens = pools.map<AppTokenPosition | null>(
-      ({ depositToken, lpToken: { id: lpTokenAddress }, totalSupply }) => {
-        const address = depositToken.id.toLowerCase();
-        const { decimals, symbol } = depositToken;
+    return ['0xc0c293ce456ff0ed870add98a0828dd4d2903dbf', ...rewardTokenAddress];
+  }
 
-        const lpToken = appTokens.find(token => token.address.toLowerCase() === lpTokenAddress.toLowerCase());
-        if (!lpToken) return null;
+  async getPrice({ appToken }: GetPriceParams<AuraDeposit>): Promise<number> {
+    return appToken.tokens[0].price;
+  }
 
-        const supply = Number(totalSupply) / 10 ** decimals;
+  async getLiquidity({ appToken }: GetDataPropsParams<AuraDeposit>) {
+    return appToken.supply * appToken.price;
+  }
 
-        return {
-          type: ContractType.APP_TOKEN,
-          appId,
-          groupId,
-          network,
-          address,
-          decimals,
-          symbol,
-          supply,
-          price: lpToken.price,
-          pricePerShare: 1,
-          tokens: [lpToken],
-          dataProps: {},
-          displayProps: {
-            label: getLabelFromToken(lpToken),
-            images: getImagesFromToken(lpToken),
-          },
-        };
-      },
-    );
+  async getReserves({ appToken }: GetDataPropsParams<AuraDeposit>) {
+    return [appToken.pricePerShare[0] * appToken.supply];
+  }
 
-    return compact(depositTokens);
+  async getApy() {
+    return 0;
   }
 }

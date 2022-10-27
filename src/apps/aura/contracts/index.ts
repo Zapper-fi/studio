@@ -4,8 +4,10 @@ import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { ContractFactory } from '~contract/contracts';
 import { Network } from '~types/network.interface';
 
+import { AuraBalToken__factory } from './ethers';
 import { AuraBalancerHelpers__factory } from './ethers';
 import { AuraBaseRewardPool__factory } from './ethers';
+import { AuraDeposit__factory } from './ethers';
 import { AuraLocker__factory } from './ethers';
 import { AuraMasterchef__factory } from './ethers';
 import { AuraToken__factory } from './ethers';
@@ -20,11 +22,17 @@ export class AuraContractFactory extends ContractFactory {
     super((network: Network) => appToolkit.getNetworkProvider(network));
   }
 
+  auraBalToken({ address, network }: ContractOpts) {
+    return AuraBalToken__factory.connect(address, this.appToolkit.getNetworkProvider(network));
+  }
   auraBalancerHelpers({ address, network }: ContractOpts) {
     return AuraBalancerHelpers__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
   auraBaseRewardPool({ address, network }: ContractOpts) {
     return AuraBaseRewardPool__factory.connect(address, this.appToolkit.getNetworkProvider(network));
+  }
+  auraDeposit({ address, network }: ContractOpts) {
+    return AuraDeposit__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
   auraLocker({ address, network }: ContractOpts) {
     return AuraLocker__factory.connect(address, this.appToolkit.getNetworkProvider(network));
@@ -40,8 +48,10 @@ export class AuraContractFactory extends ContractFactory {
   }
 }
 
+export type { AuraBalToken } from './ethers';
 export type { AuraBalancerHelpers } from './ethers';
 export type { AuraBaseRewardPool } from './ethers';
+export type { AuraDeposit } from './ethers';
 export type { AuraLocker } from './ethers';
 export type { AuraMasterchef } from './ethers';
 export type { AuraToken } from './ethers';
