@@ -50,7 +50,7 @@ export class ArbitrumUmamiFinanceMarinateUmamiTokenFetcher extends AppTokenTempl
   }
 
   async getApy(_params: GetDataPropsParams<UmamiFinanceMarinate>) {
-    const { marinate } = await this.yieldResolver.getYield();
-    return Number(marinate.apr);
+    const { apr } = await this.yieldResolver.getYield();
+    return Number(apr);
   }
 }
