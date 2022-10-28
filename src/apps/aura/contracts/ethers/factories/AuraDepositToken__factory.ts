@@ -4,7 +4,7 @@
 
 import { Contract, Signer, utils } from 'ethers';
 import type { Provider } from '@ethersproject/providers';
-import type { AuraDeposit, AuraDepositInterface } from '../AuraDeposit';
+import type { AuraDepositToken, AuraDepositTokenInterface } from '../AuraDepositToken';
 
 const _abi = [
   {
@@ -354,12 +354,12 @@ const _abi = [
   },
 ];
 
-export class AuraDeposit__factory {
+export class AuraDepositToken__factory {
   static readonly abi = _abi;
-  static createInterface(): AuraDepositInterface {
-    return new utils.Interface(_abi) as AuraDepositInterface;
+  static createInterface(): AuraDepositTokenInterface {
+    return new utils.Interface(_abi) as AuraDepositTokenInterface;
   }
-  static connect(address: string, signerOrProvider: Signer | Provider): AuraDeposit {
-    return new Contract(address, _abi, signerOrProvider) as AuraDeposit;
+  static connect(address: string, signerOrProvider: Signer | Provider): AuraDepositToken {
+    return new Contract(address, _abi, signerOrProvider) as AuraDepositToken;
   }
 }

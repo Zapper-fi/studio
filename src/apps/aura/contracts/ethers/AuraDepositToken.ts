@@ -17,7 +17,7 @@ import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi
 import type { Listener, Provider } from '@ethersproject/providers';
 import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
-export interface AuraDepositInterface extends utils.Interface {
+export interface AuraDepositTokenInterface extends utils.Interface {
   functions: {
     'allowance(address,address)': FunctionFragment;
     'approve(address,uint256)': FunctionFragment;
@@ -125,12 +125,12 @@ export type TransferEvent = TypedEvent<[string, string, BigNumber], TransferEven
 
 export type TransferEventFilter = TypedEventFilter<TransferEvent>;
 
-export interface AuraDeposit extends BaseContract {
+export interface AuraDepositToken extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
 
-  interface: AuraDepositInterface;
+  interface: AuraDepositTokenInterface;
 
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,

@@ -14,14 +14,16 @@ export type AuraBalTokenDefinition = {
 };
 
 @PositionTemplate()
-export class EthereumAuraBalTokenFetcher extends AppTokenTemplatePositionFetcher<
+export class EthereumAuraAuraBalTokenFetcher extends AppTokenTemplatePositionFetcher<
   AuraBalToken,
   DefaultAppTokenDataProps,
   AuraBalTokenDefinition
 > {
   groupLabel = 'auraBAL';
+
   AURA_BAL_ADDRESS = '0x616e8bfa43f920657b3497dbf40d6b1a02d4608d';
-  STABLE_POOL_ID = '0x3dd0843a028c86e0b760b1a76929d1c5ef93a2dd000200000000000000000249';
+  BAL_WETH_ADDRESS = '0x5c6ee304399dbdb9c8ef030ab642b10820db8f56';
+  POOL_ID = '0x3dd0843a028c86e0b760b1a76929d1c5ef93a2dd000200000000000000000249';
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
@@ -41,11 +43,11 @@ export class EthereumAuraBalTokenFetcher extends AppTokenTemplatePositionFetcher
   }
 
   async getUnderlyingTokenAddresses() {
-    return ['0x5c6ee304399dbdb9c8ef030ab642b10820db8f56'];
+    return [this.BAL_WETH_ADDRESS];
   }
 
   async getPrice(): Promise<number> {
-    const balancerPool = await this.balancerPoolResolver.getBalancerPool(this.STABLE_POOL_ID);
+    const balancerPool = await this.balancerPoolResolver.getBalancerPool(this.POOL_ID);
 
     const { tokens, totalLiquidity, totalShares } = balancerPool;
 

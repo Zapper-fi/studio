@@ -41,27 +41,15 @@ export class EthereumAuraChefContractPositionFetcher extends MasterChefTemplateC
     return contract.cvx();
   }
 
-  async getTotalAllocPoints({ contract }: GetMasterChefDataPropsParams<AuraMasterchef>): Promise<BigNumberish> {
+  async getTotalAllocPoints({ contract }: GetMasterChefDataPropsParams<AuraMasterchef>) {
     return contract.totalAllocPoint();
   }
 
-  async getTotalRewardRate({
-    contract,
-    definition,
-  }: GetMasterChefDataPropsParams<AuraMasterchef>): Promise<BigNumberish> {
-    const [rewardPerBlock, totalAllocPoint, { allocPoint }] = await Promise.all([
-      contract.rewardPerBlock(),
-      contract.totalAllocPoint(),
-      contract.poolInfo(definition.poolIndex),
-    ]);
-
-    return rewardPerBlock.mul(allocPoint.mul(1000).div(totalAllocPoint)).div(1000);
+  async getTotalRewardRate({ contract }: GetMasterChefDataPropsParams<AuraMasterchef>) {
+    return contract.rewardPerBlock();
   }
 
-  async getPoolAllocPoints({
-    contract,
-    definition,
-  }: GetMasterChefDataPropsParams<AuraMasterchef>): Promise<BigNumberish> {
+  async getPoolAllocPoints({ contract, definition }: GetMasterChefDataPropsParams<AuraMasterchef>) {
     return contract.poolInfo(definition.poolIndex).then(v => v.allocPoint);
   }
 

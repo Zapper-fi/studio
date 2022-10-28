@@ -1,59 +1,86 @@
 import { Inject } from '@nestjs/common';
+import { range } from 'lodash';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
+import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
-import { GetDataPropsParams, GetPriceParams } from '~position/template/app-token.template.types';
+import {
+  GetDataPropsParams,
+  DefaultAppTokenDataProps,
+  GetDefinitionsParams,
+  GetAddressesParams,
+  GetUnderlyingTokensParams,
+  GetDisplayPropsParams,
+} from '~position/template/app-token.template.types';
 
-import { AuraLockerRewardResolver } from '../common/aura.locker.reward-resolver';
-import { AuraContractFactory } from '../contracts';
-import { AuraDeposit } from '../contracts/ethers/AuraDeposit';
+import { AuraContractFactory, AuraDepositToken } from '../contracts';
 
-export type AuraBalTokenDefinition = {
+type AuraDepositTokenDefinition = {
   address: string;
+  poolIndex: number;
 };
 
 @PositionTemplate()
-export class EthereumAuraDepositTokenFetcher extends AppTokenTemplatePositionFetcher<AuraDeposit> {
-  groupLabel = 'Deposit';
+export class EthereumAuraDepositTokenFetcher extends AppTokenTemplatePositionFetcher<
+  AuraDepositToken,
+  DefaultAppTokenDataProps,
+  AuraDepositTokenDefinition
+> {
+  groupLabel = 'Deposits';
+
+  BOOSTER_ADDRESS = '0x7818a1da7bd1e64c199029e86ba244a9798eee10';
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
     @Inject(AuraContractFactory) protected readonly contractFactory: AuraContractFactory,
-    @Inject(AuraLockerRewardResolver)
-    private readonly lockerRewardResolver: AuraLockerRewardResolver,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): AuraDeposit {
-    return this.contractFactory.auraDeposit({ network: this.network, address });
+  getContract(address: string): AuraDepositToken {
+    return this.contractFactory.auraDepositToken({ address, network: this.network });
   }
 
-  async getAddresses(): Promise<string[]> {
-    return ['0x3fa73f1e5d8a792c80f426fc8f84fbf7ce9bbcac'];
+  async getDefinitions({ multicall }: GetDefinitionsParams): Promise<AuraDepositTokenDefinition[]> {
+    const boosterContract = this.contractFactory.auraBooster({ address: this.BOOSTER_ADDRESS, network: this.network });
+    const numOfPools = await boosterContract.poolLength();
+
+    const definitions = await Promise.all(
+      range(0, Number(numOfPools)).flatMap(async poolIndex => {
+        const poolInfo = await multicall.wrap(boosterContract).poolInfo(poolIndex);
+        return { address: poolInfo.token.toLowerCase(), poolIndex };
+      }),
+    );
+
+    return definitions;
   }
 
-  async getUnderlyingTokenAddresses(): Promise<string[]> {
-    const auraLocker = await this.lockerRewardResolver.getAuraLockerData();
-    const rewardTokenAddress = auraLocker.rewardData.map(x => x.address);
-
-    return ['0xc0c293ce456ff0ed870add98a0828dd4d2903dbf', ...rewardTokenAddress];
+  async getAddresses({ definitions }: GetAddressesParams) {
+    return definitions.map(v => v.address);
   }
 
-  async getPrice({ appToken }: GetPriceParams<AuraDeposit>): Promise<number> {
-    return appToken.tokens[0].price;
+  async getUnderlyingTokenAddresses({
+    definition,
+  }: GetUnderlyingTokensParams<AuraDepositToken, AuraDepositTokenDefinition>) {
+    const boosterContract = this.contractFactory.auraBooster({ address: this.BOOSTER_ADDRESS, network: this.network });
+    const poolInfo = await boosterContract.poolInfo(definition.poolIndex);
+    return poolInfo.lptoken;
   }
 
-  async getLiquidity({ appToken }: GetDataPropsParams<AuraDeposit>) {
+  async getLiquidity({ appToken }: GetDataPropsParams<AuraDepositToken>) {
     return appToken.supply * appToken.price;
   }
 
-  async getReserves({ appToken }: GetDataPropsParams<AuraDeposit>) {
+  async getReserves({ appToken }: GetDataPropsParams<AuraDepositToken>) {
     return [appToken.pricePerShare[0] * appToken.supply];
   }
 
-  async getApy() {
+  async getApy(_params: GetDataPropsParams<AuraDepositToken>) {
     return 0;
+  }
+
+  async getLabel({ appToken }: GetDisplayPropsParams<AuraDepositToken, DefaultAppTokenDataProps>) {
+    return getLabelFromToken(appToken.tokens[0]!);
   }
 }

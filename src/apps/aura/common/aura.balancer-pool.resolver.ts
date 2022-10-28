@@ -9,7 +9,26 @@ import { Network } from '~types/network.interface';
 import AURA_DEFINITION from '../aura.definition';
 import { AuraContractFactory } from '../contracts';
 
-import { BalancerPool } from './aura.types';
+export type BalancerPool = {
+  id: string;
+  address: string;
+  name: string;
+  poolType: string;
+  swapFee: number;
+  symbol: string;
+  tokensList: string;
+  totalLiquidity: number;
+  totalSwapVolume: number;
+  totalSwapFee: number;
+  totalShares: number;
+  tokens: {
+    address: string;
+    symbol: string;
+    decimals: number;
+    balance: number;
+    weight: number;
+  }[];
+};
 
 type GetPoolResponse = {
   pool: {

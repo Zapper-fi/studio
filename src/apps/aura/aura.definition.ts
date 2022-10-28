@@ -23,8 +23,8 @@ export const AURA_DEFINITION = appDefinition({
       label: 'auraBAL',
     },
 
-    staking: {
-      id: 'staking',
+    auraBalStaking: {
+      id: 'aura-bal-staking',
       type: GroupType.POSITION,
       label: 'Staked auraBAL',
     },
@@ -35,10 +35,10 @@ export const AURA_DEFINITION = appDefinition({
       label: 'Deposit',
     },
 
-    pool: {
-      id: 'pool',
+    lpFarm: {
+      id: 'lp-farm',
       type: GroupType.POSITION,
-      label: 'Balancer Pools',
+      label: 'Liquidity Pool Staking',
     },
 
     locker: {
