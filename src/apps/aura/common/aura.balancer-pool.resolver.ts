@@ -4,11 +4,31 @@ import { gql } from 'graphql-request';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { Cache } from '~cache/cache.decorator';
-import { Network } from '~types';
+import { Network } from '~types/network.interface';
 
-import { AURA_DEFINITION } from '../aura.definition';
-import { BalancerPool } from '../aura.types';
-import { AuraContractFactory } from '../index';
+import AURA_DEFINITION from '../aura.definition';
+import { AuraContractFactory } from '../contracts';
+
+export type BalancerPool = {
+  id: string;
+  address: string;
+  name: string;
+  poolType: string;
+  swapFee: number;
+  symbol: string;
+  tokensList: string;
+  totalLiquidity: number;
+  totalSwapVolume: number;
+  totalSwapFee: number;
+  totalShares: number;
+  tokens: {
+    address: string;
+    symbol: string;
+    decimals: number;
+    balance: number;
+    weight: number;
+  }[];
+};
 
 type GetPoolResponse = {
   pool: {
@@ -30,7 +50,7 @@ type GetPoolResponse = {
       balance: string;
       weight: string;
     }[];
-  } | null;
+  };
 };
 
 type GetBPTOutParams = { balancerPool: BalancerPool; maxAmountsIn: BigNumber[]; sender?: string; recipient?: string };
@@ -61,30 +81,32 @@ const GET_POOL_QUERY = gql`
 `;
 
 const BALANCER_VAULT = '0xba12222222228d8ba445958a75a0704d566bf2c8';
-
 const network = Network.ETHEREUM_MAINNET;
 
 @Injectable()
-export class AuraBalancerPoolsHelper {
+export class AuraBalancerPoolResolver {
   constructor(
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
-    @Inject(AuraContractFactory) private readonly auraContractFactory: AuraContractFactory,
+    @Inject(AuraContractFactory) private readonly contractFactory: AuraContractFactory,
   ) {}
 
   @Cache({
-    key: (poolId: string) => `apps-v3:${AURA_DEFINITION.id}:balancer-pools-${poolId}`,
-    ttl: 15 * 60, // 15 minutes
+    key: (poolId: string) => `studio:${AURA_DEFINITION.id}:balancer-pools-${poolId}`,
+    ttl: 15 * 60,
   })
-  async getBalancerPool(poolId: string): Promise<BalancerPool | null> {
+  private async getBalancerPoolData(poolId: string) {
+    const endpoint = `https://api.thegraph.com/subgraphs/name/balancer-labs/balancer-v2`;
     const { pool } = await this.appToolkit.helpers.theGraphHelper.request<GetPoolResponse>({
-      endpoint: 'https://api.thegraph.com/subgraphs/name/balancer-labs/balancer-v2',
+      endpoint,
       query: GET_POOL_QUERY,
       variables: { id: poolId },
     });
 
-    if (!pool) {
-      return null;
-    }
+    return pool;
+  }
+
+  async getBalancerPool(poolId: string): Promise<BalancerPool> {
+    const balancerPoolData = await this.getBalancerPoolData(poolId);
 
     const {
       id,
@@ -99,7 +121,7 @@ export class AuraBalancerPoolsHelper {
       totalSwapFee,
       totalShares,
       tokens,
-    } = pool;
+    } = balancerPoolData;
 
     return {
       id,
@@ -131,7 +153,7 @@ export class AuraBalancerPoolsHelper {
   }: GetBPTOutParams) {
     const { id, tokens } = balancerPool;
 
-    const balancerHelpers = this.auraContractFactory.auraBalancerHelpers({
+    const balancerHelpers = this.contractFactory.auraBalancerHelpers({
       address: '0x5addcca35b7a0d07c74063c48700c8590e87864e',
       network,
     });
