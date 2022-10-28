@@ -4,6 +4,20 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.257.0](https://github.com/Zapper-fi/studio/compare/v0.256.2...v0.257.0) (2022-10-28)
+
+
+### Features
+
+* **alpha-v1:** Migrate to template ([#1629](https://github.com/Zapper-fi/studio/issues/1629)) ([e6f1988](https://github.com/Zapper-fi/studio/commit/e6f19885f45d12121f9132391b3f9779bebb51b7))
+* **aura:** Migrate Aura to template ([#1628](https://github.com/Zapper-fi/studio/issues/1628)) ([395c37f](https://github.com/Zapper-fi/studio/commit/395c37f183aa9b0519eb43f3b45f95a6dbe9f5a4))
+* **mycelium:** Integrate Mycellium ([#1437](https://github.com/Zapper-fi/studio/issues/1437)) ([61ef1e8](https://github.com/Zapper-fi/studio/commit/61ef1e8d76e30cce788d5abb20fe5cc674fe99f2))
+
+
+### Bug Fixes
+
+* **umami-finance:** Migrate API v1 to v2 ([#1631](https://github.com/Zapper-fi/studio/issues/1631)) ([8935eac](https://github.com/Zapper-fi/studio/commit/8935eacf654ba013c569459cb3ee55373f7c79f9))
+
 ## [0.256.2](https://github.com/Zapper-fi/studio/compare/v0.256.1...v0.256.2) (2022-10-26)
 
 
