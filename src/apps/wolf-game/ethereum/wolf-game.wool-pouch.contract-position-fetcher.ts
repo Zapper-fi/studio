@@ -67,7 +67,7 @@ export class EthereumWolfGameWoolPouchContractPositionFetcher extends ContractPo
   }
   async getBalances(address: string): Promise<ContractPositionBalance<DefaultDataProps>[]> {
     const multicall = this.appToolkit.getMulticall(this.network);
-    const contractPositions = await this.appToolkit.getAppContractPositions<V>({
+    const contractPositions = await this.appToolkit.getAppContractPositions({
       appId: this.appId,
       network: this.network,
       groupIds: [this.groupId],
