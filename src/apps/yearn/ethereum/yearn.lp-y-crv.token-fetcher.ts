@@ -9,11 +9,11 @@ import {
   GetUnderlyingTokensParams,
 } from '~position/template/app-token.template.types';
 
-import { StakedYCrv, YearnContractFactory } from '../contracts';
+import { YearnContractFactory, YearnLpYCrv } from '../contracts';
 
 @PositionTemplate()
-export class EthereumStakedYCrvTokenTokenFetcher extends AppTokenTemplatePositionFetcher<StakedYCrv> {
-  groupLabel = 'Staked yCRV';
+export class EthereumYearnLpYCrvTokenTokenFetcher extends AppTokenTemplatePositionFetcher<YearnLpYCrv> {
+  groupLabel = 'LP yCRV';
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
@@ -22,30 +22,30 @@ export class EthereumStakedYCrvTokenTokenFetcher extends AppTokenTemplatePositio
     super(appToolkit);
   }
 
-  getContract(address: string): StakedYCrv {
-    return this.contractFactory.stakedYCrv({ network: this.network, address });
+  getContract(address: string): YearnLpYCrv {
+    return this.contractFactory.yearnLpYCrv({ network: this.network, address });
   }
 
   async getAddresses(): Promise<string[]> {
-    return ['0x27b5739e22ad9033bcbf192059122d163b60349d'];
+    return ['0xc97232527b62efb0d8ed38cf3ea103a6cca4037e'];
   }
 
-  async getUnderlyingTokenAddresses({ contract }: GetUnderlyingTokensParams<StakedYCrv>) {
+  async getUnderlyingTokenAddresses({ contract }: GetUnderlyingTokensParams<YearnLpYCrv>) {
     return contract.token();
   }
 
-  async getPricePerShare({ contract, appToken }: GetPricePerShareParams<StakedYCrv>): Promise<number> {
+  async getPricePerShare({ contract, appToken }: GetPricePerShareParams<YearnLpYCrv>): Promise<number> {
     const pricePerShareRaw = await contract.pricePerShare();
     const pricePerShare = Number(pricePerShareRaw) / 10 ** appToken.tokens[0].decimals;
 
     return pricePerShare;
   }
 
-  async getLiquidity({ appToken }: GetDataPropsParams<StakedYCrv>) {
+  async getLiquidity({ appToken }: GetDataPropsParams<YearnLpYCrv>) {
     return appToken.supply * appToken.price;
   }
 
-  async getReserves({ appToken }: GetDataPropsParams<StakedYCrv>) {
+  async getReserves({ appToken }: GetDataPropsParams<YearnLpYCrv>) {
     return [appToken.pricePerShare[0] * appToken.supply];
   }
 

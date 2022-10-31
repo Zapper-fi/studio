@@ -17,7 +17,7 @@ import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi
 import type { Listener, Provider } from '@ethersproject/providers';
 import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
-export interface LpYCrvInterface extends utils.Interface {
+export interface YearnStakedYCrvInterface extends utils.Interface {
   functions: {
     'initialize(address,address,address,string,string)': FunctionFragment;
     'initialize(address,address,address,string,string,address)': FunctionFragment;
@@ -668,12 +668,12 @@ export type StrategyAddedToQueueEvent = TypedEvent<[string], StrategyAddedToQueu
 
 export type StrategyAddedToQueueEventFilter = TypedEventFilter<StrategyAddedToQueueEvent>;
 
-export interface LpYCrv extends BaseContract {
+export interface YearnStakedYCrv extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
 
-  interface: LpYCrvInterface;
+  interface: YearnStakedYCrvInterface;
 
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,
