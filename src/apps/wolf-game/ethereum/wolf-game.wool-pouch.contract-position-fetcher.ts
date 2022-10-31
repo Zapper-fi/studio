@@ -47,12 +47,12 @@ export class EthereumWolfGameWoolPouchContractPositionFetcher extends ContractPo
   getContract(address: string): WolfGameWoolPouch {
     return this.contractFactory.wolfGameWoolPouch({ address, network: this.network });
   }
-  getTokenDefinitions(
+  async getTokenDefinitions(
     _params: GetTokenDefinitionsParams<WolfGameWoolPouch, DefaultContractPositionDefinition>,
   ): Promise<UnderlyingTokenDefinition[] | null> {
     return [{ metaType: MetaType.CLAIMABLE, address: '0x8355dbe8b0e275abad27eb843f3eaf3fc855e525' }];
   }
-  getLabel(
+  async getLabel(
     params: GetDisplayPropsParams<WolfGameWoolPouch, DefaultDataProps, DefaultContractPositionDefinition>,
   ): Promise<string> {
     return 'Wool Pouch';
