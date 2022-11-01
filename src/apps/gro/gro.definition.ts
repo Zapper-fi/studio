@@ -16,7 +16,6 @@ export const GRO_DEFINITION = appDefinition({
   },
   tags: [AppTag.YIELD_AGGREGATOR],
   links: {
-    learn: '',
     github: 'https://github.com/groLabs',
     twitter: 'https://twitter.com/groprotocol',
     telegram: 'https://t.me/gro_discussion',
