@@ -7,6 +7,8 @@ import { OptimismMeanFinanceBalanceFetcher } from './optimism/mean-finance.balan
 import { OptimismMeanFinanceDcaPositionContractPositionFetcher } from './optimism/mean-finance.dca-position.contract-position-fetcher';
 import { PolygonMeanFinanceBalanceFetcher } from './polygon/mean-finance.balance-fetcher';
 import { PolygonMeanFinanceDcaPositionContractPositionFetcher } from './polygon/mean-finance.dca-position.contract-position-fetcher';
+import { ArbitrumMeanFinanceBalanceFetcher } from './arbitrum/mean-finance.balance-fetcher';
+import { ArbitrumMeanFinanceDcaPositionContractPositionFetcher } from './arbitrum/mean-finance.dca-position.contract-position-fetcher';
 
 @Register.AppModule({
   appId: MEAN_FINANCE_DEFINITION.id,
@@ -17,6 +19,8 @@ import { PolygonMeanFinanceDcaPositionContractPositionFetcher } from './polygon/
     OptimismMeanFinanceDcaPositionContractPositionFetcher,
     PolygonMeanFinanceBalanceFetcher,
     PolygonMeanFinanceDcaPositionContractPositionFetcher,
+    ArbitrumMeanFinanceBalanceFetcher,
+    ArbitrumMeanFinanceDcaPositionContractPositionFetcher,
   ],
 })
-export class MeanFinanceAppModule extends AbstractApp() {}
+export class MeanFinanceAppModule extends AbstractApp() { }
