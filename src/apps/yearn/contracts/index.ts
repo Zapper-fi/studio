@@ -9,6 +9,7 @@ import { YearnLpYCrv__factory } from './ethers';
 import { YearnStakedYCrv__factory } from './ethers';
 import { YearnVault__factory } from './ethers';
 import { YearnVaultV2__factory } from './ethers';
+import { YearnYCrv__factory } from './ethers';
 
 // eslint-disable-next-line
 type ContractOpts = { address: string; network: Network };
@@ -34,6 +35,9 @@ export class YearnContractFactory extends ContractFactory {
   yearnVaultV2({ address, network }: ContractOpts) {
     return YearnVaultV2__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
+  yearnYCrv({ address, network }: ContractOpts) {
+    return YearnYCrv__factory.connect(address, this.appToolkit.getNetworkProvider(network));
+  }
 }
 
 export type { YearnGovernance } from './ethers';
@@ -41,3 +45,4 @@ export type { YearnLpYCrv } from './ethers';
 export type { YearnStakedYCrv } from './ethers';
 export type { YearnVault } from './ethers';
 export type { YearnVaultV2 } from './ethers';
+export type { YearnYCrv } from './ethers';
