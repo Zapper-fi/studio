@@ -4,6 +4,14 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.258.0](https://github.com/Zapper-fi/studio/compare/v0.257.0...v0.258.0) (2022-10-31)
+
+
+### Features
+
+* **mux:** Integration MUX to Studio ([#1608](https://github.com/Zapper-fi/studio/issues/1608)) ([2a5fb3e](https://github.com/Zapper-fi/studio/commit/2a5fb3e66dc7da34629a5c98405238f4874439fe))
+* **wolf-game:** Support Wolf Game wool pouches ([#1630](https://github.com/Zapper-fi/studio/issues/1630)) ([0c8b0f5](https://github.com/Zapper-fi/studio/commit/0c8b0f527371ff83db8235b144f1cf171623e930))
+
 ## [0.257.0](https://github.com/Zapper-fi/studio/compare/v0.256.2...v0.257.0) (2022-10-28)
 
 
