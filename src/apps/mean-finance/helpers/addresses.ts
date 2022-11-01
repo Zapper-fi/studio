@@ -27,6 +27,7 @@ export const HUB_ADDRESS: AddressMap<PositionVersions> = {
   [POSITION_VERSION_4]: {
     [Network.POLYGON_MAINNET]: '0xa43cc0b95ec985bf45fc03262150c20cae180952',
     [Network.OPTIMISM_MAINNET]: '0xa43cc0b95ec985bf45fc03262150c20cae180952',
+    [Network.ARBITRUM_MAINNET]: '0xa43cc0b95ec985bf45fc03262150c20cae180952',
   },
 };
 
@@ -42,6 +43,7 @@ export const PERMISSION_MANAGER_ADDRESS: AddressMap<PositionVersions> = {
   [POSITION_VERSION_4]: {
     [Network.POLYGON_MAINNET]: '0x516cb11697bf1ba2dbb5c081c23f169791c4bd01',
     [Network.OPTIMISM_MAINNET]: '0x516cb11697bf1ba2dbb5c081c23f169791c4bd01',
+    [Network.ARBITRUM_MAINNET]: '0x516cb11697bf1ba2dbb5c081c23f169791c4bd01',
   },
 };
 
@@ -51,6 +53,7 @@ export const TRANSFORMER_REGISTRY_ADDRESS: AddressMap<PositionVersions> = {
   [POSITION_VERSION_4]: {
     [Network.POLYGON_MAINNET]: '0xc0136591df365611b1452b5f8823def69ff3a685',
     [Network.OPTIMISM_MAINNET]: '0xc0136591df365611b1452b5f8823def69ff3a685',
+    [Network.ARBITRUM_MAINNET]: '0xc0136591df365611b1452b5f8823def69ff3a685',
   },
 };
 
@@ -66,6 +69,7 @@ export const MEAN_GRAPHQL_URL: AddressMap<PositionVersions> = {
   [POSITION_VERSION_4]: {
     [Network.POLYGON_MAINNET]: 'https://api.thegraph.com/subgraphs/name/mean-finance/dca-v2-yf-polygon',
     [Network.OPTIMISM_MAINNET]: 'https://api.thegraph.com/subgraphs/name/mean-finance/dca-v2-yf-optimism',
+    [Network.ARBITRUM_MAINNET]: 'https://api.thegraph.com/subgraphs/name/mean-finance/dca-v2-yf-arbitrum',
   },
 };
 
@@ -98,5 +102,13 @@ export const ERC4626WRAP_ADDRESSES = {
     '0xfe7296c374d996d09e2ffe533eeb85d1896e1b14': '0x625e7708f30ca75bfd92586e17077590c60eb4cd', // AAVE_V3_USDC
     '0x4f8424ba880b109c31ce8c5eefc4b82b8897eec0': '0x078f358208685046a11c85e8ad32895ded33a249', // AAVE_V3_WBTC
     '0xdfc636088b4f73f6bda2e9c31e7ffebf4e3646e9': '0xe50fa9b3c56ffb159cb0fca61f5c9d750e8128c8', // AAVE_V3_WETH
+  },
+  [Network.ARBITRUM_MAINNET]: {
+    '0x2285b7dc4426c29ed488c65c72a9feaadb44c7ae': '0x625E7708f30cA75bfd92586e17077590C60eb4cD', // AAVE_V3_USDC
+    '0x0669cec75e88f721efbe7d78d1783786a2f36bfe': '0x191c10Aa4AF7C30e871E70C95dB0E4eb77237530', // AAVE_V3_LINK
+    '0x4b6e42407db855fb101b9d39e084e36c90a52652': '0xe50fA9b3c56FfB159cB0FCA61F5c9D750e8128c8', // AAVE_V3_WETH
+    '0x30303a134e1850f1eda2e36dad15d052402131a7': '0x82E64f49Ed5EC1bC6e43DAD4FC8Af9bb3A2312EE', // AAVE_V3_DAI
+    '0x9ca453e4585d1acde7bd13f7da2294cfaaec4376': '0x078f358208685046a11C85e8ad32895DED33A249', // AAVE_V3_WBTC
+    '0x8fd68006d23df27fc36d3e3eda1fdcc4f0baa8c6': '0x6ab707aca953edaefbc4fd23ba73294241490620', // AAVE_V3_USDT
   },
 };
