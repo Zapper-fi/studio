@@ -12,6 +12,8 @@ import { BananoFarmBalanceFetcherHelper } from './helpers/banano.farm.balance-fe
 import { BananoFarmContractPositionFetcherHelper } from './helpers/banano.farm.contract-position-fetcher-helper';
 import { PolygonBananoBalanceFetcher } from './polygon/banano.balance-fetcher';
 import { PolygonBananoFarmContractPositionFetcher } from './polygon/banano.farm.contract-position-fetcher';
+import { EthereumBananoBalanceFetcher } from './ethereum/banano.balance-fetcher';
+import { EthereumBananoFarmContractPositionFetcher } from './ethereum/banano.farm.contract-position-fetcher';
 
 @Register.AppModule({
   appId: BANANO_DEFINITION.id,
@@ -30,6 +32,9 @@ import { PolygonBananoFarmContractPositionFetcher } from './polygon/banano.farm.
     // Fantom
     FantomBananoBalanceFetcher,
     FantomBananoFarmContractPositionFetcher,
+    // Ethereum
+    EthereumBananoBalanceFetcher,
+    EthereumBananoFarmContractPositionFetcher,
   ],
 })
 export class BananoAppModule extends AbstractApp() {}
