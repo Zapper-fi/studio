@@ -1,73 +1,48 @@
 import { Inject } from '@nestjs/common';
 
-import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
-import { Register } from '~app-toolkit/decorators';
-import { buildDollarDisplayItem } from '~app-toolkit/helpers/presentation/display-item.present';
-import { getTokenImg } from '~app-toolkit/helpers/presentation/image.present';
-import { ContractType } from '~position/contract.interface';
-import { PositionFetcher } from '~position/position-fetcher.interface';
-import { AppTokenPosition } from '~position/position.interface';
-import { Network } from '~types/network.interface';
+import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
+import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
+import { GetUnderlyingTokensParams, GetDataPropsParams } from '~position/template/app-token.template.types';
 
-import { AIRSWAP_DEFINITION } from '../airswap.definition';
-import { AirswapContractFactory } from '../contracts';
+import { AirswapContractFactory, StakingV2 } from '../contracts';
 
-const appId = AIRSWAP_DEFINITION.id;
-const groupId = AIRSWAP_DEFINITION.groups.sASTv2.id;
-const network = Network.ETHEREUM_MAINNET;
+@PositionTemplate()
+export class EthereumAirswapSAstV2TokenFetcher extends AppTokenTemplatePositionFetcher<StakingV2> {
+  groupLabel = 'Staking';
 
-@Register.TokenPositionFetcher({ appId, groupId, network })
-export class EthereumAirswapSAstV2TokenFetcher implements PositionFetcher<AppTokenPosition> {
   constructor(
-    @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
-    @Inject(AirswapContractFactory) private readonly airswapContractFactory: AirswapContractFactory,
-  ) {}
+    @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
+    @Inject(AirswapContractFactory) private readonly contractFactory: AirswapContractFactory,
+  ) {
+    super(appToolkit);
+  }
 
-  async getPositions() {
-    const address = '0x579120871266ccd8de6c85ef59e2ff6743e7cd15';
-    const multicall = this.appToolkit.getMulticall(network);
-    const contract = this.airswapContractFactory.stakingV2({ address, network });
+  getContract(address: string): StakingV2 {
+    return this.contractFactory.stakingV2({ network: this.network, address });
+  }
 
-    const [symbol, decimals, supplyRaw] = await Promise.all([
-      multicall.wrap(contract).symbol(),
-      multicall.wrap(contract).decimals(),
-      multicall.wrap(contract).totalSupply(),
-    ]);
+  async getAddresses(): Promise<string[]> {
+    return ['0x579120871266ccd8de6c85ef59e2ff6743e7cd15'];
+  }
 
-    const baseTokenDependencies = await this.appToolkit.getBaseTokenPrices(network);
-    const underlyingToken = baseTokenDependencies.find(v => v.symbol === 'AST');
-    if (!underlyingToken) return [];
+  async getUnderlyingTokenAddresses({ contract }: GetUnderlyingTokensParams<StakingV2>) {
+    return contract.token();
+  }
 
-    const supply = Number(supplyRaw) / 10 ** decimals;
-    const price = underlyingToken.price;
-    const liquidity = price * supply;
+  async getLabel(): Promise<string> {
+    return 'sAST v2';
+  }
 
-    const token: AppTokenPosition = {
-      type: ContractType.APP_TOKEN,
-      appId,
-      groupId,
-      address,
-      network,
-      symbol,
-      decimals,
-      supply,
-      tokens: [underlyingToken],
-      price,
-      pricePerShare: 1,
-      dataProps: { liquidity },
-      displayProps: {
-        label: 'sAST v2',
-        secondaryLabel: buildDollarDisplayItem(underlyingToken.price),
-        images: [getTokenImg(underlyingToken.address, network)],
-        statsItems: [
-          {
-            label: 'Liquidity',
-            value: buildDollarDisplayItem(liquidity),
-          },
-        ],
-      },
-    };
+  async getReserves({ appToken }: GetDataPropsParams<StakingV2>) {
+    return [appToken.pricePerShare[0] * appToken.supply];
+  }
 
-    return [token];
+  async getLiquidity({ appToken }: GetDataPropsParams<StakingV2>) {
+    return appToken.price * appToken.supply;
+  }
+
+  getApy(_params: GetDataPropsParams<StakingV2>) {
+    return 0;
   }
 }
