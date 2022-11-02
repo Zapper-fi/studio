@@ -25,6 +25,7 @@ export const MEAN_FINANCE_DEFINITION = appDefinition({
   supportedNetworks: {
     [Network.POLYGON_MAINNET]: [AppAction.VIEW],
     [Network.OPTIMISM_MAINNET]: [AppAction.VIEW],
+    [Network.ARBITRUM_MAINNET]: [AppAction.VIEW],
   },
 
   primaryColor: '#3076F6',
