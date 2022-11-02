@@ -4,7 +4,6 @@ import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { ContractFactory } from '~contract/contracts';
 import { Network } from '~types/network.interface';
 
-import { GroDistributor__factory } from './ethers';
 import { GroLabsVault__factory } from './ethers';
 import { GroLpTokenStaker__factory } from './ethers';
 import { GroVesting__factory } from './ethers';
@@ -18,9 +17,6 @@ export class GroContractFactory extends ContractFactory {
     super((network: Network) => appToolkit.getNetworkProvider(network));
   }
 
-  groDistributor({ address, network }: ContractOpts) {
-    return GroDistributor__factory.connect(address, this.appToolkit.getNetworkProvider(network));
-  }
   groLabsVault({ address, network }: ContractOpts) {
     return GroLabsVault__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
@@ -32,7 +28,6 @@ export class GroContractFactory extends ContractFactory {
   }
 }
 
-export type { GroDistributor } from './ethers';
 export type { GroLabsVault } from './ethers';
 export type { GroLpTokenStaker } from './ethers';
 export type { GroVesting } from './ethers';
