@@ -12,7 +12,7 @@ const appId = BANANO_DEFINITION.id;
 const groupId = BANANO_DEFINITION.groups.farm.id;
 const network = Network.ETHEREUM_MAINNET;
 
-const BENIS = '0xD91f84D4E2d9f4fa508c61356A6CB81a306e5287';
+const BENIS = '0xd91f84d4e2d9f4fa508c61356a6cb81a306e5287';
 
 @Register.ContractPositionFetcher({ appId, groupId, network })
 export class EthereumBananoFarmContractPositionFetcher implements PositionFetcher<ContractPosition> {
