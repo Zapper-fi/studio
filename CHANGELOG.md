@@ -4,6 +4,16 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.259.0](https://github.com/Zapper-fi/studio/compare/v0.258.0...v0.259.0) (2022-11-02)
+
+
+### Features
+
+* **art-gobblers:** Add Art-Gobblers claimable position ([#1645](https://github.com/Zapper-fi/studio/issues/1645)) ([16be86a](https://github.com/Zapper-fi/studio/commit/16be86a1b92277946bdb972b428c4d2405266d4a))
+* **banano:** Banano on ETH ([#1643](https://github.com/Zapper-fi/studio/issues/1643)) ([13b3394](https://github.com/Zapper-fi/studio/commit/13b33947af731f05ff7a6cdce5983c6f6e2d095b))
+* **mean-finance:** add mean finance arbitrum deployment ([#1636](https://github.com/Zapper-fi/studio/issues/1636)) ([a2ef083](https://github.com/Zapper-fi/studio/commit/a2ef083bde07f1fb7c2ec79ced49f38fdeda77cc))
+* **yearn:** Added Staked yCrv and Lp yCrv positions ([#1634](https://github.com/Zapper-fi/studio/issues/1634)) ([a0b7b8c](https://github.com/Zapper-fi/studio/commit/a0b7b8c16a5db4d8146552bcc68e838359787544))
+
 ## [0.258.0](https://github.com/Zapper-fi/studio/compare/v0.257.0...v0.258.0) (2022-10-31)
 
 
