@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.259.2](https://github.com/Zapper-fi/studio/compare/v0.259.1...v0.259.2) (2022-11-03)
+
+
+### Bug Fixes
+
+* **yearn:** Removed duplicate positions (st-yCRV and lp-yCRV) ([#1653](https://github.com/Zapper-fi/studio/issues/1653)) ([5da2cb4](https://github.com/Zapper-fi/studio/commit/5da2cb4f7768d0f5fd212bff9bfcbaebdeabb32c))
+
 ## [0.259.1](https://github.com/Zapper-fi/studio/compare/v0.259.0...v0.259.1) (2022-11-03)
 
 
