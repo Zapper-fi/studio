@@ -28,7 +28,7 @@ export class EthereumArGobblersClaimableContractPositionFetcher extends Contract
   }
 
   async getTokenDefinitions() {
-    return [{ metaType: MetaType.SUPPLIED, address: '0x600000000a36f3cd48407e35eb7c5c910dc1f7a8' }];
+    return [{ metaType: MetaType.CLAIMABLE, address: '0x600000000a36f3cd48407e35eb7c5c910dc1f7a8' }];
   }
 
   getContract(address: string): ArtGobblers {
