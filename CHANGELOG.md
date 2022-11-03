@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.259.1](https://github.com/Zapper-fi/studio/compare/v0.259.0...v0.259.1) (2022-11-03)
+
+
+### Bug Fixes
+
+* **art-gobblers:** Fix Art-Gobblers claimable metatype ([#1647](https://github.com/Zapper-fi/studio/issues/1647)) ([9487da5](https://github.com/Zapper-fi/studio/commit/9487da5a6226187924de3eacaa74cb00a9fc06a1))
+
 ## [0.259.0](https://github.com/Zapper-fi/studio/compare/v0.258.0...v0.259.0) (2022-11-02)
 
 
