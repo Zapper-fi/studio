@@ -10,11 +10,16 @@ export const KWENTA_DEFINITION = appDefinition({
     'Trade commodities, forex, crypto, and more with up to 25x leverage and deep liquidity without the risk of your assets being frozen.',
   url: 'https://kwenta.io/',
   groups: {
-    perp: {
-      id: 'perp',
+    isolated: {
+      id: 'isolated',
       type: GroupType.POSITION,
-      label: 'Perp',
+      label: 'Isolated Margin'
     },
+    cross: {
+      id: 'cross',
+      type: GroupType.POSITION,
+      label: 'Cross Margin'
+    }
   },
   tags: [AppTag.DERIVATIVES],
   keywords: [],
