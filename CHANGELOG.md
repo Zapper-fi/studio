@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.260.0](https://github.com/Zapper-fi/studio/compare/v0.259.2...v0.260.0) (2022-11-07)
+
+
+### Features
+
+* **gearbox:** Add lending tokens ([#1656](https://github.com/Zapper-fi/studio/issues/1656)) ([a89058c](https://github.com/Zapper-fi/studio/commit/a89058ca9d4ee5e7ddca2626aa976f823fce9a5a))
+
 ## [0.259.2](https://github.com/Zapper-fi/studio/compare/v0.259.1...v0.259.2) (2022-11-03)
 
 
