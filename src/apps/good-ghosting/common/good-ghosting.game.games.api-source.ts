@@ -1,16 +1,15 @@
 import { Injectable } from '@nestjs/common';
 import axios from 'axios';
 
-import { SingleStakingFarmDefinition } from '~app-toolkit';
 import { CacheOnInterval } from '~cache/cache-on-interval.decorator';
+import { Network, NETWORK_IDS } from '~types';
 
 import GOOD_GHOSTING_DEFINITION from '../good-ghosting.definition';
-import { NetworkId, getGameVersionType, RewardType, transformRewardArrayToObject } from '../helpers/constants';
 
-import { GamesResponse, PlayerBalance, PlayerResponse, BASE_API_URL } from './constants';
+import { NetworkId, getGameVersionType, RewardType, BASE_API_URL, GamesResponse } from './good-ghosting.game.constants';
 
 @Injectable()
-export class GoodGhostingGameConfigFetcherHelper {
+export class GoodGhostingGameGamesApiSource {
   @CacheOnInterval({
     key: `studio:${GOOD_GHOSTING_DEFINITION.id}:${GOOD_GHOSTING_DEFINITION.groups.game}:addresses`,
     timeout: 15 * 60 * 1000,
@@ -21,12 +20,17 @@ export class GoodGhostingGameConfigFetcherHelper {
     return response.data;
   }
 
-  async getGameConfigs(networkIdParam: string) {
-    const farms: (SingleStakingFarmDefinition & {
+  async getGameConfigs(network: Network) {
+    const farms: {
+      address: string;
+      stakedTokenAddress: string;
+      rewardTokenAddresses: string[];
       contractVersion: string;
       strategyProvider: string;
       gameName: string;
-    })[] = [];
+    }[] = [];
+
+    const networkIdParam = NETWORK_IDS[network];
     const gameConfigs = await this.getCachedGameConfigsData();
     const gameContractAddresses = Object.keys(gameConfigs);
 
@@ -75,7 +79,7 @@ export class GoodGhostingGameConfigFetcherHelper {
         rewardTokenAddresses.push(depositTokenAddress);
       }
 
-      if (depositTokenAddress && contractVersion && id && networkId && networkId === networkIdParam) {
+      if (depositTokenAddress && contractVersion && id && networkId && Number(networkId) === networkIdParam) {
         farms.push({
           address: id,
           stakedTokenAddress: depositTokenAddress,
@@ -88,60 +92,5 @@ export class GoodGhostingGameConfigFetcherHelper {
     }
 
     return farms;
-  }
-
-  async getPlayerGameBalances(playerAddress: string, networkId: string) {
-    const url = `${BASE_API_URL}/players/active-games?networkId=${networkId}&playerAddress=${playerAddress}`;
-    const response = await axios.get<PlayerResponse[]>(url);
-
-    const player = response.data;
-    const balances: Record<string, PlayerBalance> = {};
-
-    for (let i = 0; i < player.length; i += 1) {
-      const {
-        gameId,
-        incentiveAmount,
-        interestAmount,
-        withdrawn,
-        isWinner,
-        paidAmount,
-        playerId,
-        rewardAmount,
-        totalEarningsConverted,
-        gameAPY,
-        rewards,
-      } = player[i];
-
-      let playerIncentiveAmount = incentiveAmount;
-      let playerRewardAmount = rewardAmount;
-
-      if (rewards) {
-        const playerRewards = transformRewardArrayToObject(rewards);
-        playerRewardAmount = String(0);
-        playerIncentiveAmount = String(0);
-
-        if (playerRewards[RewardType.Incentive]) {
-          playerIncentiveAmount = playerRewards[RewardType.Incentive].balance;
-        }
-
-        if (playerRewards[RewardType.Reward]) {
-          playerRewardAmount = playerRewards[RewardType.Reward].balance;
-        }
-      }
-
-      balances[gameId] = {
-        incentiveAmount: parseFloat(parseFloat(playerIncentiveAmount).toFixed(3)),
-        interestAmount: parseFloat(parseFloat(interestAmount).toFixed(3)),
-        withdrawn,
-        isWinner,
-        paidAmount: parseFloat(paidAmount),
-        rewardAmount: parseFloat(parseFloat(playerRewardAmount).toFixed(3)),
-        poolAPY: parseFloat(gameAPY),
-        pooltotalEarningsConverted: parseFloat(parseFloat(totalEarningsConverted).toFixed(3)),
-        playerId,
-      };
-    }
-
-    return balances;
   }
 }

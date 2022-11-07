@@ -4,7 +4,6 @@ import { AbstractApp } from '~app/app.dynamic-module';
 import { ConcentratorAppDefinition, CONCENTRATOR_DEFINITION } from './concentrator.definition';
 import { ConcentratorContractFactory } from './contracts';
 import { EthereumConcentratorAcrvTokenFetcher } from './ethereum/concentrator.acrv.token-fetcher';
-import { EthereumConcentratorBalanceFetcher } from './ethereum/concentrator.balance-fetcher';
 import { EthereumConcentratorIfoContractPositionFetcher } from './ethereum/concentrator.ifo.contract-position-fetcher';
 import { EthereumConcentratorPoolContractPositionFetcher } from './ethereum/concentrator.pool.contract-position-fetcher';
 
@@ -14,7 +13,6 @@ import { EthereumConcentratorPoolContractPositionFetcher } from './ethereum/conc
     ConcentratorAppDefinition,
     ConcentratorContractFactory,
     EthereumConcentratorAcrvTokenFetcher,
-    EthereumConcentratorBalanceFetcher,
     EthereumConcentratorIfoContractPositionFetcher,
     EthereumConcentratorPoolContractPositionFetcher,
   ],
