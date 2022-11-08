@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.261.0](https://github.com/Zapper-fi/studio/compare/v0.260.0...v0.261.0) (2022-11-07)
+
+
+### Features
+
+* **curve:** Add dependency to Frax ([ccf35d7](https://github.com/Zapper-fi/studio/commit/ccf35d75c947118903a143139f06ae3a5549a034))
+
 ## [0.260.0](https://github.com/Zapper-fi/studio/compare/v0.259.2...v0.260.0) (2022-11-07)
 
 
