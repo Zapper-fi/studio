@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.263.1](https://github.com/Zapper-fi/studio/compare/v0.263.0...v0.263.1) (2022-11-08)
+
+
+### Bug Fixes
+
+* **maker:** Fix Maker's TIV ([#1667](https://github.com/Zapper-fi/studio/issues/1667)) ([1689cba](https://github.com/Zapper-fi/studio/commit/1689cba8edeca6e24e35b260b46cbf994d056934))
+
 ## [0.263.0](https://github.com/Zapper-fi/studio/compare/v0.262.0...v0.263.0) (2022-11-08)
 
 
