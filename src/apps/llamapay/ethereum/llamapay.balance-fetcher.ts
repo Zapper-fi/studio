@@ -1,19 +1,18 @@
 import { Inject } from '@nestjs/common';
 import { compact } from 'lodash';
-import { drillBalance } from '~app-toolkit/helpers/balance/token-balance.helper';
 
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
+import { Register } from '~app-toolkit/decorators';
+import { drillBalance } from '~app-toolkit/helpers/balance/token-balance.helper';
 import { buildDollarDisplayItem } from '~app-toolkit/helpers/presentation/display-item.present';
-import { getImagesFromToken, getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
+import { getImagesFromToken } from '~app-toolkit/helpers/presentation/image.present';
+import { BalanceFetcher } from '~balance/balance-fetcher.interface';
 import { ContractType } from '~position/contract.interface';
 import { ContractPositionBalance } from '~position/position-balance.interface';
-import { Register } from '~app-toolkit/decorators';
-import { presentBalanceFetcherResponse } from '~app-toolkit/helpers/presentation/balance-fetcher-response.present';
-import { BalanceFetcher } from '~balance/balance-fetcher.interface';
 import { Network } from '~types/network.interface';
 
-import { LlamapayContractFactory, Llamapay } from '../contracts';
 import { LlamapayStreamApiClient } from '../common/llamapay.stream.api-client';
+import { LlamapayContractFactory } from '../contracts';
 import { LLAMAPAY_DEFINITION } from '../llamapay.definition';
 
 const network = Network.ETHEREUM_MAINNET;
@@ -35,7 +34,7 @@ export class EthereumLlamapayBalanceFetcher implements BalanceFetcher {
       tags: { network: this.network, context: this.appId },
     });
 
-    const llamapayAddress = '0xB70B0feE3c7752eC5eA6B2deBC6Bc1340D3e22dD';
+    const llamapayAddress = '0xb70b0fee3c7752ec5ea6b2debc6bc1340d3e22dd';
     const llamapayContract = this.contractFactory.llamapay({
       address: llamapayAddress,
       network: network,
@@ -51,19 +50,21 @@ export class EthereumLlamapayBalanceFetcher implements BalanceFetcher {
 
     const positions = await Promise.all(
       streams.map(async stream => {
-        const streamBalanceRaw = await llamapay.withdrawable(stream.payer.id, stream.payee.id, stream.amountPerSec).catch(err => {
-          if (isMulticallUnderlyingError(err)) return null;
-          throw err;
-        });
+        const streamBalanceRaw = await llamapay
+          .withdrawable(stream.payer.id, stream.payee.id, stream.amountPerSec)
+          .catch(err => {
+            if (isMulticallUnderlyingError(err)) return null;
+            throw err;
+          });
+
         if (!streamBalanceRaw) return null;
 
         const token = tokenDependencies.find(t => t.address === stream.token.address);
         if (!token) return null;
 
         const balanceRaw = streamBalanceRaw[0].toString();
-        console.log(`BALANCE RAW: ${balanceRaw}`);
         const tokenBalance = drillBalance(token, balanceRaw);
-        const balance = (Number(balanceRaw) / 10 ** token.decimals);
+        const balance = Number(balanceRaw) / 10 ** token.decimals;
 
         const position: ContractPositionBalance = {
           type: ContractType.POSITION,

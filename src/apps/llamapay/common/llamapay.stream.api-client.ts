@@ -1,6 +1,5 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { gql } from 'graphql-request';
-import _ from 'lodash';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { Network } from '~types/network.interface';
@@ -14,7 +13,7 @@ export type LlamapayTokensResponse = {
 export const getStreamsQuery = gql`
   query StreamAndHistory($id: ID!, $network: String!) {
     user(id: $id) {
-      streams(orderBy: createdTimestamp, orderDirection: desc, where: {active: true}) {
+      streams(orderBy: createdTimestamp, orderDirection: desc, where: { active: true }) {
         streamId
         contract {
           address
@@ -40,23 +39,23 @@ export const getStreamsQuery = gql`
 export type LlamapayStreamsResponse = {
   user: {
     streams: {
-      streamId: integer,
+      streamId: integer;
       contract: {
-        address: string,
-      },
+        address: string;
+      };
       payer: {
-        id: string,
-      },
+        id: string;
+      };
       payee: {
-        id: string,
-      },
+        id: string;
+      };
       token: {
-        address: string,
-        name: string,
-        decimals: integer,
-        symbol: string,
-      },
-      amountPerSec: string,
+        address: string;
+        name: string;
+        decimals: integer;
+        symbol: string;
+      };
+      amountPerSec: string;
     }[];
   };
   recipientStreams: {
@@ -77,5 +76,4 @@ export class LlamapayStreamApiClient {
 
     return [...streamsResponse.user.streams];
   }
-
 }
