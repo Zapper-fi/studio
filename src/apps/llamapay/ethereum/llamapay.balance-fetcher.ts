@@ -4,9 +4,11 @@ import { compact } from 'lodash';
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
 import { drillBalance } from '~app-toolkit/helpers/balance/token-balance.helper';
+import { presentBalanceFetcherResponse } from '~app-toolkit/helpers/presentation/balance-fetcher-response.present';
 import { buildDollarDisplayItem } from '~app-toolkit/helpers/presentation/display-item.present';
 import { getImagesFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { BalanceFetcher } from '~balance/balance-fetcher.interface';
+import { isMulticallUnderlyingError } from '~multicall/multicall.ethers';
 import { ContractType } from '~position/contract.interface';
 import { ContractPositionBalance } from '~position/position-balance.interface';
 import { Network } from '~types/network.interface';
@@ -28,10 +30,10 @@ export class EthereumLlamapayBalanceFetcher implements BalanceFetcher {
   async getBalances(address: string) {
     const multicall = this.appToolkit.getMulticall(network);
     const streams = await this.apiClient.getStreams(address, network);
-    if (streams.length === 0) return [];
+    if (streams.length === 0) return presentBalanceFetcherResponse([{ label: 'Streams', assets: [] }]);
 
     const tokenLoader = this.appToolkit.getTokenDependencySelector({
-      tags: { network: this.network, context: this.appId },
+      tags: { network, context: LLAMAPAY_DEFINITION.id },
     });
 
     const llamapayAddress = '0xb70b0fee3c7752ec5ea6b2debc6bc1340d3e22dd';
@@ -69,9 +71,9 @@ export class EthereumLlamapayBalanceFetcher implements BalanceFetcher {
         const position: ContractPositionBalance = {
           type: ContractType.POSITION,
           address: stream.contract.address,
-          network: this.network,
-          appId: this.appId,
-          groupId: this.groupId,
+          network: network,
+          appId: LLAMAPAY_DEFINITION.id,
+          groupId: LLAMAPAY_DEFINITION.groups.stream.id,
           tokens: [tokenBalance],
           balanceUSD: tokenBalance.balanceUSD,
 
@@ -90,6 +92,6 @@ export class EthereumLlamapayBalanceFetcher implements BalanceFetcher {
       }),
     );
 
-    return compact(positions);
+    return presentBalanceFetcherResponse([{ label: 'Streams', assets: compact(positions) }]);
   }
 }

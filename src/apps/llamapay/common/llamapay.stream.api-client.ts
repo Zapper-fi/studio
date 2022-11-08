@@ -39,7 +39,7 @@ export const getStreamsQuery = gql`
 export type LlamapayStreamsResponse = {
   user: {
     streams: {
-      streamId: integer;
+      streamId: number;
       contract: {
         address: string;
       };
@@ -52,7 +52,7 @@ export type LlamapayStreamsResponse = {
       token: {
         address: string;
         name: string;
-        decimals: integer;
+        decimals: number;
         symbol: string;
       };
       amountPerSec: string;
