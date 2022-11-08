@@ -1,17 +1,11 @@
 import { Inject } from '@nestjs/common';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
-import { Register } from '~app-toolkit/decorators';
-import { BALANCER_V1_DEFINITION } from '~apps/balancer-v1/balancer-v1.definition';
-import { CURVE_DEFINITION } from '~apps/curve/curve.definition';
-import { PositionFetcher } from '~position/position-fetcher.interface';
-import { ContractPosition } from '~position/position.interface';
-import { Network } from '~types/network.interface';
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
+import { GetDataPropsParams, GetTokenBalancesParams } from '~position/template/contract-position.template.types';
+import { SingleStakingFarmTemplateContractPositionFetcher } from '~position/template/single-staking.template.contract-position-fetcher';
 
 import { SynthetixContractFactory, SynthetixRewards } from '../contracts';
-import { SynthetixSingleStakingIsActiveStrategy } from '../helpers/synthetix.single-staking.is-active-strategy';
-import { SynthetixSingleStakingRoiStrategy } from '../helpers/synthetix.single-staking.roi-strategy';
-import { SYNTHETIX_DEFINITION } from '../synthetix.definition';
 
 const FARMS = [
   // iBTC
@@ -100,51 +94,34 @@ const FARMS = [
   },
 ];
 
-const appId = SYNTHETIX_DEFINITION.id;
-const groupId = SYNTHETIX_DEFINITION.groups.farm.id;
-const network = Network.ETHEREUM_MAINNET;
+@PositionTemplate()
+export class EthereumSynthetixFarmContractPositionFetcher extends SingleStakingFarmTemplateContractPositionFetcher<SynthetixRewards> {
+  groupLabel = 'Farms';
 
-@Register.ContractPositionFetcher({ appId, groupId, network })
-export class EthereumSynthetixFarmContractPositionFetcher implements PositionFetcher<ContractPosition> {
   constructor(
-    @Inject(APP_TOOLKIT)
-    private readonly appToolkit: IAppToolkit,
-    @Inject(SynthetixContractFactory)
-    private readonly synthetixContractFactory: SynthetixContractFactory,
-    @Inject(SynthetixSingleStakingIsActiveStrategy)
-    private readonly synthetixSingleStakingIsActiveStrategy: SynthetixSingleStakingIsActiveStrategy,
-    @Inject(SynthetixSingleStakingRoiStrategy)
-    private readonly synthetixSingleStakingRoiStrategy: SynthetixSingleStakingRoiStrategy,
-  ) {}
+    @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
+    @Inject(SynthetixContractFactory) protected readonly contractFactory: SynthetixContractFactory,
+  ) {
+    super(appToolkit);
+  }
 
-  async getPositions() {
-    return await this.appToolkit.helpers.singleStakingFarmContractPositionHelper.getContractPositions<SynthetixRewards>(
-      {
-        network,
-        appId,
-        groupId,
-        dependencies: [
-          {
-            appId: BALANCER_V1_DEFINITION.id,
-            groupIds: [BALANCER_V1_DEFINITION.groups.pool.id],
-            network,
-          },
-          {
-            appId: CURVE_DEFINITION.id,
-            groupIds: [CURVE_DEFINITION.groups.pool.id],
-            network,
-          },
-        ],
-        resolveFarmDefinitions: async () => FARMS,
-        resolveFarmContract: ({ network, address }) =>
-          this.synthetixContractFactory.synthetixRewards({ network, address }),
-        resolveIsActive: this.synthetixSingleStakingIsActiveStrategy.build({
-          resolvePeriodFinish: ({ contract, multicall }) => multicall.wrap(contract).periodFinish(),
-        }),
-        resolveRois: this.synthetixSingleStakingRoiStrategy.build({
-          resolveRewardRates: ({ contract, multicall }) => multicall.wrap(contract).rewardRate(),
-        }),
-      },
-    );
+  getContract(address: string): SynthetixRewards {
+    return this.contractFactory.synthetixRewards({ address, network: this.network });
+  }
+
+  async getFarmDefinitions() {
+    return FARMS;
+  }
+
+  async getRewardRates({ contract }: GetDataPropsParams<SynthetixRewards>) {
+    return contract.rewardRate();
+  }
+
+  async getStakedTokenBalance({ address, contract }: GetTokenBalancesParams<SynthetixRewards>) {
+    return contract.balanceOf(address);
+  }
+
+  async getRewardTokenBalances({ address, contract }: GetTokenBalancesParams<SynthetixRewards>) {
+    return contract.earned(address);
   }
 }

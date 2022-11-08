@@ -1,24 +1,11 @@
-import { Inject } from '@nestjs/common';
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 
-import { Register } from '~app-toolkit/decorators';
-import { PositionFetcher } from '~position/position-fetcher.interface';
-import { AppTokenPosition } from '~position/position.interface';
-import { Network } from '~types/network.interface';
+import { SynthetixTransferrableSnxTokenFetcher } from '../common/synthetix.transferable-snx.token-fetcher';
 
-import { SynthetixTransferrableSnxTokenHelper } from '../helpers/synthetix.transferable-snx.token-helper';
-import { SYNTHETIX_DEFINITION } from '../synthetix.definition';
-
-const appId = SYNTHETIX_DEFINITION.id;
-const groupId = SYNTHETIX_DEFINITION.groups.transferableSnx.id;
-const network = Network.OPTIMISM_MAINNET;
-
-@Register.TokenPositionFetcher({ appId, groupId, network, options: { excludeFromTvl: true } })
-export class OptimismSynthetixTransferableSnxTokenFetcher implements PositionFetcher<AppTokenPosition> {
-  constructor(
-    @Inject(SynthetixTransferrableSnxTokenHelper) private readonly tokenHelper: SynthetixTransferrableSnxTokenHelper,
-  ) {}
-
-  async getPositions() {
-    return this.tokenHelper.getTokens({ network });
-  }
+@PositionTemplate()
+export class OptimismSynthetixTransferableSnxTokenFetcher extends SynthetixTransferrableSnxTokenFetcher {
+  isExcludedFromTvl = true;
+  isExchangeable = true;
+  snxAddress = '0x8700daec35af8ff88c16bdf0418774cb3d7599b4';
+  groupLabel = 'Transferable SNX';
 }

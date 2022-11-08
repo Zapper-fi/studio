@@ -1,24 +1,11 @@
-import { Inject } from '@nestjs/common';
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 
-import { Register } from '~app-toolkit/decorators';
-import { PositionFetcher } from '~position/position-fetcher.interface';
-import { AppTokenPosition } from '~position/position.interface';
-import { Network } from '~types/network.interface';
+import { SynthetixTransferrableSnxTokenFetcher } from '../common/synthetix.transferable-snx.token-fetcher';
 
-import { SynthetixTransferrableSnxTokenHelper } from '../helpers/synthetix.transferable-snx.token-helper';
-import { SYNTHETIX_DEFINITION } from '../synthetix.definition';
-
-const appId = SYNTHETIX_DEFINITION.id;
-const groupId = SYNTHETIX_DEFINITION.groups.transferableSnx.id;
-const network = Network.ETHEREUM_MAINNET;
-
-@Register.TokenPositionFetcher({ appId, groupId, network, options: { excludeFromTvl: true } })
-export class EthereumSynthetixTransferableSnxTokenFetcher implements PositionFetcher<AppTokenPosition> {
-  constructor(
-    @Inject(SynthetixTransferrableSnxTokenHelper) private readonly tokenHelper: SynthetixTransferrableSnxTokenHelper,
-  ) {}
-
-  async getPositions() {
-    return this.tokenHelper.getTokens({ network });
-  }
+@PositionTemplate()
+export class EthereumSynthetixTransferableSnxTokenFetcher extends SynthetixTransferrableSnxTokenFetcher {
+  isExcludedFromTvl = true;
+  isExchangeable = true;
+  snxAddress = '0xc011a73ee8576fb46f5e1c5751ca3b9fe0af2a6f';
+  groupLabel = 'Transferable SNX';
 }

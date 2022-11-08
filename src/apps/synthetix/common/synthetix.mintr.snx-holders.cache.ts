@@ -1,8 +1,12 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { gql } from 'graphql-request';
+import moment from 'moment';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
+import { Cache } from '~cache/cache.decorator';
 import { Network } from '~types/network.interface';
+
+import { SYNTHETIX_DEFINITION } from '../synthetix.definition';
 
 type Holder = {
   id: string;
@@ -32,12 +36,8 @@ const HOLDERS_QUERY = gql`
   }
 `;
 
-export type SynthetixMintrContractPositionBalanceHelperParams = {
-  network: Network.ETHEREUM_MAINNET | Network.OPTIMISM_MAINNET;
-};
-
 @Injectable()
-export class SynthetixHoldersHelper {
+export class SynthetixMintrSnxHoldersCache {
   constructor(@Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit) {}
 
   private graphs = {
@@ -45,7 +45,12 @@ export class SynthetixHoldersHelper {
     [Network.OPTIMISM_MAINNET]: 'https://api.thegraph.com/subgraphs/name/synthetixio-team/optimism-main',
   };
 
-  async getCacheSynthetixHolders({ network }: SynthetixMintrContractPositionBalanceHelperParams) {
+  @Cache({
+    instance: 'business',
+    key: (network: Network) => `studio:${SYNTHETIX_DEFINITION.id}:${network}:all-snx-holders`,
+    ttl: moment.duration('15', 'minutes').asSeconds,
+  })
+  async getSynthetixHolders(network: Network) {
     const endpoint = this.graphs[network];
     const holders = new Map<string, Holder>();
 
