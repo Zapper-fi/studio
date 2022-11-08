@@ -30,7 +30,7 @@ export const LLAMAPAY_DEFINITION = appDefinition({
     [Network.ARBITRUM_MAINNET]: [AppAction.VIEW],
   },
 
-  primaryColor: '#fff',
+  primaryColor: '#23BD8F',
 });
 
 @Register.AppDefinition(LLAMAPAY_DEFINITION.id)
