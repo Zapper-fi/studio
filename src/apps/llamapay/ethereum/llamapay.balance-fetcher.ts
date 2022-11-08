@@ -1,0 +1,94 @@
+import { Inject } from '@nestjs/common';
+import { compact } from 'lodash';
+import { drillBalance } from '~app-toolkit/helpers/balance/token-balance.helper';
+
+import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
+import { buildDollarDisplayItem } from '~app-toolkit/helpers/presentation/display-item.present';
+import { getImagesFromToken, getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
+import { ContractType } from '~position/contract.interface';
+import { ContractPositionBalance } from '~position/position-balance.interface';
+import { Register } from '~app-toolkit/decorators';
+import { presentBalanceFetcherResponse } from '~app-toolkit/helpers/presentation/balance-fetcher-response.present';
+import { BalanceFetcher } from '~balance/balance-fetcher.interface';
+import { Network } from '~types/network.interface';
+
+import { LlamapayContractFactory, Llamapay } from '../contracts';
+import { LlamapayStreamApiClient } from '../common/llamapay.stream.api-client';
+import { LLAMAPAY_DEFINITION } from '../llamapay.definition';
+
+const network = Network.ETHEREUM_MAINNET;
+
+@Register.BalanceFetcher(LLAMAPAY_DEFINITION.id, network)
+export class EthereumLlamapayBalanceFetcher implements BalanceFetcher {
+  constructor(
+    @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
+    @Inject(LlamapayContractFactory) protected readonly contractFactory: LlamapayContractFactory,
+    @Inject(LlamapayStreamApiClient) protected readonly apiClient: LlamapayStreamApiClient,
+  ) {}
+
+  async getBalances(address: string) {
+    const multicall = this.appToolkit.getMulticall(network);
+    const streams = await this.apiClient.getStreams(address, network);
+    if (streams.length === 0) return [];
+
+    const tokenLoader = this.appToolkit.getTokenDependencySelector({
+      tags: { network: this.network, context: this.appId },
+    });
+
+    const llamapayAddress = '0xB70B0feE3c7752eC5eA6B2deBC6Bc1340D3e22dD';
+    const llamapayContract = this.contractFactory.llamapay({
+      address: llamapayAddress,
+      network: network,
+    });
+    const llamapay = multicall.wrap(llamapayContract);
+
+    const underlyingAddresses = streams.map(stream => ({
+      network: network,
+      address: stream.token.address,
+    }));
+
+    const tokenDependencies = await tokenLoader.getMany(underlyingAddresses).then(deps => compact(deps));
+
+    const positions = await Promise.all(
+      streams.map(async stream => {
+        const streamBalanceRaw = await llamapay.withdrawable(stream.payer.id, stream.payee.id, stream.amountPerSec).catch(err => {
+          if (isMulticallUnderlyingError(err)) return null;
+          throw err;
+        });
+        if (!streamBalanceRaw) return null;
+
+        const token = tokenDependencies.find(t => t.address === stream.token.address);
+        if (!token) return null;
+
+        const balanceRaw = streamBalanceRaw[0].toString();
+        console.log(`BALANCE RAW: ${balanceRaw}`);
+        const tokenBalance = drillBalance(token, balanceRaw);
+        const balance = (Number(balanceRaw) / 10 ** token.decimals);
+
+        const position: ContractPositionBalance = {
+          type: ContractType.POSITION,
+          address: stream.contract.address,
+          network: this.network,
+          appId: this.appId,
+          groupId: this.groupId,
+          tokens: [tokenBalance],
+          balanceUSD: tokenBalance.balanceUSD,
+
+          dataProps: {
+            balance,
+          },
+
+          displayProps: {
+            label: `Available ${token.symbol} on Sablier`,
+            secondaryLabel: buildDollarDisplayItem(token.price),
+            images: getImagesFromToken(token),
+          },
+        };
+
+        return position;
+      }),
+    );
+
+    return compact(positions);
+  }
+}
