@@ -143,7 +143,7 @@ export abstract class MasterChefTemplateContractPositionFetcher<
     const multiplier = this.rewardRateUnit === RewardRateUnit.BLOCK ? BLOCKS_PER_DAY[this.network] : 86400;
     const dailyRewardRateUSD = rewardRateUSD * multiplier;
 
-    const dailyReturn = (dailyRewardRateUSD + liquidity) / liquidity - 1;
+    const dailyReturn = liquidity > 0 ? (dailyRewardRateUSD + liquidity) / liquidity - 1 : 0;
     const apy = dailyReturn * 365 * 100;
     const isActive = apy > 0;
 
