@@ -4,6 +4,18 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.262.0](https://github.com/Zapper-fi/studio/compare/v0.261.0...v0.262.0) (2022-11-08)
+
+
+### Features
+
+* **apps:** Few small fixes to LlamaPay ([5428799](https://github.com/Zapper-fi/studio/commit/542879924121ba31907e9b7b3d2c0bcc52f42351))
+* **llama:** Add Llamapay Module ([#1662](https://github.com/Zapper-fi/studio/issues/1662)) ([924c435](https://github.com/Zapper-fi/studio/commit/924c4357674734e75090fbbdc3f09f0d5fadbcff))
+* **llamapay:** Add missing logo ([553a83b](https://github.com/Zapper-fi/studio/commit/553a83b1a0643cc26d21ca052950bf47d5852094))
+* **qi-dao:** Migrate to templates ([#1661](https://github.com/Zapper-fi/studio/issues/1661)) ([8872bcd](https://github.com/Zapper-fi/studio/commit/8872bcd2890f96f79d800d6f2238b3491dbea987))
+* **synthetix:** Migrate to templates ([#1664](https://github.com/Zapper-fi/studio/issues/1664)) ([69fb4d5](https://github.com/Zapper-fi/studio/commit/69fb4d50b47b43e17187c6888c11133a1f69002b))
+* **templates:** Migrate Concentrator and Good Ghosting to templates ([#1660](https://github.com/Zapper-fi/studio/issues/1660)) ([7272b3b](https://github.com/Zapper-fi/studio/commit/7272b3b6dc13724c69f6ba778ca1511f1e347200))
+
 ## [0.261.0](https://github.com/Zapper-fi/studio/compare/v0.260.0...v0.261.0) (2022-11-07)
 
 
