@@ -1,14 +1,8 @@
-import { Register } from '~app-toolkit/decorators';
-import { Network } from '~types/network.interface';
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 
 import { SynthetixMintrContractPositionFetcher } from '../common/synthetix.mintr.contract-position-fetcher';
-import { SYNTHETIX_DEFINITION } from '../synthetix.definition';
 
-const appId = SYNTHETIX_DEFINITION.id;
-const groupId = SYNTHETIX_DEFINITION.groups.mintr.id;
-const network = Network.ETHEREUM_MAINNET;
-
-@Register.ContractPositionFetcher({ appId, groupId, network, options: { excludeFromTvl: true } })
+@PositionTemplate()
 export class EthereumSynthetixMintrContractPositionFetcher extends SynthetixMintrContractPositionFetcher {
   groupLabel = 'Mintr';
   isExcludedFromTvl = true;

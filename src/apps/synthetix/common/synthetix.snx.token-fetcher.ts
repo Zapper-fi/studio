@@ -6,11 +6,11 @@ import { IMulticallWrapper } from '~multicall';
 import { DefaultDataProps } from '~position/display.interface';
 import { AppTokenPosition } from '~position/position.interface';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
-import { GetDataPropsParams } from '~position/template/app-token.template.types';
+import { GetDataPropsParams, GetPriceParams } from '~position/template/app-token.template.types';
 
 import { SynthetixContractFactory, SynthetixNetworkToken } from '../contracts';
 
-export abstract class SynthetixTransferrableSnxTokenFetcher extends AppTokenTemplatePositionFetcher<SynthetixNetworkToken> {
+export abstract class SynthetixSnxTokenFetcher extends AppTokenTemplatePositionFetcher<SynthetixNetworkToken> {
   abstract snxAddress: string;
   abstract isExchangeable: boolean;
 
@@ -35,6 +35,11 @@ export abstract class SynthetixTransferrableSnxTokenFetcher extends AppTokenTemp
 
   async getPricePerShare() {
     return [1];
+  }
+
+  async getPrice({ appToken }: GetPriceParams<SynthetixNetworkToken>): Promise<number> {
+    const baseToken = await this.appToolkit.getBaseTokenPrice({ address: appToken.address, network: this.network });
+    return baseToken!.price;
   }
 
   async getLiquidity({ appToken }: GetDataPropsParams<SynthetixNetworkToken>) {
