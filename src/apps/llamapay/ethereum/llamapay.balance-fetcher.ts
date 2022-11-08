@@ -80,7 +80,7 @@ export class EthereumLlamapayBalanceFetcher implements BalanceFetcher {
           },
 
           displayProps: {
-            label: `Available ${token.symbol} on Sablier`,
+            label: `Available ${token.symbol} on LlamaPay`,
             secondaryLabel: buildDollarDisplayItem(token.price),
             images: getImagesFromToken(token),
           },
