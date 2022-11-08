@@ -1,18 +1,14 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Inject } from '@nestjs/common';
 
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import { GetDataPropsParams, GetPricePerShareParams } from '~position/template/app-token.template.types';
-import { Network } from '~types/network.interface';
 
-import { CONCENTRATOR_DEFINITION } from '../concentrator.definition';
 import { AladdinCrv, ConcentratorContractFactory } from '../contracts';
 
-@Injectable()
+@PositionTemplate()
 export class EthereumConcentratorAcrvTokenFetcher extends AppTokenTemplatePositionFetcher<AladdinCrv> {
-  appId = CONCENTRATOR_DEFINITION.id;
-  groupId = CONCENTRATOR_DEFINITION.groups.acrv.id;
-  network = Network.ETHEREUM_MAINNET;
   groupLabel = 'aCRV';
 
   constructor(

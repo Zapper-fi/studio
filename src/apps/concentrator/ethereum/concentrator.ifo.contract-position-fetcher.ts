@@ -1,22 +1,18 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Inject } from '@nestjs/common';
 import { BigNumberish } from 'ethers';
 
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import { IMulticallWrapper } from '~multicall';
 import {
   GetMasterChefTokenBalancesParams,
   MasterChefTemplateContractPositionFetcher,
 } from '~position/template/master-chef.template.contract-position-fetcher';
-import { Network } from '~types/network.interface';
 
-import { CONCENTRATOR_DEFINITION } from '../concentrator.definition';
 import { ConcentratorContractFactory, AladdinConcentratorIfoVault } from '../contracts';
 
-@Injectable()
+@PositionTemplate()
 export class EthereumConcentratorIfoContractPositionFetcher extends MasterChefTemplateContractPositionFetcher<AladdinConcentratorIfoVault> {
-  appId = CONCENTRATOR_DEFINITION.id;
-  groupId = CONCENTRATOR_DEFINITION.groups.ifo.id;
-  network = Network.ETHEREUM_MAINNET;
   groupLabel = 'IFO';
 
   chefAddress = '0x3cf54f3a1969be9916dad548f3c084331c4450b5';
