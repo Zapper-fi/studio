@@ -1,26 +1,12 @@
-import { Inject } from '@nestjs/common';
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 
-import { Register } from '~app-toolkit/decorators';
-import { PositionFetcher } from '~position/position-fetcher.interface';
-import { ContractPosition } from '~position/position.interface';
-import { Network } from '~types/network.interface';
+import { SynthetixLoanContractPositionFetcher } from '../common/synthetix.loan.contract-position-fetcher';
 
-import { SynthetixLoanContractPositionHelper } from '../helpers/synthetix.loan.contract-position-helper';
-import { SYNTHETIX_DEFINITION } from '../synthetix.definition';
-
-const appId = SYNTHETIX_DEFINITION.id;
-const groupId = SYNTHETIX_DEFINITION.groups.loan.id;
-const network = Network.OPTIMISM_MAINNET;
-
-@Register.ContractPositionFetcher({ appId, groupId, network })
-export class OptimismSynthetixLoanContractPositionFetcher implements PositionFetcher<ContractPosition> {
-  constructor(
-    @Inject(SynthetixLoanContractPositionHelper)
-    private readonly synthetixLoanContractPositionHelper: SynthetixLoanContractPositionHelper,
-  ) {}
-
-  async getPositions() {
-    const loanContractAddress = '0x308ad16ef90fe7cacb85b784a603cb6e71b1a41a';
-    return this.synthetixLoanContractPositionHelper.getPositions({ loanContractAddress, network });
-  }
+@PositionTemplate()
+export class OptimismSynthetixLoanContractPositionFetcher extends SynthetixLoanContractPositionFetcher {
+  groupLabel = 'Loans';
+  loanAddress = '0x308ad16ef90fe7cacb85b784a603cb6e71b1a41a';
+  sUSDAddress = '0x8c6f28f2f1a3c87f0f938b96d27520d9751ec8d9';
+  sETHAddress = '0xe405de8f52ba7559f9df3c368500b6e6ae6cee49';
+  subgraphUrl = 'https://api.thegraph.com/subgraphs/name/synthetixio-team/optimism-main';
 }

@@ -1,6 +1,6 @@
 import { Inject } from '@nestjs/common';
 import { BigNumber, BigNumberish, Contract } from 'ethers';
-import { range, sum } from 'lodash';
+import { isArray, range, sum } from 'lodash';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { BLOCKS_PER_DAY } from '~app-toolkit/constants/blocks';
@@ -55,7 +55,11 @@ export abstract class MasterChefTemplateContractPositionFetcher<
 
   // Tokens
   abstract getStakedTokenAddress(contract: T, poolIndex: number, multicall: IMulticallWrapper): Promise<string>;
-  abstract getRewardTokenAddress(contract: T, poolIndex: number, multicall: IMulticallWrapper): Promise<string>;
+  abstract getRewardTokenAddress(
+    contract: T,
+    poolIndex: number,
+    multicall: IMulticallWrapper,
+  ): Promise<string | string[]>;
 
   // APY
   rewardRateUnit: RewardRateUnit = RewardRateUnit.BLOCK;
@@ -65,7 +69,7 @@ export abstract class MasterChefTemplateContractPositionFetcher<
 
   // Balances
   abstract getStakedTokenBalance(params: GetMasterChefTokenBalancesParams<T>): Promise<BigNumberish>;
-  abstract getRewardTokenBalance(params: GetMasterChefTokenBalancesParams<T>): Promise<BigNumberish>;
+  abstract getRewardTokenBalance(params: GetMasterChefTokenBalancesParams<T>): Promise<BigNumberish | BigNumberish[]>;
 
   async getDefinitions() {
     const contract = this.getContract(this.chefAddress);
@@ -86,17 +90,18 @@ export abstract class MasterChefTemplateContractPositionFetcher<
         throw err;
       },
     );
-    const rewardTokenAddress = await this.getRewardTokenAddress(contract, definition.poolIndex, multicall).catch(
-      err => {
+
+    const rewardTokenAddresses = await this.getRewardTokenAddress(contract, definition.poolIndex, multicall)
+      .then(v => (isArray(v) ? v : [v]))
+      .catch(err => {
         if (isMulticallUnderlyingError(err)) return null;
         throw err;
-      },
-    );
+      });
 
-    if (!stakedTokenAddress || !rewardTokenAddress) return null;
+    if (!stakedTokenAddress || !rewardTokenAddresses) return null;
 
     tokenDefinitions.push({ metaType: MetaType.SUPPLIED, address: stakedTokenAddress });
-    tokenDefinitions.push({ metaType: MetaType.CLAIMABLE, address: rewardTokenAddress });
+    rewardTokenAddresses.forEach(v => tokenDefinitions.push({ metaType: MetaType.CLAIMABLE, address: v }));
     return tokenDefinitions;
   }
 
@@ -138,7 +143,7 @@ export abstract class MasterChefTemplateContractPositionFetcher<
     const multiplier = this.rewardRateUnit === RewardRateUnit.BLOCK ? BLOCKS_PER_DAY[this.network] : 86400;
     const dailyRewardRateUSD = rewardRateUSD * multiplier;
 
-    const dailyReturn = (dailyRewardRateUSD + liquidity) / liquidity - 1;
+    const dailyReturn = liquidity > 0 ? (dailyRewardRateUSD + liquidity) / liquidity - 1 : 0;
     const apy = dailyReturn * 365 * 100;
     const isActive = apy > 0;
 
@@ -161,13 +166,13 @@ export abstract class MasterChefTemplateContractPositionFetcher<
   async getTokenBalancesPerPosition(params: GetTokenBalancesParams<T, MasterChefContractPositionDataProps>) {
     const tokenBalances: BigNumberish[] = [];
 
-    const [stakedBalanceRaw, rewardTokenBalanceRaw] = await Promise.all([
+    const [stakedBalanceRaw, rewardTokenBalancesRaw] = await Promise.all([
       this.getStakedTokenBalance(params),
-      this.getRewardTokenBalance(params),
+      this.getRewardTokenBalance(params).then(v => (isArray(v) ? v : [v])),
     ]);
 
     tokenBalances.push(stakedBalanceRaw);
-    tokenBalances.push(rewardTokenBalanceRaw);
+    rewardTokenBalancesRaw.forEach(v => tokenBalances.push(v));
     return tokenBalances;
   }
 }
