@@ -5,6 +5,7 @@ import { drillBalance } from '~app-toolkit';
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { ZERO_ADDRESS } from '~app-toolkit/constants/address';
 import { getImagesFromToken } from '~app-toolkit/helpers/presentation/image.present';
+import { isMulticallUnderlyingError } from '~multicall/multicall.ethers';
 import { ContractPositionBalance } from '~position/position-balance.interface';
 import { MetaType, Standard } from '~position/position.interface';
 import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
@@ -58,9 +59,23 @@ export abstract class QiDaoVaultContractPositionFetcher extends ContractPosition
     });
 
     const [collateralTokenAddressRaw, debtTokenAddressRaw] = await Promise.all([
-      multicall.wrap(infoContract).collateral(),
-      multicall.wrap(infoContract).mai(),
+      multicall
+        .wrap(infoContract)
+        .collateral()
+        .catch(err => {
+          if (isMulticallUnderlyingError(err)) return null;
+          throw err;
+        }),
+      multicall
+        .wrap(infoContract)
+        .mai()
+        .catch(err => {
+          if (isMulticallUnderlyingError(err)) return null;
+          throw err;
+        }),
     ]);
+
+    if (!collateralTokenAddressRaw || !debtTokenAddressRaw) return null;
 
     return [
       { metaType: MetaType.SUPPLIED, address: collateralTokenAddressRaw.toLowerCase() },

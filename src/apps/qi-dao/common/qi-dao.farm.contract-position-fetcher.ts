@@ -31,7 +31,7 @@ export abstract class QiDaoFarmContractPositionFetcher extends MasterChefTemplat
       this.chefAddresses.map(async chefAddress => {
         const contract = this.getContract(chefAddress);
         const poolLength = await this.getPoolLength(contract);
-        return range(0, Number(poolLength)).map(poolIndex => ({ address: this.chefAddress, poolIndex }));
+        return range(0, Number(poolLength)).map(poolIndex => ({ address: chefAddress, poolIndex }));
       }),
     );
 
