@@ -48,7 +48,7 @@ export class SynthetixMintrSnxHoldersCache {
   @Cache({
     instance: 'business',
     key: (network: Network) => `studio:${SYNTHETIX_DEFINITION.id}:${network}:all-snx-holders`,
-    ttl: moment.duration('15', 'minutes').asSeconds,
+    ttl: moment.duration('15', 'minutes').asSeconds(),
   })
   async getSynthetixHolders(network: Network) {
     const endpoint = this.graphs[network];
