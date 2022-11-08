@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.263.2](https://github.com/Zapper-fi/studio/compare/v0.263.1...v0.263.2) (2022-11-08)
+
+
+### Bug Fixes
+
+* **llamapay:** Fix llamapay early return when address has no balance ([#1669](https://github.com/Zapper-fi/studio/issues/1669)) ([4a35810](https://github.com/Zapper-fi/studio/commit/4a35810f9f1b1c1d644e1bc1c1a92594cb485072))
+
 ## [0.263.1](https://github.com/Zapper-fi/studio/compare/v0.263.0...v0.263.1) (2022-11-08)
 
 
