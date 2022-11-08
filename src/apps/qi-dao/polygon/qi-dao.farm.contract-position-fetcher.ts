@@ -1,15 +1,9 @@
-import { Injectable } from '@nestjs/common';
-
-import { Network } from '~types/network.interface';
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 
 import { QiDaoFarmContractPositionFetcher } from '../common/qi-dao.farm.contract-position-fetcher';
-import { QI_DAO_DEFINITION } from '../qi-dao.definition';
 
-@Injectable()
+@PositionTemplate()
 export class PolygonQiDaoFarmContractPositionFetcher extends QiDaoFarmContractPositionFetcher {
-  appId = QI_DAO_DEFINITION.id;
-  groupId = QI_DAO_DEFINITION.groups.farm.id;
-  network = Network.POLYGON_MAINNET;
   groupLabel = 'Farms';
 
   chefAddresses = [

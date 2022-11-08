@@ -1,6 +1,7 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Inject } from '@nestjs/common';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { MetaType } from '~position/position.interface';
 import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
@@ -9,11 +10,9 @@ import {
   GetDisplayPropsParams,
   GetDataPropsParams,
 } from '~position/template/contract-position.template.types';
-import { Network } from '~types/network.interface';
 
 import { QiDaoContractFactory } from '../contracts';
 import { QiDaoAnchorVault } from '../contracts/ethers/QiDaoAnchorVault';
-import { QI_DAO_DEFINITION } from '../qi-dao.definition';
 
 type QiDaoAnchorVaultDataProps = {
   liquidity: number;
@@ -25,15 +24,12 @@ type QiDaoAnchorVaultDefinition = {
   tokenAddress: string;
 };
 
-@Injectable()
+@PositionTemplate()
 export class PolygonQiDaoAnchorVaultPositionFetcher extends ContractPositionTemplatePositionFetcher<
   QiDaoAnchorVault,
   QiDaoAnchorVaultDataProps,
   QiDaoAnchorVaultDefinition
 > {
-  appId = QI_DAO_DEFINITION.id;
-  groupId = QI_DAO_DEFINITION.groups.anchorVault.id;
-  network = Network.POLYGON_MAINNET;
   groupLabel = 'Anchor Vaults';
 
   isExcludedFromBalances = true;

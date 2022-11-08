@@ -1,22 +1,18 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Inject } from '@nestjs/common';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import {
   GetDataPropsParams,
   GetUnderlyingTokensParams,
   GetPricePerShareParams,
 } from '~position/template/app-token.template.types';
-import { Network } from '~types/network.interface';
 
 import { QiDaoContractFactory, QiDaoYieldToken } from '../contracts';
-import { QI_DAO_DEFINITION } from '../qi-dao.definition';
 
-@Injectable()
+@PositionTemplate()
 export class PolygonQiDaoYieldTokenFetcher extends AppTokenTemplatePositionFetcher<QiDaoYieldToken> {
-  appId = QI_DAO_DEFINITION.id;
-  groupId = QI_DAO_DEFINITION.groups.yield.id;
-  network = Network.POLYGON_MAINNET;
   groupLabel = 'Yield Tokens';
 
   constructor(

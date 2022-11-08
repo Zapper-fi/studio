@@ -1,15 +1,9 @@
-import { Injectable } from '@nestjs/common';
-
-import { Network } from '~types/network.interface';
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 
 import { QiDaoVaultContractPositionFetcher } from '../common/qi-dao.vault.contract-position-fetcher';
-import { QI_DAO_DEFINITION } from '../qi-dao.definition';
 
-@Injectable()
+@PositionTemplate()
 export class FantomQiDaoVaultPositionFetcher extends QiDaoVaultContractPositionFetcher {
-  appId = QI_DAO_DEFINITION.id;
-  groupId = QI_DAO_DEFINITION.groups.vault.id;
-  network = Network.FANTOM_OPERA_MAINNET;
   groupLabel = 'Vaults';
 
   vaultDefinitions = [
