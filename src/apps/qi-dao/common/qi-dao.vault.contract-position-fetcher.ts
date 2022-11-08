@@ -4,7 +4,7 @@ import { range, sumBy } from 'lodash';
 import { drillBalance } from '~app-toolkit';
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { ZERO_ADDRESS } from '~app-toolkit/constants/address';
-import { getImagesFromToken } from '~app-toolkit/helpers/presentation/image.present';
+import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { isMulticallUnderlyingError } from '~multicall/multicall.ethers';
 import { ContractPositionBalance } from '~position/position-balance.interface';
 import { MetaType, Standard } from '~position/position.interface';
@@ -110,7 +110,7 @@ export abstract class QiDaoVaultContractPositionFetcher extends ContractPosition
   }
 
   async getLabel({ contractPosition }: GetDisplayPropsParams<QiDaoVaultNft>) {
-    return `${getImagesFromToken(contractPosition.tokens[0])} Vault`;
+    return `${getLabelFromToken(contractPosition.tokens[0])} Vault`;
   }
 
   // @ts-ignore
@@ -159,9 +159,15 @@ export abstract class QiDaoVaultContractPositionFetcher extends ContractPosition
             const tokens = allTokens.filter(v => Math.abs(v.balanceUSD) > 0.01);
             const balanceUSD = sumBy(tokens, t => t.balanceUSD);
             const dataProps = { ...contractPosition.dataProps, tokenId: tokenId.toString() };
+            const displayProps = {
+              ...contractPosition.displayProps,
+              label: `${contractPosition.displayProps.label} (#${tokenId})`,
+            };
+
             const balance: ContractPositionBalance<QiDaoVaultDataProps> = {
               ...contractPosition,
               dataProps,
+              displayProps,
               tokens,
               balanceUSD,
             };

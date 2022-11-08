@@ -7,7 +7,6 @@ import { FantomQiDaoFarmContractPositionFetcher } from './fantom/qi-dao.farm.con
 import { FantomQiDaoVaultPositionFetcher } from './fantom/qi-dao.vault.position-fetcher';
 import { GnosisQiDaoVaultPositionFetcher } from './gnosis/qi-dao.vault.position-fetcher';
 import { OptimismQiDaoVaultPositionFetcher } from './optimism/qi-dao.vault.position-fetcher';
-import { PolygonQiDaoAnchorVaultPositionFetcher } from './polygon/qi-dao.anchor-vault.contract-position-fetcher';
 import { PolygonQiDaoEscrowedQiContractPositionFetcher } from './polygon/qi-dao.escrowed-qi.contract-position-fetcher';
 import { PolygonQiDaoFarmContractPositionFetcher } from './polygon/qi-dao.farm.contract-position-fetcher';
 import { PolygonQiDaoVaultPositionFetcher } from './polygon/qi-dao.vault.contract-position-fetcher';
@@ -27,7 +26,6 @@ import { QiDaoAppDefinition, QI_DAO_DEFINITION } from './qi-dao.definition';
     PolygonQiDaoFarmContractPositionFetcher,
     PolygonQiDaoVaultPositionFetcher,
     PolygonQiDaoYieldTokenFetcher,
-    PolygonQiDaoAnchorVaultPositionFetcher,
     // Gnosis
     GnosisQiDaoVaultPositionFetcher,
     // Arbitrum
