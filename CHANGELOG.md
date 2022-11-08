@@ -4,6 +4,18 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.263.0](https://github.com/Zapper-fi/studio/compare/v0.262.0...v0.263.0) (2022-11-08)
+
+
+### Features
+
+* **synthetix:** Fix duration ([c99aa75](https://github.com/Zapper-fi/studio/commit/c99aa7538f94227b02b02637fc88a52e2d17cc12))
+
+
+### Bug Fixes
+
+* **velodrome:** Fix Velodrome voting escrow  balance ([#1665](https://github.com/Zapper-fi/studio/issues/1665)) ([76c35b2](https://github.com/Zapper-fi/studio/commit/76c35b29976f78feeda920de145c316f86fcc6a8))
+
 ## [0.262.0](https://github.com/Zapper-fi/studio/compare/v0.261.0...v0.262.0) (2022-11-08)
 
 
