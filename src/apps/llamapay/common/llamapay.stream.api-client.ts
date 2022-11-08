@@ -74,6 +74,8 @@ export class LlamapayStreamApiClient {
       variables: { id: address, network: _network },
     });
 
+    if (!streamsResponse.user) return null;
+
     return [...streamsResponse.user.streams];
   }
 }

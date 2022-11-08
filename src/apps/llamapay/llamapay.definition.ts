@@ -6,7 +6,8 @@ import { Network } from '~types/network.interface';
 export const LLAMAPAY_DEFINITION = appDefinition({
   id: 'llamapay',
   name: 'Llamapay',
-  description: 'LlamaPay is a multi-chain protocol that allows you to automate transactions and stream them by the second.',
+  description:
+    'LlamaPay is a multi-chain protocol that allows you to automate transactions and stream them by the second.',
   url: 'https://llamapay.io/',
 
   groups: {
@@ -19,7 +20,11 @@ export const LLAMAPAY_DEFINITION = appDefinition({
 
   tags: [AppTag.PAYMENTS],
   keywords: [],
-  links: {},
+  links: {
+    discord: 'https://discord.com/invite/buPFYXzDDd',
+    github: 'https://github.com/LlamaPay',
+    twitter: 'https://twitter.com/llamapay_io/',
+  },
 
   supportedNetworks: {
     [Network.ETHEREUM_MAINNET]: [AppAction.VIEW],

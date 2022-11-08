@@ -30,7 +30,7 @@ export class EthereumLlamapayBalanceFetcher implements BalanceFetcher {
   async getBalances(address: string) {
     const multicall = this.appToolkit.getMulticall(network);
     const streams = await this.apiClient.getStreams(address, network);
-    if (streams.length === 0) return presentBalanceFetcherResponse([{ label: 'Streams', assets: [] }]);
+    if (streams === null) return presentBalanceFetcherResponse([{ label: 'Streams', assets: [] }]);
 
     const tokenLoader = this.appToolkit.getTokenDependencySelector({
       tags: { network, context: LLAMAPAY_DEFINITION.id },
