@@ -13,7 +13,7 @@ export const CONCENTRATOR_DEFINITION = appDefinition({
     acrv: {
       id: 'acrv',
       type: GroupType.TOKEN,
-      label: 'Farm',
+      label: 'aCRV',
     },
 
     pool: {
