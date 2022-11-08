@@ -33,6 +33,7 @@ export type MakerVaultDataProps = {
   ilkName: string;
   cRatio?: number;
   cdpId?: number;
+  liquidity: number;
 };
 
 @PositionTemplate()
@@ -87,8 +88,26 @@ export class EthereumMakerVaultContractPositionFetcher extends ContractPositionT
     ];
   }
 
-  async getDataProps({ definition }: GetDataPropsParams<MakerGemJoin, MakerVaultDataProps, MakerVaultDefinition>) {
-    return { ilkName: definition.ilkName };
+  async getDataProps({
+    contractPosition,
+    definition,
+    multicall,
+  }: GetDataPropsParams<MakerGemJoin, MakerVaultDataProps, MakerVaultDefinition>) {
+    const collateralTokenContract = this.contractFactory.erc20({
+      address: definition.collateralTokenAddress,
+      network: this.network,
+    });
+
+    const balanceRaw = await (definition.collateralTokenAddress === ZERO_ADDRESS
+      ? multicall.wrap(multicall.contract).getEthBalance(definition.address)
+      : multicall.wrap(collateralTokenContract).balanceOf(definition.address));
+
+    const collateralToken = contractPosition.tokens[0];
+
+    const balance = Number(balanceRaw) / 10 ** collateralToken.decimals;
+    const liquidity = balance * collateralToken.price;
+
+    return { ilkName: definition.ilkName, liquidity };
   }
 
   async getLabel({ contractPosition }: GetDisplayPropsParams<MakerGemJoin, MakerVaultDataProps, MakerVaultDefinition>) {
@@ -178,6 +197,7 @@ export class EthereumMakerVaultContractPositionFetcher extends ContractPositionT
                 ilkName: position.dataProps.ilkName,
                 cdpId: cdp,
                 cRatio,
+                liquidity: position.dataProps.liquidity,
               },
 
               displayProps: {
