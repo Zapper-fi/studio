@@ -6,7 +6,7 @@ import { Network } from '~types/network.interface';
 export const LLAMAPAY_DEFINITION = appDefinition({
   id: 'llamapay',
   name: 'Llamapay',
-  description: 'LlamaPay integration for Zapper',
+  description: 'LlamaPay is a multi-chain protocol that allows you to automate transactions and stream them by the second.',
   url: 'https://llamapay.io/',
 
   groups: {
@@ -23,11 +23,6 @@ export const LLAMAPAY_DEFINITION = appDefinition({
 
   supportedNetworks: {
     [Network.ETHEREUM_MAINNET]: [AppAction.VIEW],
-    [Network.POLYGON_MAINNET]: [AppAction.VIEW],
-    [Network.OPTIMISM_MAINNET]: [AppAction.VIEW],
-    [Network.FANTOM_OPERA_MAINNET]: [AppAction.VIEW],
-    [Network.AVALANCHE_MAINNET]: [AppAction.VIEW],
-    [Network.ARBITRUM_MAINNET]: [AppAction.VIEW],
   },
 
   primaryColor: '#23BD8F',
