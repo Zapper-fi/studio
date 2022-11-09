@@ -14,6 +14,7 @@ import {
 import { GetTokenDefinitionsParams } from '~position/template/contract-position.template.types';
 
 import { UnipilotContractFactory, UnipilotEthereumFactory, UnipilotPolygonFactory } from '../contracts';
+import { UnipilotVaultAPYHelper } from '../helpers/unipilot-vault.apy.helper';
 import { UnipilotVaultDefinition } from '../utils/generalTypes';
 
 import { UnipilotVaultDefinitionsResolver } from './unipilot.vault-definition-resolver';
@@ -31,7 +32,9 @@ export abstract class UnipilotVaultTokenFetcher extends AppTokenTemplatePosition
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
     @Inject(UnipilotVaultDefinitionsResolver)
     private readonly vaultDefinitionsResolver: UnipilotVaultDefinitionsResolver,
-    @Inject(UnipilotContractFactory) private readonly contractFactory: UnipilotContractFactory,
+    @Inject(UnipilotVaultAPYHelper) private readonly vaultApyHelper: UnipilotVaultAPYHelper,
+    @Inject(UnipilotContractFactory)
+    private readonly contractFactory: UnipilotContractFactory,
   ) {
     super(appToolkit);
   }
@@ -73,6 +76,7 @@ export abstract class UnipilotVaultTokenFetcher extends AppTokenTemplatePosition
 
     const strategyLabel: string = strategyId ? strategyLabels[strategyId] : '';
     const label = `${tokens[0].symbol}/${tokens[1].symbol} ${feeTierLabel} ${strategyLabel}`;
+
     return label;
   }
 
@@ -110,8 +114,11 @@ export abstract class UnipilotVaultTokenFetcher extends AppTokenTemplatePosition
   async getApy({
     appToken,
   }: GetDataPropsParams<UnipilotEthereumFactory, UnipilotVaultTokenDataProps, UnipilotVaultDefinition>) {
-    const apr = await this.vaultDefinitionsResolver.getAprs(appToken.address, this.network);
-    return apr;
+    const apys = await this.vaultApyHelper.getApy(this.network);
+    if (apys && Object.keys(apys).length > 0) {
+      return parseFloat(apys[appToken.address].stats7d);
+    }
+    return 0;
   }
 
   async getAddresses({ definitions }: GetAddressesParams<UnipilotVaultDefinition>): Promise<string[]> {

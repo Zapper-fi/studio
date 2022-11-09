@@ -48,3 +48,12 @@ export const UNIPILOT_VAULTS_POLYGON = gql`
     }
   }
 `;
+
+//unipilot vault addresses for apy
+export const VAULT_ADDRESSES = gql`
+  query getAddresses {
+    vaults(first: 1000) {
+      id
+    }
+  }
+`;

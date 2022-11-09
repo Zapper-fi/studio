@@ -20,6 +20,12 @@ export type UnipilotVaultFetcherResponse = {
   }[];
 };
 
+export type VaultAddressesResponse = {
+  vaults: {
+    id: string;
+  }[];
+};
+
 export type UnipilotVaultDefinition = {
   address: string;
   token0Address: string;
