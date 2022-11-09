@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.265.0](https://github.com/Zapper-fi/studio/compare/v0.264.0...v0.265.0) (2022-11-09)
+
+
+### Features
+
+* **apps:** Fix breaking APY ([f8b708b](https://github.com/Zapper-fi/studio/commit/f8b708b16de005cac0d851838a9af49628e8e7d0))
+
 ## [0.264.0](https://github.com/Zapper-fi/studio/compare/v0.263.2...v0.264.0) (2022-11-09)
 
 
