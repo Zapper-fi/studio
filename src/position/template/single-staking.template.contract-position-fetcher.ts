@@ -74,7 +74,7 @@ export abstract class SingleStakingFarmTemplateContractPositionFetcher<
     const rewardRates = rewardTokens.map((v, i) => Number(rewardRatesRaw[i] ?? 0) / 10 ** v.decimals);
     const rewardRatesUSD = sum(rewardRates.map((v, i) => v * rewardTokens[i].price));
     const dailyRewardRateUSD = rewardRatesUSD * 86_400;
-    const dailyReturn = (dailyRewardRateUSD + liquidity) / liquidity - 1;
+    const dailyReturn = liquidity > 0 ? (dailyRewardRateUSD + liquidity) / liquidity - 1 : 0;
     const apy = dailyReturn * 365 * 100;
     const isActive = apy > 0;
 
