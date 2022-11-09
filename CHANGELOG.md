@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.264.0](https://github.com/Zapper-fi/studio/compare/v0.263.2...v0.264.0) (2022-11-09)
+
+
+### Features
+
+* **apps:** Extract getReserve call so it can be overridden ([#1672](https://github.com/Zapper-fi/studio/issues/1672)) ([ed015ea](https://github.com/Zapper-fi/studio/commit/ed015ea8942476d572b3f715c0b99a40a42529cb))
+
 ## [0.263.2](https://github.com/Zapper-fi/studio/compare/v0.263.1...v0.263.2) (2022-11-08)
 
 
