@@ -5,7 +5,7 @@ import { Network } from '~types/network.interface';
 
 export const MIDAS_DEFINITION = appDefinition({
   id: 'midas',
-  name: 'Midas',
+  name: 'Midas Capital',
   description:
     'Midas Capital is a cross-chain money market solution that unlocks and maximizes the usage of all digital assets and makes them work for you.',
   url: 'https://app.midascapital.xyz/',
