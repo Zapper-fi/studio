@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.267.0](https://github.com/Zapper-fi/studio/compare/v0.266.0...v0.267.0) (2022-11-10)
+
+
+### Features
+
+* **lyra-avalon:** Migrate to templates ([#1681](https://github.com/Zapper-fi/studio/issues/1681)) ([0192de1](https://github.com/Zapper-fi/studio/commit/0192de134c41cb1c9b63fead6728754f93d7680f))
+
 ## [0.266.0](https://github.com/Zapper-fi/studio/compare/v0.265.0...v0.266.0) (2022-11-10)
 
 
