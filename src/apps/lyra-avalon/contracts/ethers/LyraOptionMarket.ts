@@ -15,13 +15,13 @@ import type {
 } from 'ethers';
 import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
 import type { Listener, Provider } from '@ethersproject/providers';
-import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
 export declare namespace OptionMarket {
   export type OptionMarketParametersStruct = {
-    maxBoardExpiry: BigNumberish;
-    securityModule: string;
-    feePortionReserved: BigNumberish;
+    maxBoardExpiry: PromiseOrValue<BigNumberish>;
+    securityModule: PromiseOrValue<string>;
+    feePortionReserved: PromiseOrValue<BigNumberish>;
   };
 
   export type OptionMarketParametersStructOutput = [BigNumber, string, BigNumber] & {
@@ -31,16 +31,16 @@ export declare namespace OptionMarket {
   };
 
   export type TradeEventDataStruct = {
-    expiry: BigNumberish;
-    strikePrice: BigNumberish;
-    optionType: BigNumberish;
-    tradeDirection: BigNumberish;
-    amount: BigNumberish;
-    setCollateralTo: BigNumberish;
-    isForceClose: boolean;
-    spotPrice: BigNumberish;
-    reservedFee: BigNumberish;
-    totalCost: BigNumberish;
+    expiry: PromiseOrValue<BigNumberish>;
+    strikePrice: PromiseOrValue<BigNumberish>;
+    optionType: PromiseOrValue<BigNumberish>;
+    tradeDirection: PromiseOrValue<BigNumberish>;
+    amount: PromiseOrValue<BigNumberish>;
+    setCollateralTo: PromiseOrValue<BigNumberish>;
+    isForceClose: PromiseOrValue<boolean>;
+    spotPrice: PromiseOrValue<BigNumberish>;
+    reservedFee: PromiseOrValue<BigNumberish>;
+    totalCost: PromiseOrValue<BigNumberish>;
   };
 
   export type TradeEventDataStructOutput = [
@@ -68,14 +68,14 @@ export declare namespace OptionMarket {
   };
 
   export type LiquidationEventDataStruct = {
-    rewardBeneficiary: string;
-    caller: string;
-    returnCollateral: BigNumberish;
-    lpPremiums: BigNumberish;
-    lpFee: BigNumberish;
-    liquidatorFee: BigNumberish;
-    smFee: BigNumberish;
-    insolventAmount: BigNumberish;
+    rewardBeneficiary: PromiseOrValue<string>;
+    caller: PromiseOrValue<string>;
+    returnCollateral: PromiseOrValue<BigNumberish>;
+    lpPremiums: PromiseOrValue<BigNumberish>;
+    lpFee: PromiseOrValue<BigNumberish>;
+    liquidatorFee: PromiseOrValue<BigNumberish>;
+    smFee: PromiseOrValue<BigNumberish>;
+    insolventAmount: PromiseOrValue<BigNumberish>;
   };
 
   export type LiquidationEventDataStructOutput = [
@@ -99,14 +99,14 @@ export declare namespace OptionMarket {
   };
 
   export type TradeInputParametersStruct = {
-    strikeId: BigNumberish;
-    positionId: BigNumberish;
-    iterations: BigNumberish;
-    optionType: BigNumberish;
-    amount: BigNumberish;
-    setCollateralTo: BigNumberish;
-    minTotalCost: BigNumberish;
-    maxTotalCost: BigNumberish;
+    strikeId: PromiseOrValue<BigNumberish>;
+    positionId: PromiseOrValue<BigNumberish>;
+    iterations: PromiseOrValue<BigNumberish>;
+    optionType: PromiseOrValue<BigNumberish>;
+    amount: PromiseOrValue<BigNumberish>;
+    setCollateralTo: PromiseOrValue<BigNumberish>;
+    minTotalCost: PromiseOrValue<BigNumberish>;
+    maxTotalCost: PromiseOrValue<BigNumberish>;
   };
 
   export type TradeInputParametersStructOutput = [
@@ -130,9 +130,9 @@ export declare namespace OptionMarket {
   };
 
   export type ResultStruct = {
-    positionId: BigNumberish;
-    totalCost: BigNumberish;
-    totalFee: BigNumberish;
+    positionId: PromiseOrValue<BigNumberish>;
+    totalCost: PromiseOrValue<BigNumberish>;
+    totalFee: PromiseOrValue<BigNumberish>;
   };
 
   export type ResultStructOutput = [BigNumber, BigNumber, BigNumber] & {
@@ -142,11 +142,11 @@ export declare namespace OptionMarket {
   };
 
   export type OptionBoardStruct = {
-    id: BigNumberish;
-    expiry: BigNumberish;
-    iv: BigNumberish;
-    frozen: boolean;
-    strikeIds: BigNumberish[];
+    id: PromiseOrValue<BigNumberish>;
+    expiry: PromiseOrValue<BigNumberish>;
+    iv: PromiseOrValue<BigNumberish>;
+    frozen: PromiseOrValue<boolean>;
+    strikeIds: PromiseOrValue<BigNumberish>[];
   };
 
   export type OptionBoardStructOutput = [BigNumber, BigNumber, BigNumber, boolean, BigNumber[]] & {
@@ -158,15 +158,15 @@ export declare namespace OptionMarket {
   };
 
   export type StrikeStruct = {
-    id: BigNumberish;
-    strikePrice: BigNumberish;
-    skew: BigNumberish;
-    longCall: BigNumberish;
-    shortCallBase: BigNumberish;
-    shortCallQuote: BigNumberish;
-    longPut: BigNumberish;
-    shortPut: BigNumberish;
-    boardId: BigNumberish;
+    id: PromiseOrValue<BigNumberish>;
+    strikePrice: PromiseOrValue<BigNumberish>;
+    skew: PromiseOrValue<BigNumberish>;
+    longCall: PromiseOrValue<BigNumberish>;
+    shortCallBase: PromiseOrValue<BigNumberish>;
+    shortCallQuote: PromiseOrValue<BigNumberish>;
+    longPut: PromiseOrValue<BigNumberish>;
+    shortPut: PromiseOrValue<BigNumberish>;
+    boardId: PromiseOrValue<BigNumberish>;
   };
 
   export type StrikeStructOutput = [
@@ -194,12 +194,12 @@ export declare namespace OptionMarket {
 
 export declare namespace OptionMarketPricer {
   export type VegaUtilFeeComponentsStruct = {
-    preTradeAmmNetStdVega: BigNumberish;
-    postTradeAmmNetStdVega: BigNumberish;
-    vegaUtil: BigNumberish;
-    volTraded: BigNumberish;
-    NAV: BigNumberish;
-    vegaUtilFee: BigNumberish;
+    preTradeAmmNetStdVega: PromiseOrValue<BigNumberish>;
+    postTradeAmmNetStdVega: PromiseOrValue<BigNumberish>;
+    vegaUtil: PromiseOrValue<BigNumberish>;
+    volTraded: PromiseOrValue<BigNumberish>;
+    NAV: PromiseOrValue<BigNumberish>;
+    vegaUtilFee: PromiseOrValue<BigNumberish>;
   };
 
   export type VegaUtilFeeComponentsStructOutput = [BigNumber, BigNumber, BigNumber, BigNumber, BigNumber, BigNumber] & {
@@ -212,14 +212,14 @@ export declare namespace OptionMarketPricer {
   };
 
   export type VarianceFeeComponentsStruct = {
-    varianceFeeCoefficient: BigNumberish;
-    vega: BigNumberish;
-    vegaCoefficient: BigNumberish;
-    skew: BigNumberish;
-    skewCoefficient: BigNumberish;
-    ivVariance: BigNumberish;
-    ivVarianceCoefficient: BigNumberish;
-    varianceFee: BigNumberish;
+    varianceFeeCoefficient: PromiseOrValue<BigNumberish>;
+    vega: PromiseOrValue<BigNumberish>;
+    vegaCoefficient: PromiseOrValue<BigNumberish>;
+    skew: PromiseOrValue<BigNumberish>;
+    skewCoefficient: PromiseOrValue<BigNumberish>;
+    ivVariance: PromiseOrValue<BigNumberish>;
+    ivVarianceCoefficient: PromiseOrValue<BigNumberish>;
+    varianceFee: PromiseOrValue<BigNumberish>;
   };
 
   export type VarianceFeeComponentsStructOutput = [
@@ -243,17 +243,17 @@ export declare namespace OptionMarketPricer {
   };
 
   export type TradeResultStruct = {
-    amount: BigNumberish;
-    premium: BigNumberish;
-    optionPriceFee: BigNumberish;
-    spotPriceFee: BigNumberish;
+    amount: PromiseOrValue<BigNumberish>;
+    premium: PromiseOrValue<BigNumberish>;
+    optionPriceFee: PromiseOrValue<BigNumberish>;
+    spotPriceFee: PromiseOrValue<BigNumberish>;
     vegaUtilFee: OptionMarketPricer.VegaUtilFeeComponentsStruct;
     varianceFee: OptionMarketPricer.VarianceFeeComponentsStruct;
-    totalFee: BigNumberish;
-    totalCost: BigNumberish;
-    volTraded: BigNumberish;
-    newBaseIv: BigNumberish;
-    newSkew: BigNumberish;
+    totalFee: PromiseOrValue<BigNumberish>;
+    totalCost: PromiseOrValue<BigNumberish>;
+    volTraded: PromiseOrValue<BigNumberish>;
+    newBaseIv: PromiseOrValue<BigNumberish>;
+    newSkew: PromiseOrValue<BigNumberish>;
   };
 
   export type TradeResultStructOutput = [
@@ -283,7 +283,7 @@ export declare namespace OptionMarketPricer {
   };
 }
 
-export interface OptionMarketInterface extends utils.Interface {
+export interface LyraOptionMarketInterface extends utils.Interface {
   functions: {
     'acceptOwnership()': FunctionFragment;
     'addCollateral(uint256,uint256)': FunctionFragment;
@@ -354,45 +354,78 @@ export interface OptionMarketInterface extends utils.Interface {
   ): FunctionFragment;
 
   encodeFunctionData(functionFragment: 'acceptOwnership', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'addCollateral', values: [BigNumberish, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'addStrikeToBoard', values: [BigNumberish, BigNumberish, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'boardToPriceAtExpiry', values: [BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'addCollateral',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'addStrikeToBoard',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'boardToPriceAtExpiry', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'closePosition', values: [OptionMarket.TradeInputParametersStruct]): string;
   encodeFunctionData(
     functionFragment: 'createOptionBoard',
-    values: [BigNumberish, BigNumberish, BigNumberish[], BigNumberish[], boolean],
+    values: [
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>[],
+      PromiseOrValue<BigNumberish>[],
+      PromiseOrValue<boolean>,
+    ],
   ): string;
   encodeFunctionData(functionFragment: 'forceClosePosition', values: [OptionMarket.TradeInputParametersStruct]): string;
-  encodeFunctionData(functionFragment: 'forceSettleBoard', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'getBoardAndStrikeDetails', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'getBoardStrikes', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'forceSettleBoard', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'getBoardAndStrikeDetails', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'getBoardStrikes', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'getLiveBoards', values?: undefined): string;
   encodeFunctionData(functionFragment: 'getNumLiveBoards', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'getOptionBoard', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'getSettlementParameters', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'getStrike', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'getStrikeAndBoard', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'getStrikeAndExpiry', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'getOptionBoard', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'getSettlementParameters', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'getStrike', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'getStrikeAndBoard', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'getStrikeAndExpiry', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(
     functionFragment: 'init',
-    values: [string, string, string, string, string, string, string, string],
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+    ],
   ): string;
-  encodeFunctionData(functionFragment: 'liquidatePosition', values: [BigNumberish, string]): string;
-  encodeFunctionData(functionFragment: 'nominateNewOwner', values: [string]): string;
+  encodeFunctionData(
+    functionFragment: 'liquidatePosition',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>],
+  ): string;
+  encodeFunctionData(functionFragment: 'nominateNewOwner', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'nominatedOwner', values?: undefined): string;
   encodeFunctionData(functionFragment: 'openPosition', values: [OptionMarket.TradeInputParametersStruct]): string;
   encodeFunctionData(functionFragment: 'optionMarketParams', values?: undefined): string;
   encodeFunctionData(functionFragment: 'owner', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'setBoardBaseIv', values: [BigNumberish, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'setBoardFrozen', values: [BigNumberish, boolean]): string;
+  encodeFunctionData(
+    functionFragment: 'setBoardBaseIv',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'setBoardFrozen',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<boolean>],
+  ): string;
   encodeFunctionData(
     functionFragment: 'setOptionMarketParams',
     values: [OptionMarket.OptionMarketParametersStruct],
   ): string;
-  encodeFunctionData(functionFragment: 'setStrikeSkew', values: [BigNumberish, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'settleExpiredBoard', values: [BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'setStrikeSkew',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'settleExpiredBoard', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'smClaim', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'strikeToBaseReturnedRatio', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'strikeToBaseReturnedRatio', values: [PromiseOrValue<BigNumberish>]): string;
 
   decodeFunctionResult(functionFragment: 'acceptOwnership', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'addCollateral', data: BytesLike): Result;
@@ -572,12 +605,12 @@ export type TradeEvent = TypedEvent<
 
 export type TradeEventFilter = TypedEventFilter<TradeEvent>;
 
-export interface OptionMarket extends BaseContract {
+export interface LyraOptionMarket extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
 
-  interface: OptionMarketInterface;
+  interface: LyraOptionMarketInterface;
 
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,
@@ -595,62 +628,65 @@ export interface OptionMarket extends BaseContract {
   removeListener: OnEvent<this>;
 
   functions: {
-    acceptOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    acceptOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     addCollateral(
-      positionId: BigNumberish,
-      amountCollateral: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      positionId: PromiseOrValue<BigNumberish>,
+      amountCollateral: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     addStrikeToBoard(
-      boardId: BigNumberish,
-      strikePrice: BigNumberish,
-      skew: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      boardId: PromiseOrValue<BigNumberish>,
+      strikePrice: PromiseOrValue<BigNumberish>,
+      skew: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    boardToPriceAtExpiry(arg0: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber]>;
+    boardToPriceAtExpiry(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     closePosition(
       params: OptionMarket.TradeInputParametersStruct,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     createOptionBoard(
-      expiry: BigNumberish,
-      baseIV: BigNumberish,
-      strikePrices: BigNumberish[],
-      skews: BigNumberish[],
-      frozen: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      expiry: PromiseOrValue<BigNumberish>,
+      baseIV: PromiseOrValue<BigNumberish>,
+      strikePrices: PromiseOrValue<BigNumberish>[],
+      skews: PromiseOrValue<BigNumberish>[],
+      frozen: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     forceClosePosition(
       params: OptionMarket.TradeInputParametersStruct,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     forceSettleBoard(
-      boardId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      boardId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     getBoardAndStrikeDetails(
-      boardId: BigNumberish,
+      boardId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<[OptionMarket.OptionBoardStructOutput, OptionMarket.StrikeStructOutput[], BigNumber[], BigNumber]>;
 
-    getBoardStrikes(boardId: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber[]]>;
+    getBoardStrikes(boardId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[BigNumber[]]>;
 
     getLiveBoards(overrides?: CallOverrides): Promise<[BigNumber[]] & { _liveBoards: BigNumber[] }>;
 
     getNumLiveBoards(overrides?: CallOverrides): Promise<[BigNumber] & { numLiveBoards: BigNumber }>;
 
-    getOptionBoard(boardId: BigNumberish, overrides?: CallOverrides): Promise<[OptionMarket.OptionBoardStructOutput]>;
+    getOptionBoard(
+      boardId: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<[OptionMarket.OptionBoardStructOutput]>;
 
     getSettlementParameters(
-      strikeId: BigNumberish,
+      strikeId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<
       [BigNumber, BigNumber, BigNumber] & {
@@ -660,46 +696,49 @@ export interface OptionMarket extends BaseContract {
       }
     >;
 
-    getStrike(strikeId: BigNumberish, overrides?: CallOverrides): Promise<[OptionMarket.StrikeStructOutput]>;
+    getStrike(
+      strikeId: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<[OptionMarket.StrikeStructOutput]>;
 
     getStrikeAndBoard(
-      strikeId: BigNumberish,
+      strikeId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<[OptionMarket.StrikeStructOutput, OptionMarket.OptionBoardStructOutput]>;
 
     getStrikeAndExpiry(
-      strikeId: BigNumberish,
+      strikeId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber, BigNumber] & { strikePrice: BigNumber; expiry: BigNumber }>;
 
     init(
-      _synthetixAdapter: string,
-      _liquidityPool: string,
-      _optionPricer: string,
-      _greekCache: string,
-      _shortCollateral: string,
-      _optionToken: string,
-      _quoteAsset: string,
-      _baseAsset: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _synthetixAdapter: PromiseOrValue<string>,
+      _liquidityPool: PromiseOrValue<string>,
+      _optionPricer: PromiseOrValue<string>,
+      _greekCache: PromiseOrValue<string>,
+      _shortCollateral: PromiseOrValue<string>,
+      _optionToken: PromiseOrValue<string>,
+      _quoteAsset: PromiseOrValue<string>,
+      _baseAsset: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     liquidatePosition(
-      positionId: BigNumberish,
-      rewardBeneficiary: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      positionId: PromiseOrValue<BigNumberish>,
+      rewardBeneficiary: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     nominateNewOwner(
-      _owner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _owner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     nominatedOwner(overrides?: CallOverrides): Promise<[string]>;
 
     openPosition(
       params: OptionMarket.TradeInputParametersStruct,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     optionMarketParams(overrides?: CallOverrides): Promise<
@@ -713,94 +752,97 @@ export interface OptionMarket extends BaseContract {
     owner(overrides?: CallOverrides): Promise<[string]>;
 
     setBoardBaseIv(
-      boardId: BigNumberish,
-      baseIv: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      boardId: PromiseOrValue<BigNumberish>,
+      baseIv: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setBoardFrozen(
-      boardId: BigNumberish,
-      frozen: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      boardId: PromiseOrValue<BigNumberish>,
+      frozen: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setOptionMarketParams(
       _optionMarketParams: OptionMarket.OptionMarketParametersStruct,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setStrikeSkew(
-      strikeId: BigNumberish,
-      skew: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      strikeId: PromiseOrValue<BigNumberish>,
+      skew: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     settleExpiredBoard(
-      boardId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      boardId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    smClaim(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    smClaim(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
-    strikeToBaseReturnedRatio(arg0: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber]>;
+    strikeToBaseReturnedRatio(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[BigNumber]>;
   };
 
-  acceptOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  acceptOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   addCollateral(
-    positionId: BigNumberish,
-    amountCollateral: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    positionId: PromiseOrValue<BigNumberish>,
+    amountCollateral: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   addStrikeToBoard(
-    boardId: BigNumberish,
-    strikePrice: BigNumberish,
-    skew: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    boardId: PromiseOrValue<BigNumberish>,
+    strikePrice: PromiseOrValue<BigNumberish>,
+    skew: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  boardToPriceAtExpiry(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+  boardToPriceAtExpiry(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
   closePosition(
     params: OptionMarket.TradeInputParametersStruct,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   createOptionBoard(
-    expiry: BigNumberish,
-    baseIV: BigNumberish,
-    strikePrices: BigNumberish[],
-    skews: BigNumberish[],
-    frozen: boolean,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    expiry: PromiseOrValue<BigNumberish>,
+    baseIV: PromiseOrValue<BigNumberish>,
+    strikePrices: PromiseOrValue<BigNumberish>[],
+    skews: PromiseOrValue<BigNumberish>[],
+    frozen: PromiseOrValue<boolean>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   forceClosePosition(
     params: OptionMarket.TradeInputParametersStruct,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   forceSettleBoard(
-    boardId: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    boardId: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   getBoardAndStrikeDetails(
-    boardId: BigNumberish,
+    boardId: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides,
   ): Promise<[OptionMarket.OptionBoardStructOutput, OptionMarket.StrikeStructOutput[], BigNumber[], BigNumber]>;
 
-  getBoardStrikes(boardId: BigNumberish, overrides?: CallOverrides): Promise<BigNumber[]>;
+  getBoardStrikes(boardId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber[]>;
 
   getLiveBoards(overrides?: CallOverrides): Promise<BigNumber[]>;
 
   getNumLiveBoards(overrides?: CallOverrides): Promise<BigNumber>;
 
-  getOptionBoard(boardId: BigNumberish, overrides?: CallOverrides): Promise<OptionMarket.OptionBoardStructOutput>;
+  getOptionBoard(
+    boardId: PromiseOrValue<BigNumberish>,
+    overrides?: CallOverrides,
+  ): Promise<OptionMarket.OptionBoardStructOutput>;
 
   getSettlementParameters(
-    strikeId: BigNumberish,
+    strikeId: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides,
   ): Promise<
     [BigNumber, BigNumber, BigNumber] & {
@@ -810,46 +852,49 @@ export interface OptionMarket extends BaseContract {
     }
   >;
 
-  getStrike(strikeId: BigNumberish, overrides?: CallOverrides): Promise<OptionMarket.StrikeStructOutput>;
+  getStrike(
+    strikeId: PromiseOrValue<BigNumberish>,
+    overrides?: CallOverrides,
+  ): Promise<OptionMarket.StrikeStructOutput>;
 
   getStrikeAndBoard(
-    strikeId: BigNumberish,
+    strikeId: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides,
   ): Promise<[OptionMarket.StrikeStructOutput, OptionMarket.OptionBoardStructOutput]>;
 
   getStrikeAndExpiry(
-    strikeId: BigNumberish,
+    strikeId: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides,
   ): Promise<[BigNumber, BigNumber] & { strikePrice: BigNumber; expiry: BigNumber }>;
 
   init(
-    _synthetixAdapter: string,
-    _liquidityPool: string,
-    _optionPricer: string,
-    _greekCache: string,
-    _shortCollateral: string,
-    _optionToken: string,
-    _quoteAsset: string,
-    _baseAsset: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _synthetixAdapter: PromiseOrValue<string>,
+    _liquidityPool: PromiseOrValue<string>,
+    _optionPricer: PromiseOrValue<string>,
+    _greekCache: PromiseOrValue<string>,
+    _shortCollateral: PromiseOrValue<string>,
+    _optionToken: PromiseOrValue<string>,
+    _quoteAsset: PromiseOrValue<string>,
+    _baseAsset: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   liquidatePosition(
-    positionId: BigNumberish,
-    rewardBeneficiary: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    positionId: PromiseOrValue<BigNumberish>,
+    rewardBeneficiary: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   nominateNewOwner(
-    _owner: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _owner: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   nominatedOwner(overrides?: CallOverrides): Promise<string>;
 
   openPosition(
     params: OptionMarket.TradeInputParametersStruct,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   optionMarketParams(overrides?: CallOverrides): Promise<
@@ -863,50 +908,54 @@ export interface OptionMarket extends BaseContract {
   owner(overrides?: CallOverrides): Promise<string>;
 
   setBoardBaseIv(
-    boardId: BigNumberish,
-    baseIv: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    boardId: PromiseOrValue<BigNumberish>,
+    baseIv: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setBoardFrozen(
-    boardId: BigNumberish,
-    frozen: boolean,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    boardId: PromiseOrValue<BigNumberish>,
+    frozen: PromiseOrValue<boolean>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setOptionMarketParams(
     _optionMarketParams: OptionMarket.OptionMarketParametersStruct,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setStrikeSkew(
-    strikeId: BigNumberish,
-    skew: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    strikeId: PromiseOrValue<BigNumberish>,
+    skew: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   settleExpiredBoard(
-    boardId: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    boardId: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  smClaim(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  smClaim(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
-  strikeToBaseReturnedRatio(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+  strikeToBaseReturnedRatio(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
   callStatic: {
     acceptOwnership(overrides?: CallOverrides): Promise<void>;
 
-    addCollateral(positionId: BigNumberish, amountCollateral: BigNumberish, overrides?: CallOverrides): Promise<void>;
-
-    addStrikeToBoard(
-      boardId: BigNumberish,
-      strikePrice: BigNumberish,
-      skew: BigNumberish,
+    addCollateral(
+      positionId: PromiseOrValue<BigNumberish>,
+      amountCollateral: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
-    boardToPriceAtExpiry(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    addStrikeToBoard(
+      boardId: PromiseOrValue<BigNumberish>,
+      strikePrice: PromiseOrValue<BigNumberish>,
+      skew: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
+
+    boardToPriceAtExpiry(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     closePosition(
       params: OptionMarket.TradeInputParametersStruct,
@@ -914,11 +963,11 @@ export interface OptionMarket extends BaseContract {
     ): Promise<OptionMarket.ResultStructOutput>;
 
     createOptionBoard(
-      expiry: BigNumberish,
-      baseIV: BigNumberish,
-      strikePrices: BigNumberish[],
-      skews: BigNumberish[],
-      frozen: boolean,
+      expiry: PromiseOrValue<BigNumberish>,
+      baseIV: PromiseOrValue<BigNumberish>,
+      strikePrices: PromiseOrValue<BigNumberish>[],
+      skews: PromiseOrValue<BigNumberish>[],
+      frozen: PromiseOrValue<boolean>,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
@@ -927,23 +976,26 @@ export interface OptionMarket extends BaseContract {
       overrides?: CallOverrides,
     ): Promise<OptionMarket.ResultStructOutput>;
 
-    forceSettleBoard(boardId: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    forceSettleBoard(boardId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
     getBoardAndStrikeDetails(
-      boardId: BigNumberish,
+      boardId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<[OptionMarket.OptionBoardStructOutput, OptionMarket.StrikeStructOutput[], BigNumber[], BigNumber]>;
 
-    getBoardStrikes(boardId: BigNumberish, overrides?: CallOverrides): Promise<BigNumber[]>;
+    getBoardStrikes(boardId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber[]>;
 
     getLiveBoards(overrides?: CallOverrides): Promise<BigNumber[]>;
 
     getNumLiveBoards(overrides?: CallOverrides): Promise<BigNumber>;
 
-    getOptionBoard(boardId: BigNumberish, overrides?: CallOverrides): Promise<OptionMarket.OptionBoardStructOutput>;
+    getOptionBoard(
+      boardId: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<OptionMarket.OptionBoardStructOutput>;
 
     getSettlementParameters(
-      strikeId: BigNumberish,
+      strikeId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<
       [BigNumber, BigNumber, BigNumber] & {
@@ -953,33 +1005,40 @@ export interface OptionMarket extends BaseContract {
       }
     >;
 
-    getStrike(strikeId: BigNumberish, overrides?: CallOverrides): Promise<OptionMarket.StrikeStructOutput>;
+    getStrike(
+      strikeId: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<OptionMarket.StrikeStructOutput>;
 
     getStrikeAndBoard(
-      strikeId: BigNumberish,
+      strikeId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<[OptionMarket.StrikeStructOutput, OptionMarket.OptionBoardStructOutput]>;
 
     getStrikeAndExpiry(
-      strikeId: BigNumberish,
+      strikeId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber, BigNumber] & { strikePrice: BigNumber; expiry: BigNumber }>;
 
     init(
-      _synthetixAdapter: string,
-      _liquidityPool: string,
-      _optionPricer: string,
-      _greekCache: string,
-      _shortCollateral: string,
-      _optionToken: string,
-      _quoteAsset: string,
-      _baseAsset: string,
+      _synthetixAdapter: PromiseOrValue<string>,
+      _liquidityPool: PromiseOrValue<string>,
+      _optionPricer: PromiseOrValue<string>,
+      _greekCache: PromiseOrValue<string>,
+      _shortCollateral: PromiseOrValue<string>,
+      _optionToken: PromiseOrValue<string>,
+      _quoteAsset: PromiseOrValue<string>,
+      _baseAsset: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
-    liquidatePosition(positionId: BigNumberish, rewardBeneficiary: string, overrides?: CallOverrides): Promise<void>;
+    liquidatePosition(
+      positionId: PromiseOrValue<BigNumberish>,
+      rewardBeneficiary: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    nominateNewOwner(_owner: string, overrides?: CallOverrides): Promise<void>;
+    nominateNewOwner(_owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     nominatedOwner(overrides?: CallOverrides): Promise<string>;
 
@@ -998,41 +1057,61 @@ export interface OptionMarket extends BaseContract {
 
     owner(overrides?: CallOverrides): Promise<string>;
 
-    setBoardBaseIv(boardId: BigNumberish, baseIv: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    setBoardBaseIv(
+      boardId: PromiseOrValue<BigNumberish>,
+      baseIv: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    setBoardFrozen(boardId: BigNumberish, frozen: boolean, overrides?: CallOverrides): Promise<void>;
+    setBoardFrozen(
+      boardId: PromiseOrValue<BigNumberish>,
+      frozen: PromiseOrValue<boolean>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
     setOptionMarketParams(
       _optionMarketParams: OptionMarket.OptionMarketParametersStruct,
       overrides?: CallOverrides,
     ): Promise<void>;
 
-    setStrikeSkew(strikeId: BigNumberish, skew: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    setStrikeSkew(
+      strikeId: PromiseOrValue<BigNumberish>,
+      skew: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    settleExpiredBoard(boardId: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    settleExpiredBoard(boardId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
     smClaim(overrides?: CallOverrides): Promise<void>;
 
-    strikeToBaseReturnedRatio(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    strikeToBaseReturnedRatio(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
   };
 
   filters: {
-    'BoardBaseIvSet(uint256,uint256)'(boardId?: BigNumberish | null, baseIv?: null): BoardBaseIvSetEventFilter;
-    BoardBaseIvSet(boardId?: BigNumberish | null, baseIv?: null): BoardBaseIvSetEventFilter;
+    'BoardBaseIvSet(uint256,uint256)'(
+      boardId?: PromiseOrValue<BigNumberish> | null,
+      baseIv?: null,
+    ): BoardBaseIvSetEventFilter;
+    BoardBaseIvSet(boardId?: PromiseOrValue<BigNumberish> | null, baseIv?: null): BoardBaseIvSetEventFilter;
 
     'BoardCreated(uint256,uint256,uint256,bool)'(
-      boardId?: BigNumberish | null,
+      boardId?: PromiseOrValue<BigNumberish> | null,
       expiry?: null,
       baseIv?: null,
       frozen?: null,
     ): BoardCreatedEventFilter;
-    BoardCreated(boardId?: BigNumberish | null, expiry?: null, baseIv?: null, frozen?: null): BoardCreatedEventFilter;
+    BoardCreated(
+      boardId?: PromiseOrValue<BigNumberish> | null,
+      expiry?: null,
+      baseIv?: null,
+      frozen?: null,
+    ): BoardCreatedEventFilter;
 
-    'BoardFrozen(uint256,bool)'(boardId?: BigNumberish | null, frozen?: null): BoardFrozenEventFilter;
-    BoardFrozen(boardId?: BigNumberish | null, frozen?: null): BoardFrozenEventFilter;
+    'BoardFrozen(uint256,bool)'(boardId?: PromiseOrValue<BigNumberish> | null, frozen?: null): BoardFrozenEventFilter;
+    BoardFrozen(boardId?: PromiseOrValue<BigNumberish> | null, frozen?: null): BoardFrozenEventFilter;
 
     'BoardSettled(uint256,uint256,uint256,uint256,uint256,uint256,uint256,uint256)'(
-      boardId?: BigNumberish | null,
+      boardId?: PromiseOrValue<BigNumberish> | null,
       spotPriceAtExpiry?: null,
       totalUserLongProfitQuote?: null,
       totalBoardLongCallCollateral?: null,
@@ -1042,7 +1121,7 @@ export interface OptionMarket extends BaseContract {
       totalAMMShortPutProfitQuote?: null,
     ): BoardSettledEventFilter;
     BoardSettled(
-      boardId?: BigNumberish | null,
+      boardId?: PromiseOrValue<BigNumberish> | null,
       spotPriceAtExpiry?: null,
       totalUserLongProfitQuote?: null,
       totalBoardLongCallCollateral?: null,
@@ -1069,34 +1148,37 @@ export interface OptionMarket extends BaseContract {
     SMClaimed(securityModule?: null, quoteAmount?: null, baseAmount?: null): SMClaimedEventFilter;
 
     'StrikeAdded(uint256,uint256,uint256,uint256)'(
-      boardId?: BigNumberish | null,
-      strikeId?: BigNumberish | null,
+      boardId?: PromiseOrValue<BigNumberish> | null,
+      strikeId?: PromiseOrValue<BigNumberish> | null,
       strikePrice?: null,
       skew?: null,
     ): StrikeAddedEventFilter;
     StrikeAdded(
-      boardId?: BigNumberish | null,
-      strikeId?: BigNumberish | null,
+      boardId?: PromiseOrValue<BigNumberish> | null,
+      strikeId?: PromiseOrValue<BigNumberish> | null,
       strikePrice?: null,
       skew?: null,
     ): StrikeAddedEventFilter;
 
-    'StrikeSkewSet(uint256,uint256)'(strikeId?: BigNumberish | null, skew?: null): StrikeSkewSetEventFilter;
-    StrikeSkewSet(strikeId?: BigNumberish | null, skew?: null): StrikeSkewSetEventFilter;
+    'StrikeSkewSet(uint256,uint256)'(
+      strikeId?: PromiseOrValue<BigNumberish> | null,
+      skew?: null,
+    ): StrikeSkewSetEventFilter;
+    StrikeSkewSet(strikeId?: PromiseOrValue<BigNumberish> | null, skew?: null): StrikeSkewSetEventFilter;
 
     'Trade(address,uint256,uint256,tuple,tuple[],tuple,uint256)'(
-      trader?: string | null,
-      strikeId?: BigNumberish | null,
-      positionId?: BigNumberish | null,
+      trader?: PromiseOrValue<string> | null,
+      strikeId?: PromiseOrValue<BigNumberish> | null,
+      positionId?: PromiseOrValue<BigNumberish> | null,
       trade?: null,
       tradeResults?: null,
       liquidation?: null,
       timestamp?: null,
     ): TradeEventFilter;
     Trade(
-      trader?: string | null,
-      strikeId?: BigNumberish | null,
-      positionId?: BigNumberish | null,
+      trader?: PromiseOrValue<string> | null,
+      strikeId?: PromiseOrValue<BigNumberish> | null,
+      positionId?: PromiseOrValue<BigNumberish> | null,
       trade?: null,
       tradeResults?: null,
       liquidation?: null,
@@ -1105,90 +1187,93 @@ export interface OptionMarket extends BaseContract {
   };
 
   estimateGas: {
-    acceptOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    acceptOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     addCollateral(
-      positionId: BigNumberish,
-      amountCollateral: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      positionId: PromiseOrValue<BigNumberish>,
+      amountCollateral: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     addStrikeToBoard(
-      boardId: BigNumberish,
-      strikePrice: BigNumberish,
-      skew: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      boardId: PromiseOrValue<BigNumberish>,
+      strikePrice: PromiseOrValue<BigNumberish>,
+      skew: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    boardToPriceAtExpiry(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    boardToPriceAtExpiry(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     closePosition(
       params: OptionMarket.TradeInputParametersStruct,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     createOptionBoard(
-      expiry: BigNumberish,
-      baseIV: BigNumberish,
-      strikePrices: BigNumberish[],
-      skews: BigNumberish[],
-      frozen: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      expiry: PromiseOrValue<BigNumberish>,
+      baseIV: PromiseOrValue<BigNumberish>,
+      strikePrices: PromiseOrValue<BigNumberish>[],
+      skews: PromiseOrValue<BigNumberish>[],
+      frozen: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     forceClosePosition(
       params: OptionMarket.TradeInputParametersStruct,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     forceSettleBoard(
-      boardId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      boardId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    getBoardAndStrikeDetails(boardId: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    getBoardAndStrikeDetails(boardId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    getBoardStrikes(boardId: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    getBoardStrikes(boardId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     getLiveBoards(overrides?: CallOverrides): Promise<BigNumber>;
 
     getNumLiveBoards(overrides?: CallOverrides): Promise<BigNumber>;
 
-    getOptionBoard(boardId: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    getOptionBoard(boardId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    getSettlementParameters(strikeId: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    getSettlementParameters(strikeId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    getStrike(strikeId: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    getStrike(strikeId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    getStrikeAndBoard(strikeId: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    getStrikeAndBoard(strikeId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    getStrikeAndExpiry(strikeId: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    getStrikeAndExpiry(strikeId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     init(
-      _synthetixAdapter: string,
-      _liquidityPool: string,
-      _optionPricer: string,
-      _greekCache: string,
-      _shortCollateral: string,
-      _optionToken: string,
-      _quoteAsset: string,
-      _baseAsset: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _synthetixAdapter: PromiseOrValue<string>,
+      _liquidityPool: PromiseOrValue<string>,
+      _optionPricer: PromiseOrValue<string>,
+      _greekCache: PromiseOrValue<string>,
+      _shortCollateral: PromiseOrValue<string>,
+      _optionToken: PromiseOrValue<string>,
+      _quoteAsset: PromiseOrValue<string>,
+      _baseAsset: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     liquidatePosition(
-      positionId: BigNumberish,
-      rewardBeneficiary: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      positionId: PromiseOrValue<BigNumberish>,
+      rewardBeneficiary: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    nominateNewOwner(_owner: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    nominateNewOwner(
+      _owner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     nominatedOwner(overrides?: CallOverrides): Promise<BigNumber>;
 
     openPosition(
       params: OptionMarket.TradeInputParametersStruct,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     optionMarketParams(overrides?: CallOverrides): Promise<BigNumber>;
@@ -1196,126 +1281,135 @@ export interface OptionMarket extends BaseContract {
     owner(overrides?: CallOverrides): Promise<BigNumber>;
 
     setBoardBaseIv(
-      boardId: BigNumberish,
-      baseIv: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      boardId: PromiseOrValue<BigNumberish>,
+      baseIv: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setBoardFrozen(
-      boardId: BigNumberish,
-      frozen: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      boardId: PromiseOrValue<BigNumberish>,
+      frozen: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setOptionMarketParams(
       _optionMarketParams: OptionMarket.OptionMarketParametersStruct,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setStrikeSkew(
-      strikeId: BigNumberish,
-      skew: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      strikeId: PromiseOrValue<BigNumberish>,
+      skew: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     settleExpiredBoard(
-      boardId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      boardId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    smClaim(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    smClaim(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
-    strikeToBaseReturnedRatio(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    strikeToBaseReturnedRatio(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
   };
 
   populateTransaction: {
-    acceptOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    acceptOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     addCollateral(
-      positionId: BigNumberish,
-      amountCollateral: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      positionId: PromiseOrValue<BigNumberish>,
+      amountCollateral: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     addStrikeToBoard(
-      boardId: BigNumberish,
-      strikePrice: BigNumberish,
-      skew: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      boardId: PromiseOrValue<BigNumberish>,
+      strikePrice: PromiseOrValue<BigNumberish>,
+      skew: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    boardToPriceAtExpiry(arg0: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    boardToPriceAtExpiry(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     closePosition(
       params: OptionMarket.TradeInputParametersStruct,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     createOptionBoard(
-      expiry: BigNumberish,
-      baseIV: BigNumberish,
-      strikePrices: BigNumberish[],
-      skews: BigNumberish[],
-      frozen: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      expiry: PromiseOrValue<BigNumberish>,
+      baseIV: PromiseOrValue<BigNumberish>,
+      strikePrices: PromiseOrValue<BigNumberish>[],
+      skews: PromiseOrValue<BigNumberish>[],
+      frozen: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     forceClosePosition(
       params: OptionMarket.TradeInputParametersStruct,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     forceSettleBoard(
-      boardId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      boardId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    getBoardAndStrikeDetails(boardId: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getBoardAndStrikeDetails(
+      boardId: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
-    getBoardStrikes(boardId: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getBoardStrikes(boardId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     getLiveBoards(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     getNumLiveBoards(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    getOptionBoard(boardId: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getOptionBoard(boardId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    getSettlementParameters(strikeId: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getSettlementParameters(
+      strikeId: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
-    getStrike(strikeId: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getStrike(strikeId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    getStrikeAndBoard(strikeId: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getStrikeAndBoard(strikeId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    getStrikeAndExpiry(strikeId: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getStrikeAndExpiry(
+      strikeId: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
     init(
-      _synthetixAdapter: string,
-      _liquidityPool: string,
-      _optionPricer: string,
-      _greekCache: string,
-      _shortCollateral: string,
-      _optionToken: string,
-      _quoteAsset: string,
-      _baseAsset: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _synthetixAdapter: PromiseOrValue<string>,
+      _liquidityPool: PromiseOrValue<string>,
+      _optionPricer: PromiseOrValue<string>,
+      _greekCache: PromiseOrValue<string>,
+      _shortCollateral: PromiseOrValue<string>,
+      _optionToken: PromiseOrValue<string>,
+      _quoteAsset: PromiseOrValue<string>,
+      _baseAsset: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     liquidatePosition(
-      positionId: BigNumberish,
-      rewardBeneficiary: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      positionId: PromiseOrValue<BigNumberish>,
+      rewardBeneficiary: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     nominateNewOwner(
-      _owner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _owner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     nominatedOwner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     openPosition(
       params: OptionMarket.TradeInputParametersStruct,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     optionMarketParams(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -1323,35 +1417,38 @@ export interface OptionMarket extends BaseContract {
     owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     setBoardBaseIv(
-      boardId: BigNumberish,
-      baseIv: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      boardId: PromiseOrValue<BigNumberish>,
+      baseIv: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setBoardFrozen(
-      boardId: BigNumberish,
-      frozen: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      boardId: PromiseOrValue<BigNumberish>,
+      frozen: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setOptionMarketParams(
       _optionMarketParams: OptionMarket.OptionMarketParametersStruct,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setStrikeSkew(
-      strikeId: BigNumberish,
-      skew: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      strikeId: PromiseOrValue<BigNumberish>,
+      skew: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     settleExpiredBoard(
-      boardId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      boardId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    smClaim(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    smClaim(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
-    strikeToBaseReturnedRatio(arg0: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    strikeToBaseReturnedRatio(
+      arg0: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
   };
 }
