@@ -6,6 +6,7 @@ import { Network } from '~types/network.interface';
 
 import { MidasPool__factory } from './ethers';
 import { MidasPoolDirectory__factory } from './ethers';
+import { MidasPoolLens__factory } from './ethers';
 
 // eslint-disable-next-line
 type ContractOpts = { address: string; network: Network };
@@ -22,7 +23,11 @@ export class MidasContractFactory extends ContractFactory {
   midasPoolDirectory({ address, network }: ContractOpts) {
     return MidasPoolDirectory__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
+  midasPoolLens({ address, network }: ContractOpts) {
+    return MidasPoolLens__factory.connect(address, this.appToolkit.getNetworkProvider(network));
+  }
 }
 
 export type { MidasPool } from './ethers';
 export type { MidasPoolDirectory } from './ethers';
+export type { MidasPoolLens } from './ethers';

@@ -3,3 +3,4 @@
 /* eslint-disable */
 export { MidasPool__factory } from './MidasPool__factory';
 export { MidasPoolDirectory__factory } from './MidasPoolDirectory__factory';
+export { MidasPoolLens__factory } from './MidasPoolLens__factory';
