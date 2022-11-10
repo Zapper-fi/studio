@@ -13,7 +13,7 @@ import {
   GetTokenDefinitionsParams,
 } from '~position/template/contract-position.template.types';
 
-import { KyberSwapElasticContractFactory, PositionManager } from '../contracts';
+import { KyberswapElasticContractFactory, PositionManager } from '../contracts';
 
 import { KyberSwapElasticApyDataLoader } from './kyberswap-elastic.apy.data-loader';
 import { KyberSwapElasticLiquidityContractPositionBuilder } from './kyberswap-elastic.liquidity.contract-position-builder';
@@ -66,7 +66,7 @@ export abstract class KyberSwapElasticLiquidityContractPositionFetcher extends C
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(KyberSwapElasticContractFactory) protected readonly contractFactory: KyberSwapElasticContractFactory,
+    @Inject(KyberswapElasticContractFactory) protected readonly contractFactory: KyberswapElasticContractFactory,
     @Inject(KyberSwapElasticLiquidityContractPositionBuilder)
     protected readonly kyberElasticLiquidityContractPositionBuilder: KyberSwapElasticLiquidityContractPositionBuilder,
     @Inject(KyberSwapElasticApyDataLoader)

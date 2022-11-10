@@ -15,6 +15,14 @@ export const KYBERSWAP_ELASTIC_DEFINITION = appDefinition({
       id: 'liquidity',
       type: GroupType.POSITION,
       label: 'Pools',
+      groupLabel: 'Pools',
+    },
+
+    farm: {
+      id: 'farm',
+      type: GroupType.POSITION,
+      label: 'Farms',
+      groupLabel: 'Farms',
     },
   },
 

@@ -15,7 +15,7 @@ import { claimable, supplied } from '~position/position.utils';
 import { TokenDependencySelector } from '~position/selectors/token-dependency-selector.interface';
 import { Network } from '~types/network.interface';
 
-import { KyberSwapElasticContractFactory } from '../contracts';
+import { KyberswapElasticContractFactory } from '../contracts';
 import { KYBERSWAP_ELASTIC_DEFINITION } from '../kyberswap-elastic.definition';
 
 import { KyberSwapElasticLiquidityPositionDataProps } from './kyberswap-elastic.liquidity.contract-position-fetcher';
@@ -40,7 +40,7 @@ export class KyberSwapElasticLiquidityContractPositionBuilder {
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(KyberSwapElasticContractFactory) protected readonly contractFactory: KyberSwapElasticContractFactory,
+    @Inject(KyberswapElasticContractFactory) protected readonly contractFactory: KyberswapElasticContractFactory,
   ) {}
 
   async buildPosition({

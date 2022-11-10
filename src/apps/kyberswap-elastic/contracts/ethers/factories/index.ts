@@ -2,6 +2,8 @@
 /* tslint:disable */
 /* eslint-disable */
 export { Factory__factory } from './Factory__factory';
+export { Masterchef__factory } from './Masterchef__factory';
 export { Pool__factory } from './Pool__factory';
 export { PositionManager__factory } from './PositionManager__factory';
+export { RewardLookerV2__factory } from './RewardLookerV2__factory';
 export { TickReader__factory } from './TickReader__factory';
