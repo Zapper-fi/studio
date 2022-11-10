@@ -13,13 +13,13 @@ export const KWENTA_DEFINITION = appDefinition({
     isolated: {
       id: 'isolated',
       type: GroupType.POSITION,
-      label: 'Isolated'
+      label: 'Isolated',
     },
     cross: {
       id: 'cross',
       type: GroupType.POSITION,
-      label: 'Cross'
-    }
+      label: 'Cross',
+    },
   },
   tags: [AppTag.DERIVATIVES],
   keywords: [],

@@ -1,6 +1,7 @@
 import { Inject } from '@nestjs/common';
 import { parseBytes32String } from 'ethers/lib/utils';
 import { gql } from 'graphql-request';
+
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { getAppAssetImage } from '~app-toolkit/helpers/presentation/image.present';
 import { SYNTHETIX_DEFINITION } from '~apps/synthetix/synthetix.definition';
@@ -11,10 +12,8 @@ import {
   GetDisplayPropsParams,
   GetTokenBalancesParams,
 } from '~position/template/contract-position.template.types';
-import { Network } from '~types';
 
 import { KwentaContractFactory, KwentaFutures } from '../contracts';
-import KWENTA_DEFINITION from '../kwenta.definition';
 
 type GetContracts = {
   futuresMarkets: {
@@ -49,6 +48,7 @@ export abstract class OptimismKwentaPerpContractPositionFetcher extends Contract
       endpoint: 'https://api.thegraph.com/subgraphs/name/kwenta/optimism-main',
       query: getContractsQuery,
     });
+
     return contractsFromSubgraph.futuresMarkets.map(futuresMarket => ({ address: futuresMarket.id }));
   }
 
@@ -83,11 +83,10 @@ export abstract class OptimismKwentaPerpContractPositionFetcher extends Contract
 
   async getTokenBalancesPerPosition({ address, contract }: GetTokenBalancesParams<KwentaFutures>) {
     const accountAddress = await this.getAccountAddress(address);
-    if (accountAddress === "") {
+    if (accountAddress === '') {
       return [];
     }
     const remainingMargin = await contract.remainingMargin(accountAddress);
     return [remainingMargin.marginRemaining];
   }
-
 }
