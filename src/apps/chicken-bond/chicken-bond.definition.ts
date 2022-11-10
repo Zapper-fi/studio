@@ -7,7 +7,7 @@ export const CHICKEN_BOND_DEFINITION = appDefinition({
   id: 'chicken-bond',
   name: 'Chicken Bond',
   description: `A novel bonding mechanism - first applied to Liquity LUSD.`,
-  url: 'https://botto.com/',
+  url: 'https://www.chickenbonds.org/',
   tags: [AppTag.BONDS],
   links: {
     discord: 'https://discord.com/invite/5HXTuqeajm',
@@ -19,6 +19,12 @@ export const CHICKEN_BOND_DEFINITION = appDefinition({
       id: 'bond',
       type: GroupType.POSITION,
       label: 'Bond',
+    },
+
+    blusd: {
+      id: 'blusd',
+      type: GroupType.TOKEN,
+      label: 'bLUSD',
     },
   },
 
