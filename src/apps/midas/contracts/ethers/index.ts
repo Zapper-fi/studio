@@ -2,5 +2,7 @@
 /* tslint:disable */
 /* eslint-disable */
 export type { MidasPool } from './MidasPool';
+export type { MidasPoolDirectory } from './MidasPoolDirectory';
 export * as factories from './factories';
+export { MidasPoolDirectory__factory } from './factories/MidasPoolDirectory__factory';
 export { MidasPool__factory } from './factories/MidasPool__factory';
