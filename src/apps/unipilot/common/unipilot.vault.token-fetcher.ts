@@ -114,9 +114,9 @@ export abstract class UnipilotVaultTokenFetcher extends AppTokenTemplatePosition
   async getApy({
     appToken,
   }: GetDataPropsParams<UnipilotEthereumFactory, UnipilotVaultTokenDataProps, UnipilotVaultDefinition>) {
-    const apys = await this.vaultApyHelper.getApy(this.network);
+    const apys = await this.vaultApyHelper.getApy();
     if (apys && Object.keys(apys).length > 0) {
-      return parseFloat(apys[appToken.address].stats7d);
+      return parseFloat(apys[appToken.address].stats);
     }
     return 0;
   }

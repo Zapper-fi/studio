@@ -13,15 +13,15 @@ export class UnipilotVaultDefinitionsResolver {
   constructor(@Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit) {}
 
   @Cache({
-    key: network => `studio:unipilot:${network}:pool-data-efinitions`,
+    key: network => `studio:unipilot:${network}:pool-data-definitions`,
     ttl: 5 * 60, // 5 minutes
   })
   private async getVaultDefinitionsData(network: Network) {
-    const commonQuery = network === Network.ETHEREUM_MAINNET ? UNIPILOT_VAULTS : UNIPILOT_VAULTS_POLYGON;
+    const Query = network === Network.ETHEREUM_MAINNET ? UNIPILOT_VAULTS : UNIPILOT_VAULTS_POLYGON;
 
     const data = await this.appToolkit.helpers.theGraphHelper.request<UnipilotVaultFetcherResponse>({
       endpoint: SUBGRAPH_ENDPOINTS[network].stats,
-      query: commonQuery,
+      query: Query,
       variables: {
         first: 1000,
       },
@@ -48,11 +48,5 @@ export class UnipilotVaultDefinitionsResolver {
     });
 
     return vaultsDefinitions;
-  }
-
-  async getVaultDefinitionsDetails(network: Network) {
-    const vaults = await this.getVaultDefinitionsData(network);
-
-    return vaults;
   }
 }

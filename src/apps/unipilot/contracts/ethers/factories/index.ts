@@ -2,6 +2,4 @@
 /* tslint:disable */
 /* eslint-disable */
 export { UnipilotEthereumFactory__factory } from './UnipilotEthereumFactory__factory';
-export { UnipilotEthereumVault__factory } from './UnipilotEthereumVault__factory';
 export { UnipilotPolygonFactory__factory } from './UnipilotPolygonFactory__factory';
-export { UnipilotPolygonVault__factory } from './UnipilotPolygonVault__factory';

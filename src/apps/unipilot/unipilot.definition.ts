@@ -7,8 +7,8 @@ export const UNIPILOT_DEFINITION = appDefinition({
   id: 'unipilot',
   name: 'unipilot',
   description:
-    '"Unipilot manages your Uniswap v3 liquidity for you, keeping it in an optimal range so you can earn higher returns and save on gas."',
-  url: '"https://unipilot.io/"',
+    'Unipilot manages your Uniswap v3 liquidity for you, keeping it in an optimal range so you can earn higher returns and save on gas.',
+  url: 'https://unipilot.io/',
 
   groups: {
     pool: {
@@ -20,7 +20,12 @@ export const UNIPILOT_DEFINITION = appDefinition({
 
   tags: [AppTag.ASSET_MANAGEMENT],
   keywords: [],
-  links: {},
+  links: {
+    discord: 'https://discord.gg/DGRVmN7B',
+    medium: 'https://unipilot.medium.com/',
+    telegram: 'https://t.me/unipilot_io',
+    twitter: 'https://twitter.com/unipilot_io',
+  },
 
   supportedNetworks: {
     [Network.ETHEREUM_MAINNET]: [AppAction.VIEW],
