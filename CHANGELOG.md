@@ -4,6 +4,96 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.265.0](https://github.com/Zapper-fi/studio/compare/v0.264.0...v0.265.0) (2022-11-09)
+
+
+### Features
+
+* **apps:** Fix breaking APY ([f8b708b](https://github.com/Zapper-fi/studio/commit/f8b708b16de005cac0d851838a9af49628e8e7d0))
+
+## [0.264.0](https://github.com/Zapper-fi/studio/compare/v0.263.2...v0.264.0) (2022-11-09)
+
+
+### Features
+
+* **apps:** Extract getReserve call so it can be overridden ([#1672](https://github.com/Zapper-fi/studio/issues/1672)) ([ed015ea](https://github.com/Zapper-fi/studio/commit/ed015ea8942476d572b3f715c0b99a40a42529cb))
+
+## [0.263.2](https://github.com/Zapper-fi/studio/compare/v0.263.1...v0.263.2) (2022-11-08)
+
+
+### Bug Fixes
+
+* **llamapay:** Fix llamapay early return when address has no balance ([#1669](https://github.com/Zapper-fi/studio/issues/1669)) ([4a35810](https://github.com/Zapper-fi/studio/commit/4a35810f9f1b1c1d644e1bc1c1a92594cb485072))
+
+## [0.263.1](https://github.com/Zapper-fi/studio/compare/v0.263.0...v0.263.1) (2022-11-08)
+
+
+### Bug Fixes
+
+* **maker:** Fix Maker's TIV ([#1667](https://github.com/Zapper-fi/studio/issues/1667)) ([1689cba](https://github.com/Zapper-fi/studio/commit/1689cba8edeca6e24e35b260b46cbf994d056934))
+
+## [0.263.0](https://github.com/Zapper-fi/studio/compare/v0.262.0...v0.263.0) (2022-11-08)
+
+
+### Features
+
+* **synthetix:** Fix duration ([c99aa75](https://github.com/Zapper-fi/studio/commit/c99aa7538f94227b02b02637fc88a52e2d17cc12))
+
+
+### Bug Fixes
+
+* **velodrome:** Fix Velodrome voting escrow  balance ([#1665](https://github.com/Zapper-fi/studio/issues/1665)) ([76c35b2](https://github.com/Zapper-fi/studio/commit/76c35b29976f78feeda920de145c316f86fcc6a8))
+
+## [0.262.0](https://github.com/Zapper-fi/studio/compare/v0.261.0...v0.262.0) (2022-11-08)
+
+
+### Features
+
+* **apps:** Few small fixes to LlamaPay ([5428799](https://github.com/Zapper-fi/studio/commit/542879924121ba31907e9b7b3d2c0bcc52f42351))
+* **llama:** Add Llamapay Module ([#1662](https://github.com/Zapper-fi/studio/issues/1662)) ([924c435](https://github.com/Zapper-fi/studio/commit/924c4357674734e75090fbbdc3f09f0d5fadbcff))
+* **llamapay:** Add missing logo ([553a83b](https://github.com/Zapper-fi/studio/commit/553a83b1a0643cc26d21ca052950bf47d5852094))
+* **qi-dao:** Migrate to templates ([#1661](https://github.com/Zapper-fi/studio/issues/1661)) ([8872bcd](https://github.com/Zapper-fi/studio/commit/8872bcd2890f96f79d800d6f2238b3491dbea987))
+* **synthetix:** Migrate to templates ([#1664](https://github.com/Zapper-fi/studio/issues/1664)) ([69fb4d5](https://github.com/Zapper-fi/studio/commit/69fb4d50b47b43e17187c6888c11133a1f69002b))
+* **templates:** Migrate Concentrator and Good Ghosting to templates ([#1660](https://github.com/Zapper-fi/studio/issues/1660)) ([7272b3b](https://github.com/Zapper-fi/studio/commit/7272b3b6dc13724c69f6ba778ca1511f1e347200))
+
+## [0.261.0](https://github.com/Zapper-fi/studio/compare/v0.260.0...v0.261.0) (2022-11-07)
+
+
+### Features
+
+* **curve:** Add dependency to Frax ([ccf35d7](https://github.com/Zapper-fi/studio/commit/ccf35d75c947118903a143139f06ae3a5549a034))
+
+## [0.260.0](https://github.com/Zapper-fi/studio/compare/v0.259.2...v0.260.0) (2022-11-07)
+
+
+### Features
+
+* **gearbox:** Add lending tokens ([#1656](https://github.com/Zapper-fi/studio/issues/1656)) ([a89058c](https://github.com/Zapper-fi/studio/commit/a89058ca9d4ee5e7ddca2626aa976f823fce9a5a))
+
+## [0.259.2](https://github.com/Zapper-fi/studio/compare/v0.259.1...v0.259.2) (2022-11-03)
+
+
+### Bug Fixes
+
+* **yearn:** Removed duplicate positions (st-yCRV and lp-yCRV) ([#1653](https://github.com/Zapper-fi/studio/issues/1653)) ([5da2cb4](https://github.com/Zapper-fi/studio/commit/5da2cb4f7768d0f5fd212bff9bfcbaebdeabb32c))
+
+## [0.259.1](https://github.com/Zapper-fi/studio/compare/v0.259.0...v0.259.1) (2022-11-03)
+
+
+### Bug Fixes
+
+* **art-gobblers:** Fix Art-Gobblers claimable metatype ([#1647](https://github.com/Zapper-fi/studio/issues/1647)) ([9487da5](https://github.com/Zapper-fi/studio/commit/9487da5a6226187924de3eacaa74cb00a9fc06a1))
+
+## [0.259.0](https://github.com/Zapper-fi/studio/compare/v0.258.0...v0.259.0) (2022-11-02)
+
+
+### Features
+
+* **art-gobblers:** Add Art-Gobblers claimable position ([#1645](https://github.com/Zapper-fi/studio/issues/1645)) ([16be86a](https://github.com/Zapper-fi/studio/commit/16be86a1b92277946bdb972b428c4d2405266d4a))
+* **banano:** Banano on ETH ([#1643](https://github.com/Zapper-fi/studio/issues/1643)) ([13b3394](https://github.com/Zapper-fi/studio/commit/13b33947af731f05ff7a6cdce5983c6f6e2d095b))
+* **mean-finance:** add mean finance arbitrum deployment ([#1636](https://github.com/Zapper-fi/studio/issues/1636)) ([a2ef083](https://github.com/Zapper-fi/studio/commit/a2ef083bde07f1fb7c2ec79ced49f38fdeda77cc))
+* **yearn:** Added Staked yCrv and Lp yCrv positions ([#1634](https://github.com/Zapper-fi/studio/issues/1634)) ([a0b7b8c](https://github.com/Zapper-fi/studio/commit/a0b7b8c16a5db4d8146552bcc68e838359787544))
+
 ## [0.258.0](https://github.com/Zapper-fi/studio/compare/v0.257.0...v0.258.0) (2022-10-31)
 
 

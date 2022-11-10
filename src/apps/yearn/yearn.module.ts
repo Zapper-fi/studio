@@ -7,6 +7,7 @@ import { YearnContractFactory } from './contracts';
 import { EthereumYearnGovernanceContractPositionFetcher } from './ethereum/yearn.governance.contract-position-fetcher';
 import { EthereumYearnV1VaultTokenFetcher } from './ethereum/yearn.v1-vault.token-fetcher';
 import { EthereumYearnV2VaultTokenFetcher } from './ethereum/yearn.v2-vault.token-fetcher';
+import { EthereumYearnYCrvTokenTokenFetcher } from './ethereum/yearn.y-crv.token-fetcher';
 import { EthereumYearnYieldTokenFetcher } from './ethereum/yearn.yield.token-fetcher';
 import { FantomYearnV2VaultTokenFetcher } from './fantom/yearn.v2-vault.token-fetcher';
 import { YearnAppDefinition, YEARN_DEFINITION } from './yearn.definition';
@@ -23,6 +24,7 @@ import { YearnAppDefinition, YEARN_DEFINITION } from './yearn.definition';
     EthereumYearnV1VaultTokenFetcher,
     EthereumYearnV2VaultTokenFetcher,
     EthereumYearnYieldTokenFetcher,
+    EthereumYearnYCrvTokenTokenFetcher,
     // Fantom
     FantomYearnV2VaultTokenFetcher,
     // Arbitrum
