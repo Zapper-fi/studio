@@ -9,6 +9,7 @@ import type {
   CallOverrides,
   ContractTransaction,
   Overrides,
+  PayableOverrides,
   PopulatedTransaction,
   Signer,
   utils,
@@ -37,6 +38,11 @@ export declare namespace FusePoolDirectory {
 
 export interface MidasPoolDirectoryInterface extends utils.Interface {
   functions: {
+    'admin()': FunctionFragment;
+    'changeAdmin(address)': FunctionFragment;
+    'implementation()': FunctionFragment;
+    'upgradeTo(address)': FunctionFragment;
+    'upgradeToAndCall(address,bytes)': FunctionFragment;
     '_acceptOwner()': FunctionFragment;
     '_editAdminWhitelist(address[],bool)': FunctionFragment;
     '_editDeployerWhitelist(address[],bool)': FunctionFragment;
@@ -66,6 +72,11 @@ export interface MidasPoolDirectoryInterface extends utils.Interface {
 
   getFunction(
     nameOrSignatureOrTopic:
+      | 'admin'
+      | 'changeAdmin'
+      | 'implementation'
+      | 'upgradeTo'
+      | 'upgradeToAndCall'
       | '_acceptOwner'
       | '_editAdminWhitelist'
       | '_editDeployerWhitelist'
@@ -93,6 +104,14 @@ export interface MidasPoolDirectoryInterface extends utils.Interface {
       | 'transferOwnership',
   ): FunctionFragment;
 
+  encodeFunctionData(functionFragment: 'admin', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'changeAdmin', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'implementation', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'upgradeTo', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'upgradeToAndCall',
+    values: [PromiseOrValue<string>, PromiseOrValue<BytesLike>],
+  ): string;
   encodeFunctionData(functionFragment: '_acceptOwner', values?: undefined): string;
   encodeFunctionData(
     functionFragment: '_editAdminWhitelist',
@@ -145,6 +164,11 @@ export interface MidasPoolDirectoryInterface extends utils.Interface {
   ): string;
   encodeFunctionData(functionFragment: 'transferOwnership', values: [PromiseOrValue<string>]): string;
 
+  decodeFunctionResult(functionFragment: 'admin', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'changeAdmin', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'implementation', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'upgradeTo', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'upgradeToAndCall', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: '_acceptOwner', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: '_editAdminWhitelist', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: '_editDeployerWhitelist', data: BytesLike): Result;
@@ -172,6 +196,9 @@ export interface MidasPoolDirectoryInterface extends utils.Interface {
   decodeFunctionResult(functionFragment: 'transferOwnership', data: BytesLike): Result;
 
   events: {
+    'AdminChanged(address,address)': EventFragment;
+    'BeaconUpgraded(address)': EventFragment;
+    'Upgraded(address)': EventFragment;
     'AdminWhitelistUpdated(address[],bool)': EventFragment;
     'Initialized(uint8)': EventFragment;
     'NewOwner(address,address)': EventFragment;
@@ -180,6 +207,9 @@ export interface MidasPoolDirectoryInterface extends utils.Interface {
     'PoolRegistered(uint256,tuple)': EventFragment;
   };
 
+  getEvent(nameOrSignatureOrTopic: 'AdminChanged'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'BeaconUpgraded'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'Upgraded'): EventFragment;
   getEvent(nameOrSignatureOrTopic: 'AdminWhitelistUpdated'): EventFragment;
   getEvent(nameOrSignatureOrTopic: 'Initialized'): EventFragment;
   getEvent(nameOrSignatureOrTopic: 'NewOwner'): EventFragment;
@@ -187,6 +217,28 @@ export interface MidasPoolDirectoryInterface extends utils.Interface {
   getEvent(nameOrSignatureOrTopic: 'OwnershipTransferred'): EventFragment;
   getEvent(nameOrSignatureOrTopic: 'PoolRegistered'): EventFragment;
 }
+
+export interface AdminChangedEventObject {
+  previousAdmin: string;
+  newAdmin: string;
+}
+export type AdminChangedEvent = TypedEvent<[string, string], AdminChangedEventObject>;
+
+export type AdminChangedEventFilter = TypedEventFilter<AdminChangedEvent>;
+
+export interface BeaconUpgradedEventObject {
+  beacon: string;
+}
+export type BeaconUpgradedEvent = TypedEvent<[string], BeaconUpgradedEventObject>;
+
+export type BeaconUpgradedEventFilter = TypedEventFilter<BeaconUpgradedEvent>;
+
+export interface UpgradedEventObject {
+  implementation: string;
+}
+export type UpgradedEvent = TypedEvent<[string], UpgradedEventObject>;
+
+export type UpgradedEventFilter = TypedEventFilter<UpgradedEvent>;
 
 export interface AdminWhitelistUpdatedEventObject {
   admins: string[];
@@ -261,6 +313,26 @@ export interface MidasPoolDirectory extends BaseContract {
   removeListener: OnEvent<this>;
 
   functions: {
+    admin(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
+
+    changeAdmin(
+      newAdmin: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<ContractTransaction>;
+
+    implementation(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
+
+    upgradeTo(
+      newImplementation: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<ContractTransaction>;
+
+    upgradeToAndCall(
+      newImplementation: PromiseOrValue<string>,
+      data: PromiseOrValue<BytesLike>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
+    ): Promise<ContractTransaction>;
+
     _acceptOwner(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     _editAdminWhitelist(
@@ -368,6 +440,26 @@ export interface MidasPoolDirectory extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
   };
+
+  admin(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
+
+  changeAdmin(
+    newAdmin: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
+  ): Promise<ContractTransaction>;
+
+  implementation(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
+
+  upgradeTo(
+    newImplementation: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
+  ): Promise<ContractTransaction>;
+
+  upgradeToAndCall(
+    newImplementation: PromiseOrValue<string>,
+    data: PromiseOrValue<BytesLike>,
+    overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
+  ): Promise<ContractTransaction>;
 
   _acceptOwner(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
@@ -477,6 +569,20 @@ export interface MidasPoolDirectory extends BaseContract {
   ): Promise<ContractTransaction>;
 
   callStatic: {
+    admin(overrides?: CallOverrides): Promise<string>;
+
+    changeAdmin(newAdmin: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
+
+    implementation(overrides?: CallOverrides): Promise<string>;
+
+    upgradeTo(newImplementation: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
+
+    upgradeToAndCall(
+      newImplementation: PromiseOrValue<string>,
+      data: PromiseOrValue<BytesLike>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
+
     _acceptOwner(overrides?: CallOverrides): Promise<void>;
 
     _editAdminWhitelist(
@@ -577,6 +683,15 @@ export interface MidasPoolDirectory extends BaseContract {
   };
 
   filters: {
+    'AdminChanged(address,address)'(previousAdmin?: null, newAdmin?: null): AdminChangedEventFilter;
+    AdminChanged(previousAdmin?: null, newAdmin?: null): AdminChangedEventFilter;
+
+    'BeaconUpgraded(address)'(beacon?: PromiseOrValue<string> | null): BeaconUpgradedEventFilter;
+    BeaconUpgraded(beacon?: PromiseOrValue<string> | null): BeaconUpgradedEventFilter;
+
+    'Upgraded(address)'(implementation?: PromiseOrValue<string> | null): UpgradedEventFilter;
+    Upgraded(implementation?: PromiseOrValue<string> | null): UpgradedEventFilter;
+
     'AdminWhitelistUpdated(address[],bool)'(admins?: null, status?: null): AdminWhitelistUpdatedEventFilter;
     AdminWhitelistUpdated(admins?: null, status?: null): AdminWhitelistUpdatedEventFilter;
 
@@ -603,6 +718,26 @@ export interface MidasPoolDirectory extends BaseContract {
   };
 
   estimateGas: {
+    admin(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
+
+    changeAdmin(
+      newAdmin: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
+
+    implementation(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
+
+    upgradeTo(
+      newImplementation: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
+
+    upgradeToAndCall(
+      newImplementation: PromiseOrValue<string>,
+      data: PromiseOrValue<BytesLike>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
+
     _acceptOwner(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     _editAdminWhitelist(
@@ -695,6 +830,26 @@ export interface MidasPoolDirectory extends BaseContract {
   };
 
   populateTransaction: {
+    admin(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
+
+    changeAdmin(
+      newAdmin: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<PopulatedTransaction>;
+
+    implementation(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
+
+    upgradeTo(
+      newImplementation: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<PopulatedTransaction>;
+
+    upgradeToAndCall(
+      newImplementation: PromiseOrValue<string>,
+      data: PromiseOrValue<BytesLike>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
+    ): Promise<PopulatedTransaction>;
+
     _acceptOwner(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     _editAdminWhitelist(
