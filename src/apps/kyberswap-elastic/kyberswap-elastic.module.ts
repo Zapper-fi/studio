@@ -1,7 +1,9 @@
 import { Register } from '~app-toolkit/decorators';
 import { AbstractApp } from '~app/app.dynamic-module';
 
+import { ArbitrumKyberswapElasticFarmContractPositionFetcher } from './arbitrum/kyberswap-elastic.farm.contract-position-fetcher';
 import { ArbitrumKyberswapElasticLiquidityContractPositionFetcher } from './arbitrum/kyberswap-elastic.liquidity.contract-position-fetcher';
+import { AvalancheKyberswapElasticFarmContractPositionFetcher } from './avalanche/kyberswap-elastic.farm.contract-position-fetcher';
 import { AvalancheKyberswapElasticLiquidityContractPositionFetcher } from './avalanche/kyberswap-elastic.liquidity.contract-position-fetcher';
 import { BinanceSmartChainKyberswapElasticLiquidityContractPositionFetcher } from './binance-smart-chain/kyberswap-elastic.liquidity.contract-position-fetcher';
 import { KyberswapElasticApyDataLoader } from './common/kyberswap-elastic.apy.data-loader';
@@ -13,7 +15,9 @@ import { EthereumKyberswapElasticFarmContractPositionFetcher } from './ethereum/
 import { EthereumKyberswapElasticLiquidityContractPositionFetcher } from './ethereum/kyberswap-elastic.liquidity.contract-position-fetcher';
 import { FantomKyberswapElasticLiquidityContractPositionFetcher } from './fantom/kyberswap-elastic.liquidity.contract-position-fetcher';
 import KYBERSWAP_ELASTIC_DEFINITION, { KyberswapElasticAppDefinition } from './kyberswap-elastic.definition';
+import { OptimismKyberswapElasticFarmContractPositionFetcher } from './optimism/kyberswap-elastic.farm.contract-position-fetcher';
 import { OptimismKyberswapElasticLiquidityContractPositionFetcher } from './optimism/kyberswap-elastic.liquidity.contract-position-fetcher';
+import { PolygonKyberswapElasticFarmContractPositionFetcher } from './polygon/kyberswap-elastic.farm.contract-position-fetcher';
 import { PolygonKyberswapElasticLiquidityContractPositionFetcher } from './polygon/kyberswap-elastic.liquidity.contract-position-fetcher';
 
 @Register.AppModule({
@@ -31,16 +35,20 @@ import { PolygonKyberswapElasticLiquidityContractPositionFetcher } from './polyg
     BinanceSmartChainKyberswapElasticLiquidityContractPositionFetcher,
     // Avalanche
     AvalancheKyberswapElasticLiquidityContractPositionFetcher,
+    AvalancheKyberswapElasticFarmContractPositionFetcher,
     // Fantom
     FantomKyberswapElasticLiquidityContractPositionFetcher,
     // Optimism
     OptimismKyberswapElasticLiquidityContractPositionFetcher,
+    OptimismKyberswapElasticFarmContractPositionFetcher,
     // Cronos
     CronosKyberswapElasticLiquidityContractPositionFetcher,
     // Arbitrum
     ArbitrumKyberswapElasticLiquidityContractPositionFetcher,
+    ArbitrumKyberswapElasticFarmContractPositionFetcher,
     // Polygon
     PolygonKyberswapElasticLiquidityContractPositionFetcher,
+    PolygonKyberswapElasticFarmContractPositionFetcher,
   ],
 })
 export class KyberswapElasticAppModule extends AbstractApp() {}
