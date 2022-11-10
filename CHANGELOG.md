@@ -4,6 +4,16 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.266.0](https://github.com/Zapper-fi/studio/compare/v0.265.0...v0.266.0) (2022-11-10)
+
+
+### Features
+
+* **chicken-bond:** Add Chicken Bond and bLUSD app token ([#1676](https://github.com/Zapper-fi/studio/issues/1676)) ([cef610d](https://github.com/Zapper-fi/studio/commit/cef610d1ff60834345d9c45dcd1fc73ae0176d33))
+* **chicken-bond:** Fix definition ([e657d52](https://github.com/Zapper-fi/studio/commit/e657d520356f2333bec551b88a572b834dc7be0c))
+* **lyra-avalon:** Replace deprecated subgraph URL ([#1677](https://github.com/Zapper-fi/studio/issues/1677)) ([a239e60](https://github.com/Zapper-fi/studio/commit/a239e6042ba1dd8662f7d094dac9c55112fe52b7))
+* **unipilot:** Add Unipilot integration ([#1680](https://github.com/Zapper-fi/studio/issues/1680)) ([1beeda9](https://github.com/Zapper-fi/studio/commit/1beeda944bd07d5a10a1797383c324d0b360283b))
+
 ## [0.265.0](https://github.com/Zapper-fi/studio/compare/v0.264.0...v0.265.0) (2022-11-09)
 
 
