@@ -39,7 +39,7 @@ export const GET_POOL_INFOS = gql`
   }
 `;
 
-export class KyberSwapElasticApyDataLoader {
+export class KyberswapElasticApyDataLoader {
   constructor(@Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit) {}
 
   getLoader({ subgraphUrl, blockSubgraphUrl }: { subgraphUrl: string; blockSubgraphUrl: string }) {
