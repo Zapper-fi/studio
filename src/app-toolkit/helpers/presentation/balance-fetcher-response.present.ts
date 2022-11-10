@@ -1,6 +1,6 @@
 import _ from 'lodash';
 
-import { MetadataItemWithLabel, TokenBalanceResponse } from '~balance/balance-fetcher.interface';
+import { LazyTokenBalanceResponse, MetadataItemWithLabel } from '~balance/balance-fetcher.interface';
 import { ContractType } from '~position/contract.interface';
 import { AppTokenPositionBalance, ContractPositionBalance, TokenBalance } from '~position/position-balance.interface';
 
@@ -47,29 +47,28 @@ type Product = {
   meta?: MetadataItemWithLabel[];
 };
 
-export const presentBalanceFetcherResponse = (
-  products: Product[],
-  meta: MetadataItemWithLabel[] = [],
-): TokenBalanceResponse => {
-  // Exclude any asset groups that have negligible balances
-  const nonZeroBalanceProducts = products
-    .map(assetGroup => ({
+export const presentBalanceFetcherResponse = (products: Product[]): LazyTokenBalanceResponse => {
+  return (includeZeroBalances?: true) => {
+    // Exclude any asset groups that have negligible balances
+    const nonZeroBalanceProducts = products
+      .map(assetGroup => ({
+        ...assetGroup,
+        assets: assetGroup.assets.filter(b => !!b).filter(b => includeZeroBalances || Math.abs(b.balanceUSD) >= 0.01),
+      }))
+      .filter(assetGroup => assetGroup.assets.length > 0);
+
+    // Build totals for each asset group
+    const productsWithTotals = nonZeroBalanceProducts.map(assetGroup => ({
       ...assetGroup,
-      assets: assetGroup.assets.filter(b => !!b).filter(b => Math.abs(b.balanceUSD) >= 0.01),
-    }))
-    .filter(assetGroup => assetGroup.assets.length > 0);
+      meta: assetGroup.meta ?? [],
+    }));
 
-  // Build totals for each asset group
-  const productsWithTotals = nonZeroBalanceProducts.map(assetGroup => ({
-    ...assetGroup,
-    meta: assetGroup.meta ?? [],
-  }));
+    const totalsMeta = getTotalsMeta(productsWithTotals.flatMap(assetGroup => assetGroup.assets));
+    const metaWithTotals = [...totalsMeta];
 
-  const totalsMeta = getTotalsMeta(productsWithTotals.flatMap(assetGroup => assetGroup.assets));
-  const metaWithTotals = [...meta, ...totalsMeta];
-
-  return {
-    products: productsWithTotals,
-    meta: metaWithTotals,
+    return {
+      products: productsWithTotals,
+      meta: metaWithTotals,
+    };
   };
 };

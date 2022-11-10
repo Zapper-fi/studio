@@ -15,6 +15,8 @@ export interface TokenBalanceResponse {
   error?: string;
 }
 
+export type LazyTokenBalanceResponse = (includeZeroBalances?: true) => TokenBalanceResponse;
+
 export interface BalanceFetcher {
-  getBalances(address: string): Promise<TokenBalanceResponse>;
+  getBalances(address: string): Promise<LazyTokenBalanceResponse>;
 }

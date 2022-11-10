@@ -53,19 +53,19 @@ export class BalancePresentationService {
       this.balancePresenterRegistry.get(appId, network) ??
       this.defaultBalancePresenterFactory.build({ appId, network });
 
-    return presenter.present(address, balances);
+    return presenter.present(address, balances).then(v => v());
   }
 
   async presentTemplates({ address, appId, network, balances }: PresentParams): Promise<TokenBalanceResponse> {
     // Use default presenter when no custom presenter
     const customPresenter = this.positionPresenterRegistry.get(appId, network);
     const defaultPresenter = this.defaultPositionPresenterFactory.build({ appId, network });
-    if (!customPresenter) return defaultPresenter.presentBalances(balances);
+    if (!customPresenter) return defaultPresenter.presentBalances(balances).then(v => v());
 
     // When balance product meta resolvers, use default presenter with position groups from either the custom or default presenter
     const positionGroups = customPresenter.positionGroups ?? defaultPresenter.getBalanceProductGroups();
     const balanceProductMetaResolvers = this.positionPresenterRegistry.getBalanceProductMetaResolvers(appId, network);
-    if (!balanceProductMetaResolvers) return defaultPresenter.presentBalances(balances, positionGroups);
+    if (!balanceProductMetaResolvers) return defaultPresenter.presentBalances(balances, positionGroups).then(v => v());
 
     // Try to resolve balance product metas, grouping balances by group selector specified in the custom presenter
     const presentedBalances = await Promise.all(
@@ -86,6 +86,6 @@ export class BalancePresentationService {
       }),
     );
 
-    return presentBalanceFetcherResponse(presentedBalances.flat());
+    return presentBalanceFetcherResponse(presentedBalances.flat())();
   }
 }
