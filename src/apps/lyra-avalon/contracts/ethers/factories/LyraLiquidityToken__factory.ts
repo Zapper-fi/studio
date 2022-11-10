@@ -4,7 +4,7 @@
 
 import { Contract, Signer, utils } from 'ethers';
 import type { Provider } from '@ethersproject/providers';
-import type { LiquidityToken, LiquidityTokenInterface } from '../LiquidityToken';
+import type { LyraLiquidityToken, LyraLiquidityTokenInterface } from '../LyraLiquidityToken';
 
 const _abi = [
   {
@@ -535,12 +535,12 @@ const _abi = [
   },
 ];
 
-export class LiquidityToken__factory {
+export class LyraLiquidityToken__factory {
   static readonly abi = _abi;
-  static createInterface(): LiquidityTokenInterface {
-    return new utils.Interface(_abi) as LiquidityTokenInterface;
+  static createInterface(): LyraLiquidityTokenInterface {
+    return new utils.Interface(_abi) as LyraLiquidityTokenInterface;
   }
-  static connect(address: string, signerOrProvider: Signer | Provider): LiquidityToken {
-    return new Contract(address, _abi, signerOrProvider) as LiquidityToken;
+  static connect(address: string, signerOrProvider: Signer | Provider): LyraLiquidityToken {
+    return new Contract(address, _abi, signerOrProvider) as LyraLiquidityToken;
   }
 }

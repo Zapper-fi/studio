@@ -3,20 +3,17 @@ import Axios from 'axios';
 import { gql } from 'graphql-request';
 
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
-import { Register } from '~app-toolkit/decorators';
-import { CacheOnInterval } from '~cache/cache-on-interval.decorator';
-import { PositionFetcher } from '~position/position-fetcher.interface';
-import { AppTokenPosition } from '~position/position.interface';
-import { Network } from '~types/network.interface';
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
+import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
+import {
+  DefaultAppTokenDefinition,
+  GetDataPropsParams,
+  DefaultAppTokenDataProps,
+  GetAddressesParams,
+  GetPricePerShareParams,
+} from '~position/template/app-token.template.types';
 
-import { LyraAvalonContractFactory, LiquidityToken } from '../contracts';
-import { LYRA_AVALON_DEFINITION } from '../lyra-avalon.definition';
-
-import { runQuery } from './helpers/graph';
-
-const appId = LYRA_AVALON_DEFINITION.id;
-const groupId = LYRA_AVALON_DEFINITION.groups.pool.id;
-const network = Network.OPTIMISM_MAINNET;
+import { LyraAvalonContractFactory, LyraLiquidityToken } from '../contracts';
 
 type LyraMainnetAddresses = Record<
   string,
@@ -53,55 +50,65 @@ const QUERY = gql`
   }
 `;
 
-@Register.TokenPositionFetcher({ appId, groupId, network })
-export class OptimismLyraAvalonPoolTokenFetcher implements PositionFetcher<AppTokenPosition> {
+@PositionTemplate()
+export class OptimismLyraAvalonPoolTokenFetcher extends AppTokenTemplatePositionFetcher<LyraLiquidityToken> {
+  groupLabel = 'Pools';
+
   constructor(
-    @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
-    @Inject(LyraAvalonContractFactory) private readonly contractFactory: LyraAvalonContractFactory,
-  ) {}
-
-  @CacheOnInterval({
-    key: `studio:${appId}:${groupId}:${network}:addresses`,
-    timeout: 15 * 60 * 1000,
-  })
-  private async getCachedAddressConfig() {
-    const { data } = await Axios.get<LyraMainnetAddresses>(
-      'https://raw.githubusercontent.com/lyra-finance/subgraph/master/addresses/mainnet-ovm/lyra.json',
-    );
-
-    return data;
+    @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
+    @Inject(LyraAvalonContractFactory) protected readonly contractFactory: LyraAvalonContractFactory,
+  ) {
+    super(appToolkit);
   }
 
-  async getPositions() {
-    const addresses = await this.getCachedAddressConfig();
-    const multicall = this.appToolkit.getMulticall(network);
-    const registryContract = this.contractFactory.lyraRegistry({ address: addresses.LyraRegistry.address, network });
+  getContract(address: string): LyraLiquidityToken {
+    return this.contractFactory.lyraLiquidityToken({ address, network: this.network });
+  }
 
-    const baseTokens = await this.appToolkit.getBaseTokenPrices(network);
-    const quoteToken = baseTokens.find(token => token.symbol === 'sUSD')!;
+  async getAddresses({ multicall }: GetAddressesParams<DefaultAppTokenDefinition>) {
+    const dataUrl = 'https://raw.githubusercontent.com/lyra-finance/subgraph/master/addresses/mainnet-ovm/lyra.json';
+    const { data: addresses } = await Axios.get<LyraMainnetAddresses>(dataUrl);
+    const registryContract = this.contractFactory.lyraRegistry({
+      address: addresses.LyraRegistry.address,
+      network: this.network,
+    });
 
-    const response = await runQuery<QueryResponse>(this.appToolkit.helpers.theGraphHelper, QUERY);
+    const marketsResponse = await this.appToolkit.helpers.theGraphHelper.requestGraph<QueryResponse>({
+      endpoint: 'https://subgraph.satsuma-prod.com/lyra/optimism-mainnet/api',
+      query: QUERY,
+    });
+
     const markets = await Promise.all(
-      response.markets.map(market => multicall.wrap(registryContract).marketAddresses(market.id)),
+      marketsResponse.markets.map(market => multicall.wrap(registryContract).marketAddresses(market.id)),
     );
 
-    const tokens = await this.appToolkit.helpers.vaultTokenHelper.getTokens<LiquidityToken>({
-      appId,
-      groupId,
-      network,
-      resolveVaultAddresses: () => markets.map(market => market.liquidityTokens),
-      resolveContract: ({ address, network }) => this.contractFactory.liquidityToken({ address, network }),
-      // Note: There are actually two underlying tokens
-      // We will pretend there is only USD and use the price specified by the pool contract
-      resolveUnderlyingTokenAddress: () => quoteToken.address,
-      resolveReserve: () => 0,
-      resolvePricePerShare: async ({ multicall, contract, underlyingToken }) => {
-        const pool = await multicall.wrap(contract).liquidityPool();
-        const poolContract = this.contractFactory.liquidityPool({ address: pool, network });
-        const ratio = await multicall.wrap(poolContract).getTokenPrice();
-        return Number(ratio) / 10 ** underlyingToken.decimals;
-      },
-    });
-    return tokens;
+    return markets.map(market => market.liquidityTokens);
+  }
+
+  async getUnderlyingTokenAddresses() {
+    return ['0x8c6f28f2f1a3c87f0f938b96d27520d9751ec8d9']; // sUSD
+  }
+
+  async getPricePerShare({
+    appToken,
+    contract,
+    multicall,
+  }: GetPricePerShareParams<LyraLiquidityToken, DefaultAppTokenDataProps, DefaultAppTokenDefinition>) {
+    const pool = await contract.liquidityPool();
+    const poolContract = this.contractFactory.lyraLiquidityPool({ address: pool, network: this.network });
+    const ratio = await multicall.wrap(poolContract).getTokenPrice();
+    return Number(ratio) / 10 ** appToken.tokens[0].decimals;
+  }
+
+  async getLiquidity({ appToken }: GetDataPropsParams<LyraLiquidityToken>) {
+    return appToken.supply * appToken.price;
+  }
+
+  async getReserves({ appToken }: GetDataPropsParams<LyraLiquidityToken>) {
+    return [appToken.pricePerShare[0] * appToken.supply];
+  }
+
+  async getApy(_params: GetDataPropsParams<LyraLiquidityToken>) {
+    return 0;
   }
 }

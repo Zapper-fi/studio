@@ -4,7 +4,7 @@
 
 import { Contract, Signer, utils } from 'ethers';
 import type { Provider } from '@ethersproject/providers';
-import type { LiquidityPool, LiquidityPoolInterface } from '../LiquidityPool';
+import type { LyraLiquidityPool, LyraLiquidityPoolInterface } from '../LyraLiquidityPool';
 
 const _abi = [
   {
@@ -2367,12 +2367,12 @@ const _abi = [
   },
 ];
 
-export class LiquidityPool__factory {
+export class LyraLiquidityPool__factory {
   static readonly abi = _abi;
-  static createInterface(): LiquidityPoolInterface {
-    return new utils.Interface(_abi) as LiquidityPoolInterface;
+  static createInterface(): LyraLiquidityPoolInterface {
+    return new utils.Interface(_abi) as LyraLiquidityPoolInterface;
   }
-  static connect(address: string, signerOrProvider: Signer | Provider): LiquidityPool {
-    return new Contract(address, _abi, signerOrProvider) as LiquidityPool;
+  static connect(address: string, signerOrProvider: Signer | Provider): LyraLiquidityPool {
+    return new Contract(address, _abi, signerOrProvider) as LyraLiquidityPool;
   }
 }

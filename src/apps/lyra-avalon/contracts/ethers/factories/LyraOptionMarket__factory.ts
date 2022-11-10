@@ -4,7 +4,7 @@
 
 import { Contract, Signer, utils } from 'ethers';
 import type { Provider } from '@ethersproject/providers';
-import type { OptionMarket, OptionMarketInterface } from '../OptionMarket';
+import type { LyraOptionMarket, LyraOptionMarketInterface } from '../LyraOptionMarket';
 
 const _abi = [
   {
@@ -1970,12 +1970,12 @@ const _abi = [
   },
 ];
 
-export class OptionMarket__factory {
+export class LyraOptionMarket__factory {
   static readonly abi = _abi;
-  static createInterface(): OptionMarketInterface {
-    return new utils.Interface(_abi) as OptionMarketInterface;
+  static createInterface(): LyraOptionMarketInterface {
+    return new utils.Interface(_abi) as LyraOptionMarketInterface;
   }
-  static connect(address: string, signerOrProvider: Signer | Provider): OptionMarket {
-    return new Contract(address, _abi, signerOrProvider) as OptionMarket;
+  static connect(address: string, signerOrProvider: Signer | Provider): LyraOptionMarket {
+    return new Contract(address, _abi, signerOrProvider) as LyraOptionMarket;
   }
 }
