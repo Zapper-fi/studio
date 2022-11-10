@@ -1,6 +1,6 @@
 import { Register } from '~app-toolkit/decorators';
 import { appDefinition, AppDefinition } from '~app/app.definition';
-import { AppAction, AppTag } from '~app/app.interface';
+import { AppAction, AppTag, GroupType } from '~app/app.interface';
 import { Network } from '~types/network.interface';
 
 export const MIDAS_DEFINITION = appDefinition({
@@ -9,10 +9,20 @@ export const MIDAS_DEFINITION = appDefinition({
   description:
     'Midas Capital is a cross-chain money market solution that unlocks and maximizes the usage of all digital assets and makes them work for you.',
   url: 'https://app.midascapital.xyz/',
-  groups: {},
-  tags: [AppTag.LENDING],
+
+  groups: {
+    pool: {
+      id: 'pool',
+      type: GroupType.TOKEN,
+      label: 'Pools',
+    },
+  },
+
+  tags: [AppTag.LIQUIDITY_POOL],
   keywords: [],
+
   links: {
+    github: 'https://github.com/Midas-Protocol/monorepo',
     twitter: 'https://twitter.com/MidasCapitalxyz',
     discord: 'https://discord.gg/85YxVuPeMt',
     telegram: 'https://t.me/midascapitaltg',
