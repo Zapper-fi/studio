@@ -62,8 +62,8 @@ export class OptimismVelodromeVotingEscrowContractPositionFetcher extends Voting
     const balances = await Promise.all(
       range(veCount).map(async i => {
         const tokenId = await contract.tokenOfOwnerByIndex(address, i);
-        const balance = await contract.balanceOfNFT(tokenId);
-        return Number(balance);
+        const balance = await contract.locked(tokenId);
+        return Number(balance.amount);
       }),
     );
 

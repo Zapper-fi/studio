@@ -4,6 +4,72 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.265.0](https://github.com/Zapper-fi/studio/compare/v0.264.0...v0.265.0) (2022-11-09)
+
+
+### Features
+
+* **apps:** Fix breaking APY ([f8b708b](https://github.com/Zapper-fi/studio/commit/f8b708b16de005cac0d851838a9af49628e8e7d0))
+
+## [0.264.0](https://github.com/Zapper-fi/studio/compare/v0.263.2...v0.264.0) (2022-11-09)
+
+
+### Features
+
+* **apps:** Extract getReserve call so it can be overridden ([#1672](https://github.com/Zapper-fi/studio/issues/1672)) ([ed015ea](https://github.com/Zapper-fi/studio/commit/ed015ea8942476d572b3f715c0b99a40a42529cb))
+
+## [0.263.2](https://github.com/Zapper-fi/studio/compare/v0.263.1...v0.263.2) (2022-11-08)
+
+
+### Bug Fixes
+
+* **llamapay:** Fix llamapay early return when address has no balance ([#1669](https://github.com/Zapper-fi/studio/issues/1669)) ([4a35810](https://github.com/Zapper-fi/studio/commit/4a35810f9f1b1c1d644e1bc1c1a92594cb485072))
+
+## [0.263.1](https://github.com/Zapper-fi/studio/compare/v0.263.0...v0.263.1) (2022-11-08)
+
+
+### Bug Fixes
+
+* **maker:** Fix Maker's TIV ([#1667](https://github.com/Zapper-fi/studio/issues/1667)) ([1689cba](https://github.com/Zapper-fi/studio/commit/1689cba8edeca6e24e35b260b46cbf994d056934))
+
+## [0.263.0](https://github.com/Zapper-fi/studio/compare/v0.262.0...v0.263.0) (2022-11-08)
+
+
+### Features
+
+* **synthetix:** Fix duration ([c99aa75](https://github.com/Zapper-fi/studio/commit/c99aa7538f94227b02b02637fc88a52e2d17cc12))
+
+
+### Bug Fixes
+
+* **velodrome:** Fix Velodrome voting escrow  balance ([#1665](https://github.com/Zapper-fi/studio/issues/1665)) ([76c35b2](https://github.com/Zapper-fi/studio/commit/76c35b29976f78feeda920de145c316f86fcc6a8))
+
+## [0.262.0](https://github.com/Zapper-fi/studio/compare/v0.261.0...v0.262.0) (2022-11-08)
+
+
+### Features
+
+* **apps:** Few small fixes to LlamaPay ([5428799](https://github.com/Zapper-fi/studio/commit/542879924121ba31907e9b7b3d2c0bcc52f42351))
+* **llama:** Add Llamapay Module ([#1662](https://github.com/Zapper-fi/studio/issues/1662)) ([924c435](https://github.com/Zapper-fi/studio/commit/924c4357674734e75090fbbdc3f09f0d5fadbcff))
+* **llamapay:** Add missing logo ([553a83b](https://github.com/Zapper-fi/studio/commit/553a83b1a0643cc26d21ca052950bf47d5852094))
+* **qi-dao:** Migrate to templates ([#1661](https://github.com/Zapper-fi/studio/issues/1661)) ([8872bcd](https://github.com/Zapper-fi/studio/commit/8872bcd2890f96f79d800d6f2238b3491dbea987))
+* **synthetix:** Migrate to templates ([#1664](https://github.com/Zapper-fi/studio/issues/1664)) ([69fb4d5](https://github.com/Zapper-fi/studio/commit/69fb4d50b47b43e17187c6888c11133a1f69002b))
+* **templates:** Migrate Concentrator and Good Ghosting to templates ([#1660](https://github.com/Zapper-fi/studio/issues/1660)) ([7272b3b](https://github.com/Zapper-fi/studio/commit/7272b3b6dc13724c69f6ba778ca1511f1e347200))
+
+## [0.261.0](https://github.com/Zapper-fi/studio/compare/v0.260.0...v0.261.0) (2022-11-07)
+
+
+### Features
+
+* **curve:** Add dependency to Frax ([ccf35d7](https://github.com/Zapper-fi/studio/commit/ccf35d75c947118903a143139f06ae3a5549a034))
+
+## [0.260.0](https://github.com/Zapper-fi/studio/compare/v0.259.2...v0.260.0) (2022-11-07)
+
+
+### Features
+
+* **gearbox:** Add lending tokens ([#1656](https://github.com/Zapper-fi/studio/issues/1656)) ([a89058c](https://github.com/Zapper-fi/studio/commit/a89058ca9d4ee5e7ddca2626aa976f823fce9a5a))
+
 ## [0.259.2](https://github.com/Zapper-fi/studio/compare/v0.259.1...v0.259.2) (2022-11-03)
 
 

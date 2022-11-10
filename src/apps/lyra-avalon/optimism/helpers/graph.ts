@@ -54,7 +54,7 @@ const OPTIONS_QUERY = gql`
     }
   }
 `;
-const subgraphUrl = 'https://api.thegraph.com/subgraphs/name/lyra-finance/mainnet';
+const subgraphUrl = 'https://subgraph.satsuma-prod.com/lyra/optimism-mainnet/api';
 
 export const runQuery = <T>(graphHelper: TheGraphHelper, query) => {
   return graphHelper.requestGraph<T>({

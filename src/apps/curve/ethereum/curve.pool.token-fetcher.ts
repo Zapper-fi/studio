@@ -37,6 +37,7 @@ export class EthereumCurvePoolTokenFetcher implements PositionFetcher<AppTokenPo
         { appId: TOKEMAK_DEFINITION.id, groupIds: [TOKEMAK_DEFINITION.groups.reactor.id], network },
         { appId: YEARN_DEFINITION.id, groupIds: [YEARN_DEFINITION.groups.yield.id], network },
         { appId: BADGER_DEFINITION.id, groupIds: [BADGER_DEFINITION.groups.vault.id], network },
+        { appId: 'frax', groupIds: ['frx-eth'], network },
         { appId: 'convex', groupIds: ['deposit'], network },
         { appId: 'fixed-forex', groupIds: ['forex'], network },
       ],
