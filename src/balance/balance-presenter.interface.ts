@@ -1,7 +1,6 @@
+import { Product } from '~app-toolkit/helpers/presentation/balance-fetcher-response.present';
 import { PositionBalance } from '~position/position-balance.interface';
 
-import { TokenBalanceResponse } from './balance-fetcher.interface';
-
 export interface BalancePresenter {
-  present(address: string, balances: PositionBalance[]): Promise<TokenBalanceResponse>;
+  present(address: string, balances: PositionBalance[]): Promise<{ products: Product[] }>;
 }

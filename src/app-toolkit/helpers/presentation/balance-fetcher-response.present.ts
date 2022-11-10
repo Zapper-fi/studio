@@ -41,17 +41,17 @@ const getTotalsMeta = (balances: (TokenBalance | ContractPositionBalance)[]): Me
   ];
 };
 
-type Product = {
+export type Product = {
   label: string;
   assets: (AppTokenPositionBalance | ContractPositionBalance)[];
   meta?: MetadataItemWithLabel[];
 };
 
-export const presentBalanceFetcherResponse = (
-  products: Product[],
-  meta: MetadataItemWithLabel[] = [],
-): TokenBalanceResponse => {
-  // Exclude any asset groups that have negligible balances
+export const presentBalanceFetcherResponse = (products: Product[]) => {
+  return { products };
+};
+
+export const kekw = ({ products }: { products: Product[] }): TokenBalanceResponse => {
   const nonZeroBalanceProducts = products
     .map(assetGroup => ({
       ...assetGroup,
@@ -66,7 +66,7 @@ export const presentBalanceFetcherResponse = (
   }));
 
   const totalsMeta = getTotalsMeta(productsWithTotals.flatMap(assetGroup => assetGroup.assets));
-  const metaWithTotals = [...meta, ...totalsMeta];
+  const metaWithTotals = [...totalsMeta];
 
   return {
     products: productsWithTotals,

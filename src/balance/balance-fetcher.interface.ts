@@ -1,3 +1,4 @@
+import { Product } from '~app-toolkit/helpers/presentation/balance-fetcher-response.present';
 import { MetadataItem } from '~position/display.interface';
 import { AppTokenPositionBalance, ContractPositionBalance } from '~position/position-balance.interface';
 
@@ -16,5 +17,5 @@ export interface TokenBalanceResponse {
 }
 
 export interface BalanceFetcher {
-  getBalances(address: string): Promise<TokenBalanceResponse>;
+  getBalances(address: string): Promise<{ products: Product[] }>;
 }
