@@ -16,11 +16,20 @@ export const KYBERSWAP_ELASTIC_DEFINITION = appDefinition({
       type: GroupType.POSITION,
       label: 'Pools',
     },
+    farm: {
+      id: 'farm',
+      type: GroupType.POSITION,
+      label: 'Farms',
+    },
   },
 
   tags: [AppTag.LIQUIDITY_POOL],
   keywords: [],
-  links: {},
+  links: {
+    discord: 'https://discord.com/invite/NB3vc8J9uv',
+    telegram: 'https://t.me/kybernetwork',
+    twitter: 'https://twitter.com/KyberNetwork',
+  },
 
   supportedNetworks: {
     [Network.ETHEREUM_MAINNET]: [AppAction.VIEW],
@@ -37,7 +46,7 @@ export const KYBERSWAP_ELASTIC_DEFINITION = appDefinition({
 });
 
 @Register.AppDefinition(KYBERSWAP_ELASTIC_DEFINITION.id)
-export class KyberSwapElasticAppDefinition extends AppDefinition {
+export class KyberswapElasticAppDefinition extends AppDefinition {
   constructor() {
     super(KYBERSWAP_ELASTIC_DEFINITION);
   }

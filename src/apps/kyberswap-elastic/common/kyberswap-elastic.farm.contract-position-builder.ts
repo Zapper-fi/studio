@@ -29,14 +29,15 @@ type KyberswapElasticLiquidityContractPositionHelperParams = {
   multicall: IMulticallWrapper;
   tokenLoader: TokenDependencySelector;
   positionId: BigNumberish;
+  poolId: BigNumberish;
   network: Network;
   collapseClaimable?: boolean;
+  kyberswapElasticLmAddress: string;
 };
 
-export class KyberswapElasticLiquidityContractPositionBuilder {
+export class KyberswapElasticFarmContractPositionBuilder {
   managerAddress = '0x2b1c7b41f6a8f2b2bc45c3233a5d5fb3cd6dc9a8';
   factoryAddress = '0x5f1dddbf348ac2fbe22a163e30f99f9ece3dd50a';
-  tickerReaderAddress = '0x165c68077ac06c83800d19200e6e2b08d02de75d';
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
@@ -46,32 +47,36 @@ export class KyberswapElasticLiquidityContractPositionBuilder {
   async buildPosition({
     multicall,
     positionId,
+    poolId,
     tokenLoader,
     network,
     collapseClaimable,
+    kyberswapElasticLmAddress,
   }: KyberswapElasticLiquidityContractPositionHelperParams) {
     const positionManager = this.contractFactory.positionManager({ address: this.managerAddress, network });
     const factoryContract = this.contractFactory.factory({ address: this.factoryAddress, network });
+    const elasticLmContract = this.contractFactory.kyberswapElasticLm({ address: kyberswapElasticLmAddress, network });
     const position = await multicall.wrap(positionManager).positions(positionId);
 
     const fee = position.info?.fee;
+    const poolInfo = await multicall.wrap(elasticLmContract).getPoolInfo(poolId);
+    const rewardTokenAddresses = poolInfo.rewardTokens.map(x => x.toLowerCase());
     const token0Address = position.info.token0.toLowerCase();
     const token1Address = position.info.token1.toLowerCase();
-    const queries = [token0Address, token1Address].map(t => ({ address: t, network }));
-    const [token0, token1] = await tokenLoader.getMany(queries);
-    if (!token0 || !token1) return null;
+    const queries = [token0Address, token1Address, ...rewardTokenAddresses].map(t => ({ address: t, network }));
+    const [token0, token1, claimableToken] = await tokenLoader.getMany(queries);
+    if (!token0 || !token1 || !claimableToken) return null;
 
     const poolAddr = await multicall.wrap(factoryContract).getPool(token0Address, token1Address, fee);
     const poolAddress = poolAddr.toLowerCase();
     const poolContract = this.contractFactory.pool({ address: poolAddress, network });
-    const tickReaderContract = this.contractFactory.tickReader({ address: this.tickerReaderAddress, network });
     const token0Contract = this.contractFactory.erc20(token0);
     const token1Contract = this.contractFactory.erc20(token1);
 
-    const [liquidityState, poolState, claimableBalances, reserveRaw0, reserveRaw1] = await Promise.all([
+    const [liquidityState, poolState, positionClaimables, reserveRaw0, reserveRaw1] = await Promise.all([
       multicall.wrap(poolContract).getLiquidityState(),
       multicall.wrap(poolContract).getPoolState(),
-      multicall.wrap(tickReaderContract).getTotalRTokensOwedToPosition(this.managerAddress, poolAddress, positionId),
+      multicall.wrap(elasticLmContract).getUserInfo(positionId, poolId),
       multicall.wrap(token0Contract).balanceOf(poolAddress),
       multicall.wrap(token1Contract).balanceOf(poolAddress),
     ]);
@@ -101,8 +106,11 @@ export class KyberswapElasticLiquidityContractPositionBuilder {
 
     const suppliedTokens = [token0, token1].map(v => supplied(v));
     const suppliedTokenBalances = suppliedTokens.map((t, i) => drillBalance(t, suppliedBalances[i]));
-    const claimableTokens = [token0, token1].map(v => claimable(v));
-    const claimableTokenBalances = claimableTokens.map((t, i) => drillBalance(t, claimableBalances[i]));
+
+    // claimables
+    const claimableTokens = [claimableToken].map(v => claimable(v));
+    const claimablesBalance = positionClaimables.rewardPending.map(x => x.toString());
+    const claimableTokenBalances = claimableTokens.map((t, i) => drillBalance(t, claimablesBalance[i]));
 
     // Build position price according to underlying reserves
     let tokens = [...suppliedTokenBalances, ...claimableTokenBalances].filter(t => t.balanceUSD > 0.01);
@@ -114,7 +122,7 @@ export class KyberswapElasticLiquidityContractPositionBuilder {
 
     if (collapseClaimable) {
       tokens = [token0, token1].map((t, i) =>
-        drillBalance(t, new BigNumber(suppliedBalances[i]).plus(claimableBalances[i]).toFixed(0)),
+        drillBalance(t, new BigNumber(suppliedBalances[i]).plus(claimablesBalance[i]).toFixed(0)),
       );
     }
 
@@ -138,7 +146,7 @@ export class KyberswapElasticLiquidityContractPositionBuilder {
       type: ContractType.POSITION,
       address: this.managerAddress,
       appId: KYBERSWAP_ELASTIC_DEFINITION.id,
-      groupId: KYBERSWAP_ELASTIC_DEFINITION.groups.liquidity.id,
+      groupId: KYBERSWAP_ELASTIC_DEFINITION.groups.farm.id,
       network,
       tokens,
       dataProps,
