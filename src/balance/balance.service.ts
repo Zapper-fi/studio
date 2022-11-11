@@ -9,7 +9,6 @@ import { PositionFetcherTemplateRegistry } from '~position/position-fetcher.temp
 import { TokenBalanceResponse } from './balance-fetcher.interface';
 import { BalanceFetcherRegistry } from './balance-fetcher.registry';
 import { BalancePresentationService } from './balance-presentation.service';
-import { DefaultBalancePresenterFactory } from './default.balance-presenter.factory';
 import { DefaultContractPositionBalanceFetcherFactory } from './default.contract-position-balance-fetcher.factory';
 import { DefaultTokenBalanceFetcherFactory } from './default.token-balance-fetcher.factory';
 import { GetBalancesParams } from './dto/get-balances-params.dto';
