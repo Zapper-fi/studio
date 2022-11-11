@@ -23,7 +23,7 @@ export class BalanceService {
     @Inject(PositionFetcherRegistry) private readonly positionFetcherRegistry: PositionFetcherRegistry,
     @Inject(PositionBalanceFetcherRegistry)
     private readonly positionFetcherBalanceFetcherRegistry: PositionBalanceFetcherRegistry,
-    @Inject(DefaultBalancePresenterFactory)
+    @Inject(DefaultTokenBalanceFetcherFactory)
     private readonly defaultTokenBalanceFetcherFactory: DefaultTokenBalanceFetcherFactory,
     @Inject(PositionFetcherTemplateRegistry)
     private readonly positionFetcherTemplateRegistry: PositionFetcherTemplateRegistry,
