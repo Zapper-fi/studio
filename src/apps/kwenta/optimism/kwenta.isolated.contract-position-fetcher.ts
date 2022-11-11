@@ -1,14 +1,12 @@
-import { OptimismKwentaPerpContractPositionFetcher } from './kwenta.perp.contract-position-fetcher';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
-import KWENTA_DEFINITION from '../kwenta.definition';
+
+import { OptimismKwentaPerpContractPositionFetcher } from '../common/kwenta.perp.contract-position-fetcher';
 
 @PositionTemplate()
 export class OptimismKwentaIsolatedContractPositionFetcher extends OptimismKwentaPerpContractPositionFetcher {
-
   groupLabel = 'Isolated Margin';
 
   getAccountAddress(address: string): string {
     return address;
   }
-
 }
