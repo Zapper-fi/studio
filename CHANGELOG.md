@@ -4,6 +4,15 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.268.0](https://github.com/Zapper-fi/studio/compare/v0.267.0...v0.268.0) (2022-11-10)
+
+
+### Features
+
+* **kwenta:** cross margin ([#1654](https://github.com/Zapper-fi/studio/issues/1654)) ([07d0b6d](https://github.com/Zapper-fi/studio/commit/07d0b6dfa05f04da3b68132c5dca2006b3783073))
+* **kyberswap-elastic:** Add Kyberswap Elastic farms ([#1683](https://github.com/Zapper-fi/studio/issues/1683)) ([400e50d](https://github.com/Zapper-fi/studio/commit/400e50ddb063ec6278ffd402cd81903b5165d6d4))
+* **sushiswap-kashi:** Kashi to templates ([#1687](https://github.com/Zapper-fi/studio/issues/1687)) ([ab49500](https://github.com/Zapper-fi/studio/commit/ab49500712dbdfc33d39987c7397f7aa0b2d5be9))
+
 ## [0.267.0](https://github.com/Zapper-fi/studio/compare/v0.266.0...v0.267.0) (2022-11-10)
 
 
