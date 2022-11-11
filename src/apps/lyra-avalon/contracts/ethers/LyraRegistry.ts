@@ -15,20 +15,20 @@ import type {
 } from 'ethers';
 import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
 import type { Listener, Provider } from '@ethersproject/providers';
-import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
 export declare namespace LyraRegistry {
   export type OptionMarketAddressesStruct = {
-    liquidityPool: string;
-    liquidityTokens: string;
-    greekCache: string;
-    optionMarket: string;
-    optionMarketPricer: string;
-    optionToken: string;
-    poolHedger: string;
-    shortCollateral: string;
-    quoteAsset: string;
-    baseAsset: string;
+    liquidityPool: PromiseOrValue<string>;
+    liquidityTokens: PromiseOrValue<string>;
+    greekCache: PromiseOrValue<string>;
+    optionMarket: PromiseOrValue<string>;
+    optionMarketPricer: PromiseOrValue<string>;
+    optionToken: PromiseOrValue<string>;
+    poolHedger: PromiseOrValue<string>;
+    shortCollateral: PromiseOrValue<string>;
+    quoteAsset: PromiseOrValue<string>;
+    baseAsset: PromiseOrValue<string>;
   };
 
   export type OptionMarketAddressesStructOutput = [
@@ -86,14 +86,17 @@ export interface LyraRegistryInterface extends utils.Interface {
 
   encodeFunctionData(functionFragment: 'acceptOwnership', values?: undefined): string;
   encodeFunctionData(functionFragment: 'addMarket', values: [LyraRegistry.OptionMarketAddressesStruct]): string;
-  encodeFunctionData(functionFragment: 'globalAddresses', values: [BytesLike]): string;
-  encodeFunctionData(functionFragment: 'marketAddresses', values: [string]): string;
-  encodeFunctionData(functionFragment: 'nominateNewOwner', values: [string]): string;
+  encodeFunctionData(functionFragment: 'globalAddresses', values: [PromiseOrValue<BytesLike>]): string;
+  encodeFunctionData(functionFragment: 'marketAddresses', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'nominateNewOwner', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'nominatedOwner', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'optionMarkets', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'optionMarkets', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'owner', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'removeMarket', values: [string]): string;
-  encodeFunctionData(functionFragment: 'updateGlobalAddresses', values: [BytesLike[], string[]]): string;
+  encodeFunctionData(functionFragment: 'removeMarket', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'updateGlobalAddresses',
+    values: [PromiseOrValue<BytesLike>[], PromiseOrValue<string>[]],
+  ): string;
 
   decodeFunctionResult(functionFragment: 'acceptOwnership', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'addMarket', data: BytesLike): Result;
@@ -185,17 +188,17 @@ export interface LyraRegistry extends BaseContract {
   removeListener: OnEvent<this>;
 
   functions: {
-    acceptOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    acceptOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     addMarket(
       newMarketAddresses: LyraRegistry.OptionMarketAddressesStruct,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    globalAddresses(arg0: BytesLike, overrides?: CallOverrides): Promise<[string]>;
+    globalAddresses(arg0: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<[string]>;
 
     marketAddresses(
-      arg0: string,
+      arg0: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<
       [string, string, string, string, string, string, string, string, string, string] & {
@@ -213,39 +216,39 @@ export interface LyraRegistry extends BaseContract {
     >;
 
     nominateNewOwner(
-      _owner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _owner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     nominatedOwner(overrides?: CallOverrides): Promise<[string]>;
 
-    optionMarkets(arg0: BigNumberish, overrides?: CallOverrides): Promise<[string]>;
+    optionMarkets(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[string]>;
 
     owner(overrides?: CallOverrides): Promise<[string]>;
 
     removeMarket(
-      market: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      market: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     updateGlobalAddresses(
-      names: BytesLike[],
-      addresses: string[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      names: PromiseOrValue<BytesLike>[],
+      addresses: PromiseOrValue<string>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
   };
 
-  acceptOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  acceptOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   addMarket(
     newMarketAddresses: LyraRegistry.OptionMarketAddressesStruct,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  globalAddresses(arg0: BytesLike, overrides?: CallOverrides): Promise<string>;
+  globalAddresses(arg0: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<string>;
 
   marketAddresses(
-    arg0: string,
+    arg0: PromiseOrValue<string>,
     overrides?: CallOverrides,
   ): Promise<
     [string, string, string, string, string, string, string, string, string, string] & {
@@ -263,25 +266,25 @@ export interface LyraRegistry extends BaseContract {
   >;
 
   nominateNewOwner(
-    _owner: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _owner: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   nominatedOwner(overrides?: CallOverrides): Promise<string>;
 
-  optionMarkets(arg0: BigNumberish, overrides?: CallOverrides): Promise<string>;
+  optionMarkets(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
 
   owner(overrides?: CallOverrides): Promise<string>;
 
   removeMarket(
-    market: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    market: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   updateGlobalAddresses(
-    names: BytesLike[],
-    addresses: string[],
-    overrides?: Overrides & { from?: string | Promise<string> },
+    names: PromiseOrValue<BytesLike>[],
+    addresses: PromiseOrValue<string>[],
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   callStatic: {
@@ -289,10 +292,10 @@ export interface LyraRegistry extends BaseContract {
 
     addMarket(newMarketAddresses: LyraRegistry.OptionMarketAddressesStruct, overrides?: CallOverrides): Promise<void>;
 
-    globalAddresses(arg0: BytesLike, overrides?: CallOverrides): Promise<string>;
+    globalAddresses(arg0: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<string>;
 
     marketAddresses(
-      arg0: string,
+      arg0: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<
       [string, string, string, string, string, string, string, string, string, string] & {
@@ -309,28 +312,38 @@ export interface LyraRegistry extends BaseContract {
       }
     >;
 
-    nominateNewOwner(_owner: string, overrides?: CallOverrides): Promise<void>;
+    nominateNewOwner(_owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     nominatedOwner(overrides?: CallOverrides): Promise<string>;
 
-    optionMarkets(arg0: BigNumberish, overrides?: CallOverrides): Promise<string>;
+    optionMarkets(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
 
     owner(overrides?: CallOverrides): Promise<string>;
 
-    removeMarket(market: string, overrides?: CallOverrides): Promise<void>;
+    removeMarket(market: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    updateGlobalAddresses(names: BytesLike[], addresses: string[], overrides?: CallOverrides): Promise<void>;
+    updateGlobalAddresses(
+      names: PromiseOrValue<BytesLike>[],
+      addresses: PromiseOrValue<string>[],
+      overrides?: CallOverrides,
+    ): Promise<void>;
   };
 
   filters: {
-    'GlobalAddressUpdated(bytes32,address)'(name?: BytesLike | null, addr?: null): GlobalAddressUpdatedEventFilter;
-    GlobalAddressUpdated(name?: BytesLike | null, addr?: null): GlobalAddressUpdatedEventFilter;
+    'GlobalAddressUpdated(bytes32,address)'(
+      name?: PromiseOrValue<BytesLike> | null,
+      addr?: null,
+    ): GlobalAddressUpdatedEventFilter;
+    GlobalAddressUpdated(name?: PromiseOrValue<BytesLike> | null, addr?: null): GlobalAddressUpdatedEventFilter;
 
-    'MarketRemoved(address)'(market?: string | null): MarketRemovedEventFilter;
-    MarketRemoved(market?: string | null): MarketRemovedEventFilter;
+    'MarketRemoved(address)'(market?: PromiseOrValue<string> | null): MarketRemovedEventFilter;
+    MarketRemoved(market?: PromiseOrValue<string> | null): MarketRemovedEventFilter;
 
-    'MarketUpdated(address,tuple)'(optionMarket?: string | null, market?: null): MarketUpdatedEventFilter;
-    MarketUpdated(optionMarket?: string | null, market?: null): MarketUpdatedEventFilter;
+    'MarketUpdated(address,tuple)'(
+      optionMarket?: PromiseOrValue<string> | null,
+      market?: null,
+    ): MarketUpdatedEventFilter;
+    MarketUpdated(optionMarket?: PromiseOrValue<string> | null, market?: null): MarketUpdatedEventFilter;
 
     'OwnerChanged(address,address)'(oldOwner?: null, newOwner?: null): OwnerChangedEventFilter;
     OwnerChanged(oldOwner?: null, newOwner?: null): OwnerChangedEventFilter;
@@ -340,66 +353,72 @@ export interface LyraRegistry extends BaseContract {
   };
 
   estimateGas: {
-    acceptOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    acceptOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     addMarket(
       newMarketAddresses: LyraRegistry.OptionMarketAddressesStruct,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    globalAddresses(arg0: BytesLike, overrides?: CallOverrides): Promise<BigNumber>;
+    globalAddresses(arg0: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    marketAddresses(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    marketAddresses(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    nominateNewOwner(_owner: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    nominateNewOwner(
+      _owner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     nominatedOwner(overrides?: CallOverrides): Promise<BigNumber>;
 
-    optionMarkets(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    optionMarkets(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     owner(overrides?: CallOverrides): Promise<BigNumber>;
 
-    removeMarket(market: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    removeMarket(
+      market: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     updateGlobalAddresses(
-      names: BytesLike[],
-      addresses: string[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      names: PromiseOrValue<BytesLike>[],
+      addresses: PromiseOrValue<string>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
   };
 
   populateTransaction: {
-    acceptOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    acceptOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     addMarket(
       newMarketAddresses: LyraRegistry.OptionMarketAddressesStruct,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    globalAddresses(arg0: BytesLike, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    globalAddresses(arg0: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    marketAddresses(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    marketAddresses(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     nominateNewOwner(
-      _owner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _owner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     nominatedOwner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    optionMarkets(arg0: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    optionMarkets(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     removeMarket(
-      market: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      market: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     updateGlobalAddresses(
-      names: BytesLike[],
-      addresses: string[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      names: PromiseOrValue<BytesLike>[],
+      addresses: PromiseOrValue<string>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
   };
 }
