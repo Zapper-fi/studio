@@ -15,9 +15,9 @@ import { UnipilotAppDefinition, UNIPILOT_DEFINITION } from './unipilot.definitio
     UnipilotContractFactory,
     UnipilotVaultDefinitionsResolver,
     UnipilotVaultAPYHelper,
-    //ethereum
+    // Ethereum
     EthereumUnipilotPoolTokenFetcher,
-    //polygon
+    // Polygon
     PolygonUnipilotPoolTokenFetcher,
   ],
 })

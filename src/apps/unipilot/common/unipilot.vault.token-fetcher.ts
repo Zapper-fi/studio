@@ -13,7 +13,7 @@ import {
 } from '~position/template/app-token.template.types';
 import { GetTokenDefinitionsParams } from '~position/template/contract-position.template.types';
 
-import { UnipilotContractFactory, UnipilotEthereumFactory, UnipilotPolygonFactory } from '../contracts';
+import { UnipilotContractFactory, UnipilotVault } from '../contracts';
 import { UnipilotVaultAPYHelper } from '../helpers/unipilot-vault.apy.helper';
 import { UnipilotVaultDefinition } from '../utils/generalTypes';
 
@@ -24,7 +24,7 @@ export type UnipilotVaultTokenDataProps = DefaultAppTokenDataProps & {
 };
 
 export abstract class UnipilotVaultTokenFetcher extends AppTokenTemplatePositionFetcher<
-  UnipilotEthereumFactory | UnipilotPolygonFactory,
+  UnipilotVault,
   UnipilotVaultTokenDataProps,
   UnipilotVaultDefinition
 > {
@@ -39,31 +39,66 @@ export abstract class UnipilotVaultTokenFetcher extends AppTokenTemplatePosition
     super(appToolkit);
   }
 
-  getContract(address: string): UnipilotEthereumFactory {
-    return this.contractFactory.unipilotEthereumFactory({ address, network: this.network });
+  getContract(address: string): UnipilotVault {
+    return this.contractFactory.unipilotVault({ address, network: this.network });
   }
 
   async getDefinitions(): Promise<UnipilotVaultDefinition[]> {
     return this.vaultDefinitionsResolver.getVaultDefinitions(this.network);
   }
 
-  async getTokenDefinitions({
-    definition,
-  }: GetTokenDefinitionsParams<UnipilotEthereumFactory, UnipilotVaultDefinition>) {
+  async getAddresses({ definitions }: GetAddressesParams<UnipilotVaultDefinition>): Promise<string[]> {
+    return definitions.map(v => v.address);
+  }
+
+  async getUnderlyingTokenAddresses({ definition }: GetUnderlyingTokensParams<UnipilotVault, UnipilotVaultDefinition>) {
+    return [definition.token0Address, definition.token1Address];
+  }
+
+  async getTokenDefinitions({ definition }: GetTokenDefinitionsParams<UnipilotVault, UnipilotVaultDefinition>) {
     return [
       { metaType: MetaType.SUPPLIED, address: definition.token0Address },
       { metaType: MetaType.SUPPLIED, address: definition.token1Address },
     ];
   }
 
+  async getPricePerShare({
+    appToken,
+    definition,
+  }: GetPricePerShareParams<UnipilotVault, UnipilotVaultTokenDataProps, UnipilotVaultDefinition>) {
+    const { totalLockedToken0, totalLockedToken1 } = definition;
+    const reservesRaw = [totalLockedToken0, totalLockedToken1];
+    const reserves = reservesRaw.map((r, i) => Number(r) / 10 ** appToken.tokens[i].decimals);
+    const pricePerShare = reserves.map(r => {
+      return r == 0 ? 0 : r / appToken.supply;
+    });
+    return pricePerShare;
+  }
+
+  async getLiquidity({
+    appToken,
+  }: GetDataPropsParams<UnipilotVault, UnipilotVaultTokenDataProps, UnipilotVaultDefinition>) {
+    return appToken.price * appToken.supply;
+  }
+
+  async getReserves({
+    appToken,
+  }: GetDataPropsParams<UnipilotVault, UnipilotVaultTokenDataProps, UnipilotVaultDefinition>) {
+    return (appToken.pricePerShare as number[]).map(v => v * appToken.supply);
+  }
+
+  async getApy({ appToken }: GetDataPropsParams<UnipilotVault, UnipilotVaultTokenDataProps, UnipilotVaultDefinition>) {
+    const apys = await this.vaultApyHelper.getApy();
+    if (apys && Object.keys(apys).length > 0) {
+      return parseFloat(apys[appToken.address].stats);
+    }
+    return 0;
+  }
+
   async getLabel({
     appToken,
     definition,
-  }: GetDisplayPropsParams<
-    UnipilotEthereumFactory | UnipilotPolygonFactory,
-    UnipilotVaultTokenDataProps,
-    UnipilotVaultDefinition
-  >): Promise<string> {
+  }: GetDisplayPropsParams<UnipilotVault, UnipilotVaultTokenDataProps, UnipilotVaultDefinition>): Promise<string> {
     const strategyLabels = {
       '1': 'Wide',
       '2': 'Balanced',
@@ -82,58 +117,9 @@ export abstract class UnipilotVaultTokenFetcher extends AppTokenTemplatePosition
 
   async getSecondaryLabel({
     appToken,
-  }: GetDisplayPropsParams<
-    UnipilotEthereumFactory | UnipilotPolygonFactory,
-    UnipilotVaultTokenDataProps,
-    UnipilotVaultDefinition
-  >) {
+  }: GetDisplayPropsParams<UnipilotVault, UnipilotVaultTokenDataProps, UnipilotVaultDefinition>) {
     const { liquidity, reserves } = appToken.dataProps;
     const reservePercentages = appToken.tokens.map((t, i) => reserves[i] * (t.price / liquidity));
     return reservePercentages.map(p => `${Math.round(p * 100)}%`).join(' / ');
-  }
-
-  async getPricePerShare({
-    appToken,
-    definition,
-  }: GetPricePerShareParams<UnipilotEthereumFactory, UnipilotVaultTokenDataProps, UnipilotVaultDefinition>) {
-    const { totalLockedToken0, totalLockedToken1 } = definition;
-    const reservesRaw = [totalLockedToken0, totalLockedToken1];
-    const reserves = reservesRaw.map((r, i) => Number(r) / 10 ** appToken.tokens[i].decimals);
-    const pricePerShare = reserves.map(r => {
-      return r == 0 ? 0 : r / appToken.supply;
-    });
-    return pricePerShare;
-  }
-
-  async getLiquidity({
-    appToken,
-  }: GetDataPropsParams<UnipilotEthereumFactory, UnipilotVaultTokenDataProps, UnipilotVaultDefinition>) {
-    return appToken.price * appToken.supply;
-  }
-
-  async getApy({
-    appToken,
-  }: GetDataPropsParams<UnipilotEthereumFactory, UnipilotVaultTokenDataProps, UnipilotVaultDefinition>) {
-    const apys = await this.vaultApyHelper.getApy();
-    if (apys && Object.keys(apys).length > 0) {
-      return parseFloat(apys[appToken.address].stats);
-    }
-    return 0;
-  }
-
-  async getAddresses({ definitions }: GetAddressesParams<UnipilotVaultDefinition>): Promise<string[]> {
-    return definitions.map(v => v.address);
-  }
-
-  async getReserves({
-    appToken,
-  }: GetDataPropsParams<UnipilotEthereumFactory, UnipilotVaultTokenDataProps, UnipilotVaultDefinition>) {
-    return (appToken.pricePerShare as number[]).map(v => v * appToken.supply);
-  }
-
-  async getUnderlyingTokenAddresses({
-    definition,
-  }: GetUnderlyingTokensParams<UnipilotEthereumFactory, UnipilotVaultDefinition>) {
-    return [definition.token0Address, definition.token1Address];
   }
 }

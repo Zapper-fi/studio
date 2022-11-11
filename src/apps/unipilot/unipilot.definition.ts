@@ -5,7 +5,7 @@ import { Network } from '~types/network.interface';
 
 export const UNIPILOT_DEFINITION = appDefinition({
   id: 'unipilot',
-  name: 'unipilot',
+  name: 'Unipilot',
   description:
     'Unipilot manages your Uniswap v3 liquidity for you, keeping it in an optimal range so you can earn higher returns and save on gas.',
   url: 'https://unipilot.io/',
