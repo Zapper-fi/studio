@@ -100,6 +100,7 @@ export abstract class UnipilotVaultTokenFetcher extends AppTokenTemplatePosition
     definition,
   }: GetDisplayPropsParams<UnipilotVault, UnipilotVaultTokenDataProps, UnipilotVaultDefinition>): Promise<string> {
     const strategyLabels = {
+      '0': '',
       '1': 'Wide',
       '2': 'Balanced',
       '3': 'Narrow',
