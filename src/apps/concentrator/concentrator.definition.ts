@@ -27,6 +27,12 @@ export const CONCENTRATOR_DEFINITION = appDefinition({
       type: GroupType.POSITION,
       label: 'IFO',
     },
+
+    ve: {
+      id: 've',
+      type: GroupType.POSITION,
+      label: 'VotingEscrow',
+    },
   },
 
   tags: [AppTag.FARMING],

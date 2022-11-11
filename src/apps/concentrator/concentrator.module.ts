@@ -6,6 +6,7 @@ import { ConcentratorContractFactory } from './contracts';
 import { EthereumConcentratorAcrvTokenFetcher } from './ethereum/concentrator.acrv.token-fetcher';
 import { EthereumConcentratorIfoContractPositionFetcher } from './ethereum/concentrator.ifo.contract-position-fetcher';
 import { EthereumConcentratorPoolContractPositionFetcher } from './ethereum/concentrator.pool.contract-position-fetcher';
+import { EthereumConcentratorVeContractPositionFetcher } from './ethereum/concentrator.ve.contract-position-fetcher';
 
 @Register.AppModule({
   appId: CONCENTRATOR_DEFINITION.id,
@@ -15,6 +16,7 @@ import { EthereumConcentratorPoolContractPositionFetcher } from './ethereum/conc
     EthereumConcentratorAcrvTokenFetcher,
     EthereumConcentratorIfoContractPositionFetcher,
     EthereumConcentratorPoolContractPositionFetcher,
+    EthereumConcentratorVeContractPositionFetcher,
   ],
 })
 export class ConcentratorAppModule extends AbstractApp() {}

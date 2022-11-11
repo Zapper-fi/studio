@@ -2,5 +2,7 @@
 /* tslint:disable */
 /* eslint-disable */
 export { AladdinConcentratorIfoVault__factory } from './AladdinConcentratorIfoVault__factory';
+export { AladdinConcentratorVe__factory } from './AladdinConcentratorVe__factory';
+export { AladdinConcentratorVeRewards__factory } from './AladdinConcentratorVeRewards__factory';
 export { AladdinConvexVault__factory } from './AladdinConvexVault__factory';
 export { AladdinCrv__factory } from './AladdinCrv__factory';
