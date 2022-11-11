@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.268.1](https://github.com/Zapper-fi/studio/compare/v0.268.0...v0.268.1) (2022-11-11)
+
+
+### Bug Fixes
+
+* **unipilot:** AppTokenTemplatePositionFetcher requires the contract interface to be an ERC20 ([#1691](https://github.com/Zapper-fi/studio/issues/1691)) ([d728e60](https://github.com/Zapper-fi/studio/commit/d728e60a7176409bb2e1375d80cfb9d8824d6651))
+
 ## [0.268.0](https://github.com/Zapper-fi/studio/compare/v0.267.0...v0.268.0) (2022-11-10)
 
 
