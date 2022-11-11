@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.268.2](https://github.com/Zapper-fi/studio/compare/v0.268.1...v0.268.2) (2022-11-11)
+
+
+### Bug Fixes
+
+* **badger:** Be safe when mapping data ([e2dceea](https://github.com/Zapper-fi/studio/commit/e2dceeafc8eae2b6f170b7d40b21b891000836e7))
+
 ## [0.268.1](https://github.com/Zapper-fi/studio/compare/v0.268.0...v0.268.1) (2022-11-11)
 
 
