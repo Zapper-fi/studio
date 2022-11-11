@@ -5,7 +5,7 @@ import { ContractFactory } from '~contract/contracts';
 import { Network } from '~types/network.interface';
 
 import { Factory__factory } from './ethers';
-import { Masterchef__factory } from './ethers';
+import { KyberswapElasticLm__factory } from './ethers';
 import { Pool__factory } from './ethers';
 import { PositionManager__factory } from './ethers';
 import { RewardLookerV2__factory } from './ethers';
@@ -23,8 +23,8 @@ export class KyberswapElasticContractFactory extends ContractFactory {
   factory({ address, network }: ContractOpts) {
     return Factory__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
-  masterchef({ address, network }: ContractOpts) {
-    return Masterchef__factory.connect(address, this.appToolkit.getNetworkProvider(network));
+  kyberswapElasticLm({ address, network }: ContractOpts) {
+    return KyberswapElasticLm__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
   pool({ address, network }: ContractOpts) {
     return Pool__factory.connect(address, this.appToolkit.getNetworkProvider(network));
@@ -41,7 +41,7 @@ export class KyberswapElasticContractFactory extends ContractFactory {
 }
 
 export type { Factory } from './ethers';
-export type { Masterchef } from './ethers';
+export type { KyberswapElasticLm } from './ethers';
 export type { Pool } from './ethers';
 export type { PositionManager } from './ethers';
 export type { RewardLookerV2 } from './ethers';

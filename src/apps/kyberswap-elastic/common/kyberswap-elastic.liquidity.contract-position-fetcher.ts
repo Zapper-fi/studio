@@ -15,11 +15,11 @@ import {
 
 import { KyberswapElasticContractFactory, PositionManager } from '../contracts';
 
-import { KyberSwapElasticApyDataLoader } from './kyberswap-elastic.apy.data-loader';
-import { KyberSwapElasticLiquidityContractPositionBuilder } from './kyberswap-elastic.liquidity.contract-position-builder';
+import { KyberswapElasticApyDataLoader } from './kyberswap-elastic.apy.data-loader';
+import { KyberswapElasticLiquidityContractPositionBuilder } from './kyberswap-elastic.liquidity.contract-position-builder';
 import { GET_TOP_POOLS_QUERY } from './kyberswap-elastic.pool.subgraph.types';
 
-export type KyberSwapElasticLiquidityPositionDataProps = {
+export type KyberswapElasticLiquidityPositionDataProps = {
   feeTier: number;
   liquidity: number;
   reserves: number[];
@@ -30,7 +30,7 @@ export type KyberSwapElasticLiquidityPositionDataProps = {
   apy?: number;
 };
 
-export type KyberSwapElasticLiquidityPositionDefinition = {
+export type KyberswapElasticLiquidityPositionDefinition = {
   address: string;
   poolAddress: string;
   token0Address: string;
@@ -51,10 +51,10 @@ type GetTopPoolsResponse = {
   }[];
 };
 
-export abstract class KyberSwapElasticLiquidityContractPositionFetcher extends ContractPositionTemplatePositionFetcher<
+export abstract class KyberswapElasticLiquidityContractPositionFetcher extends ContractPositionTemplatePositionFetcher<
   PositionManager,
-  KyberSwapElasticLiquidityPositionDataProps,
-  KyberSwapElasticLiquidityPositionDefinition
+  KyberswapElasticLiquidityPositionDataProps,
+  KyberswapElasticLiquidityPositionDefinition
 > {
   abstract subgraphUrl: string;
   abstract positionManagerAddress: string;
@@ -67,10 +67,10 @@ export abstract class KyberSwapElasticLiquidityContractPositionFetcher extends C
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
     @Inject(KyberswapElasticContractFactory) protected readonly contractFactory: KyberswapElasticContractFactory,
-    @Inject(KyberSwapElasticLiquidityContractPositionBuilder)
-    protected readonly kyberElasticLiquidityContractPositionBuilder: KyberSwapElasticLiquidityContractPositionBuilder,
-    @Inject(KyberSwapElasticApyDataLoader)
-    protected readonly apyDataLoaderBuilder: KyberSwapElasticApyDataLoader,
+    @Inject(KyberswapElasticLiquidityContractPositionBuilder)
+    protected readonly kyberElasticLiquidityContractPositionBuilder: KyberswapElasticLiquidityContractPositionBuilder,
+    @Inject(KyberswapElasticApyDataLoader)
+    protected readonly apyDataLoaderBuilder: KyberswapElasticApyDataLoader,
   ) {
     super(appToolkit);
   }
@@ -79,7 +79,7 @@ export abstract class KyberSwapElasticLiquidityContractPositionFetcher extends C
     return this.contractFactory.positionManager({ address, network: this.network });
   }
 
-  async getDefinitions(): Promise<KyberSwapElasticLiquidityPositionDefinition[]> {
+  async getDefinitions(): Promise<KyberswapElasticLiquidityPositionDefinition[]> {
     this.apyDataLoader = this.apyDataLoaderBuilder.getLoader({
       subgraphUrl: this.subgraphUrl,
       blockSubgraphUrl: this.blockSubgraphUrl,
@@ -101,7 +101,7 @@ export abstract class KyberSwapElasticLiquidityContractPositionFetcher extends C
 
   async getTokenDefinitions({
     definition,
-  }: GetTokenDefinitionsParams<PositionManager, KyberSwapElasticLiquidityPositionDefinition>) {
+  }: GetTokenDefinitionsParams<PositionManager, KyberswapElasticLiquidityPositionDefinition>) {
     return [
       { metaType: MetaType.SUPPLIED, address: definition.token0Address },
       { metaType: MetaType.SUPPLIED, address: definition.token1Address },
@@ -114,9 +114,9 @@ export abstract class KyberSwapElasticLiquidityContractPositionFetcher extends C
     definition,
   }: GetDataPropsParams<
     PositionManager,
-    KyberSwapElasticLiquidityPositionDataProps,
-    KyberSwapElasticLiquidityPositionDefinition
-  >): Promise<KyberSwapElasticLiquidityPositionDataProps> {
+    KyberswapElasticLiquidityPositionDataProps,
+    KyberswapElasticLiquidityPositionDefinition
+  >): Promise<KyberswapElasticLiquidityPositionDataProps> {
     const { poolAddress, feeTier } = definition;
     const { tokens } = contractPosition;
 
@@ -139,15 +139,15 @@ export abstract class KyberSwapElasticLiquidityContractPositionFetcher extends C
     definition,
   }: GetDisplayPropsParams<
     PositionManager,
-    KyberSwapElasticLiquidityPositionDataProps,
-    KyberSwapElasticLiquidityPositionDefinition
+    KyberswapElasticLiquidityPositionDataProps,
+    KyberswapElasticLiquidityPositionDefinition
   >): Promise<string> {
     const symbolLabel = contractPosition.tokens.map(t => getLabelFromToken(t)).join(' / ');
     const label = `${symbolLabel} (${definition.feeTier.toFixed(4)}%)`;
     return label;
   }
 
-  getKey({ contractPosition }: { contractPosition: ContractPosition<KyberSwapElasticLiquidityPositionDataProps> }) {
+  getKey({ contractPosition }: { contractPosition: ContractPosition<KyberswapElasticLiquidityPositionDataProps> }) {
     return this.appToolkit.getPositionKey(contractPosition, ['feeTier']);
   }
 
@@ -156,7 +156,7 @@ export abstract class KyberSwapElasticLiquidityContractPositionFetcher extends C
     throw new NotImplementedException();
   }
 
-  async getBalances(address: string): Promise<ContractPositionBalance<KyberSwapElasticLiquidityPositionDataProps>[]> {
+  async getBalances(address: string): Promise<ContractPositionBalance<KyberswapElasticLiquidityPositionDataProps>[]> {
     // @TODO: Rely on contract positions when we can correctly index all pools
     const multicall = this.appToolkit.getMulticall(this.network);
     const tokenLoader = this.appToolkit.getTokenDependencySelector({

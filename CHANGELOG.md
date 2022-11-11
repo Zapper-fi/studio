@@ -4,6 +4,32 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.268.0](https://github.com/Zapper-fi/studio/compare/v0.267.0...v0.268.0) (2022-11-10)
+
+
+### Features
+
+* **kwenta:** cross margin ([#1654](https://github.com/Zapper-fi/studio/issues/1654)) ([07d0b6d](https://github.com/Zapper-fi/studio/commit/07d0b6dfa05f04da3b68132c5dca2006b3783073))
+* **kyberswap-elastic:** Add Kyberswap Elastic farms ([#1683](https://github.com/Zapper-fi/studio/issues/1683)) ([400e50d](https://github.com/Zapper-fi/studio/commit/400e50ddb063ec6278ffd402cd81903b5165d6d4))
+* **sushiswap-kashi:** Kashi to templates ([#1687](https://github.com/Zapper-fi/studio/issues/1687)) ([ab49500](https://github.com/Zapper-fi/studio/commit/ab49500712dbdfc33d39987c7397f7aa0b2d5be9))
+
+## [0.267.0](https://github.com/Zapper-fi/studio/compare/v0.266.0...v0.267.0) (2022-11-10)
+
+
+### Features
+
+* **lyra-avalon:** Migrate to templates ([#1681](https://github.com/Zapper-fi/studio/issues/1681)) ([0192de1](https://github.com/Zapper-fi/studio/commit/0192de134c41cb1c9b63fead6728754f93d7680f))
+
+## [0.266.0](https://github.com/Zapper-fi/studio/compare/v0.265.0...v0.266.0) (2022-11-10)
+
+
+### Features
+
+* **chicken-bond:** Add Chicken Bond and bLUSD app token ([#1676](https://github.com/Zapper-fi/studio/issues/1676)) ([cef610d](https://github.com/Zapper-fi/studio/commit/cef610d1ff60834345d9c45dcd1fc73ae0176d33))
+* **chicken-bond:** Fix definition ([e657d52](https://github.com/Zapper-fi/studio/commit/e657d520356f2333bec551b88a572b834dc7be0c))
+* **lyra-avalon:** Replace deprecated subgraph URL ([#1677](https://github.com/Zapper-fi/studio/issues/1677)) ([a239e60](https://github.com/Zapper-fi/studio/commit/a239e6042ba1dd8662f7d094dac9c55112fe52b7))
+* **unipilot:** Add Unipilot integration ([#1680](https://github.com/Zapper-fi/studio/issues/1680)) ([1beeda9](https://github.com/Zapper-fi/studio/commit/1beeda944bd07d5a10a1797383c324d0b360283b))
+
 ## [0.265.0](https://github.com/Zapper-fi/studio/compare/v0.264.0...v0.265.0) (2022-11-09)
 
 

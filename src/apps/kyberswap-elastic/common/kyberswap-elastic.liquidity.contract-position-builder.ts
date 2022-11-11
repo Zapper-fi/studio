@@ -18,14 +18,14 @@ import { Network } from '~types/network.interface';
 import { KyberswapElasticContractFactory } from '../contracts';
 import { KYBERSWAP_ELASTIC_DEFINITION } from '../kyberswap-elastic.definition';
 
-import { KyberSwapElasticLiquidityPositionDataProps } from './kyberswap-elastic.liquidity.contract-position-fetcher';
+import { KyberswapElasticLiquidityPositionDataProps } from './kyberswap-elastic.liquidity.contract-position-fetcher';
 import {
-  KyberSwapElasticLiquidityPositionContractData,
-  KyberSwapElasticPoolStateData,
+  KyberswapElasticLiquidityPositionContractData,
+  KyberswapElasticPoolStateData,
 } from './kyberswap-elastic.liquidity.types';
 import { getSupplied, getRange } from './kyberswap-elastic.liquidity.utils';
 
-type KyberSwapElasticLiquidityContractPositionHelperParams = {
+type KyberswapElasticLiquidityContractPositionHelperParams = {
   multicall: IMulticallWrapper;
   tokenLoader: TokenDependencySelector;
   positionId: BigNumberish;
@@ -33,7 +33,7 @@ type KyberSwapElasticLiquidityContractPositionHelperParams = {
   collapseClaimable?: boolean;
 };
 
-export class KyberSwapElasticLiquidityContractPositionBuilder {
+export class KyberswapElasticLiquidityContractPositionBuilder {
   managerAddress = '0x2b1c7b41f6a8f2b2bc45c3233a5d5fb3cd6dc9a8';
   factoryAddress = '0x5f1dddbf348ac2fbe22a163e30f99f9ece3dd50a';
   tickerReaderAddress = '0x165c68077ac06c83800d19200e6e2b08d02de75d';
@@ -49,7 +49,7 @@ export class KyberSwapElasticLiquidityContractPositionBuilder {
     tokenLoader,
     network,
     collapseClaimable,
-  }: KyberSwapElasticLiquidityContractPositionHelperParams) {
+  }: KyberswapElasticLiquidityContractPositionHelperParams) {
     const positionManager = this.contractFactory.positionManager({ address: this.managerAddress, network });
     const factoryContract = this.contractFactory.factory({ address: this.factoryAddress, network });
     const position = await multicall.wrap(positionManager).positions(positionId);
@@ -76,7 +76,7 @@ export class KyberSwapElasticLiquidityContractPositionBuilder {
       multicall.wrap(token1Contract).balanceOf(poolAddress),
     ]);
 
-    const positionData: KyberSwapElasticLiquidityPositionContractData = {
+    const positionData: KyberswapElasticLiquidityPositionContractData = {
       tickLower: position.pos.tickLower,
       tickUpper: position.pos.tickUpper,
       liquidity: position.pos.liquidity,
@@ -89,7 +89,7 @@ export class KyberSwapElasticLiquidityContractPositionBuilder {
       token1: position.info.token1,
       fee: fee,
     };
-    const state: KyberSwapElasticPoolStateData = {
+    const state: KyberswapElasticPoolStateData = {
       sqrtPriceX96: poolState.sqrtP,
       reinvestL: liquidityState.reinvestL,
       currentTick: poolState.currentTick,
@@ -118,7 +118,7 @@ export class KyberSwapElasticLiquidityContractPositionBuilder {
       );
     }
 
-    const dataProps: KyberSwapElasticLiquidityPositionDataProps = {
+    const dataProps: KyberswapElasticLiquidityPositionDataProps = {
       feeTier: Number(fee) / 10 ** 4,
       rangeStart: range[0],
       rangeEnd: range[1],
@@ -134,7 +134,7 @@ export class KyberSwapElasticLiquidityContractPositionBuilder {
       statsItems: [{ label: 'Liquidity', value: buildDollarDisplayItem(Number(state.liquidity)) }],
     };
 
-    const balance: ContractPositionBalance<KyberSwapElasticLiquidityPositionDataProps> = {
+    const balance: ContractPositionBalance<KyberswapElasticLiquidityPositionDataProps> = {
       type: ContractType.POSITION,
       address: this.managerAddress,
       appId: KYBERSWAP_ELASTIC_DEFINITION.id,

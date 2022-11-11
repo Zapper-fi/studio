@@ -1,3 +1,3 @@
-export { KYBERSWAP_ELASTIC_DEFINITION, KyberSwapElasticAppDefinition } from './kyberswap-elastic.definition';
-export { KyberSwapElasticAppModule } from './kyberswap-elastic.module';
+export { KYBERSWAP_ELASTIC_DEFINITION, KyberswapElasticAppDefinition } from './kyberswap-elastic.definition';
+export { KyberswapElasticAppModule } from './kyberswap-elastic.module';
 export { KyberswapElasticContractFactory } from './contracts';
