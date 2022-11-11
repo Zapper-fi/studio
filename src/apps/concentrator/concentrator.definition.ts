@@ -19,19 +19,19 @@ export const CONCENTRATOR_DEFINITION = appDefinition({
     pool: {
       id: 'pool',
       type: GroupType.POSITION,
-      label: 'Pools',
+      label: 'aCRV Vaults',
     },
 
-    ifo: {
-      id: 'ifo',
+    legacy: {
+      id: 'legacy',
       type: GroupType.POSITION,
-      label: 'IFO',
+      label: 'Legacy Vaults',
     },
 
     ve: {
       id: 've',
       type: GroupType.POSITION,
-      label: 'VotingEscrow',
+      label: 'Voting Escrow',
     },
   },
 

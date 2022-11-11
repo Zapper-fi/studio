@@ -9,11 +9,11 @@ import {
   MasterChefTemplateContractPositionFetcher,
 } from '~position/template/master-chef.template.contract-position-fetcher';
 
-import { ConcentratorContractFactory, AladdinConcentratorIfoVault } from '../contracts';
+import { ConcentratorContractFactory, AladdinConcentratorAcrvVault } from '../contracts';
 
 @PositionTemplate()
-export class EthereumConcentratorIfoContractPositionFetcher extends MasterChefTemplateContractPositionFetcher<AladdinConcentratorIfoVault> {
-  groupLabel = 'IFO';
+export class EthereumConcentratorAcrvVaultContractPositionFetcher extends MasterChefTemplateContractPositionFetcher<AladdinConcentratorAcrvVault> {
+  groupLabel = 'aCRV Vaults';
 
   chefAddress = '0x3cf54f3a1969be9916dad548f3c084331c4450b5';
 
@@ -24,19 +24,19 @@ export class EthereumConcentratorIfoContractPositionFetcher extends MasterChefTe
     super(appToolkit);
   }
 
-  getContract(address: string): AladdinConcentratorIfoVault {
-    return this.contractFactory.aladdinConcentratorIfoVault({ address, network: this.network });
+  getContract(address: string): AladdinConcentratorAcrvVault {
+    return this.contractFactory.aladdinConcentratorAcrvVault({ address, network: this.network });
   }
 
-  async getPoolLength(contract: AladdinConcentratorIfoVault): Promise<BigNumberish> {
+  async getPoolLength(contract: AladdinConcentratorAcrvVault): Promise<BigNumberish> {
     return contract.poolLength();
   }
 
-  async getStakedTokenAddress(contract: AladdinConcentratorIfoVault, poolIndex: number): Promise<string> {
+  async getStakedTokenAddress(contract: AladdinConcentratorAcrvVault, poolIndex: number): Promise<string> {
     return contract.poolInfo(poolIndex).then(v => v.lpToken);
   }
 
-  async getRewardTokenAddress(contract: AladdinConcentratorIfoVault, _poolIndex: number, multicall: IMulticallWrapper) {
+  async getRewardTokenAddress(contract: AladdinConcentratorAcrvVault, _poolIndex: number, multicall: IMulticallWrapper) {
     return Promise.all([multicall.wrap(contract).ctr(), multicall.wrap(contract).aladdinCRV()]);
   }
 
@@ -56,7 +56,7 @@ export class EthereumConcentratorIfoContractPositionFetcher extends MasterChefTe
     address,
     contract,
     contractPosition,
-  }: GetMasterChefTokenBalancesParams<AladdinConcentratorIfoVault>) {
+  }: GetMasterChefTokenBalancesParams<AladdinConcentratorAcrvVault>) {
     return contract.userInfo(contractPosition.dataProps.poolIndex, address).then(v => v[0]);
   }
 
@@ -64,7 +64,7 @@ export class EthereumConcentratorIfoContractPositionFetcher extends MasterChefTe
     address,
     contract,
     contractPosition,
-  }: GetMasterChefTokenBalancesParams<AladdinConcentratorIfoVault>) {
+  }: GetMasterChefTokenBalancesParams<AladdinConcentratorAcrvVault>) {
     const poolIndex = contractPosition.dataProps.poolIndex;
     const ctrBalanceRaw = await contract.pendingCTR(poolIndex, address);
     const aCrvBalanceRaw = await contract.pendingReward(poolIndex, address);

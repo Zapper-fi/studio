@@ -18,27 +18,44 @@ import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi
 import type { Listener, Provider } from '@ethersproject/providers';
 import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
 
-export interface AladdinConvexVaultInterface extends utils.Interface {
+export interface AladdinConcentratorAcrvVaultInterface extends utils.Interface {
   functions: {
+    'accCTRPerShare(uint256)': FunctionFragment;
     'addPool(uint256,address[],uint256,uint256,uint256)': FunctionFragment;
     'aladdinCRV()': FunctionFragment;
     'claim(uint256,uint256,uint8)': FunctionFragment;
     'claimAll(uint256,uint8)': FunctionFragment;
+    'claimAllCTR(address)': FunctionFragment;
+    'claimCTR(uint256,address)': FunctionFragment;
+    'ctr()': FunctionFragment;
+    'ctrMined()': FunctionFragment;
+    'deposit(uint256,address,uint256)': FunctionFragment;
     'deposit(uint256,uint256)': FunctionFragment;
+    'depositAll(uint256,address)': FunctionFragment;
     'depositAll(uint256)': FunctionFragment;
+    'endTime()': FunctionFragment;
+    'getTotalShare(uint256)': FunctionFragment;
+    'getTotalUnderlying(uint256)': FunctionFragment;
+    'getUserShare(uint256,address)': FunctionFragment;
     'harvest(uint256,address,uint256)': FunctionFragment;
     'initialize(address,address,address)': FunctionFragment;
+    'migrate(uint256,address,uint256)': FunctionFragment;
+    'migrator()': FunctionFragment;
     'owner()': FunctionFragment;
     'pausePoolDeposit(uint256,bool)': FunctionFragment;
     'pausePoolWithdraw(uint256,bool)': FunctionFragment;
+    'pendingCTR(uint256,address)': FunctionFragment;
     'pendingReward(uint256,address)': FunctionFragment;
     'pendingRewardAll(address)': FunctionFragment;
     'platform()': FunctionFragment;
     'poolInfo(uint256)': FunctionFragment;
     'poolLength()': FunctionFragment;
     'renounceOwnership()': FunctionFragment;
+    'startTime()': FunctionFragment;
     'transferOwnership(address)': FunctionFragment;
     'updateHarvestBountyPercentage(uint256,uint256)': FunctionFragment;
+    'updateIFOConfig(address,uint64,uint64)': FunctionFragment;
+    'updateMigrator(address)': FunctionFragment;
     'updatePlatform(address)': FunctionFragment;
     'updatePlatformFeePercentage(uint256,uint256)': FunctionFragment;
     'updatePoolRewardTokens(uint256,address[])': FunctionFragment;
@@ -50,31 +67,50 @@ export interface AladdinConvexVaultInterface extends utils.Interface {
     'withdrawAndClaim(uint256,uint256,uint256,uint8)': FunctionFragment;
     'withdrawAndZap(uint256,uint256,address,uint256)': FunctionFragment;
     'zap()': FunctionFragment;
+    'zapAllAndDeposit(uint256,address,address,uint256)': FunctionFragment;
     'zapAllAndDeposit(uint256,address,uint256)': FunctionFragment;
+    'zapAndDeposit(uint256,address,address,uint256,uint256)': FunctionFragment;
     'zapAndDeposit(uint256,address,uint256,uint256)': FunctionFragment;
   };
 
   getFunction(
     nameOrSignatureOrTopic:
+      | 'accCTRPerShare'
       | 'addPool'
       | 'aladdinCRV'
       | 'claim'
       | 'claimAll'
-      | 'deposit'
-      | 'depositAll'
+      | 'claimAllCTR'
+      | 'claimCTR'
+      | 'ctr'
+      | 'ctrMined'
+      | 'deposit(uint256,address,uint256)'
+      | 'deposit(uint256,uint256)'
+      | 'depositAll(uint256,address)'
+      | 'depositAll(uint256)'
+      | 'endTime'
+      | 'getTotalShare'
+      | 'getTotalUnderlying'
+      | 'getUserShare'
       | 'harvest'
       | 'initialize'
+      | 'migrate'
+      | 'migrator'
       | 'owner'
       | 'pausePoolDeposit'
       | 'pausePoolWithdraw'
+      | 'pendingCTR'
       | 'pendingReward'
       | 'pendingRewardAll'
       | 'platform'
       | 'poolInfo'
       | 'poolLength'
       | 'renounceOwnership'
+      | 'startTime'
       | 'transferOwnership'
       | 'updateHarvestBountyPercentage'
+      | 'updateIFOConfig'
+      | 'updateMigrator'
       | 'updatePlatform'
       | 'updatePlatformFeePercentage'
       | 'updatePoolRewardTokens'
@@ -86,10 +122,13 @@ export interface AladdinConvexVaultInterface extends utils.Interface {
       | 'withdrawAndClaim'
       | 'withdrawAndZap'
       | 'zap'
-      | 'zapAllAndDeposit'
-      | 'zapAndDeposit',
+      | 'zapAllAndDeposit(uint256,address,address,uint256)'
+      | 'zapAllAndDeposit(uint256,address,uint256)'
+      | 'zapAndDeposit(uint256,address,address,uint256,uint256)'
+      | 'zapAndDeposit(uint256,address,uint256,uint256)',
   ): FunctionFragment;
 
+  encodeFunctionData(functionFragment: 'accCTRPerShare', values: [BigNumberish]): string;
   encodeFunctionData(
     functionFragment: 'addPool',
     values: [BigNumberish, string[], BigNumberish, BigNumberish, BigNumberish],
@@ -97,21 +136,40 @@ export interface AladdinConvexVaultInterface extends utils.Interface {
   encodeFunctionData(functionFragment: 'aladdinCRV', values?: undefined): string;
   encodeFunctionData(functionFragment: 'claim', values: [BigNumberish, BigNumberish, BigNumberish]): string;
   encodeFunctionData(functionFragment: 'claimAll', values: [BigNumberish, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'deposit', values: [BigNumberish, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'depositAll', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'claimAllCTR', values: [string]): string;
+  encodeFunctionData(functionFragment: 'claimCTR', values: [BigNumberish, string]): string;
+  encodeFunctionData(functionFragment: 'ctr', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'ctrMined', values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: 'deposit(uint256,address,uint256)',
+    values: [BigNumberish, string, BigNumberish],
+  ): string;
+  encodeFunctionData(functionFragment: 'deposit(uint256,uint256)', values: [BigNumberish, BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'depositAll(uint256,address)', values: [BigNumberish, string]): string;
+  encodeFunctionData(functionFragment: 'depositAll(uint256)', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'endTime', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'getTotalShare', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'getTotalUnderlying', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'getUserShare', values: [BigNumberish, string]): string;
   encodeFunctionData(functionFragment: 'harvest', values: [BigNumberish, string, BigNumberish]): string;
   encodeFunctionData(functionFragment: 'initialize', values: [string, string, string]): string;
+  encodeFunctionData(functionFragment: 'migrate', values: [BigNumberish, string, BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'migrator', values?: undefined): string;
   encodeFunctionData(functionFragment: 'owner', values?: undefined): string;
   encodeFunctionData(functionFragment: 'pausePoolDeposit', values: [BigNumberish, boolean]): string;
   encodeFunctionData(functionFragment: 'pausePoolWithdraw', values: [BigNumberish, boolean]): string;
+  encodeFunctionData(functionFragment: 'pendingCTR', values: [BigNumberish, string]): string;
   encodeFunctionData(functionFragment: 'pendingReward', values: [BigNumberish, string]): string;
   encodeFunctionData(functionFragment: 'pendingRewardAll', values: [string]): string;
   encodeFunctionData(functionFragment: 'platform', values?: undefined): string;
   encodeFunctionData(functionFragment: 'poolInfo', values: [BigNumberish]): string;
   encodeFunctionData(functionFragment: 'poolLength', values?: undefined): string;
   encodeFunctionData(functionFragment: 'renounceOwnership', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'startTime', values?: undefined): string;
   encodeFunctionData(functionFragment: 'transferOwnership', values: [string]): string;
   encodeFunctionData(functionFragment: 'updateHarvestBountyPercentage', values: [BigNumberish, BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'updateIFOConfig', values: [string, BigNumberish, BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'updateMigrator', values: [string]): string;
   encodeFunctionData(functionFragment: 'updatePlatform', values: [string]): string;
   encodeFunctionData(functionFragment: 'updatePlatformFeePercentage', values: [BigNumberish, BigNumberish]): string;
   encodeFunctionData(functionFragment: 'updatePoolRewardTokens', values: [BigNumberish, string[]]): string;
@@ -132,31 +190,59 @@ export interface AladdinConvexVaultInterface extends utils.Interface {
     values: [BigNumberish, BigNumberish, string, BigNumberish],
   ): string;
   encodeFunctionData(functionFragment: 'zap', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'zapAllAndDeposit', values: [BigNumberish, string, BigNumberish]): string;
   encodeFunctionData(
-    functionFragment: 'zapAndDeposit',
+    functionFragment: 'zapAllAndDeposit(uint256,address,address,uint256)',
+    values: [BigNumberish, string, string, BigNumberish],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'zapAllAndDeposit(uint256,address,uint256)',
+    values: [BigNumberish, string, BigNumberish],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'zapAndDeposit(uint256,address,address,uint256,uint256)',
+    values: [BigNumberish, string, string, BigNumberish, BigNumberish],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'zapAndDeposit(uint256,address,uint256,uint256)',
     values: [BigNumberish, string, BigNumberish, BigNumberish],
   ): string;
 
+  decodeFunctionResult(functionFragment: 'accCTRPerShare', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'addPool', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'aladdinCRV', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'claim', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'claimAll', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'deposit', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'depositAll', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'claimAllCTR', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'claimCTR', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'ctr', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'ctrMined', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'deposit(uint256,address,uint256)', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'deposit(uint256,uint256)', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'depositAll(uint256,address)', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'depositAll(uint256)', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'endTime', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'getTotalShare', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'getTotalUnderlying', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'getUserShare', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'harvest', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'initialize', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'migrate', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'migrator', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'owner', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'pausePoolDeposit', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'pausePoolWithdraw', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'pendingCTR', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'pendingReward', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'pendingRewardAll', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'platform', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'poolInfo', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'poolLength', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'renounceOwnership', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'startTime', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'transferOwnership', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'updateHarvestBountyPercentage', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'updateIFOConfig', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'updateMigrator', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'updatePlatform', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'updatePlatformFeePercentage', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'updatePoolRewardTokens', data: BytesLike): Result;
@@ -168,18 +254,28 @@ export interface AladdinConvexVaultInterface extends utils.Interface {
   decodeFunctionResult(functionFragment: 'withdrawAndClaim', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'withdrawAndZap', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'zap', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'zapAllAndDeposit', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'zapAndDeposit', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'zapAllAndDeposit(uint256,address,address,uint256)', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'zapAllAndDeposit(uint256,address,uint256)', data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: 'zapAndDeposit(uint256,address,address,uint256,uint256)',
+    data: BytesLike,
+  ): Result;
+  decodeFunctionResult(functionFragment: 'zapAndDeposit(uint256,address,uint256,uint256)', data: BytesLike): Result;
 
   events: {
     'AddPool(uint256,uint256,address[])': EventFragment;
     'Claim(address,uint256,uint8)': EventFragment;
+    'ClaimCTR(uint256,address,address,uint256)': EventFragment;
     'Deposit(uint256,address,uint256)': EventFragment;
     'Harvest(address,uint256,uint256,uint256)': EventFragment;
+    'IFOMineCTR(uint256)': EventFragment;
+    'Migrate(uint256,address,uint256,address,address,uint256)': EventFragment;
     'OwnershipTransferred(address,address)': EventFragment;
     'PausePoolDeposit(uint256,bool)': EventFragment;
     'PausePoolWithdraw(uint256,bool)': EventFragment;
     'UpdateHarvestBountyPercentage(uint256,uint256)': EventFragment;
+    'UpdateIFOConfig(address,uint256,uint256)': EventFragment;
+    'UpdateMigrator(address)': EventFragment;
     'UpdatePlatform(address)': EventFragment;
     'UpdatePlatformFeePercentage(uint256,uint256)': EventFragment;
     'UpdatePoolRewardTokens(uint256,address[])': EventFragment;
@@ -190,12 +286,17 @@ export interface AladdinConvexVaultInterface extends utils.Interface {
 
   getEvent(nameOrSignatureOrTopic: 'AddPool'): EventFragment;
   getEvent(nameOrSignatureOrTopic: 'Claim'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'ClaimCTR'): EventFragment;
   getEvent(nameOrSignatureOrTopic: 'Deposit'): EventFragment;
   getEvent(nameOrSignatureOrTopic: 'Harvest'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'IFOMineCTR'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'Migrate'): EventFragment;
   getEvent(nameOrSignatureOrTopic: 'OwnershipTransferred'): EventFragment;
   getEvent(nameOrSignatureOrTopic: 'PausePoolDeposit'): EventFragment;
   getEvent(nameOrSignatureOrTopic: 'PausePoolWithdraw'): EventFragment;
   getEvent(nameOrSignatureOrTopic: 'UpdateHarvestBountyPercentage'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'UpdateIFOConfig'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'UpdateMigrator'): EventFragment;
   getEvent(nameOrSignatureOrTopic: 'UpdatePlatform'): EventFragment;
   getEvent(nameOrSignatureOrTopic: 'UpdatePlatformFeePercentage'): EventFragment;
   getEvent(nameOrSignatureOrTopic: 'UpdatePoolRewardTokens'): EventFragment;
@@ -222,6 +323,16 @@ export type ClaimEvent = TypedEvent<[string, BigNumber, number], ClaimEventObjec
 
 export type ClaimEventFilter = TypedEventFilter<ClaimEvent>;
 
+export interface ClaimCTREventObject {
+  _pid: BigNumber;
+  _caller: string;
+  _recipient: string;
+  _amount: BigNumber;
+}
+export type ClaimCTREvent = TypedEvent<[BigNumber, string, string, BigNumber], ClaimCTREventObject>;
+
+export type ClaimCTREventFilter = TypedEventFilter<ClaimCTREvent>;
+
 export interface DepositEventObject {
   _pid: BigNumber;
   _sender: string;
@@ -240,6 +351,25 @@ export interface HarvestEventObject {
 export type HarvestEvent = TypedEvent<[string, BigNumber, BigNumber, BigNumber], HarvestEventObject>;
 
 export type HarvestEventFilter = TypedEventFilter<HarvestEvent>;
+
+export interface IFOMineCTREventObject {
+  _amount: BigNumber;
+}
+export type IFOMineCTREvent = TypedEvent<[BigNumber], IFOMineCTREventObject>;
+
+export type IFOMineCTREventFilter = TypedEventFilter<IFOMineCTREvent>;
+
+export interface MigrateEventObject {
+  _pid: BigNumber;
+  _caller: string;
+  _share: BigNumber;
+  _recipient: string;
+  _migrator: string;
+  _newPid: BigNumber;
+}
+export type MigrateEvent = TypedEvent<[BigNumber, string, BigNumber, string, string, BigNumber], MigrateEventObject>;
+
+export type MigrateEventFilter = TypedEventFilter<MigrateEvent>;
 
 export interface OwnershipTransferredEventObject {
   previousOwner: string;
@@ -275,6 +405,22 @@ export type UpdateHarvestBountyPercentageEvent = TypedEvent<
 >;
 
 export type UpdateHarvestBountyPercentageEventFilter = TypedEventFilter<UpdateHarvestBountyPercentageEvent>;
+
+export interface UpdateIFOConfigEventObject {
+  _ctr: string;
+  _startTime: BigNumber;
+  _endTime: BigNumber;
+}
+export type UpdateIFOConfigEvent = TypedEvent<[string, BigNumber, BigNumber], UpdateIFOConfigEventObject>;
+
+export type UpdateIFOConfigEventFilter = TypedEventFilter<UpdateIFOConfigEvent>;
+
+export interface UpdateMigratorEventObject {
+  _migrator: string;
+}
+export type UpdateMigratorEvent = TypedEvent<[string], UpdateMigratorEventObject>;
+
+export type UpdateMigratorEventFilter = TypedEventFilter<UpdateMigratorEvent>;
 
 export interface UpdatePlatformEventObject {
   _platform: string;
@@ -329,12 +475,12 @@ export type WithdrawEvent = TypedEvent<[BigNumber, string, BigNumber], WithdrawE
 
 export type WithdrawEventFilter = TypedEventFilter<WithdrawEvent>;
 
-export interface AladdinConvexVault extends BaseContract {
+export interface AladdinConcentratorAcrvVault extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
 
-  interface: AladdinConvexVaultInterface;
+  interface: AladdinConcentratorAcrvVaultInterface;
 
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,
@@ -352,6 +498,8 @@ export interface AladdinConvexVault extends BaseContract {
   removeListener: OnEvent<this>;
 
   functions: {
+    accCTRPerShare(arg0: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber]>;
+
     addPool(
       _convexPid: BigNumberish,
       _rewardTokens: string[],
@@ -376,16 +524,52 @@ export interface AladdinConvexVault extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<ContractTransaction>;
 
-    deposit(
+    claimAllCTR(
+      _recipient: string,
+      overrides?: Overrides & { from?: string | Promise<string> },
+    ): Promise<ContractTransaction>;
+
+    claimCTR(
+      _pid: BigNumberish,
+      _recipient: string,
+      overrides?: Overrides & { from?: string | Promise<string> },
+    ): Promise<ContractTransaction>;
+
+    ctr(overrides?: CallOverrides): Promise<[string]>;
+
+    ctrMined(overrides?: CallOverrides): Promise<[BigNumber]>;
+
+    'deposit(uint256,address,uint256)'(
+      _pid: BigNumberish,
+      _recipient: string,
+      _amount: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> },
+    ): Promise<ContractTransaction>;
+
+    'deposit(uint256,uint256)'(
       _pid: BigNumberish,
       _amount: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<ContractTransaction>;
 
-    depositAll(
+    'depositAll(uint256,address)'(
+      _pid: BigNumberish,
+      _recipient: string,
+      overrides?: Overrides & { from?: string | Promise<string> },
+    ): Promise<ContractTransaction>;
+
+    'depositAll(uint256)'(
       _pid: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<ContractTransaction>;
+
+    endTime(overrides?: CallOverrides): Promise<[BigNumber]>;
+
+    getTotalShare(_pid: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber]>;
+
+    getTotalUnderlying(_pid: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber]>;
+
+    getUserShare(_pid: BigNumberish, _account: string, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     harvest(
       _pid: BigNumberish,
@@ -401,6 +585,15 @@ export interface AladdinConvexVault extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<ContractTransaction>;
 
+    migrate(
+      _pid: BigNumberish,
+      _recipient: string,
+      _newPid: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> },
+    ): Promise<ContractTransaction>;
+
+    migrator(overrides?: CallOverrides): Promise<[string]>;
+
     owner(overrides?: CallOverrides): Promise<[string]>;
 
     pausePoolDeposit(
@@ -414,6 +607,8 @@ export interface AladdinConvexVault extends BaseContract {
       _status: boolean,
       overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<ContractTransaction>;
+
+    pendingCTR(_pid: BigNumberish, _account: string, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     pendingReward(_pid: BigNumberish, _account: string, overrides?: CallOverrides): Promise<[BigNumber]>;
 
@@ -456,6 +651,8 @@ export interface AladdinConvexVault extends BaseContract {
 
     renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
 
+    startTime(overrides?: CallOverrides): Promise<[BigNumber]>;
+
     transferOwnership(
       newOwner: string,
       overrides?: Overrides & { from?: string | Promise<string> },
@@ -464,6 +661,18 @@ export interface AladdinConvexVault extends BaseContract {
     updateHarvestBountyPercentage(
       _pid: BigNumberish,
       _percentage: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> },
+    ): Promise<ContractTransaction>;
+
+    updateIFOConfig(
+      _ctr: string,
+      _startTime: BigNumberish,
+      _endTime: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> },
+    ): Promise<ContractTransaction>;
+
+    updateMigrator(
+      _migrator: string,
       overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<ContractTransaction>;
 
@@ -536,14 +745,31 @@ export interface AladdinConvexVault extends BaseContract {
 
     zap(overrides?: CallOverrides): Promise<[string]>;
 
-    zapAllAndDeposit(
+    'zapAllAndDeposit(uint256,address,address,uint256)'(
+      _pid: BigNumberish,
+      _recipient: string,
+      _token: string,
+      _minAmount: BigNumberish,
+      overrides?: PayableOverrides & { from?: string | Promise<string> },
+    ): Promise<ContractTransaction>;
+
+    'zapAllAndDeposit(uint256,address,uint256)'(
       _pid: BigNumberish,
       _token: string,
       _minAmount: BigNumberish,
       overrides?: PayableOverrides & { from?: string | Promise<string> },
     ): Promise<ContractTransaction>;
 
-    zapAndDeposit(
+    'zapAndDeposit(uint256,address,address,uint256,uint256)'(
+      _pid: BigNumberish,
+      _recipient: string,
+      _token: string,
+      _amount: BigNumberish,
+      _minAmount: BigNumberish,
+      overrides?: PayableOverrides & { from?: string | Promise<string> },
+    ): Promise<ContractTransaction>;
+
+    'zapAndDeposit(uint256,address,uint256,uint256)'(
       _pid: BigNumberish,
       _token: string,
       _amount: BigNumberish,
@@ -551,6 +777,8 @@ export interface AladdinConvexVault extends BaseContract {
       overrides?: PayableOverrides & { from?: string | Promise<string> },
     ): Promise<ContractTransaction>;
   };
+
+  accCTRPerShare(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
 
   addPool(
     _convexPid: BigNumberish,
@@ -576,16 +804,52 @@ export interface AladdinConvexVault extends BaseContract {
     overrides?: Overrides & { from?: string | Promise<string> },
   ): Promise<ContractTransaction>;
 
-  deposit(
+  claimAllCTR(
+    _recipient: string,
+    overrides?: Overrides & { from?: string | Promise<string> },
+  ): Promise<ContractTransaction>;
+
+  claimCTR(
+    _pid: BigNumberish,
+    _recipient: string,
+    overrides?: Overrides & { from?: string | Promise<string> },
+  ): Promise<ContractTransaction>;
+
+  ctr(overrides?: CallOverrides): Promise<string>;
+
+  ctrMined(overrides?: CallOverrides): Promise<BigNumber>;
+
+  'deposit(uint256,address,uint256)'(
+    _pid: BigNumberish,
+    _recipient: string,
+    _amount: BigNumberish,
+    overrides?: Overrides & { from?: string | Promise<string> },
+  ): Promise<ContractTransaction>;
+
+  'deposit(uint256,uint256)'(
     _pid: BigNumberish,
     _amount: BigNumberish,
     overrides?: Overrides & { from?: string | Promise<string> },
   ): Promise<ContractTransaction>;
 
-  depositAll(
+  'depositAll(uint256,address)'(
+    _pid: BigNumberish,
+    _recipient: string,
+    overrides?: Overrides & { from?: string | Promise<string> },
+  ): Promise<ContractTransaction>;
+
+  'depositAll(uint256)'(
     _pid: BigNumberish,
     overrides?: Overrides & { from?: string | Promise<string> },
   ): Promise<ContractTransaction>;
+
+  endTime(overrides?: CallOverrides): Promise<BigNumber>;
+
+  getTotalShare(_pid: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+
+  getTotalUnderlying(_pid: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+
+  getUserShare(_pid: BigNumberish, _account: string, overrides?: CallOverrides): Promise<BigNumber>;
 
   harvest(
     _pid: BigNumberish,
@@ -601,6 +865,15 @@ export interface AladdinConvexVault extends BaseContract {
     overrides?: Overrides & { from?: string | Promise<string> },
   ): Promise<ContractTransaction>;
 
+  migrate(
+    _pid: BigNumberish,
+    _recipient: string,
+    _newPid: BigNumberish,
+    overrides?: Overrides & { from?: string | Promise<string> },
+  ): Promise<ContractTransaction>;
+
+  migrator(overrides?: CallOverrides): Promise<string>;
+
   owner(overrides?: CallOverrides): Promise<string>;
 
   pausePoolDeposit(
@@ -614,6 +887,8 @@ export interface AladdinConvexVault extends BaseContract {
     _status: boolean,
     overrides?: Overrides & { from?: string | Promise<string> },
   ): Promise<ContractTransaction>;
+
+  pendingCTR(_pid: BigNumberish, _account: string, overrides?: CallOverrides): Promise<BigNumber>;
 
   pendingReward(_pid: BigNumberish, _account: string, overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -644,6 +919,8 @@ export interface AladdinConvexVault extends BaseContract {
 
   renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
 
+  startTime(overrides?: CallOverrides): Promise<BigNumber>;
+
   transferOwnership(
     newOwner: string,
     overrides?: Overrides & { from?: string | Promise<string> },
@@ -652,6 +929,18 @@ export interface AladdinConvexVault extends BaseContract {
   updateHarvestBountyPercentage(
     _pid: BigNumberish,
     _percentage: BigNumberish,
+    overrides?: Overrides & { from?: string | Promise<string> },
+  ): Promise<ContractTransaction>;
+
+  updateIFOConfig(
+    _ctr: string,
+    _startTime: BigNumberish,
+    _endTime: BigNumberish,
+    overrides?: Overrides & { from?: string | Promise<string> },
+  ): Promise<ContractTransaction>;
+
+  updateMigrator(
+    _migrator: string,
     overrides?: Overrides & { from?: string | Promise<string> },
   ): Promise<ContractTransaction>;
 
@@ -724,14 +1013,31 @@ export interface AladdinConvexVault extends BaseContract {
 
   zap(overrides?: CallOverrides): Promise<string>;
 
-  zapAllAndDeposit(
+  'zapAllAndDeposit(uint256,address,address,uint256)'(
+    _pid: BigNumberish,
+    _recipient: string,
+    _token: string,
+    _minAmount: BigNumberish,
+    overrides?: PayableOverrides & { from?: string | Promise<string> },
+  ): Promise<ContractTransaction>;
+
+  'zapAllAndDeposit(uint256,address,uint256)'(
     _pid: BigNumberish,
     _token: string,
     _minAmount: BigNumberish,
     overrides?: PayableOverrides & { from?: string | Promise<string> },
   ): Promise<ContractTransaction>;
 
-  zapAndDeposit(
+  'zapAndDeposit(uint256,address,address,uint256,uint256)'(
+    _pid: BigNumberish,
+    _recipient: string,
+    _token: string,
+    _amount: BigNumberish,
+    _minAmount: BigNumberish,
+    overrides?: PayableOverrides & { from?: string | Promise<string> },
+  ): Promise<ContractTransaction>;
+
+  'zapAndDeposit(uint256,address,uint256,uint256)'(
     _pid: BigNumberish,
     _token: string,
     _amount: BigNumberish,
@@ -740,6 +1046,8 @@ export interface AladdinConvexVault extends BaseContract {
   ): Promise<ContractTransaction>;
 
   callStatic: {
+    accCTRPerShare(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+
     addPool(
       _convexPid: BigNumberish,
       _rewardTokens: string[],
@@ -760,9 +1068,42 @@ export interface AladdinConvexVault extends BaseContract {
 
     claimAll(_minOut: BigNumberish, _option: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
 
-    deposit(_pid: BigNumberish, _amount: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    claimAllCTR(_recipient: string, overrides?: CallOverrides): Promise<BigNumber>;
 
-    depositAll(_pid: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    claimCTR(_pid: BigNumberish, _recipient: string, overrides?: CallOverrides): Promise<BigNumber>;
+
+    ctr(overrides?: CallOverrides): Promise<string>;
+
+    ctrMined(overrides?: CallOverrides): Promise<BigNumber>;
+
+    'deposit(uint256,address,uint256)'(
+      _pid: BigNumberish,
+      _recipient: string,
+      _amount: BigNumberish,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
+
+    'deposit(uint256,uint256)'(
+      _pid: BigNumberish,
+      _amount: BigNumberish,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
+
+    'depositAll(uint256,address)'(
+      _pid: BigNumberish,
+      _recipient: string,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
+
+    'depositAll(uint256)'(_pid: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+
+    endTime(overrides?: CallOverrides): Promise<BigNumber>;
+
+    getTotalShare(_pid: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+
+    getTotalUnderlying(_pid: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+
+    getUserShare(_pid: BigNumberish, _account: string, overrides?: CallOverrides): Promise<BigNumber>;
 
     harvest(
       _pid: BigNumberish,
@@ -773,11 +1114,17 @@ export interface AladdinConvexVault extends BaseContract {
 
     initialize(_aladdinCRV: string, _zap: string, _platform: string, overrides?: CallOverrides): Promise<void>;
 
+    migrate(_pid: BigNumberish, _recipient: string, _newPid: BigNumberish, overrides?: CallOverrides): Promise<void>;
+
+    migrator(overrides?: CallOverrides): Promise<string>;
+
     owner(overrides?: CallOverrides): Promise<string>;
 
     pausePoolDeposit(_pid: BigNumberish, _status: boolean, overrides?: CallOverrides): Promise<void>;
 
     pausePoolWithdraw(_pid: BigNumberish, _status: boolean, overrides?: CallOverrides): Promise<void>;
+
+    pendingCTR(_pid: BigNumberish, _account: string, overrides?: CallOverrides): Promise<BigNumber>;
 
     pendingReward(_pid: BigNumberish, _account: string, overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -820,6 +1167,8 @@ export interface AladdinConvexVault extends BaseContract {
 
     renounceOwnership(overrides?: CallOverrides): Promise<void>;
 
+    startTime(overrides?: CallOverrides): Promise<BigNumber>;
+
     transferOwnership(newOwner: string, overrides?: CallOverrides): Promise<void>;
 
     updateHarvestBountyPercentage(
@@ -827,6 +1176,15 @@ export interface AladdinConvexVault extends BaseContract {
       _percentage: BigNumberish,
       overrides?: CallOverrides,
     ): Promise<void>;
+
+    updateIFOConfig(
+      _ctr: string,
+      _startTime: BigNumberish,
+      _endTime: BigNumberish,
+      overrides?: CallOverrides,
+    ): Promise<void>;
+
+    updateMigrator(_migrator: string, overrides?: CallOverrides): Promise<void>;
 
     updatePlatform(_platform: string, overrides?: CallOverrides): Promise<void>;
 
@@ -890,14 +1248,31 @@ export interface AladdinConvexVault extends BaseContract {
 
     zap(overrides?: CallOverrides): Promise<string>;
 
-    zapAllAndDeposit(
+    'zapAllAndDeposit(uint256,address,address,uint256)'(
+      _pid: BigNumberish,
+      _recipient: string,
+      _token: string,
+      _minAmount: BigNumberish,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
+
+    'zapAllAndDeposit(uint256,address,uint256)'(
       _pid: BigNumberish,
       _token: string,
       _minAmount: BigNumberish,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
-    zapAndDeposit(
+    'zapAndDeposit(uint256,address,address,uint256,uint256)'(
+      _pid: BigNumberish,
+      _recipient: string,
+      _token: string,
+      _amount: BigNumberish,
+      _minAmount: BigNumberish,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
+
+    'zapAndDeposit(uint256,address,uint256,uint256)'(
       _pid: BigNumberish,
       _token: string,
       _amount: BigNumberish,
@@ -917,6 +1292,19 @@ export interface AladdinConvexVault extends BaseContract {
     'Claim(address,uint256,uint8)'(_sender?: string | null, _reward?: null, _option?: null): ClaimEventFilter;
     Claim(_sender?: string | null, _reward?: null, _option?: null): ClaimEventFilter;
 
+    'ClaimCTR(uint256,address,address,uint256)'(
+      _pid?: BigNumberish | null,
+      _caller?: string | null,
+      _recipient?: null,
+      _amount?: null,
+    ): ClaimCTREventFilter;
+    ClaimCTR(
+      _pid?: BigNumberish | null,
+      _caller?: string | null,
+      _recipient?: null,
+      _amount?: null,
+    ): ClaimCTREventFilter;
+
     'Deposit(uint256,address,uint256)'(
       _pid?: BigNumberish | null,
       _sender?: string | null,
@@ -931,6 +1319,26 @@ export interface AladdinConvexVault extends BaseContract {
       _harvestBounty?: null,
     ): HarvestEventFilter;
     Harvest(_caller?: string | null, _reward?: null, _platformFee?: null, _harvestBounty?: null): HarvestEventFilter;
+
+    'IFOMineCTR(uint256)'(_amount?: null): IFOMineCTREventFilter;
+    IFOMineCTR(_amount?: null): IFOMineCTREventFilter;
+
+    'Migrate(uint256,address,uint256,address,address,uint256)'(
+      _pid?: BigNumberish | null,
+      _caller?: string | null,
+      _share?: null,
+      _recipient?: null,
+      _migrator?: null,
+      _newPid?: null,
+    ): MigrateEventFilter;
+    Migrate(
+      _pid?: BigNumberish | null,
+      _caller?: string | null,
+      _share?: null,
+      _recipient?: null,
+      _migrator?: null,
+      _newPid?: null,
+    ): MigrateEventFilter;
 
     'OwnershipTransferred(address,address)'(
       previousOwner?: string | null,
@@ -952,6 +1360,16 @@ export interface AladdinConvexVault extends BaseContract {
       _pid?: BigNumberish | null,
       _percentage?: null,
     ): UpdateHarvestBountyPercentageEventFilter;
+
+    'UpdateIFOConfig(address,uint256,uint256)'(
+      _ctr?: null,
+      _startTime?: null,
+      _endTime?: null,
+    ): UpdateIFOConfigEventFilter;
+    UpdateIFOConfig(_ctr?: null, _startTime?: null, _endTime?: null): UpdateIFOConfigEventFilter;
+
+    'UpdateMigrator(address)'(_migrator?: null): UpdateMigratorEventFilter;
+    UpdateMigrator(_migrator?: null): UpdateMigratorEventFilter;
 
     'UpdatePlatform(address)'(_platform?: string | null): UpdatePlatformEventFilter;
     UpdatePlatform(_platform?: string | null): UpdatePlatformEventFilter;
@@ -992,6 +1410,8 @@ export interface AladdinConvexVault extends BaseContract {
   };
 
   estimateGas: {
+    accCTRPerShare(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+
     addPool(
       _convexPid: BigNumberish,
       _rewardTokens: string[],
@@ -1016,13 +1436,49 @@ export interface AladdinConvexVault extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<BigNumber>;
 
-    deposit(
+    claimAllCTR(_recipient: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+
+    claimCTR(
+      _pid: BigNumberish,
+      _recipient: string,
+      overrides?: Overrides & { from?: string | Promise<string> },
+    ): Promise<BigNumber>;
+
+    ctr(overrides?: CallOverrides): Promise<BigNumber>;
+
+    ctrMined(overrides?: CallOverrides): Promise<BigNumber>;
+
+    'deposit(uint256,address,uint256)'(
+      _pid: BigNumberish,
+      _recipient: string,
+      _amount: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> },
+    ): Promise<BigNumber>;
+
+    'deposit(uint256,uint256)'(
       _pid: BigNumberish,
       _amount: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<BigNumber>;
 
-    depositAll(_pid: BigNumberish, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    'depositAll(uint256,address)'(
+      _pid: BigNumberish,
+      _recipient: string,
+      overrides?: Overrides & { from?: string | Promise<string> },
+    ): Promise<BigNumber>;
+
+    'depositAll(uint256)'(
+      _pid: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> },
+    ): Promise<BigNumber>;
+
+    endTime(overrides?: CallOverrides): Promise<BigNumber>;
+
+    getTotalShare(_pid: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+
+    getTotalUnderlying(_pid: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+
+    getUserShare(_pid: BigNumberish, _account: string, overrides?: CallOverrides): Promise<BigNumber>;
 
     harvest(
       _pid: BigNumberish,
@@ -1038,6 +1494,15 @@ export interface AladdinConvexVault extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<BigNumber>;
 
+    migrate(
+      _pid: BigNumberish,
+      _recipient: string,
+      _newPid: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> },
+    ): Promise<BigNumber>;
+
+    migrator(overrides?: CallOverrides): Promise<BigNumber>;
+
     owner(overrides?: CallOverrides): Promise<BigNumber>;
 
     pausePoolDeposit(
@@ -1052,6 +1517,8 @@ export interface AladdinConvexVault extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<BigNumber>;
 
+    pendingCTR(_pid: BigNumberish, _account: string, overrides?: CallOverrides): Promise<BigNumber>;
+
     pendingReward(_pid: BigNumberish, _account: string, overrides?: CallOverrides): Promise<BigNumber>;
 
     pendingRewardAll(_account: string, overrides?: CallOverrides): Promise<BigNumber>;
@@ -1064,6 +1531,8 @@ export interface AladdinConvexVault extends BaseContract {
 
     renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
 
+    startTime(overrides?: CallOverrides): Promise<BigNumber>;
+
     transferOwnership(
       newOwner: string,
       overrides?: Overrides & { from?: string | Promise<string> },
@@ -1074,6 +1543,15 @@ export interface AladdinConvexVault extends BaseContract {
       _percentage: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<BigNumber>;
+
+    updateIFOConfig(
+      _ctr: string,
+      _startTime: BigNumberish,
+      _endTime: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> },
+    ): Promise<BigNumber>;
+
+    updateMigrator(_migrator: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
 
     updatePlatform(_platform: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
 
@@ -1131,14 +1609,31 @@ export interface AladdinConvexVault extends BaseContract {
 
     zap(overrides?: CallOverrides): Promise<BigNumber>;
 
-    zapAllAndDeposit(
+    'zapAllAndDeposit(uint256,address,address,uint256)'(
+      _pid: BigNumberish,
+      _recipient: string,
+      _token: string,
+      _minAmount: BigNumberish,
+      overrides?: PayableOverrides & { from?: string | Promise<string> },
+    ): Promise<BigNumber>;
+
+    'zapAllAndDeposit(uint256,address,uint256)'(
       _pid: BigNumberish,
       _token: string,
       _minAmount: BigNumberish,
       overrides?: PayableOverrides & { from?: string | Promise<string> },
     ): Promise<BigNumber>;
 
-    zapAndDeposit(
+    'zapAndDeposit(uint256,address,address,uint256,uint256)'(
+      _pid: BigNumberish,
+      _recipient: string,
+      _token: string,
+      _amount: BigNumberish,
+      _minAmount: BigNumberish,
+      overrides?: PayableOverrides & { from?: string | Promise<string> },
+    ): Promise<BigNumber>;
+
+    'zapAndDeposit(uint256,address,uint256,uint256)'(
       _pid: BigNumberish,
       _token: string,
       _amount: BigNumberish,
@@ -1148,6 +1643,8 @@ export interface AladdinConvexVault extends BaseContract {
   };
 
   populateTransaction: {
+    accCTRPerShare(arg0: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
     addPool(
       _convexPid: BigNumberish,
       _rewardTokens: string[],
@@ -1172,16 +1669,52 @@ export interface AladdinConvexVault extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<PopulatedTransaction>;
 
-    deposit(
+    claimAllCTR(
+      _recipient: string,
+      overrides?: Overrides & { from?: string | Promise<string> },
+    ): Promise<PopulatedTransaction>;
+
+    claimCTR(
+      _pid: BigNumberish,
+      _recipient: string,
+      overrides?: Overrides & { from?: string | Promise<string> },
+    ): Promise<PopulatedTransaction>;
+
+    ctr(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    ctrMined(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    'deposit(uint256,address,uint256)'(
+      _pid: BigNumberish,
+      _recipient: string,
+      _amount: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> },
+    ): Promise<PopulatedTransaction>;
+
+    'deposit(uint256,uint256)'(
       _pid: BigNumberish,
       _amount: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<PopulatedTransaction>;
 
-    depositAll(
+    'depositAll(uint256,address)'(
+      _pid: BigNumberish,
+      _recipient: string,
+      overrides?: Overrides & { from?: string | Promise<string> },
+    ): Promise<PopulatedTransaction>;
+
+    'depositAll(uint256)'(
       _pid: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<PopulatedTransaction>;
+
+    endTime(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    getTotalShare(_pid: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    getTotalUnderlying(_pid: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    getUserShare(_pid: BigNumberish, _account: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     harvest(
       _pid: BigNumberish,
@@ -1197,6 +1730,15 @@ export interface AladdinConvexVault extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<PopulatedTransaction>;
 
+    migrate(
+      _pid: BigNumberish,
+      _recipient: string,
+      _newPid: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> },
+    ): Promise<PopulatedTransaction>;
+
+    migrator(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
     owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     pausePoolDeposit(
@@ -1211,6 +1753,8 @@ export interface AladdinConvexVault extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<PopulatedTransaction>;
 
+    pendingCTR(_pid: BigNumberish, _account: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
     pendingReward(_pid: BigNumberish, _account: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     pendingRewardAll(_account: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -1223,6 +1767,8 @@ export interface AladdinConvexVault extends BaseContract {
 
     renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
 
+    startTime(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
     transferOwnership(
       newOwner: string,
       overrides?: Overrides & { from?: string | Promise<string> },
@@ -1231,6 +1777,18 @@ export interface AladdinConvexVault extends BaseContract {
     updateHarvestBountyPercentage(
       _pid: BigNumberish,
       _percentage: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> },
+    ): Promise<PopulatedTransaction>;
+
+    updateIFOConfig(
+      _ctr: string,
+      _startTime: BigNumberish,
+      _endTime: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> },
+    ): Promise<PopulatedTransaction>;
+
+    updateMigrator(
+      _migrator: string,
       overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<PopulatedTransaction>;
 
@@ -1293,14 +1851,31 @@ export interface AladdinConvexVault extends BaseContract {
 
     zap(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    zapAllAndDeposit(
+    'zapAllAndDeposit(uint256,address,address,uint256)'(
+      _pid: BigNumberish,
+      _recipient: string,
+      _token: string,
+      _minAmount: BigNumberish,
+      overrides?: PayableOverrides & { from?: string | Promise<string> },
+    ): Promise<PopulatedTransaction>;
+
+    'zapAllAndDeposit(uint256,address,uint256)'(
       _pid: BigNumberish,
       _token: string,
       _minAmount: BigNumberish,
       overrides?: PayableOverrides & { from?: string | Promise<string> },
     ): Promise<PopulatedTransaction>;
 
-    zapAndDeposit(
+    'zapAndDeposit(uint256,address,address,uint256,uint256)'(
+      _pid: BigNumberish,
+      _recipient: string,
+      _token: string,
+      _amount: BigNumberish,
+      _minAmount: BigNumberish,
+      overrides?: PayableOverrides & { from?: string | Promise<string> },
+    ): Promise<PopulatedTransaction>;
+
+    'zapAndDeposit(uint256,address,uint256,uint256)'(
       _pid: BigNumberish,
       _token: string,
       _amount: BigNumberish,
