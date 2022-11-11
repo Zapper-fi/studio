@@ -16,16 +16,28 @@ export const CONCENTRATOR_DEFINITION = appDefinition({
       label: 'aCRV',
     },
 
-    pool: {
-      id: 'pool',
+    afxs: {
+      id: 'afxs',
+      type: GroupType.TOKEN,
+      label: 'aFXS',
+    },
+
+    poolcrv: {
+      id: 'poolcrv',
       type: GroupType.POSITION,
       label: 'aCRV Vaults',
     },
 
-    legacy: {
-      id: 'legacy',
+    poollegacy: {
+      id: 'poollegacy',
       type: GroupType.POSITION,
       label: 'Legacy Vaults',
+    },
+
+    poolfxs: {
+      id: 'poolfxs',
+      type: GroupType.POSITION,
+      label: 'aFXS Vaults',
     },
 
     ve: {

@@ -2,13 +2,17 @@
 /* tslint:disable */
 /* eslint-disable */
 export type { AladdinConcentratorAcrvVault } from './AladdinConcentratorAcrvVault';
+export type { AladdinConcentratorAfxsVault } from './AladdinConcentratorAfxsVault';
 export type { AladdinConcentratorLegacyVault } from './AladdinConcentratorLegacyVault';
 export type { AladdinConcentratorVe } from './AladdinConcentratorVe';
 export type { AladdinConcentratorVeRewards } from './AladdinConcentratorVeRewards';
 export type { AladdinCrv } from './AladdinCrv';
+export type { AladdinFxs } from './AladdinFxs';
 export * as factories from './factories';
 export { AladdinConcentratorAcrvVault__factory } from './factories/AladdinConcentratorAcrvVault__factory';
+export { AladdinConcentratorAfxsVault__factory } from './factories/AladdinConcentratorAfxsVault__factory';
 export { AladdinConcentratorLegacyVault__factory } from './factories/AladdinConcentratorLegacyVault__factory';
 export { AladdinConcentratorVeRewards__factory } from './factories/AladdinConcentratorVeRewards__factory';
 export { AladdinConcentratorVe__factory } from './factories/AladdinConcentratorVe__factory';
 export { AladdinCrv__factory } from './factories/AladdinCrv__factory';
+export { AladdinFxs__factory } from './factories/AladdinFxs__factory';

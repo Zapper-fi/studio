@@ -2,7 +2,9 @@
 /* tslint:disable */
 /* eslint-disable */
 export { AladdinConcentratorAcrvVault__factory } from './AladdinConcentratorAcrvVault__factory';
+export { AladdinConcentratorAfxsVault__factory } from './AladdinConcentratorAfxsVault__factory';
 export { AladdinConcentratorLegacyVault__factory } from './AladdinConcentratorLegacyVault__factory';
 export { AladdinConcentratorVe__factory } from './AladdinConcentratorVe__factory';
 export { AladdinConcentratorVeRewards__factory } from './AladdinConcentratorVeRewards__factory';
 export { AladdinCrv__factory } from './AladdinCrv__factory';
+export { AladdinFxs__factory } from './AladdinFxs__factory';

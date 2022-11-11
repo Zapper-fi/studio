@@ -13,8 +13,8 @@ export class EthereumConcentratorVeContractPositionFetcher extends VotingEscrowW
   AladdinConcentratorVeRewards
 > {
   groupLabel = 'Voting Escrow';
-  veTokenAddress = '0xe4C09928d834cd58D233CD77B5af3545484B4968'.toLowerCase();
-  rewardAddress = '0xA5D9358c60fC9Bd2b508eDa17c78C67A43A4458C'.toLowerCase();;
+  veTokenAddress = '0xe4c09928d834cd58d233cd77b5af3545484b4968';
+  rewardAddress = '0xa5d9358c60fc9bd2b508eda17c78c67a43a4458c';
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
@@ -36,7 +36,7 @@ export class EthereumConcentratorVeContractPositionFetcher extends VotingEscrowW
   }
 
   async getRewardTokenBalance(address: string, contract: AladdinConcentratorVeRewards): Promise<BigNumberish> {
-    return contract.callStatic.claim(address)
+    return contract.callStatic.claim(address);
   }
 
   getRewardTokenAddress(contract: AladdinConcentratorVeRewards): Promise<string> {

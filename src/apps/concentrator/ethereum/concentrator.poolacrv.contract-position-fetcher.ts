@@ -36,7 +36,11 @@ export class EthereumConcentratorAcrvVaultContractPositionFetcher extends Master
     return contract.poolInfo(poolIndex).then(v => v.lpToken);
   }
 
-  async getRewardTokenAddress(contract: AladdinConcentratorAcrvVault, _poolIndex: number, multicall: IMulticallWrapper) {
+  async getRewardTokenAddress(
+    contract: AladdinConcentratorAcrvVault,
+    _poolIndex: number,
+    multicall: IMulticallWrapper,
+  ) {
     return Promise.all([multicall.wrap(contract).ctr(), multicall.wrap(contract).aladdinCRV()]);
   }
 

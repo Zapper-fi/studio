@@ -5,10 +5,12 @@ import { ContractFactory } from '~contract/contracts';
 import { Network } from '~types/network.interface';
 
 import { AladdinConcentratorAcrvVault__factory } from './ethers';
+import { AladdinConcentratorAfxsVault__factory } from './ethers';
 import { AladdinConcentratorLegacyVault__factory } from './ethers';
 import { AladdinConcentratorVe__factory } from './ethers';
 import { AladdinConcentratorVeRewards__factory } from './ethers';
 import { AladdinCrv__factory } from './ethers';
+import { AladdinFxs__factory } from './ethers';
 
 // eslint-disable-next-line
 type ContractOpts = { address: string; network: Network };
@@ -22,6 +24,9 @@ export class ConcentratorContractFactory extends ContractFactory {
   aladdinConcentratorAcrvVault({ address, network }: ContractOpts) {
     return AladdinConcentratorAcrvVault__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
+  aladdinConcentratorAfxsVault({ address, network }: ContractOpts) {
+    return AladdinConcentratorAfxsVault__factory.connect(address, this.appToolkit.getNetworkProvider(network));
+  }
   aladdinConcentratorLegacyVault({ address, network }: ContractOpts) {
     return AladdinConcentratorLegacyVault__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
@@ -34,10 +39,15 @@ export class ConcentratorContractFactory extends ContractFactory {
   aladdinCrv({ address, network }: ContractOpts) {
     return AladdinCrv__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
+  aladdinFxs({ address, network }: ContractOpts) {
+    return AladdinFxs__factory.connect(address, this.appToolkit.getNetworkProvider(network));
+  }
 }
 
 export type { AladdinConcentratorAcrvVault } from './ethers';
+export type { AladdinConcentratorAfxsVault } from './ethers';
 export type { AladdinConcentratorLegacyVault } from './ethers';
 export type { AladdinConcentratorVe } from './ethers';
 export type { AladdinConcentratorVeRewards } from './ethers';
 export type { AladdinCrv } from './ethers';
+export type { AladdinFxs } from './ethers';
