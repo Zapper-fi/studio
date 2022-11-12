@@ -4,6 +4,18 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.269.0](https://github.com/Zapper-fi/studio/compare/v0.268.2...v0.269.0) (2022-11-12)
+
+
+### Features
+
+* **positions:** Extract reserve call in dynamic single staking template ([442adff](https://github.com/Zapper-fi/studio/commit/442adff63a66d0e168042922f809d9eb58cea5af))
+
+
+### Bug Fixes
+
+* **unipilot:** Remove undefined from the token label in polygon chain ([#1695](https://github.com/Zapper-fi/studio/issues/1695)) ([e51fcca](https://github.com/Zapper-fi/studio/commit/e51fcca4eec86f4a3953fdf0463d5392270e9bca))
+
 ## [0.268.2](https://github.com/Zapper-fi/studio/compare/v0.268.1...v0.268.2) (2022-11-11)
 
 
