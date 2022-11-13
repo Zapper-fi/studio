@@ -2,7 +2,7 @@ import { Inject } from '@nestjs/common';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { Erc20 } from '~contract/contracts';
-import { GetTokenPropsParams } from '~position/template/app-token.template.types';
+import { DefaultAppTokenDataProps, GetTokenPropsParams } from '~position/template/app-token.template.types';
 
 import { PoolTogetherV3ContractFactory } from '../contracts';
 
@@ -35,7 +35,10 @@ export abstract class PoolTogetherV3SponsorshipTokenFetcher extends PoolTogether
     });
   }
 
-  async getSupply({ contract, definition }: GetTokenPropsParams<Erc20, PoolTogetherV3PrizePoolDefinition>) {
+  async getSupply({
+    contract,
+    definition,
+  }: GetTokenPropsParams<Erc20, DefaultAppTokenDataProps, PoolTogetherV3PrizePoolDefinition>) {
     const ticketContract = this.contractFactory.poolTogetherV3Ticket({
       network: this.network,
       address: definition.ticketAddress,
