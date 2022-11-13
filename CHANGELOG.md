@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.270.0](https://github.com/Zapper-fi/studio/compare/v0.269.0...v0.270.0) (2022-11-13)
+
+
+### Features
+
+* **templates:** Adjust app token template for flexibility with ERC1155 ([#1697](https://github.com/Zapper-fi/studio/issues/1697)) ([ed2c7b7](https://github.com/Zapper-fi/studio/commit/ed2c7b7038ffc3e27a8c35a9cb30a7a0a815a038))
+
 ## [0.269.0](https://github.com/Zapper-fi/studio/compare/v0.268.2...v0.269.0) (2022-11-12)
 
 
