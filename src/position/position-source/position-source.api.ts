@@ -66,18 +66,12 @@ export class ApiPositionSource implements PositionSource {
   }
 
   async getAppTokensBatch(queries: AppTokenSelectorKey[]) {
-    const { data } = await this.axios.post<(AppTokenPosition | null)[]>(`/v2/app-tokens/batch`, {
-      queries,
-    });
-
+    const { data } = await this.axios.post<(AppTokenPosition | null)[]>(`/v2/app-tokens/batch`, { queries });
     return data;
   }
 
   async getTokenDependenciesBatch(queries: AppTokenSelectorKey[]) {
-    const { data } = await this.axios.post<(TokenDependency | null)[]>(`/v2/token-dependencies/batch`, {
-      queries,
-    });
-
+    const { data } = await this.axios.post<(TokenDependency | null)[]>(`/v2/token-dependencies/batch`, { queries });
     return data;
   }
 }
