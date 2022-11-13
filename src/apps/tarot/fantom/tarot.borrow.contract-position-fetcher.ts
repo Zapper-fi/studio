@@ -69,7 +69,13 @@ export class FantomTarotBorrowContractPositionFetcher extends ContractPositionTe
 
   async getTokenDefinitions({ contract }: GetTokenDefinitionsParams<TarotBorrowable>) {
     const underlyingAddress = await contract.underlying();
-    return [{ address: underlyingAddress, metaType: MetaType.BORROWED }];
+    return [
+      {
+        metaType: MetaType.BORROWED,
+        address: underlyingAddress,
+        network: this.network,
+      },
+    ];
   }
 
   async getLabel({ contractPosition }: GetDisplayPropsParams<TarotBorrowable>): Promise<DisplayProps['label']> {

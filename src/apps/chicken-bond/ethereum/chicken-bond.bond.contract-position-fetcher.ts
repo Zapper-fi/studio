@@ -29,8 +29,16 @@ export class EthereumChickenBondBondContractPositionFetcher extends ContractPosi
 
   async getTokenDefinitions() {
     return [
-      { metaType: MetaType.SUPPLIED, address: '0x5f98805a4e8be255a32880fdec7f6728c6568ba0' },
-      { metaType: MetaType.CLAIMABLE, address: '0xb9d7dddca9a4ac480991865efef82e01273f79c3' },
+      {
+        metaType: MetaType.SUPPLIED,
+        address: '0x5f98805a4e8be255a32880fdec7f6728c6568ba0',
+        network: this.network,
+      },
+      {
+        metaType: MetaType.CLAIMABLE,
+        address: '0xb9d7dddca9a4ac480991865efef82e01273f79c3',
+        network: this.network,
+      },
     ];
   }
 
