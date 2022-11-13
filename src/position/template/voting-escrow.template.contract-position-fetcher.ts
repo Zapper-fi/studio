@@ -28,7 +28,9 @@ export abstract class VotingEscrowTemplateContractPositionFetcher<
   }
 
   async getTokenDefinitions(params: GetTokenDefinitionsParams<T>) {
-    return [{ metaType: MetaType.SUPPLIED, address: await this.getEscrowedTokenAddress(params) }];
+    return [
+      { metaType: MetaType.SUPPLIED, address: await this.getEscrowedTokenAddress(params), network: this.network },
+    ];
   }
 
   async getLabel({ contractPosition }: GetDisplayPropsParams<T>) {

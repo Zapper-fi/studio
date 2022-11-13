@@ -49,8 +49,21 @@ export abstract class SingleStakingFarmTemplateContractPositionFetcher<
 
   async getTokenDefinitions({ definition }: GetTokenDefinitionsParams<T, SingleStakingFarmDefinition>) {
     const tokenDefinitions: UnderlyingTokenDefinition[] = [];
-    tokenDefinitions.push({ metaType: MetaType.SUPPLIED, address: definition.stakedTokenAddress });
-    tokenDefinitions.push(...definition.rewardTokenAddresses.map(v => ({ metaType: MetaType.CLAIMABLE, address: v })));
+
+    tokenDefinitions.push({
+      metaType: MetaType.SUPPLIED,
+      address: definition.stakedTokenAddress,
+      network: this.network,
+    });
+
+    tokenDefinitions.push(
+      ...definition.rewardTokenAddresses.map(v => ({
+        metaType: MetaType.CLAIMABLE,
+        address: v,
+        network: this.network,
+      })),
+    );
+
     return tokenDefinitions;
   }
 

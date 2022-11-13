@@ -53,8 +53,16 @@ export class EthereumRhinoFiDepositContractPositionFetcher extends ContractPosit
 
   async getTokenDefinitions({ definition }: GetTokenDefinitionsParams<RhinoFiStarkEx, RhinoFiDepositDefinition>) {
     return [
-      { metaType: MetaType.SUPPLIED, address: definition.tokenAddress },
-      { metaType: MetaType.LOCKED, address: definition.tokenAddress },
+      {
+        metaType: MetaType.SUPPLIED,
+        address: definition.tokenAddress,
+        network: this.network,
+      },
+      {
+        metaType: MetaType.LOCKED,
+        address: definition.tokenAddress,
+        network: this.network,
+      },
     ];
   }
 

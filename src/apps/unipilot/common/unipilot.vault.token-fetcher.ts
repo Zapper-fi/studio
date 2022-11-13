@@ -57,8 +57,16 @@ export abstract class UnipilotVaultTokenFetcher extends AppTokenTemplatePosition
 
   async getTokenDefinitions({ definition }: GetTokenDefinitionsParams<UnipilotVault, UnipilotVaultDefinition>) {
     return [
-      { metaType: MetaType.SUPPLIED, address: definition.token0Address },
-      { metaType: MetaType.SUPPLIED, address: definition.token1Address },
+      {
+        metaType: MetaType.SUPPLIED,
+        address: definition.token0Address,
+        network: this.network,
+      },
+      {
+        metaType: MetaType.SUPPLIED,
+        address: definition.token1Address,
+        network: this.network,
+      },
     ];
   }
 

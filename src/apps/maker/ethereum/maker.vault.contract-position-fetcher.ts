@@ -83,8 +83,16 @@ export class EthereumMakerVaultContractPositionFetcher extends ContractPositionT
     definition,
   }: GetTokenDefinitionsParams<MakerGemJoin, MakerVaultDefinition>): Promise<UnderlyingTokenDefinition[] | null> {
     return [
-      { metaType: MetaType.SUPPLIED, address: definition.collateralTokenAddress }, // Vault Collateral
-      { metaType: MetaType.BORROWED, address: '0x6b175474e89094c44da98b954eedeac495271d0f' }, // DAI
+      {
+        metaType: MetaType.SUPPLIED,
+        address: definition.collateralTokenAddress, // Vault Collateral
+        network: this.network,
+      },
+      {
+        metaType: MetaType.BORROWED,
+        address: '0x6b175474e89094c44da98b954eedeac495271d0f', // DAI
+        network: this.network,
+      },
     ];
   }
 
