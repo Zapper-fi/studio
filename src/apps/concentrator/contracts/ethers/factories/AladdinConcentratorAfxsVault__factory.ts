@@ -4,7 +4,10 @@
 
 import { Contract, Signer, utils } from 'ethers';
 import type { Provider } from '@ethersproject/providers';
-import type { AladdinConcentratorIfoVault, AladdinConcentratorIfoVaultInterface } from '../AladdinConcentratorIfoVault';
+import type {
+  AladdinConcentratorAfxsVault,
+  AladdinConcentratorAfxsVaultInterface,
+} from '../AladdinConcentratorAfxsVault';
 
 const _abi = [
   {
@@ -37,21 +40,58 @@ const _abi = [
     inputs: [
       {
         indexed: true,
+        internalType: 'uint256',
+        name: 'pid',
+        type: 'uint256',
+      },
+      {
+        indexed: true,
         internalType: 'address',
-        name: '_sender',
+        name: 'owner',
+        type: 'address',
+      },
+      {
+        indexed: true,
+        internalType: 'address',
+        name: 'spender',
         type: 'address',
       },
       {
         indexed: false,
         internalType: 'uint256',
-        name: '_reward',
+        name: 'value',
+        type: 'uint256',
+      },
+    ],
+    name: 'Approval',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: 'uint256',
+        name: 'pid',
         type: 'uint256',
       },
       {
+        indexed: true,
+        internalType: 'address',
+        name: 'sender',
+        type: 'address',
+      },
+      {
+        indexed: true,
+        internalType: 'address',
+        name: 'recipient',
+        type: 'address',
+      },
+      {
         indexed: false,
-        internalType: 'enum IAladdinConvexVault.ClaimOption',
-        name: '_option',
-        type: 'uint8',
+        internalType: 'uint256',
+        name: 'rewards',
+        type: 'uint256',
       },
     ],
     name: 'Claim',
@@ -63,50 +103,31 @@ const _abi = [
       {
         indexed: true,
         internalType: 'uint256',
-        name: '_pid',
+        name: 'pid',
         type: 'uint256',
       },
       {
         indexed: true,
         internalType: 'address',
-        name: '_caller',
+        name: 'sender',
         type: 'address',
-      },
-      {
-        indexed: false,
-        internalType: 'address',
-        name: '_recipient',
-        type: 'address',
-      },
-      {
-        indexed: false,
-        internalType: 'uint256',
-        name: '_amount',
-        type: 'uint256',
-      },
-    ],
-    name: 'ClaimCTR',
-    type: 'event',
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: true,
-        internalType: 'uint256',
-        name: '_pid',
-        type: 'uint256',
       },
       {
         indexed: true,
         internalType: 'address',
-        name: '_sender',
+        name: 'recipient',
         type: 'address',
       },
       {
         indexed: false,
         internalType: 'uint256',
-        name: '_amount',
+        name: 'assetsIn',
+        type: 'uint256',
+      },
+      {
+        indexed: false,
+        internalType: 'uint256',
+        name: 'sharesOut',
         type: 'uint256',
       },
     ],
@@ -118,86 +139,42 @@ const _abi = [
     inputs: [
       {
         indexed: true,
+        internalType: 'uint256',
+        name: 'pid',
+        type: 'uint256',
+      },
+      {
+        indexed: true,
         internalType: 'address',
-        name: '_caller',
+        name: 'caller',
+        type: 'address',
+      },
+      {
+        indexed: true,
+        internalType: 'address',
+        name: 'recipient',
         type: 'address',
       },
       {
         indexed: false,
         internalType: 'uint256',
-        name: '_reward',
+        name: 'rewards',
         type: 'uint256',
       },
       {
         indexed: false,
         internalType: 'uint256',
-        name: '_platformFee',
+        name: 'platformFee',
         type: 'uint256',
       },
       {
         indexed: false,
         internalType: 'uint256',
-        name: '_harvestBounty',
+        name: 'harvestBounty',
         type: 'uint256',
       },
     ],
     name: 'Harvest',
-    type: 'event',
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: false,
-        internalType: 'uint256',
-        name: '_amount',
-        type: 'uint256',
-      },
-    ],
-    name: 'IFOMineCTR',
-    type: 'event',
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: true,
-        internalType: 'uint256',
-        name: '_pid',
-        type: 'uint256',
-      },
-      {
-        indexed: true,
-        internalType: 'address',
-        name: '_caller',
-        type: 'address',
-      },
-      {
-        indexed: false,
-        internalType: 'uint256',
-        name: '_share',
-        type: 'uint256',
-      },
-      {
-        indexed: false,
-        internalType: 'address',
-        name: '_recipient',
-        type: 'address',
-      },
-      {
-        indexed: false,
-        internalType: 'address',
-        name: '_migrator',
-        type: 'address',
-      },
-      {
-        indexed: false,
-        internalType: 'uint256',
-        name: '_newPid',
-        type: 'uint256',
-      },
-    ],
-    name: 'Migrate',
     type: 'event',
   },
   {
@@ -269,49 +246,11 @@ const _abi = [
       {
         indexed: false,
         internalType: 'uint256',
-        name: '_percentage',
+        name: '_feePercentage',
         type: 'uint256',
       },
     ],
     name: 'UpdateHarvestBountyPercentage',
-    type: 'event',
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: false,
-        internalType: 'address',
-        name: '_ctr',
-        type: 'address',
-      },
-      {
-        indexed: false,
-        internalType: 'uint256',
-        name: '_startTime',
-        type: 'uint256',
-      },
-      {
-        indexed: false,
-        internalType: 'uint256',
-        name: '_endTime',
-        type: 'uint256',
-      },
-    ],
-    name: 'UpdateIFOConfig',
-    type: 'event',
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: false,
-        internalType: 'address',
-        name: '_migrator',
-        type: 'address',
-      },
-    ],
-    name: 'UpdateMigrator',
     type: 'event',
   },
   {
@@ -376,6 +315,25 @@ const _abi = [
       },
       {
         indexed: false,
+        internalType: 'uint32',
+        name: '_period',
+        type: 'uint32',
+      },
+    ],
+    name: 'UpdateRewardPeriod',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: 'uint256',
+        name: '_pid',
+        type: 'uint256',
+      },
+      {
+        indexed: false,
         internalType: 'uint256',
         name: '_feePercentage',
         type: 'uint256',
@@ -403,43 +361,42 @@ const _abi = [
       {
         indexed: true,
         internalType: 'uint256',
-        name: '_pid',
+        name: 'pid',
         type: 'uint256',
       },
       {
         indexed: true,
         internalType: 'address',
-        name: '_sender',
+        name: 'sender',
+        type: 'address',
+      },
+      {
+        indexed: true,
+        internalType: 'address',
+        name: 'owner',
+        type: 'address',
+      },
+      {
+        indexed: false,
+        internalType: 'address',
+        name: 'recipient',
         type: 'address',
       },
       {
         indexed: false,
         internalType: 'uint256',
-        name: '_shares',
+        name: 'sharesIn',
+        type: 'uint256',
+      },
+      {
+        indexed: false,
+        internalType: 'uint256',
+        name: 'assetsOut',
         type: 'uint256',
       },
     ],
     name: 'Withdraw',
     type: 'event',
-  },
-  {
-    inputs: [
-      {
-        internalType: 'uint256',
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    name: 'accCTRPerShare',
-    outputs: [
-      {
-        internalType: 'uint256',
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
   },
   {
     inputs: [
@@ -476,7 +433,7 @@ const _abi = [
   },
   {
     inputs: [],
-    name: 'aladdinCRV',
+    name: 'aladdinFXS',
     outputs: [
       {
         internalType: 'address',
@@ -495,21 +452,78 @@ const _abi = [
         type: 'uint256',
       },
       {
+        internalType: 'address',
+        name: '_owner',
+        type: 'address',
+      },
+      {
+        internalType: 'address',
+        name: '_spender',
+        type: 'address',
+      },
+    ],
+    name: 'allowance',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'uint256',
+        name: '_pid',
+        type: 'uint256',
+      },
+      {
+        internalType: 'address',
+        name: '_spender',
+        type: 'address',
+      },
+      {
+        internalType: 'uint256',
+        name: '_amount',
+        type: 'uint256',
+      },
+    ],
+    name: 'approve',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'uint256',
+        name: '_pid',
+        type: 'uint256',
+      },
+      {
+        internalType: 'address',
+        name: '_recipient',
+        type: 'address',
+      },
+      {
         internalType: 'uint256',
         name: '_minOut',
         type: 'uint256',
       },
       {
-        internalType: 'enum IAladdinConvexVault.ClaimOption',
-        name: '_option',
-        type: 'uint8',
+        internalType: 'address',
+        name: '_claimAsToken',
+        type: 'address',
       },
     ],
     name: 'claim',
     outputs: [
       {
         internalType: 'uint256',
-        name: 'claimed',
+        name: '',
         type: 'uint256',
       },
     ],
@@ -524,34 +538,20 @@ const _abi = [
         type: 'uint256',
       },
       {
-        internalType: 'enum IAladdinConvexVault.ClaimOption',
-        name: '_option',
-        type: 'uint8',
+        internalType: 'address',
+        name: '_recipient',
+        type: 'address',
+      },
+      {
+        internalType: 'address',
+        name: '_claimAsToken',
+        type: 'address',
       },
     ],
     name: 'claimAll',
     outputs: [
       {
         internalType: 'uint256',
-        name: 'claimed',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        internalType: 'address',
-        name: '_recipient',
-        type: 'address',
-      },
-    ],
-    name: 'claimAllCTR',
-    outputs: [
-      {
-        internalType: 'uint256',
         name: '',
         type: 'uint256',
       },
@@ -571,59 +571,9 @@ const _abi = [
         name: '_recipient',
         type: 'address',
       },
-    ],
-    name: 'claimCTR',
-    outputs: [
       {
         internalType: 'uint256',
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'ctr',
-    outputs: [
-      {
-        internalType: 'address',
-        name: '',
-        type: 'address',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'ctrMined',
-    outputs: [
-      {
-        internalType: 'uint128',
-        name: '',
-        type: 'uint128',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        internalType: 'uint256',
-        name: '_pid',
-        type: 'uint256',
-      },
-      {
-        internalType: 'address',
-        name: '_recipient',
-        type: 'address',
-      },
-      {
-        internalType: 'uint256',
-        name: '_amount',
+        name: '_assetsIn',
         type: 'uint256',
       },
     ],
@@ -631,91 +581,11 @@ const _abi = [
     outputs: [
       {
         internalType: 'uint256',
-        name: 'share',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        internalType: 'uint256',
-        name: '_pid',
-        type: 'uint256',
-      },
-      {
-        internalType: 'uint256',
-        name: '_amount',
-        type: 'uint256',
-      },
-    ],
-    name: 'deposit',
-    outputs: [
-      {
-        internalType: 'uint256',
-        name: 'share',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        internalType: 'uint256',
-        name: '_pid',
-        type: 'uint256',
-      },
-      {
-        internalType: 'address',
-        name: '_recipient',
-        type: 'address',
-      },
-    ],
-    name: 'depositAll',
-    outputs: [
-      {
-        internalType: 'uint256',
-        name: 'share',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        internalType: 'uint256',
-        name: '_pid',
-        type: 'uint256',
-      },
-    ],
-    name: 'depositAll',
-    outputs: [
-      {
-        internalType: 'uint256',
-        name: 'share',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'endTime',
-    outputs: [
-      {
-        internalType: 'uint64',
         name: '',
-        type: 'uint64',
+        type: 'uint256',
       },
     ],
-    stateMutability: 'view',
+    stateMutability: 'nonpayable',
     type: 'function',
   },
   {
@@ -794,7 +664,7 @@ const _abi = [
       },
       {
         internalType: 'uint256',
-        name: '_minimumOut',
+        name: '_minOut',
         type: 'uint256',
       },
     ],
@@ -802,7 +672,7 @@ const _abi = [
     outputs: [
       {
         internalType: 'uint256',
-        name: 'harvested',
+        name: '',
         type: 'uint256',
       },
     ],
@@ -813,7 +683,7 @@ const _abi = [
     inputs: [
       {
         internalType: 'address',
-        name: '_aladdinCRV',
+        name: '_aladdinFXS',
         type: 'address',
       },
       {
@@ -830,42 +700,6 @@ const _abi = [
     name: 'initialize',
     outputs: [],
     stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        internalType: 'uint256',
-        name: '_pid',
-        type: 'uint256',
-      },
-      {
-        internalType: 'address',
-        name: '_recipient',
-        type: 'address',
-      },
-      {
-        internalType: 'uint256',
-        name: '_newPid',
-        type: 'uint256',
-      },
-    ],
-    name: 'migrate',
-    outputs: [],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'migrator',
-    outputs: [
-      {
-        internalType: 'address',
-        name: '',
-        type: 'address',
-      },
-    ],
-    stateMutability: 'view',
     type: 'function',
   },
   {
@@ -915,30 +749,6 @@ const _abi = [
     name: 'pausePoolWithdraw',
     outputs: [],
     stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        internalType: 'uint256',
-        name: '_pid',
-        type: 'uint256',
-      },
-      {
-        internalType: 'address',
-        name: '_account',
-        type: 'address',
-      },
-    ],
-    name: 'pendingCTR',
-    outputs: [
-      {
-        internalType: 'uint256',
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
     type: 'function',
   },
   {
@@ -1087,13 +897,47 @@ const _abi = [
     type: 'function',
   },
   {
-    inputs: [],
-    name: 'startTime',
+    inputs: [
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    name: 'rewardInfo',
     outputs: [
       {
-        internalType: 'uint64',
+        internalType: 'uint128',
+        name: 'rate',
+        type: 'uint128',
+      },
+      {
+        internalType: 'uint32',
+        name: 'periodLength',
+        type: 'uint32',
+      },
+      {
+        internalType: 'uint48',
+        name: 'lastUpdate',
+        type: 'uint48',
+      },
+      {
+        internalType: 'uint48',
+        name: 'finishAt',
+        type: 'uint48',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'rewardToken',
+    outputs: [
+      {
+        internalType: 'address',
         name: '',
-        type: 'uint64',
+        type: 'address',
       },
     ],
     stateMutability: 'view',
@@ -1119,6 +963,25 @@ const _abi = [
         name: '_pid',
         type: 'uint256',
       },
+    ],
+    name: 'underlying',
+    outputs: [
+      {
+        internalType: 'address',
+        name: '',
+        type: 'address',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'uint256',
+        name: '_pid',
+        type: 'uint256',
+      },
       {
         internalType: 'uint256',
         name: '_percentage',
@@ -1126,42 +989,6 @@ const _abi = [
       },
     ],
     name: 'updateHarvestBountyPercentage',
-    outputs: [],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        internalType: 'address',
-        name: '_ctr',
-        type: 'address',
-      },
-      {
-        internalType: 'uint64',
-        name: '_startTime',
-        type: 'uint64',
-      },
-      {
-        internalType: 'uint64',
-        name: '_endTime',
-        type: 'uint64',
-      },
-    ],
-    name: 'updateIFOConfig',
-    outputs: [],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        internalType: 'address',
-        name: '_migrator',
-        type: 'address',
-      },
-    ],
-    name: 'updateMigrator',
     outputs: [],
     stateMutability: 'nonpayable',
     type: 'function',
@@ -1211,6 +1038,24 @@ const _abi = [
       },
     ],
     name: 'updatePoolRewardTokens',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'uint256',
+        name: '_pid',
+        type: 'uint256',
+      },
+      {
+        internalType: 'uint32',
+        name: '_period',
+        type: 'uint32',
+      },
+    ],
+    name: 'updateRewardPeriod',
     outputs: [],
     stateMutability: 'nonpayable',
     type: 'function',
@@ -1289,127 +1134,25 @@ const _abi = [
       },
       {
         internalType: 'uint256',
-        name: '_minOut',
-        type: 'uint256',
-      },
-      {
-        internalType: 'enum IAladdinConvexVault.ClaimOption',
-        name: '_option',
-        type: 'uint8',
-      },
-    ],
-    name: 'withdrawAllAndClaim',
-    outputs: [
-      {
-        internalType: 'uint256',
-        name: 'withdrawn',
-        type: 'uint256',
-      },
-      {
-        internalType: 'uint256',
-        name: 'claimed',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        internalType: 'uint256',
-        name: '_pid',
+        name: '_sharesIn',
         type: 'uint256',
       },
       {
         internalType: 'address',
-        name: '_token',
+        name: '_recipient',
         type: 'address',
-      },
-      {
-        internalType: 'uint256',
-        name: '_minOut',
-        type: 'uint256',
-      },
-    ],
-    name: 'withdrawAllAndZap',
-    outputs: [
-      {
-        internalType: 'uint256',
-        name: 'withdrawn',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        internalType: 'uint256',
-        name: '_pid',
-        type: 'uint256',
-      },
-      {
-        internalType: 'uint256',
-        name: '_shares',
-        type: 'uint256',
-      },
-      {
-        internalType: 'uint256',
-        name: '_minOut',
-        type: 'uint256',
-      },
-      {
-        internalType: 'enum IAladdinConvexVault.ClaimOption',
-        name: '_option',
-        type: 'uint8',
-      },
-    ],
-    name: 'withdrawAndClaim',
-    outputs: [
-      {
-        internalType: 'uint256',
-        name: 'withdrawn',
-        type: 'uint256',
-      },
-      {
-        internalType: 'uint256',
-        name: 'claimed',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        internalType: 'uint256',
-        name: '_pid',
-        type: 'uint256',
-      },
-      {
-        internalType: 'uint256',
-        name: '_shares',
-        type: 'uint256',
       },
       {
         internalType: 'address',
-        name: '_token',
+        name: '_owner',
         type: 'address',
       },
-      {
-        internalType: 'uint256',
-        name: '_minOut',
-        type: 'uint256',
-      },
     ],
-    name: 'withdrawAndZap',
+    name: 'withdraw',
     outputs: [
       {
         internalType: 'uint256',
-        name: 'withdrawn',
+        name: '',
         type: 'uint256',
       },
     ],
@@ -1430,153 +1173,17 @@ const _abi = [
     type: 'function',
   },
   {
-    inputs: [
-      {
-        internalType: 'uint256',
-        name: '_pid',
-        type: 'uint256',
-      },
-      {
-        internalType: 'address',
-        name: '_recipient',
-        type: 'address',
-      },
-      {
-        internalType: 'address',
-        name: '_token',
-        type: 'address',
-      },
-      {
-        internalType: 'uint256',
-        name: '_minAmount',
-        type: 'uint256',
-      },
-    ],
-    name: 'zapAllAndDeposit',
-    outputs: [
-      {
-        internalType: 'uint256',
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'payable',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        internalType: 'uint256',
-        name: '_pid',
-        type: 'uint256',
-      },
-      {
-        internalType: 'address',
-        name: '_token',
-        type: 'address',
-      },
-      {
-        internalType: 'uint256',
-        name: '_minAmount',
-        type: 'uint256',
-      },
-    ],
-    name: 'zapAllAndDeposit',
-    outputs: [
-      {
-        internalType: 'uint256',
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'payable',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        internalType: 'uint256',
-        name: '_pid',
-        type: 'uint256',
-      },
-      {
-        internalType: 'address',
-        name: '_recipient',
-        type: 'address',
-      },
-      {
-        internalType: 'address',
-        name: '_token',
-        type: 'address',
-      },
-      {
-        internalType: 'uint256',
-        name: '_amount',
-        type: 'uint256',
-      },
-      {
-        internalType: 'uint256',
-        name: '_minAmount',
-        type: 'uint256',
-      },
-    ],
-    name: 'zapAndDeposit',
-    outputs: [
-      {
-        internalType: 'uint256',
-        name: 'share',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'payable',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        internalType: 'uint256',
-        name: '_pid',
-        type: 'uint256',
-      },
-      {
-        internalType: 'address',
-        name: '_token',
-        type: 'address',
-      },
-      {
-        internalType: 'uint256',
-        name: '_amount',
-        type: 'uint256',
-      },
-      {
-        internalType: 'uint256',
-        name: '_minAmount',
-        type: 'uint256',
-      },
-    ],
-    name: 'zapAndDeposit',
-    outputs: [
-      {
-        internalType: 'uint256',
-        name: 'share',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'payable',
-    type: 'function',
-  },
-  {
     stateMutability: 'payable',
     type: 'receive',
   },
 ];
 
-export class AladdinConcentratorIfoVault__factory {
+export class AladdinConcentratorAfxsVault__factory {
   static readonly abi = _abi;
-  static createInterface(): AladdinConcentratorIfoVaultInterface {
-    return new utils.Interface(_abi) as AladdinConcentratorIfoVaultInterface;
+  static createInterface(): AladdinConcentratorAfxsVaultInterface {
+    return new utils.Interface(_abi) as AladdinConcentratorAfxsVaultInterface;
   }
-  static connect(address: string, signerOrProvider: Signer | Provider): AladdinConcentratorIfoVault {
-    return new Contract(address, _abi, signerOrProvider) as AladdinConcentratorIfoVault;
+  static connect(address: string, signerOrProvider: Signer | Provider): AladdinConcentratorAfxsVault {
+    return new Contract(address, _abi, signerOrProvider) as AladdinConcentratorAfxsVault;
   }
 }
