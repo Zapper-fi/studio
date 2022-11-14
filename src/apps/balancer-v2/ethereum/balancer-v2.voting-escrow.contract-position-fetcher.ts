@@ -34,8 +34,13 @@ export class EthereumBalancerV2VotingEscrowContractPositionFetcher extends Contr
   }
 
   async getTokenDefinitions({ contract }: GetTokenDefinitionsParams<BalancerVeBal>) {
-    const tokenAddress = await contract.token();
-    return [{ metaType: MetaType.SUPPLIED, address: tokenAddress }];
+    return [
+      {
+        metaType: MetaType.SUPPLIED,
+        address: await contract.token(),
+        network: this.network,
+      },
+    ];
   }
 
   async getLabel({ contractPosition }: GetDisplayPropsParams<BalancerVeBal>) {

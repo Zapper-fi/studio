@@ -36,7 +36,13 @@ export class EthereumOriginDollarRewardsContractPositionFetcher extends Contract
   }
 
   async getTokenDefinitions(): Promise<UnderlyingTokenDefinition[] | null> {
-    return [{ address: '0x9c354503c38481a7a7a51629142963f98ecc12d0', metaType: MetaType.CLAIMABLE }];
+    return [
+      {
+        address: '0x9c354503c38481a7a7a51629142963f98ecc12d0',
+        metaType: MetaType.CLAIMABLE,
+        network: this.network,
+      },
+    ];
   }
 
   async getLabel({ contractPosition }: GetDisplayPropsParams<Veogv>) {

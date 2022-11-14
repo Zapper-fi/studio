@@ -2,8 +2,17 @@ import { Network } from '~types';
 
 import { AppTokenPosition } from '../position.interface';
 
-export type LoggingTags = { network?: Network; context?: string };
-export type AppTokenSelectorKey = { network: Network; address: string };
+export type LoggingTags = {
+  network?: Network;
+  context?: string;
+};
+
+export type AppTokenSelectorKey = {
+  address: string;
+  network: Network;
+  tokenId?: number;
+};
+
 export type GetOne = (opts: AppTokenSelectorKey) => Promise<AppTokenPosition | null>;
 export type GetMany = (opts: AppTokenSelectorKey[]) => Promise<(AppTokenPosition | null)[]>;
 

@@ -38,7 +38,7 @@ export class BadgerClaimableRewardsResolver {
   async getVaultDefinitions({ network, address }: BadgerClaimableContractPositionBalanceHelperParams) {
     const data = await this.getCachedAccumulatedRewardsData(network, address);
 
-    const accumulatedRewardsData = data.tokens.map((tokenAddress, index) => ({
+    const accumulatedRewardsData = (data.tokens ?? []).map((tokenAddress, index) => ({
       rewardTokenAddress: tokenAddress.toLowerCase(),
       rewardTokenBalanceRaw: data.cumulativeAmounts[index],
     }));

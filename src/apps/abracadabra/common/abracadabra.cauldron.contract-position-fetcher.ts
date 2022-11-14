@@ -55,8 +55,16 @@ export abstract class AbracadabraCauldronContractPositionFetcher extends Contrac
       : collateralAddressRaw.toLowerCase();
 
     return [
-      { metaType: MetaType.SUPPLIED, address: collateralAddress },
-      { metaType: MetaType.BORROWED, address: debtAddressRaw },
+      {
+        metaType: MetaType.SUPPLIED,
+        address: collateralAddress,
+        network: this.network,
+      },
+      {
+        metaType: MetaType.BORROWED,
+        address: debtAddressRaw,
+        network: this.network,
+      },
     ];
   }
 

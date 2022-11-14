@@ -55,7 +55,13 @@ export abstract class PoolTogetherV3AirdropContractPositionFetcher extends Contr
   async getTokenDefinitions(
     _opts: GetTokenDefinitionsParams<PoolTogetherMerkleDistributor, DefaultContractPositionDefinition>,
   ): Promise<UnderlyingTokenDefinition[] | null> {
-    return [{ address: this.airdropTokenAddress, metaType: MetaType.CLAIMABLE }];
+    return [
+      {
+        metaType: MetaType.CLAIMABLE,
+        address: this.airdropTokenAddress,
+        network: this.network,
+      },
+    ];
   }
 
   async getLabel({ contractPosition }: GetDisplayPropsParams<PoolTogetherMerkleDistributor>) {

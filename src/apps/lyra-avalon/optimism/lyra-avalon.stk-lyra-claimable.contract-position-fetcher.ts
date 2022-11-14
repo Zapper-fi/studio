@@ -34,7 +34,13 @@ export class OptimismLyraAvalonStkLyraClaimableContractPositionFetcher extends C
   }
 
   async getTokenDefinitions(_params: GetTokenDefinitionsParams<LyraStkLyra>) {
-    return [{ metaType: MetaType.CLAIMABLE, address: '0x50c5725949a6f0c72e6c4a641f24049a917db0cb' }];
+    return [
+      {
+        metaType: MetaType.CLAIMABLE,
+        address: '0x50c5725949a6f0c72e6c4a641f24049a917db0cb',
+        network: this.network,
+      },
+    ];
   }
 
   async getLabel({ contractPosition }: GetDisplayPropsParams<LyraStkLyra>) {
