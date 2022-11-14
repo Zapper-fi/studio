@@ -39,8 +39,16 @@ export class EthereumConvexVotingEscrowContractPositionFetcher extends ContractP
     const rewardTokenAddress = await contract.rewardTokens(0);
 
     return [
-      { metaType: MetaType.SUPPLIED, address: stakedTokenAddress },
-      { metaType: MetaType.CLAIMABLE, address: rewardTokenAddress },
+      {
+        metaType: MetaType.SUPPLIED,
+        address: stakedTokenAddress,
+        network: this.network,
+      },
+      {
+        metaType: MetaType.CLAIMABLE,
+        address: rewardTokenAddress,
+        network: this.network,
+      },
     ];
   }
 

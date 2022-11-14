@@ -4,6 +4,20 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.272.0](https://github.com/Zapper-fi/studio/compare/v0.271.0...v0.272.0) (2022-11-13)
+
+
+### Features
+
+* **templates:** Update token definitions query to enable cross-network and ERC-1155 underlying tokens ([#1701](https://github.com/Zapper-fi/studio/issues/1701)) ([c256881](https://github.com/Zapper-fi/studio/commit/c2568817f279cbd8abc2d1ddc79f13e2206098c8))
+
+## [0.271.0](https://github.com/Zapper-fi/studio/compare/v0.270.0...v0.271.0) (2022-11-13)
+
+
+### Features
+
+* **templates:** Enable network and ERC1155 ID in token definitions for Contract Position template ([#1699](https://github.com/Zapper-fi/studio/issues/1699)) ([ea55f6c](https://github.com/Zapper-fi/studio/commit/ea55f6c98382b0a7c4214c094af85626ce5a67a8))
+
 ## [0.270.0](https://github.com/Zapper-fi/studio/compare/v0.269.0...v0.270.0) (2022-11-13)
 
 

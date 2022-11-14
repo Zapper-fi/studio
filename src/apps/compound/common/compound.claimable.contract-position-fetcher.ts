@@ -42,7 +42,13 @@ export abstract class CompoundClaimableContractPositionFetcher<
   async getTokenDefinitions(
     _opts: GetTokenDefinitionsParams<R, DefaultContractPositionDefinition>,
   ): Promise<UnderlyingTokenDefinition[] | null> {
-    return [{ address: this.rewardTokenAddress, metaType: MetaType.CLAIMABLE }];
+    return [
+      {
+        metaType: MetaType.CLAIMABLE,
+        address: this.rewardTokenAddress,
+        network: this.network,
+      },
+    ];
   }
 
   async getLabel({ contractPosition }: GetDisplayPropsParams<R>) {

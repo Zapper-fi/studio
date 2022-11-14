@@ -35,8 +35,16 @@ export class ArbitrumUmamiFinanceMarinateContractPositionFetcher extends Contrac
 
   async getTokenDefinitions(_params: GetTokenDefinitionsParams<UmamiFinanceMarinate>) {
     return [
-      { metaType: MetaType.SUPPLIED, address: '0x2adabd6e8ce3e82f52d9998a7f64a90d294a92a4' },
-      { metaType: MetaType.CLAIMABLE, address: '0x82af49447d8a07e3bd95bd0d56f35241523fbab1' },
+      {
+        metaType: MetaType.SUPPLIED,
+        address: '0x2adabd6e8ce3e82f52d9998a7f64a90d294a92a4',
+        network: this.network,
+      },
+      {
+        metaType: MetaType.CLAIMABLE,
+        address: '0x82af49447d8a07e3bd95bd0d56f35241523fbab1',
+        network: this.network,
+      },
     ];
   }
 

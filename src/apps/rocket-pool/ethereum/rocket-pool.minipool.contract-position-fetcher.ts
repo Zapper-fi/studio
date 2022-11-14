@@ -30,7 +30,13 @@ export class EthereumRocketPoolMinipoolContractPositionFetcher extends ContractP
   }
 
   async getTokenDefinitions() {
-    return [{ metaType: MetaType.SUPPLIED, address: ZERO_ADDRESS }];
+    return [
+      {
+        metaType: MetaType.SUPPLIED,
+        address: ZERO_ADDRESS,
+        network: this.network,
+      },
+    ];
   }
 
   async getLabel({ contractPosition }: GetDisplayPropsParams<RocketMinipoolManager>) {

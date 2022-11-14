@@ -54,7 +54,11 @@ export abstract class OptimismKwentaPerpContractPositionFetcher extends Contract
 
   async getTokenDefinitions() {
     return [
-      { metaType: MetaType.SUPPLIED, address: '0x8c6f28f2f1a3c87f0f938b96d27520d9751ec8d9' }, // sUSD
+      {
+        address: '0x8c6f28f2f1a3c87f0f938b96d27520d9751ec8d9', // sUSD
+        metaType: MetaType.SUPPLIED,
+        network: this.network,
+      },
     ];
   }
 

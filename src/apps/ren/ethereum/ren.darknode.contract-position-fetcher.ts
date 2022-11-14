@@ -40,8 +40,16 @@ export class EthereumRenDarknodeContractPositionFetcher extends ContractPosition
     const claimable = [ZERO_ADDRESS, ...assets.map(v => v.tokenAddress)];
 
     return [
-      { address: '0x408e41876cccdc0f92210600ef50372656052a38', metaType: MetaType.SUPPLIED },
-      ...claimable.map(address => ({ address, metaType: MetaType.CLAIMABLE })),
+      {
+        metaType: MetaType.SUPPLIED,
+        address: '0x408e41876cccdc0f92210600ef50372656052a38',
+        network: this.network,
+      },
+      ...claimable.map(claimableTokenAddress => ({
+        metaType: MetaType.CLAIMABLE,
+        address: claimableTokenAddress,
+        network: this.network,
+      })),
     ];
   }
 

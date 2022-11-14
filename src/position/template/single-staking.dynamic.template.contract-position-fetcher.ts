@@ -48,8 +48,21 @@ export abstract class SingleStakingFarmDynamicTemplateContractPositionFetcher<
     const rewardTokenAddresses = await this.getRewardTokenAddresses(params).then(v => (isArray(v) ? v : [v]));
 
     const tokens: UnderlyingTokenDefinition[] = [];
-    tokens.push({ metaType: MetaType.SUPPLIED, address: stakedTokenAddress.toLowerCase() });
-    tokens.push(...rewardTokenAddresses.map(v => ({ metaType: MetaType.CLAIMABLE, address: v.toLowerCase() })));
+
+    tokens.push({
+      metaType: MetaType.SUPPLIED,
+      address: stakedTokenAddress.toLowerCase(),
+      network: this.network,
+    });
+
+    tokens.push(
+      ...rewardTokenAddresses.map(v => ({
+        metaType: MetaType.CLAIMABLE,
+        address: v.toLowerCase(),
+        network: this.network,
+      })),
+    );
+
     return tokens;
   }
 
