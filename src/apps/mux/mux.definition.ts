@@ -26,6 +26,11 @@ export const MUX_DEFINITION = appDefinition({
       type: GroupType.POSITION,
       label: 'Farms',
     },
+    levTrades: {
+      id: 'lev-trades',
+      type: GroupType.POSITION,
+      label: 'Leveraged trades',
+    },
   },
   tags: [AppTag.MARGIN_TRADING],
   keywords: [],
