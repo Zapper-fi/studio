@@ -17,17 +17,11 @@ export const KYBERSWAP_ELASTIC_DEFINITION = appDefinition({
       label: 'Pools',
       groupLabel: 'Pools',
     },
-
     farm: {
       id: 'farm',
       type: GroupType.POSITION,
       label: 'Farms',
       groupLabel: 'Farms',
-    },
-    farm: {
-      id: 'farm',
-      type: GroupType.POSITION,
-      label: 'Farms',
     },
   },
 
@@ -48,6 +42,7 @@ export const KYBERSWAP_ELASTIC_DEFINITION = appDefinition({
     [Network.FANTOM_OPERA_MAINNET]: [AppAction.VIEW],
     [Network.POLYGON_MAINNET]: [AppAction.VIEW],
     [Network.AVALANCHE_MAINNET]: [AppAction.VIEW],
+    [Network.OPTIMISM_MAINNET]: [AppAction.VIEW],
   },
 
   primaryColor: '#fff',
