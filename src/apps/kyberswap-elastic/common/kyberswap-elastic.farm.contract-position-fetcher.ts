@@ -76,6 +76,8 @@ export abstract class KyberswapElasticFarmContractPositionFetcher extends Contra
           multicall.wrap(poolContract).swapFeeUnits(),
         ]);
 
+        if (Number(poolInfos.numStakes) === 0) return null;
+
         return {
           address: this.kyberswapElasticLmAddress,
           poolAddress: poolInfos.poolAddress,
@@ -87,7 +89,7 @@ export abstract class KyberswapElasticFarmContractPositionFetcher extends Contra
       }),
     );
 
-    const definitions = _.uniqBy(definitionsRaw, 'poolAddress');
+    const definitions = _.compact(definitionsRaw);
 
     return definitions;
   }
