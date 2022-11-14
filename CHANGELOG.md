@@ -4,6 +4,19 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.273.0](https://github.com/Zapper-fi/studio/compare/v0.272.0...v0.273.0) (2022-11-14)
+
+
+### Features
+
+* **concentrator:** implement ve and fxs vaults ([#1690](https://github.com/Zapper-fi/studio/issues/1690)) ([8a9afab](https://github.com/Zapper-fi/studio/commit/8a9afab2c39b8806412243d399fd6fc471f86775))
+
+
+### Bug Fixes
+
+* **kyberswap-elastic:** Fix Kyberswap Elastic farm definitions ([#1708](https://github.com/Zapper-fi/studio/issues/1708)) ([d615065](https://github.com/Zapper-fi/studio/commit/d615065880c23a91f6da8c8d6b0a930bd3eb9a5f))
+* **kyberswap-elastic:** Remove duplicates from definitions ([#1706](https://github.com/Zapper-fi/studio/issues/1706)) ([4b5a298](https://github.com/Zapper-fi/studio/commit/4b5a298bbb5267492f211d5795270f1eda5217c6))
+
 ## [0.272.0](https://github.com/Zapper-fi/studio/compare/v0.271.0...v0.272.0) (2022-11-13)
 
 
