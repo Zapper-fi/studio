@@ -1,4 +1,5 @@
 import { Inject, NotImplementedException } from '@nestjs/common';
+import _ from 'lodash';
 import { compact, range } from 'lodash';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
@@ -65,7 +66,7 @@ export abstract class KyberswapElasticFarmContractPositionFetcher extends Contra
 
     const poolLengthRaw = await multicall.wrap(kyberswapElasticLmContract).poolLength();
 
-    const definitions = await Promise.all(
+    const definitionsRaw = await Promise.all(
       range(0, poolLengthRaw.toNumber()).map(async index => {
         const poolInfos = await multicall.wrap(kyberswapElasticLmContract).getPoolInfo(index);
         const poolContract = this.contractFactory.pool({ address: poolInfos.poolAddress, network: this.network });
@@ -85,6 +86,8 @@ export abstract class KyberswapElasticFarmContractPositionFetcher extends Contra
         };
       }),
     );
+
+    const definitions = _.uniqBy(definitionsRaw, 'poolAddress');
 
     return definitions;
   }
