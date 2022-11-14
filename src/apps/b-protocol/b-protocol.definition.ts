@@ -10,6 +10,7 @@ export const B_PROTOCOL_DEFINITION = appDefinition({
   groups: {
     deposit: { id: 'deposit', type: GroupType.POSITION, label: 'Lending' },
     compoundSupply: { id: 'compound-supply', type: GroupType.TOKEN, label: 'Compound Supply' },
+    compoundBorrow: { id: 'compound-borrow', type: GroupType.POSITION, label: 'Compound Supply' },
   },
   url: 'https://www.bprotocol.org/',
   links: {
@@ -30,5 +31,3 @@ export class BProtocolAppDefinition extends AppDefinition {
     super(B_PROTOCOL_DEFINITION);
   }
 }
-
-export default B_PROTOCOL_DEFINITION;

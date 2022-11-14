@@ -2,16 +2,16 @@ import { Inject } from '@nestjs/common';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { CompoundContractFactory, COMPOUND_DEFINITION } from '~apps/compound';
-import { EthereumCompoundSupplyTokenFetcher } from '~apps/compound/ethereum/compound.supply.token-fetcher';
-import { DefaultAppTokenDataProps } from '~position/template/app-token.template.types';
+import { CompoundBorrowTokenDataProps } from '~apps/compound/common/compound.borrow.contract-position-fetcher';
+import { EthereumCompoundBorrowContractPositionFetcher } from '~apps/compound/ethereum/compound.borrow.contract-position-fetcher';
 import { Network } from '~types/network.interface';
 
 import { B_PROTOCOL_DEFINITION } from '../b-protocol.definition';
 import { BProtocolContractFactory } from '../contracts';
 
-export class EthereumBProtocolCompoundSupplyTokenFetcher extends EthereumCompoundSupplyTokenFetcher {
+export class EthereumBProtocolCompoundBorrowContractPositionFetcher extends EthereumCompoundBorrowContractPositionFetcher {
   appId = B_PROTOCOL_DEFINITION.id;
-  groupId = B_PROTOCOL_DEFINITION.groups.compoundSupply.id;
+  groupId = B_PROTOCOL_DEFINITION.groups.compoundBorrow.id;
   network = Network.ETHEREUM_MAINNET;
   groupLabel = 'Compound Lending';
 
@@ -23,7 +23,7 @@ export class EthereumBProtocolCompoundSupplyTokenFetcher extends EthereumCompoun
     super(appToolkit, compoundContractFactory);
   }
 
-  async getAddresses() {
+  async getDefinitions() {
     return [];
   }
 
@@ -38,7 +38,7 @@ export class EthereumBProtocolCompoundSupplyTokenFetcher extends EthereumCompoun
   }
 
   async getPositionsForBalances() {
-    const positions = await this.appToolkit.getAppTokenPositions<DefaultAppTokenDataProps>({
+    const positions = await this.appToolkit.getAppContractPositions<CompoundBorrowTokenDataProps>({
       appId: COMPOUND_DEFINITION.id,
       groupIds: [COMPOUND_DEFINITION.groups.borrow.id],
       network: this.network,
@@ -46,9 +46,9 @@ export class EthereumBProtocolCompoundSupplyTokenFetcher extends EthereumCompoun
 
     return positions.map(position => {
       const appGroupNetwork = { appId: this.appId, groupId: this.groupId, network: this.network };
-      const proxiedAppToken = { ...position, ...appGroupNetwork };
-      proxiedAppToken.key = this.getKey({ appToken: proxiedAppToken });
-      return proxiedAppToken;
+      const proxiedContractPosition = { ...position, ...appGroupNetwork };
+      proxiedContractPosition.key = this.getKey({ contractPosition: proxiedContractPosition });
+      return proxiedContractPosition;
     });
   }
 }

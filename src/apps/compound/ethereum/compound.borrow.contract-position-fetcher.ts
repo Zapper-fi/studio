@@ -28,6 +28,7 @@ export class EthereumCompoundBorrowContractPositionFetcher extends CompoundBorro
   getCompoundComptrollerContract(address: string) {
     return this.contractFactory.compoundComptroller({ address, network: this.network });
   }
+
   getMarkets(contract: CompoundComptroller) {
     return contract.getAllMarkets();
   }
