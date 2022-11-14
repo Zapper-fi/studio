@@ -20,7 +20,11 @@ export const MEAN_FINANCE_DEFINITION = appDefinition({
 
   tags: [AppTag.ASSET_MANAGEMENT, AppTag.CROSS_CHAIN, AppTag.PREDICTION_MARKET],
   keywords: [],
-  links: {},
+  links: {
+    discord: 'https://discord.com/invite/ThfzDdn4pn/',
+    github: 'https://github.com/Mean-Finance',
+    twitter: 'https://twitter.com/mean_fi',
+  },
 
   supportedNetworks: {
     [Network.POLYGON_MAINNET]: [AppAction.VIEW],
