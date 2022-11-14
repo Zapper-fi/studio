@@ -9,6 +9,7 @@ export const B_PROTOCOL_DEFINITION = appDefinition({
   description: `B.Protocol is a backstop protocol which BPRO holders govern. Users of the protocol have access to all the benefits of MakerDAO and Compound (soon Aave), with the additional benefit of splitting liquidation proceeds according to proportional usage of the protocol.`,
   groups: {
     deposit: { id: 'deposit', type: GroupType.POSITION, label: 'Lending' },
+    compoundSupply: { id: 'compound-supply', type: GroupType.TOKEN, label: 'Compound Supply' },
   },
   url: 'https://www.bprotocol.org/',
   links: {

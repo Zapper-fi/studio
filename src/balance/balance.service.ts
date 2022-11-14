@@ -68,6 +68,7 @@ export class BalanceService {
           address,
           balances: balances.flat(),
         });
+
         return [address, presentedBalances];
       }),
     );
