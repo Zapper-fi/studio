@@ -3,11 +3,11 @@ import { AbstractApp } from '~app/app.dynamic-module';
 
 import { ConcentratorAppDefinition, CONCENTRATOR_DEFINITION } from './concentrator.definition';
 import { ConcentratorContractFactory } from './contracts';
-import { EthereumConcentratorAcrvVaultContractPositionFetcher } from './ethereum/concentrator.poolacrv.contract-position-fetcher';
 import { EthereumConcentratorAcrvTokenFetcher } from './ethereum/concentrator.acrv.token-fetcher';
 import { EthereumConcentratorAfxsTokenFetcher } from './ethereum/concentrator.afxs.token-fetcher';
-import { EthereumConcentratorLegacyVaultContractPositionFetcher } from './ethereum/concentrator.poollegacy.contract-position-fetcher';
+import { EthereumConcentratorAcrvVaultContractPositionFetcher } from './ethereum/concentrator.poolacrv.contract-position-fetcher';
 import { EthereumConcentratorAfxsVaultContractPositionFetcher } from './ethereum/concentrator.poolfxs.contract-position-fetcher';
+import { EthereumConcentratorLegacyVaultContractPositionFetcher } from './ethereum/concentrator.poollegacy.contract-position-fetcher';
 import { EthereumConcentratorVeContractPositionFetcher } from './ethereum/concentrator.ve.contract-position-fetcher';
 
 @Register.AppModule({
@@ -23,4 +23,4 @@ import { EthereumConcentratorVeContractPositionFetcher } from './ethereum/concen
     EthereumConcentratorVeContractPositionFetcher,
   ],
 })
-export class ConcentratorAppModule extends AbstractApp() { }
+export class ConcentratorAppModule extends AbstractApp() {}
