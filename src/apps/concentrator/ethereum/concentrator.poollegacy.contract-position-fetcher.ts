@@ -8,11 +8,11 @@ import {
   MasterChefTemplateContractPositionFetcher,
 } from '~position/template/master-chef.template.contract-position-fetcher';
 
-import { ConcentratorContractFactory, AladdinConvexVault } from '../contracts';
+import { ConcentratorContractFactory, AladdinConcentratorLegacyVault } from '../contracts';
 
 @PositionTemplate()
-export class EthereumConcentratorPoolContractPositionFetcher extends MasterChefTemplateContractPositionFetcher<AladdinConvexVault> {
-  groupLabel = 'Farms';
+export class EthereumConcentratorLegacyVaultContractPositionFetcher extends MasterChefTemplateContractPositionFetcher<AladdinConcentratorLegacyVault> {
+  groupLabel = 'Legacy Vaults';
 
   chefAddress = '0xc8ff37f7d057df1bb9ad681b53fa4726f268e0e8';
 
@@ -23,15 +23,15 @@ export class EthereumConcentratorPoolContractPositionFetcher extends MasterChefT
     super(appToolkit);
   }
 
-  getContract(address: string): AladdinConvexVault {
-    return this.contractFactory.aladdinConvexVault({ address, network: this.network });
+  getContract(address: string): AladdinConcentratorLegacyVault {
+    return this.contractFactory.aladdinConcentratorLegacyVault({ address, network: this.network });
   }
 
-  async getPoolLength(contract: AladdinConvexVault): Promise<BigNumberish> {
+  async getPoolLength(contract: AladdinConcentratorLegacyVault): Promise<BigNumberish> {
     return contract.poolLength();
   }
 
-  async getStakedTokenAddress(contract: AladdinConvexVault, poolIndex: number): Promise<string> {
+  async getStakedTokenAddress(contract: AladdinConcentratorLegacyVault, poolIndex: number): Promise<string> {
     return contract.poolInfo(poolIndex).then(v => v.lpToken);
   }
 
@@ -55,7 +55,7 @@ export class EthereumConcentratorPoolContractPositionFetcher extends MasterChefT
     address,
     contract,
     contractPosition,
-  }: GetMasterChefTokenBalancesParams<AladdinConvexVault>): Promise<BigNumberish> {
+  }: GetMasterChefTokenBalancesParams<AladdinConcentratorLegacyVault>): Promise<BigNumberish> {
     return contract.userInfo(contractPosition.dataProps.poolIndex, address).then(v => v.shares);
   }
 
@@ -63,7 +63,7 @@ export class EthereumConcentratorPoolContractPositionFetcher extends MasterChefT
     address,
     contract,
     contractPosition,
-  }: GetMasterChefTokenBalancesParams<AladdinConvexVault>): Promise<BigNumberish | BigNumberish[]> {
+  }: GetMasterChefTokenBalancesParams<AladdinConcentratorLegacyVault>): Promise<BigNumberish | BigNumberish[]> {
     return contract.pendingReward(contractPosition.dataProps.poolIndex, address);
   }
 }
