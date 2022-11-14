@@ -61,7 +61,14 @@ export abstract class CompoundBorrowContractPositionFetcher<
     });
 
     const underlyingAddress = underlyingAddressRaw.toLowerCase().replace(ETH_ADDR_ALIAS, ZERO_ADDRESS);
-    return [{ address: underlyingAddress, metaType: MetaType.BORROWED }];
+
+    return [
+      {
+        metaType: MetaType.BORROWED,
+        address: underlyingAddress,
+        network: this.network,
+      },
+    ];
   }
 
   async getLabel({

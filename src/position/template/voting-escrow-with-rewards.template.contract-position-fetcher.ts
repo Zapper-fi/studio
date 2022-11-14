@@ -37,8 +37,8 @@ export abstract class VotingEscrowWithRewardsTemplateContractPositionFetcher<
     const reward = multicall.wrap(this.getRewardContract(this.rewardAddress));
 
     return [
-      { metaType: MetaType.SUPPLIED, address: await this.getEscrowedTokenAddress(escrow) },
-      { metaType: MetaType.CLAIMABLE, address: await this.getRewardTokenAddress(reward) },
+      { metaType: MetaType.SUPPLIED, address: await this.getEscrowedTokenAddress(escrow), network: this.network },
+      { metaType: MetaType.CLAIMABLE, address: await this.getRewardTokenAddress(reward), network: this.network },
     ];
   }
 

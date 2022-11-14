@@ -71,8 +71,16 @@ export abstract class HomoraV2FarmContractPositionFetcher extends ContractPositi
 
   async getTokenDefinitions({ definition }: GetTokenDefinitionsParams<HomoraBank, HomoraV2FarmingPositionDefinition>) {
     return [
-      { metaType: MetaType.SUPPLIED, address: definition.poolAddress },
-      ...definition.tokenAddresses.map(token => ({ metaType: MetaType.BORROWED, address: token })),
+      {
+        metaType: MetaType.SUPPLIED,
+        address: definition.poolAddress,
+        network: this.network,
+      },
+      ...definition.tokenAddresses.map(token => ({
+        metaType: MetaType.BORROWED,
+        address: token,
+        network: this.network,
+      })),
     ];
   }
 

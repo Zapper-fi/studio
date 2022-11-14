@@ -164,17 +164,37 @@ export class OptimismLyraAvalonOptionsContractPositionFetcher extends ContractPo
 
     if (definition.optionType === 0 || definition.optionType === 1) {
       // Long Call/Long Put
-      const quoteTokenDefinition = { metaType: MetaType.SUPPLIED, address: definition.quoteAddress };
+      const quoteTokenDefinition = {
+        metaType: MetaType.SUPPLIED,
+        address: definition.quoteAddress,
+        network: this.network,
+      };
       return [quoteTokenDefinition];
     } else if (definition.optionType === 2) {
       // Short Call Base
-      const quoteTokenDefinition = { metaType: MetaType.BORROWED, address: definition.quoteAddress };
-      const collateralTokenDefinition = { metaType: MetaType.SUPPLIED, address: definition.baseAddress };
+      const quoteTokenDefinition = {
+        metaType: MetaType.BORROWED,
+        address: definition.quoteAddress,
+        network: this.network,
+      };
+      const collateralTokenDefinition = {
+        metaType: MetaType.SUPPLIED,
+        address: definition.baseAddress,
+        network: this.network,
+      };
       return [quoteTokenDefinition, collateralTokenDefinition];
     } else {
       // Short Call Quote/Short Put Quote
-      const quoteTokenDefinition = { metaType: MetaType.BORROWED, address: definition.quoteAddress };
-      const collateralTokenDefinition = { metaType: MetaType.SUPPLIED, address: definition.quoteAddress };
+      const quoteTokenDefinition = {
+        metaType: MetaType.BORROWED,
+        address: definition.quoteAddress,
+        network: this.network,
+      };
+      const collateralTokenDefinition = {
+        metaType: MetaType.SUPPLIED,
+        address: definition.quoteAddress,
+        network: this.network,
+      };
       return [quoteTokenDefinition, collateralTokenDefinition];
     }
   }

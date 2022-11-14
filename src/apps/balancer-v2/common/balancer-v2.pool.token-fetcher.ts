@@ -91,7 +91,7 @@ export abstract class BalancerV2PoolTokenFetcher extends AppTokenTemplatePositio
     contract,
     definition,
     multicall,
-  }: GetTokenPropsParams<BalancerPool, BalancerV2PoolTokenDefinition>) {
+  }: GetTokenPropsParams<BalancerPool, BalancerV2PoolTokenDataProps, BalancerV2PoolTokenDefinition>) {
     // Logic derived from https://github.com/balancer-labs/frontend-v2/blob/f22a7bf8f7adfbf1158178322ce9aa12034b5894/src/services/balancer/contracts/contracts/vault.ts#L86-L93
     if (
       definition.poolType === 'StablePhantom' ||

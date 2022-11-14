@@ -31,7 +31,7 @@ export abstract class MerkleTemplateContractPositionFetcher<
   }
 
   async getTokenDefinitions({ definition }: GetTokenDefinitionsParams<T, MerkleContractPositionDefinition>) {
-    return [{ metaType: MetaType.CLAIMABLE, address: definition.rewardTokenAddress }];
+    return [{ metaType: MetaType.CLAIMABLE, address: definition.rewardTokenAddress, network: this.network }];
   }
 
   async getLabel({ contractPosition }: GetDisplayPropsParams<T>) {

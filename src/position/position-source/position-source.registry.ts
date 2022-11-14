@@ -41,7 +41,15 @@ export class RegistryPositionSource implements PositionSource {
     );
 
     const allTokens = cachedTokenResults.flat();
-    return queries.map(q => allTokens.find(t => t.network === q.network && t.address === q.address) ?? null);
+    return queries.map(
+      q =>
+        allTokens.find(t => {
+          const isNetworkMatch = t.network === q.network;
+          const isAddressMatch = t.address === q.address;
+          const isMaybeTokenIdMatch = !q.tokenId || q.tokenId === t.dataProps.tokenId;
+          return isNetworkMatch && isAddressMatch && isMaybeTokenIdMatch;
+        }) ?? null,
+    );
   }
 
   getSupported(definitions: AppGroupsDefinition[], contractType: ContractType) {

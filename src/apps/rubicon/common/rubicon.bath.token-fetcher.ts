@@ -53,7 +53,11 @@ export abstract class RubiconBathTokenFetcher extends AppTokenTemplatePositionFe
     return definition.underlyingTokenAddress;
   }
 
-  async getSupply({ multicall, definition, contract }: GetTokenPropsParams<BathToken, RubiconPoolDefinition>) {
+  async getSupply({
+    multicall,
+    definition,
+    contract,
+  }: GetTokenPropsParams<BathToken, DefaultAppTokenDataProps, RubiconPoolDefinition>) {
     const underlyingAssetContract = this.contractFactory.erc20({
       address: definition.underlyingTokenAddress,
       network: this.network,

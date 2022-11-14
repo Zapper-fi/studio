@@ -93,9 +93,21 @@ export abstract class KyberswapElasticFarmContractPositionFetcher extends Contra
     definition,
   }: GetTokenDefinitionsParams<KyberswapElasticLm, KyberswapElasticFarmPositionDefinition>) {
     return [
-      { metaType: MetaType.SUPPLIED, address: definition.token0Address },
-      { metaType: MetaType.SUPPLIED, address: definition.token1Address },
-      ...definition.rewardTokenAddresses.map(v => ({ metaType: MetaType.CLAIMABLE, address: v })),
+      {
+        metaType: MetaType.SUPPLIED,
+        address: definition.token0Address,
+        network: this.network,
+      },
+      {
+        metaType: MetaType.SUPPLIED,
+        address: definition.token1Address,
+        network: this.network,
+      },
+      ...definition.rewardTokenAddresses.map(v => ({
+        metaType: MetaType.CLAIMABLE,
+        address: v,
+        network: this.network,
+      })),
     ];
   }
 

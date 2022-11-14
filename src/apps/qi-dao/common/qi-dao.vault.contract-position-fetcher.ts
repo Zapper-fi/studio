@@ -78,8 +78,16 @@ export abstract class QiDaoVaultContractPositionFetcher extends ContractPosition
     if (!collateralTokenAddressRaw || !debtTokenAddressRaw) return null;
 
     return [
-      { metaType: MetaType.SUPPLIED, address: collateralTokenAddressRaw.toLowerCase() },
-      { metaType: MetaType.BORROWED, address: debtTokenAddressRaw.toLowerCase() },
+      {
+        metaType: MetaType.SUPPLIED,
+        address: collateralTokenAddressRaw.toLowerCase(),
+        network: this.network,
+      },
+      {
+        metaType: MetaType.BORROWED,
+        address: debtTokenAddressRaw.toLowerCase(),
+        network: this.network,
+      },
     ];
   }
 
