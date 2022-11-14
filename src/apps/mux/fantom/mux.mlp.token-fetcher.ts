@@ -19,6 +19,7 @@ export class FantomMuxMlpTokenFetcher implements PositionFetcher<AppTokenPositio
   async getPositions() {
     return this.muxMlpTokenHelper.getTokens({
       network,
+      subgraphUrl: 'https://api.thegraph.com/subgraphs/name/mux-world/mux-ftm',
       mlpTokenAddress: '0xddade9a8da4851960dfcff1ae4a18ee75c39edd2',
     });
   }
