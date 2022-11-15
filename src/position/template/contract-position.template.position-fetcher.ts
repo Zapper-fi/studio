@@ -124,8 +124,8 @@ export abstract class ContractPositionTemplatePositionFetcher<
     );
 
     const underlyingTokenRequests = compact(skeletons)
-      .flatMap(v => v.tokenDefinitions.map(v => v.address.toLowerCase()))
-      .map(v => ({ network: this.network, address: v }));
+      .flatMap(v => v.tokenDefinitions)
+      .map(v => ({ address: v.address, network: v.network, tokenId: v.tokenId }));
     const tokenDependencies = await tokenLoader.getMany(underlyingTokenRequests).then(tokenDeps => compact(tokenDeps));
 
     const skeletonsWithResolvedTokens = await Promise.all(

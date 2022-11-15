@@ -33,8 +33,16 @@ export class EthereumGroVestingContractPositionFetcher extends ContractPositionT
 
   async getTokenDefinitions() {
     return [
-      { metaType: MetaType.SUPPLIED, address: '0x3ec8798b81485a254928b70cda1cf0a2bb0b74d7' },
-      { metaType: MetaType.CLAIMABLE, address: '0x3ec8798b81485a254928b70cda1cf0a2bb0b74d7' },
+      {
+        metaType: MetaType.SUPPLIED,
+        address: '0x3ec8798b81485a254928b70cda1cf0a2bb0b74d7',
+        network: this.network,
+      },
+      {
+        metaType: MetaType.CLAIMABLE,
+        address: '0x3ec8798b81485a254928b70cda1cf0a2bb0b74d7',
+        network: this.network,
+      },
     ];
   }
 

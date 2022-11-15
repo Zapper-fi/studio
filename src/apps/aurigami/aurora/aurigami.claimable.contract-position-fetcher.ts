@@ -44,7 +44,13 @@ export class AuroraAurigamiClaimableContractPositionFetcher extends ContractPosi
   async getTokenDefinitions(
     _opts: GetTokenDefinitionsParams<AurigamiComptroller, DefaultContractPositionDefinition>,
   ): Promise<UnderlyingTokenDefinition[] | null> {
-    return [{ address: this.rewardTokenAddress, metaType: MetaType.CLAIMABLE }];
+    return [
+      {
+        metaType: MetaType.CLAIMABLE,
+        address: this.rewardTokenAddress,
+        network: this.network,
+      },
+    ];
   }
 
   async getLabel({ contractPosition }: GetDisplayPropsParams<AurigamiComptroller>) {

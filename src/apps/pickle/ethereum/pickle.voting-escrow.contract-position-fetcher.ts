@@ -64,9 +64,21 @@ export class EthereumPickleVotingEscrowContractPositionFetcher extends VotingEsc
     const reward = multicall.wrap(this.getRewardContract(this.rewardAddress));
 
     return [
-      { metaType: MetaType.SUPPLIED, address: await this.getEscrowedTokenAddress(escrow) },
-      { metaType: MetaType.CLAIMABLE, address: await this.getRewardTokenAddress(reward) },
-      { metaType: MetaType.CLAIMABLE, address: ZERO_ADDRESS },
+      {
+        metaType: MetaType.SUPPLIED,
+        address: await this.getEscrowedTokenAddress(escrow),
+        network: this.network,
+      },
+      {
+        metaType: MetaType.CLAIMABLE,
+        address: await this.getRewardTokenAddress(reward),
+        network: this.network,
+      },
+      {
+        metaType: MetaType.CLAIMABLE,
+        address: ZERO_ADDRESS,
+        network: this.network,
+      },
     ];
   }
 

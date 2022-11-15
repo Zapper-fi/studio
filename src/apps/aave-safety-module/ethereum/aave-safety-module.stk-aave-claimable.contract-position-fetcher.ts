@@ -34,7 +34,13 @@ export class EthereumAaveSafetyModuleStkAaveClaimableContractPositionFetcher ext
   }
 
   async getTokenDefinitions(_params: GetTokenDefinitionsParams<AaveStkAave>) {
-    return [{ metaType: MetaType.CLAIMABLE, address: '0x7fc66500c84a76ad7e9c93437bfc5ac33e2ddae9' }];
+    return [
+      {
+        metaType: MetaType.CLAIMABLE,
+        address: '0x7fc66500c84a76ad7e9c93437bfc5ac33e2ddae9',
+        network: this.network,
+      },
+    ];
   }
 
   async getLabel({ contractPosition }: GetDisplayPropsParams<AaveStkAave>) {

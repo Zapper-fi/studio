@@ -6,9 +6,11 @@ export type LoggingTags = {
   network?: Network;
   context?: string;
 };
+
 export type TokenDependencySelectorKey = {
-  network: Network;
   address: string;
+  network: Network;
+  tokenId?: number;
 };
 
 export type TokenDependency = AppTokenPosition | BaseTokenPrice;

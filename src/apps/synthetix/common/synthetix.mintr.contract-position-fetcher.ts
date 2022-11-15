@@ -45,8 +45,16 @@ export abstract class SynthetixMintrContractPositionFetcher extends ContractPosi
 
   async getTokenDefinitions() {
     return [
-      { metaType: MetaType.SUPPLIED, address: this.snxAddress },
-      { metaType: MetaType.BORROWED, address: this.sUSDAddress },
+      {
+        metaType: MetaType.SUPPLIED,
+        address: this.snxAddress,
+        network: this.network,
+      },
+      {
+        metaType: MetaType.BORROWED,
+        address: this.sUSDAddress,
+        network: this.network,
+      },
     ];
   }
 

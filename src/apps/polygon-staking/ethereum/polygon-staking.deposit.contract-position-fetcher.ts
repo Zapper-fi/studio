@@ -122,8 +122,17 @@ export class EthereumPolygonStakingContractPositionFetcher extends ContractPosit
 
   async getTokenDefinitions(_params: GetTokenDefinitionsParams<PolygonStakeManager>) {
     return [
-      { metaType: MetaType.SUPPLIED, address: '0x7d1afa7b718fb893db30a3abc0cfc608aacfebb0' },
-      { metaType: MetaType.CLAIMABLE, address: '0x7d1afa7b718fb893db30a3abc0cfc608aacfebb0' },
+      {
+        metaType: MetaType.SUPPLIED,
+        address: '0x7d1afa7b718fb893db30a3abc0cfc608aacfebb0',
+        network: this.network,
+      },
+
+      {
+        metaType: MetaType.CLAIMABLE,
+        address: '0x7d1afa7b718fb893db30a3abc0cfc608aacfebb0',
+        network: this.network,
+      },
     ];
   }
 

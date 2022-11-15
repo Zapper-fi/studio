@@ -43,7 +43,13 @@ export class EthereumPodsYieldQueueContractPositionFetcher extends ContractPosit
   }
 
   async getTokenDefinitions({ contract }: GetTokenDefinitionsParams<PodsYieldVault>) {
-    return [{ metaType: MetaType.SUPPLIED, address: await contract.asset() }];
+    return [
+      {
+        metaType: MetaType.SUPPLIED,
+        address: await contract.asset(),
+        network: this.network,
+      },
+    ];
   }
 
   async getDataProps({ contract }: GetDataPropsParams<PodsYieldVault>): Promise<PodsYieldQueueDataProps> {

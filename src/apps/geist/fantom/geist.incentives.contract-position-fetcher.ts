@@ -38,7 +38,13 @@ export class FantomGeistIncentivesPositionFetcher extends ContractPositionTempla
   }
 
   async getTokenDefinitions() {
-    return [{ address: this.geistTokenAddress, metaType: MetaType.CLAIMABLE }];
+    return [
+      {
+        metaType: MetaType.CLAIMABLE,
+        address: this.geistTokenAddress,
+        network: this.network,
+      },
+    ];
   }
 
   async getLabel(): Promise<string> {

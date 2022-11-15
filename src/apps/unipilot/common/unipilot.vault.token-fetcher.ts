@@ -57,8 +57,16 @@ export abstract class UnipilotVaultTokenFetcher extends AppTokenTemplatePosition
 
   async getTokenDefinitions({ definition }: GetTokenDefinitionsParams<UnipilotVault, UnipilotVaultDefinition>) {
     return [
-      { metaType: MetaType.SUPPLIED, address: definition.token0Address },
-      { metaType: MetaType.SUPPLIED, address: definition.token1Address },
+      {
+        metaType: MetaType.SUPPLIED,
+        address: definition.token0Address,
+        network: this.network,
+      },
+      {
+        metaType: MetaType.SUPPLIED,
+        address: definition.token1Address,
+        network: this.network,
+      },
     ];
   }
 
@@ -100,6 +108,7 @@ export abstract class UnipilotVaultTokenFetcher extends AppTokenTemplatePosition
     definition,
   }: GetDisplayPropsParams<UnipilotVault, UnipilotVaultTokenDataProps, UnipilotVaultDefinition>): Promise<string> {
     const strategyLabels = {
+      '0': '',
       '1': 'Wide',
       '2': 'Balanced',
       '3': 'Narrow',

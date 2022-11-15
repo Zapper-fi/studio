@@ -36,9 +36,21 @@ export class AvalancheTeddyCashStabilityPoolContractPositionFetcher extends Cont
 
   async getTokenDefinitions() {
     return [
-      { metaType: MetaType.SUPPLIED, address: '0x4fbf0429599460d327bd5f55625e30e4fc066095' }, // TSD
-      { metaType: MetaType.CLAIMABLE, address: ZERO_ADDRESS }, // AVAX
-      { metaType: MetaType.CLAIMABLE, address: '0x094bd7b2d99711a1486fb94d4395801c6d0fddcc' }, // TEDDY
+      {
+        metaType: MetaType.SUPPLIED,
+        address: '0x4fbf0429599460d327bd5f55625e30e4fc066095', // TSD
+        network: this.network,
+      },
+      {
+        metaType: MetaType.CLAIMABLE,
+        address: ZERO_ADDRESS, // AVAX
+        network: this.network,
+      },
+      {
+        metaType: MetaType.CLAIMABLE,
+        address: '0x094bd7b2d99711a1486fb94d4395801c6d0fddcc', // TEDDY
+        network: this.network,
+      },
     ];
   }
 

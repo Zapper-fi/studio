@@ -4,14 +4,17 @@ import { IMulticallWrapper } from '~multicall/multicall.interface';
 import { DefaultDataProps } from '~position/display.interface';
 import { ContractPosition, MetaType } from '~position/position.interface';
 import { TokenDependencySelector } from '~position/selectors/token-dependency-selector.interface';
+import { Network } from '~types';
 
 export type DefaultContractPositionDefinition = {
   address: string;
 };
 
 export type UnderlyingTokenDefinition = {
-  address: string;
   metaType: MetaType;
+  address: string;
+  network: Network;
+  tokenId?: number;
 };
 
 // PHASE 1: List definitions

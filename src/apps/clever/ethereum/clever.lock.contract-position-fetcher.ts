@@ -31,9 +31,21 @@ export class EthereumCleverLockContractPositionFetcher extends ContractPositionT
 
   async getTokenDefinitions() {
     return [
-      { metaType: MetaType.LOCKED, address: CVX },
-      { metaType: MetaType.CLAIMABLE, address: CVX },
-      { metaType: MetaType.BORROWED, address: CLEVCVX },
+      {
+        metaType: MetaType.LOCKED,
+        address: CVX,
+        network: this.network,
+      },
+      {
+        metaType: MetaType.CLAIMABLE,
+        address: CVX,
+        network: this.network,
+      },
+      {
+        metaType: MetaType.BORROWED,
+        address: CLEVCVX,
+        network: this.network,
+      },
     ];
   }
 

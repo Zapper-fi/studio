@@ -4,6 +4,87 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.275.0](https://github.com/Zapper-fi/studio/compare/v0.274.1...v0.275.0) (2022-11-15)
+
+
+### Features
+
+* **b-protocol:** Fix whatever the fuck was going on in B.Protocol ([#1716](https://github.com/Zapper-fi/studio/issues/1716)) ([a77144e](https://github.com/Zapper-fi/studio/commit/a77144ee61036ecf06e0f5cd60f78ae7ff42b6c5))
+
+## [0.274.1](https://github.com/Zapper-fi/studio/compare/v0.274.0...v0.274.1) (2022-11-15)
+
+
+### Bug Fixes
+
+* **presenter:** Use interface and DI concrete implementation ([#1718](https://github.com/Zapper-fi/studio/issues/1718)) ([759ed28](https://github.com/Zapper-fi/studio/commit/759ed2837646cacc3be3fb96558cc1679691d079))
+
+## [0.274.0](https://github.com/Zapper-fi/studio/compare/v0.273.0...v0.274.0) (2022-11-15)
+
+
+### Features
+
+* **presenter:** Add local-storage flag to include zero balances ([#1705](https://github.com/Zapper-fi/studio/issues/1705)) ([60f90b9](https://github.com/Zapper-fi/studio/commit/60f90b9d19ab27b9e246d9d1e77e4f00280a5f56))
+* **presenter:** Remove most of presentation logic indirection ([#1689](https://github.com/Zapper-fi/studio/issues/1689)) ([79b47e5](https://github.com/Zapper-fi/studio/commit/79b47e58b30615da9e8d9556e67b6621daaedf98))
+
+
+### Bug Fixes
+
+* **mean-finance:** Added assetStandard on position + linting ([#1712](https://github.com/Zapper-fi/studio/issues/1712)) ([107e10c](https://github.com/Zapper-fi/studio/commit/107e10ce1eb14742c4c5483dce147078abbd82b0))
+* **presenter:** Remove left-over from previous refactor of the presenter service ([#1715](https://github.com/Zapper-fi/studio/issues/1715)) ([397fc1c](https://github.com/Zapper-fi/studio/commit/397fc1c6adaa66230adf419de42bd36cabc1359b))
+
+## [0.273.0](https://github.com/Zapper-fi/studio/compare/v0.272.0...v0.273.0) (2022-11-14)
+
+
+### Features
+
+* **concentrator:** implement ve and fxs vaults ([#1690](https://github.com/Zapper-fi/studio/issues/1690)) ([8a9afab](https://github.com/Zapper-fi/studio/commit/8a9afab2c39b8806412243d399fd6fc471f86775))
+
+
+### Bug Fixes
+
+* **kyberswap-elastic:** Fix Kyberswap Elastic farm definitions ([#1708](https://github.com/Zapper-fi/studio/issues/1708)) ([d615065](https://github.com/Zapper-fi/studio/commit/d615065880c23a91f6da8c8d6b0a930bd3eb9a5f))
+* **kyberswap-elastic:** Remove duplicates from definitions ([#1706](https://github.com/Zapper-fi/studio/issues/1706)) ([4b5a298](https://github.com/Zapper-fi/studio/commit/4b5a298bbb5267492f211d5795270f1eda5217c6))
+
+## [0.272.0](https://github.com/Zapper-fi/studio/compare/v0.271.0...v0.272.0) (2022-11-13)
+
+
+### Features
+
+* **templates:** Update token definitions query to enable cross-network and ERC-1155 underlying tokens ([#1701](https://github.com/Zapper-fi/studio/issues/1701)) ([c256881](https://github.com/Zapper-fi/studio/commit/c2568817f279cbd8abc2d1ddc79f13e2206098c8))
+
+## [0.271.0](https://github.com/Zapper-fi/studio/compare/v0.270.0...v0.271.0) (2022-11-13)
+
+
+### Features
+
+* **templates:** Enable network and ERC1155 ID in token definitions for Contract Position template ([#1699](https://github.com/Zapper-fi/studio/issues/1699)) ([ea55f6c](https://github.com/Zapper-fi/studio/commit/ea55f6c98382b0a7c4214c094af85626ce5a67a8))
+
+## [0.270.0](https://github.com/Zapper-fi/studio/compare/v0.269.0...v0.270.0) (2022-11-13)
+
+
+### Features
+
+* **templates:** Adjust app token template for flexibility with ERC1155 ([#1697](https://github.com/Zapper-fi/studio/issues/1697)) ([ed2c7b7](https://github.com/Zapper-fi/studio/commit/ed2c7b7038ffc3e27a8c35a9cb30a7a0a815a038))
+
+## [0.269.0](https://github.com/Zapper-fi/studio/compare/v0.268.2...v0.269.0) (2022-11-12)
+
+
+### Features
+
+* **positions:** Extract reserve call in dynamic single staking template ([442adff](https://github.com/Zapper-fi/studio/commit/442adff63a66d0e168042922f809d9eb58cea5af))
+
+
+### Bug Fixes
+
+* **unipilot:** Remove undefined from the token label in polygon chain ([#1695](https://github.com/Zapper-fi/studio/issues/1695)) ([e51fcca](https://github.com/Zapper-fi/studio/commit/e51fcca4eec86f4a3953fdf0463d5392270e9bca))
+
+## [0.268.2](https://github.com/Zapper-fi/studio/compare/v0.268.1...v0.268.2) (2022-11-11)
+
+
+### Bug Fixes
+
+* **badger:** Be safe when mapping data ([e2dceea](https://github.com/Zapper-fi/studio/commit/e2dceeafc8eae2b6f170b7d40b21b891000836e7))
+
 ## [0.268.1](https://github.com/Zapper-fi/studio/compare/v0.268.0...v0.268.1) (2022-11-11)
 
 

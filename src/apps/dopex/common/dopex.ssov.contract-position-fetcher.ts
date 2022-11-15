@@ -110,8 +110,10 @@ export abstract class DopexSsovContractPositionFetcher<
   async getTokenDefinitions({ definition }: GetTokenDefinitionsParams<T, DopexSsovEpochStrikeDefinition>) {
     const tokens: UnderlyingTokenDefinition[] = [];
     const { depositTokenAddress, extraRewardTokenAddresses = [] } = definition;
-    tokens.push({ metaType: MetaType.SUPPLIED, address: depositTokenAddress });
-    tokens.push(...extraRewardTokenAddresses.map(v => ({ metaType: MetaType.CLAIMABLE, address: v })));
+    tokens.push({ metaType: MetaType.SUPPLIED, address: depositTokenAddress, network: this.network });
+    tokens.push(
+      ...extraRewardTokenAddresses.map(v => ({ metaType: MetaType.CLAIMABLE, address: v, network: this.network })),
+    );
     return tokens;
   }
 
