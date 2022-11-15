@@ -6,7 +6,7 @@ import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import { buildDollarDisplayItem } from '~app-toolkit/helpers/presentation/display-item.present';
 import { StatsItem } from '~position/display.interface';
-import { AppTokenPositionBalance } from '~position/position-balance.interface';
+import { AppTokenPositionBalance, RawTokenBalance } from '~position/position-balance.interface';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import {
   DefaultAppTokenDataProps,
@@ -103,7 +103,7 @@ export class PolygonMeshswapSupplyTokenFetcher extends AppTokenTemplatePositionF
     return [{ label: 'Liquidity', value: buildDollarDisplayItem(liquidity) }];
   }
 
-  async getBalances(address: string): Promise<AppTokenPositionBalance<DefaultAppTokenDataProps>[]> {
+  async getRawBalances(address: string): Promise<RawTokenBalance[]> {
     const multicall = this.appToolkit.getMulticall(this.network);
 
     const appTokens = await this.appToolkit.getAppTokenPositions<MeshswapContractPositionDataProps>({
@@ -112,15 +112,16 @@ export class PolygonMeshswapSupplyTokenFetcher extends AppTokenTemplatePositionF
       groupIds: [this.groupId],
     });
 
-    const balances = await Promise.all(
+    return Promise.all(
       appTokens.map(async appToken => {
         const balanceRaw = await multicall.wrap(this.getContract(appToken.address)).balanceOf(address);
         const balance = Number(balanceRaw) * appToken.dataProps.exchangeRate;
 
-        return drillBalance(appToken, balance.toString());
+        return {
+          key: this.appToolkit.getPositionKey(appToken),
+          balance: balance.toString(),
+        };
       }),
     );
-
-    return balances as AppTokenPositionBalance<DefaultAppTokenDataProps>[];
   }
 }
