@@ -4,6 +4,18 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.276.0](https://github.com/Zapper-fi/studio/compare/v0.275.0...v0.276.0) (2022-11-15)
+
+
+### Features
+
+* **b-protocol:** Refactor ([#1725](https://github.com/Zapper-fi/studio/issues/1725)) ([62b9e8c](https://github.com/Zapper-fi/studio/commit/62b9e8c7cf5d2cb6fba1b2a03757c0f78fcaebee))
+
+
+### Bug Fixes
+
+* **gearbox:** Fix Gearbox liquidity ([#1722](https://github.com/Zapper-fi/studio/issues/1722)) ([37f2b13](https://github.com/Zapper-fi/studio/commit/37f2b13186f5e6222ac3275f05142d2dd1bfaf13))
+
 ## [0.275.0](https://github.com/Zapper-fi/studio/compare/v0.274.1...v0.275.0) (2022-11-15)
 
 
