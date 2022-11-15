@@ -2,14 +2,9 @@ import { Inject } from '@nestjs/common';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
-import { CompoundSupplyTokenFetcher, GetMarketsParams } from '~apps/compound/common/compound.supply.token-fetcher';
+import { CompoundSupplyTokenFetcher } from '~apps/compound/common/compound.supply.token-fetcher';
 import { DisplayProps } from '~position/display.interface';
-import {
-  GetDataPropsParams,
-  GetDisplayPropsParams,
-  GetPricePerShareParams,
-  GetUnderlyingTokensParams,
-} from '~position/template/app-token.template.types';
+import { GetDisplayPropsParams } from '~position/template/app-token.template.types';
 
 import { CozyFinanceComptroller, CozyFinanceContractFactory, CozyFinanceCToken } from '../contracts';
 
@@ -27,6 +22,7 @@ export class EthereumCozyFinanceSupplyTokenFetcher extends CompoundSupplyTokenFe
   ) {
     super(appToolkit);
   }
+
   getCompoundCTokenContract(address: string) {
     return this.contractFactory.cozyFinanceCToken({ address, network: this.network });
   }
@@ -35,19 +31,19 @@ export class EthereumCozyFinanceSupplyTokenFetcher extends CompoundSupplyTokenFe
     return this.contractFactory.cozyFinanceComptroller({ address, network: this.network });
   }
 
-  async getMarkets({ contract }: GetMarketsParams<CozyFinanceComptroller>) {
+  getMarkets(contract: CozyFinanceComptroller) {
     return contract.getAllMarkets();
   }
 
-  async getUnderlyingAddress({ contract }: GetUnderlyingTokensParams<CozyFinanceCToken>) {
+  async getUnderlyingAddress(contract: CozyFinanceCToken) {
     return contract.underlying();
   }
 
-  async getExchangeRate({ contract }: GetPricePerShareParams<CozyFinanceCToken>) {
+  getExchangeRate(contract: CozyFinanceCToken) {
     return contract.exchangeRateCurrent();
   }
 
-  async getSupplyRate({ contract }: GetDataPropsParams<CozyFinanceCToken>) {
+  async getSupplyRate(contract: CozyFinanceCToken) {
     return contract.supplyRatePerBlock().catch(() => 0);
   }
 

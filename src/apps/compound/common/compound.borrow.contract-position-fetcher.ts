@@ -24,10 +24,6 @@ export type CompoundBorrowTokenDataProps = {
   isActive: boolean;
 };
 
-export type GetMarketsParams<S> = GetDefinitionsParams & {
-  contract: S;
-};
-
 export abstract class CompoundBorrowContractPositionFetcher<
   R extends Contract,
   S extends Contract,
@@ -36,27 +32,29 @@ export abstract class CompoundBorrowContractPositionFetcher<
   abstract getCompoundCTokenContract(address: string): R;
   abstract getCompoundComptrollerContract(address: string): S;
 
-  abstract getMarkets(params: GetMarketsParams<S>): Promise<string[]>;
-  abstract getUnderlyingAddress(params: GetTokenDefinitionsParams<R>): Promise<string>;
-  abstract getExchangeRate(params: GetDataPropsParams<R, CompoundBorrowTokenDataProps>): Promise<BigNumberish>;
-  abstract getBorrowRate(params: GetDataPropsParams<R, CompoundBorrowTokenDataProps>): Promise<BigNumberish>;
-  abstract getCash(params: GetDataPropsParams<R, CompoundBorrowTokenDataProps>): Promise<BigNumberish>;
-  abstract getCTokenSupply(params: GetDataPropsParams<R, CompoundBorrowTokenDataProps>): Promise<BigNumberish>;
-  abstract getCTokenDecimals(params: GetDataPropsParams<R, CompoundBorrowTokenDataProps>): Promise<number>;
-  abstract getBorrowBalance(params: GetTokenBalancesParams<R, CompoundBorrowTokenDataProps>): Promise<BigNumberish>;
+  abstract getMarkets(contract: S): Promise<string[]>;
+  abstract getUnderlyingAddress(contract: R): Promise<string>;
+  abstract getExchangeRate(contract: R): Promise<BigNumberish>;
+  abstract getBorrowRate(contract: R): Promise<BigNumberish>;
+  abstract getCash(contract: R): Promise<BigNumberish>;
+  abstract getBorrowBalance(opts: { address: string; contract: R }): Promise<BigNumberish>;
+  abstract getCTokenSupply(contract: R): Promise<BigNumberish>;
+  abstract getCTokenDecimals(contract: R): Promise<number>;
 
   getContract(address: string): R {
     return this.getCompoundCTokenContract(address);
   }
 
-  async getDefinitions(params: GetDefinitionsParams): Promise<DefaultContractPositionDefinition[]> {
+  async getDefinitions({ multicall }: GetDefinitionsParams): Promise<DefaultContractPositionDefinition[]> {
     const comptroller = this.getCompoundComptrollerContract(this.comptrollerAddress);
-    const addresses = await this.getMarkets({ ...params, contract: comptroller });
+    const addresses = await this.getMarkets(multicall.wrap(comptroller));
     return addresses.map(addr => ({ address: addr.toLowerCase() }));
   }
 
-  async getTokenDefinitions(params: GetTokenDefinitionsParams<R>): Promise<UnderlyingTokenDefinition[] | null> {
-    const underlyingAddressRaw = await this.getUnderlyingAddress(params).catch(err => {
+  async getTokenDefinitions({
+    contract,
+  }: GetTokenDefinitionsParams<R, DefaultContractPositionDefinition>): Promise<UnderlyingTokenDefinition[] | null> {
+    const underlyingAddressRaw = await this.getUnderlyingAddress(contract).catch(err => {
       // if the underlying call failed, it's the compound-wrapped native token
       if (isMulticallUnderlyingError(err)) return ZERO_ADDRESS;
       throw err;
@@ -91,9 +89,9 @@ export abstract class CompoundBorrowContractPositionFetcher<
     return 100 * (Math.pow(1 + (blocksPerDay * Number(rate)) / Number(1e18), 365) - 1);
   }
 
-  async getApy(params: GetDataPropsParams<R, CompoundBorrowTokenDataProps>) {
-    const [underlyingToken] = params.contractPosition.tokens;
-    const borrowRate = await this.getBorrowRate(params);
+  async getApy({ contract, contractPosition }: GetDataPropsParams<R, CompoundBorrowTokenDataProps>) {
+    const [underlyingToken] = contractPosition.tokens;
+    const borrowRate = await this.getBorrowRate(contract);
     const blocksPerDay = BLOCKS_PER_DAY[this.network];
     return this.getDenormalizedRate({
       blocksPerDay,
@@ -102,27 +100,28 @@ export abstract class CompoundBorrowContractPositionFetcher<
     });
   }
 
-  async getExchangeRateMantissa({ contractPosition }: GetDataPropsParams<R, CompoundBorrowTokenDataProps>) {
+  async getExchangeRateMantissa(opts: GetDataPropsParams<R, CompoundBorrowTokenDataProps>) {
+    const { contractPosition } = opts;
     const [underlyingToken] = contractPosition.tokens;
     return underlyingToken.decimals + 10;
   }
 
-  async getPricePerShare(params: GetDataPropsParams<R, CompoundBorrowTokenDataProps>) {
-    const [rateRaw, mantissa] = await Promise.all([this.getExchangeRate(params), this.getExchangeRateMantissa(params)]);
+  async getPricePerShare(opts: GetDataPropsParams<R, CompoundBorrowTokenDataProps>) {
+    const { contract } = opts;
+    const [rateRaw, mantissa] = await Promise.all([this.getExchangeRate(contract), this.getExchangeRateMantissa(opts)]);
     return Number(rateRaw) / 10 ** mantissa;
   }
 
-  async getDataProps(
-    params: GetDataPropsParams<R, CompoundBorrowTokenDataProps>,
-  ): Promise<CompoundBorrowTokenDataProps> {
-    const [underlyingToken] = params.contractPosition.tokens;
+  async getDataProps(opts: GetDataPropsParams<R, CompoundBorrowTokenDataProps>): Promise<CompoundBorrowTokenDataProps> {
+    const { contractPosition, contract } = opts;
+    const [underlyingToken] = contractPosition.tokens;
 
     const [decimals, supplyRaw, pricePerShare, apy, cashRaw] = await Promise.all([
-      this.getCTokenDecimals(params),
-      this.getCTokenSupply(params),
-      this.getPricePerShare(params),
-      this.getApy(params),
-      this.getCash(params).catch(e => {
+      this.getCTokenDecimals(contract),
+      this.getCTokenSupply(contract),
+      this.getPricePerShare(opts),
+      this.getApy(opts),
+      this.getCash(contract).catch(e => {
         if (isMulticallUnderlyingError(e)) return 0;
         throw e;
       }),
@@ -148,8 +147,8 @@ export abstract class CompoundBorrowContractPositionFetcher<
     };
   }
 
-  async getTokenBalancesPerPosition(params: GetTokenBalancesParams<R, CompoundBorrowTokenDataProps>) {
-    const balanceRaw = await this.getBorrowBalance(params);
+  async getTokenBalancesPerPosition({ address, contract }: GetTokenBalancesParams<R, CompoundBorrowTokenDataProps>) {
+    const balanceRaw = await this.getBorrowBalance({ contract, address });
     return [balanceRaw];
   }
 }

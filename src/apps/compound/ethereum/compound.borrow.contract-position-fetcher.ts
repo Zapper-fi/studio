@@ -2,17 +2,8 @@ import { Inject } from '@nestjs/common';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
-import {
-  GetTokenDefinitionsParams,
-  GetDataPropsParams,
-  GetTokenBalancesParams,
-} from '~position/template/contract-position.template.types';
 
-import {
-  CompoundBorrowContractPositionFetcher,
-  CompoundBorrowTokenDataProps,
-  GetMarketsParams,
-} from '../common/compound.borrow.contract-position-fetcher';
+import { CompoundBorrowContractPositionFetcher } from '../common/compound.borrow.contract-position-fetcher';
 import { CompoundComptroller, CompoundContractFactory, CompoundCToken } from '../contracts';
 
 @PositionTemplate()
@@ -37,36 +28,35 @@ export class EthereumCompoundBorrowContractPositionFetcher extends CompoundBorro
   getCompoundComptrollerContract(address: string) {
     return this.contractFactory.compoundComptroller({ address, network: this.network });
   }
-
-  async getMarkets({ contract }: GetMarketsParams<CompoundComptroller>) {
+  getMarkets(contract: CompoundComptroller) {
     return contract.getAllMarkets();
   }
 
-  async getUnderlyingAddress({ contract }: GetTokenDefinitionsParams<CompoundCToken>) {
+  async getUnderlyingAddress(contract: CompoundCToken) {
     return contract.underlying();
   }
 
-  async getExchangeRate({ contract }: GetDataPropsParams<CompoundCToken, CompoundBorrowTokenDataProps>) {
+  getExchangeRate(contract: CompoundCToken) {
     return contract.exchangeRateCurrent();
   }
 
-  async getBorrowRate({ contract }: GetDataPropsParams<CompoundCToken, CompoundBorrowTokenDataProps>) {
+  async getBorrowRate(contract: CompoundCToken) {
     return contract.borrowRatePerBlock().catch(() => 0);
   }
 
-  async getCash({ contract }: GetDataPropsParams<CompoundCToken, CompoundBorrowTokenDataProps>) {
-    return contract.getCash();
-  }
-
-  async getCTokenSupply({ contract }: GetDataPropsParams<CompoundCToken, CompoundBorrowTokenDataProps>) {
+  getCTokenSupply(contract: CompoundCToken) {
     return contract.totalSupply();
   }
 
-  async getCTokenDecimals({ contract }: GetDataPropsParams<CompoundCToken, CompoundBorrowTokenDataProps>) {
+  getCTokenDecimals(contract: CompoundCToken) {
     return contract.decimals();
   }
 
-  async getBorrowBalance({ address, contract }: GetTokenBalancesParams<CompoundCToken, CompoundBorrowTokenDataProps>) {
+  getBorrowBalance({ address, contract }: { address: string; contract: CompoundCToken }) {
     return contract.borrowBalanceCurrent(address);
+  }
+
+  getCash(contract: CompoundCToken) {
+    return contract.getCash();
   }
 }

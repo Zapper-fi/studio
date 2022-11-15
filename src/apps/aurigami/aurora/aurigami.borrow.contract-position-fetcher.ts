@@ -5,13 +5,8 @@ import { PositionTemplate } from '~app-toolkit/decorators/position-template.deco
 import {
   CompoundBorrowContractPositionFetcher,
   CompoundBorrowTokenDataProps,
-  GetMarketsParams,
 } from '~apps/compound/common/compound.borrow.contract-position-fetcher';
-import {
-  GetDataPropsParams,
-  GetTokenBalancesParams,
-  GetTokenDefinitionsParams,
-} from '~position/template/contract-position.template.types';
+import { GetDataPropsParams } from '~position/template/contract-position.template.types';
 
 import { AurigamiAuToken, AurigamiComptroller, AurigamiContractFactory } from '../contracts';
 
@@ -38,41 +33,44 @@ export class AuroraAurigamiBorrowContractPositionFetcher extends CompoundBorrowC
     return this.contractFactory.aurigamiComptroller({ address, network: this.network });
   }
 
-  async getMarkets({ contract }: GetMarketsParams<AurigamiComptroller>) {
+  getMarkets(contract: AurigamiComptroller) {
     return contract.getAllMarkets();
   }
 
-  async getUnderlyingAddress({ contract }: GetTokenDefinitionsParams<AurigamiAuToken>) {
+  async getUnderlyingAddress(contract: AurigamiAuToken) {
     return contract.underlying();
   }
 
-  async getExchangeRate({ contract }: GetDataPropsParams<AurigamiAuToken, CompoundBorrowTokenDataProps>) {
+  getExchangeRate(contract: AurigamiAuToken) {
     return contract.callStatic.exchangeRateCurrent();
   }
 
-  async getExchangeRateMantissa(params: GetDataPropsParams<AurigamiAuToken, CompoundBorrowTokenDataProps>) {
-    const [underlyingToken] = params.contractPosition.tokens;
-    const auTokenDecimals = await this.getCTokenDecimals(params);
+  async getExchangeRateMantissa({
+    contract,
+    contractPosition,
+  }: GetDataPropsParams<AurigamiAuToken, CompoundBorrowTokenDataProps>) {
+    const [underlyingToken] = contractPosition.tokens;
+    const auTokenDecimals = await this.getCTokenDecimals(contract);
     return 18 + underlyingToken.decimals - auTokenDecimals;
   }
 
-  async getBorrowRate({ contract }: GetDataPropsParams<AurigamiAuToken, CompoundBorrowTokenDataProps>) {
+  async getBorrowRate(contract: AurigamiAuToken) {
     return contract.callStatic.borrowRatePerTimestamp().catch(() => 0);
   }
 
-  async getCash({ contract }: GetDataPropsParams<AurigamiAuToken, CompoundBorrowTokenDataProps>) {
-    return contract.getCash();
-  }
-
-  async getCTokenSupply({ contract }: GetDataPropsParams<AurigamiAuToken, CompoundBorrowTokenDataProps>) {
+  getCTokenSupply(contract: AurigamiAuToken) {
     return contract.totalSupply();
   }
 
-  async getCTokenDecimals({ contract }: GetDataPropsParams<AurigamiAuToken, CompoundBorrowTokenDataProps>) {
+  getCTokenDecimals(contract: AurigamiAuToken) {
     return contract.decimals();
   }
 
-  async getBorrowBalance({ address, contract }: GetTokenBalancesParams<AurigamiAuToken, CompoundBorrowTokenDataProps>) {
+  getBorrowBalance({ address, contract }: { address: string; contract: AurigamiAuToken }) {
     return contract.callStatic.borrowBalanceCurrent(address);
+  }
+
+  getCash(contract: AurigamiAuToken) {
+    return contract.getCash();
   }
 }

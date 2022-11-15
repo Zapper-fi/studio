@@ -14,6 +14,5 @@ import { MakerAppDefinition, MAKER_DEFINITION } from './maker.definition';
     EthereumMakerGovernanceContractPositionFetcher,
     EthereumMakerVaultContractPositionFetcher,
   ],
-  exports: [MakerContractFactory],
 })
 export class MakerAppModule extends AbstractApp() {}
