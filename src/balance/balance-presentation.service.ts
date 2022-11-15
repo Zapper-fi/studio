@@ -3,6 +3,7 @@ import _ from 'lodash';
 import { get, groupBy } from 'lodash';
 
 import { presentBalanceFetcherResponse } from '~app-toolkit/helpers/presentation/balance-fetcher-response.present';
+import { AppDefinition } from '~app/app.definition';
 import { AppService } from '~app/app.service';
 import {
   AppTokenPositionBalance,
@@ -23,13 +24,17 @@ export type PresentParams = {
   balances: (AppTokenPositionBalance | ContractPositionBalance)[];
 };
 
+interface IAppService {
+  getApp(appId: string): Promise<AppDefinition | undefined>;
+}
+
 @Injectable()
 export class BalancePresentationService {
   constructor(
     @Inject(PositionPresenterRegistry) private readonly positionPresenterRegistry: PositionPresenterRegistry,
     @Inject(PositionFetcherTemplateRegistry)
     private readonly positionFetcherTemplateRegistry: PositionFetcherTemplateRegistry,
-    @Inject(AppService) private readonly appService: AppService,
+    @Inject(AppService) private readonly appService: IAppService,
   ) {}
 
   private groupBalancesByPositionGroup(
