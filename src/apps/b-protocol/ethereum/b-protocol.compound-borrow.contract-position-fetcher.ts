@@ -1,54 +1,82 @@
 import { Inject } from '@nestjs/common';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
-import { CompoundContractFactory, COMPOUND_DEFINITION } from '~apps/compound';
-import { CompoundBorrowTokenDataProps } from '~apps/compound/common/compound.borrow.contract-position-fetcher';
-import { EthereumCompoundBorrowContractPositionFetcher } from '~apps/compound/ethereum/compound.borrow.contract-position-fetcher';
+import { ZERO_ADDRESS } from '~app-toolkit/constants/address';
+import { CompoundContractFactory } from '~apps/compound';
+import { CompoundBorrowContractPositionFetcher } from '~apps/compound/common/compound.borrow.contract-position-fetcher';
+import { IMulticallWrapper } from '~multicall';
 import { Network } from '~types/network.interface';
 
 import { B_PROTOCOL_DEFINITION } from '../b-protocol.definition';
-import { BProtocolContractFactory } from '../contracts';
+import { BProtocolCompoundComptroller, BProtocolCompoundToken, BProtocolContractFactory } from '../contracts';
 
-export class EthereumBProtocolCompoundBorrowContractPositionFetcher extends EthereumCompoundBorrowContractPositionFetcher {
+export class EthereumBProtocolCompoundBorrowContractPositionFetcher extends CompoundBorrowContractPositionFetcher<
+  BProtocolCompoundToken,
+  BProtocolCompoundComptroller
+> {
   appId = B_PROTOCOL_DEFINITION.id;
   groupId = B_PROTOCOL_DEFINITION.groups.compoundBorrow.id;
   network = Network.ETHEREUM_MAINNET;
   groupLabel = 'Compound Lending';
+  comptrollerAddress = '0x9db10b9429989cc13408d7368644d4a1cb704ea3';
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
+    @Inject(BProtocolContractFactory) protected readonly contractFactory: BProtocolContractFactory,
     @Inject(CompoundContractFactory) protected readonly compoundContractFactory: CompoundContractFactory,
-    @Inject(BProtocolContractFactory) protected readonly bProtocolContractFactory: BProtocolContractFactory,
   ) {
-    super(appToolkit, compoundContractFactory);
+    super(appToolkit);
   }
 
-  async getDefinitions() {
-    return [];
+  getCompoundCTokenContract(address: string) {
+    return this.contractFactory.bProtocolCompoundToken({ address, network: this.network });
   }
 
-  async getAccountAddress(address: string): Promise<string> {
-    const registry = this.bProtocolContractFactory.bProtocolCompoundRegistry({
-      address: '0xbf698df5591caf546a7e087f5806e216afed666a',
-      network: this.network,
-    });
-
-    const avatarAddress = await registry.avatarOf(address);
-    return avatarAddress;
+  getCompoundComptrollerContract(address: string) {
+    return this.contractFactory.bProtocolCompoundComptroller({ address, network: this.network });
   }
 
-  async getPositionsForBalances() {
-    const positions = await this.appToolkit.getAppContractPositions<CompoundBorrowTokenDataProps>({
-      appId: COMPOUND_DEFINITION.id,
-      groupIds: [COMPOUND_DEFINITION.groups.borrow.id],
-      network: this.network,
-    });
+  async getMarkets(contract: BProtocolCompoundComptroller) {
+    const cTokenAddresses = await contract.getAllMarkets();
+    const bTokenAddresses = await Promise.all(cTokenAddresses.map(cTokenAddress => contract.c2b(cTokenAddress)));
+    return bTokenAddresses.filter(v => v !== ZERO_ADDRESS);
+  }
 
-    return positions.map(position => {
-      const appGroupNetwork = { appId: this.appId, groupId: this.groupId, network: this.network };
-      const proxiedContractPosition = { ...position, ...appGroupNetwork };
-      proxiedContractPosition.key = this.getKey({ contractPosition: proxiedContractPosition });
-      return proxiedContractPosition;
-    });
+  async getUnderlyingAddress(contract: BProtocolCompoundToken) {
+    return contract.underlying();
+  }
+
+  async getExchangeRate(contract: BProtocolCompoundToken) {
+    return contract.callStatic.exchangeRateCurrent();
+  }
+
+  async getBorrowRate(contract: BProtocolCompoundToken, multicall: IMulticallWrapper) {
+    const cTokenAddress = await contract.cToken();
+    const cToken = this.compoundContractFactory.compoundCToken({ address: cTokenAddress, network: this.network });
+    return multicall
+      .wrap(cToken)
+      .borrowRatePerBlock()
+      .catch(() => 0);
+  }
+
+  async getCTokenSupply(contract: BProtocolCompoundToken) {
+    return contract.totalSupply();
+  }
+
+  async getCTokenDecimals(contract: BProtocolCompoundToken) {
+    return contract.decimals();
+  }
+
+  async getBorrowBalance({ address, contract }: { address: string; contract: BProtocolCompoundToken }) {
+    return contract.callStatic.borrowBalanceCurrent(address);
+  }
+
+  async getCash(contract: BProtocolCompoundToken, multicall: IMulticallWrapper) {
+    const cTokenAddress = await contract.cToken();
+    const cToken = this.compoundContractFactory.compoundCToken({ address: cTokenAddress, network: this.network });
+    return multicall
+      .wrap(cToken)
+      .getCash()
+      .catch(() => 0);
   }
 }

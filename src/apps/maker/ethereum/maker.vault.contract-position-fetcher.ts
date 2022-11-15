@@ -127,6 +127,10 @@ export class EthereumMakerVaultContractPositionFetcher extends ContractPositionT
   }
 
   async getBalances(address: string): Promise<ContractPositionBalance<MakerVaultDataProps>[]> {
+    // A user can open multiple CDP positions for single ilk (i.e.: ETH-A)
+    // Each position is isolated for liquidation by their own health factor
+    // Also, can use 0x36a724bd100c39f0ea4d3a20f7097ee01a8ff573 for _all_ CDP values at once (optimized)
+
     const multicall = this.appToolkit.getMulticall(this.network);
     const positions = await this.appToolkit.getAppContractPositions<MakerVaultDataProps>({
       appId: this.appId,

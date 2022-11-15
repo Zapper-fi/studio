@@ -4,6 +4,7 @@ import { ETH_ADDR_ALIAS, ZERO_ADDRESS } from '~app-toolkit/constants/address';
 import { BLOCKS_PER_DAY } from '~app-toolkit/constants/blocks';
 import { buildDollarDisplayItem } from '~app-toolkit/helpers/presentation/display-item.present';
 import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
+import { IMulticallWrapper } from '~multicall';
 import { isMulticallUnderlyingError } from '~multicall/multicall.ethers';
 import { DisplayProps } from '~position/display.interface';
 import { MetaType } from '~position/position.interface';
@@ -32,14 +33,18 @@ export abstract class CompoundBorrowContractPositionFetcher<
   abstract getCompoundCTokenContract(address: string): R;
   abstract getCompoundComptrollerContract(address: string): S;
 
-  abstract getMarkets(contract: S): Promise<string[]>;
-  abstract getUnderlyingAddress(contract: R): Promise<string>;
-  abstract getExchangeRate(contract: R): Promise<BigNumberish>;
-  abstract getBorrowRate(contract: R): Promise<BigNumberish>;
-  abstract getCash(contract: R): Promise<BigNumberish>;
-  abstract getBorrowBalance(opts: { address: string; contract: R }): Promise<BigNumberish>;
-  abstract getCTokenSupply(contract: R): Promise<BigNumberish>;
-  abstract getCTokenDecimals(contract: R): Promise<number>;
+  abstract getMarkets(contract: S, multicall: IMulticallWrapper): Promise<string[]>;
+  abstract getUnderlyingAddress(contract: R, multicall: IMulticallWrapper): Promise<string>;
+  abstract getExchangeRate(contract: R, multicall: IMulticallWrapper): Promise<BigNumberish>;
+  abstract getBorrowRate(contract: R, multicall: IMulticallWrapper): Promise<BigNumberish>;
+  abstract getCash(contract: R, multicall: IMulticallWrapper): Promise<BigNumberish>;
+  abstract getBorrowBalance(opts: {
+    address: string;
+    contract: R;
+    multicall: IMulticallWrapper;
+  }): Promise<BigNumberish>;
+  abstract getCTokenSupply(contract: R, multicall: IMulticallWrapper): Promise<BigNumberish>;
+  abstract getCTokenDecimals(contract: R, multicall: IMulticallWrapper): Promise<number>;
 
   getContract(address: string): R {
     return this.getCompoundCTokenContract(address);
@@ -47,14 +52,15 @@ export abstract class CompoundBorrowContractPositionFetcher<
 
   async getDefinitions({ multicall }: GetDefinitionsParams): Promise<DefaultContractPositionDefinition[]> {
     const comptroller = this.getCompoundComptrollerContract(this.comptrollerAddress);
-    const addresses = await this.getMarkets(multicall.wrap(comptroller));
+    const addresses = await this.getMarkets(multicall.wrap(comptroller), multicall);
     return addresses.map(addr => ({ address: addr.toLowerCase() }));
   }
 
   async getTokenDefinitions({
     contract,
+    multicall,
   }: GetTokenDefinitionsParams<R, DefaultContractPositionDefinition>): Promise<UnderlyingTokenDefinition[] | null> {
-    const underlyingAddressRaw = await this.getUnderlyingAddress(contract).catch(err => {
+    const underlyingAddressRaw = await this.getUnderlyingAddress(contract, multicall).catch(err => {
       // if the underlying call failed, it's the compound-wrapped native token
       if (isMulticallUnderlyingError(err)) return ZERO_ADDRESS;
       throw err;
@@ -89,9 +95,9 @@ export abstract class CompoundBorrowContractPositionFetcher<
     return 100 * (Math.pow(1 + (blocksPerDay * Number(rate)) / Number(1e18), 365) - 1);
   }
 
-  async getApy({ contract, contractPosition }: GetDataPropsParams<R, CompoundBorrowTokenDataProps>) {
+  async getApy({ contract, contractPosition, multicall }: GetDataPropsParams<R, CompoundBorrowTokenDataProps>) {
     const [underlyingToken] = contractPosition.tokens;
-    const borrowRate = await this.getBorrowRate(contract);
+    const borrowRate = await this.getBorrowRate(contract, multicall);
     const blocksPerDay = BLOCKS_PER_DAY[this.network];
     return this.getDenormalizedRate({
       blocksPerDay,
@@ -107,21 +113,24 @@ export abstract class CompoundBorrowContractPositionFetcher<
   }
 
   async getPricePerShare(opts: GetDataPropsParams<R, CompoundBorrowTokenDataProps>) {
-    const { contract } = opts;
-    const [rateRaw, mantissa] = await Promise.all([this.getExchangeRate(contract), this.getExchangeRateMantissa(opts)]);
+    const { contract, multicall } = opts;
+    const [rateRaw, mantissa] = await Promise.all([
+      this.getExchangeRate(contract, multicall),
+      this.getExchangeRateMantissa(opts),
+    ]);
     return Number(rateRaw) / 10 ** mantissa;
   }
 
   async getDataProps(opts: GetDataPropsParams<R, CompoundBorrowTokenDataProps>): Promise<CompoundBorrowTokenDataProps> {
-    const { contractPosition, contract } = opts;
+    const { contractPosition, contract, multicall } = opts;
     const [underlyingToken] = contractPosition.tokens;
 
     const [decimals, supplyRaw, pricePerShare, apy, cashRaw] = await Promise.all([
-      this.getCTokenDecimals(contract),
-      this.getCTokenSupply(contract),
+      this.getCTokenDecimals(contract, multicall),
+      this.getCTokenSupply(contract, multicall),
       this.getPricePerShare(opts),
       this.getApy(opts),
-      this.getCash(contract).catch(e => {
+      this.getCash(contract, multicall).catch(e => {
         if (isMulticallUnderlyingError(e)) return 0;
         throw e;
       }),
@@ -147,8 +156,12 @@ export abstract class CompoundBorrowContractPositionFetcher<
     };
   }
 
-  async getTokenBalancesPerPosition({ address, contract }: GetTokenBalancesParams<R, CompoundBorrowTokenDataProps>) {
-    const balanceRaw = await this.getBorrowBalance({ contract, address });
+  async getTokenBalancesPerPosition({
+    address,
+    contract,
+    multicall,
+  }: GetTokenBalancesParams<R, CompoundBorrowTokenDataProps>) {
+    const balanceRaw = await this.getBorrowBalance({ contract, address, multicall });
     return [balanceRaw];
   }
 }

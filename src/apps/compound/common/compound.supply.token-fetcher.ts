@@ -2,6 +2,7 @@ import { BigNumberish, Contract } from 'ethers';
 
 import { ETH_ADDR_ALIAS, ZERO_ADDRESS } from '~app-toolkit/constants/address';
 import { BLOCKS_PER_DAY } from '~app-toolkit/constants/blocks';
+import { IMulticallWrapper } from '~multicall';
 import { isMulticallUnderlyingError } from '~multicall/multicall.ethers';
 import { BalanceDisplayMode, DisplayProps } from '~position/display.interface';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
@@ -24,10 +25,10 @@ export abstract class CompoundSupplyTokenFetcher<
   abstract getCompoundCTokenContract(address: string): R;
   abstract getCompoundComptrollerContract(address: string): S;
 
-  abstract getMarkets(contract: S): Promise<string[]>;
-  abstract getUnderlyingAddress(contract: R): Promise<string>;
-  abstract getExchangeRate(contract: R): Promise<BigNumberish>;
-  abstract getSupplyRate(contract: R): Promise<BigNumberish>;
+  abstract getMarkets(contract: S, multicall: IMulticallWrapper): Promise<string[]>;
+  abstract getUnderlyingAddress(contract: R, multicall: IMulticallWrapper): Promise<string>;
+  abstract getExchangeRate(contract: R, multicall: IMulticallWrapper): Promise<BigNumberish>;
+  abstract getSupplyRate(contract: R, multicall: IMulticallWrapper): Promise<BigNumberish>;
 
   getContract(address: string): R {
     return this.getCompoundCTokenContract(address);
@@ -35,11 +36,11 @@ export abstract class CompoundSupplyTokenFetcher<
 
   async getAddresses({ multicall }: GetAddressesParams) {
     const comptroller = this.getCompoundComptrollerContract(this.comptrollerAddress);
-    return this.getMarkets(multicall.wrap(comptroller));
+    return this.getMarkets(multicall.wrap(comptroller), multicall);
   }
 
-  async getUnderlyingTokenAddresses({ contract }: GetUnderlyingTokensParams<R>) {
-    const underlyingAddressRaw = await this.getUnderlyingAddress(contract).catch(err => {
+  async getUnderlyingTokenAddresses({ contract, multicall }: GetUnderlyingTokensParams<R>) {
+    const underlyingAddressRaw = await this.getUnderlyingAddress(contract, multicall).catch(err => {
       // if the underlying call failed, it's the compound-wrapped native token
       if (isMulticallUnderlyingError(err)) return ZERO_ADDRESS;
       throw err;
@@ -55,8 +56,11 @@ export abstract class CompoundSupplyTokenFetcher<
   }
 
   async getPricePerShare(opts: GetPricePerShareParams<R>) {
-    const { contract } = opts;
-    const [rateRaw, mantissa] = await Promise.all([this.getExchangeRate(contract), this.getExchangeRateMantissa(opts)]);
+    const { contract, multicall } = opts;
+    const [rateRaw, mantissa] = await Promise.all([
+      this.getExchangeRate(contract, multicall),
+      this.getExchangeRateMantissa(opts),
+    ]);
     return Number(rateRaw) / 10 ** mantissa;
   }
 
@@ -81,8 +85,8 @@ export abstract class CompoundSupplyTokenFetcher<
     return [appToken.pricePerShare[0] * appToken.supply];
   }
 
-  async getApy({ contract }: GetDataPropsParams<R>) {
-    const supplyRate = await this.getSupplyRate(contract);
+  async getApy({ contract, multicall }: GetDataPropsParams<R>) {
+    const supplyRate = await this.getSupplyRate(contract, multicall);
     const blocksPerDay = BLOCKS_PER_DAY[this.network];
     return 100 * (Math.pow(1 + (blocksPerDay * Number(supplyRate)) / Number(1e18), 365) - 1);
   }
