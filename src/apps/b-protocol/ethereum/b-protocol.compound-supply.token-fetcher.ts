@@ -3,8 +3,12 @@ import { Inject } from '@nestjs/common';
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { ZERO_ADDRESS } from '~app-toolkit/constants/address';
 import { CompoundContractFactory } from '~apps/compound';
-import { CompoundSupplyTokenFetcher } from '~apps/compound/common/compound.supply.token-fetcher';
-import { IMulticallWrapper } from '~multicall';
+import { CompoundSupplyTokenFetcher, GetMarketsParams } from '~apps/compound/common/compound.supply.token-fetcher';
+import {
+  GetDataPropsParams,
+  GetPricePerShareParams,
+  GetUnderlyingTokensParams,
+} from '~position/template/app-token.template.types';
 import { Network } from '~types/network.interface';
 
 import { B_PROTOCOL_DEFINITION } from '../b-protocol.definition';
@@ -36,21 +40,21 @@ export class EthereumBProtocolCompoundSupplyTokenFetcher extends CompoundSupplyT
     return this.contractFactory.bProtocolCompoundComptroller({ address, network: this.network });
   }
 
-  async getMarkets(contract: BProtocolCompoundComptroller) {
+  async getMarkets({ contract }: GetMarketsParams<BProtocolCompoundComptroller>) {
     const cTokenAddresses = await contract.getAllMarkets();
     const bTokenAddresses = await Promise.all(cTokenAddresses.map(cTokenAddress => contract.c2b(cTokenAddress)));
     return bTokenAddresses.filter(v => v !== ZERO_ADDRESS);
   }
 
-  async getUnderlyingAddress(contract: BProtocolCompoundToken) {
+  async getUnderlyingAddress({ contract }: GetUnderlyingTokensParams<BProtocolCompoundToken>) {
     return contract.underlying();
   }
 
-  async getExchangeRate(contract: BProtocolCompoundToken) {
+  async getExchangeRate({ contract }: GetPricePerShareParams<BProtocolCompoundToken>) {
     return contract.callStatic.exchangeRateCurrent();
   }
 
-  async getSupplyRate(contract: BProtocolCompoundToken, multicall: IMulticallWrapper) {
+  async getSupplyRate({ contract, multicall }: GetDataPropsParams<BProtocolCompoundToken>) {
     const cTokenAddress = await contract.cToken();
     const cToken = this.compoundContractFactory.compoundCToken({ address: cTokenAddress, network: this.network });
     return multicall

@@ -2,7 +2,16 @@ import { Inject } from '@nestjs/common';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
-import { CompoundBorrowContractPositionFetcher } from '~apps/compound/common/compound.borrow.contract-position-fetcher';
+import {
+  CompoundBorrowContractPositionFetcher,
+  CompoundBorrowTokenDataProps,
+  GetMarketsParams,
+} from '~apps/compound/common/compound.borrow.contract-position-fetcher';
+import {
+  GetTokenDefinitionsParams,
+  GetDataPropsParams,
+  GetTokenBalancesParams,
+} from '~position/template/contract-position.template.types';
 
 import { CozyFinanceContractFactory } from '../contracts';
 import { CozyFinanceComptroller, CozyFinanceCToken } from '../contracts/ethers';
@@ -30,35 +39,38 @@ export class EthereumCozyFinanceBorrowContractPositionFetcher extends CompoundBo
     return this.contractFactory.cozyFinanceComptroller({ address, network: this.network });
   }
 
-  getMarkets(contract: CozyFinanceComptroller) {
+  async getMarkets({ contract }: GetMarketsParams<CozyFinanceComptroller>) {
     return contract.getAllMarkets();
   }
 
-  async getUnderlyingAddress(contract: CozyFinanceCToken) {
+  async getUnderlyingAddress({ contract }: GetTokenDefinitionsParams<CozyFinanceCToken>) {
     return contract.underlying();
   }
 
-  getExchangeRate(contract: CozyFinanceCToken) {
+  async getExchangeRate({ contract }: GetDataPropsParams<CozyFinanceCToken, CompoundBorrowTokenDataProps>) {
     return contract.exchangeRateCurrent();
   }
 
-  async getBorrowRate(contract: CozyFinanceCToken) {
+  async getBorrowRate({ contract }: GetDataPropsParams<CozyFinanceCToken, CompoundBorrowTokenDataProps>) {
     return contract.borrowRatePerBlock().catch(() => 0);
   }
 
-  getCTokenSupply(contract: CozyFinanceCToken) {
+  async getCash({ contract }: GetDataPropsParams<CozyFinanceCToken, CompoundBorrowTokenDataProps>) {
+    return contract.getCash();
+  }
+
+  async getCTokenSupply({ contract }: GetDataPropsParams<CozyFinanceCToken, CompoundBorrowTokenDataProps>) {
     return contract.totalSupply();
   }
 
-  getCTokenDecimals(contract: CozyFinanceCToken) {
+  async getCTokenDecimals({ contract }: GetDataPropsParams<CozyFinanceCToken, CompoundBorrowTokenDataProps>) {
     return contract.decimals();
   }
 
-  getBorrowBalance({ address, contract }: { address: string; contract: CozyFinanceCToken }) {
+  async getBorrowBalance({
+    address,
+    contract,
+  }: GetTokenBalancesParams<CozyFinanceCToken, CompoundBorrowTokenDataProps>) {
     return contract.borrowBalanceCurrent(address);
-  }
-
-  getCash(contract: CozyFinanceCToken) {
-    return contract.getCash();
   }
 }
