@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.275.0](https://github.com/Zapper-fi/studio/compare/v0.274.1...v0.275.0) (2022-11-15)
+
+
+### Features
+
+* **b-protocol:** Fix whatever the fuck was going on in B.Protocol ([#1716](https://github.com/Zapper-fi/studio/issues/1716)) ([a77144e](https://github.com/Zapper-fi/studio/commit/a77144ee61036ecf06e0f5cd60f78ae7ff42b6c5))
+
 ## [0.274.1](https://github.com/Zapper-fi/studio/compare/v0.274.0...v0.274.1) (2022-11-15)
 
 
