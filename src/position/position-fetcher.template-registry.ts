@@ -11,7 +11,10 @@ import { AppTokenTemplatePositionFetcher } from './template/app-token.template.p
 import { ContractPositionTemplatePositionFetcher } from './template/contract-position.template.position-fetcher';
 import { CustomContractPositionTemplatePositionFetcher } from './template/custom-contract-position.template.position-fetcher';
 
-type Template = AppTokenTemplatePositionFetcher<Erc20> | ContractPositionTemplatePositionFetcher<Erc20>;
+type Template =
+  | AppTokenTemplatePositionFetcher<Erc20>
+  | ContractPositionTemplatePositionFetcher<Erc20>
+  | CustomContractPositionTemplatePositionFetcher<Erc20>;
 
 @Injectable()
 export class PositionFetcherTemplateRegistry implements OnModuleInit {
