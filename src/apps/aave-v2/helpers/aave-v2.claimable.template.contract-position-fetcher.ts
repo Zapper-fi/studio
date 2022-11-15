@@ -35,7 +35,13 @@ export abstract class AaveV2ClaimableTemplatePositionFetcher extends ContractPos
   }
 
   async getTokenDefinitions() {
-    return [{ address: this.rewardTokenAddress, metaType: MetaType.CLAIMABLE }];
+    return [
+      {
+        metaType: MetaType.CLAIMABLE,
+        address: this.rewardTokenAddress,
+        network: this.network,
+      },
+    ];
   }
 
   async getLabel(

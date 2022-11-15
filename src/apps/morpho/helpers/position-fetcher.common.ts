@@ -79,8 +79,16 @@ export abstract class BaseEthereumMorphoSupplyContractPositionFetcher<
   ): Promise<BigNumberish[]>;
   async getTokenDefinitions({ definition }: GetTokenDefinitionsParams<T, MorphoContractPositionDefinition>) {
     return [
-      { metaType: MetaType.SUPPLIED, address: definition.supplyTokenAddress },
-      { metaType: MetaType.BORROWED, address: definition.supplyTokenAddress },
+      {
+        metaType: MetaType.SUPPLIED,
+        address: definition.supplyTokenAddress,
+        network: this.network,
+      },
+      {
+        metaType: MetaType.BORROWED,
+        address: definition.supplyTokenAddress,
+        network: this.network,
+      },
     ];
   }
 }

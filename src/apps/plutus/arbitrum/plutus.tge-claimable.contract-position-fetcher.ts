@@ -33,7 +33,13 @@ export class ArbitrumPlutusTgeClaimableContractPositionFetcher extends ContractP
   }
 
   async getTokenDefinitions(_params: GetTokenDefinitionsParams<PlutusPrivateTgeVester>) {
-    return [{ metaType: MetaType.CLAIMABLE, address: '0x51318b7d00db7acc4026c88c3952b66278b6a67f' }];
+    return [
+      {
+        metaType: MetaType.CLAIMABLE,
+        address: '0x51318b7d00db7acc4026c88c3952b66278b6a67f',
+        network: this.network,
+      },
+    ];
   }
 
   async getLabel({ contractPosition }: GetDisplayPropsParams<PlutusPrivateTgeVester>) {

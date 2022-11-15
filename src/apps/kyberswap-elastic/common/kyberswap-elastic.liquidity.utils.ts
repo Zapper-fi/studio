@@ -6,8 +6,8 @@ import { Token } from '~position/position.interface';
 import { Network, NETWORK_IDS } from '~types';
 
 import {
-  KyberSwapElasticLiquidityPositionContractData,
-  KyberSwapElasticPoolStateData,
+  KyberswapElasticLiquidityPositionContractData,
+  KyberswapElasticPoolStateData,
 } from './kyberswap-elastic.liquidity.types';
 
 export const getSupplied = ({
@@ -17,8 +17,8 @@ export const getSupplied = ({
   token1,
   network,
 }: {
-  position: KyberSwapElasticLiquidityPositionContractData;
-  state: KyberSwapElasticPoolStateData;
+  position: KyberswapElasticLiquidityPositionContractData;
+  state: KyberswapElasticPoolStateData;
   token0: Token;
   token1: Token;
   network: Network;
@@ -53,8 +53,8 @@ export const getRange = ({
   token1,
   network,
 }: {
-  position: KyberSwapElasticLiquidityPositionContractData;
-  state: KyberSwapElasticPoolStateData;
+  position: KyberswapElasticLiquidityPositionContractData;
+  state: KyberswapElasticPoolStateData;
   token0: Token;
   token1: Token;
   network: Network;

@@ -4,6 +4,92 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.273.0](https://github.com/Zapper-fi/studio/compare/v0.272.0...v0.273.0) (2022-11-14)
+
+
+### Features
+
+* **concentrator:** implement ve and fxs vaults ([#1690](https://github.com/Zapper-fi/studio/issues/1690)) ([8a9afab](https://github.com/Zapper-fi/studio/commit/8a9afab2c39b8806412243d399fd6fc471f86775))
+
+
+### Bug Fixes
+
+* **kyberswap-elastic:** Fix Kyberswap Elastic farm definitions ([#1708](https://github.com/Zapper-fi/studio/issues/1708)) ([d615065](https://github.com/Zapper-fi/studio/commit/d615065880c23a91f6da8c8d6b0a930bd3eb9a5f))
+* **kyberswap-elastic:** Remove duplicates from definitions ([#1706](https://github.com/Zapper-fi/studio/issues/1706)) ([4b5a298](https://github.com/Zapper-fi/studio/commit/4b5a298bbb5267492f211d5795270f1eda5217c6))
+
+## [0.272.0](https://github.com/Zapper-fi/studio/compare/v0.271.0...v0.272.0) (2022-11-13)
+
+
+### Features
+
+* **templates:** Update token definitions query to enable cross-network and ERC-1155 underlying tokens ([#1701](https://github.com/Zapper-fi/studio/issues/1701)) ([c256881](https://github.com/Zapper-fi/studio/commit/c2568817f279cbd8abc2d1ddc79f13e2206098c8))
+
+## [0.271.0](https://github.com/Zapper-fi/studio/compare/v0.270.0...v0.271.0) (2022-11-13)
+
+
+### Features
+
+* **templates:** Enable network and ERC1155 ID in token definitions for Contract Position template ([#1699](https://github.com/Zapper-fi/studio/issues/1699)) ([ea55f6c](https://github.com/Zapper-fi/studio/commit/ea55f6c98382b0a7c4214c094af85626ce5a67a8))
+
+## [0.270.0](https://github.com/Zapper-fi/studio/compare/v0.269.0...v0.270.0) (2022-11-13)
+
+
+### Features
+
+* **templates:** Adjust app token template for flexibility with ERC1155 ([#1697](https://github.com/Zapper-fi/studio/issues/1697)) ([ed2c7b7](https://github.com/Zapper-fi/studio/commit/ed2c7b7038ffc3e27a8c35a9cb30a7a0a815a038))
+
+## [0.269.0](https://github.com/Zapper-fi/studio/compare/v0.268.2...v0.269.0) (2022-11-12)
+
+
+### Features
+
+* **positions:** Extract reserve call in dynamic single staking template ([442adff](https://github.com/Zapper-fi/studio/commit/442adff63a66d0e168042922f809d9eb58cea5af))
+
+
+### Bug Fixes
+
+* **unipilot:** Remove undefined from the token label in polygon chain ([#1695](https://github.com/Zapper-fi/studio/issues/1695)) ([e51fcca](https://github.com/Zapper-fi/studio/commit/e51fcca4eec86f4a3953fdf0463d5392270e9bca))
+
+## [0.268.2](https://github.com/Zapper-fi/studio/compare/v0.268.1...v0.268.2) (2022-11-11)
+
+
+### Bug Fixes
+
+* **badger:** Be safe when mapping data ([e2dceea](https://github.com/Zapper-fi/studio/commit/e2dceeafc8eae2b6f170b7d40b21b891000836e7))
+
+## [0.268.1](https://github.com/Zapper-fi/studio/compare/v0.268.0...v0.268.1) (2022-11-11)
+
+
+### Bug Fixes
+
+* **unipilot:** AppTokenTemplatePositionFetcher requires the contract interface to be an ERC20 ([#1691](https://github.com/Zapper-fi/studio/issues/1691)) ([d728e60](https://github.com/Zapper-fi/studio/commit/d728e60a7176409bb2e1375d80cfb9d8824d6651))
+
+## [0.268.0](https://github.com/Zapper-fi/studio/compare/v0.267.0...v0.268.0) (2022-11-10)
+
+
+### Features
+
+* **kwenta:** cross margin ([#1654](https://github.com/Zapper-fi/studio/issues/1654)) ([07d0b6d](https://github.com/Zapper-fi/studio/commit/07d0b6dfa05f04da3b68132c5dca2006b3783073))
+* **kyberswap-elastic:** Add Kyberswap Elastic farms ([#1683](https://github.com/Zapper-fi/studio/issues/1683)) ([400e50d](https://github.com/Zapper-fi/studio/commit/400e50ddb063ec6278ffd402cd81903b5165d6d4))
+* **sushiswap-kashi:** Kashi to templates ([#1687](https://github.com/Zapper-fi/studio/issues/1687)) ([ab49500](https://github.com/Zapper-fi/studio/commit/ab49500712dbdfc33d39987c7397f7aa0b2d5be9))
+
+## [0.267.0](https://github.com/Zapper-fi/studio/compare/v0.266.0...v0.267.0) (2022-11-10)
+
+
+### Features
+
+* **lyra-avalon:** Migrate to templates ([#1681](https://github.com/Zapper-fi/studio/issues/1681)) ([0192de1](https://github.com/Zapper-fi/studio/commit/0192de134c41cb1c9b63fead6728754f93d7680f))
+
+## [0.266.0](https://github.com/Zapper-fi/studio/compare/v0.265.0...v0.266.0) (2022-11-10)
+
+
+### Features
+
+* **chicken-bond:** Add Chicken Bond and bLUSD app token ([#1676](https://github.com/Zapper-fi/studio/issues/1676)) ([cef610d](https://github.com/Zapper-fi/studio/commit/cef610d1ff60834345d9c45dcd1fc73ae0176d33))
+* **chicken-bond:** Fix definition ([e657d52](https://github.com/Zapper-fi/studio/commit/e657d520356f2333bec551b88a572b834dc7be0c))
+* **lyra-avalon:** Replace deprecated subgraph URL ([#1677](https://github.com/Zapper-fi/studio/issues/1677)) ([a239e60](https://github.com/Zapper-fi/studio/commit/a239e6042ba1dd8662f7d094dac9c55112fe52b7))
+* **unipilot:** Add Unipilot integration ([#1680](https://github.com/Zapper-fi/studio/issues/1680)) ([1beeda9](https://github.com/Zapper-fi/studio/commit/1beeda944bd07d5a10a1797383c324d0b360283b))
+
 ## [0.265.0](https://github.com/Zapper-fi/studio/compare/v0.264.0...v0.265.0) (2022-11-09)
 
 

@@ -6,7 +6,7 @@ import { Register } from '~app-toolkit/decorators';
 import { getImagesFromToken, getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { ContractType } from '~position/contract.interface';
 import { PositionFetcher } from '~position/position-fetcher.interface';
-import { ContractPosition } from '~position/position.interface';
+import { ContractPosition, Standard } from '~position/position.interface';
 import { claimable, supplied } from '~position/position.utils';
 import { Network } from '~types/network.interface';
 
@@ -23,11 +23,12 @@ type MeanFinanceDcaPositionContractPositionDataProps = {
   from: string;
   to: string;
   positionId: string;
+  assetStandard: Standard;
 };
 
 @Register.ContractPositionFetcher({ appId, groupId, network })
 export class ArbitrumMeanFinanceDcaPositionContractPositionFetcher implements PositionFetcher<ContractPosition> {
-  constructor(@Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit) { }
+  constructor(@Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit) {}
 
   async getPositionsForVersion(version: PositionVersions) {
     const dcaHubAddress = HUB_ADDRESS[version][network];
@@ -67,6 +68,7 @@ export class ArbitrumMeanFinanceDcaPositionContractPositionFetcher implements Po
           to: to.address,
           liquidity,
           positionId: dcaPosition.id,
+          assetStandard: Standard.ERC_721,
         },
         displayProps: {
           label,
@@ -97,6 +99,7 @@ export class ArbitrumMeanFinanceDcaPositionContractPositionFetcher implements Po
           to: anyPosition.dataProps.to,
           liquidity: totalLiquidity,
           positionId: anyPosition.dataProps.positionId,
+          assetStandard: Standard.ERC_721,
         },
         displayProps: {
           label: anyPosition.displayProps.label,

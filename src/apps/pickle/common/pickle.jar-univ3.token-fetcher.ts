@@ -10,6 +10,7 @@ import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.te
 import {
   GetDataPropsParams,
   GetPricePerShareParams,
+  GetTokenPropsParams,
   GetUnderlyingTokensParams,
 } from '~position/template/app-token.template.types';
 
@@ -96,8 +97,17 @@ export abstract class PickleJarUniv3TokenFetcher extends AppTokenTemplatePositio
 
         // Get standard Jar stats
         const contract = multicall.wrap(this.getContract(address));
-        const baseContext = { address, definition, contract, multicall, tokenLoader };
 
+        const baseFragment: GetTokenPropsParams<PickleJarUniv3>['appToken'] = {
+          type: ContractType.APP_TOKEN,
+          appId: this.appId,
+          groupId: this.groupId,
+          network: this.network,
+          address,
+          tokens: uniV3Token.tokens,
+        };
+
+        const baseContext = { address, definition, contract, multicall, tokenLoader, appToken: baseFragment };
         const [symbol, decimals, totalSupplyRaw] = await Promise.all([
           this.getSymbol(baseContext),
           this.getDecimals(baseContext),
@@ -105,24 +115,13 @@ export abstract class PickleJarUniv3TokenFetcher extends AppTokenTemplatePositio
         ]);
         const supply = Number(totalSupplyRaw) / 10 ** decimals;
 
-        const baseFragment: GetPricePerShareParams<PickleJarUniv3, DefaultDataProps>['appToken'] = {
-          type: ContractType.APP_TOKEN,
-          appId: this.appId,
-          groupId: this.groupId,
-          network: this.network,
-          address,
-          symbol,
-          decimals,
-          supply,
-          tokens: uniV3Token.tokens,
-        };
-
         // Resolve price per share stage
-        const pricePerShareContext = { ...baseContext, appToken: baseFragment };
+        const pricePerShareStageFragment = { ...baseFragment, symbol, decimals, supply };
+        const pricePerShareContext = { ...baseContext, appToken: pricePerShareStageFragment };
         const pricePerShare = await this.getPricePerShare(pricePerShareContext).then(v => (isArray(v) ? v : [v]));
 
         // Resolve Price Stage
-        const priceStageFragment = { ...baseFragment, pricePerShare };
+        const priceStageFragment = { ...pricePerShareStageFragment, pricePerShare };
         const price = uniV3Token.balanceUSD / supply;
 
         // Resolve Data Props Stage

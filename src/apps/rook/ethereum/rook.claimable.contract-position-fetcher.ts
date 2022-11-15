@@ -82,7 +82,13 @@ export class EthereumRookClaimableContractPositionFetcher extends ContractPositi
   }
 
   async getTokenDefinitions(): Promise<UnderlyingTokenDefinition[] | null> {
-    return [{ metaType: MetaType.CLAIMABLE, address: '0xfa5047c9c78b8877af97bdcb85db743fd7313d4a' }];
+    return [
+      {
+        metaType: MetaType.CLAIMABLE,
+        address: '0xfa5047c9c78b8877af97bdcb85db743fd7313d4a',
+        network: this.network,
+      },
+    ];
   }
 
   async getLabel({ contractPosition }: GetDisplayPropsParams<RookLiquidityPoolDistributor>) {

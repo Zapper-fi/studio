@@ -1,15 +1,9 @@
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
-import { Network } from '~types/network.interface';
 
-import { KyberSwapElasticLiquidityContractPositionFetcher } from '../common/kyberswap-elastic.liquidity.contract-position-fetcher';
-import { KYBERSWAP_ELASTIC_DEFINITION } from '../kyberswap-elastic.definition';
+import { KyberswapElasticLiquidityContractPositionFetcher } from '../common/kyberswap-elastic.liquidity.contract-position-fetcher';
 
 @PositionTemplate()
-export class EthereumKyberSwapElasticLiquidityContractPositionFetcher extends KyberSwapElasticLiquidityContractPositionFetcher {
-  appId = KYBERSWAP_ELASTIC_DEFINITION.id;
-  groupId = KYBERSWAP_ELASTIC_DEFINITION.groups.liquidity.id;
-  network = Network.ETHEREUM_MAINNET;
-
+export class EthereumKyberswapElasticLiquidityContractPositionFetcher extends KyberswapElasticLiquidityContractPositionFetcher {
   groupLabel = 'Pools';
 
   subgraphUrl = 'https://api.thegraph.com/subgraphs/name/kybernetwork/kyberswap-elastic-mainnet';

@@ -47,8 +47,16 @@ export abstract class BeefyBoostVaultContractPositionFetcher extends ContractPos
     definition,
   }: GetTokenDefinitionsParams<BeefyBoostVault, BeefyBoostVaultDefinition>): Promise<UnderlyingTokenDefinition[]> {
     return [
-      { address: definition.underlyingTokenAddress, metaType: MetaType.SUPPLIED },
-      { address: definition.rewardTokenAddress, metaType: MetaType.CLAIMABLE },
+      {
+        metaType: MetaType.SUPPLIED,
+        address: definition.underlyingTokenAddress,
+        network: this.network,
+      },
+      {
+        metaType: MetaType.CLAIMABLE,
+        address: definition.rewardTokenAddress,
+        network: this.network,
+      },
     ];
   }
 

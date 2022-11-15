@@ -164,14 +164,9 @@ export abstract class AppTokenTemplatePositionFetcher<
     });
 
     const definitions = await this.getDefinitions({ multicall, tokenLoader });
-    const addressesRaw = await this.getAddresses({ multicall, definitions });
-    const addresses = addressesRaw.map(x => x.toLowerCase());
-
     const maybeSkeletons = await Promise.all(
-      addresses.map(async address => {
-        const definition = definitions.find(v => v.address.toLowerCase() === address);
-        if (!definition) return null;
-
+      definitions.map(async definition => {
+        const address = definition.address.toLowerCase();
         const contract = multicall.wrap(this.getContract(address));
         const context = { address, definition, contract, multicall, tokenLoader };
 
@@ -218,33 +213,31 @@ export abstract class AppTokenTemplatePositionFetcher<
         compact(skeletonsWithResolvedTokens).map(async ({ address, definition, tokens }) => {
           const contract = multicall.wrap(this.getContract(address));
           const baseContext = { address, contract, multicall, tokenLoader, definition };
-
-          const [symbol, decimals, totalSupplyRaw] = await Promise.all([
-            this.getSymbol(baseContext),
-            this.getDecimals(baseContext),
-            this.getSupply(baseContext),
-          ]);
-
-          const supply = Number(totalSupplyRaw) / 10 ** decimals;
-
-          const baseFragment: GetPricePerShareParams<T, V, R>['appToken'] = {
+          const baseFragment: GetTokenPropsParams<T, V, R>['appToken'] = {
             type: ContractType.APP_TOKEN,
             appId: this.appId,
             groupId: this.groupId,
             network: this.network,
             address,
-            symbol,
-            decimals,
-            supply,
             tokens,
           };
 
+          const tokenPropsContext = { ...baseContext, appToken: baseFragment };
+          const [symbol, decimals, totalSupplyRaw] = await Promise.all([
+            this.getSymbol(tokenPropsContext),
+            this.getDecimals(tokenPropsContext),
+            this.getSupply(tokenPropsContext),
+          ]);
+
+          const supply = Number(totalSupplyRaw) / 10 ** decimals;
+
           // Resolve price per share stage
-          const pricePerShareContext = { ...baseContext, appToken: baseFragment };
+          const pricePerShareStageFragment = { ...baseFragment, symbol, decimals, supply };
+          const pricePerShareContext = { ...baseContext, appToken: pricePerShareStageFragment };
           const pricePerShare = await this.getPricePerShare(pricePerShareContext).then(v => (isArray(v) ? v : [v]));
 
           // Resolve Price Stage
-          const priceStageFragment = { ...baseFragment, pricePerShare };
+          const priceStageFragment = { ...pricePerShareStageFragment, pricePerShare };
           const priceContext = { ...baseContext, appToken: priceStageFragment };
           const price = await this.getPrice(priceContext);
 

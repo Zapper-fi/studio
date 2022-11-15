@@ -61,9 +61,21 @@ export abstract class SynthetixLoanContractPositionFetcher extends ContractPosit
 
   async getTokenDefinitions() {
     return [
-      { metaType: MetaType.SUPPLIED, address: ZERO_ADDRESS },
-      { metaType: MetaType.BORROWED, address: this.sUSDAddress },
-      { metaType: MetaType.BORROWED, address: this.sETHAddress },
+      {
+        metaType: MetaType.SUPPLIED,
+        address: ZERO_ADDRESS,
+        network: this.network,
+      },
+      {
+        metaType: MetaType.BORROWED,
+        address: this.sUSDAddress,
+        network: this.network,
+      },
+      {
+        metaType: MetaType.BORROWED,
+        address: this.sETHAddress,
+        network: this.network,
+      },
     ];
   }
 

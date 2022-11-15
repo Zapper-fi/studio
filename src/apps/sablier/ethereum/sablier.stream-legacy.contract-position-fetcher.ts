@@ -55,7 +55,13 @@ export class EthereumSablierStreamLegacyContractPositionFetcher extends Contract
   async getTokenDefinitions({
     definition,
   }: GetTokenDefinitionsParams<SablierStream, SablierStreamLegacyContractPositionDefinition>) {
-    return [{ address: definition.tokenAddress, metaType: MetaType.SUPPLIED }];
+    return [
+      {
+        address: definition.tokenAddress,
+        metaType: MetaType.SUPPLIED,
+        network: this.network,
+      },
+    ];
   }
 
   async getLabel({
