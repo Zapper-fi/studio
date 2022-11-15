@@ -90,7 +90,9 @@ export class EthereumGearboxLendingTokenFetcher extends AppTokenTemplatePosition
     const underlyingTokenDecimals = await this.gearboxContractFactory
       .erc20({ address: underlyingToken, network })
       .decimals();
-    return +formatUnits(liquidity, underlyingTokenDecimals);
+    const underlyingBalance = +formatUnits(liquidity, underlyingTokenDecimals);
+
+    return underlyingBalance * params.appToken.tokens[0].price;
   }
 
   getReserves(
