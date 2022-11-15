@@ -4,7 +4,10 @@
 
 import { Contract, Signer, utils } from 'ethers';
 import type { Provider } from '@ethersproject/providers';
-import type { AladdinConvexVault, AladdinConvexVaultInterface } from '../AladdinConvexVault';
+import type {
+  AladdinConcentratorLegacyVault,
+  AladdinConcentratorLegacyVaultInterface,
+} from '../AladdinConcentratorLegacyVault';
 
 const _abi = [
   {
@@ -1048,12 +1051,12 @@ const _abi = [
   },
 ];
 
-export class AladdinConvexVault__factory {
+export class AladdinConcentratorLegacyVault__factory {
   static readonly abi = _abi;
-  static createInterface(): AladdinConvexVaultInterface {
-    return new utils.Interface(_abi) as AladdinConvexVaultInterface;
+  static createInterface(): AladdinConcentratorLegacyVaultInterface {
+    return new utils.Interface(_abi) as AladdinConcentratorLegacyVaultInterface;
   }
-  static connect(address: string, signerOrProvider: Signer | Provider): AladdinConvexVault {
-    return new Contract(address, _abi, signerOrProvider) as AladdinConvexVault;
+  static connect(address: string, signerOrProvider: Signer | Provider): AladdinConcentratorLegacyVault {
+    return new Contract(address, _abi, signerOrProvider) as AladdinConcentratorLegacyVault;
   }
 }
