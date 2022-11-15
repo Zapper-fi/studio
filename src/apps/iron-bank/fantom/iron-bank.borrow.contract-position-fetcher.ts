@@ -2,7 +2,16 @@ import { Inject } from '@nestjs/common';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
-import { CompoundBorrowContractPositionFetcher } from '~apps/compound/common/compound.borrow.contract-position-fetcher';
+import {
+  CompoundBorrowContractPositionFetcher,
+  CompoundBorrowTokenDataProps,
+  GetMarketsParams,
+} from '~apps/compound/common/compound.borrow.contract-position-fetcher';
+import {
+  GetDataPropsParams,
+  GetTokenBalancesParams,
+  GetTokenDefinitionsParams,
+} from '~position/template/contract-position.template.types';
 
 import { IronBankComptroller, IronBankContractFactory, IronBankCToken } from '../contracts';
 
@@ -20,7 +29,6 @@ export class FantomIronBankBorrowContractPositionFetcher extends CompoundBorrowC
   ) {
     super(appToolkit);
   }
-
   getCompoundCTokenContract(address: string) {
     return this.contractFactory.ironBankCToken({ address, network: this.network });
   }
@@ -28,35 +36,36 @@ export class FantomIronBankBorrowContractPositionFetcher extends CompoundBorrowC
   getCompoundComptrollerContract(address: string) {
     return this.contractFactory.ironBankComptroller({ address, network: this.network });
   }
-  getMarkets(contract: IronBankComptroller) {
+
+  async getMarkets({ contract }: GetMarketsParams<IronBankComptroller>) {
     return contract.getAllMarkets();
   }
 
-  async getUnderlyingAddress(contract: IronBankCToken) {
+  async getUnderlyingAddress({ contract }: GetTokenDefinitionsParams<IronBankCToken>) {
     return contract.underlying();
   }
 
-  getExchangeRate(contract: IronBankCToken) {
+  async getExchangeRate({ contract }: GetDataPropsParams<IronBankCToken, CompoundBorrowTokenDataProps>) {
     return contract.exchangeRateCurrent();
   }
 
-  async getBorrowRate(contract: IronBankCToken) {
+  async getBorrowRate({ contract }: GetDataPropsParams<IronBankCToken, CompoundBorrowTokenDataProps>) {
     return contract.borrowRatePerBlock().catch(() => 0);
   }
 
-  getCTokenSupply(contract: IronBankCToken) {
+  async getCash({ contract }: GetDataPropsParams<IronBankCToken, CompoundBorrowTokenDataProps>) {
+    return contract.getCash();
+  }
+
+  async getCTokenSupply({ contract }: GetDataPropsParams<IronBankCToken, CompoundBorrowTokenDataProps>) {
     return contract.totalSupply();
   }
 
-  getCTokenDecimals(contract: IronBankCToken) {
+  async getCTokenDecimals({ contract }: GetDataPropsParams<IronBankCToken, CompoundBorrowTokenDataProps>) {
     return contract.decimals();
   }
 
-  getBorrowBalance({ address, contract }: { address: string; contract: IronBankCToken }) {
+  async getBorrowBalance({ address, contract }: GetTokenBalancesParams<IronBankCToken, CompoundBorrowTokenDataProps>) {
     return contract.borrowBalanceCurrent(address);
-  }
-
-  getCash(contract: IronBankCToken) {
-    return contract.getCash();
   }
 }

@@ -2,7 +2,16 @@ import { Inject } from '@nestjs/common';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
-import { CompoundBorrowContractPositionFetcher } from '~apps/compound/common/compound.borrow.contract-position-fetcher';
+import {
+  CompoundBorrowContractPositionFetcher,
+  CompoundBorrowTokenDataProps,
+  GetMarketsParams,
+} from '~apps/compound/common/compound.borrow.contract-position-fetcher';
+import {
+  GetTokenDefinitionsParams,
+  GetDataPropsParams,
+  GetTokenBalancesParams,
+} from '~position/template/contract-position.template.types';
 
 import { TectonicContractFactory, TectonicCore, TectonicTToken } from '../contracts';
 
@@ -28,35 +37,36 @@ export class CronosTectonicBorrowContractPositionFetcher extends CompoundBorrowC
   getCompoundComptrollerContract(address: string) {
     return this.contractFactory.tectonicCore({ address, network: this.network });
   }
-  getMarkets(contract: TectonicCore) {
+
+  async getMarkets({ contract }: GetMarketsParams<TectonicCore>) {
     return contract.getAllMarkets();
   }
 
-  async getUnderlyingAddress(contract: TectonicTToken) {
+  async getUnderlyingAddress({ contract }: GetTokenDefinitionsParams<TectonicTToken>) {
     return contract.underlying();
   }
 
-  getExchangeRate(contract: TectonicTToken) {
+  async getExchangeRate({ contract }: GetDataPropsParams<TectonicTToken, CompoundBorrowTokenDataProps>) {
     return contract.callStatic.exchangeRateCurrent();
   }
 
-  async getBorrowRate(contract: TectonicTToken) {
+  async getBorrowRate({ contract }: GetDataPropsParams<TectonicTToken, CompoundBorrowTokenDataProps>) {
     return contract.borrowRatePerBlock().catch(() => 0);
   }
 
-  getCTokenSupply(contract: TectonicTToken) {
+  async getCash({ contract }: GetDataPropsParams<TectonicTToken, CompoundBorrowTokenDataProps>) {
+    return contract.getCash();
+  }
+
+  async getCTokenSupply({ contract }: GetDataPropsParams<TectonicTToken, CompoundBorrowTokenDataProps>) {
     return contract.totalSupply();
   }
 
-  getCTokenDecimals(contract: TectonicTToken) {
+  async getCTokenDecimals({ contract }: GetDataPropsParams<TectonicTToken, CompoundBorrowTokenDataProps>) {
     return contract.decimals();
   }
 
-  getBorrowBalance({ address, contract }: { address: string; contract: TectonicTToken }) {
+  async getBorrowBalance({ address, contract }: GetTokenBalancesParams<TectonicTToken, CompoundBorrowTokenDataProps>) {
     return contract.callStatic.borrowBalanceCurrent(address);
-  }
-
-  getCash(contract: TectonicTToken) {
-    return contract.getCash();
   }
 }
