@@ -50,15 +50,11 @@ export class BalancePresentationService {
     }
   }
 
-  async present({ appId, balances }: PresentParams): Promise<TokenBalanceResponse> {
-    return this.present2(appId, balances);
-  }
-
   async presentTemplates({ address, appId, network, balances }: PresentParams): Promise<TokenBalanceResponse> {
     return this.presentBalances(address, appId, network, balances);
   }
 
-  private async present2(appId: string, balances: PositionBalance[]) {
+  async present({ appId, balances }: PresentParams): Promise<TokenBalanceResponse> {
     // Build labelled groups by the labels defined in the app definition
     const app = await this.appService.getApp(appId);
     const products = Object.values(app!.groups ?? {}).map(group => {
