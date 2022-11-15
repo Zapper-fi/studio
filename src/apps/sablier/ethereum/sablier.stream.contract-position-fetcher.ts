@@ -12,6 +12,7 @@ import { ContractPositionBalance } from '~position/position-balance.interface';
 import { MetaType } from '~position/position.interface';
 import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
 import { GetDisplayPropsParams, GetTokenDefinitionsParams } from '~position/template/contract-position.template.types';
+import { CustomContractPositionTemplatePositionFetcher } from '~position/template/custom-contract-position.template.position-fetcher';
 
 import { SablierStreamApiClient } from '../common/sablier.stream.api-client';
 import { SablierContractFactory, SablierStream } from '../contracts';
@@ -27,7 +28,7 @@ export type SablierStreamContractPositionDefinition = {
 };
 
 @PositionTemplate()
-export class EthereumSablierStreamContractPositionFetcher extends ContractPositionTemplatePositionFetcher<
+export class EthereumSablierStreamContractPositionFetcher extends CustomContractPositionTemplatePositionFetcher<
   SablierStream,
   SablierStreamContractPositionDataProps,
   SablierStreamContractPositionDefinition

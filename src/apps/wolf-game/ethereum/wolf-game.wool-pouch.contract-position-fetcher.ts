@@ -14,6 +14,7 @@ import {
   GetTokenDefinitionsParams,
   UnderlyingTokenDefinition,
 } from '~position/template/contract-position.template.types';
+import { CustomContractPositionTemplatePositionFetcher } from '~position/template/custom-contract-position.template.position-fetcher';
 
 import { WolfGameContractFactory, WolfGameWoolPouch } from '../contracts';
 
@@ -29,7 +30,7 @@ const pouchesQuery = gql`
 `;
 
 @PositionTemplate()
-export class EthereumWolfGameWoolPouchContractPositionFetcher extends ContractPositionTemplatePositionFetcher<WolfGameWoolPouch> {
+export class EthereumWolfGameWoolPouchContractPositionFetcher extends CustomContractPositionTemplatePositionFetcher<WolfGameWoolPouch> {
   groupLabel = 'Wool Pouches';
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolKit: AppToolkit,
