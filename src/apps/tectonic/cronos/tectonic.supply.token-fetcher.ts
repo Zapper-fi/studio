@@ -2,7 +2,12 @@ import { Inject } from '@nestjs/common';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
-import { CompoundSupplyTokenFetcher } from '~apps/compound/common/compound.supply.token-fetcher';
+import { CompoundSupplyTokenFetcher, GetMarketsParams } from '~apps/compound/common/compound.supply.token-fetcher';
+import {
+  GetDataPropsParams,
+  GetPricePerShareParams,
+  GetUnderlyingTokensParams,
+} from '~position/template/app-token.template.types';
 
 import { TectonicContractFactory, TectonicCore, TectonicTToken } from '../contracts';
 
@@ -26,19 +31,19 @@ export class CronosTectonicSupplyTokenFetcher extends CompoundSupplyTokenFetcher
     return this.contractFactory.tectonicCore({ address, network: this.network });
   }
 
-  getMarkets(contract: TectonicCore) {
+  async getMarkets({ contract }: GetMarketsParams<TectonicCore>) {
     return contract.getAllMarkets();
   }
 
-  async getUnderlyingAddress(contract: TectonicTToken) {
+  async getUnderlyingAddress({ contract }: GetUnderlyingTokensParams<TectonicTToken>) {
     return contract.underlying();
   }
 
-  getExchangeRate(contract: TectonicTToken) {
-    return contract.callStatic.exchangeRateCurrent();
+  async getExchangeRate({ contract }: GetPricePerShareParams<TectonicTToken>) {
+    return contract.underlying();
   }
 
-  async getSupplyRate(contract: TectonicTToken) {
+  async getSupplyRate({ contract }: GetDataPropsParams<TectonicTToken>) {
     return contract.supplyRatePerBlock().catch(() => 0);
   }
 }
