@@ -4,6 +4,20 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.274.0](https://github.com/Zapper-fi/studio/compare/v0.273.0...v0.274.0) (2022-11-15)
+
+
+### Features
+
+* **presenter:** Add local-storage flag to include zero balances ([#1705](https://github.com/Zapper-fi/studio/issues/1705)) ([60f90b9](https://github.com/Zapper-fi/studio/commit/60f90b9d19ab27b9e246d9d1e77e4f00280a5f56))
+* **presenter:** Remove most of presentation logic indirection ([#1689](https://github.com/Zapper-fi/studio/issues/1689)) ([79b47e5](https://github.com/Zapper-fi/studio/commit/79b47e58b30615da9e8d9556e67b6621daaedf98))
+
+
+### Bug Fixes
+
+* **mean-finance:** Added assetStandard on position + linting ([#1712](https://github.com/Zapper-fi/studio/issues/1712)) ([107e10c](https://github.com/Zapper-fi/studio/commit/107e10ce1eb14742c4c5483dce147078abbd82b0))
+* **presenter:** Remove left-over from previous refactor of the presenter service ([#1715](https://github.com/Zapper-fi/studio/issues/1715)) ([397fc1c](https://github.com/Zapper-fi/studio/commit/397fc1c6adaa66230adf419de42bd36cabc1359b))
+
 ## [0.273.0](https://github.com/Zapper-fi/studio/compare/v0.272.0...v0.273.0) (2022-11-14)
 
 
