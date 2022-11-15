@@ -2,12 +2,7 @@ import { Inject } from '@nestjs/common';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
-import { CompoundSupplyTokenFetcher, GetMarketsParams } from '~apps/compound/common/compound.supply.token-fetcher';
-import {
-  GetUnderlyingTokensParams,
-  GetPricePerShareParams,
-  GetDataPropsParams,
-} from '~position/template/app-token.template.types';
+import { CompoundSupplyTokenFetcher } from '~apps/compound/common/compound.supply.token-fetcher';
 
 import { IronBankComptroller, IronBankContractFactory, IronBankCToken } from '../contracts';
 
@@ -31,19 +26,19 @@ export class FantomIronBankSupplyTokenFetcher extends CompoundSupplyTokenFetcher
     return this.contractFactory.ironBankComptroller({ address, network: this.network });
   }
 
-  async getMarkets({ contract }: GetMarketsParams<IronBankComptroller>) {
+  getMarkets(contract: IronBankComptroller) {
     return contract.getAllMarkets();
   }
 
-  async getUnderlyingAddress({ contract }: GetUnderlyingTokensParams<IronBankCToken>) {
+  async getUnderlyingAddress(contract: IronBankCToken) {
     return contract.underlying();
   }
 
-  async getExchangeRate({ contract }: GetPricePerShareParams<IronBankCToken>) {
+  getExchangeRate(contract: IronBankCToken) {
     return contract.exchangeRateCurrent();
   }
 
-  async getSupplyRate({ contract }: GetDataPropsParams<IronBankCToken>) {
+  async getSupplyRate(contract: IronBankCToken) {
     return contract.supplyRatePerBlock().catch(() => 0);
   }
 }

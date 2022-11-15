@@ -2,16 +2,7 @@ import { Inject } from '@nestjs/common';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
-import {
-  CompoundBorrowContractPositionFetcher,
-  CompoundBorrowTokenDataProps,
-  GetMarketsParams,
-} from '~apps/compound/common/compound.borrow.contract-position-fetcher';
-import {
-  GetDataPropsParams,
-  GetTokenBalancesParams,
-  GetTokenDefinitionsParams,
-} from '~position/template/contract-position.template.types';
+import { CompoundBorrowContractPositionFetcher } from '~apps/compound/common/compound.borrow.contract-position-fetcher';
 
 import { IronBankComptroller, IronBankContractFactory, IronBankCToken } from '../contracts';
 
@@ -37,36 +28,35 @@ export class OptimismIronBankBorrowContractPositionFetcher extends CompoundBorro
   getCompoundComptrollerContract(address: string) {
     return this.contractFactory.ironBankComptroller({ address, network: this.network });
   }
-
-  async getMarkets({ contract }: GetMarketsParams<IronBankComptroller>) {
+  getMarkets(contract: IronBankComptroller) {
     return contract.getAllMarkets();
   }
 
-  async getUnderlyingAddress({ contract }: GetTokenDefinitionsParams<IronBankCToken>) {
+  async getUnderlyingAddress(contract: IronBankCToken) {
     return contract.underlying();
   }
 
-  async getExchangeRate({ contract }: GetDataPropsParams<IronBankCToken, CompoundBorrowTokenDataProps>) {
+  getExchangeRate(contract: IronBankCToken) {
     return contract.exchangeRateCurrent();
   }
 
-  async getBorrowRate({ contract }: GetDataPropsParams<IronBankCToken, CompoundBorrowTokenDataProps>) {
+  async getBorrowRate(contract: IronBankCToken) {
     return contract.borrowRatePerBlock().catch(() => 0);
   }
 
-  async getCash({ contract }: GetDataPropsParams<IronBankCToken, CompoundBorrowTokenDataProps>) {
-    return contract.getCash();
-  }
-
-  async getCTokenSupply({ contract }: GetDataPropsParams<IronBankCToken, CompoundBorrowTokenDataProps>) {
+  getCTokenSupply(contract: IronBankCToken) {
     return contract.totalSupply();
   }
 
-  async getCTokenDecimals({ contract }: GetDataPropsParams<IronBankCToken, CompoundBorrowTokenDataProps>) {
+  getCTokenDecimals(contract: IronBankCToken) {
     return contract.decimals();
   }
 
-  async getBorrowBalance({ address, contract }: GetTokenBalancesParams<IronBankCToken, CompoundBorrowTokenDataProps>) {
+  getBorrowBalance({ address, contract }: { address: string; contract: IronBankCToken }) {
     return contract.borrowBalanceCurrent(address);
+  }
+
+  getCash(contract: IronBankCToken) {
+    return contract.getCash();
   }
 }

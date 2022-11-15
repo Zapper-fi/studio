@@ -4,11 +4,8 @@ import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { ContractFactory } from '~contract/contracts';
 import { Network } from '~types/network.interface';
 
-import { BProtocolBamm__factory } from './ethers';
 import { BProtocolBammLens__factory } from './ethers';
-import { BProtocolCompoundComptroller__factory } from './ethers';
 import { BProtocolCompoundRegistry__factory } from './ethers';
-import { BProtocolCompoundToken__factory } from './ethers';
 import { BProtocolGetInfo__factory } from './ethers';
 
 // eslint-disable-next-line
@@ -20,29 +17,17 @@ export class BProtocolContractFactory extends ContractFactory {
     super((network: Network) => appToolkit.getNetworkProvider(network));
   }
 
-  bProtocolBamm({ address, network }: ContractOpts) {
-    return BProtocolBamm__factory.connect(address, this.appToolkit.getNetworkProvider(network));
-  }
   bProtocolBammLens({ address, network }: ContractOpts) {
     return BProtocolBammLens__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
-  bProtocolCompoundComptroller({ address, network }: ContractOpts) {
-    return BProtocolCompoundComptroller__factory.connect(address, this.appToolkit.getNetworkProvider(network));
-  }
   bProtocolCompoundRegistry({ address, network }: ContractOpts) {
     return BProtocolCompoundRegistry__factory.connect(address, this.appToolkit.getNetworkProvider(network));
-  }
-  bProtocolCompoundToken({ address, network }: ContractOpts) {
-    return BProtocolCompoundToken__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
   bProtocolGetInfo({ address, network }: ContractOpts) {
     return BProtocolGetInfo__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
 }
 
-export type { BProtocolBamm } from './ethers';
 export type { BProtocolBammLens } from './ethers';
-export type { BProtocolCompoundComptroller } from './ethers';
 export type { BProtocolCompoundRegistry } from './ethers';
-export type { BProtocolCompoundToken } from './ethers';
 export type { BProtocolGetInfo } from './ethers';

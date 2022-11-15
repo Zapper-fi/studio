@@ -2,14 +2,8 @@ import { Inject } from '@nestjs/common';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
-import {
-  GetUnderlyingTokensParams,
-  DefaultAppTokenDataProps,
-  GetPricePerShareParams,
-  GetDataPropsParams,
-} from '~position/template/app-token.template.types';
 
-import { CompoundSupplyTokenFetcher, GetMarketsParams } from '../common/compound.supply.token-fetcher';
+import { CompoundSupplyTokenFetcher } from '../common/compound.supply.token-fetcher';
 import { CompoundComptroller, CompoundContractFactory, CompoundCToken } from '../contracts';
 
 @PositionTemplate()
@@ -35,19 +29,19 @@ export class EthereumCompoundSupplyTokenFetcher extends CompoundSupplyTokenFetch
     return this.contractFactory.compoundComptroller({ address, network: this.network });
   }
 
-  async getMarkets({ contract }: GetMarketsParams<CompoundComptroller>) {
+  getMarkets(contract: CompoundComptroller) {
     return contract.getAllMarkets();
   }
 
-  async getUnderlyingAddress({ contract }: GetUnderlyingTokensParams<CompoundCToken>) {
+  async getUnderlyingAddress(contract: CompoundCToken) {
     return contract.underlying();
   }
 
-  async getExchangeRate({ contract }: GetPricePerShareParams<CompoundCToken, DefaultAppTokenDataProps>) {
+  getExchangeRate(contract: CompoundCToken) {
     return contract.exchangeRateCurrent();
   }
 
-  async getSupplyRate({ contract }: GetDataPropsParams<CompoundCToken, DefaultAppTokenDataProps>) {
+  async getSupplyRate(contract: CompoundCToken) {
     return contract.supplyRatePerBlock().catch(() => 0);
   }
 }

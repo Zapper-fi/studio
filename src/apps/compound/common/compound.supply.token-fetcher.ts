@@ -13,10 +13,6 @@ import {
   GetUnderlyingTokensParams,
 } from '~position/template/app-token.template.types';
 
-export type GetMarketsParams<S> = GetAddressesParams & {
-  contract: S;
-};
-
 export abstract class CompoundSupplyTokenFetcher<
   R extends Contract,
   S extends Contract,
@@ -28,22 +24,22 @@ export abstract class CompoundSupplyTokenFetcher<
   abstract getCompoundCTokenContract(address: string): R;
   abstract getCompoundComptrollerContract(address: string): S;
 
-  abstract getMarkets(params: GetMarketsParams<S>): Promise<string[]>;
-  abstract getUnderlyingAddress(params: GetUnderlyingTokensParams<R>): Promise<string>;
-  abstract getExchangeRate(params: GetPricePerShareParams<R>): Promise<BigNumberish>;
-  abstract getSupplyRate(params: GetDataPropsParams<R>): Promise<BigNumberish>;
+  abstract getMarkets(contract: S): Promise<string[]>;
+  abstract getUnderlyingAddress(contract: R): Promise<string>;
+  abstract getExchangeRate(contract: R): Promise<BigNumberish>;
+  abstract getSupplyRate(contract: R): Promise<BigNumberish>;
 
   getContract(address: string): R {
     return this.getCompoundCTokenContract(address);
   }
 
-  async getAddresses(params: GetAddressesParams) {
+  async getAddresses({ multicall }: GetAddressesParams) {
     const comptroller = this.getCompoundComptrollerContract(this.comptrollerAddress);
-    return this.getMarkets({ ...params, contract: comptroller });
+    return this.getMarkets(multicall.wrap(comptroller));
   }
 
-  async getUnderlyingTokenAddresses(params: GetUnderlyingTokensParams<R>) {
-    const underlyingAddressRaw = await this.getUnderlyingAddress(params).catch(err => {
+  async getUnderlyingTokenAddresses({ contract }: GetUnderlyingTokensParams<R>) {
+    const underlyingAddressRaw = await this.getUnderlyingAddress(contract).catch(err => {
       // if the underlying call failed, it's the compound-wrapped native token
       if (isMulticallUnderlyingError(err)) return ZERO_ADDRESS;
       throw err;
@@ -52,14 +48,15 @@ export abstract class CompoundSupplyTokenFetcher<
     return underlyingAddressRaw.toLowerCase().replace(ETH_ADDR_ALIAS, ZERO_ADDRESS);
   }
 
-  async getExchangeRateMantissa(params: GetPricePerShareParams<R>) {
-    const { appToken } = params;
+  async getExchangeRateMantissa(opts: GetPricePerShareParams<R>) {
+    const { appToken } = opts;
     const [underlyingToken] = appToken.tokens;
     return underlyingToken.decimals + 10;
   }
 
-  async getPricePerShare(params: GetPricePerShareParams<R>) {
-    const [rateRaw, mantissa] = await Promise.all([this.getExchangeRate(params), this.getExchangeRateMantissa(params)]);
+  async getPricePerShare(opts: GetPricePerShareParams<R>) {
+    const { contract } = opts;
+    const [rateRaw, mantissa] = await Promise.all([this.getExchangeRate(contract), this.getExchangeRateMantissa(opts)]);
     return Number(rateRaw) / 10 ** mantissa;
   }
 
@@ -84,8 +81,8 @@ export abstract class CompoundSupplyTokenFetcher<
     return [appToken.pricePerShare[0] * appToken.supply];
   }
 
-  async getApy(params: GetDataPropsParams<R>) {
-    const supplyRate = await this.getSupplyRate(params);
+  async getApy({ contract }: GetDataPropsParams<R>) {
+    const supplyRate = await this.getSupplyRate(contract);
     const blocksPerDay = BLOCKS_PER_DAY[this.network];
     return 100 * (Math.pow(1 + (blocksPerDay * Number(supplyRate)) / Number(1e18), 365) - 1);
   }
