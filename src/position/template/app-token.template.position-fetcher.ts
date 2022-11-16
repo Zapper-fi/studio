@@ -4,6 +4,7 @@ import { compact, intersection, isArray, partition, sortBy, sum } from 'lodash';
 
 import { drillBalance } from '~app-toolkit';
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
+import { ZERO_ADDRESS } from '~app-toolkit/constants/address';
 import {
   buildDollarDisplayItem,
   buildPercentageDisplayItem,
@@ -98,9 +99,17 @@ export abstract class AppTokenTemplatePositionFetcher<
     return sum(appToken.tokens.map((v, i) => v.price * appToken.pricePerShare[i]));
   }
 
-  abstract getLiquidity(params: GetDataPropsParams<T, V, R>): number | Promise<number>;
-  abstract getReserves(params: GetDataPropsParams<T, V, R>): number[] | Promise<number[]>;
-  abstract getApy(params: GetDataPropsParams<T, V, R>): number | Promise<number>;
+  async getLiquidity({ appToken }: GetDataPropsParams<T, V, R>) {
+    return appToken.supply * appToken.price;
+  }
+
+  async getReserves({ appToken }: GetDataPropsParams<T, V, R>) {
+    return (appToken.pricePerShare as number[]).map(v => v * appToken.supply);
+  }
+
+  async getApy(_params: GetDataPropsParams<T, V, R>) {
+    return 0;
+  }
 
   async getDataProps(params: GetDataPropsParams<T, V, R>): Promise<V> {
     const [liquidity, reserves, apy] = await Promise.all([
@@ -275,7 +284,19 @@ export abstract class AppTokenTemplatePositionFetcher<
     });
   }
 
-  getBalancePerToken({
+  async getAccountAddress(address: string) {
+    return address;
+  }
+
+  async getPositionsForBalances() {
+    return this.appToolkit.getAppTokenPositions<V>({
+      appId: this.appId,
+      network: this.network,
+      groupIds: [this.groupId],
+    });
+  }
+
+  async getBalancePerToken({
     address,
     appToken,
     multicall,
@@ -287,13 +308,11 @@ export abstract class AppTokenTemplatePositionFetcher<
     return multicall.wrap(this.getContract(appToken.address)).balanceOf(address);
   }
 
-  async getBalances(address: string): Promise<AppTokenPositionBalance<V>[]> {
+  async getBalances(_address: string): Promise<AppTokenPositionBalance<V>[]> {
     const multicall = this.appToolkit.getMulticall(this.network);
-    const appTokens = await this.appToolkit.getAppTokenPositions<V>({
-      appId: this.appId,
-      network: this.network,
-      groupIds: [this.groupId],
-    });
+    const address = await this.getAccountAddress(_address);
+    const appTokens = await this.getPositionsForBalances();
+    if (address === ZERO_ADDRESS) return [];
 
     const balances = await Promise.all(
       appTokens.map(async appToken => {
@@ -306,13 +325,11 @@ export abstract class AppTokenTemplatePositionFetcher<
     return balances as AppTokenPositionBalance<V>[];
   }
 
-  async getRawBalances(address: string): Promise<RawAppTokenBalance[]> {
+  async getRawBalances(_address: string): Promise<RawAppTokenBalance[]> {
     const multicall = this.appToolkit.getMulticall(this.network);
-    const appTokens = await this.appToolkit.getAppTokenPositions({
-      appId: this.appId,
-      network: this.network,
-      groupIds: [this.groupId],
-    });
+    const address = await this.getAccountAddress(_address);
+    const appTokens = await this.getPositionsForBalances();
+    if (address === ZERO_ADDRESS) return [];
 
     return Promise.all(
       appTokens.map(async appToken => ({
@@ -323,11 +340,7 @@ export abstract class AppTokenTemplatePositionFetcher<
   }
 
   async drillRawBalances(balances: RawAppTokenBalance[]): Promise<AppTokenPositionBalance<V>[]> {
-    const appTokens = await this.appToolkit.getAppTokenPositions<V>({
-      appId: this.appId,
-      network: this.network,
-      groupIds: [this.groupId],
-    });
+    const appTokens = await this.getPositionsForBalances();
 
     const appTokenBalances = appTokens.map(token => {
       const tokenBalance = balances.find(b => b.key === this.appToolkit.getPositionKey(token));
