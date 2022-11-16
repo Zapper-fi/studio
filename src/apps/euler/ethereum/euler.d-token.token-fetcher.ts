@@ -7,4 +7,5 @@ import { EulerTokenType } from '../common/euler.token-definition-resolver';
 export class EthereumEulerDTokenTokenFetcher extends EulerDTokenTokenFetcher {
   groupLabel = 'Lending';
   tokenType = EulerTokenType.D_TOKEN;
+  isDebt = true;
 }
