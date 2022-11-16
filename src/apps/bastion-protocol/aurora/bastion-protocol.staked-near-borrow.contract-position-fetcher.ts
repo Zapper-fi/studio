@@ -20,7 +20,7 @@ export class AuroraBastionProtocolStakedNearBorrowContractPositionFetcher extend
   BastionProtocolCtoken,
   BastionProtocolComptroller
 > {
-  groupLabel = 'Staked Near Realm';
+  groupLabel = 'Staked NEAR Realm';
   comptrollerAddress = '0xe550a886716241afb7ee276e647207d7667e1e79';
 
   constructor(

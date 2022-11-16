@@ -1,10 +1,12 @@
 import { sumBy } from 'lodash';
 
 import { Register } from '~app-toolkit/decorators';
+import { PresenterTemplate } from '~app-toolkit/decorators/presenter-template.decorator';
 import { PresentationConfig } from '~app/app.interface';
 import { MetadataItemWithLabel } from '~balance/balance-fetcher.interface';
 import { PositionPresenterTemplate, ReadonlyBalances } from '~position/template/position-presenter.template';
 
+@PresenterTemplate()
 export class AuroraBastionProtocolPositionPresenter extends PositionPresenterTemplate {
   explorePresentationConfig: PresentationConfig = {
     tabs: [
