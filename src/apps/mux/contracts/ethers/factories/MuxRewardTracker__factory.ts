@@ -4,9 +4,66 @@
 
 import { Contract, Signer, utils } from 'ethers';
 import type { Provider } from '@ethersproject/providers';
-import type { MuxRewardTracker, MuxRewardRouterInterface } from '../MuxRewardTracker';
+import type { MuxRewardTracker, MuxRewardTrackerInterface } from '../MuxRewardTracker';
 
 const _abi = [
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: 'address',
+        name: 'owner',
+        type: 'address',
+      },
+      {
+        indexed: true,
+        internalType: 'address',
+        name: 'spender',
+        type: 'address',
+      },
+      {
+        indexed: false,
+        internalType: 'uint256',
+        name: 'value',
+        type: 'uint256',
+      },
+    ],
+    name: 'Approval',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: false,
+        internalType: 'address',
+        name: 'receiver',
+        type: 'address',
+      },
+      {
+        indexed: false,
+        internalType: 'uint256',
+        name: 'amount',
+        type: 'uint256',
+      },
+    ],
+    name: 'Claim',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: false,
+        internalType: 'uint8',
+        name: 'version',
+        type: 'uint8',
+      },
+    ],
+    name: 'Initialized',
+    type: 'event',
+  },
   {
     anonymous: false,
     inputs: [
@@ -30,303 +87,41 @@ const _abi = [
     anonymous: false,
     inputs: [
       {
-        indexed: false,
+        indexed: true,
         internalType: 'address',
-        name: 'previousOwner',
+        name: 'from',
+        type: 'address',
+      },
+      {
+        indexed: true,
+        internalType: 'address',
+        name: 'to',
         type: 'address',
       },
       {
         indexed: false,
-        internalType: 'address',
-        name: 'newOwner',
-        type: 'address',
+        internalType: 'uint256',
+        name: 'value',
+        type: 'uint256',
       },
     ],
-    name: 'SetProtocolLiquidityOwner',
+    name: 'Transfer',
     type: 'event',
   },
   {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: false,
-        internalType: 'address',
-        name: 'previousTimelock',
-        type: 'address',
-      },
-      {
-        indexed: false,
-        internalType: 'address',
-        name: 'newTimelock',
-        type: 'address',
-      },
-    ],
-    name: 'SetTimelock',
-    type: 'event',
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: false,
-        internalType: 'address',
-        name: 'previousVault',
-        type: 'address',
-      },
-      {
-        indexed: false,
-        internalType: 'address',
-        name: 'newVault',
-        type: 'address',
-      },
-    ],
-    name: 'SetVault',
-    type: 'event',
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: false,
-        internalType: 'address',
-        name: 'account',
-        type: 'address',
-      },
-      {
-        indexed: false,
-        internalType: 'uint256',
-        name: 'amount',
-        type: 'uint256',
-      },
-    ],
-    name: 'StakeMlp',
-    type: 'event',
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: false,
-        internalType: 'address',
-        name: 'account',
-        type: 'address',
-      },
-      {
-        indexed: false,
-        internalType: 'address',
-        name: 'token',
-        type: 'address',
-      },
-      {
-        indexed: false,
-        internalType: 'uint256',
-        name: 'amount',
-        type: 'uint256',
-      },
-      {
-        indexed: false,
-        internalType: 'uint256',
-        name: 'unlockTime',
-        type: 'uint256',
-      },
-    ],
-    name: 'StakeMux',
-    type: 'event',
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: false,
-        internalType: 'address',
-        name: 'account',
-        type: 'address',
-      },
-      {
-        indexed: false,
-        internalType: 'uint256',
-        name: 'amount',
-        type: 'uint256',
-      },
-    ],
-    name: 'UnstakeMlp',
-    type: 'event',
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: false,
-        internalType: 'address',
-        name: 'account',
-        type: 'address',
-      },
-      {
-        indexed: false,
-        internalType: 'uint256',
-        name: 'amount',
-        type: 'uint256',
-      },
-    ],
-    name: 'UnstakeMux',
-    type: 'event',
-  },
-  {
-    inputs: [],
-    name: 'averageStakePeriod',
-    outputs: [
-      {
-        internalType: 'uint256',
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        internalType: 'address[]',
-        name: '_accounts',
-        type: 'address[]',
-      },
-    ],
-    name: 'batchCompoundForAccounts',
-    outputs: [],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        internalType: 'address[]',
-        name: '_accounts',
-        type: 'address[]',
-      },
-      {
-        internalType: 'uint256[]',
-        name: '_amounts',
-        type: 'uint256[]',
-      },
-      {
-        internalType: 'uint256[]',
-        name: '_unlockTime',
-        type: 'uint256[]',
-      },
-    ],
-    name: 'batchStakeMuxForAccount',
-    outputs: [],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'claimAll',
-    outputs: [],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'claimFromMlp',
-    outputs: [],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'claimFromVe',
-    outputs: [],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
     inputs: [
       {
         internalType: 'address',
-        name: 'account',
+        name: '_owner',
         type: 'address',
       },
-    ],
-    name: 'claimVestedTokenFromMlp',
-    outputs: [
-      {
-        internalType: 'uint256',
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [
       {
         internalType: 'address',
-        name: 'account',
+        name: '_spender',
         type: 'address',
       },
     ],
-    name: 'claimVestedTokenFromVe',
-    outputs: [
-      {
-        internalType: 'uint256',
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        internalType: 'address',
-        name: 'account',
-        type: 'address',
-      },
-    ],
-    name: 'claimableRewards',
-    outputs: [
-      {
-        internalType: 'uint256',
-        name: 'mlpFeeAmount',
-        type: 'uint256',
-      },
-      {
-        internalType: 'uint256',
-        name: 'mlpMuxAmount',
-        type: 'uint256',
-      },
-      {
-        internalType: 'uint256',
-        name: 'veFeeAmount',
-        type: 'uint256',
-      },
-      {
-        internalType: 'uint256',
-        name: 'veMuxAmount',
-        type: 'uint256',
-      },
-      {
-        internalType: 'uint256',
-        name: 'mcbAmount',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        internalType: 'address',
-        name: 'account',
-        type: 'address',
-      },
-    ],
-    name: 'claimableVestedTokenFromMlp',
+    name: 'allowance',
     outputs: [
       {
         internalType: 'uint256',
@@ -341,11 +136,16 @@ const _abi = [
     inputs: [
       {
         internalType: 'address',
-        name: 'account',
+        name: '',
+        type: 'address',
+      },
+      {
+        internalType: 'address',
+        name: '',
         type: 'address',
       },
     ],
-    name: 'claimableVestedTokenFromVe',
+    name: 'allowances',
     outputs: [
       {
         internalType: 'uint256',
@@ -360,11 +160,35 @@ const _abi = [
     inputs: [
       {
         internalType: 'address',
-        name: 'account',
+        name: '_spender',
+        type: 'address',
+      },
+      {
+        internalType: 'uint256',
+        name: '_amount',
+        type: 'uint256',
+      },
+    ],
+    name: 'approve',
+    outputs: [
+      {
+        internalType: 'bool',
+        name: '',
+        type: 'bool',
+      },
+    ],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'address',
+        name: '',
         type: 'address',
       },
     ],
-    name: 'claimedVestedTokenFromMlp',
+    name: 'averageStakedAmounts',
     outputs: [
       {
         internalType: 'uint256',
@@ -379,11 +203,11 @@ const _abi = [
     inputs: [
       {
         internalType: 'address',
-        name: 'account',
+        name: '_account',
         type: 'address',
       },
     ],
-    name: 'claimedVestedTokenFromVe',
+    name: 'balanceOf',
     outputs: [
       {
         internalType: 'uint256',
@@ -395,9 +219,64 @@ const _abi = [
     type: 'function',
   },
   {
-    inputs: [],
-    name: 'compound',
-    outputs: [],
+    inputs: [
+      {
+        internalType: 'address',
+        name: '',
+        type: 'address',
+      },
+    ],
+    name: 'balances',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'address',
+        name: '_receiver',
+        type: 'address',
+      },
+    ],
+    name: 'claim',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'address',
+        name: '_account',
+        type: 'address',
+      },
+      {
+        internalType: 'address',
+        name: '_receiver',
+        type: 'address',
+      },
+    ],
+    name: 'claimForAccount',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
+      },
+    ],
     stateMutability: 'nonpayable',
     type: 'function',
   },
@@ -409,40 +288,39 @@ const _abi = [
         type: 'address',
       },
     ],
-    name: 'compoundForAccount',
-    outputs: [],
+    name: 'claimable',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
+      },
+    ],
     stateMutability: 'nonpayable',
     type: 'function',
   },
   {
     inputs: [
       {
-        internalType: 'uint256',
-        name: 'amount',
-        type: 'uint256',
+        internalType: 'address',
+        name: '',
+        type: 'address',
       },
     ],
-    name: 'depositToMlpVester',
-    outputs: [],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [
+    name: 'claimableReward',
+    outputs: [
       {
         internalType: 'uint256',
-        name: 'amount',
+        name: '',
         type: 'uint256',
       },
     ],
-    name: 'depositToVeVester',
-    outputs: [],
-    stateMutability: 'nonpayable',
+    stateMutability: 'view',
     type: 'function',
   },
   {
     inputs: [],
-    name: 'feeRewardRate',
+    name: 'cumulativeRewardPerToken',
     outputs: [
       {
         internalType: 'uint256',
@@ -456,37 +334,132 @@ const _abi = [
   {
     inputs: [
       {
+        internalType: 'address',
+        name: '',
+        type: 'address',
+      },
+    ],
+    name: 'cumulativeRewards',
+    outputs: [
+      {
         internalType: 'uint256',
-        name: 'lockPeriod',
+        name: '',
         type: 'uint256',
       },
     ],
-    name: 'increaseStakeUnlockTime',
-    outputs: [],
-    stateMutability: 'nonpayable',
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'decimals',
+    outputs: [
+      {
+        internalType: 'uint8',
+        name: '',
+        type: 'uint8',
+      },
+    ],
+    stateMutability: 'view',
     type: 'function',
   },
   {
     inputs: [
       {
-        internalType: 'address[5]',
-        name: '_tokens',
-        type: 'address[5]',
+        internalType: 'address',
+        name: '',
+        type: 'address',
       },
       {
-        internalType: 'address[4]',
-        name: '_rewardTrackers',
-        type: 'address[4]',
+        internalType: 'address',
+        name: '',
+        type: 'address',
+      },
+    ],
+    name: 'depositBalances',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'distributor',
+    outputs: [
+      {
+        internalType: 'contract IRewardDistributor',
+        name: '',
+        type: 'address',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'inPrivateClaimingMode',
+    outputs: [
+      {
+        internalType: 'bool',
+        name: '',
+        type: 'bool',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'inPrivateStakingMode',
+    outputs: [
+      {
+        internalType: 'bool',
+        name: '',
+        type: 'bool',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'inPrivateTransferMode',
+    outputs: [
+      {
+        internalType: 'bool',
+        name: '',
+        type: 'bool',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'string',
+        name: '_name',
+        type: 'string',
       },
       {
-        internalType: 'address[2]',
-        name: '_vesters',
-        type: 'address[2]',
+        internalType: 'string',
+        name: '_symbol',
+        type: 'string',
       },
       {
-        internalType: 'address[2]',
-        name: '_distributors',
-        type: 'address[2]',
+        internalType: 'address[]',
+        name: '_depositTokens',
+        type: 'address[]',
+      },
+      {
+        internalType: 'address',
+        name: '_distributor',
+        type: 'address',
       },
     ],
     name: 'initialize',
@@ -498,16 +471,16 @@ const _abi = [
     inputs: [
       {
         internalType: 'address',
-        name: 'account',
+        name: '',
         type: 'address',
       },
     ],
-    name: 'maxVestableTokenFromMlp',
+    name: 'isDepositToken',
     outputs: [
       {
-        internalType: 'uint256',
+        internalType: 'bool',
         name: '',
-        type: 'uint256',
+        type: 'bool',
       },
     ],
     stateMutability: 'view',
@@ -517,11 +490,24 @@ const _abi = [
     inputs: [
       {
         internalType: 'address',
-        name: 'account',
+        name: '',
         type: 'address',
       },
     ],
-    name: 'maxVestableTokenFromVe',
+    name: 'isHandler',
+    outputs: [
+      {
+        internalType: 'bool',
+        name: '',
+        type: 'bool',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'lastRewardBalance',
     outputs: [
       {
         internalType: 'uint256',
@@ -534,153 +520,12 @@ const _abi = [
   },
   {
     inputs: [],
-    name: 'mcb',
+    name: 'name',
     outputs: [
       {
-        internalType: 'address',
+        internalType: 'string',
         name: '',
-        type: 'address',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'mlp',
-    outputs: [
-      {
-        internalType: 'address',
-        name: '',
-        type: 'address',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'mlpDistributor',
-    outputs: [
-      {
-        internalType: 'contract IRewardDistributor',
-        name: '',
-        type: 'address',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'mlpFeeTracker',
-    outputs: [
-      {
-        internalType: 'contract IMlpRewardTracker',
-        name: '',
-        type: 'address',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        internalType: 'address',
-        name: 'account',
-        type: 'address',
-      },
-      {
-        internalType: 'uint256',
-        name: 'amount',
-        type: 'uint256',
-      },
-    ],
-    name: 'mlpLockAmount',
-    outputs: [
-      {
-        internalType: 'uint256',
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'mlpMuxTracker',
-    outputs: [
-      {
-        internalType: 'contract IMlpRewardTracker',
-        name: '',
-        type: 'address',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'mlpVester',
-    outputs: [
-      {
-        internalType: 'contract IVester',
-        name: '',
-        type: 'address',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'mux',
-    outputs: [
-      {
-        internalType: 'address',
-        name: '',
-        type: 'address',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'muxDistributor',
-    outputs: [
-      {
-        internalType: 'contract IRewardDistributor',
-        name: '',
-        type: 'address',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'muxRewardRate',
-    outputs: [
-      {
-        internalType: 'uint256',
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'muxVester',
-    outputs: [
-      {
-        internalType: 'contract IVester',
-        name: '',
-        type: 'address',
+        type: 'string',
       },
     ],
     stateMutability: 'view',
@@ -700,26 +545,19 @@ const _abi = [
     type: 'function',
   },
   {
-    inputs: [],
-    name: 'poolOwnedRate',
+    inputs: [
+      {
+        internalType: 'address',
+        name: '',
+        type: 'address',
+      },
+    ],
+    name: 'previousCumulatedRewardPerToken',
     outputs: [
       {
         internalType: 'uint256',
         name: '',
         type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'protocolLiquidityOwner',
-    outputs: [
-      {
-        internalType: 'address',
-        name: '',
-        type: 'address',
       },
     ],
     stateMutability: 'view',
@@ -733,19 +571,13 @@ const _abi = [
     type: 'function',
   },
   {
-    inputs: [
-      {
-        internalType: 'address',
-        name: 'account',
-        type: 'address',
-      },
-    ],
-    name: 'reservedMlpAmount',
+    inputs: [],
+    name: 'rewardToken',
     outputs: [
       {
-        internalType: 'uint256',
+        internalType: 'address',
         name: '',
-        type: 'uint256',
+        type: 'address',
       },
     ],
     stateMutability: 'view',
@@ -755,11 +587,16 @@ const _abi = [
     inputs: [
       {
         internalType: 'address',
-        name: '_protocolLiquidityOwner',
+        name: '_depositToken',
         type: 'address',
       },
+      {
+        internalType: 'bool',
+        name: '_isDepositToken',
+        type: 'bool',
+      },
     ],
-    name: 'setProtocolLiquidityOwner',
+    name: 'setDepositToken',
     outputs: [],
     stateMutability: 'nonpayable',
     type: 'function',
@@ -768,11 +605,55 @@ const _abi = [
     inputs: [
       {
         internalType: 'address',
-        name: '_timelock',
+        name: '_handler',
         type: 'address',
       },
+      {
+        internalType: 'bool',
+        name: '_isActive',
+        type: 'bool',
+      },
     ],
-    name: 'setTimelock',
+    name: 'setHandler',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'bool',
+        name: '_inPrivateClaimingMode',
+        type: 'bool',
+      },
+    ],
+    name: 'setInPrivateClaimingMode',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'bool',
+        name: '_inPrivateStakingMode',
+        type: 'bool',
+      },
+    ],
+    name: 'setInPrivateStakingMode',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'bool',
+        name: '_inPrivateTransferMode',
+        type: 'bool',
+      },
+    ],
+    name: 'setInPrivateTransferMode',
     outputs: [],
     stateMutability: 'nonpayable',
     type: 'function',
@@ -781,84 +662,44 @@ const _abi = [
     inputs: [
       {
         internalType: 'address',
-        name: '_vault',
+        name: '_depositToken',
         type: 'address',
       },
-    ],
-    name: 'setVault',
-    outputs: [],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [
       {
         internalType: 'uint256',
         name: '_amount',
         type: 'uint256',
       },
-      {
-        internalType: 'uint256',
-        name: 'lockPeriod',
-        type: 'uint256',
-      },
     ],
-    name: 'stakeMcb',
+    name: 'stake',
     outputs: [],
     stateMutability: 'nonpayable',
     type: 'function',
   },
   {
     inputs: [
+      {
+        internalType: 'address',
+        name: '_fundingAccount',
+        type: 'address',
+      },
       {
         internalType: 'address',
         name: '_account',
         type: 'address',
       },
       {
-        internalType: 'uint256',
-        name: '_amount',
-        type: 'uint256',
+        internalType: 'address',
+        name: '_depositToken',
+        type: 'address',
       },
-    ],
-    name: 'stakeMcbForAccount',
-    outputs: [],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [
       {
         internalType: 'uint256',
         name: '_amount',
         type: 'uint256',
       },
     ],
-    name: 'stakeMlp',
-    outputs: [
-      {
-        internalType: 'uint256',
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        internalType: 'uint256',
-        name: '_amount',
-        type: 'uint256',
-      },
-      {
-        internalType: 'uint256',
-        name: 'lockPeriod',
-        type: 'uint256',
-      },
-    ],
-    name: 'stakeMux',
+    name: 'stakeForAccount',
     outputs: [],
     stateMutability: 'nonpayable',
     type: 'function',
@@ -867,11 +708,11 @@ const _abi = [
     inputs: [
       {
         internalType: 'address',
-        name: 'account',
+        name: '',
         type: 'address',
       },
     ],
-    name: 'stakedMlpAmount',
+    name: 'stakedAmounts',
     outputs: [
       {
         internalType: 'uint256',
@@ -884,12 +725,12 @@ const _abi = [
   },
   {
     inputs: [],
-    name: 'timelock',
+    name: 'symbol',
     outputs: [
       {
-        internalType: 'address',
+        internalType: 'string',
         name: '',
-        type: 'address',
+        type: 'string',
       },
     ],
     stateMutability: 'view',
@@ -899,11 +740,24 @@ const _abi = [
     inputs: [
       {
         internalType: 'address',
-        name: 'account',
+        name: '',
         type: 'address',
       },
     ],
-    name: 'totalVestedTokenFromMlp',
+    name: 'totalDepositSupply',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'totalSupply',
     outputs: [
       {
         internalType: 'uint256',
@@ -918,19 +772,53 @@ const _abi = [
     inputs: [
       {
         internalType: 'address',
-        name: 'account',
+        name: '_recipient',
         type: 'address',
       },
-    ],
-    name: 'totalVestedTokenFromVe',
-    outputs: [
       {
         internalType: 'uint256',
-        name: '',
+        name: '_amount',
         type: 'uint256',
       },
     ],
-    stateMutability: 'view',
+    name: 'transfer',
+    outputs: [
+      {
+        internalType: 'bool',
+        name: '',
+        type: 'bool',
+      },
+    ],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'address',
+        name: '_sender',
+        type: 'address',
+      },
+      {
+        internalType: 'address',
+        name: '_recipient',
+        type: 'address',
+      },
+      {
+        internalType: 'uint256',
+        name: '_amount',
+        type: 'uint256',
+      },
+    ],
+    name: 'transferFrom',
+    outputs: [
+      {
+        internalType: 'bool',
+        name: '',
+        type: 'bool',
+      },
+    ],
+    stateMutability: 'nonpayable',
     type: 'function',
   },
   {
@@ -950,159 +838,51 @@ const _abi = [
     inputs: [
       {
         internalType: 'address',
-        name: 'account',
+        name: '_depositToken',
         type: 'address',
       },
-    ],
-    name: 'unlockTime',
-    outputs: [
-      {
-        internalType: 'uint256',
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'unstakeMcbAndMux',
-    outputs: [],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [
       {
         internalType: 'uint256',
         name: '_amount',
         type: 'uint256',
       },
     ],
-    name: 'unstakeMlp',
-    outputs: [
-      {
-        internalType: 'uint256',
-        name: '',
-        type: 'uint256',
-      },
-    ],
+    name: 'unstake',
+    outputs: [],
     stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'vault',
-    outputs: [
-      {
-        internalType: 'address',
-        name: '',
-        type: 'address',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'veFeeTracker',
-    outputs: [
-      {
-        internalType: 'contract IMuxRewardTracker',
-        name: '',
-        type: 'address',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'veMuxTracker',
-    outputs: [
-      {
-        internalType: 'contract IMuxRewardTracker',
-        name: '',
-        type: 'address',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'votingEscrow',
-    outputs: [
-      {
-        internalType: 'contract IVotingEscrow',
-        name: '',
-        type: 'address',
-      },
-    ],
-    stateMutability: 'view',
     type: 'function',
   },
   {
     inputs: [
       {
         internalType: 'address',
-        name: 'account',
+        name: '_account',
         type: 'address',
       },
-    ],
-    name: 'votingEscrowedAmounts',
-    outputs: [
-      {
-        internalType: 'uint256',
-        name: '',
-        type: 'uint256',
-      },
-      {
-        internalType: 'uint256',
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'votingEscrowedRate',
-    outputs: [
-      {
-        internalType: 'uint256',
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'weth',
-    outputs: [
       {
         internalType: 'address',
-        name: '',
+        name: '_depositToken',
+        type: 'address',
+      },
+      {
+        internalType: 'uint256',
+        name: '_amount',
+        type: 'uint256',
+      },
+      {
+        internalType: 'address',
+        name: '_receiver',
         type: 'address',
       },
     ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'withdrawFromMlpVester',
+    name: 'unstakeForAccount',
     outputs: [],
     stateMutability: 'nonpayable',
     type: 'function',
   },
   {
     inputs: [],
-    name: 'withdrawFromVeVester',
+    name: 'updateRewards',
     outputs: [],
     stateMutability: 'nonpayable',
     type: 'function',
@@ -1130,16 +910,12 @@ const _abi = [
     stateMutability: 'nonpayable',
     type: 'function',
   },
-  {
-    stateMutability: 'payable',
-    type: 'receive',
-  },
 ];
 
 export class MuxRewardTracker__factory {
   static readonly abi = _abi;
-  static createInterface(): MuxRewardRouterInterface {
-    return new utils.Interface(_abi) as MuxRewardRouterInterface;
+  static createInterface(): MuxRewardTrackerInterface {
+    return new utils.Interface(_abi) as MuxRewardTrackerInterface;
   }
   static connect(address: string, signerOrProvider: Signer | Provider): MuxRewardTracker {
     return new Contract(address, _abi, signerOrProvider) as MuxRewardTracker;

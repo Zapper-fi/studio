@@ -4,6 +4,7 @@ import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { ContractFactory } from '~contract/contracts';
 import { Network } from '~types/network.interface';
 
+import { MuxRewardRouter__factory } from './ethers';
 import { MuxRewardTracker__factory } from './ethers';
 
 // eslint-disable-next-line
@@ -15,9 +16,13 @@ export class MuxContractFactory extends ContractFactory {
     super((network: Network) => appToolkit.getNetworkProvider(network));
   }
 
+  muxRewardRouter({ address, network }: ContractOpts) {
+    return MuxRewardRouter__factory.connect(address, this.appToolkit.getNetworkProvider(network));
+  }
   muxRewardTracker({ address, network }: ContractOpts) {
     return MuxRewardTracker__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
 }
 
+export type { MuxRewardRouter } from './ethers';
 export type { MuxRewardTracker } from './ethers';

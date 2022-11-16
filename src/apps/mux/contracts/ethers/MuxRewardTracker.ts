@@ -17,320 +17,267 @@ import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi
 import type { Listener, Provider } from '@ethersproject/providers';
 import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
-export interface MuxRewardRouterInterface extends utils.Interface {
+export interface MuxRewardTrackerInterface extends utils.Interface {
   functions: {
-    'averageStakePeriod()': FunctionFragment;
-    'batchCompoundForAccounts(address[])': FunctionFragment;
-    'batchStakeMuxForAccount(address[],uint256[],uint256[])': FunctionFragment;
-    'claimAll()': FunctionFragment;
-    'claimFromMlp()': FunctionFragment;
-    'claimFromVe()': FunctionFragment;
-    'claimVestedTokenFromMlp(address)': FunctionFragment;
-    'claimVestedTokenFromVe(address)': FunctionFragment;
-    'claimableRewards(address)': FunctionFragment;
-    'claimableVestedTokenFromMlp(address)': FunctionFragment;
-    'claimableVestedTokenFromVe(address)': FunctionFragment;
-    'claimedVestedTokenFromMlp(address)': FunctionFragment;
-    'claimedVestedTokenFromVe(address)': FunctionFragment;
-    'compound()': FunctionFragment;
-    'compoundForAccount(address)': FunctionFragment;
-    'depositToMlpVester(uint256)': FunctionFragment;
-    'depositToVeVester(uint256)': FunctionFragment;
-    'feeRewardRate()': FunctionFragment;
-    'increaseStakeUnlockTime(uint256)': FunctionFragment;
-    'initialize(address[5],address[4],address[2],address[2])': FunctionFragment;
-    'maxVestableTokenFromMlp(address)': FunctionFragment;
-    'maxVestableTokenFromVe(address)': FunctionFragment;
-    'mcb()': FunctionFragment;
-    'mlp()': FunctionFragment;
-    'mlpDistributor()': FunctionFragment;
-    'mlpFeeTracker()': FunctionFragment;
-    'mlpLockAmount(address,uint256)': FunctionFragment;
-    'mlpMuxTracker()': FunctionFragment;
-    'mlpVester()': FunctionFragment;
-    'mux()': FunctionFragment;
-    'muxDistributor()': FunctionFragment;
-    'muxRewardRate()': FunctionFragment;
-    'muxVester()': FunctionFragment;
+    'allowance(address,address)': FunctionFragment;
+    'allowances(address,address)': FunctionFragment;
+    'approve(address,uint256)': FunctionFragment;
+    'averageStakedAmounts(address)': FunctionFragment;
+    'balanceOf(address)': FunctionFragment;
+    'balances(address)': FunctionFragment;
+    'claim(address)': FunctionFragment;
+    'claimForAccount(address,address)': FunctionFragment;
+    'claimable(address)': FunctionFragment;
+    'claimableReward(address)': FunctionFragment;
+    'cumulativeRewardPerToken()': FunctionFragment;
+    'cumulativeRewards(address)': FunctionFragment;
+    'decimals()': FunctionFragment;
+    'depositBalances(address,address)': FunctionFragment;
+    'distributor()': FunctionFragment;
+    'inPrivateClaimingMode()': FunctionFragment;
+    'inPrivateStakingMode()': FunctionFragment;
+    'inPrivateTransferMode()': FunctionFragment;
+    'initialize(string,string,address[],address)': FunctionFragment;
+    'isDepositToken(address)': FunctionFragment;
+    'isHandler(address)': FunctionFragment;
+    'lastRewardBalance()': FunctionFragment;
+    'name()': FunctionFragment;
     'owner()': FunctionFragment;
-    'poolOwnedRate()': FunctionFragment;
-    'protocolLiquidityOwner()': FunctionFragment;
+    'previousCumulatedRewardPerToken(address)': FunctionFragment;
     'renounceOwnership()': FunctionFragment;
-    'reservedMlpAmount(address)': FunctionFragment;
-    'setProtocolLiquidityOwner(address)': FunctionFragment;
-    'setTimelock(address)': FunctionFragment;
-    'setVault(address)': FunctionFragment;
-    'stakeMcb(uint256,uint256)': FunctionFragment;
-    'stakeMcbForAccount(address,uint256)': FunctionFragment;
-    'stakeMlp(uint256)': FunctionFragment;
-    'stakeMux(uint256,uint256)': FunctionFragment;
-    'stakedMlpAmount(address)': FunctionFragment;
-    'timelock()': FunctionFragment;
-    'totalVestedTokenFromMlp(address)': FunctionFragment;
-    'totalVestedTokenFromVe(address)': FunctionFragment;
+    'rewardToken()': FunctionFragment;
+    'setDepositToken(address,bool)': FunctionFragment;
+    'setHandler(address,bool)': FunctionFragment;
+    'setInPrivateClaimingMode(bool)': FunctionFragment;
+    'setInPrivateStakingMode(bool)': FunctionFragment;
+    'setInPrivateTransferMode(bool)': FunctionFragment;
+    'stake(address,uint256)': FunctionFragment;
+    'stakeForAccount(address,address,address,uint256)': FunctionFragment;
+    'stakedAmounts(address)': FunctionFragment;
+    'symbol()': FunctionFragment;
+    'totalDepositSupply(address)': FunctionFragment;
+    'totalSupply()': FunctionFragment;
+    'transfer(address,uint256)': FunctionFragment;
+    'transferFrom(address,address,uint256)': FunctionFragment;
     'transferOwnership(address)': FunctionFragment;
-    'unlockTime(address)': FunctionFragment;
-    'unstakeMcbAndMux()': FunctionFragment;
-    'unstakeMlp(uint256)': FunctionFragment;
-    'vault()': FunctionFragment;
-    'veFeeTracker()': FunctionFragment;
-    'veMuxTracker()': FunctionFragment;
-    'votingEscrow()': FunctionFragment;
-    'votingEscrowedAmounts(address)': FunctionFragment;
-    'votingEscrowedRate()': FunctionFragment;
-    'weth()': FunctionFragment;
-    'withdrawFromMlpVester()': FunctionFragment;
-    'withdrawFromVeVester()': FunctionFragment;
+    'unstake(address,uint256)': FunctionFragment;
+    'unstakeForAccount(address,address,uint256,address)': FunctionFragment;
+    'updateRewards()': FunctionFragment;
     'withdrawToken(address,address,uint256)': FunctionFragment;
   };
 
   getFunction(
     nameOrSignatureOrTopic:
-      | 'averageStakePeriod'
-      | 'batchCompoundForAccounts'
-      | 'batchStakeMuxForAccount'
-      | 'claimAll'
-      | 'claimFromMlp'
-      | 'claimFromVe'
-      | 'claimVestedTokenFromMlp'
-      | 'claimVestedTokenFromVe'
-      | 'claimableRewards'
-      | 'claimableVestedTokenFromMlp'
-      | 'claimableVestedTokenFromVe'
-      | 'claimedVestedTokenFromMlp'
-      | 'claimedVestedTokenFromVe'
-      | 'compound'
-      | 'compoundForAccount'
-      | 'depositToMlpVester'
-      | 'depositToVeVester'
-      | 'feeRewardRate'
-      | 'increaseStakeUnlockTime'
+      | 'allowance'
+      | 'allowances'
+      | 'approve'
+      | 'averageStakedAmounts'
+      | 'balanceOf'
+      | 'balances'
+      | 'claim'
+      | 'claimForAccount'
+      | 'claimable'
+      | 'claimableReward'
+      | 'cumulativeRewardPerToken'
+      | 'cumulativeRewards'
+      | 'decimals'
+      | 'depositBalances'
+      | 'distributor'
+      | 'inPrivateClaimingMode'
+      | 'inPrivateStakingMode'
+      | 'inPrivateTransferMode'
       | 'initialize'
-      | 'maxVestableTokenFromMlp'
-      | 'maxVestableTokenFromVe'
-      | 'mcb'
-      | 'mlp'
-      | 'mlpDistributor'
-      | 'mlpFeeTracker'
-      | 'mlpLockAmount'
-      | 'mlpMuxTracker'
-      | 'mlpVester'
-      | 'mux'
-      | 'muxDistributor'
-      | 'muxRewardRate'
-      | 'muxVester'
+      | 'isDepositToken'
+      | 'isHandler'
+      | 'lastRewardBalance'
+      | 'name'
       | 'owner'
-      | 'poolOwnedRate'
-      | 'protocolLiquidityOwner'
+      | 'previousCumulatedRewardPerToken'
       | 'renounceOwnership'
-      | 'reservedMlpAmount'
-      | 'setProtocolLiquidityOwner'
-      | 'setTimelock'
-      | 'setVault'
-      | 'stakeMcb'
-      | 'stakeMcbForAccount'
-      | 'stakeMlp'
-      | 'stakeMux'
-      | 'stakedMlpAmount'
-      | 'timelock'
-      | 'totalVestedTokenFromMlp'
-      | 'totalVestedTokenFromVe'
+      | 'rewardToken'
+      | 'setDepositToken'
+      | 'setHandler'
+      | 'setInPrivateClaimingMode'
+      | 'setInPrivateStakingMode'
+      | 'setInPrivateTransferMode'
+      | 'stake'
+      | 'stakeForAccount'
+      | 'stakedAmounts'
+      | 'symbol'
+      | 'totalDepositSupply'
+      | 'totalSupply'
+      | 'transfer'
+      | 'transferFrom'
       | 'transferOwnership'
-      | 'unlockTime'
-      | 'unstakeMcbAndMux'
-      | 'unstakeMlp'
-      | 'vault'
-      | 'veFeeTracker'
-      | 'veMuxTracker'
-      | 'votingEscrow'
-      | 'votingEscrowedAmounts'
-      | 'votingEscrowedRate'
-      | 'weth'
-      | 'withdrawFromMlpVester'
-      | 'withdrawFromVeVester'
+      | 'unstake'
+      | 'unstakeForAccount'
+      | 'updateRewards'
       | 'withdrawToken',
   ): FunctionFragment;
 
-  encodeFunctionData(functionFragment: 'averageStakePeriod', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'batchCompoundForAccounts', values: [PromiseOrValue<string>[]]): string;
+  encodeFunctionData(functionFragment: 'allowance', values: [PromiseOrValue<string>, PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'allowances', values: [PromiseOrValue<string>, PromiseOrValue<string>]): string;
   encodeFunctionData(
-    functionFragment: 'batchStakeMuxForAccount',
-    values: [PromiseOrValue<string>[], PromiseOrValue<BigNumberish>[], PromiseOrValue<BigNumberish>[]],
+    functionFragment: 'approve',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
   ): string;
-  encodeFunctionData(functionFragment: 'claimAll', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'claimFromMlp', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'claimFromVe', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'claimVestedTokenFromMlp', values: [PromiseOrValue<string>]): string;
-  encodeFunctionData(functionFragment: 'claimVestedTokenFromVe', values: [PromiseOrValue<string>]): string;
-  encodeFunctionData(functionFragment: 'claimableRewards', values: [PromiseOrValue<string>]): string;
-  encodeFunctionData(functionFragment: 'claimableVestedTokenFromMlp', values: [PromiseOrValue<string>]): string;
-  encodeFunctionData(functionFragment: 'claimableVestedTokenFromVe', values: [PromiseOrValue<string>]): string;
-  encodeFunctionData(functionFragment: 'claimedVestedTokenFromMlp', values: [PromiseOrValue<string>]): string;
-  encodeFunctionData(functionFragment: 'claimedVestedTokenFromVe', values: [PromiseOrValue<string>]): string;
-  encodeFunctionData(functionFragment: 'compound', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'compoundForAccount', values: [PromiseOrValue<string>]): string;
-  encodeFunctionData(functionFragment: 'depositToMlpVester', values: [PromiseOrValue<BigNumberish>]): string;
-  encodeFunctionData(functionFragment: 'depositToVeVester', values: [PromiseOrValue<BigNumberish>]): string;
-  encodeFunctionData(functionFragment: 'feeRewardRate', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'increaseStakeUnlockTime', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'averageStakedAmounts', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'balanceOf', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'balances', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'claim', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'claimForAccount',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>],
+  ): string;
+  encodeFunctionData(functionFragment: 'claimable', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'claimableReward', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'cumulativeRewardPerToken', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'cumulativeRewards', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'decimals', values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: 'depositBalances',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>],
+  ): string;
+  encodeFunctionData(functionFragment: 'distributor', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'inPrivateClaimingMode', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'inPrivateStakingMode', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'inPrivateTransferMode', values?: undefined): string;
   encodeFunctionData(
     functionFragment: 'initialize',
-    values: [
-      [
-        PromiseOrValue<string>,
-        PromiseOrValue<string>,
-        PromiseOrValue<string>,
-        PromiseOrValue<string>,
-        PromiseOrValue<string>,
-      ],
-      [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<string>],
-      [PromiseOrValue<string>, PromiseOrValue<string>],
-      [PromiseOrValue<string>, PromiseOrValue<string>],
-    ],
+    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<string>[], PromiseOrValue<string>],
   ): string;
-  encodeFunctionData(functionFragment: 'maxVestableTokenFromMlp', values: [PromiseOrValue<string>]): string;
-  encodeFunctionData(functionFragment: 'maxVestableTokenFromVe', values: [PromiseOrValue<string>]): string;
-  encodeFunctionData(functionFragment: 'mcb', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'mlp', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'mlpDistributor', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'mlpFeeTracker', values?: undefined): string;
-  encodeFunctionData(
-    functionFragment: 'mlpLockAmount',
-    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
-  ): string;
-  encodeFunctionData(functionFragment: 'mlpMuxTracker', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'mlpVester', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'mux', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'muxDistributor', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'muxRewardRate', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'muxVester', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'isDepositToken', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'isHandler', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'lastRewardBalance', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'name', values?: undefined): string;
   encodeFunctionData(functionFragment: 'owner', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'poolOwnedRate', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'protocolLiquidityOwner', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'previousCumulatedRewardPerToken', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'renounceOwnership', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'reservedMlpAmount', values: [PromiseOrValue<string>]): string;
-  encodeFunctionData(functionFragment: 'setProtocolLiquidityOwner', values: [PromiseOrValue<string>]): string;
-  encodeFunctionData(functionFragment: 'setTimelock', values: [PromiseOrValue<string>]): string;
-  encodeFunctionData(functionFragment: 'setVault', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'rewardToken', values?: undefined): string;
   encodeFunctionData(
-    functionFragment: 'stakeMcb',
-    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+    functionFragment: 'setDepositToken',
+    values: [PromiseOrValue<string>, PromiseOrValue<boolean>],
   ): string;
+  encodeFunctionData(functionFragment: 'setHandler', values: [PromiseOrValue<string>, PromiseOrValue<boolean>]): string;
+  encodeFunctionData(functionFragment: 'setInPrivateClaimingMode', values: [PromiseOrValue<boolean>]): string;
+  encodeFunctionData(functionFragment: 'setInPrivateStakingMode', values: [PromiseOrValue<boolean>]): string;
+  encodeFunctionData(functionFragment: 'setInPrivateTransferMode', values: [PromiseOrValue<boolean>]): string;
+  encodeFunctionData(functionFragment: 'stake', values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(
-    functionFragment: 'stakeMcbForAccount',
+    functionFragment: 'stakeForAccount',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'stakedAmounts', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'symbol', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'totalDepositSupply', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'totalSupply', values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: 'transfer',
     values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
   ): string;
-  encodeFunctionData(functionFragment: 'stakeMlp', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(
-    functionFragment: 'stakeMux',
-    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+    functionFragment: 'transferFrom',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
   ): string;
-  encodeFunctionData(functionFragment: 'stakedMlpAmount', values: [PromiseOrValue<string>]): string;
-  encodeFunctionData(functionFragment: 'timelock', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'totalVestedTokenFromMlp', values: [PromiseOrValue<string>]): string;
-  encodeFunctionData(functionFragment: 'totalVestedTokenFromVe', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'transferOwnership', values: [PromiseOrValue<string>]): string;
-  encodeFunctionData(functionFragment: 'unlockTime', values: [PromiseOrValue<string>]): string;
-  encodeFunctionData(functionFragment: 'unstakeMcbAndMux', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'unstakeMlp', values: [PromiseOrValue<BigNumberish>]): string;
-  encodeFunctionData(functionFragment: 'vault', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'veFeeTracker', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'veMuxTracker', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'votingEscrow', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'votingEscrowedAmounts', values: [PromiseOrValue<string>]): string;
-  encodeFunctionData(functionFragment: 'votingEscrowedRate', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'weth', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'withdrawFromMlpVester', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'withdrawFromVeVester', values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: 'unstake',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'unstakeForAccount',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<BigNumberish>, PromiseOrValue<string>],
+  ): string;
+  encodeFunctionData(functionFragment: 'updateRewards', values?: undefined): string;
   encodeFunctionData(
     functionFragment: 'withdrawToken',
     values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
   ): string;
 
-  decodeFunctionResult(functionFragment: 'averageStakePeriod', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'batchCompoundForAccounts', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'batchStakeMuxForAccount', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'claimAll', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'claimFromMlp', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'claimFromVe', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'claimVestedTokenFromMlp', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'claimVestedTokenFromVe', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'claimableRewards', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'claimableVestedTokenFromMlp', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'claimableVestedTokenFromVe', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'claimedVestedTokenFromMlp', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'claimedVestedTokenFromVe', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'compound', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'compoundForAccount', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'depositToMlpVester', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'depositToVeVester', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'feeRewardRate', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'increaseStakeUnlockTime', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'allowance', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'allowances', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'approve', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'averageStakedAmounts', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'balanceOf', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'balances', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'claim', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'claimForAccount', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'claimable', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'claimableReward', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'cumulativeRewardPerToken', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'cumulativeRewards', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'decimals', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'depositBalances', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'distributor', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'inPrivateClaimingMode', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'inPrivateStakingMode', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'inPrivateTransferMode', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'initialize', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'maxVestableTokenFromMlp', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'maxVestableTokenFromVe', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'mcb', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'mlp', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'mlpDistributor', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'mlpFeeTracker', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'mlpLockAmount', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'mlpMuxTracker', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'mlpVester', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'mux', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'muxDistributor', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'muxRewardRate', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'muxVester', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'isDepositToken', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'isHandler', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'lastRewardBalance', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'name', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'owner', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'poolOwnedRate', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'protocolLiquidityOwner', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'previousCumulatedRewardPerToken', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'renounceOwnership', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'reservedMlpAmount', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'setProtocolLiquidityOwner', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'setTimelock', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'setVault', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'stakeMcb', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'stakeMcbForAccount', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'stakeMlp', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'stakeMux', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'stakedMlpAmount', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'timelock', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'totalVestedTokenFromMlp', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'totalVestedTokenFromVe', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'rewardToken', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'setDepositToken', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'setHandler', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'setInPrivateClaimingMode', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'setInPrivateStakingMode', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'setInPrivateTransferMode', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'stake', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'stakeForAccount', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'stakedAmounts', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'symbol', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'totalDepositSupply', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'totalSupply', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'transfer', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'transferFrom', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'transferOwnership', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'unlockTime', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'unstakeMcbAndMux', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'unstakeMlp', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'vault', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'veFeeTracker', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'veMuxTracker', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'votingEscrow', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'votingEscrowedAmounts', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'votingEscrowedRate', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'weth', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'withdrawFromMlpVester', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'withdrawFromVeVester', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'unstake', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'unstakeForAccount', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'updateRewards', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'withdrawToken', data: BytesLike): Result;
 
   events: {
+    'Approval(address,address,uint256)': EventFragment;
+    'Claim(address,uint256)': EventFragment;
+    'Initialized(uint8)': EventFragment;
     'OwnershipTransferred(address,address)': EventFragment;
-    'SetProtocolLiquidityOwner(address,address)': EventFragment;
-    'SetTimelock(address,address)': EventFragment;
-    'SetVault(address,address)': EventFragment;
-    'StakeMlp(address,uint256)': EventFragment;
-    'StakeMux(address,address,uint256,uint256)': EventFragment;
-    'UnstakeMlp(address,uint256)': EventFragment;
-    'UnstakeMux(address,uint256)': EventFragment;
+    'Transfer(address,address,uint256)': EventFragment;
   };
 
+  getEvent(nameOrSignatureOrTopic: 'Approval'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'Claim'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'Initialized'): EventFragment;
   getEvent(nameOrSignatureOrTopic: 'OwnershipTransferred'): EventFragment;
-  getEvent(nameOrSignatureOrTopic: 'SetProtocolLiquidityOwner'): EventFragment;
-  getEvent(nameOrSignatureOrTopic: 'SetTimelock'): EventFragment;
-  getEvent(nameOrSignatureOrTopic: 'SetVault'): EventFragment;
-  getEvent(nameOrSignatureOrTopic: 'StakeMlp'): EventFragment;
-  getEvent(nameOrSignatureOrTopic: 'StakeMux'): EventFragment;
-  getEvent(nameOrSignatureOrTopic: 'UnstakeMlp'): EventFragment;
-  getEvent(nameOrSignatureOrTopic: 'UnstakeMux'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'Transfer'): EventFragment;
 }
+
+export interface ApprovalEventObject {
+  owner: string;
+  spender: string;
+  value: BigNumber;
+}
+export type ApprovalEvent = TypedEvent<[string, string, BigNumber], ApprovalEventObject>;
+
+export type ApprovalEventFilter = TypedEventFilter<ApprovalEvent>;
+
+export interface ClaimEventObject {
+  receiver: string;
+  amount: BigNumber;
+}
+export type ClaimEvent = TypedEvent<[string, BigNumber], ClaimEventObject>;
+
+export type ClaimEventFilter = TypedEventFilter<ClaimEvent>;
+
+export interface InitializedEventObject {
+  version: number;
+}
+export type InitializedEvent = TypedEvent<[number], InitializedEventObject>;
+
+export type InitializedEventFilter = TypedEventFilter<InitializedEvent>;
 
 export interface OwnershipTransferredEventObject {
   previousOwner: string;
@@ -340,70 +287,21 @@ export type OwnershipTransferredEvent = TypedEvent<[string, string], OwnershipTr
 
 export type OwnershipTransferredEventFilter = TypedEventFilter<OwnershipTransferredEvent>;
 
-export interface SetProtocolLiquidityOwnerEventObject {
-  previousOwner: string;
-  newOwner: string;
+export interface TransferEventObject {
+  from: string;
+  to: string;
+  value: BigNumber;
 }
-export type SetProtocolLiquidityOwnerEvent = TypedEvent<[string, string], SetProtocolLiquidityOwnerEventObject>;
+export type TransferEvent = TypedEvent<[string, string, BigNumber], TransferEventObject>;
 
-export type SetProtocolLiquidityOwnerEventFilter = TypedEventFilter<SetProtocolLiquidityOwnerEvent>;
-
-export interface SetTimelockEventObject {
-  previousTimelock: string;
-  newTimelock: string;
-}
-export type SetTimelockEvent = TypedEvent<[string, string], SetTimelockEventObject>;
-
-export type SetTimelockEventFilter = TypedEventFilter<SetTimelockEvent>;
-
-export interface SetVaultEventObject {
-  previousVault: string;
-  newVault: string;
-}
-export type SetVaultEvent = TypedEvent<[string, string], SetVaultEventObject>;
-
-export type SetVaultEventFilter = TypedEventFilter<SetVaultEvent>;
-
-export interface StakeMlpEventObject {
-  account: string;
-  amount: BigNumber;
-}
-export type StakeMlpEvent = TypedEvent<[string, BigNumber], StakeMlpEventObject>;
-
-export type StakeMlpEventFilter = TypedEventFilter<StakeMlpEvent>;
-
-export interface StakeMuxEventObject {
-  account: string;
-  token: string;
-  amount: BigNumber;
-  unlockTime: BigNumber;
-}
-export type StakeMuxEvent = TypedEvent<[string, string, BigNumber, BigNumber], StakeMuxEventObject>;
-
-export type StakeMuxEventFilter = TypedEventFilter<StakeMuxEvent>;
-
-export interface UnstakeMlpEventObject {
-  account: string;
-  amount: BigNumber;
-}
-export type UnstakeMlpEvent = TypedEvent<[string, BigNumber], UnstakeMlpEventObject>;
-
-export type UnstakeMlpEventFilter = TypedEventFilter<UnstakeMlpEvent>;
-
-export interface UnstakeMuxEventObject {
-  account: string;
-  amount: BigNumber;
-}
-export type UnstakeMuxEvent = TypedEvent<[string, BigNumber], UnstakeMuxEventObject>;
-
-export type UnstakeMuxEventFilter = TypedEventFilter<UnstakeMuxEvent>;
+export type TransferEventFilter = TypedEventFilter<TransferEvent>;
 
 export interface MuxRewardTracker extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
 
-  interface: MuxRewardRouterInterface;
+  interface: MuxRewardTrackerInterface;
 
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,
@@ -421,204 +319,174 @@ export interface MuxRewardTracker extends BaseContract {
   removeListener: OnEvent<this>;
 
   functions: {
-    averageStakePeriod(overrides?: CallOverrides): Promise<[BigNumber]>;
-
-    batchCompoundForAccounts(
-      _accounts: PromiseOrValue<string>[],
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<ContractTransaction>;
-
-    batchStakeMuxForAccount(
-      _accounts: PromiseOrValue<string>[],
-      _amounts: PromiseOrValue<BigNumberish>[],
-      _unlockTime: PromiseOrValue<BigNumberish>[],
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<ContractTransaction>;
-
-    claimAll(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
-
-    claimFromMlp(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
-
-    claimFromVe(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
-
-    claimVestedTokenFromMlp(
-      account: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<ContractTransaction>;
-
-    claimVestedTokenFromVe(
-      account: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<ContractTransaction>;
-
-    claimableRewards(
-      account: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<ContractTransaction>;
-
-    claimableVestedTokenFromMlp(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
-
-    claimableVestedTokenFromVe(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
-
-    claimedVestedTokenFromMlp(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
-
-    claimedVestedTokenFromVe(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
-
-    compound(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
-
-    compoundForAccount(
-      _account: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<ContractTransaction>;
-
-    depositToMlpVester(
-      amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<ContractTransaction>;
-
-    depositToVeVester(
-      amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<ContractTransaction>;
-
-    feeRewardRate(overrides?: CallOverrides): Promise<[BigNumber]>;
-
-    increaseStakeUnlockTime(
-      lockPeriod: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<ContractTransaction>;
-
-    initialize(
-      _tokens: [
-        PromiseOrValue<string>,
-        PromiseOrValue<string>,
-        PromiseOrValue<string>,
-        PromiseOrValue<string>,
-        PromiseOrValue<string>,
-      ],
-      _rewardTrackers: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<string>],
-      _vesters: [PromiseOrValue<string>, PromiseOrValue<string>],
-      _distributors: [PromiseOrValue<string>, PromiseOrValue<string>],
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<ContractTransaction>;
-
-    maxVestableTokenFromMlp(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
-
-    maxVestableTokenFromVe(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
-
-    mcb(overrides?: CallOverrides): Promise<[string]>;
-
-    mlp(overrides?: CallOverrides): Promise<[string]>;
-
-    mlpDistributor(overrides?: CallOverrides): Promise<[string]>;
-
-    mlpFeeTracker(overrides?: CallOverrides): Promise<[string]>;
-
-    mlpLockAmount(
-      account: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
+    allowance(
+      _owner: PromiseOrValue<string>,
+      _spender: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber]>;
 
-    mlpMuxTracker(overrides?: CallOverrides): Promise<[string]>;
+    allowances(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber]>;
 
-    mlpVester(overrides?: CallOverrides): Promise<[string]>;
+    approve(
+      _spender: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<ContractTransaction>;
 
-    mux(overrides?: CallOverrides): Promise<[string]>;
+    averageStakedAmounts(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    muxDistributor(overrides?: CallOverrides): Promise<[string]>;
+    balanceOf(_account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    muxRewardRate(overrides?: CallOverrides): Promise<[BigNumber]>;
+    balances(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    muxVester(overrides?: CallOverrides): Promise<[string]>;
+    claim(
+      _receiver: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<ContractTransaction>;
+
+    claimForAccount(
+      _account: PromiseOrValue<string>,
+      _receiver: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<ContractTransaction>;
+
+    claimable(
+      _account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<ContractTransaction>;
+
+    claimableReward(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
+
+    cumulativeRewardPerToken(overrides?: CallOverrides): Promise<[BigNumber]>;
+
+    cumulativeRewards(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
+
+    decimals(overrides?: CallOverrides): Promise<[number]>;
+
+    depositBalances(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber]>;
+
+    distributor(overrides?: CallOverrides): Promise<[string]>;
+
+    inPrivateClaimingMode(overrides?: CallOverrides): Promise<[boolean]>;
+
+    inPrivateStakingMode(overrides?: CallOverrides): Promise<[boolean]>;
+
+    inPrivateTransferMode(overrides?: CallOverrides): Promise<[boolean]>;
+
+    initialize(
+      _name: PromiseOrValue<string>,
+      _symbol: PromiseOrValue<string>,
+      _depositTokens: PromiseOrValue<string>[],
+      _distributor: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<ContractTransaction>;
+
+    isDepositToken(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[boolean]>;
+
+    isHandler(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[boolean]>;
+
+    lastRewardBalance(overrides?: CallOverrides): Promise<[BigNumber]>;
+
+    name(overrides?: CallOverrides): Promise<[string]>;
 
     owner(overrides?: CallOverrides): Promise<[string]>;
 
-    poolOwnedRate(overrides?: CallOverrides): Promise<[BigNumber]>;
-
-    protocolLiquidityOwner(overrides?: CallOverrides): Promise<[string]>;
+    previousCumulatedRewardPerToken(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
-    reservedMlpAmount(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
+    rewardToken(overrides?: CallOverrides): Promise<[string]>;
 
-    setProtocolLiquidityOwner(
-      _protocolLiquidityOwner: PromiseOrValue<string>,
+    setDepositToken(
+      _depositToken: PromiseOrValue<string>,
+      _isDepositToken: PromiseOrValue<boolean>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    setTimelock(
-      _timelock: PromiseOrValue<string>,
+    setHandler(
+      _handler: PromiseOrValue<string>,
+      _isActive: PromiseOrValue<boolean>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    setVault(
-      _vault: PromiseOrValue<string>,
+    setInPrivateClaimingMode(
+      _inPrivateClaimingMode: PromiseOrValue<boolean>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    stakeMcb(
+    setInPrivateStakingMode(
+      _inPrivateStakingMode: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<ContractTransaction>;
+
+    setInPrivateTransferMode(
+      _inPrivateTransferMode: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<ContractTransaction>;
+
+    stake(
+      _depositToken: PromiseOrValue<string>,
       _amount: PromiseOrValue<BigNumberish>,
-      lockPeriod: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    stakeMcbForAccount(
+    stakeForAccount(
+      _fundingAccount: PromiseOrValue<string>,
       _account: PromiseOrValue<string>,
+      _depositToken: PromiseOrValue<string>,
       _amount: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    stakeMlp(
+    stakedAmounts(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
+
+    symbol(overrides?: CallOverrides): Promise<[string]>;
+
+    totalDepositSupply(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
+
+    totalSupply(overrides?: CallOverrides): Promise<[BigNumber]>;
+
+    transfer(
+      _recipient: PromiseOrValue<string>,
       _amount: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    stakeMux(
+    transferFrom(
+      _sender: PromiseOrValue<string>,
+      _recipient: PromiseOrValue<string>,
       _amount: PromiseOrValue<BigNumberish>,
-      lockPeriod: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
-
-    stakedMlpAmount(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
-
-    timelock(overrides?: CallOverrides): Promise<[string]>;
-
-    totalVestedTokenFromMlp(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
-
-    totalVestedTokenFromVe(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     transferOwnership(
       newOwner: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    unlockTime(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
-
-    unstakeMcbAndMux(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
-
-    unstakeMlp(
+    unstake(
+      _depositToken: PromiseOrValue<string>,
       _amount: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    vault(overrides?: CallOverrides): Promise<[string]>;
+    unstakeForAccount(
+      _account: PromiseOrValue<string>,
+      _depositToken: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
+      _receiver: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<ContractTransaction>;
 
-    veFeeTracker(overrides?: CallOverrides): Promise<[string]>;
-
-    veMuxTracker(overrides?: CallOverrides): Promise<[string]>;
-
-    votingEscrow(overrides?: CallOverrides): Promise<[string]>;
-
-    votingEscrowedAmounts(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber, BigNumber]>;
-
-    votingEscrowedRate(overrides?: CallOverrides): Promise<[BigNumber]>;
-
-    weth(overrides?: CallOverrides): Promise<[string]>;
-
-    withdrawFromMlpVester(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
-
-    withdrawFromVeVester(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
+    updateRewards(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     withdrawToken(
       _token: PromiseOrValue<string>,
@@ -628,204 +496,170 @@ export interface MuxRewardTracker extends BaseContract {
     ): Promise<ContractTransaction>;
   };
 
-  averageStakePeriod(overrides?: CallOverrides): Promise<BigNumber>;
-
-  batchCompoundForAccounts(
-    _accounts: PromiseOrValue<string>[],
-    overrides?: Overrides & { from?: PromiseOrValue<string> },
-  ): Promise<ContractTransaction>;
-
-  batchStakeMuxForAccount(
-    _accounts: PromiseOrValue<string>[],
-    _amounts: PromiseOrValue<BigNumberish>[],
-    _unlockTime: PromiseOrValue<BigNumberish>[],
-    overrides?: Overrides & { from?: PromiseOrValue<string> },
-  ): Promise<ContractTransaction>;
-
-  claimAll(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
-
-  claimFromMlp(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
-
-  claimFromVe(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
-
-  claimVestedTokenFromMlp(
-    account: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> },
-  ): Promise<ContractTransaction>;
-
-  claimVestedTokenFromVe(
-    account: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> },
-  ): Promise<ContractTransaction>;
-
-  claimableRewards(
-    account: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> },
-  ): Promise<ContractTransaction>;
-
-  claimableVestedTokenFromMlp(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
-
-  claimableVestedTokenFromVe(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
-
-  claimedVestedTokenFromMlp(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
-
-  claimedVestedTokenFromVe(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
-
-  compound(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
-
-  compoundForAccount(
-    _account: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> },
-  ): Promise<ContractTransaction>;
-
-  depositToMlpVester(
-    amount: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> },
-  ): Promise<ContractTransaction>;
-
-  depositToVeVester(
-    amount: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> },
-  ): Promise<ContractTransaction>;
-
-  feeRewardRate(overrides?: CallOverrides): Promise<BigNumber>;
-
-  increaseStakeUnlockTime(
-    lockPeriod: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> },
-  ): Promise<ContractTransaction>;
-
-  initialize(
-    _tokens: [
-      PromiseOrValue<string>,
-      PromiseOrValue<string>,
-      PromiseOrValue<string>,
-      PromiseOrValue<string>,
-      PromiseOrValue<string>,
-    ],
-    _rewardTrackers: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<string>],
-    _vesters: [PromiseOrValue<string>, PromiseOrValue<string>],
-    _distributors: [PromiseOrValue<string>, PromiseOrValue<string>],
-    overrides?: Overrides & { from?: PromiseOrValue<string> },
-  ): Promise<ContractTransaction>;
-
-  maxVestableTokenFromMlp(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
-
-  maxVestableTokenFromVe(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
-
-  mcb(overrides?: CallOverrides): Promise<string>;
-
-  mlp(overrides?: CallOverrides): Promise<string>;
-
-  mlpDistributor(overrides?: CallOverrides): Promise<string>;
-
-  mlpFeeTracker(overrides?: CallOverrides): Promise<string>;
-
-  mlpLockAmount(
-    account: PromiseOrValue<string>,
-    amount: PromiseOrValue<BigNumberish>,
+  allowance(
+    _owner: PromiseOrValue<string>,
+    _spender: PromiseOrValue<string>,
     overrides?: CallOverrides,
   ): Promise<BigNumber>;
 
-  mlpMuxTracker(overrides?: CallOverrides): Promise<string>;
+  allowances(arg0: PromiseOrValue<string>, arg1: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  mlpVester(overrides?: CallOverrides): Promise<string>;
+  approve(
+    _spender: PromiseOrValue<string>,
+    _amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
+  ): Promise<ContractTransaction>;
 
-  mux(overrides?: CallOverrides): Promise<string>;
+  averageStakedAmounts(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  muxDistributor(overrides?: CallOverrides): Promise<string>;
+  balanceOf(_account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  muxRewardRate(overrides?: CallOverrides): Promise<BigNumber>;
+  balances(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  muxVester(overrides?: CallOverrides): Promise<string>;
+  claim(
+    _receiver: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
+  ): Promise<ContractTransaction>;
+
+  claimForAccount(
+    _account: PromiseOrValue<string>,
+    _receiver: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
+  ): Promise<ContractTransaction>;
+
+  claimable(
+    _account: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
+  ): Promise<ContractTransaction>;
+
+  claimableReward(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
+
+  cumulativeRewardPerToken(overrides?: CallOverrides): Promise<BigNumber>;
+
+  cumulativeRewards(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
+
+  decimals(overrides?: CallOverrides): Promise<number>;
+
+  depositBalances(
+    arg0: PromiseOrValue<string>,
+    arg1: PromiseOrValue<string>,
+    overrides?: CallOverrides,
+  ): Promise<BigNumber>;
+
+  distributor(overrides?: CallOverrides): Promise<string>;
+
+  inPrivateClaimingMode(overrides?: CallOverrides): Promise<boolean>;
+
+  inPrivateStakingMode(overrides?: CallOverrides): Promise<boolean>;
+
+  inPrivateTransferMode(overrides?: CallOverrides): Promise<boolean>;
+
+  initialize(
+    _name: PromiseOrValue<string>,
+    _symbol: PromiseOrValue<string>,
+    _depositTokens: PromiseOrValue<string>[],
+    _distributor: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
+  ): Promise<ContractTransaction>;
+
+  isDepositToken(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
+
+  isHandler(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
+
+  lastRewardBalance(overrides?: CallOverrides): Promise<BigNumber>;
+
+  name(overrides?: CallOverrides): Promise<string>;
 
   owner(overrides?: CallOverrides): Promise<string>;
 
-  poolOwnedRate(overrides?: CallOverrides): Promise<BigNumber>;
-
-  protocolLiquidityOwner(overrides?: CallOverrides): Promise<string>;
+  previousCumulatedRewardPerToken(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
-  reservedMlpAmount(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
+  rewardToken(overrides?: CallOverrides): Promise<string>;
 
-  setProtocolLiquidityOwner(
-    _protocolLiquidityOwner: PromiseOrValue<string>,
+  setDepositToken(
+    _depositToken: PromiseOrValue<string>,
+    _isDepositToken: PromiseOrValue<boolean>,
     overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  setTimelock(
-    _timelock: PromiseOrValue<string>,
+  setHandler(
+    _handler: PromiseOrValue<string>,
+    _isActive: PromiseOrValue<boolean>,
     overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  setVault(
-    _vault: PromiseOrValue<string>,
+  setInPrivateClaimingMode(
+    _inPrivateClaimingMode: PromiseOrValue<boolean>,
     overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  stakeMcb(
+  setInPrivateStakingMode(
+    _inPrivateStakingMode: PromiseOrValue<boolean>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
+  ): Promise<ContractTransaction>;
+
+  setInPrivateTransferMode(
+    _inPrivateTransferMode: PromiseOrValue<boolean>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
+  ): Promise<ContractTransaction>;
+
+  stake(
+    _depositToken: PromiseOrValue<string>,
     _amount: PromiseOrValue<BigNumberish>,
-    lockPeriod: PromiseOrValue<BigNumberish>,
     overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  stakeMcbForAccount(
+  stakeForAccount(
+    _fundingAccount: PromiseOrValue<string>,
     _account: PromiseOrValue<string>,
+    _depositToken: PromiseOrValue<string>,
     _amount: PromiseOrValue<BigNumberish>,
     overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  stakeMlp(
+  stakedAmounts(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
+
+  symbol(overrides?: CallOverrides): Promise<string>;
+
+  totalDepositSupply(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
+
+  totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
+
+  transfer(
+    _recipient: PromiseOrValue<string>,
     _amount: PromiseOrValue<BigNumberish>,
     overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  stakeMux(
+  transferFrom(
+    _sender: PromiseOrValue<string>,
+    _recipient: PromiseOrValue<string>,
     _amount: PromiseOrValue<BigNumberish>,
-    lockPeriod: PromiseOrValue<BigNumberish>,
     overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
-
-  stakedMlpAmount(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
-
-  timelock(overrides?: CallOverrides): Promise<string>;
-
-  totalVestedTokenFromMlp(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
-
-  totalVestedTokenFromVe(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   transferOwnership(
     newOwner: PromiseOrValue<string>,
     overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  unlockTime(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
-
-  unstakeMcbAndMux(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
-
-  unstakeMlp(
+  unstake(
+    _depositToken: PromiseOrValue<string>,
     _amount: PromiseOrValue<BigNumberish>,
     overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  vault(overrides?: CallOverrides): Promise<string>;
+  unstakeForAccount(
+    _account: PromiseOrValue<string>,
+    _depositToken: PromiseOrValue<string>,
+    _amount: PromiseOrValue<BigNumberish>,
+    _receiver: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
+  ): Promise<ContractTransaction>;
 
-  veFeeTracker(overrides?: CallOverrides): Promise<string>;
-
-  veMuxTracker(overrides?: CallOverrides): Promise<string>;
-
-  votingEscrow(overrides?: CallOverrides): Promise<string>;
-
-  votingEscrowedAmounts(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber, BigNumber]>;
-
-  votingEscrowedRate(overrides?: CallOverrides): Promise<BigNumber>;
-
-  weth(overrides?: CallOverrides): Promise<string>;
-
-  withdrawFromMlpVester(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
-
-  withdrawFromVeVester(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
+  updateRewards(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   withdrawToken(
     _token: PromiseOrValue<string>,
@@ -835,176 +669,156 @@ export interface MuxRewardTracker extends BaseContract {
   ): Promise<ContractTransaction>;
 
   callStatic: {
-    averageStakePeriod(overrides?: CallOverrides): Promise<BigNumber>;
-
-    batchCompoundForAccounts(_accounts: PromiseOrValue<string>[], overrides?: CallOverrides): Promise<void>;
-
-    batchStakeMuxForAccount(
-      _accounts: PromiseOrValue<string>[],
-      _amounts: PromiseOrValue<BigNumberish>[],
-      _unlockTime: PromiseOrValue<BigNumberish>[],
-      overrides?: CallOverrides,
-    ): Promise<void>;
-
-    claimAll(overrides?: CallOverrides): Promise<void>;
-
-    claimFromMlp(overrides?: CallOverrides): Promise<void>;
-
-    claimFromVe(overrides?: CallOverrides): Promise<void>;
-
-    claimVestedTokenFromMlp(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
-
-    claimVestedTokenFromVe(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
-
-    claimableRewards(
-      account: PromiseOrValue<string>,
-      overrides?: CallOverrides,
-    ): Promise<
-      [BigNumber, BigNumber, BigNumber, BigNumber, BigNumber] & {
-        mlpFeeAmount: BigNumber;
-        mlpMuxAmount: BigNumber;
-        veFeeAmount: BigNumber;
-        veMuxAmount: BigNumber;
-        mcbAmount: BigNumber;
-      }
-    >;
-
-    claimableVestedTokenFromMlp(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
-
-    claimableVestedTokenFromVe(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
-
-    claimedVestedTokenFromMlp(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
-
-    claimedVestedTokenFromVe(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
-
-    compound(overrides?: CallOverrides): Promise<void>;
-
-    compoundForAccount(_account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
-
-    depositToMlpVester(amount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
-
-    depositToVeVester(amount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
-
-    feeRewardRate(overrides?: CallOverrides): Promise<BigNumber>;
-
-    increaseStakeUnlockTime(lockPeriod: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
-
-    initialize(
-      _tokens: [
-        PromiseOrValue<string>,
-        PromiseOrValue<string>,
-        PromiseOrValue<string>,
-        PromiseOrValue<string>,
-        PromiseOrValue<string>,
-      ],
-      _rewardTrackers: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<string>],
-      _vesters: [PromiseOrValue<string>, PromiseOrValue<string>],
-      _distributors: [PromiseOrValue<string>, PromiseOrValue<string>],
-      overrides?: CallOverrides,
-    ): Promise<void>;
-
-    maxVestableTokenFromMlp(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
-
-    maxVestableTokenFromVe(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
-
-    mcb(overrides?: CallOverrides): Promise<string>;
-
-    mlp(overrides?: CallOverrides): Promise<string>;
-
-    mlpDistributor(overrides?: CallOverrides): Promise<string>;
-
-    mlpFeeTracker(overrides?: CallOverrides): Promise<string>;
-
-    mlpLockAmount(
-      account: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
+    allowance(
+      _owner: PromiseOrValue<string>,
+      _spender: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
-    mlpMuxTracker(overrides?: CallOverrides): Promise<string>;
+    allowances(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    mlpVester(overrides?: CallOverrides): Promise<string>;
+    approve(
+      _spender: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
 
-    mux(overrides?: CallOverrides): Promise<string>;
+    averageStakedAmounts(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    muxDistributor(overrides?: CallOverrides): Promise<string>;
+    balanceOf(_account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    muxRewardRate(overrides?: CallOverrides): Promise<BigNumber>;
+    balances(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    muxVester(overrides?: CallOverrides): Promise<string>;
+    claim(_receiver: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
+
+    claimForAccount(
+      _account: PromiseOrValue<string>,
+      _receiver: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
+
+    claimable(_account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
+
+    claimableReward(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
+
+    cumulativeRewardPerToken(overrides?: CallOverrides): Promise<BigNumber>;
+
+    cumulativeRewards(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
+
+    decimals(overrides?: CallOverrides): Promise<number>;
+
+    depositBalances(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
+
+    distributor(overrides?: CallOverrides): Promise<string>;
+
+    inPrivateClaimingMode(overrides?: CallOverrides): Promise<boolean>;
+
+    inPrivateStakingMode(overrides?: CallOverrides): Promise<boolean>;
+
+    inPrivateTransferMode(overrides?: CallOverrides): Promise<boolean>;
+
+    initialize(
+      _name: PromiseOrValue<string>,
+      _symbol: PromiseOrValue<string>,
+      _depositTokens: PromiseOrValue<string>[],
+      _distributor: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
+
+    isDepositToken(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
+
+    isHandler(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
+
+    lastRewardBalance(overrides?: CallOverrides): Promise<BigNumber>;
+
+    name(overrides?: CallOverrides): Promise<string>;
 
     owner(overrides?: CallOverrides): Promise<string>;
 
-    poolOwnedRate(overrides?: CallOverrides): Promise<BigNumber>;
-
-    protocolLiquidityOwner(overrides?: CallOverrides): Promise<string>;
+    previousCumulatedRewardPerToken(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     renounceOwnership(overrides?: CallOverrides): Promise<void>;
 
-    reservedMlpAmount(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
+    rewardToken(overrides?: CallOverrides): Promise<string>;
 
-    setProtocolLiquidityOwner(
-      _protocolLiquidityOwner: PromiseOrValue<string>,
+    setDepositToken(
+      _depositToken: PromiseOrValue<string>,
+      _isDepositToken: PromiseOrValue<boolean>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
-    setTimelock(_timelock: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
+    setHandler(
+      _handler: PromiseOrValue<string>,
+      _isActive: PromiseOrValue<boolean>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    setVault(_vault: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
+    setInPrivateClaimingMode(_inPrivateClaimingMode: PromiseOrValue<boolean>, overrides?: CallOverrides): Promise<void>;
 
-    stakeMcb(
+    setInPrivateStakingMode(_inPrivateStakingMode: PromiseOrValue<boolean>, overrides?: CallOverrides): Promise<void>;
+
+    setInPrivateTransferMode(_inPrivateTransferMode: PromiseOrValue<boolean>, overrides?: CallOverrides): Promise<void>;
+
+    stake(
+      _depositToken: PromiseOrValue<string>,
       _amount: PromiseOrValue<BigNumberish>,
-      lockPeriod: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
-    stakeMcbForAccount(
+    stakeForAccount(
+      _fundingAccount: PromiseOrValue<string>,
       _account: PromiseOrValue<string>,
+      _depositToken: PromiseOrValue<string>,
       _amount: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
-    stakeMlp(_amount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
+    stakedAmounts(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    stakeMux(
+    symbol(overrides?: CallOverrides): Promise<string>;
+
+    totalDepositSupply(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
+
+    totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
+
+    transfer(
+      _recipient: PromiseOrValue<string>,
       _amount: PromiseOrValue<BigNumberish>,
-      lockPeriod: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
-    ): Promise<void>;
+    ): Promise<boolean>;
 
-    stakedMlpAmount(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
-
-    timelock(overrides?: CallOverrides): Promise<string>;
-
-    totalVestedTokenFromMlp(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
-
-    totalVestedTokenFromVe(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
+    transferFrom(
+      _sender: PromiseOrValue<string>,
+      _recipient: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
 
     transferOwnership(newOwner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    unlockTime(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
+    unstake(
+      _depositToken: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    unstakeMcbAndMux(overrides?: CallOverrides): Promise<void>;
+    unstakeForAccount(
+      _account: PromiseOrValue<string>,
+      _depositToken: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
+      _receiver: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    unstakeMlp(_amount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
-
-    vault(overrides?: CallOverrides): Promise<string>;
-
-    veFeeTracker(overrides?: CallOverrides): Promise<string>;
-
-    veMuxTracker(overrides?: CallOverrides): Promise<string>;
-
-    votingEscrow(overrides?: CallOverrides): Promise<string>;
-
-    votingEscrowedAmounts(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber, BigNumber]>;
-
-    votingEscrowedRate(overrides?: CallOverrides): Promise<BigNumber>;
-
-    weth(overrides?: CallOverrides): Promise<string>;
-
-    withdrawFromMlpVester(overrides?: CallOverrides): Promise<void>;
-
-    withdrawFromVeVester(overrides?: CallOverrides): Promise<void>;
+    updateRewards(overrides?: CallOverrides): Promise<void>;
 
     withdrawToken(
       _token: PromiseOrValue<string>,
@@ -1015,6 +829,23 @@ export interface MuxRewardTracker extends BaseContract {
   };
 
   filters: {
+    'Approval(address,address,uint256)'(
+      owner?: PromiseOrValue<string> | null,
+      spender?: PromiseOrValue<string> | null,
+      value?: null,
+    ): ApprovalEventFilter;
+    Approval(
+      owner?: PromiseOrValue<string> | null,
+      spender?: PromiseOrValue<string> | null,
+      value?: null,
+    ): ApprovalEventFilter;
+
+    'Claim(address,uint256)'(receiver?: null, amount?: null): ClaimEventFilter;
+    Claim(receiver?: null, amount?: null): ClaimEventFilter;
+
+    'Initialized(uint8)'(version?: null): InitializedEventFilter;
+    Initialized(version?: null): InitializedEventFilter;
+
     'OwnershipTransferred(address,address)'(
       previousOwner?: PromiseOrValue<string> | null,
       newOwner?: PromiseOrValue<string> | null,
@@ -1024,235 +855,187 @@ export interface MuxRewardTracker extends BaseContract {
       newOwner?: PromiseOrValue<string> | null,
     ): OwnershipTransferredEventFilter;
 
-    'SetProtocolLiquidityOwner(address,address)'(
-      previousOwner?: null,
-      newOwner?: null,
-    ): SetProtocolLiquidityOwnerEventFilter;
-    SetProtocolLiquidityOwner(previousOwner?: null, newOwner?: null): SetProtocolLiquidityOwnerEventFilter;
-
-    'SetTimelock(address,address)'(previousTimelock?: null, newTimelock?: null): SetTimelockEventFilter;
-    SetTimelock(previousTimelock?: null, newTimelock?: null): SetTimelockEventFilter;
-
-    'SetVault(address,address)'(previousVault?: null, newVault?: null): SetVaultEventFilter;
-    SetVault(previousVault?: null, newVault?: null): SetVaultEventFilter;
-
-    'StakeMlp(address,uint256)'(account?: null, amount?: null): StakeMlpEventFilter;
-    StakeMlp(account?: null, amount?: null): StakeMlpEventFilter;
-
-    'StakeMux(address,address,uint256,uint256)'(
-      account?: null,
-      token?: null,
-      amount?: null,
-      unlockTime?: null,
-    ): StakeMuxEventFilter;
-    StakeMux(account?: null, token?: null, amount?: null, unlockTime?: null): StakeMuxEventFilter;
-
-    'UnstakeMlp(address,uint256)'(account?: null, amount?: null): UnstakeMlpEventFilter;
-    UnstakeMlp(account?: null, amount?: null): UnstakeMlpEventFilter;
-
-    'UnstakeMux(address,uint256)'(account?: null, amount?: null): UnstakeMuxEventFilter;
-    UnstakeMux(account?: null, amount?: null): UnstakeMuxEventFilter;
+    'Transfer(address,address,uint256)'(
+      from?: PromiseOrValue<string> | null,
+      to?: PromiseOrValue<string> | null,
+      value?: null,
+    ): TransferEventFilter;
+    Transfer(
+      from?: PromiseOrValue<string> | null,
+      to?: PromiseOrValue<string> | null,
+      value?: null,
+    ): TransferEventFilter;
   };
 
   estimateGas: {
-    averageStakePeriod(overrides?: CallOverrides): Promise<BigNumber>;
-
-    batchCompoundForAccounts(
-      _accounts: PromiseOrValue<string>[],
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<BigNumber>;
-
-    batchStakeMuxForAccount(
-      _accounts: PromiseOrValue<string>[],
-      _amounts: PromiseOrValue<BigNumberish>[],
-      _unlockTime: PromiseOrValue<BigNumberish>[],
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<BigNumber>;
-
-    claimAll(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
-
-    claimFromMlp(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
-
-    claimFromVe(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
-
-    claimVestedTokenFromMlp(
-      account: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<BigNumber>;
-
-    claimVestedTokenFromVe(
-      account: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<BigNumber>;
-
-    claimableRewards(
-      account: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<BigNumber>;
-
-    claimableVestedTokenFromMlp(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
-
-    claimableVestedTokenFromVe(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
-
-    claimedVestedTokenFromMlp(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
-
-    claimedVestedTokenFromVe(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
-
-    compound(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
-
-    compoundForAccount(
-      _account: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<BigNumber>;
-
-    depositToMlpVester(
-      amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<BigNumber>;
-
-    depositToVeVester(
-      amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<BigNumber>;
-
-    feeRewardRate(overrides?: CallOverrides): Promise<BigNumber>;
-
-    increaseStakeUnlockTime(
-      lockPeriod: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<BigNumber>;
-
-    initialize(
-      _tokens: [
-        PromiseOrValue<string>,
-        PromiseOrValue<string>,
-        PromiseOrValue<string>,
-        PromiseOrValue<string>,
-        PromiseOrValue<string>,
-      ],
-      _rewardTrackers: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<string>],
-      _vesters: [PromiseOrValue<string>, PromiseOrValue<string>],
-      _distributors: [PromiseOrValue<string>, PromiseOrValue<string>],
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<BigNumber>;
-
-    maxVestableTokenFromMlp(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
-
-    maxVestableTokenFromVe(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
-
-    mcb(overrides?: CallOverrides): Promise<BigNumber>;
-
-    mlp(overrides?: CallOverrides): Promise<BigNumber>;
-
-    mlpDistributor(overrides?: CallOverrides): Promise<BigNumber>;
-
-    mlpFeeTracker(overrides?: CallOverrides): Promise<BigNumber>;
-
-    mlpLockAmount(
-      account: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
+    allowance(
+      _owner: PromiseOrValue<string>,
+      _spender: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
-    mlpMuxTracker(overrides?: CallOverrides): Promise<BigNumber>;
+    allowances(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    mlpVester(overrides?: CallOverrides): Promise<BigNumber>;
+    approve(
+      _spender: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
-    mux(overrides?: CallOverrides): Promise<BigNumber>;
+    averageStakedAmounts(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    muxDistributor(overrides?: CallOverrides): Promise<BigNumber>;
+    balanceOf(_account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    muxRewardRate(overrides?: CallOverrides): Promise<BigNumber>;
+    balances(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    muxVester(overrides?: CallOverrides): Promise<BigNumber>;
+    claim(
+      _receiver: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
+
+    claimForAccount(
+      _account: PromiseOrValue<string>,
+      _receiver: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
+
+    claimable(
+      _account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
+
+    claimableReward(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
+
+    cumulativeRewardPerToken(overrides?: CallOverrides): Promise<BigNumber>;
+
+    cumulativeRewards(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
+
+    decimals(overrides?: CallOverrides): Promise<BigNumber>;
+
+    depositBalances(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
+
+    distributor(overrides?: CallOverrides): Promise<BigNumber>;
+
+    inPrivateClaimingMode(overrides?: CallOverrides): Promise<BigNumber>;
+
+    inPrivateStakingMode(overrides?: CallOverrides): Promise<BigNumber>;
+
+    inPrivateTransferMode(overrides?: CallOverrides): Promise<BigNumber>;
+
+    initialize(
+      _name: PromiseOrValue<string>,
+      _symbol: PromiseOrValue<string>,
+      _depositTokens: PromiseOrValue<string>[],
+      _distributor: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
+
+    isDepositToken(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
+
+    isHandler(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
+
+    lastRewardBalance(overrides?: CallOverrides): Promise<BigNumber>;
+
+    name(overrides?: CallOverrides): Promise<BigNumber>;
 
     owner(overrides?: CallOverrides): Promise<BigNumber>;
 
-    poolOwnedRate(overrides?: CallOverrides): Promise<BigNumber>;
-
-    protocolLiquidityOwner(overrides?: CallOverrides): Promise<BigNumber>;
+    previousCumulatedRewardPerToken(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
-    reservedMlpAmount(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
+    rewardToken(overrides?: CallOverrides): Promise<BigNumber>;
 
-    setProtocolLiquidityOwner(
-      _protocolLiquidityOwner: PromiseOrValue<string>,
+    setDepositToken(
+      _depositToken: PromiseOrValue<string>,
+      _isDepositToken: PromiseOrValue<boolean>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    setTimelock(
-      _timelock: PromiseOrValue<string>,
+    setHandler(
+      _handler: PromiseOrValue<string>,
+      _isActive: PromiseOrValue<boolean>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    setVault(
-      _vault: PromiseOrValue<string>,
+    setInPrivateClaimingMode(
+      _inPrivateClaimingMode: PromiseOrValue<boolean>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    stakeMcb(
+    setInPrivateStakingMode(
+      _inPrivateStakingMode: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
+
+    setInPrivateTransferMode(
+      _inPrivateTransferMode: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
+
+    stake(
+      _depositToken: PromiseOrValue<string>,
       _amount: PromiseOrValue<BigNumberish>,
-      lockPeriod: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    stakeMcbForAccount(
+    stakeForAccount(
+      _fundingAccount: PromiseOrValue<string>,
       _account: PromiseOrValue<string>,
+      _depositToken: PromiseOrValue<string>,
       _amount: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    stakeMlp(
+    stakedAmounts(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
+
+    symbol(overrides?: CallOverrides): Promise<BigNumber>;
+
+    totalDepositSupply(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
+
+    totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
+
+    transfer(
+      _recipient: PromiseOrValue<string>,
       _amount: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    stakeMux(
+    transferFrom(
+      _sender: PromiseOrValue<string>,
+      _recipient: PromiseOrValue<string>,
       _amount: PromiseOrValue<BigNumberish>,
-      lockPeriod: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
-
-    stakedMlpAmount(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
-
-    timelock(overrides?: CallOverrides): Promise<BigNumber>;
-
-    totalVestedTokenFromMlp(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
-
-    totalVestedTokenFromVe(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     transferOwnership(
       newOwner: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    unlockTime(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
-
-    unstakeMcbAndMux(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
-
-    unstakeMlp(
+    unstake(
+      _depositToken: PromiseOrValue<string>,
       _amount: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    vault(overrides?: CallOverrides): Promise<BigNumber>;
+    unstakeForAccount(
+      _account: PromiseOrValue<string>,
+      _depositToken: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
+      _receiver: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
-    veFeeTracker(overrides?: CallOverrides): Promise<BigNumber>;
-
-    veMuxTracker(overrides?: CallOverrides): Promise<BigNumber>;
-
-    votingEscrow(overrides?: CallOverrides): Promise<BigNumber>;
-
-    votingEscrowedAmounts(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
-
-    votingEscrowedRate(overrides?: CallOverrides): Promise<BigNumber>;
-
-    weth(overrides?: CallOverrides): Promise<BigNumber>;
-
-    withdrawFromMlpVester(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
-
-    withdrawFromVeVester(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
+    updateRewards(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     withdrawToken(
       _token: PromiseOrValue<string>,
@@ -1263,213 +1046,177 @@ export interface MuxRewardTracker extends BaseContract {
   };
 
   populateTransaction: {
-    averageStakePeriod(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    batchCompoundForAccounts(
-      _accounts: PromiseOrValue<string>[],
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<PopulatedTransaction>;
-
-    batchStakeMuxForAccount(
-      _accounts: PromiseOrValue<string>[],
-      _amounts: PromiseOrValue<BigNumberish>[],
-      _unlockTime: PromiseOrValue<BigNumberish>[],
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<PopulatedTransaction>;
-
-    claimAll(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
-
-    claimFromMlp(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
-
-    claimFromVe(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
-
-    claimVestedTokenFromMlp(
-      account: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<PopulatedTransaction>;
-
-    claimVestedTokenFromVe(
-      account: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<PopulatedTransaction>;
-
-    claimableRewards(
-      account: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<PopulatedTransaction>;
-
-    claimableVestedTokenFromMlp(
-      account: PromiseOrValue<string>,
+    allowance(
+      _owner: PromiseOrValue<string>,
+      _spender: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
-    claimableVestedTokenFromVe(
-      account: PromiseOrValue<string>,
+    allowances(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
-    claimedVestedTokenFromMlp(
-      account: PromiseOrValue<string>,
-      overrides?: CallOverrides,
+    approve(
+      _spender: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    claimedVestedTokenFromVe(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    averageStakedAmounts(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    compound(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
+    balanceOf(_account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    compoundForAccount(
+    balances(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    claim(
+      _receiver: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<PopulatedTransaction>;
+
+    claimForAccount(
+      _account: PromiseOrValue<string>,
+      _receiver: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<PopulatedTransaction>;
+
+    claimable(
       _account: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    depositToMlpVester(
-      amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<PopulatedTransaction>;
+    claimableReward(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    depositToVeVester(
-      amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<PopulatedTransaction>;
+    cumulativeRewardPerToken(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    feeRewardRate(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    cumulativeRewards(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    increaseStakeUnlockTime(
-      lockPeriod: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<PopulatedTransaction>;
+    decimals(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    initialize(
-      _tokens: [
-        PromiseOrValue<string>,
-        PromiseOrValue<string>,
-        PromiseOrValue<string>,
-        PromiseOrValue<string>,
-        PromiseOrValue<string>,
-      ],
-      _rewardTrackers: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<string>],
-      _vesters: [PromiseOrValue<string>, PromiseOrValue<string>],
-      _distributors: [PromiseOrValue<string>, PromiseOrValue<string>],
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<PopulatedTransaction>;
-
-    maxVestableTokenFromMlp(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    maxVestableTokenFromVe(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    mcb(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    mlp(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    mlpDistributor(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    mlpFeeTracker(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    mlpLockAmount(
-      account: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
+    depositBalances(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
-    mlpMuxTracker(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    distributor(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    mlpVester(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    inPrivateClaimingMode(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    mux(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    inPrivateStakingMode(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    muxDistributor(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    inPrivateTransferMode(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    muxRewardRate(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    initialize(
+      _name: PromiseOrValue<string>,
+      _symbol: PromiseOrValue<string>,
+      _depositTokens: PromiseOrValue<string>[],
+      _distributor: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<PopulatedTransaction>;
 
-    muxVester(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    isDepositToken(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    isHandler(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    lastRewardBalance(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    name(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    poolOwnedRate(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    protocolLiquidityOwner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    previousCumulatedRewardPerToken(
+      arg0: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
     renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
-    reservedMlpAmount(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    rewardToken(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    setProtocolLiquidityOwner(
-      _protocolLiquidityOwner: PromiseOrValue<string>,
+    setDepositToken(
+      _depositToken: PromiseOrValue<string>,
+      _isDepositToken: PromiseOrValue<boolean>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    setTimelock(
-      _timelock: PromiseOrValue<string>,
+    setHandler(
+      _handler: PromiseOrValue<string>,
+      _isActive: PromiseOrValue<boolean>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    setVault(
-      _vault: PromiseOrValue<string>,
+    setInPrivateClaimingMode(
+      _inPrivateClaimingMode: PromiseOrValue<boolean>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    stakeMcb(
+    setInPrivateStakingMode(
+      _inPrivateStakingMode: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<PopulatedTransaction>;
+
+    setInPrivateTransferMode(
+      _inPrivateTransferMode: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<PopulatedTransaction>;
+
+    stake(
+      _depositToken: PromiseOrValue<string>,
       _amount: PromiseOrValue<BigNumberish>,
-      lockPeriod: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    stakeMcbForAccount(
+    stakeForAccount(
+      _fundingAccount: PromiseOrValue<string>,
       _account: PromiseOrValue<string>,
+      _depositToken: PromiseOrValue<string>,
       _amount: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    stakeMlp(
+    stakedAmounts(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    symbol(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    totalDepositSupply(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    totalSupply(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    transfer(
+      _recipient: PromiseOrValue<string>,
       _amount: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    stakeMux(
+    transferFrom(
+      _sender: PromiseOrValue<string>,
+      _recipient: PromiseOrValue<string>,
       _amount: PromiseOrValue<BigNumberish>,
-      lockPeriod: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
-
-    stakedMlpAmount(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    timelock(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    totalVestedTokenFromMlp(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    totalVestedTokenFromVe(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     transferOwnership(
       newOwner: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    unlockTime(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    unstakeMcbAndMux(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
-
-    unstakeMlp(
+    unstake(
+      _depositToken: PromiseOrValue<string>,
       _amount: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    vault(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    unstakeForAccount(
+      _account: PromiseOrValue<string>,
+      _depositToken: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
+      _receiver: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<PopulatedTransaction>;
 
-    veFeeTracker(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    veMuxTracker(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    votingEscrow(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    votingEscrowedAmounts(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    votingEscrowedRate(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    weth(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    withdrawFromMlpVester(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
-
-    withdrawFromVeVester(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
+    updateRewards(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     withdrawToken(
       _token: PromiseOrValue<string>,
