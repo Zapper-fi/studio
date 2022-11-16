@@ -19,7 +19,11 @@ export const ATLENDIS_V_1_DEFINITION = appDefinition({
 
   tags: [AppTag.BONDS, AppTag.LENDING],
   keywords: [],
-  links: {},
+  links: {
+    discord: 'https://discord.com/invite/amDA5Rzk5r',
+    medium: 'https://medium.com/@atlendis',
+    twitter: 'https://twitter.com/AtlendisLabs',
+  },
 
   supportedNetworks: {
     [Network.POLYGON_MAINNET]: [AppAction.VIEW],

@@ -20,7 +20,12 @@ export const VENDOR_FINANCE_DEFINITION = appDefinition({
 
   tags: [AppTag.LENDING],
   keywords: [],
-  links: {},
+  links: {
+    discord: 'https://discord.com/invite/mZWtWVJvzZ',
+    github: 'https://github.com/VendorFinance',
+    medium: 'https://vendorfinance.medium.com/',
+    twitter: 'https://twitter.com/VendorFi',
+  },
 
   supportedNetworks: {
     [Network.ARBITRUM_MAINNET]: [AppAction.VIEW],

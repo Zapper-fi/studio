@@ -20,7 +20,10 @@ export const CONCAVE_DEFINITION = appDefinition({
 
   tags: [AppTag.LIQUID_STAKING],
   keywords: [],
-  links: {},
+  links: {
+    telegram: 'https://t.me/concavefi',
+    twitter: 'https://twitter.com/ConcaveFi/',
+  },
 
   supportedNetworks: {
     [Network.ETHEREUM_MAINNET]: [AppAction.VIEW],

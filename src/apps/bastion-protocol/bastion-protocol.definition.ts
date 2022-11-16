@@ -135,7 +135,11 @@ export const BASTION_PROTOCOL_DEFINITION = appDefinition({
   },
   tags: [AppTag.LENDING, AppTag.LIQUIDITY_POOL],
   keywords: [],
-  links: {},
+  links: {
+    discord: 'https://discord.com/invite/bastionprotocol',
+    medium: 'https://bastionprotocol.medium.com/',
+    twitter: 'https://twitter.com/BastionProtocol',
+  },
 
   supportedNetworks: {
     [Network.AURORA_MAINNET]: [AppAction.VIEW],

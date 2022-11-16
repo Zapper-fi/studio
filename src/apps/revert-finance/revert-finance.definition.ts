@@ -24,7 +24,11 @@ export const REVERT_FINANCE_DEFINITION = appDefinition({
 
   tags: [AppTag.ASSET_MANAGEMENT],
   keywords: [],
-  links: {},
+  links: {
+    discord: 'https://discord.com/invite/HXfxKHrRmf',
+    github: 'https://github.com/revert-finance',
+    twitter: 'https://twitter.com/revertfinance',
+  },
 
   supportedNetworks: {
     [Network.ETHEREUM_MAINNET]: [AppAction.VIEW],

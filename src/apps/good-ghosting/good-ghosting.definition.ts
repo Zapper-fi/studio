@@ -20,7 +20,12 @@ export const GOOD_GHOSTING_DEFINITION = appDefinition({
 
   tags: [AppTag.ASSET_MANAGEMENT, AppTag.FARMING],
   keywords: [],
-  links: {},
+  links: {
+    discord: 'https://discord.com/invite/AWvcTFP',
+    github: 'https://github.com/Good-Ghosting',
+    medium: 'https://medium.com/goodghosting',
+    twitter: 'https://twitter.com/goodghosting',
+  },
 
   supportedNetworks: {
     [Network.POLYGON_MAINNET]: [AppAction.VIEW],

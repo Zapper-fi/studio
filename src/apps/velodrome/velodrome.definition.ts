@@ -8,11 +8,6 @@ export const VELODROME_DEFINITION = appDefinition({
   name: 'Velodrome',
   description: 'The liquidity base-layer of the Optimism ecosystem.',
   url: 'https://app.velodrome.finance',
-  tags: [AppTag.DECENTRALIZED_EXCHANGE, AppTag.LIQUIDITY_POOL],
-  primaryColor: '#fff',
-  keywords: [],
-
-  links: {},
 
   groups: {
     pool: {
@@ -32,6 +27,15 @@ export const VELODROME_DEFINITION = appDefinition({
       type: GroupType.POSITION,
       label: 'Voting Escrow',
     },
+  },
+
+  tags: [AppTag.DECENTRALIZED_EXCHANGE, AppTag.LIQUIDITY_POOL],
+  primaryColor: '#fff',
+  keywords: [],
+
+  links: {
+    discord: 'https://discord.com/invite/velodrome',
+    twitter: 'https://twitter.com/VelodromeFi',
   },
 
   supportedNetworks: {

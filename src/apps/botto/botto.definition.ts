@@ -9,7 +9,6 @@ export const BOTTO_DEFINITION = appDefinition({
   description: `A decentralized artist that generates art based on community feedback`,
   url: 'https://botto.com/',
   tags: [AppTag.ASSET_MANAGEMENT],
-  links: {},
 
   groups: {
     farm: {
@@ -23,6 +22,11 @@ export const BOTTO_DEFINITION = appDefinition({
       type: GroupType.POSITION,
       label: 'Governance',
     },
+  },
+  links: {
+    discord: 'https://discord.com/invite/botto',
+    medium: 'https://medium.com/@iambotto',
+    twitter: 'https://twitter.com/bottoproject',
   },
 
   supportedNetworks: {

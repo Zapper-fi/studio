@@ -18,7 +18,12 @@ export const POLYGON_STAKING_DEFINITION = appDefinition({
   },
   tags: [AppTag.STAKING],
   keywords: [],
-  links: {},
+  links: {
+    discord: 'https://discord.com/invite/0xPolygon',
+    github: 'https://github.com/maticnetwork/',
+    telegram: 'https://t.me/polygonofficial',
+    twitter: 'https://twitter.com/0xPolygon',
+  },
 
   supportedNetworks: {
     [Network.ETHEREUM_MAINNET]: [AppAction.VIEW],

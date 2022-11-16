@@ -43,7 +43,11 @@ export const MYCELIUM_DEFINITION = appDefinition({
 
   tags: [AppTag.DECENTRALIZED_EXCHANGE, AppTag.DERIVATIVES, AppTag.MARGIN_TRADING],
   keywords: [],
-  links: {},
+  links: {
+    discord: 'https://discord.com/invite/mycelium-xyz',
+    github: 'https://github.com/mycelium-ethereum',
+    twitter: 'https://twitter.com/mycelium_xyz',
+  },
 
   supportedNetworks: {
     [Network.ARBITRUM_MAINNET]: [AppAction.VIEW],

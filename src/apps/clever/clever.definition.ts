@@ -32,7 +32,13 @@ export const CLEVER_DEFINITION = appDefinition({
 
   tags: [AppTag.FARMING],
   keywords: [],
-  links: {},
+  links: {
+    discord: 'https://discord.com/invite/mCTXgANxWy',
+    github: 'https://github.com/AladdinDAO/',
+    medium: 'https://medium.com/@0xC_Lever',
+    telegram: 'https://t.me/aladdin_dao',
+    twitter: 'https://twitter.com/0xc_lever',
+  },
 
   supportedNetworks: {
     [Network.ETHEREUM_MAINNET]: [AppAction.VIEW],

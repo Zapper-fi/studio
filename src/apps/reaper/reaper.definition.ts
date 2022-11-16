@@ -9,7 +9,6 @@ export const REAPER_DEFINITION = appDefinition({
   description: `Reaper is a passive money multiplier on the Fantom network.`,
   url: 'https://www.reaper.farm/',
   tags: [AppTag.YIELD_AGGREGATOR],
-  links: {},
 
   groups: {
     vault: {
@@ -17,6 +16,11 @@ export const REAPER_DEFINITION = appDefinition({
       type: GroupType.TOKEN,
       label: 'Vaults',
     },
+  },
+  links: {
+    discord: 'https://discord.com/invite/ahDw4TWhz5',
+    telegram: 'https://t.me/reaperfarm',
+    twitter: 'https://twitter.com/Reaper_Farm',
   },
 
   supportedNetworks: {
