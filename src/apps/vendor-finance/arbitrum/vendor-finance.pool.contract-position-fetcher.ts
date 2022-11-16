@@ -1,7 +1,7 @@
 import { Inject } from '@nestjs/common';
 
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
-import { Register } from '~app-toolkit/decorators';
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import {
   buildDollarDisplayItem,
   buildPercentageDisplayItem,
@@ -16,18 +16,12 @@ import {
   GetTokenBalancesParams,
   GetTokenDefinitionsParams,
 } from '~position/template/contract-position.template.types';
-import { Network } from '~types/network.interface';
 
 import { VendorFinanceContractFactory } from '../contracts';
 import { VendorFinancePool } from '../contracts/ethers';
 import { VENDOR_GRAPH_URL } from '../graphql/constants';
 import { borrowerInfosQuery, VendorBorrowerGraphResponse } from '../graphql/getBorrowerInfosQuery';
 import { lendingPoolsQuery, VendorLendingPoolsGraphResponse } from '../graphql/getLendingPoolsQuery';
-import { VENDOR_FINANCE_DEFINITION } from '../vendor-finance.definition';
-
-const appId = VENDOR_FINANCE_DEFINITION.id;
-const groupId = VENDOR_FINANCE_DEFINITION.groups.pools.id;
-const network = Network.ARBITRUM_MAINNET;
 
 export type VendorFinancePoolDefinition = {
   address: string;
@@ -40,7 +34,7 @@ export type VendorFinancePoolDefinition = {
   lendBalance: string;
   totalBorrowed: string;
 };
-@Register.ContractPositionFetcher({ appId, groupId, network })
+@PositionTemplate()
 export class ArbitrumVendorFinancePoolContractPositionFetcher extends ContractPositionTemplatePositionFetcher<VendorFinancePool> {
   groupLabel = 'Lending Pools';
 
