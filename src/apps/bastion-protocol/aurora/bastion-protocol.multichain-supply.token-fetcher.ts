@@ -29,28 +29,24 @@
 //   }
 // }
 
-import { Inject, Injectable } from '@nestjs/common';
+import { Inject } from '@nestjs/common';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import { CompoundSupplyTokenFetcher, GetMarketsParams } from '~apps/compound/common/compound.supply.token-fetcher';
 import {
   GetUnderlyingTokensParams,
   GetPricePerShareParams,
   GetDataPropsParams,
 } from '~position/template/app-token.template.types';
-import { Network } from '~types/network.interface';
 
-import { BASTION_PROTOCOL_DEFINITION } from '../bastion-protocol.definition';
 import { BastionProtocolComptroller, BastionProtocolContractFactory, BastionProtocolCtoken } from '../contracts';
 
-@Injectable()
-export class AuroraBastionProtocolSupplyMultichainTokenFetcher extends CompoundSupplyTokenFetcher<
+@PositionTemplate()
+export class AuroraBastionProtocolMultichainSupplyTokenFetcher extends CompoundSupplyTokenFetcher<
   BastionProtocolCtoken,
   BastionProtocolComptroller
 > {
-  appId = BASTION_PROTOCOL_DEFINITION.id;
-  groupId = BASTION_PROTOCOL_DEFINITION.groups.supplyMultichain.id;
-  network = Network.AURORA_MAINNET;
   groupLabel = 'Multichain Realm';
   comptrollerAddress = '0xa195b3d7aa34e47fb2d2e5a682df2d9efa2daf06';
 

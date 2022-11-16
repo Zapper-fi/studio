@@ -19,51 +19,51 @@ export const BASTION_PROTOCOL_DEFINITION = appDefinition({
   },
 
   groups: {
-    supplyMainHub: {
-      id: 'supply-main-hub',
+    mainHubSupply: {
+      id: 'main-hub-supply',
       type: GroupType.TOKEN,
       label: 'Main Hub',
     },
 
-    borrowMainHub: {
-      id: 'borrow-main-hub',
-      type: GroupType.TOKEN,
+    mainHubBorrow: {
+      id: 'main-hub-borrow',
+      type: GroupType.POSITION,
       label: 'Main Hub',
     },
 
-    supplyStakedNear: {
-      id: 'supply-staked-near',
+    stakedNearSupply: {
+      id: 'staked-near-supply',
       type: GroupType.TOKEN,
       label: 'Staked NEAR',
     },
 
-    borrowStakedNear: {
-      id: 'borrow-staked-near',
-      type: GroupType.TOKEN,
+    stakedNearBorrow: {
+      id: 'staked-near-borrow',
+      type: GroupType.POSITION,
       label: 'Staked NEAR',
     },
 
-    supplyAuroraEcosystem: {
-      id: 'supply-aurora-ecosystem',
+    auroraEcosystemSupply: {
+      id: 'aurora-ecosystem-supply',
       type: GroupType.TOKEN,
       label: 'Aurora Ecosystem',
     },
 
-    borrowAuroraEcosystem: {
-      id: 'borrow-aurora-ecosystem',
-      type: GroupType.TOKEN,
+    auroraEcosystemBorrow: {
+      id: 'aurora-ecosystem-borrow',
+      type: GroupType.POSITION,
       label: 'Aurora Ecosystem',
     },
 
-    supplyMultichain: {
-      id: 'supply-multichain',
+    multichainSupply: {
+      id: 'multichain-supply',
       type: GroupType.TOKEN,
       label: 'Multichain Realm',
     },
 
-    borrowMultichain: {
-      id: 'borrow-multichain',
-      type: GroupType.TOKEN,
+    multichainBorrow: {
+      id: 'multichain-borrow',
+      type: GroupType.POSITION,
       label: 'Multichain Realm',
     },
 

@@ -16,12 +16,12 @@ import {
 import { BastionProtocolComptroller, BastionProtocolContractFactory, BastionProtocolCtoken } from '../contracts';
 
 @PositionTemplate()
-export class AuroraBastionProtocolBorrowMainHubContractPositionFetcher extends CompoundBorrowContractPositionFetcher<
+export class AuroraBastionProtocolMultichainBorrowContractPositionFetcher extends CompoundBorrowContractPositionFetcher<
   BastionProtocolCtoken,
   BastionProtocolComptroller
 > {
-  groupLabel = 'Main Hub Realm';
-  comptrollerAddress = '0x6de54724e128274520606f038591a00c5e94a1f6';
+  groupLabel = 'Multichain Realm';
+  comptrollerAddress = '0xa195b3d7aa34e47fb2d2e5a682df2d9efa2daf06';
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,

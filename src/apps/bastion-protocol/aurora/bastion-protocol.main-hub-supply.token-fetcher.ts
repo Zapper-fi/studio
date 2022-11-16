@@ -1,27 +1,23 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Inject } from '@nestjs/common';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import { CompoundSupplyTokenFetcher, GetMarketsParams } from '~apps/compound/common/compound.supply.token-fetcher';
 import {
   GetUnderlyingTokensParams,
   GetPricePerShareParams,
   GetDataPropsParams,
 } from '~position/template/app-token.template.types';
-import { Network } from '~types/network.interface';
 
-import { BASTION_PROTOCOL_DEFINITION } from '../bastion-protocol.definition';
 import { BastionProtocolComptroller, BastionProtocolContractFactory, BastionProtocolCtoken } from '../contracts';
 
-@Injectable()
-export class AuroraBastionProtocolSupplyAuroraEcosystemTokenFetcher extends CompoundSupplyTokenFetcher<
+@PositionTemplate()
+export class AuroraBastionProtocolMainHubSupplyTokenFetcher extends CompoundSupplyTokenFetcher<
   BastionProtocolCtoken,
   BastionProtocolComptroller
 > {
-  appId = BASTION_PROTOCOL_DEFINITION.id;
-  groupId = BASTION_PROTOCOL_DEFINITION.groups.supplyAuroraEcosystem.id;
-  network = Network.AURORA_MAINNET;
-  groupLabel = 'Aurora Ecosystem Realm';
-  comptrollerAddress = '0xe1cf09bda2e089c63330f0ffe3f6d6b790835973';
+  groupLabel = 'Main Hub Realm';
+  comptrollerAddress = '0x6de54724e128274520606f038591a00c5e94a1f6';
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,

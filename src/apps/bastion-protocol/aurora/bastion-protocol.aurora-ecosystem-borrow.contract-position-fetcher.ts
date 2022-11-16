@@ -16,7 +16,7 @@ import {
 import { BastionProtocolComptroller, BastionProtocolContractFactory, BastionProtocolCtoken } from '../contracts';
 
 @PositionTemplate()
-export class AuroraBastionProtocolBorrowAuroraEcosystemContractPositionFetcher extends CompoundBorrowContractPositionFetcher<
+export class AuroraBastionProtocolAuroraEcosystemBorrowContractPositionFetcher extends CompoundBorrowContractPositionFetcher<
   BastionProtocolCtoken,
   BastionProtocolComptroller
 > {
