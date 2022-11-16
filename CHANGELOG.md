@@ -4,6 +4,19 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.280.0](https://github.com/Zapper-fi/studio/compare/v0.279.1...v0.280.0) (2022-11-16)
+
+
+### Features
+
+* **yield-protocol:** To templates ([#1739](https://github.com/Zapper-fi/studio/issues/1739)) ([b7e976e](https://github.com/Zapper-fi/studio/commit/b7e976e11fa02cf1033b8ea0d934966a409caef4))
+* **yield-protocol:** Update strategies ([d34c1db](https://github.com/Zapper-fi/studio/commit/d34c1db2c1ccdf50ae3a61e3005a57830a46f172))
+
+
+### Bug Fixes
+
+* **chicken-bond:** Fix bLUSD price + filter out claimed and cancelled positions ([#1742](https://github.com/Zapper-fi/studio/issues/1742)) ([011ed75](https://github.com/Zapper-fi/studio/commit/011ed75703227ef27b481e9b7885edf245a924e2))
+
 ## [0.279.1](https://github.com/Zapper-fi/studio/compare/v0.279.0...v0.279.1) (2022-11-16)
 
 
