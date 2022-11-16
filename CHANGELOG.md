@@ -4,6 +4,19 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.277.0](https://github.com/Zapper-fi/studio/compare/v0.276.0...v0.277.0) (2022-11-16)
+
+
+### Features
+
+* **insurace:** add InsurAce integration ([#1635](https://github.com/Zapper-fi/studio/issues/1635)) ([ceaea57](https://github.com/Zapper-fi/studio/commit/ceaea57c8bc8598ed8e8f4500c903ad2e222fac4))
+
+
+### Bug Fixes
+
+* **euler:** Add position presenter ([#1727](https://github.com/Zapper-fi/studio/issues/1727)) ([b18e591](https://github.com/Zapper-fi/studio/commit/b18e5911df1f5a1474692720ca6b90444ac12b92))
+* **stargate:** Fix pool position price per share ([#1729](https://github.com/Zapper-fi/studio/issues/1729)) ([4fc09d8](https://github.com/Zapper-fi/studio/commit/4fc09d82f3dc20ceca81381eb09f2e1cefcd43e8))
+
 ## [0.276.0](https://github.com/Zapper-fi/studio/compare/v0.275.0...v0.276.0) (2022-11-15)
 
 
