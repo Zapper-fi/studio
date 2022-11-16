@@ -1,9 +1,10 @@
 import { Inject } from '@nestjs/common';
+import { BigNumber } from 'ethers';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
-import { GetDataPropsParams, GetPricePerShareParams } from '~position/template/app-token.template.types';
+import { GetDataPropsParams, GetPriceParams } from '~position/template/app-token.template.types';
 
 import { ChickenBondBlusd, ChickenBondContractFactory } from '../contracts';
 
@@ -30,26 +31,18 @@ export class EthereumChickenBondBlusdTokenFetcher extends AppTokenTemplatePositi
     return ['0x5f98805a4e8be255a32880fdec7f6728c6568ba0'];
   }
 
-  async getPricePerShare({
-    contract,
-    multicall,
-  }: GetPricePerShareParams<ChickenBondBlusd>): Promise<number | number[]> {
-    const chickenBondManagerContract = this.contractFactory.chickenBondManager({
-      address: '0x57619fe9c539f890b19c61812226f9703ce37137',
+  async getPrice({ multicall }: GetPriceParams<ChickenBondBlusd>): Promise<number> {
+    // Temporary solution until Curve is migrated to template
+    const curvePoolContract = this.contractFactory.curvePool({
+      address: '0x74ed5d42203806c8cdcf2f04ca5f60dc777b901c',
       network: this.network,
     });
-    const [lusdInSpRaw, lusdInCurveRaw, totalSupplyRaw] = await Promise.all([
-      multicall.wrap(chickenBondManagerContract).getAcquiredLUSDInSP(),
-      multicall.wrap(chickenBondManagerContract).getAcquiredLUSDInCurve(),
-      contract.totalSupply(),
-    ]);
+    const oneUnit = BigNumber.from(10).pow(18);
 
-    const [lusdInSp, lusdInCurve, totalSupply] = [Number(lusdInSpRaw), Number(lusdInCurveRaw), Number(totalSupplyRaw)];
+    const priceRaw = await multicall.wrap(curvePoolContract).get_dy(0, 1, oneUnit);
+    const price = Number(priceRaw) / 10 ** 18;
 
-    //redemption_price = LUSD in the Reserve / total bLUSD supply
-    const redemptionPrice = (lusdInSp + lusdInCurve) / totalSupply;
-
-    return redemptionPrice;
+    return price;
   }
 
   getLiquidity({ appToken }: GetDataPropsParams<ChickenBondBlusd>) {
