@@ -12,7 +12,7 @@ export class EthereumYieldProtocolPoolTokenFetcher extends YieldProtocolPoolToke
     '0x8e8d6ab093905c400d583efd37fbeeb1ee1c0c39',
     '0xcf30a5a994f9ace5832e30c138c9697cda5e1247',
     '0x831df23f7278575ba0b136296a285600cd75d076',
-    '0x47cc34188a2869daa1ce821c8758aa8442715831',
+    '0xbd6277e36686184a5343f83a4be5ced0f8cd185a',
     '0x1565f539e96c4d440c38979dbc86fd711c995dd6',
   ];
 }
