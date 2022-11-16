@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.279.1](https://github.com/Zapper-fi/studio/compare/v0.279.0...v0.279.1) (2022-11-16)
+
+
+### Bug Fixes
+
+* **cache:** Use only 1 metadata attribute for CacheOnInterval ([#1730](https://github.com/Zapper-fi/studio/issues/1730)) ([1a2d1fa](https://github.com/Zapper-fi/studio/commit/1a2d1fab1b7eb3d9315ed0d75a8d7d2653b8994c))
+
 ## [0.279.0](https://github.com/Zapper-fi/studio/compare/v0.278.0...v0.279.0) (2022-11-16)
 
 
