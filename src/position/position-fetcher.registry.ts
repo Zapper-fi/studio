@@ -2,7 +2,7 @@ import { Inject, OnApplicationBootstrap } from '@nestjs/common';
 import { DiscoveryService } from '@nestjs/core';
 import { compact } from 'lodash';
 
-import { CACHE_ON_INTERVAL_KEY, CACHE_ON_INTERVAL_TIMEOUT } from '~cache/cache-on-interval.decorator';
+import { CacheOnIntervalOptions, CACHE_ON_INTERVAL_OPTIONS } from '~cache/cache-on-interval.decorator';
 import { CacheOnIntervalService } from '~cache/cache-on-interval.service';
 import { Network } from '~types/network.interface';
 import { Registry } from '~utils/build-registry';
@@ -112,8 +112,8 @@ export class PositionFetcherRegistry implements OnApplicationBootstrap {
 
     // Register the position fetcher in the caching module
     const cacheKey = buildAppPositionsCacheKey({ type, network, appId, groupId });
-    Reflect.defineMetadata(CACHE_ON_INTERVAL_KEY, cacheKey, fetcher['getPositions']);
-    Reflect.defineMetadata(CACHE_ON_INTERVAL_TIMEOUT, 45 * 1000, fetcher['getPositions']);
+    const cacheOptions: CacheOnIntervalOptions = { key: cacheKey, timeout: 45 * 1000 };
+    Reflect.defineMetadata(CACHE_ON_INTERVAL_OPTIONS, cacheOptions, fetcher['getPositions']);
     this.cacheOnIntervalService.registerCache(fetcher, 'getPositions');
   }
 
