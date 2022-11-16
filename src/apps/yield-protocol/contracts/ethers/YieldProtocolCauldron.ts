@@ -41,7 +41,7 @@ export declare namespace DataTypes {
   };
 }
 
-export interface CauldronInterface extends utils.Interface {
+export interface YieldProtocolCauldronInterface extends utils.Interface {
   functions: {
     'LOCK()': FunctionFragment;
     'LOCK8605463013()': FunctionFragment;
@@ -482,12 +482,12 @@ export type VaultTweakedEvent = TypedEvent<[string, string, string], VaultTweake
 
 export type VaultTweakedEventFilter = TypedEventFilter<VaultTweakedEvent>;
 
-export interface Cauldron extends BaseContract {
+export interface YieldProtocolCauldron extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
 
-  interface: CauldronInterface;
+  interface: YieldProtocolCauldronInterface;
 
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,
