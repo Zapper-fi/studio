@@ -2,12 +2,14 @@ import { Inject } from '@nestjs/common';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
+import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { Erc20 } from '~contract/contracts';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import {
   DefaultAppTokenDataProps,
   GetAddressesParams,
   GetDataPropsParams,
+  GetDisplayPropsParams,
   GetPricePerShareParams,
   GetUnderlyingTokensParams,
 } from '~position/template/app-token.template.types';
@@ -98,5 +100,9 @@ export class AuroraBastionProtocolPoolTokenFetcher extends AppTokenTemplatePosit
 
   async getApy(_params: GetDataPropsParams<Erc20>) {
     return 0;
+  }
+
+  async getLabel({ appToken }: GetDisplayPropsParams<Erc20>) {
+    return appToken.tokens.map(v => getLabelFromToken(v)).join(' / ');
   }
 }
