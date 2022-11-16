@@ -4,6 +4,32 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.279.0](https://github.com/Zapper-fi/studio/compare/v0.278.0...v0.279.0) (2022-11-16)
+
+
+### Features
+
+* **vendor-finance:** To templates ([#1735](https://github.com/Zapper-fi/studio/issues/1735)) ([2653b8e](https://github.com/Zapper-fi/studio/commit/2653b8e92da9eeb64b3229c3b78db308d02af23c))
+
+
+### Bug Fixes
+
+* **schedule:** Use only 1 metadata attribute for @Schedule ([#1724](https://github.com/Zapper-fi/studio/issues/1724)) ([5bebca3](https://github.com/Zapper-fi/studio/commit/5bebca393918434e092401196934c2466f959234))
+
+## [0.278.0](https://github.com/Zapper-fi/studio/compare/v0.277.1...v0.278.0) (2022-11-16)
+
+
+### Features
+
+* **bastion-protocol:** To templates ([#1733](https://github.com/Zapper-fi/studio/issues/1733)) ([4e0a394](https://github.com/Zapper-fi/studio/commit/4e0a3943606da2ec76781806161fa77f8e34ac5e))
+
+## [0.277.1](https://github.com/Zapper-fi/studio/compare/v0.277.0...v0.277.1) (2022-11-16)
+
+
+### Bug Fixes
+
+* **block-per-day:** Update Ethereum number of block per day post merge ([#1731](https://github.com/Zapper-fi/studio/issues/1731)) ([91c964c](https://github.com/Zapper-fi/studio/commit/91c964cb6026193a6fa9e8a10f5bd86880b9b69f))
+
 ## [0.277.0](https://github.com/Zapper-fi/studio/compare/v0.276.0...v0.277.0) (2022-11-16)
 
 
