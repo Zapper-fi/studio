@@ -63,6 +63,7 @@ export class EthereumTokemakBalanceFetcher implements BalanceFetcher {
   @CacheOnInterval({
     key: `studio:${TOKEMAK_DEFINITION.id}:${TOKEMAK_DEFINITION.groups.farm.id}:${network}:cycle-rewards-hash`,
     timeout: 15 * 60 * 1000, // 15 min
+    failOnMissingData: false,
   })
   async getCycleRewardsHash() {
     const multicall = this.appToolkit.getMulticall(network);

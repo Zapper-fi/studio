@@ -36,6 +36,7 @@ export class PickleApiJarRegistry {
   @CacheOnInterval({
     key: `studio:${PICKLE_DEFINITION.id}:${PICKLE_DEFINITION.groups.jar.id}:jar-definitions-data`,
     timeout: 5 * 60 * 1000,
+    failOnMissingData: false,
   })
   private async getJarDefinitionsData() {
     const apyUrl = 'https://api.pickle.finance/prod/protocol/pools';

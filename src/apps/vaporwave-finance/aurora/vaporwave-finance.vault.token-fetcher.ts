@@ -72,6 +72,7 @@ export class AuroraVaporwaveFinanceVaultTokenFetcher implements PositionFetcher<
   @CacheOnInterval({
     key: `studio:${network}:${appId}:${groupId}:vaults`,
     timeout: 15 * 60 * 1000,
+    failOnMissingData: false,
   })
   async getVaults() {
     const vaultData = await Axios.get<VaporwaveVaultDetails[]>('https://api.vaporwave.farm/vaults').then(v => v.data);
@@ -81,6 +82,7 @@ export class AuroraVaporwaveFinanceVaultTokenFetcher implements PositionFetcher<
   @CacheOnInterval({
     key: `studio:${network}:${appId}:${groupId}:vaportokenprices`,
     timeout: 15 * 60 * 1000,
+    failOnMissingData: false,
   })
   async getVTokenPrices() {
     const vtokenPrices = await Axios.get('https://api.vaporwave.farm/vaportokenprices').then(v => v.data);
@@ -90,6 +92,7 @@ export class AuroraVaporwaveFinanceVaultTokenFetcher implements PositionFetcher<
   @CacheOnInterval({
     key: `studio:${network}:${appId}:${groupId}:apy`,
     timeout: 15 * 60 * 1000,
+    failOnMissingData: false,
   })
   async getAPY() {
     const apy = await Axios.get('https://api.vaporwave.farm/apy').then(v => v.data);
