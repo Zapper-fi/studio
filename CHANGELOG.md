@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.278.0](https://github.com/Zapper-fi/studio/compare/v0.277.1...v0.278.0) (2022-11-16)
+
+
+### Features
+
+* **bastion-protocol:** To templates ([#1733](https://github.com/Zapper-fi/studio/issues/1733)) ([4e0a394](https://github.com/Zapper-fi/studio/commit/4e0a3943606da2ec76781806161fa77f8e34ac5e))
+
 ## [0.277.1](https://github.com/Zapper-fi/studio/compare/v0.277.0...v0.277.1) (2022-11-16)
 
 
