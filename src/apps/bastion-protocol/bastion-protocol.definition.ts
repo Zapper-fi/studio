@@ -8,6 +8,15 @@ export const BASTION_PROTOCOL_DEFINITION = appDefinition({
   name: 'Bastion',
   description: 'Liquidity Foundation of Aurora',
   url: 'https://bastionprotocol.com/',
+  primaryColor: '#fff',
+  tags: [AppTag.LENDING, AppTag.LIQUIDITY_POOL],
+  keywords: [],
+
+  links: {
+    discord: 'https://discord.com/invite/bastionprotocol',
+    medium: 'https://bastionprotocol.medium.com/',
+    twitter: 'https://twitter.com/BastionProtocol',
+  },
 
   groups: {
     supplyMainHub: {
@@ -58,94 +67,16 @@ export const BASTION_PROTOCOL_DEFINITION = appDefinition({
       label: 'Multichain Realm',
     },
 
-    swap: {
-      id: 'swap',
+    pool: {
+      id: 'pool',
       type: GroupType.TOKEN,
       label: 'Stableswap Pools',
     },
-  },
-  presentationConfig: {
-    tabs: [
-      {
-        label: 'Main Hub',
-        viewType: 'split',
-        views: [
-          {
-            viewType: 'list',
-            label: 'Supply',
-            groupIds: ['supply-main-hub'],
-          },
-          {
-            viewType: 'list',
-            label: 'Borrow',
-            groupIds: ['borrow-main-hub'],
-          },
-        ],
-      },
-      {
-        label: 'Staked Near',
-        viewType: 'split',
-        views: [
-          {
-            viewType: 'list',
-            label: 'Supply',
-            groupIds: ['supply-staked-near'],
-          },
-          {
-            viewType: 'list',
-            label: 'Borrow',
-            groupIds: ['borrow-staked-near'],
-          },
-        ],
-      },
-      {
-        label: 'Aurora Ecosystem',
-        viewType: 'split',
-        views: [
-          {
-            viewType: 'list',
-            label: 'Supply',
-            groupIds: ['supply-aurora-ecosystem'],
-          },
-          {
-            viewType: 'list',
-            label: 'Borrow',
-            groupIds: ['borrow-aurora-ecosystem'],
-          },
-        ],
-      },
-      {
-        label: 'Multichain Realm',
-        viewType: 'split',
-        views: [
-          {
-            viewType: 'list',
-            label: 'Supply',
-            groupIds: ['supply-multichain'],
-          },
-          {
-            viewType: 'list',
-            label: 'Borrow',
-            groupIds: ['borrow-multichain'],
-          },
-        ],
-      },
-      { label: 'Stableswap Pools', viewType: 'list', groupIds: ['swap'] },
-    ],
-  },
-  tags: [AppTag.LENDING, AppTag.LIQUIDITY_POOL],
-  keywords: [],
-  links: {
-    discord: 'https://discord.com/invite/bastionprotocol',
-    medium: 'https://bastionprotocol.medium.com/',
-    twitter: 'https://twitter.com/BastionProtocol',
   },
 
   supportedNetworks: {
     [Network.AURORA_MAINNET]: [AppAction.VIEW],
   },
-
-  primaryColor: '#fff',
 });
 
 @Register.AppDefinition(BASTION_PROTOCOL_DEFINITION.id)

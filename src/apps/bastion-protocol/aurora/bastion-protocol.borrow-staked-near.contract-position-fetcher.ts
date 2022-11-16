@@ -1,30 +1,81 @@
 import { Inject } from '@nestjs/common';
 
-import { Register } from '~app-toolkit/decorators';
-import { PositionFetcher } from '~position/position-fetcher.interface';
-import { ContractPosition } from '~position/position.interface';
-import { Network } from '~types/network.interface';
+import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
+import {
+  CompoundBorrowContractPositionFetcher,
+  CompoundBorrowTokenDataProps,
+  GetMarketsParams,
+} from '~apps/compound/common/compound.borrow.contract-position-fetcher';
+import {
+  GetDataPropsParams,
+  GetTokenBalancesParams,
+  GetTokenDefinitionsParams,
+} from '~position/template/contract-position.template.types';
 
-import { BASTION_PROTOCOL_DEFINITION } from '../bastion-protocol.definition';
-import { BastionBorrowContractPositionHelper } from '../helper/bastion-protocol.borrow.contract-position-helper';
+import { BastionProtocolComptroller, BastionProtocolContractFactory, BastionProtocolCtoken } from '../contracts';
 
-const appId = BASTION_PROTOCOL_DEFINITION.id;
-const groupId = BASTION_PROTOCOL_DEFINITION.groups.borrowStakedNear.id;
-const network = Network.AURORA_MAINNET;
+@PositionTemplate()
+export class AuroraBastionProtocolBorrowStakedNearContractPositionFetcher extends CompoundBorrowContractPositionFetcher<
+  BastionProtocolCtoken,
+  BastionProtocolComptroller
+> {
+  groupLabel = 'Staked Near Realm';
+  comptrollerAddress = '0xe550a886716241afb7ee276e647207d7667e1e79';
 
-@Register.ContractPositionFetcher({ appId, groupId, network })
-export class AuroraBastionProtocolBorrowStakedNearContractPositionFetcher implements PositionFetcher<ContractPosition> {
   constructor(
-    @Inject(BastionBorrowContractPositionHelper)
-    private readonly bastionBorrowContractPositionHelper: BastionBorrowContractPositionHelper,
-  ) {}
+    @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
+    @Inject(BastionProtocolContractFactory) protected readonly contractFactory: BastionProtocolContractFactory,
+  ) {
+    super(appToolkit);
+  }
 
-  async getPositions() {
-    return this.bastionBorrowContractPositionHelper.getPositions({
-      network,
-      appId,
-      groupId,
-      supplyGroupId: BASTION_PROTOCOL_DEFINITION.groups.supplyStakedNear.id,
-    });
+  getCompoundCTokenContract(address: string) {
+    return this.contractFactory.bastionProtocolCtoken({ address, network: this.network });
+  }
+
+  getCompoundComptrollerContract(address: string) {
+    return this.contractFactory.bastionProtocolComptroller({ address, network: this.network });
+  }
+
+  async getMarkets({ contract }: GetMarketsParams<BastionProtocolComptroller>) {
+    return contract.getAllMarkets();
+  }
+
+  async getUnderlyingAddress({ contract }: GetTokenDefinitionsParams<BastionProtocolCtoken>) {
+    return contract.underlying();
+  }
+
+  async getExchangeRate({ contract }: GetDataPropsParams<BastionProtocolCtoken, CompoundBorrowTokenDataProps>) {
+    return contract.callStatic.exchangeRateCurrent();
+  }
+
+  async getExchangeRateMantissa(params: GetDataPropsParams<BastionProtocolCtoken, CompoundBorrowTokenDataProps>) {
+    const [underlyingToken] = params.contractPosition.tokens;
+    const auTokenDecimals = await this.getCTokenDecimals(params);
+    return 18 + underlyingToken.decimals - auTokenDecimals;
+  }
+
+  async getBorrowRate({ contract }: GetDataPropsParams<BastionProtocolCtoken, CompoundBorrowTokenDataProps>) {
+    return contract.callStatic.borrowRatePerBlock().catch(() => 0);
+  }
+
+  async getCash({ contract }: GetDataPropsParams<BastionProtocolCtoken, CompoundBorrowTokenDataProps>) {
+    return contract.getCash();
+  }
+
+  async getCTokenSupply({ contract }: GetDataPropsParams<BastionProtocolCtoken, CompoundBorrowTokenDataProps>) {
+    return contract.totalSupply();
+  }
+
+  async getCTokenDecimals({ contract }: GetDataPropsParams<BastionProtocolCtoken, CompoundBorrowTokenDataProps>) {
+    return contract.decimals();
+  }
+
+  async getBorrowBalance({
+    address,
+    contract,
+  }: GetTokenBalancesParams<BastionProtocolCtoken, CompoundBorrowTokenDataProps>) {
+    return contract.callStatic.borrowBalanceCurrent(address);
   }
 }
