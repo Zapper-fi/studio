@@ -20,7 +20,10 @@ export const PIREX_DEFINITION = appDefinition({
 
   tags: [AppTag.FARMING],
   keywords: [],
-  links: {},
+  links: {
+    discord: 'https://discord.com/invite/redactedcartel',
+    twitter: 'https://twitter.com/redactedcartel',
+  },
 
   supportedNetworks: {
     [Network.ETHEREUM_MAINNET]: [AppAction.VIEW],

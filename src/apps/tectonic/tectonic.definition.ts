@@ -60,7 +60,12 @@ export const TECTONIC_DEFINITION = appDefinition({
 
   tags: [AppTag.LENDING],
   keywords: [],
-  links: {},
+  links: {
+    discord: 'https://discord.com/invite/jqaxqK7KBR',
+    medium: 'https://medium.com/@0xTectonic',
+    telegram: 'https://t.me/TectonicOfficial',
+    twitter: 'https://twitter.com/TectonicFi',
+  },
 
   supportedNetworks: {
     [Network.CRONOS_MAINNET]: [AppAction.VIEW],

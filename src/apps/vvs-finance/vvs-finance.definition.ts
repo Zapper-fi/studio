@@ -20,9 +20,13 @@ export const VVS_FINANCE_DEFINITION = appDefinition({
   },
 
   tags: [AppTag.DECENTRALIZED_EXCHANGE, AppTag.FARMING, AppTag.LIQUIDITY_POOL, AppTag.LIQUID_STAKING],
-
   keywords: [],
-  links: {},
+  links: {
+    discord: 'https://discord.com/invite/V2957zMsmg',
+    medium: 'https://medium.com/vvs-finance',
+    telegram: 'https://t.me/VVSFinance',
+    twitter: 'https://twitter.com/VVS_finance',
+  },
 
   supportedNetworks: {
     [Network.CRONOS_MAINNET]: [AppAction.VIEW],

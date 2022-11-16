@@ -7,6 +7,7 @@ export const RARI_FUSE_DEFINITION = appDefinition({
   id: 'rari-fuse',
   name: 'Rari Fuse',
   description: `Fuse is the first truly open interest rate protocol. Lend, borrow, and create isolated lending markets with unlimited flexibility.`,
+  url: 'https://rari.capital/',
 
   groups: {
     supply: {
@@ -49,10 +50,13 @@ export const RARI_FUSE_DEFINITION = appDefinition({
     ],
   },
 
-  url: 'https://rari.capital/',
   tags: [AppTag.LIQUIDITY_POOL],
   keywords: [],
-  links: {},
+  links: {
+    discord: 'https://discord.com/invite/T9Yrd7MGSP',
+    medium: 'https://medium.com/rari-capital',
+    twitter: 'https://twitter.com/RariCapital',
+  },
 
   supportedNetworks: {
     [Network.ETHEREUM_MAINNET]: [AppAction.VIEW],

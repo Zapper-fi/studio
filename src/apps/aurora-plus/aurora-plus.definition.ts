@@ -20,7 +20,12 @@ export const AURORA_PLUS_DEFINITION = appDefinition({
 
   tags: [AppTag.STAKING],
   keywords: [],
-  links: {},
+  links: {
+    discord: 'https://discord.com/invite/dEFJBz8HQV',
+    github: 'https://github.com/aurora-is-near',
+    telegram: 'https://t.me/auroraisnear',
+    twitter: 'https://twitter.com/auroraisnear',
+  },
 
   supportedNetworks: {
     [Network.AURORA_MAINNET]: [AppAction.VIEW],

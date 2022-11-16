@@ -51,7 +51,12 @@ export const AURIGAMI_DEFINITION = appDefinition({
 
   tags: [AppTag.LENDING],
   keywords: [],
-  links: {},
+  links: {
+    discord: 'https://discord.com/invite/MpgHRtm8EK',
+    medium: 'https://medium.com/aurigami',
+    telegram: 'https://t.me/aurigami_PLY',
+    twitter: 'https://twitter.com/aurigami_PLY',
+  },
 
   supportedNetworks: {
     [Network.AURORA_MAINNET]: [AppAction.VIEW],

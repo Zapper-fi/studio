@@ -8,8 +8,6 @@ export const RHINO_FI_DEFINITION = appDefinition({
   name: 'rhino.fi',
   description: `rhino.fi is opening DeFi to the entire world. People shouldn’t have to go through centralised web 3 exchanges to reach financial freedom – we believe they should have a gateway that takes them straight there.`,
   url: 'https://rhino.fi/',
-  tags: [AppTag.DECENTRALIZED_EXCHANGE],
-  links: {},
 
   groups: {
     bridge: {
@@ -23,6 +21,11 @@ export const RHINO_FI_DEFINITION = appDefinition({
       type: GroupType.POSITION,
       label: 'Deposits',
     },
+  },
+  tags: [AppTag.DECENTRALIZED_EXCHANGE],
+  links: {
+    discord: 'https://discord.com/invite/26sXx2KAhy',
+    twitter: 'https://twitter.com/rhinofi',
   },
 
   supportedNetworks: {

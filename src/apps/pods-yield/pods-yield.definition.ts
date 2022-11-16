@@ -8,7 +8,7 @@ export const PODS_YIELD_DEFINITION = appDefinition({
   name: 'Pods Yield',
   description:
     'Change the way you earn. Tap into low-risk protected vaults to make more with less overhead. Starting with ETH and options.',
-  url: 'https://app.yield.pods.finance',
+  url: 'https://www.pods.finance/',
 
   groups: {
     strategy: {
@@ -26,7 +26,11 @@ export const PODS_YIELD_DEFINITION = appDefinition({
 
   tags: [AppTag.ASSET_MANAGEMENT],
   keywords: [],
-  links: {},
+  links: {
+    discord: 'https://discord.com/invite/Qf7utym',
+    github: 'https://github.com/pods-finance',
+    twitter: 'https://twitter.com/podsfinance',
+  },
 
   supportedNetworks: {
     [Network.ETHEREUM_MAINNET]: [AppAction.VIEW],

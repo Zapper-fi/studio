@@ -26,7 +26,11 @@ export const ARTH_DEFINITION = appDefinition({
 
   tags: [AppTag.COLLATERALIZED_DEBT_POSITION],
   keywords: [],
-  links: {},
+  links: {
+    discord: 'https://discord.com/invite/mahadao',
+    github: 'https://github.com/mahadao',
+    twitter: 'https://twitter.com/TheMahaDAO',
+  },
 
   supportedNetworks: {
     [Network.ETHEREUM_MAINNET]: [AppAction.VIEW],

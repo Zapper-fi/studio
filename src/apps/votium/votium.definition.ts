@@ -19,7 +19,11 @@ export const VOTIUM_DEFINITION = appDefinition({
 
   tags: [AppTag.FARMING],
   keywords: [],
-  links: {},
+  links: {
+    discord: 'https://discord.com/invite/dvPcqPAbTh',
+    github: 'https://github.com/oo-00/Votium',
+    twitter: 'https://twitter.com/VotiumProtocol',
+  },
 
   supportedNetworks: {
     [Network.ETHEREUM_MAINNET]: [AppAction.VIEW],
