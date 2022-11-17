@@ -5,8 +5,4 @@ import { OptimismKwentaPerpContractPositionFetcher } from '../common/kwenta.perp
 @PositionTemplate()
 export class OptimismKwentaIsolatedContractPositionFetcher extends OptimismKwentaPerpContractPositionFetcher {
   groupLabel = 'Isolated Margin';
-
-  getAccountAddress(address: string): string {
-    return address;
-  }
 }
