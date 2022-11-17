@@ -42,7 +42,7 @@ export class EthereumAirswapSAstV3TokenFetcher extends AppTokenTemplatePositionF
     return appToken.price * appToken.supply;
   }
 
-  getApy(_params: GetDataPropsParams<StakingV2>) {
+  async getApy(_params: GetDataPropsParams<StakingV2>) {
     return 0;
   }
 }

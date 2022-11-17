@@ -45,11 +45,11 @@ export class EthereumChickenBondBlusdTokenFetcher extends AppTokenTemplatePositi
     return price;
   }
 
-  getLiquidity({ appToken }: GetDataPropsParams<ChickenBondBlusd>) {
+  async getLiquidity({ appToken }: GetDataPropsParams<ChickenBondBlusd>) {
     return appToken.price * appToken.supply;
   }
 
-  getReserves({ appToken }: GetDataPropsParams<ChickenBondBlusd>) {
+  async getReserves({ appToken }: GetDataPropsParams<ChickenBondBlusd>) {
     return [appToken.pricePerShare[0] * appToken.supply];
   }
 

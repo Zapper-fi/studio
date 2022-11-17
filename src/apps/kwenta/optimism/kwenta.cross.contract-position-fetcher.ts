@@ -1,5 +1,6 @@
 import { gql } from 'graphql-request';
 
+import { ZERO_ADDRESS } from '~app-toolkit/constants/address';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 
 import { OptimismKwentaPerpContractPositionFetcher } from '../common/kwenta.perp.contract-position-fetcher';
@@ -31,7 +32,7 @@ export class OptimismKwentaCrossContractPositionFetcher extends OptimismKwentaPe
       });
 
     if (crossMarginAccountsFromSubgraph.crossMarginAccounts.length === 0) {
-      return '';
+      return ZERO_ADDRESS;
     }
 
     return crossMarginAccountsFromSubgraph.crossMarginAccounts[0].id;

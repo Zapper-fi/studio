@@ -39,15 +39,15 @@ export class BinanceSmartChainPStakeStakeTokenFetcher extends AppTokenTemplatePo
     return Number(exchangeRate.totalWei) / Number(exchangeRate.poolTokenSupply);
   }
 
-  getLiquidity({ appToken }: GetDataPropsParams<PStakeStkToken>) {
+  async getLiquidity({ appToken }: GetDataPropsParams<PStakeStkToken>) {
     return appToken.supply * appToken.price;
   }
 
-  getReserves({ appToken }: GetDataPropsParams<PStakeStkToken>) {
+  async getReserves({ appToken }: GetDataPropsParams<PStakeStkToken>) {
     return [appToken.pricePerShare[0] * appToken.supply];
   }
 
-  getApy(_params: GetDataPropsParams<PStakeStkToken>) {
+  async getApy(_params: GetDataPropsParams<PStakeStkToken>) {
     return 0;
   }
 }
