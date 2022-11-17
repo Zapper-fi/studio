@@ -4,6 +4,18 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.281.0](https://github.com/Zapper-fi/studio/compare/v0.280.0...v0.281.0) (2022-11-17)
+
+
+### Features
+
+* **templates:** Support proxy protocols and add data prop defaults for app token fetchers ([#1741](https://github.com/Zapper-fi/studio/issues/1741)) ([559f33a](https://github.com/Zapper-fi/studio/commit/559f33a17f810f59e86f0b9b2a08cc47ef1cac80))
+
+
+### Bug Fixes
+
+* **yield-protocol:** Decimals issue ([2fdc0c6](https://github.com/Zapper-fi/studio/commit/2fdc0c6ba2831a3e4d25821dadd9d7dd7b9efbc0))
+
 ## [0.280.0](https://github.com/Zapper-fi/studio/compare/v0.279.1...v0.280.0) (2022-11-16)
 
 
