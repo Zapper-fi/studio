@@ -119,20 +119,20 @@ export class PolygonFurucomboFundTokenFetcher extends AppTokenTemplatePositionFe
     return Number(definition.price) / appToken.tokens[0].price;
   }
 
-  getLiquidity({
+  async getLiquidity({
     definition,
   }: GetDataPropsParams<FurucomboFundShareToken, DefaultAppTokenDataProps, FurucomboFundDefinition>) {
     return Number(definition.liquidity);
   }
 
-  getReserves({
+  async getReserves({
     definition,
     appToken,
   }: GetDataPropsParams<FurucomboFundShareToken, DefaultAppTokenDataProps, FurucomboFundDefinition>) {
     return [Number(definition.liquidity) / appToken.tokens[0].price];
   }
 
-  getApy({
+  async getApy({
     definition,
   }: GetDataPropsParams<FurucomboFundShareToken, DefaultAppTokenDataProps, FurucomboFundDefinition>) {
     return Number(definition.apy) * 100;

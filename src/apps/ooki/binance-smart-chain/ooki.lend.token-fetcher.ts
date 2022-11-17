@@ -47,15 +47,15 @@ export class BinanceSmartChainOokiLendTokenFetcher extends AppTokenTemplatePosit
     return Number(exchangeRateRaw) / 10 ** 18;
   }
 
-  getLiquidity({ appToken }: GetDataPropsParams<OokiIToken>) {
+  async getLiquidity({ appToken }: GetDataPropsParams<OokiIToken>) {
     return appToken.supply * appToken.price;
   }
 
-  getReserves({ appToken }: GetDataPropsParams<OokiIToken>) {
+  async getReserves({ appToken }: GetDataPropsParams<OokiIToken>) {
     return [appToken.pricePerShare[0] * appToken.supply];
   }
 
-  getApy(_params: GetDataPropsParams<OokiIToken>) {
+  async getApy(_params: GetDataPropsParams<OokiIToken>) {
     return 0;
   }
 }

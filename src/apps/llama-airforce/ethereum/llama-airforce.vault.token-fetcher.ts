@@ -67,15 +67,15 @@ export class EthereumLlamaAirforceVaultTokenFetcher extends AppTokenTemplatePosi
     return reserve / appToken.supply;
   }
 
-  getLiquidity({ appToken }: GetDataPropsParams<LlamaAirforceUnionVault>) {
+  async getLiquidity({ appToken }: GetDataPropsParams<LlamaAirforceUnionVault>) {
     return appToken.supply * appToken.price;
   }
 
-  getReserves({ appToken }: GetDataPropsParams<LlamaAirforceUnionVault>) {
+  async getReserves({ appToken }: GetDataPropsParams<LlamaAirforceUnionVault>) {
     return [appToken.pricePerShare[0] * appToken.supply];
   }
 
-  getApy(_params: GetDataPropsParams<LlamaAirforceUnionVault>) {
+  async getApy(_params: GetDataPropsParams<LlamaAirforceUnionVault>) {
     return 0;
   }
 

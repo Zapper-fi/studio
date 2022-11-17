@@ -95,7 +95,7 @@ export class EthereumGearboxLendingTokenFetcher extends AppTokenTemplatePosition
     return underlyingBalance * params.appToken.tokens[0].price;
   }
 
-  getReserves(
+  async getReserves(
     _: GetDataPropsParams<DieselToken, DefaultAppTokenDataProps, DefaultAppTokenDefinition>,
   ): number[] | Promise<number[]> {
     return [];

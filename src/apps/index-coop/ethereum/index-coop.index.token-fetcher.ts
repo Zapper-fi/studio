@@ -71,15 +71,15 @@ export class EthereumIndexCoopIndexTokenFetcher extends AppTokenTemplatePosition
     return 1;
   }
 
-  getLiquidity({ appToken }: GetDataPropsParams<IndexCoopToken>) {
+  async getLiquidity({ appToken }: GetDataPropsParams<IndexCoopToken>) {
     return appToken.supply * appToken.price;
   }
 
-  getReserves({ appToken }: GetDataPropsParams<IndexCoopToken>) {
+  async getReserves({ appToken }: GetDataPropsParams<IndexCoopToken>) {
     return (appToken.pricePerShare as number[]).map(v => v * appToken.supply);
   }
 
-  getApy(): number | Promise<number> {
+  async getApy(): number | Promise<number> {
     return 0;
   }
 

@@ -137,15 +137,15 @@ export class EthereumPendleYieldTokenFetcher extends AppTokenTemplatePositionFet
     return price / appToken.tokens[0].price;
   }
 
-  getLiquidity({ appToken }: GetDataPropsParams<PendleYieldToken>) {
+  async getLiquidity({ appToken }: GetDataPropsParams<PendleYieldToken>) {
     return appToken.supply * appToken.price;
   }
 
-  getReserves({ appToken }: GetDataPropsParams<PendleYieldToken>) {
+  async getReserves({ appToken }: GetDataPropsParams<PendleYieldToken>) {
     return [appToken.pricePerShare[0] * appToken.supply];
   }
 
-  getApy(_params: GetDataPropsParams<PendleYieldToken>) {
+  async getApy(_params: GetDataPropsParams<PendleYieldToken>) {
     return 0;
   }
 
