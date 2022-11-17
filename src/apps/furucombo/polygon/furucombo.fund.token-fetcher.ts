@@ -79,6 +79,7 @@ export class PolygonFurucomboFundTokenFetcher extends AppTokenTemplatePositionFe
   @CacheOnInterval({
     key: `studio:${appId}:${groupId}:${network}:funds`,
     timeout: 15 * 60 * 1000,
+    failOnMissingData: false,
   })
   async getFurucomboFunds() {
     const { data } = await Axios.get<{ investables: FurucomboFund[] }>('https://api.furucombo.app/v1/investables', {

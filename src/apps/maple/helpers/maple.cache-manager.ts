@@ -49,6 +49,7 @@ export class MapleCacheManager {
   @CacheOnInterval({
     key: `studio:${MAPLE_DEFINITION.id}:${MAPLE_DEFINITION.groups.pool.id}:${Network.ETHEREUM_MAINNET}:pool-data`,
     timeout: 15 * 60 * 1000,
+    failOnMissingData: false,
   })
   async getCachedPoolData() {
     const client = new GraphQLClient('https://api.maple.finance/v1/graphql', {

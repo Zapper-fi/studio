@@ -10,6 +10,7 @@ export class OpenleveragePoolAPYHelper {
   @CacheOnInterval({
     key: `studio:${OPENLEVERAGE_DEFINITION.id}:${OPENLEVERAGE_DEFINITION.groups.pool.id}:openleverage-definitions-data`,
     timeout: 5 * 60 * 1000,
+    failOnMissingData: false,
   })
   async getApy() {
     const poolDetailMap = {};

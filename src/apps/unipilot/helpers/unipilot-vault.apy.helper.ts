@@ -20,6 +20,7 @@ export class UnipilotVaultAPYHelper {
   @CacheOnInterval({
     key: `studio:${UNIPILOT_DEFINITION.id}:${UNIPILOT_DEFINITION.groups.pool.id}:unipilot-definitions-data`,
     timeout: 5 * 60 * 1000,
+    failOnMissingData: false,
   })
   async getApy() {
     const ethData = await this.appToolkit.helpers.theGraphHelper.request<VaultAddressesResponse>({
