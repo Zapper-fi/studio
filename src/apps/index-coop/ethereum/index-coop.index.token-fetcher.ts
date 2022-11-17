@@ -79,7 +79,7 @@ export class EthereumIndexCoopIndexTokenFetcher extends AppTokenTemplatePosition
     return (appToken.pricePerShare as number[]).map(v => v * appToken.supply);
   }
 
-  async getApy(): number | Promise<number> {
+  async getApy() {
     return 0;
   }
 
