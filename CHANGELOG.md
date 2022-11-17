@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.282.0](https://github.com/Zapper-fi/studio/compare/v0.281.0...v0.282.0) (2022-11-17)
+
+
+### Features
+
+* **synthetix:** Fix logos ([ff66e2d](https://github.com/Zapper-fi/studio/commit/ff66e2d496e90b3f4c41f0442924ae0ac1b5bdaf))
+
 ## [0.281.0](https://github.com/Zapper-fi/studio/compare/v0.280.0...v0.281.0) (2022-11-17)
 
 
