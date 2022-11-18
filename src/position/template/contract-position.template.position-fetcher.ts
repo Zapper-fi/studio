@@ -131,9 +131,17 @@ export abstract class ContractPositionTemplatePositionFetcher<
 
     const skeletonsWithResolvedTokens = await Promise.all(
       compact(skeletons).map(async ({ address, tokenDefinitions, definition }) => {
-        const maybeTokens = tokenDefinitions.map(v => {
-          const match = tokenDependencies.find(t => t.address === v.address);
-          return match ? metatyped(match, v.metaType) : null;
+        const maybeTokens = tokenDefinitions.map(definition => {
+          const match = tokenDependencies.find(token => {
+            const isAddressMatch = token.address === definition.address;
+            const isNetworkMatch = token.network == definition.network;
+            const isMaybeErc1155TokenIdMatch =
+              !definition.tokenId ||
+              (token.type === ContractType.APP_TOKEN && token.dataProps.tokenId === definition.tokenId);
+            return isAddressMatch && isNetworkMatch && isMaybeErc1155TokenIdMatch;
+          });
+
+          return match ? metatyped(match, definition.metaType) : null;
         });
 
         const tokens = compact(maybeTokens);
