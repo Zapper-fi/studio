@@ -25,7 +25,7 @@ export class EthereumMahadaoBalanceFetcher implements BalanceFetcher {
       network,
       appId: MAHADAO_DEFINITION.id,
       groupId: MAHADAO_DEFINITION.groups.locker.id,
-      resolveContract: ({ address }) => this.bluebitContractFactory.mahadoMahaxLocker({ network, address: "0xbdd8f4daf71c2cb16cce7e54bb81ef3cfcf5aacb" }),
+      resolveContract: ({ address }) => this.bluebitContractFactory.mahadoMahaxLocker({ network, address }),
       resolveLockedTokenBalance: ({ contract, multicall }) => {
         console.log("Contract", contract.address);
         return multicall
