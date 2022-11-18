@@ -6,6 +6,7 @@ import { LemmafinanceAppDefinition, LEMMAFINANCE_DEFINITION } from './lemmafinan
 import { OptimismLemmafinanceBalanceFetcher } from './optimism/lemmafinance.balance-fetcher';
 import { OptimismLemmafinanceLemmaSynthTokenFetcher } from './optimism/lemmafinance.LemmaSynth.token-fetcher';
 import { OptimismLemmafinanceUsdlTokenFetcher } from './optimism/lemmafinance.usdl.token-fetcher';
+import { OptimismLemmafinanceXLemmaSynthTokenFetcher } from './optimism/lemmafinance.xLemmaSynth.token-fetcher';
 import { OptimismLemmafinanceXusdlTokenFetcher } from './optimism/lemmafinance.xusdl.token-fetcher';
 
 @Register.AppModule({
@@ -16,6 +17,7 @@ import { OptimismLemmafinanceXusdlTokenFetcher } from './optimism/lemmafinance.x
     OptimismLemmafinanceBalanceFetcher,
     OptimismLemmafinanceLemmaSynthTokenFetcher,
     OptimismLemmafinanceUsdlTokenFetcher,
+    OptimismLemmafinanceXLemmaSynthTokenFetcher,
     OptimismLemmafinanceXusdlTokenFetcher,
   ],
 })

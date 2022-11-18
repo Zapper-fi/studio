@@ -87,5 +87,5 @@ export class OptimismLemmafinanceUsdlTokenFetcher implements PositionFetcher<App
     );
 
       return tokens;  
-    }
+  }
 }

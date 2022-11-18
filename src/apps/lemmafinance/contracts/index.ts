@@ -5,6 +5,7 @@ import { ContractFactory } from '~contract/contracts';
 import { Network } from '~types/network.interface';
 
 import { LemmaSynth__factory } from './ethers';
+import { PerpLemma__factory } from './ethers';
 import { Usdl__factory } from './ethers';
 import { XLemmaSynth__factory } from './ethers';
 import { Xusdl__factory } from './ethers';
@@ -21,6 +22,9 @@ export class LemmafinanceContractFactory extends ContractFactory {
   lemmaSynth({ address, network }: ContractOpts) {
     return LemmaSynth__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
+  perpLemma({ address, network }: ContractOpts) {
+    return PerpLemma__factory.connect(address, this.appToolkit.getNetworkProvider(network));
+  }
   usdl({ address, network }: ContractOpts) {
     return Usdl__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
@@ -33,6 +37,7 @@ export class LemmafinanceContractFactory extends ContractFactory {
 }
 
 export type { LemmaSynth } from './ethers';
+export type { PerpLemma } from './ethers';
 export type { Usdl } from './ethers';
 export type { XLemmaSynth } from './ethers';
 export type { Xusdl } from './ethers';

@@ -11,11 +11,11 @@ import { LemmafinanceContractFactory } from '../contracts';
 import { LEMMAFINANCE_DEFINITION } from '../lemmafinance.definition';
 
 const appId = LEMMAFINANCE_DEFINITION.id;
-const groupId = LEMMAFINANCE_DEFINITION.groups.LemmaSynth.id;
+const groupId = LEMMAFINANCE_DEFINITION.groups.xLemmaSynth.id;
 const network = Network.OPTIMISM_MAINNET;
 
 @Register.TokenPositionFetcher({ appId, groupId, network })
-export class OptimismLemmafinanceLemmaSynthTokenFetcher implements PositionFetcher<AppTokenPosition> {
+export class OptimismLemmafinanceXLemmaSynthTokenFetcher implements PositionFetcher<AppTokenPosition> {
   constructor(
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
     @Inject(LemmafinanceContractFactory) private readonly lemmafinanceContractFactory: LemmafinanceContractFactory,
@@ -23,13 +23,13 @@ export class OptimismLemmafinanceLemmaSynthTokenFetcher implements PositionFetch
 
   async getPositions() {
 
-    const LemmaSynths = [
-      "0x3BC414FA971189783ACee4dEe281067C322E3412", // LemmaEth
-      "0x8A641696Caf0f59bB7a53CF8D2dc943ED95229A6", // LemmaWbtc
-      "0x5C39a4a368AB3c3239d20eb4219e0361Bd2ad092", // LemmaLink
-      "0x546ba811099883bEf35Fa360e7ded8Af439831f3", // LemmaCRV
-      "0xd1a988b024C55d7bAaBB07fD531d63A4E19e3B4C", // LemmaPerp
-      "0xA7C657a94Eb9571f4e94F49943Af1130e6D7337c", // LemmaAAVE
+    const xLemmaSynths = [
+      "0x89c4e9a23Db43641e1B3C5E0691b100E64b50E32", // xLemmaEth
+      "0x7D39583e262CBe75a1D698A6D79cd5a2958cb61d", // xLemmaWbtc
+      "0x823c55654d6E860F40070ee5625ff8b091df4269", // xLemmaLink
+      "0x754E6134872D7a501fFEbA6c186e187DBFdf6f4a", // xLemmaCRV
+      "0x3C7E63ba04FF4d5f0673bc93bBD9E73E9DD37Ed2", // xLemmaPerp
+      "0x90356c24c1F95CF29543D45122f2554b6A74f201", // xLemmaAAVE
     ];
 
     const perpLemmas = [
@@ -43,10 +43,10 @@ export class OptimismLemmafinanceLemmaSynthTokenFetcher implements PositionFetch
 
     const multicall = this.appToolkit.getMulticall(network);
     const tokens = await Promise.all(
-      LemmaSynths.map(async (lemmaSynth, i) => {
+      xLemmaSynths.map(async (xlemmaSynth, i) => {
         // Instantiate a smart contract instance pointing to the jar token address
-        const contract = this.lemmafinanceContractFactory.lemmaSynth({
-          address: lemmaSynth,
+        const contract = this.lemmafinanceContractFactory.xLemmaSynth({
+          address: xlemmaSynth,
           network,
         });
 
@@ -60,7 +60,7 @@ export class OptimismLemmafinanceLemmaSynthTokenFetcher implements PositionFetch
           multicall.wrap(contract).symbol(),
           multicall.wrap(contract).decimals(),
           multicall.wrap(contract).totalSupply(),
-          multicall.wrap(contract).tailCollateral(),
+          multicall.wrap(perpLemmaContract).usdlCollateral(),
           multicall.wrap(perpLemmaContract).getIndexPrice()
         ]);
 
@@ -84,7 +84,7 @@ export class OptimismLemmafinanceLemmaSynthTokenFetcher implements PositionFetch
           type: ContractType.APP_TOKEN,
           appId,
           groupId,
-          address: lemmaSynth,
+          address: xlemmaSynth,
           network,
           symbol,
           decimals,
