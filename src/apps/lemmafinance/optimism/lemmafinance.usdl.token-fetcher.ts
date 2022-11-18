@@ -3,6 +3,7 @@ import { Inject } from '@nestjs/common';
 
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
+import { buildDollarDisplayItem } from '~app-toolkit/helpers/presentation/display-item.present';
 import { getImagesFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { ContractType } from '~position/contract.interface';
 import { PositionFetcher } from '~position/position-fetcher.interface';
@@ -16,8 +17,7 @@ const appId = LEMMAFINANCE_DEFINITION.id;
 const groupId = LEMMAFINANCE_DEFINITION.groups.usdl.id;
 const network = Network.OPTIMISM_MAINNET;
 
-export type USDLTokenDataProps = {
-};
+export type USDLTokenDataProps = {};
 
 @Register.TokenPositionFetcher({ appId, groupId, network })
 export class OptimismLemmafinanceUsdlTokenFetcher implements PositionFetcher<AppTokenPosition> {
@@ -27,12 +27,10 @@ export class OptimismLemmafinanceUsdlTokenFetcher implements PositionFetcher<App
   ) {}
 
   async getPositions() {
-
-    const usdlAddresses = ["0x96F2539d3684dbde8B3242A51A73B66360a5B541"];
-
+    const usdlAddresses = ['0x96F2539d3684dbde8B3242A51A73B66360a5B541'];
     const multicall = this.appToolkit.getMulticall(network);
     const tokens = await Promise.all(
-      usdlAddresses.map(async (usdlAddress) => {
+      usdlAddresses.map(async usdlAddress => {
         // Instantiate a smart contract instance pointing to the jar token address
         const contract = this.lemmafinanceContractFactory.usdl({
           address: usdlAddress,
@@ -40,10 +38,11 @@ export class OptimismLemmafinanceUsdlTokenFetcher implements PositionFetcher<App
         });
 
         // Request the symbol, decimals, ands supply for the jar token
-        const [symbol, decimals, supplyRaw] = await Promise.all([
+        const [name, symbol, decimals, supplyRaw] = await Promise.all([
+          multicall.wrap(contract).name(),
           multicall.wrap(contract).symbol(),
           multicall.wrap(contract).decimals(),
-          multicall.wrap(contract).totalSupply()
+          multicall.wrap(contract).totalSupply(),
         ]);
 
         // Denormalize the supply
@@ -53,11 +52,11 @@ export class OptimismLemmafinanceUsdlTokenFetcher implements PositionFetcher<App
         const pricePerShare = Number(1e18);
 
         // // As a label, we'll use the underlying label (i.e.: 'LOOKS' or 'UNI-V2 LOOKS / ETH'), and suffix it with 'Jar'
-        // const label = `USDLL`;
+        const label = `${name} (${symbol})`;
         // // For images, we'll use the underlying token images as well
-        // const images = getImagesFromToken(usdlAddress);
+        const images = getImagesFromToken(tokens[0]);
         // // For the secondary label, we'll use the price of the jar token
-        // const secondaryLabel = buildDollarDisplayItem(price);
+        const secondaryLabel = buildDollarDisplayItem(price);
         // // And for a tertiary label, we'll use the APY
         // const tertiaryLabel = `${(apy * 100).toFixed(3)}% APY`;
 
@@ -76,16 +75,15 @@ export class OptimismLemmafinanceUsdlTokenFetcher implements PositionFetcher<App
           pricePerShare,
           dataProps: {},
           displayProps: {
-            label: '',
-            images: [''],
-            secondaryLabel: '',
+            label,
+            images,
+            secondaryLabel,
             tertiaryLabel: '',
           },
         };
         return token;
-      })
+      }),
     );
-
-      return tokens;  
+    return tokens;
   }
 }

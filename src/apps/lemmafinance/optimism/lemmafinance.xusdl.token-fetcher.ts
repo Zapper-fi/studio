@@ -2,6 +2,8 @@ import { Inject } from '@nestjs/common';
 
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
+import { buildDollarDisplayItem } from '~app-toolkit/helpers/presentation/display-item.present';
+import { getImagesFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { ContractType } from '~position/contract.interface';
 import { PositionFetcher } from '~position/position-fetcher.interface';
 import { AppTokenPosition } from '~position/position.interface';
@@ -22,11 +24,11 @@ export class OptimismLemmafinanceXusdlTokenFetcher implements PositionFetcher<Ap
   ) {}
 
   async getPositions() {
-    const xusdlAddresses = ["0x252Ea7E68a27390Ce0D53851192839A39Ab8B38C"];
+    const xusdlAddresses = ['0x252Ea7E68a27390Ce0D53851192839A39Ab8B38C'];
 
     const multicall = this.appToolkit.getMulticall(network);
     const tokens = await Promise.all(
-      xusdlAddresses.map(async (xusdlAddress) => {
+      xusdlAddresses.map(async xusdlAddress => {
         // Instantiate a smart contract instance pointing to the jar token address
         const contract = this.lemmafinanceContractFactory.xusdl({
           address: xusdlAddress,
@@ -34,11 +36,12 @@ export class OptimismLemmafinanceXusdlTokenFetcher implements PositionFetcher<Ap
         });
 
         // Request the symbol, decimals, ands supply for the jar token
-        const [symbol, decimals, supplyRaw, assetsPerShare] = await Promise.all([
+        const [name, symbol, decimals, supplyRaw, assetsPerShare] = await Promise.all([
+          multicall.wrap(contract).name(),
           multicall.wrap(contract).symbol(),
           multicall.wrap(contract).decimals(),
           multicall.wrap(contract).totalSupply(),
-          multicall.wrap(contract).assetsPerShare()
+          multicall.wrap(contract).assetsPerShare(),
         ]);
 
         // Denormalize the supply
@@ -48,11 +51,11 @@ export class OptimismLemmafinanceXusdlTokenFetcher implements PositionFetcher<Ap
         const pricePerShare = Number(assetsPerShare);
 
         // // As a label, we'll use the underlying label (i.e.: 'LOOKS' or 'UNI-V2 LOOKS / ETH'), and suffix it with 'Jar'
-        // const label = `USDLL`;
+        const label = `${name} (${symbol})`;
         // // For images, we'll use the underlying token images as well
-        // const images = getImagesFromToken(usdlAddress);
+        const images = getImagesFromToken(tokens[0]);
         // // For the secondary label, we'll use the price of the jar token
-        // const secondaryLabel = buildDollarDisplayItem(price);
+        const secondaryLabel = buildDollarDisplayItem(price);
         // // And for a tertiary label, we'll use the APY
         // const tertiaryLabel = `${(apy * 100).toFixed(3)}% APY`;
 
@@ -71,16 +74,16 @@ export class OptimismLemmafinanceXusdlTokenFetcher implements PositionFetcher<Ap
           pricePerShare,
           dataProps: {},
           displayProps: {
-            label: '',
-            images: [''],
-            secondaryLabel: '',
+            label,
+            images,
+            secondaryLabel,
             tertiaryLabel: '',
           },
         };
         return token;
-      })
+      }),
     );
 
-      return tokens;  
+    return tokens;
   }
 }

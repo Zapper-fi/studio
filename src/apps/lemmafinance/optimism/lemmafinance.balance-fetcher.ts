@@ -41,26 +41,39 @@ export class OptimismLemmafinanceBalanceFetcher implements BalanceFetcher {
     });
   }
 
+  async getxLemmaTokenBalances(address: string) {
+    return this.appToolkit.helpers.tokenBalanceHelper.getTokenBalances({
+      address,
+      appId: LEMMAFINANCE_DEFINITION.id,
+      groupId: LEMMAFINANCE_DEFINITION.groups.xLemmaSynth.id,
+      network: Network.OPTIMISM_MAINNET,
+    });
+  }
+
   async getBalances(address: string) {
-    const [usdlTokenBalances, xusdlTokenBalances, lemmaSythTokenBalances] = await Promise.all([
+    const [usdlTokenBalances, xusdlTokenBalances, lemmaSythTokenBalances, xlemmaSythTokenBalances] = await Promise.all([
       this.getUSDLTokenBalances(address),
       this.getXUSDLTokenBalances(address),
       this.getLemmaTokenBalances(address),
-
+      this.getxLemmaTokenBalances(address),
     ]);
 
     return presentBalanceFetcherResponse([
       {
-        label: "usdl",
+        label: 'usdl',
         assets: usdlTokenBalances,
       },
       {
-        label: "xusdl",
+        label: 'xusdl',
         assets: xusdlTokenBalances,
       },
       {
-        label: "LemmaSynth",
+        label: 'LemmaSynth',
         assets: lemmaSythTokenBalances,
+      },
+      {
+        label: 'xLemmaSynth',
+        assets: xlemmaSythTokenBalances,
       },
     ]);
   }
