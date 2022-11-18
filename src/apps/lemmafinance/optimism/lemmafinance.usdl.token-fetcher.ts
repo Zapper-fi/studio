@@ -32,8 +32,6 @@ export class OptimismLemmafinanceUsdlTokenFetcher implements PositionFetcher<App
     const usdlAddresses = ["0x96F2539d3684dbde8B3242A51A73B66360a5B541"];
 
     const multicall = this.appToolkit.getMulticall(network);
-
-
     const tokens = await Promise.all(
       usdlAddresses.map(async (usdlAddress) => {
         // Instantiate a smart contract instance pointing to the jar token address
