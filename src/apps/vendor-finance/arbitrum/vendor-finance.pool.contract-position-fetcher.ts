@@ -76,7 +76,7 @@ export class ArbitrumVendorFinancePoolContractPositionFetcher extends ContractPo
   }
 
   // returning the lendToken with two different status as it'll either be
-  // deposited initially (user = lender) or borrowed (user = borrower)
+  // deposited initially (user = lender) or borrowed (user = borrower).
   async getTokenDefinitions({ definition }: GetTokenDefinitionsParams<VendorFinancePool, VendorFinancePoolDefinition>) {
     return [
       { metaType: MetaType.SUPPLIED, address: definition.colToken, network: this.network },
