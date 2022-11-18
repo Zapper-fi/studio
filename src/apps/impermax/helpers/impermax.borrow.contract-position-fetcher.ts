@@ -45,7 +45,13 @@ export abstract class ImpermaxBorrowContractPositionFetcher extends ContractPosi
 
   async getTokenDefinitions({ contract }: GetTokenDefinitionsParams<Borrowable>) {
     const underlyingAddress = await contract.underlying();
-    return [{ address: underlyingAddress, metaType: MetaType.BORROWED }];
+    return [
+      {
+        metaType: MetaType.BORROWED,
+        address: underlyingAddress,
+        network: this.network,
+      },
+    ];
   }
 
   async getLabel({ contractPosition }: GetDisplayPropsParams<Borrowable>): Promise<DisplayProps['label']> {

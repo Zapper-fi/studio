@@ -1,6 +1,7 @@
 import _ from 'lodash';
 
 import { MetadataItemWithLabel, TokenBalanceResponse } from '~balance/balance-fetcher.interface';
+import { BALANCE_LOCALSTORAGE_FLAGS } from '~balance/balance.utils';
 import { ContractType } from '~position/contract.interface';
 import { AppTokenPositionBalance, ContractPositionBalance, TokenBalance } from '~position/position-balance.interface';
 
@@ -51,11 +52,14 @@ export const presentBalanceFetcherResponse = (
   products: Product[],
   meta: MetadataItemWithLabel[] = [],
 ): TokenBalanceResponse => {
+  const storage = BALANCE_LOCALSTORAGE_FLAGS.getStore();
+  const { includeZeroBalances } = storage ?? { includeZeroBalances: false };
+
   // Exclude any asset groups that have negligible balances
   const nonZeroBalanceProducts = products
     .map(assetGroup => ({
       ...assetGroup,
-      assets: assetGroup.assets.filter(b => !!b).filter(b => Math.abs(b.balanceUSD) >= 0.01),
+      assets: assetGroup.assets.filter(b => !!b).filter(b => includeZeroBalances || Math.abs(b.balanceUSD) >= 0.01),
     }))
     .filter(assetGroup => assetGroup.assets.length > 0);
 

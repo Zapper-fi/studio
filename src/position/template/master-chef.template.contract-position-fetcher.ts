@@ -100,8 +100,10 @@ export abstract class MasterChefTemplateContractPositionFetcher<
 
     if (!stakedTokenAddress || !rewardTokenAddresses) return null;
 
-    tokenDefinitions.push({ metaType: MetaType.SUPPLIED, address: stakedTokenAddress });
-    rewardTokenAddresses.forEach(v => tokenDefinitions.push({ metaType: MetaType.CLAIMABLE, address: v }));
+    tokenDefinitions.push({ metaType: MetaType.SUPPLIED, address: stakedTokenAddress, network: this.network });
+    rewardTokenAddresses.forEach(v =>
+      tokenDefinitions.push({ metaType: MetaType.CLAIMABLE, address: v, network: this.network }),
+    );
     return tokenDefinitions;
   }
 

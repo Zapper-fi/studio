@@ -34,7 +34,13 @@ export class ArbitrumDopexVotingEscrowContractPositionFetcher extends ContractPo
   }
 
   async getTokenDefinitions({ contract }: GetTokenDefinitionsParams<DopexVotingEscrow>) {
-    return [{ metaType: MetaType.SUPPLIED, address: await contract.token() }];
+    return [
+      {
+        metaType: MetaType.SUPPLIED,
+        address: await contract.token(),
+        network: this.network,
+      },
+    ];
   }
 
   async getLabel({ contractPosition }: GetDisplayPropsParams<DopexVotingEscrow>) {

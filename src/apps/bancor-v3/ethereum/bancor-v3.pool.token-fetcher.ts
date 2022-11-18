@@ -72,15 +72,15 @@ export class EthereumBancorV3PoolTokenFetcher extends AppTokenTemplatePositionFe
     return pricePerShare;
   }
 
-  getLiquidity({ appToken }: GetDataPropsParams<PoolToken>) {
+  async getLiquidity({ appToken }: GetDataPropsParams<PoolToken>) {
     return appToken.supply * appToken.price;
   }
 
-  getReserves({ appToken }: GetDataPropsParams<PoolToken>) {
+  async getReserves({ appToken }: GetDataPropsParams<PoolToken>) {
     return [appToken.pricePerShare[0] * appToken.supply];
   }
 
-  getApy(_params: GetDataPropsParams<PoolToken>) {
+  async getApy(_params: GetDataPropsParams<PoolToken>) {
     return 0;
   }
 }

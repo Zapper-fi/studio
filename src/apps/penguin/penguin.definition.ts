@@ -44,7 +44,12 @@ export const PENGUIN_DEFINITION = appDefinition({
 
   tags: [AppTag.YIELD_AGGREGATOR],
   keywords: [],
-  links: {},
+  links: {
+    discord: 'https://discord.com/invite/WyFT54acU5',
+    medium: 'https://penguin-finance.medium.com/',
+    telegram: 'https://t.me/penguin_defi',
+    twitter: 'https://twitter.com/penguin_defi',
+  },
 
   supportedNetworks: {
     [Network.AVALANCHE_MAINNET]: [AppAction.VIEW],

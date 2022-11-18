@@ -53,6 +53,7 @@ export class AvalancheHedgefarmAlphaOneTokenFetcher extends AppTokenTemplatePosi
   @CacheOnInterval({
     key: `studio:hedgefarm:alpha-one:performance`,
     timeout: 15 * 60 * 1000,
+    failOnMissingData: false,
   })
   async getPerformance(): Promise<Performance> {
     const url = 'https://api.hedgefarm.workers.dev/alpha1/performance';

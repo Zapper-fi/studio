@@ -1,6 +1,7 @@
 import { gql } from 'graphql-request';
 
 import {
+  BalancerV2PoolTokenDataProps,
   BalancerV2PoolTokenDefinition,
   BalancerV2PoolTokenFetcher,
 } from '~apps/balancer-v2/common/balancer-v2.pool.token-fetcher';
@@ -56,7 +57,7 @@ export abstract class BeethovenXPoolTokenFetcher extends BalancerV2PoolTokenFetc
     contract,
     definition,
     multicall,
-  }: GetTokenPropsParams<BalancerPool, BalancerV2PoolTokenDefinition>) {
+  }: GetTokenPropsParams<BalancerPool, BalancerV2PoolTokenDataProps, BalancerV2PoolTokenDefinition>) {
     // Logic derived from https://github.com/beethovenxfi/beethovenx-backend/blob/89242560f444f6f29ceb09155b905f783fda9481/modules/pool/lib/pool-on-chain-data.service.ts#L154-L163
     if (
       (definition.poolType === 'PHANTOM_STABLE' && definition.factory === this.composablePoolFactory) ||

@@ -56,15 +56,15 @@ export abstract class WombatExchangePoolTokenFetcher extends AppTokenTemplatePos
     return Number(pricePerShareRaw.amount) / 10 ** appToken.decimals;
   }
 
-  getLiquidity({ appToken }: GetDataPropsParams<WombatExchangePoolToken>) {
+  async getLiquidity({ appToken }: GetDataPropsParams<WombatExchangePoolToken>) {
     return appToken.supply * appToken.price;
   }
 
-  getReserves({ appToken }: GetDataPropsParams<WombatExchangePoolToken>) {
+  async getReserves({ appToken }: GetDataPropsParams<WombatExchangePoolToken>) {
     return [appToken.pricePerShare[0] * appToken.supply];
   }
 
-  getApy(_params: GetDataPropsParams<WombatExchangePoolToken>) {
+  async getApy(_params: GetDataPropsParams<WombatExchangePoolToken>) {
     return 0;
   }
 }

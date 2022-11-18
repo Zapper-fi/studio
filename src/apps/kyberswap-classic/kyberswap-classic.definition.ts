@@ -7,9 +7,8 @@ export const KYBERSWAP_CLASSIC_DEFINITION = appDefinition({
   id: 'kyberswap-classic',
   name: 'KyberSwap Classic',
   description: `KyberSwap Classic is a next-generation AMM designed to maximize the use of capital by enabling extremely high capital efficiency and reacting to market conditions to optimise returns for liquidity providers.`,
-  url: 'https://classic.exchange/',
+  url: 'https://kyberswap.com/swap',
   tags: [AppTag.LIQUIDITY_POOL],
-  links: {},
 
   groups: {
     pool: {
@@ -32,6 +31,11 @@ export const KYBERSWAP_CLASSIC_DEFINITION = appDefinition({
       label: 'Farms',
       groupLabel: 'Farms',
     },
+  },
+  links: {
+    discord: 'https://discord.com/invite/NB3vc8J9uv',
+    telegram: 'https://t.me/kybernetwork',
+    twitter: 'https://twitter.com/KyberNetwork',
   },
 
   supportedNetworks: {

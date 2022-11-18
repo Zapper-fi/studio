@@ -4,7 +4,6 @@ import { PositionBalanceFetcher } from '~position/position-balance-fetcher.decor
 import { PositionFetcher } from '~position/position-fetcher.decorator';
 
 import { BalanceFetcher } from './balance-fetcher.decorator';
-import { BalancePresenter } from './balance-presenter.decorator';
 import { BalanceProductMeta } from './balance-product-meta.decorator';
 import { PositionTemplate } from './position-template.decorator';
 import { PresenterTemplate } from './presenter-template.decorator';
@@ -13,7 +12,6 @@ export const Register = {
   AppDefinition,
   AppModule,
   BalanceFetcher,
-  BalancePresenter,
   BalanceProductMeta,
   ContractPositionBalanceFetcher: PositionBalanceFetcher(ContractType.POSITION),
   ContractPositionFetcher: PositionFetcher(ContractType.POSITION),

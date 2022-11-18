@@ -8,9 +8,6 @@ export const UNISWAP_V3_DEFINITION = appDefinition({
   name: 'Uniswap V3',
   description: `A protocol for trading and automated liquidity provision on Ethereum.`,
   url: 'https://uniswap.org/',
-  primaryColor: '#f80076',
-  tags: [AppTag.LIQUIDITY_POOL],
-  links: {},
 
   groups: {
     liquidity: {
@@ -19,6 +16,14 @@ export const UNISWAP_V3_DEFINITION = appDefinition({
       label: 'Liquidity Positions',
       groupLabel: 'Pools',
     },
+  },
+
+  primaryColor: '#f80076',
+  tags: [AppTag.LIQUIDITY_POOL],
+  links: {
+    github: 'https://github.com/Uniswap',
+    twitter: 'https://twitter.com/Uniswap',
+    discord: 'https://discord.gg/FCfyBSbCU5',
   },
 
   supportedNetworks: {

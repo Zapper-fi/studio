@@ -46,7 +46,13 @@ export abstract class BadgerClaimableContractPositionFetcher extends ContractPos
   async getTokenDefinitions({
     definition,
   }: GetTokenDefinitionsParams<BadgerTree, BadgerClaimableDefinition>): Promise<UnderlyingTokenDefinition[]> {
-    return [{ address: definition.rewardTokenAddress, metaType: MetaType.CLAIMABLE }];
+    return [
+      {
+        metaType: MetaType.CLAIMABLE,
+        address: definition.rewardTokenAddress,
+        network: this.network,
+      },
+    ];
   }
 
   async getLabel(params: GetDisplayPropsParams<BadgerTree>): Promise<string> {

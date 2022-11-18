@@ -25,7 +25,12 @@ export const SPOOL_DEFINITION = appDefinition({
 
   tags: [AppTag.INFRASTRUCTURE, AppTag.YIELD_AGGREGATOR],
   keywords: [],
-  links: {},
+  links: {
+    discord: 'https://discord.com/invite/kCDC7BWxrw',
+    medium: 'https://medium.com/spoolfi',
+    telegram: 'https://t.me/SpoolFi',
+    twitter: 'https://twitter.com/spoolfi',
+  },
 
   supportedNetworks: {
     [Network.ETHEREUM_MAINNET]: [AppAction.VIEW],

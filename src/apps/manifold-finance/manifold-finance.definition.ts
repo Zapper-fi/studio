@@ -19,7 +19,11 @@ export const MANIFOLD_FINANCE_DEFINITION = appDefinition({
 
   tags: [AppTag.INFRASTRUCTURE],
   keywords: [],
-  links: {},
+  links: {
+    github: 'https://github.com/manifoldfinance',
+    telegram: 'https://t.me/manifoldfinance',
+    twitter: 'https://twitter.com/foldfinance',
+  },
 
   supportedNetworks: {
     [Network.ETHEREUM_MAINNET]: [AppAction.VIEW],

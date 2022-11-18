@@ -32,7 +32,10 @@ export const STEAK_HUT_DEFINITION = appDefinition({
 
   tags: [AppTag.FARMING],
   keywords: [],
-  links: {},
+  links: {
+    discord: 'https://discord.com/invite/3yPHT3xTk3',
+    twitter: 'https://twitter.com/steakhut_fi',
+  },
 
   supportedNetworks: {
     [Network.AVALANCHE_MAINNET]: [AppAction.VIEW],

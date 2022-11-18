@@ -37,8 +37,6 @@ export abstract class OptimismKwentaPerpContractPositionFetcher extends Contract
     super(appToolkit);
   }
 
-  abstract getAccountAddress(address: string): Promise<string> | string;
-
   getContract(address: string): KwentaFutures {
     return this.contractFactory.kwentaFutures({ address, network: this.network });
   }
@@ -54,7 +52,11 @@ export abstract class OptimismKwentaPerpContractPositionFetcher extends Contract
 
   async getTokenDefinitions() {
     return [
-      { metaType: MetaType.SUPPLIED, address: '0x8c6f28f2f1a3c87f0f938b96d27520d9751ec8d9' }, // sUSD
+      {
+        address: '0x8c6f28f2f1a3c87f0f938b96d27520d9751ec8d9', // sUSD
+        metaType: MetaType.SUPPLIED,
+        network: this.network,
+      },
     ];
   }
 
@@ -82,11 +84,7 @@ export abstract class OptimismKwentaPerpContractPositionFetcher extends Contract
   }
 
   async getTokenBalancesPerPosition({ address, contract }: GetTokenBalancesParams<KwentaFutures>) {
-    const accountAddress = await this.getAccountAddress(address);
-    if (accountAddress === '') {
-      return [];
-    }
-    const remainingMargin = await contract.remainingMargin(accountAddress);
+    const remainingMargin = await contract.remainingMargin(address);
     return [remainingMargin.marginRemaining];
   }
 }

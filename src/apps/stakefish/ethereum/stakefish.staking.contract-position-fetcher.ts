@@ -45,9 +45,21 @@ export class EthereumStakefishStakingContractPositionFetcher extends ContractPos
 
   async getTokenDefinitions() {
     return [
-      { metaType: MetaType.SUPPLIED, address: ZERO_ADDRESS },
-      { metaType: MetaType.VESTING, address: ZERO_ADDRESS },
-      { metaType: MetaType.CLAIMABLE, address: ZERO_ADDRESS },
+      {
+        metaType: MetaType.SUPPLIED,
+        address: ZERO_ADDRESS,
+        network: this.network,
+      },
+      {
+        metaType: MetaType.VESTING,
+        address: ZERO_ADDRESS,
+        network: this.network,
+      },
+      {
+        metaType: MetaType.CLAIMABLE,
+        address: ZERO_ADDRESS,
+        network: this.network,
+      },
     ];
   }
 

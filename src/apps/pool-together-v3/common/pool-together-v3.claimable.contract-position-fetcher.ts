@@ -44,7 +44,13 @@ export abstract class PoolTogetherV3ClaimableContractPositionFetcher extends Con
     UnderlyingTokenDefinition[] | null
   > {
     const rewardTokenAddressRaw = await contract.asset().then(addr => addr.toLowerCase());
-    return [{ address: rewardTokenAddressRaw, metaType: MetaType.CLAIMABLE }];
+    return [
+      {
+        metaType: MetaType.CLAIMABLE,
+        address: rewardTokenAddressRaw,
+        network: this.network,
+      },
+    ];
   }
 
   async getLabel({ contractPosition }: GetDisplayPropsParams<PoolTogetherV3TokenFaucet>) {

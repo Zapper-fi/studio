@@ -29,7 +29,12 @@ export const MUX_DEFINITION = appDefinition({
   },
   tags: [AppTag.MARGIN_TRADING],
   keywords: [],
-  links: {},
+  links: {
+    discord: 'https://discord.com/invite/bd88NrzN3N',
+    github: 'https://github.com/mux-world/mux-protocol',
+    telegram: 'https://t.me/muxprotocol',
+    twitter: 'https://twitter.com/muxprotocol',
+  },
 
   supportedNetworks: {
     [Network.BINANCE_SMART_CHAIN_MAINNET]: [AppAction.VIEW],

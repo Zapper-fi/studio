@@ -56,8 +56,16 @@ export class SushiswapKashiLeverageContractPositionFetcher extends ContractPosit
     definition,
   }: GetTokenDefinitionsParams<SushiswapKashiLendingToken, SushiswapKashiLeverageDefinition>) {
     return [
-      { metaType: MetaType.BORROWED, address: definition.assetAddress },
-      { metaType: MetaType.SUPPLIED, address: definition.collateralAddress },
+      {
+        metaType: MetaType.BORROWED,
+        address: definition.assetAddress,
+        network: this.network,
+      },
+      {
+        metaType: MetaType.SUPPLIED,
+        address: definition.collateralAddress,
+        network: this.network,
+      },
     ];
   }
 

@@ -26,7 +26,11 @@ export const OOKI_DEFINITION = appDefinition({
   ],
 
   keywords: [],
-  links: {},
+  links: {
+    discord: 'https://discord.com/invite/4wPVA6a',
+    telegram: 'https://t.me/OokiAnnouncements',
+    twitter: 'https://twitter.com/OokiTrade',
+  },
 
   supportedNetworks: {
     [Network.ETHEREUM_MAINNET]: [AppAction.VIEW],

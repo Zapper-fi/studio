@@ -58,15 +58,15 @@ export abstract class PoolTogetherV3PodTokenFetcher extends AppTokenTemplatePosi
     return [underlyingTokenAddress];
   }
 
-  getLiquidity({ appToken }: GetDataPropsParams<PoolTogetherV3Pod>) {
+  async getLiquidity({ appToken }: GetDataPropsParams<PoolTogetherV3Pod>) {
     return appToken.supply * appToken.price;
   }
 
-  getReserves({ appToken }: GetDataPropsParams<PoolTogetherV3Pod>) {
+  async getReserves({ appToken }: GetDataPropsParams<PoolTogetherV3Pod>) {
     return [appToken.pricePerShare[0] * appToken.supply];
   }
 
-  getApy(_params: GetDataPropsParams<PoolTogetherV3Pod>) {
+  async getApy(_params: GetDataPropsParams<PoolTogetherV3Pod>) {
     return 0;
   }
 }

@@ -2,11 +2,12 @@ import { Inject } from '@nestjs/common';
 import { BigNumberish } from 'ethers';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
+import { getTokenImg } from '~app-toolkit/helpers/presentation/image.present';
 import { IMulticallWrapper } from '~multicall';
 import { DefaultDataProps } from '~position/display.interface';
 import { AppTokenPosition } from '~position/position.interface';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
-import { GetDataPropsParams, GetPriceParams } from '~position/template/app-token.template.types';
+import { GetDataPropsParams, GetDisplayPropsParams, GetPriceParams } from '~position/template/app-token.template.types';
 
 import { SynthetixContractFactory, SynthetixNetworkToken } from '../contracts';
 
@@ -57,6 +58,10 @@ export abstract class SynthetixSnxTokenFetcher extends AppTokenTemplatePositionF
   async getDataProps(params: GetDataPropsParams<SynthetixNetworkToken>) {
     const defaultDataProps = await super.getDataProps(params);
     return { ...defaultDataProps, exchangeable: this.isExchangeable };
+  }
+
+  async getImages({ appToken }: GetDisplayPropsParams<SynthetixNetworkToken>) {
+    return [getTokenImg(appToken.address, this.network)];
   }
 
   async getBalancePerToken({

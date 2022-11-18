@@ -9,6 +9,15 @@ export const VENDOR_FINANCE_DEFINITION = appDefinition({
   description:
     'Vendor Finance allows for permission-less, isolated, fixed-rate, fixed-term, and zero liquidation loan markets to be created. Lenders create fully customizable loans by setting all their own terms ! Borrowers obtain non-liquidatable, fixed rate, and fixed terms loans.',
   url: 'https://vendor.finance/borrow',
+  tags: [AppTag.LENDING],
+  keywords: [],
+
+  links: {
+    discord: 'https://discord.com/invite/mZWtWVJvzZ',
+    github: 'https://github.com/VendorFinance',
+    medium: 'https://vendorfinance.medium.com/',
+    twitter: 'https://twitter.com/VendorFi',
+  },
 
   groups: {
     pools: {
@@ -17,10 +26,6 @@ export const VENDOR_FINANCE_DEFINITION = appDefinition({
       label: 'Lending pools',
     },
   },
-
-  tags: [AppTag.LENDING],
-  keywords: [],
-  links: {},
 
   supportedNetworks: {
     [Network.ARBITRUM_MAINNET]: [AppAction.VIEW],
@@ -35,5 +40,3 @@ export class VendorFinanceAppDefinition extends AppDefinition {
     super(VENDOR_FINANCE_DEFINITION);
   }
 }
-
-export default VENDOR_FINANCE_DEFINITION;

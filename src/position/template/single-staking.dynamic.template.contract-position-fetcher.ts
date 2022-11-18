@@ -48,20 +48,39 @@ export abstract class SingleStakingFarmDynamicTemplateContractPositionFetcher<
     const rewardTokenAddresses = await this.getRewardTokenAddresses(params).then(v => (isArray(v) ? v : [v]));
 
     const tokens: UnderlyingTokenDefinition[] = [];
-    tokens.push({ metaType: MetaType.SUPPLIED, address: stakedTokenAddress.toLowerCase() });
-    tokens.push(...rewardTokenAddresses.map(v => ({ metaType: MetaType.CLAIMABLE, address: v.toLowerCase() })));
+
+    tokens.push({
+      metaType: MetaType.SUPPLIED,
+      address: stakedTokenAddress.toLowerCase(),
+      network: this.network,
+    });
+
+    tokens.push(
+      ...rewardTokenAddresses.map(v => ({
+        metaType: MetaType.CLAIMABLE,
+        address: v.toLowerCase(),
+        network: this.network,
+      })),
+    );
+
     return tokens;
   }
 
+  async getReserve({ contractPosition, multicall }: GetDataPropsParams<T, V>) {
+    const stakedToken = contractPosition.tokens.find(isSupplied)!;
+    const stakedTokenContract = this.appToolkit.globalContracts.erc20(stakedToken);
+    const reserveRaw = await multicall.wrap(stakedTokenContract).balanceOf(contractPosition.address);
+    const reserve = Number(reserveRaw) / 10 ** stakedToken.decimals;
+    return reserve;
+  }
+
   async getDataProps(params: GetDataPropsParams<T, V>): Promise<V> {
-    const { contractPosition, multicall } = params;
+    const { contractPosition } = params;
     const stakedToken = contractPosition.tokens.find(isSupplied)!;
     const rewardTokens = contractPosition.tokens.filter(isClaimable);
     const rewardRatesRaw = await this.getRewardRates(params).then(v => (isArray(v) ? v : [v]));
 
-    const stakedTokenContract = this.appToolkit.globalContracts.erc20(stakedToken);
-    const reserveRaw = await multicall.wrap(stakedTokenContract).balanceOf(contractPosition.address);
-    const reserve = Number(reserveRaw) / 10 ** stakedToken.decimals;
+    const reserve = await this.getReserve(params);
     const liquidity = reserve * stakedToken.price;
 
     const rewardRates = rewardTokens.map((v, i) => Number(rewardRatesRaw[i] ?? 0) / 10 ** v.decimals);

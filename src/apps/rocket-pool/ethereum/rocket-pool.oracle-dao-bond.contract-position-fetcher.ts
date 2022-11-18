@@ -28,7 +28,13 @@ export class EthereumRocketPoolOracleDaoBondContractPositionFetcher extends Cont
   }
 
   async getTokenDefinitions() {
-    return [{ metaType: MetaType.SUPPLIED, address: '0xd33526068d116ce69f19a9ee46f0bd304f21a51f' }];
+    return [
+      {
+        metaType: MetaType.SUPPLIED,
+        address: '0xd33526068d116ce69f19a9ee46f0bd304f21a51f',
+        network: this.network,
+      },
+    ];
   }
 
   async getLabel() {

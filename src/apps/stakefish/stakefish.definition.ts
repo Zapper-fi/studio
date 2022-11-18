@@ -19,7 +19,10 @@ export const STAKEFISH_DEFINITION = appDefinition({
 
   tags: [AppTag.INFRASTRUCTURE, AppTag.STAKING],
   keywords: [],
-  links: {},
+  links: {
+    telegram: 'https://t.me/stakefish',
+    twitter: 'https://twitter.com/stakefish',
+  },
 
   supportedNetworks: {
     [Network.ETHEREUM_MAINNET]: [AppAction.VIEW],

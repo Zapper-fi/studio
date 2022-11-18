@@ -14,6 +14,7 @@ import {
   BaseTokenBalance,
   ContractPositionBalance,
 } from '~position/position-balance.interface';
+import { Standard } from '~position/position.interface';
 import { claimable } from '~position/position.utils';
 import { Network } from '~types/network.interface';
 
@@ -159,6 +160,7 @@ export class PolygonMeanFinanceBalanceFetcher implements BalanceFetcher {
           remainingLiquidity,
           remainingSwaps,
           totalValueLocked: balanceUSD,
+          assetStandard: Standard.ERC_721,
         },
         displayProps: {
           label,

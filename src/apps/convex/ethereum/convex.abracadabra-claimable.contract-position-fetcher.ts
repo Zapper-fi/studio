@@ -49,9 +49,21 @@ export class EthereumConvexAbracadabraClaimableContractPositionFetcher extends C
 
   async getTokenDefinitions({ contract }: GetTokenDefinitionsParams<ConvexAbracadabraWrapper>) {
     return [
-      { metaType: MetaType.SUPPLIED, address: await contract.convexToken() },
-      { metaType: MetaType.CLAIMABLE, address: '0xd533a949740bb3306d119cc777fa900ba034cd52' },
-      { metaType: MetaType.CLAIMABLE, address: '0x4e3fbd56cd56c3e72c1403e103b45db9da5b9d2b' },
+      {
+        metaType: MetaType.SUPPLIED,
+        address: await contract.convexToken(),
+        network: this.network,
+      },
+      {
+        metaType: MetaType.CLAIMABLE,
+        address: '0xd533a949740bb3306d119cc777fa900ba034cd52',
+        network: this.network,
+      },
+      {
+        metaType: MetaType.CLAIMABLE,
+        address: '0x4e3fbd56cd56c3e72c1403e103b45db9da5b9d2b',
+        network: this.network,
+      },
     ];
   }
 

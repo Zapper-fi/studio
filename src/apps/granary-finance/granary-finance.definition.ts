@@ -31,7 +31,11 @@ export const GRANARY_FINANCE_DEFINITION = appDefinition({
 
   tags: [AppTag.LENDING],
   keywords: [],
-  links: {},
+  links: {
+    discord: 'https://discord.com/invite/cfqhP4fppK',
+    github: 'https://github.com/The-Granary',
+    twitter: 'https://twitter.com/GranaryFinance',
+  },
 
   supportedNetworks: {
     [Network.ETHEREUM_MAINNET]: [AppAction.VIEW],

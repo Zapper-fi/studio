@@ -44,9 +44,21 @@ export class FantomHectorNetworkStakeBondContractPositionFetcher extends Contrac
     const [principle, claimable] = await Promise.all([contract.principle(), contract.sHEC()]);
 
     return [
-      { address: claimable, metaType: MetaType.VESTING },
-      { address: claimable, metaType: MetaType.CLAIMABLE },
-      { address: principle, metaType: MetaType.SUPPLIED },
+      {
+        metaType: MetaType.VESTING,
+        address: claimable,
+        network: this.network,
+      },
+      {
+        metaType: MetaType.CLAIMABLE,
+        address: claimable,
+        network: this.network,
+      },
+      {
+        metaType: MetaType.SUPPLIED,
+        address: principle,
+        network: this.network,
+      },
     ];
   }
 

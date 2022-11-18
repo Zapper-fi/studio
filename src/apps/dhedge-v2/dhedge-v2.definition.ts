@@ -19,7 +19,12 @@ export const DHEDGE_V_2_DEFINITION = appDefinition({
 
   tags: [AppTag.ASSET_MANAGEMENT],
   keywords: [],
-  links: {},
+  links: {
+    discord: 'https://discord.com/invite/BAWTbRA',
+    medium: 'https://medium.com/dhedge-org',
+    telegram: 'https://t.me/dhedge',
+    twitter: 'https://twitter.com/dHedgeOrg',
+  },
 
   supportedNetworks: {
     [Network.POLYGON_MAINNET]: [AppAction.VIEW],

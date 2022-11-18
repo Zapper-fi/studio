@@ -13,6 +13,7 @@ export class GoodGhostingGameGamesApiSource {
   @CacheOnInterval({
     key: `studio:${GOOD_GHOSTING_DEFINITION.id}:${GOOD_GHOSTING_DEFINITION.groups.game}:addresses`,
     timeout: 15 * 60 * 1000,
+    failOnMissingData: false,
   })
   async getCachedGameConfigsData() {
     const url = `${BASE_API_URL}/games`;
