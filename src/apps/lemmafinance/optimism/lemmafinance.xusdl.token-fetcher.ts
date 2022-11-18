@@ -1,56 +1,51 @@
-import { Token } from '@kyberswap/ks-sdk-core';
 import { Inject } from '@nestjs/common';
 
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
-import { getImagesFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { ContractType } from '~position/contract.interface';
 import { PositionFetcher } from '~position/position-fetcher.interface';
 import { AppTokenPosition } from '~position/position.interface';
 import { Network } from '~types/network.interface';
 
-import { LemmafinanceContractFactory, Xusdl } from '../contracts';
+import { LemmafinanceContractFactory } from '../contracts';
 import { LEMMAFINANCE_DEFINITION } from '../lemmafinance.definition';
 
 const appId = LEMMAFINANCE_DEFINITION.id;
-const groupId = LEMMAFINANCE_DEFINITION.groups.usdl.id;
+const groupId = LEMMAFINANCE_DEFINITION.groups.xusdl.id;
 const network = Network.OPTIMISM_MAINNET;
 
-export type USDLTokenDataProps = {
-};
-
 @Register.TokenPositionFetcher({ appId, groupId, network })
-export class OptimismLemmafinanceUsdlTokenFetcher implements PositionFetcher<AppTokenPosition> {
+export class OptimismLemmafinanceXusdlTokenFetcher implements PositionFetcher<AppTokenPosition> {
   constructor(
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
     @Inject(LemmafinanceContractFactory) private readonly lemmafinanceContractFactory: LemmafinanceContractFactory,
   ) {}
 
   async getPositions() {
-
-    const usdlAddresses = ["0x96F2539d3684dbde8B3242A51A73B66360a5B541"];
+    const xusdlAddresses = ["0x252Ea7E68a27390Ce0D53851192839A39Ab8B38C"];
 
     const multicall = this.appToolkit.getMulticall(network);
     const tokens = await Promise.all(
-      usdlAddresses.map(async (usdlAddress) => {
+      xusdlAddresses.map(async (xusdlAddress) => {
         // Instantiate a smart contract instance pointing to the jar token address
-        const contract = this.lemmafinanceContractFactory.usdl({
-          address: usdlAddress,
+        const contract = this.lemmafinanceContractFactory.xusdl({
+          address: xusdlAddress,
           network,
         });
 
         // Request the symbol, decimals, ands supply for the jar token
-        const [symbol, decimals, supplyRaw] = await Promise.all([
+        const [symbol, decimals, supplyRaw, assetsPerShare] = await Promise.all([
           multicall.wrap(contract).symbol(),
           multicall.wrap(contract).decimals(),
-          multicall.wrap(contract).totalSupply()
+          multicall.wrap(contract).totalSupply(),
+          multicall.wrap(contract).assetsPerShare()
         ]);
 
         // Denormalize the supply
         const supply = Number(supplyRaw) / 10 ** decimals;
-        const tokens: any = [usdlAddress];
-        const price = Number(1);
-        const pricePerShare = Number(1e18);
+        const tokens: any = [xusdlAddress];
+        const price = Number(assetsPerShare);
+        const pricePerShare = Number(assetsPerShare);
 
         // // As a label, we'll use the underlying label (i.e.: 'LOOKS' or 'UNI-V2 LOOKS / ETH'), and suffix it with 'Jar'
         // const label = `USDLL`;
@@ -66,7 +61,7 @@ export class OptimismLemmafinanceUsdlTokenFetcher implements PositionFetcher<App
           type: ContractType.APP_TOKEN,
           appId,
           groupId,
-          address: usdlAddress,
+          address: xusdlAddress,
           network,
           symbol,
           decimals,
@@ -87,5 +82,5 @@ export class OptimismLemmafinanceUsdlTokenFetcher implements PositionFetcher<App
     );
 
       return tokens;  
-    }
+  }
 }

@@ -15,6 +15,21 @@ export const LEMMAFINANCE_DEFINITION = appDefinition({
       type: GroupType.TOKEN,
       label: 'USDL',
     },
+    xusdl: {
+      id: 'xusdl',
+      type: GroupType.TOKEN,
+      label: 'xUSDL',
+    },
+    LemmaSynth: {
+      id: 'LemmaSynth',
+      type: GroupType.TOKEN,
+      label: 'LemmaSynth',
+    },
+    xLemmaSynth: {
+      id: 'xLemmaSynth',
+      type: GroupType.TOKEN,
+      label: 'xLemmaSynth',
+    },
   },
 
   tags: [AppTag.ALGORITHMIC_STABLECOIN],
