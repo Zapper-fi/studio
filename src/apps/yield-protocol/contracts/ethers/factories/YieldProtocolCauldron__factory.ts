@@ -4,7 +4,7 @@
 
 import { Contract, Signer, utils } from 'ethers';
 import type { Provider } from '@ethersproject/providers';
-import type { Cauldron, CauldronInterface } from '../Cauldron';
+import type { YieldProtocolCauldron, YieldProtocolCauldronInterface } from '../YieldProtocolCauldron';
 
 const _abi = [
   {
@@ -1471,12 +1471,12 @@ const _abi = [
   },
 ];
 
-export class Cauldron__factory {
+export class YieldProtocolCauldron__factory {
   static readonly abi = _abi;
-  static createInterface(): CauldronInterface {
-    return new utils.Interface(_abi) as CauldronInterface;
+  static createInterface(): YieldProtocolCauldronInterface {
+    return new utils.Interface(_abi) as YieldProtocolCauldronInterface;
   }
-  static connect(address: string, signerOrProvider: Signer | Provider): Cauldron {
-    return new Contract(address, _abi, signerOrProvider) as Cauldron;
+  static connect(address: string, signerOrProvider: Signer | Provider): YieldProtocolCauldron {
+    return new Contract(address, _abi, signerOrProvider) as YieldProtocolCauldron;
   }
 }

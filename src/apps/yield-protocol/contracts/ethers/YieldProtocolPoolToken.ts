@@ -17,7 +17,7 @@ import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi
 import type { Listener, Provider } from '@ethersproject/providers';
 import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
-export interface StrategyInterface extends utils.Interface {
+export interface YieldProtocolPoolTokenInterface extends utils.Interface {
   functions: {
     'DOMAIN_SEPARATOR()': FunctionFragment;
     'LOCK()': FunctionFragment;
@@ -455,12 +455,12 @@ export type YieldSetEvent = TypedEvent<[string, string], YieldSetEventObject>;
 
 export type YieldSetEventFilter = TypedEventFilter<YieldSetEvent>;
 
-export interface Strategy extends BaseContract {
+export interface YieldProtocolPoolToken extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
 
-  interface: StrategyInterface;
+  interface: YieldProtocolPoolTokenInterface;
 
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,

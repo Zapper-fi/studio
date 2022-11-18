@@ -65,15 +65,15 @@ export abstract class BeefyVaultTokenFetcher extends AppTokenTemplatePositionFet
     return Number(ratioRaw) / 10 ** decimals;
   }
 
-  getLiquidity({ appToken }: GetDataPropsParams<BeefyVaultToken>) {
+  async getLiquidity({ appToken }: GetDataPropsParams<BeefyVaultToken>) {
     return appToken.supply * appToken.price;
   }
 
-  getReserves({ appToken }: GetDataPropsParams<BeefyVaultToken>) {
+  async getReserves({ appToken }: GetDataPropsParams<BeefyVaultToken>) {
     return [appToken.pricePerShare[0] * appToken.supply];
   }
 
-  getApy(_params: GetDataPropsParams<BeefyVaultToken>) {
+  async getApy(_params: GetDataPropsParams<BeefyVaultToken>) {
     return 0;
   }
 }

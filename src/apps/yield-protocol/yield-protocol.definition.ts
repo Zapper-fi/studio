@@ -8,13 +8,28 @@ export const YIELD_PROTOCOL_DEFINITION = appDefinition({
   name: 'Yield Protocol',
   description: 'Yield Protocol brings fixed-rate borrowing and lending for fixed terms to decentralized finance.',
   url: 'https://app.yieldprotocol.com/',
-  groups: {
-    borrow: { id: 'borrow', type: GroupType.POSITION, label: 'Borrow' },
-    lend: { id: 'lend', type: GroupType.TOKEN, label: 'Lend' },
-    pool: { id: 'pool', type: GroupType.TOKEN, label: 'Pool' },
-  },
-
+  primaryColor: '#fff',
   tags: [AppTag.BONDS, AppTag.COLLATERALIZED_DEBT_POSITION, AppTag.LENDING, AppTag.LIQUIDITY_POOL],
+
+  groups: {
+    borrow: {
+      id: 'borrow',
+      type: GroupType.POSITION,
+      label: 'Borrow',
+    },
+
+    lend: {
+      id: 'lend',
+      type: GroupType.TOKEN,
+      label: 'Lend',
+    },
+
+    pool: {
+      id: 'pool',
+      type: GroupType.TOKEN,
+      label: 'Pool',
+    },
+  },
 
   links: {
     github: 'https://github.com/yieldprotocol',
@@ -27,8 +42,6 @@ export const YIELD_PROTOCOL_DEFINITION = appDefinition({
     [Network.ETHEREUM_MAINNET]: [AppAction.VIEW],
     [Network.ARBITRUM_MAINNET]: [AppAction.VIEW],
   },
-
-  primaryColor: '#fff',
 });
 
 @Register.AppDefinition(YIELD_PROTOCOL_DEFINITION.id)
@@ -37,5 +50,3 @@ export class YieldProtocolAppDefinition extends AppDefinition {
     super(YIELD_PROTOCOL_DEFINITION);
   }
 }
-
-export default YIELD_PROTOCOL_DEFINITION;

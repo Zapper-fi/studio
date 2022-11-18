@@ -84,11 +84,11 @@ export abstract class AaveAmmLendingTemplateTokenFetcher extends AppTokenTemplat
     return { liquidationThreshold, enabledAsCollateral };
   }
 
-  getLiquidity({ appToken }: GetDataPropsParams<AaveAmmAToken>) {
+  async getLiquidity({ appToken }: GetDataPropsParams<AaveAmmAToken>) {
     return (this.isDebt ? -1 : 1) * appToken.price * appToken.supply;
   }
 
-  getReserves({ appToken }: GetDataPropsParams<AaveAmmAToken>) {
+  async getReserves({ appToken }: GetDataPropsParams<AaveAmmAToken>) {
     return [appToken.pricePerShare[0] * appToken.supply];
   }
 

@@ -69,17 +69,17 @@ export class EthereumAaveSafetyModuleAbptTokenFetcher extends AppTokenTemplatePo
     return [aaveReserve / appToken.supply, wethReserve / appToken.supply];
   }
 
-  getLiquidity({ appToken }: GetDataPropsParams<AaveAbpt, AaveSafetyModuleAbptTokenDataProps>) {
+  async getLiquidity({ appToken }: GetDataPropsParams<AaveAbpt, AaveSafetyModuleAbptTokenDataProps>) {
     const reserves = (appToken.pricePerShare as number[]).map(v => v * appToken.supply);
     const liquidity = sum(reserves.map((v, i) => v * appToken.tokens[i].price));
     return liquidity;
   }
 
-  getReserves({ appToken }: GetDataPropsParams<AaveAbpt, AaveSafetyModuleAbptTokenDataProps>) {
+  async getReserves({ appToken }: GetDataPropsParams<AaveAbpt, AaveSafetyModuleAbptTokenDataProps>) {
     return (appToken.pricePerShare as number[]).map(v => v * appToken.supply);
   }
 
-  getApy(): number | Promise<number> {
+  async getApy() {
     return 0;
   }
 

@@ -30,6 +30,7 @@ export class RhinoFiCacheManager {
   @CacheOnInterval({
     key: `studio:${RHINO_FI_DEFINITION.id}:supported-tokens:data`,
     timeout: 15 * 60 * 1000,
+    failOnMissingData: false,
   })
   async getCachedSupportedTokens() {
     const { data } = await axios.post<ConfigResponse>('https://api.rhino.fi/v1/trading/r/getConf');

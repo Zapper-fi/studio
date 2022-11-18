@@ -68,6 +68,7 @@ export class ReaperVaultCacheManager {
   @CacheOnInterval({
     key: `studio:${Network.FANTOM_OPERA_MAINNET}:${REAPER_DEFINITION.id}:${REAPER_DEFINITION.groups.vault.id}:addresses`,
     timeout: 5 * 60 * 1000,
+    failOnMissingData: false,
   })
   private async getFantomCryptDefinitions() {
     return this.fetchCryptDefinitions('https://yzo0r3ahok.execute-api.us-east-1.amazonaws.com/dev/api/crypts');
@@ -76,6 +77,7 @@ export class ReaperVaultCacheManager {
   @CacheOnInterval({
     key: `studio:${Network.OPTIMISM_MAINNET}:${REAPER_DEFINITION.id}:${REAPER_DEFINITION.groups.vault.id}:addresses`,
     timeout: 5 * 60 * 1000,
+    failOnMissingData: false,
   })
   private async getOptimismCryptDefinitions() {
     return this.fetchCryptDefinitions('https://yzo0r3ahok.execute-api.us-east-1.amazonaws.com/dev/api/optimism/crypts');

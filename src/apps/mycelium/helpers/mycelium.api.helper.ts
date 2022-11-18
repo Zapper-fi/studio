@@ -25,6 +25,7 @@ export class MyceliumApiHelper {
   @CacheOnInterval({
     key: `studio:${network}:${appId}:${groupId}:pools`,
     timeout: 5 * 60 * 1000,
+    failOnMissingData: false,
   })
   async getMyceliumPools(): Promise<Array<MyceliumPoolsApiDatas>> {
     try {

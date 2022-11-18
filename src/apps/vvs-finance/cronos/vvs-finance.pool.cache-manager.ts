@@ -21,6 +21,7 @@ export class CronosVvsFinancePoolAddressCacheManager {
   @CacheOnInterval({
     key: `studio:${VVS_FINANCE_DEFINITION.id}:graph-top-pool-addresses`,
     timeout: 15 * 60 * 1000,
+    failOnMissingData: false,
   })
   private async getTopPoolAddresses() {
     return [];
@@ -29,6 +30,7 @@ export class CronosVvsFinancePoolAddressCacheManager {
   @CacheOnInterval({
     key: `studio:${VVS_FINANCE_DEFINITION.id}:craftsman-pool-addresses`,
     timeout: 15 * 60 * 1000,
+    failOnMissingData: false,
   })
   private async getCraftsmanPoolAddresses() {
     const craftsmanContract = this.contractFactory.vvsCraftsman({
@@ -68,6 +70,7 @@ export class CronosVvsFinancePoolAddressCacheManager {
   @CacheOnInterval({
     key: `studio:${VVS_FINANCE_DEFINITION.id}:craftsman-v2-pools`,
     timeout: 15 * 60 * 1000,
+    failOnMissingData: false,
   })
   async getCraftsmanV2Pools() {
     const multicall = this.appToolkit.getMulticall(network);
@@ -110,6 +113,7 @@ export class CronosVvsFinancePoolAddressCacheManager {
   @CacheOnInterval({
     key: `studio:${VVS_FINANCE_DEFINITION.id}:craftsman-v2-pool-addresses`,
     timeout: 15 * 60 * 1000,
+    failOnMissingData: false,
   })
   private async getCraftsmanV2PoolAddresses() {
     const pools = await this.getCraftsmanV2Pools();

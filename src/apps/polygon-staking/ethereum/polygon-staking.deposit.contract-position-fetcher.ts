@@ -98,6 +98,7 @@ export class EthereumPolygonStakingContractPositionFetcher extends ContractPosit
   @CacheOnInterval({
     key: `studio:polygon-staking:deposit:ethereum:validators`,
     timeout: 15 * 60 * 1000,
+    failOnMissingData: false,
   })
   async getValidators() {
     const url = `https://sentinel.matic.network/api/v2/validators?limit=1000`;
