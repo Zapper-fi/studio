@@ -4,6 +4,27 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.284.0](https://github.com/Zapper-fi/studio/compare/v0.283.1...v0.284.0) (2022-11-18)
+
+
+### Features
+
+* **curve:** Catch errors if balances fails ([c4b5d98](https://github.com/Zapper-fi/studio/commit/c4b5d9810184675cd68249153dca00d942ea7172))
+
+## [0.283.1](https://github.com/Zapper-fi/studio/compare/v0.283.0...v0.283.1) (2022-11-18)
+
+
+### Bug Fixes
+
+* **vendor-finance:** fix lender positions after migration ([#1752](https://github.com/Zapper-fi/studio/issues/1752)) ([ef42f6e](https://github.com/Zapper-fi/studio/commit/ef42f6ef49da8d0ab601261672b07e4bcf8ff579))
+
+## [0.283.0](https://github.com/Zapper-fi/studio/compare/v0.282.0...v0.283.0) (2022-11-18)
+
+
+### Features
+
+* **positions:** Match on token loader response with definitions ([c113f9d](https://github.com/Zapper-fi/studio/commit/c113f9d1012d9f217120449a8b3715e7bd6327bc))
+
 ## [0.282.0](https://github.com/Zapper-fi/studio/compare/v0.281.0...v0.282.0) (2022-11-17)
 
 
