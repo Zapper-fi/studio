@@ -5,16 +5,18 @@ import { CurveVotingEscrowContractPositionHelper } from '~apps/curve/helpers/cur
 
 import { MahadaoContractFactory } from './contracts';
 import { EthereumMahadaoBalanceFetcher } from './ethereum/mahadao.balance-fetcher';
+import { EthereumMahadaoLockerContractPositionFetcher } from './ethereum/mahadao.locker.contract-position-fetcher';
 import { MahadaoAppDefinition, MAHADAO_DEFINITION } from './mahadao.definition';
 
 @Register.AppModule({
   appId: MAHADAO_DEFINITION.id,
   providers: [
+    CurveVotingEscrowContractPositionBalanceHelper,
+    CurveVotingEscrowContractPositionHelper,
     EthereumMahadaoBalanceFetcher,
+    EthereumMahadaoLockerContractPositionFetcher,
     MahadaoAppDefinition,
     MahadaoContractFactory,
-    CurveVotingEscrowContractPositionBalanceHelper,
-    CurveVotingEscrowContractPositionHelper
   ],
 })
-export class MahadaoAppModule extends AbstractApp() { }
+export class MahadaoAppModule extends AbstractApp() {}

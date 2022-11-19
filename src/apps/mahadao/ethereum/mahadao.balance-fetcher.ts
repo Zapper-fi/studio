@@ -1,5 +1,5 @@
 import { Inject } from '@nestjs/common';
-
+import { BigNumber } from 'ethers';
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
 import { presentBalanceFetcherResponse } from '~app-toolkit/helpers/presentation/balance-fetcher-response.present';
@@ -25,13 +25,16 @@ export class EthereumMahadaoBalanceFetcher implements BalanceFetcher {
       network,
       appId: MAHADAO_DEFINITION.id,
       groupId: MAHADAO_DEFINITION.groups.locker.id,
-      resolveContract: ({ address }) => this.bluebitContractFactory.mahadoMahaxLocker({ network, address: "0xbdd8f4daf71c2cb16cce7e54bb81ef3cfcf5aacb" }),
-      resolveLockedTokenBalance: ({ contract, multicall }) => {
-        console.log("Contract", contract.address);
-        return multicall
-          .wrap(contract)
-          .locked(100)
-          .then(v => v.amount)
+      resolveContract: ({ address }) => this.bluebitContractFactory.mahadoMahaxLocker({ network, address }),
+      resolveLockedTokenBalance: async ({ contract, multicall }) => {
+        const noOfNft = await multicall.wrap(contract).balanceOf(address)
+        let totalAmount = BigNumber.from(0)
+        for (let i = 0; i < noOfNft.toNumber(); i++) {
+          const nftId = await multicall.wrap(contract).tokenOfOwnerByIndex(address, i)
+          const nftAmount = await multicall.wrap(contract).locked(nftId.toNumber())
+          totalAmount = totalAmount.add(nftAmount.amount)
+        }
+        return totalAmount
       }
     });
   }
