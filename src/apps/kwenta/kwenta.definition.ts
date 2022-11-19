@@ -40,7 +40,7 @@ export const KWENTA_DEFINITION = appDefinition({
 
   primaryColor: '#fff',
   token: {
-    address: '0x920Cf626a271321C151D027030D5d08aF699456b',
+    address: '0x920cf626a271321c151d027030d5d08af699456b',
     network: Network.OPTIMISM_MAINNET,
   },
 });
