@@ -136,15 +136,15 @@ export abstract class PoolTogetherV3CommunityTicketTokenFetcher extends AppToken
     return [underlyingTokenAddress];
   }
 
-  getLiquidity({ appToken }: GetDataPropsParams<PoolTogetherV3Ticket>) {
+  async getLiquidity({ appToken }: GetDataPropsParams<PoolTogetherV3Ticket>) {
     return appToken.supply * appToken.price;
   }
 
-  getReserves({ appToken }: GetDataPropsParams<PoolTogetherV3Ticket>) {
+  async getReserves({ appToken }: GetDataPropsParams<PoolTogetherV3Ticket>) {
     return [appToken.pricePerShare[0] * appToken.supply];
   }
 
-  getApy(_params: GetDataPropsParams<PoolTogetherV3Ticket>) {
+  async getApy(_params: GetDataPropsParams<PoolTogetherV3Ticket>) {
     return 0;
   }
 

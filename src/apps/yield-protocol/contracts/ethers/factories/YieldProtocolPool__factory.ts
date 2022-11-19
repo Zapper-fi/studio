@@ -4,7 +4,7 @@
 
 import { Contract, Signer, utils } from 'ethers';
 import type { Provider } from '@ethersproject/providers';
-import type { Pool, PoolInterface } from '../Pool';
+import type { YieldProtocolPool, YieldProtocolPoolInterface } from '../YieldProtocolPool';
 
 const _abi = [
   {
@@ -1012,12 +1012,12 @@ const _abi = [
   },
 ];
 
-export class Pool__factory {
+export class YieldProtocolPool__factory {
   static readonly abi = _abi;
-  static createInterface(): PoolInterface {
-    return new utils.Interface(_abi) as PoolInterface;
+  static createInterface(): YieldProtocolPoolInterface {
+    return new utils.Interface(_abi) as YieldProtocolPoolInterface;
   }
-  static connect(address: string, signerOrProvider: Signer | Provider): Pool {
-    return new Contract(address, _abi, signerOrProvider) as Pool;
+  static connect(address: string, signerOrProvider: Signer | Provider): YieldProtocolPool {
+    return new Contract(address, _abi, signerOrProvider) as YieldProtocolPool;
   }
 }

@@ -4,6 +4,105 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.284.0](https://github.com/Zapper-fi/studio/compare/v0.283.1...v0.284.0) (2022-11-18)
+
+
+### Features
+
+* **curve:** Catch errors if balances fails ([c4b5d98](https://github.com/Zapper-fi/studio/commit/c4b5d9810184675cd68249153dca00d942ea7172))
+
+## [0.283.1](https://github.com/Zapper-fi/studio/compare/v0.283.0...v0.283.1) (2022-11-18)
+
+
+### Bug Fixes
+
+* **vendor-finance:** fix lender positions after migration ([#1752](https://github.com/Zapper-fi/studio/issues/1752)) ([ef42f6e](https://github.com/Zapper-fi/studio/commit/ef42f6ef49da8d0ab601261672b07e4bcf8ff579))
+
+## [0.283.0](https://github.com/Zapper-fi/studio/compare/v0.282.0...v0.283.0) (2022-11-18)
+
+
+### Features
+
+* **positions:** Match on token loader response with definitions ([c113f9d](https://github.com/Zapper-fi/studio/commit/c113f9d1012d9f217120449a8b3715e7bd6327bc))
+
+## [0.282.0](https://github.com/Zapper-fi/studio/compare/v0.281.0...v0.282.0) (2022-11-17)
+
+
+### Features
+
+* **synthetix:** Fix logos ([ff66e2d](https://github.com/Zapper-fi/studio/commit/ff66e2d496e90b3f4c41f0442924ae0ac1b5bdaf))
+
+## [0.281.0](https://github.com/Zapper-fi/studio/compare/v0.280.0...v0.281.0) (2022-11-17)
+
+
+### Features
+
+* **templates:** Support proxy protocols and add data prop defaults for app token fetchers ([#1741](https://github.com/Zapper-fi/studio/issues/1741)) ([559f33a](https://github.com/Zapper-fi/studio/commit/559f33a17f810f59e86f0b9b2a08cc47ef1cac80))
+
+
+### Bug Fixes
+
+* **yield-protocol:** Decimals issue ([2fdc0c6](https://github.com/Zapper-fi/studio/commit/2fdc0c6ba2831a3e4d25821dadd9d7dd7b9efbc0))
+
+## [0.280.0](https://github.com/Zapper-fi/studio/compare/v0.279.1...v0.280.0) (2022-11-16)
+
+
+### Features
+
+* **yield-protocol:** To templates ([#1739](https://github.com/Zapper-fi/studio/issues/1739)) ([b7e976e](https://github.com/Zapper-fi/studio/commit/b7e976e11fa02cf1033b8ea0d934966a409caef4))
+* **yield-protocol:** Update strategies ([d34c1db](https://github.com/Zapper-fi/studio/commit/d34c1db2c1ccdf50ae3a61e3005a57830a46f172))
+
+
+### Bug Fixes
+
+* **chicken-bond:** Fix bLUSD price + filter out claimed and cancelled positions ([#1742](https://github.com/Zapper-fi/studio/issues/1742)) ([011ed75](https://github.com/Zapper-fi/studio/commit/011ed75703227ef27b481e9b7885edf245a924e2))
+
+## [0.279.1](https://github.com/Zapper-fi/studio/compare/v0.279.0...v0.279.1) (2022-11-16)
+
+
+### Bug Fixes
+
+* **cache:** Use only 1 metadata attribute for CacheOnInterval ([#1730](https://github.com/Zapper-fi/studio/issues/1730)) ([1a2d1fa](https://github.com/Zapper-fi/studio/commit/1a2d1fab1b7eb3d9315ed0d75a8d7d2653b8994c))
+
+## [0.279.0](https://github.com/Zapper-fi/studio/compare/v0.278.0...v0.279.0) (2022-11-16)
+
+
+### Features
+
+* **vendor-finance:** To templates ([#1735](https://github.com/Zapper-fi/studio/issues/1735)) ([2653b8e](https://github.com/Zapper-fi/studio/commit/2653b8e92da9eeb64b3229c3b78db308d02af23c))
+
+
+### Bug Fixes
+
+* **schedule:** Use only 1 metadata attribute for @Schedule ([#1724](https://github.com/Zapper-fi/studio/issues/1724)) ([5bebca3](https://github.com/Zapper-fi/studio/commit/5bebca393918434e092401196934c2466f959234))
+
+## [0.278.0](https://github.com/Zapper-fi/studio/compare/v0.277.1...v0.278.0) (2022-11-16)
+
+
+### Features
+
+* **bastion-protocol:** To templates ([#1733](https://github.com/Zapper-fi/studio/issues/1733)) ([4e0a394](https://github.com/Zapper-fi/studio/commit/4e0a3943606da2ec76781806161fa77f8e34ac5e))
+
+## [0.277.1](https://github.com/Zapper-fi/studio/compare/v0.277.0...v0.277.1) (2022-11-16)
+
+
+### Bug Fixes
+
+* **block-per-day:** Update Ethereum number of block per day post merge ([#1731](https://github.com/Zapper-fi/studio/issues/1731)) ([91c964c](https://github.com/Zapper-fi/studio/commit/91c964cb6026193a6fa9e8a10f5bd86880b9b69f))
+
+## [0.277.0](https://github.com/Zapper-fi/studio/compare/v0.276.0...v0.277.0) (2022-11-16)
+
+
+### Features
+
+* **insurace:** add InsurAce integration ([#1635](https://github.com/Zapper-fi/studio/issues/1635)) ([ceaea57](https://github.com/Zapper-fi/studio/commit/ceaea57c8bc8598ed8e8f4500c903ad2e222fac4))
+
+
+### Bug Fixes
+
+* **euler:** Add position presenter ([#1727](https://github.com/Zapper-fi/studio/issues/1727)) ([b18e591](https://github.com/Zapper-fi/studio/commit/b18e5911df1f5a1474692720ca6b90444ac12b92))
+* **stargate:** Fix pool position price per share ([#1729](https://github.com/Zapper-fi/studio/issues/1729)) ([4fc09d8](https://github.com/Zapper-fi/studio/commit/4fc09d82f3dc20ceca81381eb09f2e1cefcd43e8))
+
 ## [0.276.0](https://github.com/Zapper-fi/studio/compare/v0.275.0...v0.276.0) (2022-11-15)
 
 
