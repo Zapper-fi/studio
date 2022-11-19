@@ -28,6 +28,7 @@ export class OptimismLemmafinanceUsdlTokenFetcher implements PositionFetcher<App
 
   async getPositions() {
     const usdlAddresses = ['0x96F2539d3684dbde8B3242A51A73B66360a5B541'];
+    const imageURL = 'https://drive.google.com/file/d/1_MUCG0r6JJ4Ol1XT36RXoBCHHiLFIJEt/view?usp=share_link';
     const multicall = this.appToolkit.getMulticall(network);
     const tokens = await Promise.all(
       usdlAddresses.map(async usdlAddress => {
@@ -49,12 +50,12 @@ export class OptimismLemmafinanceUsdlTokenFetcher implements PositionFetcher<App
         const supply = Number(supplyRaw) / 10 ** decimals;
         const tokens: any = [usdlAddress];
         const price = Number(1);
-        const pricePerShare = Number(1e18);
+        const pricePerShare = Number(1);
 
         // // As a label, we'll use the underlying label (i.e.: 'LOOKS' or 'UNI-V2 LOOKS / ETH'), and suffix it with 'Jar'
         const label = `${name} (${symbol})`;
         // // For images, we'll use the underlying token images as well
-        const images = getImagesFromToken(tokens[0]);
+        const images = [imageURL];
         // // For the secondary label, we'll use the price of the jar token
         const secondaryLabel = buildDollarDisplayItem(price);
         // // And for a tertiary label, we'll use the APY

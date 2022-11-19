@@ -42,6 +42,15 @@ export class OptimismLemmafinanceXLemmaSynthTokenFetcher implements PositionFetc
       '0xFE1EB36d31ead771Fd5E051ee8CC424dB6416567', // PerpLemmaAAVE
     ];
 
+    const tokenImages = [
+      'https://drive.google.com/file/d/1UbLEyvuLbLPLUfHHl7gY-BMlVIqnA6Om/view?usp=share_link', // xLWETH
+      'https://drive.google.com/file/d/1ce_P5KPL4wZk5IXLIMaLe_w-DIaqpapd/view?usp=share_link', // xLWBTC
+      'https://drive.google.com/file/d/1QKu4pNZSaMf4K66xSQTpnm0_8W-T7m0Z/view?usp=share_link', // xLLINK need to change
+      'https://drive.google.com/file/d/1QKu4pNZSaMf4K66xSQTpnm0_8W-T7m0Z/view?usp=share_link', // xLCRV need to change
+      'https://drive.google.com/file/d/1QKu4pNZSaMf4K66xSQTpnm0_8W-T7m0Z/view?usp=share_link', // xLPERP
+      'https://drive.google.com/file/d/1QKu4pNZSaMf4K66xSQTpnm0_8W-T7m0Z/view?usp=share_link', // xLAAVE need to change
+    ];
+
     const multicall = this.appToolkit.getMulticall(network);
     const tokens = await Promise.all(
       xLemmaSynths.map(async (xlemmaSynth, i) => {
@@ -70,12 +79,13 @@ export class OptimismLemmafinanceXLemmaSynthTokenFetcher implements PositionFetc
         const supply = Number(supplyRaw) / 10 ** decimals;
         const tokens: any = [collateral];
         const price = Number(assetsPerShare) / 10 ** decimals;
-        const pricePerShare = Number(1e18);
+        const pricePerShare = Number(assetsPerShare) / 10 ** decimals;
 
         // // As a label, we'll use the underlying label (i.e.: 'LOOKS' or 'UNI-V2 LOOKS / ETH'), and suffix it with 'Jar'
         const label = `${name} (${symbol})`;
         // // For images, we'll use the underlying token images as well
-        const images = getImagesFromToken(tokens[0]);
+        // const images = getImagesFromToken(tokens[0]);
+        const images = [tokenImages[i]];
         // // For the secondary label, we'll use the price of the jar token
         const secondaryLabel = buildDollarDisplayItem(price);
         // // And for a tertiary label, we'll use the APY
@@ -105,7 +115,6 @@ export class OptimismLemmafinanceXLemmaSynthTokenFetcher implements PositionFetc
         return token;
       }),
     );
-
     return tokens;
   }
 }
