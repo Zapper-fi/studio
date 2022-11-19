@@ -52,8 +52,7 @@ export class GmxGlpTokenHelper {
     // Reserves
     const reserves = await Promise.all(
       tokens.map(async token => {
-        const contract = this.contractFactory.erc20(token);
-        const reserveRaw = await multicall.wrap(contract).balanceOf(vaultAddress);
+        const reserveRaw = await multicall.wrap(vaultContract).getRedemptionCollateral(token.address);
         return Number(reserveRaw) / 10 ** token.decimals;
       }),
     );
