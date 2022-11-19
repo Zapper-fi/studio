@@ -17,4 +17,4 @@ import { OptimismKwentaStakingContractPositionFetcher } from './optimism/kwenta.
     OptimismKwentaStakingContractPositionFetcher,
   ],
 })
-export class KwentaAppModule extends AbstractApp() { }
+export class KwentaAppModule extends AbstractApp() {}
