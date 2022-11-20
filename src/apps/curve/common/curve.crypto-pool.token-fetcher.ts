@@ -1,11 +1,18 @@
 import { Inject } from '@nestjs/common';
-import { BigNumberish } from 'ethers';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 
 import { CurveContractFactory, CurveCryptoRegistry } from '../contracts';
 
-import { CurvePoolTokenFetcher } from './curve.pool.token-fetcher';
+import {
+  CurvePoolTokenFetcher,
+  ResolveCoinAddressesParams,
+  ResolveFeesParams,
+  ResolvePoolCountParams,
+  ResolveReservesParams,
+  ResolveSwapAddressParams,
+  ResolveTokenAddressParams,
+} from './curve.pool.token-fetcher';
 
 export abstract class CurveCryptoPoolTokenFetcher extends CurvePoolTokenFetcher<CurveCryptoRegistry> {
   constructor(
@@ -19,27 +26,27 @@ export abstract class CurveCryptoPoolTokenFetcher extends CurvePoolTokenFetcher<
     return this.contractFactory.curveCryptoRegistry({ address, network: this.network });
   }
 
-  resolvePoolCount(registryContract: CurveCryptoRegistry): Promise<BigNumberish> {
+  async resolvePoolCount({ registryContract }: ResolvePoolCountParams<CurveCryptoRegistry>) {
     return registryContract.pool_count();
   }
 
-  resolveSwapAddress(registryContract: CurveCryptoRegistry, index: number): Promise<string> {
-    return registryContract.pool_list(index);
+  async resolveSwapAddress({ registryContract, poolIndex }: ResolveSwapAddressParams<CurveCryptoRegistry>) {
+    return registryContract.pool_list(poolIndex);
   }
 
-  resolveTokenAddress(registryContract: CurveCryptoRegistry, swapAddress: string): Promise<string> {
+  async resolveTokenAddress({ registryContract, swapAddress }: ResolveTokenAddressParams<CurveCryptoRegistry>) {
     return registryContract.get_lp_token(swapAddress);
   }
 
-  resolveCoinAddresses(registryContract: CurveCryptoRegistry, swapAddress: string): Promise<string[]> {
+  async resolveCoinAddresses({ registryContract, swapAddress }: ResolveCoinAddressesParams<CurveCryptoRegistry>) {
     return registryContract.get_coins(swapAddress);
   }
 
-  resolveReserves(registryContract: CurveCryptoRegistry, swapAddress: string): Promise<BigNumberish[]> {
+  async resolveReserves({ registryContract, swapAddress }: ResolveReservesParams<CurveCryptoRegistry>) {
     return registryContract.get_balances(swapAddress);
   }
 
-  resolveFees(registryContract: CurveCryptoRegistry, swapAddress: string): Promise<BigNumberish[]> {
+  async resolveFees({ registryContract, swapAddress }: ResolveFeesParams<CurveCryptoRegistry>) {
     return registryContract.get_fees(swapAddress);
   }
 }

@@ -1,11 +1,18 @@
 import { Inject } from '@nestjs/common';
-import { BigNumberish } from 'ethers';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 
 import { CurveContractFactory, CurveStableFactory } from '../contracts';
 
-import { CurvePoolTokenFetcher } from './curve.pool.token-fetcher';
+import {
+  CurvePoolTokenFetcher,
+  ResolveCoinAddressesParams,
+  ResolveFeesParams,
+  ResolvePoolCountParams,
+  ResolveReservesParams,
+  ResolveSwapAddressParams,
+  ResolveTokenAddressParams,
+} from './curve.pool.token-fetcher';
 
 export abstract class CurveFactoryStablePoolTokenFetcher extends CurvePoolTokenFetcher<CurveStableFactory> {
   constructor(
@@ -19,27 +26,27 @@ export abstract class CurveFactoryStablePoolTokenFetcher extends CurvePoolTokenF
     return this.contractFactory.curveStableFactory({ address, network: this.network });
   }
 
-  resolvePoolCount(registryContract: CurveStableFactory): Promise<BigNumberish> {
+  async resolvePoolCount({ registryContract }: ResolvePoolCountParams<CurveStableFactory>) {
     return registryContract.pool_count();
   }
 
-  resolveSwapAddress(registryContract: CurveStableFactory, index: number): Promise<string> {
-    return registryContract.pool_list(index);
+  async resolveSwapAddress({ registryContract, poolIndex }: ResolveSwapAddressParams<CurveStableFactory>) {
+    return registryContract.pool_list(poolIndex);
   }
 
-  resolveTokenAddress(registryContract: CurveStableFactory, swapAddress: string): Promise<string> {
-    return Promise.resolve(swapAddress);
+  async resolveTokenAddress({ swapAddress }: ResolveTokenAddressParams<CurveStableFactory>) {
+    return swapAddress;
   }
 
-  resolveCoinAddresses(registryContract: CurveStableFactory, swapAddress: string): Promise<string[]> {
+  async resolveCoinAddresses({ registryContract, swapAddress }: ResolveCoinAddressesParams<CurveStableFactory>) {
     return registryContract.get_coins(swapAddress);
   }
 
-  resolveReserves(registryContract: CurveStableFactory, swapAddress: string): Promise<BigNumberish[]> {
+  async resolveReserves({ registryContract, swapAddress }: ResolveReservesParams<CurveStableFactory>) {
     return registryContract.get_balances(swapAddress);
   }
 
-  resolveFees(registryContract: CurveStableFactory, swapAddress: string): Promise<BigNumberish[]> {
+  async resolveFees({ registryContract, swapAddress }: ResolveFeesParams<CurveStableFactory>) {
     return registryContract.get_fees(swapAddress);
   }
 }
