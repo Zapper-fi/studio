@@ -4,6 +4,15 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.286.0](https://github.com/Zapper-fi/studio/compare/v0.285.0...v0.286.0) (2022-11-20)
+
+
+### Features
+
+* **kwenta:** Fix LP staking ID and linting ([70fcefa](https://github.com/Zapper-fi/studio/commit/70fcefa8b3ab0b2b93c82322eb1040c3d4addc27))
+* **kwenta:** WETH/KWENTA LP staking ([#1761](https://github.com/Zapper-fi/studio/issues/1761)) ([e25a4d5](https://github.com/Zapper-fi/studio/commit/e25a4d5e71b2971ef1fdb80bab1c89c7c19ecfdf))
+* **stargate:** Fix decimals issue with S*FRAX on Avalanche by using local decimals ([dcd5647](https://github.com/Zapper-fi/studio/commit/dcd56470891ed568d975a5eb21da0bee1736af8c))
+
 ## [0.285.0](https://github.com/Zapper-fi/studio/compare/v0.284.0...v0.285.0) (2022-11-19)
 
 
