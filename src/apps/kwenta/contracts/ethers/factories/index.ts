@@ -2,4 +2,5 @@
 /* tslint:disable */
 /* eslint-disable */
 export { KwentaFutures__factory } from './KwentaFutures__factory';
+export { KwentaLpStaking__factory } from './KwentaLpStaking__factory';
 export { KwentaStaking__factory } from './KwentaStaking__factory';
