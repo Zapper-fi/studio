@@ -25,8 +25,8 @@ export const KWENTA_DEFINITION = appDefinition({
       type: GroupType.POSITION,
       label: 'Staking',
     },
-    lPstaking: {
-      id: 'LPstaking',
+    lpStaking: {
+      id: 'lp-staking',
       type: GroupType.POSITION,
       label: 'LP Staking',
     },
