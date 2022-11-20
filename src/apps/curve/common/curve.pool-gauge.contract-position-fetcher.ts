@@ -1,14 +1,17 @@
 import { Inject } from '@nestjs/common';
 import { BigNumberish, Contract, ethers } from 'ethers';
 import { range } from 'lodash';
+import moment from 'moment';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { ZERO_ADDRESS } from '~app-toolkit/constants/address';
 import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { IMulticallWrapper } from '~multicall';
 import { MetaType } from '~position/position.interface';
+import { isClaimable, isSupplied } from '~position/position.utils';
 import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
 import {
+  GetDataPropsParams,
   GetDefinitionsParams,
   GetDisplayPropsParams,
   GetTokenDefinitionsParams,
@@ -17,7 +20,7 @@ import { Network } from '~types/network.interface';
 
 import { CurveContractFactory, CurveGauge } from '../contracts';
 
-export enum CurveGaugeType {
+export enum GaugeType {
   SINGLE = 'single',
   DOUBLE = 'double',
   N_GAUGE = 'n-gauge',
@@ -26,20 +29,17 @@ export enum CurveGaugeType {
   REWARDS_ONLY = 'rewards-only',
 }
 
-export type CurvePoolTokenDataProps = {
-  swapAddress: string;
+export type CurvePoolGaugeDataProps = {
   liquidity: number;
-  reserves: number[];
   apy: number;
-  volume: number;
-  fee: number;
+  isActive: boolean;
 };
 
 export type CurvePoolGaugeDefinition = {
   address: string;
   swapAddress: string;
   tokenAddress: string;
-  gaugeType: CurveGaugeType;
+  gaugeType: GaugeType;
 };
 
 export type ResolvePoolCountParams<T extends Contract> = {
@@ -85,9 +85,10 @@ export type ResolveFeesParams<T extends Contract> = {
 
 export abstract class CurvePoolGaugeContractPositionFetcher<
   T extends Contract,
-> extends ContractPositionTemplatePositionFetcher<CurveGauge, CurvePoolTokenDataProps, CurvePoolGaugeDefinition> {
+> extends ContractPositionTemplatePositionFetcher<CurveGauge, CurvePoolGaugeDataProps, CurvePoolGaugeDefinition> {
   abstract registryAddress: string;
   abstract crvTokenAddress: string;
+  abstract controllerAddress: string;
 
   abstract resolveRegistry(address: string): T;
   abstract resolvePoolCount(params: ResolvePoolCountParams<T>): Promise<BigNumberish>;
@@ -145,67 +146,94 @@ export abstract class CurvePoolGaugeContractPositionFetcher<
     const gaugeV4Method = ethers.utils.id('claimable_reward_write(address,address)').slice(2, 10);
 
     if (this.network === Network.ETHEREUM_MAINNET) {
-      if (bytecode.includes(gaugeV4Method)) return CurveGaugeType.GAUGE_V4;
-      if (bytecode.includes(nGaugeMethod)) return CurveGaugeType.N_GAUGE;
-      if (bytecode.includes(doubleGaugeMethod)) return CurveGaugeType.DOUBLE;
-      return CurveGaugeType.SINGLE;
+      if (bytecode.includes(gaugeV4Method)) return GaugeType.GAUGE_V4;
+      if (bytecode.includes(nGaugeMethod)) return GaugeType.N_GAUGE;
+      if (bytecode.includes(doubleGaugeMethod)) return GaugeType.DOUBLE;
+      return GaugeType.SINGLE;
     } else {
-      if (bytecode.includes(childGaugeMethod)) return CurveGaugeType.CHILD;
-      return CurveGaugeType.REWARDS_ONLY;
+      if (bytecode.includes(childGaugeMethod)) return GaugeType.CHILD;
+      return GaugeType.REWARDS_ONLY;
     }
   }
 
   async getTokenDefinitions({
+    address,
     definition,
     multicall,
   }: GetTokenDefinitionsParams<CurveGauge, CurvePoolGaugeDefinition>) {
     const definitions = [{ metaType: MetaType.SUPPLIED, address: definition.tokenAddress, network: this.network }];
 
-    switch (definition.gaugeType) {
-      case CurveGaugeType.SINGLE: {
-        definitions.push({ metaType: MetaType.CLAIMABLE, address: this.crvTokenAddress, network: this.network });
-        break;
-      }
+    // All gauges except the legacy sidechain/L2 "rewards-only" gauges support CRV rewards
+    const crvRewardToken = { metaType: MetaType.CLAIMABLE, address: this.crvTokenAddress, network: this.network };
+    if (definition.gaugeType !== GaugeType.REWARDS_ONLY) definitions.push(crvRewardToken);
 
-      case CurveGaugeType.DOUBLE: {
-        const doubleContract = this.contractFactory.curveDoubleGauge({
-          address: definition.address,
-          network: this.network,
-        });
+    // Legacy "double" gauge supports one extra reward token
+    if (definition.gaugeType === GaugeType.DOUBLE) {
+      const doubleGauge = this.contractFactory.curveDoubleGauge({ address, network: this.network });
+      const rewardTokenAddress = await multicall.wrap(doubleGauge).rewarded_token();
+      definitions.push({ metaType: MetaType.CLAIMABLE, address: rewardTokenAddress, network: this.network });
+    }
 
-        const extraRewardTokenAddress = await multicall.wrap(doubleContract).rewarded_token();
-        definitions.push({ metaType: MetaType.CLAIMABLE, address: this.crvTokenAddress, network: this.network });
-        if (extraRewardTokenAddress !== ZERO_ADDRESS)
-          definitions.push({ metaType: MetaType.CLAIMABLE, address: extraRewardTokenAddress, network: this.network });
-
-        break;
-      }
-
-      case CurveGaugeType.N_GAUGE:
-      case CurveGaugeType.GAUGE_V4: {
-        const nGaugeContract = this.contractFactory.curveNGauge({
-          address: definition.address,
-          network: this.network,
-        });
-
-        const extraRewardTokenAddress = await multicall.wrap(nGaugeContract).reward_tokens(0);
-        definitions.push({ metaType: MetaType.CLAIMABLE, address: this.crvTokenAddress, network: this.network });
-        if (extraRewardTokenAddress !== ZERO_ADDRESS)
-          definitions.push({ metaType: MetaType.CLAIMABLE, address: extraRewardTokenAddress, network: this.network });
-
-        break;
-      }
-
-      default:
-        break;
+    // Modern "n" gauges supports multiple extra tokens
+    const nRewardsGauges = [GaugeType.CHILD, GaugeType.GAUGE_V4, GaugeType.N_GAUGE, GaugeType.REWARDS_ONLY];
+    if (nRewardsGauges.includes(definition.gaugeType)) {
+      const nGauge = this.contractFactory.curveNGauge({ address, network: this.network });
+      const rewardTokenAddresses = await Promise.all(range(0, 4).map(i => multicall.wrap(nGauge).reward_tokens(i)));
+      const filtered = rewardTokenAddresses.filter(v => v !== ZERO_ADDRESS);
+      filtered.forEach(v => definitions.push({ metaType: MetaType.CLAIMABLE, address: v, network: this.network }));
     }
 
     return definitions;
   }
 
+  async getDataProps({
+    address,
+    contract,
+    multicall,
+    contractPosition,
+  }: GetDataPropsParams<
+    CurveGauge,
+    CurvePoolGaugeDataProps,
+    CurvePoolGaugeDefinition
+  >): Promise<CurvePoolGaugeDataProps> {
+    const stakedToken = contractPosition.tokens.find(isSupplied)!;
+    const rewardTokens = contractPosition.tokens.filter(isClaimable);
+
+    // Derive liquidity as the amount of the staked token held by the gauge contract
+    const stakedTokenContract = this.contractFactory.erc20(stakedToken);
+    const reserveRaw = await multicall.wrap(stakedTokenContract).balanceOf(address);
+    const reserve = Number(reserveRaw) / 10 ** stakedToken.decimals;
+    const liquidity = reserve * stakedToken.price;
+
+    // On the Ethereum network, derive the APY from the inflation rate and relative weight
+    if (this.network === Network.ETHEREUM_MAINNET) {
+      const controller = this.contractFactory.curveController({
+        address: this.controllerAddress,
+        network: this.network,
+      });
+
+      const inflationRateRaw = await contract.inflation_rate();
+      const workingSupplyRaw = await contract.working_supply();
+      const relativeWeightRaw = await multicall.wrap(controller)['gauge_relative_weight(address)'](address);
+
+      const inflationRate = Number(inflationRateRaw) / 10 ** 18;
+      const workingSupply = Number(workingSupplyRaw) / 10 ** 18;
+      const relativeWeight = Number(relativeWeightRaw) / 10 ** 18;
+
+      const secondsPerYear = moment.duration(1, 'year').asSeconds();
+      const ratePerSecond = (inflationRate * relativeWeight * 0.4) / workingSupply;
+      const apy = ((ratePerSecond * secondsPerYear) / stakedToken.price) * rewardTokens[0].price * 100;
+      const isActive = Number(inflationRate) > 0;
+
+      return { liquidity, apy, isActive };
+    }
+
+    return { liquidity, apy: 0, isActive: false };
+  }
+
   async getLabel({
     contractPosition,
-  }: GetDisplayPropsParams<CurveGauge, CurvePoolTokenDataProps, CurvePoolGaugeDefinition>) {
+  }: GetDisplayPropsParams<CurveGauge, CurvePoolGaugeDataProps, CurvePoolGaugeDefinition>) {
     return `Staked ${getLabelFromToken(contractPosition.tokens[0])}`;
   }
 
