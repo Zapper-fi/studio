@@ -89,7 +89,9 @@ export class ArbitrumVendorFinancePoolContractPositionFetcher extends ContractPo
     contractPosition,
     definition,
   }: GetDisplayPropsParams<VendorFinancePool, DefaultDataProps, VendorFinancePoolDefinition>) {
-    const poolLabel = contractPosition.tokens.map(v => getLabelFromToken(v)).join(' / ');
+    const poolLabel = `${getLabelFromToken(contractPosition.tokens[0])}/${getLabelFromToken(
+      contractPosition.tokens[1],
+    )}`;
 
     const dateString = new Date(parseInt(definition.expiry) * 1000).toLocaleDateString('en-US', {
       year: 'numeric',
