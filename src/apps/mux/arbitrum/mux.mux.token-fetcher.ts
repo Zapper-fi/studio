@@ -3,6 +3,7 @@ import { Inject } from '@nestjs/common';
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
 import { buildDollarDisplayItem } from '~app-toolkit/helpers/presentation/display-item.present';
+import { getAppAssetImage } from '~app-toolkit/helpers/presentation/image.present';
 import { ContractType } from '~position/contract.interface';
 import { PositionFetcher } from '~position/position-fetcher.interface';
 import { AppTokenPosition } from '~position/position.interface';
@@ -45,7 +46,7 @@ export class ArbitrumMuxMuxTokenFetcher implements PositionFetcher<AppTokenPosit
     // Display Props
     const label = symbol;
     const secondaryLabel = buildDollarDisplayItem(price);
-    const images = ['https://mux-world.github.io/assets/img/tokens/MUX.svg'];
+    const images = [getAppAssetImage('mux', 'MUX')];
 
     const muxToken: AppTokenPosition = {
       type: ContractType.APP_TOKEN,

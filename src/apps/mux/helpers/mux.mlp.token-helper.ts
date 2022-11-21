@@ -6,6 +6,7 @@ import _ from 'lodash';
 
 import {APP_TOOLKIT, IAppToolkit} from '~app-toolkit/app-toolkit.interface';
 import {buildDollarDisplayItem} from '~app-toolkit/helpers/presentation/display-item.present';
+import {getAppAssetImage} from "~app-toolkit/helpers/presentation/image.present";
 import {MuxContractFactory} from '~apps/mux';
 import {ContractType} from '~position/contract.interface';
 import {AppTokenPosition, Token} from '~position/position.interface';
@@ -119,10 +120,9 @@ export class MuxMlpTokenHelper {
     const tokens = _.compact(tokensRaw) as Token[];
 
     // Display Props
-    const imgUrl = 'https://mux-world.github.io/assets/img/tokens/MUXLP.svg';
     const label = symbol;
     const secondaryLabel = buildDollarDisplayItem(price);
-    const images = [imgUrl];
+    const images = [getAppAssetImage('mux', 'MUXLP')];
     const statsItems = [{ label: 'Liquidity', value: buildDollarDisplayItem(liquidityNumber) }];
 
     const mlpToken: AppTokenPosition = {
