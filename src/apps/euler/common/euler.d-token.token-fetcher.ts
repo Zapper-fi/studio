@@ -20,7 +20,7 @@ export abstract class EulerDTokenTokenFetcher extends AppTokenTemplatePositionFe
   DefaultAppTokenDataProps,
   EulerTokenDefinition
 > {
-  isDebt: true;
+  isDebt = true;
   abstract tokenType: EulerTokenType;
 
   constructor(

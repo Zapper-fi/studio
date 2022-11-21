@@ -22,7 +22,7 @@ export class EthereumBendDaoVariableDebtTokenFetcher extends AppTokenTemplatePos
   debtTokenAddress = '0x87dde3a3f4b629e389ce5894c9a1f34a7eec5648';
   wethAddress = '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2';
   dataProviderAddress = '0x0b54cdf07d5467012a2d5731c5f87f9c6945bea9';
-  isDebt: true;
+  isDebt = true;
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
