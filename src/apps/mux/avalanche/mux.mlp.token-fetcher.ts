@@ -19,6 +19,7 @@ export class AvalancheMuxMlpTokenFetcher implements PositionFetcher<AppTokenPosi
   async getPositions() {
     return this.muxMlpTokenHelper.getTokens({
       network,
+      subgraphUrl: 'https://api.thegraph.com/subgraphs/name/mux-world/mux-ava',
       mlpTokenAddress: '0xaf2d365e668baafedcfd256c0fbbe519e594e390',
     });
   }
