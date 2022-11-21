@@ -19,7 +19,6 @@ export class ArbitrumMuxMlpTokenFetcher implements PositionFetcher<AppTokenPosit
   async getPositions() {
     return this.muxMlpTokenHelper.getTokens({
       network,
-      subgraphUrl: 'https://api.thegraph.com/subgraphs/name/mux-world/mux-arb',
       mlpTokenAddress: '0x7cbaf5a14d953ff896e5b3312031515c858737c8',
     });
   }
