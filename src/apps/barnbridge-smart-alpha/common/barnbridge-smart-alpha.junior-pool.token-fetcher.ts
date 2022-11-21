@@ -113,15 +113,15 @@ export abstract class BarnbridgeSmartAlphaJuniorPoolTokenFetcher extends AppToke
     return [appToken.tokens[0].symbol, 'Junior Pool', '-', duration].join(' ');
   }
 
-  getLiquidity({ appToken }: GetDataPropsParams<BarnbridgeSmartAlphaToken>) {
+  async getLiquidity({ appToken }: GetDataPropsParams<BarnbridgeSmartAlphaToken>) {
     return appToken.supply * appToken.price;
   }
 
-  getReserves({ appToken }: GetDataPropsParams<BarnbridgeSmartAlphaToken>) {
+  async getReserves({ appToken }: GetDataPropsParams<BarnbridgeSmartAlphaToken>) {
     return [appToken.pricePerShare[0] * appToken.supply];
   }
 
-  getApy(_params: GetDataPropsParams<BarnbridgeSmartAlphaToken>) {
+  async getApy(_params: GetDataPropsParams<BarnbridgeSmartAlphaToken>) {
     return 0;
   }
 }

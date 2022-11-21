@@ -104,8 +104,16 @@ export abstract class UniswapV3LiquidityContractPositionFetcher extends Contract
     definition,
   }: GetTokenDefinitionsParams<UniswapV3PositionManager, UniswapV3LiquidityPositionDefinition>) {
     return [
-      { metaType: MetaType.SUPPLIED, address: definition.token0Address },
-      { metaType: MetaType.SUPPLIED, address: definition.token1Address },
+      {
+        metaType: MetaType.SUPPLIED,
+        address: definition.token0Address,
+        network: this.network,
+      },
+      {
+        metaType: MetaType.SUPPLIED,
+        address: definition.token1Address,
+        network: this.network,
+      },
     ];
   }
 

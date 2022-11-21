@@ -10,10 +10,25 @@ export const KWENTA_DEFINITION = appDefinition({
     'Trade commodities, forex, crypto, and more with up to 25x leverage and deep liquidity without the risk of your assets being frozen.',
   url: 'https://kwenta.io/',
   groups: {
-    perp: {
-      id: 'perp',
+    isolated: {
+      id: 'isolated',
       type: GroupType.POSITION,
-      label: 'Perp',
+      label: 'Isolated',
+    },
+    cross: {
+      id: 'cross',
+      type: GroupType.POSITION,
+      label: 'Cross',
+    },
+    staking: {
+      id: 'staking',
+      type: GroupType.POSITION,
+      label: 'Staking',
+    },
+    lpStaking: {
+      id: 'lp-staking',
+      type: GroupType.POSITION,
+      label: 'LP Staking',
     },
   },
   tags: [AppTag.DERIVATIVES],
@@ -29,6 +44,10 @@ export const KWENTA_DEFINITION = appDefinition({
   },
 
   primaryColor: '#fff',
+  token: {
+    address: '0x920cf626a271321c151d027030d5d08af699456b',
+    network: Network.OPTIMISM_MAINNET,
+  },
 });
 
 @Register.AppDefinition(KWENTA_DEFINITION.id)

@@ -75,8 +75,16 @@ export class EthereumConcaveLiquidStakingContractPositionFetcher extends Contrac
 
   async getTokenDefinitions(_params: GetTokenDefinitionsParams<Lsdcnv>) {
     return [
-      { metaType: MetaType.SUPPLIED, address: '0x000000007a58f5f58e697e51ab0357bc9e260a04' },
-      { metaType: MetaType.CLAIMABLE, address: '0x000000007a58f5f58e697e51ab0357bc9e260a04' },
+      {
+        metaType: MetaType.SUPPLIED,
+        address: '0x000000007a58f5f58e697e51ab0357bc9e260a04',
+        network: this.network,
+      },
+      {
+        metaType: MetaType.CLAIMABLE,
+        address: '0x000000007a58f5f58e697e51ab0357bc9e260a04',
+        network: this.network,
+      },
     ];
   }
 

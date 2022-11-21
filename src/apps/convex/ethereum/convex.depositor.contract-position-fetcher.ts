@@ -33,7 +33,13 @@ export class EthereumConvexDepositorContractPositionFetcher extends ContractPosi
   }
 
   async getTokenDefinitions(_params: GetTokenDefinitionsParams<ConvexDepositor>) {
-    return [{ metaType: MetaType.SUPPLIED, address: '0x4e3fbd56cd56c3e72c1403e103b45db9da5b9d2b' }];
+    return [
+      {
+        metaType: MetaType.SUPPLIED,
+        address: '0x4e3fbd56cd56c3e72c1403e103b45db9da5b9d2b',
+        network: this.network,
+      },
+    ];
   }
 
   async getLabel({ contractPosition }: GetDisplayPropsParams<ConvexDepositor>) {

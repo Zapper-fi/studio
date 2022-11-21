@@ -52,10 +52,26 @@ export class FantomGeistPlatformFeesPositionFetcher extends ContractPositionTemp
     ).then(addresses => compact(addresses));
 
     return [
-      { address: this.geistTokenAddress, metaType: MetaType.LOCKED }, // Locked GEIST
-      { address: this.geistTokenAddress, metaType: MetaType.CLAIMABLE }, // Unlocked GEIST
-      { address: this.geistTokenAddress, metaType: MetaType.CLAIMABLE }, // Vested GEIST
-      ...rewardTokenAddresses.map(address => ({ address: address.toLowerCase(), metaType: MetaType.CLAIMABLE })),
+      {
+        metaType: MetaType.LOCKED,
+        address: this.geistTokenAddress, // Locked GEIST
+        network: this.network,
+      },
+      {
+        metaType: MetaType.CLAIMABLE,
+        address: this.geistTokenAddress, // Unlocked GEIST
+        network: this.network,
+      },
+      {
+        metaType: MetaType.CLAIMABLE,
+        address: this.geistTokenAddress, // Vested GEIST
+        network: this.network,
+      },
+      ...rewardTokenAddresses.map(address => ({
+        metaType: MetaType.CLAIMABLE,
+        address: address.toLowerCase(),
+        network: this.network,
+      })),
     ];
   }
 

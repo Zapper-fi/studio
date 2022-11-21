@@ -69,7 +69,12 @@ export const AGAVE_DEFINITION = appDefinition({
 
   tags: [AppTag.LENDING],
   keywords: [],
-  links: {},
+  links: {
+    discord: 'https://discord.com/invite/SstXTj6xgp',
+    medium: 'https://agavefinance.medium.com/',
+    telegram: 'https://t.me/Agave1Hive',
+    twitter: 'https://twitter.com/Agave_lending',
+  },
 
   supportedNetworks: {
     [Network.GNOSIS_MAINNET]: [AppAction.VIEW],

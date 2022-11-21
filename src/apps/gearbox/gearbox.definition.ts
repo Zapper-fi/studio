@@ -5,7 +5,7 @@ import { Network } from '~types/network.interface';
 
 export const GEARBOX_DEFINITION = appDefinition({
   id: 'gearbox',
-  name: 'gearbox',
+  name: 'Gearbox',
   description: 'Composable Leverage Protocol',
   url: 'https://gearbox.fi ',
   groups: {
@@ -17,7 +17,11 @@ export const GEARBOX_DEFINITION = appDefinition({
   },
   tags: [AppTag.COLLATERALIZED_DEBT_POSITION, AppTag.FARMING, AppTag.LENDING],
   keywords: [],
-  links: {},
+  links: {
+    discord: 'https://discord.com/invite/gearbox',
+    github: 'https://github.com/Gearbox-protocol',
+    twitter: 'https://twitter.com/GearboxProtocol',
+  },
 
   supportedNetworks: {
     [Network.ETHEREUM_MAINNET]: [AppAction.VIEW],

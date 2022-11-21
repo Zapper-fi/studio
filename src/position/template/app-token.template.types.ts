@@ -43,7 +43,16 @@ type PositionBuilderContextWithAppToken<
 
 export type GetUnderlyingTokensParams<T, R = DefaultAppTokenDefinition> = PositionBuilderContext<T, R>;
 
-export type GetTokenPropsParams<T, R = DefaultAppTokenDefinition> = PositionBuilderContext<T, R>;
+export type GetTokenPropsParams<
+  T,
+  V = DefaultAppTokenDataProps,
+  R = DefaultAppTokenDefinition,
+> = PositionBuilderContextWithAppToken<
+  T,
+  V,
+  R,
+  'symbol' | 'decimals' | 'supply' | 'pricePerShare' | 'price' | 'dataProps' | 'displayProps'
+>;
 
 export type GetPricePerShareParams<
   T,

@@ -30,9 +30,21 @@ export class CronosArgoFinancePledgingContractPositionFetcher extends ContractPo
 
   async getTokenDefinitions() {
     return [
-      { metaType: MetaType.SUPPLIED, address: '0xb966b5d6a0fcd5b373b180bbe072bbfbbee10552' }, // xARGO
-      { metaType: MetaType.CLAIMABLE, address: '0xb966b5d6a0fcd5b373b180bbe072bbfbbee10552' }, // xARGO
-      { metaType: MetaType.CLAIMABLE, address: '0x5c7f8a570d578ed84e63fdfa7b1ee72deae1ae23' }, // wCRO
+      {
+        metaType: MetaType.SUPPLIED,
+        address: '0xb966b5d6a0fcd5b373b180bbe072bbfbbee10552', // xARGO
+        network: this.network,
+      },
+      {
+        metaType: MetaType.CLAIMABLE,
+        address: '0xb966b5d6a0fcd5b373b180bbe072bbfbbee10552', // xARGO
+        network: this.network,
+      },
+      {
+        metaType: MetaType.CLAIMABLE,
+        address: '0x5c7f8a570d578ed84e63fdfa7b1ee72deae1ae23', // wCRO
+        network: this.network,
+      },
     ];
   }
 

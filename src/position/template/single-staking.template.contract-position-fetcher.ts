@@ -49,26 +49,45 @@ export abstract class SingleStakingFarmTemplateContractPositionFetcher<
 
   async getTokenDefinitions({ definition }: GetTokenDefinitionsParams<T, SingleStakingFarmDefinition>) {
     const tokenDefinitions: UnderlyingTokenDefinition[] = [];
-    tokenDefinitions.push({ metaType: MetaType.SUPPLIED, address: definition.stakedTokenAddress });
-    tokenDefinitions.push(...definition.rewardTokenAddresses.map(v => ({ metaType: MetaType.CLAIMABLE, address: v })));
+
+    tokenDefinitions.push({
+      metaType: MetaType.SUPPLIED,
+      address: definition.stakedTokenAddress,
+      network: this.network,
+    });
+
+    tokenDefinitions.push(
+      ...definition.rewardTokenAddresses.map(v => ({
+        metaType: MetaType.CLAIMABLE,
+        address: v,
+        network: this.network,
+      })),
+    );
+
     return tokenDefinitions;
   }
 
+  async getReserve({ contractPosition, multicall }: GetDataPropsParams<T, V, SingleStakingFarmDefinition>) {
+    const stakedToken = contractPosition.tokens.find(isSupplied)!;
+    const stakedTokenContract = this.appToolkit.globalContracts.erc20(stakedToken);
+    const reserveRaw = await multicall.wrap(stakedTokenContract).balanceOf(contractPosition.address);
+    const reserve = Number(reserveRaw) / 10 ** stakedToken.decimals;
+    return reserve;
+  }
+
   async getDataProps(params: GetDataPropsParams<T, V, SingleStakingFarmDefinition>): Promise<V> {
-    const { contractPosition, multicall } = params;
+    const { contractPosition } = params;
     const stakedToken = contractPosition.tokens.find(isSupplied)!;
     const rewardTokens = contractPosition.tokens.filter(isClaimable);
     const rewardRatesRaw = await this.getRewardRates(params).then(v => (isArray(v) ? v : [v]));
 
-    const stakedTokenContract = this.appToolkit.globalContracts.erc20(stakedToken);
-    const reserveRaw = await multicall.wrap(stakedTokenContract).balanceOf(contractPosition.address);
-    const reserve = Number(reserveRaw) / 10 ** stakedToken.decimals;
+    const reserve = await this.getReserve(params);
     const liquidity = reserve * stakedToken.price;
 
     const rewardRates = rewardTokens.map((v, i) => Number(rewardRatesRaw[i] ?? 0) / 10 ** v.decimals);
     const rewardRatesUSD = sum(rewardRates.map((v, i) => v * rewardTokens[i].price));
     const dailyRewardRateUSD = rewardRatesUSD * 86_400;
-    const dailyReturn = (dailyRewardRateUSD + liquidity) / liquidity - 1;
+    const dailyReturn = liquidity > 0 ? (dailyRewardRateUSD + liquidity) / liquidity - 1 : 0;
     const apy = dailyReturn * 365 * 100;
     const isActive = apy > 0;
 

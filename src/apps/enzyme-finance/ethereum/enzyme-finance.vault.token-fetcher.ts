@@ -76,15 +76,15 @@ export class EthereumEnzymeFinanceVaultTokenFetcher extends AppTokenTemplatePosi
       : 0;
   }
 
-  getLiquidity({ appToken }: GetDataPropsParams<EnzymeFinanceVault>) {
+  async getLiquidity({ appToken }: GetDataPropsParams<EnzymeFinanceVault>) {
     return appToken.supply * appToken.price;
   }
 
-  getReserves({ appToken }: GetDataPropsParams<EnzymeFinanceVault>) {
+  async getReserves({ appToken }: GetDataPropsParams<EnzymeFinanceVault>) {
     return [appToken.pricePerShare[0] * appToken.supply];
   }
 
-  getApy(_params: GetDataPropsParams<EnzymeFinanceVault>) {
+  async getApy(_params: GetDataPropsParams<EnzymeFinanceVault>) {
     return 0;
   }
 }

@@ -1,6 +1,7 @@
 import { Inject, Injectable } from '@nestjs/common';
 
 import { CurvePool } from '~apps/curve/contracts/ethers/CurvePool';
+import { isMulticallUnderlyingError } from '~multicall/multicall.ethers';
 import { AppGroupsDefinition } from '~position/position.service';
 import { Network } from '~types/network.interface';
 
@@ -54,7 +55,14 @@ export class CurvePoolDefaultTokenHelper {
         resolveCoinAddress: ({ poolContract, multicall, index }) => multicall.wrap(poolContract).coins(index),
       }),
       resolvePoolReserves: this.curvePoolOnChainReserveStrategy.build({
-        resolveReserve: ({ poolContract, multicall, index }) => multicall.wrap(poolContract).balances(index),
+        resolveReserve: ({ poolContract, multicall, index }) =>
+          multicall
+            .wrap(poolContract)
+            .balances(index)
+            .catch(err => {
+              if (isMulticallUnderlyingError(err)) return 0;
+              throw err;
+            }),
       }),
       resolvePoolTokenPrice: this.curvePoolVirtualPriceStrategy.build({
         resolveVirtualPrice: ({ multicall, poolContract }) => multicall.wrap(poolContract).get_virtual_price(),

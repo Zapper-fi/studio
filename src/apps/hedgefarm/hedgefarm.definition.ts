@@ -19,7 +19,10 @@ export const HEDGEFARM_DEFINITION = appDefinition({
 
   tags: [AppTag.YIELD_AGGREGATOR],
   keywords: [],
-  links: {},
+  links: {
+    discord: 'https://discord.com/invite/b57NTqH7SG',
+    twitter: 'https://twitter.com/hedge_farm',
+  },
 
   supportedNetworks: {
     [Network.AVALANCHE_MAINNET]: [AppAction.VIEW],

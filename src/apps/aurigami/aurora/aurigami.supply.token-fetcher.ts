@@ -2,8 +2,12 @@ import { Inject } from '@nestjs/common';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
-import { CompoundSupplyTokenFetcher } from '~apps/compound/common/compound.supply.token-fetcher';
-import { GetPricePerShareParams } from '~position/template/app-token.template.types';
+import { CompoundSupplyTokenFetcher, GetMarketsParams } from '~apps/compound/common/compound.supply.token-fetcher';
+import {
+  GetDataPropsParams,
+  GetPricePerShareParams,
+  GetUnderlyingTokensParams,
+} from '~position/template/app-token.template.types';
 
 import { AurigamiAuToken, AurigamiComptroller, AurigamiContractFactory } from '../contracts';
 
@@ -27,15 +31,15 @@ export class AuroraAurigamiSupplyTokenFetcher extends CompoundSupplyTokenFetcher
     return this.contractFactory.aurigamiComptroller({ address, network: this.network });
   }
 
-  getMarkets(contract: AurigamiComptroller) {
+  async getMarkets({ contract }: GetMarketsParams<AurigamiComptroller>) {
     return contract.getAllMarkets();
   }
 
-  async getUnderlyingAddress(contract: AurigamiAuToken) {
+  async getUnderlyingAddress({ contract }: GetUnderlyingTokensParams<AurigamiAuToken>) {
     return contract.underlying();
   }
 
-  getExchangeRate(contract: AurigamiAuToken) {
+  async getExchangeRate({ contract }: GetPricePerShareParams<AurigamiAuToken>) {
     return contract.callStatic.exchangeRateCurrent();
   }
 
@@ -44,7 +48,7 @@ export class AuroraAurigamiSupplyTokenFetcher extends CompoundSupplyTokenFetcher
     return 18 + underlyingToken.decimals - appToken.decimals;
   }
 
-  async getSupplyRate(contract: AurigamiAuToken) {
+  async getSupplyRate({ contract }: GetDataPropsParams<AurigamiAuToken>) {
     return contract.supplyRatePerTimestamp().catch(() => 0);
   }
 }

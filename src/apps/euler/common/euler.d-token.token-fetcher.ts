@@ -55,7 +55,7 @@ export abstract class EulerDTokenTokenFetcher extends AppTokenTemplatePositionFe
   }
 
   async getLiquidity({ appToken }: GetDataPropsParams<EulerDtokenContract>) {
-    return appToken.supply * appToken.price * -1;
+    return (this.isDebt ? -1 : 1) * appToken.price * appToken.supply;
   }
 
   async getReserves({ appToken }: GetDataPropsParams<EulerDtokenContract>) {

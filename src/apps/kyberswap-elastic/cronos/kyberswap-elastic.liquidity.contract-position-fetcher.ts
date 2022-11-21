@@ -1,15 +1,9 @@
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
-import { Network } from '~types/network.interface';
 
-import { KyberSwapElasticLiquidityContractPositionFetcher } from '../common/kyberswap-elastic.liquidity.contract-position-fetcher';
-import { KYBERSWAP_ELASTIC_DEFINITION } from '../kyberswap-elastic.definition';
+import { KyberswapElasticLiquidityContractPositionFetcher } from '../common/kyberswap-elastic.liquidity.contract-position-fetcher';
 
 @PositionTemplate()
-export class CronosKyberSwapElasticLiquidityContractPositionFetcher extends KyberSwapElasticLiquidityContractPositionFetcher {
-  appId = KYBERSWAP_ELASTIC_DEFINITION.id;
-  groupId = KYBERSWAP_ELASTIC_DEFINITION.groups.liquidity.id;
-  network = Network.CRONOS_MAINNET;
-
+export class CronosKyberswapElasticLiquidityContractPositionFetcher extends KyberswapElasticLiquidityContractPositionFetcher {
   groupLabel = 'Pools';
 
   subgraphUrl = 'https://cronos-graph.kyberengineering.io/subgraphs/name/kybernetwork/kyberswap-elastic-cronos';

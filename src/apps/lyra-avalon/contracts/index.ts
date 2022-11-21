@@ -4,13 +4,13 @@ import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { ContractFactory } from '~contract/contracts';
 import { Network } from '~types/network.interface';
 
-import { LiquidityPool__factory } from './ethers';
-import { LiquidityToken__factory } from './ethers';
+import { LyraLiquidityPool__factory } from './ethers';
+import { LyraLiquidityToken__factory } from './ethers';
 import { LyraLpStaking__factory } from './ethers';
+import { LyraOptionMarket__factory } from './ethers';
+import { LyraOptionToken__factory } from './ethers';
 import { LyraRegistry__factory } from './ethers';
-import { LyraStaking__factory } from './ethers';
-import { OptionMarket__factory } from './ethers';
-import { OptionToken__factory } from './ethers';
+import { LyraStkLyra__factory } from './ethers';
 
 // eslint-disable-next-line
 type ContractOpts = { address: string; network: Network };
@@ -21,33 +21,33 @@ export class LyraAvalonContractFactory extends ContractFactory {
     super((network: Network) => appToolkit.getNetworkProvider(network));
   }
 
-  liquidityPool({ address, network }: ContractOpts) {
-    return LiquidityPool__factory.connect(address, this.appToolkit.getNetworkProvider(network));
+  lyraLiquidityPool({ address, network }: ContractOpts) {
+    return LyraLiquidityPool__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
-  liquidityToken({ address, network }: ContractOpts) {
-    return LiquidityToken__factory.connect(address, this.appToolkit.getNetworkProvider(network));
+  lyraLiquidityToken({ address, network }: ContractOpts) {
+    return LyraLiquidityToken__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
   lyraLpStaking({ address, network }: ContractOpts) {
     return LyraLpStaking__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
+  lyraOptionMarket({ address, network }: ContractOpts) {
+    return LyraOptionMarket__factory.connect(address, this.appToolkit.getNetworkProvider(network));
+  }
+  lyraOptionToken({ address, network }: ContractOpts) {
+    return LyraOptionToken__factory.connect(address, this.appToolkit.getNetworkProvider(network));
+  }
   lyraRegistry({ address, network }: ContractOpts) {
     return LyraRegistry__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
-  lyraStaking({ address, network }: ContractOpts) {
-    return LyraStaking__factory.connect(address, this.appToolkit.getNetworkProvider(network));
-  }
-  optionMarket({ address, network }: ContractOpts) {
-    return OptionMarket__factory.connect(address, this.appToolkit.getNetworkProvider(network));
-  }
-  optionToken({ address, network }: ContractOpts) {
-    return OptionToken__factory.connect(address, this.appToolkit.getNetworkProvider(network));
+  lyraStkLyra({ address, network }: ContractOpts) {
+    return LyraStkLyra__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
 }
 
-export type { LiquidityPool } from './ethers';
-export type { LiquidityToken } from './ethers';
+export type { LyraLiquidityPool } from './ethers';
+export type { LyraLiquidityToken } from './ethers';
 export type { LyraLpStaking } from './ethers';
+export type { LyraOptionMarket } from './ethers';
+export type { LyraOptionToken } from './ethers';
 export type { LyraRegistry } from './ethers';
-export type { LyraStaking } from './ethers';
-export type { OptionMarket } from './ethers';
-export type { OptionToken } from './ethers';
+export type { LyraStkLyra } from './ethers';

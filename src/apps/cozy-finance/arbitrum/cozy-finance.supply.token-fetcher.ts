@@ -2,9 +2,14 @@ import { Inject } from '@nestjs/common';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
-import { CompoundSupplyTokenFetcher } from '~apps/compound/common/compound.supply.token-fetcher';
+import { CompoundSupplyTokenFetcher, GetMarketsParams } from '~apps/compound/common/compound.supply.token-fetcher';
 import { DisplayProps } from '~position/display.interface';
-import { GetDisplayPropsParams } from '~position/template/app-token.template.types';
+import {
+  GetDataPropsParams,
+  GetDisplayPropsParams,
+  GetPricePerShareParams,
+  GetUnderlyingTokensParams,
+} from '~position/template/app-token.template.types';
 
 import { CozyFinanceComptroller, CozyFinanceContractFactory, CozyFinanceCToken } from '../contracts';
 
@@ -31,19 +36,19 @@ export class ArbitrumCozyFinanceSupplyTokenFetcher extends CompoundSupplyTokenFe
     return this.contractFactory.cozyFinanceComptroller({ address, network: this.network });
   }
 
-  getMarkets(contract: CozyFinanceComptroller) {
+  async getMarkets({ contract }: GetMarketsParams<CozyFinanceComptroller>) {
     return contract.getAllMarkets();
   }
 
-  async getUnderlyingAddress(contract: CozyFinanceCToken) {
+  async getUnderlyingAddress({ contract }: GetUnderlyingTokensParams<CozyFinanceCToken>) {
     return contract.underlying();
   }
 
-  getExchangeRate(contract: CozyFinanceCToken) {
+  async getExchangeRate({ contract }: GetPricePerShareParams<CozyFinanceCToken>) {
     return contract.exchangeRateCurrent();
   }
 
-  async getSupplyRate(contract: CozyFinanceCToken) {
+  async getSupplyRate({ contract }: GetDataPropsParams<CozyFinanceCToken>) {
     return contract.supplyRatePerBlock().catch(() => 0);
   }
 

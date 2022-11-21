@@ -35,8 +35,16 @@ export class EthereumLiquityTroveContractPositionFetcher extends ContractPositio
 
   async getTokenDefinitions() {
     return [
-      { metaType: MetaType.SUPPLIED, address: ZERO_ADDRESS }, // ETH
-      { metaType: MetaType.BORROWED, address: '0x5f98805a4e8be255a32880fdec7f6728c6568ba0' }, // LUSD
+      {
+        metaType: MetaType.SUPPLIED,
+        address: ZERO_ADDRESS, // ETH
+        network: this.network,
+      },
+      {
+        metaType: MetaType.BORROWED,
+        address: '0x5f98805a4e8be255a32880fdec7f6728c6568ba0', // LUSD
+        network: this.network,
+      },
     ];
   }
 

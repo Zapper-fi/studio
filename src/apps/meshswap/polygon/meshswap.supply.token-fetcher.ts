@@ -80,7 +80,7 @@ export class PolygonMeshswapSupplyTokenFetcher extends AppTokenTemplatePositionF
     return borrowAmount + cash;
   }
 
-  getApy(_params: GetDataPropsParams<MeshswapSinglePool>) {
+  async getApy(_params: GetDataPropsParams<MeshswapSinglePool>) {
     return 0;
   }
 

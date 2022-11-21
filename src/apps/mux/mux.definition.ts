@@ -1,6 +1,6 @@
 import { Register } from '~app-toolkit/decorators';
 import { appDefinition, AppDefinition } from '~app/app.definition';
-import { AppAction, AppTag, GroupType } from "~app/app.interface";
+import { AppAction, AppTag, GroupType } from '~app/app.interface';
 import { Network } from '~types/network.interface';
 
 export const MUX_DEFINITION = appDefinition({
@@ -8,7 +8,7 @@ export const MUX_DEFINITION = appDefinition({
   name: 'MUX',
   description:
     'Trade crypto on the MUX protocol with zero price impact, up to 100x leverage and no counterparty risks.',
-  url: 'mux.network',
+  url: 'https://mux.network/',
   groups: {
     mlp: {
       id: 'mlp',
@@ -18,7 +18,12 @@ export const MUX_DEFINITION = appDefinition({
   },
   tags: [AppTag.LIQUIDITY_POOL],
   keywords: [],
-  links: {},
+  links: {
+    discord: 'https://discord.com/invite/bd88NrzN3N',
+    github: 'https://github.com/mux-world/mux-protocol',
+    telegram: 'https://t.me/muxprotocol',
+    twitter: 'https://twitter.com/muxprotocol',
+  },
 
   supportedNetworks: {
     [Network.BINANCE_SMART_CHAIN_MAINNET]: [AppAction.VIEW],

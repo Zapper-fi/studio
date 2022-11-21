@@ -19,7 +19,12 @@ export const CLEARPOOL_DEFINITION = appDefinition({
 
   tags: [AppTag.LENDING],
   keywords: [],
-  links: {},
+  links: {
+    discord: 'https://discord.com/invite/YYzxscA4nu',
+    github: 'https://github.com/clearpool-finance',
+    telegram: 'https://t.me/clearpoolofficial',
+    twitter: 'https://twitter.com/ClearpoolFin',
+  },
 
   supportedNetworks: {
     [Network.ETHEREUM_MAINNET]: [AppAction.VIEW],

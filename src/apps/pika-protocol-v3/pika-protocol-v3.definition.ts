@@ -18,7 +18,12 @@ export const PIKA_PROTOCOL_V_3_DEFINITION = appDefinition({
   },
   tags: [AppTag.PERPETUALS_EXCHANGE],
   keywords: [],
-  links: {},
+  links: {
+    discord: 'https://discord.com/invite/R4CG94ZVYm',
+    medium: 'https://pikaprotocol.medium.com/',
+    telegram: 'https://t.me/PikaProtocol',
+    twitter: 'https://twitter.com/PikaProtocol',
+  },
 
   supportedNetworks: {
     [Network.OPTIMISM_MAINNET]: [AppAction.VIEW],

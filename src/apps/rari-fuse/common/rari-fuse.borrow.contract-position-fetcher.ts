@@ -80,7 +80,13 @@ export abstract class RariFuseBorrowContractPositionFetcher<
   }
 
   async getTokenDefinitions({ contract }: GetTokenDefinitionsParams<R>) {
-    return [{ metaType: MetaType.BORROWED, address: await this.getUnderlyingTokenAddress(contract) }];
+    return [
+      {
+        metaType: MetaType.BORROWED,
+        address: await this.getUnderlyingTokenAddress(contract),
+        network: this.network,
+      },
+    ];
   }
 
   async getDataProps({

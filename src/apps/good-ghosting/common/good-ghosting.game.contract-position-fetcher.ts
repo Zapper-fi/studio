@@ -59,8 +59,16 @@ export abstract class GoodGhostingGameContractPositionFetcher extends ContractPo
     UnderlyingTokenDefinition[] | null
   > {
     return [
-      { metaType: MetaType.SUPPLIED, address: definition.stakedTokenAddress },
-      ...definition.rewardTokenAddresses.map(v => ({ metaType: MetaType.CLAIMABLE, address: v })),
+      {
+        metaType: MetaType.SUPPLIED,
+        address: definition.stakedTokenAddress,
+        network: this.network,
+      },
+      ...definition.rewardTokenAddresses.map(rewardTokenAddress => ({
+        metaType: MetaType.CLAIMABLE,
+        address: rewardTokenAddress,
+        network: this.network,
+      })),
     ];
   }
 

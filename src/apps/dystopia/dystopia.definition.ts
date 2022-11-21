@@ -31,7 +31,12 @@ export const DYSTOPIA_DEFINITION = appDefinition({
   },
   tags: [AppTag.DECENTRALIZED_EXCHANGE, AppTag.LIQUIDITY_POOL],
   keywords: [],
-  links: {},
+  links: {
+    discord: 'https://discord.com/invite/gNMqms9H27',
+    medium: 'https://medium.com/@DystopiaSwap',
+    telegram: 'https://t.me/Dystopia_swap',
+    twitter: 'https://twitter.com/dystopiaswap',
+  },
 
   supportedNetworks: {
     [Network.POLYGON_MAINNET]: [AppAction.VIEW],

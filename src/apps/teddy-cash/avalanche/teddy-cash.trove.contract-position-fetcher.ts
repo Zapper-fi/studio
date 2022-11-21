@@ -35,8 +35,16 @@ export class AvalancheTeddyCashTroveContractPositionFetcher extends ContractPosi
 
   async getTokenDefinitions() {
     return [
-      { metaType: MetaType.SUPPLIED, address: ZERO_ADDRESS }, // AVAX
-      { metaType: MetaType.BORROWED, address: '0x4fbf0429599460d327bd5f55625e30e4fc066095' }, // TSD
+      {
+        metaType: MetaType.SUPPLIED,
+        address: ZERO_ADDRESS, // AVAX
+        network: this.network,
+      },
+      {
+        metaType: MetaType.BORROWED,
+        address: '0x4fbf0429599460d327bd5f55625e30e4fc066095', // TSD
+        network: this.network,
+      },
     ];
   }
 

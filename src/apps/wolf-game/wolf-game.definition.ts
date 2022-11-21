@@ -9,11 +9,6 @@ export const WOLF_GAME_DEFINITION = appDefinition({
   description:
     'A risky blockchain-based game between Sheep and Wolves. Together, we are building a world of strategy and game theory, ruled by the Wolves.',
   url: 'https://wolf.game',
-  tags: [AppTag.GAMING],
-  primaryColor: '#fff',
-  keywords: [],
-
-  links: {},
 
   groups: {
     woolPouch: {
@@ -21,6 +16,15 @@ export const WOLF_GAME_DEFINITION = appDefinition({
       type: GroupType.POSITION,
       label: 'Wool Pouches',
     },
+  },
+
+  tags: [AppTag.GAMING],
+  primaryColor: '#fff',
+  keywords: [],
+
+  links: {
+    discord: 'https://discord.com/invite/wolfgame',
+    twitter: 'https://twitter.com/wolfdotgame',
   },
 
   supportedNetworks: {

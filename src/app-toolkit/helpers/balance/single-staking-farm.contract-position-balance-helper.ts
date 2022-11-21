@@ -3,6 +3,7 @@ import { BigNumberish } from 'ethers';
 import { compact, isArray, sumBy } from 'lodash';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
+import { BALANCE_LOCALSTORAGE_FLAGS } from '~balance/balance.utils';
 import { IMulticallWrapper } from '~multicall/multicall.interface';
 import { ContractPositionBalance } from '~position/position-balance.interface';
 import { ContractPosition, MetaType } from '~position/position.interface';
@@ -97,7 +98,12 @@ export class SingleStakingContractPositionBalanceHelper {
           drillBalance(v, rewardTokenBalancesRaw[i]?.toString() ?? '0'),
         );
 
-        const tokens = [stakedTokenBalance, ...rewardTokenBalances].filter(v => v.balanceUSD > 0);
+        const storage = BALANCE_LOCALSTORAGE_FLAGS.getStore();
+        const { includeZeroBalances } = storage ?? { includeZeroBalances: false };
+
+        const tokens = [stakedTokenBalance, ...rewardTokenBalances].filter(
+          v => includeZeroBalances || v.balanceUSD > 0,
+        );
         const balanceUSD = sumBy(tokens, t => t.balanceUSD);
 
         return {
