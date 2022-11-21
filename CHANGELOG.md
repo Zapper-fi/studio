@@ -4,6 +4,49 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.286.0](https://github.com/Zapper-fi/studio/compare/v0.285.0...v0.286.0) (2022-11-20)
+
+
+### Features
+
+* **kwenta:** Fix LP staking ID and linting ([70fcefa](https://github.com/Zapper-fi/studio/commit/70fcefa8b3ab0b2b93c82322eb1040c3d4addc27))
+* **kwenta:** WETH/KWENTA LP staking ([#1761](https://github.com/Zapper-fi/studio/issues/1761)) ([e25a4d5](https://github.com/Zapper-fi/studio/commit/e25a4d5e71b2971ef1fdb80bab1c89c7c19ecfdf))
+* **stargate:** Fix decimals issue with S*FRAX on Avalanche by using local decimals ([dcd5647](https://github.com/Zapper-fi/studio/commit/dcd56470891ed568d975a5eb21da0bee1736af8c))
+
+## [0.285.0](https://github.com/Zapper-fi/studio/compare/v0.284.0...v0.285.0) (2022-11-19)
+
+
+### Features
+
+* **kwenta:** kwenta token staking ([#1749](https://github.com/Zapper-fi/studio/issues/1749)) ([d24ba59](https://github.com/Zapper-fi/studio/commit/d24ba597af357ec5133175a6d996c10a7b675ae4))
+
+
+### Bug Fixes
+
+* **gmx:** Fix GLP price ([#1757](https://github.com/Zapper-fi/studio/issues/1757)) ([de03c14](https://github.com/Zapper-fi/studio/commit/de03c145e64ce8d9eb0a1a9c68e69700d5738f85))
+* **vendor-finance:** fix pool naming ([#1755](https://github.com/Zapper-fi/studio/issues/1755)) ([d407dc7](https://github.com/Zapper-fi/studio/commit/d407dc74cd3f1dc760b3a294ac25f7c50768c044))
+
+## [0.284.0](https://github.com/Zapper-fi/studio/compare/v0.283.1...v0.284.0) (2022-11-18)
+
+
+### Features
+
+* **curve:** Catch errors if balances fails ([c4b5d98](https://github.com/Zapper-fi/studio/commit/c4b5d9810184675cd68249153dca00d942ea7172))
+
+## [0.283.1](https://github.com/Zapper-fi/studio/compare/v0.283.0...v0.283.1) (2022-11-18)
+
+
+### Bug Fixes
+
+* **vendor-finance:** fix lender positions after migration ([#1752](https://github.com/Zapper-fi/studio/issues/1752)) ([ef42f6e](https://github.com/Zapper-fi/studio/commit/ef42f6ef49da8d0ab601261672b07e4bcf8ff579))
+
+## [0.283.0](https://github.com/Zapper-fi/studio/compare/v0.282.0...v0.283.0) (2022-11-18)
+
+
+### Features
+
+* **positions:** Match on token loader response with definitions ([c113f9d](https://github.com/Zapper-fi/studio/commit/c113f9d1012d9f217120449a8b3715e7bd6327bc))
+
 ## [0.282.0](https://github.com/Zapper-fi/studio/compare/v0.281.0...v0.282.0) (2022-11-17)
 
 

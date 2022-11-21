@@ -12,6 +12,7 @@ import { MetaType } from '~position/position.interface';
 import { isBorrowed } from '~position/position.utils';
 import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
 import {
+  GetDataPropsParams,
   GetDisplayPropsParams,
   GetTokenBalancesParams,
   GetTokenDefinitionsParams,
@@ -34,6 +35,12 @@ export type VendorFinancePoolDefinition = {
   lendBalance: string;
   totalBorrowed: string;
 };
+
+type VendorFinancePoolDataProps = DefaultDataProps & {
+  deployer: string;
+  totalDeposited: number;
+};
+
 @PositionTemplate()
 export class ArbitrumVendorFinancePoolContractPositionFetcher extends ContractPositionTemplatePositionFetcher<VendorFinancePool> {
   groupLabel = 'Lending Pools';
@@ -68,10 +75,13 @@ export class ArbitrumVendorFinancePoolContractPositionFetcher extends ContractPo
     }));
   }
 
+  // returning the lendToken with two different status as it'll either be
+  // deposited initially (user = lender) or borrowed (user = borrower).
   async getTokenDefinitions({ definition }: GetTokenDefinitionsParams<VendorFinancePool, VendorFinancePoolDefinition>) {
     return [
       { metaType: MetaType.SUPPLIED, address: definition.colToken, network: this.network },
       { metaType: MetaType.BORROWED, address: definition.lendToken, network: this.network },
+      { metaType: MetaType.SUPPLIED, address: definition.lendToken, network: this.network },
     ];
   }
 
@@ -79,7 +89,9 @@ export class ArbitrumVendorFinancePoolContractPositionFetcher extends ContractPo
     contractPosition,
     definition,
   }: GetDisplayPropsParams<VendorFinancePool, DefaultDataProps, VendorFinancePoolDefinition>) {
-    const poolLabel = contractPosition.tokens.map(v => getLabelFromToken(v)).join(' / ');
+    const poolLabel = `${getLabelFromToken(contractPosition.tokens[0])}/${getLabelFromToken(
+      contractPosition.tokens[1],
+    )}`;
 
     const dateString = new Date(parseInt(definition.expiry) * 1000).toLocaleDateString('en-US', {
       year: 'numeric',
@@ -123,14 +135,30 @@ export class ArbitrumVendorFinancePoolContractPositionFetcher extends ContractPo
       },
     ];
   }
+  async getDataProps(
+    _params: GetDataPropsParams<VendorFinancePool, DefaultDataProps, VendorFinancePoolDefinition>,
+  ): Promise<VendorFinancePoolDataProps> {
+    return {
+      deployer: _params.definition.deployer,
+      totalDeposited: parseInt(_params.definition.lendBalance) + parseInt(_params.definition.totalBorrowed),
+    };
+  }
 
   async getTokenBalancesPerPosition({
     address,
     contractPosition,
-  }: GetTokenBalancesParams<VendorFinancePool, DefaultDataProps>) {
+  }: GetTokenBalancesParams<VendorFinancePool, VendorFinancePoolDataProps>) {
     const collateralToken = contractPosition.tokens[0]!;
     const lentToken = contractPosition.tokens[1]!;
 
+    // --- Lender logic ----
+    // No deposit, no borrow, but lending out
+    if (address === contractPosition.dataProps.deployer.toLowerCase()) {
+      return ['0', '0', contractPosition.dataProps.totalDeposited.toString()];
+    }
+    // --! Lender logic !---
+
+    // --- Borrower logic ----
     const data = await this.appToolkit.helpers.theGraphHelper.requestGraph<VendorBorrowerGraphResponse>({
       endpoint: VENDOR_GRAPH_URL,
       query: borrowerInfosQuery(address),
@@ -144,6 +172,8 @@ export class ArbitrumVendorFinancePoolContractPositionFetcher extends ContractPo
     const suppliedBalanceRaw = suppliedBalance * 10 ** collateralToken.decimals;
     const borrowedBalance = parseInt(borrowerPosition.totalBorrowed);
 
-    return [suppliedBalanceRaw.toString(), borrowedBalance.toString()];
+    // Deposit, borrow, no lending out (not pool creator)
+    return [suppliedBalanceRaw.toString(), borrowedBalance.toString(), '0'];
+    // --! Borrower logic !---
   }
 }
