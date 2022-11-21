@@ -15,6 +15,7 @@ import {
   GetDisplayPropsParams,
   GetTokenBalancesParams,
 } from '~position/template/contract-position.template.types';
+import { CustomContractPositionTemplatePositionFetcher } from '~position/template/custom-contract-position.template.position-fetcher';
 
 export type RariFuseBorrowContractPositionDataProps = {
   apy: number;
@@ -34,7 +35,7 @@ export abstract class RariFuseBorrowContractPositionFetcher<
   V extends Contract,
   R extends Contract,
   S extends Contract,
-> extends ContractPositionTemplatePositionFetcher<
+> extends CustomContractPositionTemplatePositionFetcher<
   R,
   RariFuseBorrowContractPositionDataProps,
   RariFuseBorrowContractPositionDefinition

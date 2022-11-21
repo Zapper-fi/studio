@@ -22,6 +22,7 @@ export class EthereumBendDaoVariableDebtTokenFetcher extends AppTokenTemplatePos
   debtTokenAddress = '0x87dde3a3f4b629e389ce5894c9a1f34a7eec5648';
   wethAddress = '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2';
   dataProviderAddress = '0x0b54cdf07d5467012a2d5731c5f87f9c6945bea9';
+  isDebt = true;
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
@@ -72,24 +73,5 @@ export class EthereumBendDaoVariableDebtTokenFetcher extends AppTokenTemplatePos
 
   async getTertiaryLabel({ appToken }: GetDisplayPropsParams<BendDaoDebtToken>) {
     return `${appToken.dataProps.apy.toFixed(3)}% APR (variable)`;
-  }
-
-  async getBalances(address: string): Promise<AppTokenPositionBalance<DefaultAppTokenDataProps>[]> {
-    const multicall = this.appToolkit.getMulticall(this.network);
-    const appTokens = await this.appToolkit.getAppTokenPositions<DefaultAppTokenDataProps>({
-      appId: this.appId,
-      network: this.network,
-      groupIds: [this.groupId],
-    });
-
-    const balances = await Promise.all(
-      appTokens.map(async appToken => {
-        const balanceRaw = await this.getBalancePerToken({ multicall, address, appToken });
-        const tokenBalance = drillBalance(appToken, balanceRaw.toString(), { isDebt: true });
-        return tokenBalance;
-      }),
-    );
-
-    return balances as AppTokenPositionBalance<DefaultAppTokenDataProps>[];
   }
 }

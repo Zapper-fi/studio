@@ -12,6 +12,7 @@ import { ContractPositionBalance } from '~position/position-balance.interface';
 import { MetaType } from '~position/position.interface';
 import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
 import { GetDisplayPropsParams, GetTokenDefinitionsParams } from '~position/template/contract-position.template.types';
+import { CustomContractPositionTemplatePositionFetcher } from '~position/template/custom-contract-position.template.position-fetcher';
 
 import { RhinoFiApiClient } from '../common/rhino-fi.api-client';
 import { RhinoFiCacheManager } from '../common/rhino-fi.cache-manager';
@@ -23,7 +24,7 @@ type RhinoFiDepositDefinition = {
 };
 
 @PositionTemplate()
-export class EthereumRhinoFiDepositContractPositionFetcher extends ContractPositionTemplatePositionFetcher<
+export class EthereumRhinoFiDepositContractPositionFetcher extends CustomContractPositionTemplatePositionFetcher<
   RhinoFiStarkEx,
   DefaultDataProps,
   RhinoFiDepositDefinition

@@ -13,6 +13,7 @@ import {
   GetDisplayPropsParams,
   GetTokenDefinitionsParams,
 } from '~position/template/contract-position.template.types';
+import { CustomContractPositionTemplatePositionFetcher } from '~position/template/custom-contract-position.template.position-fetcher';
 
 import { KyberswapElasticContractFactory, KyberswapElasticLm } from '../contracts';
 
@@ -38,7 +39,7 @@ export type KyberswapElasticFarmPositionDefinition = {
   feeTier: number;
 };
 
-export abstract class KyberswapElasticFarmContractPositionFetcher extends ContractPositionTemplatePositionFetcher<
+export abstract class KyberswapElasticFarmContractPositionFetcher extends CustomContractPositionTemplatePositionFetcher<
   KyberswapElasticLm,
   KyberswapElasticFarmPositionDataProps,
   KyberswapElasticFarmPositionDefinition

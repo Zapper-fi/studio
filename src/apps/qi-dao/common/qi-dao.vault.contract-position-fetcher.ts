@@ -14,6 +14,7 @@ import {
   GetDisplayPropsParams,
   GetDataPropsParams,
 } from '~position/template/contract-position.template.types';
+import { CustomContractPositionTemplatePositionFetcher } from '~position/template/custom-contract-position.template.position-fetcher';
 
 import { QiDaoContractFactory, QiDaoVaultNft } from '../contracts';
 
@@ -30,7 +31,7 @@ type QiDaoVaultDefinition = {
 };
 
 @Injectable()
-export abstract class QiDaoVaultContractPositionFetcher extends ContractPositionTemplatePositionFetcher<
+export abstract class QiDaoVaultContractPositionFetcher extends CustomContractPositionTemplatePositionFetcher<
   QiDaoVaultNft,
   QiDaoVaultDataProps,
   QiDaoVaultDefinition

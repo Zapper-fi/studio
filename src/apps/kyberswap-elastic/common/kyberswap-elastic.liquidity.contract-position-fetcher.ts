@@ -12,6 +12,7 @@ import {
   GetDisplayPropsParams,
   GetTokenDefinitionsParams,
 } from '~position/template/contract-position.template.types';
+import { CustomContractPositionTemplatePositionFetcher } from '~position/template/custom-contract-position.template.position-fetcher';
 
 import { KyberswapElasticContractFactory, PositionManager } from '../contracts';
 
@@ -51,7 +52,7 @@ type GetTopPoolsResponse = {
   }[];
 };
 
-export abstract class KyberswapElasticLiquidityContractPositionFetcher extends ContractPositionTemplatePositionFetcher<
+export abstract class KyberswapElasticLiquidityContractPositionFetcher extends CustomContractPositionTemplatePositionFetcher<
   PositionManager,
   KyberswapElasticLiquidityPositionDataProps,
   KyberswapElasticLiquidityPositionDefinition
