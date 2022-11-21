@@ -1,4 +1,5 @@
 import { Inject } from '@nestjs/common';
+import DataLoader from 'dataloader';
 import { BigNumberish, Contract } from 'ethers';
 import { range } from 'lodash';
 
@@ -23,6 +24,8 @@ import {
 } from '~position/template/app-token.template.types';
 
 import { CurveContractFactory } from '../contracts';
+
+import { CurveVolumeDataLoader } from './curve.volume.data-loader';
 
 export type CurvePoolTokenDataProps = {
   swapAddress: string;
@@ -78,6 +81,8 @@ export abstract class CurvePoolTokenFetcher<T extends Contract> extends AppToken
   CurvePoolTokenDataProps,
   CurvePoolDefinition
 > {
+  volumeDataLoader: DataLoader<string, number>;
+
   abstract registryAddress: string;
 
   abstract resolveRegistry(address: string): T;
@@ -91,6 +96,7 @@ export abstract class CurvePoolTokenFetcher<T extends Contract> extends AppToken
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
     @Inject(CurveContractFactory) protected readonly contractFactory: CurveContractFactory,
+    @Inject(CurveVolumeDataLoader) protected readonly curveVolumeDataLoader: CurveVolumeDataLoader,
   ) {
     super(appToolkit);
   }
@@ -100,6 +106,8 @@ export abstract class CurvePoolTokenFetcher<T extends Contract> extends AppToken
   }
 
   async getDefinitions({ multicall }: GetDefinitionsParams) {
+    this.volumeDataLoader = this.curveVolumeDataLoader.getLoader({ network: this.network });
+
     const registry = this.resolveRegistry(this.registryAddress);
     const registryContract = multicall.wrap(registry);
 
@@ -160,7 +168,12 @@ export abstract class CurvePoolTokenFetcher<T extends Contract> extends AppToken
 
     const fees = await this.resolveFees({ registryContract, swapAddress, multicall });
     const fee = Number(fees[0]) / 10 ** 10;
-    return { ...defaultDataProps, fee, volume: 0, apy: 0 };
+
+    const volume = await this.volumeDataLoader.load(definition.swapAddress);
+    const feeVolume = fee * volume;
+    const apy = feeVolume / defaultDataProps.liquidity;
+
+    return { ...defaultDataProps, fee, volume, apy };
   }
 
   async getLabel({ appToken }: GetDisplayPropsParams<Erc20, CurvePoolTokenDataProps, CurvePoolDefinition>) {

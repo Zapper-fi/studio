@@ -3,6 +3,7 @@ import { AbstractApp } from '~app/app.dynamic-module';
 
 import { CurveContractFactory } from './contracts';
 import { CurveAppDefinition, CURVE_DEFINITION } from './curve.definition';
+import { EthereumCurveCryptoPoolGaugeContractPositionFetcher } from './ethereum/curve.crypto-pool-gauge.contract-position-fetcher';
 import { EthereumCurveStablePoolGaugeContractPositionFetcher } from './ethereum/curve.stable-pool-gauge.contract-position-fetcher';
 
 @Register.AppModule({
@@ -16,6 +17,7 @@ import { EthereumCurveStablePoolGaugeContractPositionFetcher } from './ethereum/
     // EthereumCurveFactoryStablePoolTokenFetcher,
     // EthereumCurveFactoryCryptoPoolTokenFetcher,
     EthereumCurveStablePoolGaugeContractPositionFetcher,
+    EthereumCurveCryptoPoolGaugeContractPositionFetcher,
 
     // OLDDD
     // // Arbitrum
