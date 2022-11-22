@@ -20,6 +20,7 @@ import {
   GetTokenDefinitionsParams,
   UnderlyingTokenDefinition,
 } from '~position/template/contract-position.template.types';
+import { CustomContractPositionTemplatePositionFetcher } from '~position/template/custom-contract-position.template.position-fetcher';
 
 import { MakerContractFactory, MakerGemJoin } from '../contracts';
 
@@ -37,7 +38,7 @@ export type MakerVaultDataProps = {
 };
 
 @PositionTemplate()
-export class EthereumMakerVaultContractPositionFetcher extends ContractPositionTemplatePositionFetcher<
+export class EthereumMakerVaultContractPositionFetcher extends CustomContractPositionTemplatePositionFetcher<
   MakerGemJoin,
   MakerVaultDataProps,
   MakerVaultDefinition

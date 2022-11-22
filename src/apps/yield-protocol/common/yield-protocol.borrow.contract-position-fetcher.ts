@@ -17,6 +17,7 @@ import {
   GetDisplayPropsParams,
   GetDataPropsParams,
 } from '~position/template/contract-position.template.types';
+import { CustomContractPositionTemplatePositionFetcher } from '~position/template/custom-contract-position.template.position-fetcher';
 
 import { YieldProtocolContractFactory, YieldProtocolLadle } from '../contracts';
 
@@ -132,7 +133,7 @@ const vaultsQuery = gql`
 
 // TESTTT: 0x35e057137060cd397bd82e3dff54beba480e7012
 
-export abstract class YieldProtocolBorrowContractPositionFetcher extends ContractPositionTemplatePositionFetcher<
+export abstract class YieldProtocolBorrowContractPositionFetcher extends CustomContractPositionTemplatePositionFetcher<
   YieldProtocolLadle,
   YieldProtocolBorrowDataProps,
   YieldProtocolBorrowDefinition

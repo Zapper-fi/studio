@@ -4,6 +4,18 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.287.0](https://github.com/Zapper-fi/studio/compare/v0.286.0...v0.287.0) (2022-11-21)
+
+
+### Features
+
+* **contract-positions:** Custom contract positions ([#1717](https://github.com/Zapper-fi/studio/issues/1717)) ([e01e4fb](https://github.com/Zapper-fi/studio/commit/e01e4fb5c920b345b1d595c27e53126af1ebea62))
+
+
+### Bug Fixes
+
+* **contracts:** Throw error on missing balances ([#1763](https://github.com/Zapper-fi/studio/issues/1763)) ([9e8f9dd](https://github.com/Zapper-fi/studio/commit/9e8f9dda584d95ff2e31435a0765428780dbe0ae))
+
 ## [0.286.0](https://github.com/Zapper-fi/studio/compare/v0.285.0...v0.286.0) (2022-11-20)
 
 
