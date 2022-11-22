@@ -25,7 +25,7 @@ export class OptimismLemmafinanceXusdlTokenFetcher implements PositionFetcher<Ap
 
   async getPositions() {
     const xusdlAddresses = ['0x252Ea7E68a27390Ce0D53851192839A39Ab8B38C'];
-    const imageURL = 'https://drive.google.com/file/d/1udpfv0tcpPOa6Rcc-cE_b_XPGorA1sTc/view?usp=share_link';
+    const imageURL = 'src/apps/lemmafinance/assets/xUSDL.png';
     const multicall = this.appToolkit.getMulticall(network);
     const tokens = await Promise.all(
       xusdlAddresses.map(async xusdlAddress => {

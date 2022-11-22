@@ -42,13 +42,14 @@ export class OptimismLemmafinanceLemmaSynthTokenFetcher implements PositionFetch
       '0xFE1EB36d31ead771Fd5E051ee8CC424dB6416567', // PerpLemmaAAVE
     ];
 
+    const imageURL = 'src/apps/lemmafinance/assets/';
     const tokenImages = [
-      'https://drive.google.com/file/d/1S3XNhpwS6YCjxC3yPYerUTaHFFHxdchx/view?usp=share_link', // LWETH
-      'https://drive.google.com/file/d/1gnMO8GzF86tb33XNj2uZcTplZCZ49aQ_/view?usp=share_link', // LWBTC
-      'https://drive.google.com/file/d/1-BNJzE_zrj9f02s5oGkiHBDeV82DG15g/view?usp=share_link', // LLINK
-      'https://drive.google.com/file/d/16xDST9L8IEIIoaSNG22Op14adRSsIsZ0/view?usp=share_link', // LCRV
-      'https://drive.google.com/file/d/1FWrT-vfw6-D2PVQJfo6ij9ws_GxRrRAS/view?usp=share_link', // LPERP
-      'https://drive.google.com/file/d/1UWDHMb1qh9yTOVC9nWHMnoCp7ivGNmBu/view?usp=share_link', // LAAVE
+      'LETH.png',
+      'LBTC.png',
+      'LLink.png',
+      'LCRV.png',
+      'LPERP.png',
+      'LAAVE.png'
     ];
 
     const multicall = this.appToolkit.getMulticall(network);
@@ -84,7 +85,7 @@ export class OptimismLemmafinanceLemmaSynthTokenFetcher implements PositionFetch
         // // As a label, we'll use the underlying label (i.e.: 'LOOKS' or 'UNI-V2 LOOKS / ETH'), and suffix it with 'Jar'
         const label = `${name} (${symbol})`;
         // // For images, we'll use the underlying token images as well
-        const images = [tokenImages[i]];
+        const images = [imageURL + tokenImages[i]];
         // // For the secondary label, we'll use the price of the jar token
         const secondaryLabel = buildDollarDisplayItem(price);
         // // And for a tertiary label, we'll use the APY
