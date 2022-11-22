@@ -111,7 +111,7 @@ export abstract class CurvePoolTokenFetcher<T extends Contract> extends AppToken
     const registry = this.resolveRegistry(this.registryAddress);
     const registryContract = multicall.wrap(registry);
 
-    const poolCount = this.resolvePoolCount({ registryContract, multicall });
+    const poolCount = await this.resolvePoolCount({ registryContract, multicall });
     const poolRange = range(0, Number(poolCount));
     const poolDefinitions = await Promise.all(
       poolRange.map(async poolIndex => {
@@ -167,11 +167,11 @@ export abstract class CurvePoolTokenFetcher<T extends Contract> extends AppToken
     const swapAddress = definition.swapAddress;
 
     const fees = await this.resolveFees({ registryContract, swapAddress, multicall });
-    const fee = Number(fees[0]) / 10 ** 10;
+    const fee = Number(fees[0]) / 10 ** 8;
 
     const volume = await this.volumeDataLoader.load(definition.swapAddress);
     const feeVolume = fee * volume;
-    const apy = feeVolume / defaultDataProps.liquidity;
+    const apy = (feeVolume / defaultDataProps.liquidity) * 365;
 
     return { ...defaultDataProps, fee, volume, apy };
   }

@@ -13,13 +13,15 @@ import {
   ResolveSwapAddressParams,
   ResolveTokenAddressParams,
 } from './curve.pool.token-fetcher';
+import { CurveVolumeDataLoader } from './curve.volume.data-loader';
 
 export abstract class CurveFactoryStablePoolTokenFetcher extends CurvePoolTokenFetcher<CurveStableFactory> {
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
     @Inject(CurveContractFactory) protected readonly contractFactory: CurveContractFactory,
+    @Inject(CurveVolumeDataLoader) protected readonly curveVolumeDataLoader: CurveVolumeDataLoader,
   ) {
-    super(appToolkit, contractFactory);
+    super(appToolkit, contractFactory, curveVolumeDataLoader);
   }
 
   resolveRegistry(address: string): CurveStableFactory {

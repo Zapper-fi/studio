@@ -1,23 +1,18 @@
 import { Register } from '~app-toolkit/decorators';
 import { AbstractApp } from '~app/app.dynamic-module';
 
+import { CurveVolumeDataLoader } from './common/curve.volume.data-loader';
 import { CurveContractFactory } from './contracts';
 import { CurveAppDefinition, CURVE_DEFINITION } from './curve.definition';
-import { EthereumCurveCryptoPoolGaugeContractPositionFetcher } from './ethereum/curve.crypto-pool-gauge.contract-position-fetcher';
-import { EthereumCurveStablePoolGaugeContractPositionFetcher } from './ethereum/curve.stable-pool-gauge.contract-position-fetcher';
+import { ETHEREUM_CURVE_PROVIDERS } from './ethereum';
 
 @Register.AppModule({
   appId: CURVE_DEFINITION.id,
   providers: [
     CurveAppDefinition,
     CurveContractFactory,
-    // Ethereum
-    // EthereumCurveStablePoolTokenFetcher,
-    // EthereumCurveCryptoPoolTokenFetcher,
-    // EthereumCurveFactoryStablePoolTokenFetcher,
-    // EthereumCurveFactoryCryptoPoolTokenFetcher,
-    EthereumCurveStablePoolGaugeContractPositionFetcher,
-    EthereumCurveCryptoPoolGaugeContractPositionFetcher,
+    CurveVolumeDataLoader,
+    ...ETHEREUM_CURVE_PROVIDERS,
 
     // OLDDD
     // // Arbitrum

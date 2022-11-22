@@ -1,4 +1,4 @@
-import { Inject } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import axios from 'axios';
 import DataLoader from 'dataloader';
 
@@ -36,6 +36,7 @@ export type GetPoolApyDataResponse = {
   };
 };
 
+@Injectable()
 export class CurveVolumeDataLoader {
   constructor(@Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit) {}
 
