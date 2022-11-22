@@ -19,7 +19,6 @@ export class BinanceSmartChainMuxMlpTokenFetcher implements PositionFetcher<AppT
   async getPositions() {
     return this.muxMlpTokenHelper.getTokens({
       network,
-      subgraphUrl: 'https://api.thegraph.com/subgraphs/name/mux-world/mux-bsc',
       mlpTokenAddress: '0x07145ad7c7351c6fe86b6b841fc9bed74eb475a7',
     });
   }

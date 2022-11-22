@@ -121,7 +121,7 @@ export class AngleApiHelper {
 
   @Cache({
     instance: 'user',
-    key: (network: Network) => `studio:${ANGLE_DEFINITION}:perpetuals:${network}:angle`,
+    key: (network: Network) => `studio:${ANGLE_DEFINITION.id}:perpetuals:${network}:angle`,
     ttl: 15 * 60,
   })
   async getUserPerpetuals(address: string, _network: Network) {

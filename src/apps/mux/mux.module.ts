@@ -14,15 +14,20 @@ import { MuxAppDefinition, MUX_DEFINITION } from './mux.definition';
 @Register.AppModule({
   appId: MUX_DEFINITION.id,
   providers: [
+    MuxAppDefinition,
+    MuxContractFactory,
+    // Helper
+    MuxMlpTokenHelper,
+    // Arbitrum
     ArbitrumMuxFarmContractPositionFetcher,
     ArbitrumMuxMlpTokenFetcher,
     ArbitrumMuxMuxTokenFetcher,
+    // Avalanche
     AvalancheMuxMlpTokenFetcher,
+    // Binance-smart-chain
     BinanceSmartChainMuxMlpTokenFetcher,
+    // Fantom
     FantomMuxMlpTokenFetcher,
-    MuxAppDefinition,
-    MuxContractFactory,
-    MuxMlpTokenHelper,
   ],
 })
 export class MuxAppModule extends AbstractApp() {}
