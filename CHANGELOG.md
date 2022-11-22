@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.288.1](https://github.com/Zapper-fi/studio/compare/v0.288.0...v0.288.1) (2022-11-22)
+
+
+### Bug Fixes
+
+* **insurace:** Add missing statsItems on positions ([#1769](https://github.com/Zapper-fi/studio/issues/1769)) ([dc870ab](https://github.com/Zapper-fi/studio/commit/dc870ab72c9a180297d075c03a7ec7bcaf4c6755))
+
 ## [0.288.0](https://github.com/Zapper-fi/studio/compare/v0.287.0...v0.288.0) (2022-11-22)
 
 
