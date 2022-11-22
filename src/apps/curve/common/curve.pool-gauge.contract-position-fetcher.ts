@@ -91,7 +91,7 @@ export abstract class CurvePoolGaugeContractPositionFetcher<
 > extends ContractPositionTemplatePositionFetcher<CurveGauge, CurvePoolGaugeDataProps, CurvePoolGaugeDefinition> {
   abstract registryAddress: string;
   abstract crvTokenAddress: string;
-  abstract controllerAddress: string;
+  controllerAddress = ''; // ETH network only
 
   abstract resolveRegistry(address: string): T;
   abstract resolvePoolCount(params: ResolvePoolCountParams<T>): Promise<BigNumberish>;
@@ -214,7 +214,7 @@ export abstract class CurvePoolGaugeContractPositionFetcher<
     const ethGauges = [GaugeType.SINGLE, GaugeType.DOUBLE, GaugeType.N_GAUGE, GaugeType.GAUGE_V4];
     if (ethGauges.includes(gaugeType)) {
       const controller = this.contractFactory.curveController({
-        address: this.controllerAddress,
+        address: this.controllerAddress!,
         network: this.network,
       });
 

@@ -2,7 +2,7 @@ import { BigNumberish, Contract } from 'ethers';
 
 import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { MetaType } from '~position/position.interface';
-import { isSupplied } from '~position/position.utils';
+import { isVesting } from '~position/position.utils';
 import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
 
 import {
@@ -36,7 +36,7 @@ export abstract class VestingEscrowTemplateContractPositionFetcher<
   }
 
   async getLabel({ contractPosition }: GetDisplayPropsParams<T>) {
-    const suppliedToken = contractPosition.tokens.find(isSupplied)!;
+    const suppliedToken = contractPosition.tokens.find(isVesting)!;
     return `Vesting Escrow ${getLabelFromToken(suppliedToken)}`;
   }
 

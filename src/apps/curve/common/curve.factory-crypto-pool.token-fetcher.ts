@@ -1,6 +1,7 @@
 import { Inject } from '@nestjs/common';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
+import { isMulticallUnderlyingError } from '~multicall/multicall.ethers';
 
 import { CurveContractFactory, CurveCryptoFactory } from '../contracts';
 
@@ -36,8 +37,8 @@ export abstract class CurveFactoryCryptoPoolTokenFetcher extends CurvePoolTokenF
     return registryContract.pool_list(poolIndex);
   }
 
-  async resolveTokenAddress({ swapAddress }: ResolveTokenAddressParams<CurveCryptoFactory>) {
-    return swapAddress;
+  async resolveTokenAddress({ registryContract, swapAddress }: ResolveTokenAddressParams<CurveCryptoFactory>) {
+    return registryContract.get_token(swapAddress);
   }
 
   async resolveCoinAddresses({ registryContract, swapAddress }: ResolveCoinAddressesParams<CurveCryptoFactory>) {
@@ -50,7 +51,14 @@ export abstract class CurveFactoryCryptoPoolTokenFetcher extends CurvePoolTokenF
 
   async resolveFees({ swapAddress, multicall }: ResolveFeesParams<CurveCryptoFactory>) {
     const swapContract = this.contractFactory.curvePool({ address: swapAddress, network: this.network });
-    const fee = await multicall.wrap(swapContract).fee();
+    const fee = await multicall
+      .wrap(swapContract)
+      .fee()
+      .catch(err => {
+        if (isMulticallUnderlyingError(err)) return 0;
+        throw err;
+      });
+
     return [fee, 0];
   }
 }

@@ -21,8 +21,8 @@ export abstract class CurveFactoryCryptoPoolGaugeContractPositionFetcher extends
     return registryContract.pool_list(poolIndex);
   }
 
-  async resolveTokenAddress({ swapAddress }: ResolveTokenAddressParams<CurveCryptoFactory>) {
-    return swapAddress;
+  async resolveTokenAddress({ registryContract, swapAddress }: ResolveTokenAddressParams<CurveCryptoFactory>) {
+    return registryContract.get_token(swapAddress);
   }
 
   async resolveGaugeAddresses({ registryContract, swapAddress }: ResolveGaugeAddressParams<CurveCryptoFactory>) {
