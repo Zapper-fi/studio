@@ -1,10 +1,22 @@
 import { Register } from '~app-toolkit/decorators';
 import { AbstractApp } from '~app/app.dynamic-module';
 
+import { ARBITRUM_CURVE_PROVIDERS } from './arbitrum';
+import { AVALANCHE_CURVE_PROVIDERS } from './avalanche';
 import { CurveVolumeDataLoader } from './common/curve.volume.data-loader';
 import { CurveContractFactory } from './contracts';
 import { CurveAppDefinition, CURVE_DEFINITION } from './curve.definition';
 import { ETHEREUM_CURVE_PROVIDERS } from './ethereum';
+import { FANTOM_CURVE_PROVIDERS } from './fantom';
+import { GNOSIS_CURVE_PROVIDERS } from './gnosis';
+import { CurvePoolOnChainCoinStrategy } from './helpers/curve.pool.on-chain.coin-strategy';
+import { CurvePoolOnChainReserveStrategy } from './helpers/curve.pool.on-chain.reserve-strategy';
+import { CurvePoolTokenHelper } from './helpers/curve.pool.token-helper';
+import { CurvePoolVirtualPriceStrategy } from './helpers/curve.pool.virtual.price-strategy';
+import { CurveVotingEscrowContractPositionBalanceHelper } from './helpers/curve.voting-escrow.contract-position-balance-helper';
+import { CurveVotingEscrowContractPositionHelper } from './helpers/curve.voting-escrow.contract-position-helper';
+import { OPTIMISM_CURVE_PROVIDERS } from './optimism';
+import { POLYGON_CURVE_PROVIDERS } from './polygon';
 
 @Register.AppModule({
   appId: CURVE_DEFINITION.id,
@@ -12,84 +24,32 @@ import { ETHEREUM_CURVE_PROVIDERS } from './ethereum';
     CurveAppDefinition,
     CurveContractFactory,
     CurveVolumeDataLoader,
+    // Providers by Network
+    ...ARBITRUM_CURVE_PROVIDERS,
+    ...AVALANCHE_CURVE_PROVIDERS,
+    ...FANTOM_CURVE_PROVIDERS,
     ...ETHEREUM_CURVE_PROVIDERS,
-
-    // OLDDD
-    // // Arbitrum
-    // ArbitrumCurveBalanceFetcher,
-    // ArbitrumCurvePoolTokenFetcher,
-    // ArbitrumCurveGaugeContractPositionFetcher,
-    // // Avalanche
-    // AvalancheCurveBalanceFetcher,
-    // AvalancheCurvePoolTokenFetcher,
-    // AvalancheCurveGaugeContractPositionFetcher,
-    // // Ethereum
-    // EthereumCurveBalanceFetcher,
-    // EthereumCurvePoolTokenFetcher,
-    // EthereumCurveGaugeContractPositionFetcher,
-    // EthereumCurveVotingEscrowContractPositionFetcher,
-    // EthereumCurveVestingEscrowContractPositionFetcher,
-    // // Fantom
-    // FantomCurveBalanceFetcher,
-    // FantomCurvePoolTokenFetcher,
-    // FantomCurveGaugeContractPositionFetcher,
-    // // Gnosis
-    // GnosisCurveBalanceFetcher,
-    // GnosisCurvePoolTokenFetcher,
-    // GnosisCurveGaugeContractPositionFetcher,
-    // // Optimism
-    // OptimismCurveBalanceFetcher,
-    // OptimismCurvePoolTokenFetcher,
-    // OptimismCurveGaugeContractPositionFetcher,
-    // // Polygon
-    // PolygonCurveBalanceFetcher,
-    // PolygonCurvePoolTokenFetcher,
-    // PolygonCurveGaugeContractPositionFetcher,
-    // // API Helpers
-    // CurveApiClient,
-    // // Pool Token Helpers
-    // CurvePoolRegistry,
-    // CurvePoolTokenHelper,
-    // CurvePoolDefaultTokenHelper,
-    // CurvePoolVirtualPriceStrategy,
-    // CurvePoolOnChainCoinStrategy,
-    // CurvePoolOnChainReserveStrategy,
-    // // Gauge Helpers
-    // CurveGaugeRegistry,
-    // CurveGaugeDefaultContractPositionHelper,
-    // CurveGaugeDefaultContractPositionBalanceHelper,
-    // CurveGaugeIsActiveStrategy,
-    // CurveGaugeRoiStrategy,
-    // CurveChildLiquidityGaugeRoiStrategy,
-    // // Escrow Helpers
-    // CurveVotingEscrowContractPositionHelper,
-    // CurveVotingEscrowContractPositionBalanceHelper,
-    // CurveVestingEscrowContractPositionHelper,
-    // CurveVestingEscrowContractPositionBalanceHelper,
+    ...GNOSIS_CURVE_PROVIDERS,
+    ...OPTIMISM_CURVE_PROVIDERS,
+    ...POLYGON_CURVE_PROVIDERS,
+    // Legacy Helpers
+    CurvePoolTokenHelper,
+    CurvePoolVirtualPriceStrategy,
+    CurvePoolOnChainCoinStrategy,
+    CurvePoolOnChainReserveStrategy,
+    CurveVotingEscrowContractPositionHelper,
+    CurveVotingEscrowContractPositionBalanceHelper,
   ],
   exports: [
-    // CurveContractFactory,
-    // // API Helpers
-    // CurveApiClient,
-    // // Pool Token Helpers
-    // CurvePoolRegistry,
-    // CurvePoolTokenHelper,
-    // CurvePoolDefaultTokenHelper,
-    // CurvePoolVirtualPriceStrategy,
-    // CurvePoolOnChainCoinStrategy,
-    // CurvePoolOnChainReserveStrategy,
-    // // Gauge Helpers
-    // CurveGaugeRegistry,
-    // CurveGaugeDefaultContractPositionHelper,
-    // CurveGaugeDefaultContractPositionBalanceHelper,
-    // CurveGaugeIsActiveStrategy,
-    // CurveGaugeRoiStrategy,
-    // CurveChildLiquidityGaugeRoiStrategy,
-    // // Escrow Helpers
-    // CurveVotingEscrowContractPositionHelper,
-    // CurveVotingEscrowContractPositionBalanceHelper,
-    // CurveVestingEscrowContractPositionHelper,
-    // CurveVestingEscrowContractPositionBalanceHelper,
+    CurveAppDefinition,
+    CurveContractFactory,
+    // Legacy Helpers
+    CurvePoolTokenHelper,
+    CurvePoolVirtualPriceStrategy,
+    CurvePoolOnChainCoinStrategy,
+    CurvePoolOnChainReserveStrategy,
+    CurveVotingEscrowContractPositionHelper,
+    CurveVotingEscrowContractPositionBalanceHelper,
   ],
 })
 export class CurveAppModule extends AbstractApp() {}

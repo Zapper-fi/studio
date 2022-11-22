@@ -8,21 +8,66 @@ export const CURVE_DEFINITION = appDefinition({
   name: 'Curve',
   description: `An exchange liquidity pool on Ethereum designed for: extremely efficient stablecoin trading, low risk, supplemental fee income for liquidity providers`,
   url: 'https://curve.fi',
+  tags: [AppTag.LIQUIDITY_POOL],
+  primaryColor: '#34649c',
+
+  token: {
+    address: '0xd533a949740bb3306d119cc777fa900ba034cd52',
+    network: Network.ETHEREUM_MAINNET,
+  },
+
   links: {
     github: 'https://github.com/curvefi/',
     twitter: 'https://twitter.com/curvefinance',
     discord: 'https://discord.com/invite/rgrfS7W',
     telegram: 'https://t.me/curvefi',
   },
+
   groups: {
-    gauge: {
-      id: 'gauge',
+    cryptoPoolGauge: {
+      id: 'crypto-pool-gauge',
       type: GroupType.POSITION,
       label: 'Staking',
     },
 
-    pool: {
-      id: 'pool',
+    cryptoPool: {
+      id: 'crypto-pool',
+      type: GroupType.TOKEN,
+      label: 'Pools',
+    },
+
+    factoryCryptoPoolGauge: {
+      id: 'factory-crypto-pool-gauge',
+      type: GroupType.POSITION,
+      label: 'Staking',
+    },
+
+    factoryCryptoPool: {
+      id: 'factory-crypto-pool',
+      type: GroupType.TOKEN,
+      label: 'Pools',
+    },
+
+    factoryStablePoolGauge: {
+      id: 'factory-stable-pool-gauge',
+      type: GroupType.POSITION,
+      label: 'Staking',
+    },
+
+    factoryStablePool: {
+      id: 'factory-stable-pool',
+      type: GroupType.TOKEN,
+      label: 'Pools',
+    },
+
+    stablePoolGauge: {
+      id: 'stable-pool-gauge',
+      type: GroupType.POSITION,
+      label: 'Staking',
+    },
+
+    stablePool: {
+      id: 'stable-pool',
       type: GroupType.TOKEN,
       label: 'Pools',
     },
@@ -39,7 +84,7 @@ export const CURVE_DEFINITION = appDefinition({
       label: 'Vesting',
     },
   },
-  tags: [AppTag.LIQUIDITY_POOL],
+
   supportedNetworks: {
     [Network.ARBITRUM_MAINNET]: [AppAction.VIEW],
     [Network.AVALANCHE_MAINNET]: [AppAction.VIEW],
@@ -48,11 +93,6 @@ export const CURVE_DEFINITION = appDefinition({
     [Network.GNOSIS_MAINNET]: [AppAction.VIEW],
     [Network.OPTIMISM_MAINNET]: [AppAction.VIEW],
     [Network.POLYGON_MAINNET]: [AppAction.VIEW],
-  },
-  primaryColor: '#34649c',
-  token: {
-    address: '0xd533a949740bb3306d119cc777fa900ba034cd52',
-    network: Network.ETHEREUM_MAINNET,
   },
 });
 
