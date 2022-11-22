@@ -1,22 +1,23 @@
-import {Inject, Injectable} from '@nestjs/common';
-import Axios, {AxiosInstance} from 'axios';
+import { Inject, Injectable } from '@nestjs/common';
+import Axios, { AxiosInstance } from 'axios';
 import BigNumber from 'bignumber.js';
-import request, {gql} from 'graphql-request';
+import request, { gql } from 'graphql-request';
 import _ from 'lodash';
 
-import {APP_TOOLKIT, IAppToolkit} from '~app-toolkit/app-toolkit.interface';
-import {buildDollarDisplayItem} from '~app-toolkit/helpers/presentation/display-item.present';
-import {getAppAssetImage} from "~app-toolkit/helpers/presentation/image.present";
-import {MuxContractFactory} from '~apps/mux';
-import {ContractType} from '~position/contract.interface';
-import {AppTokenPosition, Token} from '~position/position.interface';
-import {Network, NETWORK_IDS} from '~types/network.interface';
+import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
+import { ZERO_ADDRESS } from '~app-toolkit/constants/address';
+import { buildDollarDisplayItem } from '~app-toolkit/helpers/presentation/display-item.present';
+import { getAppAssetImage } from '~app-toolkit/helpers/presentation/image.present';
+import { MuxContractFactory } from '~apps/mux';
+import { Cache } from '~cache/cache.decorator';
+import { ContractType } from '~position/contract.interface';
+import { AppTokenPosition } from '~position/position.interface';
+import { Network, NETWORK_IDS } from '~types/network.interface';
 
-import {MUX_DEFINITION} from '../mux.definition';
+import { MUX_DEFINITION } from '../mux.definition';
 
 type GetMuxMlpTokenParams = {
   network: Network;
-  subgraphUrl: string;
   mlpTokenAddress: string;
 };
 
@@ -45,7 +46,7 @@ type TokensResponse = {
   }[];
 };
 
-const assetsTokensQuery = gql`
+const ASSETS_TOKENS_QUERY = gql`
   {
     assets {
       symbol
@@ -54,7 +55,13 @@ const assetsTokensQuery = gql`
     }
   }
 `;
-const invalidAddress = '0x0000000000000000000000000000000000000000';
+
+const SUBGRAPH_URL: Partial<Record<Network, string>> = {
+  [Network.ARBITRUM_MAINNET]: 'https://api.thegraph.com/subgraphs/name/mux-world/mux-arb',
+  [Network.AVALANCHE_MAINNET]: 'https://api.thegraph.com/subgraphs/name/mux-world/mux-ava',
+  [Network.BINANCE_SMART_CHAIN_MAINNET]: 'https://api.thegraph.com/subgraphs/name/mux-world/mux-bsc',
+  [Network.FANTOM_OPERA_MAINNET]: 'https://api.thegraph.com/subgraphs/name/mux-world/mux-ftm',
+};
 
 @Injectable()
 export class MuxMlpTokenHelper {
@@ -67,12 +74,20 @@ export class MuxMlpTokenHelper {
     @Inject(MuxContractFactory) private readonly contractFactory: MuxContractFactory,
   ) {}
 
-  private static async getAssetsTokens(url: string) {
-    const response = await request<TokensResponse>(url, assetsTokensQuery, {});
+  @Cache({
+    instance: 'business',
+    key: (network: Network) => `studio:${MUX_DEFINITION.id}:${MUX_DEFINITION.groups.mlp.id}:${network}`,
+    ttl: 15 * 60,
+  })
+  private async getAssetsTokens(network: Network) {
+    const url = SUBGRAPH_URL[network];
+    if (!url) return [];
+
+    const response = await request<TokensResponse>(url, ASSETS_TOKENS_QUERY, {});
     return response.assets ?? [];
   }
 
-  async getTokens({ network, subgraphUrl, mlpTokenAddress }: GetMuxMlpTokenParams) {
+  async getTokens({ network, mlpTokenAddress }: GetMuxMlpTokenParams) {
     const multicall = this.appToolkit.getMulticall(network);
     const baseTokens = await this.appToolkit.getBaseTokenPrices(network);
     const mlpTokenContract = this.contractFactory.erc20({ address: mlpTokenAddress, network });
@@ -84,7 +99,7 @@ export class MuxMlpTokenHelper {
     ]);
 
     // Liquidity
-    let liquidity = new BigNumber(0);
+    let liquidityBn = new BigNumber(0);
     const priceMap: Map<string, number> = new Map();
     const { data: liquidityAsset } = await this.axios.get<LiquidityAsset>('/api/liquidityAsset');
     liquidityAsset.assets.map(asset => {
@@ -92,38 +107,29 @@ export class MuxMlpTokenHelper {
       priceMap.set(asset.symbol, Number(asset.price));
       if (chainId) {
         const liq = asset.liquidityOnChains[chainId];
-        liquidity = liquidity.plus(liq?.value || 0);
+        liquidityBn = liquidityBn.plus(liq?.value || 0);
       }
     });
-    const liquidityNumber = liquidity.toNumber();
+    const liquidity = liquidityBn.toNumber();
     const supply = Number(supplyRaw) / 10 ** decimals;
     const price = liquidityAsset.muxLPPrice;
 
     // Tokens
-    const assetsTokens = await MuxMlpTokenHelper.getAssetsTokens(subgraphUrl);
+    const assetsTokens = await this.getAssetsTokens(network);
     const tokensRaw = assetsTokens.map(token => {
-      if (token.tokenAddress !== invalidAddress) {
-        const t = baseTokens.find(baseToken => baseToken.address === token.tokenAddress.toLowerCase());
-        if (!t) {
-          return {
-            address: token.tokenAddress,
-            symbol: token.symbol,
-            decimals: token.decimal,
-            price: priceMap.get(token.symbol) || 0,
-            type: ContractType.BASE_TOKEN,
-            network: network,
-          };
-        }
-        return t;
+      if (token.tokenAddress !== ZERO_ADDRESS) {
+        const baseToken = baseTokens.find(baseToken => baseToken.address === token.tokenAddress.toLowerCase());
+        if (!baseToken) return null;
+        return baseToken;
       }
     });
-    const tokens = _.compact(tokensRaw) as Token[];
+    const tokens = _.compact(tokensRaw);
 
     // Display Props
     const label = symbol;
     const secondaryLabel = buildDollarDisplayItem(price);
     const images = [getAppAssetImage('mux', 'MUXLP')];
-    const statsItems = [{ label: 'Liquidity', value: buildDollarDisplayItem(liquidityNumber) }];
+    const statsItems = [{ label: 'Liquidity', value: buildDollarDisplayItem(liquidity) }];
 
     const mlpToken: AppTokenPosition = {
       type: ContractType.APP_TOKEN,
@@ -139,7 +145,7 @@ export class MuxMlpTokenHelper {
       tokens,
 
       dataProps: {
-        liquidity: liquidityNumber,
+        liquidity,
       },
 
       displayProps: {
