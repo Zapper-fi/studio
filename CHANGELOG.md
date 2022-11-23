@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.291.0](https://github.com/Zapper-fi/studio/compare/v0.290.0...v0.291.0) (2022-11-23)
+
+
+### Features
+
+* **convex:** Update supported networks ([b91d976](https://github.com/Zapper-fi/studio/commit/b91d976f306707c25f66a891503d6a08226b7b41))
+
 ## [0.290.0](https://github.com/Zapper-fi/studio/compare/v0.289.0...v0.290.0) (2022-11-23)
 
 
