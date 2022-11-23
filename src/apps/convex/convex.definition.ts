@@ -73,6 +73,7 @@ export const CONVEX_DEFINITION = appDefinition({
   },
 
   supportedNetworks: {
+    [Network.ARBITRUM_MAINNET]: [AppAction.VIEW],
     [Network.ETHEREUM_MAINNET]: [AppAction.VIEW],
   },
 
