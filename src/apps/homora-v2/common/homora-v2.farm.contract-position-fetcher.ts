@@ -14,6 +14,7 @@ import {
   GetDisplayPropsParams,
   GetTokenDefinitionsParams,
 } from '~position/template/contract-position.template.types';
+import { CustomContractPositionTemplatePositionFetcher } from '~position/template/custom-contract-position.template.position-fetcher';
 import { Network, NETWORK_IDS } from '~types';
 
 import { HomoraBank, HomoraV2ContractFactory } from '../contracts';
@@ -27,7 +28,7 @@ import {
   PoolPosition,
 } from '../interfaces/interfaces';
 
-export abstract class HomoraV2FarmContractPositionFetcher extends ContractPositionTemplatePositionFetcher<
+export abstract class HomoraV2FarmContractPositionFetcher extends CustomContractPositionTemplatePositionFetcher<
   HomoraBank,
   HomoraV2FarmingPositionDataProps,
   HomoraV2FarmingPositionDefinition

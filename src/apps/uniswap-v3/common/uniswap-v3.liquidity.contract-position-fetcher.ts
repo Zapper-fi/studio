@@ -12,6 +12,7 @@ import {
   GetDisplayPropsParams,
   GetTokenDefinitionsParams,
 } from '~position/template/contract-position.template.types';
+import { CustomContractPositionTemplatePositionFetcher } from '~position/template/custom-contract-position.template.position-fetcher';
 
 import { UniswapV3ContractFactory, UniswapV3PositionManager } from '../contracts';
 
@@ -63,7 +64,7 @@ const GET_TOP_POOLS_QUERY = gql`
   }
 `;
 
-export abstract class UniswapV3LiquidityContractPositionFetcher extends ContractPositionTemplatePositionFetcher<
+export abstract class UniswapV3LiquidityContractPositionFetcher extends CustomContractPositionTemplatePositionFetcher<
   UniswapV3PositionManager,
   UniswapV3LiquidityPositionDataProps,
   UniswapV3LiquidityPositionDefinition

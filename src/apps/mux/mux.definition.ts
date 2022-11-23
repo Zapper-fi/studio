@@ -15,8 +15,19 @@ export const MUX_DEFINITION = appDefinition({
       type: GroupType.TOKEN,
       label: 'MUXLP',
     },
+    mux: {
+      id: 'mux',
+      type: GroupType.TOKEN,
+      label: 'MUX',
+      isHiddenFromExplore: true,
+    },
+    farm: {
+      id: 'farm',
+      type: GroupType.POSITION,
+      label: 'Farms',
+    },
   },
-  tags: [AppTag.LIQUIDITY_POOL],
+  tags: [AppTag.MARGIN_TRADING],
   keywords: [],
   links: {
     discord: 'https://discord.com/invite/bd88NrzN3N',
