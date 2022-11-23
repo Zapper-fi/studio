@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.290.0](https://github.com/Zapper-fi/studio/compare/v0.289.0...v0.290.0) (2022-11-23)
+
+
+### Features
+
+* **convex:** Support Arbitrum ([#1775](https://github.com/Zapper-fi/studio/issues/1775)) ([103bc25](https://github.com/Zapper-fi/studio/commit/103bc25dc840e79b4f0898e5ec9e0ad6b9e5be47))
+
 ## [0.289.0](https://github.com/Zapper-fi/studio/compare/v0.288.1...v0.289.0) (2022-11-23)
 
 
