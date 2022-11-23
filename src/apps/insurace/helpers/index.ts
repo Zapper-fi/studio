@@ -2,6 +2,10 @@ import _ from 'lodash';
 
 import { IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { ZERO_ADDRESS } from '~app-toolkit/constants/address';
+import {
+  buildDollarDisplayItem,
+  buildPercentageDisplayItem,
+} from '~app-toolkit/helpers/presentation/display-item.present';
 import { getImagesFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { ContractType } from '~position/contract.interface';
 import { AppTokenPosition } from '~position/position.interface';
@@ -28,9 +32,7 @@ export async function getMiningPositions(
 ): Promise<AppTokenPosition<InsuraceMiningDataProps>[]> {
   const config = configs[network];
 
-  if (config == null) {
-    return [];
-  }
+  if (config == null) return [];
 
   const pools = config.governanceMiningPools.concat(config.underwritingMiningPools).concat(config.liquidityMiningPools);
 
@@ -47,9 +49,7 @@ export async function getMiningPositions(
 
   const insur = allTokenDependencies.find(item => item.address === config.insur);
 
-  if (insur == null) {
-    return [];
-  }
+  if (insur == null) return [];
 
   const contractPool = contractFactory.stakersPoolV2({
     address: config.contract.StakersPoolV2,
@@ -65,9 +65,7 @@ export async function getMiningPositions(
           ? allTokenDependencies.find(item => item.address === ZERO_ADDRESS)
           : allTokenDependencies.find(item => item.address === underlyingAddress);
 
-      if (underlyingToken == null) {
-        return null;
-      }
+      if (underlyingToken == null) return null;
 
       const contractLp = contractFactory.erc20({
         address: lpAddress,
@@ -98,6 +96,10 @@ export async function getMiningPositions(
       const blocksPerYear = (365 * 24 * 60 * 60) / config.blockTime;
       const liquidity = underlyingSupply * underlyingToken.price;
       const apy = liquidity <= 0 ? 0 : (insurPerBlock * blocksPerYear * insur.price) / liquidity;
+      const statsItems = [
+        { label: 'APY', value: buildPercentageDisplayItem(apy) },
+        { label: 'Liquidity', value: buildDollarDisplayItem(liquidity) },
+      ];
 
       const token: AppTokenPosition<InsuraceMiningDataProps> = {
         type: ContractType.APP_TOKEN,
@@ -118,6 +120,7 @@ export async function getMiningPositions(
         displayProps: {
           label: `${underlyingToken.symbol} Pool`,
           images: getImagesFromToken(underlyingToken),
+          statsItems,
         },
       };
 
