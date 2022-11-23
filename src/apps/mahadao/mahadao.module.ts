@@ -11,12 +11,12 @@ import { MahadaoAppDefinition, MAHADAO_DEFINITION } from './mahadao.definition';
 @Register.AppModule({
   appId: MAHADAO_DEFINITION.id,
   providers: [
+    MahadaoAppDefinition,
+    MahadaoContractFactory,
     CurveVotingEscrowContractPositionBalanceHelper,
     CurveVotingEscrowContractPositionHelper,
     EthereumMahadaoBalanceFetcher,
     EthereumMahadaoLockerContractPositionFetcher,
-    MahadaoAppDefinition,
-    MahadaoContractFactory,
   ],
 })
 export class MahadaoAppModule extends AbstractApp() {}

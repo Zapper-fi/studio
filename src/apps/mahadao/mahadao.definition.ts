@@ -5,7 +5,7 @@ import { Network } from '~types/network.interface';
 
 export const MAHADAO_DEFINITION = appDefinition({
   id: 'mahadao',
-  name: 'mahadao',
+  name: 'MahaDAO',
   description:
     'MahaDAO is on a community-driven mission to promote financial liberty with a decentralized currency ($ARTH) and a governance token ($MAHA)',
   url: 'https://gov.mahadao.com/#/',
@@ -20,15 +20,16 @@ export const MAHADAO_DEFINITION = appDefinition({
 
   tags: [AppTag.FARMING, AppTag.STAKING],
   keywords: [],
-  links: {},
+  links: {
+    discord: 'https://discord.com/invite/mahadao',
+    github: 'https://github.com/mahadao',
+    telegram: 'https://t.me/MahaDAO',
+    twitter: 'https://twitter.com/TheMahaDAO',
+  },
 
   supportedNetworks: {
     [Network.ETHEREUM_MAINNET]: [AppAction.VIEW],
   },
-  // token: {
-  //   address: '0xbdD8F4dAF71C2cB16ccE7e54BB81ef3cfcF5AAcb',
-  //   network: Network.ETHEREUM_MAINNET,
-  // },
 
   primaryColor: '#fff',
 });
