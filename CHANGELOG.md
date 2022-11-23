@@ -4,6 +4,18 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.289.0](https://github.com/Zapper-fi/studio/compare/v0.288.1...v0.289.0) (2022-11-23)
+
+
+### Features
+
+* **mahadao:** Add MahaDAO app ([#1748](https://github.com/Zapper-fi/studio/issues/1748)) ([e24c6f2](https://github.com/Zapper-fi/studio/commit/e24c6f2010bc7079f6984ebd940ad116a7927d70))
+
+
+### Bug Fixes
+
+* **maple:** Fix pool query ([#1774](https://github.com/Zapper-fi/studio/issues/1774)) ([341cae1](https://github.com/Zapper-fi/studio/commit/341cae131b5379cb05c3f554d07ea6077c92580c))
+
 ## [0.288.1](https://github.com/Zapper-fi/studio/compare/v0.288.0...v0.288.1) (2022-11-22)
 
 
