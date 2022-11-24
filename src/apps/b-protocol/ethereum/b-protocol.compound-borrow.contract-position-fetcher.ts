@@ -1,5 +1,4 @@
 import { Inject } from '@nestjs/common';
-import { BigNumberish } from 'ethers';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { ZERO_ADDRESS } from '~app-toolkit/constants/address';
@@ -9,10 +8,8 @@ import {
   CompoundBorrowTokenDataProps,
   GetMarketsParams,
 } from '~apps/compound/common/compound.borrow.contract-position-fetcher';
-import { IMulticallWrapper } from '~multicall';
 import {
   GetTokenDefinitionsParams,
-  DefaultContractPositionDefinition,
   GetDataPropsParams,
   GetTokenBalancesParams,
 } from '~position/template/contract-position.template.types';
