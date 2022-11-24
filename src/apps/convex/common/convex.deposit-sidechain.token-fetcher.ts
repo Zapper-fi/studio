@@ -26,9 +26,6 @@ export abstract class ConvexDepositSidechainTokenFetcher extends AppTokenTemplat
 > {
   abstract boosterAddress: string;
 
-  isExcludedFromExplore = true;
-  isExcludedFromTvl = true;
-
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
     @Inject(ConvexContractFactory) protected readonly contractFactory: ConvexContractFactory,
