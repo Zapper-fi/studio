@@ -38,5 +38,3 @@ export class AtlendisV1AppDefinition extends AppDefinition {
     super(ATLENDIS_V_1_DEFINITION);
   }
 }
-
-export default ATLENDIS_V_1_DEFINITION;
