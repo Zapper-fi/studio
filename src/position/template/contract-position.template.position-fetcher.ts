@@ -244,15 +244,11 @@ export abstract class ContractPositionTemplatePositionFetcher<
         const contract = multicall.wrap(this.getContract(contractPosition.address));
         const balancesRaw = await this.getTokenBalancesPerPosition({ address, contract, contractPosition, multicall });
 
-        if (contractPosition.tokens.length > balancesRaw.length) {
-          throw new Error(`Balance mismatch for ${contractPosition.appId}:${contractPosition.groupId}`);
-        }
-
         return {
           key: this.appToolkit.getPositionKey(contractPosition),
           tokens: contractPosition.tokens.map((token, i) => ({
             key: this.appToolkit.getPositionKey(token),
-            balance: balancesRaw[i].toString(),
+            balance: balancesRaw[i]?.toString() ?? '0',
           })),
         };
       }),

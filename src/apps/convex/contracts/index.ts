@@ -6,6 +6,7 @@ import { Network } from '~types/network.interface';
 
 import { ConvexAbracadabraWrapper__factory } from './ethers';
 import { ConvexBooster__factory } from './ethers';
+import { ConvexBoosterSidechain__factory } from './ethers';
 import { ConvexCvxCrvStaking__factory } from './ethers';
 import { ConvexCvxStaking__factory } from './ethers';
 import { ConvexDepositToken__factory } from './ethers';
@@ -28,6 +29,9 @@ export class ConvexContractFactory extends ContractFactory {
   }
   convexBooster({ address, network }: ContractOpts) {
     return ConvexBooster__factory.connect(address, this.appToolkit.getNetworkProvider(network));
+  }
+  convexBoosterSidechain({ address, network }: ContractOpts) {
+    return ConvexBoosterSidechain__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
   convexCvxCrvStaking({ address, network }: ContractOpts) {
     return ConvexCvxCrvStaking__factory.connect(address, this.appToolkit.getNetworkProvider(network));
@@ -54,6 +58,7 @@ export class ConvexContractFactory extends ContractFactory {
 
 export type { ConvexAbracadabraWrapper } from './ethers';
 export type { ConvexBooster } from './ethers';
+export type { ConvexBoosterSidechain } from './ethers';
 export type { ConvexCvxCrvStaking } from './ethers';
 export type { ConvexCvxStaking } from './ethers';
 export type { ConvexDepositToken } from './ethers';
