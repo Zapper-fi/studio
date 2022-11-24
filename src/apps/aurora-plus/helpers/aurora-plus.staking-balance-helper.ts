@@ -3,7 +3,9 @@ import { range } from 'lodash';
 
 import { drillBalance } from '~app-toolkit';
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
+import { WithMetaType } from '~position/display.interface';
 import { BaseTokenBalance } from '~position/position-balance.interface';
+import { claimable, supplied } from '~position/position.utils';
 import { Network } from '~types/network.interface';
 
 import AURORA_DEFINITION from '../aurora-plus.definition';
@@ -48,11 +50,11 @@ export class AuroraPlusStakingBalanceHelper {
 
         const userTotalDeposit = (await mcs.getUserTotalDeposit(address)).toString();
 
-        const tokens: BaseTokenBalance[] = [];
-        if (aurora) tokens.push(drillBalance(aurora, userTotalDeposit));
+        const tokens: WithMetaType<BaseTokenBalance[]> = [];
+        if (aurora) tokens.push(supplied(drillBalance(aurora, userTotalDeposit)));
         streamIDs.forEach((streamID: number) => {
           if (!rewardTokens[streamID]) return;
-          tokens.push(drillBalance(rewardTokens[streamID]!, rewardTokenValues[streamID].toString()));
+          tokens.push(claimable(drillBalance(rewardTokens[streamID]!, rewardTokenValues[streamID].toString())));
         });
 
         return tokens;
