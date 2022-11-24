@@ -4,6 +4,19 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.293.0](https://github.com/Zapper-fi/studio/compare/v0.292.0...v0.293.0) (2022-11-24)
+
+
+### Features
+
+* **atlendis-v1:** Migrate to templates ([#1787](https://github.com/Zapper-fi/studio/issues/1787)) ([e3b1c6e](https://github.com/Zapper-fi/studio/commit/e3b1c6eb84b559bdf150b3585a6c77ac1925f359))
+
+
+### Bug Fixes
+
+* **geist:** Fix duplicated claimable token ([#1783](https://github.com/Zapper-fi/studio/issues/1783)) ([f76d5fb](https://github.com/Zapper-fi/studio/commit/f76d5fb6918a5638e747d7844dc986d16fabb4ec))
+* **positions:** Avoid generating the key in a loop ([#1784](https://github.com/Zapper-fi/studio/issues/1784)) ([ae28c28](https://github.com/Zapper-fi/studio/commit/ae28c28c33a3d21d5ef3b0871cce7a6f2423799e))
+
 ## [0.292.0](https://github.com/Zapper-fi/studio/compare/v0.291.0...v0.292.0) (2022-11-24)
 
 
