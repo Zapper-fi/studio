@@ -4,6 +4,19 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.292.0](https://github.com/Zapper-fi/studio/compare/v0.291.0...v0.292.0) (2022-11-24)
+
+
+### Features
+
+* **stake-dao:** Added veSDT and moved farms position to studio ([#1780](https://github.com/Zapper-fi/studio/issues/1780)) ([841f240](https://github.com/Zapper-fi/studio/commit/841f24009905020f65f1469ae0f1aa7fb5e92b0c))
+
+
+### Bug Fixes
+
+* **aurora-plus:** Fix aurora-plus missing meta type ([#1782](https://github.com/Zapper-fi/studio/issues/1782)) ([4fd1279](https://github.com/Zapper-fi/studio/commit/4fd1279fbe88b6db0aea123921ce7269a808e030))
+* **good-ghosting:** Fix cache key ([#1778](https://github.com/Zapper-fi/studio/issues/1778)) ([8e6c63f](https://github.com/Zapper-fi/studio/commit/8e6c63f1fb1259e915ad43fec3a0804f89a06036))
+
 ## [0.291.0](https://github.com/Zapper-fi/studio/compare/v0.290.0...v0.291.0) (2022-11-23)
 
 
