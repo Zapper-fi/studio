@@ -17,7 +17,7 @@ import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi
 import type { Listener, Provider } from '@ethersproject/providers';
 import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
-export interface PositionManagerInterface extends utils.Interface {
+export interface AtlendisPositionManagerInterface extends utils.Interface {
   functions: {
     '_positions(uint128)': FunctionFragment;
     'approve(address,uint256)': FunctionFragment;
@@ -243,12 +243,12 @@ export type WithdrawEvent = TypedEvent<
 
 export type WithdrawEventFilter = TypedEventFilter<WithdrawEvent>;
 
-export interface PositionManager extends BaseContract {
+export interface AtlendisPositionManager extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
 
-  interface: PositionManagerInterface;
+  interface: AtlendisPositionManagerInterface;
 
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,
