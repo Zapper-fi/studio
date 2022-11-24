@@ -1,4 +1,5 @@
 import { Inject } from '@nestjs/common';
+import _ from 'lodash';
 import { range } from 'lodash';
 
 import { drillBalance } from '~app-toolkit';
@@ -39,9 +40,12 @@ export class AuroraAuroraPlusBalanceFetcher implements BalanceFetcher {
         );
 
         const depositAmount = await multicall.wrap(contract).getUserTotalDeposit(address);
-        const rewardBalance = rewardTokens.map((token, id) => {
+        const rewardBalanceRaw = rewardTokens.map((token, id) => {
+          if (Number(rewardTokenValues[id]) == 0) return null;
           return drillBalance(token, rewardTokenValues[id].toString());
         });
+
+        const rewardBalance = _.compact(rewardBalanceRaw);
 
         return [drillBalance(stakedToken, depositAmount.toString()), ...rewardBalance];
       },
