@@ -4,6 +4,18 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.294.0](https://github.com/Zapper-fi/studio/compare/v0.293.0...v0.294.0) (2022-11-24)
+
+
+### Features
+
+* **convex:** Show deposits in explore and TVL ([#1789](https://github.com/Zapper-fi/studio/issues/1789)) ([9afc30d](https://github.com/Zapper-fi/studio/commit/9afc30d98394d440dd5b5f75b2bab6c649adc32c))
+
+
+### Bug Fixes
+
+* **lint:** Fix all linting errors ([#1788](https://github.com/Zapper-fi/studio/issues/1788)) ([4dc3268](https://github.com/Zapper-fi/studio/commit/4dc32687403ffa3496e2914cb37dd05cabb66fc1))
+
 ## [0.293.0](https://github.com/Zapper-fi/studio/compare/v0.292.0...v0.293.0) (2022-11-24)
 
 
