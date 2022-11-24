@@ -3,7 +3,7 @@ import { Inject } from '@nestjs/common';
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
 import { buildDollarDisplayItem } from '~app-toolkit/helpers/presentation/display-item.present';
-import { getImagesFromToken } from '~app-toolkit/helpers/presentation/image.present';
+import { getAppAssetImage, getImagesFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { ContractType } from '~position/contract.interface';
 import { PositionFetcher } from '~position/position-fetcher.interface';
 import { AppTokenPosition } from '~position/position.interface';
@@ -42,15 +42,9 @@ export class OptimismLemmafinanceXLemmaSynthTokenFetcher implements PositionFetc
       '0xFE1EB36d31ead771Fd5E051ee8CC424dB6416567', // PerpLemmaAAVE
     ];
 
-    const imageURL = 'src/apps/lemmafinance/assets/';
-    const tokenImages = [
-      'xLETH.png',
-      'xLBTC.png',
-      'xLPERP.png',
-      'xLPERP.png',
-      'xLPERP.png',
-      'xLPERP.png'
-    ];
+    // const imageURL = 'src/apps/lemmafinance/assets/';
+    const tokenImages = ['xLETH', 'xLBTC', 'xLPERP', 'xLPERP', 'xLPERP', 'xLPERP'];
+    const baseTokens = await this.appToolkit.getBaseTokenPrices(network);
 
     const multicall = this.appToolkit.getMulticall(network);
     const tokens = await Promise.all(
@@ -67,26 +61,28 @@ export class OptimismLemmafinanceXLemmaSynthTokenFetcher implements PositionFetc
         });
 
         // Request the symbol, decimals, ands supply for the jar token
-        const [name, symbol, decimals, supplyRaw, collateral, assetsPerShare] = await Promise.all([
+        const [name, symbol, decimals, supplyRaw, collateral, usdc, assetsPerShare] = await Promise.all([
           multicall.wrap(contract).name(),
           multicall.wrap(contract).symbol(),
           multicall.wrap(contract).decimals(),
           multicall.wrap(contract).totalSupply(),
           multicall.wrap(perpLemmaContract).usdlCollateral(),
+          multicall.wrap(perpLemmaContract).usdc(),
           multicall.wrap(contract).assetsPerShare(),
         ]);
 
         // Denormalize the supply
         const supply = Number(supplyRaw) / 10 ** decimals;
-        const tokens: any = [collateral];
+        const usdcToken = baseTokens.find(x => x.address.toLowerCase() === usdc.toLowerCase());
+        const collateralToken = baseTokens.find(x => x.address.toLowerCase() === collateral.toLowerCase());
+        const tokens: any = [usdcToken, collateralToken];
         const price = Number(assetsPerShare) / 10 ** decimals;
         const pricePerShare = Number(assetsPerShare) / 10 ** decimals;
 
         // // As a label, we'll use the underlying label (i.e.: 'LOOKS' or 'UNI-V2 LOOKS / ETH'), and suffix it with 'Jar'
         const label = `${name} (${symbol})`;
         // // For images, we'll use the underlying token images as well
-        // const images = getImagesFromToken(tokens[0]);
-        const images = [imageURL + tokenImages[i]];
+        const images = [getAppAssetImage(appId, tokenImages[i])];
         // // For the secondary label, we'll use the price of the jar token
         const secondaryLabel = buildDollarDisplayItem(price);
         // // And for a tertiary label, we'll use the APY
@@ -105,7 +101,9 @@ export class OptimismLemmafinanceXLemmaSynthTokenFetcher implements PositionFetc
           tokens,
           price,
           pricePerShare,
-          dataProps: {},
+          dataProps: {
+            liquidity: supply * price,
+          },
           displayProps: {
             label,
             images,
