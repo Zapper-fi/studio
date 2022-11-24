@@ -260,11 +260,13 @@ export abstract class ContractPositionTemplatePositionFetcher<
 
     return compact(
       contractPositions.map(contractPosition => {
-        const positionBalances = balances.find(b => b.key === this.appToolkit.getPositionKey(contractPosition));
+        const key = this.appToolkit.getPositionKey(contractPosition);
+        const positionBalances = balances.find(b => b.key === key);
         if (!positionBalances) return null;
 
-        const allTokens = contractPosition.tokens.map(token => {
-          const tokenBalance = positionBalances.tokens.find(b => b.key === this.appToolkit.getPositionKey(token));
+        const allTokens = contractPosition.tokens.map((token, idx) => {
+          const key = this.appToolkit.getPositionKey(token);
+          const tokenBalance = positionBalances.tokens.find(b => b.key === key);
           if (!tokenBalance) return null;
 
           return drillBalance<typeof token, V>(token, tokenBalance.balance, {
