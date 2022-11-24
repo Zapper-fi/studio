@@ -264,7 +264,7 @@ export abstract class ContractPositionTemplatePositionFetcher<
         const positionBalances = balances.find(b => b.key === key);
         if (!positionBalances) return null;
 
-        const allTokens = contractPosition.tokens.map((token, idx) => {
+        const allTokens = contractPosition.tokens.map(token => {
           const key = this.appToolkit.getPositionKey(token);
           const tokenBalance = positionBalances.tokens.find(b => b.key === key);
           if (!tokenBalance) return null;
