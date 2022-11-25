@@ -43,13 +43,13 @@ export class EthereumHexStakeContractPositionFetcher implements PositionFetcher<
       multicall.wrap(hexContract).totalSupply(),
       multicall.wrap(hexContract).currentDay(),
     ]);
-    const stakedSupply = stakedAndUnstakedSupply - unstakedSupply;
+    const stakedSupply = Number(stakedAndUnstakedSupply.toBigInt() - unstakedSupply.toBigInt());
     const stakedSupplyInDollars = (stakedSupply / 10 ** hexToken.decimals) * hexToken.price;
 
     // HEX Average APR is the latest daily payout annualized divided by total amount staked
     const [latestDailyData] = await Promise.all([
       // Need to use day - 1 as data is only available for previous day
-      multicall.wrap(hexContract).dailyData(currentDay - 1),
+      multicall.wrap(hexContract).dailyData(currentDay.toNumber() - 1),
     ]);
     const aprInPercent = Number(latestDailyData.dayPayoutTotal) / stakedSupply * 100 * 365;
 
