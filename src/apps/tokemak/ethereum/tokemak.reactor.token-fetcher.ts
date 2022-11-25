@@ -2,13 +2,8 @@ import { Inject } from '@nestjs/common';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
-import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
-import {
-  GetUnderlyingTokensParams,
-  GetDataPropsParams,
-  GetDisplayPropsParams,
-} from '~position/template/app-token.template.types';
+import { GetUnderlyingTokensParams } from '~position/template/app-token.template.types';
 
 import { TokemakContractFactory, TokemakReactor } from '../contracts';
 
@@ -57,21 +52,5 @@ export class EthereumTokemakReactorTokenFetcher extends AppTokenTemplatePosition
 
   async getUnderlyingTokenAddresses({ contract }: GetUnderlyingTokensParams<TokemakReactor>) {
     return contract.underlyer();
-  }
-
-  async getLabel({ appToken }: GetDisplayPropsParams<TokemakReactor>) {
-    return getLabelFromToken(appToken.tokens[0]);
-  }
-
-  async getReserves({ appToken }: GetDataPropsParams<TokemakReactor>) {
-    return [appToken.pricePerShare[0] * appToken.supply];
-  }
-
-  async getLiquidity({ appToken }: GetDataPropsParams<TokemakReactor>) {
-    return appToken.price * appToken.supply;
-  }
-
-  async getApy(_params: GetDataPropsParams<TokemakReactor>) {
-    return 0;
   }
 }

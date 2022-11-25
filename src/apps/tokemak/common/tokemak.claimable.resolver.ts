@@ -50,7 +50,8 @@ export class TokemakClaimableResolver {
   }
 
   @Cache({
-    key: `studio:${TOKEMAK_DEFINITION.id}:${TOKEMAK_DEFINITION.groups.claimable.id}:ethereum`,
+    key: (address: string) =>
+      `studio:${TOKEMAK_DEFINITION.id}:${TOKEMAK_DEFINITION.groups.claimable.id}:ethereum:${address}`,
     ttl: 5 * 60, // 5 min
   })
   async getClaimableBalanceData(address: string) {
