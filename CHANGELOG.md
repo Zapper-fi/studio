@@ -4,6 +4,14 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.294.1](https://github.com/Zapper-fi/studio/compare/v0.294.0...v0.294.1) (2022-11-25)
+
+
+### Bug Fixes
+
+* **aurora-plus:** Filter out tokens with no claimables ([#1791](https://github.com/Zapper-fi/studio/issues/1791)) ([582de25](https://github.com/Zapper-fi/studio/commit/582de25d1b53dcb3ca09f6159492f95ee125e12e))
+* **synthetix:** Use synth asset's logo instead of underlying ([#1793](https://github.com/Zapper-fi/studio/issues/1793)) ([5979b3c](https://github.com/Zapper-fi/studio/commit/5979b3cc0b5e003279300bda178bab66e069398a))
+
 ## [0.294.0](https://github.com/Zapper-fi/studio/compare/v0.293.0...v0.294.0) (2022-11-24)
 
 
