@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.294.2](https://github.com/Zapper-fi/studio/compare/v0.294.1...v0.294.2) (2022-11-25)
+
+
+### Bug Fixes
+
+* **pika-protocol:** Remove fractional balance ([#1795](https://github.com/Zapper-fi/studio/issues/1795)) ([1dd8e4a](https://github.com/Zapper-fi/studio/commit/1dd8e4af96a4d8d90a26a2aaae68908d5877779f))
+
 ## [0.294.1](https://github.com/Zapper-fi/studio/compare/v0.294.0...v0.294.1) (2022-11-25)
 
 
