@@ -1,15 +1,9 @@
-import { Injectable } from '@nestjs/common';
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 
-import { Network } from '~types/network.interface';
+import { GmxEsGmxTokenFetcher } from '../common/gmx.es-gmx.token-fetcher';
 
-import { GmxEsGmxTokenFetcher } from '../common/gmx.es-gmx.token-helper';
-import { GMX_DEFINITION } from '../gmx.definition';
-
-@Injectable()
+@PositionTemplate()
 export class ArbitrumGmxEsGmxTokenFetcher extends GmxEsGmxTokenFetcher {
-  appId = GMX_DEFINITION.id;
-  groupId = GMX_DEFINITION.groups.esGmx.id;
-  network = Network.ARBITRUM_MAINNET;
   groupLabel = 'esGMX';
   isExcludedFromTvl = true;
 
