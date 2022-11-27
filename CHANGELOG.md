@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.296.0](https://github.com/Zapper-fi/studio/compare/v0.295.0...v0.296.0) (2022-11-27)
+
+
+### Features
+
+* **atlendis:** Fix dupe key ([01bb031](https://github.com/Zapper-fi/studio/commit/01bb031b0c2120672378121f8fc9ed447879ab1a))
+
 ## [0.295.0](https://github.com/Zapper-fi/studio/compare/v0.294.3...v0.295.0) (2022-11-27)
 
 
