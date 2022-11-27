@@ -8,6 +8,6 @@ import { HexAppDefinition, HEX_DEFINITION } from './hex.definition';
 
 @Register.AppModule({
   appId: HEX_DEFINITION.id,
-  providers: [EthereumHexBalanceFetcher, EthereumHexStakeContractPositionFetcher, HexAppDefinition, HexContractFactory],
+  providers: [HexAppDefinition, HexContractFactory, EthereumHexBalanceFetcher, EthereumHexStakeContractPositionFetcher],
 })
 export class HexAppModule extends AbstractApp() {}
