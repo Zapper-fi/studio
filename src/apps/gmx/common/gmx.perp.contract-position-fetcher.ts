@@ -1,9 +1,9 @@
 import { Inject, Injectable } from '@nestjs/common';
-import _ from 'lodash';
+import _, { compact } from 'lodash';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { getImagesFromToken, getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
-import { MetaType } from '~position/position.interface';
+import { ContractPosition, MetaType } from '~position/position.interface';
 import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
 import {
   GetDefinitionsParams,
@@ -56,12 +56,16 @@ export abstract class GmxPerpContractPositionFetcher extends ContractPositionTem
       tokensRange.map(async tokenIndex => multicall.wrap(vaultContract).allWhitelistedTokens(tokenIndex)),
     );
 
-    return whitelistedTokens.flatMap(v =>
-      whitelistedTokens.flatMap(t => [
-        { address: this.vaultAddress, indexTokenAddress: v, collateralTokenAddress: t, isLong: true },
-        { address: this.vaultAddress, indexTokenAddress: v, collateralTokenAddress: t, isLong: false },
-      ]),
+    const definitions = whitelistedTokens.flatMap(v =>
+      whitelistedTokens.flatMap(t => {
+        if (v === t) return null;
+        const long = { address: this.vaultAddress, indexTokenAddress: v, collateralTokenAddress: t, isLong: true };
+        const short = { address: this.vaultAddress, indexTokenAddress: v, collateralTokenAddress: t, isLong: true };
+        return [long, short];
+      }),
     );
+
+    return compact(definitions);
   }
 
   async getTokenDefinitions({ definition }: GetTokenDefinitionsParams<GmxVault, GmxOptionContractPositionDefinition>) {
@@ -95,6 +99,10 @@ export abstract class GmxPerpContractPositionFetcher extends ContractPositionTem
   }: GetDisplayPropsParams<GmxVault, GmxOptionContractPositionDataProps, DefaultContractPositionDefinition>) {
     const [collateralToken, indexToken] = contractPosition.tokens;
     return [indexToken, collateralToken].flatMap(v => getImagesFromToken(v));
+  }
+
+  getKey({ contractPosition }: { contractPosition: ContractPosition<GmxOptionContractPositionDataProps> }) {
+    return this.appToolkit.getPositionKey(contractPosition, ['isLong']);
   }
 
   async getTokenBalancesPerPosition({
