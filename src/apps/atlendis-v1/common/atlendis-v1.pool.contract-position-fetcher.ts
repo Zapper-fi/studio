@@ -7,7 +7,7 @@ import { compact, merge } from 'lodash';
 import { drillBalance } from '~app-toolkit';
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { ContractPositionBalance } from '~position/position-balance.interface';
-import { MetaType, Standard } from '~position/position.interface';
+import { ContractPosition, MetaType, Standard } from '~position/position.interface';
 import {
   GetTokenDefinitionsParams,
   GetDisplayPropsParams,
@@ -128,6 +128,10 @@ export abstract class AtlendisV1PoolContractPositionFetcher extends CustomContra
     contractPosition,
   }: GetDisplayPropsParams<AtlendisPositionManager, AtlendisV1PoolDataProps, AtlendisV1PoolDefinition>) {
     return contractPosition.dataProps.label;
+  }
+
+  getKey({ contractPosition }: { contractPosition: ContractPosition<AtlendisV1PoolDataProps> }) {
+    return this.appToolkit.getPositionKey(contractPosition, ['id']);
   }
 
   async getTokenBalancesPerPosition(): Promise<BigNumberish[]> {
