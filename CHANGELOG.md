@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.297.0](https://github.com/Zapper-fi/studio/compare/v0.296.0...v0.297.0) (2022-11-27)
+
+
+### Features
+
+* **gmx:** Add isLong to perp key ([2505221](https://github.com/Zapper-fi/studio/commit/25052210aa0e7301d9dd9e05cf6872f532a742f7))
+
 ## [0.296.0](https://github.com/Zapper-fi/studio/compare/v0.295.0...v0.296.0) (2022-11-27)
 
 
