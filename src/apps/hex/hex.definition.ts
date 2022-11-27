@@ -8,6 +8,15 @@ export const HEX_DEFINITION = appDefinition({
   name: 'HEX',
   description: 'HEX is the first high-yield Blockchain Certificate of Deposit.',
   url: 'https://hex.com',
+  tags: [AppTag.STAKING],
+  primaryColor: '#fff',
+  keywords: [],
+
+  links: {
+    discord: 'https://discord.com/invite/JmKBUCZKB3',
+    telegram: 'https://t.me/HEXcrypto',
+    twitter: 'https://twitter.com/HEXcrypto',
+  },
 
   groups: {
     stake: {
@@ -17,19 +26,9 @@ export const HEX_DEFINITION = appDefinition({
     },
   },
 
-  tags: [AppTag.STAKING],
-  keywords: [],
-  links: {
-    discord: 'https://discord.com/invite/JmKBUCZKB3',
-    telegram: 'https://t.me/HEXcrypto',
-    twitter: 'https://twitter.com/HEXcrypto',
-  },
-
   supportedNetworks: {
     [Network.ETHEREUM_MAINNET]: [AppAction.VIEW],
   },
-
-  primaryColor: '#fff',
 });
 
 @Register.AppDefinition(HEX_DEFINITION.id)
@@ -38,5 +37,3 @@ export class HexAppDefinition extends AppDefinition {
     super(HEX_DEFINITION);
   }
 }
-
-export default HEX_DEFINITION;
