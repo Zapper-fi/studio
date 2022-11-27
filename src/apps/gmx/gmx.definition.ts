@@ -29,10 +29,10 @@ export const GMX_DEFINITION = appDefinition({
       label: 'Farms',
     },
 
-    option: {
-      id: 'option',
+    perp: {
+      id: 'perp',
       type: GroupType.POSITION,
-      label: 'Options',
+      label: 'Perpetuals',
     },
   },
   tags: [AppTag.MARGIN_TRADING],
@@ -63,5 +63,3 @@ export class GmxAppDefinition extends AppDefinition {
     super(GMX_DEFINITION);
   }
 }
-
-export default GMX_DEFINITION;

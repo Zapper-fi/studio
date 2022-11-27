@@ -1,13 +1,13 @@
-import { Inject } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 
-import { SingleStakingFarmContractPositionHelper } from '~app-toolkit';
-import { Register } from '~app-toolkit/decorators';
-import { PositionFetcher } from '~position/position-fetcher.interface';
-import { ContractPosition } from '~position/position.interface';
+import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
+import { isClaimable, isSupplied } from '~position/position.utils';
+import { GetDataPropsParams, GetTokenBalancesParams } from '~position/template/contract-position.template.types';
+import { SingleStakingFarmTemplateContractPositionFetcher } from '~position/template/single-staking.template.contract-position-fetcher';
 import { Network } from '~types/network.interface';
 
 import { GmxContractFactory, GmxRewardTracker } from '../contracts';
-import GMX_DEFINITION from '../gmx.definition';
+import { GMX_DEFINITION } from '../gmx.definition';
 
 export const GMX_FARM = {
   address: '0x2bd10f8e93b3669b6d42e74eeedc65dd1b0a1342',
@@ -32,31 +32,54 @@ export const GLP_FARM = {
 
 export const FARMS = [GMX_FARM, ES_GMX_FARM, GLP_FARM];
 
-const appId = GMX_DEFINITION.id;
-const groupId = GMX_DEFINITION.groups.farm.id;
-const network = Network.AVALANCHE_MAINNET;
+@Injectable()
+export class AvalancheGmxFarmContractPositionFetcher extends SingleStakingFarmTemplateContractPositionFetcher<GmxRewardTracker> {
+  appId = GMX_DEFINITION.id;
+  groupId = GMX_DEFINITION.groups.farm.id;
+  network = Network.AVALANCHE_MAINNET;
+  groupLabel = 'Farms';
 
-@Register.ContractPositionFetcher({ appId, groupId, network })
-export class AvalancheGmxFarmContractPositionFetcher implements PositionFetcher<ContractPosition> {
   constructor(
-    @Inject(SingleStakingFarmContractPositionHelper)
-    private readonly singleStakingFarmContractPositionHelper: SingleStakingFarmContractPositionHelper,
-    @Inject(GmxContractFactory)
-    private readonly gmxContractFactory: GmxContractFactory,
-  ) {}
+    @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
+    @Inject(GmxContractFactory) protected readonly contractFactory: GmxContractFactory,
+  ) {
+    super(appToolkit);
+  }
 
-  async getPositions() {
-    return this.singleStakingFarmContractPositionHelper.getContractPositions<GmxRewardTracker>({
-      appId,
-      groupId,
-      network,
-      dependencies: [
-        { appId: GMX_DEFINITION.id, groupIds: [GMX_DEFINITION.groups.esGmx.id, GMX_DEFINITION.groups.glp.id], network },
-      ],
-      resolveFarmDefinitions: async () => FARMS,
-      resolveFarmContract: ({ network, address }) => this.gmxContractFactory.gmxRewardTracker({ network, address }),
-      resolveIsActive: () => true,
-      resolveRois: () => ({ dailyROI: 0, weeklyROI: 0, yearlyROI: 0 }),
-    });
+  getContract(address: string): GmxRewardTracker {
+    return this.contractFactory.gmxRewardTracker({ address, network: this.network });
+  }
+
+  async getFarmDefinitions() {
+    return FARMS;
+  }
+
+  async getRewardRates({ contractPosition }: GetDataPropsParams<GmxRewardTracker>) {
+    return contractPosition.tokens.filter(isClaimable).map(() => 0);
+  }
+
+  async getStakedTokenBalance({ address, contractPosition, multicall }: GetTokenBalancesParams<GmxRewardTracker>) {
+    const stakedToken = contractPosition.tokens.find(isSupplied)!;
+    const readerAddress = '0x956d63dd6540230487eb7e599ef8b0c6fdca4ab8';
+    const readerContract = this.contractFactory.gmxRewardReader({ address: readerAddress, network: this.network });
+
+    const depositBalances = await multicall
+      .wrap(readerContract)
+      .getDepositBalances(address, [stakedToken.address], [contractPosition.address]);
+
+    return depositBalances[0];
+  }
+
+  async getRewardTokenBalances({ address, contractPosition, multicall }: GetTokenBalancesParams<GmxRewardTracker>) {
+    const stakedToken = contractPosition.tokens.find(isSupplied)!;
+
+    const farmDefinition = FARMS.find(v => v.stakedTokenAddress === stakedToken.address);
+    const rewardTrackers = farmDefinition?.rewardTrackerAddresses ?? [];
+    if (!rewardTrackers.length) return [];
+
+    const readerAddress = '0x956d63dd6540230487eb7e599ef8b0c6fdca4ab8';
+    const readerContract = this.contractFactory.gmxRewardReader({ address: readerAddress, network: this.network });
+    const stakingInfo = await multicall.wrap(readerContract).getStakingInfo(address, rewardTrackers);
+    return [stakingInfo[0].toString(), stakingInfo[5].toString()];
   }
 }
