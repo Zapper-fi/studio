@@ -4,7 +4,6 @@ import _ from 'lodash';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { ZERO_ADDRESS } from '~app-toolkit/constants/address';
-import { Cache } from '~cache/cache.decorator';
 
 export type EulerTokenDefinition = {
   address: string;
@@ -33,7 +32,7 @@ interface EulerMarketsResponse {
 export const MARKET_QUERY = gql`
   {
     eulerMarketStore(id: "euler-market-store") {
-      markets {
+      markets(first: 1000) {
         id
         interestRate
         borrowAPY
@@ -61,10 +60,6 @@ export enum EulerTokenType {
 export class EulerTokenDefinitionsResolver {
   constructor(@Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit) {}
 
-  @Cache({
-    key: `studio:euler:ethereum:token-data`,
-    ttl: 5 * 60, // 5 minutes
-  })
   private async getTokenDefinitionsData() {
     const data = await this.appToolkit.helpers.theGraphHelper.request<EulerMarketsResponse>({
       endpoint: `https://api.thegraph.com/subgraphs/name/euler-xyz/euler-mainnet`,
