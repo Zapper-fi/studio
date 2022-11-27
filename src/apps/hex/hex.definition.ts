@@ -5,7 +5,7 @@ import { Network } from '~types/network.interface';
 
 export const HEX_DEFINITION = appDefinition({
   id: 'hex',
-  name: 'HEX',
+  name: 'Hex',
   description: 'HEX is the first high-yield Blockchain Certificate of Deposit.',
   url: 'https://hex.com',
   tags: [AppTag.STAKING],
