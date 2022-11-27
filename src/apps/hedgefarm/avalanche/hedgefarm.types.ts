@@ -1,3 +1,4 @@
 export type Performance = {
-    poolName: string, averageApy: number;
+  poolName: string;
+  averageApy: number;
 };

@@ -343,7 +343,8 @@ export abstract class AppTokenTemplatePositionFetcher<
     const appTokens = await this.getPositionsForBalances();
 
     const appTokenBalances = appTokens.map(token => {
-      const tokenBalance = balances.find(b => b.key === this.appToolkit.getPositionKey(token));
+      const key = this.appToolkit.getPositionKey(token);
+      const tokenBalance = balances.find(b => b.key === key);
       if (!tokenBalance) return null;
 
       const result = drillBalance<typeof token, V>(token, tokenBalance.balance, { isDebt: this.isDebt });

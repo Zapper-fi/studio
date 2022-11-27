@@ -23,11 +23,20 @@ export const STAKE_DAO_DEFINITION = appDefinition({
       type: GroupType.TOKEN,
       label: 'Lockers',
     },
-
     gauge: {
       id: 'gauge',
       type: GroupType.POSITION,
       label: 'Gauges',
+    },
+    farm: {
+      id: 'farm',
+      type: GroupType.TOKEN,
+      label: 'Farms',
+    },
+    votingEscrow: {
+      id: 'voting-escrow',
+      type: GroupType.TOKEN,
+      label: 'veSDT',
     },
   },
 

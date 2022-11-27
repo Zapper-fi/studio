@@ -16,8 +16,8 @@ import { MapleAppDefinition, MAPLE_DEFINITION } from './maple.definition';
   imports: [SynthetixAppModule],
   providers: [
     MapleAppDefinition,
-    MapleCacheManager,
     MapleContractFactory,
+    MapleCacheManager,
     EthereumMapleFarmContractPositionFetcher,
     EthereumMapleFarmContractPositionBalanceFetcher,
     EthereumMaplePoolTokenFetcher,

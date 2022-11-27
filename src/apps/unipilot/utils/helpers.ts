@@ -6,7 +6,7 @@ export const convertToQueryString = (queryParams: { [key: string]: string | Chai
   }
 
   return Object.entries(queryParams)
-    .filter(([key, value]) => !!value)
+    .filter(([_, value]) => !!value)
     .map(([key, value]) => {
       return `${key}=${encodeURI(value + '')}`;
     })

@@ -1,4 +1,5 @@
 import { Inject } from '@nestjs/common';
+import _ from 'lodash';
 import { findIndex, sumBy } from 'lodash';
 
 import { drillBalance } from '~app-toolkit';
@@ -42,30 +43,25 @@ export class OptimismMeanFinanceBalanceFetcher implements BalanceFetcher {
 
   async getUserPositions(address: string, version: PositionVersions) {
     const graphHelper = this.appToolkit.helpers.theGraphHelper;
-    const data = await getUserPositions(address.toLowerCase(), Network.OPTIMISM_MAINNET, graphHelper, version);
+    const data = await getUserPositions(address.toLowerCase(), network, graphHelper, version);
+
     return data.positions;
   }
 
   async getBalanceForVersion(address: string, version: PositionVersions) {
     const positions = await this.getUserPositions(address, version);
     const dcaHubAddress = HUB_ADDRESS[version][network];
+    if (!dcaHubAddress) return [];
 
-    if (!dcaHubAddress) {
-      return Promise.resolve([]);
-    }
-
-    const baseTokens = await this.appToolkit.getBaseTokenPrices(network);
-    const appTokens = await this.appToolkit.getAppTokenPositions({
-      appId: 'aave-v3',
-      groupIds: ['supply'],
+    const contractPositions = await this.appToolkit.getAppContractPositions({
+      appId: MEAN_FINANCE_DEFINITION.id,
+      groupIds: [MEAN_FINANCE_DEFINITION.groups.dcaPosition.id],
       network,
     });
 
-    const allTokens = [...appTokens, ...baseTokens];
-
     const amountsToFetch: { tokenFrom: string; tokenTo: string; amount: string; positionId: string }[] = [];
 
-    const mappedPositions = positions.map(dcaPosition => {
+    const mappedPositionsRaw = positions.map(dcaPosition => {
       const toWithdraw = dcaPosition.toWithdraw;
       const remainingLiquidity = dcaPosition.remainingLiquidity;
       const remainingSwaps = Number(dcaPosition.remainingSwaps);
@@ -95,8 +91,15 @@ export class OptimismMeanFinanceBalanceFetcher implements BalanceFetcher {
         formattedRate = '<0.001';
       }
 
-      const from = allTokens.find(v => v.address.toLowerCase() === tokenFromToSearch.toLowerCase());
-      const to = allTokens.find(v => v.address.toLowerCase() === tokenToToSearch.toLowerCase());
+      const matchingPosition = contractPositions.find(
+        position =>
+          position.tokens[0].address === tokenFromToSearch.toLowerCase() &&
+          position.tokens[1].address === tokenToToSearch.toLowerCase(),
+      );
+      if (!matchingPosition) return null;
+
+      const from = matchingPosition.tokens[0];
+      const to = matchingPosition.tokens[1];
 
       const tokens: WithMetaType<BaseTokenBalance | AppTokenPositionBalance<DefaultDataProps>>[] = [];
       let images: string[] = [];
@@ -171,6 +174,8 @@ export class OptimismMeanFinanceBalanceFetcher implements BalanceFetcher {
       return position;
     });
 
+    const mappedPositions = _.compact(mappedPositionsRaw);
+
     const multicall = this.appToolkit.getMulticall(network);
 
     const transformerAddress = TRANSFORMER_REGISTRY_ADDRESS[POSITION_VERSION_4][network];
@@ -195,17 +200,13 @@ export class OptimismMeanFinanceBalanceFetcher implements BalanceFetcher {
 
       const foundPositionIndex = findIndex(mappedPositions, { dataProps: { id: positionToChange.positionId } });
 
-      if (foundPositionIndex === -1) {
-        return;
-      }
+      if (foundPositionIndex === -1) return;
 
       const tokenToReplaceIndex = findIndex(mappedPositions[foundPositionIndex].tokens, {
         address: positionToChange.tokenTo,
       });
 
-      if (tokenToReplaceIndex === -1) {
-        return;
-      }
+      if (tokenToReplaceIndex === -1) return;
 
       mappedPositions[foundPositionIndex].tokens[tokenToReplaceIndex] = drillBalance(
         mappedPositions[foundPositionIndex].tokens[tokenToReplaceIndex],

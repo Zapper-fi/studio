@@ -4,7 +4,7 @@
 
 import { Contract, Signer, utils } from 'ethers';
 import type { Provider } from '@ethersproject/providers';
-import type { PositionManager, PositionManagerInterface } from '../PositionManager';
+import type { AtlendisPositionManager, AtlendisPositionManagerInterface } from '../AtlendisPositionManager';
 
 const _abi = [
   {
@@ -779,12 +779,12 @@ const _abi = [
   },
 ];
 
-export class PositionManager__factory {
+export class AtlendisPositionManager__factory {
   static readonly abi = _abi;
-  static createInterface(): PositionManagerInterface {
-    return new utils.Interface(_abi) as PositionManagerInterface;
+  static createInterface(): AtlendisPositionManagerInterface {
+    return new utils.Interface(_abi) as AtlendisPositionManagerInterface;
   }
-  static connect(address: string, signerOrProvider: Signer | Provider): PositionManager {
-    return new Contract(address, _abi, signerOrProvider) as PositionManager;
+  static connect(address: string, signerOrProvider: Signer | Provider): AtlendisPositionManager {
+    return new Contract(address, _abi, signerOrProvider) as AtlendisPositionManager;
   }
 }

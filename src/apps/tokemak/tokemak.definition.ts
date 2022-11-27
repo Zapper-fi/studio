@@ -10,6 +10,7 @@ export const TOKEMAK_DEFINITION = appDefinition({
   groups: {
     farm: { id: 'farm', type: GroupType.POSITION, label: 'Staking' },
     reactor: { id: 'reactor', type: GroupType.TOKEN, label: 'Reactors' },
+    claimable: { id: 'claimable', type: GroupType.POSITION, label: 'Claimables' },
   },
   url: 'https://www.tokemak.xyz/',
   links: {

@@ -59,12 +59,7 @@ export class FantomGeistPlatformFeesPositionFetcher extends ContractPositionTemp
       },
       {
         metaType: MetaType.CLAIMABLE,
-        address: this.geistTokenAddress, // Unlocked GEIST
-        network: this.network,
-      },
-      {
-        metaType: MetaType.CLAIMABLE,
-        address: this.geistTokenAddress, // Vested GEIST
+        address: this.geistTokenAddress, // Vested/Unlocked GEIST
         network: this.network,
       },
       ...rewardTokenAddresses.map(address => ({
@@ -89,22 +84,17 @@ export class FantomGeistPlatformFeesPositionFetcher extends ContractPositionTemp
   }
 
   async getTokenBalancesPerPosition({ address, contract, contractPosition }: GetTokenBalancesParams<GeistStaking>) {
-    const [lockedBalancesData, withdrawableDataRaw, unlockedBalanceRaw, platformFeesPlatformFees] = await Promise.all([
+    const [lockedBalancesData, withdrawableDataRaw, platformFeesPlatformFees] = await Promise.all([
       contract.lockedBalances(address),
       contract.withdrawableBalance(address),
-      contract.unlockedBalance(address),
       contract.claimableRewards(address),
     ]);
 
-    const vestedBalanceRaw = withdrawableDataRaw.amount
-      .add(withdrawableDataRaw.penaltyAmount)
-      .sub(unlockedBalanceRaw)
-      .toString();
+    const withdrawableBalanceRaw = withdrawableDataRaw.amount.add(withdrawableDataRaw.penaltyAmount).toString();
 
     return contractPosition.tokens.map((token, idx) => {
       if (idx === 0) return lockedBalancesData.total; // Locked GEIST
-      if (idx === 1) return unlockedBalanceRaw; // Unlocked GEIST
-      if (idx === 2) return vestedBalanceRaw; // Vested GEIST
+      if (idx === 1) return withdrawableBalanceRaw; // Vested/Unlocked GEIST
 
       const rewardTokenMatch = platformFeesPlatformFees.find(
         ([tokenAddressRaw]) => tokenAddressRaw.toLowerCase() === token.address,
