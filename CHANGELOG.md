@@ -4,6 +4,22 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.295.0](https://github.com/Zapper-fi/studio/compare/v0.294.3...v0.295.0) (2022-11-27)
+
+
+### Features
+
+* **comethswap:** Added pools ([#1803](https://github.com/Zapper-fi/studio/issues/1803)) ([3fe9058](https://github.com/Zapper-fi/studio/commit/3fe90586f79265d11f1977236938c8a0a861abdb))
+* **euler:** Fix missing markets ([dcc6abf](https://github.com/Zapper-fi/studio/commit/dcc6abf13be03e2333be6a99d40cbb2ae273c420))
+* **gmx:** Migrate to templates ([#1801](https://github.com/Zapper-fi/studio/issues/1801)) ([74df378](https://github.com/Zapper-fi/studio/commit/74df37882dfb6971d3710da8d36f2703c5ff5a5d))
+* **hex:** Add staked HEX ([#1771](https://github.com/Zapper-fi/studio/issues/1771)) ([3095905](https://github.com/Zapper-fi/studio/commit/30959058db2201b053cecc35207de3d6dd4205c5))
+* **hex:** Convert to templates ([4368b91](https://github.com/Zapper-fi/studio/commit/4368b91ed43b6bd0239f919e4893f5df053e9245))
+
+
+### Bug Fixes
+
+* **hex:** Linting + added links in app definition ([#1804](https://github.com/Zapper-fi/studio/issues/1804)) ([8d26271](https://github.com/Zapper-fi/studio/commit/8d262711d1845fa049f003046acb48bfa971cddf))
+
 ## [0.294.3](https://github.com/Zapper-fi/studio/compare/v0.294.2...v0.294.3) (2022-11-25)
 
 
