@@ -5,6 +5,7 @@ import { GmxFarmContractPositionFetcher } from '../common/gmx.farm.contract-posi
 @PositionTemplate()
 export class AvalancheGmxFarmContractPositionFetcher extends GmxFarmContractPositionFetcher {
   groupLabel = 'Farms';
+  readerAddress = '0x956d63dd6540230487eb7e599ef8b0c6fdca4ab8';
   farms = [
     {
       address: '0x2bd10f8e93b3669b6d42e74eeedc65dd1b0a1342',

@@ -5,6 +5,7 @@ import { GmxFarmContractPositionFetcher } from '../common/gmx.farm.contract-posi
 @PositionTemplate()
 export class ArbitrumGmxFarmContractPositionFetcher extends GmxFarmContractPositionFetcher {
   groupLabel = 'Farms';
+  readerAddress = '0xe725ad0ce3ecf68a7b93d8d8091e83043ff12e9a';
   farms = [
     {
       address: '0x908c4d94d34924765f1edc22a1dd098397c59dd4',

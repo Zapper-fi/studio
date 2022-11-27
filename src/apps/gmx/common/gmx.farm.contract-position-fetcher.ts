@@ -16,6 +16,7 @@ type GmxFarmType = {
 
 export abstract class GmxFarmContractPositionFetcher extends SingleStakingFarmTemplateContractPositionFetcher<GmxRewardTracker> {
   abstract farms: GmxFarmType[];
+  abstract readerAddress: string;
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
@@ -38,8 +39,7 @@ export abstract class GmxFarmContractPositionFetcher extends SingleStakingFarmTe
 
   async getStakedTokenBalance({ address, contractPosition, multicall }: GetTokenBalancesParams<GmxRewardTracker>) {
     const stakedToken = contractPosition.tokens.find(isSupplied)!;
-    const readerAddress = '0x956d63dd6540230487eb7e599ef8b0c6fdca4ab8';
-    const readerContract = this.contractFactory.gmxRewardReader({ address: readerAddress, network: this.network });
+    const readerContract = this.contractFactory.gmxRewardReader({ address: this.readerAddress, network: this.network });
 
     const depositBalances = await multicall
       .wrap(readerContract)
@@ -55,8 +55,7 @@ export abstract class GmxFarmContractPositionFetcher extends SingleStakingFarmTe
     const rewardTrackers = farmDefinition?.rewardTrackerAddresses ?? [];
     if (!rewardTrackers.length) return [];
 
-    const readerAddress = '0x956d63dd6540230487eb7e599ef8b0c6fdca4ab8';
-    const readerContract = this.contractFactory.gmxRewardReader({ address: readerAddress, network: this.network });
+    const readerContract = this.contractFactory.gmxRewardReader({ address: this.readerAddress, network: this.network });
     const stakingInfo = await multicall.wrap(readerContract).getStakingInfo(address, rewardTrackers);
     return [stakingInfo[0].toString(), stakingInfo[5].toString()];
   }
