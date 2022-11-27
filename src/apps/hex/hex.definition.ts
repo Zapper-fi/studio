@@ -19,7 +19,11 @@ export const HEX_DEFINITION = appDefinition({
 
   tags: [AppTag.STAKING],
   keywords: [],
-  links: {},
+  links: {
+    discord: 'https://discord.com/invite/JmKBUCZKB3',
+    telegram: 'https://t.me/HEXcrypto',
+    twitter: 'https://twitter.com/HEXcrypto',
+  },
 
   supportedNetworks: {
     [Network.ETHEREUM_MAINNET]: [AppAction.VIEW],

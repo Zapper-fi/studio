@@ -1,9 +1,11 @@
 import { Inject } from '@nestjs/common';
-import { BigNumber } from 'ethers';
 
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
-import { buildDollarDisplayItem, buildPercentageDisplayItem } from '~app-toolkit/helpers/presentation/display-item.present';
+import {
+  buildDollarDisplayItem,
+  buildPercentageDisplayItem,
+} from '~app-toolkit/helpers/presentation/display-item.present';
 import { getImagesFromToken, getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { ContractType } from '~position/contract.interface';
 import { PositionFetcher } from '~position/position-fetcher.interface';
@@ -23,7 +25,7 @@ export class EthereumHexStakeContractPositionFetcher implements PositionFetcher<
   constructor(
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
     @Inject(HexContractFactory) private readonly hexContractFactory: HexContractFactory,
-  ) { }
+  ) {}
 
   async getPositions() {
     const baseTokens = await this.appToolkit.getBaseTokenPrices(network);
@@ -31,7 +33,7 @@ export class EthereumHexStakeContractPositionFetcher implements PositionFetcher<
     if (!hexToken) return [];
 
     // Get token info
-    const label = 'Staked ' + getLabelFromToken(hexToken);
+    const label = getLabelFromToken(hexToken);
     const images = getImagesFromToken(hexToken);
     const secondaryLabel = buildDollarDisplayItem(hexToken.price);
 
@@ -43,15 +45,16 @@ export class EthereumHexStakeContractPositionFetcher implements PositionFetcher<
       multicall.wrap(hexContract).totalSupply(),
       multicall.wrap(hexContract).currentDay(),
     ]);
+
     const stakedSupply = Number(stakedAndUnstakedSupply.toBigInt() - unstakedSupply.toBigInt());
-    const stakedSupplyInDollars = (stakedSupply / 10 ** hexToken.decimals) * hexToken.price;
+    const liquidity = (stakedSupply / 10 ** hexToken.decimals) * hexToken.price;
 
     // HEX Average APR is the latest daily payout annualized divided by total amount staked
     const [latestDailyData] = await Promise.all([
       // Need to use day - 1 as data is only available for previous day
       multicall.wrap(hexContract).dailyData(currentDay.toNumber() - 1),
     ]);
-    const aprInPercent = Number(latestDailyData.dayPayoutTotal) / stakedSupply * 100 * 365;
+    const aprInPercent = (Number(latestDailyData.dayPayoutTotal) / stakedSupply) * 100 * 365;
 
     const position: ContractPosition = {
       type: ContractType.POSITION,
@@ -61,7 +64,7 @@ export class EthereumHexStakeContractPositionFetcher implements PositionFetcher<
       network,
       tokens: [supplied(hexToken)],
       dataProps: {
-        liquidity: stakedSupplyInDollars,
+        liquidity,
       },
       displayProps: {
         label,
@@ -69,10 +72,11 @@ export class EthereumHexStakeContractPositionFetcher implements PositionFetcher<
         images,
         statsItems: [
           { label: 'APR', value: buildPercentageDisplayItem(aprInPercent) },
-          { label: 'Liquidity', value: buildDollarDisplayItem(stakedSupplyInDollars) },
+          { label: 'Liquidity', value: buildDollarDisplayItem(liquidity) },
         ],
       },
     };
+
     return [position];
   }
 }
