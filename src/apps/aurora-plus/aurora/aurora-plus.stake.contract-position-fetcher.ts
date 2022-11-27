@@ -46,6 +46,9 @@ export class AuroraAuroraPlusStakeContractPositionFetcher implements PositionFet
     const rewardTokens = _.compact(rewardTokensRaw);
 
     const tokens = [supplied(auroraToken), ...rewardTokens.map(v => claimable(v))];
+    const stakedAmountRaw = await mcs.totalAmountOfStakedAurora();
+    const stakedAmount = Number(stakedAmountRaw) / 10 ** auroraToken.decimals;
+    const liquidity = Number(stakedAmount) * auroraToken.price;
 
     const position: ContractPosition = {
       type: ContractType.POSITION,
@@ -54,7 +57,9 @@ export class AuroraAuroraPlusStakeContractPositionFetcher implements PositionFet
       groupId,
       network,
       tokens: tokens,
-      dataProps: {},
+      dataProps: {
+        liquidity,
+      },
       displayProps: {
         label: `Staked AURORA`,
         images: getImagesFromToken(auroraToken),

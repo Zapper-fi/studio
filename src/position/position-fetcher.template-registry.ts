@@ -9,8 +9,12 @@ import { buildTemplateRegistry } from '~utils/build-template-registry';
 import { ContractType } from './contract.interface';
 import { AppTokenTemplatePositionFetcher } from './template/app-token.template.position-fetcher';
 import { ContractPositionTemplatePositionFetcher } from './template/contract-position.template.position-fetcher';
+import { CustomContractPositionTemplatePositionFetcher } from './template/custom-contract-position.template.position-fetcher';
 
-type Template = AppTokenTemplatePositionFetcher<Erc20> | ContractPositionTemplatePositionFetcher<Erc20>;
+type Template =
+  | AppTokenTemplatePositionFetcher<Erc20>
+  | ContractPositionTemplatePositionFetcher<Erc20>
+  | CustomContractPositionTemplatePositionFetcher<Erc20>;
 
 @Injectable()
 export class PositionFetcherTemplateRegistry implements OnModuleInit {
@@ -24,6 +28,11 @@ export class PositionFetcherTemplateRegistry implements OnModuleInit {
     Map<Network, Map<string, ContractPositionTemplatePositionFetcher<Erc20>>>
   >();
 
+  private customContractPositionTemplateRegistry = new Map<
+    string,
+    Map<Network, Map<string, CustomContractPositionTemplatePositionFetcher<Erc20>>>
+  >();
+
   constructor(@Inject(DiscoveryService) private readonly discoveryService: DiscoveryService) {}
 
   onModuleInit() {
@@ -34,6 +43,11 @@ export class PositionFetcherTemplateRegistry implements OnModuleInit {
 
     this.contractPositionTemplateRegistry = buildTemplateRegistry(this.discoveryService, {
       template: ContractPositionTemplatePositionFetcher,
+      keySelector: t => [t.appId, t.network, t.groupId] as const,
+    });
+
+    this.customContractPositionTemplateRegistry = buildTemplateRegistry(this.discoveryService, {
+      template: CustomContractPositionTemplatePositionFetcher,
       keySelector: t => [t.appId, t.network, t.groupId] as const,
     });
   }
@@ -58,10 +72,19 @@ export class PositionFetcherTemplateRegistry implements OnModuleInit {
     return Array.from(this.contractPositionTemplateRegistry.get(appId)?.get(network)?.values() ?? []);
   }
 
+  getCustomContractPositionTemplate({ network, appId, groupId }: { network: Network; appId: string; groupId: string }) {
+    return this.customContractPositionTemplateRegistry.get(appId)?.get(network)?.get(groupId) ?? null;
+  }
+
+  getCustomContractPositionTemplates({ network, appId }: { network: Network; appId: string }) {
+    return Array.from(this.customContractPositionTemplateRegistry.get(appId)?.get(network)?.values() ?? []);
+  }
+
   getTemplatesForApp(appId: string) {
     const appTokenNetworks = Array.from(this.appTokenTemplateRegistry.get(appId)?.keys() ?? []);
     const contractPositionNetworks = Array.from(this.contractPositionTemplateRegistry.get(appId)?.keys() ?? []);
-    const networks = uniq([...appTokenNetworks, ...contractPositionNetworks]);
+    const customPositions = Array.from(this.customContractPositionTemplateRegistry.get(appId)?.keys() ?? []);
+    const networks = uniq([...appTokenNetworks, ...contractPositionNetworks, ...customPositions]);
 
     return networks.flatMap(network => this.getTemplatesForAppOnNetwork(appId, network));
   }
@@ -69,7 +92,8 @@ export class PositionFetcherTemplateRegistry implements OnModuleInit {
   getAppHasTemplates(appId: string) {
     const appTokenNetworks = Array.from(this.appTokenTemplateRegistry.get(appId)?.keys() ?? []);
     const contractPositionNetworks = Array.from(this.contractPositionTemplateRegistry.get(appId)?.keys() ?? []);
-    const networks = uniq([...appTokenNetworks, ...contractPositionNetworks]);
+    const customPositions = Array.from(this.customContractPositionTemplateRegistry.get(appId)?.keys() ?? []);
+    const networks = uniq([...appTokenNetworks, ...contractPositionNetworks, ...customPositions]);
 
     return networks.some(network => this.getAppHasTemplatesOnNetwork(appId, network));
   }
@@ -77,19 +101,26 @@ export class PositionFetcherTemplateRegistry implements OnModuleInit {
   getTemplatesForAppOnNetwork(appId: string, network: Network) {
     const appTokenTemplates = this.appTokenTemplateRegistry.get(appId)?.get(network);
     const contractPositionTemplates = this.contractPositionTemplateRegistry.get(appId)?.get(network);
-    return [...Array.from(appTokenTemplates?.values() ?? []), ...Array.from(contractPositionTemplates?.values() ?? [])];
+    const customPositions = this.customContractPositionTemplateRegistry.get(appId)?.get(network);
+    return [
+      ...Array.from(appTokenTemplates?.values() ?? []),
+      ...Array.from(contractPositionTemplates?.values() ?? []),
+      ...Array.from(customPositions?.values() ?? []),
+    ];
   }
 
   getAppHasTemplatesOnNetwork(appId: string, network: Network) {
     const appTokenTemplates = this.appTokenTemplateRegistry.get(appId)?.get(network);
     const contractPositionTemplates = this.contractPositionTemplateRegistry.get(appId)?.get(network);
-    return !!appTokenTemplates || !!contractPositionTemplates;
+    const customPositionTemplates = this.customContractPositionTemplateRegistry.get(appId)?.get(network);
+    return !!appTokenTemplates || !!contractPositionTemplates || !!customPositionTemplates;
   }
 
   getAllTemplates() {
     const appTokenAppIds = Array.from(this.appTokenTemplateRegistry.keys() ?? []);
     const contractAppIds = Array.from(this.contractPositionTemplateRegistry.keys() ?? []);
-    const appIds = uniq([...appTokenAppIds, ...contractAppIds]);
+    const customAppIds = Array.from(this.customContractPositionTemplateRegistry.keys() ?? []);
+    const appIds = uniq([...appTokenAppIds, ...contractAppIds, ...customAppIds]);
 
     return appIds.flatMap(appId => this.getTemplatesForApp(appId));
   }

@@ -5,6 +5,7 @@ import { KwentaContractFactory } from './contracts';
 import { KwentaAppDefinition, KWENTA_DEFINITION } from './kwenta.definition';
 import { OptimismKwentaCrossContractPositionFetcher } from './optimism/kwenta.cross.contract-position-fetcher';
 import { OptimismKwentaIsolatedContractPositionFetcher } from './optimism/kwenta.isolated.contract-position-fetcher';
+import { OptimismKwentaLpStakingContractPositionFetcher } from './optimism/kwenta.lp-staking.contract-position-fetcher';
 import { OptimismKwentaStakingContractPositionFetcher } from './optimism/kwenta.staking.contract-position-fetcher';
 
 @Register.AppModule({
@@ -15,6 +16,7 @@ import { OptimismKwentaStakingContractPositionFetcher } from './optimism/kwenta.
     OptimismKwentaIsolatedContractPositionFetcher,
     OptimismKwentaCrossContractPositionFetcher,
     OptimismKwentaStakingContractPositionFetcher,
+    OptimismKwentaLpStakingContractPositionFetcher,
   ],
 })
 export class KwentaAppModule extends AbstractApp() {}

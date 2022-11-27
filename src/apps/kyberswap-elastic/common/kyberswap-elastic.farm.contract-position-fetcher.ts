@@ -6,13 +6,13 @@ import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { ContractPositionBalance } from '~position/position-balance.interface';
 import { ContractPosition, MetaType, Standard } from '~position/position.interface';
-import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
 import {
   GetDataPropsParams,
   GetDefinitionsParams,
   GetDisplayPropsParams,
   GetTokenDefinitionsParams,
 } from '~position/template/contract-position.template.types';
+import { CustomContractPositionTemplatePositionFetcher } from '~position/template/custom-contract-position.template.position-fetcher';
 
 import { KyberswapElasticContractFactory, KyberswapElasticLm } from '../contracts';
 
@@ -38,7 +38,7 @@ export type KyberswapElasticFarmPositionDefinition = {
   feeTier: number;
 };
 
-export abstract class KyberswapElasticFarmContractPositionFetcher extends ContractPositionTemplatePositionFetcher<
+export abstract class KyberswapElasticFarmContractPositionFetcher extends CustomContractPositionTemplatePositionFetcher<
   KyberswapElasticLm,
   KyberswapElasticFarmPositionDataProps,
   KyberswapElasticFarmPositionDefinition

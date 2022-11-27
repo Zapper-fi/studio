@@ -11,13 +11,13 @@ import { CacheOnInterval } from '~cache/cache-on-interval.decorator';
 import { ContractPositionBalance } from '~position/position-balance.interface';
 import { ContractPosition, MetaType } from '~position/position.interface';
 import { isClaimable, isSupplied } from '~position/position.utils';
-import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
 import {
   GetTokenDefinitionsParams,
   GetDisplayPropsParams,
   GetTokenBalancesParams,
   GetDataPropsParams,
 } from '~position/template/contract-position.template.types';
+import { CustomContractPositionTemplatePositionFetcher } from '~position/template/custom-contract-position.template.position-fetcher';
 
 import { PolygonStakingContractFactory } from '../contracts';
 import { PolygonStakeManager } from '../contracts/ethers/PolygonStakeManager';
@@ -81,7 +81,7 @@ type PolygonStakingDepositDataProps = {
 };
 
 @PositionTemplate()
-export class EthereumPolygonStakingContractPositionFetcher extends ContractPositionTemplatePositionFetcher<
+export class EthereumPolygonStakingContractPositionFetcher extends CustomContractPositionTemplatePositionFetcher<
   PolygonStakeManager,
   PolygonStakingDepositDataProps,
   PolygonStakingDepositDefinition

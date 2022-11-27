@@ -9,10 +9,10 @@ import { MAPLE_DEFINITION } from '../maple.definition';
 type MapleAllPoolsResponse = {
   allPools?: {
     list?: {
+      id: string;
       poolName: string;
-      contractAddress: string;
       symbol: string;
-      lpApy: string;
+      lendingApy: string;
       farmingApy: string;
       stakeRewards: {
         id: string;
@@ -28,10 +28,10 @@ const ALL_POOLS_QUERY = gql`
   {
     allPools {
       list {
+        id
         poolName
-        contractAddress
         symbol
-        lpApy
+        lendingApy
         farmingApy
         stakeRewards {
           id
@@ -59,8 +59,8 @@ export class MapleCacheManager {
 
     return (pairsData.allPools?.list ?? []).map(v => ({
       poolName: v.poolName,
-      apy: Number(v.lpApy) + Number(v.farmingApy),
-      poolAddress: v.contractAddress.toLowerCase(),
+      apy: Number(v.lendingApy) + Number(v.farmingApy),
+      poolAddress: v.id.toLowerCase(),
       farmAddress: v.stakeRewards.id.toLowerCase(),
     }));
   }

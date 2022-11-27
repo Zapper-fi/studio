@@ -8,12 +8,12 @@ import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.prese
 import { isMulticallUnderlyingError } from '~multicall/multicall.ethers';
 import { ContractPositionBalance } from '~position/position-balance.interface';
 import { MetaType, Standard } from '~position/position.interface';
-import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
 import {
   GetTokenDefinitionsParams,
   GetDisplayPropsParams,
   GetDataPropsParams,
 } from '~position/template/contract-position.template.types';
+import { CustomContractPositionTemplatePositionFetcher } from '~position/template/custom-contract-position.template.position-fetcher';
 
 import { QiDaoContractFactory, QiDaoVaultNft } from '../contracts';
 
@@ -30,7 +30,7 @@ type QiDaoVaultDefinition = {
 };
 
 @Injectable()
-export abstract class QiDaoVaultContractPositionFetcher extends ContractPositionTemplatePositionFetcher<
+export abstract class QiDaoVaultContractPositionFetcher extends CustomContractPositionTemplatePositionFetcher<
   QiDaoVaultNft,
   QiDaoVaultDataProps,
   QiDaoVaultDefinition

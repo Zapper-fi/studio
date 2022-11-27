@@ -6,5 +6,5 @@ import { StargatePoolTokenFetcher } from '../common/stargate.pool.token-fetcher'
 export class AvalancheStargatePoolTokenFetcher extends StargatePoolTokenFetcher {
   groupLabel = 'Pool';
   factoryAddress = '0x808d7c71ad2ba3fa531b068a2417c63106bc0949';
-  useLocalDecimals = false;
+  useLocalDecimals = true;
 }

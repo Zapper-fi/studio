@@ -3,6 +3,7 @@
 /* eslint-disable */
 export type { ConvexAbracadabraWrapper } from './ConvexAbracadabraWrapper';
 export type { ConvexBooster } from './ConvexBooster';
+export type { ConvexBoosterSidechain } from './ConvexBoosterSidechain';
 export type { ConvexCvxCrvStaking } from './ConvexCvxCrvStaking';
 export type { ConvexCvxStaking } from './ConvexCvxStaking';
 export type { ConvexDepositToken } from './ConvexDepositToken';
@@ -12,6 +13,7 @@ export type { ConvexVirtualBalanceRewardPool } from './ConvexVirtualBalanceRewar
 export type { ConvexVotingEscrow } from './ConvexVotingEscrow';
 export * as factories from './factories';
 export { ConvexAbracadabraWrapper__factory } from './factories/ConvexAbracadabraWrapper__factory';
+export { ConvexBoosterSidechain__factory } from './factories/ConvexBoosterSidechain__factory';
 export { ConvexBooster__factory } from './factories/ConvexBooster__factory';
 export { ConvexCvxCrvStaking__factory } from './factories/ConvexCvxCrvStaking__factory';
 export { ConvexCvxStaking__factory } from './factories/ConvexCvxStaking__factory';

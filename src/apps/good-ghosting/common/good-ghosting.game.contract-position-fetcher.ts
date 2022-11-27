@@ -8,12 +8,12 @@ import { DefaultDataProps } from '~position/display.interface';
 import { ContractPositionBalance } from '~position/position-balance.interface';
 import { MetaType } from '~position/position.interface';
 import { isClaimable, isSupplied } from '~position/position.utils';
-import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
 import {
   GetTokenDefinitionsParams,
   UnderlyingTokenDefinition,
   GetDisplayPropsParams,
 } from '~position/template/contract-position.template.types';
+import { CustomContractPositionTemplatePositionFetcher } from '~position/template/custom-contract-position.template.position-fetcher';
 import { Network } from '~types';
 
 import { GoodGhostingContractFactory, GoodghostingAbiV001 } from '../contracts';
@@ -31,7 +31,7 @@ export type GoodGhostingGameDefinition = {
 };
 
 @Injectable()
-export abstract class GoodGhostingGameContractPositionFetcher extends ContractPositionTemplatePositionFetcher<
+export abstract class GoodGhostingGameContractPositionFetcher extends CustomContractPositionTemplatePositionFetcher<
   GoodghostingAbiV001,
   DefaultDataProps,
   GoodGhostingGameDefinition

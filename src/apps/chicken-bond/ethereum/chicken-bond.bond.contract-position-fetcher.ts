@@ -8,8 +8,8 @@ import { PositionTemplate } from '~app-toolkit/decorators/position-template.deco
 import { DefaultDataProps } from '~position/display.interface';
 import { ContractPositionBalance } from '~position/position-balance.interface';
 import { MetaType } from '~position/position.interface';
-import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
 import { DefaultContractPositionDefinition } from '~position/template/contract-position.template.types';
+import { CustomContractPositionTemplatePositionFetcher } from '~position/template/custom-contract-position.template.position-fetcher';
 
 import { ChickenBondBondNft, ChickenBondContractFactory } from '../contracts';
 
@@ -20,7 +20,7 @@ enum BondStatus {
 }
 
 @PositionTemplate()
-export class EthereumChickenBondBondContractPositionFetcher extends ContractPositionTemplatePositionFetcher<ChickenBondBondNft> {
+export class EthereumChickenBondBondContractPositionFetcher extends CustomContractPositionTemplatePositionFetcher<ChickenBondBondNft> {
   groupLabel = 'Bond';
 
   constructor(

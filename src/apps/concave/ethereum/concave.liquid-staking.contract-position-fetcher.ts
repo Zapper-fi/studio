@@ -13,8 +13,8 @@ import { DefaultDataProps } from '~position/display.interface';
 import { ContractPositionBalance } from '~position/position-balance.interface';
 import { MetaType } from '~position/position.interface';
 import { isClaimable, isSupplied } from '~position/position.utils';
-import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
 import { GetTokenBalancesParams, GetTokenDefinitionsParams } from '~position/template/contract-position.template.types';
+import { CustomContractPositionTemplatePositionFetcher } from '~position/template/custom-contract-position.template.position-fetcher';
 
 import { ConcaveContractFactory, Lsdcnv } from '../contracts';
 
@@ -55,7 +55,7 @@ export type ConcaveLsdcnvContractPositionDataProps = {
 };
 
 @PositionTemplate()
-export class EthereumConcaveLiquidStakingContractPositionFetcher extends ContractPositionTemplatePositionFetcher<Lsdcnv> {
+export class EthereumConcaveLiquidStakingContractPositionFetcher extends CustomContractPositionTemplatePositionFetcher<Lsdcnv> {
   groupLabel = 'Liquid Staking';
 
   constructor(

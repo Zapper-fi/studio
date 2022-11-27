@@ -11,7 +11,6 @@ import { ContractType } from '~position/contract.interface';
 import { ContractPositionBalance } from '~position/position-balance.interface';
 import { MetaType } from '~position/position.interface';
 import { isBorrowed, isSupplied } from '~position/position.utils';
-import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
 import {
   GetDataPropsParams,
   GetDefinitionsParams,
@@ -20,6 +19,7 @@ import {
   GetTokenDefinitionsParams,
   UnderlyingTokenDefinition,
 } from '~position/template/contract-position.template.types';
+import { CustomContractPositionTemplatePositionFetcher } from '~position/template/custom-contract-position.template.position-fetcher';
 
 import { MakerContractFactory, MakerGemJoin } from '../contracts';
 
@@ -37,7 +37,7 @@ export type MakerVaultDataProps = {
 };
 
 @PositionTemplate()
-export class EthereumMakerVaultContractPositionFetcher extends ContractPositionTemplatePositionFetcher<
+export class EthereumMakerVaultContractPositionFetcher extends CustomContractPositionTemplatePositionFetcher<
   MakerGemJoin,
   MakerVaultDataProps,
   MakerVaultDefinition
