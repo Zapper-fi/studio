@@ -1,76 +1,106 @@
 import { Inject } from '@nestjs/common';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
-import { Register } from '~app-toolkit/decorators';
-import { RewardRateUnit } from '~app-toolkit/helpers/master-chef/master-chef.contract-position-helper';
-import { PositionFetcher } from '~position/position-fetcher.interface';
-import { ContractPosition } from '~position/position.interface';
-import { Network } from '~types/network.interface';
+import { ZERO_ADDRESS } from '~app-toolkit/constants/address';
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
+import {
+  GetMasterChefV2ExtraRewardTokenBalancesParams,
+  GetMasterChefV2ExtraRewardTokenRewardRates,
+  MasterChefV2TemplateContractPositionFetcher,
+} from '~position/template/master-chef-v2.template.contract-position-fetcher';
+import {
+  GetMasterChefDataPropsParams,
+  GetMasterChefTokenBalancesParams,
+} from '~position/template/master-chef.template.contract-position-fetcher';
 
 import { SaddleContractFactory } from '../contracts';
 import { SaddleMiniChefV2 } from '../contracts/ethers/SaddleMiniChefV2';
 import { SaddleMiniChefV2Rewarder } from '../contracts/ethers/SaddleMiniChefV2Rewarder';
-import { SADDLE_DEFINITION } from '../saddle.definition';
 
-const appId = SADDLE_DEFINITION.id;
-const groupId = SADDLE_DEFINITION.groups.miniChefV2.id;
-const network = Network.ETHEREUM_MAINNET;
+@PositionTemplate()
+export class EthereumSaddleMiniChefV2FarmContractPositionFetcher extends MasterChefV2TemplateContractPositionFetcher<
+  SaddleMiniChefV2,
+  SaddleMiniChefV2Rewarder
+> {
+  groupLabel = 'Farms';
+  chefAddress = '0x691ef79e40d909c715be5e9e93738b3ff7d58534';
 
-@Register.ContractPositionFetcher({ appId, groupId, network })
-export class EthereumSaddleMiniChefV2FarmContractPositionFetcher implements PositionFetcher<ContractPosition> {
   constructor(
-    @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
-    @Inject(SaddleContractFactory) private readonly saddleContractFactory: SaddleContractFactory,
-  ) {}
+    @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
+    @Inject(SaddleContractFactory) protected readonly contractFactory: SaddleContractFactory,
+  ) {
+    super(appToolkit);
+  }
 
-  async getPositions() {
-    return this.appToolkit.helpers.masterChefContractPositionHelper.getContractPositions<SaddleMiniChefV2>({
-      address: '0x691ef79e40d909c715be5e9e93738b3ff7d58534',
-      appId: SADDLE_DEFINITION.id,
-      groupId: SADDLE_DEFINITION.groups.miniChefV2.id,
-      network: Network.ETHEREUM_MAINNET,
-      dependencies: [
-        {
-          appId: SADDLE_DEFINITION.id,
-          groupIds: [SADDLE_DEFINITION.groups.pool.id],
-          network: Network.ETHEREUM_MAINNET,
-        },
-      ],
-      resolveContract: ({ address, network }) => this.saddleContractFactory.saddleMiniChefV2({ address, network }),
-      resolvePoolLength: ({ multicall, contract }) => multicall.wrap(contract).poolLength(),
-      resolveDepositTokenAddress: ({ poolIndex, contract, multicall }) => multicall.wrap(contract).lpToken(poolIndex),
-      resolveRewardTokenAddresses: this.appToolkit.helpers.masterChefV2ClaimableTokenStrategy.build<
-        SaddleMiniChefV2,
-        SaddleMiniChefV2Rewarder
-      >({
-        resolvePrimaryClaimableToken: ({ multicall, contract }) => multicall.wrap(contract).SADDLE(),
-        resolveRewarderAddress: ({ multicall, contract, poolIndex }) => multicall.wrap(contract).rewarder(poolIndex),
-        resolveRewarderContract: ({ network, rewarderAddress }) =>
-          this.saddleContractFactory.saddleMiniChefV2Rewarder({ address: rewarderAddress, network }),
-        resolveSecondaryClaimableToken: ({ multicall, rewarderContract }) =>
-          multicall.wrap(rewarderContract).rewardToken(),
-      }),
-      rewardRateUnit: RewardRateUnit.SECOND,
-      resolveRewardRate: this.appToolkit.helpers.masterChefV2RewardRateStrategy.build<
-        SaddleMiniChefV2,
-        SaddleMiniChefV2Rewarder
-      >({
-        resolvePoolAllocPoints: async ({ poolIndex, contract, multicall }) =>
-          multicall
-            .wrap(contract)
-            .poolInfo(poolIndex)
-            .then(v => v.allocPoint),
-        resolveTotalAllocPoints: ({ multicall, contract }) => multicall.wrap(contract).totalAllocPoint(),
-        resolvePrimaryTotalRewardRate: async ({ multicall, contract }) => multicall.wrap(contract).saddlePerSecond(),
-        resolveRewarderAddress: ({ multicall, contract, poolIndex }) => multicall.wrap(contract).rewarder(poolIndex),
-        resolveRewarderContract: ({ network, rewarderAddress }) =>
-          this.saddleContractFactory.saddleMiniChefV2Rewarder({ address: rewarderAddress, network }),
-        resolveSecondaryTotalRewardRate: async ({ multicall, rewarderContract }) =>
-          multicall
-            .wrap(rewarderContract)
-            .rewardPerSecond()
-            .catch(() => '0'),
-      }),
-    });
+  getContract(address: string): SaddleMiniChefV2 {
+    return this.contractFactory.saddleMiniChefV2({ address, network: this.network });
+  }
+
+  getExtraRewarderContract(address: string) {
+    return this.contractFactory.saddleMiniChefV2Rewarder({ address, network: this.network });
+  }
+
+  async getPoolLength(contract: SaddleMiniChefV2) {
+    return contract.poolLength();
+  }
+
+  async getStakedTokenAddress(contract: SaddleMiniChefV2, poolIndex: number) {
+    return contract.lpToken(poolIndex);
+  }
+
+  async getRewardTokenAddress(contract: SaddleMiniChefV2) {
+    return contract.SADDLE();
+  }
+
+  async getExtraRewarder(contract: SaddleMiniChefV2, poolIndex: number) {
+    return contract.rewarder(poolIndex);
+  }
+
+  async getExtraRewardTokenAddresses(contract: SaddleMiniChefV2Rewarder, poolIndex: number) {
+    return contract.pendingTokens(poolIndex, ZERO_ADDRESS, 0).then(v => [v.rewardTokens[0]]);
+  }
+
+  async getTotalAllocPoints({ contract }: GetMasterChefDataPropsParams<SaddleMiniChefV2>) {
+    return contract.totalAllocPoint();
+  }
+
+  async getTotalRewardRate({ contract }: GetMasterChefDataPropsParams<SaddleMiniChefV2>) {
+    return contract.saddlePerSecond();
+  }
+
+  async getPoolAllocPoints({ contract, definition }: GetMasterChefDataPropsParams<SaddleMiniChefV2>) {
+    return contract.poolInfo(definition.poolIndex).then(v => v.allocPoint);
+  }
+
+  async getExtraRewardTokenRewardRates({
+    rewarderContract,
+  }: GetMasterChefV2ExtraRewardTokenRewardRates<SaddleMiniChefV2, SaddleMiniChefV2Rewarder>) {
+    return rewarderContract.rewardPerSecond().catch(_err => 0);
+  }
+
+  async getStakedTokenBalance({
+    address,
+    contract,
+    contractPosition,
+  }: GetMasterChefTokenBalancesParams<SaddleMiniChefV2>) {
+    return contract.userInfo(contractPosition.dataProps.poolIndex, address).then(v => v.amount);
+  }
+
+  async getRewardTokenBalance({
+    address,
+    contract,
+    contractPosition,
+  }: GetMasterChefTokenBalancesParams<SaddleMiniChefV2>) {
+    return contract.pendingSaddle(contractPosition.dataProps.poolIndex, address);
+  }
+
+  async getExtraRewardTokenBalances({
+    address,
+    rewarderContract,
+    contractPosition,
+  }: GetMasterChefV2ExtraRewardTokenBalancesParams<SaddleMiniChefV2, SaddleMiniChefV2Rewarder>) {
+    return rewarderContract
+      .pendingTokens(contractPosition.dataProps.poolIndex, address, 0)
+      .then(v => v.rewardAmounts[0]);
   }
 }
