@@ -7,6 +7,7 @@ import {
   buildPercentageDisplayItem,
 } from '~app-toolkit/helpers/presentation/display-item.present';
 import { getImagesFromToken } from '~app-toolkit/helpers/presentation/image.present';
+import { UNISWAP_V2_DEFINITION } from '~apps/uniswap-v2';
 import { ContractType } from '~position/contract.interface';
 import { AppTokenPosition } from '~position/position.interface';
 import { Network } from '~types/network.interface';
@@ -40,8 +41,8 @@ export async function getMiningPositions(
 
   const baseTokenDependencies = await appToolkit.getBaseTokenPrices(network);
   const appTokenDependencies = await appToolkit.getAppTokenPositions({
-    appId: 'uniswap-v2',
-    groupIds: ['pool'],
+    appId: UNISWAP_V2_DEFINITION.id,
+    groupIds: [UNISWAP_V2_DEFINITION.groups.pool.id],
     network,
   });
 
@@ -95,7 +96,7 @@ export async function getMiningPositions(
 
       const blocksPerYear = (365 * 24 * 60 * 60) / config.blockTime;
       const liquidity = underlyingSupply * underlyingToken.price;
-      const apy = liquidity <= 0 ? 0 : (insurPerBlock * blocksPerYear * insur.price) / liquidity;
+      const apy = liquidity <= 0 ? 0 : ((insurPerBlock * blocksPerYear * insur.price) / liquidity) * 100;
       const statsItems = [
         { label: 'APY', value: buildPercentageDisplayItem(apy) },
         { label: 'Liquidity', value: buildDollarDisplayItem(liquidity) },
