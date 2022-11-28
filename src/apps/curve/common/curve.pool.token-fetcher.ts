@@ -174,7 +174,7 @@ export abstract class CurvePoolTokenFetcher<T extends Contract> extends AppToken
     const feeVolume = fee * volume;
     const apy = (feeVolume / defaultDataProps.liquidity) * 365;
 
-    return { ...defaultDataProps, fee, volume, apy };
+    return { ...defaultDataProps, fee, volume, apy, swapAddress };
   }
 
   async getLabel({ appToken }: GetDisplayPropsParams<Erc20, CurvePoolTokenDataProps, CurvePoolDefinition>) {
