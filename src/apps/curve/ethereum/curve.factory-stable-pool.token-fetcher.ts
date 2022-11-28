@@ -8,7 +8,7 @@ export class EthereumCurveFactoryStablePoolTokenFetcher extends CurveFactoryStab
   registryAddress = '0xb9fc157394af804a3578134a6585c0dc9cc990d4';
 
   // Tokens that are already in the Curve stable registry
-  blacklist = [
+  blacklistedSwapAddresses = [
     '0x43b4fdfd4ff969587185cdb6f0bd875c5fc83f8c',
     '0x5a6a4d54456819380173272a5e8e9b9904bdf41b',
     '0xd632f22692fac7611d2aa1c0d552930d43caed3b',

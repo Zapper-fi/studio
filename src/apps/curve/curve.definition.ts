@@ -72,6 +72,18 @@ export const CURVE_DEFINITION = appDefinition({
       label: 'Pools',
     },
 
+    childLiquidityGauge: {
+      id: 'child-liquidity-gauge',
+      type: GroupType.POSITION,
+      label: 'Staking',
+    },
+
+    rewardsOnlyGauge: {
+      id: 'rewards-only-gauge',
+      type: GroupType.POSITION,
+      label: 'Staking',
+    },
+
     votingEscrow: {
       id: 'voting-escrow',
       type: GroupType.POSITION,

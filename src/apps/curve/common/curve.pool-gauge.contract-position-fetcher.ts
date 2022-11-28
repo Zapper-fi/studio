@@ -68,24 +68,6 @@ export type ResolveGaugeAddressParams<T extends Contract> = {
   multicall: IMulticallWrapper;
 };
 
-export type ResolveCoinAddressesParams<T extends Contract> = {
-  registryContract: T;
-  swapAddress: string;
-  multicall: IMulticallWrapper;
-};
-
-export type ResolveReservesParams<T extends Contract> = {
-  registryContract: T;
-  swapAddress: string;
-  multicall: IMulticallWrapper;
-};
-
-export type ResolveFeesParams<T extends Contract> = {
-  registryContract: T;
-  swapAddress: string;
-  multicall: IMulticallWrapper;
-};
-
 export abstract class CurvePoolGaugeContractPositionFetcher<
   T extends Contract,
 > extends ContractPositionTemplatePositionFetcher<CurveGauge, CurvePoolGaugeDataProps, CurvePoolGaugeDefinition> {
@@ -116,7 +98,7 @@ export abstract class CurvePoolGaugeContractPositionFetcher<
 
     const poolCount = await this.resolvePoolCount({ registryContract, multicall });
     const poolRange = range(0, Number(poolCount));
-    const poolDefinitions = await Promise.all(
+    const gaugeDefinitions = await Promise.all(
       poolRange.map(async poolIndex => {
         const swapAddress = await this.resolveSwapAddress({ registryContract, poolIndex, multicall });
         const tokenAddress = await this.resolveTokenAddress({ registryContract, swapAddress, multicall });
@@ -134,7 +116,7 @@ export abstract class CurvePoolGaugeContractPositionFetcher<
       }),
     );
 
-    return poolDefinitions.flat();
+    return gaugeDefinitions.flat();
   }
 
   private async resolveGaugeType(gaugeAddress: string) {

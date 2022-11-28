@@ -84,7 +84,7 @@ export abstract class CurvePoolTokenFetcher<T extends Contract> extends AppToken
   volumeDataLoader: DataLoader<string, number>;
 
   abstract registryAddress: string;
-  blacklist: string[] = [];
+  blacklistedSwapAddresses: string[] = [];
 
   abstract resolveRegistry(address: string): T;
   abstract resolvePoolCount(params: ResolvePoolCountParams<T>): Promise<BigNumberish>;
@@ -122,7 +122,7 @@ export abstract class CurvePoolTokenFetcher<T extends Contract> extends AppToken
       }),
     );
 
-    return poolDefinitions.filter(v => !this.blacklist.includes(v.address));
+    return poolDefinitions.filter(v => !this.blacklistedSwapAddresses.includes(v.address));
   }
 
   async getAddresses({ definitions }: GetAddressesParams<DefaultAppTokenDefinition>) {
