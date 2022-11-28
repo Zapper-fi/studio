@@ -73,7 +73,7 @@ export class EthereumRevertFinanceBalanceFetcher implements BalanceFetcher {
         if (!uniV3Token) return;
         const position = getCompoundingContractPosition(network, uniV3Token);
         compoundingBalances.push({
-          key: this.appToolkit.getPositionKey(position, ['compoundingPositionId']),
+          key: this.appToolkit.getPositionKey(position),
           ...position,
         });
       }),

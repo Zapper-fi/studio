@@ -1,7 +1,7 @@
 import { Inject } from '@nestjs/common';
 import BigNumber from 'bignumber.js';
 import { ethers } from 'ethers';
-import { compact, omit, range, sumBy } from 'lodash';
+import { compact, range, sumBy } from 'lodash';
 
 import { drillBalance } from '~app-toolkit';
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
@@ -34,6 +34,7 @@ export type MakerVaultDataProps = {
   cRatio?: number;
   cdpId?: number;
   liquidity: number;
+  positionKey?: string;
 };
 
 @PositionTemplate()
@@ -193,7 +194,6 @@ export class EthereumMakerVaultContractPositionFetcher extends CustomContractPos
 
             const positionBalance: ContractPositionBalance<MakerVaultDataProps> = {
               type: ContractType.POSITION,
-              key: position.key,
               address: position.address,
               appId: position.appId,
               groupId: position.groupId,
@@ -206,6 +206,7 @@ export class EthereumMakerVaultContractPositionFetcher extends CustomContractPos
                 cdpId: cdp,
                 cRatio,
                 liquidity: position.dataProps.liquidity,
+                positionKey: `${cdp}`,
               },
 
               displayProps: {
@@ -215,7 +216,7 @@ export class EthereumMakerVaultContractPositionFetcher extends CustomContractPos
               },
             };
 
-            positionBalance.key = this.appToolkit.getPositionKey(omit(positionBalance, 'key'), ['cdpId']);
+            positionBalance.key = this.appToolkit.getPositionKey(positionBalance);
             return positionBalance;
           }),
         );

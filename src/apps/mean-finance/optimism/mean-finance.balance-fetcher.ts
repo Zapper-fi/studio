@@ -147,6 +147,7 @@ export class OptimismMeanFinanceBalanceFetcher implements BalanceFetcher {
           ? `${STRING_SWAP_INTERVALS[swapInterval].plural(remainingSwaps)} left`
           : 'Position finished';
 
+      const positionId = `${dcaPosition.id}-v${version}`;
       const position: ContractPositionBalance = {
         type: ContractType.POSITION,
         address: dcaHubAddress,
@@ -156,12 +157,13 @@ export class OptimismMeanFinanceBalanceFetcher implements BalanceFetcher {
         tokens,
         balanceUSD,
         dataProps: {
-          id: `${dcaPosition.id}-v${version}`,
+          id: positionId,
           positionId: dcaPosition.id,
           toWithdraw,
           remainingLiquidity,
           remainingSwaps,
           totalValueLocked: balanceUSD,
+          positionKey: positionId,
         },
         displayProps: {
           label,
@@ -170,7 +172,7 @@ export class OptimismMeanFinanceBalanceFetcher implements BalanceFetcher {
         },
       };
 
-      position.key = this.appToolkit.getPositionKey(position, ['id']);
+      position.key = this.appToolkit.getPositionKey(position);
       return position;
     });
 

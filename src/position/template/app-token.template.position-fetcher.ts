@@ -160,10 +160,6 @@ export abstract class AppTokenTemplatePositionFetcher<
     return statsItems;
   }
 
-  getKey({ appToken }: { appToken: AppTokenPosition<V> }): string {
-    return this.appToolkit.getPositionKey(appToken);
-  }
-
   // Default (adapted) Template Runner
   // Note: This will be removed in favour of an orchestrator at a higher level once all groups are migrated
   async getPositions(): Promise<AppTokenPosition<V>[]> {
@@ -269,7 +265,7 @@ export abstract class AppTokenTemplatePositionFetcher<
           };
 
           const appToken = { ...displayPropsStageFragment, displayProps };
-          const key = this.getKey({ appToken });
+          const key = this.appToolkit.getPositionKey(appToken);
           return { key, ...appToken };
         }),
       );

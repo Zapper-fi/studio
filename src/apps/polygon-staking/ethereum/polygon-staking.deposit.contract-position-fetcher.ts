@@ -9,7 +9,7 @@ import { PositionTemplate } from '~app-toolkit/decorators/position-template.deco
 import { getImagesFromToken, getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { CacheOnInterval } from '~cache/cache-on-interval.decorator';
 import { ContractPositionBalance } from '~position/position-balance.interface';
-import { ContractPosition, MetaType } from '~position/position.interface';
+import { MetaType } from '~position/position.interface';
 import { isClaimable, isSupplied } from '~position/position.utils';
 import {
   GetTokenDefinitionsParams,
@@ -78,6 +78,7 @@ type PolygonStakingDepositDataProps = {
   validatorId: number;
   validatorName: string;
   validatorShareAddress: string;
+  positionKey: string;
 };
 
 @PositionTemplate()
@@ -144,6 +145,7 @@ export class EthereumPolygonStakingContractPositionFetcher extends CustomContrac
       validatorId: definition.validatorId,
       validatorName: definition.validatorName,
       validatorShareAddress: definition.validatorShareAddress,
+      positionKey: `${definition.validatorId}`,
     };
   }
 
@@ -154,10 +156,6 @@ export class EthereumPolygonStakingContractPositionFetcher extends CustomContrac
 
   async getImages({ contractPosition }: GetDisplayPropsParams<PolygonStakeManager>) {
     return getImagesFromToken(contractPosition.tokens[0]);
-  }
-
-  getKey({ contractPosition }: { contractPosition: ContractPosition<PolygonStakingDepositDataProps> }) {
-    return this.appToolkit.getPositionKey(contractPosition, ['validatorId']);
   }
 
   // @ts-ignore
