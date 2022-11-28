@@ -13,7 +13,7 @@ import {
   ResolveReservesParams,
   ResolveSwapAddressParams,
   ResolveTokenAddressParams,
-} from './curve.pool-on-chain.token-fetcher';
+} from './curve.pool-dynamic.token-fetcher';
 import { CurveVolumeDataLoader } from './curve.volume.data-loader';
 
 export abstract class CurveFactoryCryptoPoolTokenFetcher extends CurvePoolDynamicTokenFetcher<CurveCryptoFactory> {
