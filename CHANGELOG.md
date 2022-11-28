@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.298.1](https://github.com/Zapper-fi/studio/compare/v0.298.0...v0.298.1) (2022-11-28)
+
+
+### Bug Fixes
+
+* **positions:** Normalize position key generation ([#1810](https://github.com/Zapper-fi/studio/issues/1810)) ([cc89b0f](https://github.com/Zapper-fi/studio/commit/cc89b0f97926bcd439e0646434d516eae4ceba40))
+
 ## [0.298.0](https://github.com/Zapper-fi/studio/compare/v0.297.0...v0.298.0) (2022-11-28)
 
 
