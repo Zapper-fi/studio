@@ -4,6 +4,20 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.298.0](https://github.com/Zapper-fi/studio/compare/v0.297.0...v0.298.0) (2022-11-28)
+
+
+### Features
+
+* **curve:** Migrate to templates ([#1760](https://github.com/Zapper-fi/studio/issues/1760)) ([931f2b7](https://github.com/Zapper-fi/studio/commit/931f2b7dc4276fc9e03d812bcb252c224951f861))
+
+
+### Bug Fixes
+
+* **hex:** Sentence case name ([b697e4b](https://github.com/Zapper-fi/studio/commit/b697e4ba0b60007411c9ece864933cc51e20c832))
+* **insurace:** Fix APY ([#1808](https://github.com/Zapper-fi/studio/issues/1808)) ([29fd41c](https://github.com/Zapper-fi/studio/commit/29fd41c15a04318125a0865fcbc77b73a1314c04))
+* **yield-protocol:** Add missing meta type for borrowed positions ([#1798](https://github.com/Zapper-fi/studio/issues/1798)) ([95aa77b](https://github.com/Zapper-fi/studio/commit/95aa77b669cca10e3229c4faa590a2ffd19d024f))
+
 ## [0.297.0](https://github.com/Zapper-fi/studio/compare/v0.296.0...v0.297.0) (2022-11-27)
 
 
