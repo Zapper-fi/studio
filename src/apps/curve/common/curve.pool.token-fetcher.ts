@@ -42,36 +42,36 @@ export type CurvePoolDefinition = {
 };
 
 export type ResolvePoolCountParams<T extends Contract> = {
-  registryContract: T;
+  contract: T;
   multicall: IMulticallWrapper;
 };
 
 export type ResolveSwapAddressParams<T extends Contract> = {
-  registryContract: T;
+  contract: T;
   poolIndex: number;
   multicall: IMulticallWrapper;
 };
 
 export type ResolveTokenAddressParams<T extends Contract> = {
-  registryContract: T;
+  contract: T;
   swapAddress: string;
   multicall: IMulticallWrapper;
 };
 
 export type ResolveCoinAddressesParams<T extends Contract> = {
-  registryContract: T;
+  contract: T;
   swapAddress: string;
   multicall: IMulticallWrapper;
 };
 
 export type ResolveReservesParams<T extends Contract> = {
-  registryContract: T;
+  contract: T;
   swapAddress: string;
   multicall: IMulticallWrapper;
 };
 
 export type ResolveFeesParams<T extends Contract> = {
-  registryContract: T;
+  contract: T;
   swapAddress: string;
   multicall: IMulticallWrapper;
 };
@@ -109,15 +109,13 @@ export abstract class CurvePoolTokenFetcher<T extends Contract> extends AppToken
   async getDefinitions({ multicall }: GetDefinitionsParams) {
     this.volumeDataLoader = this.curveVolumeDataLoader.getLoader({ network: this.network });
 
-    const registry = this.resolveRegistry(this.registryAddress);
-    const registryContract = multicall.wrap(registry);
-
-    const poolCount = await this.resolvePoolCount({ registryContract, multicall });
+    const contract = multicall.wrap(this.resolveRegistry(this.registryAddress));
+    const poolCount = await this.resolvePoolCount({ contract, multicall });
     const poolRange = range(0, Number(poolCount));
     const poolDefinitions = await Promise.all(
       poolRange.map(async poolIndex => {
-        const swapAddress = await this.resolveSwapAddress({ registryContract, poolIndex, multicall });
-        const tokenAddress = await this.resolveTokenAddress({ registryContract, swapAddress, multicall });
+        const swapAddress = await this.resolveSwapAddress({ contract, poolIndex, multicall });
+        const tokenAddress = await this.resolveTokenAddress({ contract, swapAddress, multicall });
         return { address: tokenAddress.toLowerCase(), swapAddress: swapAddress.toLowerCase() };
       }),
     );
@@ -130,10 +128,9 @@ export abstract class CurvePoolTokenFetcher<T extends Contract> extends AppToken
   }
 
   async getUnderlyingTokenAddresses({ multicall, definition }: GetUnderlyingTokensParams<Erc20, CurvePoolDefinition>) {
-    const registry = this.resolveRegistry(this.registryAddress);
-    const registryContract = multicall.wrap(registry);
+    const contract = multicall.wrap(this.resolveRegistry(this.registryAddress));
     const swapAddress = definition.swapAddress;
-    const coinsRaw = await this.resolveCoinAddresses({ registryContract, swapAddress, multicall });
+    const coinsRaw = await this.resolveCoinAddresses({ contract, swapAddress, multicall });
 
     return coinsRaw
       .map(v => v.toLowerCase())
@@ -146,10 +143,9 @@ export abstract class CurvePoolTokenFetcher<T extends Contract> extends AppToken
     definition,
     appToken,
   }: GetPricePerShareParams<Erc20, CurvePoolTokenDataProps, CurvePoolDefinition>) {
-    const registry = this.resolveRegistry(this.registryAddress);
-    const registryContract = multicall.wrap(registry);
+    const contract = multicall.wrap(this.resolveRegistry(this.registryAddress));
     const swapAddress = definition.swapAddress;
-    const reservesRaw = await this.resolveReserves({ registryContract, swapAddress, multicall });
+    const reservesRaw = await this.resolveReserves({ contract, swapAddress, multicall });
 
     const reserves = reservesRaw
       .slice(0, appToken.tokens.length)
@@ -163,11 +159,10 @@ export abstract class CurvePoolTokenFetcher<T extends Contract> extends AppToken
     const defaultDataProps = await super.getDataProps(params);
 
     const { multicall, definition } = params;
-    const registry = this.resolveRegistry(this.registryAddress);
-    const registryContract = multicall.wrap(registry);
+    const contract = multicall.wrap(this.resolveRegistry(this.registryAddress));
     const swapAddress = definition.swapAddress;
 
-    const fees = await this.resolveFees({ registryContract, swapAddress, multicall });
+    const fees = await this.resolveFees({ contract, swapAddress, multicall });
     const fee = Number(fees[0]) / 10 ** 8;
 
     const volume = await this.volumeDataLoader.load(definition.swapAddress);

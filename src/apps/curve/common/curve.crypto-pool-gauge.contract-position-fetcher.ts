@@ -12,19 +12,19 @@ export abstract class CurveCryptoPoolGaugeContractPositionFetcher extends CurveP
     return this.contractFactory.curveCryptoRegistry({ address, network: this.network });
   }
 
-  async resolvePoolCount({ registryContract }: ResolvePoolCountParams<CurveCryptoRegistry>) {
-    return registryContract.pool_count();
+  async resolvePoolCount({ contract }: ResolvePoolCountParams<CurveCryptoRegistry>) {
+    return contract.pool_count();
   }
 
-  async resolveSwapAddress({ registryContract, poolIndex }: ResolveSwapAddressParams<CurveCryptoRegistry>) {
-    return registryContract.pool_list(poolIndex);
+  async resolveSwapAddress({ contract, poolIndex }: ResolveSwapAddressParams<CurveCryptoRegistry>) {
+    return contract.pool_list(poolIndex);
   }
 
-  async resolveTokenAddress({ registryContract, swapAddress }: ResolveTokenAddressParams<CurveCryptoRegistry>) {
-    return registryContract.get_lp_token(swapAddress);
+  async resolveTokenAddress({ contract, swapAddress }: ResolveTokenAddressParams<CurveCryptoRegistry>) {
+    return contract.get_lp_token(swapAddress);
   }
 
-  async resolveGaugeAddresses({ registryContract, swapAddress }: ResolveGaugeAddressParams<CurveCryptoRegistry>) {
-    return registryContract.get_gauges(swapAddress).then(v => v[0]);
+  async resolveGaugeAddresses({ contract, swapAddress }: ResolveGaugeAddressParams<CurveCryptoRegistry>) {
+    return contract.get_gauges(swapAddress).then(v => v[0]);
   }
 }

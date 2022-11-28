@@ -28,27 +28,27 @@ export abstract class CurveStablePoolTokenFetcher extends CurvePoolTokenFetcher<
     return this.contractFactory.curveStableRegistry({ address, network: this.network });
   }
 
-  async resolvePoolCount({ registryContract }: ResolvePoolCountParams<CurveStableRegistry>) {
-    return registryContract.pool_count();
+  async resolvePoolCount({ contract }: ResolvePoolCountParams<CurveStableRegistry>) {
+    return contract.pool_count();
   }
 
-  async resolveSwapAddress({ registryContract, poolIndex }: ResolveSwapAddressParams<CurveStableRegistry>) {
-    return registryContract.pool_list(poolIndex);
+  async resolveSwapAddress({ contract, poolIndex }: ResolveSwapAddressParams<CurveStableRegistry>) {
+    return contract.pool_list(poolIndex);
   }
 
-  async resolveTokenAddress({ registryContract, swapAddress }: ResolveTokenAddressParams<CurveStableRegistry>) {
-    return registryContract.get_lp_token(swapAddress);
+  async resolveTokenAddress({ contract, swapAddress }: ResolveTokenAddressParams<CurveStableRegistry>) {
+    return contract.get_lp_token(swapAddress);
   }
 
-  async resolveCoinAddresses({ registryContract, swapAddress }: ResolveCoinAddressesParams<CurveStableRegistry>) {
-    return registryContract.get_coins(swapAddress);
+  async resolveCoinAddresses({ contract, swapAddress }: ResolveCoinAddressesParams<CurveStableRegistry>) {
+    return contract.get_coins(swapAddress);
   }
 
-  async resolveReserves({ registryContract, swapAddress }: ResolveReservesParams<CurveStableRegistry>) {
-    return registryContract.get_balances(swapAddress);
+  async resolveReserves({ contract, swapAddress }: ResolveReservesParams<CurveStableRegistry>) {
+    return contract.get_balances(swapAddress);
   }
 
-  async resolveFees({ registryContract, swapAddress }: ResolveFeesParams<CurveStableRegistry>) {
-    return registryContract.get_fees(swapAddress);
+  async resolveFees({ contract, swapAddress }: ResolveFeesParams<CurveStableRegistry>) {
+    return contract.get_fees(swapAddress);
   }
 }
