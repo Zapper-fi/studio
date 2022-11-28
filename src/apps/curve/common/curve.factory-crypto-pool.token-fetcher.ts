@@ -6,17 +6,17 @@ import { isMulticallUnderlyingError } from '~multicall/multicall.ethers';
 import { CurveContractFactory, CurveCryptoFactory } from '../contracts';
 
 import {
-  CurvePoolTokenFetcher,
+  CurvePoolDynamicTokenFetcher,
   ResolveCoinAddressesParams,
   ResolveFeesParams,
   ResolvePoolCountParams,
   ResolveReservesParams,
   ResolveSwapAddressParams,
   ResolveTokenAddressParams,
-} from './curve.pool.token-fetcher';
+} from './curve.pool-on-chain.token-fetcher';
 import { CurveVolumeDataLoader } from './curve.volume.data-loader';
 
-export abstract class CurveFactoryCryptoPoolTokenFetcher extends CurvePoolTokenFetcher<CurveCryptoFactory> {
+export abstract class CurveFactoryCryptoPoolTokenFetcher extends CurvePoolDynamicTokenFetcher<CurveCryptoFactory> {
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
     @Inject(CurveContractFactory) protected readonly contractFactory: CurveContractFactory,

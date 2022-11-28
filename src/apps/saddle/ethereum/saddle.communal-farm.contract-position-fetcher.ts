@@ -1,14 +1,11 @@
 import { Inject } from '@nestjs/common';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
-import { Register } from '~app-toolkit/decorators';
-import { SynthetixSingleStakingIsActiveStrategy, SynthetixSingleStakingRoiStrategy } from '~apps/synthetix';
-import { PositionFetcher } from '~position/position-fetcher.interface';
-import { ContractPosition } from '~position/position.interface';
-import { Network } from '~types/network.interface';
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
+import { GetDataPropsParams, GetTokenBalancesParams } from '~position/template/contract-position.template.types';
+import { SingleStakingFarmTemplateContractPositionFetcher } from '~position/template/single-staking.template.contract-position-fetcher';
 
 import { SaddleCommunalFarm, SaddleContractFactory } from '../contracts';
-import SADDLE_DEFINITION from '../saddle.definition';
 
 const FARMS = [
   // Saddle D4 Communal Farm
@@ -24,47 +21,39 @@ const FARMS = [
   },
 ];
 
-const appId = SADDLE_DEFINITION.id;
-const groupId = SADDLE_DEFINITION.groups.communalFarm.id;
-const network = Network.ETHEREUM_MAINNET;
+@PositionTemplate()
+export class EthereumSaddleCommunalFarmContractPositionFetcher extends SingleStakingFarmTemplateContractPositionFetcher<SaddleCommunalFarm> {
+  groupLabel = 'Farms';
 
-@Register.ContractPositionFetcher({ appId, groupId, network })
-export class EthereumSaddleCommunalFarmContractPositionFetcher implements PositionFetcher<ContractPosition> {
   constructor(
-    @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
-    @Inject(SaddleContractFactory) private readonly contractFactory: SaddleContractFactory,
-    @Inject(SynthetixSingleStakingIsActiveStrategy)
-    private readonly synthetixSingleStakingIsActiveStrategy: SynthetixSingleStakingIsActiveStrategy,
-    @Inject(SynthetixSingleStakingRoiStrategy)
-    private readonly synthetixSingleStakingRoiStrategy: SynthetixSingleStakingRoiStrategy,
-  ) {}
+    @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
+    @Inject(SaddleContractFactory) protected readonly contractFactory: SaddleContractFactory,
+  ) {
+    super(appToolkit);
+  }
 
-  async getPositions() {
-    return this.appToolkit.helpers.singleStakingFarmContractPositionHelper.getContractPositions<SaddleCommunalFarm>({
-      appId,
-      groupId,
-      network,
-      dependencies: [
-        {
-          appId: SADDLE_DEFINITION.id,
-          groupIds: [SADDLE_DEFINITION.groups.pool.id],
-          network: Network.ETHEREUM_MAINNET,
-        },
-      ],
-      resolveFarmDefinitions: async () => FARMS,
-      resolveFarmContract: opts => this.contractFactory.saddleCommunalFarm(opts),
-      resolveIsActive: this.synthetixSingleStakingIsActiveStrategy.build({
-        resolvePeriodFinish: ({ contract, multicall }) => multicall.wrap(contract).periodFinish(),
-      }),
-      resolveRois: this.synthetixSingleStakingRoiStrategy.build({
-        resolveRewardRates: ({ contract, multicall }) =>
-          Promise.all([
-            multicall.wrap(contract).rewardRates(0),
-            multicall.wrap(contract).rewardRates(1),
-            multicall.wrap(contract).rewardRates(2),
-            multicall.wrap(contract).rewardRates(3),
-          ]),
-      }),
-    });
+  getContract(address: string): SaddleCommunalFarm {
+    return this.contractFactory.saddleCommunalFarm({ address, network: this.network });
+  }
+
+  async getFarmDefinitions() {
+    return FARMS;
+  }
+
+  async getRewardRates({ contract }: GetDataPropsParams<SaddleCommunalFarm>) {
+    return Promise.all([
+      contract.rewardRates(0),
+      contract.rewardRates(1),
+      contract.rewardRates(2),
+      contract.rewardRates(3),
+    ]);
+  }
+
+  async getStakedTokenBalance({ address, contract }: GetTokenBalancesParams<SaddleCommunalFarm>) {
+    return contract.lockedLiquidityOf(address);
+  }
+
+  async getRewardTokenBalances({ address, contract }: GetTokenBalancesParams<SaddleCommunalFarm>) {
+    return contract.earned(address);
   }
 }
