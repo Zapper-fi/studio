@@ -220,7 +220,7 @@ export abstract class CurvePoolGaugeContractPositionFetcher<
 
     // Legacy "double" gauge supports one extra reward token
     if (contractPosition.dataProps.gaugeType === GaugeType.DOUBLE && rewardTokens.length > 1) {
-      const doubleGauge = this.contractFactory.curveDoubleGauge({ address, network: this.network });
+      const doubleGauge = this.contractFactory.curveDoubleGauge(contractPosition);
       const [secondaryRewardBalanceTotal, secondaryRewardBalanceClaimed] = await Promise.all([
         multicall.wrap(doubleGauge).claimable_reward(address),
         multicall.wrap(doubleGauge).claimed_rewards_for(address),
@@ -232,7 +232,7 @@ export abstract class CurvePoolGaugeContractPositionFetcher<
 
     // Modern "n" gauges supports multiple extra tokens. Call the read function for "n" gauge
     if (contractPosition.dataProps.gaugeType === GaugeType.N_GAUGE) {
-      const nGauge = this.contractFactory.curveNGauge({ address, network: this.network });
+      const nGauge = this.contractFactory.curveNGauge(contractPosition);
       const rewardTokenBalances = await Promise.all(
         rewardTokens.slice(1).map(t => multicall.wrap(nGauge).claimable_reward(address, t.address)),
       );
@@ -241,7 +241,7 @@ export abstract class CurvePoolGaugeContractPositionFetcher<
 
     // Modern "n" gauges supports multiple extra tokens. Call the read function for "v4" gauge
     if (contractPosition.dataProps.gaugeType === GaugeType.GAUGE_V4) {
-      const nGauge = this.contractFactory.curveGaugeV2({ address, network: this.network });
+      const nGauge = this.contractFactory.curveGaugeV2(contractPosition);
       const rewardTokenBalances = await Promise.all(
         rewardTokens.slice(1).map(t => multicall.wrap(nGauge).claimable_reward_write(address, t.address)),
       );
