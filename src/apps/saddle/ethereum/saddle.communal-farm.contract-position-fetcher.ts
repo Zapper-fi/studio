@@ -23,7 +23,7 @@ const FARMS = [
 
 @PositionTemplate()
 export class EthereumSaddleCommunalFarmContractPositionFetcher extends SingleStakingFarmTemplateContractPositionFetcher<SaddleCommunalFarm> {
-  groupLabel = 'Farms';
+  groupLabel = 'Communal Farms';
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,

@@ -3,6 +3,7 @@ import { BigNumber, BigNumberish, Contract } from 'ethers';
 import { isArray, range, sum } from 'lodash';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
+import { ZERO_ADDRESS } from '~app-toolkit/constants/address';
 import { BLOCKS_PER_DAY } from '~app-toolkit/constants/blocks';
 import { RewardRateUnit } from '~app-toolkit/helpers/master-chef/master-chef.contract-position-helper';
 import { getImagesFromToken, getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
@@ -99,7 +100,7 @@ export abstract class MasterChefTemplateContractPositionFetcher<
         throw err;
       });
 
-    if (!stakedTokenAddress || !rewardTokenAddresses) return null;
+    if (!stakedTokenAddress || stakedTokenAddress === ZERO_ADDRESS || !rewardTokenAddresses) return null;
 
     tokenDefinitions.push({ metaType: MetaType.SUPPLIED, address: stakedTokenAddress, network: this.network });
     rewardTokenAddresses.forEach(v =>
