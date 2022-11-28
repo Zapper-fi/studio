@@ -6,7 +6,7 @@ import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { ZERO_ADDRESS } from '~app-toolkit/constants/address';
 import { Cache } from '~cache/cache.decorator';
 import { ContractPositionBalance } from '~position/position-balance.interface';
-import { ContractPosition, MetaType } from '~position/position.interface';
+import { MetaType } from '~position/position.interface';
 import { isBorrowed } from '~position/position.utils';
 import {
   GetDataPropsParams,
@@ -100,6 +100,7 @@ export abstract class HomoraV2FarmContractPositionFetcher extends CustomContract
       poolAddress,
       tradingVolume: definition.tradingVolume,
       feeTier,
+      positionKey: key,
     };
   }
 
@@ -116,10 +117,6 @@ export abstract class HomoraV2FarmContractPositionFetcher extends CustomContract
     }
 
     return `[${definition.exchange}] ${definition.poolName}`;
-  }
-
-  getKey({ contractPosition }: { contractPosition: ContractPosition<HomoraV2FarmingPositionDataProps> }) {
-    return this.appToolkit.getPositionKey(contractPosition, ['key']);
   }
 
   async getNativeToken() {

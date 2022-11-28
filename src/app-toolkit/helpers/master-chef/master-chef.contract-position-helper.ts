@@ -275,6 +275,7 @@ export class MasterChefContractPositionHelper {
           dailyROI,
           weeklyROI,
           yearlyROI,
+          positionKey: `${poolIndex}`,
         };
 
         // Resolve display properties
@@ -303,7 +304,7 @@ export class MasterChefContractPositionHelper {
           displayProps,
         };
 
-        position.key = this.appToolkit.getPositionKey(position, ['poolIndex']);
+        position.key = this.appToolkit.getPositionKey(position);
         return position;
       }),
     );

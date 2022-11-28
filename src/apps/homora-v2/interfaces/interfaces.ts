@@ -139,6 +139,7 @@ export type HomoraV2FarmingPositionDataProps = {
   poolAddress: string;
   feeTier?: number;
   key: string;
+  positionKey: string;
 };
 
 export type HomoraV2LendingPositionDefinition = {

@@ -136,7 +136,7 @@ export abstract class PickleJarUniv3TokenFetcher extends AppTokenTemplatePositio
         const displayPropsStageFragment = { ...dataPropsStageFragment, dataProps };
         const displayProps = uniV3Token.displayProps;
         const appToken = { ...displayPropsStageFragment, displayProps };
-        const key = this.getKey({ appToken });
+        const key = this.appToolkit.getPositionKey(appToken);
         return { key, ...appToken };
       }),
     );

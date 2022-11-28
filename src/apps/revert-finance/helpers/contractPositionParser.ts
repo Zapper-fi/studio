@@ -41,6 +41,7 @@ export const getCompoundingContractPosition = (
   balanceUSD: uniV3Lp.balanceUSD,
   dataProps: {
     compoundingPositionId: uniV3Lp.dataProps.id,
+    positionKey: `${uniV3Lp.dataProps.id}`,
   },
   displayProps: {
     label: `Compounding ${uniV3Lp.displayProps.label}`,

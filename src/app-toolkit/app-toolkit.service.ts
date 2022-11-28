@@ -92,11 +92,8 @@ export class AppToolkit implements IAppToolkit {
 
   // Position Key
 
-  getPositionKey(
-    position: ContractPosition | AppTokenPosition | BaseToken | NonFungibleToken,
-    pickFields: string[] = [],
-  ) {
-    return this.positionKeyService.getPositionKey(position, pickFields);
+  getPositionKey(position: ContractPosition | AppTokenPosition | BaseToken | NonFungibleToken) {
+    return this.positionKeyService.getPositionKey(position);
   }
 
   // Cache
