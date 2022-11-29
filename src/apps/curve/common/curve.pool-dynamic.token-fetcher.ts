@@ -1,7 +1,7 @@
 import { Inject } from '@nestjs/common';
 import DataLoader from 'dataloader';
 import { BigNumberish, Contract } from 'ethers';
-import { range } from 'lodash';
+import { compact, range } from 'lodash';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { ETH_ADDR_ALIAS, ZERO_ADDRESS } from '~app-toolkit/constants/address';
@@ -116,11 +116,16 @@ export abstract class CurvePoolDynamicTokenFetcher<T extends Contract> extends A
       poolRange.map(async poolIndex => {
         const swapAddress = await this.resolveSwapAddress({ contract, poolIndex, multicall });
         const tokenAddress = await this.resolveTokenAddress({ contract, swapAddress, multicall });
+
+        const tokenContract = this.contractFactory.erc20({ address: tokenAddress, network: this.network });
+        const supply = await multicall.wrap(tokenContract).totalSupply();
+        if (Number(supply) === 0) return null;
+
         return { address: tokenAddress.toLowerCase(), swapAddress: swapAddress.toLowerCase() };
       }),
     );
 
-    return poolDefinitions.filter(v => !this.blacklistedSwapAddresses.includes(v.address));
+    return compact(poolDefinitions).filter(v => !this.blacklistedSwapAddresses.includes(v.address));
   }
 
   async getAddresses({ definitions }: GetAddressesParams<DefaultAppTokenDefinition>) {
@@ -143,8 +148,6 @@ export abstract class CurvePoolDynamicTokenFetcher<T extends Contract> extends A
     definition,
     appToken,
   }: GetPricePerShareParams<Erc20, CurvePoolTokenDataProps, CurvePoolDefinition>) {
-    if (appToken.supply === 0) return 0;
-
     const contract = multicall.wrap(this.resolveRegistry(this.registryAddress));
     const swapAddress = definition.swapAddress;
     const reservesRaw = await this.resolveReserves({ contract, swapAddress, multicall });
