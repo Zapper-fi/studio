@@ -1,4 +1,4 @@
-import { CACHE_MANAGER, forwardRef, Inject, Injectable } from '@nestjs/common';
+import { CACHE_MANAGER, forwardRef, Inject, Injectable, Logger } from '@nestjs/common';
 import { BigNumber as BigNumberJS } from 'bignumber.js';
 import { Cache } from 'cache-manager';
 import { ethers } from 'ethers';
@@ -18,7 +18,16 @@ import { PriceSelectorService } from '~token/selectors/token-price-selector.serv
 import { Network } from '~types/network.interface';
 
 import { AppToolkitHelperRegistry } from './app-toolkit.helpers';
-import { IAppToolkit } from './app-toolkit.interface';
+import { AppToolkitLogger, IAppToolkit } from './app-toolkit.interface';
+
+@Injectable()
+class NestJsLogger implements AppToolkitLogger {
+  private readonly logger = new Logger(NestJsLogger.name);
+
+  log(message: string) {
+    this.logger.log(message);
+  }
+}
 
 @Injectable()
 export class AppToolkit implements IAppToolkit {
@@ -36,6 +45,7 @@ export class AppToolkit implements IAppToolkit {
     private readonly tokenDependencySelectorService: TokenDependencySelectorService,
     @Inject(MulticallService) private readonly multicallService: MulticallService,
     @Inject(CACHE_MANAGER) private readonly cacheManager: Cache,
+    @Inject(NestJsLogger) private readonly appToolkitLogger: AppToolkitLogger,
   ) {
     this.contractFactory = new ContractFactory((network: Network) => this.networkProviderService.getProvider(network));
   }
@@ -112,6 +122,10 @@ export class AppToolkit implements IAppToolkit {
 
   get helpers() {
     return this.helperRegistry;
+  }
+
+  get logger() {
+    return this.appToolkitLogger;
   }
 
   getBigNumber(source: BigNumberJS.Value | ethers.BigNumber): BigNumberJS {

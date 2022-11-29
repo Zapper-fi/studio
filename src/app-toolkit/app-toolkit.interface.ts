@@ -19,6 +19,10 @@ import { AppToolkitHelperRegistry } from './app-toolkit.helpers';
 
 export const APP_TOOLKIT = Symbol('APP_TOOLKIT');
 
+export interface AppToolkitLogger {
+  log(message: string);
+}
+
 export interface IAppToolkit {
   // Apps
   getApps(): Promise<AppDefinition[]>;
@@ -62,6 +66,8 @@ export interface IAppToolkit {
   // Global Helpers
 
   get helpers(): AppToolkitHelperRegistry;
+
+  get logger(): AppToolkitLogger;
 
   getBigNumber(source: BigNumberJS.Value | ethers.BigNumber): BigNumberJS;
 }

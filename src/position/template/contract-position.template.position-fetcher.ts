@@ -1,6 +1,6 @@
 import { Inject } from '@nestjs/common';
 import { BigNumberish, Contract } from 'ethers/lib/ethers';
-import { compact, sumBy } from 'lodash';
+import _, { compact, sumBy } from 'lodash';
 
 import { drillBalance } from '~app-toolkit';
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
@@ -120,9 +120,30 @@ export abstract class ContractPositionTemplatePositionFetcher<
       }),
     );
 
-    const underlyingTokenRequests = compact(skeletons)
-      .flatMap(v => v.tokenDefinitions)
-      .map(v => ({ address: v.address, network: v.network, tokenId: v.tokenId }));
+    const underlyingTokenDefinitions = compact(skeletons).flatMap(v => v.tokenDefinitions);
+    const duplicatedUnderlyingTokenDefinitions = _(underlyingTokenDefinitions)
+      .countBy(v => {
+        let id = `${v.address}:${v.network}:${v.metaType}`;
+        if (v.tokenId) id = `${id}:${v.tokenId}`;
+        return id;
+      })
+      .filter(v => v > 1)
+      .keys()
+      .value();
+
+    if (duplicatedUnderlyingTokenDefinitions.length > 0) {
+      this.appToolkit.logger.log(
+        `Found duplicate underlying token definition for ${this.appId}${this.groupId}:${
+          this.network
+        }: ${duplicatedUnderlyingTokenDefinitions.join(', ')}`,
+      );
+    }
+
+    const underlyingTokenRequests = underlyingTokenDefinitions.map(v => ({
+      address: v.address,
+      network: v.network,
+      tokenId: v.tokenId,
+    }));
     const tokenDependencies = await tokenLoader.getMany(underlyingTokenRequests).then(tokenDeps => compact(tokenDeps));
 
     const skeletonsWithResolvedTokens = await Promise.all(
