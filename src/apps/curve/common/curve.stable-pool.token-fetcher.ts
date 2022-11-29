@@ -5,17 +5,17 @@ import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { CurveContractFactory, CurveStableRegistry } from '../contracts';
 
 import {
-  CurvePoolTokenFetcher,
+  CurvePoolDynamicTokenFetcher,
   ResolveCoinAddressesParams,
   ResolveFeesParams,
   ResolvePoolCountParams,
   ResolveReservesParams,
   ResolveSwapAddressParams,
   ResolveTokenAddressParams,
-} from './curve.pool.token-fetcher';
+} from './curve.pool-dynamic.token-fetcher';
 import { CurveVolumeDataLoader } from './curve.volume.data-loader';
 
-export abstract class CurveStablePoolTokenFetcher extends CurvePoolTokenFetcher<CurveStableRegistry> {
+export abstract class CurveStablePoolTokenFetcher extends CurvePoolDynamicTokenFetcher<CurveStableRegistry> {
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
     @Inject(CurveContractFactory) protected readonly contractFactory: CurveContractFactory,

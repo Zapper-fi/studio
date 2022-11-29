@@ -33,7 +33,7 @@ export class AvalanchePenguinIPefiTokenFetcher implements PositionFetcher<AppTok
           .then(v => Number(v) / 10 ** underlyingToken.decimals),
       resolvePricePerShare: async ({ reserve, supply }) => reserve / supply,
       appId: PENGUIN_DEFINITION.id,
-      groupId: PENGUIN_DEFINITION.groups.xPefi.id,
+      groupId: PENGUIN_DEFINITION.groups.iPefi.id,
       network: Network.AVALANCHE_MAINNET,
     });
   }

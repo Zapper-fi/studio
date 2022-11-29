@@ -4,6 +4,20 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.300.0](https://github.com/Zapper-fi/studio/compare/v0.299.0...v0.300.0) (2022-11-29)
+
+
+### Features
+
+* **curve:** Fix fee in static template ([2584aff](https://github.com/Zapper-fi/studio/commit/2584affee96882662777cf51f36a000dd6b48170))
+
+## [0.299.0](https://github.com/Zapper-fi/studio/compare/v0.298.2...v0.299.0) (2022-11-28)
+
+
+### Features
+
+* **saddle:** Migrate to templates, add Curve template for simple static definitions ([#1813](https://github.com/Zapper-fi/studio/issues/1813)) ([7e97ef8](https://github.com/Zapper-fi/studio/commit/7e97ef89e172b8be416ae0d072aab0612d9c0b53))
+
 ## [0.298.2](https://github.com/Zapper-fi/studio/compare/v0.298.1...v0.298.2) (2022-11-28)
 
 
