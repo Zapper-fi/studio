@@ -4,6 +4,7 @@ import { sumBy } from 'lodash';
 
 import { drillBalance } from '~app-toolkit';
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
+import { BALANCE_LOCALSTORAGE_FLAGS } from '~balance/balance.utils';
 import { ContractPositionBalance } from '~position/position-balance.interface';
 import { isClaimable, isVesting } from '~position/position.utils';
 import { Network } from '~types/network.interface';
@@ -48,7 +49,13 @@ export class OlympusBondV2ContractPositionBalanceHelper {
         }, BigNumber.from('0'));
         const claimableTokenBalance = drillBalance(claimableToken, claimableAmount.toString());
         const vestingTokenBalance = drillBalance(vestingToken, vestingAmount.toString());
-        const tokens = [claimableTokenBalance, vestingTokenBalance].filter(v => v.balanceUSD > 0);
+
+        const storage = BALANCE_LOCALSTORAGE_FLAGS.getStore();
+        const { includeZeroBalances } = storage ?? { includeZeroBalances: false };
+
+        const tokens = [claimableTokenBalance, vestingTokenBalance].filter(
+          v => includeZeroBalances || v.balanceUSD > 0,
+        );
         const balanceUSD = sumBy(tokens, t => t.balanceUSD);
 
         return { ...contractPosition, tokens, balanceUSD };
