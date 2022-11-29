@@ -169,7 +169,7 @@ export abstract class CurvePoolDynamicTokenFetcher<T extends Contract> extends A
 
     const volume = await this.volumeDataLoader.load(definition.swapAddress);
     const feeVolume = fee * volume;
-    const apy = (feeVolume / defaultDataProps.liquidity) * 365;
+    const apy = defaultDataProps.liquidity > 0 ? (feeVolume / defaultDataProps.liquidity) * 365 : 0;
 
     return { ...defaultDataProps, fee, volume, apy, swapAddress };
   }
@@ -181,6 +181,8 @@ export abstract class CurvePoolDynamicTokenFetcher<T extends Contract> extends A
   async getSecondaryLabel({ appToken }: GetDisplayPropsParams<Erc20, CurvePoolTokenDataProps, CurvePoolDefinition>) {
     const reservesUSD = appToken.tokens.map((t, i) => appToken.dataProps.reserves[i] * t.price);
     const liquidity = reservesUSD.reduce((total, r) => total + r, 0);
+    if (liquidity === 0) return appToken.tokens.map(() => '0%').join(' / ');
+
     const reservePercentages = reservesUSD.map(reserveUSD => reserveUSD / liquidity);
     const ratio = reservePercentages.map(p => `${Math.floor(p * 100)}%`).join(' / ');
 
