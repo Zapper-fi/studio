@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.302.0](https://github.com/Zapper-fi/studio/compare/v0.301.0...v0.302.0) (2022-11-29)
+
+
+### Features
+
+* **curve:** Better yet, filter out tokens with zero supply ([a78d244](https://github.com/Zapper-fi/studio/commit/a78d244100bcaf66f0019e8f6d155e05cab859d4))
+
 ## [0.301.0](https://github.com/Zapper-fi/studio/compare/v0.300.0...v0.301.0) (2022-11-29)
 
 
