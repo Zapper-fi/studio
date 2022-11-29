@@ -4,6 +4,20 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.301.0](https://github.com/Zapper-fi/studio/compare/v0.300.0...v0.301.0) (2022-11-29)
+
+
+### Features
+
+* **curve:** I don't wanna talk about it ([f7fea9f](https://github.com/Zapper-fi/studio/commit/f7fea9f4f70eae4dd70085bd5a6cb493fbf42a66))
+
+
+### Bug Fixes
+
+* **geist:** Fix double counting of geist claimable ([#1818](https://github.com/Zapper-fi/studio/issues/1818)) ([16c8da8](https://github.com/Zapper-fi/studio/commit/16c8da874ad724a2db5b0d7ed6f38350f7a9f062))
+* **penguin:** Fix iPEFI groupId ([#1822](https://github.com/Zapper-fi/studio/issues/1822)) ([0096cef](https://github.com/Zapper-fi/studio/commit/0096cefbe65be75351791cbc06beae02434962c5))
+* **thales:** Add missing reward token balance for thales escrow ([#1821](https://github.com/Zapper-fi/studio/issues/1821)) ([0367f33](https://github.com/Zapper-fi/studio/commit/0367f33a05c716be21113ace55e76299f55756e7))
+
 ## [0.300.0](https://github.com/Zapper-fi/studio/compare/v0.299.0...v0.300.0) (2022-11-29)
 
 
