@@ -70,10 +70,7 @@ export class EthereumPieDaoBalanceFetcher implements BalanceFetcher {
     const claimableRaw = new BigNumber(userData.accountWithdrawableRewards.toString())
       .minus(userData.accountWithdrawnRewards.toString())
       .toFixed(0);
-    const tokens = [
-      drillBalance(locked(doughToken), lockedRaw),
-      drillBalance(claimable(doughToken), claimableRaw),
-    ].filter(v => v.balanceUSD > 0);
+    const tokens = [drillBalance(locked(doughToken), lockedRaw), drillBalance(claimable(doughToken), claimableRaw)];
     const balanceUSD = sumBy(tokens, v => v.balanceUSD);
 
     const position: ContractPositionBalance = {
