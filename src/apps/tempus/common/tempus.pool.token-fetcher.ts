@@ -1,8 +1,14 @@
 import { Inject, Injectable } from '@nestjs/common';
+import moment from 'moment';
 
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
+import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
-import { GetPricePerShareParams, GetUnderlyingTokensParams } from '~position/template/app-token.template.types';
+import {
+  GetDisplayPropsParams,
+  GetPricePerShareParams,
+  GetUnderlyingTokensParams,
+} from '~position/template/app-token.template.types';
 
 import { TempusContractFactory, TempusPyToken } from '../contracts';
 
@@ -35,5 +41,13 @@ export abstract class TempusPoolTokenFetcher extends AppTokenTemplatePositionFet
   async getPricePerShare({ contract, appToken }: GetPricePerShareParams<TempusPyToken>) {
     const pricePerShareRaw = await contract.getPricePerFullShareStored();
     return Number(pricePerShareRaw) / 10 ** Number(appToken.decimals);
+  }
+
+  async getLabel({ appToken, contract, multicall }: GetDisplayPropsParams<TempusPyToken>) {
+    const kindLabel = (await contract.kind()) === 1 ? 'Yield' : 'Principal';
+    const poolAddress = await contract.pool();
+    const pool = this.contractFactory.tempusPool({ address: poolAddress, network: this.network });
+    const maturity = await multicall.wrap(pool).maturityTime();
+    return `${getLabelFromToken(appToken.tokens[0])} ${kindLabel} Share - ${moment.unix(Number(maturity)).format('L')}`;
   }
 }
