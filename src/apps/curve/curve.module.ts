@@ -9,10 +9,6 @@ import { CurveAppDefinition, CURVE_DEFINITION } from './curve.definition';
 import { ETHEREUM_CURVE_PROVIDERS } from './ethereum';
 import { FANTOM_CURVE_PROVIDERS } from './fantom';
 import { GNOSIS_CURVE_PROVIDERS } from './gnosis';
-import { CurvePoolOnChainCoinStrategy } from './helpers/curve.pool.on-chain.coin-strategy';
-import { CurvePoolOnChainReserveStrategy } from './helpers/curve.pool.on-chain.reserve-strategy';
-import { CurvePoolTokenHelper } from './helpers/curve.pool.token-helper';
-import { CurvePoolVirtualPriceStrategy } from './helpers/curve.pool.virtual.price-strategy';
 import { CurveVotingEscrowContractPositionBalanceHelper } from './helpers/curve.voting-escrow.contract-position-balance-helper';
 import { CurveVotingEscrowContractPositionHelper } from './helpers/curve.voting-escrow.contract-position-helper';
 import { OPTIMISM_CURVE_PROVIDERS } from './optimism';
@@ -33,10 +29,6 @@ import { POLYGON_CURVE_PROVIDERS } from './polygon';
     ...OPTIMISM_CURVE_PROVIDERS,
     ...POLYGON_CURVE_PROVIDERS,
     // Legacy Helpers
-    CurvePoolTokenHelper,
-    CurvePoolVirtualPriceStrategy,
-    CurvePoolOnChainCoinStrategy,
-    CurvePoolOnChainReserveStrategy,
     CurveVotingEscrowContractPositionHelper,
     CurveVotingEscrowContractPositionBalanceHelper,
   ],
@@ -44,10 +36,6 @@ import { POLYGON_CURVE_PROVIDERS } from './polygon';
     CurveAppDefinition,
     CurveContractFactory,
     // Legacy Helpers
-    CurvePoolTokenHelper,
-    CurvePoolVirtualPriceStrategy,
-    CurvePoolOnChainCoinStrategy,
-    CurvePoolOnChainReserveStrategy,
     CurveVotingEscrowContractPositionHelper,
     CurveVotingEscrowContractPositionBalanceHelper,
   ],
