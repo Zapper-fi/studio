@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.306.0](https://github.com/Zapper-fi/studio/compare/v0.305.0...v0.306.0) (2022-11-30)
+
+
+### Features
+
+* **curve:** Remove legacy Curve helpers, migrate Tempus to templates ([#1830](https://github.com/Zapper-fi/studio/issues/1830)) ([e081792](https://github.com/Zapper-fi/studio/commit/e0817927a4e64285c27e648e01aa0298894a50a5))
+
 ## [0.305.0](https://github.com/Zapper-fi/studio/compare/v0.304.0...v0.305.0) (2022-11-30)
 
 
