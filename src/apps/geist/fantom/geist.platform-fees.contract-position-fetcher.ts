@@ -63,12 +63,12 @@ export class FantomGeistPlatformFeesPositionFetcher extends ContractPositionTemp
         network: this.network,
       },
       ...rewardTokenAddresses
-        .filter(address => address !== this.geistTokenAddress)
         .map(address => ({
           metaType: MetaType.CLAIMABLE,
           address: address.toLowerCase(),
           network: this.network,
-        })),
+        }))
+        .filter(({ address }) => address !== this.geistTokenAddress),
     ];
   }
 
