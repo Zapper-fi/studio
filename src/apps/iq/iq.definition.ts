@@ -12,14 +12,20 @@ export const IQ_DEFINITION = appDefinition({
   groups: {
     hiiq: {
       id: 'hiiq',
-      type: GroupType.TOKEN,
+      type: GroupType.POSITION,
       label: 'HiIQ',
     },
   },
 
   tags: [AppTag.BRIDGE, AppTag.STAKING],
   keywords: [],
-  links: {},
+  links: {
+    github: 'https://github.com/EveripediaNetwork',
+    twitter: 'https://twitter.com/everipedia/',
+    telegram: 'https://t.me/everipedia',
+    discord: 'https://discord.com/invite/x9EWvTcPXt',
+    Reddit: 'https://www.reddit.com/r/Everipedia/',
+  },
 
   supportedNetworks: {
     [Network.ETHEREUM_MAINNET]: [AppAction.VIEW],
@@ -27,7 +33,7 @@ export const IQ_DEFINITION = appDefinition({
     [Network.ARBITRUM_MAINNET]: [AppAction.VIEW],
   },
 
-  primaryColor: '#fff',
+  primaryColor: '#ff5caa',
 });
 
 @Register.AppDefinition(IQ_DEFINITION.id)
