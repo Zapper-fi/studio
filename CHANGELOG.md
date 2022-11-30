@@ -4,6 +4,19 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.305.0](https://github.com/Zapper-fi/studio/compare/v0.304.0...v0.305.0) (2022-11-30)
+
+
+### Features
+
+* **balances:** Stop filtering out zero balance tokens in balance fetchers ([#1820](https://github.com/Zapper-fi/studio/issues/1820)) ([3303c0a](https://github.com/Zapper-fi/studio/commit/3303c0a76259dca02b5a0969626ebc9b4d25bf7f))
+
+
+### Bug Fixes
+
+* **compound:** Add missing borrowed metaType ([#1828](https://github.com/Zapper-fi/studio/issues/1828)) ([93bd81b](https://github.com/Zapper-fi/studio/commit/93bd81bb4fc211229c519de1d0d75a317dd27c29))
+* **geist:** Fix lowercased token address ([#1829](https://github.com/Zapper-fi/studio/issues/1829)) ([d9d2acd](https://github.com/Zapper-fi/studio/commit/d9d2acd83ae947f8b7da5bb7b2374a972dc081ae))
+
 ## [0.304.0](https://github.com/Zapper-fi/studio/compare/v0.303.0...v0.304.0) (2022-11-29)
 
 
