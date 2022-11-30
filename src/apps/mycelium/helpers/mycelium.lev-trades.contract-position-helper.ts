@@ -17,6 +17,7 @@ export type MyceliumLevTradesContractPositionDataProps = {
   collateralTokenAddress: string;
   indexTokenAddress: string;
   isLong: boolean;
+  positionKey: string;
 };
 
 type MyceliumLevTradesContractPositionHelperParams = {
@@ -41,7 +42,7 @@ export class MyceliumLevTradesContractPositionHelper {
       address: MLP_VAULT_ADDRESS,
       network,
     });
-    // const test = await multicall.wrap(vaultContract).getPositions();
+
     const whitelistedTokenLengthRaw = await multicall.wrap(vaultContract).allWhitelistedTokensLength();
 
     const whitelistedTokens = await Promise.all(
@@ -63,17 +64,17 @@ export class MyceliumLevTradesContractPositionHelper {
               appId,
               groupId,
               address: LEV_TRADES_VAULT_ADDRESS,
-              key: `${collateralToken.symbol}:${indexToken.symbol}:short`,
               network,
-              tokens: [supplied(collateralToken), indexToken],
+              tokens: [supplied(collateralToken)],
               dataProps: {
                 collateralTokenAddress: collateralToken.address,
                 indexTokenAddress: indexToken.address,
                 isLong: false,
+                positionKey: `${collateralToken.address}:${indexToken.address}:short`,
               },
               displayProps: {
                 label: `Short ${indexToken.symbol}`,
-                images: [getTokenImg(collateralToken.address, network), getTokenImg(indexToken.address, network)],
+                images: [getTokenImg(collateralToken.address, network)],
                 statsItems: [],
               },
             };
@@ -83,17 +84,17 @@ export class MyceliumLevTradesContractPositionHelper {
               appId,
               groupId,
               address: LEV_TRADES_VAULT_ADDRESS,
-              key: `${collateralToken.symbol}:${indexToken.symbol}:long`,
               network,
-              tokens: [supplied(collateralToken), indexToken],
+              tokens: [supplied(collateralToken)],
               dataProps: {
                 collateralTokenAddress: collateralToken.address,
                 indexTokenAddress: indexToken.address,
                 isLong: true,
+                positionKey: `${collateralToken.address}:${indexToken.address}:long`,
               },
               displayProps: {
                 label: `Long ${indexToken.symbol}`,
-                images: [getTokenImg(collateralToken.address, network), getTokenImg(indexToken.address, network)],
+                images: [getTokenImg(collateralToken.address, network)],
                 statsItems: [],
               },
             };
