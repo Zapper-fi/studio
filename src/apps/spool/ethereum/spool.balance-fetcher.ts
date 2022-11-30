@@ -70,7 +70,10 @@ export class EthereumSpoolBalanceFetcher implements BalanceFetcher {
         // balanceRaw[4]: user's funds in underlying asset
         const pendingDeposit = balanceRaw[5].add(balanceRaw[7]);
         const balance = balanceRaw[4].add(pendingDeposit);
-        return [drillBalance(suppliedToken, balance.toString())];
+        return [
+          drillBalance(suppliedToken, balance.toString()),
+          ...props.contractPosition.tokens.slice(1).map(t => drillBalance(t, '0')),
+        ];
       },
     });
   }
