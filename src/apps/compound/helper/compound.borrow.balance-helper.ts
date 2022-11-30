@@ -4,6 +4,7 @@ import { BigNumberish } from 'ethers';
 import { drillBalance } from '~app-toolkit';
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { IMulticallWrapper } from '~multicall/multicall.interface';
+import { borrowed } from '~position/position.utils';
 import { Network } from '~types/network.interface';
 
 import { CompoundCToken } from '../contracts';
@@ -43,7 +44,7 @@ export class CompoundBorrowBalanceHelper {
       borrowPositions.map(async borrowPosition => {
         const borrowContract = getTokenContract({ address: borrowPosition.address, network });
         const balanceRaw = await getBorrowBalanceRaw({ contract: borrowContract, multicall, address });
-        const tokens = [drillBalance(borrowPosition.tokens[0], balanceRaw.toString(), { isDebt: true })];
+        const tokens = [drillBalance(borrowed(borrowPosition.tokens[0]), balanceRaw.toString(), { isDebt: true })];
         return { ...borrowPosition, tokens, balanceUSD: tokens[0].balanceUSD };
       }),
     );
