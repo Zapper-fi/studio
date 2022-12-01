@@ -2,10 +2,12 @@ import { Inject } from '@nestjs/common';
 import { BigNumberish } from 'ethers';
 
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import { VotingEscrowWithRewardsTemplateContractPositionFetcher } from '~position/template/voting-escrow-with-rewards.template.contract-position-fetcher';
 
 import { PieDaoContractFactory, PieDaoVoteLockedDough } from '../contracts';
 
+@PositionTemplate()
 export class EthereumPieDaoVotingEscrowContractPositionFether extends VotingEscrowWithRewardsTemplateContractPositionFetcher<
   PieDaoVoteLockedDough,
   PieDaoVoteLockedDough

@@ -2,17 +2,15 @@ import { Inject } from '@nestjs/common';
 
 import { APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { AppToolkit } from '~app-toolkit/app-toolkit.service';
-import { Register } from '~app-toolkit/decorators';
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import { GetDataPropsParams, GetTokenBalancesParams } from '~position/template/contract-position.template.types';
 import {
   SingleStakingFarmDataProps,
   SingleStakingFarmDefinition,
   SingleStakingFarmTemplateContractPositionFetcher,
 } from '~position/template/single-staking.template.contract-position-fetcher';
-import { Network } from '~types/network.interface';
 
 import { PieDaoContractFactory, PieDaoRewards } from '../contracts';
-import { PIE_DAO_DEFINITION } from '../pie-dao.definition';
 
 const FARMS = [
   // BPT WETH / DOUGH
@@ -47,11 +45,7 @@ const FARMS = [
   },
 ];
 
-const appId = PIE_DAO_DEFINITION.id;
-const groupId = PIE_DAO_DEFINITION.groups.farmSingleStaking.id;
-const network = Network.ETHEREUM_MAINNET;
-
-@Register.ContractPositionFetcher({ appId, groupId, network })
+@PositionTemplate()
 export class EthereumPieDaoFarmSingleStakingContractPositionFetcher extends SingleStakingFarmTemplateContractPositionFetcher<PieDaoRewards> {
   groupLabel = 'Farms';
 
