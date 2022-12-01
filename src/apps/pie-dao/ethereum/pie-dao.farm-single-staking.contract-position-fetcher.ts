@@ -1,11 +1,12 @@
 import { Inject } from '@nestjs/common';
 
+import { APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
+import { AppToolkit } from '~app-toolkit/app-toolkit.service';
 import { Register } from '~app-toolkit/decorators';
-import { SynthetixSingleStakingFarmContractPositionHelper } from '~apps/synthetix';
-import { PositionFetcher } from '~position/position-fetcher.interface';
-import { ContractPosition } from '~position/position.interface';
+import { SingleStakingFarmTemplateContractPositionFetcher } from '~position/template/single-staking.template.contract-position-fetcher';
 import { Network } from '~types/network.interface';
 
+import { PieDaoContractFactory, PieDaoRewards } from '../contracts';
 import { PIE_DAO_DEFINITION } from '../pie-dao.definition';
 
 const FARMS = [
@@ -46,22 +47,33 @@ const groupId = PIE_DAO_DEFINITION.groups.farmSingleStaking.id;
 const network = Network.ETHEREUM_MAINNET;
 
 @Register.ContractPositionFetcher({ appId, groupId, network })
-export class EthereumPieDaoFarmSingleStakingContractPositionFetcher implements PositionFetcher<ContractPosition> {
-  constructor(
-    @Inject(SynthetixSingleStakingFarmContractPositionHelper)
-    private readonly synthetixSingleStakingFarmContractPositionHelper: SynthetixSingleStakingFarmContractPositionHelper,
-  ) {}
+export class EthereumPieDaoFarmSingleStakingContractPositionFetcher extends SingleStakingFarmTemplateContractPositionFetcher<PieDaoRewards> {
+  groupLabel = 'Farms';
 
-  async getPositions() {
-    return this.synthetixSingleStakingFarmContractPositionHelper.getContractPositions({
-      network,
-      appId,
-      groupId,
-      farmDefinitions: FARMS,
-      dependencies: [
-        { appId: 'uniswap-v2', groupIds: ['pool'], network },
-        { appId: 'balancer-v1', groupIds: ['pool'], network },
-      ],
-    });
+  constructor(
+    @Inject(APP_TOOLKIT) protected readonly appToolkit: AppToolkit,
+    @Inject(PieDaoContractFactory) protected readonly contractFactory: PieDaoContractFactory,
+  ) {
+    super(appToolkit);
+  }
+
+  getContract(address: string): PieDaoRewards {
+    return this.contractFactory.pieDaoRewards({ address, network: this.network });
+  }
+
+  async getFarmDefinitions(): Promise<SingleStakingFarmDefinition[]> {
+    return FARMS;
+  }
+
+  getRewardRates({ contract }: GetDataPropsParams<PieDaoRewards, SingleStakingFarmDataProps>) {
+    return contract.rewardRate();
+  }
+
+  getStakedTokenBalance({ address, contract }: GetTokenBalancesParams<PieDaoRewards, SingleStakingFarmDataProps>) {
+    return contract.balanceOf(address);
+  }
+
+  getRewardTokenBalances({ address, contract }: GetTokenBalancesParams<PieDaoRewards, SingleStakingFarmDataProps>) {
+    return contract.earned(address);
   }
 }

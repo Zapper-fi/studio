@@ -8,8 +8,8 @@ import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.te
 import { PieDaoContractFactory } from '../contracts';
 
 @PositionTemplate()
-export class EthereumPieDaoEDoughTokenFetcher extends AppTokenTemplatePositionFetcher<Erc20> {
-  groupLabel = 'eDOUGH';
+export class EthereumPieDaoVeDoughTokenFetcher extends AppTokenTemplatePositionFetcher<Erc20> {
+  groupLabel = 'veDOUGH';
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
