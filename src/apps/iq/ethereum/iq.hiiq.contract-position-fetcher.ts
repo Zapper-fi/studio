@@ -3,8 +3,6 @@ import { ethers } from 'ethers';
 
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
-import { DefaultDataProps } from '~position/display.interface';
-import { ContractPositionBalance } from '~position/position-balance.interface';
 import { MetaType } from '~position/position.interface';
 import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
 import { GetDataPropsParams, GetTokenBalancesParams } from '~position/template/contract-position.template.types';
@@ -40,10 +38,6 @@ export class EthereumIqHiiqContractPositionFetcher extends ContractPositionTempl
     ];
   }
 
-  async getAccountAddress(address: string) {
-    return address;
-  }
-
   async getLabel() {
     return `HiIQ Lock`;
   }
@@ -61,7 +55,6 @@ export class EthereumIqHiiqContractPositionFetcher extends ContractPositionTempl
     let timeRemaining = bigTime.toNumber();
     const unlockTime = new Date(timeRemaining * 1000).toUTCString();
     const earned = await contract.earned(address);
-    const hiiqEarned = ethers.utils.formatUnits(earned);
-    return [hiiqEarned, unlockTime];
+    return [earned, unlockTime];
   }
 }
