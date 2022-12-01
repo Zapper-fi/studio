@@ -100,9 +100,9 @@ export abstract class ConvexFarmContractPositionFetcher extends SingleStakingFar
     const crvRewardRate = await multicall.wrap(contract).rewardRate();
     let cvxRewardRate = claimedCrvToMintedCvx(crvRewardRate.toString(), cvxSupplyRaw.toString());
 
-    const numExtraRewards = await multicall.wrap(contract).extraRewardsLength().then(Number);
+    const numExtraRewards = await multicall.wrap(contract).extraRewardsLength();
     const extraRewardRates = await Promise.all(
-      range(0, numExtraRewards).map(async v => {
+      range(0, Number(numExtraRewards)).map(async v => {
         const vbpAddress = await multicall.wrap(contract).extraRewards(v);
 
         const vbpContract = this.contractFactory.convexVirtualBalanceRewardPool({
@@ -143,18 +143,18 @@ export abstract class ConvexFarmContractPositionFetcher extends SingleStakingFar
     BigNumberish | BigNumberish[]
   > {
     const rewardTokens = contractPosition.tokens.filter(isClaimable);
-    const [, cvxRewardToken, ...extraRewards] = rewardTokens;
+    const [, cvxRewardToken] = rewardTokens;
 
     const cvxTokenContract = multicall.wrap(this.contractFactory.erc20(cvxRewardToken));
     const currentCvxSupply = await cvxTokenContract.totalSupply();
 
     const crvBalanceBN = await contract.earned(address);
     const crvBalanceRaw = crvBalanceBN.toString();
-    const cvxBalanceRaw = claimedCrvToMintedCvx(crvBalanceRaw, currentCvxSupply.toString());
-    // const cvxBalanceRawBN =
+    let cvxBalanceRaw = claimedCrvToMintedCvx(crvBalanceRaw, currentCvxSupply.toString());
 
+    const numExtraRewards = await multicall.wrap(contract).extraRewardsLength();
     const extraRewardBalances = await Promise.all(
-      extraRewards.map(async (_, i) => {
+      range(0, Number(numExtraRewards)).map(async (_, i) => {
         const vbpAddress = await contract.extraRewards(i);
 
         const vbpContract = this.contractFactory.convexVirtualBalanceRewardPool({
@@ -168,7 +168,7 @@ export abstract class ConvexFarmContractPositionFetcher extends SingleStakingFar
 
         // We will combine CVX extra rewards with the amount minted
         if (extraRewardTokenAddress === cvxRewardToken.address) {
-          cvxBalanceRaw.add(earnedBN);
+          cvxBalanceRaw = cvxBalanceRaw.add(earnedBN);
           return null;
         }
 
