@@ -36,7 +36,7 @@ export class EthereumPieDaoVotingEscrowContractPositionFether extends VotingEscr
   }
 
   async getRewardTokenAddress(contract: PieDaoVoteLockedDough) {
-    return contract.rewardsToken();
+    return contract.depositToken();
   }
 
   async getEscrowedTokenBalance(address: string, contract: PieDaoVoteLockedDough) {
