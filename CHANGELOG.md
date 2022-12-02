@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.310.0](https://github.com/Zapper-fi/studio/compare/v0.309.0...v0.310.0) (2022-12-02)
+
+
+### Features
+
+* **abracadabra:** Support GLP cauldron ([#1849](https://github.com/Zapper-fi/studio/issues/1849)) ([3795b2f](https://github.com/Zapper-fi/studio/commit/3795b2fa080e1a7862a0378e0bd0fd0b6ab2b675))
+
 ## [0.309.0](https://github.com/Zapper-fi/studio/compare/v0.308.0...v0.309.0) (2022-12-02)
 
 
