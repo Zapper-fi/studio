@@ -6,6 +6,7 @@ import 'moment-duration-format';
 
 import { drillBalance } from '~app-toolkit';
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
+import { ETH_ADDR_ALIAS, ZERO_ADDRESS } from '~app-toolkit/constants/address';
 import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { ContractPositionBalance } from '~position/position-balance.interface';
 import { MetaType, Standard } from '~position/position.interface';
@@ -70,19 +71,25 @@ export abstract class MeanFinanceDcaPositionContractPositionFetcher extends Cust
           dataToSearch: 'positions',
         });
 
-        const directions = positionData.positions.map(v => ({
-          fromTokenAddress: (v.from.underlyingTokens[0]?.address ?? v.from.address).toLowerCase(),
-          toTokenAddress: (v.to.underlyingTokens[0]?.address ?? v.to.address).toLowerCase(),
+        const directionsAndLiquidity = positionData.positions.map(v => ({
+          fromTokenAddress: (v.from.underlyingTokens[0]?.address ?? v.from.address)
+            .toLowerCase()
+            .replace(ETH_ADDR_ALIAS, ZERO_ADDRESS),
+          toTokenAddress: (v.to.underlyingTokens[0]?.address ?? v.to.address)
+            .toLowerCase()
+            .replace(ETH_ADDR_ALIAS, ZERO_ADDRESS),
+          fromLiquidity: v.remainingLiquidity,
+          toLiquidity: v.toWithdraw,
         }));
 
         // @TODO I'd prefer this to be done with a DataLoader in the `getDataProps` method.
-        const uniqueDirections = uniqBy(directions, v => `${v.fromTokenAddress}:${v.toTokenAddress}`);
+        const uniqueDirections = uniqBy(directionsAndLiquidity, v => `${v.fromTokenAddress}:${v.toTokenAddress}`);
         const uniqueDirectionsWithLiquidity = uniqueDirections.map(direction => {
-          const positions = positionData.positions
-            .filter(position => position.from.address.toLowerCase() === direction.fromTokenAddress)
-            .filter(position => position.to.address.toLowerCase() === direction.toTokenAddress);
-          const fromLiquidityBN = reduce(positions, (acc, v) => acc.add(v.remainingLiquidity), BigNumber.from(0));
-          const toLiquidityBN = reduce(positions, (acc, v) => acc.add(v.toWithdraw), BigNumber.from(0));
+          const positions = directionsAndLiquidity
+            .filter(d2 => d2.fromTokenAddress === direction.fromTokenAddress)
+            .filter(d2 => d2.toTokenAddress === direction.toTokenAddress);
+          const fromLiquidityBN = reduce(positions, (acc, v) => acc.add(v.fromLiquidity), BigNumber.from(0));
+          const toLiquidityBN = reduce(positions, (acc, v) => acc.add(v.toLiquidity), BigNumber.from(0));
 
           const fromLiquidity = fromLiquidityBN.toString();
           const toLiquidity = toLiquidityBN.toString();
@@ -148,8 +155,12 @@ export abstract class MeanFinanceDcaPositionContractPositionFetcher extends Cust
         const userPositions = await Promise.all(
           userPositionsData.positions.map(async userPos => {
             const hasYield = userPos.from.underlyingTokens.length > 0;
-            const fromTokenAddress = (userPos.from.underlyingTokens[0]?.address ?? userPos.from.address).toLowerCase();
-            const toTokenAddress = (userPos.to.underlyingTokens[0]?.address ?? userPos.to.address).toLowerCase();
+            const fromTokenAddress = (userPos.from.underlyingTokens[0]?.address ?? userPos.from.address)
+              .toLowerCase()
+              .replace(ETH_ADDR_ALIAS, ZERO_ADDRESS);
+            const toTokenAddress = (userPos.to.underlyingTokens[0]?.address ?? userPos.to.address)
+              .toLowerCase()
+              .replace(ETH_ADDR_ALIAS, ZERO_ADDRESS);
 
             const position = positions
               .filter(v => v.tokens[0].address === fromTokenAddress)
@@ -191,7 +202,7 @@ export abstract class MeanFinanceDcaPositionContractPositionFetcher extends Cust
             const remainingLabel = remainingMoment.format('w [weeks], d [days], h [hours], m [minutes]', {
               trim: 'all',
             });
-            const label = `Swapping ~${formattedRate} ${getLabelFromToken(fromToken)} ${hasYield ? ' with yield' : ''}${
+            const label = `Swapping ~${formattedRate}${getLabelFromToken(fromToken)}${hasYield ? ' with yield' : ''}${
               remainingSwaps > 0 ? ` every ${intervalLabel}` : ''
             } to ${getLabelFromToken(toToken)}`;
             const secondaryLabel = remainingSwaps > 0 ? `${remainingLabel} remaining` : 'Position finished';
