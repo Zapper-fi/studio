@@ -4,6 +4,48 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.309.0](https://github.com/Zapper-fi/studio/compare/v0.308.0...v0.309.0) (2022-12-02)
+
+
+### Features
+
+* **mean-finance:** Convert to custom templates and condense it ([#1843](https://github.com/Zapper-fi/studio/issues/1843)) ([54a40f6](https://github.com/Zapper-fi/studio/commit/54a40f6e66a49f86dc704e175f2000e45dee2914))
+
+## [0.308.0](https://github.com/Zapper-fi/studio/compare/v0.307.2...v0.308.0) (2022-12-01)
+
+
+### Features
+
+* **convex:** Convert to using Curve ve template ([33abea4](https://github.com/Zapper-fi/studio/commit/33abea4a7d9f422607e0427ada09caa78667d616))
+* **plutus:** TGE is fully vested, so the claimable amount is now allocation minus claimed ([7ca15b0](https://github.com/Zapper-fi/studio/commit/7ca15b0b3251dab73f289c1bf9f9587ed0f3e627))
+
+## [0.307.2](https://github.com/Zapper-fi/studio/compare/v0.307.1...v0.307.2) (2022-12-01)
+
+
+### Bug Fixes
+
+* **build:** Increase memory for build ([4d3cb8a](https://github.com/Zapper-fi/studio/commit/4d3cb8a34657560320ac014884a777ba5463e69f))
+
+## [0.307.1](https://github.com/Zapper-fi/studio/compare/v0.307.0...v0.307.1) (2022-12-01)
+
+
+### Bug Fixes
+
+* **convex:** Combine minted and bonus claimable CVX ([#1838](https://github.com/Zapper-fi/studio/issues/1838)) ([0e1caf5](https://github.com/Zapper-fi/studio/commit/0e1caf56959fa79090c033ebbbe6ef63c4382fec))
+
+## [0.307.0](https://github.com/Zapper-fi/studio/compare/v0.306.0...v0.307.0) (2022-12-01)
+
+
+### Features
+
+* **pie-dao:** Migrate to templates ([#1837](https://github.com/Zapper-fi/studio/issues/1837)) ([3f136fa](https://github.com/Zapper-fi/studio/commit/3f136fa8af48ced6be5bdde08c41f7f8b2982fa6))
+
+
+### Bug Fixes
+
+* **mycelium:** Remove indexToken from list of underlying tokens ([#1832](https://github.com/Zapper-fi/studio/issues/1832)) ([79f534a](https://github.com/Zapper-fi/studio/commit/79f534aeaf977542f128d83afbf1d810e7a6d67c))
+* **spool:** Make list of underlying tokens order the same as balances ([#1833](https://github.com/Zapper-fi/studio/issues/1833)) ([39a3701](https://github.com/Zapper-fi/studio/commit/39a37017575ff201fff250a2ce927cd5d0a9ea7d))
+
 ## [0.306.0](https://github.com/Zapper-fi/studio/compare/v0.305.0...v0.306.0) (2022-11-30)
 
 
