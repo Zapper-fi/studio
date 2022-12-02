@@ -17,7 +17,7 @@ export const IQ_DEFINITION = appDefinition({
     },
   },
 
-  tags: [AppTag.BRIDGE, AppTag.STAKING],
+  tags: [AppTag.STAKING],
   keywords: [],
   links: {
     github: 'https://github.com/EveripediaNetwork',
@@ -29,8 +29,6 @@ export const IQ_DEFINITION = appDefinition({
 
   supportedNetworks: {
     [Network.ETHEREUM_MAINNET]: [AppAction.VIEW],
-    [Network.POLYGON_MAINNET]: [AppAction.VIEW],
-    [Network.ARBITRUM_MAINNET]: [AppAction.VIEW],
   },
 
   primaryColor: '#ff5caa',
