@@ -38,6 +38,22 @@ export class UniswapV3LiquidityContractPositionBuilder {
     @Inject(UniswapV3ContractFactory) protected readonly contractFactory: UniswapV3ContractFactory,
   ) {}
 
+  async getTokensForPosition({
+    multicall,
+    positionId,
+    tokenLoader,
+    network,
+  }: UniswapV3LiquidityContractPositionHelperParams) {
+    const positionManager = this.contractFactory.uniswapV3PositionManager({ address: this.managerAddress, network });
+    const position = await multicall.wrap(positionManager).positions(positionId);
+
+    const token0Address = position.token0.toLowerCase();
+    const token1Address = position.token1.toLowerCase();
+    const queries = [token0Address, token1Address].map(t => ({ address: t, network }));
+    const [token0, token1] = await tokenLoader.getMany(queries);
+    return [token0, token1];
+  }
+
   async buildPosition({
     multicall,
     positionId,
@@ -49,14 +65,11 @@ export class UniswapV3LiquidityContractPositionBuilder {
     const factoryContract = this.contractFactory.uniswapV3Factory({ address: this.factoryAddress, network });
     const position = await multicall.wrap(positionManager).positions(positionId);
 
-    const fee = position.fee;
-    const token0Address = position.token0.toLowerCase();
-    const token1Address = position.token1.toLowerCase();
-    const queries = [token0Address, token1Address].map(t => ({ address: t, network }));
-    const [token0, token1] = await tokenLoader.getMany(queries);
+    const [token0, token1] = await this.getTokensForPosition({ multicall, positionId, tokenLoader, network });
     if (!token0 || !token1) return null;
 
-    const poolAddr = await multicall.wrap(factoryContract).getPool(token0Address, token1Address, fee);
+    const fee = position.fee;
+    const poolAddr = await multicall.wrap(factoryContract).getPool(token0.address, token1.address, fee);
     const poolAddress = poolAddr.toLowerCase();
     const poolContract = this.contractFactory.uniswapV3Pool({ address: poolAddress, network });
     const token0Contract = this.contractFactory.erc20(token0);
