@@ -6,7 +6,8 @@ import { PositionFetcher } from '~position/position-fetcher.interface';
 import { AppTokenPosition } from '~position/position.interface';
 import { Network } from '~types/network.interface';
 
-import { MstableContractFactory, MstableMetavault4626 } from '../contracts';
+import { MstableContractFactory } from '../contracts';
+import { MstableMetavault4626 } from '../contracts/ethers';
 import { MSTABLE_DEFINITION } from '../mstable.definition';
 
 const appId = MSTABLE_DEFINITION.id;
@@ -33,11 +34,7 @@ export class EthereumMstableMvUsdc3PcvTokenFetcher implements PositionFetcher<Ap
           .wrap(contract)
           .totalAssets()
           .then(v => Number(v) / 10 ** underlyingToken.decimals),
-      resolvePricePerShare: ({ multicall, contract, underlyingToken }) =>
-        multicall
-          .wrap(contract)
-          .convertToAssets(Number(1) ** 18)
-          .then(v => Number(v) / 10 ** underlyingToken.decimals),
+      resolvePricePerShare: ({ reserve, supply }) => reserve / supply,
     });
   }
 }
