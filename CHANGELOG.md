@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.310.1](https://github.com/Zapper-fi/studio/compare/v0.310.0...v0.310.1) (2022-12-03)
+
+
+### Bug Fixes
+
+* **llamapay:** Fix missing balances using contract address from the stream ([#1851](https://github.com/Zapper-fi/studio/issues/1851)) ([73add13](https://github.com/Zapper-fi/studio/commit/73add13c3090f3d27f5c0dd9e9bfa44d56e38292))
+
 ## [0.310.0](https://github.com/Zapper-fi/studio/compare/v0.309.0...v0.310.0) (2022-12-02)
 
 
