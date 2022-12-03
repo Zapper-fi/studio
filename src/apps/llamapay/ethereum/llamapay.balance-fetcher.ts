@@ -36,13 +36,6 @@ export class EthereumLlamapayBalanceFetcher implements BalanceFetcher {
       tags: { network, context: LLAMAPAY_DEFINITION.id },
     });
 
-    const llamapayAddress = '0xb70b0fee3c7752ec5ea6b2debc6bc1340d3e22dd';
-    const llamapayContract = this.contractFactory.llamapay({
-      address: llamapayAddress,
-      network: network,
-    });
-    const llamapay = multicall.wrap(llamapayContract);
-
     const underlyingAddresses = streams.map(stream => ({
       network: network,
       address: stream.token.address,
@@ -52,6 +45,11 @@ export class EthereumLlamapayBalanceFetcher implements BalanceFetcher {
 
     const positions = await Promise.all(
       streams.map(async stream => {
+        const llamapayContract = this.contractFactory.llamapay({
+          address: stream.contract.address.toLowerCase(),
+          network,
+        });
+        const llamapay = multicall.wrap(llamapayContract);
         const streamBalanceRaw = await llamapay
           .withdrawable(stream.payer.id, stream.payee.id, stream.amountPerSec)
           .catch(err => {
@@ -71,7 +69,7 @@ export class EthereumLlamapayBalanceFetcher implements BalanceFetcher {
         const position: ContractPositionBalance = {
           type: ContractType.POSITION,
           address: stream.contract.address,
-          network: network,
+          network,
           appId: LLAMAPAY_DEFINITION.id,
           groupId: LLAMAPAY_DEFINITION.groups.stream.id,
           tokens: [tokenBalance],
