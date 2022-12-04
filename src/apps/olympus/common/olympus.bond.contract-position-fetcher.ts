@@ -64,7 +64,7 @@ export abstract class OlympusBondContractPositionFetcher<
     contract,
     multicall,
   }: GetTokenBalancesParams<T, DefaultDataProps>): Promise<BigNumberish[]> {
-    const vestingAmountRaw = await this.resolveClaimableBalance({ address, contract, multicall });
+    const vestingAmountRaw = await this.resolveVestingBalance({ address, contract, multicall });
     const claimableAmountRaw = await this.resolveClaimableBalance({ address, contract, multicall });
     return [vestingAmountRaw, claimableAmountRaw, 0];
   }

@@ -4,8 +4,8 @@ import { AbstractApp } from '~app/app.dynamic-module';
 import { KlimaContractFactory } from './contracts';
 import { KlimaAppDefinition, KLIMA_DEFINITION } from './klima.definition';
 import { PolygonKlimaBondContractPositionFetcher } from './polygon/klima.bond.contract-position-fetcher';
-import { PolygonKlimaSTokenFetcher } from './polygon/klima.s-klima.token-fetcher';
-import { PolygonKlimaWsTokenFetcher } from './polygon/klima.ws-klima.token-fetcher';
+import { PolygonKlimaSKlimaTokenFetcher } from './polygon/klima.s-klima.token-fetcher';
+import { PolygonKlimaWsKlimaTokenFetcher } from './polygon/klima.ws-klima.token-fetcher';
 
 @Register.AppModule({
   appId: KLIMA_DEFINITION.id,
@@ -14,8 +14,8 @@ import { PolygonKlimaWsTokenFetcher } from './polygon/klima.ws-klima.token-fetch
     KlimaContractFactory,
     // Polygon
     PolygonKlimaBondContractPositionFetcher,
-    PolygonKlimaSTokenFetcher,
-    PolygonKlimaWsTokenFetcher,
+    PolygonKlimaSKlimaTokenFetcher,
+    PolygonKlimaWsKlimaTokenFetcher,
   ],
 })
 export class KlimaAppModule extends AbstractApp() {}

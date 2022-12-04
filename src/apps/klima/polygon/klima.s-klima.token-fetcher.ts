@@ -8,7 +8,7 @@ import { GetDataPropsParams } from '~position/template/app-token.template.types'
 import { KlimaContractFactory, KlimaSKlima } from '../contracts';
 
 @PositionTemplate()
-export class PolygonKlimaSTokenFetcher extends AppTokenTemplatePositionFetcher<KlimaSKlima> {
+export class PolygonKlimaSKlimaTokenFetcher extends AppTokenTemplatePositionFetcher<KlimaSKlima> {
   groupLabel = 'sKLIMA';
 
   constructor(
