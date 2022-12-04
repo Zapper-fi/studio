@@ -8,7 +8,7 @@ import { GetPricePerShareParams, GetUnderlyingTokensParams } from '~position/tem
 import { KlimaContractFactory, KlimaWsKlima } from '../contracts';
 
 @PositionTemplate()
-export class PolygonKlimaWsTokenFetcher extends AppTokenTemplatePositionFetcher<KlimaWsKlima> {
+export class PolygonKlimaWsKlimaTokenFetcher extends AppTokenTemplatePositionFetcher<KlimaWsKlima> {
   groupLabel = 'wsKLIMA';
 
   constructor(
@@ -23,7 +23,7 @@ export class PolygonKlimaWsTokenFetcher extends AppTokenTemplatePositionFetcher<
   }
 
   async getAddresses() {
-    return ['0xca76543cf381ebbb277be79574059e32108e3e65'];
+    return ['0x6f370dba99e32a3cad959b341120db3c9e280ba6'];
   }
 
   async getUnderlyingTokenAddresses({ contract }: GetUnderlyingTokensParams<KlimaWsKlima>) {

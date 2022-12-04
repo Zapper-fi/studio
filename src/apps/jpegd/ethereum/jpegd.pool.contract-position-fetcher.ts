@@ -13,8 +13,8 @@ import { JpegdContractFactory, JpegdLpFarm } from '../contracts';
 
 @PositionTemplate()
 export class EthereumJpegdPoolContractPositionFetcher extends MasterChefTemplateContractPositionFetcher<JpegdLpFarm> {
+  groupLabel = 'Pools';
   chefAddress = '0x3eed641562ac83526d7941e4326559e7b607556b';
-  groupLabel: string;
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
