@@ -8,7 +8,9 @@ import { AvalancheOlympusWsOhmV1TokenFetcher } from './avalanche/olympus.ws-ohm-
 import { OlympusContractFactory } from './contracts';
 import { EthereumOlympusBondContractPositionFetcher } from './ethereum/olympus.bond.contract-position-fetcher';
 import { EthereumOlympusGOhmTokenFetcher } from './ethereum/olympus.g-ohm.token-fetcher';
+import { EthereumOlympusSOhmV1TokenFetcher } from './ethereum/olympus.s-ohm-v1.token-fetcher';
 import { EthereumOlympusSOhmTokenFetcher } from './ethereum/olympus.s-ohm.token-fetcher';
+import { EthereumOlympusWsOhmV1TokenFetcher } from './ethereum/olympus.ws-ohm-v1.token-fetcher';
 import { FantomOlympusGOhmTokenFetcher } from './fantom/olympus.g-ohm.token-fetcher';
 import { OlympusBondV1ContractPositionBalanceHelper } from './helpers/olympus.bond-v1.contract-position-balance-helper';
 import { OlympusBondV2ContractPositionBalanceHelper } from './helpers/olympus.bond-v2.contract-position-balance-helper';
@@ -31,7 +33,9 @@ import { PolygonOlympusGOhmTokenFetcher } from './polygon/olympus.g-ohm.token-fe
     // // Ethereum
     EthereumOlympusBondContractPositionFetcher,
     EthereumOlympusSOhmTokenFetcher,
+    EthereumOlympusSOhmV1TokenFetcher,
     EthereumOlympusGOhmTokenFetcher,
+    EthereumOlympusWsOhmV1TokenFetcher,
     // // Fantom
     FantomOlympusGOhmTokenFetcher,
     // // Polygon

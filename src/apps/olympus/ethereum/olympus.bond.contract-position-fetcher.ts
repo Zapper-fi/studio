@@ -54,9 +54,9 @@ export class EthereumOlympusBondContractPositionFetcher extends ContractPosition
     definition,
   }: GetTokenDefinitionsParams<OlympusV2BondDepository, OlympusBondContractPositionDefinition>) {
     return [
-      { metaType: MetaType.VESTING, address: definition.mintedTokenAddress },
-      { metaType: MetaType.CLAIMABLE, address: definition.mintedTokenAddress },
-      { metaType: MetaType.SUPPLIED, address: definition.bondedTokenAddress },
+      { metaType: MetaType.VESTING, address: definition.mintedTokenAddress, network: this.network },
+      { metaType: MetaType.CLAIMABLE, address: definition.mintedTokenAddress, network: this.network },
+      { metaType: MetaType.SUPPLIED, address: definition.bondedTokenAddress, network: this.network },
     ];
   }
 
