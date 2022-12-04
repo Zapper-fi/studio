@@ -4,6 +4,19 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.312.0](https://github.com/Zapper-fi/studio/compare/v0.311.0...v0.312.0) (2022-12-04)
+
+
+### Features
+
+* **klima, jpegd:** To templates ([afbc315](https://github.com/Zapper-fi/studio/commit/afbc3158181f7dc93e9580dd6c33c6b44b894c41))
+* **klima, jpegd:** To templates ([#1857](https://github.com/Zapper-fi/studio/issues/1857)) ([637fa7f](https://github.com/Zapper-fi/studio/commit/637fa7f0753ca3dbf9ca7f3e6fd8440173cf150a))
+
+
+### Bug Fixes
+
+* **jpegd,klima:** Smol fixes ([933825e](https://github.com/Zapper-fi/studio/commit/933825e11f0336a93dc317008fa6a62fd678feee))
+
 ## [0.311.0](https://github.com/Zapper-fi/studio/compare/v0.310.1...v0.311.0) (2022-12-04)
 
 
