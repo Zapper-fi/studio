@@ -8,9 +8,6 @@ export const CONVEX_DEFINITION = appDefinition({
   name: 'Convex',
   description: `A platform that boosts rewards for CRV stakers and liquidity providers alike`,
   url: 'https://www.convexfinance.com/',
-  tags: [AppTag.YIELD_AGGREGATOR],
-  primaryColor: '#1682fe',
-  links: {},
 
   groups: {
     deposit: {
@@ -65,8 +62,18 @@ export const CONVEX_DEFINITION = appDefinition({
       isHiddenFromExplore: true,
     },
   },
+  tags: [AppTag.YIELD_AGGREGATOR],
+  primaryColor: '#1682fe',
+  links: {
+    discord: 'https://discord.com/invite/TTEVTqY488',
+    github: 'https://github.com/convex-eth',
+    medium: 'https://convexfinance.medium.com/',
+    telegram: 'https://t.me/convexEthChat',
+    twitter: 'https://twitter.com/ConvexFinance',
+  },
 
   supportedNetworks: {
+    [Network.ARBITRUM_MAINNET]: [AppAction.VIEW],
     [Network.ETHEREUM_MAINNET]: [AppAction.VIEW],
   },
 

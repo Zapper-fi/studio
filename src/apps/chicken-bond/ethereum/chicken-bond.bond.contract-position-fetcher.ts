@@ -1,4 +1,5 @@
 import { Inject, NotImplementedException } from '@nestjs/common';
+import _ from 'lodash';
 import { range } from 'lodash';
 
 import { drillBalance } from '~app-toolkit';
@@ -7,13 +8,19 @@ import { PositionTemplate } from '~app-toolkit/decorators/position-template.deco
 import { DefaultDataProps } from '~position/display.interface';
 import { ContractPositionBalance } from '~position/position-balance.interface';
 import { MetaType } from '~position/position.interface';
-import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
 import { DefaultContractPositionDefinition } from '~position/template/contract-position.template.types';
+import { CustomContractPositionTemplatePositionFetcher } from '~position/template/custom-contract-position.template.position-fetcher';
 
 import { ChickenBondBondNft, ChickenBondContractFactory } from '../contracts';
 
+enum BondStatus {
+  PENDING = 1,
+  CANCELLED = 2,
+  CLAIMED = 3,
+}
+
 @PositionTemplate()
-export class EthereumChickenBondBondContractPositionFetcher extends ContractPositionTemplatePositionFetcher<ChickenBondBondNft> {
+export class EthereumChickenBondBondContractPositionFetcher extends CustomContractPositionTemplatePositionFetcher<ChickenBondBondNft> {
   groupLabel = 'Bond';
 
   constructor(
@@ -29,8 +36,16 @@ export class EthereumChickenBondBondContractPositionFetcher extends ContractPosi
 
   async getTokenDefinitions() {
     return [
-      { metaType: MetaType.SUPPLIED, address: '0x5f98805a4e8be255a32880fdec7f6728c6568ba0' },
-      { metaType: MetaType.CLAIMABLE, address: '0xb9d7dddca9a4ac480991865efef82e01273f79c3' },
+      {
+        metaType: MetaType.SUPPLIED,
+        address: '0x5f98805a4e8be255a32880fdec7f6728c6568ba0',
+        network: this.network,
+      },
+      {
+        metaType: MetaType.CLAIMABLE,
+        address: '0xb9d7dddca9a4ac480991865efef82e01273f79c3',
+        network: this.network,
+      },
     ];
   }
 
@@ -68,8 +83,14 @@ export class EthereumChickenBondBondContractPositionFetcher extends ContractPosi
     const balances = await Promise.all(
       range(0, numPositionsRaw.toNumber()).map(async index => {
         const bondId = await multicall.wrap(bondNftContract).tokenOfOwnerByIndex(address, index);
-        const depositAmountRaw = await multicall.wrap(bondNftContract).getBondAmount(bondId);
-        const claimableAmountRaw = await multicall.wrap(bondManagerContract).calcAccruedBLUSD(bondId);
+
+        const bondStatus = await multicall.wrap(bondNftContract).getBondStatus(bondId);
+        if (bondStatus !== BondStatus.PENDING) return null;
+
+        const [depositAmountRaw, claimableAmountRaw] = await Promise.all([
+          multicall.wrap(bondNftContract).getBondAmount(bondId),
+          multicall.wrap(bondManagerContract).calcAccruedBLUSD(bondId),
+        ]);
 
         const depositAmount = drillBalance(contractPositions[0].tokens[0], depositAmountRaw.toString());
         const claimableBalance = drillBalance(contractPositions[0].tokens[1], claimableAmountRaw.toString());
@@ -82,6 +103,6 @@ export class EthereumChickenBondBondContractPositionFetcher extends ContractPosi
       }),
     );
 
-    return balances;
+    return _.compact(balances);
   }
 }

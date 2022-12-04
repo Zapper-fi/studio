@@ -25,7 +25,10 @@ export const COZY_FINANCE_DEFINITION = appDefinition({
 
   tags: [AppTag.INSURANCE],
   keywords: [],
-  links: {},
+  links: {
+    discord: 'https://discord.com/invite/3HWthTMHDd',
+    twitter: 'https://twitter.com/cozyfinance',
+  },
 
   supportedNetworks: {
     [Network.ETHEREUM_MAINNET]: [AppAction.VIEW],

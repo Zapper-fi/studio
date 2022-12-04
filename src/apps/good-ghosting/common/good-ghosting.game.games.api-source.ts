@@ -11,8 +11,9 @@ import { NetworkId, getGameVersionType, RewardType, BASE_API_URL, GamesResponse 
 @Injectable()
 export class GoodGhostingGameGamesApiSource {
   @CacheOnInterval({
-    key: `studio:${GOOD_GHOSTING_DEFINITION.id}:${GOOD_GHOSTING_DEFINITION.groups.game}:addresses`,
+    key: `studio:${GOOD_GHOSTING_DEFINITION.id}:${GOOD_GHOSTING_DEFINITION.groups.game.id}:addresses`,
     timeout: 15 * 60 * 1000,
+    failOnMissingData: false,
   })
   async getCachedGameConfigsData() {
     const url = `${BASE_API_URL}/games`;

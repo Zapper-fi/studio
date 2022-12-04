@@ -1,7 +1,7 @@
 import { Inject } from '@nestjs/common';
 import BigNumber from 'bignumber.js';
 import { ethers } from 'ethers';
-import { compact, omit, range, sumBy } from 'lodash';
+import { compact, range, sumBy } from 'lodash';
 
 import { drillBalance } from '~app-toolkit';
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
@@ -11,7 +11,6 @@ import { ContractType } from '~position/contract.interface';
 import { ContractPositionBalance } from '~position/position-balance.interface';
 import { MetaType } from '~position/position.interface';
 import { isBorrowed, isSupplied } from '~position/position.utils';
-import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
 import {
   GetDataPropsParams,
   GetDefinitionsParams,
@@ -20,6 +19,7 @@ import {
   GetTokenDefinitionsParams,
   UnderlyingTokenDefinition,
 } from '~position/template/contract-position.template.types';
+import { CustomContractPositionTemplatePositionFetcher } from '~position/template/custom-contract-position.template.position-fetcher';
 
 import { MakerContractFactory, MakerGemJoin } from '../contracts';
 
@@ -34,10 +34,11 @@ export type MakerVaultDataProps = {
   cRatio?: number;
   cdpId?: number;
   liquidity: number;
+  positionKey?: string;
 };
 
 @PositionTemplate()
-export class EthereumMakerVaultContractPositionFetcher extends ContractPositionTemplatePositionFetcher<
+export class EthereumMakerVaultContractPositionFetcher extends CustomContractPositionTemplatePositionFetcher<
   MakerGemJoin,
   MakerVaultDataProps,
   MakerVaultDefinition
@@ -83,8 +84,16 @@ export class EthereumMakerVaultContractPositionFetcher extends ContractPositionT
     definition,
   }: GetTokenDefinitionsParams<MakerGemJoin, MakerVaultDefinition>): Promise<UnderlyingTokenDefinition[] | null> {
     return [
-      { metaType: MetaType.SUPPLIED, address: definition.collateralTokenAddress }, // Vault Collateral
-      { metaType: MetaType.BORROWED, address: '0x6b175474e89094c44da98b954eedeac495271d0f' }, // DAI
+      {
+        metaType: MetaType.SUPPLIED,
+        address: definition.collateralTokenAddress, // Vault Collateral
+        network: this.network,
+      },
+      {
+        metaType: MetaType.BORROWED,
+        address: '0x6b175474e89094c44da98b954eedeac495271d0f', // DAI
+        network: this.network,
+      },
     ];
   }
 
@@ -185,7 +194,6 @@ export class EthereumMakerVaultContractPositionFetcher extends ContractPositionT
 
             const positionBalance: ContractPositionBalance<MakerVaultDataProps> = {
               type: ContractType.POSITION,
-              key: position.key,
               address: position.address,
               appId: position.appId,
               groupId: position.groupId,
@@ -198,6 +206,7 @@ export class EthereumMakerVaultContractPositionFetcher extends ContractPositionT
                 cdpId: cdp,
                 cRatio,
                 liquidity: position.dataProps.liquidity,
+                positionKey: `${cdp}`,
               },
 
               displayProps: {
@@ -207,7 +216,7 @@ export class EthereumMakerVaultContractPositionFetcher extends ContractPositionT
               },
             };
 
-            positionBalance.key = this.appToolkit.getPositionKey(omit(positionBalance, 'key'), ['cdpId']);
+            positionBalance.key = this.appToolkit.getPositionKey(positionBalance);
             return positionBalance;
           }),
         );

@@ -2,8 +2,7 @@ import { Inject, Injectable, Logger, OnModuleDestroy, OnModuleInit } from '@nest
 import { DiscoveryService, MetadataScanner, Reflector } from '@nestjs/core';
 import chalk from 'chalk';
 
-import { SCHEDULER_INTERVAL } from './scheduler.constants';
-import { ScheduleOptions } from './scheduler.decorator';
+import { ScheduleOptions, SCHEDULER_OPTIONS } from './scheduler.decorator';
 
 @Injectable()
 export class SchedulerService implements OnModuleInit, OnModuleDestroy {
@@ -38,10 +37,10 @@ export class SchedulerService implements OnModuleInit, OnModuleDestroy {
   private registerSchedule(instance: any, methodName: string) {
     const logger = this.logger;
     const methodRef = instance[methodName];
-    const intervalTimeout: ScheduleOptions['every'] = this.reflector.get(SCHEDULER_INTERVAL, methodRef);
+    const opts = this.reflector.get<ScheduleOptions | undefined>(SCHEDULER_OPTIONS, methodRef);
 
     // Don't register interval when missing parameters
-    if (!intervalTimeout) return;
+    if (!opts) return;
 
     let liveData = methodRef.apply(instance);
     // Duck typing shennanigans
@@ -64,7 +63,7 @@ export class SchedulerService implements OnModuleInit, OnModuleDestroy {
         logger.error(`@Schedule target error for ${instance.constructor.name}#${methodName}: ${e.message}`);
         logger.error(chalk.gray(e.stack));
       });
-    }, intervalTimeout);
+    }, opts.every);
 
     this.intervals.push(interval);
   }

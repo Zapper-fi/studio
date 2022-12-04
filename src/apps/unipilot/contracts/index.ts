@@ -6,6 +6,7 @@ import { Network } from '~types/network.interface';
 
 import { UnipilotEthereumFactory__factory } from './ethers';
 import { UnipilotPolygonFactory__factory } from './ethers';
+import { UnipilotVault__factory } from './ethers';
 
 // eslint-disable-next-line
 type ContractOpts = { address: string; network: Network };
@@ -22,7 +23,11 @@ export class UnipilotContractFactory extends ContractFactory {
   unipilotPolygonFactory({ address, network }: ContractOpts) {
     return UnipilotPolygonFactory__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
+  unipilotVault({ address, network }: ContractOpts) {
+    return UnipilotVault__factory.connect(address, this.appToolkit.getNetworkProvider(network));
+  }
 }
 
 export type { UnipilotEthereumFactory } from './ethers';
 export type { UnipilotPolygonFactory } from './ethers';
+export type { UnipilotVault } from './ethers';

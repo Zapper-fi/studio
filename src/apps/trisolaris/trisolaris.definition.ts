@@ -26,7 +26,12 @@ export const TRISOLARIS_DEFINITION = appDefinition({
 
   tags: [AppTag.LIQUIDITY_POOL],
   keywords: [],
-  links: {},
+  links: {
+    discord: 'https://discord.com/invite/my6GtSTmmX',
+    github: 'https://github.com/trisolaris-labs',
+    telegram: 'https://t.me/TrisolarisLabs',
+    twitter: 'https://twitter.com/trisolarislabs',
+  },
 
   supportedNetworks: {
     [Network.AURORA_MAINNET]: [AppAction.VIEW],

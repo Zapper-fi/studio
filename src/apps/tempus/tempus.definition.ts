@@ -26,7 +26,12 @@ export const TEMPUS_DEFINITION = appDefinition({
 
   tags: [AppTag.CROSS_CHAIN, AppTag.YIELD_AGGREGATOR],
   keywords: [],
-  links: {},
+  links: {
+    discord: 'https://discord.com/invite/uBZt4XyQbZ',
+    medium: 'https://medium.com/tempusfinance',
+    telegram: 'https://t.me/tempuschat',
+    twitter: 'https://twitter.com/tempusfinance',
+  },
 
   supportedNetworks: {
     [Network.ETHEREUM_MAINNET]: [AppAction.VIEW],
@@ -42,5 +47,3 @@ export class TempusAppDefinition extends AppDefinition {
     super(TEMPUS_DEFINITION);
   }
 }
-
-export default TEMPUS_DEFINITION;

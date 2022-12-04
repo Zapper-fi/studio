@@ -9,15 +9,15 @@ import { PositionTemplate } from '~app-toolkit/decorators/position-template.deco
 import { getImagesFromToken, getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { CacheOnInterval } from '~cache/cache-on-interval.decorator';
 import { ContractPositionBalance } from '~position/position-balance.interface';
-import { ContractPosition, MetaType } from '~position/position.interface';
+import { MetaType } from '~position/position.interface';
 import { isClaimable, isSupplied } from '~position/position.utils';
-import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
 import {
   GetTokenDefinitionsParams,
   GetDisplayPropsParams,
   GetTokenBalancesParams,
   GetDataPropsParams,
 } from '~position/template/contract-position.template.types';
+import { CustomContractPositionTemplatePositionFetcher } from '~position/template/custom-contract-position.template.position-fetcher';
 
 import { PolygonStakingContractFactory } from '../contracts';
 import { PolygonStakeManager } from '../contracts/ethers/PolygonStakeManager';
@@ -78,10 +78,11 @@ type PolygonStakingDepositDataProps = {
   validatorId: number;
   validatorName: string;
   validatorShareAddress: string;
+  positionKey: string;
 };
 
 @PositionTemplate()
-export class EthereumPolygonStakingContractPositionFetcher extends ContractPositionTemplatePositionFetcher<
+export class EthereumPolygonStakingContractPositionFetcher extends CustomContractPositionTemplatePositionFetcher<
   PolygonStakeManager,
   PolygonStakingDepositDataProps,
   PolygonStakingDepositDefinition
@@ -98,6 +99,7 @@ export class EthereumPolygonStakingContractPositionFetcher extends ContractPosit
   @CacheOnInterval({
     key: `studio:polygon-staking:deposit:ethereum:validators`,
     timeout: 15 * 60 * 1000,
+    failOnMissingData: false,
   })
   async getValidators() {
     const url = `https://sentinel.matic.network/api/v2/validators?limit=1000`;
@@ -122,8 +124,17 @@ export class EthereumPolygonStakingContractPositionFetcher extends ContractPosit
 
   async getTokenDefinitions(_params: GetTokenDefinitionsParams<PolygonStakeManager>) {
     return [
-      { metaType: MetaType.SUPPLIED, address: '0x7d1afa7b718fb893db30a3abc0cfc608aacfebb0' },
-      { metaType: MetaType.CLAIMABLE, address: '0x7d1afa7b718fb893db30a3abc0cfc608aacfebb0' },
+      {
+        metaType: MetaType.SUPPLIED,
+        address: '0x7d1afa7b718fb893db30a3abc0cfc608aacfebb0',
+        network: this.network,
+      },
+
+      {
+        metaType: MetaType.CLAIMABLE,
+        address: '0x7d1afa7b718fb893db30a3abc0cfc608aacfebb0',
+        network: this.network,
+      },
     ];
   }
 
@@ -134,6 +145,7 @@ export class EthereumPolygonStakingContractPositionFetcher extends ContractPosit
       validatorId: definition.validatorId,
       validatorName: definition.validatorName,
       validatorShareAddress: definition.validatorShareAddress,
+      positionKey: `${definition.validatorId}`,
     };
   }
 
@@ -144,10 +156,6 @@ export class EthereumPolygonStakingContractPositionFetcher extends ContractPosit
 
   async getImages({ contractPosition }: GetDisplayPropsParams<PolygonStakeManager>) {
     return getImagesFromToken(contractPosition.tokens[0]);
-  }
-
-  getKey({ contractPosition }: { contractPosition: ContractPosition<PolygonStakingDepositDataProps> }) {
-    return this.appToolkit.getPositionKey(contractPosition, ['validatorId']);
   }
 
   // @ts-ignore

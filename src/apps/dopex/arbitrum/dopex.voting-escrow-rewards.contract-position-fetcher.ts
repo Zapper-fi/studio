@@ -34,7 +34,13 @@ export class ArbitrumDopexVotingEscrowRewardsContractPositionFetcher extends Con
   }
 
   async getTokenDefinitions({ contract }: GetTokenDefinitionsParams<DopexVotingEscrowRewards>) {
-    return [{ metaType: MetaType.CLAIMABLE, address: await contract.emittedToken() }];
+    return [
+      {
+        metaType: MetaType.CLAIMABLE,
+        address: await contract.emittedToken(),
+        network: this.network,
+      },
+    ];
   }
 
   async getLabel({ contractPosition }: GetDisplayPropsParams<DopexVotingEscrowRewards>) {

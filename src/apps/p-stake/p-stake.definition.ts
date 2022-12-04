@@ -19,7 +19,11 @@ export const P_STAKE_DEFINITION = appDefinition({
 
   tags: [AppTag.LIQUID_STAKING],
   keywords: [],
-  links: {},
+  links: {
+    discord: 'https://discord.com/invite/qXRmTTGcYD',
+    telegram: 'https://t.me/pstakefinancechat',
+    twitter: 'https://twitter.com/pStakeFinance',
+  },
 
   supportedNetworks: {
     [Network.BINANCE_SMART_CHAIN_MAINNET]: [AppAction.VIEW],

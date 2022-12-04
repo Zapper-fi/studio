@@ -7,7 +7,6 @@ import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.prese
 import { isMulticallUnderlyingError } from '~multicall/multicall.ethers';
 import { ContractPositionBalance } from '~position/position-balance.interface';
 import { MetaType } from '~position/position.interface';
-import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
 import {
   GetDefinitionsParams,
   GetTokenDefinitionsParams,
@@ -15,6 +14,7 @@ import {
   GetDisplayPropsParams,
   GetTokenBalancesParams,
 } from '~position/template/contract-position.template.types';
+import { CustomContractPositionTemplatePositionFetcher } from '~position/template/custom-contract-position.template.position-fetcher';
 
 export type RariFuseBorrowContractPositionDataProps = {
   apy: number;
@@ -34,7 +34,7 @@ export abstract class RariFuseBorrowContractPositionFetcher<
   V extends Contract,
   R extends Contract,
   S extends Contract,
-> extends ContractPositionTemplatePositionFetcher<
+> extends CustomContractPositionTemplatePositionFetcher<
   R,
   RariFuseBorrowContractPositionDataProps,
   RariFuseBorrowContractPositionDefinition
@@ -80,7 +80,13 @@ export abstract class RariFuseBorrowContractPositionFetcher<
   }
 
   async getTokenDefinitions({ contract }: GetTokenDefinitionsParams<R>) {
-    return [{ metaType: MetaType.BORROWED, address: await this.getUnderlyingTokenAddress(contract) }];
+    return [
+      {
+        metaType: MetaType.BORROWED,
+        address: await this.getUnderlyingTokenAddress(contract),
+        network: this.network,
+      },
+    ];
   }
 
   async getDataProps({

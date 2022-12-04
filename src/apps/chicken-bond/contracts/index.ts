@@ -7,6 +7,7 @@ import { Network } from '~types/network.interface';
 import { ChickenBondBlusd__factory } from './ethers';
 import { ChickenBondBondNft__factory } from './ethers';
 import { ChickenBondManager__factory } from './ethers';
+import { CurvePool__factory } from './ethers';
 
 // eslint-disable-next-line
 type ContractOpts = { address: string; network: Network };
@@ -26,8 +27,12 @@ export class ChickenBondContractFactory extends ContractFactory {
   chickenBondManager({ address, network }: ContractOpts) {
     return ChickenBondManager__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
+  curvePool({ address, network }: ContractOpts) {
+    return CurvePool__factory.connect(address, this.appToolkit.getNetworkProvider(network));
+  }
 }
 
 export type { ChickenBondBlusd } from './ethers';
 export type { ChickenBondBondNft } from './ethers';
 export type { ChickenBondManager } from './ethers';
+export type { CurvePool } from './ethers';

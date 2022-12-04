@@ -6,7 +6,7 @@ import _, { flattenDeep, omit } from 'lodash';
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import { DefaultDataProps } from '~position/display.interface';
-import { ContractPosition, MetaType } from '~position/position.interface';
+import { MetaType } from '~position/position.interface';
 import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
 import {
   GetTokenDefinitionsParams,
@@ -91,6 +91,7 @@ export interface LyraAvalonOptionContractPositionDataProps extends DefaultDataPr
   callPrice: number;
   putPrice: number;
   strikePriceReadable: string;
+  positionKey: string;
 }
 
 export type LyraAvalonOptionTokenDefinition = {
@@ -164,17 +165,37 @@ export class OptimismLyraAvalonOptionsContractPositionFetcher extends ContractPo
 
     if (definition.optionType === 0 || definition.optionType === 1) {
       // Long Call/Long Put
-      const quoteTokenDefinition = { metaType: MetaType.SUPPLIED, address: definition.quoteAddress };
+      const quoteTokenDefinition = {
+        metaType: MetaType.SUPPLIED,
+        address: definition.quoteAddress,
+        network: this.network,
+      };
       return [quoteTokenDefinition];
     } else if (definition.optionType === 2) {
       // Short Call Base
-      const quoteTokenDefinition = { metaType: MetaType.BORROWED, address: definition.quoteAddress };
-      const collateralTokenDefinition = { metaType: MetaType.SUPPLIED, address: definition.baseAddress };
+      const quoteTokenDefinition = {
+        metaType: MetaType.BORROWED,
+        address: definition.quoteAddress,
+        network: this.network,
+      };
+      const collateralTokenDefinition = {
+        metaType: MetaType.SUPPLIED,
+        address: definition.baseAddress,
+        network: this.network,
+      };
       return [quoteTokenDefinition, collateralTokenDefinition];
     } else {
       // Short Call Quote/Short Put Quote
-      const quoteTokenDefinition = { metaType: MetaType.BORROWED, address: definition.quoteAddress };
-      const collateralTokenDefinition = { metaType: MetaType.SUPPLIED, address: definition.quoteAddress };
+      const quoteTokenDefinition = {
+        metaType: MetaType.BORROWED,
+        address: definition.quoteAddress,
+        network: this.network,
+      };
+      const collateralTokenDefinition = {
+        metaType: MetaType.SUPPLIED,
+        address: definition.quoteAddress,
+        network: this.network,
+      };
       return [quoteTokenDefinition, collateralTokenDefinition];
     }
   }
@@ -182,7 +203,7 @@ export class OptimismLyraAvalonOptionsContractPositionFetcher extends ContractPo
   async getDataProps({
     definition,
   }: GetDataPropsParams<LyraOptionToken, LyraAvalonOptionContractPositionDataProps, LyraAvalonOptionTokenDefinition>) {
-    return omit(definition, 'address');
+    return { ...omit(definition, 'address'), positionKey: `${definition.optionType}:${definition.strikeId}` };
   }
 
   async getLabel({
@@ -197,14 +218,6 @@ export class OptimismLyraAvalonOptionsContractPositionFetcher extends ContractPo
     const baseSymbol = await multicall.wrap(baseContract).symbol();
     const optionLabel = OPTION_TYPES[definition.optionType];
     return `${optionLabel} ${baseSymbol} @ $${definition.strikePriceReadable}`;
-  }
-
-  getKey({
-    contractPosition,
-  }: {
-    contractPosition: ContractPosition<LyraAvalonOptionContractPositionDataProps>;
-  }): string {
-    return this.appToolkit.getPositionKey(contractPosition, ['optionType', 'strikeId']);
   }
 
   async getTokenBalancesPerPosition({

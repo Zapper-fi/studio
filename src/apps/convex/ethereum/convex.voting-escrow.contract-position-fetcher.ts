@@ -1,23 +1,21 @@
 import { Inject } from '@nestjs/common';
+import { BigNumberish } from 'ethers';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
-import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
-import { MetaType } from '~position/position.interface';
-import { isSupplied } from '~position/position.utils';
-import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
-import {
-  GetDisplayPropsParams,
-  GetTokenBalancesParams,
-  GetTokenDefinitionsParams,
-} from '~position/template/contract-position.template.types';
+import { VotingEscrowWithRewardsTemplateContractPositionFetcher } from '~position/template/voting-escrow-with-rewards.template.contract-position-fetcher';
 
 import { ConvexContractFactory } from '../contracts';
 import { ConvexVotingEscrow } from '../contracts/ethers/ConvexVotingEscrow';
 
 @PositionTemplate()
-export class EthereumConvexVotingEscrowContractPositionFetcher extends ContractPositionTemplatePositionFetcher<ConvexVotingEscrow> {
+export class EthereumConvexVotingEscrowContractPositionFetcher extends VotingEscrowWithRewardsTemplateContractPositionFetcher<
+  ConvexVotingEscrow,
+  ConvexVotingEscrow
+> {
   groupLabel = 'Vote Locked CVX';
+  veTokenAddress = '0x72a19342e8f1838460ebfccef09f6585e32db86e';
+  rewardAddress = '0x72a19342e8f1838460ebfccef09f6585e32db86e';
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
@@ -26,33 +24,27 @@ export class EthereumConvexVotingEscrowContractPositionFetcher extends ContractP
     super(appToolkit);
   }
 
-  getContract(address: string): ConvexVotingEscrow {
+  getEscrowContract(address: string): ConvexVotingEscrow {
     return this.contractFactory.convexVotingEscrow({ address, network: this.network });
   }
 
-  async getDefinitions() {
-    return [{ address: '0x72a19342e8f1838460ebfccef09f6585e32db86e' }];
+  getRewardContract(address: string): ConvexVotingEscrow {
+    return this.contractFactory.convexVotingEscrow({ address, network: this.network });
   }
 
-  async getTokenDefinitions({ contract }: GetTokenDefinitionsParams<ConvexVotingEscrow>) {
-    const stakedTokenAddress = await contract.stakingToken();
-    const rewardTokenAddress = await contract.rewardTokens(0);
-
-    return [
-      { metaType: MetaType.SUPPLIED, address: stakedTokenAddress },
-      { metaType: MetaType.CLAIMABLE, address: rewardTokenAddress },
-    ];
+  async getEscrowedTokenAddress(contract: ConvexVotingEscrow): Promise<string> {
+    return contract.stakingToken();
   }
 
-  async getLabel({ contractPosition }: GetDisplayPropsParams<ConvexVotingEscrow>) {
-    const suppliedToken = contractPosition.tokens.find(isSupplied)!;
-    return `Voting Escrow ${getLabelFromToken(suppliedToken)}`;
+  async getRewardTokenAddress(contract: ConvexVotingEscrow): Promise<string> {
+    return contract.rewardTokens(0);
   }
 
-  async getTokenBalancesPerPosition({ address, contract }: GetTokenBalancesParams<ConvexVotingEscrow>) {
-    return Promise.all([
-      contract.lockedBalances(address).then(v => v.total),
-      contract.claimableRewards(address).then(v => v[0].amount),
-    ]);
+  async getEscrowedTokenBalance(address: string, contract: ConvexVotingEscrow): Promise<BigNumberish> {
+    return contract.lockedBalances(address).then(v => v.total);
+  }
+
+  async getRewardTokenBalance(address: string, contract: ConvexVotingEscrow): Promise<BigNumberish> {
+    return contract.claimableRewards(address).then(v => v[0].amount);
   }
 }

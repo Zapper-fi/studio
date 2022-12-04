@@ -35,7 +35,10 @@ export const IRON_BANK_DEFINITION = appDefinition({
   },
   tags: [AppTag.LENDING],
   keywords: [],
-  links: {},
+  links: {
+    medium: 'https://ibdotxyz.medium.com/',
+    twitter: 'https://twitter.com/ibdotxyz',
+  },
 
   supportedNetworks: {
     [Network.ETHEREUM_MAINNET]: [AppAction.VIEW],

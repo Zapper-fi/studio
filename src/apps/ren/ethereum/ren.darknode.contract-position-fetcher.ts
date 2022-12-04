@@ -9,14 +9,14 @@ import { PositionTemplate } from '~app-toolkit/decorators/position-template.deco
 import { ContractPositionBalance } from '~position/position-balance.interface';
 import { MetaType } from '~position/position.interface';
 import { isClaimable, isSupplied } from '~position/position.utils';
-import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
 import { GetDisplayPropsParams } from '~position/template/contract-position.template.types';
+import { CustomContractPositionTemplatePositionFetcher } from '~position/template/custom-contract-position.template.position-fetcher';
 
 import { RenApiClient } from '../common/ren.api.client';
 import { RenContractFactory, RenDarknodeRegistry } from '../contracts';
 
 @PositionTemplate()
-export class EthereumRenDarknodeContractPositionFetcher extends ContractPositionTemplatePositionFetcher<RenDarknodeRegistry> {
+export class EthereumRenDarknodeContractPositionFetcher extends CustomContractPositionTemplatePositionFetcher<RenDarknodeRegistry> {
   groupLabel = 'Darknodes';
 
   constructor(
@@ -40,8 +40,16 @@ export class EthereumRenDarknodeContractPositionFetcher extends ContractPosition
     const claimable = [ZERO_ADDRESS, ...assets.map(v => v.tokenAddress)];
 
     return [
-      { address: '0x408e41876cccdc0f92210600ef50372656052a38', metaType: MetaType.SUPPLIED },
-      ...claimable.map(address => ({ address, metaType: MetaType.CLAIMABLE })),
+      {
+        metaType: MetaType.SUPPLIED,
+        address: '0x408e41876cccdc0f92210600ef50372656052a38',
+        network: this.network,
+      },
+      ...claimable.map(claimableTokenAddress => ({
+        metaType: MetaType.CLAIMABLE,
+        address: claimableTokenAddress,
+        network: this.network,
+      })),
     ];
   }
 

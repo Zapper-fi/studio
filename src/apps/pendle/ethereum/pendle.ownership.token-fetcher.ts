@@ -149,15 +149,15 @@ export class EthereumPendleOwnershipTokenFetcher extends AppTokenTemplatePositio
     return otPrice / appToken.tokens[0].price;
   }
 
-  getLiquidity({ appToken }: GetDataPropsParams<PendleOwnershipToken>) {
+  async getLiquidity({ appToken }: GetDataPropsParams<PendleOwnershipToken>) {
     return appToken.supply * appToken.price;
   }
 
-  getReserves({ appToken }: GetDataPropsParams<PendleOwnershipToken>) {
+  async getReserves({ appToken }: GetDataPropsParams<PendleOwnershipToken>) {
     return [appToken.pricePerShare[0] * appToken.supply];
   }
 
-  getApy(_params: GetDataPropsParams<PendleOwnershipToken>) {
+  async getApy(_params: GetDataPropsParams<PendleOwnershipToken>) {
     return 0;
   }
 

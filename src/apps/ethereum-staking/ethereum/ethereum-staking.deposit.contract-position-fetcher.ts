@@ -54,7 +54,13 @@ export class EthereumEthereumStakingDepositContractPositionFetcher extends Contr
   }
 
   async getTokenDefinitions(_params: GetTokenDefinitionsParams<EthereumStakingDeposit>) {
-    return [{ metaType: MetaType.SUPPLIED, address: ZERO_ADDRESS }];
+    return [
+      {
+        metaType: MetaType.SUPPLIED,
+        address: ZERO_ADDRESS,
+        network: this.network,
+      },
+    ];
   }
 
   async getLabel({ contractPosition }: GetDisplayPropsParams<EthereumStakingDeposit>) {

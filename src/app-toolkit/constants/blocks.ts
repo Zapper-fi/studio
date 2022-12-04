@@ -1,7 +1,7 @@
 import { Network } from '~types/network.interface';
 
 export const BLOCKS_PER_DAY: Record<Network, number> = {
-  [Network.ETHEREUM_MAINNET]: 5760,
+  [Network.ETHEREUM_MAINNET]: 7160,
   [Network.POLYGON_MAINNET]: 43200,
   [Network.BINANCE_SMART_CHAIN_MAINNET]: 17280,
   [Network.ARBITRUM_MAINNET]: 6400,

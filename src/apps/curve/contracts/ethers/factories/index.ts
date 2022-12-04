@@ -3,6 +3,7 @@
 /* eslint-disable */
 export { CurveAddressResolver__factory } from './CurveAddressResolver__factory';
 export { CurveChildLiquidityGauge__factory } from './CurveChildLiquidityGauge__factory';
+export { CurveChildLiquidityGaugeFactory__factory } from './CurveChildLiquidityGaugeFactory__factory';
 export { CurveController__factory } from './CurveController__factory';
 export { CurveCryptoFactory__factory } from './CurveCryptoFactory__factory';
 export { CurveCryptoRegistry__factory } from './CurveCryptoRegistry__factory';

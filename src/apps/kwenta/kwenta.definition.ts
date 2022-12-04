@@ -13,13 +13,23 @@ export const KWENTA_DEFINITION = appDefinition({
     isolated: {
       id: 'isolated',
       type: GroupType.POSITION,
-      label: 'Isolated'
+      label: 'Isolated',
     },
     cross: {
       id: 'cross',
       type: GroupType.POSITION,
-      label: 'Cross'
-    }
+      label: 'Cross',
+    },
+    staking: {
+      id: 'staking',
+      type: GroupType.POSITION,
+      label: 'Staking',
+    },
+    lpStaking: {
+      id: 'lp-staking',
+      type: GroupType.POSITION,
+      label: 'LP Staking',
+    },
   },
   tags: [AppTag.DERIVATIVES],
   keywords: [],
@@ -34,6 +44,10 @@ export const KWENTA_DEFINITION = appDefinition({
   },
 
   primaryColor: '#fff',
+  token: {
+    address: '0x920cf626a271321c151d027030d5d08af699456b',
+    network: Network.OPTIMISM_MAINNET,
+  },
 });
 
 @Register.AppDefinition(KWENTA_DEFINITION.id)

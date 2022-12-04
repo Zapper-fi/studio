@@ -9,6 +9,8 @@ export const MEAN_FINANCE_DEFINITION = appDefinition({
   description:
     'Mean Finance enables users to Dollar Cost Average (DCA) any ERC20 into any ERC20 with their preferred period frequency.',
   url: 'https://mean.finance',
+  tags: [AppTag.ASSET_MANAGEMENT, AppTag.CROSS_CHAIN, AppTag.PREDICTION_MARKET],
+  keywords: [],
 
   groups: {
     dcaPosition: {
@@ -18,9 +20,11 @@ export const MEAN_FINANCE_DEFINITION = appDefinition({
     },
   },
 
-  tags: [AppTag.ASSET_MANAGEMENT, AppTag.CROSS_CHAIN, AppTag.PREDICTION_MARKET],
-  keywords: [],
-  links: {},
+  links: {
+    discord: 'https://discord.com/invite/ThfzDdn4pn/',
+    github: 'https://github.com/Mean-Finance',
+    twitter: 'https://twitter.com/mean_fi',
+  },
 
   supportedNetworks: {
     [Network.POLYGON_MAINNET]: [AppAction.VIEW],
@@ -37,5 +41,3 @@ export class MeanFinanceAppDefinition extends AppDefinition {
     super(MEAN_FINANCE_DEFINITION);
   }
 }
-
-export default MEAN_FINANCE_DEFINITION;

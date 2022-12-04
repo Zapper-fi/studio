@@ -87,20 +87,20 @@ export class EthereumSpoolStakingContractPositionFetcher implements PositionFetc
       rewardAddresses.map(address => this.appToolkit.getBaseTokenPrice({ network, address })),
     );
 
-    const tokens = rewardTokens.filter((token): token is BaseToken => token !== null).map(claimable);
-    tokens.push(supplied(stakedToken!));
-    tokens.push(vesting(govToken));
+    const claimableTokens = rewardTokens.filter((token): token is BaseToken => token !== null).map(claimable);
+
+    const tokens = [supplied(stakedToken), vesting(govToken), ...claimableTokens];
 
     const spoolContract = this.spoolContractFactory.erc20({ network, address: spoolTokenAddress });
     const totalStaked = await spoolContract.balanceOf(STAKING_ADDRESS);
-    const spoolStaked = totalStaked.div(big10.pow(stakedToken!.decimals)).toNumber();
+    const spoolStaked = totalStaked.div(big10.pow(stakedToken.decimals)).toNumber();
     const totalAccVoSpool = votingPowerRaw.div(big10.pow(voSpoolDecimals)).toNumber();
 
     const pricePrecision = 10 ** 10;
-    const tvl = BigNumber.from(pricePrecision * stakedToken!.price)
+    const tvl = BigNumber.from(pricePrecision * stakedToken.price)
       .mul(totalStaked)
       .div(pricePrecision)
-      .div(big10.pow(stakedToken!.decimals))
+      .div(big10.pow(stakedToken.decimals))
       .toNumber();
 
     const position: ContractPosition = {

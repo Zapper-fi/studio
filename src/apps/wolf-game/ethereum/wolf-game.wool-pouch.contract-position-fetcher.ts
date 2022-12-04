@@ -1,5 +1,4 @@
 import { Inject } from '@nestjs/common';
-import { BigNumberish } from 'ethers';
 import { gql } from 'graphql-request';
 
 import { drillBalance } from '~app-toolkit';
@@ -9,15 +8,12 @@ import { PositionTemplate } from '~app-toolkit/decorators/position-template.deco
 import { DefaultDataProps } from '~position/display.interface';
 import { ContractPositionBalance } from '~position/position-balance.interface';
 import { MetaType } from '~position/position.interface';
-import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
 import {
-  GetDefinitionsParams,
   DefaultContractPositionDefinition,
   GetTokenDefinitionsParams,
   UnderlyingTokenDefinition,
-  GetDisplayPropsParams,
-  GetTokenBalancesParams,
 } from '~position/template/contract-position.template.types';
+import { CustomContractPositionTemplatePositionFetcher } from '~position/template/custom-contract-position.template.position-fetcher';
 
 import { WolfGameContractFactory, WolfGameWoolPouch } from '../contracts';
 
@@ -33,7 +29,7 @@ const pouchesQuery = gql`
 `;
 
 @PositionTemplate()
-export class EthereumWolfGameWoolPouchContractPositionFetcher extends ContractPositionTemplatePositionFetcher<WolfGameWoolPouch> {
+export class EthereumWolfGameWoolPouchContractPositionFetcher extends CustomContractPositionTemplatePositionFetcher<WolfGameWoolPouch> {
   groupLabel = 'Wool Pouches';
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolKit: AppToolkit,
@@ -41,7 +37,7 @@ export class EthereumWolfGameWoolPouchContractPositionFetcher extends ContractPo
   ) {
     super(appToolKit);
   }
-  async getDefinitions(params: GetDefinitionsParams): Promise<DefaultContractPositionDefinition[]> {
+  async getDefinitions(): Promise<DefaultContractPositionDefinition[]> {
     return [{ address: '0xb76fbbb30e31f2c3bdaa2466cfb1cfe39b220d06' }];
   }
   getContract(address: string): WolfGameWoolPouch {
@@ -50,21 +46,23 @@ export class EthereumWolfGameWoolPouchContractPositionFetcher extends ContractPo
   async getTokenDefinitions(
     _params: GetTokenDefinitionsParams<WolfGameWoolPouch, DefaultContractPositionDefinition>,
   ): Promise<UnderlyingTokenDefinition[] | null> {
-    return [{ metaType: MetaType.CLAIMABLE, address: '0x8355dbe8b0e275abad27eb843f3eaf3fc855e525' }];
+    return [
+      {
+        metaType: MetaType.CLAIMABLE,
+        address: '0x8355dbe8b0e275abad27eb843f3eaf3fc855e525',
+        network: this.network,
+      },
+    ];
   }
-  async getLabel(
-    params: GetDisplayPropsParams<WolfGameWoolPouch, DefaultDataProps, DefaultContractPositionDefinition>,
-  ): Promise<string> {
+  async getLabel(): Promise<string> {
     return 'Wool Pouch';
   }
-  getTokenBalancesPerPosition({
-    address,
-    contractPosition,
-    contract,
-    multicall,
-  }: GetTokenBalancesParams<WolfGameWoolPouch, DefaultDataProps>): Promise<BigNumberish[]> {
+
+  // @ts-ignore
+  async getTokenBalancesPerPosition() {
     throw new Error('Method not implemented.');
   }
+
   async getBalances(address: string): Promise<ContractPositionBalance<DefaultDataProps>[]> {
     const multicall = this.appToolkit.getMulticall(this.network);
     const contractPositions = await this.appToolkit.getAppContractPositions({

@@ -10,7 +10,6 @@ export const REN_DEFINITION = appDefinition({
   primaryColor: '#f5f6f8',
   url: 'https://renproject.io/',
   tags: [AppTag.INFRASTRUCTURE],
-  links: {},
 
   groups: {
     darknode: {
@@ -18,6 +17,12 @@ export const REN_DEFINITION = appDefinition({
       type: GroupType.POSITION,
       label: 'Darknodes',
     },
+  },
+  links: {
+    discord: 'https://discord.com/invite/ren',
+    github: 'https://github.com/renproject',
+    medium: 'https://medium.com/renproject',
+    twitter: 'https://twitter.com/renprotocol',
   },
 
   supportedNetworks: {

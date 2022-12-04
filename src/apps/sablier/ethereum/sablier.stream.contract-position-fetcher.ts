@@ -10,8 +10,8 @@ import { isMulticallUnderlyingError } from '~multicall/multicall.ethers';
 import { ContractType } from '~position/contract.interface';
 import { ContractPositionBalance } from '~position/position-balance.interface';
 import { MetaType } from '~position/position.interface';
-import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
 import { GetDisplayPropsParams, GetTokenDefinitionsParams } from '~position/template/contract-position.template.types';
+import { CustomContractPositionTemplatePositionFetcher } from '~position/template/custom-contract-position.template.position-fetcher';
 
 import { SablierStreamApiClient } from '../common/sablier.stream.api-client';
 import { SablierContractFactory, SablierStream } from '../contracts';
@@ -27,7 +27,7 @@ export type SablierStreamContractPositionDefinition = {
 };
 
 @PositionTemplate()
-export class EthereumSablierStreamContractPositionFetcher extends ContractPositionTemplatePositionFetcher<
+export class EthereumSablierStreamContractPositionFetcher extends CustomContractPositionTemplatePositionFetcher<
   SablierStream,
   SablierStreamContractPositionDataProps,
   SablierStreamContractPositionDefinition
@@ -55,7 +55,13 @@ export class EthereumSablierStreamContractPositionFetcher extends ContractPositi
   async getTokenDefinitions({
     definition,
   }: GetTokenDefinitionsParams<SablierStream, SablierStreamContractPositionDefinition>) {
-    return [{ address: definition.tokenAddress, metaType: MetaType.SUPPLIED }];
+    return [
+      {
+        address: definition.tokenAddress,
+        metaType: MetaType.SUPPLIED,
+        network: this.network,
+      },
+    ];
   }
 
   async getLabel({ contractPosition }: GetDisplayPropsParams<SablierStream, SablierStreamContractPositionDataProps>) {

@@ -3,12 +3,13 @@ import { BigNumber, BigNumberish, Contract } from 'ethers';
 import { isArray, range, sum } from 'lodash';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
+import { ZERO_ADDRESS } from '~app-toolkit/constants/address';
 import { BLOCKS_PER_DAY } from '~app-toolkit/constants/blocks';
 import { RewardRateUnit } from '~app-toolkit/helpers/master-chef/master-chef.contract-position-helper';
 import { getImagesFromToken, getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { IMulticallWrapper } from '~multicall';
 import { isMulticallUnderlyingError } from '~multicall/multicall.ethers';
-import { ContractPosition, MetaType } from '~position/position.interface';
+import { MetaType } from '~position/position.interface';
 import { isClaimable, isSupplied } from '~position/position.utils';
 import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
 import {
@@ -24,6 +25,7 @@ export type MasterChefContractPositionDataProps = {
   liquidity: number;
   isActive: boolean;
   apy: number;
+  positionKey: string;
 };
 
 export type MasterChefContractPositionDefinition = {
@@ -98,10 +100,12 @@ export abstract class MasterChefTemplateContractPositionFetcher<
         throw err;
       });
 
-    if (!stakedTokenAddress || !rewardTokenAddresses) return null;
+    if (!stakedTokenAddress || stakedTokenAddress === ZERO_ADDRESS || !rewardTokenAddresses) return null;
 
-    tokenDefinitions.push({ metaType: MetaType.SUPPLIED, address: stakedTokenAddress });
-    rewardTokenAddresses.forEach(v => tokenDefinitions.push({ metaType: MetaType.CLAIMABLE, address: v }));
+    tokenDefinitions.push({ metaType: MetaType.SUPPLIED, address: stakedTokenAddress, network: this.network });
+    rewardTokenAddresses.forEach(v =>
+      tokenDefinitions.push({ metaType: MetaType.CLAIMABLE, address: v, network: this.network }),
+    );
     return tokenDefinitions;
   }
 
@@ -147,7 +151,7 @@ export abstract class MasterChefTemplateContractPositionFetcher<
     const apy = dailyReturn * 365 * 100;
     const isActive = apy > 0;
 
-    return { poolIndex, liquidity, apy, isActive } as V;
+    return { poolIndex, liquidity, apy, isActive, positionKey: `${poolIndex}` } as V;
   }
 
   async getLabel({ contractPosition }: GetDisplayPropsParams<T>) {
@@ -157,10 +161,6 @@ export abstract class MasterChefTemplateContractPositionFetcher<
 
   async getImages({ contractPosition }: GetDisplayPropsParams<T, V>) {
     return contractPosition.tokens.filter(isSupplied).flatMap(v => getImagesFromToken(v));
-  }
-
-  getKey({ contractPosition }: { contractPosition: ContractPosition<V> }): string {
-    return this.appToolkit.getPositionKey(contractPosition, ['poolIndex']);
   }
 
   async getTokenBalancesPerPosition(params: GetTokenBalancesParams<T, MasterChefContractPositionDataProps>) {

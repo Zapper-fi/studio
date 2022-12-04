@@ -2,5 +2,6 @@
 /* tslint:disable */
 /* eslint-disable */
 export { PieDaoReferralRewards__factory } from './PieDaoReferralRewards__factory';
+export { PieDaoRewards__factory } from './PieDaoRewards__factory';
 export { PieDaoStaking__factory } from './PieDaoStaking__factory';
 export { PieDaoVoteLockedDough__factory } from './PieDaoVoteLockedDough__factory';
