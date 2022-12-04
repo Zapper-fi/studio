@@ -4,6 +4,15 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.311.0](https://github.com/Zapper-fi/studio/compare/v0.310.1...v0.311.0) (2022-12-04)
+
+
+### Features
+
+* **m-stable:** Add USDC 3Pool Convex Meta Vault ([#1855](https://github.com/Zapper-fi/studio/issues/1855)) ([4a8e253](https://github.com/Zapper-fi/studio/commit/4a8e25357d5d10d84859d344cdbc0378b5183191))
+* **olympus:** Migrate to templates ([#1688](https://github.com/Zapper-fi/studio/issues/1688)) ([6528036](https://github.com/Zapper-fi/studio/commit/652803627f2eda4270bb0986added14331b92ae8))
+* **revert-finance:** To templates ([#1853](https://github.com/Zapper-fi/studio/issues/1853)) ([a3baf80](https://github.com/Zapper-fi/studio/commit/a3baf808a571f804d7747d6a8f37fd82a94bdff5))
+
 ## [0.310.1](https://github.com/Zapper-fi/studio/compare/v0.310.0...v0.310.1) (2022-12-03)
 
 
