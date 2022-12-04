@@ -4,7 +4,7 @@ import { compact, merge, range, sumBy, uniqBy } from 'lodash';
 
 import { drillBalance } from '~app-toolkit';
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
-import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
+import { getImagesFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { UniswapV3LiquidityContractPositionBuilder } from '~apps/uniswap-v3/common/uniswap-v3.liquidity.contract-position-builder';
 import { DefaultDataProps } from '~position/display.interface';
 import { ContractPositionBalance } from '~position/position-balance.interface';
@@ -89,12 +89,13 @@ export abstract class RevertFinanceCompoundorRewardsContractPositionFetcher exte
       }),
     );
 
+    const nonZeroBalances = tokenBalances.filter(v => v.balanceUSD > 0);
     const positionBalance = merge({}, position, {
-      balanceUSD: sumBy(tokenBalances, v => v.balanceUSD),
-      tokens: tokenBalances,
+      balanceUSD: sumBy(nonZeroBalances, v => v.balanceUSD),
+      tokens: nonZeroBalances,
       displayProps: {
         label: `Compoundor Claimable Fees`,
-        images: tokens.flatMap(v => getLabelFromToken(v)),
+        images: nonZeroBalances.flatMap(v => getImagesFromToken(v)),
         statsItems: [],
       },
     });
