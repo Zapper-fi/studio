@@ -71,7 +71,7 @@ export class PolygonKlimaBondContractPositionFetcher extends OlympusBondContract
     return vestingBalanceRaw;
   }
 
-  resolveClaimableBalance({
+  async resolveClaimableBalance({
     address,
     contract,
   }: ResolveClaimableBalanceParams<KlimaBondDepository>): Promise<BigNumberish> {
