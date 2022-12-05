@@ -1,12 +1,14 @@
 import { Inject } from '@nestjs/common';
 
-import { Register } from '~app-toolkit/decorators';
 import { PresentationConfig } from '~app/app.interface';
+import { MetadataItemWithLabel } from '~balance/balance-fetcher.interface';
 import { PositionPresenterTemplate, ReadonlyBalances } from '~position/template/position-presenter.template';
 
 import { AaveV2ContractFactory } from '../contracts';
 
-export abstract class AaveV2PositionPresenter extends PositionPresenterTemplate {
+export type AaveV2PositionPresenterDataProps = { healthFactor: number };
+
+export abstract class AaveV2PositionPresenter extends PositionPresenterTemplate<AaveV2PositionPresenterDataProps> {
   abstract lendingPoolAddress: string;
 
   constructor(@Inject(AaveV2ContractFactory) protected readonly aaveV2ContractFactory: AaveV2ContractFactory) {
@@ -55,18 +57,23 @@ export abstract class AaveV2PositionPresenter extends PositionPresenterTemplate 
     return lendingPoolUserData.healthFactor;
   }
 
-  @Register.BalanceProductMeta('Lending')
-  async getLendingMeta(address: string, balances: ReadonlyBalances) {
-    // When no debt, no health factor (pas de bras, pas de chocolat)
-    if (!balances.some(balance => balance.balanceUSD < 0)) return [];
-    const healthFactor = await this.getHealthFactor(address);
+  async positionDataProps({
+    address,
+    groupLabel,
+    balances,
+  }: {
+    address: string;
+    groupLabel: string;
+    balances: ReadonlyBalances;
+  }): Promise<AaveV2PositionPresenterDataProps | undefined> {
+    if (groupLabel !== 'Lending') return;
+    if (!balances.some(balance => balance.balanceUSD < 0)) return;
 
-    return [
-      {
-        label: 'Health Factor',
-        value: Number(healthFactor) / 10 ** 18,
-        type: 'number',
-      },
-    ];
+    const healthFactor = await this.getHealthFactor(address).then(v => Number(v) / 10 ** 18);
+    return { healthFactor };
+  }
+
+  presentDataProps(dataProps: AaveV2PositionPresenterDataProps): MetadataItemWithLabel[] {
+    return [{ label: 'Health Factor', value: dataProps.healthFactor, type: 'number' }];
   }
 }

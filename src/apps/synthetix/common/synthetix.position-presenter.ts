@@ -2,26 +2,44 @@ import { Inject } from '@nestjs/common';
 import { formatBytes32String } from 'ethers/lib/utils';
 import _ from 'lodash';
 
-import { Register } from '~app-toolkit/decorators';
 import {
   buildDollarDisplayItem,
   buildPercentageDisplayItem,
   buildNumberDisplayItem,
 } from '~app-toolkit/helpers/presentation/display-item.present';
+import { MetadataItemWithLabel } from '~balance/balance-fetcher.interface';
 import { ContractType } from '~position/contract.interface';
 import { PositionPresenterTemplate, ReadonlyBalances } from '~position/template/position-presenter.template';
 
 import { SynthetixContractFactory } from '../contracts';
 
-export abstract class SynthetixPositionPresenter extends PositionPresenterTemplate {
+export type SynthetixPositionPresenterDataProps = {
+  collateralUSD: number;
+  debtBalanceUSD: number;
+  cRatio: number;
+  escrowed: number;
+  unescrowed: number;
+  snxPrice: number;
+};
+
+export abstract class SynthetixPositionPresenter extends PositionPresenterTemplate<SynthetixPositionPresenterDataProps> {
   abstract snxAddress: string;
 
   constructor(@Inject(SynthetixContractFactory) protected readonly contractFactory: SynthetixContractFactory) {
     super();
   }
 
-  @Register.BalanceProductMeta('Mintr')
-  async getMintrMeta(address: string, balances: ReadonlyBalances) {
+  async positionDataProps({
+    address,
+    groupLabel,
+    balances,
+  }: {
+    address: string;
+    groupLabel: string;
+    balances: ReadonlyBalances;
+  }): Promise<SynthetixPositionPresenterDataProps | undefined> {
+    if (groupLabel !== 'Mintr') return;
+
     let snxPrice: number | undefined;
     let susdPrice: number | undefined;
 
@@ -44,7 +62,7 @@ export abstract class SynthetixPositionPresenter extends PositionPresenterTempla
       }
     }
 
-    if (!snxPrice || !susdPrice) return [];
+    if (!snxPrice || !susdPrice) return;
 
     const synthetixContract = this.contractFactory.synthetixNetworkToken({
       address: this.snxAddress,
@@ -67,6 +85,11 @@ export abstract class SynthetixPositionPresenter extends PositionPresenterTempla
     const escrowed = collateralBalance - unlockedSnx;
     const unescrowed = unlockedSnx;
 
+    return { collateralUSD, debtBalanceUSD, cRatio, escrowed, unescrowed, snxPrice: snxBalance.price };
+  }
+
+  presentDataProps(dataProps: SynthetixPositionPresenterDataProps): MetadataItemWithLabel[] {
+    const { collateralUSD, debtBalanceUSD, cRatio, escrowed, unescrowed, snxPrice } = dataProps;
     return [
       { label: 'Collateral', ...buildDollarDisplayItem(collateralUSD) },
       { label: 'Debt', ...buildDollarDisplayItem(debtBalanceUSD) },

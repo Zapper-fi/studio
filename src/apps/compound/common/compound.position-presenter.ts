@@ -1,10 +1,9 @@
-import { sumBy } from 'lodash';
-
-import { Register } from '~app-toolkit/decorators';
 import { PresentationConfig } from '~app/app.interface';
+import { MetadataItemWithLabel } from '~balance/balance-fetcher.interface';
+import { lendingDataProps, LendingDataProps, presentLendingDataProps } from '~position/position-presenter.utils';
 import { PositionPresenterTemplate, ReadonlyBalances } from '~position/template/position-presenter.template';
 
-export abstract class CompoundPositionPresenter extends PositionPresenterTemplate {
+export abstract class CompoundPositionPresenter extends PositionPresenterTemplate<LendingDataProps> {
   explorePresentationConfig?: PresentationConfig = {
     tabs: [
       {
@@ -26,30 +25,20 @@ export abstract class CompoundPositionPresenter extends PositionPresenterTemplat
     ],
   };
 
-  @Register.BalanceProductMeta('Lending')
-  async getLendingMeta(_address: string, balances: ReadonlyBalances) {
-    const collaterals = balances.filter(balance => balance.balanceUSD > 0);
-    const debt = balances.filter(balance => balance.balanceUSD < 0);
-    const totalCollateralUSD = sumBy(collaterals, a => a.balanceUSD);
-    const totalDebtUSD = sumBy(debt, a => a.balanceUSD);
-    const utilRatio = (Math.abs(totalDebtUSD) / totalCollateralUSD) * 100;
+  async positionDataProps({
+    balances,
+    groupLabel,
+  }: {
+    address: string;
+    groupLabel: string;
+    balances: ReadonlyBalances;
+  }): Promise<LendingDataProps | undefined> {
+    if (groupLabel === 'Lending') {
+      return lendingDataProps(balances);
+    }
+  }
 
-    return [
-      {
-        label: 'Collateral',
-        value: totalCollateralUSD,
-        type: 'dollar',
-      },
-      {
-        label: 'Debt',
-        value: totalDebtUSD,
-        type: 'dollar',
-      },
-      {
-        label: 'Utilization Rate',
-        value: utilRatio,
-        type: 'pct',
-      },
-    ];
+  presentDataProps(dataProps: LendingDataProps): MetadataItemWithLabel[] {
+    return presentLendingDataProps(dataProps);
   }
 }
