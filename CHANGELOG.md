@@ -4,6 +4,18 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.313.0](https://github.com/Zapper-fi/studio/compare/v0.312.0...v0.313.0) (2022-12-05)
+
+
+### Features
+
+* **rocket-pool:** Fix app participation for rocket pool ([#1861](https://github.com/Zapper-fi/studio/issues/1861)) ([2221a67](https://github.com/Zapper-fi/studio/commit/2221a67b26172b60a45ea394130948097a574454))
+
+
+### Bug Fixes
+
+* **env:** Add missing .env.sample file ([#1859](https://github.com/Zapper-fi/studio/issues/1859)) ([d1da748](https://github.com/Zapper-fi/studio/commit/d1da748d5516aded913cf326d9cde49c186b0921))
+
 ## [0.312.0](https://github.com/Zapper-fi/studio/compare/v0.311.0...v0.312.0) (2022-12-04)
 
 
