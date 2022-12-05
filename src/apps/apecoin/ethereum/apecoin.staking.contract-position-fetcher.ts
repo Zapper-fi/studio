@@ -83,15 +83,18 @@ export class EthereumApecoinStakingContractPositionFetcher extends CustomContrac
           drillBalance(claimableToken, claimableAmountRaw.toString()),
         ];
         const balanceUSD = sumBy(tokens, v => v.balanceUSD);
+        const positionKey = `${position.poolId}:${position.tokenId}`;
+        const labelSuffix =
+          position.poolId.gt(0) && position.tokenId.gt(0)
+            ? ` (Pool #${position.poolId}, Token ID #${position.tokenId})`
+            : '';
+        const label = `Staked APE${labelSuffix}`;
+
         const contractPositionBalance = merge({}, contractPosition, {
           tokens,
           balanceUSD,
-          dataProps: {
-            positionKey: `${position.poolId}:${position.tokenId}`,
-          },
-          displayProps: {
-            label: `Staked Apecoin (Pool #${position.poolId}, Token ID #${position.tokenId})`,
-          },
+          dataProps: { positionKey },
+          displayProps: { label },
         });
 
         return contractPositionBalance;
