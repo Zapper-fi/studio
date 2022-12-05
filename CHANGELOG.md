@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.314.0](https://github.com/Zapper-fi/studio/compare/v0.313.0...v0.314.0) (2022-12-05)
+
+
+### Features
+
+* **enzyme-finance:** Fix price per share ([#1862](https://github.com/Zapper-fi/studio/issues/1862)) ([b1c75f9](https://github.com/Zapper-fi/studio/commit/b1c75f9d0e1434c886c4bb452f8db102f2d21ba9))
+
 ## [0.313.0](https://github.com/Zapper-fi/studio/compare/v0.312.0...v0.313.0) (2022-12-05)
 
 
