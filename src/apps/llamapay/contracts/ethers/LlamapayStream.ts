@@ -18,7 +18,7 @@ import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi
 import type { Listener, Provider } from '@ethersproject/providers';
 import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
-export interface LlamapayInterface extends utils.Interface {
+export interface LlamapayStreamInterface extends utils.Interface {
   functions: {
     'DECIMALS_DIVISOR()': FunctionFragment;
     'balances(address)': FunctionFragment;
@@ -272,12 +272,12 @@ export type WithdrawEvent = TypedEvent<[string, string, BigNumber, string, BigNu
 
 export type WithdrawEventFilter = TypedEventFilter<WithdrawEvent>;
 
-export interface Llamapay extends BaseContract {
+export interface LlamapayStream extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
 
-  interface: LlamapayInterface;
+  interface: LlamapayStreamInterface;
 
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,
