@@ -13,19 +13,21 @@ import { ContractPositionBalance } from '~position/position-balance.interface';
 import { isClaimable, isSupplied } from '~position/position.utils';
 import { Network } from '~types/network.interface';
 import { NetworkId } from '../common/good-ghosting.game.constants';
-import { GoodGhostingGameConfigFetcherHelper } from '../helpers/good-ghosting.game.config-fetcher';
+import { GoodGhostingGameGamesApiSource } from '../common/good-ghosting.game.games.api-source';
+import { GoodGhostingGameBalancesApiSource } from '../common/good-ghosting.game.balances.api-source';
 
 @Injectable()
 export class GoodGhostingBalanceFetcherHelper {
   constructor(
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
     @Inject(GoodGhostingGameConfigFetcherHelper)
-    private readonly goodGhostingGameConfigFetcherHelper: GoodGhostingGameConfigFetcherHelper,
+    private readonly goodGhostingGameGamesApiSource: GoodGhostingGameGamesApiSource,
+    private readonly goodGhostingGameBalancesApiSource: GoodGhostingGameBalancesApiSource,
   ) {}
 
   async getGameBalances(network: Network, networkId: string, appId: string, groupId: string, address: string) {
-    const getGameConfigs = this.goodGhostingGameConfigFetcherHelper.getGameConfigs(networkId);
-    const getPlayerGameBalances = this.goodGhostingGameConfigFetcherHelper.getPlayerGameBalances(address, networkId);
+    const getGameConfigs = this.goodGhostingGameGamesApiSource.getGameConfigs(networkId);
+    const getPlayerGameBalances = this.goodGhostingGameBalancesApiSource.getBalances(address, networkId);
 
     const [gameConfigs, playerGameBalances] = await Promise.all([getGameConfigs, getPlayerGameBalances]);
     const contractPositions = await this.appToolkit.getAppContractPositions({ network, appId, groupIds: [groupId] });
