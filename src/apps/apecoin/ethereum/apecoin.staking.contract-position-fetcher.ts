@@ -25,7 +25,7 @@ export class EthereumApecoinStakingContractPositionFetcher extends CustomContrac
   }
 
   async getDefinitions(): Promise<DefaultContractPositionDefinition[]> {
-    return [{ address: '0x5954ab967bc958940b7eb73ee84797dc8a2afbb9' }]; // to be replaced with the address of the contract on ethereum
+    return [{ address: '0x5954ab967bc958940b7eb73ee84797dc8a2afbb9' }];
   }
 
   async getTokenDefinitions() {
