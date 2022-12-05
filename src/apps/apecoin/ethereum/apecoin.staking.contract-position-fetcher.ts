@@ -1,16 +1,20 @@
-import { Inject, NotImplementedException } from '@nestjs/common';
+import { Inject } from '@nestjs/common';
+import { BigNumberish } from 'ethers';
+import { merge, sumBy } from 'lodash';
 
+import { drillBalance } from '~app-toolkit';
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
-import { RawContractPositionBalance } from '~position/position-balance.interface';
+import { DefaultDataProps } from '~position/display.interface';
+import { ContractPositionBalance, RawContractPositionBalance } from '~position/position-balance.interface';
 import { MetaType } from '~position/position.interface';
-import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
 import { DefaultContractPositionDefinition } from '~position/template/contract-position.template.types';
+import { CustomContractPositionTemplatePositionFetcher } from '~position/template/custom-contract-position.template.position-fetcher';
 
 import { ApecoinContractFactory, ApecoinStaking } from '../contracts';
 
 @PositionTemplate()
-export class EthereumApecoinStakingContractPositionFetcher extends ContractPositionTemplatePositionFetcher<ApecoinStaking> {
+export class EthereumApecoinStakingContractPositionFetcher extends CustomContractPositionTemplatePositionFetcher<ApecoinStaking> {
   groupLabel = 'Staking';
 
   constructor(
@@ -21,7 +25,7 @@ export class EthereumApecoinStakingContractPositionFetcher extends ContractPosit
   }
 
   async getDefinitions(): Promise<DefaultContractPositionDefinition[]> {
-    return [{ address: '0x831e0c7a89dbc52a1911b78ebf4ab905354c96ce' }]; // to be replaced with the address of the contract on ethereum
+    return [{ address: '0x5954ab967bc958940b7eb73ee84797dc8a2afbb9' }];
   }
 
   async getTokenDefinitions() {
@@ -48,20 +52,70 @@ export class EthereumApecoinStakingContractPositionFetcher extends ContractPosit
     return `Staked Apecoin`;
   }
 
-  getTokenBalancesPerPosition(): never {
-    throw new NotImplementedException();
+  async getTokenBalancesPerPosition(): Promise<BigNumberish[]> {
+    throw new Error('Method not implemented.');
   }
 
-  async getRawBalances(address: string): Promise<RawContractPositionBalance[]> {
+  async getBalances(address: string): Promise<ContractPositionBalance<DefaultDataProps>[]> {
     const multicall = this.appToolkit.getMulticall(this.network);
-    const stakingContract = this.contractFactory.apecoinStaking({ address, network: this.network });
-    const positions = await multicall.wrap(stakingContract).getAllStakes(address);
 
     const contractPositions = await this.appToolkit.getAppContractPositions({
       appId: this.appId,
       network: this.network,
       groupIds: [this.groupId],
     });
+
+    const contractPosition = contractPositions[0];
+    if (!contractPosition) return [];
+
+    const stakingContract = this.contractFactory.apecoinStaking(contractPosition);
+    const positions = await multicall.wrap(stakingContract).getAllStakes(address);
+    if (positions.length === 0) return [];
+
+    const allPositions = await Promise.all(
+      positions.map(async position => {
+        const depositAmountRaw = position.deposited;
+        const claimableAmountRaw = position.unclaimed;
+        const [depositToken, claimableToken] = contractPosition.tokens;
+
+        const tokens = [
+          drillBalance(depositToken, depositAmountRaw.toString()),
+          drillBalance(claimableToken, claimableAmountRaw.toString()),
+        ];
+        const balanceUSD = sumBy(tokens, v => v.balanceUSD);
+        const contractPositionBalance = merge({}, contractPosition, {
+          tokens,
+          balanceUSD,
+          dataProps: {
+            positionKey: `${position.poolId}:${position.tokenId}`,
+          },
+          displayProps: {
+            label: `Staked Apecoin (Pool #${position.poolId}, Token ID #${position.tokenId})`,
+          },
+        });
+
+        return contractPositionBalance;
+      }),
+    );
+
+    return allPositions.flat();
+  }
+
+  async getRawBalances(address: string): Promise<RawContractPositionBalance[]> {
+    const multicall = this.appToolkit.getMulticall(this.network);
+
+    const contractPositions = await this.appToolkit.getAppContractPositions({
+      appId: this.appId,
+      network: this.network,
+      groupIds: [this.groupId],
+    });
+
+    const contractPosition = contractPositions[0];
+    if (!contractPosition) return [];
+
+    const stakingContract = this.contractFactory.apecoinStaking(contractPosition);
+    const positions = await multicall.wrap(stakingContract).getAllStakes(address);
+    if (positions.length === 0) return [];
 
     return (
       await Promise.all(
