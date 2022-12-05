@@ -14,10 +14,10 @@ export enum RewardType {
 }
 
 enum ContractVersions {
-  V200 = '2.0.0',
-  V001 = '0.0.1',
-  v002 = '0.0.2',
-  v003 = '0.0.3',
+  v200 = '2.0.0',
+  v201 = '2.0.1',
+  v202 = '2.0.2',
+  v203 = '2.0.3',
 }
 
 type RewardBalance = {
@@ -36,15 +36,15 @@ type Reward = {
 
 export const transformRewardArrayToObject = (rewards: RewardBalance[]) => {
   const playerReward: Record<string, RewardBalance> = {};
-  rewards.map(reward => {
+  rewards.forEach(reward => {
     const { type } = reward;
     playerReward[type] = reward;
   });
-
   return playerReward;
 };
 
-export const getGameVersionType = (contractVersion: string) => contractVersion === ContractVersions.V200;
+export const getGameVersionType = (contractVersion: string) =>
+  Object.values(ContractVersions).includes(contractVersion);
 
 export type PlayerResponse = {
   gameId: string;
