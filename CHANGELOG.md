@@ -4,6 +4,14 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.315.0](https://github.com/Zapper-fi/studio/compare/v0.314.0...v0.315.0) (2022-12-05)
+
+
+### Features
+
+* **apecoin:** Add staked ApeCoin getBalances and address ([#1865](https://github.com/Zapper-fi/studio/issues/1865)) ([fd3e085](https://github.com/Zapper-fi/studio/commit/fd3e0853d4442301d88cf1c6a2d62513a85669a2))
+* **apecoin:** Implemented Apecoin Staking ([#1776](https://github.com/Zapper-fi/studio/issues/1776)) ([6c2da91](https://github.com/Zapper-fi/studio/commit/6c2da91f9780f875607f2bff3514791a2a75e0bc))
+
 ## [0.314.0](https://github.com/Zapper-fi/studio/compare/v0.313.0...v0.314.0) (2022-12-05)
 
 
