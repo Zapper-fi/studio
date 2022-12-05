@@ -13,6 +13,20 @@ import { CustomContractPositionTemplatePositionFetcher } from '~position/templat
 
 import { ApecoinContractFactory, ApecoinStaking } from '../contracts';
 
+enum PoolTypes {
+  APECOIN = 0,
+  BAYC = 1,
+  MAYC = 2,
+  BAKC = 3,
+}
+
+const POOL_LABEL_PREFIXES = {
+  [PoolTypes.APECOIN]: 'Apecoin (APE) Pool',
+  [PoolTypes.BAYC]: 'Bored Ape (BAYC) Pool',
+  [PoolTypes.MAYC]: 'Mutant (MAYC) Pool',
+  [PoolTypes.BAKC]: 'Paired (BAKC) Pool',
+};
+
 @PositionTemplate()
 export class EthereumApecoinStakingContractPositionFetcher extends CustomContractPositionTemplatePositionFetcher<ApecoinStaking> {
   groupLabel = 'Staking';
@@ -84,11 +98,10 @@ export class EthereumApecoinStakingContractPositionFetcher extends CustomContrac
         ];
         const balanceUSD = sumBy(tokens, v => v.balanceUSD);
         const positionKey = `${position.poolId}:${position.tokenId}`;
-        const labelSuffix =
-          position.poolId.gt(0) && position.tokenId.gt(0)
-            ? ` (Pool #${position.poolId}, Token ID #${position.tokenId})`
-            : '';
-        const label = `Staked APE${labelSuffix}`;
+
+        let labelSuffix = `${POOL_LABEL_PREFIXES[Number(position.poolId)]}`;
+        if (Number(position.tokenId) > 0) labelSuffix += `, Token ID #${position.tokenId}`;
+        const label = `Staked APE in ${labelSuffix}`;
 
         const contractPositionBalance = merge({}, contractPosition, {
           tokens,
