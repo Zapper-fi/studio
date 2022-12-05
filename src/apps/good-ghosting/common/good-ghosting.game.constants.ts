@@ -13,13 +13,6 @@ export enum RewardType {
   Deposit = 'deposit',
 }
 
-enum ContractVersions {
-  v200 = '2.0.0',
-  v201 = '2.0.1',
-  v202 = '2.0.2',
-  v203 = '2.0.3',
-}
-
 type RewardBalance = {
   tokenId: string;
   address: string;
@@ -43,8 +36,9 @@ export const transformRewardArrayToObject = (rewards: RewardBalance[]) => {
   return playerReward;
 };
 
-export const getGameVersionType = (contractVersion: string) =>
-  Object.values(ContractVersions).includes(contractVersion);
+const ContractVersions = ['2.0.0', '2.0.1', '2.0.2', '2.0.3'];
+
+export const getGameVersionType = (contractVersion: string) => ContractVersions.includes(contractVersion);
 
 export type PlayerResponse = {
   gameId: string;
