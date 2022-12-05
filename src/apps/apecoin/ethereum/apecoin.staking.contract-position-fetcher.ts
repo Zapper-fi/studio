@@ -59,10 +59,6 @@ export class EthereumApecoinStakingContractPositionFetcher extends CustomContrac
   async getBalances(address: string): Promise<ContractPositionBalance<DefaultDataProps>[]> {
     const multicall = this.appToolkit.getMulticall(this.network);
 
-    const stakingContract = this.contractFactory.apecoinStaking({ address, network: this.network });
-    const positions = await multicall.wrap(stakingContract).getAllStakes(address);
-    if (positions.length === 0) return [];
-
     const contractPositions = await this.appToolkit.getAppContractPositions({
       appId: this.appId,
       network: this.network,
@@ -71,6 +67,10 @@ export class EthereumApecoinStakingContractPositionFetcher extends CustomContrac
 
     const contractPosition = contractPositions[0];
     if (!contractPosition) return [];
+
+    const stakingContract = this.contractFactory.apecoinStaking(contractPosition);
+    const positions = await multicall.wrap(stakingContract).getAllStakes(address);
+    if (positions.length === 0) return [];
 
     const allPositions = await Promise.all(
       positions.map(async position => {
@@ -103,15 +103,19 @@ export class EthereumApecoinStakingContractPositionFetcher extends CustomContrac
 
   async getRawBalances(address: string): Promise<RawContractPositionBalance[]> {
     const multicall = this.appToolkit.getMulticall(this.network);
-    const stakingContract = this.contractFactory.apecoinStaking({ address, network: this.network });
-    const positions = await multicall.wrap(stakingContract).getAllStakes(address);
-    if (positions.length === 0) return [];
 
     const contractPositions = await this.appToolkit.getAppContractPositions({
       appId: this.appId,
       network: this.network,
       groupIds: [this.groupId],
     });
+
+    const contractPosition = contractPositions[0];
+    if (!contractPosition) return [];
+
+    const stakingContract = this.contractFactory.apecoinStaking(contractPosition);
+    const positions = await multicall.wrap(stakingContract).getAllStakes(address);
+    if (positions.length === 0) return [];
 
     return (
       await Promise.all(
