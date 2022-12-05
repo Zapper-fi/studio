@@ -15,28 +15,33 @@ export const TECTONIC_DEFINITION = appDefinition({
       id: 'claimable',
       type: GroupType.POSITION,
       label: 'Claimable',
-      isHiddenFromExplore: true,
     },
 
     supply: {
       id: 'supply',
       type: GroupType.TOKEN,
       label: 'Lending',
-      groupLabel: 'Supply',
     },
 
     borrow: {
       id: 'borrow',
       type: GroupType.POSITION,
       label: 'Lending',
-      groupLabel: 'Borrow',
+    },
+
+    xtonic: {
+      id: 'xtonic',
+      type: GroupType.TOKEN,
+      label: 'xTONIC',
     },
   },
+
   presentationConfig: {
     tabs: [
       {
         label: 'Lending',
         viewType: 'split',
+
         views: [
           {
             viewType: 'list',
@@ -52,9 +57,15 @@ export const TECTONIC_DEFINITION = appDefinition({
       },
     ],
   },
+
   tags: [AppTag.LENDING],
   keywords: [],
-  links: {},
+  links: {
+    discord: 'https://discord.com/invite/jqaxqK7KBR',
+    medium: 'https://medium.com/@0xTectonic',
+    telegram: 'https://t.me/TectonicOfficial',
+    twitter: 'https://twitter.com/TectonicFi',
+  },
 
   supportedNetworks: {
     [Network.CRONOS_MAINNET]: [AppAction.VIEW],

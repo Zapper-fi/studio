@@ -17,7 +17,7 @@ export const UMAMI_FINANCE_DEFINITION = appDefinition({
       label: 'Vaults',
     },
     marinate: {
-      id: 'marinate',
+      id: 'marinate-umami',
       type: GroupType.TOKEN,
       label: 'Marinate',
     },
@@ -34,7 +34,6 @@ export const UMAMI_FINANCE_DEFINITION = appDefinition({
   links: {
     github: 'https://github.com/orgs/Arbi-s/repositories',
     twitter: 'https://twitter.com/UmamiFinance',
-    telegram: '',
     discord: 'https://discord.gg/8SrKEXF8',
     medium: 'https://umamifinance.medium.com/',
   },

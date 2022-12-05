@@ -3,4 +3,6 @@
 /* eslint-disable */
 export { TectonicCore__factory } from './TectonicCore__factory';
 export { TectonicLens__factory } from './TectonicLens__factory';
+export { TectonicStakingPool__factory } from './TectonicStakingPool__factory';
 export { TectonicTToken__factory } from './TectonicTToken__factory';
+export { TectonicXtonic__factory } from './TectonicXtonic__factory';

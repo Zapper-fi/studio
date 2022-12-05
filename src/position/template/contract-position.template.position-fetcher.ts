@@ -4,130 +4,92 @@ import { compact, sumBy } from 'lodash';
 
 import { drillBalance } from '~app-toolkit';
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
+import { ZERO_ADDRESS } from '~app-toolkit/constants/address';
 import {
   buildDollarDisplayItem,
   buildPercentageDisplayItem,
 } from '~app-toolkit/helpers/presentation/display-item.present';
 import { getImagesFromToken } from '~app-toolkit/helpers/presentation/image.present';
-import { IMulticallWrapper } from '~multicall';
 import { ContractType } from '~position/contract.interface';
 import { DefaultDataProps, DisplayProps, StatsItem } from '~position/display.interface';
-import { ContractPositionBalance } from '~position/position-balance.interface';
+import { ContractPositionBalance, RawContractPositionBalance } from '~position/position-balance.interface';
 import { PositionFetcher } from '~position/position-fetcher.interface';
 import { ContractPosition, MetaType } from '~position/position.interface';
-import { AppGroupsDefinition } from '~position/position.service';
 import { metatyped } from '~position/position.utils';
 import { Network } from '~types/network.interface';
 
-export type DefaultContractPositionDescriptor = {
-  address: string;
-};
-
-export type UnderlyingTokenDescriptor = {
-  address: string;
-  metaType: MetaType;
-};
-
-export type ContractPositionFetcherContext<
-  T extends Contract,
-  V extends DefaultDataProps = DefaultDataProps,
-  R extends DefaultContractPositionDescriptor = DefaultContractPositionDescriptor,
-  K extends keyof ContractPosition = never,
-> = {
-  contract: T;
-  descriptor: R;
-  multicall: IMulticallWrapper;
-  contractPosition: Omit<ContractPosition<V>, K>;
-};
-
-export type DescriptorsStageParams = {
-  multicall: IMulticallWrapper;
-};
-
-export type TokenStageParams<
-  T extends Contract,
-  V extends DefaultDataProps = DefaultDataProps,
-  R extends DefaultContractPositionDescriptor = DefaultContractPositionDescriptor,
-> = Omit<ContractPositionFetcherContext<T, V, R>, 'contractPosition'>;
-
-export type DataPropsStageParams<
-  T extends Contract,
-  V extends DefaultDataProps = DefaultDataProps,
-  R extends DefaultContractPositionDescriptor = DefaultContractPositionDescriptor,
-> = ContractPositionFetcherContext<T, V, R, 'dataProps' | 'displayProps'>;
-
-export type DisplayPropsStageParams<
-  T extends Contract,
-  V extends DefaultDataProps = DefaultDataProps,
-  R extends DefaultContractPositionDescriptor = DefaultContractPositionDescriptor,
-> = ContractPositionFetcherContext<T, V, R, 'displayProps'>;
-
-export type GetTokenBalancesPerPositionParams<T extends Contract, V extends DefaultDataProps = DefaultDataProps> = {
-  address: string;
-  contractPosition: ContractPosition<V>;
-  contract: T;
-  multicall: IMulticallWrapper;
-};
+import {
+  DefaultContractPositionDefinition,
+  GetDataPropsParams,
+  GetDefinitionsParams,
+  GetDisplayPropsParams,
+  GetTokenBalancesParams,
+  GetTokenDefinitionsParams,
+  UnderlyingTokenDefinition,
+} from './contract-position.template.types';
+import { PositionFetcherTemplateCommons } from './position-fetcher.template.types';
 
 export abstract class ContractPositionTemplatePositionFetcher<
   T extends Contract,
   V extends DefaultDataProps = DefaultDataProps,
-  R extends DefaultContractPositionDescriptor = DefaultContractPositionDescriptor,
-> implements PositionFetcher<ContractPosition<V>>
+  R extends DefaultContractPositionDefinition = DefaultContractPositionDefinition,
+> implements PositionFetcher<ContractPosition<V>>, PositionFetcherTemplateCommons
 {
-  abstract appId: string;
-  abstract groupId: string;
-  abstract network: Network;
-  groupLabel?: string;
-  dependencies: AppGroupsDefinition[] = [];
+  appId: string;
+  groupId: string;
+  network: Network;
+  abstract groupLabel: string;
+
+  isExcludedFromBalances = false;
+  isExcludedFromExplore = false;
+  isExcludedFromTvl = false;
 
   constructor(@Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit) {}
 
-  abstract getDescriptors(params: { multicall: IMulticallWrapper }): Promise<R[]>;
+  // 1. Get contract position definitions (i.e.: contract addresses and additional context)
+  abstract getDefinitions(params: GetDefinitionsParams): Promise<R[]>;
+
+  // 2. Get contract instance
   abstract getContract(address: string): T;
-  abstract getLabel(params: DisplayPropsStageParams<T, V>): Promise<string>;
 
-  // Tokens
-  async getTokenDescriptors(_params: TokenStageParams<T, R>): Promise<UnderlyingTokenDescriptor[] | null> {
-    return [];
-  }
+  // 3. Get token definitions (supplied tokens, borrowed tokens, claimable tokens, etc.)
+  abstract getTokenDefinitions(_params: GetTokenDefinitionsParams<T, R>): Promise<UnderlyingTokenDefinition[] | null>;
 
-  // Data Properties
-  async getDataProps(_params: DataPropsStageParams<T, V>): Promise<V> {
+  // 4. Get additional data properties
+  async getDataProps(_params: GetDataPropsParams<T, V, R>): Promise<V> {
     return {} as V;
   }
 
-  async getLabelDetailed(_params: DisplayPropsStageParams<T, V>): Promise<DisplayProps['labelDetailed']> {
+  // 5. Get display properties
+  abstract getLabel(params: GetDisplayPropsParams<T, V, R>): Promise<string>;
+
+  async getLabelDetailed(_params: GetDisplayPropsParams<T, V>): Promise<DisplayProps['labelDetailed']> {
     return undefined;
   }
 
-  async getSecondaryLabel(_params: DisplayPropsStageParams<T, V>): Promise<DisplayProps['secondaryLabel']> {
+  async getSecondaryLabel(_params: GetDisplayPropsParams<T, V>): Promise<DisplayProps['secondaryLabel']> {
     return undefined;
   }
 
-  async getTertiaryLabel({ contractPosition }: DisplayPropsStageParams<T, V>): Promise<DisplayProps['tertiaryLabel']> {
+  async getTertiaryLabel({ contractPosition }: GetDisplayPropsParams<T, V>): Promise<DisplayProps['tertiaryLabel']> {
     if (typeof contractPosition.dataProps.apy === 'number') return `${contractPosition.dataProps.apy.toFixed(3)}% APY`;
     return undefined;
   }
 
-  async getImages({ contractPosition }: DisplayPropsStageParams<T, V>): Promise<DisplayProps['images']> {
+  async getImages({ contractPosition }: GetDisplayPropsParams<T, V>): Promise<DisplayProps['images']> {
     return contractPosition.tokens.flatMap(v => getImagesFromToken(v));
   }
 
-  async getStatsItems({ contractPosition }: DisplayPropsStageParams<T, V>): Promise<DisplayProps['statsItems']> {
+  async getStatsItems({ contractPosition }: GetDisplayPropsParams<T, V>): Promise<DisplayProps['statsItems']> {
     const statsItems: StatsItem[] = [];
 
     // Standardized Fields
-    if (typeof contractPosition.dataProps.liquidity === 'number' && contractPosition.dataProps.liquidity > 0)
+    if (typeof contractPosition.dataProps.liquidity === 'number' && Math.abs(contractPosition.dataProps.liquidity) > 0)
       statsItems.push({ label: 'Liquidity', value: buildDollarDisplayItem(contractPosition.dataProps.liquidity) });
     if (typeof contractPosition.dataProps.apy === 'number' && contractPosition.dataProps.apy > 0)
       statsItems.push({ label: 'APY', value: buildPercentageDisplayItem(contractPosition.dataProps.apy) });
 
     return statsItems;
-  }
-
-  getKey({ contractPosition }: { contractPosition: ContractPosition<V> }): string {
-    return this.appToolkit.getPositionKey(contractPosition);
   }
 
   // Default (adapted) Template Runner
@@ -138,71 +100,98 @@ export abstract class ContractPositionTemplatePositionFetcher<
       tags: { network: this.network, context: `${this.appId}__template` },
     });
 
-    const descriptors = await this.getDescriptors({ multicall });
+    const definitions = await this.getDefinitions({ multicall, tokenLoader });
+
     const skeletons = await Promise.all(
-      descriptors.map(async descriptor => {
-        const contract = multicall.wrap(this.getContract(descriptor.address));
-        const maybeTokenDescriptors = await this.getTokenDescriptors({ contract, descriptor, multicall });
-        if (!maybeTokenDescriptors) return null;
+      definitions.map(async definition => {
+        const address = definition.address.toLowerCase();
+        const contract = multicall.wrap(this.getContract(definition.address));
+        const context = { address, contract, definition, multicall, tokenLoader };
 
-        const tokenDescriptorsArr = Array.isArray(maybeTokenDescriptors)
-          ? maybeTokenDescriptors
-          : [maybeTokenDescriptors];
-        const tokenDescriptors = tokenDescriptorsArr.map(t => ({ ...t, address: t.address.toLowerCase() }));
+        const maybeTokenDefinitions = await this.getTokenDefinitions(context);
+        if (!maybeTokenDefinitions) return null;
 
-        return { address: descriptor.address, descriptor, tokenDescriptors };
+        const tokenDefinitionsArr = Array.isArray(maybeTokenDefinitions)
+          ? maybeTokenDefinitions
+          : [maybeTokenDefinitions];
+        const tokenDefinitions = tokenDefinitionsArr.map(t => ({ ...t, address: t.address.toLowerCase() }));
+
+        return { address, definition, tokenDefinitions };
       }),
     );
 
     const underlyingTokenRequests = compact(skeletons)
-      .flatMap(v => v.tokenDescriptors.map(v => v.address.toLowerCase()))
-      .map(v => ({ network: this.network, address: v }));
+      .flatMap(v => v.tokenDefinitions)
+      .map(v => ({ address: v.address, network: v.network, tokenId: v.tokenId }));
     const tokenDependencies = await tokenLoader.getMany(underlyingTokenRequests).then(tokenDeps => compact(tokenDeps));
 
     const skeletonsWithResolvedTokens = await Promise.all(
-      compact(skeletons).map(async ({ address, tokenDescriptors, descriptor }) => {
-        const maybeTokens = tokenDescriptors.map(v => {
-          const match = tokenDependencies.find(t => t.address === v.address);
-          return match ? metatyped(match, v.metaType) : null;
+      compact(skeletons).map(({ address, tokenDefinitions, definition }) => {
+        const maybeTokens = tokenDefinitions.map(definition => {
+          const match = tokenDependencies.find(token => {
+            const isAddressMatch = token.address === definition.address;
+            const isNetworkMatch = token.network == definition.network;
+            const isMaybeErc1155TokenIdMatch =
+              !definition.tokenId ||
+              (token.type === ContractType.APP_TOKEN && token.dataProps.tokenId === definition.tokenId);
+            return isAddressMatch && isNetworkMatch && isMaybeErc1155TokenIdMatch;
+          });
+
+          if (match) {
+            const tokenWithMetaType = metatyped(match, definition.metaType);
+
+            // Since the key generation is stateful and the key is already generated for an app token, we need to
+            // regenerate the key for underlying app tokens. Otherwise, we may end up in situations where underlying
+            // app tokens balances are double counted.
+            if (tokenWithMetaType.type === ContractType.APP_TOKEN) {
+              // eslint-disable-next-line @typescript-eslint/no-unused-vars
+              const { key, ...token } = tokenWithMetaType;
+              return { ...token, key: this.appToolkit.getPositionKey(token) };
+            }
+
+            return tokenWithMetaType;
+          }
+          return null;
         });
 
         const tokens = compact(maybeTokens);
         if (maybeTokens.length !== tokens.length) return null;
-        return { address, tokens, descriptor };
+        return { address, tokens, definition };
       }),
     );
 
     const tokens = await Promise.all(
-      compact(skeletonsWithResolvedTokens).map(async ({ address, tokens, descriptor }) => {
+      compact(skeletonsWithResolvedTokens).map(async ({ address, tokens, definition }) => {
         const contract = multicall.wrap(this.getContract(address));
+        const baseContext = { address, contract, multicall, tokenLoader, definition };
 
-        const fragment: DataPropsStageParams<T, V>['contractPosition'] = {
+        const baseFragment: GetDataPropsParams<T, V>['contractPosition'] = {
           type: ContractType.POSITION,
           appId: this.appId,
           groupId: this.groupId,
           network: this.network,
-          groupLabel: this.groupLabel,
           address,
           tokens,
         };
 
         // Resolve Data Props Stage
-        const dataPropsStageParams = { contractPosition: { ...fragment }, contract, multicall, descriptor };
+        const dataPropsStageParams = { ...baseContext, contractPosition: baseFragment };
         const dataProps = await this.getDataProps(dataPropsStageParams);
 
         // Resolve Display Props Stage
-        const displayPropsStageParams = { ...dataPropsStageParams, contractPosition: { ...fragment, dataProps } };
+        const displayPropsStageFragment = { ...baseFragment, dataProps };
+        const displayPropsStageParams = { ...dataPropsStageParams, contractPosition: displayPropsStageFragment };
         const displayProps = {
           label: await this.getLabel(displayPropsStageParams),
           labelDetailed: await this.getLabelDetailed(displayPropsStageParams),
-          secondarylabel: await this.getSecondaryLabel(displayPropsStageParams),
+          secondaryLabel: await this.getSecondaryLabel(displayPropsStageParams),
           tertiaryLabel: await this.getTertiaryLabel(displayPropsStageParams),
           images: await this.getImages(displayPropsStageParams),
           statsItems: await this.getStatsItems(displayPropsStageParams),
         };
 
-        const contractPosition = { ...fragment, dataProps, displayProps };
-        const key = this.getKey({ contractPosition });
+        const contractPosition = { ...baseFragment, dataProps, displayProps };
+        const key = this.appToolkit.getPositionKey(contractPosition);
         return { key, ...contractPosition };
       }),
     );
@@ -210,26 +199,40 @@ export abstract class ContractPositionTemplatePositionFetcher<
     return tokens;
   }
 
+  async getAccountAddress(address: string) {
+    return address;
+  }
+
+  async getPositionsForBalances() {
+    return this.appToolkit.getAppContractPositions<V>({
+      appId: this.appId,
+      network: this.network,
+      groupIds: [this.groupId],
+    });
+  }
+
   abstract getTokenBalancesPerPosition({
     address,
     contractPosition,
     contract,
     multicall,
-  }: GetTokenBalancesPerPositionParams<T, V>): Promise<BigNumberish[]>;
+  }: GetTokenBalancesParams<T, V>): Promise<BigNumberish[]>;
 
-  async getBalances(address: string): Promise<ContractPositionBalance<V>[]> {
+  async getBalances(_address: string): Promise<ContractPositionBalance<V>[]> {
     const multicall = this.appToolkit.getMulticall(this.network);
-    const contractPositions = await this.appToolkit.getAppContractPositions<V>({
-      appId: this.appId,
-      network: this.network,
-      groupIds: [this.groupId],
-    });
+    const address = await this.getAccountAddress(_address);
+    const contractPositions = await this.getPositionsForBalances();
+    if (address === ZERO_ADDRESS) return [];
 
     const balances = await Promise.all(
       contractPositions.map(async contractPosition => {
         const contract = multicall.wrap(this.getContract(contractPosition.address));
         const balancesRaw = await this.getTokenBalancesPerPosition({ address, contract, contractPosition, multicall });
-        const tokens = contractPosition.tokens.map((cp, idx) => drillBalance(cp, balancesRaw[idx]?.toString() ?? '0'));
+        const allTokens = contractPosition.tokens.map((cp, idx) =>
+          drillBalance(cp, balancesRaw[idx]?.toString() ?? '0', { isDebt: cp.metaType === MetaType.BORROWED }),
+        );
+
+        const tokens = allTokens.filter(v => Math.abs(v.balanceUSD) > 0.01);
         const balanceUSD = sumBy(tokens, t => t.balanceUSD);
 
         const balance: ContractPositionBalance<V> = { ...contractPosition, tokens, balanceUSD };
@@ -238,5 +241,54 @@ export abstract class ContractPositionTemplatePositionFetcher<
     );
 
     return balances;
+  }
+
+  async getRawBalances(_address: string): Promise<RawContractPositionBalance[]> {
+    const multicall = this.appToolkit.getMulticall(this.network);
+    const address = await this.getAccountAddress(_address);
+    const contractPositions = await this.getPositionsForBalances();
+    if (address === ZERO_ADDRESS) return [];
+
+    return Promise.all(
+      contractPositions.map(async contractPosition => {
+        const contract = multicall.wrap(this.getContract(contractPosition.address));
+        const balancesRaw = await this.getTokenBalancesPerPosition({ address, contract, contractPosition, multicall });
+
+        return {
+          key: this.appToolkit.getPositionKey(contractPosition),
+          tokens: contractPosition.tokens.map((token, i) => ({
+            key: this.appToolkit.getPositionKey(token),
+            balance: balancesRaw[i]?.toString() ?? '0',
+          })),
+        };
+      }),
+    );
+  }
+
+  async drillRawBalances(balances: RawContractPositionBalance[]): Promise<ContractPositionBalance<V>[]> {
+    const contractPositions = await this.getPositionsForBalances();
+
+    return compact(
+      contractPositions.map(contractPosition => {
+        const key = this.appToolkit.getPositionKey(contractPosition);
+        const positionBalances = balances.find(b => b.key === key);
+        if (!positionBalances) return null;
+
+        const allTokens = contractPosition.tokens.map(token => {
+          const key = this.appToolkit.getPositionKey(token);
+          const tokenBalance = positionBalances.tokens.find(b => b.key === key);
+          if (!tokenBalance) return null;
+
+          return drillBalance<typeof token, V>(token, tokenBalance.balance, {
+            isDebt: token.metaType === MetaType.BORROWED,
+          });
+        });
+
+        const tokens = compact(allTokens).filter(t => Math.abs(t.balanceUSD) > 0.01);
+        const balanceUSD = sumBy(tokens, t => t.balanceUSD);
+
+        return { ...contractPosition, tokens, balanceUSD };
+      }),
+    );
   }
 }

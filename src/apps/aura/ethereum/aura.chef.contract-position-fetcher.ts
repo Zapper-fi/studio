@@ -1,60 +1,102 @@
 import { Inject } from '@nestjs/common';
+import { BigNumber, BigNumberish } from 'ethers';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
-import { Register } from '~app-toolkit/decorators';
-import { BALANCER_V2_DEFINITION } from '~apps/balancer-v2';
-import { PositionFetcher } from '~position/position-fetcher.interface';
-import { ContractPosition } from '~position/position.interface';
-import { Network } from '~types/network.interface';
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
+import { RewardRateUnit } from '~app-toolkit/helpers/master-chef/master-chef.contract-position-helper';
+import {
+  GetMasterChefDataPropsParams,
+  GetMasterChefTokenBalancesParams,
+  MasterChefTemplateContractPositionFetcher,
+} from '~position/template/master-chef.template.contract-position-fetcher';
 
-import { AURA_DEFINITION } from '../aura.definition';
 import { AuraContractFactory, AuraMasterchef } from '../contracts';
 
-const appId = AURA_DEFINITION.id;
-const groupId = AURA_DEFINITION.groups.chef.id;
-const network = Network.ETHEREUM_MAINNET;
+@PositionTemplate()
+export class EthereumAuraChefContractPositionFetcher extends MasterChefTemplateContractPositionFetcher<AuraMasterchef> {
+  chefAddress = '0x1ab80f7fb46b25b7e0b2cfac23fc88ac37aaf4e9';
+  groupLabel = 'Farms';
+  rewardRateUnit = RewardRateUnit.SECOND;
 
-@Register.ContractPositionFetcher({ appId, groupId, network })
-export class EthereumAuraChefContractPositionFetcher implements PositionFetcher<ContractPosition> {
   constructor(
-    @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
-    @Inject(AuraContractFactory) private readonly auraContractFactory: AuraContractFactory,
-  ) {}
+    @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
+    @Inject(AuraContractFactory) private readonly contractFactory: AuraContractFactory,
+  ) {
+    super(appToolkit);
+  }
 
-  async getPositions() {
-    return this.appToolkit.helpers.masterChefContractPositionHelper.getContractPositions<AuraMasterchef>({
-      address: '0x1ab80f7fb46b25b7e0b2cfac23fc88ac37aaf4e9',
-      network,
-      appId,
-      groupId,
-      dependencies: [
-        { appId: AURA_DEFINITION.id, network, groupIds: [AURA_DEFINITION.groups.auraBal.id] },
-        { appId: BALANCER_V2_DEFINITION.id, network, groupIds: [BALANCER_V2_DEFINITION.groups.pool.id] },
-      ],
-      resolvePoolIndexIsValid: async ({ contract, poolIndex, multicall }) =>
-        // pid 0 is deprecated
-        poolIndex > 0 && poolIndex < Number(await multicall.wrap(contract).poolLength()),
-      resolveLiquidity: ({ depositTokenAddress, address, multicall }) =>
-        multicall
-          .wrap(this.appToolkit.globalContracts.erc20({ network, address: depositTokenAddress }))
-          .balanceOf(address),
-      resolveDepositTokenAddress: ({ contract, multicall, poolIndex }) =>
-        multicall
-          .wrap(contract)
-          .poolInfo(poolIndex)
-          .then(v => v.lpToken),
-      resolveRewardRate: async ({ contract, multicall, poolIndex }) => {
-        const [rewardPerBlock, totalAllocPoint, { allocPoint }] = await Promise.all([
-          multicall.wrap(contract).rewardPerBlock(),
-          multicall.wrap(contract).totalAllocPoint(),
-          multicall.wrap(contract).poolInfo(poolIndex),
-        ]);
+  getContract(address: string): AuraMasterchef {
+    return this.contractFactory.auraMasterchef({ address, network: this.network });
+  }
 
-        return rewardPerBlock.mul(allocPoint.mul(1000).div(totalAllocPoint)).div(1000);
-      },
-      resolvePoolLength: ({ multicall, contract }) => multicall.wrap(contract).poolLength(),
-      resolveContract: ({ address, network }) => this.auraContractFactory.auraMasterchef({ address, network }),
-      resolveRewardTokenAddresses: ({ multicall, contract }) => multicall.wrap(contract).cvx(),
-    });
+  async getPoolLength(contract: AuraMasterchef): Promise<BigNumberish> {
+    return contract.poolLength();
+  }
+
+  async getStakedTokenAddress(contract: AuraMasterchef, poolIndex: number): Promise<string> {
+    return contract.poolInfo(poolIndex).then(v => v.lpToken);
+  }
+
+  async getRewardTokenAddress(contract: AuraMasterchef): Promise<string> {
+    return contract.cvx();
+  }
+
+  async getTotalAllocPoints({ contract }: GetMasterChefDataPropsParams<AuraMasterchef>) {
+    return contract.totalAllocPoint();
+  }
+
+  async getTotalRewardRate({ contract }: GetMasterChefDataPropsParams<AuraMasterchef>) {
+    return contract.rewardPerBlock();
+  }
+
+  async getPoolAllocPoints({ contract, definition }: GetMasterChefDataPropsParams<AuraMasterchef>) {
+    return contract.poolInfo(definition.poolIndex).then(v => v.allocPoint);
+  }
+
+  async getStakedTokenBalance({
+    address,
+    contract,
+    contractPosition,
+  }: GetMasterChefTokenBalancesParams<AuraMasterchef>): Promise<BigNumberish> {
+    return contract.userInfo(contractPosition.dataProps.poolIndex, address).then(v => v.amount);
+  }
+
+  async getRewardTokenBalance({
+    address,
+    contract,
+    contractPosition,
+  }: GetMasterChefTokenBalancesParams<AuraMasterchef>): Promise<BigNumberish> {
+    const provider = this.appToolkit.getNetworkProvider(this.network);
+    const block = await provider.getBlockNumber();
+
+    const { poolIndex } = contractPosition.dataProps;
+    const [poolInfo, userInfo, totalAllocPoint, rewardPerBlock, endBlock] = await Promise.all([
+      contract.poolInfo(poolIndex),
+      contract.userInfo(poolIndex, address),
+      contract.totalAllocPoint(),
+      contract.rewardPerBlock(),
+      contract.endBlock(),
+    ]);
+
+    if (userInfo.amount.eq(0)) {
+      return 0;
+    }
+
+    const lpToken = this.appToolkit.globalContracts.erc20({ address: poolInfo.lpToken, network: this.network });
+    const lpSupply = await lpToken.balanceOf(contract.address);
+
+    let { accCvxPerShare } = poolInfo;
+    if (poolInfo.lastRewardBlock.lt(block) && lpSupply.gt(0)) {
+      const clampedTo = Math.min(block, Number(endBlock));
+      const clampedFrom = Math.min(Number(poolInfo.lastRewardBlock), Number(endBlock));
+      const multiplier = BigNumber.from(clampedTo - clampedFrom);
+      const reward = multiplier.mul(rewardPerBlock).mul(poolInfo.allocPoint).div(totalAllocPoint);
+      accCvxPerShare = accCvxPerShare.add(reward.mul(10 ** 12).div(lpSupply));
+    }
+
+    return userInfo.amount
+      .mul(accCvxPerShare)
+      .div(10 ** 12)
+      .sub(userInfo.rewardDebt);
   }
 }

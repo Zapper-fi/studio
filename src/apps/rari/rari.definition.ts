@@ -9,7 +9,6 @@ export const RARI_DEFINITION = appDefinition({
   description: `Rari Capital opens up the world to financial innovation on an unprecedented scale. Earn. Deposit crypto-assets to automatically begin earning the highest yield.`,
   url: 'https://rari.capital/',
   tags: [AppTag.FUND_MANAGER],
-  links: {},
 
   groups: {
     farm: {
@@ -29,6 +28,11 @@ export const RARI_DEFINITION = appDefinition({
       type: GroupType.POSITION,
       label: 'Governance',
     },
+  },
+  links: {
+    discord: 'https://discord.com/invite/T9Yrd7MGSP',
+    medium: 'https://medium.com/rari-capital',
+    twitter: 'https://twitter.com/RariCapital',
   },
 
   supportedNetworks: {

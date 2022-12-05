@@ -1,3 +1,4 @@
+import { log } from 'console';
 import { readdirSync } from 'fs';
 
 import { IConfigurableDynamicRootModule } from '@golevelup/nestjs-modules';
@@ -90,13 +91,14 @@ export class AppsModule {
     // Find all apps available to be registered
     const allAppIds = readdirSync(__dirname, { withFileTypes: true })
       .filter(dirent => dirent.isDirectory())
+      .filter(dirent => !['__tests__'].includes(dirent.name))
       .map(dirent => dirent.name);
 
     // If we're in prod, or if there is no enabled apps subset configured, enable everything
-    const isProd = process.env.NODE_ENV === 'production';
+    const isProdOrTest = process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'test';
     const configuredAppIds = compact((process.env.ENABLED_APPS ?? '').split(','));
 
-    if (isProd) {
+    if (isProdOrTest) {
       const appModules = await this.resolveModulesByAppIds(allAppIds);
       return this.externalizeAppModuleDependencies(appModules);
     }
@@ -115,38 +117,18 @@ export class AppsModule {
     return this.externalizeAppModuleDependencies(enabledApps);
   }
 
-  static async resolveAppHelperModules() {
-    // Find all apps available to be registered
-    const allAppIds = readdirSync(__dirname, { withFileTypes: true })
-      .filter(dirent => dirent.isDirectory())
-      .map(dirent => dirent.name);
-
-    // If we're in prod, or if there is no enabled app helpers subset configured, enable nothing
-    const isProd = process.env.NODE_ENV === 'production';
-    const configuredHelpersAppIds = (process.env.ENABLED_HELPERS ?? '').split(',').filter(Boolean);
-    if (isProd || !configuredHelpersAppIds.length) return [];
-
-    // Resolve modules, and dependency modules
-    const enabledAppHelperIds = intersection(configuredHelpersAppIds, allAppIds);
-    const enabledAppHelperIdsAndDependencies = await this.resolveDependencies(enabledAppHelperIds);
-    const enabledAppHelpers = await this.resolveModulesByAppIds(enabledAppHelperIdsAndDependencies, false);
-
-    return this.externalizeAppModuleDependencies(enabledAppHelpers);
-  }
-
   static async registerAsync(opts: { appToolkitModule: Type }): Promise<DynamicModule> {
     const { appToolkitModule } = opts;
 
     const appModules = await this.resolveAppModules();
-    const appHelperModules = await this.resolveAppHelperModules();
     // eslint-disable-next-line no-console
-    console.log(chalk.yellow(`Enabled app modules: ${appModules.map(v => v.name).join(',')}`));
+    log(chalk.yellow(`Enabled app modules: ${appModules.map(v => v.name).join(',')}`));
 
     return {
       module: AppsModule,
       imports: [
         ...DynamicApps({
-          apps: [...compact([...appModules, ...appHelperModules])],
+          apps: [...compact(appModules)],
           imports: [appToolkitModule],
         }),
       ],

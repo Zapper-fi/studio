@@ -1,0 +1,55 @@
+import { Register } from '~app-toolkit/decorators';
+import { appDefinition, AppDefinition } from '~app/app.definition';
+import { AppAction, AppTag, GroupType } from '~app/app.interface';
+import { Network } from '~types/network.interface';
+
+export const KYBERSWAP_ELASTIC_DEFINITION = appDefinition({
+  id: 'kyberswap-elastic',
+  name: 'KyberSwap Elastic',
+  description:
+    'KyberSwap’s newest protocol, dubbed KyberSwap Elastic, is a tick-based AMM with concentrated liquidity.',
+  url: 'https://kyberswap.com',
+
+  groups: {
+    liquidity: {
+      id: 'liquidity',
+      type: GroupType.POSITION,
+      label: 'Pools',
+    },
+    farm: {
+      id: 'farm',
+      type: GroupType.POSITION,
+      label: 'Farms',
+    },
+  },
+
+  tags: [AppTag.LIQUIDITY_POOL],
+  keywords: [],
+  links: {
+    discord: 'https://discord.com/invite/NB3vc8J9uv',
+    telegram: 'https://t.me/kybernetwork',
+    twitter: 'https://twitter.com/KyberNetwork',
+  },
+
+  supportedNetworks: {
+    [Network.ETHEREUM_MAINNET]: [AppAction.VIEW],
+    [Network.BINANCE_SMART_CHAIN_MAINNET]: [AppAction.VIEW],
+    [Network.OPTIMISM_MAINNET]: [AppAction.VIEW],
+    [Network.ARBITRUM_MAINNET]: [AppAction.VIEW],
+    [Network.CRONOS_MAINNET]: [AppAction.VIEW],
+    [Network.FANTOM_OPERA_MAINNET]: [AppAction.VIEW],
+    [Network.POLYGON_MAINNET]: [AppAction.VIEW],
+    [Network.AVALANCHE_MAINNET]: [AppAction.VIEW],
+  },
+
+  primaryColor: '#fff',
+});
+
+@Register.AppDefinition(KYBERSWAP_ELASTIC_DEFINITION.id)
+export class KyberswapElasticAppDefinition extends AppDefinition {
+  constructor() {
+    super(KYBERSWAP_ELASTIC_DEFINITION);
+  }
+}
+
+export default KYBERSWAP_ELASTIC_DEFINITION;

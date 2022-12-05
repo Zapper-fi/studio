@@ -8,37 +8,36 @@ export const GEIST_DEFINITION = appDefinition({
   name: 'Geist',
   description: `Geist is a decentralised non-custodial liquidity market protocol where users can participate as depositors or borrowers. Depositors provide liquidity to the market to earn a passive income, while borrowers are able to borrow in an overcollateralised (perpetually) or undercollateralised (one-block liquidity) fashion.`,
   url: 'https://geist.finance/',
-  tags: [AppTag.LENDING],
-  primaryColor: '#bcfd71',
-  links: {},
 
   groups: {
-    claimable: {
-      id: 'claimable',
+    platformFees: {
+      id: 'platform-fees',
       type: GroupType.POSITION,
       label: 'Platform Fees',
-      isHiddenFromExplore: true,
+    },
+
+    incentives: {
+      id: 'incentives',
+      type: GroupType.POSITION,
+      label: 'Incentives',
     },
 
     supply: {
       id: 'supply',
       type: GroupType.TOKEN,
       label: 'Lending',
-      groupLabel: 'Supply',
     },
 
     stableDebt: {
       id: 'stable-debt',
       type: GroupType.TOKEN,
       label: 'Lending',
-      groupLabel: 'Borrow',
     },
 
     variableDebt: {
       id: 'variable-debt',
       type: GroupType.TOKEN,
       label: 'Lending',
-      groupLabel: 'Borrow',
     },
   },
   presentationConfig: {
@@ -73,6 +72,13 @@ export const GEIST_DEFINITION = appDefinition({
     ],
   },
 
+  tags: [AppTag.LENDING],
+  primaryColor: '#bcfd71',
+  links: {
+    discord: 'https://discord.com/invite/b6cXdZRNSK',
+    telegram: 'https://t.me/geist_finance',
+    twitter: 'https://twitter.com/GeistFinance',
+  },
   supportedNetworks: {
     [Network.FANTOM_OPERA_MAINNET]: [AppAction.VIEW, AppAction.TRANSACT],
   },

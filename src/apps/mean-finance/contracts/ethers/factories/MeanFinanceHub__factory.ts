@@ -20,7 +20,7 @@ const _abi = [
         type: 'address',
       },
       {
-        internalType: 'contract IPriceOracle',
+        internalType: 'contract ITokenPriceOracle',
         name: '_oracle',
         type: 'address',
       },
@@ -273,8 +273,8 @@ const _abi = [
     inputs: [
       {
         indexed: false,
-        internalType: 'contract IPriceOracle',
-        name: '_oracle',
+        internalType: 'contract ITokenPriceOracle',
+        name: 'oracle',
         type: 'address',
       },
     ],
@@ -300,7 +300,7 @@ const _abi = [
       {
         indexed: false,
         internalType: 'uint16',
-        name: '_platformFeeRatio',
+        name: 'platformFeeRatio',
         type: 'uint16',
       },
     ],
@@ -388,7 +388,7 @@ const _abi = [
       {
         indexed: false,
         internalType: 'uint32',
-        name: '_feeSet',
+        name: 'feeSet',
         type: 'uint32',
       },
     ],
@@ -401,7 +401,7 @@ const _abi = [
       {
         indexed: false,
         internalType: 'uint32[]',
-        name: '_swapIntervals',
+        name: 'swapIntervals',
         type: 'uint32[]',
       },
     ],
@@ -414,7 +414,7 @@ const _abi = [
       {
         indexed: false,
         internalType: 'uint32[]',
-        name: '_swapIntervals',
+        name: 'swapIntervals',
         type: 'uint32[]',
       },
     ],
@@ -482,6 +482,16 @@ const _abi = [
                 internalType: 'address',
                 name: 'tokenB',
                 type: 'address',
+              },
+              {
+                internalType: 'uint256',
+                name: 'totalAmountToSwapTokenA',
+                type: 'uint256',
+              },
+              {
+                internalType: 'uint256',
+                name: 'totalAmountToSwapTokenB',
+                type: 'uint256',
               },
               {
                 internalType: 'uint256',
@@ -574,13 +584,13 @@ const _abi = [
       {
         indexed: false,
         internalType: 'address[]',
-        name: '_tokens',
+        name: 'tokens',
         type: 'address[]',
       },
       {
         indexed: false,
         internalType: 'bool[]',
-        name: '_allowed',
+        name: 'allowed',
         type: 'bool[]',
       },
     ],
@@ -784,6 +794,19 @@ const _abi = [
   },
   {
     inputs: [],
+    name: 'PRIVILEGED_SWAPPER_ROLE',
+    outputs: [
+      {
+        internalType: 'bytes32',
+        name: '',
+        type: 'bytes32',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
     name: 'TIME_LOCKED_ROLE',
     outputs: [
       {
@@ -799,43 +822,36 @@ const _abi = [
     inputs: [
       {
         internalType: 'address',
-        name: '_tokenA',
+        name: '',
         type: 'address',
       },
       {
         internalType: 'address',
-        name: '_tokenB',
+        name: '',
         type: 'address',
       },
       {
         internalType: 'bytes1',
-        name: '_swapIntervalMask',
+        name: '',
         type: 'bytes1',
       },
       {
         internalType: 'uint32',
-        name: '_swapNumber',
+        name: '',
         type: 'uint32',
       },
     ],
     name: 'accumRatio',
     outputs: [
       {
-        components: [
-          {
-            internalType: 'uint256',
-            name: 'accumRatioAToB',
-            type: 'uint256',
-          },
-          {
-            internalType: 'uint256',
-            name: 'accumRatioBToA',
-            type: 'uint256',
-          },
-        ],
-        internalType: 'struct IDCAHubParameters.AccumRatio',
-        name: '',
-        type: 'tuple',
+        internalType: 'uint256',
+        name: 'accumRatioAToB',
+        type: 'uint256',
+      },
+      {
+        internalType: 'uint256',
+        name: 'accumRatioBToA',
+        type: 'uint256',
       },
     ],
     stateMutability: 'view',
@@ -1061,6 +1077,16 @@ const _abi = [
         name: '_pairs',
         type: 'tuple[]',
       },
+      {
+        internalType: 'bool',
+        name: '_calculatePrivilegedAvailability',
+        type: 'bool',
+      },
+      {
+        internalType: 'bytes',
+        name: '_oracleData',
+        type: 'bytes',
+      },
     ],
     name: 'getNextSwapInfo',
     outputs: [
@@ -1104,6 +1130,16 @@ const _abi = [
                 internalType: 'address',
                 name: 'tokenB',
                 type: 'address',
+              },
+              {
+                internalType: 'uint256',
+                name: 'totalAmountToSwapTokenA',
+                type: 'uint256',
+              },
+              {
+                internalType: 'uint256',
+                name: 'totalAmountToSwapTokenB',
+                type: 'uint256',
               },
               {
                 internalType: 'uint256',
@@ -1223,7 +1259,7 @@ const _abi = [
     name: 'oracle',
     outputs: [
       {
-        internalType: 'contract IPriceOracle',
+        internalType: 'contract ITokenPriceOracle',
         name: '',
         type: 'address',
       },
@@ -1394,7 +1430,7 @@ const _abi = [
   {
     inputs: [
       {
-        internalType: 'contract IPriceOracle',
+        internalType: 'contract ITokenPriceOracle',
         name: '_oracle',
         type: 'address',
       },
@@ -1490,7 +1526,12 @@ const _abi = [
       },
       {
         internalType: 'bytes',
-        name: '_data',
+        name: '_callbackData',
+        type: 'bytes',
+      },
+      {
+        internalType: 'bytes',
+        name: '_oracleData',
         type: 'bytes',
       },
     ],
@@ -1539,6 +1580,16 @@ const _abi = [
               },
               {
                 internalType: 'uint256',
+                name: 'totalAmountToSwapTokenA',
+                type: 'uint256',
+              },
+              {
+                internalType: 'uint256',
+                name: 'totalAmountToSwapTokenB',
+                type: 'uint256',
+              },
+              {
+                internalType: 'uint256',
                 name: 'ratioAToB',
                 type: 'uint256',
               },
@@ -1570,43 +1621,36 @@ const _abi = [
     inputs: [
       {
         internalType: 'address',
-        name: '_tokenA',
+        name: '',
         type: 'address',
       },
       {
         internalType: 'address',
-        name: '_tokenB',
+        name: '',
         type: 'address',
       },
       {
         internalType: 'bytes1',
-        name: '_swapIntervalMask',
+        name: '',
         type: 'bytes1',
       },
       {
         internalType: 'uint32',
-        name: '_swapNumber',
+        name: '',
         type: 'uint32',
       },
     ],
     name: 'swapAmountDelta',
     outputs: [
       {
-        components: [
-          {
-            internalType: 'uint128',
-            name: 'swapDeltaAToB',
-            type: 'uint128',
-          },
-          {
-            internalType: 'uint128',
-            name: 'swapDeltaBToA',
-            type: 'uint128',
-          },
-        ],
-        internalType: 'struct IDCAHubParameters.SwapDelta',
-        name: '',
-        type: 'tuple',
+        internalType: 'uint128',
+        name: 'swapDeltaAToB',
+        type: 'uint128',
+      },
+      {
+        internalType: 'uint128',
+        name: 'swapDeltaBToA',
+        type: 'uint128',
       },
     ],
     stateMutability: 'view',
@@ -1616,48 +1660,41 @@ const _abi = [
     inputs: [
       {
         internalType: 'address',
-        name: '_tokenA',
+        name: '',
         type: 'address',
       },
       {
         internalType: 'address',
-        name: '_tokenB',
+        name: '',
         type: 'address',
       },
       {
         internalType: 'bytes1',
-        name: '_swapIntervalMask',
+        name: '',
         type: 'bytes1',
       },
     ],
     name: 'swapData',
     outputs: [
       {
-        components: [
-          {
-            internalType: 'uint32',
-            name: 'performedSwaps',
-            type: 'uint32',
-          },
-          {
-            internalType: 'uint224',
-            name: 'nextAmountToSwapAToB',
-            type: 'uint224',
-          },
-          {
-            internalType: 'uint32',
-            name: 'lastSwappedAt',
-            type: 'uint32',
-          },
-          {
-            internalType: 'uint224',
-            name: 'nextAmountToSwapBToA',
-            type: 'uint224',
-          },
-        ],
-        internalType: 'struct IDCAHubParameters.SwapData',
-        name: '',
-        type: 'tuple',
+        internalType: 'uint32',
+        name: 'performedSwaps',
+        type: 'uint32',
+      },
+      {
+        internalType: 'uint224',
+        name: 'nextAmountToSwapAToB',
+        type: 'uint224',
+      },
+      {
+        internalType: 'uint32',
+        name: 'lastSwappedAt',
+        type: 'uint32',
+      },
+      {
+        internalType: 'uint224',
+        name: 'nextAmountToSwapBToA',
+        type: 'uint224',
       },
     ],
     stateMutability: 'view',

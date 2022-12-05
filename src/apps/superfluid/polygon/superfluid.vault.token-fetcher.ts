@@ -2,17 +2,11 @@ import { Inject } from '@nestjs/common';
 import { gql } from 'graphql-request';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
-import { Register } from '~app-toolkit/decorators';
-import { DefaultDataProps } from '~position/display.interface';
-import {
-  AppTokenTemplatePositionFetcher,
-  DataPropsStageParams,
-  UnderlyingTokensStageParams,
-} from '~position/template/app-token.template.position-fetcher';
-import { Network } from '~types/network.interface';
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
+import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
+import { GetUnderlyingTokensParams, GetDataPropsParams } from '~position/template/app-token.template.types';
 
 import { SuperfluidContractFactory, VaultToken } from '../contracts';
-import { SUPERFLUID_DEFINITION } from '../superfluid.definition';
 
 const ALL_TOKENS_QUERY = gql`
   {
@@ -32,15 +26,9 @@ type TokensResponse = {
   }[];
 };
 
-const appId = SUPERFLUID_DEFINITION.id;
-const groupId = SUPERFLUID_DEFINITION.groups.vault.id;
-const network = Network.POLYGON_MAINNET;
-
-@Register.TokenPositionFetcher({ appId, groupId, network })
+@PositionTemplate()
 export class PolygonSuperfluidVaultTokenFetcher extends AppTokenTemplatePositionFetcher<VaultToken> {
-  appId = SUPERFLUID_DEFINITION.id;
-  groupId = SUPERFLUID_DEFINITION.groups.vault.id;
-  network = Network.POLYGON_MAINNET;
+  groupLabel = 'Vaults';
 
   readonly brokenAddresses = [
     '0x263026e7e53dbfdce5ae55ade22493f828922965',
@@ -70,14 +58,19 @@ export class PolygonSuperfluidVaultTokenFetcher extends AppTokenTemplatePosition
     return tokenData.tokens?.filter(x => !this.brokenAddresses.includes(x.id)).map(v => v.id) ?? [];
   }
 
-  async getUnderlyingTokenAddresses({ contract }: UnderlyingTokensStageParams<VaultToken>) {
+  async getUnderlyingTokenAddresses({ contract }: GetUnderlyingTokensParams<VaultToken>) {
     return await contract.getUnderlyingToken();
   }
 
-  async getDataProps(opts: DataPropsStageParams<VaultToken, DefaultDataProps>): Promise<DefaultDataProps> {
-    const { appToken } = opts;
-    const liquidity = appToken.price * appToken.supply;
+  async getLiquidity({ appToken }: GetDataPropsParams<VaultToken>) {
+    return appToken.supply * appToken.price;
+  }
 
-    return { liquidity };
+  async getReserves({ appToken }: GetDataPropsParams<VaultToken>) {
+    return [appToken.pricePerShare[0] * appToken.supply];
+  }
+
+  async getApy() {
+    return 0;
   }
 }

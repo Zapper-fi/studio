@@ -1,14 +1,15 @@
 import { Inject } from '@nestjs/common';
 
-import { SingleStakingFarmContractPositionHelper } from '~app-toolkit';
-import { Register } from '~app-toolkit/decorators';
-import { SynthetixContractFactory, SynthetixRewards } from '~apps/synthetix';
-import { UNISWAP_V2_DEFINITION } from '~apps/uniswap-v2';
-import { PositionFetcher } from '~position/position-fetcher.interface';
-import { ContractPosition } from '~position/position.interface';
-import { Network } from '~types/network.interface';
+import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
+import { GetDataPropsParams, GetTokenBalancesParams } from '~position/template/contract-position.template.types';
+import {
+  SingleStakingFarmDataProps,
+  SingleStakingFarmDefinition,
+  SingleStakingFarmTemplateContractPositionFetcher,
+} from '~position/template/single-staking.template.contract-position-fetcher';
 
-import { INDEX_COOP_DEFINITION } from '../index-coop.definition';
+import { IndexCoopContractFactory, IndexCoopStaking } from '../contracts';
 
 const FARMS = [
   // UNI-V2 DPI / ETH
@@ -31,36 +32,34 @@ const FARMS = [
   },
 ];
 
-const appId = INDEX_COOP_DEFINITION.id;
-const groupId = INDEX_COOP_DEFINITION.groups.farm.id;
-const network = Network.ETHEREUM_MAINNET;
+@PositionTemplate()
+export class EthereumIndexCoopFarmContractPositionFetcher extends SingleStakingFarmTemplateContractPositionFetcher<IndexCoopStaking> {
+  groupLabel = 'Staking';
 
-@Register.TokenPositionFetcher({ appId, groupId, network })
-export class EthereumIndexCoopContractPositionFetcher implements PositionFetcher<ContractPosition> {
   constructor(
-    @Inject(SynthetixContractFactory)
-    private readonly synthetixContractFactory: SynthetixContractFactory,
-    @Inject(SingleStakingFarmContractPositionHelper)
-    private readonly singleStakingFarmContractPositionHelper: SingleStakingFarmContractPositionHelper,
-  ) {}
+    @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
+    @Inject(IndexCoopContractFactory) protected readonly contractFactory: IndexCoopContractFactory,
+  ) {
+    super(appToolkit);
+  }
 
-  async getPositions() {
-    return this.singleStakingFarmContractPositionHelper.getContractPositions<SynthetixRewards>({
-      appId,
-      groupId,
-      network,
-      resolveFarmDefinitions: async () => FARMS,
-      dependencies: [
-        {
-          appId: UNISWAP_V2_DEFINITION.id,
-          groupIds: [UNISWAP_V2_DEFINITION.groups.pool.id],
-          network,
-        },
-      ],
-      resolveFarmContract: ({ address, network }) =>
-        this.synthetixContractFactory.synthetixRewards({ address, network }),
-      resolveIsActive: async () => true,
-      resolveRois: async () => ({ dailyROI: 0, weeklyROI: 0, yearlyROI: 0 }),
-    });
+  getContract(address: string): IndexCoopStaking {
+    return this.contractFactory.indexCoopStaking({ address, network: this.network });
+  }
+
+  async getFarmDefinitions(): Promise<SingleStakingFarmDefinition[]> {
+    return FARMS;
+  }
+
+  getRewardRates({ contract }: GetDataPropsParams<IndexCoopStaking, SingleStakingFarmDataProps>) {
+    return contract.rewardRate();
+  }
+
+  getStakedTokenBalance({ address, contract }: GetTokenBalancesParams<IndexCoopStaking, SingleStakingFarmDataProps>) {
+    return contract.balanceOf(address);
+  }
+
+  getRewardTokenBalances({ address, contract }: GetTokenBalancesParams<IndexCoopStaking, SingleStakingFarmDataProps>) {
+    return contract.earned(address);
   }
 }

@@ -4,17 +4,19 @@ import { PositionBalanceFetcher } from '~position/position-balance-fetcher.decor
 import { PositionFetcher } from '~position/position-fetcher.decorator';
 
 import { BalanceFetcher } from './balance-fetcher.decorator';
-import { BalancePresenter } from './balance-presenter.decorator';
-import { GroupMeta } from './group-meta.decorator';
+import { BalanceProductMeta } from './balance-product-meta.decorator';
+import { PositionTemplate } from './position-template.decorator';
+import { PresenterTemplate } from './presenter-template.decorator';
 
 export const Register = {
   AppDefinition,
   AppModule,
   BalanceFetcher,
-  BalancePresenter,
-  ContractPositionFetcher: PositionFetcher(ContractType.POSITION),
-  TokenPositionFetcher: PositionFetcher(ContractType.APP_TOKEN),
+  BalanceProductMeta,
   ContractPositionBalanceFetcher: PositionBalanceFetcher(ContractType.POSITION),
+  ContractPositionFetcher: PositionFetcher(ContractType.POSITION),
+  PositionTemplate,
+  PresenterTemplate,
   TokenPositionBalanceFetcher: PositionBalanceFetcher(ContractType.APP_TOKEN),
-  GroupMeta: GroupMeta,
+  TokenPositionFetcher: PositionFetcher(ContractType.APP_TOKEN),
 };

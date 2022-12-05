@@ -19,7 +19,7 @@ export const TENDERIZE_DEFINITION = appDefinition({
     swap: {
       id: 'swap',
       type: GroupType.TOKEN,
-      label: 'Pools',
+      label: 'Swap',
     },
   },
 

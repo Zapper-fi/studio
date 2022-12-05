@@ -7,16 +7,18 @@ import { AvalancheHakuswapFarmContractPositionFetcher } from './avalanche/hakusw
 import { AvalancheHakuswapPoolTokenFetcher } from './avalanche/hakuswap.pool.token-fetcher';
 import { HakuswapContractFactory } from './contracts';
 import { HakuswapAppDefinition, HAKUSWAP_DEFINITION } from './hakuswap.definition';
+import { HakuswapPoolTokenHelper } from './helpers/hakuswap.pool.token-helper';
 
 @Register.AppModule({
   appId: HAKUSWAP_DEFINITION.id,
   imports: [UniswapV2AppModule],
   providers: [
+    HakuswapAppDefinition,
+    HakuswapContractFactory,
+    HakuswapPoolTokenHelper,
     AvalancheHakuswapBalanceFetcher,
     AvalancheHakuswapFarmContractPositionFetcher,
     AvalancheHakuswapPoolTokenFetcher,
-    HakuswapAppDefinition,
-    HakuswapContractFactory,
   ],
 })
 export class HakuswapAppModule extends AbstractApp() {}

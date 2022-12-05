@@ -66,6 +66,7 @@ export class EthereumUniswapV2PoolTokenFetcher implements PositionFetcher<AppTok
           '0x0bf46ba06dc1d33c3bd80ff42497ebff13a88900', // rDPX/ETH
           '0xfd0a40bc83c5fae4203dec7e5929b446b07d1c76', // FRAX/ETH
           '0x97c4adc5d28a86f9470c70dd91dc6cc2f20d2d4d', // FRAX/USDC
+          '0x1f249f8b5a42aa78cc8a2b66ee0bb015468a5f43', // wETH/wBAN
         ],
       }),
       resolveDerivedUnderlyingToken: this.uniswapV2OnChainTokenDerivationStrategy.build({

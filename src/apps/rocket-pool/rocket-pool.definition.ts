@@ -30,6 +30,12 @@ export const ROCKET_POOL_DEFINITION = appDefinition({
       label: 'Staking',
     },
 
+    minipool: {
+      id: 'minipool',
+      type: GroupType.POSITION,
+      label: 'Minipools',
+    },
+
     oracleDaoBond: {
       id: 'oracle-dao-bond',
       type: GroupType.POSITION,

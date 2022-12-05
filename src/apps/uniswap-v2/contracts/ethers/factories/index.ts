@@ -3,6 +3,3 @@
 /* eslint-disable */
 export { UniswapFactory__factory } from './UniswapFactory__factory';
 export { UniswapPair__factory } from './UniswapPair__factory';
-export { UniswapV3Factory__factory } from './UniswapV3Factory__factory';
-export { UniswapV3Pool__factory } from './UniswapV3Pool__factory';
-export { UniswapV3PositionManager__factory } from './UniswapV3PositionManager__factory';

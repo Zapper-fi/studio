@@ -2,115 +2,124 @@ import { Inject } from '@nestjs/common';
 import _ from 'lodash';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
-import { Register } from '~app-toolkit/decorators';
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import { buildDollarDisplayItem } from '~app-toolkit/helpers/presentation/display-item.present';
-import { getTokenImg } from '~app-toolkit/helpers/presentation/image.present';
-import { ContractType } from '~position/contract.interface';
-import { PositionFetcher } from '~position/position-fetcher.interface';
-import { AppTokenPosition } from '~position/position.interface';
-import { Network } from '~types/network.interface';
+import { StatsItem } from '~position/display.interface';
+import { RawTokenBalance } from '~position/position-balance.interface';
+import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
+import {
+  GetDataPropsParams,
+  GetDisplayPropsParams,
+  GetUnderlyingTokensParams,
+} from '~position/template/app-token.template.types';
 
-import { MeshswapContractFactory } from '../contracts';
-import { MESHSWAP_DEFINITION } from '../meshswap.definition';
+import { MeshswapContractFactory, MeshswapSinglePool } from '../contracts';
 
-const appId = MESHSWAP_DEFINITION.id;
-const groupId = MESHSWAP_DEFINITION.groups.supply.id;
-const network = Network.POLYGON_MAINNET;
+export type MeshswapContractPositionDataProps = {
+  liquidity: number;
+  exchangeRate: number;
+};
 
-@Register.TokenPositionFetcher({ appId, groupId, network })
-export class PolygonMeshswapSupplyTokenFetcher implements PositionFetcher<AppTokenPosition> {
+@PositionTemplate()
+export class PolygonMeshswapSupplyTokenFetcher extends AppTokenTemplatePositionFetcher<MeshswapSinglePool> {
+  groupLabel = 'Supply';
+
   constructor(
-    @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
-    @Inject(MeshswapContractFactory) private readonly meshswapContractFactory: MeshswapContractFactory,
-  ) {}
+    @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
+    @Inject(MeshswapContractFactory) private readonly contractFactory: MeshswapContractFactory,
+  ) {
+    super(appToolkit);
+  }
 
-  async getPositions() {
-    const multicall = this.appToolkit.getMulticall(network);
-    const baseTokens = await this.appToolkit.getBaseTokenPrices(network);
+  getContract(address: string): MeshswapSinglePool {
+    return this.contractFactory.meshswapSinglePool({ network: this.network, address });
+  }
 
-    const singlePoolFactoryContract = this.meshswapContractFactory.meshswapSinglePoolFactory({
-      network,
+  async getAddresses(): Promise<string[]> {
+    const multicall = this.appToolkit.getMulticall(this.network);
+    const singlePoolFactoryContract = this.contractFactory.meshswapSinglePoolFactory({
+      network: this.network,
       address: '0x504722a6eabb3d1573bada9abd585ae177d52e7a',
     });
 
     const poolCountRaw = await multicall.wrap(singlePoolFactoryContract).getPoolCount();
     const poolCount = Number(poolCountRaw);
 
-    const positions = await Promise.all(
+    const poolAddresses = await Promise.all(
       _.range(0, poolCount).map(async index => {
-        const addressRaw = await multicall.wrap(singlePoolFactoryContract).getPoolAddressByIndex(index);
-        const address = addressRaw.toLowerCase();
-        const singlePoolContract = this.meshswapContractFactory.meshswapSinglePool({
-          network,
-          address,
-        });
-
-        const [
-          totalSupplyRaw,
-          decimals,
-          underlyingTokenAddressRaw,
-          symbol,
-          label,
-          cashRaw,
-          borrowAmountRaw,
-          exchangeRateRaw,
-        ] = await Promise.all([
-          multicall.wrap(singlePoolContract).totalSupply(),
-          multicall.wrap(singlePoolContract).decimals(),
-          multicall.wrap(singlePoolContract).token(),
-          multicall.wrap(singlePoolContract).symbol(),
-          multicall.wrap(singlePoolContract).name(),
-          multicall.wrap(singlePoolContract).getCash(),
-          multicall.wrap(singlePoolContract).totalBorrows(),
-          multicall.wrap(singlePoolContract).exchangeRateStored(),
-        ]);
-
-        const underlyingTokenAddress = underlyingTokenAddressRaw.toLowerCase();
-
-        const tokens = baseTokens.find(x => x.address == underlyingTokenAddress);
-        if (!tokens) return null;
-
-        const exchangeRate = Number(exchangeRateRaw) / 10 ** 18;
-        const cash = Number(cashRaw) / 10 ** decimals;
-        const borrowAmount = Number(borrowAmountRaw) / 10 ** decimals;
-
-        const liquidity = borrowAmount + cash;
-        const supply = Number(totalSupplyRaw) / 10 ** decimals;
-        const pricePerShare = 1;
-        const price = tokens.price;
-
-        const statsItems = [{ label: 'Liquidity', value: buildDollarDisplayItem(liquidity) }];
-
-        const poolToken: AppTokenPosition = {
-          type: ContractType.APP_TOKEN,
-          appId,
-          groupId,
-          address,
-          network,
-          supply,
-          decimals,
-          symbol,
-          price,
-          pricePerShare,
-          tokens: [tokens],
-
-          dataProps: {
-            liquidity,
-            exchangeRate,
-          },
-
-          displayProps: {
-            label,
-            secondaryLabel: symbol,
-            images: [getTokenImg(tokens.address, network)],
-            statsItems,
-          },
-        };
-
-        return poolToken;
+        return await multicall.wrap(singlePoolFactoryContract).getPoolAddressByIndex(index);
       }),
     );
+    return poolAddresses;
+  }
 
-    return _.compact(positions);
+  async getUnderlyingTokenAddresses({ contract }: GetUnderlyingTokensParams<MeshswapSinglePool>) {
+    return contract.token();
+  }
+
+  async getPricePerShare() {
+    return 1;
+  }
+
+  async getLabel({ contract }: GetDisplayPropsParams<MeshswapSinglePool>): Promise<string> {
+    return contract.name();
+  }
+
+  async getReserves({ appToken }: GetDataPropsParams<MeshswapSinglePool>) {
+    return (appToken.pricePerShare as number[]).map(v => v * appToken.supply);
+  }
+
+  async getLiquidity({ appToken, contract }: GetDataPropsParams<MeshswapSinglePool>) {
+    const cashRaw = await contract.getCash();
+    const borrowAmountRaw = await contract.totalBorrows();
+    const cash = Number(cashRaw) / 10 ** appToken.decimals;
+    const borrowAmount = Number(borrowAmountRaw) / 10 ** appToken.decimals;
+
+    return borrowAmount + cash;
+  }
+
+  async getApy(_params: GetDataPropsParams<MeshswapSinglePool>) {
+    return 0;
+  }
+
+  async getDataProps(params: GetDataPropsParams<MeshswapSinglePool>) {
+    const [liquidity, reserves, apy] = await Promise.all([
+      this.getLiquidity(params),
+      this.getReserves(params),
+      this.getApy(params),
+    ]);
+
+    const exchangeRateRaw = await params.contract.exchangeRateStored();
+    const exchangeRate = Number(exchangeRateRaw) / 10 ** 18;
+
+    return { liquidity, reserves, apy, exchangeRate };
+  }
+
+  async getStatsItems({ appToken }: GetDisplayPropsParams<MeshswapSinglePool>): Promise<StatsItem[] | undefined> {
+    const { liquidity } = appToken.dataProps;
+
+    return [{ label: 'Liquidity', value: buildDollarDisplayItem(liquidity) }];
+  }
+
+  async getRawBalances(address: string): Promise<RawTokenBalance[]> {
+    const multicall = this.appToolkit.getMulticall(this.network);
+
+    const appTokens = await this.appToolkit.getAppTokenPositions<MeshswapContractPositionDataProps>({
+      appId: this.appId,
+      network: this.network,
+      groupIds: [this.groupId],
+    });
+
+    return Promise.all(
+      appTokens.map(async appToken => {
+        const balanceRaw = await multicall.wrap(this.getContract(appToken.address)).balanceOf(address);
+        const balance = Number(balanceRaw) * appToken.dataProps.exchangeRate;
+
+        return {
+          key: this.appToolkit.getPositionKey(appToken),
+          balance: balance.toString(),
+        };
+      }),
+    );
   }
 }

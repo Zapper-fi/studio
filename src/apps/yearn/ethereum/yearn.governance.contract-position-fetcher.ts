@@ -1,39 +1,31 @@
 import { Inject } from '@nestjs/common';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
-import { Register } from '~app-toolkit/decorators';
-import { SynthetixContractFactory, SynthetixRewards } from '~apps/synthetix';
-import {
-  DataPropsStageParams,
-  GetTokenBalancesPerPositionParams,
-} from '~position/template/contract-position.template.position-fetcher';
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
+import { GetDataPropsParams, GetTokenBalancesParams } from '~position/template/contract-position.template.types';
 import {
   SingleStakingFarmDefinition,
   SingleStakingFarmTemplateContractPositionFetcher,
 } from '~position/template/single-staking.template.contract-position-fetcher';
-import { Network } from '~types/network.interface';
 
-import { YEARN_DEFINITION } from '../yearn.definition';
+import { YearnContractFactory } from '../contracts';
+import { YearnGovernance } from '../contracts/ethers/YearnGovernance';
 
-const appId = YEARN_DEFINITION.id;
-const groupId = YEARN_DEFINITION.groups.governance.id;
-const network = Network.ETHEREUM_MAINNET;
+@PositionTemplate()
+export class EthereumYearnGovernanceContractPositionFetcher extends SingleStakingFarmTemplateContractPositionFetcher<YearnGovernance> {
+  groupLabel = 'Governance';
 
-@Register.ContractPositionFetcher({ appId, groupId, network })
-export class EthereumYearnGovernanceContractPositionFetcher extends SingleStakingFarmTemplateContractPositionFetcher<SynthetixRewards> {
-  appId = appId;
-  groupId = groupId;
-  network = network;
+  isExcludedFromExplore = true;
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(SynthetixContractFactory) protected readonly contractFactory: SynthetixContractFactory,
+    @Inject(YearnContractFactory) protected readonly contractFactory: YearnContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): SynthetixRewards {
-    return this.contractFactory.synthetixRewards({ address, network: this.network });
+  getContract(address: string): YearnGovernance {
+    return this.contractFactory.yearnGovernance({ address, network: this.network });
   }
 
   async getFarmDefinitions(): Promise<SingleStakingFarmDefinition[]> {
@@ -46,15 +38,15 @@ export class EthereumYearnGovernanceContractPositionFetcher extends SingleStakin
     ];
   }
 
-  async getRewardRates({ contract }: DataPropsStageParams<SynthetixRewards>) {
+  async getRewardRates({ contract }: GetDataPropsParams<YearnGovernance>) {
     return contract.rewardRate();
   }
 
-  async getStakedTokenBalance({ contract, address }: GetTokenBalancesPerPositionParams<SynthetixRewards>) {
+  async getStakedTokenBalance({ contract, address }: GetTokenBalancesParams<YearnGovernance>) {
     return contract.balanceOf(address);
   }
 
-  async getRewardTokenBalances({ contract, address }: GetTokenBalancesPerPositionParams<SynthetixRewards>) {
+  async getRewardTokenBalances({ contract, address }: GetTokenBalancesParams<YearnGovernance>) {
     return contract.rewards(address);
   }
 }

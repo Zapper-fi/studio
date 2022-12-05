@@ -7,7 +7,7 @@ import { ContractPosition } from '~position/position.interface';
 import { Network } from '~types/network.interface';
 
 import { PolynomialContractFactory, PolynomialCoveredCall, PolynomialPutSelling } from '../contracts';
-import { resolveTitle, getVault } from '../helpers/formatters';
+import { resolveTitle, getVault, isUnderlyingDenominated } from '../helpers/formatters';
 import { PolynomialApiHelper } from '../helpers/polynomial.api';
 import { POLYNOMIAL_DEFINITION } from '../polynomial.definition';
 
@@ -36,7 +36,9 @@ export class OptimismPolynomialVaultsContractPositionFetcher implements Position
             { appId: POLYNOMIAL_DEFINITION.id, groupIds: [POLYNOMIAL_DEFINITION.groups.vaults.id], network },
           ],
           resolveFarmAddresses: () =>
-            vaults.filter(vault => vault.vaultId.includes('CALL')).map(vault => vault.vaultAddress.toLowerCase()),
+            vaults
+              .filter(vault => isUnderlyingDenominated(vault.vaultId))
+              .map(vault => vault.vaultAddress.toLowerCase()),
           resolveStakedTokenAddress: async ({ multicall, contract }) => multicall.wrap(contract).UNDERLYING(),
           resolveRewardTokenAddresses: ({ multicall, contract }) => multicall.wrap(contract).VAULT_TOKEN(),
           resolveFarmContract: ({ address }) => this.contractFactory.polynomialCoveredCall({ address, network }),
@@ -69,7 +71,9 @@ export class OptimismPolynomialVaultsContractPositionFetcher implements Position
           { appId: POLYNOMIAL_DEFINITION.id, groupIds: [POLYNOMIAL_DEFINITION.groups.vaults.id], network },
         ],
         resolveFarmAddresses: () =>
-          vaults.filter(vault => !vault.vaultId.includes('CALL')).map(vault => vault.vaultAddress.toLowerCase()), // Put and Gamma positions
+          vaults
+            .filter(vault => !isUnderlyingDenominated(vault.vaultId))
+            .map(vault => vault.vaultAddress.toLowerCase()), // Put and Gamma positions
         resolveStakedTokenAddress: async ({ multicall, contract }) => multicall.wrap(contract).SUSD(),
         resolveRewardTokenAddresses: ({ multicall, contract }) => multicall.wrap(contract).VAULT_TOKEN(),
         resolveFarmContract: ({ address }) => this.contractFactory.polynomialPutSelling({ address, network }),

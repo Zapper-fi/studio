@@ -5,7 +5,7 @@ import { Network } from '~types/network.interface';
 
 export const PIKA_PROTOCOL_DEFINITION = appDefinition({
   id: 'pika-protocol',
-  name: 'Pika Protocol',
+  name: 'Pika Protocol V2',
   description:
     'Pika Protocol is a decentralized perpetual swap exchange on Optimism, offering up to 50x leverage on any asset with deep liquidity',
   url: 'https://app.pikaprotocol.com',
@@ -15,13 +15,17 @@ export const PIKA_PROTOCOL_DEFINITION = appDefinition({
       id: 'vault',
       type: GroupType.POSITION,
       label: 'Vault',
-      groupLabel: 'Vault',
     },
   },
 
   tags: [AppTag.PERPETUALS_EXCHANGE],
   keywords: [],
-  links: {},
+  links: {
+    discord: 'https://discord.com/invite/R4CG94ZVYm',
+    medium: 'https://pikaprotocol.medium.com/',
+    telegram: 'https://t.me/PikaProtocol',
+    twitter: 'https://twitter.com/PikaProtocol',
+  },
 
   supportedNetworks: {
     [Network.OPTIMISM_MAINNET]: [AppAction.VIEW],

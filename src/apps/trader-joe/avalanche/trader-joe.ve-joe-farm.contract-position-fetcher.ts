@@ -1,40 +1,61 @@
 import { Inject } from '@nestjs/common';
+import { BigNumberish } from 'ethers';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
-import { Register } from '~app-toolkit/decorators';
-import { PositionFetcher } from '~position/position-fetcher.interface';
-import { ContractPosition } from '~position/position.interface';
-import { Network } from '~types/network.interface';
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
+import {
+  GetMasterChefDataPropsParams,
+  GetMasterChefTokenBalancesParams,
+  MasterChefTemplateContractPositionFetcher,
+} from '~position/template/master-chef.template.contract-position-fetcher';
 
 import { TraderJoeVeJoeStaking, TraderJoeContractFactory } from '../contracts';
-import { TRADER_JOE_DEFINITION } from '../trader-joe.definition';
 
-const appId = TRADER_JOE_DEFINITION.id;
-const groupId = TRADER_JOE_DEFINITION.groups.veJoe.id;
-const network = Network.AVALANCHE_MAINNET;
+@PositionTemplate()
+export class AvalancheTraderJoeVeJoeContractPositionFetcher extends MasterChefTemplateContractPositionFetcher<TraderJoeVeJoeStaking> {
+  groupLabel = 'veJOE';
+  chefAddress = '0x25d85e17dd9e544f6e9f8d44f99602dbf5a97341';
 
-@Register.ContractPositionFetcher({ appId, groupId, network })
-export class AvalancheTraderJoeVeJoeContractPositionFetcher implements PositionFetcher<ContractPosition> {
   constructor(
-    @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
-    @Inject(TraderJoeContractFactory) private readonly contractFactory: TraderJoeContractFactory,
-  ) {}
+    @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
+    @Inject(TraderJoeContractFactory) protected readonly contractFactory: TraderJoeContractFactory,
+  ) {
+    super(appToolkit);
+  }
 
-  async getPositions() {
-    return this.appToolkit.helpers.masterChefContractPositionHelper.getContractPositions<TraderJoeVeJoeStaking>({
-      address: '0x25d85e17dd9e544f6e9f8d44f99602dbf5a97341',
-      appId,
-      groupId,
-      network,
-      resolveContract: ({ address, network }) => this.contractFactory.traderJoeVeJoeStaking({ address, network }),
-      resolvePoolLength: () => 1,
-      resolveDepositTokenAddress: ({ contract, multicall }) => multicall.wrap(contract).joe(),
-      resolveRewardTokenAddresses: ({ contract, multicall }) => multicall.wrap(contract).veJoe(),
-      resolveRewardRate: this.appToolkit.helpers.masterChefDefaultRewardsPerBlockStrategy.build({
-        resolvePoolAllocPoints: async () => 1,
-        resolveTotalAllocPoints: () => 1,
-        resolveTotalRewardRate: ({ multicall, contract }) => multicall.wrap(contract).veJoePerSharePerSec(),
-      }),
-    });
+  getContract(address: string): TraderJoeVeJoeStaking {
+    return this.contractFactory.traderJoeVeJoeStaking({ address, network: this.network });
+  }
+
+  async getPoolLength(_contract: TraderJoeVeJoeStaking): Promise<BigNumberish> {
+    return 1;
+  }
+
+  async getStakedTokenAddress(contract: TraderJoeVeJoeStaking) {
+    return contract.joe();
+  }
+
+  async getRewardTokenAddress(contract: TraderJoeVeJoeStaking) {
+    return contract.veJoe();
+  }
+
+  async getTotalAllocPoints(_params: GetMasterChefDataPropsParams<TraderJoeVeJoeStaking>) {
+    return 1;
+  }
+
+  async getPoolAllocPoints(_params: GetMasterChefDataPropsParams<TraderJoeVeJoeStaking>) {
+    return 1;
+  }
+
+  async getTotalRewardRate({ contract }: GetMasterChefDataPropsParams<TraderJoeVeJoeStaking>) {
+    return contract.veJoePerSharePerSec();
+  }
+
+  async getStakedTokenBalance({ address, contract }: GetMasterChefTokenBalancesParams<TraderJoeVeJoeStaking>) {
+    return contract.userInfos(address).then(v => v.balance);
+  }
+
+  async getRewardTokenBalance({ address, contract }: GetMasterChefTokenBalancesParams<TraderJoeVeJoeStaking>) {
+    return contract.getPendingVeJoe(address);
   }
 }

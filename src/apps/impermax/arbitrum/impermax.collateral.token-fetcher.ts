@@ -1,34 +1,10 @@
-import { Inject } from '@nestjs/common';
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 
-import { Register } from '~app-toolkit/decorators';
-import { PositionFetcher } from '~position/position-fetcher.interface';
-import { AppTokenPosition } from '~position/position.interface';
-import { Network } from '~types/network.interface';
+import { ImpermaxCollateralTokenFetcher } from '../common/impermax.collateral.token-fetcher';
 
-import { ImpermaxCollateralTokenHelper } from '../helpers/impermax.collateral.token-fetcher-helper';
-import { IMPERMAX_DEFINITION } from '../impermax.definition';
+@PositionTemplate()
+export class ArbitrumImpermaxCollateralTokenFetcher extends ImpermaxCollateralTokenFetcher {
+  groupLabel = 'Lending Pool';
 
-const appId = IMPERMAX_DEFINITION.id;
-const groupId = IMPERMAX_DEFINITION.groups.collateral.id;
-const network = Network.ARBITRUM_MAINNET;
-
-const address = '0x8c3736e2fe63cc2cd89ee228d9dbcab6ce5b767b';
-
-@Register.TokenPositionFetcher({ appId, groupId, network })
-export class ArbitrumImpermaxCollateralTokenFetcher implements PositionFetcher<AppTokenPosition> {
-  constructor(
-    @Inject(ImpermaxCollateralTokenHelper)
-    private readonly impermaxCollateralTokenHelper: ImpermaxCollateralTokenHelper,
-  ) {}
-
-  async getPositions() {
-    return this.impermaxCollateralTokenHelper.getPositions({
-      address,
-      network,
-      dependencies: [
-        { appId: 'sushiswap', groupIds: ['pool'], network },
-        { appId: 'swapr', groupIds: ['pool'], network },
-      ],
-    });
-  }
+  factoryAddress = '0x8c3736e2fe63cc2cd89ee228d9dbcab6ce5b767b';
 }

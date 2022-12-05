@@ -1,148 +1,163 @@
 import { Inject } from '@nestjs/common';
 import { BigNumberish, Contract } from 'ethers/lib/ethers';
-import { compact, intersection, isArray, partition, sum } from 'lodash';
+import { compact, intersection, isArray, partition, sortBy, sum } from 'lodash';
 
 import { drillBalance } from '~app-toolkit';
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
+import { ZERO_ADDRESS } from '~app-toolkit/constants/address';
 import {
   buildDollarDisplayItem,
   buildPercentageDisplayItem,
 } from '~app-toolkit/helpers/presentation/display-item.present';
 import { getImagesFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { IMulticallWrapper } from '~multicall';
+import { isMulticallUnderlyingError } from '~multicall/multicall.ethers';
 import { ContractType } from '~position/contract.interface';
-import { DefaultDataProps, DisplayProps, StatsItem } from '~position/display.interface';
-import { AppTokenPositionBalance } from '~position/position-balance.interface';
+import { DisplayProps, StatsItem } from '~position/display.interface';
+import { AppTokenPositionBalance, RawAppTokenBalance } from '~position/position-balance.interface';
 import { PositionFetcher } from '~position/position-fetcher.interface';
 import { AppTokenPosition } from '~position/position.interface';
-import { TokenDependencySelector } from '~position/selectors/token-dependency-selector.interface';
 import { Network } from '~types/network.interface';
 
-export type StageParams<T extends Contract, V, K extends keyof AppTokenPosition> = {
-  tokenLoader: TokenDependencySelector;
-  multicall: IMulticallWrapper;
-  contract: T;
-  appToken: Omit<AppTokenPosition<V>, K>;
-};
+import {
+  DefaultAppTokenDefinition,
+  DefaultAppTokenDataProps,
+  GetAddressesParams,
+  GetDataPropsParams,
+  GetDefinitionsParams,
+  GetDisplayPropsParams,
+  GetPricePerShareParams,
+  GetPriceParams,
+  GetTokenPropsParams,
+  GetUnderlyingTokensParams,
+} from './app-token.template.types';
+import { PositionFetcherTemplateCommons } from './position-fetcher.template.types';
 
-export type TokenPropsStageParams<T> = {
-  address: string;
-  contract: T;
-  multicall: IMulticallWrapper;
-};
-
-export type UnderlyingTokensStageParams<T> = {
-  address: string;
-  contract: T;
-  multicall: IMulticallWrapper;
-};
-
-export type PricePerShareStageParams<T extends Contract, V extends DefaultDataProps = DefaultDataProps> = StageParams<
-  T,
-  V,
-  'pricePerShare' | 'price' | 'dataProps' | 'displayProps'
->;
-export type PriceStageParams<T extends Contract, V extends DefaultDataProps = DefaultDataProps> = StageParams<
-  T,
-  V,
-  'price' | 'dataProps' | 'displayProps'
->;
-export type DataPropsStageParams<T extends Contract, V extends DefaultDataProps = DefaultDataProps> = StageParams<
-  T,
-  V,
-  'dataProps' | 'displayProps'
->;
-export type DisplayPropsStageParams<T extends Contract, V extends DefaultDataProps = DefaultDataProps> = StageParams<
-  T,
-  V,
-  'displayProps'
->;
-
-export abstract class AppTokenTemplatePositionFetcher<T extends Contract, V extends DefaultDataProps = DefaultDataProps>
-  implements PositionFetcher<AppTokenPosition<V>>
+export abstract class AppTokenTemplatePositionFetcher<
+  T extends Contract,
+  V extends DefaultAppTokenDataProps = DefaultAppTokenDataProps,
+  R extends DefaultAppTokenDefinition = DefaultAppTokenDefinition,
+> implements PositionFetcher<AppTokenPosition<V>>, PositionFetcherTemplateCommons
 {
-  abstract appId: string;
-  abstract groupId: string;
-  abstract network: Network;
-  groupLabel?: string;
+  appId: string;
+  groupId: string;
+  network: Network;
+  isDebt = false;
+  abstract groupLabel: string;
 
+  isExcludedFromBalances = false;
+  isExcludedFromExplore = false;
+  isExcludedFromTvl = false;
+
+  fromNetwork?: Network;
   minLiquidity = 1000;
 
   constructor(@Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit) {}
 
-  abstract getContract(address: string): T;
-  abstract getAddresses(params: { multicall: IMulticallWrapper }): string[] | Promise<string[]>;
+  // 1. Get token addresses
+  abstract getAddresses(params: GetAddressesParams): string[] | Promise<string[]>;
 
-  // Token Props
-  async getSymbol({ address, multicall }: TokenPropsStageParams<T>): Promise<string> {
+  // 2. (Optional) Get token definitions (i.e.: token addresses and additional context)
+  async getDefinitions(params: GetDefinitionsParams): Promise<R[]> {
+    const addresses = await this.getAddresses({ ...params, definitions: [] });
+    return addresses.map(address => ({ address: address.toLowerCase() } as R));
+  }
+
+  // 3. Get token contract instance
+  abstract getContract(address: string): T;
+
+  // 4. Get underlying token addresses
+  async getUnderlyingTokenAddresses(_params: GetUnderlyingTokensParams<T, R>): Promise<string | string[]> {
+    return [];
+  }
+
+  // 5A. Get symbol (ERC20 standard)
+  async getSymbol({ address, multicall }: GetTokenPropsParams<T, R>): Promise<string> {
     const erc20 = this.appToolkit.globalContracts.erc20({ address, network: this.network });
     return multicall.wrap(erc20).symbol();
   }
 
-  async getDecimals({ address, multicall }: TokenPropsStageParams<T>): Promise<number> {
+  // 5B. Get decimals (ERC20 standard)
+  async getDecimals({ address, multicall }: GetTokenPropsParams<T, R>): Promise<number> {
     const erc20 = this.appToolkit.globalContracts.erc20({ address, network: this.network });
     return multicall.wrap(erc20).decimals();
   }
 
-  async getSupply({ address, multicall }: TokenPropsStageParams<T>): Promise<BigNumberish> {
+  // 5C. Get supply (ERC20 standard)
+  async getSupply({ address, multicall }: GetTokenPropsParams<T, R>): Promise<BigNumberish> {
     const erc20 = this.appToolkit.globalContracts.erc20({ address, network: this.network });
     return multicall.wrap(erc20).totalSupply();
   }
 
-  // Price Properties
-  async getUnderlyingTokenAddresses(_params: UnderlyingTokensStageParams<T>): Promise<string | string[]> {
-    return [];
-  }
-
-  async getPricePerShare(_params: PricePerShareStageParams<T, V>): Promise<number | number[]> {
+  // 6. Get price per share (ratio between token and underlying token)
+  async getPricePerShare(_params: GetPricePerShareParams<T, V, R>): Promise<number | number[]> {
     return 1;
   }
 
-  async getPrice({ appToken }: PriceStageParams<T, V>): Promise<number> {
+  // 7. Get price using the price per share
+  async getPrice({ appToken }: GetPriceParams<T, V, R>): Promise<number> {
     return sum(appToken.tokens.map((v, i) => v.price * appToken.pricePerShare[i]));
   }
 
-  // Data Properties
-  async getDataProps(_params: DataPropsStageParams<T, V>): Promise<V> {
-    return {} as V;
+  async getLiquidity({ appToken }: GetDataPropsParams<T, V, R>) {
+    return appToken.supply * appToken.price;
+  }
+
+  async getReserves({ appToken }: GetDataPropsParams<T, V, R>) {
+    return (appToken.pricePerShare as number[]).map(v => v * appToken.supply);
+  }
+
+  async getApy(_params: GetDataPropsParams<T, V, R>) {
+    return 0;
+  }
+
+  async getDataProps(params: GetDataPropsParams<T, V, R>): Promise<V> {
+    const [liquidity, reserves, apy] = await Promise.all([
+      this.getLiquidity(params),
+      this.getReserves(params),
+      this.getApy(params),
+    ]);
+
+    return { liquidity, reserves, apy } as V;
   }
 
   // Display Properties
-  async getLabel({ appToken }: DisplayPropsStageParams<T, V>): Promise<DisplayProps['label']> {
+  async getLabel({ appToken }: GetDisplayPropsParams<T, V, R>): Promise<DisplayProps['label']> {
     return appToken.symbol;
   }
 
-  async getLabelDetailed(_params: DisplayPropsStageParams<T, V>): Promise<DisplayProps['labelDetailed']> {
+  async getLabelDetailed(_params: GetDisplayPropsParams<T, V, R>): Promise<DisplayProps['labelDetailed']> {
     return undefined;
   }
 
-  async getSecondaryLabel({ appToken }: DisplayPropsStageParams<T, V>): Promise<DisplayProps['secondaryLabel']> {
+  async getSecondaryLabel({ appToken }: GetDisplayPropsParams<T, V, R>): Promise<DisplayProps['secondaryLabel']> {
     return buildDollarDisplayItem(appToken.price);
   }
 
-  async getTertiaryLabel({ appToken }: DisplayPropsStageParams<T, V>): Promise<DisplayProps['tertiaryLabel']> {
-    if (typeof appToken.dataProps.apy === 'number') return `${appToken.dataProps.apy.toFixed(3)}% APY`;
+  async getTertiaryLabel({ appToken }: GetDisplayPropsParams<T, V, R>): Promise<DisplayProps['tertiaryLabel']> {
+    if (typeof appToken.dataProps.apy === 'number' && appToken.dataProps.apy > 0)
+      return `${appToken.dataProps.apy.toFixed(3)}% APY`;
     return undefined;
   }
 
-  async getImages({ appToken }: DisplayPropsStageParams<T, V>): Promise<DisplayProps['images']> {
+  async getImages({ appToken }: GetDisplayPropsParams<T, V, R>): Promise<DisplayProps['images']> {
     return appToken.tokens.flatMap(v => getImagesFromToken(v));
   }
 
-  async getStatsItems({ appToken }: DisplayPropsStageParams<T, V>): Promise<DisplayProps['statsItems']> {
+  async getBalanceDisplayMode(_params: GetDisplayPropsParams<T, V, R>): Promise<DisplayProps['balanceDisplayMode']> {
+    return undefined;
+  }
+
+  async getStatsItems({ appToken }: GetDisplayPropsParams<T, V, R>): Promise<DisplayProps['statsItems']> {
     const statsItems: StatsItem[] = [];
 
     // Standardized Fields
     if (typeof appToken.dataProps.liquidity === 'number')
       statsItems.push({ label: 'Liquidity', value: buildDollarDisplayItem(appToken.dataProps.liquidity) });
-    if (typeof appToken.dataProps.apy === 'number')
+    if (typeof appToken.dataProps.apy === 'number' && appToken.dataProps.apy > 0)
       statsItems.push({ label: 'APY', value: buildPercentageDisplayItem(appToken.dataProps.apy) });
 
     return statsItems;
-  }
-
-  getKey({ appToken }: { appToken: AppTokenPosition<V> }): string {
-    return this.appToolkit.getPositionKey(appToken);
   }
 
   // Default (adapted) Template Runner
@@ -153,19 +168,27 @@ export abstract class AppTokenTemplatePositionFetcher<T extends Contract, V exte
       tags: { network: this.network, context: `${this.appId}__template` },
     });
 
-    const addresses = await this.getAddresses({ multicall });
-
-    const skeletons = await Promise.all(
-      addresses.map(async address => {
+    const definitions = await this.getDefinitions({ multicall, tokenLoader });
+    const maybeSkeletons = await Promise.all(
+      definitions.map(async definition => {
+        const address = definition.address.toLowerCase();
         const contract = multicall.wrap(this.getContract(address));
-        const underlyingTokenAddresses = await this.getUnderlyingTokenAddresses({ address, contract, multicall })
-          .then(v => (Array.isArray(v) ? v : [v]))
-          .then(v => v.map(t => t.toLowerCase()));
+        const context = { address, definition, contract, multicall, tokenLoader };
 
-        return { address, underlyingTokenAddresses };
+        const underlyingTokenAddresses = await this.getUnderlyingTokenAddresses(context)
+          .then(v => (Array.isArray(v) ? v : [v]))
+          .then(v => v.map(t => t.toLowerCase()))
+          .catch(err => {
+            if (isMulticallUnderlyingError(err)) return null;
+            throw err;
+          });
+
+        if (!underlyingTokenAddresses) return null;
+        return { address, definition, underlyingTokenAddresses };
       }),
     );
 
+    const skeletons = compact(maybeSkeletons);
     const [base, meta] = partition(skeletons, t => {
       const tokenAddresses = skeletons.map(v => v.address);
       return intersection(t.underlyingTokenAddresses, tokenAddresses).length === 0;
@@ -175,117 +198,155 @@ export abstract class AppTokenTemplatePositionFetcher<T extends Contract, V exte
     for (const skeletonsSubset of [base, meta]) {
       const underlyingTokenRequests = skeletons
         .flatMap(v => v.underlyingTokenAddresses)
-        .map(v => ({ network: this.network, address: v }));
+        .map(v => ({ network: this.fromNetwork ?? this.network, address: v }));
       const tokenDependencies = await tokenLoader
         .getMany(underlyingTokenRequests)
         .then(tokenDeps => compact(tokenDeps));
       const allTokens = [...currentTokens, ...tokenDependencies];
 
       const skeletonsWithResolvedTokens = await Promise.all(
-        skeletonsSubset.map(async ({ address, underlyingTokenAddresses }) => {
+        skeletonsSubset.map(async ({ address, definition, underlyingTokenAddresses }) => {
           const maybeTokens = underlyingTokenAddresses.map(v => allTokens.find(t => t.address === v));
           const tokens = compact(maybeTokens);
 
           if (maybeTokens.length !== tokens.length) return null;
-          return { address, tokens };
+          return { address, definition, tokens };
         }),
       );
 
       const tokens = await Promise.all(
-        compact(skeletonsWithResolvedTokens).map(async ({ address, tokens }) => {
+        compact(skeletonsWithResolvedTokens).map(async ({ address, definition, tokens }) => {
           const contract = multicall.wrap(this.getContract(address));
-          const [symbol, decimals, totalSupplyRaw] = await Promise.all([
-            this.getSymbol({ address, contract, multicall }),
-            this.getDecimals({ address, contract, multicall }),
-            this.getSupply({ address, contract, multicall }),
-          ]);
-
-          const supply = Number(totalSupplyRaw) / 10 ** decimals;
-
-          const fragment: PricePerShareStageParams<T, V>['appToken'] = {
+          const baseContext = { address, contract, multicall, tokenLoader, definition };
+          const baseFragment: GetTokenPropsParams<T, V, R>['appToken'] = {
             type: ContractType.APP_TOKEN,
             appId: this.appId,
             groupId: this.groupId,
             network: this.network,
-            groupLabel: this.groupLabel,
             address,
-            symbol,
-            decimals,
-            supply,
             tokens,
           };
 
+          const tokenPropsContext = { ...baseContext, appToken: baseFragment };
+          const [symbol, decimals, totalSupplyRaw] = await Promise.all([
+            this.getSymbol(tokenPropsContext),
+            this.getDecimals(tokenPropsContext),
+            this.getSupply(tokenPropsContext),
+          ]);
+
+          const supply = Number(totalSupplyRaw) / 10 ** decimals;
+
           // Resolve price per share stage
-          const pricePerShareStageParams = { appToken: fragment, contract, multicall, tokenLoader };
-          const pricePerShare = await this.getPricePerShare(pricePerShareStageParams).then(v => (isArray(v) ? v : [v]));
+          const pricePerShareStageFragment = { ...baseFragment, symbol, decimals, supply };
+          const pricePerShareContext = { ...baseContext, appToken: pricePerShareStageFragment };
+          const pricePerShare = await this.getPricePerShare(pricePerShareContext).then(v => (isArray(v) ? v : [v]));
 
           // Resolve Price Stage
-          const priceStageFragment = { ...pricePerShareStageParams.appToken, pricePerShare };
-          const priceStageParams = { appToken: priceStageFragment, contract, multicall, tokenLoader };
-          const price = await this.getPrice(priceStageParams);
+          const priceStageFragment = { ...pricePerShareStageFragment, pricePerShare };
+          const priceContext = { ...baseContext, appToken: priceStageFragment };
+          const price = await this.getPrice(priceContext);
 
           // Resolve Data Props Stage
-          const dataPropsStageFragment = { ...priceStageParams.appToken, price };
-          const dataPropsStageParams = { appToken: dataPropsStageFragment, contract, multicall, tokenLoader };
+          const dataPropsStageFragment = { ...priceStageFragment, price };
+          const dataPropsStageParams = { ...baseContext, appToken: dataPropsStageFragment };
           const dataProps = await this.getDataProps(dataPropsStageParams);
 
           // Resolve Display Props Stage
-          const displayPropsStageFragment = { ...dataPropsStageParams.appToken, dataProps };
-          const displayPropsStageParams = { appToken: displayPropsStageFragment, contract, multicall, tokenLoader };
+          const displayPropsStageFragment = { ...dataPropsStageFragment, dataProps };
+          const displayPropsStageParams = { ...baseContext, appToken: displayPropsStageFragment };
           const displayProps = {
             label: await this.getLabel(displayPropsStageParams),
             labelDetailed: await this.getLabelDetailed(displayPropsStageParams),
-            secondarylabel: await this.getSecondaryLabel(displayPropsStageParams),
+            secondaryLabel: await this.getSecondaryLabel(displayPropsStageParams),
             tertiaryLabel: await this.getTertiaryLabel(displayPropsStageParams),
             images: await this.getImages(displayPropsStageParams),
             statsItems: await this.getStatsItems(displayPropsStageParams),
+            balanceDisplayMode: await this.getBalanceDisplayMode(displayPropsStageParams),
           };
 
           const appToken = { ...displayPropsStageFragment, displayProps };
-          const key = this.getKey({ appToken });
+          const key = this.appToolkit.getPositionKey(appToken);
           return { key, ...appToken };
         }),
       );
 
-      const positionsSubset = compact(tokens).filter(v => {
-        if (typeof v.dataProps.liquidity === 'number') return Math.abs(v.dataProps.liquidity) > this.minLiquidity;
-        return true;
-      });
-
+      const positionsSubset = compact(tokens);
       currentTokens.push(...positionsSubset);
     }
 
-    return currentTokens;
+    return sortBy(currentTokens, t => {
+      if (typeof t.dataProps.liquidity === 'number') return -t.dataProps.liquidity;
+      return 1;
+    });
   }
 
-  getBalancePerToken({
+  async getAccountAddress(address: string) {
+    return address;
+  }
+
+  async getPositionsForBalances() {
+    return this.appToolkit.getAppTokenPositions<V>({
+      appId: this.appId,
+      network: this.network,
+      groupIds: [this.groupId],
+    });
+  }
+
+  async getBalancePerToken({
     address,
     appToken,
     multicall,
   }: {
     address: string;
-    appToken: AppTokenPosition<V>;
+    appToken: AppTokenPosition;
     multicall: IMulticallWrapper;
   }): Promise<BigNumberish> {
     return multicall.wrap(this.getContract(appToken.address)).balanceOf(address);
   }
 
-  async getBalances(address: string): Promise<AppTokenPositionBalance<V>[]> {
+  async getBalances(_address: string): Promise<AppTokenPositionBalance<V>[]> {
     const multicall = this.appToolkit.getMulticall(this.network);
-    const appTokens = await this.appToolkit.getAppTokenPositions<V>({
-      appId: this.appId,
-      network: this.network,
-      groupIds: [this.groupId],
-    });
+    const address = await this.getAccountAddress(_address);
+    const appTokens = await this.getPositionsForBalances();
+    if (address === ZERO_ADDRESS) return [];
 
     const balances = await Promise.all(
       appTokens.map(async appToken => {
         const balanceRaw = await this.getBalancePerToken({ multicall, address, appToken });
-        const tokenBalance = drillBalance(appToken, balanceRaw.toString());
+        const tokenBalance = drillBalance(appToken, balanceRaw.toString(), { isDebt: this.isDebt });
         return tokenBalance;
       }),
     );
 
     return balances as AppTokenPositionBalance<V>[];
+  }
+
+  async getRawBalances(_address: string): Promise<RawAppTokenBalance[]> {
+    const multicall = this.appToolkit.getMulticall(this.network);
+    const address = await this.getAccountAddress(_address);
+    const appTokens = await this.getPositionsForBalances();
+    if (address === ZERO_ADDRESS) return [];
+
+    return Promise.all(
+      appTokens.map(async appToken => ({
+        key: this.appToolkit.getPositionKey(appToken),
+        balance: (await this.getBalancePerToken({ multicall, address, appToken })).toString(),
+      })),
+    );
+  }
+
+  async drillRawBalances(balances: RawAppTokenBalance[]): Promise<AppTokenPositionBalance<V>[]> {
+    const appTokens = await this.getPositionsForBalances();
+
+    const appTokenBalances = appTokens.map(token => {
+      const key = this.appToolkit.getPositionKey(token);
+      const tokenBalance = balances.find(b => b.key === key);
+      if (!tokenBalance) return null;
+
+      const result = drillBalance<typeof token, V>(token, tokenBalance.balance, { isDebt: this.isDebt });
+      return result;
+    });
+
+    return compact(appTokenBalances);
   }
 }

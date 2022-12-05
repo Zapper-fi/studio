@@ -1,30 +1,19 @@
 import { Inject } from '@nestjs/common';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
-import { Register } from '~app-toolkit/decorators';
-import {
-  DataPropsStageParams,
-  GetTokenBalancesPerPositionParams,
-} from '~position/template/contract-position.template.position-fetcher';
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
+import { GetDataPropsParams, GetTokenBalancesParams } from '~position/template/contract-position.template.types';
 import {
   SingleStakingFarmDataProps,
   SingleStakingFarmDefinition,
   SingleStakingFarmTemplateContractPositionFetcher,
 } from '~position/template/single-staking.template.contract-position-fetcher';
-import { Network } from '~types/network.interface';
 
 import { PlutusContractFactory, PlutusFarmPlsJonesLp } from '../contracts';
-import PLUTUS_DEFINITION from '../plutus.definition';
 
-const appId = PLUTUS_DEFINITION.id;
-const groupId = PLUTUS_DEFINITION.groups.farmPlsJonesLp.id;
-const network = Network.ARBITRUM_MAINNET;
-
-@Register.ContractPositionFetcher({ appId, groupId, network })
+@PositionTemplate()
 export class ArbitrumPlutusFarmPlsJonesLpContractPositionFetcher extends SingleStakingFarmTemplateContractPositionFetcher<PlutusFarmPlsJonesLp> {
-  appId = PLUTUS_DEFINITION.id;
-  groupId = PLUTUS_DEFINITION.groups.farmPlsJonesLp.id;
-  network = Network.ARBITRUM_MAINNET;
+  groupLabel = 'plsJONES LP Farm';
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
@@ -49,15 +38,15 @@ export class ArbitrumPlutusFarmPlsJonesLpContractPositionFetcher extends SingleS
     ];
   }
 
-  getRewardRates({ contract }: DataPropsStageParams<PlutusFarmPlsJonesLp, SingleStakingFarmDataProps>) {
+  getRewardRates({ contract }: GetDataPropsParams<PlutusFarmPlsJonesLp, SingleStakingFarmDataProps>) {
     return contract.plsPerSecond();
   }
 
-  async getStakedTokenBalance({ contract, address }: GetTokenBalancesPerPositionParams<PlutusFarmPlsJonesLp>) {
+  async getStakedTokenBalance({ contract, address }: GetTokenBalancesParams<PlutusFarmPlsJonesLp>) {
     return contract.userInfo(address).then(v => v.amount);
   }
 
-  async getRewardTokenBalances({ contract, address }: GetTokenBalancesPerPositionParams<PlutusFarmPlsJonesLp>) {
+  async getRewardTokenBalances({ contract, address }: GetTokenBalancesParams<PlutusFarmPlsJonesLp>) {
     return contract.pendingRewards(address);
   }
 }

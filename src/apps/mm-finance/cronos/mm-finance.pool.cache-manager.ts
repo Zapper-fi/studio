@@ -18,6 +18,7 @@ export class CronosMmFinancePoolAddressCacheManager {
   @CacheOnInterval({
     key: `apps-v3:${MM_FINANCE_DEFINITION.id}:chef-pool-addresses`,
     timeout: 15 * 60 * 1000,
+    failOnMissingData: false,
   })
   private async getChefPoolAddresses() {
     const network = Network.CRONOS_MAINNET;

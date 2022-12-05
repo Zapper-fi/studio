@@ -5,7 +5,7 @@ import { Network } from '~types/network.interface';
 
 export const VAPORWAVE_FINANCE_DEFINITION = appDefinition({
   id: 'vaporwave-finance',
-  name: 'vaporwave-finance',
+  name: 'Vaporwave Finance',
   description: 'Yield Optimizer on Aurora ',
   url: 'https://www.vaporwave.farm',
 
@@ -25,7 +25,11 @@ export const VAPORWAVE_FINANCE_DEFINITION = appDefinition({
 
   tags: [AppTag.YIELD_AGGREGATOR],
   keywords: [],
-  links: {},
+  links: {
+    discord: 'https://discord.com/invite/yhvRWFFXXk',
+    telegram: 'https://t.me/vaporwavefinancechat',
+    twitter: 'https://twitter.com/vwavefinance',
+  },
 
   supportedNetworks: {
     [Network.AURORA_MAINNET]: [AppAction.VIEW],

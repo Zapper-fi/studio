@@ -52,10 +52,7 @@ export interface IAppToolkit {
 
   // Position Key
 
-  getPositionKey(
-    position: ContractPosition | AppTokenPosition | BaseToken | NonFungibleToken,
-    pickFields?: string[],
-  ): string;
+  getPositionKey(position: ContractPosition | AppTokenPosition | BaseToken | NonFungibleToken): string;
 
   // Cache
 

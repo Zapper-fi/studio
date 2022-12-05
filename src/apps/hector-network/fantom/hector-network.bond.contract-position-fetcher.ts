@@ -1,29 +1,21 @@
 import { Inject } from '@nestjs/common';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
-import { Register } from '~app-toolkit/decorators';
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import { getImagesFromToken, getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { MetaType } from '~position/position.interface';
+import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
 import {
-  ContractPositionTemplatePositionFetcher,
-  DisplayPropsStageParams,
-  GetTokenBalancesPerPositionParams,
-  TokenStageParams,
-} from '~position/template/contract-position.template.position-fetcher';
-import { Network } from '~types';
+  GetDisplayPropsParams,
+  GetTokenBalancesParams,
+  GetTokenDefinitionsParams,
+} from '~position/template/contract-position.template.types';
 
 import { HectorNetworkBondDepository, HectorNetworkContractFactory } from '../contracts';
-import { HECTOR_NETWORK_DEFINITION } from '../hector-network.definition';
 
-const appId = HECTOR_NETWORK_DEFINITION.id;
-const groupId = HECTOR_NETWORK_DEFINITION.groups.bond.id;
-const network = Network.FANTOM_OPERA_MAINNET;
-
-@Register.ContractPositionFetcher({ appId, groupId, network })
+@PositionTemplate()
 export class FantomHectorNetworkBondContractPositionFetcher extends ContractPositionTemplatePositionFetcher<HectorNetworkBondDepository> {
-  appId = HECTOR_NETWORK_DEFINITION.id;
-  groupId = HECTOR_NETWORK_DEFINITION.groups.bond.id;
-  network = Network.FANTOM_OPERA_MAINNET;
+  groupLabel = 'Bonds';
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
@@ -32,7 +24,7 @@ export class FantomHectorNetworkBondContractPositionFetcher extends ContractPosi
     super(appToolkit);
   }
 
-  async getDescriptors() {
+  async getDefinitions() {
     return [
       { address: '0x4099eb0e82ffa0048e4bf037a9743ca05ec561d7' },
       { address: '0x6c9b3a47a28a39fea65e99d97895e717df1706d0' },
@@ -49,32 +41,40 @@ export class FantomHectorNetworkBondContractPositionFetcher extends ContractPosi
     return this.contractFactory.hectorNetworkBondDepository({ address, network: this.network });
   }
 
-  async getTokenDescriptors({ contract }: TokenStageParams<HectorNetworkBondDepository>) {
+  async getTokenDefinitions({ contract }: GetTokenDefinitionsParams<HectorNetworkBondDepository>) {
     const [principle, claimable] = await Promise.all([contract.principle(), contract.HEC()]);
 
     return [
-      { address: claimable, metaType: MetaType.VESTING },
-      { address: claimable, metaType: MetaType.CLAIMABLE },
-      { address: principle, metaType: MetaType.SUPPLIED },
+      {
+        metaType: MetaType.VESTING,
+        address: claimable,
+        network: this.network,
+      },
+      {
+        metaType: MetaType.CLAIMABLE,
+        address: claimable,
+        network: this.network,
+      },
+      {
+        metaType: MetaType.SUPPLIED,
+        address: principle,
+        network: this.network,
+      },
     ];
   }
 
-  async getLabel({ contractPosition }: DisplayPropsStageParams<HectorNetworkBondDepository>) {
+  async getLabel({ contractPosition }: GetDisplayPropsParams<HectorNetworkBondDepository>) {
     return `${getLabelFromToken(contractPosition.tokens[2])} Bond`;
   }
 
-  async getImages({ contractPosition }: DisplayPropsStageParams<HectorNetworkBondDepository>) {
+  async getImages({ contractPosition }: GetDisplayPropsParams<HectorNetworkBondDepository>) {
     return getImagesFromToken(contractPosition.tokens[2]);
   }
 
-  async getTokenBalancesPerPosition({
-    address,
-    contract,
-    multicall,
-  }: GetTokenBalancesPerPositionParams<HectorNetworkBondDepository>) {
+  async getTokenBalancesPerPosition({ address, contract }: GetTokenBalancesParams<HectorNetworkBondDepository>) {
     const [bondInfo, claimablePayout] = await Promise.all([
-      multicall.wrap(contract).bondInfo(address),
-      multicall.wrap(contract).pendingPayoutFor(address),
+      contract.bondInfo(address),
+      contract.pendingPayoutFor(address),
     ]);
 
     return [bondInfo.payout.sub(claimablePayout).toString(), claimablePayout.toString()];

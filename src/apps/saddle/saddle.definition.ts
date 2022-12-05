@@ -29,11 +29,15 @@ export const SADDLE_DEFINITION = appDefinition({
   },
   tags: [AppTag.LIQUIDITY_POOL],
   keywords: [],
-  links: {},
+  links: {
+    discord: 'https://discord.com/invite/saddle',
+    github: 'https://github.com/saddle-finance',
+    telegram: 'https://t.me/saddle_finance',
+    twitter: 'https://twitter.com/saddlefinance',
+  },
 
   supportedNetworks: {
     [Network.ETHEREUM_MAINNET]: [AppAction.VIEW],
-    [Network.EVMOS_MAINNET]: [AppAction.VIEW],
   },
 
   primaryColor: '#fff',

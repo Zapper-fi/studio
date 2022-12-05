@@ -1,14 +1,21 @@
 import { Inject, Injectable } from '@nestjs/common';
+import _ from 'lodash';
 import { get, groupBy } from 'lodash';
 
 import { presentBalanceFetcherResponse } from '~app-toolkit/helpers/presentation/balance-fetcher-response.present';
-import { AppTokenPositionBalance, ContractPositionBalance } from '~position/position-balance.interface';
-import { PositionFetcherRegistry } from '~position/position-fetcher.registry';
+import { AppDefinition } from '~app/app.definition';
+import { AppService } from '~app/app.service';
+import {
+  AppTokenPositionBalance,
+  ContractPositionBalance,
+  PositionBalance,
+} from '~position/position-balance.interface';
+import { PositionFetcherTemplateRegistry } from '~position/position-fetcher.template-registry';
+import { PositionPresenterRegistry } from '~position/position-presenter.registry';
+import { PositionGroup } from '~position/template/position-presenter.template';
 import { Network } from '~types';
 
 import { TokenBalanceResponse } from './balance-fetcher.interface';
-import { BalancePresenterRegistry } from './balance-presenter.registry';
-import { DefaultBalancePresenterFactory } from './default.balance-presenter.factory';
 
 export type PresentParams = {
   appId: string;
@@ -17,18 +24,22 @@ export type PresentParams = {
   balances: (AppTokenPositionBalance | ContractPositionBalance)[];
 };
 
+interface IAppService {
+  getApp(appId: string): Promise<AppDefinition | undefined>;
+}
+
 @Injectable()
 export class BalancePresentationService {
   constructor(
-    @Inject(PositionFetcherRegistry) private readonly positionFetcherRegistry: PositionFetcherRegistry,
-    @Inject(BalancePresenterRegistry) private readonly balancePresenterRegistry: BalancePresenterRegistry,
-    @Inject(DefaultBalancePresenterFactory)
-    private readonly defaultBalancePresenterFactory: DefaultBalancePresenterFactory,
+    @Inject(PositionPresenterRegistry) private readonly positionPresenterRegistry: PositionPresenterRegistry,
+    @Inject(PositionFetcherTemplateRegistry)
+    private readonly positionFetcherTemplateRegistry: PositionFetcherTemplateRegistry,
+    @Inject(AppService) private readonly appService: IAppService,
   ) {}
 
-  private groupBalancesByGroupLabel(
+  private groupBalancesByPositionGroup(
     balances: (AppTokenPositionBalance | ContractPositionBalance)[],
-    groupLabel: string,
+    positionGroup: PositionGroup,
   ) {
     const getDynamicLabel = (label: string) => {
       const matches = label.match(/{{(.*)}}/);
@@ -36,54 +47,75 @@ export class BalancePresentationService {
       return matches[1].trim();
     };
 
-    const dynamicLabel = getDynamicLabel(groupLabel);
-    if (!dynamicLabel) return { [groupLabel]: balances };
+    const dynamicLabel = getDynamicLabel(positionGroup.label);
+    if (!dynamicLabel)
+      return { [positionGroup.label]: balances.filter(({ groupId }) => positionGroup.groupIds.includes(groupId)) };
     else {
       return groupBy(balances, balance => get(balance, dynamicLabel));
     }
   }
 
-  private async groupMetaProcessor(
-    appId: string,
-    network: Network,
-    balances: (AppTokenPositionBalance | ContractPositionBalance)[],
-  ) {
-    const groupMetaResolvers = this.balancePresenterRegistry.getMetaResolvers(appId, network);
-    const hasMissingGroupLabel = balances.some(({ groupLabel }) => !groupLabel);
-    if (hasMissingGroupLabel) return null;
+  async presentTemplates({ address, appId, network, balances }: PresentParams): Promise<TokenBalanceResponse> {
+    return this.presentBalances(address, appId, network, balances);
+  }
 
-    // Group balances by group label specified in the template `this.groupLabel`
-    const groupedBalances = groupBy(balances, balance => balance.groupLabel);
+  async present({ appId, balances }: PresentParams): Promise<TokenBalanceResponse> {
+    // Build labelled groups by the labels defined in the app definition
+    const app = await this.appService.getApp(appId);
+    const products = Object.values(app!.groups ?? {}).map(group => {
+      const groupBalances = balances.filter(v => v.groupId === group.id);
+      return { label: group.label, assets: groupBalances };
+    });
 
-    const presentedBalances = await Promise.all(
-      Object.entries(groupedBalances).map(async ([groupLabel, balances]) => {
-        // For each group label, compute group label (might be using a selector), and group by the results
-        const balancesByGroupLabel = this.groupBalancesByGroupLabel(balances, groupLabel);
+    // Collapse products on colliding group labels
+    const collapsedProducts = _.values(groupBy(products, v => v.label)).map(t => ({
+      label: t[0].label,
+      assets: t.flatMap(v => v.assets),
+    }));
+
+    return presentBalanceFetcherResponse(collapsedProducts);
+  }
+
+  private getBalanceProductGroups(appId: string, network: Network): PositionGroup[] {
+    const templates = this.positionFetcherTemplateRegistry.getTemplatesForAppOnNetwork(appId, network);
+
+    const groups = templates
+      .filter(template => !template.isExcludedFromBalances)
+      .map(template => ({
+        label: template.groupLabel,
+        groupIds: [template.groupId],
+      }));
+
+    const groupedByLabel = groupBy(groups, group => group.label);
+    return _.map(groupedByLabel, (groups, label) => ({
+      label,
+      groupIds: _.uniq(groups.flatMap(({ groupIds }) => groupIds)),
+    }));
+  }
+
+  private async presentBalances(address: string, appId: string, network: Network, balances: PositionBalance[]) {
+    const customPresenter = this.positionPresenterRegistry.get(appId, network);
+    const positionGroups = customPresenter?.positionGroups ?? this.getBalanceProductGroups(appId, network);
+
+    const balanceMetaResolvers = this.positionPresenterRegistry.getBalanceProductMetaResolvers(appId, network);
+    const products = await Promise.all(
+      positionGroups.map(async group => {
+        const groupBalances = this.groupBalancesByPositionGroup(balances, group);
 
         return Promise.all(
-          // For each computed label group, run the meta resolve if exists
-          Object.entries(balancesByGroupLabel).map(async ([computedGroupLabel, balances]) => {
-            const groupMetaResolver = groupMetaResolvers?.get(groupLabel);
-            if (!groupMetaResolver) return { label: computedGroupLabel, assets: balances };
-            else {
-              const meta = await groupMetaResolver(balances);
-              return { label: computedGroupLabel, assets: balances, meta };
-            }
+          Object.entries(groupBalances).map(async ([computedGroupLabel, balances]) => {
+            const groupMetaResolver = balanceMetaResolvers?.get(group.label);
+
+            return {
+              label: computedGroupLabel,
+              assets: balances,
+              ...(groupMetaResolver && { meta: await groupMetaResolver(address, balances) }),
+            };
           }),
         );
       }),
     );
 
-    return presentBalanceFetcherResponse(presentedBalances.flat());
-  }
-
-  async present({ appId, address, network, balances }: PresentParams): Promise<TokenBalanceResponse> {
-    const presenter =
-      this.balancePresenterRegistry.get(appId, network) ??
-      this.defaultBalancePresenterFactory.build({ appId, network });
-
-    let presentedBalances: TokenBalanceResponse | null = await this.groupMetaProcessor(appId, network, balances);
-    presentedBalances ??= await presenter.present(address, balances);
-    return presentedBalances;
+    return presentBalanceFetcherResponse(products.flat());
   }
 }

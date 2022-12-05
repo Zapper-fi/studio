@@ -9,9 +9,9 @@ export const THALES_DEFINITION = appDefinition({
   description: 'Novel on-chain, permissionless, and non-custodial Parimutuel Markets.',
   url: 'https://thalesmarket.io/',
   groups: {
-    staking: { id: 'staking', type: GroupType.POSITION, label: 'Staking', groupLabel: 'Farms' },
+    staking: { id: 'staking', type: GroupType.POSITION, label: 'Staking' },
     escrow: { id: 'escrow', type: GroupType.POSITION, label: 'Escrow' },
-    pool2: { id: 'pool2', type: GroupType.POSITION, label: 'LP Staking', groupLabel: 'Pools' },
+    pool2: { id: 'pool2', type: GroupType.POSITION, label: 'LP Staking' },
   },
   tags: [AppTag.OPTIONS],
   links: {

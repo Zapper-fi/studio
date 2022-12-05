@@ -1,24 +1,25 @@
 import { Register } from '~app-toolkit/decorators';
 import { AbstractApp } from '~app/app.dynamic-module';
 
-import { ArbitrumUmamiFinanceBalanceFetcher } from './arbitrum/umami-finance.balance-fetcher';
 import { ArbitrumUmamiFinanceCompoundTokenFetcher } from './arbitrum/umami-finance.compound.token-fetcher';
+import { ArbitrumUmamiFinanceMarinateUmamiTokenFetcher } from './arbitrum/umami-finance.marinate-umami.token-fetcher';
 import { ArbitrumUmamiFinanceMarinateContractPositionFetcher } from './arbitrum/umami-finance.marinate.contract-position-fetcher';
-import { ArbitrumUmamiMarinateTokenFetcher } from './arbitrum/umami-finance.marinate.token-fetcher';
 import { ArbitrumUmamiFinanceVaultsTokenFetcher } from './arbitrum/umami-finance.vaults.token-fetcher';
+import { UmamiFinanceYieldResolver } from './common/umami-finance.marinate.token-definition-resolver';
 import { UmamiFinanceContractFactory } from './contracts';
 import { UmamiFinanceAppDefinition, UMAMI_FINANCE_DEFINITION } from './umami-finance.definition';
 
 @Register.AppModule({
   appId: UMAMI_FINANCE_DEFINITION.id,
   providers: [
-    ArbitrumUmamiFinanceBalanceFetcher,
+    UmamiFinanceAppDefinition,
+    UmamiFinanceContractFactory,
+    UmamiFinanceYieldResolver,
+    // Arbitrum
     ArbitrumUmamiFinanceCompoundTokenFetcher,
     ArbitrumUmamiFinanceMarinateContractPositionFetcher,
     ArbitrumUmamiFinanceVaultsTokenFetcher,
-    ArbitrumUmamiMarinateTokenFetcher,
-    UmamiFinanceAppDefinition,
-    UmamiFinanceContractFactory,
+    ArbitrumUmamiFinanceMarinateUmamiTokenFetcher,
   ],
 })
 export class UmamiFinanceAppModule extends AbstractApp() {}

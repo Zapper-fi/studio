@@ -1,89 +1,58 @@
 import { Inject } from '@nestjs/common';
-import _ from 'lodash';
+import 'moment-duration-format';
 
-import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
-import { Register } from '~app-toolkit/decorators';
-import { buildDollarDisplayItem } from '~app-toolkit/helpers/presentation/display-item.present';
-import { getImagesFromToken } from '~app-toolkit/helpers/presentation/image.present';
-import { ContractType } from '~position/contract.interface';
-import { PositionFetcher } from '~position/position-fetcher.interface';
-import { AppTokenPosition } from '~position/position.interface';
-import { Network } from '~types/network.interface';
+import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
+import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
+import {
+  GetDataPropsParams,
+  GetPricePerShareParams,
+  GetUnderlyingTokensParams,
+} from '~position/template/app-token.template.types';
 
-import { GroContractFactory } from '../contracts';
-import { GRO_DEFINITION } from '../gro.definition';
+import { GroContractFactory, GroLabsVault } from '../contracts';
 
-const appId = GRO_DEFINITION.id;
-const groupId = GRO_DEFINITION.groups.labs.id;
-const network = Network.AVALANCHE_MAINNET;
+@PositionTemplate()
+export class AvalancheGroLabsTokenFetcher extends AppTokenTemplatePositionFetcher<GroLabsVault> {
+  groupLabel = 'Labs';
 
-@Register.TokenPositionFetcher({ appId, groupId, network })
-export class AvalancheGroLabsTokenFetcher implements PositionFetcher<AppTokenPosition> {
   constructor(
-    @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
-    @Inject(GroContractFactory) private readonly groContractFactory: GroContractFactory,
-  ) {}
+    @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
+    @Inject(GroContractFactory) private readonly contractFactory: GroContractFactory,
+  ) {
+    super(appToolkit);
+  }
 
-  async getPositions() {
-    const daiLabVaultAddress = '0x6063597b9356b246e706fd6a48c780f897e3ef55';
-    const usdcLabVaultAddress = '0x2eb05cffa24309b9aaf300392a4d8db745d4e592';
-    const usdtLabVaultAddress = '0x6ef44077a1f5e10cdfccc30efb7dcdb1d5475581';
-    const vaultAddresses = [daiLabVaultAddress, usdcLabVaultAddress, usdtLabVaultAddress];
-    const baseTokens = await this.appToolkit.getBaseTokenPrices(network);
-    const multicall = this.appToolkit.getMulticall(network);
+  getContract(address: string): GroLabsVault {
+    return this.contractFactory.groLabsVault({ network: this.network, address });
+  }
 
-    const tokens = await Promise.all(
-      vaultAddresses.map(async vaultAddress => {
-        const contract = this.groContractFactory.groLabsVault({ address: vaultAddress, network });
+  async getAddresses() {
+    return [
+      '0x6063597b9356b246e706fd6a48c780f897e3ef55',
+      '0x2eb05cffa24309b9aaf300392a4d8db745d4e592',
+      '0x6ef44077a1f5e10cdfccc30efb7dcdb1d5475581',
+    ];
+  }
 
-        const [symbol, decimals, supplyRaw, pricePerShareRaw, name, underlyingTokenAddressRaw] = await Promise.all([
-          multicall.wrap(contract).symbol(),
-          multicall.wrap(contract).decimals(),
-          multicall.wrap(contract).totalSupply(),
-          multicall.wrap(contract).getPricePerShare(),
-          multicall.wrap(contract).name(),
-          multicall.wrap(contract).token(),
-        ]);
+  async getUnderlyingTokenAddresses({ contract }: GetUnderlyingTokensParams<GroLabsVault>) {
+    return contract.token();
+  }
 
-        const underlyingToken = baseTokens.find(v => v.address === underlyingTokenAddressRaw.toLowerCase());
-        const tokens = [underlyingToken!];
+  async getPricePerShare({ contract }: GetPricePerShareParams<GroLabsVault>) {
+    const pricePerShareRaw = await contract.getPricePerShare();
+    return Number(pricePerShareRaw) / 10 ** 18;
+  }
 
-        const supply = Number(supplyRaw) / 10 ** decimals;
-        const pricePerShare = Number(pricePerShareRaw) / 10 ** 18;
-        const price = Number(pricePerShare) * underlyingToken!.price;
-        const liquidity = price * supply;
+  async getLiquidity({ appToken }: GetDataPropsParams<GroLabsVault>) {
+    return appToken.price * appToken.supply;
+  }
 
-        // Create the token object
-        const token: AppTokenPosition = {
-          type: ContractType.APP_TOKEN,
-          appId,
-          groupId,
-          address: vaultAddress,
-          network,
-          symbol,
-          decimals,
-          supply,
-          pricePerShare: Number(pricePerShare),
-          price,
-          tokens,
-          dataProps: { liquidity },
-          displayProps: {
-            label: name,
-            images: getImagesFromToken(underlyingToken!),
-            secondaryLabel: buildDollarDisplayItem(Number(pricePerShare)),
-            statsItems: [
-              {
-                label: 'Liquidity',
-                value: buildDollarDisplayItem(liquidity),
-              },
-            ],
-          },
-        };
-        return token;
-      }),
-    );
+  async getReserves({ appToken }: GetDataPropsParams<GroLabsVault>) {
+    return [appToken.pricePerShare[0] * appToken.supply];
+  }
 
-    // Use compact from lodash to filter out any null elements
-    return _.compact(tokens);
+  async getApy(_params: GetDataPropsParams<GroLabsVault>) {
+    return 0;
   }
 }

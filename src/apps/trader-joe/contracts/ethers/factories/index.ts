@@ -2,6 +2,7 @@
 /* tslint:disable */
 /* eslint-disable */
 export { TraderJoeChefBoosted__factory } from './TraderJoeChefBoosted__factory';
+export { TraderJoeChefBoostedRewarder__factory } from './TraderJoeChefBoostedRewarder__factory';
 export { TraderJoeChefV2__factory } from './TraderJoeChefV2__factory';
 export { TraderJoeChefV2Rewarder__factory } from './TraderJoeChefV2Rewarder__factory';
 export { TraderJoeChefV3__factory } from './TraderJoeChefV3__factory';

@@ -12,11 +12,10 @@ export const GRO_DEFINITION = appDefinition({
   groups: {
     farm: { id: 'farm', type: GroupType.POSITION, label: 'Pools' },
     vesting: { id: 'vesting', type: GroupType.POSITION, label: 'Vesting' },
-    labs: { id: 'labs', type: GroupType.TOKEN, label: 'Labs', groupLabel: 'Farms' },
+    labs: { id: 'labs', type: GroupType.TOKEN, label: 'Labs' },
   },
   tags: [AppTag.YIELD_AGGREGATOR],
   links: {
-    learn: '',
     github: 'https://github.com/groLabs',
     twitter: 'https://twitter.com/groprotocol',
     telegram: 'https://t.me/gro_discussion',

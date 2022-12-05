@@ -6,6 +6,8 @@ import BANANO_DEFINITION, { BananoAppDefinition } from './banano.definition';
 import { BinanceSmartChainBananoBalanceFetcher } from './binance-smart-chain/banano.balance-fetcher';
 import { BinanceSmartChainBananoFarmContractPositionFetcher } from './binance-smart-chain/banano.farm.contract-position-fetcher';
 import { BananoContractFactory } from './contracts';
+import { EthereumBananoBalanceFetcher } from './ethereum/banano.balance-fetcher';
+import { EthereumBananoFarmContractPositionFetcher } from './ethereum/banano.farm.contract-position-fetcher';
 import { FantomBananoBalanceFetcher } from './fantom/banano.balance-fetcher';
 import { FantomBananoFarmContractPositionFetcher } from './fantom/banano.farm.contract-position-fetcher';
 import { BananoFarmBalanceFetcherHelper } from './helpers/banano.farm.balance-fetcher-helper';
@@ -30,6 +32,9 @@ import { PolygonBananoFarmContractPositionFetcher } from './polygon/banano.farm.
     // Fantom
     FantomBananoBalanceFetcher,
     FantomBananoFarmContractPositionFetcher,
+    // Ethereum
+    EthereumBananoBalanceFetcher,
+    EthereumBananoFarmContractPositionFetcher,
   ],
 })
 export class BananoAppModule extends AbstractApp() {}

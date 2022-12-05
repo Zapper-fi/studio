@@ -22,10 +22,10 @@ export const STARGATE_DEFINITION = appDefinition({
       label: 'Farms',
     },
 
-    ve: {
-      id: 've',
+    votingEscrow: {
+      id: 'voting-escrow',
       type: GroupType.TOKEN,
-      label: 'VotedEscrow',
+      label: 'Voting Escrow',
     },
 
     eth: {

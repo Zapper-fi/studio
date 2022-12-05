@@ -1,24 +1,14 @@
-import { BigNumberish } from 'ethers';
-import { padEnd } from 'lodash';
-import Web3 from 'web3';
+import { BigNumberish, ethers } from 'ethers';
 
-import { Register } from '~app-toolkit/decorators';
-import { GetTokenBalancesPerPositionParams } from '~position/template/contract-position.template.position-fetcher';
-import { Network } from '~types/network.interface';
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
+import { GetTokenBalancesParams } from '~position/template/contract-position.template.types';
 
 import { DopexSsovContractPositionFetcher, DopexSsovDataProps } from '../common/dopex.ssov.contract-position-fetcher';
 import { DopexEthSsov } from '../contracts';
-import { DOPEX_DEFINITION } from '../dopex.definition';
 
-const appId = DOPEX_DEFINITION.id;
-const groupId = DOPEX_DEFINITION.groups.ethSsov.id;
-const network = Network.ARBITRUM_MAINNET;
-
-@Register.ContractPositionFetcher({ appId, groupId, network })
+@PositionTemplate()
 export class ArbitrumDopexEthSsovContractPositionFetcher extends DopexSsovContractPositionFetcher<DopexEthSsov> {
-  appId = appId;
-  groupId = groupId;
-  network = network;
+  groupLabel = 'SSOVs';
 
   getContract(address: string): DopexEthSsov {
     return this.contractFactory.dopexEthSsov({ address, network: this.network });
@@ -59,7 +49,7 @@ export class ArbitrumDopexEthSsovContractPositionFetcher extends DopexSsovContra
   getTotalEpochStrikeDepositBalance({
     contract,
     contractPosition,
-  }: GetTokenBalancesPerPositionParams<DopexEthSsov, DopexSsovDataProps>) {
+  }: GetTokenBalancesParams<DopexEthSsov, DopexSsovDataProps>) {
     const { epoch, strike } = contractPosition.dataProps;
     return contract.totalEpochStrikeEthBalance(epoch, strike);
   }
@@ -68,9 +58,9 @@ export class ArbitrumDopexEthSsovContractPositionFetcher extends DopexSsovContra
     contract,
     contractPosition,
     multicall,
-  }: GetTokenBalancesPerPositionParams<DopexEthSsov, DopexSsovDataProps>): Promise<BigNumberish | BigNumberish[]> {
+  }: GetTokenBalancesParams<DopexEthSsov, DopexSsovDataProps>): Promise<BigNumberish | BigNumberish[]> {
     const { epoch } = contractPosition.dataProps;
-    const rewardDistributionName = padEnd(Web3.utils.asciiToHex('RewardsDistribution'), 66, '0');
+    const rewardDistributionName = ethers.utils.formatBytes32String('RewardsDistribution');
     const rewardDistrbutionAddress = await multicall.wrap(contract).getAddress(rewardDistributionName);
     const rewardDistributionContract = this.contractFactory.dopexRewardDistribution({
       address: rewardDistrbutionAddress,

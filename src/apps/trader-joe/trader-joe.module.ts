@@ -2,7 +2,6 @@ import { Register } from '~app-toolkit/decorators';
 import { AbstractApp } from '~app/app.dynamic-module';
 import { UniswapV2AppModule } from '~apps/uniswap-v2';
 
-import { AvalancheTraderJoeBalanceFetcher } from './avalanche/trader-joe.balance-fetcher';
 import { AvalancheTraderJoeChefBoostedFarmContractPositionFetcher } from './avalanche/trader-joe.chef-boosted-farm.contract-position-fetcher';
 import { AvalancheTraderJoeChefV2FarmContractPositionFetcher } from './avalanche/trader-joe.chef-v2-farm.contract-position-fetcher';
 import { AvalancheTraderJoeChefV3FarmContractPositionFetcher } from './avalanche/trader-joe.chef-v3-farm.contract-position-fetcher';
@@ -19,7 +18,6 @@ import { TraderJoeAppDefinition, TRADER_JOE_DEFINITION } from './trader-joe.defi
   providers: [
     TraderJoeAppDefinition,
     TraderJoeContractFactory,
-    AvalancheTraderJoeBalanceFetcher,
     AvalancheTraderJoeChefV2FarmContractPositionFetcher,
     AvalancheTraderJoeChefV3FarmContractPositionFetcher,
     AvalancheTraderJoeChefBoostedFarmContractPositionFetcher,

@@ -1,19 +1,14 @@
 import { Inject } from '@nestjs/common';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
-import { Register } from '~app-toolkit/decorators';
-import {
-  DataPropsStageParams,
-  GetTokenBalancesPerPositionParams,
-} from '~position/template/contract-position.template.position-fetcher';
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
+import { GetDataPropsParams, GetTokenBalancesParams } from '~position/template/contract-position.template.types';
 import {
   SingleStakingFarmDefinition,
   SingleStakingFarmTemplateContractPositionFetcher,
 } from '~position/template/single-staking.template.contract-position-fetcher';
-import { Network } from '~types';
 
 import { RariContractFactory, RariUniswapTokenDistributor } from '../contracts';
-import { RARI_DEFINITION } from '../rari.definition';
 
 const FARMS = [
   // SLP ETH/RGT
@@ -24,15 +19,9 @@ const FARMS = [
   },
 ];
 
-const appId = RARI_DEFINITION.id;
-const groupId = RARI_DEFINITION.groups.farm.id;
-const network = Network.ETHEREUM_MAINNET;
-
-@Register.ContractPositionFetcher({ appId, groupId, network })
+@PositionTemplate()
 export class EthereumRariFarmContractPositionFetcher extends SingleStakingFarmTemplateContractPositionFetcher<RariUniswapTokenDistributor> {
-  appId = appId;
-  groupId = groupId;
-  network = network;
+  groupLabel = 'Farms';
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
@@ -49,15 +38,15 @@ export class EthereumRariFarmContractPositionFetcher extends SingleStakingFarmTe
     return FARMS;
   }
 
-  async getRewardRates(_params: DataPropsStageParams<RariUniswapTokenDistributor>) {
+  async getRewardRates(_params: GetDataPropsParams<RariUniswapTokenDistributor>) {
     return [0];
   }
 
-  getStakedTokenBalance({ contract, address }: GetTokenBalancesPerPositionParams<RariUniswapTokenDistributor>) {
+  getStakedTokenBalance({ contract, address }: GetTokenBalancesParams<RariUniswapTokenDistributor>) {
     return contract.stakingBalances(address);
   }
 
-  getRewardTokenBalances({ contract, address }: GetTokenBalancesPerPositionParams<RariUniswapTokenDistributor>) {
+  getRewardTokenBalances({ contract, address }: GetTokenBalancesParams<RariUniswapTokenDistributor>) {
     return contract.getUnclaimedRgt(address);
   }
 }

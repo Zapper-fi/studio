@@ -4,6 +4,7 @@ import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { ContractFactory } from '~contract/contracts';
 import { Network } from '~types/network.interface';
 
+import { QiDaoAnchorVault__factory } from './ethers';
 import { QiDaoEscrowedQi__factory } from './ethers';
 import { QiDaoMasterChef__factory } from './ethers';
 import { QiDaoVaultInfo__factory } from './ethers';
@@ -19,6 +20,9 @@ export class QiDaoContractFactory extends ContractFactory {
     super((network: Network) => appToolkit.getNetworkProvider(network));
   }
 
+  qiDaoAnchorVault({ address, network }: ContractOpts) {
+    return QiDaoAnchorVault__factory.connect(address, this.appToolkit.getNetworkProvider(network));
+  }
   qiDaoEscrowedQi({ address, network }: ContractOpts) {
     return QiDaoEscrowedQi__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
@@ -36,6 +40,7 @@ export class QiDaoContractFactory extends ContractFactory {
   }
 }
 
+export type { QiDaoAnchorVault } from './ethers';
 export type { QiDaoEscrowedQi } from './ethers';
 export type { QiDaoMasterChef } from './ethers';
 export type { QiDaoVaultInfo } from './ethers';

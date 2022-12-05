@@ -3,8 +3,10 @@
 /* eslint-disable */
 export type { VelodromeGauge } from './VelodromeGauge';
 export type { VelodromePool } from './VelodromePool';
+export type { VelodromeRewards } from './VelodromeRewards';
 export type { VelodromeVe } from './VelodromeVe';
 export * as factories from './factories';
 export { VelodromeGauge__factory } from './factories/VelodromeGauge__factory';
 export { VelodromePool__factory } from './factories/VelodromePool__factory';
+export { VelodromeRewards__factory } from './factories/VelodromeRewards__factory';
 export { VelodromeVe__factory } from './factories/VelodromeVe__factory';

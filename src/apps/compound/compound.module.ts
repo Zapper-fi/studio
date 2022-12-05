@@ -3,9 +3,9 @@ import { AbstractApp } from '~app/app.dynamic-module';
 
 import { CompoundAppDefinition, COMPOUND_DEFINITION } from './compound.definition';
 import { CompoundContractFactory } from './contracts';
-import { EthereumCompoundBalanceFetcher } from './ethereum/compound.balance-fetcher';
 import { EthereumCompoundBorrowContractPositionFetcher } from './ethereum/compound.borrow.contract-position-fetcher';
 import { EthereumCompoundClaimableContractPositionFetcher } from './ethereum/compound.claimable.contract-position-fetcher';
+import { EthereumCompoundPositionPresenter } from './ethereum/compound.position-presenter';
 import { EthereumCompoundSupplyTokenFetcher } from './ethereum/compound.supply.token-fetcher';
 import { CompoundBorrowBalanceHelper } from './helper/compound.borrow.balance-helper';
 import { CompoundBorrowContractPositionHelper } from './helper/compound.borrow.contract-position-helper';
@@ -20,8 +20,8 @@ import { CompoundSupplyTokenHelper } from './helper/compound.supply.token-helper
   providers: [
     CompoundAppDefinition,
     CompoundContractFactory,
-    EthereumCompoundBalanceFetcher,
     EthereumCompoundBorrowContractPositionFetcher,
+    EthereumCompoundPositionPresenter,
     EthereumCompoundClaimableContractPositionFetcher,
     EthereumCompoundSupplyTokenFetcher,
     // Helpers

@@ -26,7 +26,12 @@ export const ARGO_FINANCE_DEFINITION = appDefinition({
 
   tags: [AppTag.LIQUID_STAKING],
   keywords: [],
-  links: {},
+  links: {
+    twitter: 'https://twitter.com/ArgoProtocol',
+    telegram: 'https://t.me/Argo_Finance',
+    discord: 'https://discord.com/invite/argofinance',
+    medium: 'https://argofinance.medium.com/',
+  },
 
   supportedNetworks: {
     [Network.CRONOS_MAINNET]: [AppAction.VIEW],

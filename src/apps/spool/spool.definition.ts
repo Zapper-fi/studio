@@ -7,7 +7,7 @@ export const SPOOL_DEFINITION = appDefinition({
   id: 'spool',
   name: 'Spool',
   description:
-    'Spool is decentralized middleware that allows anyone to create custom, diversified, and automated DeFi meta-strategies called “Spools”.',
+    'Spool is decentralized middleware that allows anyone to create custom, diversified, and automated DeFi meta-strategies called “Smart Vaults”.',
   url: 'https://app.spool.fi',
 
   groups: {
@@ -16,11 +16,21 @@ export const SPOOL_DEFINITION = appDefinition({
       type: GroupType.POSITION,
       label: 'Spools',
     },
+    staking: {
+      id: 'staking',
+      type: GroupType.POSITION,
+      label: 'Staking',
+    },
   },
 
   tags: [AppTag.INFRASTRUCTURE, AppTag.YIELD_AGGREGATOR],
   keywords: [],
-  links: {},
+  links: {
+    discord: 'https://discord.com/invite/kCDC7BWxrw',
+    medium: 'https://medium.com/spoolfi',
+    telegram: 'https://t.me/SpoolFi',
+    twitter: 'https://twitter.com/spoolfi',
+  },
 
   supportedNetworks: {
     [Network.ETHEREUM_MAINNET]: [AppAction.VIEW],

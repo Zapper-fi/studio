@@ -1,30 +1,11 @@
-import { Inject } from '@nestjs/common';
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 
-import { Register } from '~app-toolkit/decorators';
-import { CompoundBorrowContractPositionHelper } from '~apps/compound/helper/compound.borrow.contract-position-helper';
-import { PositionFetcher } from '~position/position-fetcher.interface';
-import { ContractPosition } from '~position/position.interface';
-import { Network } from '~types/network.interface';
+import { MarketXyzBorrowContractPositionFetcher } from '../common/market-xyz.borrow.contract-position-fetcher';
 
-import { MARKET_XYZ_DEFINITION } from '../market-xyz.definition';
+@PositionTemplate()
+export class FantomMarketXyzBorrowContractPositionFetcher extends MarketXyzBorrowContractPositionFetcher {
+  groupLabel = 'Lending';
 
-const appId = MARKET_XYZ_DEFINITION.id;
-const groupId = MARKET_XYZ_DEFINITION.groups.borrow.id;
-const network = Network.FANTOM_OPERA_MAINNET;
-
-@Register.ContractPositionFetcher({ appId, groupId, network })
-export class FantomMarketXyzBorrowContractPositionFetcher implements PositionFetcher<ContractPosition> {
-  constructor(
-    @Inject(CompoundBorrowContractPositionHelper)
-    private readonly compoundBorrowContractPositionHelper: CompoundBorrowContractPositionHelper,
-  ) {}
-
-  async getPositions() {
-    return this.compoundBorrowContractPositionHelper.getPositions({
-      network,
-      appId,
-      groupId,
-      supplyGroupId: MARKET_XYZ_DEFINITION.groups.supply.id,
-    });
-  }
+  lensAddress = '0x5ab6215ab8344c28b899efde93bee47b124200fb';
+  poolDirectoryAddress = '0x0e7d754a8d1a82220432148c10715497a0569bd7';
 }

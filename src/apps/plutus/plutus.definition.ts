@@ -22,6 +22,18 @@ export const PLUTUS_DEFINITION = appDefinition({
       label: 'plsJONES',
     },
 
+    plsGlp: {
+      id: 'pls-glp',
+      type: GroupType.TOKEN,
+      label: 'plsGLP',
+    },
+
+    plvGlp: {
+      id: 'plv-glp',
+      type: GroupType.TOKEN,
+      label: 'plvGLP',
+    },
+
     lock: {
       id: 'lock',
       type: GroupType.POSITION,
@@ -62,6 +74,12 @@ export const PLUTUS_DEFINITION = appDefinition({
       id: 'farm-pls',
       type: GroupType.POSITION,
       label: 'PLS Farm',
+    },
+
+    farmPlvGlp: {
+      id: 'farm-plv-glp',
+      type: GroupType.POSITION,
+      label: 'plvGLP Farm',
     },
 
     tgeClaimable: {

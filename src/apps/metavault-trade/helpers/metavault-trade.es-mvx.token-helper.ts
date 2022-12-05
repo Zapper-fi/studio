@@ -2,7 +2,7 @@ import { Inject, Injectable } from '@nestjs/common';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { buildDollarDisplayItem } from '~app-toolkit/helpers/presentation/display-item.present';
-import { getTokenImg } from '~app-toolkit/helpers/presentation/image.present';
+import { getAppAssetImage } from '~app-toolkit/helpers/presentation/image.present';
 import { ContractType } from '~position/contract.interface';
 import { AppTokenPosition } from '~position/position.interface';
 import { Network } from '~types/network.interface';
@@ -10,10 +10,14 @@ import { Network } from '~types/network.interface';
 import { MetavaultTradeContractFactory } from '../contracts';
 import { METAVAULT_TRADE_DEFINITION } from '../metavault-trade.definition';
 
+import { METAVAULT_TOKENS } from './../metavault-trade.definition';
+
 type GetMetavaultTradeEsMvxTokenParams = {
   network: Network;
   esMvxTokenAddress: string;
 };
+
+const appId = METAVAULT_TRADE_DEFINITION.id;
 
 @Injectable()
 export class MetavaultTradeEsMvxTokenHelper {
@@ -44,7 +48,7 @@ export class MetavaultTradeEsMvxTokenHelper {
     // Display Props
     const label = symbol;
     const secondaryLabel = buildDollarDisplayItem(price);
-    const images = [getTokenImg(underlyingToken.address, network)];
+    const images = [getAppAssetImage(appId, METAVAULT_TOKENS.esMvx)];
 
     const vaultToken: AppTokenPosition = {
       type: ContractType.APP_TOKEN,

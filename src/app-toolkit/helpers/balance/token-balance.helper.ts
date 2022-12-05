@@ -32,8 +32,8 @@ type Options = {
 
 type InferHasMetaType<T, B> = T extends WithMetaType<T> ? WithMetaType<B> : B;
 
-type InferTokenBalanceType<T> = T extends AppTokenPosition
-  ? InferHasMetaType<T, AppTokenPositionBalance>
+type InferTokenBalanceType<T, V = DefaultDataProps> = T extends AppTokenPosition
+  ? InferHasMetaType<T, AppTokenPositionBalance<V>>
   : T extends BaseToken
   ? InferHasMetaType<T, BaseTokenBalance>
   : never;
@@ -51,17 +51,17 @@ export const getContractPositionFromToken = <T>(
   return contractPosition;
 };
 
-export const drillBalance = <T extends Token>(
+export const drillBalance = <T extends Token, V = DefaultDataProps>(
   token: T,
   balanceRaw: string,
   options: Options = {},
-): InferTokenBalanceType<T> => {
+): InferTokenBalanceType<T, V> => {
   const balance = Number(balanceRaw) / 10 ** token.decimals;
   const balanceUSD = balance * token.price * (options.isDebt ? -1 : 1);
 
   if (token.type === ContractType.BASE_TOKEN || token.type === ContractType.NON_FUNGIBLE_TOKEN) {
     const tokenWithBalance = { ...(token as BaseToken), balance, balanceRaw, balanceUSD };
-    return tokenWithBalance as unknown as InferTokenBalanceType<T>;
+    return tokenWithBalance as unknown as InferTokenBalanceType<T, V>;
   }
 
   // Token share stats item
@@ -97,7 +97,7 @@ export const drillBalance = <T extends Token>(
     },
   };
 
-  return tokenWithBalance as unknown as InferTokenBalanceType<T>;
+  return tokenWithBalance as unknown as InferTokenBalanceType<T, V>;
 };
 
 @Injectable()

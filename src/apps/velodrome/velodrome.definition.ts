@@ -15,23 +15,32 @@ export const VELODROME_DEFINITION = appDefinition({
       type: GroupType.TOKEN,
       label: 'Pools',
     },
+
     farm: {
       id: 'farm',
       type: GroupType.TOKEN,
       label: 'Staking',
     },
-    votingEscrow: { id: 'voting-escrow', type: GroupType.POSITION, label: 'Voting Escrow' },
+
+    votingEscrow: {
+      id: 'voting-escrow',
+      type: GroupType.POSITION,
+      label: 'Voting Escrow',
+    },
   },
 
   tags: [AppTag.DECENTRALIZED_EXCHANGE, AppTag.LIQUIDITY_POOL],
+  primaryColor: '#fff',
   keywords: [],
-  links: {},
+
+  links: {
+    discord: 'https://discord.com/invite/velodrome',
+    twitter: 'https://twitter.com/VelodromeFi',
+  },
 
   supportedNetworks: {
     [Network.OPTIMISM_MAINNET]: [AppAction.VIEW],
   },
-
-  primaryColor: '#fff',
 });
 
 @Register.AppDefinition(VELODROME_DEFINITION.id)

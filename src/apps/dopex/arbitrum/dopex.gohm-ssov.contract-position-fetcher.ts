@@ -1,20 +1,12 @@
-import { Register } from '~app-toolkit/decorators';
-import { GetTokenBalancesPerPositionParams } from '~position/template/contract-position.template.position-fetcher';
-import { Network } from '~types/network.interface';
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
+import { GetTokenBalancesParams } from '~position/template/contract-position.template.types';
 
 import { DopexSsovContractPositionFetcher, DopexSsovDataProps } from '../common/dopex.ssov.contract-position-fetcher';
 import { DopexGOhmSsov } from '../contracts';
-import { DOPEX_DEFINITION } from '../dopex.definition';
 
-const appId = DOPEX_DEFINITION.id;
-const groupId = DOPEX_DEFINITION.groups.gohmSsov.id;
-const network = Network.ARBITRUM_MAINNET;
-
-@Register.ContractPositionFetcher({ appId, groupId, network })
+@PositionTemplate()
 export class ArbitrumDopexGOhmSsovContractPositionFetcher extends DopexSsovContractPositionFetcher<DopexGOhmSsov> {
-  appId = appId;
-  groupId = groupId;
-  network = network;
+  groupLabel = 'SSOVs';
 
   getContract(address: string): DopexGOhmSsov {
     return this.contractFactory.dopexGOhmSsov({ address, network: this.network });
@@ -43,14 +35,12 @@ export class ArbitrumDopexGOhmSsovContractPositionFetcher extends DopexSsovContr
   getTotalEpochStrikeDepositBalance({
     contract,
     contractPosition,
-  }: GetTokenBalancesPerPositionParams<DopexGOhmSsov, DopexSsovDataProps>) {
+  }: GetTokenBalancesParams<DopexGOhmSsov, DopexSsovDataProps>) {
     const { epoch, strike } = contractPosition.dataProps;
     return contract.totalEpochStrikeGohmBalance(epoch, strike);
   }
 
-  async getTotalEpochStrikeRewardBalances(
-    _params: GetTokenBalancesPerPositionParams<DopexGOhmSsov, DopexSsovDataProps>,
-  ) {
+  async getTotalEpochStrikeRewardBalances(_params: GetTokenBalancesParams<DopexGOhmSsov, DopexSsovDataProps>) {
     return [];
   }
 }

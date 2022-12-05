@@ -1,3 +1,6 @@
+import { IMulticallWrapper } from '~multicall';
+import { ContractPosition } from '~position/position.interface';
+
 export type SpoolVaults = {
   spools: VaultDetails[];
 };
@@ -65,3 +68,33 @@ export type Platform = {
     ecosystemFeeSize: string;
   };
 };
+
+export type StakingReward = {
+  stakingRewardTokens: {
+    id: string;
+    token: {
+      id: string;
+      name: string;
+      symbol: string;
+      decimals: number;
+    };
+    isRemoved: boolean;
+    endTime: string;
+    startTime: string;
+  }[];
+};
+
+export type UserSpoolStaking = {
+  userSpoolStaking: {
+    id: string;
+    spoolStaked: string;
+  };
+};
+
+export type VaultDataProps = {
+  strategies: string[];
+};
+
+export type VaultPosition = ContractPosition<VaultDataProps>;
+
+export type ResolveBalancesProps = { address: string; contractPosition: VaultPosition; multicall: IMulticallWrapper };

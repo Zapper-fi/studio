@@ -183,15 +183,22 @@ export class SingleStakingFarmContractPositionHelper {
           const liquidity = stakedToken.price * (Number(liquidityRaw) / 10 ** stakedToken.decimals);
           const isActive = await resolveIsActive({ address, network, contract, multicall, stakedToken, rewardTokens });
 
-          const rois = await resolveRois({
-            address,
-            network,
-            contract,
-            multicall,
-            stakedToken,
-            rewardTokens: rewardTokenMatches,
-            liquidity,
-          });
+          const rois =
+            isActive === true
+              ? await resolveRois({
+                  address,
+                  network,
+                  contract,
+                  multicall,
+                  stakedToken,
+                  rewardTokens: rewardTokenMatches,
+                  liquidity,
+                })
+              : {
+                  dailyROI: 0,
+                  weeklyROI: 0,
+                  yearlyROI: 0,
+                };
 
           const otherProps = resolveImplementation ? { implementation: resolveImplementation() } : {};
           const dataProps = { liquidity, isActive, ...rois, ...otherProps };

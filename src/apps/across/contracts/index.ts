@@ -4,6 +4,8 @@ import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { ContractFactory } from '~contract/contracts';
 import { Network } from '~types/network.interface';
 
+import { AcrossV2HubPool__factory } from './ethers';
+import { AcrossV2PoolToken__factory } from './ethers';
 import { ArbDepositeBox__factory } from './ethers';
 import { BadgerPool__factory } from './ethers';
 import { BobaDepositeBox__factory } from './ethers';
@@ -27,6 +29,12 @@ export class AcrossContractFactory extends ContractFactory {
     super((network: Network) => appToolkit.getNetworkProvider(network));
   }
 
+  acrossV2HubPool({ address, network }: ContractOpts) {
+    return AcrossV2HubPool__factory.connect(address, this.appToolkit.getNetworkProvider(network));
+  }
+  acrossV2PoolToken({ address, network }: ContractOpts) {
+    return AcrossV2PoolToken__factory.connect(address, this.appToolkit.getNetworkProvider(network));
+  }
   arbDepositeBox({ address, network }: ContractOpts) {
     return ArbDepositeBox__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
@@ -68,6 +76,8 @@ export class AcrossContractFactory extends ContractFactory {
   }
 }
 
+export type { AcrossV2HubPool } from './ethers';
+export type { AcrossV2PoolToken } from './ethers';
 export type { ArbDepositeBox } from './ethers';
 export type { BadgerPool } from './ethers';
 export type { BobaDepositeBox } from './ethers';

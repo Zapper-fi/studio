@@ -3,7 +3,6 @@ import { AbstractApp } from '~app/app.dynamic-module';
 
 import { ArgoFinanceAppDefinition, ARGO_FINANCE_DEFINITION } from './argo-finance.definition';
 import { ArgoFinanceContractFactory } from './contracts';
-import { CronosArgoFinanceBalanceFetcher } from './cronos/argo-finance.balance-fetcher';
 import { CronosArgoFinancePledgingContractPositionFetcher } from './cronos/argo-finance.pledging.contract-position-fetcher';
 import { CronosArgoFinanceXArgoTokenFetcher } from './cronos/argo-finance.x-argo.token-fetcher';
 
@@ -12,7 +11,6 @@ import { CronosArgoFinanceXArgoTokenFetcher } from './cronos/argo-finance.x-argo
   providers: [
     ArgoFinanceAppDefinition,
     ArgoFinanceContractFactory,
-    CronosArgoFinanceBalanceFetcher,
     CronosArgoFinancePledgingContractPositionFetcher,
     CronosArgoFinanceXArgoTokenFetcher,
   ],
