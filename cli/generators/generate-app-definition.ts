@@ -51,8 +51,6 @@ export async function generateAppDefinition(appDefinition: Partial<AppDefinition
         super(${appDefinitionName});
       }
     }
-
-    export default ${appDefinitionName};
   `;
 
   const ast = recast.parse(content, { parser: require('recast/parsers/typescript') });
