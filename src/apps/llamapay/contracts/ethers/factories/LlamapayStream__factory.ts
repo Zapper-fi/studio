@@ -4,7 +4,7 @@
 
 import { Contract, Signer, utils } from 'ethers';
 import type { Provider } from '@ethersproject/providers';
-import type { Llamapay, LlamapayInterface } from '../Llamapay';
+import type { LlamapayStream, LlamapayStreamInterface } from '../LlamapayStream';
 
 const _abi = [
   {
@@ -721,12 +721,12 @@ const _abi = [
   },
 ];
 
-export class Llamapay__factory {
+export class LlamapayStream__factory {
   static readonly abi = _abi;
-  static createInterface(): LlamapayInterface {
-    return new utils.Interface(_abi) as LlamapayInterface;
+  static createInterface(): LlamapayStreamInterface {
+    return new utils.Interface(_abi) as LlamapayStreamInterface;
   }
-  static connect(address: string, signerOrProvider: Signer | Provider): Llamapay {
-    return new Contract(address, _abi, signerOrProvider) as Llamapay;
+  static connect(address: string, signerOrProvider: Signer | Provider): LlamapayStream {
+    return new Contract(address, _abi, signerOrProvider) as LlamapayStream;
   }
 }
