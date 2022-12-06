@@ -4,6 +4,20 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.316.0](https://github.com/Zapper-fi/studio/compare/v0.315.0...v0.316.0) (2022-12-06)
+
+
+### Features
+
+* **base-token:** Fix type returned by token dependency selector ([#1873](https://github.com/Zapper-fi/studio/issues/1873)) ([334fc46](https://github.com/Zapper-fi/studio/commit/334fc46a1fd3623affae9fda124b7b485455bd2c))
+
+
+### Bug Fixes
+
+* **apecoin:** Fix APE staking for pool 0 label ([#1866](https://github.com/Zapper-fi/studio/issues/1866)) ([bac0d4a](https://github.com/Zapper-fi/studio/commit/bac0d4a967dbd6e5f07be57f8eb4ecb782d21812))
+* **aurora-plus:** Migrate to template ([#1871](https://github.com/Zapper-fi/studio/issues/1871)) ([eff585d](https://github.com/Zapper-fi/studio/commit/eff585d9f5f426d2c4429637500905d78f38eebb))
+* **llamapay:** Migrate to template ([#1869](https://github.com/Zapper-fi/studio/issues/1869)) ([12fa9bd](https://github.com/Zapper-fi/studio/commit/12fa9bd2ee9fab460205e627a201264329797bff))
+
 ## [0.315.0](https://github.com/Zapper-fi/studio/compare/v0.314.0...v0.315.0) (2022-12-05)
 
 
