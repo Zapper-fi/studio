@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.317.0](https://github.com/Zapper-fi/studio/compare/v0.316.0...v0.317.0) (2022-12-06)
+
+
+### Features
+
+* **llamapay:** Fix missing null checfk ([c292dfa](https://github.com/Zapper-fi/studio/commit/c292dfa9cf41034ac4576bdce35f382c6f8c067d))
+
 ## [0.316.0](https://github.com/Zapper-fi/studio/compare/v0.315.0...v0.316.0) (2022-12-06)
 
 
