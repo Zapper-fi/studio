@@ -18,7 +18,7 @@ import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi
 import type { Listener, Provider } from '@ethersproject/providers';
 import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
-export interface StakersPoolV2Interface extends utils.Interface {
+export interface InsuraceStakersPoolV2Interface extends utils.Interface {
   functions: {
     'addStkAmount(address,uint256)': FunctionFragment;
     'claimPayout(address,address,uint256,address,uint256,uint256,uint256)': FunctionFragment;
@@ -319,12 +319,12 @@ export type UnpausedEvent = TypedEvent<[string], UnpausedEventObject>;
 
 export type UnpausedEventFilter = TypedEventFilter<UnpausedEvent>;
 
-export interface StakersPoolV2 extends BaseContract {
+export interface InsuraceStakersPoolV2 extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
 
-  interface: StakersPoolV2Interface;
+  interface: InsuraceStakersPoolV2Interface;
 
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,
