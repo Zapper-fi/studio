@@ -1,5 +1,5 @@
 import { AppTokenPosition } from '~position/position.interface';
-import { BaseTokenPrice } from '~token/selectors/token-price-selector.interface';
+import { BaseToken } from '~position/token.interface';
 import { Network } from '~types';
 
 export type LoggingTags = {
@@ -13,7 +13,7 @@ export type TokenDependencySelectorKey = {
   tokenId?: number;
 };
 
-export type TokenDependency = AppTokenPosition | BaseTokenPrice;
+export type TokenDependency = BaseToken | AppTokenPosition;
 
 export type GetOne = (opts: TokenDependencySelectorKey) => Promise<TokenDependency | null>;
 export type GetMany = (opts: TokenDependencySelectorKey[]) => Promise<(TokenDependency | null)[]>;
