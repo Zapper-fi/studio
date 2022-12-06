@@ -24,7 +24,6 @@ export const IQ_DEFINITION = appDefinition({
     twitter: 'https://twitter.com/everipedia/',
     telegram: 'https://t.me/everipedia',
     discord: 'https://discord.com/invite/x9EWvTcPXt',
-    Reddit: 'https://www.reddit.com/r/Everipedia/',
   },
 
   supportedNetworks: {
