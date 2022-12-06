@@ -51,10 +51,7 @@ export class EthereumIqHiiqContractPositionFetcher extends ContractPositionTempl
   }
 
   async getTokenBalancesPerPosition({ address, contract }: GetTokenBalancesParams<IqHiiq>) {
-    const bigTime = await contract.userHiIQEndpointCheckpointed(address);
-    let timeRemaining = bigTime.toNumber();
-    const unlockTime = new Date(timeRemaining * 1000).toUTCString();
     const earned = await contract.earned(address);
-    return [earned, unlockTime];
+    return [earned];
   }
 }
