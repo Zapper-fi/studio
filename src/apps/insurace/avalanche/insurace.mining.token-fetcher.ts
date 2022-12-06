@@ -1,15 +1,9 @@
 import { ZERO_ADDRESS } from '~app-toolkit/constants/address';
-import { Register } from '~app-toolkit/decorators';
-import { Network } from '~types/network.interface';
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 
 import { InsuraceMiningTokenFetcher } from '../common/insurace.mining.token-fetcher';
-import { INSURACE_DEFINITION } from '../insurace.definition';
 
-const appId = INSURACE_DEFINITION.id;
-const groupId = INSURACE_DEFINITION.groups.mining.id;
-const network = Network.AVALANCHE_MAINNET;
-
-@Register.TokenPositionFetcher({ appId, groupId, network })
+@PositionTemplate()
 export class AvalancheInsuraceMiningTokenFetcher extends InsuraceMiningTokenFetcher {
   groupLabel = 'Mining Pools';
   insurTokenAddress = '0x544c42fbb96b39b21df61cf322b5edc285ee7429';
