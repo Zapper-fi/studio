@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.318.0](https://github.com/Zapper-fi/studio/compare/v0.317.0...v0.318.0) (2022-12-06)
+
+
+### Features
+
+* **mstable:** To templates ([#1875](https://github.com/Zapper-fi/studio/issues/1875)) ([5cbac76](https://github.com/Zapper-fi/studio/commit/5cbac764a8d0f2bb1fcb04048c0e38be2675073e))
+
 ## [0.317.0](https://github.com/Zapper-fi/studio/compare/v0.316.0...v0.317.0) (2022-12-06)
 
 
