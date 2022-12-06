@@ -1,4 +1,5 @@
 import { Inject } from '@nestjs/common';
+import { BigNumber } from 'ethers';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
@@ -55,11 +56,20 @@ export class EthereumMstableMtaV2FarmContractPositionFetcher extends SingleStaki
     return [globalData.rewardRate];
   }
 
-  getStakedTokenBalance({ address, contract }: GetTokenBalancesParams<MstableStakingV2, SingleStakingFarmDataProps>) {
-    return contract.balanceOf(address);
+  async getStakedTokenBalance({
+    address,
+    contract,
+  }: GetTokenBalancesParams<MstableStakingV2, SingleStakingFarmDataProps>) {
+    return contract
+      .rawBalanceOf(address)
+      .then(v => v[0].add(v[1]))
+      .catch(() => BigNumber.from('0'));
   }
 
-  getRewardTokenBalances({ address, contract }: GetTokenBalancesParams<MstableStakingV2, SingleStakingFarmDataProps>) {
+  async getRewardTokenBalances({
+    address,
+    contract,
+  }: GetTokenBalancesParams<MstableStakingV2, SingleStakingFarmDataProps>) {
     return contract.earned(address);
   }
 }

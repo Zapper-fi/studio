@@ -1,4 +1,5 @@
 import { Inject } from '@nestjs/common';
+import { BigNumber } from 'ethers';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
@@ -9,7 +10,7 @@ import {
   SingleStakingFarmTemplateContractPositionFetcher,
 } from '~position/template/single-staking.template.contract-position-fetcher';
 
-import { MstableContractFactory, MstableStaking } from '../contracts';
+import { MstableContractFactory, MstableVmta } from '../contracts';
 
 const MTA_V1_FARMS = [
   // MTA staking v1
@@ -21,7 +22,7 @@ const MTA_V1_FARMS = [
 ];
 
 @PositionTemplate()
-export class EthereumMstableMtaV1FarmContractPositionFetcher extends SingleStakingFarmTemplateContractPositionFetcher<MstableStaking> {
+export class EthereumMstableMtaV1FarmContractPositionFetcher extends SingleStakingFarmTemplateContractPositionFetcher<MstableVmta> {
   groupLabel = 'MTA Staking V1';
 
   constructor(
@@ -31,23 +32,26 @@ export class EthereumMstableMtaV1FarmContractPositionFetcher extends SingleStaki
     super(appToolkit);
   }
 
-  getContract(address: string): MstableStaking {
-    return this.contractFactory.mstableStaking({ address, network: this.network });
+  getContract(address: string): MstableVmta {
+    return this.contractFactory.mstableVmta({ address, network: this.network });
   }
 
   async getFarmDefinitions(): Promise<SingleStakingFarmDefinition[]> {
     return MTA_V1_FARMS;
   }
 
-  getRewardRates({ contract }: GetDataPropsParams<MstableStaking, SingleStakingFarmDataProps>) {
+  getRewardRates({ contract }: GetDataPropsParams<MstableVmta, SingleStakingFarmDataProps>) {
     return contract.rewardRate();
   }
 
-  getStakedTokenBalance({ address, contract }: GetTokenBalancesParams<MstableStaking, SingleStakingFarmDataProps>) {
-    return contract.balanceOf(address);
+  getStakedTokenBalance({ address, contract }: GetTokenBalancesParams<MstableVmta, SingleStakingFarmDataProps>) {
+    return contract
+      .locked(address)
+      .then(v => v.amount)
+      .catch(() => BigNumber.from('0'));
   }
 
-  getRewardTokenBalances({ address, contract }: GetTokenBalancesParams<MstableStaking, SingleStakingFarmDataProps>) {
+  getRewardTokenBalances({ address, contract }: GetTokenBalancesParams<MstableVmta, SingleStakingFarmDataProps>) {
     return contract.earned(address);
   }
 }
