@@ -100,7 +100,7 @@ export abstract class ArrakisPoolTokenFetcher extends AppTokenTemplatePositionFe
     return appToken.price * appToken.supply;
   }
 
-  getApy(_params: GetDataPropsParams<ArrakisGelatoPool, ArrakisPoolTokenDataProps, ArrakisPoolDefinition>) {
+  async getApy(_params: GetDataPropsParams<ArrakisGelatoPool, ArrakisPoolTokenDataProps, ArrakisPoolDefinition>) {
     return 0;
   }
 

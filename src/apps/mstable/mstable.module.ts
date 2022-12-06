@@ -8,6 +8,7 @@ import { EthereumMstableEarnContractPositionFetcher } from './ethereum/mstable.e
 import { EthereumMstableImusdTokenFetcher } from './ethereum/mstable.imusd.token-fetcher';
 import { EthereumMstableMtaV1FarmContractPositionFetcher } from './ethereum/mstable.mta-v1-farm.contract-position-fetcher';
 import { EthereumMstableMtaV2FarmContractPositionFetcher } from './ethereum/mstable.mta-v2-farm.contract-position-fetcher';
+import { EthereumMstableMvUsdc3PcvTokenFetcher } from './ethereum/mstable.mvUSDC-3PCV.token-fetcher';
 import { EthereumMstableSavingsVaultContractPositionFetcher } from './ethereum/mstable.savings-vault.contract-position-fetcher';
 import { MstableAppDefinition, MSTABLE_DEFINITION } from './mstable.definition';
 import { PolygonMstableBalanceFetcher } from './polygon/mstable.balance-fetcher';
@@ -21,11 +22,12 @@ import { PolygonMstableSavingsVaultContractPositionFetcher } from './polygon/mst
     MstableAppDefinition,
     MstableContractFactory,
     EthereumMstableBalanceFetcher,
+    EthereumMstableEarnContractPositionFetcher,
     EthereumMstableImusdTokenFetcher,
-    EthereumMstableSavingsVaultContractPositionFetcher,
     EthereumMstableMtaV1FarmContractPositionFetcher,
     EthereumMstableMtaV2FarmContractPositionFetcher,
-    EthereumMstableEarnContractPositionFetcher,
+    EthereumMstableMvUsdc3PcvTokenFetcher,
+    EthereumMstableSavingsVaultContractPositionFetcher,
     PolygonMstableBalanceFetcher,
     PolygonMstableImusdTokenFetcher,
     PolygonMstableSavingsVaultContractPositionFetcher,

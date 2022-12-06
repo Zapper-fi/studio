@@ -5,7 +5,7 @@ import { isArray, range } from 'lodash';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { getImagesFromToken, getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
-import { ContractPosition, MetaType } from '~position/position.interface';
+import { MetaType } from '~position/position.interface';
 import { isClaimable, isSupplied } from '~position/position.utils';
 import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
 import {
@@ -28,6 +28,7 @@ export type DopexSsovDefinition = {
 export type DopexSsovDataProps = {
   epoch: number;
   strike: number;
+  positionKey: string;
 };
 
 export type DopexSsovEpochStrikeDefinition = {
@@ -90,7 +91,11 @@ export abstract class DopexSsovContractPositionFetcher<
   }
 
   async getDataProps({ definition }: GetDataPropsParams<T, DopexSsovDataProps, DopexSsovEpochStrikeDefinition>) {
-    return { epoch: definition.epoch, strike: definition.strike };
+    return {
+      epoch: definition.epoch,
+      strike: definition.strike,
+      positionKey: `${definition.epoch}:${definition.strike}`,
+    };
   }
 
   async getLabel({ contractPosition }: GetDisplayPropsParams<T, DopexSsovDataProps>) {
@@ -115,10 +120,6 @@ export abstract class DopexSsovContractPositionFetcher<
       ...extraRewardTokenAddresses.map(v => ({ metaType: MetaType.CLAIMABLE, address: v, network: this.network })),
     );
     return tokens;
-  }
-
-  getKey({ contractPosition }: { contractPosition: ContractPosition<DopexSsovDataProps> }): string {
-    return this.appToolkit.getPositionKey(contractPosition, ['epoch', 'strike']);
   }
 
   async getDepositBalance(params: GetTokenBalancesParams<T, DopexSsovDataProps>) {

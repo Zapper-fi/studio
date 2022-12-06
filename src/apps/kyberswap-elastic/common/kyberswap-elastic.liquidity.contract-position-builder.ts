@@ -118,14 +118,16 @@ export class KyberswapElasticLiquidityContractPositionBuilder {
       );
     }
 
+    const feeTier = Number(fee) / 10 ** 4;
     const dataProps: KyberswapElasticLiquidityPositionDataProps = {
-      feeTier: Number(fee) / 10 ** 4,
+      feeTier,
       rangeStart: range[0],
       rangeEnd: range[1],
       liquidity: totalLiquidity,
       reserves: reserves,
       poolAddress: poolAddr.toLowerCase(),
       assetStandard: Standard.ERC_721,
+      positionKey: `${feeTier}`,
     };
 
     const displayProps = {

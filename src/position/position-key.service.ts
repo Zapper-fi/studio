@@ -19,10 +19,7 @@ export class PositionKeyService {
     return murmur.murmur3(input).toString();
   }
 
-  getPositionKey(
-    position: ContractPosition | AppTokenPosition | BaseToken | NonFungibleToken,
-    pickFields: string[] = [],
-  ) {
+  getPositionKey(position: ContractPosition | AppTokenPosition | BaseToken | NonFungibleToken) {
     if ('key' in position) return position.key!;
 
     switch (position.type) {
@@ -33,7 +30,7 @@ export class PositionKeyService {
             position.network,
             position.appId,
             position.tokens.map(token => [token.address, token.network, token.metaType].join(':')),
-            pickFields.map(v => position.dataProps[v]).join(':'),
+            (position.dataProps.positionKey as any)?.toString() || '',
           ].join(':'),
         );
       case ContractType.APP_TOKEN:
@@ -43,7 +40,7 @@ export class PositionKeyService {
             position.address,
             position.network,
             MetaType.SUPPLIED,
-            pickFields.map(v => position.dataProps[v]).join(':'),
+            (position.dataProps.positionKey as any)?.toString() || '',
           ].join(':'),
         );
       default:

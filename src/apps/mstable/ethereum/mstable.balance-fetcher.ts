@@ -87,14 +87,25 @@ export class EthereumMstableBalanceFetcher implements BalanceFetcher {
     });
   }
 
+  private getmvUsdc3PcvMetaVaultBalances(address: string) {
+    return this.appToolkit.helpers.tokenBalanceHelper.getTokenBalances({
+      address,
+      appId,
+      groupId: MSTABLE_DEFINITION.groups.mvUsdc3Pcv.id,
+      network,
+    });
+  }
+
   async getBalances(address: string) {
-    const [imUsdTokenBalances, savingsVaultBalances, earnFarms, mtaV1Farms, mtaV2Farms] = await Promise.all([
-      this.getImUsdTokenBalances(address),
-      this.getSavingsVaultBalances(address),
-      this.getEarnFarmBalances(address),
-      this.getStakedBalancesMtaV1Farm(address),
-      this.getStakedBalancesMtaV2Farm(address),
-    ]);
+    const [imUsdTokenBalances, savingsVaultBalances, earnFarms, mtaV1Farms, mtaV2Farms, mvUsdc3PcvMetaVaultBalances] =
+      await Promise.all([
+        this.getImUsdTokenBalances(address),
+        this.getSavingsVaultBalances(address),
+        this.getEarnFarmBalances(address),
+        this.getStakedBalancesMtaV1Farm(address),
+        this.getStakedBalancesMtaV2Farm(address),
+        this.getmvUsdc3PcvMetaVaultBalances(address),
+      ]);
 
     return presentBalanceFetcherResponse([
       {
@@ -120,6 +131,11 @@ export class EthereumMstableBalanceFetcher implements BalanceFetcher {
       {
         label: 'Earn',
         assets: [...earnFarms],
+        meta: [],
+      },
+      {
+        label: MSTABLE_DEFINITION.groups.mvUsdc3Pcv.label,
+        assets: mvUsdc3PcvMetaVaultBalances,
         meta: [],
       },
     ]);

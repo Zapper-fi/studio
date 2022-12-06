@@ -79,6 +79,7 @@ export class PolygonFurucomboFundTokenFetcher extends AppTokenTemplatePositionFe
   @CacheOnInterval({
     key: `studio:${appId}:${groupId}:${network}:funds`,
     timeout: 15 * 60 * 1000,
+    failOnMissingData: false,
   })
   async getFurucomboFunds() {
     const { data } = await Axios.get<{ investables: FurucomboFund[] }>('https://api.furucombo.app/v1/investables', {
@@ -119,20 +120,20 @@ export class PolygonFurucomboFundTokenFetcher extends AppTokenTemplatePositionFe
     return Number(definition.price) / appToken.tokens[0].price;
   }
 
-  getLiquidity({
+  async getLiquidity({
     definition,
   }: GetDataPropsParams<FurucomboFundShareToken, DefaultAppTokenDataProps, FurucomboFundDefinition>) {
     return Number(definition.liquidity);
   }
 
-  getReserves({
+  async getReserves({
     definition,
     appToken,
   }: GetDataPropsParams<FurucomboFundShareToken, DefaultAppTokenDataProps, FurucomboFundDefinition>) {
     return [Number(definition.liquidity) / appToken.tokens[0].price];
   }
 
-  getApy({
+  async getApy({
     definition,
   }: GetDataPropsParams<FurucomboFundShareToken, DefaultAppTokenDataProps, FurucomboFundDefinition>) {
     return Number(definition.apy) * 100;

@@ -5,14 +5,14 @@ import { compact, range } from 'lodash';
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { ContractPositionBalance } from '~position/position-balance.interface';
-import { ContractPosition, MetaType, Standard } from '~position/position.interface';
-import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
+import { MetaType, Standard } from '~position/position.interface';
 import {
   GetDataPropsParams,
   GetDefinitionsParams,
   GetDisplayPropsParams,
   GetTokenDefinitionsParams,
 } from '~position/template/contract-position.template.types';
+import { CustomContractPositionTemplatePositionFetcher } from '~position/template/custom-contract-position.template.position-fetcher';
 
 import { KyberswapElasticContractFactory, KyberswapElasticLm } from '../contracts';
 
@@ -27,6 +27,7 @@ export type KyberswapElasticFarmPositionDataProps = {
   rangeStart?: number;
   rangeEnd?: number;
   apy?: number;
+  positionKey: string;
 };
 
 export type KyberswapElasticFarmPositionDefinition = {
@@ -38,7 +39,7 @@ export type KyberswapElasticFarmPositionDefinition = {
   feeTier: number;
 };
 
-export abstract class KyberswapElasticFarmContractPositionFetcher extends ContractPositionTemplatePositionFetcher<
+export abstract class KyberswapElasticFarmContractPositionFetcher extends CustomContractPositionTemplatePositionFetcher<
   KyberswapElasticLm,
   KyberswapElasticFarmPositionDataProps,
   KyberswapElasticFarmPositionDefinition
@@ -138,7 +139,7 @@ export abstract class KyberswapElasticFarmContractPositionFetcher extends Contra
     const liquidity = reserves[0] * tokens[0].price + reserves[1] * tokens[1].price;
     const assetStandard = Standard.ERC_721;
 
-    return { feeTier, reserves, liquidity, poolAddress, assetStandard };
+    return { feeTier, reserves, liquidity, poolAddress, assetStandard, positionKey: `${feeTier}` };
   }
 
   async getLabel({
@@ -152,10 +153,6 @@ export abstract class KyberswapElasticFarmContractPositionFetcher extends Contra
     const symbolLabel = contractPosition.tokens.map(t => getLabelFromToken(t)).join(' / ');
     const label = `${symbolLabel} (${definition.feeTier.toFixed(4)}%)`;
     return label;
-  }
-
-  getKey({ contractPosition }: { contractPosition: ContractPosition<KyberswapElasticFarmPositionDataProps> }) {
-    return this.appToolkit.getPositionKey(contractPosition, ['feeTier']);
   }
 
   // @ts-ignore

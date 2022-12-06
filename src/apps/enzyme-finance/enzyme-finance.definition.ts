@@ -7,10 +7,9 @@ export const ENZYME_FINANCE_DEFINITION = appDefinition({
   id: 'enzyme-finance',
   name: 'Enzyme Finance',
   description: 'Enzyme empowers you to build and scale vaults based on the investment strategies of your choice.',
-  groups: {
-    vault: { id: 'vault', type: GroupType.TOKEN, label: 'Vaults' },
-  },
   url: 'https://enzyme.finance/',
+  tags: [AppTag.ASSET_MANAGEMENT],
+
   links: {
     github: 'https://github.com/enzymefinance',
     twitter: 'https://twitter.com/enzymefinance',
@@ -18,7 +17,15 @@ export const ENZYME_FINANCE_DEFINITION = appDefinition({
     telegram: 'https://telegram.enzyme.finance/',
     medium: 'https://medium.com/enzymefinance',
   },
-  tags: [AppTag.ASSET_MANAGEMENT],
+
+  groups: {
+    vault: {
+      id: 'vault',
+      type: GroupType.TOKEN,
+      label: 'Vaults',
+    },
+  },
+
   supportedNetworks: {
     [Network.ETHEREUM_MAINNET]: [AppAction.VIEW],
   },
@@ -31,5 +38,3 @@ export class EnzymeFinanceAppDefinition extends AppDefinition {
     super(ENZYME_FINANCE_DEFINITION);
   }
 }
-
-export default ENZYME_FINANCE_DEFINITION;

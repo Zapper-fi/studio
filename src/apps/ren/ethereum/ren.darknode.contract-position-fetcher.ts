@@ -9,14 +9,14 @@ import { PositionTemplate } from '~app-toolkit/decorators/position-template.deco
 import { ContractPositionBalance } from '~position/position-balance.interface';
 import { MetaType } from '~position/position.interface';
 import { isClaimable, isSupplied } from '~position/position.utils';
-import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
 import { GetDisplayPropsParams } from '~position/template/contract-position.template.types';
+import { CustomContractPositionTemplatePositionFetcher } from '~position/template/custom-contract-position.template.position-fetcher';
 
 import { RenApiClient } from '../common/ren.api.client';
 import { RenContractFactory, RenDarknodeRegistry } from '../contracts';
 
 @PositionTemplate()
-export class EthereumRenDarknodeContractPositionFetcher extends ContractPositionTemplatePositionFetcher<RenDarknodeRegistry> {
+export class EthereumRenDarknodeContractPositionFetcher extends CustomContractPositionTemplatePositionFetcher<RenDarknodeRegistry> {
   groupLabel = 'Darknodes';
 
   constructor(

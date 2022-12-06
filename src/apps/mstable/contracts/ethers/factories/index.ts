@@ -2,6 +2,7 @@
 /* tslint:disable */
 /* eslint-disable */
 export { MstableAsset__factory } from './MstableAsset__factory';
+export { MstableMetavault4626__factory } from './MstableMetavault4626__factory';
 export { MstableStaking__factory } from './MstableStaking__factory';
 export { MstableStakingV2__factory } from './MstableStakingV2__factory';
 export { MstableVmta__factory } from './MstableVmta__factory';

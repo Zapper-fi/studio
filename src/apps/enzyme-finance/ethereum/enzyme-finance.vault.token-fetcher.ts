@@ -1,16 +1,14 @@
 import { Inject } from '@nestjs/common';
-import BigNumber from 'bignumber.js';
 import { gql } from 'graphql-request';
-import _ from 'lodash';
 
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
-import { DefaultDataProps } from '~position/display.interface';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import {
-  GetDataPropsParams,
+  DefaultAppTokenDataProps,
+  DefaultAppTokenDefinition,
   GetDisplayPropsParams,
-  GetPriceParams,
+  GetPricePerShareParams,
   GetUnderlyingTokensParams,
 } from '~position/template/app-token.template.types';
 
@@ -59,32 +57,21 @@ export class EthereumEnzymeFinanceVaultTokenFetcher extends AppTokenTemplatePosi
     return (await contract.getTrackedAssets()).map(x => x.toLowerCase());
   }
 
-  async getPrice({ appToken, multicall }: GetPriceParams<EnzymeFinanceVault, DefaultDataProps>): Promise<number> {
-    const totalAssetUnderManagement = _.sum(
-      await Promise.all(
-        appToken.tokens.map(async token => {
-          const uTokenContract = this.contractFactory.erc20({ address: token.address, network: this.network });
-          const tokenAmountRaw = await multicall.wrap(uTokenContract).balanceOf(appToken.address);
-          const amount = Number(tokenAmountRaw) / 10 ** token.decimals;
-          return token.price * amount;
-        }),
-      ),
+  async getPricePerShare({
+    appToken,
+    multicall,
+  }: GetPricePerShareParams<EnzymeFinanceVault, DefaultAppTokenDataProps, DefaultAppTokenDefinition>) {
+    if (appToken.supply === 0) return appToken.tokens.map(() => 0);
+
+    const reserves = await Promise.all(
+      appToken.tokens.map(async token => {
+        const uTokenContract = this.contractFactory.erc20({ address: token.address, network: this.network });
+        const reserveRaw = await multicall.wrap(uTokenContract).balanceOf(appToken.address);
+        const reserve = Number(reserveRaw) / 10 ** token.decimals;
+        return reserve;
+      }),
     );
 
-    return Number(appToken.supply) > 0
-      ? new BigNumber(totalAssetUnderManagement.toString()).div(appToken.supply).toNumber()
-      : 0;
-  }
-
-  getLiquidity({ appToken }: GetDataPropsParams<EnzymeFinanceVault>) {
-    return appToken.supply * appToken.price;
-  }
-
-  getReserves({ appToken }: GetDataPropsParams<EnzymeFinanceVault>) {
-    return [appToken.pricePerShare[0] * appToken.supply];
-  }
-
-  getApy(_params: GetDataPropsParams<EnzymeFinanceVault>) {
-    return 0;
+    return reserves.map(r => r / appToken.supply);
   }
 }

@@ -3,6 +3,7 @@
 /* eslint-disable */
 export { ConvexAbracadabraWrapper__factory } from './ConvexAbracadabraWrapper__factory';
 export { ConvexBooster__factory } from './ConvexBooster__factory';
+export { ConvexBoosterSidechain__factory } from './ConvexBoosterSidechain__factory';
 export { ConvexCvxCrvStaking__factory } from './ConvexCvxCrvStaking__factory';
 export { ConvexCvxStaking__factory } from './ConvexCvxStaking__factory';
 export { ConvexDepositToken__factory } from './ConvexDepositToken__factory';

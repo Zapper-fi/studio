@@ -6,14 +6,14 @@ import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { ZERO_ADDRESS } from '~app-toolkit/constants/address';
 import { Cache } from '~cache/cache.decorator';
 import { ContractPositionBalance } from '~position/position-balance.interface';
-import { ContractPosition, MetaType } from '~position/position.interface';
+import { MetaType } from '~position/position.interface';
 import { isBorrowed } from '~position/position.utils';
-import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
 import {
   GetDataPropsParams,
   GetDisplayPropsParams,
   GetTokenDefinitionsParams,
 } from '~position/template/contract-position.template.types';
+import { CustomContractPositionTemplatePositionFetcher } from '~position/template/custom-contract-position.template.position-fetcher';
 import { Network, NETWORK_IDS } from '~types';
 
 import { HomoraBank, HomoraV2ContractFactory } from '../contracts';
@@ -27,7 +27,7 @@ import {
   PoolPosition,
 } from '../interfaces/interfaces';
 
-export abstract class HomoraV2FarmContractPositionFetcher extends ContractPositionTemplatePositionFetcher<
+export abstract class HomoraV2FarmContractPositionFetcher extends CustomContractPositionTemplatePositionFetcher<
   HomoraBank,
   HomoraV2FarmingPositionDataProps,
   HomoraV2FarmingPositionDefinition
@@ -100,6 +100,7 @@ export abstract class HomoraV2FarmContractPositionFetcher extends ContractPositi
       poolAddress,
       tradingVolume: definition.tradingVolume,
       feeTier,
+      positionKey: key,
     };
   }
 
@@ -116,10 +117,6 @@ export abstract class HomoraV2FarmContractPositionFetcher extends ContractPositi
     }
 
     return `[${definition.exchange}] ${definition.poolName}`;
-  }
-
-  getKey({ contractPosition }: { contractPosition: ContractPosition<HomoraV2FarmingPositionDataProps> }) {
-    return this.appToolkit.getPositionKey(contractPosition, ['key']);
   }
 
   async getNativeToken() {

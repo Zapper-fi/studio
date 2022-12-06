@@ -5,13 +5,13 @@ import { compact, range } from 'lodash';
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { ContractPositionBalance } from '~position/position-balance.interface';
-import { ContractPosition, MetaType, Standard } from '~position/position.interface';
-import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
+import { MetaType, Standard } from '~position/position.interface';
 import {
   GetDataPropsParams,
   GetDisplayPropsParams,
   GetTokenDefinitionsParams,
 } from '~position/template/contract-position.template.types';
+import { CustomContractPositionTemplatePositionFetcher } from '~position/template/custom-contract-position.template.position-fetcher';
 
 import { UniswapV3ContractFactory, UniswapV3PositionManager } from '../contracts';
 
@@ -25,6 +25,7 @@ export type UniswapV3LiquidityPositionDataProps = {
   assetStandard: Standard.ERC_721;
   rangeStart?: number;
   rangeEnd?: number;
+  positionKey: string;
 };
 
 export type UniswapV3LiquidityPositionDefinition = {
@@ -63,7 +64,7 @@ const GET_TOP_POOLS_QUERY = gql`
   }
 `;
 
-export abstract class UniswapV3LiquidityContractPositionFetcher extends ContractPositionTemplatePositionFetcher<
+export abstract class UniswapV3LiquidityContractPositionFetcher extends CustomContractPositionTemplatePositionFetcher<
   UniswapV3PositionManager,
   UniswapV3LiquidityPositionDataProps,
   UniswapV3LiquidityPositionDefinition
@@ -139,7 +140,7 @@ export abstract class UniswapV3LiquidityContractPositionFetcher extends Contract
     const liquidity = reserves[0] * tokens[0].price + reserves[1] * tokens[1].price;
     const assetStandard = Standard.ERC_721;
 
-    return { feeTier, reserves, liquidity, poolAddress, assetStandard };
+    return { feeTier, reserves, liquidity, poolAddress, assetStandard, positionKey: `${feeTier}` };
   }
 
   async getLabel({
@@ -153,10 +154,6 @@ export abstract class UniswapV3LiquidityContractPositionFetcher extends Contract
     const symbolLabel = contractPosition.tokens.map(t => getLabelFromToken(t)).join(' / ');
     const label = `${symbolLabel} (${definition.feeTier.toFixed(2)}%)`;
     return label;
-  }
-
-  getKey({ contractPosition }: { contractPosition: ContractPosition<UniswapV3LiquidityPositionDataProps> }) {
-    return this.appToolkit.getPositionKey(contractPosition, ['feeTier']);
   }
 
   // @ts-ignore

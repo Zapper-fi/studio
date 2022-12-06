@@ -4,11 +4,7 @@ import chalk from 'chalk';
 import Cache from 'file-system-cache';
 import { isUndefined } from 'lodash';
 
-import {
-  CacheOnIntervalOptions,
-  CACHE_ON_INTERVAL_KEY,
-  CACHE_ON_INTERVAL_TIMEOUT,
-} from './cache-on-interval.decorator';
+import { CacheOnIntervalOptions, CACHE_ON_INTERVAL_OPTIONS } from './cache-on-interval.decorator';
 
 @Injectable()
 export class CacheOnIntervalService implements OnModuleInit, OnModuleDestroy {
@@ -56,11 +52,11 @@ export class CacheOnIntervalService implements OnModuleInit, OnModuleDestroy {
   registerCache(instance: any, methodName: string) {
     const logger = this.logger;
     const methodRef = instance[methodName];
-    const cacheKey: CacheOnIntervalOptions['key'] = this.reflector.get(CACHE_ON_INTERVAL_KEY, methodRef);
-    const cacheTimeout: CacheOnIntervalOptions['timeout'] = this.reflector.get(CACHE_ON_INTERVAL_TIMEOUT, methodRef);
+    const opts = this.reflector.get<CacheOnIntervalOptions | undefined>(CACHE_ON_INTERVAL_OPTIONS, methodRef);
 
-    // Don't register cache on interval when missing parameters
-    if (!cacheKey || !cacheTimeout) return;
+    if (!opts) return;
+
+    const { key: cacheKey, timeout: cacheTimeout } = opts;
 
     // Don't register cache on cache conflict
     try {
