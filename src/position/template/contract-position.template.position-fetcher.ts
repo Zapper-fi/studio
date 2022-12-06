@@ -92,10 +92,6 @@ export abstract class ContractPositionTemplatePositionFetcher<
     return statsItems;
   }
 
-  getKey({ contractPosition }: { contractPosition: ContractPosition<V> }): string {
-    return this.appToolkit.getPositionKey(contractPosition);
-  }
-
   // Default (adapted) Template Runner
   // Note: This will be removed in favour of an orchestrator at a higher level once all groups are migrated
   async getPositions() {
@@ -130,7 +126,7 @@ export abstract class ContractPositionTemplatePositionFetcher<
     const tokenDependencies = await tokenLoader.getMany(underlyingTokenRequests).then(tokenDeps => compact(tokenDeps));
 
     const skeletonsWithResolvedTokens = await Promise.all(
-      compact(skeletons).map(async ({ address, tokenDefinitions, definition }) => {
+      compact(skeletons).map(({ address, tokenDefinitions, definition }) => {
         const maybeTokens = tokenDefinitions.map(definition => {
           const match = tokenDependencies.find(token => {
             const isAddressMatch = token.address === definition.address;
@@ -141,7 +137,21 @@ export abstract class ContractPositionTemplatePositionFetcher<
             return isAddressMatch && isNetworkMatch && isMaybeErc1155TokenIdMatch;
           });
 
-          return match ? metatyped(match, definition.metaType) : null;
+          if (match) {
+            const tokenWithMetaType = metatyped(match, definition.metaType);
+
+            // Since the key generation is stateful and the key is already generated for an app token, we need to
+            // regenerate the key for underlying app tokens. Otherwise, we may end up in situations where underlying
+            // app tokens balances are double counted.
+            if (tokenWithMetaType.type === ContractType.APP_TOKEN) {
+              // eslint-disable-next-line @typescript-eslint/no-unused-vars
+              const { key, ...token } = tokenWithMetaType;
+              return { ...token, key: this.appToolkit.getPositionKey(token) };
+            }
+
+            return tokenWithMetaType;
+          }
+          return null;
         });
 
         const tokens = compact(maybeTokens);
@@ -181,7 +191,7 @@ export abstract class ContractPositionTemplatePositionFetcher<
         };
 
         const contractPosition = { ...baseFragment, dataProps, displayProps };
-        const key = this.getKey({ contractPosition });
+        const key = this.appToolkit.getPositionKey(contractPosition);
         return { key, ...contractPosition };
       }),
     );

@@ -22,6 +22,7 @@ type QiDaoVaultDataProps = {
   assetStandard: Standard;
   vaultInfoAddress: string;
   tokenId?: string;
+  positionKey?: string;
 };
 
 type QiDaoVaultDefinition = {
@@ -166,7 +167,11 @@ export abstract class QiDaoVaultContractPositionFetcher extends CustomContractPo
 
             const tokens = allTokens.filter(v => Math.abs(v.balanceUSD) > 0.01);
             const balanceUSD = sumBy(tokens, t => t.balanceUSD);
-            const dataProps = { ...contractPosition.dataProps, tokenId: tokenId.toString() };
+            const dataProps = {
+              ...contractPosition.dataProps,
+              tokenId: tokenId.toString(),
+              positionKey: tokenId.toString(),
+            };
             const displayProps = {
               ...contractPosition.displayProps,
               label: `${contractPosition.displayProps.label} (#${tokenId})`,
@@ -180,7 +185,7 @@ export abstract class QiDaoVaultContractPositionFetcher extends CustomContractPo
               balanceUSD,
             };
 
-            balance.key = this.appToolkit.getPositionKey(balance, ['tokenId']);
+            balance.key = this.appToolkit.getPositionKey(balance);
             return balance;
           }),
         );

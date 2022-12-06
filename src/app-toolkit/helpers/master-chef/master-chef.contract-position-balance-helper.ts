@@ -2,6 +2,7 @@ import { Inject, Injectable } from '@nestjs/common';
 import { sumBy } from 'lodash';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
+import { BALANCE_LOCALSTORAGE_FLAGS } from '~balance/balance.utils';
 import { IMulticallWrapper } from '~multicall/multicall.interface';
 import { WithMetaType } from '~position/display.interface';
 import { ContractPositionBalance, TokenBalance } from '~position/position-balance.interface';
@@ -87,7 +88,12 @@ export class MasterChefContractPositionBalanceHelper {
           }),
         ]);
 
-        const tokens = [stakedTokenBalance!, ...claimableTokenBalances].filter(v => v.balanceUSD > 0);
+        const storage = BALANCE_LOCALSTORAGE_FLAGS.getStore();
+        const { includeZeroBalances } = storage ?? { includeZeroBalances: false };
+
+        const tokens = [stakedTokenBalance!, ...claimableTokenBalances].filter(
+          v => includeZeroBalances || v.balanceUSD > 0,
+        );
         const balanceUSD = sumBy(tokens, t => t.balanceUSD);
 
         return {

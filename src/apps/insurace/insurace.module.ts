@@ -15,14 +15,18 @@ import { PolygonInsuraceMiningTokenFetcher } from './polygon/insurace.mining.tok
 @Register.AppModule({
   appId: INSURACE_DEFINITION.id,
   providers: [
-    AvalancheInsuraceBalanceFetcher,
-    AvalancheInsuraceMiningTokenFetcher,
-    BinanceSmartChainInsuraceBalanceFetcher,
-    BinanceSmartChainInsuraceMiningTokenFetcher,
-    EthereumInsuraceBalanceFetcher,
-    EthereumInsuraceMiningTokenFetcher,
     InsuraceAppDefinition,
     InsuraceContractFactory,
+    // Avalanche
+    AvalancheInsuraceBalanceFetcher,
+    AvalancheInsuraceMiningTokenFetcher,
+    // Binance-smart-chain
+    BinanceSmartChainInsuraceBalanceFetcher,
+    BinanceSmartChainInsuraceMiningTokenFetcher,
+    // Ethereum
+    EthereumInsuraceBalanceFetcher,
+    EthereumInsuraceMiningTokenFetcher,
+    // Polygon
     PolygonInsuraceBalanceFetcher,
     PolygonInsuraceMiningTokenFetcher,
   ],

@@ -1,59 +1,69 @@
 import { Inject } from '@nestjs/common';
+import { BigNumberish } from 'ethers';
 
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
-import { Register } from '~app-toolkit/decorators';
-import { PositionFetcher } from '~position/position-fetcher.interface';
-import { ContractPosition } from '~position/position.interface';
-import { Network } from '~types/network.interface';
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
+import {
+  GetMasterChefDataPropsParams,
+  GetMasterChefTokenBalancesParams,
+  MasterChefTemplateContractPositionFetcher,
+} from '~position/template/master-chef.template.contract-position-fetcher';
 
 import { JpegdContractFactory, JpegdLpFarm } from '../contracts';
-import { JPEGD_DEFINITION } from '../jpegd.definition';
 
-const appId = JPEGD_DEFINITION.id;
-const groupId = JPEGD_DEFINITION.groups.pool.id;
-const network = Network.ETHEREUM_MAINNET;
+@PositionTemplate()
+export class EthereumJpegdPoolContractPositionFetcher extends MasterChefTemplateContractPositionFetcher<JpegdLpFarm> {
+  groupLabel = 'Pools';
+  chefAddress = '0x3eed641562ac83526d7941e4326559e7b607556b';
 
-@Register.ContractPositionFetcher({ appId, groupId, network })
-export class EthereumJpegdPoolContractPositionFetcher implements PositionFetcher<ContractPosition> {
   constructor(
-    @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
-    @Inject(JpegdContractFactory) private readonly jpegdContractFactory: JpegdContractFactory,
-  ) {}
+    @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
+    @Inject(JpegdContractFactory) protected readonly contractFactory: JpegdContractFactory,
+  ) {
+    super(appToolkit);
+  }
 
-  async getPositions() {
-    return this.appToolkit.helpers.masterChefContractPositionHelper.getContractPositions<JpegdLpFarm>({
-      address: '0x3eed641562ac83526d7941e4326559e7b607556b',
-      appId,
-      groupId,
-      network,
-      dependencies: [
-        {
-          appId: 'sushiswap',
-          groupIds: ['pool'],
-          network,
-        },
-      ],
-      resolveContract: ({ address, network }) => this.jpegdContractFactory.jpegdLpFarm({ address, network }),
-      resolvePoolLength: ({ multicall, contract }) => multicall.wrap(contract).poolLength(),
-      resolveDepositTokenAddress: ({ poolIndex, contract, multicall }) =>
-        multicall
-          .wrap(contract)
-          .poolInfo(poolIndex)
-          .then(v => v.lpToken),
-      resolveRewardTokenAddresses: ({ multicall, contract }) => multicall.wrap(contract).jpeg(),
-      resolveRewardRate: this.appToolkit.helpers.masterChefDefaultRewardsPerBlockStrategy.build({
-        resolvePoolAllocPoints: async ({ poolIndex, contract, multicall }) =>
-          multicall
-            .wrap(contract)
-            .poolInfo(poolIndex)
-            .then(v => v.allocPoint),
-        resolveTotalAllocPoints: ({ multicall, contract }) => multicall.wrap(contract).totalAllocPoint(),
-        resolveTotalRewardRate: ({ multicall, contract }) =>
-          multicall
-            .wrap(contract)
-            .epoch()
-            .then(x => x.rewardPerBlock),
-      }),
-    });
+  getContract(address: string): JpegdLpFarm {
+    return this.contractFactory.jpegdLpFarm({ address, network: this.network });
+  }
+
+  async getPoolLength(contract: JpegdLpFarm): Promise<BigNumberish> {
+    return contract.poolLength();
+  }
+
+  async getStakedTokenAddress(contract: JpegdLpFarm, poolIndex: number): Promise<string> {
+    return contract.poolInfo(poolIndex).then(v => v.lpToken);
+  }
+
+  async getRewardTokenAddress(contract: JpegdLpFarm): Promise<string> {
+    return contract.jpeg();
+  }
+
+  async getTotalAllocPoints({ contract }: GetMasterChefDataPropsParams<JpegdLpFarm>): Promise<BigNumberish> {
+    return contract.totalAllocPoint();
+  }
+
+  async getTotalRewardRate({ contract }: GetMasterChefDataPropsParams<JpegdLpFarm>): Promise<BigNumberish> {
+    return contract.epoch().then(v => v.rewardPerBlock);
+  }
+
+  async getPoolAllocPoints({ contract, definition }: GetMasterChefDataPropsParams<JpegdLpFarm>): Promise<BigNumberish> {
+    return contract.poolInfo(definition.poolIndex).then(v => v.allocPoint);
+  }
+
+  async getStakedTokenBalance({
+    address,
+    contract,
+    contractPosition,
+  }: GetMasterChefTokenBalancesParams<JpegdLpFarm>): Promise<BigNumberish> {
+    return contract.userInfo(contractPosition.dataProps.poolIndex, address).then(v => v.amount);
+  }
+
+  async getRewardTokenBalance({
+    address,
+    contract,
+    contractPosition,
+  }: GetMasterChefTokenBalancesParams<JpegdLpFarm>): Promise<BigNumberish> {
+    return contract.pendingReward(contractPosition.dataProps.poolIndex, address);
   }
 }

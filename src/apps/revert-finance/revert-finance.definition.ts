@@ -8,26 +8,27 @@ export const REVERT_FINANCE_DEFINITION = appDefinition({
   name: 'Revert finance',
   description: 'Revert develops analytics and management tools for liquidity providers in AMM protocols. ',
   url: 'https://revert.finance/',
-
-  groups: {
-    compoundorRewards: {
-      id: 'compoundor-rewards',
-      type: GroupType.POSITION,
-      label: 'Compoundor rewards',
-    },
-    compoundingPositions: {
-      id: 'compounding-positions',
-      type: GroupType.TOKEN,
-      label: 'Compounding positions',
-    },
-  },
-
   tags: [AppTag.ASSET_MANAGEMENT],
   keywords: [],
+
   links: {
     discord: 'https://discord.com/invite/HXfxKHrRmf',
     github: 'https://github.com/revert-finance',
     twitter: 'https://twitter.com/revertfinance',
+  },
+
+  groups: {
+    compoundor: {
+      id: 'compoundor',
+      type: GroupType.POSITION,
+      label: 'Compounding Positions',
+    },
+
+    compoundorRewards: {
+      id: 'compoundor-rewards',
+      type: GroupType.POSITION,
+      label: 'Compoundor Rewards',
+    },
   },
 
   supportedNetworks: {

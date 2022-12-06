@@ -171,7 +171,7 @@ export class CronosVvsFinanceBalanceFetcher implements BalanceFetcher {
             ? [drillBalance(claimableToken, (await multicall.wrap(contract).pendingVVS(address)).toString())]
             : [];
 
-        const tokens = [...stakedTokenBalances, ...claimableTokenBalances].filter(v => v.balanceUSD > 0);
+        const tokens = [...stakedTokenBalances, ...claimableTokenBalances];
 
         return {
           ...contractPosition,

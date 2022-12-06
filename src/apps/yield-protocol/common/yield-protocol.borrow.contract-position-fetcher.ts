@@ -10,6 +10,7 @@ import { getImagesFromToken, getLabelFromToken } from '~app-toolkit/helpers/pres
 import { ContractType } from '~position/contract.interface';
 import { ContractPositionBalance } from '~position/position-balance.interface';
 import { MetaType } from '~position/position.interface';
+import { borrowed, supplied } from '~position/position.utils';
 import { GetDefinitionsParams } from '~position/template/app-token.template.types';
 import {
   GetTokenDefinitionsParams,
@@ -268,8 +269,13 @@ export abstract class YieldProtocolBorrowContractPositionFetcher extends CustomC
         if (!art || !ilk) return null;
 
         // data props
-        const collateral = drillBalance(ilk, parseUnits(collateralAmount.toString(), ilk.decimals).toString());
-        const debt = drillBalance(art, parseUnits(debtAmount.toString(), art.decimals).toString(), { isDebt: true });
+        const collateral = drillBalance(
+          supplied(ilk),
+          parseUnits(collateralAmount.toString(), ilk.decimals).toString(),
+        );
+        const debt = drillBalance(borrowed(art), parseUnits(debtAmount.toString(), art.decimals).toString(), {
+          isDebt: true,
+        });
         const tokens = [collateral, debt];
         const balanceUSD = sumBy(tokens, v => v.balanceUSD);
         const collateralizationRatio =

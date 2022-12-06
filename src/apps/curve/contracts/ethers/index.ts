@@ -3,6 +3,7 @@
 /* eslint-disable */
 export type { CurveAddressResolver } from './CurveAddressResolver';
 export type { CurveChildLiquidityGauge } from './CurveChildLiquidityGauge';
+export type { CurveChildLiquidityGaugeFactory } from './CurveChildLiquidityGaugeFactory';
 export type { CurveController } from './CurveController';
 export type { CurveCryptoFactory } from './CurveCryptoFactory';
 export type { CurveCryptoRegistry } from './CurveCryptoRegistry';
@@ -22,6 +23,7 @@ export type { CurveVotingEscrow } from './CurveVotingEscrow';
 export type { CurveVotingEscrowReward } from './CurveVotingEscrowReward';
 export * as factories from './factories';
 export { CurveAddressResolver__factory } from './factories/CurveAddressResolver__factory';
+export { CurveChildLiquidityGaugeFactory__factory } from './factories/CurveChildLiquidityGaugeFactory__factory';
 export { CurveChildLiquidityGauge__factory } from './factories/CurveChildLiquidityGauge__factory';
 export { CurveController__factory } from './factories/CurveController__factory';
 export { CurveCryptoFactory__factory } from './factories/CurveCryptoFactory__factory';

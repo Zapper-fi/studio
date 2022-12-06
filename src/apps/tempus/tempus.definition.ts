@@ -47,5 +47,3 @@ export class TempusAppDefinition extends AppDefinition {
     super(TEMPUS_DEFINITION);
   }
 }
-
-export default TEMPUS_DEFINITION;

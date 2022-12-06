@@ -1,14 +1,18 @@
 import { Inject } from '@nestjs/common';
+import { BigNumber } from 'ethers';
 
-import { Register } from '~app-toolkit/decorators';
-import { SynthetixSingleStakingFarmContractPositionHelper } from '~apps/synthetix';
-import { PositionFetcher } from '~position/position-fetcher.interface';
-import { ContractPosition } from '~position/position.interface';
-import { Network } from '~types/network.interface';
+import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
+import { GetDataPropsParams, GetTokenBalancesParams } from '~position/template/contract-position.template.types';
+import {
+  SingleStakingFarmDataProps,
+  SingleStakingFarmDefinition,
+  SingleStakingFarmTemplateContractPositionFetcher,
+} from '~position/template/single-staking.template.contract-position-fetcher';
 
-import { MSTABLE_DEFINITION } from '../mstable.definition';
+import { MstableContractFactory, MstableVmta } from '../contracts';
 
-const MTA_V1_FARM = [
+const MTA_V1_FARMS = [
   // MTA staking v1
   {
     address: '0xae8bc96da4f9a9613c323478be181fdb2aa0e1bf',
@@ -16,18 +20,38 @@ const MTA_V1_FARM = [
     rewardTokenAddresses: ['0xa3bed4e1c75d00fa6f4e5e6922db7261b5e9acd2'],
   },
 ];
-const appId = MSTABLE_DEFINITION.id;
-const groupId = MSTABLE_DEFINITION.groups.mtaV1Farm.id;
-const network = Network.ETHEREUM_MAINNET;
 
-@Register.ContractPositionFetcher({ appId, groupId, network })
-export class EthereumMstableMtaV1FarmContractPositionFetcher implements PositionFetcher<ContractPosition> {
+@PositionTemplate()
+export class EthereumMstableMtaV1FarmContractPositionFetcher extends SingleStakingFarmTemplateContractPositionFetcher<MstableVmta> {
+  groupLabel = 'MTA Staking V1';
+
   constructor(
-    @Inject(SynthetixSingleStakingFarmContractPositionHelper)
-    private readonly helper: SynthetixSingleStakingFarmContractPositionHelper,
-  ) {}
+    @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
+    @Inject(MstableContractFactory) protected readonly contractFactory: MstableContractFactory,
+  ) {
+    super(appToolkit);
+  }
 
-  getPositions() {
-    return this.helper.getContractPositions({ appId, groupId, network, farmDefinitions: MTA_V1_FARM });
+  getContract(address: string): MstableVmta {
+    return this.contractFactory.mstableVmta({ address, network: this.network });
+  }
+
+  async getFarmDefinitions(): Promise<SingleStakingFarmDefinition[]> {
+    return MTA_V1_FARMS;
+  }
+
+  getRewardRates({ contract }: GetDataPropsParams<MstableVmta, SingleStakingFarmDataProps>) {
+    return contract.rewardRate();
+  }
+
+  getStakedTokenBalance({ address, contract }: GetTokenBalancesParams<MstableVmta, SingleStakingFarmDataProps>) {
+    return contract
+      .locked(address)
+      .then(v => v.amount)
+      .catch(() => BigNumber.from('0'));
+  }
+
+  getRewardTokenBalances({ address, contract }: GetTokenBalancesParams<MstableVmta, SingleStakingFarmDataProps>) {
+    return contract.earned(address);
   }
 }

@@ -3,7 +3,7 @@ import _, { compact } from 'lodash';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { getImagesFromToken, getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
-import { ContractPosition, MetaType } from '~position/position.interface';
+import { MetaType } from '~position/position.interface';
 import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
 import {
   GetDefinitionsParams,
@@ -25,6 +25,7 @@ export type GmxOptionContractPositionDefinition = {
 
 export type GmxOptionContractPositionDataProps = {
   isLong: boolean;
+  positionKey: string;
 };
 
 @Injectable()
@@ -79,7 +80,7 @@ export abstract class GmxPerpContractPositionFetcher extends ContractPositionTem
   async getDataProps({
     definition,
   }: GetDataPropsParams<GmxVault, GmxOptionContractPositionDataProps, GmxOptionContractPositionDefinition>) {
-    return { isLong: definition.isLong };
+    return { isLong: definition.isLong, positionKey: `${definition.isLong}` };
   }
 
   async getLabel({
@@ -99,10 +100,6 @@ export abstract class GmxPerpContractPositionFetcher extends ContractPositionTem
   }: GetDisplayPropsParams<GmxVault, GmxOptionContractPositionDataProps, DefaultContractPositionDefinition>) {
     const [collateralToken, indexToken] = contractPosition.tokens;
     return [indexToken, collateralToken].flatMap(v => getImagesFromToken(v));
-  }
-
-  getKey({ contractPosition }: { contractPosition: ContractPosition<GmxOptionContractPositionDataProps> }) {
-    return this.appToolkit.getPositionKey(contractPosition, ['isLong']);
   }
 
   async getTokenBalancesPerPosition({

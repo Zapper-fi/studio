@@ -7,13 +7,9 @@ export const PIE_DAO_DEFINITION = appDefinition({
   id: 'pie-dao',
   name: 'PieDAO',
   description: `PieDAO is the asset allocation DAO for decentralized market-weighted portfolio allocations.`,
-  groups: {
-    farmSingleStaking: { id: 'farm-single-staking', type: GroupType.POSITION, label: 'Farming' },
-    farmMasterChef: { id: 'farm-master-chef', type: GroupType.POSITION, label: 'Farming' },
-    eDough: { id: 'e-dough', type: GroupType.TOKEN, label: 'Escrow' },
-    voting: { id: 'voting', type: GroupType.POSITION, label: 'Voting Escrow' },
-  },
   url: 'https://www.piedao.org/',
+  tags: [AppTag.ASSET_MANAGEMENT],
+
   links: {
     github: 'https://github.com/pie-dao',
     twitter: 'https://twitter.com/PieDAO_DeFi',
@@ -21,7 +17,39 @@ export const PIE_DAO_DEFINITION = appDefinition({
     telegram: 'https://t.me/piedao',
     medium: 'https://medium.com/piedao',
   },
-  tags: [AppTag.ASSET_MANAGEMENT],
+
+  groups: {
+    farmSingleStaking: {
+      id: 'farm-single-staking',
+      type: GroupType.POSITION,
+      label: 'Farms',
+    },
+
+    farmMasterChef: {
+      id: 'farm-master-chef',
+      type: GroupType.POSITION,
+      label: 'Farms',
+    },
+
+    eDough: {
+      id: 'e-dough',
+      type: GroupType.TOKEN,
+      label: 'eDOUGH',
+    },
+
+    veDough: {
+      id: 've-dough',
+      type: GroupType.TOKEN,
+      label: 'veDOUGH',
+    },
+
+    voting: {
+      id: 'voting',
+      type: GroupType.POSITION,
+      label: 'Voting Escrow',
+    },
+  },
+
   supportedNetworks: {
     [Network.ETHEREUM_MAINNET]: [AppAction.VIEW],
   },

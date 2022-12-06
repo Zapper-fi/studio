@@ -90,10 +90,6 @@ export abstract class CustomContractPositionTemplatePositionFetcher<
     return statsItems;
   }
 
-  getKey({ contractPosition }: { contractPosition: ContractPosition<V> }): string {
-    return this.appToolkit.getPositionKey(contractPosition);
-  }
-
   // Default (adapted) Template Runner
   // Note: This will be removed in favour of an orchestrator at a higher level once all groups are migrated
   async getPositions() {
@@ -171,7 +167,7 @@ export abstract class CustomContractPositionTemplatePositionFetcher<
         };
 
         const contractPosition = { ...baseFragment, dataProps, displayProps };
-        const key = this.getKey({ contractPosition });
+        const key = this.appToolkit.getPositionKey(contractPosition);
         return { key, ...contractPosition };
       }),
     );
