@@ -1,5 +1,6 @@
 import { Inject } from '@nestjs/common';
 import { BigNumberish, Contract } from 'ethers/lib/ethers';
+import _ from 'lodash';
 import { compact, intersection, isArray, partition, sortBy, sum } from 'lodash';
 
 import { drillBalance } from '~app-toolkit';
@@ -324,15 +325,21 @@ export abstract class AppTokenTemplatePositionFetcher<
   async getRawBalances(_address: string): Promise<RawAppTokenBalance[]> {
     const multicall = this.appToolkit.getMulticall(this.network);
     const address = await this.getAccountAddress(_address);
-    const appTokens = await this.getPositionsForBalances();
     if (address === ZERO_ADDRESS) return [];
 
-    return Promise.all(
-      appTokens.map(async appToken => ({
-        key: this.appToolkit.getPositionKey(appToken),
-        balance: (await this.getBalancePerToken({ multicall, address, appToken })).toString(),
-      })),
-    );
+    const appTokens = await this.getPositionsForBalances();
+    let results: RawAppTokenBalance[] = [];
+    for (const batch of _.chunk(appTokens, 100).values()) {
+      results = results.concat(
+        await Promise.all(
+          batch.map(async appToken => ({
+            key: this.appToolkit.getPositionKey(appToken),
+            balance: (await this.getBalancePerToken({ multicall, address, appToken })).toString(),
+          })),
+        ),
+      );
+    }
+    return results;
   }
 
   async drillRawBalances(balances: RawAppTokenBalance[]): Promise<AppTokenPositionBalance<V>[]> {
