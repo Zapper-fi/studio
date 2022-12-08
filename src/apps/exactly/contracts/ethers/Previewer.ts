@@ -89,6 +89,7 @@ export declare namespace Previewer {
 
   export type MarketAccountStruct = {
     market: PromiseOrValue<string>;
+    symbol: PromiseOrValue<string>;
     decimals: PromiseOrValue<BigNumberish>;
     asset: PromiseOrValue<string>;
     assetSymbol: PromiseOrValue<string>;
@@ -102,6 +103,8 @@ export declare namespace Previewer {
     floatingAvailableAssets: PromiseOrValue<BigNumberish>;
     totalFloatingBorrowAssets: PromiseOrValue<BigNumberish>;
     totalFloatingDepositAssets: PromiseOrValue<BigNumberish>;
+    totalFloatingBorrowShares: PromiseOrValue<BigNumberish>;
+    totalFloatingDepositShares: PromiseOrValue<BigNumberish>;
     isCollateral: PromiseOrValue<boolean>;
     maxBorrowAssets: PromiseOrValue<BigNumberish>;
     floatingBorrowShares: PromiseOrValue<BigNumberish>;
@@ -113,6 +116,7 @@ export declare namespace Previewer {
   };
 
   export type MarketAccountStructOutput = [
+    string,
     string,
     number,
     string,
@@ -127,6 +131,8 @@ export declare namespace Previewer {
     BigNumber,
     BigNumber,
     BigNumber,
+    BigNumber,
+    BigNumber,
     boolean,
     BigNumber,
     BigNumber,
@@ -137,6 +143,7 @@ export declare namespace Previewer {
     Previewer.FixedPositionStructOutput[],
   ] & {
     market: string;
+    symbol: string;
     decimals: number;
     asset: string;
     assetSymbol: string;
@@ -150,6 +157,8 @@ export declare namespace Previewer {
     floatingAvailableAssets: BigNumber;
     totalFloatingBorrowAssets: BigNumber;
     totalFloatingDepositAssets: BigNumber;
+    totalFloatingBorrowShares: BigNumber;
+    totalFloatingDepositShares: BigNumber;
     isCollateral: boolean;
     maxBorrowAssets: BigNumber;
     floatingBorrowShares: BigNumber;

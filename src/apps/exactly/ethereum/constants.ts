@@ -1,1 +1,0 @@
-export const PREVIEWER_ADDRESS = '0x48ccc04dda3a904eaea3f94150310669b5e70727';

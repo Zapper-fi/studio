@@ -3,13 +3,6 @@ import { appDefinition, AppDefinition } from '~app/app.definition';
 import { AppAction, AppTag, GroupType } from '~app/app.interface';
 import { Network } from '~types/network.interface';
 
-const IDs = {
-  deposit: 'deposit',
-  borrow: 'borrow',
-  fixedDeposit: 'fixed-deposit',
-  fixedBorrow: 'fixed-borrow',
-};
-
 export const EXACTLY_DEFINITION = appDefinition({
   id: 'exactly',
   name: 'Exactly Protocol',
@@ -20,66 +13,31 @@ export const EXACTLY_DEFINITION = appDefinition({
 
   groups: {
     deposit: {
-      id: IDs.deposit,
+      id: 'deposit',
       type: GroupType.TOKEN,
-      label: 'Deposit',
+      label: 'Variable Deposit',
     },
-
     borrow: {
-      id: IDs.borrow,
+      id: 'borrow',
       type: GroupType.TOKEN,
-      label: 'Borrow',
-    },
-
-    fixedDeposit: {
-      id: IDs.fixedDeposit,
-      type: GroupType.TOKEN,
-      label: 'Fixed Deposit',
-    },
-
-    fixedBorrow: {
-      id: IDs.fixedBorrow,
-      type: GroupType.TOKEN,
-      label: 'Fixed Borrow',
+      label: 'Variable Borrow',
     },
   },
   presentationConfig: {
     tabs: [
       {
-        label: '',
+        label: 'Markets',
         viewType: 'split',
         views: [
           {
             viewType: 'split',
             label: 'Deposit',
-            views: [
-              {
-                viewType: 'list',
-                label: 'Variable',
-                groupIds: [IDs.deposit],
-              },
-              {
-                viewType: 'list',
-                label: 'Fixed',
-                groupIds: [IDs.fixedDeposit],
-              },
-            ],
+            views: [{ viewType: 'list', label: 'Variable', groupIds: ['deposit'] }],
           },
           {
             viewType: 'split',
             label: 'Borrow',
-            views: [
-              {
-                viewType: 'list',
-                label: 'Variable',
-                groupIds: [IDs.borrow],
-              },
-              {
-                viewType: 'list',
-                label: 'Fixed',
-                groupIds: [IDs.fixedBorrow],
-              },
-            ],
+            views: [{ viewType: 'list', label: 'Variable', groupIds: ['borrow'] }],
           },
         ],
       },
@@ -107,5 +65,3 @@ export class ExactlyAppDefinition extends AppDefinition {
     super(EXACTLY_DEFINITION);
   }
 }
-
-export default EXACTLY_DEFINITION;

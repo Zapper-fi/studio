@@ -72,6 +72,11 @@ const _abi = [
             type: 'address',
           },
           {
+            internalType: 'string',
+            name: 'symbol',
+            type: 'string',
+          },
+          {
             internalType: 'uint8',
             name: 'decimals',
             type: 'uint8',
@@ -213,6 +218,16 @@ const _abi = [
           {
             internalType: 'uint256',
             name: 'totalFloatingDepositAssets',
+            type: 'uint256',
+          },
+          {
+            internalType: 'uint256',
+            name: 'totalFloatingBorrowShares',
+            type: 'uint256',
+          },
+          {
+            internalType: 'uint256',
+            name: 'totalFloatingDepositShares',
             type: 'uint256',
           },
           {

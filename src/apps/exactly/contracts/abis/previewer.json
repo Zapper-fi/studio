@@ -29,6 +29,7 @@
       {
         "components": [
           { "internalType": "contract Market", "name": "market", "type": "address" },
+          { "internalType": "string", "name": "symbol", "type": "string" },
           { "internalType": "uint8", "name": "decimals", "type": "uint8" },
           { "internalType": "address", "name": "asset", "type": "address" },
           { "internalType": "string", "name": "assetSymbol", "type": "string" },
@@ -69,6 +70,8 @@
           { "internalType": "uint256", "name": "floatingAvailableAssets", "type": "uint256" },
           { "internalType": "uint256", "name": "totalFloatingBorrowAssets", "type": "uint256" },
           { "internalType": "uint256", "name": "totalFloatingDepositAssets", "type": "uint256" },
+          { "internalType": "uint256", "name": "totalFloatingBorrowShares", "type": "uint256" },
+          { "internalType": "uint256", "name": "totalFloatingDepositShares", "type": "uint256" },
           { "internalType": "bool", "name": "isCollateral", "type": "bool" },
           { "internalType": "uint256", "name": "maxBorrowAssets", "type": "uint256" },
           { "internalType": "uint256", "name": "floatingBorrowShares", "type": "uint256" },
