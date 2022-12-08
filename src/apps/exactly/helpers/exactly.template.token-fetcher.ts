@@ -1,6 +1,5 @@
 import { Inject } from '@nestjs/common';
 import { constants } from 'ethers';
-import type { BigNumber } from 'ethers';
 
 import { APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import type { IAppToolkit } from '~app-toolkit/app-toolkit.interface';
@@ -37,7 +36,9 @@ export abstract class ExactlyTemplateTokenFetcher extends AppTokenTemplatePositi
     return this.contractFactory.market({ address, network: this.network });
   }
 
-  abstract getAPR(marketAccount: Previewer.MarketAccountStructOutput): BigNumber;
+  getAPY(marketAccount: Previewer.MarketAccountStructOutput) {
+    return this.toAPY(this.getAPR(marketAccount));
+  }
 
   async getPositions() {
     const exactly = await this.previewer.exactly(constants.AddressZero);
@@ -59,9 +60,6 @@ export abstract class ExactlyTemplateTokenFetcher extends AppTokenTemplatePositi
         const liquidity = (Number(totalFloatingDepositAssets) / baseUnit) * baseToken.price;
         const pricePerShare = Number(totalFloatingDepositAssets.mul(constants.WeiPerEther).div(totalSupply)) / baseUnit;
 
-        const apr = Number(this.getAPR(marketAccount)) / 1e18;
-        const apy = (1 + Number(apr) / 31_536_000) ** 31_536_000 - 1;
-
         return {
           type: ContractType.APP_TOKEN,
           appId: this.appId,
@@ -74,7 +72,12 @@ export abstract class ExactlyTemplateTokenFetcher extends AppTokenTemplatePositi
           pricePerShare,
           price: baseToken.price * pricePerShare,
           tokens: [baseToken],
-          dataProps: { liquidity, apr, apy, reserves: [] },
+          dataProps: {
+            liquidity,
+            apr: this.getAPR(marketAccount),
+            apy: this.getAPY(marketAccount),
+            reserves: [],
+          },
           displayProps: {
             label: assetSymbol,
             labelDetailed: symbol,
@@ -89,4 +92,15 @@ export abstract class ExactlyTemplateTokenFetcher extends AppTokenTemplatePositi
   get previewer() {
     return this.contractFactory.previewer({ address: PREVIEWER_ADDRESS, network: this.network });
   }
+
+  protected toAPY(apr: number, maturity?: number) {
+    const year = 31_536_000;
+
+    if (!maturity) return (1 + apr / year) ** year - 1;
+
+    const timeLeft = maturity - Math.round(Date.now() / 1_000);
+    return (1 + (apr * timeLeft) / year) ** (year / timeLeft) - 1;
+  }
+
+  abstract getAPR(marketAccount: Previewer.MarketAccountStructOutput): number;
 }

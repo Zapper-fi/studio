@@ -1,5 +1,3 @@
-import { BigNumber } from 'ethers';
-
 import { Register } from '~app-toolkit/decorators';
 import { Network } from '~types/network.interface';
 
@@ -14,11 +12,11 @@ const network = Network.ETHEREUM_MAINNET;
 @Register.TokenPositionFetcher({ appId, groupId, network })
 export class EthereumExactlyBorrowTokenFetcher extends ExactlyTemplateTokenFetcher {
   network = network;
-  groupLabel = 'Variable borrow';
+  groupLabel = 'Variable Borrow';
   isDebt = true;
 
   getAPR(_: Previewer.MarketAccountStructOutput) {
     // not implemented yet
-    return BigNumber.from(0);
+    return 0;
   }
 }

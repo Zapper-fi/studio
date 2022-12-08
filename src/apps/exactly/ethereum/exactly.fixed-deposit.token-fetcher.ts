@@ -1,3 +1,5 @@
+import { constants } from 'ethers';
+
 import { Register } from '~app-toolkit/decorators';
 import { Network } from '~types/network.interface';
 
@@ -12,12 +14,21 @@ const network = Network.ETHEREUM_MAINNET;
 @Register.TokenPositionFetcher({ appId, groupId, network })
 export class EthereumExactlyFixedDepositTokenFetcher extends ExactlyTemplateTokenFetcher {
   network = network;
-  groupLabel = 'Fixed borrow';
+  groupLabel = 'Fixed Deposit';
 
-  getAPR(marketData: Previewer.MarketAccountStructOutput) {
-    const { depositRate: bestRate } = marketData.fixedPools.reduce((prev, current) =>
-      prev.depositRate.gt(current.depositRate) ? prev : current,
+  getAPR({ fixedPools }: Previewer.MarketAccountStructOutput) {
+    const rate = fixedPools.reduce(
+      (best, { depositRate }) => (depositRate.gt(best) ? depositRate : best),
+      constants.Zero,
     );
-    return bestRate;
+    return Number(rate) / 1e18;
+  }
+
+  getAPY({ fixedPools }: Previewer.MarketAccountStructOutput) {
+    const { maturity, rate } = fixedPools.reduce(
+      (best, { maturity, depositRate: rate }) => (rate.gt(best.rate) ? { maturity, rate } : best),
+      { maturity: constants.Zero, rate: constants.Zero },
+    );
+    return this.toAPY(Number(rate) / 1e18, Number(maturity));
   }
 }
