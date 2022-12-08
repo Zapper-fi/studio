@@ -4,50 +4,32 @@
 
 import { Contract, Signer, utils } from 'ethers';
 import type { Provider } from '@ethersproject/providers';
-import type { StakersPoolV2, StakersPoolV2Interface } from '../StakersPoolV2';
+import type { InsuracePoolToken, InsuracePoolTokenInterface } from '../InsuracePoolToken';
 
 const _abi = [
   {
     anonymous: false,
     inputs: [
       {
-        indexed: false,
+        indexed: true,
         internalType: 'address',
-        name: '_fromToken',
+        name: 'owner',
+        type: 'address',
+      },
+      {
+        indexed: true,
+        internalType: 'address',
+        name: 'spender',
         type: 'address',
       },
       {
         indexed: false,
-        internalType: 'address',
-        name: '_paymentToken',
-        type: 'address',
-      },
-      {
-        indexed: false,
         internalType: 'uint256',
-        name: '_settleAmtPT',
-        type: 'uint256',
-      },
-      {
-        indexed: false,
-        internalType: 'uint256',
-        name: '_claimId',
-        type: 'uint256',
-      },
-      {
-        indexed: false,
-        internalType: 'uint256',
-        name: '_fromRate',
-        type: 'uint256',
-      },
-      {
-        indexed: false,
-        internalType: 'uint256',
-        name: '_toRate',
+        name: 'value',
         type: 'uint256',
       },
     ],
-    name: 'ClaimPayoutEvent',
+    name: 'Approval',
     type: 'event',
   },
   {
@@ -86,53 +68,15 @@ const _abi = [
     anonymous: false,
     inputs: [
       {
-        indexed: false,
-        internalType: 'uint256',
-        name: '_rewardStartBlock',
-        type: 'uint256',
-      },
-      {
-        indexed: false,
-        internalType: 'uint256',
-        name: '_rewardEndBlock',
-        type: 'uint256',
-      },
-      {
-        indexed: false,
-        internalType: 'uint256',
-        name: '_rewardPerBlock',
-        type: 'uint256',
-      },
-    ],
-    name: 'SetRewardInfo',
-    type: 'event',
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
         indexed: true,
         internalType: 'address',
-        name: 'signer',
+        name: '_from',
         type: 'address',
       },
       {
-        indexed: false,
-        internalType: 'bool',
-        name: 'enabled',
-        type: 'bool',
-      },
-    ],
-    name: 'SetStakersPoolSignerEvent',
-    type: 'event',
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
         indexed: true,
         internalType: 'address',
-        name: '_token',
+        name: '_to',
         type: 'address',
       },
       {
@@ -142,7 +86,57 @@ const _abi = [
         type: 'uint256',
       },
     ],
-    name: 'StakedAmountPTEvent',
+    name: 'TokenBurn',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: 'address',
+        name: '_from',
+        type: 'address',
+      },
+      {
+        indexed: true,
+        internalType: 'address',
+        name: '_to',
+        type: 'address',
+      },
+      {
+        indexed: false,
+        internalType: 'uint256',
+        name: '_amount',
+        type: 'uint256',
+      },
+    ],
+    name: 'TokenMint',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: 'address',
+        name: 'from',
+        type: 'address',
+      },
+      {
+        indexed: true,
+        internalType: 'address',
+        name: 'to',
+        type: 'address',
+      },
+      {
+        indexed: false,
+        internalType: 'uint256',
+        name: 'value',
+        type: 'uint256',
+      },
+    ],
+    name: 'Transfer',
     type: 'event',
   },
   {
@@ -162,60 +156,47 @@ const _abi = [
     inputs: [
       {
         internalType: 'address',
-        name: '_token',
+        name: 'owner',
         type: 'address',
       },
       {
+        internalType: 'address',
+        name: 'spender',
+        type: 'address',
+      },
+    ],
+    name: 'allowance',
+    outputs: [
+      {
         internalType: 'uint256',
-        name: '_amount',
+        name: '',
         type: 'uint256',
       },
     ],
-    name: 'addStkAmount',
-    outputs: [],
-    stateMutability: 'payable',
+    stateMutability: 'view',
     type: 'function',
   },
   {
     inputs: [
       {
         internalType: 'address',
-        name: '_fromToken',
-        type: 'address',
-      },
-      {
-        internalType: 'address',
-        name: '_paymentToken',
+        name: 'spender',
         type: 'address',
       },
       {
         internalType: 'uint256',
-        name: '_settleAmtPT',
-        type: 'uint256',
-      },
-      {
-        internalType: 'address',
-        name: '_claimToSettlementPool',
-        type: 'address',
-      },
-      {
-        internalType: 'uint256',
-        name: '_claimId',
-        type: 'uint256',
-      },
-      {
-        internalType: 'uint256',
-        name: '_fromRate',
-        type: 'uint256',
-      },
-      {
-        internalType: 'uint256',
-        name: '_toRate',
+        name: 'amount',
         type: 'uint256',
       },
     ],
-    name: 'claimPayout',
-    outputs: [],
+    name: 'approve',
+    outputs: [
+      {
+        internalType: 'bool',
+        name: '',
+        type: 'bool',
+      },
+    ],
     stateMutability: 'nonpayable',
     type: 'function',
   },
@@ -223,62 +204,11 @@ const _abi = [
     inputs: [
       {
         internalType: 'address',
-        name: '_lpToken',
+        name: 'account',
         type: 'address',
       },
     ],
-    name: 'getPoolRewardPerLPToken',
-    outputs: [
-      {
-        internalType: 'uint256',
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        internalType: 'address',
-        name: '_lpToken',
-        type: 'address',
-      },
-    ],
-    name: 'getRewardPerBlockPerPool',
-    outputs: [
-      {
-        internalType: 'uint256',
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'getRewardToken',
-    outputs: [
-      {
-        internalType: 'address',
-        name: '',
-        type: 'address',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        internalType: 'address',
-        name: '_token',
-        type: 'address',
-      },
-    ],
-    name: 'getStakedAmountPT',
+    name: 'balanceOf',
     outputs: [
       {
         internalType: 'uint256',
@@ -297,24 +227,18 @@ const _abi = [
         type: 'address',
       },
       {
-        internalType: 'address',
-        name: '_lpToken',
-        type: 'address',
+        internalType: 'uint256',
+        name: '_amount',
+        type: 'uint256',
       },
-      {
-        internalType: 'address',
-        name: '_to',
-        type: 'address',
-      },
-    ],
-    name: 'harvestRewards',
-    outputs: [
       {
         internalType: 'uint256',
-        name: '',
+        name: '_poolRewardPerLPToken',
         type: 'uint256',
       },
     ],
+    name: 'burn',
+    outputs: [],
     stateMutability: 'nonpayable',
     type: 'function',
   },
@@ -325,13 +249,89 @@ const _abi = [
         name: '',
         type: 'address',
       },
+    ],
+    name: 'burnWeightPH',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'address',
+        name: '_account',
+        type: 'address',
+      },
+    ],
+    name: 'burnableAmtOf',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
       {
         internalType: 'address',
         name: '',
         type: 'address',
       },
     ],
-    name: 'harvestedRewardsPerAPerLPT',
+    name: 'burnableAmtPH',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'address',
+        name: '_account',
+        type: 'address',
+      },
+      {
+        internalType: 'uint256',
+        name: '_amount',
+        type: 'uint256',
+      },
+    ],
+    name: 'canMintPerAccountCap',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'uint256',
+        name: '_amount',
+        type: 'uint256',
+      },
+    ],
+    name: 'canMintPerTotalSupply',
     outputs: [
       {
         internalType: 'uint256',
@@ -344,14 +344,104 @@ const _abi = [
   },
   {
     inputs: [],
-    name: 'initializeStakersPoolV2',
+    name: 'decimals',
+    outputs: [
+      {
+        internalType: 'uint8',
+        name: '',
+        type: 'uint8',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'address',
+        name: 'spender',
+        type: 'address',
+      },
+      {
+        internalType: 'uint256',
+        name: 'subtractedValue',
+        type: 'uint256',
+      },
+    ],
+    name: 'decreaseAllowance',
+    outputs: [
+      {
+        internalType: 'bool',
+        name: '',
+        type: 'bool',
+      },
+    ],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'address',
+        name: 'spender',
+        type: 'address',
+      },
+      {
+        internalType: 'uint256',
+        name: 'addedValue',
+        type: 'uint256',
+      },
+    ],
+    name: 'increaseAllowance',
+    outputs: [
+      {
+        internalType: 'bool',
+        name: '',
+        type: 'bool',
+      },
+    ],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'string',
+        name: '_name',
+        type: 'string',
+      },
+      {
+        internalType: 'string',
+        name: '_symbol',
+        type: 'string',
+      },
+      {
+        internalType: 'uint8',
+        name: '_decimals',
+        type: 'uint8',
+      },
+    ],
+    name: 'initializeLPToken',
     outputs: [],
     stateMutability: 'nonpayable',
     type: 'function',
   },
   {
     inputs: [],
-    name: 'insurTokenAddress',
+    name: 'lpTokenBurner',
+    outputs: [
+      {
+        internalType: 'address',
+        name: '',
+        type: 'address',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'lpTokenMinter',
     outputs: [
       {
         internalType: 'address',
@@ -365,17 +455,34 @@ const _abi = [
   {
     inputs: [
       {
+        internalType: 'address',
+        name: '_account',
+        type: 'address',
+      },
+      {
         internalType: 'uint256',
-        name: '',
+        name: '_amount',
+        type: 'uint256',
+      },
+      {
+        internalType: 'uint256',
+        name: '_poolRewardPerLPToken',
         type: 'uint256',
       },
     ],
-    name: 'nonceFlagMap',
+    name: 'mint',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'name',
     outputs: [
       {
-        internalType: 'bool',
+        internalType: 'string',
         name: '',
-        type: 'bool',
+        type: 'string',
       },
     ],
     stateMutability: 'view',
@@ -392,6 +499,13 @@ const _abi = [
       },
     ],
     stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'pauseAll',
+    outputs: [],
+    stateMutability: 'nonpayable',
     type: 'function',
   },
   {
@@ -415,7 +529,20 @@ const _abi = [
         type: 'address',
       },
     ],
-    name: 'poolLastCalcBlock',
+    name: 'pendingBurnAmtPH',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'perAccountCap',
     outputs: [
       {
         internalType: 'uint256',
@@ -430,92 +557,21 @@ const _abi = [
     inputs: [
       {
         internalType: 'address',
-        name: '',
+        name: '_account',
         type: 'address',
       },
-    ],
-    name: 'poolRewardPerLPToken',
-    outputs: [
       {
         internalType: 'uint256',
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        internalType: 'address',
-        name: '',
-        type: 'address',
-      },
-    ],
-    name: 'poolWeightPT',
-    outputs: [
-      {
-        internalType: 'uint256',
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        internalType: 'address',
-        name: '_lpToken',
-        type: 'address',
-      },
-    ],
-    name: 'reCalcPoolPT',
-    outputs: [],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        internalType: 'uint256',
-        name: '_rewardPerBlock',
+        name: '_amount',
         type: 'uint256',
       },
       {
-        internalType: 'address[]',
-        name: '_lpTokens',
-        type: 'address[]',
-      },
-      {
-        internalType: 'uint256[]',
-        name: '_weightList',
-        type: 'uint256[]',
-      },
-      {
         internalType: 'uint256',
-        name: '_nounce',
+        name: '_blockWeightDuration',
         type: 'uint256',
       },
-      {
-        internalType: 'uint8[]',
-        name: 'v',
-        type: 'uint8[]',
-      },
-      {
-        internalType: 'bytes32[]',
-        name: 'r',
-        type: 'bytes32[]',
-      },
-      {
-        internalType: 'bytes32[]',
-        name: 's',
-        type: 'bytes32[]',
-      },
     ],
-    name: 'rebalancePools',
+    name: 'proposeToBurn',
     outputs: [],
     stateMutability: 'nonpayable',
     type: 'function',
@@ -528,124 +584,22 @@ const _abi = [
     type: 'function',
   },
   {
-    inputs: [],
-    name: 'rewardEndBlock',
-    outputs: [
-      {
-        internalType: 'uint256',
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'rewardPerBlock',
-    outputs: [
-      {
-        internalType: 'uint256',
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'rewardStartBlock',
-    outputs: [
-      {
-        internalType: 'uint256',
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'securityMatrix',
-    outputs: [
+    inputs: [
       {
         internalType: 'address',
         name: '',
         type: 'address',
       },
     ],
+    name: 'rewardDebt',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
+      },
+    ],
     stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        internalType: 'address',
-        name: '_lpToken',
-        type: 'address',
-      },
-      {
-        internalType: 'uint256',
-        name: '_poolWeightPT',
-        type: 'uint256',
-      },
-      {
-        internalType: 'address[]',
-        name: '_lpTokens',
-        type: 'address[]',
-      },
-    ],
-    name: 'setPoolWeight',
-    outputs: [],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        internalType: 'uint256',
-        name: '_rewardStartBlock',
-        type: 'uint256',
-      },
-      {
-        internalType: 'uint256',
-        name: '_rewardEndBlock',
-        type: 'uint256',
-      },
-      {
-        internalType: 'uint256',
-        name: '_rewardPerBlock',
-        type: 'uint256',
-      },
-      {
-        internalType: 'address[]',
-        name: '_lpTokens',
-        type: 'address[]',
-      },
-    ],
-    name: 'setRewardInfo',
-    outputs: [],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        internalType: 'address',
-        name: 'signer',
-        type: 'address',
-      },
-      {
-        internalType: 'bool',
-        name: 'enabled',
-        type: 'bool',
-      },
-    ],
-    name: 'setStakersPoolSigner',
-    outputs: [],
-    stateMutability: 'nonpayable',
     type: 'function',
   },
   {
@@ -655,27 +609,28 @@ const _abi = [
         name: '_account',
         type: 'address',
       },
+    ],
+    name: 'rewardDebtOf',
+    outputs: [
       {
-        internalType: 'address',
-        name: '_lpToken',
-        type: 'address',
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
       },
     ],
-    name: 'settlePendingRewards',
-    outputs: [],
-    stateMutability: 'nonpayable',
+    stateMutability: 'view',
     type: 'function',
   },
   {
     inputs: [
       {
         internalType: 'address',
-        name: '_securityMatrix',
+        name: '_lpTokenMinter',
         type: 'address',
       },
       {
         internalType: 'address',
-        name: '_insurTokenAddress',
+        name: '_lpTokenBurner',
         type: 'address',
       },
     ],
@@ -687,103 +642,50 @@ const _abi = [
   {
     inputs: [
       {
-        internalType: 'address',
-        name: '_account',
-        type: 'address',
-      },
-      {
-        internalType: 'address',
-        name: '_lpToken',
-        type: 'address',
+        internalType: 'uint8',
+        name: '_decimals',
+        type: 'uint8',
       },
     ],
-    name: 'showHarvestRewards',
-    outputs: [
+    name: 'setupDecimals',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
       {
         internalType: 'uint256',
-        name: '',
+        name: '_totalSupplyCap',
+        type: 'uint256',
+      },
+      {
+        internalType: 'uint256',
+        name: '_perAccountCap',
         type: 'uint256',
       },
     ],
-    stateMutability: 'view',
+    name: 'setupMintCap',
+    outputs: [],
+    stateMutability: 'nonpayable',
     type: 'function',
   },
   {
-    inputs: [
-      {
-        internalType: 'address',
-        name: '_account',
-        type: 'address',
-      },
-      {
-        internalType: 'address',
-        name: '_lpToken',
-        type: 'address',
-      },
-    ],
-    name: 'showPendingRewards',
+    inputs: [],
+    name: 'symbol',
     outputs: [
       {
-        internalType: 'uint256',
+        internalType: 'string',
         name: '',
-        type: 'uint256',
+        type: 'string',
       },
     ],
     stateMutability: 'view',
     type: 'function',
   },
   {
-    inputs: [
-      {
-        internalType: 'address',
-        name: '',
-        type: 'address',
-      },
-    ],
-    name: 'signerFlagMap',
-    outputs: [
-      {
-        internalType: 'bool',
-        name: '',
-        type: 'bool',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        internalType: 'address',
-        name: '',
-        type: 'address',
-      },
-    ],
-    name: 'stakedAmountPT',
-    outputs: [
-      {
-        internalType: 'uint256',
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        internalType: 'address',
-        name: '',
-        type: 'address',
-      },
-      {
-        internalType: 'address',
-        name: '',
-        type: 'address',
-      },
-    ],
-    name: 'stkRewardsPerAPerLPT',
+    inputs: [],
+    name: 'totalSupply',
     outputs: [
       {
         internalType: 'uint256',
@@ -796,7 +698,7 @@ const _abi = [
   },
   {
     inputs: [],
-    name: 'totalPoolWeight',
+    name: 'totalSupplyCap',
     outputs: [
       {
         internalType: 'uint256',
@@ -805,6 +707,59 @@ const _abi = [
       },
     ],
     stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'address',
+        name: 'recipient',
+        type: 'address',
+      },
+      {
+        internalType: 'uint256',
+        name: 'amount',
+        type: 'uint256',
+      },
+    ],
+    name: 'transfer',
+    outputs: [
+      {
+        internalType: 'bool',
+        name: '',
+        type: 'bool',
+      },
+    ],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'address',
+        name: 'sender',
+        type: 'address',
+      },
+      {
+        internalType: 'address',
+        name: 'recipient',
+        type: 'address',
+      },
+      {
+        internalType: 'uint256',
+        name: 'amount',
+        type: 'uint256',
+      },
+    ],
+    name: 'transferFrom',
+    outputs: [
+      {
+        internalType: 'bool',
+        name: '',
+        type: 'bool',
+      },
+    ],
+    stateMutability: 'nonpayable',
     type: 'function',
   },
   {
@@ -821,46 +776,20 @@ const _abi = [
     type: 'function',
   },
   {
-    inputs: [
-      {
-        internalType: 'address payable',
-        name: '_to',
-        type: 'address',
-      },
-      {
-        internalType: 'uint256',
-        name: '_withdrawAmtAfterFee',
-        type: 'uint256',
-      },
-      {
-        internalType: 'address',
-        name: '_token',
-        type: 'address',
-      },
-      {
-        internalType: 'address',
-        name: '_feePool',
-        type: 'address',
-      },
-      {
-        internalType: 'uint256',
-        name: '_fee',
-        type: 'uint256',
-      },
-    ],
-    name: 'withdrawTokens',
+    inputs: [],
+    name: 'unPauseAll',
     outputs: [],
     stateMutability: 'nonpayable',
     type: 'function',
   },
 ];
 
-export class StakersPoolV2__factory {
+export class InsuracePoolToken__factory {
   static readonly abi = _abi;
-  static createInterface(): StakersPoolV2Interface {
-    return new utils.Interface(_abi) as StakersPoolV2Interface;
+  static createInterface(): InsuracePoolTokenInterface {
+    return new utils.Interface(_abi) as InsuracePoolTokenInterface;
   }
-  static connect(address: string, signerOrProvider: Signer | Provider): StakersPoolV2 {
-    return new Contract(address, _abi, signerOrProvider) as StakersPoolV2;
+  static connect(address: string, signerOrProvider: Signer | Provider): InsuracePoolToken {
+    return new Contract(address, _abi, signerOrProvider) as InsuracePoolToken;
   }
 }
