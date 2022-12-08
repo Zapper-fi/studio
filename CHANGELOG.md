@@ -4,6 +4,24 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.319.0](https://github.com/Zapper-fi/studio/compare/v0.318.0...v0.319.0) (2022-12-08)
+
+
+### Features
+
+* **balances:** Chunk balance calculations ([#1880](https://github.com/Zapper-fi/studio/issues/1880)) ([a4885b3](https://github.com/Zapper-fi/studio/commit/a4885b3d14c20ff3e4ad53cf71f5a84e0a700687))
+* **insurace:** To templates ([#1876](https://github.com/Zapper-fi/studio/issues/1876)) ([30fb474](https://github.com/Zapper-fi/studio/commit/30fb474aec3020e96a8b1b7f5d901349db7286de))
+* **Iq:** add Iq app integration  ([#1847](https://github.com/Zapper-fi/studio/issues/1847)) ([e8bdd5c](https://github.com/Zapper-fi/studio/commit/e8bdd5ca3201649b0875ecf7cb73441255d2e4c5))
+* **Iq:** add Iq app integration  ([#1847](https://github.com/Zapper-fi/studio/issues/1847)) ([e8bdd5c](https://github.com/Zapper-fi/studio/commit/e8bdd5ca3201649b0875ecf7cb73441255d2e4c5))
+* **lemma-finance:** Support Lemma Finance ([#1756](https://github.com/Zapper-fi/studio/issues/1756)) ([04ef819](https://github.com/Zapper-fi/studio/commit/04ef819f668b36530ef9600a7c9f4ccd44e85fe4))
+
+
+### Bug Fixes
+
+* **idle:** Migrate to template ([#1881](https://github.com/Zapper-fi/studio/issues/1881)) ([4bea362](https://github.com/Zapper-fi/studio/commit/4bea362afb55c57370d1c0605815d46cca35c747))
+* **idle:** Simplify vault token fetcher ([39b8e82](https://github.com/Zapper-fi/studio/commit/39b8e82244c95692570d58146af9d878b64177a8))
+* **mstable:** Fix call for balances ([54daa35](https://github.com/Zapper-fi/studio/commit/54daa35a9f2e413aad3c0765cf2ff54b2052a17c))
+
 ## [0.318.0](https://github.com/Zapper-fi/studio/compare/v0.317.0...v0.318.0) (2022-12-06)
 
 
