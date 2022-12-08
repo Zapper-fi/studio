@@ -25,7 +25,7 @@ export class EthereumExactlyBalanceFetcher implements BalanceFetcher {
   constructor(
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
     @Inject(ExactlyContractFactory) private readonly contractFactory: ExactlyContractFactory,
-  ) { }
+  ) {}
 
   async getMarketsData(address: string) {
     const multicall = this.appToolkit.getMulticall(network);
