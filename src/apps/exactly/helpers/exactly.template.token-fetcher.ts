@@ -1,14 +1,14 @@
 import { Inject } from '@nestjs/common';
-import { BigNumber } from 'ethers';
-import { formatEther } from 'ethers/lib/utils';
+import { constants } from 'ethers';
+import type { BigNumber } from 'ethers';
 
-import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
-import { ZERO_ADDRESS } from '~app-toolkit/constants/address';
+import { APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
+import type { IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { getImagesFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { ContractType } from '~position/contract.interface';
-import { AppTokenPosition } from '~position/position.interface';
+import type { AppTokenPosition } from '~position/position.interface';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
-import { DefaultAppTokenDataProps } from '~position/template/app-token.template.types';
+import type { DefaultAppTokenDataProps } from '~position/template/app-token.template.types';
 
 import { ExactlyContractFactory, Market, Previewer } from '../contracts';
 import { PREVIEWER_ADDRESS } from '../ethereum/constants';
@@ -23,98 +23,70 @@ export abstract class ExactlyTemplateTokenFetcher extends AppTokenTemplatePositi
 > {
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(ExactlyContractFactory) protected readonly exactlyContractFactory: ExactlyContractFactory,
+    @Inject(ExactlyContractFactory) protected readonly contractFactory: ExactlyContractFactory,
   ) {
     super(appToolkit);
   }
 
   async getAddresses() {
-    const previewer = this.getPreviewer();
-    const marketsData = await previewer.exactly(ZERO_ADDRESS);
-
+    const marketsData = await this.previewer.exactly(constants.AddressZero);
     return marketsData.map(({ market }) => market);
   }
 
   getContract(address: string) {
-    return this.exactlyContractFactory.market({
-      address,
-      network: this.network,
-    });
+    return this.contractFactory.market({ address, network: this.network });
   }
 
-  abstract getAPR(marketData: Previewer.MarketAccountStructOutput): BigNumber;
+  abstract getAPR(marketAccount: Previewer.MarketAccountStructOutput): BigNumber;
 
   async getPositions() {
-    const previewer = this.getPreviewer();
-
-    const marketsData = await previewer.exactly(ZERO_ADDRESS);
-
+    const exactly = await this.previewer.exactly(constants.AddressZero);
     const multicall = this.appToolkit.getMulticall(this.network);
     const tokens = await Promise.all(
-      marketsData.map(async marketData => {
-        const { market: address, asset } = marketData;
-        const marketContract = this.exactlyContractFactory.market({
-          address,
-          network: this.network,
-        });
+      exactly.map(async marketAccount => {
+        const { market: address, asset, decimals, assetSymbol, totalFloatingDepositAssets } = marketAccount;
+        const baseUnit = 10 ** decimals;
+        const market = multicall.wrap(this.contractFactory.market({ address, network: this.network }));
+        const [symbol, totalSupply] = await Promise.all([market.symbol(), market.totalSupply()]);
 
-        const [symbol, decimals, totalSupply, pricePerShareRaw, totalAssets] = await Promise.all([
-          multicall.wrap(marketContract).symbol(),
-          multicall.wrap(marketContract).decimals(),
-          multicall.wrap(marketContract).totalSupply(),
-          multicall.wrap(marketContract).convertToAssets(String(10 ** marketData.decimals)),
-          multicall.wrap(marketContract).totalAssets(),
-        ]);
-
-        const underlyingToken = await this.appToolkit.getBaseTokenPrice({
+        const baseToken = await this.appToolkit.getBaseTokenPrice({
           network: this.network,
           address: asset.toLowerCase(),
         });
-        if (!underlyingToken) return null;
+        if (!baseToken) return null;
 
-        const supply = Number(totalSupply) / 10 ** decimals;
-        const liquidity = (Number(totalAssets) / 10 ** decimals) * underlyingToken.price;
-        const pricePerShare = Number(pricePerShareRaw) / 10 ** decimals;
+        const supply = Number(totalSupply) / baseUnit;
+        const liquidity = (Number(totalFloatingDepositAssets) / baseUnit) * baseToken.price;
+        const pricePerShare = Number(totalFloatingDepositAssets.mul(constants.WeiPerEther).div(totalSupply)) / baseUnit;
 
-        const apr = Number(formatEther(this.getAPR(marketData))) * 100;
+        const apr = Number(this.getAPR(marketAccount)) / 1e18;
         const apy = (1 + Number(apr) / 31_536_000) ** 31_536_000 - 1;
 
-        const token: AppTokenPosition<ExactlyTokenDataProps> = {
+        return {
           type: ContractType.APP_TOKEN,
           appId: this.appId,
           groupId: this.groupId,
-          address,
           network: this.network,
           symbol,
+          address,
           decimals,
           supply,
-          price: underlyingToken.price,
           pricePerShare,
-          dataProps: {
-            liquidity,
-            apr,
-            apy,
-            reserves: [],
-          },
-          tokens: [underlyingToken],
+          price: baseToken.price * pricePerShare,
+          tokens: [baseToken],
+          dataProps: { liquidity, apr, apy, reserves: [] },
           displayProps: {
-            label: underlyingToken.symbol,
+            label: assetSymbol,
             labelDetailed: symbol,
-            images: [...getImagesFromToken(underlyingToken)],
+            images: [...getImagesFromToken(baseToken)],
           },
         };
-
-        return token;
       }),
     );
-
     return tokens.filter(Boolean) as AppTokenPosition<ExactlyTokenDataProps>[];
   }
 
-  getPreviewer() {
-    return this.exactlyContractFactory.previewer({
-      address: PREVIEWER_ADDRESS,
-      network: this.network,
-    });
+  get previewer() {
+    return this.contractFactory.previewer({ address: PREVIEWER_ADDRESS, network: this.network });
   }
 }
