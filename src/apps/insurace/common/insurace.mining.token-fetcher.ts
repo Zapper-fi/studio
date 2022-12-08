@@ -2,12 +2,14 @@ import { Inject } from '@nestjs/common';
 
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { BLOCKS_PER_DAY } from '~app-toolkit/constants/blocks';
+import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import {
   DefaultAppTokenDataProps,
   DefaultAppTokenDefinition,
   GetAddressesParams,
   GetDataPropsParams,
+  GetDisplayPropsParams,
   GetPricePerShareParams,
   GetUnderlyingTokensParams,
 } from '~position/template/app-token.template.types';
@@ -97,5 +99,9 @@ export abstract class InsuraceMiningTokenFetcher extends AppTokenTemplatePositio
 
     const apy = ((insurPerBlock * blocksPerYear * insurToken.price) / liquidity) * 100;
     return apy;
+  }
+
+  async getLabel({ appToken }: GetDisplayPropsParams<InsuracePoolToken>) {
+    return `${getLabelFromToken(appToken.tokens[0])} Pool`;
   }
 }
