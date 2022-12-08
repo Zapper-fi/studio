@@ -4,8 +4,7 @@ import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { ContractFactory } from '~contract/contracts';
 import { Network } from '~types/network.interface';
 
-import { Market__factory } from './ethers';
-import { Previewer__factory } from './ethers';
+import { Market__factory, Previewer__factory } from './ethers';
 
 type ContractOpts = { address: string; network: Network };
 
@@ -23,5 +22,4 @@ export class ExactlyContractFactory extends ContractFactory {
   }
 }
 
-export type { Market } from './ethers';
-export type { Previewer } from './ethers';
+export type { Market, Previewer } from './ethers';
