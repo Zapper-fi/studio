@@ -1,5 +1,3 @@
-import { BigNumber } from 'ethers';
-
 import { Register } from '~app-toolkit/decorators';
 import { Network } from '~types/network.interface';
 
@@ -16,7 +14,7 @@ export class EthereumExactlyFixedDepositTokenFetcher extends ExactlyTemplateToke
   network = network;
   groupLabel = 'Fixed borrow';
 
-  getAPR(marketData: Previewer.MarketAccountStructOutput): BigNumber {
+  getAPR(marketData: Previewer.MarketAccountStructOutput) {
     const { depositRate: bestRate } = marketData.fixedPools.reduce((prev, current) =>
       prev.depositRate.gt(current.depositRate) ? prev : current,
     );

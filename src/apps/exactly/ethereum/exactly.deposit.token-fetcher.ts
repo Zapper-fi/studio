@@ -16,7 +16,7 @@ export class EthereumExactlyDepositTokenFetcher extends ExactlyTemplateTokenFetc
   network = network;
   groupLabel = 'Deposit';
 
-  getAPR(_: Previewer.MarketAccountStructOutput): BigNumber {
+  getAPR(_: Previewer.MarketAccountStructOutput) {
     // not implemented yet
     return BigNumber.from(0);
   }

@@ -17,7 +17,7 @@ export class EthereumExactlyBorrowTokenFetcher extends ExactlyTemplateTokenFetch
   groupLabel = 'Variable borrow';
   isDebt = true;
 
-  getAPR(_: Previewer.MarketAccountStructOutput): BigNumber {
+  getAPR(_: Previewer.MarketAccountStructOutput) {
     // not implemented yet
     return BigNumber.from(0);
   }

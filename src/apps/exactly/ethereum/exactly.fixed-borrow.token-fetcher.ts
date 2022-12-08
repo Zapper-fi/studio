@@ -1,5 +1,3 @@
-import { BigNumber } from 'ethers';
-
 import { Register } from '~app-toolkit/decorators';
 import { Network } from '~types/network.interface';
 
@@ -17,7 +15,7 @@ export class EthereumExactlyFixedBorrowTokenFetcher extends ExactlyTemplateToken
   groupLabel = 'Fixed borrow';
   isDebt = true;
 
-  getAPR(marketData: Previewer.MarketAccountStructOutput): BigNumber {
+  getAPR(marketData: Previewer.MarketAccountStructOutput) {
     const { minBorrowRate: bestRate } = marketData.fixedPools.reduce((prev, current) =>
       prev.minBorrowRate.lt(current.minBorrowRate) ? prev : current,
     );

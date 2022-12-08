@@ -28,14 +28,14 @@ export abstract class ExactlyTemplateTokenFetcher extends AppTokenTemplatePositi
     super(appToolkit);
   }
 
-  async getAddresses(): Promise<string[]> {
+  async getAddresses() {
     const previewer = this.getPreviewer();
     const marketsData = await previewer.exactly(ZERO_ADDRESS);
 
     return marketsData.map(({ market }) => market);
   }
 
-  getContract(address: string): Market {
+  getContract(address: string) {
     return this.exactlyContractFactory.market({
       address,
       network: this.network,
@@ -44,7 +44,7 @@ export abstract class ExactlyTemplateTokenFetcher extends AppTokenTemplatePositi
 
   abstract getAPR(marketData: Previewer.MarketAccountStructOutput): BigNumber;
 
-  async getPositions(): Promise<AppTokenPosition<ExactlyTokenDataProps>[]> {
+  async getPositions() {
     const previewer = this.getPreviewer();
 
     const marketsData = await previewer.exactly(ZERO_ADDRESS);
@@ -111,7 +111,7 @@ export abstract class ExactlyTemplateTokenFetcher extends AppTokenTemplatePositi
     return tokens.filter(Boolean) as AppTokenPosition<ExactlyTokenDataProps>[];
   }
 
-  getPreviewer(): Previewer {
+  getPreviewer() {
     return this.exactlyContractFactory.previewer({
       address: PREVIEWER_ADDRESS,
       network: this.network,

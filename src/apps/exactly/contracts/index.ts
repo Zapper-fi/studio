@@ -11,7 +11,7 @@ type ContractOpts = { address: string; network: Network };
 @Injectable()
 export class ExactlyContractFactory extends ContractFactory {
   constructor(@Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit) {
-    super((network: Network) => appToolkit.getNetworkProvider(network));
+    super(network => appToolkit.getNetworkProvider(network));
   }
 
   market({ address, network }: ContractOpts) {
