@@ -4,7 +4,7 @@
 
 import { Contract, Signer, utils } from 'ethers';
 import type { Provider } from '@ethersproject/providers';
-import type { LemmaSynth, LemmaSynthInterface } from '../LemmaSynth';
+import type { Synth, SynthInterface } from '../Synth';
 
 const _abi = [
   {
@@ -1205,12 +1205,12 @@ const _abi = [
   },
 ];
 
-export class LemmaSynth__factory {
+export class Synth__factory {
   static readonly abi = _abi;
-  static createInterface(): LemmaSynthInterface {
-    return new utils.Interface(_abi) as LemmaSynthInterface;
+  static createInterface(): SynthInterface {
+    return new utils.Interface(_abi) as SynthInterface;
   }
-  static connect(address: string, signerOrProvider: Signer | Provider): LemmaSynth {
-    return new Contract(address, _abi, signerOrProvider) as LemmaSynth;
+  static connect(address: string, signerOrProvider: Signer | Provider): Synth {
+    return new Contract(address, _abi, signerOrProvider) as Synth;
   }
 }

@@ -3,44 +3,43 @@ import { Inject } from '@nestjs/common';
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
 import { buildDollarDisplayItem } from '~app-toolkit/helpers/presentation/display-item.present';
-import { getAppAssetImage, getImagesFromToken } from '~app-toolkit/helpers/presentation/image.present';
+import { getAppAssetImage } from '~app-toolkit/helpers/presentation/image.present';
 import { ContractType } from '~position/contract.interface';
 import { PositionFetcher } from '~position/position-fetcher.interface';
 import { AppTokenPosition } from '~position/position.interface';
 import { Network } from '~types/network.interface';
 
-import { LemmafinanceContractFactory } from '../contracts';
-import { LEMMAFINANCE_DEFINITION } from '../lemmafinance.definition';
+import { LemmaFinanceContractFactory } from '../contracts';
+import { LEMMA_FINANCE_DEFINITION } from '../lemma-finance.definition';
 
-const appId = LEMMAFINANCE_DEFINITION.id;
-const groupId = LEMMAFINANCE_DEFINITION.groups.xusdl.id;
+const appId = LEMMA_FINANCE_DEFINITION.id;
+const groupId = LEMMA_FINANCE_DEFINITION.groups.xUsdl.id;
 const network = Network.OPTIMISM_MAINNET;
 
 @Register.TokenPositionFetcher({ appId, groupId, network })
-export class OptimismLemmafinanceXusdlTokenFetcher implements PositionFetcher<AppTokenPosition> {
+export class OptimismLemmaFinanceXusdlTokenFetcher implements PositionFetcher<AppTokenPosition> {
   constructor(
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
-    @Inject(LemmafinanceContractFactory) private readonly lemmafinanceContractFactory: LemmafinanceContractFactory,
+    @Inject(LemmaFinanceContractFactory) private readonly contractFactory: LemmaFinanceContractFactory,
   ) {}
 
   async getPositions() {
     const BaseTokens = [
       '0x4200000000000000000000000000000000000006', // WETH
-      '0x68f180fcCe6836688e9084f035309E29Bf0A2095', // Wbtc
-      '0x350a791Bfc2C21F9Ed5d10980Dad2e2638ffa7f6', // Link
-      '0x0994206dfE8De6Ec6920FF4D779B0d950605Fb53', // CRV
-      '0x9e1028F5F1D5eDE59748FFceE5532509976840E0', // Perp
-      '0x76FB31fb4af56892A25e32cFC43De717950c9278', // AAVE
+      '0x68f180fcce6836688e9084f035309e29bf0a2095', // Wbtc
+      '0x350a791bfc2c21f9ed5d10980dad2e2638ffa7f6', // Link
+      '0x0994206dfe8de6ec6920ff4d779b0d950605fb53', // CRV
+      '0x9e1028f5f1d5ede59748ffcee5532509976840e0', // Perp
+      '0x76fb31fb4af56892a25e32cfc43de717950c9278', // AAVE
     ];
 
-    const xusdlAddresses = ['0x252Ea7E68a27390Ce0D53851192839A39Ab8B38C'];
-    // const imageURL = 'src/apps/lemmafinance/assets/xUSDL.png';
+    const xusdlAddresses = ['0x252ea7e68a27390ce0d53851192839a39ab8b38c'];
     const imageURL = getAppAssetImage(appId, 'xUSDL');
     const multicall = this.appToolkit.getMulticall(network);
     const tokens = await Promise.all(
       xusdlAddresses.map(async xusdlAddress => {
         // Instantiate a smart contract instance pointing to the jar token address
-        const contract = this.lemmafinanceContractFactory.xusdl({
+        const contract = this.contractFactory.xUsdl({
           address: xusdlAddress,
           network,
         });
@@ -61,19 +60,14 @@ export class OptimismLemmafinanceXusdlTokenFetcher implements PositionFetcher<Ap
           tokens = [collateralToken, ...tokens];
         });
         tokens = tokens.reverse();
-        // Denormalize the supply
+
         const supply = Number(supplyRaw) / 10 ** decimals;
         const price = Number(assetsPerShare);
         const pricePerShare = Number(assetsPerShare) / 10 ** decimals;
 
-        // // As a label, we'll use the underlying label (i.e.: 'LOOKS' or 'UNI-V2 LOOKS / ETH'), and suffix it with 'Jar'
         const label = `${name} (${symbol})`;
-        // // For images, we'll use the underlying token images as well
         const images = [imageURL];
-        // // For the secondary label, we'll use the price of the jar token
         const secondaryLabel = buildDollarDisplayItem(price);
-        // // And for a tertiary label, we'll use the APY
-        // const tertiaryLabel = `${(apy * 100).toFixed(3)}% APY`;
 
         // Create the token object
         const token: AppTokenPosition = {
@@ -95,7 +89,6 @@ export class OptimismLemmafinanceXusdlTokenFetcher implements PositionFetcher<Ap
             label,
             images,
             secondaryLabel,
-            tertiaryLabel: '',
           },
         };
         return token;

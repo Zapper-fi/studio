@@ -4,7 +4,7 @@
 
 import { Contract, Signer, utils } from 'ethers';
 import type { Provider } from '@ethersproject/providers';
-import type { XLemmaSynth, XLemmaSynthInterface } from '../XLemmaSynth';
+import type { XSynth, XSynthInterface } from '../XSynth';
 
 const _abi = [
   {
@@ -929,12 +929,12 @@ const _abi = [
   },
 ];
 
-export class XLemmaSynth__factory {
+export class XSynth__factory {
   static readonly abi = _abi;
-  static createInterface(): XLemmaSynthInterface {
-    return new utils.Interface(_abi) as XLemmaSynthInterface;
+  static createInterface(): XSynthInterface {
+    return new utils.Interface(_abi) as XSynthInterface;
   }
-  static connect(address: string, signerOrProvider: Signer | Provider): XLemmaSynth {
-    return new Contract(address, _abi, signerOrProvider) as XLemmaSynth;
+  static connect(address: string, signerOrProvider: Signer | Provider): XSynth {
+    return new Contract(address, _abi, signerOrProvider) as XSynth;
   }
 }

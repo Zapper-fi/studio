@@ -1,4 +1,3 @@
-import { Token } from '@kyberswap/ks-sdk-core';
 import { Inject } from '@nestjs/common';
 
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
@@ -10,41 +9,38 @@ import { PositionFetcher } from '~position/position-fetcher.interface';
 import { AppTokenPosition } from '~position/position.interface';
 import { Network } from '~types/network.interface';
 
-import { LemmafinanceContractFactory, Xusdl } from '../contracts';
-import { LEMMAFINANCE_DEFINITION } from '../lemmafinance.definition';
+import { LemmaFinanceContractFactory } from '../contracts';
+import LEMMA_FINANCE_DEFINITION from '../lemma-finance.definition';
 
-const appId = LEMMAFINANCE_DEFINITION.id;
-const groupId = LEMMAFINANCE_DEFINITION.groups.usdl.id;
+const appId = LEMMA_FINANCE_DEFINITION.id;
+const groupId = LEMMA_FINANCE_DEFINITION.groups.usdl.id;
 const network = Network.OPTIMISM_MAINNET;
 
-export type USDLTokenDataProps = {};
-
 @Register.TokenPositionFetcher({ appId, groupId, network })
-export class OptimismLemmafinanceUsdlTokenFetcher implements PositionFetcher<AppTokenPosition> {
+export class OptimismLemmaFinanceUsdlTokenFetcher implements PositionFetcher<AppTokenPosition> {
   constructor(
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
-    @Inject(LemmafinanceContractFactory) private readonly lemmafinanceContractFactory: LemmafinanceContractFactory,
+    @Inject(LemmaFinanceContractFactory) private readonly contractFactory: LemmaFinanceContractFactory,
   ) {}
 
   async getPositions() {
     const BaseTokens = [
       '0x4200000000000000000000000000000000000006', // WETH
-      '0x68f180fcCe6836688e9084f035309E29Bf0A2095', // Wbtc
-      '0x350a791Bfc2C21F9Ed5d10980Dad2e2638ffa7f6', // Link
-      '0x0994206dfE8De6Ec6920FF4D779B0d950605Fb53', // CRV
-      '0x9e1028F5F1D5eDE59748FFceE5532509976840E0', // Perp
-      '0x76FB31fb4af56892A25e32cFC43De717950c9278', // AAVE
+      '0x68f180fcce6836688e9084f035309e29bf0a2095', // Wbtc
+      '0x350a791bfc2c21f9ed5d10980dad2e2638ffa7f6', // Link
+      '0x0994206dfe8de6ec6920ff4d779b0d950605fb53', // CRV
+      '0x9e1028f5f1d5ede59748ffcee5532509976840e0', // Perp
+      '0x76fb31fb4af56892a25e32cfc43de717950c9278', // AAVE
     ];
 
-    const usdlAddresses = ['0x96F2539d3684dbde8B3242A51A73B66360a5B541'];
-    // const imageURL = 'src/apps/lemmafinance/assets/USDL.png';
+    const usdlAddresses = ['0x96f2539d3684dbde8b3242a51a73b66360a5b541'];
     const imageURL = getAppAssetImage(appId, 'USDL');
 
     const multicall = this.appToolkit.getMulticall(network);
     const tokens = await Promise.all(
       usdlAddresses.map(async usdlAddress => {
         // Instantiate a smart contract instance pointing to the jar token address
-        const contract = this.lemmafinanceContractFactory.usdl({
+        const contract = this.contractFactory.usdl({
           address: usdlAddress,
           network,
         });
@@ -98,7 +94,6 @@ export class OptimismLemmafinanceUsdlTokenFetcher implements PositionFetcher<App
             label,
             images,
             secondaryLabel,
-            tertiaryLabel: '',
           },
         };
         return token;

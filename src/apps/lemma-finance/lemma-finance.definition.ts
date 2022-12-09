@@ -3,9 +3,9 @@ import { appDefinition, AppDefinition } from '~app/app.definition';
 import { AppAction, AppTag, GroupType } from '~app/app.interface';
 import { Network } from '~types/network.interface';
 
-export const LEMMAFINANCE_DEFINITION = appDefinition({
-  id: 'lemmafinance',
-  name: 'LemmaFinance',
+export const LEMMA_FINANCE_DEFINITION = appDefinition({
+  id: 'lemma-finance',
+  name: 'Lemma Finance',
   description: 'A basis trading stablecoin protocol.',
   url: 'https://v2.lemma.finance/',
 
@@ -15,20 +15,20 @@ export const LEMMAFINANCE_DEFINITION = appDefinition({
       type: GroupType.TOKEN,
       label: 'USDL',
     },
-    xusdl: {
-      id: 'xusdl',
+    xUsdl: {
+      id: 'x-usdl',
       type: GroupType.TOKEN,
       label: 'xUSDL',
     },
-    LemmaSynth: {
-      id: 'LemmaSynth',
+    synth: {
+      id: 'synth',
       type: GroupType.TOKEN,
       label: 'LemmaSynth',
     },
-    xLemmaSynth: {
-      id: 'xLemmaSynth',
+    xSynth: {
+      id: 'x-synth',
       type: GroupType.TOKEN,
-      label: 'xLemmaSynth',
+      label: 'xSynth',
     },
   },
 
@@ -43,11 +43,11 @@ export const LEMMAFINANCE_DEFINITION = appDefinition({
   primaryColor: '#fff',
 });
 
-@Register.AppDefinition(LEMMAFINANCE_DEFINITION.id)
-export class LemmafinanceAppDefinition extends AppDefinition {
+@Register.AppDefinition(LEMMA_FINANCE_DEFINITION.id)
+export class LemmaFinanceAppDefinition extends AppDefinition {
   constructor() {
-    super(LEMMAFINANCE_DEFINITION);
+    super(LEMMA_FINANCE_DEFINITION);
   }
 }
 
-export default LEMMAFINANCE_DEFINITION;
+export default LEMMA_FINANCE_DEFINITION;
