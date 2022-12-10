@@ -7,18 +7,19 @@ import { OptimismLemmaFinanceBalanceFetcher } from './optimism/lemma-finance.bal
 import { OptimismLemmaFinanceLemmaSynthTokenFetcher } from './optimism/lemma-finance.synth.token-fetcher';
 import { OptimismLemmaFinanceUsdlTokenFetcher } from './optimism/lemma-finance.usdl.token-fetcher';
 import { OptimismLemmaFinanceXSynthTokenFetcher } from './optimism/lemma-finance.x-synth.token-fetcher';
-import { OptimismLemmaFinanceXusdlTokenFetcher } from './optimism/lemma-finance.xusdl.token-fetcher';
+import { OptimismLemmaFinanceXUsdlTokenFetcher } from './optimism/lemma-finance.x-usdl.token-fetcher';
 
 @Register.AppModule({
   appId: LEMMA_FINANCE_DEFINITION.id,
   providers: [
     LemmaFinanceAppDefinition,
     LemmaFinanceContractFactory,
+    // Optimism
     OptimismLemmaFinanceBalanceFetcher,
     OptimismLemmaFinanceLemmaSynthTokenFetcher,
     OptimismLemmaFinanceUsdlTokenFetcher,
     OptimismLemmaFinanceXSynthTokenFetcher,
-    OptimismLemmaFinanceXusdlTokenFetcher,
+    OptimismLemmaFinanceXUsdlTokenFetcher,
   ],
 })
 export class LemmaFinanceAppModule extends AbstractApp() {}

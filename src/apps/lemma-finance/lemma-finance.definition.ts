@@ -23,7 +23,7 @@ export const LEMMA_FINANCE_DEFINITION = appDefinition({
     synth: {
       id: 'synth',
       type: GroupType.TOKEN,
-      label: 'LemmaSynth',
+      label: 'Synth',
     },
     xSynth: {
       id: 'x-synth',
@@ -34,7 +34,10 @@ export const LEMMA_FINANCE_DEFINITION = appDefinition({
 
   tags: [AppTag.ALGORITHMIC_STABLECOIN],
   keywords: [],
-  links: {},
+  links: {
+    discord: 'https://discord.com/invite/AvCEkVbtQt',
+    twitter: 'https://twitter.com/LemmaFinance',
+  },
 
   supportedNetworks: {
     [Network.OPTIMISM_MAINNET]: [AppAction.VIEW],

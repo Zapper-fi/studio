@@ -11,7 +11,7 @@ import { LEMMA_FINANCE_DEFINITION } from '../lemma-finance.definition';
 const appId = LEMMA_FINANCE_DEFINITION.id;
 const network = Network.OPTIMISM_MAINNET;
 
-@Register.BalanceFetcher(LEMMA_FINANCE_DEFINITION.id, network)
+@Register.BalanceFetcher(appId, network)
 export class OptimismLemmaFinanceBalanceFetcher implements BalanceFetcher {
   constructor(@Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit) {}
 

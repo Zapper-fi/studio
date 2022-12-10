@@ -53,8 +53,8 @@ export class OptimismLemmaFinanceLemmaSynthTokenFetcher implements PositionFetch
 
   async getPositions() {
     const baseTokens = await this.appToolkit.getBaseTokenPrices(network);
-
     const multicall = this.appToolkit.getMulticall(network);
+
     const tokens = await Promise.all(
       synthAddresses.map(async position => {
         const contract = this.contractFactory.synth({
