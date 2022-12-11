@@ -1,6 +1,8 @@
 import { constants } from 'ethers';
 
 import { Register } from '~app-toolkit/decorators';
+import type { IMulticallWrapper } from '~multicall/multicall.interface';
+import type { AppTokenPosition } from '~position/position.interface';
 import type { GetDataPropsParams, GetTokenPropsParams } from '~position/template/app-token.template.types';
 import { Network } from '~types/network.interface';
 
@@ -26,6 +28,24 @@ export class EthereumExactlyBorrowTokenFetcher extends ExactlyTokenFetcher {
 
   getTotalAssets({ definition }: GetTokenPropsParams<Market, ExactlyMarketProps, ExactlyMarketDefinition>) {
     return definition.totalFloatingBorrowAssets;
+  }
+
+  async getBalancePerToken({
+    address,
+    appToken,
+    multicall,
+  }: {
+    address: string;
+    appToken: AppTokenPosition;
+    multicall: IMulticallWrapper;
+  }) {
+    const { floatingBorrowShares } = await this.definitionsResolver.getDefinition({
+      multicall,
+      network: this.network,
+      account: address,
+      market: appToken.address,
+    });
+    return floatingBorrowShares;
   }
 
   async getApr({

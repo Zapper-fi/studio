@@ -1,6 +1,8 @@
 import { constants } from 'ethers';
 
 import { Register } from '~app-toolkit/decorators';
+import type { IMulticallWrapper } from '~multicall/multicall.interface';
+import type { AppTokenPosition } from '~position/position.interface';
 import type { GetDataPropsParams, GetTokenPropsParams } from '~position/template/app-token.template.types';
 import { Network } from '~types/network.interface';
 
@@ -29,5 +31,23 @@ export class EthereumExactlyFixedDepositPositionFetcher extends ExactlyFixedPosi
       (best, { maturity, depositRate: rate }) => (rate.gt(best.rate) ? { maturity, rate } : best),
       { maturity: constants.Zero, rate: constants.Zero },
     );
+  }
+
+  async getBalancePerToken({
+    address,
+    appToken,
+    multicall,
+  }: {
+    address: string;
+    appToken: AppTokenPosition;
+    multicall: IMulticallWrapper;
+  }) {
+    const { fixedDepositPositions } = await this.definitionsResolver.getDefinition({
+      multicall,
+      network: this.network,
+      account: address,
+      market: appToken.address,
+    });
+    return fixedDepositPositions.reduce((total, { previewValue }) => total.add(previewValue), constants.Zero);
   }
 }
