@@ -35,7 +35,7 @@ export class OptimismLemmaFinanceXUsdlTokenFetcher implements PositionFetcher<Ap
 
     const xusdlAddress = '0x252ea7e68a27390ce0d53851192839a39ab8b38c';
     const multicall = this.appToolkit.getMulticall(network);
-    const contract = this.contractFactory.xUsdl({
+    const contract = this.contractFactory.stakedUsdl({
       address: xusdlAddress,
       network,
     });

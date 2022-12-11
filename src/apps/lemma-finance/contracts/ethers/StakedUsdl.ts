@@ -17,7 +17,7 @@ import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi
 import type { Listener, Provider } from '@ethersproject/providers';
 import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
-export interface XUsdlInterface extends utils.Interface {
+export interface StakedUsdlInterface extends utils.Interface {
   functions: {
     'DOMAIN_SEPARATOR()': FunctionFragment;
     'allowance(address,address)': FunctionFragment;
@@ -312,12 +312,12 @@ export type WithdrawEvent = TypedEvent<[string, string, BigNumber, BigNumber], W
 
 export type WithdrawEventFilter = TypedEventFilter<WithdrawEvent>;
 
-export interface XUsdl extends BaseContract {
+export interface StakedUsdl extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
 
-  interface: XUsdlInterface;
+  interface: StakedUsdlInterface;
 
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,

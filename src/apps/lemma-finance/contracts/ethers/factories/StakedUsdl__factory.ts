@@ -4,7 +4,7 @@
 
 import { Contract, Signer, utils } from 'ethers';
 import type { Provider } from '@ethersproject/providers';
-import type { XUsdl, XUsdlInterface } from '../XUsdl';
+import type { StakedUsdl, StakedUsdlInterface } from '../StakedUsdl';
 
 const _abi = [
   {
@@ -919,12 +919,12 @@ const _abi = [
   },
 ];
 
-export class XUsdl__factory {
+export class StakedUsdl__factory {
   static readonly abi = _abi;
-  static createInterface(): XUsdlInterface {
-    return new utils.Interface(_abi) as XUsdlInterface;
+  static createInterface(): StakedUsdlInterface {
+    return new utils.Interface(_abi) as StakedUsdlInterface;
   }
-  static connect(address: string, signerOrProvider: Signer | Provider): XUsdl {
-    return new Contract(address, _abi, signerOrProvider) as XUsdl;
+  static connect(address: string, signerOrProvider: Signer | Provider): StakedUsdl {
+    return new Contract(address, _abi, signerOrProvider) as StakedUsdl;
   }
 }
