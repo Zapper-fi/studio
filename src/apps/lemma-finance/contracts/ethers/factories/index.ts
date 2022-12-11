@@ -2,7 +2,7 @@
 /* tslint:disable */
 /* eslint-disable */
 export { PerpLemma__factory } from './PerpLemma__factory';
-export { StakedUsdl__factory } from './StakedUsdl__factory';
 export { Synth__factory } from './Synth__factory';
 export { Usdl__factory } from './Usdl__factory';
 export { XSynth__factory } from './XSynth__factory';
+export { XUsdl__factory } from './XUsdl__factory';
