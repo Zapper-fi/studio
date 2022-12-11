@@ -4,6 +4,8 @@ import type { BigNumber } from 'ethers';
 
 import { APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import type { IAppToolkit } from '~app-toolkit/app-toolkit.interface';
+import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
+import { BalanceDisplayMode } from '~position/display.interface';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import type {
   GetAddressesParams,
@@ -13,6 +15,7 @@ import type {
   GetUnderlyingTokensParams,
   DefaultAppTokenDataProps,
   GetPricePerShareParams,
+  GetDisplayPropsParams,
 } from '~position/template/app-token.template.types';
 
 import { ExactlyContractFactory } from '../contracts';
@@ -59,6 +62,19 @@ export abstract class ExactlyTokenFetcher<
 
   getDecimals({ definition }: GetTokenPropsParams<Market, V, ExactlyMarketDefinition>) {
     return Promise.resolve(definition.decimals);
+  }
+
+  getLabel({ appToken }: GetDisplayPropsParams<Market, V, ExactlyMarketDefinition>) {
+    const [underlyingToken] = appToken.tokens;
+    return Promise.resolve(getLabelFromToken(underlyingToken));
+  }
+
+  getLabelDetailed({ appToken }: GetDisplayPropsParams<Market, V, ExactlyMarketDefinition>) {
+    return Promise.resolve(appToken.symbol);
+  }
+
+  getBalanceDisplayMode() {
+    return Promise.resolve(BalanceDisplayMode.UNDERLYING);
   }
 
   async getPricePerShare(params: GetPricePerShareParams<Market, V, ExactlyMarketDefinition>) {
