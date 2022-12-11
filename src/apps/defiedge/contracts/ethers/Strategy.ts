@@ -29,7 +29,7 @@ export declare namespace IStrategyBase {
   };
 }
 
-export declare namespace DefiedgeStrategy {
+export declare namespace DefiEdgeStrategy {
   export type PartialTickStruct = {
     index: PromiseOrValue<BigNumberish>;
     burn: PromiseOrValue<boolean>;
@@ -191,8 +191,8 @@ export interface StrategyInterface extends utils.Interface {
     functionFragment: 'rebalance',
     values: [
       PromiseOrValue<BytesLike>,
-      DefiedgeStrategy.PartialTickStruct[],
-      DefiedgeStrategy.NewTickStruct[],
+      DefiEdgeStrategy.PartialTickStruct[],
+      DefiEdgeStrategy.NewTickStruct[],
       PromiseOrValue<boolean>,
     ],
   ): string;
@@ -327,19 +327,19 @@ export type MintEvent = TypedEvent<[string, BigNumber, BigNumber, BigNumber], Mi
 export type MintEventFilter = TypedEventFilter<MintEvent>;
 
 export interface PartialRebalanceEventObject {
-  ticks: DefiedgeStrategy.PartialTickStructOutput[];
+  ticks: DefiEdgeStrategy.PartialTickStructOutput[];
 }
 export type PartialRebalanceEvent = TypedEvent<
-  [DefiedgeStrategy.PartialTickStructOutput[]],
+  [DefiEdgeStrategy.PartialTickStructOutput[]],
   PartialRebalanceEventObject
 >;
 
 export type PartialRebalanceEventFilter = TypedEventFilter<PartialRebalanceEvent>;
 
 export interface RebalanceEventObject {
-  ticks: DefiedgeStrategy.NewTickStructOutput[];
+  ticks: DefiEdgeStrategy.NewTickStructOutput[];
 }
-export type RebalanceEvent = TypedEvent<[DefiedgeStrategy.NewTickStructOutput[]], RebalanceEventObject>;
+export type RebalanceEvent = TypedEvent<[DefiEdgeStrategy.NewTickStructOutput[]], RebalanceEventObject>;
 
 export type RebalanceEventFilter = TypedEventFilter<RebalanceEvent>;
 
@@ -477,8 +477,8 @@ export interface Strategy extends BaseContract {
 
     rebalance(
       _swapData: PromiseOrValue<BytesLike>,
-      _existingTicks: DefiedgeStrategy.PartialTickStruct[],
-      _newTicks: DefiedgeStrategy.NewTickStruct[],
+      _existingTicks: DefiEdgeStrategy.PartialTickStruct[],
+      _newTicks: DefiEdgeStrategy.NewTickStruct[],
       _burnAll: PromiseOrValue<boolean>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
@@ -609,8 +609,8 @@ export interface Strategy extends BaseContract {
 
   rebalance(
     _swapData: PromiseOrValue<BytesLike>,
-    _existingTicks: DefiedgeStrategy.PartialTickStruct[],
-    _newTicks: DefiedgeStrategy.NewTickStruct[],
+    _existingTicks: DefiEdgeStrategy.PartialTickStruct[],
+    _newTicks: DefiEdgeStrategy.NewTickStruct[],
     _burnAll: PromiseOrValue<boolean>,
     overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
@@ -765,8 +765,8 @@ export interface Strategy extends BaseContract {
 
     rebalance(
       _swapData: PromiseOrValue<BytesLike>,
-      _existingTicks: DefiedgeStrategy.PartialTickStruct[],
-      _newTicks: DefiedgeStrategy.NewTickStruct[],
+      _existingTicks: DefiEdgeStrategy.PartialTickStruct[],
+      _newTicks: DefiEdgeStrategy.NewTickStruct[],
       _burnAll: PromiseOrValue<boolean>,
       overrides?: CallOverrides,
     ): Promise<void>;
@@ -961,8 +961,8 @@ export interface Strategy extends BaseContract {
 
     rebalance(
       _swapData: PromiseOrValue<BytesLike>,
-      _existingTicks: DefiedgeStrategy.PartialTickStruct[],
-      _newTicks: DefiedgeStrategy.NewTickStruct[],
+      _existingTicks: DefiEdgeStrategy.PartialTickStruct[],
+      _newTicks: DefiEdgeStrategy.NewTickStruct[],
       _burnAll: PromiseOrValue<boolean>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
@@ -1095,8 +1095,8 @@ export interface Strategy extends BaseContract {
 
     rebalance(
       _swapData: PromiseOrValue<BytesLike>,
-      _existingTicks: DefiedgeStrategy.PartialTickStruct[],
-      _newTicks: DefiedgeStrategy.NewTickStruct[],
+      _existingTicks: DefiEdgeStrategy.PartialTickStruct[],
+      _newTicks: DefiEdgeStrategy.NewTickStruct[],
       _burnAll: PromiseOrValue<boolean>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
