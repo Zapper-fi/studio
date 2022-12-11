@@ -22,6 +22,16 @@ export const EXACTLY_DEFINITION = appDefinition({
       type: GroupType.TOKEN,
       label: 'Variable Borrow',
     },
+    fixedDeposit: {
+      id: 'fixed-deposit',
+      type: GroupType.TOKEN,
+      label: 'Fixed Deposit',
+    },
+    fixedBorrow: {
+      id: 'fixed-borrow',
+      type: GroupType.TOKEN,
+      label: 'Fixed Borrow',
+    },
   },
   presentationConfig: {
     tabs: [
@@ -32,12 +42,18 @@ export const EXACTLY_DEFINITION = appDefinition({
           {
             viewType: 'split',
             label: 'Deposit',
-            views: [{ viewType: 'list', label: 'Variable', groupIds: ['deposit'] }],
+            views: [
+              { viewType: 'list', label: 'Variable', groupIds: ['deposit'] },
+              { viewType: 'list', label: 'Fixed', groupIds: ['fixed-deposit'] },
+            ],
           },
           {
             viewType: 'split',
             label: 'Borrow',
-            views: [{ viewType: 'list', label: 'Variable', groupIds: ['borrow'] }],
+            views: [
+              { viewType: 'list', label: 'Variable', groupIds: ['borrow'] },
+              { viewType: 'list', label: 'Fixed', groupIds: ['fixed-borrow'] },
+            ],
           },
         ],
       },
