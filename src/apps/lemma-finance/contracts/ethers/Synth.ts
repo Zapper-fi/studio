@@ -17,7 +17,7 @@ import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi
 import type { Listener, Provider } from '@ethersproject/providers';
 import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
-export interface LemmaSynthInterface extends utils.Interface {
+export interface SynthInterface extends utils.Interface {
   functions: {
     'ADMIN_ROLE()': FunctionFragment;
     'DEFAULT_ADMIN_ROLE()': FunctionFragment;
@@ -433,12 +433,12 @@ export type WithdrawToEvent = TypedEvent<[string, string, string, BigNumber, Big
 
 export type WithdrawToEventFilter = TypedEventFilter<WithdrawToEvent>;
 
-export interface LemmaSynth extends BaseContract {
+export interface Synth extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
 
-  interface: LemmaSynthInterface;
+  interface: SynthInterface;
 
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,

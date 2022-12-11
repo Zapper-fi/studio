@@ -17,7 +17,7 @@ import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi
 import type { Listener, Provider } from '@ethersproject/providers';
 import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
-export interface XusdlInterface extends utils.Interface {
+export interface XSynthInterface extends utils.Interface {
   functions: {
     'DOMAIN_SEPARATOR()': FunctionFragment;
     'allowance(address,address)': FunctionFragment;
@@ -30,8 +30,9 @@ export interface XusdlInterface extends utils.Interface {
     'decreaseAllowance(address,uint256)': FunctionFragment;
     'deposit(uint256,address)': FunctionFragment;
     'increaseAllowance(address,uint256)': FunctionFragment;
-    'initialize(address,address,address)': FunctionFragment;
+    'initialize(address,address,address,string,string)': FunctionFragment;
     'isTrustedForwarder(address)': FunctionFragment;
+    'lSynth()': FunctionFragment;
     'maxDeposit()': FunctionFragment;
     'maxMint()': FunctionFragment;
     'maxRedeem()': FunctionFragment;
@@ -58,7 +59,6 @@ export interface XusdlInterface extends utils.Interface {
     'transfer(address,uint256)': FunctionFragment;
     'transferFrom(address,address,uint256)': FunctionFragment;
     'transferOwnership(address)': FunctionFragment;
-    'usdl()': FunctionFragment;
     'userUnlockBlock(address)': FunctionFragment;
     'withdraw(uint256,address,address)': FunctionFragment;
   };
@@ -78,6 +78,7 @@ export interface XusdlInterface extends utils.Interface {
       | 'increaseAllowance'
       | 'initialize'
       | 'isTrustedForwarder'
+      | 'lSynth'
       | 'maxDeposit'
       | 'maxMint'
       | 'maxRedeem'
@@ -104,7 +105,6 @@ export interface XusdlInterface extends utils.Interface {
       | 'transfer'
       | 'transferFrom'
       | 'transferOwnership'
-      | 'usdl'
       | 'userUnlockBlock'
       | 'withdraw',
   ): FunctionFragment;
@@ -134,9 +134,16 @@ export interface XusdlInterface extends utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: 'initialize',
-    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<string>],
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+    ],
   ): string;
   encodeFunctionData(functionFragment: 'isTrustedForwarder', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'lSynth', values?: undefined): string;
   encodeFunctionData(functionFragment: 'maxDeposit', values?: undefined): string;
   encodeFunctionData(functionFragment: 'maxMint', values?: undefined): string;
   encodeFunctionData(functionFragment: 'maxRedeem', values?: undefined): string;
@@ -183,7 +190,6 @@ export interface XusdlInterface extends utils.Interface {
     values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
   ): string;
   encodeFunctionData(functionFragment: 'transferOwnership', values: [PromiseOrValue<string>]): string;
-  encodeFunctionData(functionFragment: 'usdl', values?: undefined): string;
   encodeFunctionData(functionFragment: 'userUnlockBlock', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(
     functionFragment: 'withdraw',
@@ -203,6 +209,7 @@ export interface XusdlInterface extends utils.Interface {
   decodeFunctionResult(functionFragment: 'increaseAllowance', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'initialize', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'isTrustedForwarder', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'lSynth', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'maxDeposit', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'maxMint', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'maxRedeem', data: BytesLike): Result;
@@ -229,7 +236,6 @@ export interface XusdlInterface extends utils.Interface {
   decodeFunctionResult(functionFragment: 'transfer', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'transferFrom', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'transferOwnership', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'usdl', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'userUnlockBlock', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'withdraw', data: BytesLike): Result;
 
@@ -312,12 +318,12 @@ export type WithdrawEvent = TypedEvent<[string, string, BigNumber, BigNumber], W
 
 export type WithdrawEventFilter = TypedEventFilter<WithdrawEvent>;
 
-export interface Xusdl extends BaseContract {
+export interface XSynth extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
 
-  interface: XusdlInterface;
+  interface: XSynthInterface;
 
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,
@@ -379,12 +385,16 @@ export interface Xusdl extends BaseContract {
 
     initialize(
       _trustedForwarder: PromiseOrValue<string>,
-      _usdl: PromiseOrValue<string>,
+      _lSynth: PromiseOrValue<string>,
       _periphery: PromiseOrValue<string>,
+      _name: PromiseOrValue<string>,
+      _symbol: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     isTrustedForwarder(forwarder: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[boolean]>;
+
+    lSynth(overrides?: CallOverrides): Promise<[string]>;
 
     maxDeposit(overrides?: CallOverrides): Promise<[BigNumber] & { maxAssets: BigNumber }>;
 
@@ -486,8 +496,6 @@ export interface Xusdl extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    usdl(overrides?: CallOverrides): Promise<[string]>;
-
     userUnlockBlock(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     withdraw(
@@ -542,12 +550,16 @@ export interface Xusdl extends BaseContract {
 
   initialize(
     _trustedForwarder: PromiseOrValue<string>,
-    _usdl: PromiseOrValue<string>,
+    _lSynth: PromiseOrValue<string>,
     _periphery: PromiseOrValue<string>,
+    _name: PromiseOrValue<string>,
+    _symbol: PromiseOrValue<string>,
     overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   isTrustedForwarder(forwarder: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
+
+  lSynth(overrides?: CallOverrides): Promise<string>;
 
   maxDeposit(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -637,8 +649,6 @@ export interface Xusdl extends BaseContract {
     overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  usdl(overrides?: CallOverrides): Promise<string>;
-
   userUnlockBlock(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   withdraw(
@@ -693,12 +703,16 @@ export interface Xusdl extends BaseContract {
 
     initialize(
       _trustedForwarder: PromiseOrValue<string>,
-      _usdl: PromiseOrValue<string>,
+      _lSynth: PromiseOrValue<string>,
       _periphery: PromiseOrValue<string>,
+      _name: PromiseOrValue<string>,
+      _symbol: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
     isTrustedForwarder(forwarder: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
+
+    lSynth(overrides?: CallOverrides): Promise<string>;
 
     maxDeposit(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -778,8 +792,6 @@ export interface Xusdl extends BaseContract {
     ): Promise<boolean>;
 
     transferOwnership(newOwner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
-
-    usdl(overrides?: CallOverrides): Promise<string>;
 
     userUnlockBlock(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -901,12 +913,16 @@ export interface Xusdl extends BaseContract {
 
     initialize(
       _trustedForwarder: PromiseOrValue<string>,
-      _usdl: PromiseOrValue<string>,
+      _lSynth: PromiseOrValue<string>,
       _periphery: PromiseOrValue<string>,
+      _name: PromiseOrValue<string>,
+      _symbol: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     isTrustedForwarder(forwarder: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
+
+    lSynth(overrides?: CallOverrides): Promise<BigNumber>;
 
     maxDeposit(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -996,8 +1012,6 @@ export interface Xusdl extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    usdl(overrides?: CallOverrides): Promise<BigNumber>;
-
     userUnlockBlock(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     withdraw(
@@ -1053,12 +1067,16 @@ export interface Xusdl extends BaseContract {
 
     initialize(
       _trustedForwarder: PromiseOrValue<string>,
-      _usdl: PromiseOrValue<string>,
+      _lSynth: PromiseOrValue<string>,
       _periphery: PromiseOrValue<string>,
+      _name: PromiseOrValue<string>,
+      _symbol: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     isTrustedForwarder(forwarder: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    lSynth(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     maxDeposit(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
@@ -1147,8 +1165,6 @@ export interface Xusdl extends BaseContract {
       newOwner: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
-
-    usdl(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     userUnlockBlock(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
