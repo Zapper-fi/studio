@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.320.0](https://github.com/Zapper-fi/studio/compare/v0.319.0...v0.320.0) (2022-12-10)
+
+
+### Features
+
+* **positions:** Split getPositions to enable batching ([#1884](https://github.com/Zapper-fi/studio/issues/1884)) ([c936163](https://github.com/Zapper-fi/studio/commit/c936163760ccc56d4c503da68ff3a983847be3fb))
+
 ## [0.319.0](https://github.com/Zapper-fi/studio/compare/v0.318.0...v0.319.0) (2022-12-08)
 
 

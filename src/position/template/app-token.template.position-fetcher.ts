@@ -161,15 +161,12 @@ export abstract class AppTokenTemplatePositionFetcher<
     return statsItems;
   }
 
-  // Default (adapted) Template Runner
-  // Note: This will be removed in favour of an orchestrator at a higher level once all groups are migrated
-  async getPositions(): Promise<AppTokenPosition<V>[]> {
+  async getPositionsForBatch(definitions: R[]) {
     const multicall = this.appToolkit.getMulticall(this.network);
     const tokenLoader = this.appToolkit.getTokenDependencySelector({
       tags: { network: this.network, context: `${this.appId}__template` },
     });
 
-    const definitions = await this.getDefinitions({ multicall, tokenLoader });
     const maybeSkeletons = await Promise.all(
       definitions.map(async definition => {
         const address = definition.address.toLowerCase();
@@ -279,6 +276,18 @@ export abstract class AppTokenTemplatePositionFetcher<
       if (typeof t.dataProps.liquidity === 'number') return -t.dataProps.liquidity;
       return 1;
     });
+  }
+
+  // Default (adapted) Template Runner
+  // Note: This will be removed in favour of an orchestrator at a higher level once all groups are migrated
+  async getPositions(): Promise<AppTokenPosition<V>[]> {
+    const multicall = this.appToolkit.getMulticall(this.network);
+    const tokenLoader = this.appToolkit.getTokenDependencySelector({
+      tags: { network: this.network, context: `${this.appId}__template` },
+    });
+
+    const definitions = await this.getDefinitions({ multicall, tokenLoader });
+    return this.getPositionsForBatch(definitions);
   }
 
   async getAccountAddress(address: string) {
