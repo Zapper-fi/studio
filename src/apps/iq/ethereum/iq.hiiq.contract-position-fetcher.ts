@@ -25,7 +25,7 @@ export class EthereumIqHiiqContractPositionFetcher extends ContractPositionTempl
   }
 
   async getDefinitions() {
-    return [{ address: '0xb55Dcc69d909103b4De773412A22AB8B86e8c602' }];
+    return [{ address: '0xb55dcc69d909103b4de773412a22ab8b86e8c602' }];
   }
 
   async getTokenDefinitions() {
