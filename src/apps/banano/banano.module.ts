@@ -2,6 +2,8 @@ import { Register } from '~app-toolkit/decorators';
 import { AbstractApp } from '~app/app.dynamic-module';
 import { UniswapV2AppModule } from '~apps/uniswap-v2';
 
+import { ArbitrumBananoBalanceFetcher } from './arbitrum/banano.balance-fetcher';
+import { ArbitrumBananoFarmContractPositionFetcher } from './arbitrum/banano.farm.contract-position-fetcher';
 import BANANO_DEFINITION, { BananoAppDefinition } from './banano.definition';
 import { BinanceSmartChainBananoBalanceFetcher } from './binance-smart-chain/banano.balance-fetcher';
 import { BinanceSmartChainBananoFarmContractPositionFetcher } from './binance-smart-chain/banano.farm.contract-position-fetcher';
@@ -35,6 +37,9 @@ import { PolygonBananoFarmContractPositionFetcher } from './polygon/banano.farm.
     // Ethereum
     EthereumBananoBalanceFetcher,
     EthereumBananoFarmContractPositionFetcher,
+    // Arbitrum
+    ArbitrumBananoBalanceFetcher,
+    ArbitrumBananoFarmContractPositionFetcher,
   ],
 })
 export class BananoAppModule extends AbstractApp() {}
