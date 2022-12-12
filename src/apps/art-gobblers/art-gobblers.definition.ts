@@ -6,7 +6,7 @@ import { Network } from '~types/network.interface';
 export const ART_GOBBLERS_DEFINITION = appDefinition({
   id: 'art-gobblers',
   name: 'Art Gobblers',
-  description: '',
+  description: 'An experimental decentralized art factory',
   url: 'https://artgobblers.com/',
 
   groups: {
