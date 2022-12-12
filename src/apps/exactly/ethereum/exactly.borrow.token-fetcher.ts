@@ -1,25 +1,18 @@
 import { constants } from 'ethers';
 
-import { Register } from '~app-toolkit/decorators';
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import type { IMulticallWrapper } from '~multicall/multicall.interface';
 import type { AppTokenPosition } from '~position/position.interface';
 import type { GetDataPropsParams, GetTokenPropsParams } from '~position/template/app-token.template.types';
-import { Network } from '~types/network.interface';
 
 import type { ExactlyMarketDefinition } from '../common/exactly.definitions-resolver';
 import { ExactlyTokenFetcher } from '../common/exactly.token-fetcher';
 import type { ExactlyMarketProps } from '../common/exactly.token-fetcher';
 import type { Market } from '../contracts';
-import { EXACTLY_DEFINITION } from '../exactly.definition';
 
-const group = EXACTLY_DEFINITION.groups.borrow;
-const network = Network.ETHEREUM_MAINNET;
-
-@Register.TokenPositionFetcher({ appId: EXACTLY_DEFINITION.id, groupId: group.id, network })
-export class EthereumExactlyBorrowTokenFetcher extends ExactlyTokenFetcher {
-  groupLabel = group.label;
-  groupId = group.id;
-  network = network;
+@PositionTemplate()
+export class EthereumExactlyBorrowFetcher extends ExactlyTokenFetcher {
+  groupLabel = 'Fixed Borrow';
   isDebt = true;
 
   getSupply({ definition }: GetTokenPropsParams<Market, ExactlyMarketProps, ExactlyMarketDefinition>) {

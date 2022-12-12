@@ -3,10 +3,10 @@ import { AbstractApp } from '~app/app.dynamic-module';
 
 import { ExactlyDefinitionsResolver } from './common/exactly.definitions-resolver';
 import { ExactlyContractFactory } from './contracts';
-import { EthereumExactlyFixedBorrowPositionFetcher } from './ethereum/exactly.borrow.fixed-position-fetcher';
-import { EthereumExactlyBorrowTokenFetcher } from './ethereum/exactly.borrow.token-fetcher';
-import { EthereumExactlyFixedDepositPositionFetcher } from './ethereum/exactly.deposit.fixed-position-fetcher';
-import { EthereumExactlyDepositTokenFetcher } from './ethereum/exactly.deposit.token-fetcher';
+import { EthereumExactlyBorrowFetcher } from './ethereum/exactly.borrow.token-fetcher';
+import { EthereumExactlyDepositFetcher } from './ethereum/exactly.deposit.token-fetcher';
+import { EthereumExactlyFixedBorrowFetcher } from './ethereum/exactly.fixed-borrow.token-fetcher';
+import { EthereumExactlyFixedDepositFetcher } from './ethereum/exactly.fixed-deposit.token-fetcher';
 import { EthereumExactlyPositionPresenter } from './ethereum/exactly.position-presenter';
 import { ExactlyAppDefinition, EXACTLY_DEFINITION } from './exactly.definition';
 
@@ -17,10 +17,10 @@ import { ExactlyAppDefinition, EXACTLY_DEFINITION } from './exactly.definition';
     ExactlyContractFactory,
     ExactlyDefinitionsResolver,
     EthereumExactlyPositionPresenter,
-    EthereumExactlyBorrowTokenFetcher,
-    EthereumExactlyDepositTokenFetcher,
-    EthereumExactlyFixedBorrowPositionFetcher,
-    EthereumExactlyFixedDepositPositionFetcher,
+    EthereumExactlyBorrowFetcher,
+    EthereumExactlyDepositFetcher,
+    EthereumExactlyFixedBorrowFetcher,
+    EthereumExactlyFixedDepositFetcher,
   ],
   exports: [ExactlyAppDefinition, ExactlyContractFactory, ExactlyDefinitionsResolver],
 })
