@@ -12,7 +12,7 @@ export const PREVIEWER_ADDRESSES = {
   [Network.ETHEREUM_MAINNET]: '0x0aa3529ae5fdbceb69cf8ab2b9e2d3af85860469',
 } as Partial<Record<Network, string>>;
 
-export type ExactlyMarketDefinition = DefaultAppTokenDefinition & Omit<Previewer.MarketAccountStructOutput, 'address'>;
+export type ExactlyMarketDefinition = DefaultAppTokenDefinition & Previewer.MarketAccountStructOutput;
 export type GetMarketDefinitionsParams = { network: Network; multicall: IMulticallWrapper; account?: string };
 
 @Injectable()
