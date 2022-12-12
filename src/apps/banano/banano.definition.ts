@@ -25,6 +25,7 @@ export const BANANO_DEFINITION = appDefinition({
     [Network.BINANCE_SMART_CHAIN_MAINNET]: [AppAction.VIEW],
     [Network.FANTOM_OPERA_MAINNET]: [AppAction.VIEW],
     [Network.ETHEREUM_MAINNET]: [AppAction.VIEW],
+    [Network.ARBITRUM_MAINNET]: [AppAction.VIEW],
   },
   primaryColor: '#fff',
 });
