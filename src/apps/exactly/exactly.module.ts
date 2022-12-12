@@ -7,6 +7,7 @@ import { EthereumExactlyFixedBorrowPositionFetcher } from './ethereum/exactly.bo
 import { EthereumExactlyBorrowTokenFetcher } from './ethereum/exactly.borrow.token-fetcher';
 import { EthereumExactlyFixedDepositPositionFetcher } from './ethereum/exactly.deposit.fixed-position-fetcher';
 import { EthereumExactlyDepositTokenFetcher } from './ethereum/exactly.deposit.token-fetcher';
+import { EthereumExactlyPositionPresenter } from './ethereum/exactly.position-presenter';
 import { ExactlyAppDefinition, EXACTLY_DEFINITION } from './exactly.definition';
 
 @Register.AppModule({
@@ -15,6 +16,7 @@ import { ExactlyAppDefinition, EXACTLY_DEFINITION } from './exactly.definition';
     ExactlyAppDefinition,
     ExactlyContractFactory,
     ExactlyDefinitionsResolver,
+    EthereumExactlyPositionPresenter,
     EthereumExactlyBorrowTokenFetcher,
     EthereumExactlyDepositTokenFetcher,
     EthereumExactlyFixedBorrowPositionFetcher,

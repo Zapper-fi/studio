@@ -33,32 +33,6 @@ export const EXACTLY_DEFINITION = appDefinition({
       label: 'Fixed Borrow',
     },
   },
-  presentationConfig: {
-    tabs: [
-      {
-        label: 'Markets',
-        viewType: 'split',
-        views: [
-          {
-            viewType: 'split',
-            label: 'Deposit',
-            views: [
-              { viewType: 'list', label: 'Variable', groupIds: ['deposit'] },
-              { viewType: 'list', label: 'Fixed', groupIds: ['fixed-deposit'] },
-            ],
-          },
-          {
-            viewType: 'split',
-            label: 'Borrow',
-            views: [
-              { viewType: 'list', label: 'Variable', groupIds: ['borrow'] },
-              { viewType: 'list', label: 'Fixed', groupIds: ['fixed-borrow'] },
-            ],
-          },
-        ],
-      },
-    ],
-  },
 
   links: {
     discord: 'https://exact.ly/discord',
