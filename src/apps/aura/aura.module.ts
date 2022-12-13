@@ -14,6 +14,7 @@ import { EthereumAuraPoolContractPositionFetcher } from './ethereum/aura.pool.co
 import { EthereumAuraStakingContractPositionFetcher } from './ethereum/aura.staking.contract-position-fetcher';
 import { AuraBalancerPoolsHelper } from './helpers/aura.balancer-pools-helper';
 import { AuraBaseRewardPoolHelper } from './helpers/aura.base-reward-pool-helper';
+import { AuraSubgraphHelper } from './helpers/aura.subgraph-helper';
 
 @Register.AppModule({
   appId: AURA_DEFINITION.id,
@@ -32,6 +33,7 @@ import { AuraBaseRewardPoolHelper } from './helpers/aura.base-reward-pool-helper
     // Helpers
     AuraBalancerPoolsHelper,
     AuraBaseRewardPoolHelper,
+    AuraSubgraphHelper,
   ],
 })
 export class AuraAppModule extends AbstractApp() {}

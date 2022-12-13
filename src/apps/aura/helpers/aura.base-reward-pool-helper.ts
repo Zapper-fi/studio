@@ -12,7 +12,7 @@ import { Network } from '~types';
 
 type GetRewardsDataPropsParams = {
   network: Network;
-  rewardPools: string[];
+  rewardPools: { address: string; deprecated: boolean }[];
 };
 
 type GetBaseRewardPoolContractPositionsParams = {
@@ -20,7 +20,7 @@ type GetBaseRewardPoolContractPositionsParams = {
   groupId: string;
   network: Network;
   dependencies: AppGroupsDefinition[];
-  rewardPools: string[];
+  rewardPools: { address: string; deprecated: boolean }[];
 };
 
 type GetAuraMintedForRewardTokenParams = {
@@ -63,13 +63,13 @@ export class AuraBaseRewardPoolHelper {
         dependencies,
         resolveFarmContract: ({ address, network }) =>
           this.auraContractFactory.auraBaseRewardPool({ address, network }),
-        resolveFarmAddresses: () => rewardPools,
+        resolveFarmAddresses: () => rewardPools.map(rewardPool => rewardPool.address),
         resolveLiquidity: ({ contract, multicall }) => multicall.wrap(contract).totalSupply(),
         resolveIsActive: this.isActiveStrategy.build<AuraBaseRewardPool>({
           resolvePeriodFinish: ({ contract, multicall }) => multicall.wrap(contract).periodFinish(),
         }),
         resolveRewardTokenAddresses: async ({ contract }) => {
-          const rewards = rewardsDataProps.find(r => r.rewardPool === contract.address)!;
+          const rewards = rewardsDataProps.find(r => r.rewardPool.address === contract.address)!;
           const { rewardToken, extraRewards } = rewards;
           return [rewardToken, AURA_DEFINITION.token!.address, ...extraRewards.map(r => r.rewardToken)];
         },
@@ -80,7 +80,7 @@ export class AuraBaseRewardPoolHelper {
               // Platform reward (e.g. BAL)
               const rewardRate = await contract.rewardRate();
 
-              const { extraRewards } = rewardsDataProps.find(r => r.rewardPool === contract.address)!;
+              const { extraRewards } = rewardsDataProps.find(r => r.rewardPool.address === contract.address)!;
 
               // AURA reward and extra rewards
               const otherRewardRates = await Promise.all([
@@ -101,10 +101,16 @@ export class AuraBaseRewardPoolHelper {
 
     return contractPositions.map<ContractPosition<AuraBaseRewardPoolDataProps>>(
       ({ dataProps, ...contractPosition }) => {
-        const { extraRewards, rewardToken } = rewardsDataProps.find(r => r.rewardPool === contractPosition.address)!;
+        const { extraRewards, rewardToken, rewardPool } = rewardsDataProps.find(
+          r => r.rewardPool.address === contractPosition.address,
+        )!;
         return {
           ...contractPosition,
-          dataProps: { ...dataProps, extraRewards, rewardToken },
+          dataProps: { ...dataProps, extraRewards, rewardToken, rewardPool },
+          displayProps: {
+            ...contractPosition.displayProps,
+            ...(rewardPool.deprecated ? { tertiaryLabel: 'Needs migration' } : null),
+          },
         };
       },
     );
@@ -172,14 +178,12 @@ export class AuraBaseRewardPoolHelper {
   private async getRewardsDataProps({
     rewardPools,
     network,
-  }: GetRewardsDataPropsParams): Promise<
-    { rewardPool: string; rewardToken: string; extraRewards: { address: string; rewardToken: string }[] }[]
-  > {
+  }: GetRewardsDataPropsParams): Promise<AuraBaseRewardPoolDataProps[]> {
     const multicall = this.appToolkit.getMulticall(network);
 
     return Promise.all(
       rewardPools.map(async rewardPool => {
-        const contract = this.auraContractFactory.auraBaseRewardPool({ address: rewardPool, network });
+        const contract = this.auraContractFactory.auraBaseRewardPool({ address: rewardPool.address, network });
 
         const extraRewardsLength = Number(await contract.extraRewardsLength());
 

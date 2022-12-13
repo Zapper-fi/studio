@@ -26,7 +26,10 @@ export class EthereumAuraStakingContractPositionFetcher implements PositionFetch
         { appId: BALANCER_V2_DEFINITION.id, network, groupIds: [BALANCER_V2_DEFINITION.groups.pool.id] },
         { appId: AURA_DEFINITION.id, network, groupIds: [AURA_DEFINITION.groups.auraBal.id] },
       ],
-      rewardPools: ['0x5e5ea2048475854a5702f5b8468a51ba1296efcc'],
+      rewardPools: [
+        { address: '0x00a7ba8ae7bca0b10a32ea1f8e2a1da980c6cad2', deprecated: false },
+        { address: '0x5e5ea2048475854a5702f5b8468a51ba1296efcc', deprecated: true },
+      ],
     });
   }
 }

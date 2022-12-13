@@ -10,6 +10,7 @@ import {
   buildPercentageDisplayItem,
 } from '~app-toolkit/helpers/presentation/display-item.present';
 import { getTokenImg } from '~app-toolkit/helpers/presentation/image.present';
+import { AuraSubgraphHelper } from '~apps/aura/helpers/aura.subgraph-helper';
 import { SynthetixSingleStakingRoiStrategy } from '~apps/synthetix';
 import { ContractType } from '~position/contract.interface';
 import { PositionFetcher } from '~position/position-fetcher.interface';
@@ -52,6 +53,7 @@ const AURA_LOCKER_QUERY = gql`
 export class EthereumAuraLockerContractPositionFetcher implements PositionFetcher<ContractPosition> {
   constructor(
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
+    @Inject(AuraSubgraphHelper) private readonly subgraphHelper: AuraSubgraphHelper,
     @Inject(AuraContractFactory) private readonly auraContractFactory: AuraContractFactory,
     @Inject(SynthetixSingleStakingRoiStrategy) private readonly roiStrategy: SynthetixSingleStakingRoiStrategy,
   ) {}
@@ -130,10 +132,7 @@ export class EthereumAuraLockerContractPositionFetcher implements PositionFetche
   private async getAuraLockerData() {
     const {
       auraLocker: { rewardData, totalSupply },
-    } = await this.appToolkit.helpers.theGraphHelper.request<AuraLockerQuery>({
-      endpoint: 'https://api.thegraph.com/subgraphs/name/aurafinance/aura',
-      query: AURA_LOCKER_QUERY,
-    });
+    } = await this.subgraphHelper.request<AuraLockerQuery>(AURA_LOCKER_QUERY);
     return {
       totalSupply: BigNumber.from(totalSupply),
       rewardData: rewardData.map(({ token: { id }, rewardRate }) => ({ address: id.toLowerCase(), rewardRate })),

@@ -1,6 +1,6 @@
 import { Inject } from '@nestjs/common';
 import { gql } from 'graphql-request';
-import { compact } from 'lodash';
+import { chain } from 'lodash';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
@@ -12,6 +12,7 @@ import { AppTokenPosition } from '~position/position.interface';
 import { Network } from '~types/network.interface';
 
 import { AURA_DEFINITION } from '../aura.definition';
+import { AuraSubgraphHelper } from '../helpers/aura.subgraph-helper';
 
 type Pools = {
   pools: {
@@ -58,7 +59,10 @@ const QUERY = gql`
 
 @Register.TokenPositionFetcher({ appId, groupId, network })
 export class EthereumAuraDepositTokenFetcher implements PositionFetcher<AppTokenPosition> {
-  constructor(@Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit) {}
+  constructor(
+    @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
+    @Inject(AuraSubgraphHelper) private readonly subgraphHelper: AuraSubgraphHelper,
+  ) {}
 
   async getPositions() {
     const appTokens = await this.appToolkit.getAppTokenPositions(
@@ -66,14 +70,14 @@ export class EthereumAuraDepositTokenFetcher implements PositionFetcher<AppToken
       { appId: AURA_DEFINITION.id, groupIds: [AURA_DEFINITION.groups.chef.id], network },
     );
 
-    const { pools } = await this.appToolkit.helpers.theGraphHelper.request<Pools>({
-      endpoint: 'https://api.thegraph.com/subgraphs/name/aurafinance/aura',
-      query: QUERY,
-    });
+    const poolsAllVersions = await this.subgraphHelper.requestAllVersions<Pools>(QUERY);
 
     // Aura platform deposit tokens (e.g. aBPT tokens)
-    const depositTokens = pools.map<AppTokenPosition | null>(
-      ({ depositToken, lpToken: { id: lpTokenAddress }, totalSupply }) => {
+    return chain(poolsAllVersions)
+      .values()
+      .flatMap(query => query.pools)
+      .uniqBy(pool => pool.depositToken.id.toLowerCase())
+      .map<AppTokenPosition | null>(({ depositToken, lpToken: { id: lpTokenAddress }, totalSupply }) => {
         const address = depositToken.id.toLowerCase();
         const { decimals, symbol } = depositToken;
 
@@ -100,9 +104,8 @@ export class EthereumAuraDepositTokenFetcher implements PositionFetcher<AppToken
             images: getImagesFromToken(lpToken),
           },
         };
-      },
-    );
-
-    return compact(depositTokens);
+      })
+      .compact()
+      .value();
   }
 }

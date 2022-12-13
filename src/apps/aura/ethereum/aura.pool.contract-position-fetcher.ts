@@ -1,6 +1,6 @@
 import { Inject } from '@nestjs/common';
 import { gql } from 'graphql-request';
-import { compact } from 'lodash';
+import { chain } from 'lodash';
 
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
@@ -11,6 +11,7 @@ import { ContractPosition } from '~position/position.interface';
 import { Network } from '~types/network.interface';
 
 import { AURA_DEFINITION } from '../aura.definition';
+import { AuraSubgraphHelper } from '../helpers/aura.subgraph-helper';
 
 const appId = AURA_DEFINITION.id;
 const groupId = AURA_DEFINITION.groups.pool.id;
@@ -34,6 +35,7 @@ const REWARD_POOLS_QUERY = gql`
 export class EthereumAuraPoolContractPositionFetcher implements PositionFetcher<ContractPosition> {
   constructor(
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
+    @Inject(AuraSubgraphHelper) private readonly subgraphHelper: AuraSubgraphHelper,
     @Inject(AuraBaseRewardPoolHelper) private readonly auraBaseRewardPoolHelper: AuraBaseRewardPoolHelper,
   ) {}
 
@@ -57,10 +59,21 @@ export class EthereumAuraPoolContractPositionFetcher implements PositionFetcher<
   }
 
   private async getRewardPools() {
-    const { pools } = await this.appToolkit.helpers.theGraphHelper.request<RewardPools>({
-      endpoint: 'https://api.thegraph.com/subgraphs/name/aurafinance/aura',
-      query: REWARD_POOLS_QUERY,
-    });
-    return compact(pools.map(pool => pool.rewardPool));
+    const rewardPoolsAllVersions = await this.subgraphHelper.requestAllVersions<RewardPools>(REWARD_POOLS_QUERY);
+
+    return chain(rewardPoolsAllVersions)
+      .entries()
+      .flatMap(([version, query]) =>
+        query.pools.map(({ rewardPool }) => {
+          if (!rewardPool) {
+            return null;
+          }
+          const deprecated = version === 'v1';
+          return { address: rewardPool, deprecated };
+        }),
+      )
+      .compact()
+      .uniqBy(rewardPool => rewardPool.address)
+      .value();
   }
 }

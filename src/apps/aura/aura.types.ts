@@ -1,6 +1,7 @@
 export type AuraBaseRewardPoolDataProps = {
   extraRewards: { address: string; rewardToken: string }[];
   rewardToken: string;
+  rewardPool: { address: string; deprecated: boolean };
 };
 
 export type BalancerPool = {
