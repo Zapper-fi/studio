@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.323.0](https://github.com/Zapper-fi/studio/compare/v0.322.0...v0.323.0) (2022-12-13)
+
+
+### Features
+
+* **uniswap-v2:** Get positions for balances from DB ([#1903](https://github.com/Zapper-fi/studio/issues/1903)) ([cd49935](https://github.com/Zapper-fi/studio/commit/cd4993593a9dab9df9168ea7202615b2a0b979af))
+
 ## [0.322.0](https://github.com/Zapper-fi/studio/compare/v0.321.0...v0.322.0) (2022-12-13)
 
 
