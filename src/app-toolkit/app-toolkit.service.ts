@@ -80,6 +80,10 @@ export class AppToolkit implements IAppToolkit {
     return this.positionService.getAppTokenPositions<T>(...appTokenDefinitions);
   }
 
+  getAppTokenPositionsFromDatabase<T = DefaultDataProps>(...appTokenDefinitions: AppGroupsDefinition[]) {
+    return this.positionService.getAppTokenPositions<T>(...appTokenDefinitions);
+  }
+
   getAppContractPositions<T = DefaultDataProps>(...appTokenDefinitions: AppGroupsDefinition[]) {
     return this.positionService.getAppContractPositions<T>(...appTokenDefinitions);
   }
