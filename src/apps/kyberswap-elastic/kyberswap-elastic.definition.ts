@@ -36,7 +36,6 @@ export const KYBERSWAP_ELASTIC_DEFINITION = appDefinition({
     [Network.BINANCE_SMART_CHAIN_MAINNET]: [AppAction.VIEW],
     [Network.OPTIMISM_MAINNET]: [AppAction.VIEW],
     [Network.ARBITRUM_MAINNET]: [AppAction.VIEW],
-    [Network.CRONOS_MAINNET]: [AppAction.VIEW],
     [Network.FANTOM_OPERA_MAINNET]: [AppAction.VIEW],
     [Network.POLYGON_MAINNET]: [AppAction.VIEW],
     [Network.AVALANCHE_MAINNET]: [AppAction.VIEW],

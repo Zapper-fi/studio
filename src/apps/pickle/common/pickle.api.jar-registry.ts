@@ -26,7 +26,6 @@ const NETWORK_MAPPING = {
   [Network.MOONRIVER_MAINNET]: 'moonriver',
   [Network.OPTIMISM_MAINNET]: 'optimism',
   [Network.FANTOM_OPERA_MAINNET]: 'fantom',
-  [Network.CRONOS_MAINNET]: 'cronos',
   [Network.GNOSIS_MAINNET]: 'gnosis',
   [Network.AURORA_MAINNET]: 'aurora',
 };
