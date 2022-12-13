@@ -38,6 +38,7 @@ export class EthereumUniswapV2PoolTokenFetcher extends UniswapV2DefaultPoolSubgr
 
   factoryAddress = '0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f';
   subgraphUrl = 'https://api.thegraph.com/subgraphs/name/ianlapham/uniswapv2';
+  ignoredPools = ['0x3016a43b482d0480460f6625115bd372fe90c6bf'];
   first = 5000;
 
   async getBalances(_address: string): Promise<AppTokenPositionBalance<UniswapV2TokenDataProps>[]> {
