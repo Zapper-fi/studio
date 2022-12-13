@@ -4,6 +4,18 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.324.0](https://github.com/Zapper-fi/studio/compare/v0.323.0...v0.324.0) (2022-12-13)
+
+
+### Features
+
+* **banano:** To templates ([#1906](https://github.com/Zapper-fi/studio/issues/1906)) ([0b7ceb1](https://github.com/Zapper-fi/studio/commit/0b7ceb15828a5409adb9c08a1397edbc48bb5a11))
+
+
+### Bug Fixes
+
+* **main:** Remove support for cronos network ([#1897](https://github.com/Zapper-fi/studio/issues/1897)) ([bc1a314](https://github.com/Zapper-fi/studio/commit/bc1a3142ab487c90f215399dc4c6c7a84a23566f))
+
 ## [0.323.0](https://github.com/Zapper-fi/studio/compare/v0.322.0...v0.323.0) (2022-12-13)
 
 
