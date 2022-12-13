@@ -4,6 +4,20 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.321.0](https://github.com/Zapper-fi/studio/compare/v0.320.0...v0.321.0) (2022-12-13)
+
+
+### Features
+
+* **banano:** Banano on Arbitrum ([#1896](https://github.com/Zapper-fi/studio/issues/1896)) ([934c525](https://github.com/Zapper-fi/studio/commit/934c525a45ab049b8f808aeec935aaf3f9252ab9))
+* **uniswap-v2:** Enable fetching 5000 Uniswap V2 pools ([#1900](https://github.com/Zapper-fi/studio/issues/1900)) ([9ee1020](https://github.com/Zapper-fi/studio/commit/9ee1020b1279595071469cd264ab92ad8d9c94c3))
+
+
+### Bug Fixes
+
+* **iq:** Linting ([#1894](https://github.com/Zapper-fi/studio/issues/1894)) ([86c1692](https://github.com/Zapper-fi/studio/commit/86c1692e078d27b21f4a89afbeda67649032abd2))
+* **lemma-finance:** xUSDL price and underlying token ([#1892](https://github.com/Zapper-fi/studio/issues/1892)) ([726e5a6](https://github.com/Zapper-fi/studio/commit/726e5a6c03f49d764cc6d7de92dd5930a438310e))
+
 ## [0.320.0](https://github.com/Zapper-fi/studio/compare/v0.319.0...v0.320.0) (2022-12-10)
 
 
