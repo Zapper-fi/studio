@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.325.0](https://github.com/Zapper-fi/studio/compare/v0.324.0...v0.325.0) (2022-12-13)
+
+
+### Features
+
+* **chef:** Add params for getDefinitions for overrides ([#1908](https://github.com/Zapper-fi/studio/issues/1908)) ([9068604](https://github.com/Zapper-fi/studio/commit/9068604b41be2aa56640b46ccfd9048ff6032e4d))
+
 ## [0.324.0](https://github.com/Zapper-fi/studio/compare/v0.323.0...v0.324.0) (2022-12-13)
 
 
