@@ -4,6 +4,18 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.322.0](https://github.com/Zapper-fi/studio/compare/v0.321.0...v0.322.0) (2022-12-13)
+
+
+### Features
+
+* **uniswap-v2:** Remove ShibaDoge pool ([#1902](https://github.com/Zapper-fi/studio/issues/1902)) ([3a2bd45](https://github.com/Zapper-fi/studio/commit/3a2bd45fc9a506692277b8ea94b165582469e973))
+
+
+### Bug Fixes
+
+* **art-gobbler:** Add description ([#1898](https://github.com/Zapper-fi/studio/issues/1898)) ([78c6539](https://github.com/Zapper-fi/studio/commit/78c65398e8346bb87d4ce3dfb54dad11f50d749c))
+
 ## [0.321.0](https://github.com/Zapper-fi/studio/compare/v0.320.0...v0.321.0) (2022-12-13)
 
 
