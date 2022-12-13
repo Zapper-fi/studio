@@ -100,6 +100,6 @@ export class LlamapayStreamApiClient {
       variables: { id: address, network: _network },
     });
 
-    return streamsResponse.user.streams;
+    return streamsResponse.user?.streams ?? [];
   }
 }

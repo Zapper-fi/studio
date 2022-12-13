@@ -8,6 +8,14 @@ export const MSTABLE_DEFINITION = appDefinition({
   name: 'mStable',
   description: `mStable is an autonomous and non-custodial infrastructure for pegged-value crypto assets.`,
   url: 'https://mstable.org/',
+  tags: [AppTag.ASSET_MANAGEMENT],
+
+  links: {
+    twitter: 'https://twitter.com/mstable_',
+    discord: 'https://discord.com/invite/pgCVG7e',
+    medium: 'https://medium.com/mstable',
+    github: 'https://github.com/mstable',
+  },
 
   groups: {
     imusd: {
@@ -41,25 +49,17 @@ export const MSTABLE_DEFINITION = appDefinition({
       label: 'Earn',
       isHiddenFromExplore: true,
     },
-    mvUsdc3Pcv: {
-      id: 'mvUSDC-3PCV',
+
+    metaVault: {
+      id: 'meta-vault',
       type: GroupType.TOKEN,
-      label: '3Pool Convex Meta Vault',
+      label: 'Meta Vaults',
     },
   },
-
-  tags: [AppTag.ASSET_MANAGEMENT],
 
   supportedNetworks: {
     [Network.ETHEREUM_MAINNET]: [AppAction.VIEW],
     [Network.POLYGON_MAINNET]: [AppAction.VIEW],
-  },
-
-  links: {
-    twitter: 'https://twitter.com/mstable_',
-    discord: 'https://discord.com/invite/pgCVG7e',
-    medium: 'https://medium.com/mstable',
-    github: 'https://github.com/mstable',
   },
 });
 

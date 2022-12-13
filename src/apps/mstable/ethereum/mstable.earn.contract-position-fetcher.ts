@@ -1,14 +1,15 @@
 import { Inject } from '@nestjs/common';
 
-import { Register } from '~app-toolkit/decorators';
-import { BALANCER_V2_DEFINITION } from '~apps/balancer-v2';
-import { SynthetixSingleStakingFarmContractPositionHelper } from '~apps/synthetix';
-import { UNISWAP_V2_DEFINITION } from '~apps/uniswap-v2';
-import { PositionFetcher } from '~position/position-fetcher.interface';
-import { ContractPosition } from '~position/position.interface';
-import { Network } from '~types/network.interface';
+import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
+import { GetDataPropsParams, GetTokenBalancesParams } from '~position/template/contract-position.template.types';
+import {
+  SingleStakingFarmDataProps,
+  SingleStakingFarmDefinition,
+  SingleStakingFarmTemplateContractPositionFetcher,
+} from '~position/template/single-staking.template.contract-position-fetcher';
 
-import { MSTABLE_DEFINITION } from '../mstable.definition';
+import { MstableContractFactory, MstableStaking } from '../contracts';
 
 const EARN_FARMS = [
   {
@@ -48,36 +49,34 @@ const EARN_FARMS = [
   },
 ];
 
-// Legacy; see https://earn.mstable.org/
-const network = Network.ETHEREUM_MAINNET;
-const groupId = MSTABLE_DEFINITION.groups.earn.id;
-const appId = MSTABLE_DEFINITION.id;
+@PositionTemplate()
+export class EthereumMstableEarnContractPositionFetcher extends SingleStakingFarmTemplateContractPositionFetcher<MstableStaking> {
+  groupLabel = 'Earn';
 
-@Register.ContractPositionFetcher({ appId, groupId, network })
-export class EthereumMstableEarnContractPositionFetcher implements PositionFetcher<ContractPosition> {
   constructor(
-    @Inject(SynthetixSingleStakingFarmContractPositionHelper)
-    private readonly helper: SynthetixSingleStakingFarmContractPositionHelper,
-  ) {}
+    @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
+    @Inject(MstableContractFactory) protected readonly contractFactory: MstableContractFactory,
+  ) {
+    super(appToolkit);
+  }
 
-  getPositions() {
-    return this.helper.getContractPositions({
-      appId,
-      groupId,
-      network,
-      farmDefinitions: EARN_FARMS,
-      dependencies: [
-        {
-          appId: UNISWAP_V2_DEFINITION.id,
-          groupIds: [UNISWAP_V2_DEFINITION.groups.pool.id],
-          network,
-        },
-        {
-          appId: BALANCER_V2_DEFINITION.id,
-          groupIds: [BALANCER_V2_DEFINITION.groups.pool.id],
-          network,
-        },
-      ],
-    });
+  getContract(address: string): MstableStaking {
+    return this.contractFactory.mstableStaking({ address, network: this.network });
+  }
+
+  async getFarmDefinitions(): Promise<SingleStakingFarmDefinition[]> {
+    return EARN_FARMS;
+  }
+
+  getRewardRates({ contract }: GetDataPropsParams<MstableStaking, SingleStakingFarmDataProps>) {
+    return contract.rewardRate();
+  }
+
+  getStakedTokenBalance({ address, contract }: GetTokenBalancesParams<MstableStaking, SingleStakingFarmDataProps>) {
+    return contract.balanceOf(address);
+  }
+
+  getRewardTokenBalances({ address, contract }: GetTokenBalancesParams<MstableStaking, SingleStakingFarmDataProps>) {
+    return contract.earned(address);
   }
 }

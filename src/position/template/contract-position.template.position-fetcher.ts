@@ -1,6 +1,6 @@
 import { Inject } from '@nestjs/common';
 import { BigNumberish, Contract } from 'ethers/lib/ethers';
-import { compact, sumBy } from 'lodash';
+import _, { compact, sumBy } from 'lodash';
 
 import { drillBalance } from '~app-toolkit';
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
@@ -246,23 +246,34 @@ export abstract class ContractPositionTemplatePositionFetcher<
   async getRawBalances(_address: string): Promise<RawContractPositionBalance[]> {
     const multicall = this.appToolkit.getMulticall(this.network);
     const address = await this.getAccountAddress(_address);
-    const contractPositions = await this.getPositionsForBalances();
     if (address === ZERO_ADDRESS) return [];
 
-    return Promise.all(
-      contractPositions.map(async contractPosition => {
-        const contract = multicall.wrap(this.getContract(contractPosition.address));
-        const balancesRaw = await this.getTokenBalancesPerPosition({ address, contract, contractPosition, multicall });
+    const contractPositions = await this.getPositionsForBalances();
+    let results: RawContractPositionBalance[] = [];
+    for (const batch of _.chunk(contractPositions, 100).values()) {
+      results = results.concat(
+        await Promise.all(
+          batch.map(async contractPosition => {
+            const contract = multicall.wrap(this.getContract(contractPosition.address));
+            const balancesRaw = await this.getTokenBalancesPerPosition({
+              address,
+              contract,
+              contractPosition,
+              multicall,
+            });
 
-        return {
-          key: this.appToolkit.getPositionKey(contractPosition),
-          tokens: contractPosition.tokens.map((token, i) => ({
-            key: this.appToolkit.getPositionKey(token),
-            balance: balancesRaw[i]?.toString() ?? '0',
-          })),
-        };
-      }),
-    );
+            return {
+              key: this.appToolkit.getPositionKey(contractPosition),
+              tokens: contractPosition.tokens.map((token, i) => ({
+                key: this.appToolkit.getPositionKey(token),
+                balance: balancesRaw[i]?.toString() ?? '0',
+              })),
+            };
+          }),
+        ),
+      );
+    }
+    return results;
   }
 
   async drillRawBalances(balances: RawContractPositionBalance[]): Promise<ContractPositionBalance<V>[]> {

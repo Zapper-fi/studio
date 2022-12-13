@@ -4,6 +4,73 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.321.0](https://github.com/Zapper-fi/studio/compare/v0.320.0...v0.321.0) (2022-12-13)
+
+
+### Features
+
+* **banano:** Banano on Arbitrum ([#1896](https://github.com/Zapper-fi/studio/issues/1896)) ([934c525](https://github.com/Zapper-fi/studio/commit/934c525a45ab049b8f808aeec935aaf3f9252ab9))
+* **uniswap-v2:** Enable fetching 5000 Uniswap V2 pools ([#1900](https://github.com/Zapper-fi/studio/issues/1900)) ([9ee1020](https://github.com/Zapper-fi/studio/commit/9ee1020b1279595071469cd264ab92ad8d9c94c3))
+
+
+### Bug Fixes
+
+* **iq:** Linting ([#1894](https://github.com/Zapper-fi/studio/issues/1894)) ([86c1692](https://github.com/Zapper-fi/studio/commit/86c1692e078d27b21f4a89afbeda67649032abd2))
+* **lemma-finance:** xUSDL price and underlying token ([#1892](https://github.com/Zapper-fi/studio/issues/1892)) ([726e5a6](https://github.com/Zapper-fi/studio/commit/726e5a6c03f49d764cc6d7de92dd5930a438310e))
+
+## [0.320.0](https://github.com/Zapper-fi/studio/compare/v0.319.0...v0.320.0) (2022-12-10)
+
+
+### Features
+
+* **positions:** Split getPositions to enable batching ([#1884](https://github.com/Zapper-fi/studio/issues/1884)) ([c936163](https://github.com/Zapper-fi/studio/commit/c936163760ccc56d4c503da68ff3a983847be3fb))
+
+## [0.319.0](https://github.com/Zapper-fi/studio/compare/v0.318.0...v0.319.0) (2022-12-08)
+
+
+### Features
+
+* **balances:** Chunk balance calculations ([#1880](https://github.com/Zapper-fi/studio/issues/1880)) ([a4885b3](https://github.com/Zapper-fi/studio/commit/a4885b3d14c20ff3e4ad53cf71f5a84e0a700687))
+* **insurace:** To templates ([#1876](https://github.com/Zapper-fi/studio/issues/1876)) ([30fb474](https://github.com/Zapper-fi/studio/commit/30fb474aec3020e96a8b1b7f5d901349db7286de))
+* **Iq:** add Iq app integration  ([#1847](https://github.com/Zapper-fi/studio/issues/1847)) ([e8bdd5c](https://github.com/Zapper-fi/studio/commit/e8bdd5ca3201649b0875ecf7cb73441255d2e4c5))
+* **Iq:** add Iq app integration  ([#1847](https://github.com/Zapper-fi/studio/issues/1847)) ([e8bdd5c](https://github.com/Zapper-fi/studio/commit/e8bdd5ca3201649b0875ecf7cb73441255d2e4c5))
+* **lemma-finance:** Support Lemma Finance ([#1756](https://github.com/Zapper-fi/studio/issues/1756)) ([04ef819](https://github.com/Zapper-fi/studio/commit/04ef819f668b36530ef9600a7c9f4ccd44e85fe4))
+
+
+### Bug Fixes
+
+* **idle:** Migrate to template ([#1881](https://github.com/Zapper-fi/studio/issues/1881)) ([4bea362](https://github.com/Zapper-fi/studio/commit/4bea362afb55c57370d1c0605815d46cca35c747))
+* **idle:** Simplify vault token fetcher ([39b8e82](https://github.com/Zapper-fi/studio/commit/39b8e82244c95692570d58146af9d878b64177a8))
+* **mstable:** Fix call for balances ([54daa35](https://github.com/Zapper-fi/studio/commit/54daa35a9f2e413aad3c0765cf2ff54b2052a17c))
+
+## [0.318.0](https://github.com/Zapper-fi/studio/compare/v0.317.0...v0.318.0) (2022-12-06)
+
+
+### Features
+
+* **mstable:** To templates ([#1875](https://github.com/Zapper-fi/studio/issues/1875)) ([5cbac76](https://github.com/Zapper-fi/studio/commit/5cbac764a8d0f2bb1fcb04048c0e38be2675073e))
+
+## [0.317.0](https://github.com/Zapper-fi/studio/compare/v0.316.0...v0.317.0) (2022-12-06)
+
+
+### Features
+
+* **llamapay:** Fix missing null checfk ([c292dfa](https://github.com/Zapper-fi/studio/commit/c292dfa9cf41034ac4576bdce35f382c6f8c067d))
+
+## [0.316.0](https://github.com/Zapper-fi/studio/compare/v0.315.0...v0.316.0) (2022-12-06)
+
+
+### Features
+
+* **base-token:** Fix type returned by token dependency selector ([#1873](https://github.com/Zapper-fi/studio/issues/1873)) ([334fc46](https://github.com/Zapper-fi/studio/commit/334fc46a1fd3623affae9fda124b7b485455bd2c))
+
+
+### Bug Fixes
+
+* **apecoin:** Fix APE staking for pool 0 label ([#1866](https://github.com/Zapper-fi/studio/issues/1866)) ([bac0d4a](https://github.com/Zapper-fi/studio/commit/bac0d4a967dbd6e5f07be57f8eb4ecb782d21812))
+* **aurora-plus:** Migrate to template ([#1871](https://github.com/Zapper-fi/studio/issues/1871)) ([eff585d](https://github.com/Zapper-fi/studio/commit/eff585d9f5f426d2c4429637500905d78f38eebb))
+* **llamapay:** Migrate to template ([#1869](https://github.com/Zapper-fi/studio/issues/1869)) ([12fa9bd](https://github.com/Zapper-fi/studio/commit/12fa9bd2ee9fab460205e627a201264329797bff))
+
 ## [0.315.0](https://github.com/Zapper-fi/studio/compare/v0.314.0...v0.315.0) (2022-12-05)
 
 
