@@ -1,112 +1,65 @@
 import { Inject } from '@nestjs/common';
-import { compact } from 'lodash';
+import 'moment-duration-format';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
-import { Register } from '~app-toolkit/decorators';
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
+import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import {
-  buildDollarDisplayItem,
-  buildPercentageDisplayItem,
-} from '~app-toolkit/helpers/presentation/display-item.present';
-import { getTokenImg } from '~app-toolkit/helpers/presentation/image.present';
-import { ContractType } from '~position/contract.interface';
-import { PositionFetcher } from '~position/position-fetcher.interface';
-import { AppTokenPosition } from '~position/position.interface';
-import { Network } from '~types';
+  DefaultAppTokenDataProps,
+  GetAddressesParams,
+  GetDataPropsParams,
+  GetDisplayPropsParams,
+  GetUnderlyingTokensParams,
+} from '~position/template/app-token.template.types';
 
-import { MapleContractFactory } from '../contracts';
-import { MapleCacheManager } from '../helpers/maple.cache-manager';
-import { MAPLE_DEFINITION } from '../maple.definition';
+import { MaplePoolDefinitionResolver } from '../common/maple.pool.definition-resolver';
+import { MapleContractFactory, MaplePool } from '../contracts';
 
-export type MaplePoolTokenDataProps = {
-  liquidity: number;
+export type MaplePoolTokenDefinition = {
+  address: string;
+  poolName: string;
   apy: number;
 };
 
-const appId = MAPLE_DEFINITION.id;
-const groupId = MAPLE_DEFINITION.groups.pool.id;
-const network = Network.ETHEREUM_MAINNET;
+@PositionTemplate()
+export class EthereumMaplePoolTokenFetcher extends AppTokenTemplatePositionFetcher<
+  MaplePool,
+  DefaultAppTokenDataProps,
+  MaplePoolTokenDefinition
+> {
+  groupLabel = 'Lending';
 
-@Register.TokenPositionFetcher({
-  appId,
-  groupId,
-  network,
-})
-export class EthereumMaplePoolTokenFetcher implements PositionFetcher<AppTokenPosition> {
   constructor(
-    @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
-    @Inject(MapleContractFactory) private readonly mapleContractFactory: MapleContractFactory,
-    @Inject(MapleCacheManager) private readonly mapleCacheManager: MapleCacheManager,
-  ) {}
+    @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
+    @Inject(MapleContractFactory) protected readonly contractFactory: MapleContractFactory,
+    @Inject(MaplePoolDefinitionResolver) protected readonly maplePoolDefinitionResolver: MaplePoolDefinitionResolver,
+  ) {
+    super(appToolkit);
+  }
 
-  async getPositions() {
-    const multicall = this.appToolkit.getMulticall(network);
-    const baseTokens = await this.appToolkit.getBaseTokenPrices(network);
-    const poolData = (await this.mapleCacheManager.getCachedPoolData()) ?? [];
+  getContract(address: string): MaplePool {
+    return this.contractFactory.maplePool({ network: this.network, address });
+  }
 
-    const poolTokens = await Promise.all(
-      poolData.map(async pool => {
-        const contract = this.mapleContractFactory.maplePool({ address: pool.poolAddress, network });
-        const [underlyingTokenAddressRaw, symbol, decimals, supplyRaw] = await Promise.all([
-          multicall.wrap(contract).liquidityAsset(),
-          multicall.wrap(contract).symbol(),
-          multicall.wrap(contract).decimals(),
-          multicall.wrap(contract).totalSupply(),
-        ]);
+  async getDefinitions(): Promise<MaplePoolTokenDefinition[]> {
+    return this.maplePoolDefinitionResolver.getPoolDefinitions();
+  }
 
-        const underlyingToken = baseTokens.find(p => p.address == underlyingTokenAddressRaw.toLowerCase());
-        if (!underlyingToken) return null;
+  async getAddresses({ definitions }: GetAddressesParams) {
+    return definitions.map(v => v.address);
+  }
 
-        // Data Props
-        const address = pool.poolAddress;
-        const supply = Number(supplyRaw) / 10 ** decimals;
-        const pricePerShare = 1;
-        const price = underlyingToken.price;
-        const tokens = [underlyingToken];
-        const apy = Number(pool.apy) / 100;
-        const liquidity = price * supply;
-        if (liquidity <= 0) return null;
+  async getUnderlyingTokenAddresses({ contract }: GetUnderlyingTokensParams<MaplePool>) {
+    return contract.asset();
+  }
 
-        // Display Props
-        const label = pool.poolName;
-        const secondaryLabel = buildDollarDisplayItem(price);
-        const tertiaryLabel = `${apy.toFixed(3)}% APY`;
-        const images = [getTokenImg(underlyingToken.address, network)];
-        const statsItems = [
-          { label: 'APY', value: buildPercentageDisplayItem(apy) },
-          { label: 'Liquidity', value: buildDollarDisplayItem(liquidity) },
-        ];
+  async getApy({ definition }: GetDataPropsParams<MaplePool, DefaultAppTokenDataProps, MaplePoolTokenDefinition>) {
+    return Number(definition.apy) / 10 ** 28;
+  }
 
-        const poolToken: AppTokenPosition<MaplePoolTokenDataProps> = {
-          type: ContractType.APP_TOKEN,
-          appId,
-          groupId,
-          address,
-          network,
-          symbol,
-          decimals,
-          supply,
-          pricePerShare,
-          price,
-          tokens,
-
-          dataProps: {
-            liquidity,
-            apy,
-          },
-
-          displayProps: {
-            label,
-            secondaryLabel,
-            tertiaryLabel,
-            images,
-            statsItems,
-          },
-        };
-
-        return poolToken;
-      }),
-    );
-
-    return compact(poolTokens);
+  async getLabel({
+    definition,
+  }: GetDisplayPropsParams<MaplePool, DefaultAppTokenDataProps, MaplePoolTokenDefinition>): Promise<string> {
+    return definition.poolName;
   }
 }
