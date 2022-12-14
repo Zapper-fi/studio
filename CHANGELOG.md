@@ -4,6 +4,18 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.326.0](https://github.com/Zapper-fi/studio/compare/v0.325.1...v0.326.0) (2022-12-14)
+
+
+### Features
+
+* **maple:** Implemented Maple v2 and migrate to template ([#1910](https://github.com/Zapper-fi/studio/issues/1910)) ([d4634a1](https://github.com/Zapper-fi/studio/commit/d4634a1397441bd130e242c6a97c0a5000c2dbc0))
+
+
+### Bug Fixes
+
+* **presenter:** Check against balances, not grouped balances ([#1917](https://github.com/Zapper-fi/studio/issues/1917)) ([d1c2f2f](https://github.com/Zapper-fi/studio/commit/d1c2f2f09a6d9c025c3bdb1e5cdc218cf1e34554))
+
 ## [0.325.1](https://github.com/Zapper-fi/studio/compare/v0.325.0...v0.325.1) (2022-12-14)
 
 
