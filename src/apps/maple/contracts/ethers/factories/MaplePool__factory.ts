@@ -11,52 +11,37 @@ const _abi = [
     inputs: [
       {
         internalType: 'address',
-        name: '_poolDelegate',
+        name: 'manager_',
         type: 'address',
       },
       {
         internalType: 'address',
-        name: '_liquidityAsset',
+        name: 'asset_',
         type: 'address',
       },
       {
         internalType: 'address',
-        name: '_stakeAsset',
-        type: 'address',
-      },
-      {
-        internalType: 'address',
-        name: '_slFactory',
-        type: 'address',
-      },
-      {
-        internalType: 'address',
-        name: '_llFactory',
+        name: 'destination_',
         type: 'address',
       },
       {
         internalType: 'uint256',
-        name: '_stakingFee',
+        name: 'bootstrapMint_',
         type: 'uint256',
       },
       {
         internalType: 'uint256',
-        name: '_delegateFee',
-        type: 'uint256',
-      },
-      {
-        internalType: 'uint256',
-        name: '_liquidityCap',
+        name: 'initialSupply_',
         type: 'uint256',
       },
       {
         internalType: 'string',
-        name: 'name',
+        name: 'name_',
         type: 'string',
       },
       {
         internalType: 'string',
-        name: 'symbol',
+        name: 'symbol_',
         type: 'string',
       },
     ],
@@ -69,19 +54,19 @@ const _abi = [
       {
         indexed: true,
         internalType: 'address',
-        name: 'owner',
+        name: 'owner_',
         type: 'address',
       },
       {
         indexed: true,
         internalType: 'address',
-        name: 'spender',
+        name: 'spender_',
         type: 'address',
       },
       {
         indexed: false,
         internalType: 'uint256',
-        name: 'value',
+        name: 'amount_',
         type: 'uint256',
       },
     ],
@@ -94,66 +79,35 @@ const _abi = [
       {
         indexed: true,
         internalType: 'address',
-        name: 'liquidityProvider',
+        name: 'caller_',
         type: 'address',
       },
       {
         indexed: true,
         internalType: 'address',
-        name: 'token',
+        name: 'receiver_',
         type: 'address',
       },
       {
         indexed: false,
         internalType: 'uint256',
-        name: 'balance',
+        name: 'assets_',
+        type: 'uint256',
+      },
+      {
+        indexed: false,
+        internalType: 'uint256',
+        name: 'shares_',
+        type: 'uint256',
+      },
+      {
+        indexed: false,
+        internalType: 'uint256',
+        name: 'bootStrapMintAmount_',
         type: 'uint256',
       },
     ],
-    name: 'BalanceUpdated',
-    type: 'event',
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: true,
-        internalType: 'address',
-        name: 'loan',
-        type: 'address',
-      },
-      {
-        indexed: false,
-        internalType: 'uint256',
-        name: 'interest',
-        type: 'uint256',
-      },
-      {
-        indexed: false,
-        internalType: 'uint256',
-        name: 'principal',
-        type: 'uint256',
-      },
-      {
-        indexed: false,
-        internalType: 'uint256',
-        name: 'fee',
-        type: 'uint256',
-      },
-      {
-        indexed: false,
-        internalType: 'uint256',
-        name: 'stakeLockerPortion',
-        type: 'uint256',
-      },
-      {
-        indexed: false,
-        internalType: 'uint256',
-        name: 'poolDelegatePortion',
-        type: 'uint256',
-      },
-    ],
-    name: 'Claim',
+    name: 'BootstrapMintPerformed',
     type: 'event',
   },
   {
@@ -162,17 +116,29 @@ const _abi = [
       {
         indexed: true,
         internalType: 'address',
-        name: 'liquidityProvider',
+        name: 'caller_',
+        type: 'address',
+      },
+      {
+        indexed: true,
+        internalType: 'address',
+        name: 'owner_',
         type: 'address',
       },
       {
         indexed: false,
         internalType: 'uint256',
-        name: 'cooldown',
+        name: 'assets_',
+        type: 'uint256',
+      },
+      {
+        indexed: false,
+        internalType: 'uint256',
+        name: 'shares_',
         type: 'uint256',
       },
     ],
-    name: 'Cooldown',
+    name: 'Deposit',
     type: 'event',
   },
   {
@@ -181,29 +147,17 @@ const _abi = [
       {
         indexed: true,
         internalType: 'address',
-        name: 'liquidityProvider',
+        name: 'previousOwner_',
         type: 'address',
       },
       {
         indexed: true,
         internalType: 'address',
-        name: 'custodian',
+        name: 'newOwner_',
         type: 'address',
       },
-      {
-        indexed: false,
-        internalType: 'uint256',
-        name: 'oldAllowance',
-        type: 'uint256',
-      },
-      {
-        indexed: false,
-        internalType: 'uint256',
-        name: 'newAllowance',
-        type: 'uint256',
-      },
     ],
-    name: 'CustodyAllowanceChanged',
+    name: 'OwnershipAccepted',
     type: 'event',
   },
   {
@@ -212,29 +166,17 @@ const _abi = [
       {
         indexed: true,
         internalType: 'address',
-        name: 'custodian',
+        name: 'owner_',
         type: 'address',
       },
       {
         indexed: true,
         internalType: 'address',
-        name: 'from',
+        name: 'pendingOwner_',
         type: 'address',
-      },
-      {
-        indexed: true,
-        internalType: 'address',
-        name: 'to',
-        type: 'address',
-      },
-      {
-        indexed: false,
-        internalType: 'uint256',
-        name: 'amount',
-        type: 'uint256',
       },
     ],
-    name: 'CustodyTransfer',
+    name: 'PendingOwnerSet',
     type: 'event',
   },
   {
@@ -243,35 +185,23 @@ const _abi = [
       {
         indexed: true,
         internalType: 'address',
-        name: 'loan',
+        name: 'owner_',
         type: 'address',
       },
       {
         indexed: false,
         internalType: 'uint256',
-        name: 'defaultSuffered',
+        name: 'shares_',
         type: 'uint256',
       },
       {
         indexed: false,
         internalType: 'uint256',
-        name: 'bptsBurned',
-        type: 'uint256',
-      },
-      {
-        indexed: false,
-        internalType: 'uint256',
-        name: 'bptsReturned',
-        type: 'uint256',
-      },
-      {
-        indexed: false,
-        internalType: 'uint256',
-        name: 'liquidityAssetRecoveredFromBurn',
+        name: 'escrowedShares_',
         type: 'uint256',
       },
     ],
-    name: 'DefaultSuffered',
+    name: 'RedemptionRequested',
     type: 'event',
   },
   {
@@ -280,17 +210,17 @@ const _abi = [
       {
         indexed: true,
         internalType: 'address',
-        name: 'liquidityProvider',
+        name: 'owner_',
         type: 'address',
       },
       {
         indexed: false,
         internalType: 'uint256',
-        name: 'depositDate',
+        name: 'shares_',
         type: 'uint256',
       },
     ],
-    name: 'DepositDateUpdated',
+    name: 'SharesRemoved',
     type: 'event',
   },
   {
@@ -299,318 +229,19 @@ const _abi = [
       {
         indexed: true,
         internalType: 'address',
-        name: 'by',
-        type: 'address',
-      },
-      {
-        indexed: false,
-        internalType: 'uint256',
-        name: 'fundsDistributed',
-        type: 'uint256',
-      },
-    ],
-    name: 'FundsDistributed',
-    type: 'event',
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: true,
-        internalType: 'address',
-        name: 'by',
-        type: 'address',
-      },
-      {
-        indexed: false,
-        internalType: 'uint256',
-        name: 'fundsWithdrawn',
-        type: 'uint256',
-      },
-      {
-        indexed: false,
-        internalType: 'uint256',
-        name: 'totalWithdrawn',
-        type: 'uint256',
-      },
-    ],
-    name: 'FundsWithdrawn',
-    type: 'event',
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: true,
-        internalType: 'address',
-        name: 'liquidityProvider',
-        type: 'address',
-      },
-      {
-        indexed: false,
-        internalType: 'bool',
-        name: 'status',
-        type: 'bool',
-      },
-    ],
-    name: 'LPStatusChanged',
-    type: 'event',
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: false,
-        internalType: 'uint256',
-        name: 'newLiquidityCap',
-        type: 'uint256',
-      },
-    ],
-    name: 'LiquidityCapSet',
-    type: 'event',
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: true,
-        internalType: 'address',
-        name: 'loan',
-        type: 'address',
-      },
-      {
-        indexed: false,
-        internalType: 'address',
-        name: 'debtLocker',
-        type: 'address',
-      },
-      {
-        indexed: false,
-        internalType: 'uint256',
-        name: 'amountFunded',
-        type: 'uint256',
-      },
-    ],
-    name: 'LoanFunded',
-    type: 'event',
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: false,
-        internalType: 'uint256',
-        name: 'newLockupPeriod',
-        type: 'uint256',
-      },
-    ],
-    name: 'LockupPeriodSet',
-    type: 'event',
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: true,
-        internalType: 'address',
-        name: 'account',
-        type: 'address',
-      },
-      {
-        indexed: false,
-        internalType: 'int256',
-        name: 'lossesCorrection',
-        type: 'int256',
-      },
-    ],
-    name: 'LossesCorrectionUpdated',
-    type: 'event',
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: true,
-        internalType: 'address',
-        name: 'by',
-        type: 'address',
-      },
-      {
-        indexed: false,
-        internalType: 'uint256',
-        name: 'lossesDistributed',
-        type: 'uint256',
-      },
-    ],
-    name: 'LossesDistributed',
-    type: 'event',
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: false,
-        internalType: 'uint256',
-        name: 'lossesPerShare',
-        type: 'uint256',
-      },
-    ],
-    name: 'LossesPerShareUpdated',
-    type: 'event',
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: true,
-        internalType: 'address',
-        name: 'by',
-        type: 'address',
-      },
-      {
-        indexed: false,
-        internalType: 'uint256',
-        name: 'lossesRecognized',
-        type: 'uint256',
-      },
-      {
-        indexed: false,
-        internalType: 'uint256',
-        name: 'totalLossesRecognized',
-        type: 'uint256',
-      },
-    ],
-    name: 'LossesRecognized',
-    type: 'event',
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: true,
-        internalType: 'address',
-        name: 'account',
-        type: 'address',
-      },
-      {
-        indexed: false,
-        internalType: 'int256',
-        name: 'pointsCorrection',
-        type: 'int256',
-      },
-    ],
-    name: 'PointsCorrectionUpdated',
-    type: 'event',
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: false,
-        internalType: 'uint256',
-        name: 'pointsPerShare',
-        type: 'uint256',
-      },
-    ],
-    name: 'PointsPerShareUpdated',
-    type: 'event',
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: true,
-        internalType: 'address',
-        name: 'poolAdmin',
-        type: 'address',
-      },
-      {
-        indexed: false,
-        internalType: 'bool',
-        name: 'allowed',
-        type: 'bool',
-      },
-    ],
-    name: 'PoolAdminSet',
-    type: 'event',
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: false,
-        internalType: 'bool',
-        name: 'isOpen',
-        type: 'bool',
-      },
-    ],
-    name: 'PoolOpenedToPublic',
-    type: 'event',
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: false,
-        internalType: 'enum Pool.State',
-        name: 'state',
-        type: 'uint8',
-      },
-    ],
-    name: 'PoolStateChanged',
-    type: 'event',
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: false,
-        internalType: 'uint256',
-        name: 'newStakingFee',
-        type: 'uint256',
-      },
-    ],
-    name: 'StakingFeeSet',
-    type: 'event',
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: true,
-        internalType: 'address',
-        name: 'liquidityProvider',
-        type: 'address',
-      },
-      {
-        indexed: false,
-        internalType: 'uint256',
-        name: 'newTotalAllowance',
-        type: 'uint256',
-      },
-    ],
-    name: 'TotalCustodyAllowanceUpdated',
-    type: 'event',
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: true,
-        internalType: 'address',
-        name: 'from',
+        name: 'owner_',
         type: 'address',
       },
       {
         indexed: true,
         internalType: 'address',
-        name: 'to',
+        name: 'recipient_',
         type: 'address',
       },
       {
         indexed: false,
         internalType: 'uint256',
-        name: 'value',
+        name: 'amount_',
         type: 'uint256',
       },
     ],
@@ -618,29 +249,70 @@ const _abi = [
     type: 'event',
   },
   {
+    anonymous: false,
     inputs: [
       {
+        indexed: true,
         internalType: 'address',
-        name: '_bPool',
+        name: 'caller_',
         type: 'address',
       },
       {
+        indexed: true,
         internalType: 'address',
-        name: '_liquidityAsset',
+        name: 'receiver_',
         type: 'address',
       },
       {
+        indexed: true,
         internalType: 'address',
-        name: '_staker',
+        name: 'owner_',
         type: 'address',
       },
       {
-        internalType: 'address',
-        name: '_stakeLocker',
-        type: 'address',
+        indexed: false,
+        internalType: 'uint256',
+        name: 'assets_',
+        type: 'uint256',
+      },
+      {
+        indexed: false,
+        internalType: 'uint256',
+        name: 'shares_',
+        type: 'uint256',
       },
     ],
-    name: 'BPTVal',
+    name: 'Withdraw',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: 'address',
+        name: 'owner_',
+        type: 'address',
+      },
+      {
+        indexed: false,
+        internalType: 'uint256',
+        name: 'assets_',
+        type: 'uint256',
+      },
+      {
+        indexed: false,
+        internalType: 'uint256',
+        name: 'escrowedShares_',
+        type: 'uint256',
+      },
+    ],
+    name: 'WithdrawRequested',
+    type: 'event',
+  },
+  {
+    inputs: [],
+    name: 'BOOTSTRAP_MINT',
     outputs: [
       {
         internalType: 'uint256',
@@ -653,12 +325,25 @@ const _abi = [
   },
   {
     inputs: [],
-    name: 'DL_FACTORY',
+    name: 'DOMAIN_SEPARATOR',
     outputs: [
       {
-        internalType: 'uint8',
+        internalType: 'bytes32',
+        name: 'domainSeparator_',
+        type: 'bytes32',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'PERMIT_TYPEHASH',
+    outputs: [
+      {
+        internalType: 'bytes32',
         name: '',
-        type: 'uint8',
+        type: 'bytes32',
       },
     ],
     stateMutability: 'view',
@@ -668,50 +353,12 @@ const _abi = [
     inputs: [
       {
         internalType: 'address',
-        name: '_owner',
-        type: 'address',
-      },
-    ],
-    name: 'accumulativeFundsOf',
-    outputs: [
-      {
-        internalType: 'uint256',
         name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        internalType: 'address',
-        name: '_owner',
         type: 'address',
       },
-    ],
-    name: 'accumulativeLossesOf',
-    outputs: [
       {
-        internalType: 'uint256',
+        internalType: 'address',
         name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        internalType: 'address',
-        name: 'owner',
-        type: 'address',
-      },
-      {
-        internalType: 'address',
-        name: 'spender',
         type: 'address',
       },
     ],
@@ -730,16 +377,34 @@ const _abi = [
     inputs: [
       {
         internalType: 'address',
-        name: '',
+        name: 'spender_',
         type: 'address',
       },
+      {
+        internalType: 'uint256',
+        name: 'amount_',
+        type: 'uint256',
+      },
     ],
-    name: 'allowedLiquidityProviders',
+    name: 'approve',
     outputs: [
       {
         internalType: 'bool',
-        name: '',
+        name: 'success_',
         type: 'bool',
+      },
+    ],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'asset',
+    outputs: [
+      {
+        internalType: 'address',
+        name: '',
+        type: 'address',
       },
     ],
     stateMutability: 'view',
@@ -749,31 +414,7 @@ const _abi = [
     inputs: [
       {
         internalType: 'address',
-        name: 'spender',
-        type: 'address',
-      },
-      {
-        internalType: 'uint256',
-        name: 'amount',
-        type: 'uint256',
-      },
-    ],
-    name: 'approve',
-    outputs: [
-      {
-        internalType: 'bool',
         name: '',
-        type: 'bool',
-      },
-    ],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        internalType: 'address',
-        name: 'account',
         type: 'address',
       },
     ],
@@ -789,54 +430,18 @@ const _abi = [
     type: 'function',
   },
   {
-    inputs: [],
-    name: 'cancelWithdraw',
-    outputs: [],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
     inputs: [
       {
         internalType: 'address',
-        name: 'loan',
-        type: 'address',
-      },
-      {
-        internalType: 'address',
-        name: 'dlFactory',
+        name: 'account_',
         type: 'address',
       },
     ],
-    name: 'claim',
-    outputs: [
-      {
-        internalType: 'uint256[7]',
-        name: 'claimInfo',
-        type: 'uint256[7]',
-      },
-    ],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        internalType: 'address',
-        name: '',
-        type: 'address',
-      },
-      {
-        internalType: 'address',
-        name: '',
-        type: 'address',
-      },
-    ],
-    name: 'custodyAllowance',
+    name: 'balanceOfAssets',
     outputs: [
       {
         internalType: 'uint256',
-        name: '',
+        name: 'balanceOfAssets_',
         type: 'uint256',
       },
     ],
@@ -844,31 +449,76 @@ const _abi = [
     type: 'function',
   },
   {
-    inputs: [],
-    name: 'deactivate',
-    outputs: [],
-    stateMutability: 'nonpayable',
+    inputs: [
+      {
+        internalType: 'uint256',
+        name: 'shares_',
+        type: 'uint256',
+      },
+    ],
+    name: 'convertToAssets',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: 'assets_',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
     type: 'function',
   },
   {
     inputs: [
       {
-        internalType: 'address',
-        name: '',
-        type: 'address',
-      },
-      {
-        internalType: 'address',
-        name: '',
-        type: 'address',
+        internalType: 'uint256',
+        name: 'shares_',
+        type: 'uint256',
       },
     ],
-    name: 'debtLockers',
+    name: 'convertToExitAssets',
     outputs: [
       {
-        internalType: 'address',
-        name: '',
-        type: 'address',
+        internalType: 'uint256',
+        name: 'assets_',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'uint256',
+        name: 'amount_',
+        type: 'uint256',
+      },
+    ],
+    name: 'convertToExitShares',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: 'shares_',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'uint256',
+        name: 'assets_',
+        type: 'uint256',
+      },
+    ],
+    name: 'convertToShares',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: 'shares_',
+        type: 'uint256',
       },
     ],
     stateMutability: 'view',
@@ -891,12 +541,12 @@ const _abi = [
     inputs: [
       {
         internalType: 'address',
-        name: 'spender',
+        name: 'spender_',
         type: 'address',
       },
       {
         internalType: 'uint256',
-        name: 'subtractedValue',
+        name: 'subtractedAmount_',
         type: 'uint256',
       },
     ],
@@ -904,7 +554,7 @@ const _abi = [
     outputs: [
       {
         internalType: 'bool',
-        name: '',
+        name: 'success_',
         type: 'bool',
       },
     ],
@@ -912,28 +562,70 @@ const _abi = [
     type: 'function',
   },
   {
-    inputs: [],
-    name: 'delegateFee',
-    outputs: [
-      {
-        internalType: 'uint256',
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
     inputs: [
       {
         internalType: 'uint256',
-        name: 'amt',
+        name: 'assets_',
         type: 'uint256',
+      },
+      {
+        internalType: 'address',
+        name: 'receiver_',
+        type: 'address',
       },
     ],
     name: 'deposit',
-    outputs: [],
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: 'shares_',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'uint256',
+        name: 'assets_',
+        type: 'uint256',
+      },
+      {
+        internalType: 'address',
+        name: 'receiver_',
+        type: 'address',
+      },
+      {
+        internalType: 'uint256',
+        name: 'deadline_',
+        type: 'uint256',
+      },
+      {
+        internalType: 'uint8',
+        name: 'v_',
+        type: 'uint8',
+      },
+      {
+        internalType: 'bytes32',
+        name: 'r_',
+        type: 'bytes32',
+      },
+      {
+        internalType: 'bytes32',
+        name: 's_',
+        type: 'bytes32',
+      },
+    ],
+    name: 'depositWithPermit',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: 'shares_',
+        type: 'uint256',
+      },
+    ],
     stateMutability: 'nonpayable',
     type: 'function',
   },
@@ -941,138 +633,12 @@ const _abi = [
     inputs: [
       {
         internalType: 'address',
-        name: '',
-        type: 'address',
-      },
-    ],
-    name: 'depositDate',
-    outputs: [
-      {
-        internalType: 'uint256',
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'finalize',
-    outputs: [],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        internalType: 'address',
-        name: 'loan',
-        type: 'address',
-      },
-      {
-        internalType: 'address',
-        name: 'dlFactory',
+        name: 'spender_',
         type: 'address',
       },
       {
         internalType: 'uint256',
-        name: 'amt',
-        type: 'uint256',
-      },
-    ],
-    name: 'fundLoan',
-    outputs: [],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'getInitialStakeRequirements',
-    outputs: [
-      {
-        internalType: 'uint256',
-        name: '',
-        type: 'uint256',
-      },
-      {
-        internalType: 'uint256',
-        name: '',
-        type: 'uint256',
-      },
-      {
-        internalType: 'bool',
-        name: '',
-        type: 'bool',
-      },
-      {
-        internalType: 'uint256',
-        name: '',
-        type: 'uint256',
-      },
-      {
-        internalType: 'uint256',
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        internalType: 'address',
-        name: '_bPool',
-        type: 'address',
-      },
-      {
-        internalType: 'address',
-        name: '_liquidityAsset',
-        type: 'address',
-      },
-      {
-        internalType: 'address',
-        name: '_staker',
-        type: 'address',
-      },
-      {
-        internalType: 'address',
-        name: '_stakeLocker',
-        type: 'address',
-      },
-      {
-        internalType: 'uint256',
-        name: '_liquidityAssetAmountRequired',
-        type: 'uint256',
-      },
-    ],
-    name: 'getPoolSharesRequired',
-    outputs: [
-      {
-        internalType: 'uint256',
-        name: '',
-        type: 'uint256',
-      },
-      {
-        internalType: 'uint256',
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        internalType: 'address',
-        name: 'spender',
-        type: 'address',
-      },
-      {
-        internalType: 'uint256',
-        name: 'addedValue',
+        name: 'addedAmount_',
         type: 'uint256',
       },
     ],
@@ -1080,7 +646,7 @@ const _abi = [
     outputs: [
       {
         internalType: 'bool',
-        name: '',
+        name: 'success_',
         type: 'bool',
       },
     ],
@@ -1088,117 +654,8 @@ const _abi = [
     type: 'function',
   },
   {
-    inputs: [
-      {
-        internalType: 'address',
-        name: 'custodian',
-        type: 'address',
-      },
-      {
-        internalType: 'uint256',
-        name: 'amount',
-        type: 'uint256',
-      },
-    ],
-    name: 'increaseCustodyAllowance',
-    outputs: [],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
     inputs: [],
-    name: 'intendToWithdraw',
-    outputs: [],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'interestBalance',
-    outputs: [
-      {
-        internalType: 'uint256',
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'interestSum',
-    outputs: [
-      {
-        internalType: 'uint256',
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        internalType: 'uint256',
-        name: 'depositAmt',
-        type: 'uint256',
-      },
-    ],
-    name: 'isDepositAllowed',
-    outputs: [
-      {
-        internalType: 'bool',
-        name: '',
-        type: 'bool',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'isPoolFinalized',
-    outputs: [
-      {
-        internalType: 'bool',
-        name: '',
-        type: 'bool',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'liquidityAsset',
-    outputs: [
-      {
-        internalType: 'contract IERC20',
-        name: '',
-        type: 'address',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'liquidityCap',
-    outputs: [
-      {
-        internalType: 'uint256',
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'liquidityLocker',
+    name: 'manager',
     outputs: [
       {
         internalType: 'address',
@@ -1210,12 +667,18 @@ const _abi = [
     type: 'function',
   },
   {
-    inputs: [],
-    name: 'lockupPeriod',
+    inputs: [
+      {
+        internalType: 'address',
+        name: 'receiver_',
+        type: 'address',
+      },
+    ],
+    name: 'maxDeposit',
     outputs: [
       {
         internalType: 'uint256',
-        name: '',
+        name: 'maxAssets_',
         type: 'uint256',
       },
     ],
@@ -1223,16 +686,133 @@ const _abi = [
     type: 'function',
   },
   {
-    inputs: [],
-    name: 'lossesBalance',
+    inputs: [
+      {
+        internalType: 'address',
+        name: 'receiver_',
+        type: 'address',
+      },
+    ],
+    name: 'maxMint',
     outputs: [
       {
         internalType: 'uint256',
-        name: '',
+        name: 'maxShares_',
         type: 'uint256',
       },
     ],
     stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'address',
+        name: 'owner_',
+        type: 'address',
+      },
+    ],
+    name: 'maxRedeem',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: 'maxShares_',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'address',
+        name: 'owner_',
+        type: 'address',
+      },
+    ],
+    name: 'maxWithdraw',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: 'maxAssets_',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'uint256',
+        name: 'shares_',
+        type: 'uint256',
+      },
+      {
+        internalType: 'address',
+        name: 'receiver_',
+        type: 'address',
+      },
+    ],
+    name: 'mint',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: 'assets_',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'uint256',
+        name: 'shares_',
+        type: 'uint256',
+      },
+      {
+        internalType: 'address',
+        name: 'receiver_',
+        type: 'address',
+      },
+      {
+        internalType: 'uint256',
+        name: 'maxAssets_',
+        type: 'uint256',
+      },
+      {
+        internalType: 'uint256',
+        name: 'deadline_',
+        type: 'uint256',
+      },
+      {
+        internalType: 'uint8',
+        name: 'v_',
+        type: 'uint8',
+      },
+      {
+        internalType: 'bytes32',
+        name: 'r_',
+        type: 'bytes32',
+      },
+      {
+        internalType: 'bytes32',
+        name: 's_',
+        type: 'bytes32',
+      },
+    ],
+    name: 'mintWithPermit',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: 'assets_',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'nonpayable',
     type: 'function',
   },
   {
@@ -1249,19 +829,6 @@ const _abi = [
     type: 'function',
   },
   {
-    inputs: [],
-    name: 'openToPublic',
-    outputs: [
-      {
-        internalType: 'bool',
-        name: '',
-        type: 'bool',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
     inputs: [
       {
         internalType: 'address',
@@ -1269,33 +836,7 @@ const _abi = [
         type: 'address',
       },
     ],
-    name: 'poolAdmins',
-    outputs: [
-      {
-        internalType: 'bool',
-        name: '',
-        type: 'bool',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'poolDelegate',
-    outputs: [
-      {
-        internalType: 'address',
-        name: '',
-        type: 'address',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'poolLosses',
+    name: 'nonces',
     outputs: [
       {
         internalType: 'uint256',
@@ -1307,25 +848,61 @@ const _abi = [
     type: 'function',
   },
   {
-    inputs: [],
-    name: 'poolState',
-    outputs: [
+    inputs: [
       {
-        internalType: 'enum Pool.State',
-        name: '',
+        internalType: 'address',
+        name: 'owner_',
+        type: 'address',
+      },
+      {
+        internalType: 'address',
+        name: 'spender_',
+        type: 'address',
+      },
+      {
+        internalType: 'uint256',
+        name: 'amount_',
+        type: 'uint256',
+      },
+      {
+        internalType: 'uint256',
+        name: 'deadline_',
+        type: 'uint256',
+      },
+      {
+        internalType: 'uint8',
+        name: 'v_',
         type: 'uint8',
       },
+      {
+        internalType: 'bytes32',
+        name: 'r_',
+        type: 'bytes32',
+      },
+      {
+        internalType: 'bytes32',
+        name: 's_',
+        type: 'bytes32',
+      },
     ],
-    stateMutability: 'view',
+    name: 'permit',
+    outputs: [],
+    stateMutability: 'nonpayable',
     type: 'function',
   },
   {
-    inputs: [],
-    name: 'principalOut',
+    inputs: [
+      {
+        internalType: 'uint256',
+        name: 'assets_',
+        type: 'uint256',
+      },
+    ],
+    name: 'previewDeposit',
     outputs: [
       {
         internalType: 'uint256',
-        name: '',
+        name: 'shares_',
         type: 'uint256',
       },
     ],
@@ -1335,29 +912,16 @@ const _abi = [
   {
     inputs: [
       {
-        internalType: 'address',
-        name: 'token',
-        type: 'address',
+        internalType: 'uint256',
+        name: 'shares_',
+        type: 'uint256',
       },
     ],
-    name: 'reclaimERC20',
-    outputs: [],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        internalType: 'address',
-        name: '_owner',
-        type: 'address',
-      },
-    ],
-    name: 'recognizableLossesOf',
+    name: 'previewMint',
     outputs: [
       {
         internalType: 'uint256',
-        name: '',
+        name: 'assets_',
         type: 'uint256',
       },
     ],
@@ -1367,16 +931,16 @@ const _abi = [
   {
     inputs: [
       {
-        internalType: 'address',
-        name: '_owner',
-        type: 'address',
+        internalType: 'uint256',
+        name: 'shares_',
+        type: 'uint256',
       },
     ],
-    name: 'recognizedLossesOf',
+    name: 'previewRedeem',
     outputs: [
       {
         internalType: 'uint256',
-        name: '',
+        name: 'assets_',
         type: 'uint256',
       },
     ],
@@ -1386,124 +950,16 @@ const _abi = [
   {
     inputs: [
       {
-        internalType: 'address',
-        name: 'account',
-        type: 'address',
-      },
-      {
-        internalType: 'bool',
-        name: 'status',
-        type: 'bool',
-      },
-    ],
-    name: 'setAllowList',
-    outputs: [],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
         internalType: 'uint256',
-        name: 'newLiquidityCap',
+        name: 'assets_',
         type: 'uint256',
       },
     ],
-    name: 'setLiquidityCap',
-    outputs: [],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        internalType: 'uint256',
-        name: 'newLockupPeriod',
-        type: 'uint256',
-      },
-    ],
-    name: 'setLockupPeriod',
-    outputs: [],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        internalType: 'bool',
-        name: 'open',
-        type: 'bool',
-      },
-    ],
-    name: 'setOpenToPublic',
-    outputs: [],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        internalType: 'address',
-        name: 'poolAdmin',
-        type: 'address',
-      },
-      {
-        internalType: 'bool',
-        name: 'allowed',
-        type: 'bool',
-      },
-    ],
-    name: 'setPoolAdmin',
-    outputs: [],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        internalType: 'uint256',
-        name: 'newStakingFee',
-        type: 'uint256',
-      },
-    ],
-    name: 'setStakingFee',
-    outputs: [],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'stakeAsset',
-    outputs: [
-      {
-        internalType: 'address',
-        name: '',
-        type: 'address',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'stakeLocker',
-    outputs: [
-      {
-        internalType: 'address',
-        name: '',
-        type: 'address',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'stakingFee',
+    name: 'previewWithdraw',
     outputs: [
       {
         internalType: 'uint256',
-        name: '',
+        name: 'shares_',
         type: 'uint256',
       },
     ],
@@ -1511,16 +967,104 @@ const _abi = [
     type: 'function',
   },
   {
-    inputs: [],
-    name: 'superFactory',
-    outputs: [
+    inputs: [
+      {
+        internalType: 'uint256',
+        name: 'shares_',
+        type: 'uint256',
+      },
       {
         internalType: 'address',
-        name: '',
+        name: 'receiver_',
+        type: 'address',
+      },
+      {
+        internalType: 'address',
+        name: 'owner_',
         type: 'address',
       },
     ],
-    stateMutability: 'view',
+    name: 'redeem',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: 'assets_',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'uint256',
+        name: 'shares_',
+        type: 'uint256',
+      },
+      {
+        internalType: 'address',
+        name: 'owner_',
+        type: 'address',
+      },
+    ],
+    name: 'removeShares',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: 'sharesReturned_',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'uint256',
+        name: 'shares_',
+        type: 'uint256',
+      },
+      {
+        internalType: 'address',
+        name: 'owner_',
+        type: 'address',
+      },
+    ],
+    name: 'requestRedeem',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: 'escrowedShares_',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'uint256',
+        name: 'assets_',
+        type: 'uint256',
+      },
+      {
+        internalType: 'address',
+        name: 'owner_',
+        type: 'address',
+      },
+    ],
+    name: 'requestWithdraw',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: 'escrowedShares_',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'nonpayable',
     type: 'function',
   },
   {
@@ -1537,18 +1081,12 @@ const _abi = [
     type: 'function',
   },
   {
-    inputs: [
-      {
-        internalType: 'address',
-        name: '',
-        type: 'address',
-      },
-    ],
-    name: 'totalCustodyAllowance',
+    inputs: [],
+    name: 'totalAssets',
     outputs: [
       {
         internalType: 'uint256',
-        name: '',
+        name: 'totalAssets_',
         type: 'uint256',
       },
     ],
@@ -1572,12 +1110,12 @@ const _abi = [
     inputs: [
       {
         internalType: 'address',
-        name: 'recipient',
+        name: 'recipient_',
         type: 'address',
       },
       {
         internalType: 'uint256',
-        name: 'amount',
+        name: 'amount_',
         type: 'uint256',
       },
     ],
@@ -1585,7 +1123,7 @@ const _abi = [
     outputs: [
       {
         internalType: 'bool',
-        name: '',
+        name: 'success_',
         type: 'bool',
       },
     ],
@@ -1596,40 +1134,17 @@ const _abi = [
     inputs: [
       {
         internalType: 'address',
-        name: 'from',
+        name: 'owner_',
         type: 'address',
       },
       {
         internalType: 'address',
-        name: 'to',
+        name: 'recipient_',
         type: 'address',
       },
       {
         internalType: 'uint256',
-        name: 'amount',
-        type: 'uint256',
-      },
-    ],
-    name: 'transferByCustodian',
-    outputs: [],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        internalType: 'address',
-        name: 'sender',
-        type: 'address',
-      },
-      {
-        internalType: 'address',
-        name: 'recipient',
-        type: 'address',
-      },
-      {
-        internalType: 'uint256',
-        name: 'amount',
+        name: 'amount_',
         type: 'uint256',
       },
     ],
@@ -1637,7 +1152,7 @@ const _abi = [
     outputs: [
       {
         internalType: 'bool',
-        name: '',
+        name: 'success_',
         type: 'bool',
       },
     ],
@@ -1645,112 +1160,45 @@ const _abi = [
     type: 'function',
   },
   {
-    inputs: [
+    inputs: [],
+    name: 'unrealizedLosses',
+    outputs: [
       {
-        internalType: 'address',
-        name: 'loan',
-        type: 'address',
-      },
-      {
-        internalType: 'address',
-        name: 'dlFactory',
-        type: 'address',
+        internalType: 'uint256',
+        name: 'unrealizedLosses_',
+        type: 'uint256',
       },
     ],
-    name: 'triggerDefault',
-    outputs: [],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'updateFundsReceived',
-    outputs: [],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'updateLossesReceived',
-    outputs: [],
-    stateMutability: 'nonpayable',
+    stateMutability: 'view',
     type: 'function',
   },
   {
     inputs: [
       {
         internalType: 'uint256',
-        name: 'amt',
+        name: 'assets_',
         type: 'uint256',
+      },
+      {
+        internalType: 'address',
+        name: 'receiver_',
+        type: 'address',
+      },
+      {
+        internalType: 'address',
+        name: 'owner_',
+        type: 'address',
       },
     ],
     name: 'withdraw',
-    outputs: [],
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: 'shares_',
+        type: 'uint256',
+      },
+    ],
     stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        internalType: 'address',
-        name: '',
-        type: 'address',
-      },
-    ],
-    name: 'withdrawCooldown',
-    outputs: [
-      {
-        internalType: 'uint256',
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'withdrawFunds',
-    outputs: [],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        internalType: 'address',
-        name: '_owner',
-        type: 'address',
-      },
-    ],
-    name: 'withdrawableFundsOf',
-    outputs: [
-      {
-        internalType: 'uint256',
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        internalType: 'address',
-        name: '_owner',
-        type: 'address',
-      },
-    ],
-    name: 'withdrawnFundsOf',
-    outputs: [
-      {
-        internalType: 'uint256',
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
     type: 'function',
   },
 ];
