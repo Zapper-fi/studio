@@ -354,9 +354,14 @@ export abstract class AppTokenTemplatePositionFetcher<
   async drillRawBalances(balances: RawAppTokenBalance[]): Promise<AppTokenPositionBalance<V>[]> {
     const appTokens = await this.getPositionsForBalances();
 
+    const balancesByKey = _(balances)
+      .groupBy(b => b.key)
+      .mapValues(v => v[0])
+      .value();
+
     const appTokenBalances = appTokens.map(token => {
       const key = this.appToolkit.getPositionKey(token);
-      const tokenBalance = balances.find(b => b.key === key);
+      const tokenBalance = balancesByKey[key];
       if (!tokenBalance) return null;
 
       const result = drillBalance<typeof token, V>(token, tokenBalance.balance, { isDebt: this.isDebt });

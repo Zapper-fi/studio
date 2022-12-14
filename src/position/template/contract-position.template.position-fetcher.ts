@@ -279,15 +279,25 @@ export abstract class ContractPositionTemplatePositionFetcher<
   async drillRawBalances(balances: RawContractPositionBalance[]): Promise<ContractPositionBalance<V>[]> {
     const contractPositions = await this.getPositionsForBalances();
 
+    const balancesByKey = _(balances)
+      .groupBy(b => b.key)
+      .mapValues(v => v[0])
+      .value();
+
     return compact(
       contractPositions.map(contractPosition => {
         const key = this.appToolkit.getPositionKey(contractPosition);
-        const positionBalances = balances.find(b => b.key === key);
+        const positionBalances = balancesByKey[key];
         if (!positionBalances) return null;
+
+        const positionTokensByKey = _(positionBalances.tokens)
+          .groupBy(t => t.key)
+          .mapValues(v => v[0])
+          .value();
 
         const allTokens = contractPosition.tokens.map(token => {
           const key = this.appToolkit.getPositionKey(token);
-          const tokenBalance = positionBalances.tokens.find(b => b.key === key);
+          const tokenBalance = positionTokensByKey[key];
           if (!tokenBalance) return null;
 
           return drillBalance<typeof token, V>(token, tokenBalance.balance, {
