@@ -4,6 +4,18 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.327.0](https://github.com/Zapper-fi/studio/compare/v0.326.0...v0.327.0) (2022-12-14)
+
+
+### Features
+
+* **balances:** Improve performance by doing O(1) lookups ([#1919](https://github.com/Zapper-fi/studio/issues/1919)) ([d373394](https://github.com/Zapper-fi/studio/commit/d373394ac17a7aa0c0b2ca03e2b97f4ea19deff6))
+
+
+### Bug Fixes
+
+* **synthetix:** Check if the contract position is undefined ([#1914](https://github.com/Zapper-fi/studio/issues/1914)) ([60b8def](https://github.com/Zapper-fi/studio/commit/60b8def07df3656821221f87b9e39568a21fcd11))
+
 ## [0.326.0](https://github.com/Zapper-fi/studio/compare/v0.325.1...v0.326.0) (2022-12-14)
 
 
