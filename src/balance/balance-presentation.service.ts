@@ -104,6 +104,8 @@ export class BalancePresentationService {
 
         return Promise.all(
           Object.entries(groupBalances).map(async ([computedGroupLabel, balances]) => {
+            if (!groupBalances.length) return;
+
             const groupMetaResolver = balanceMetaResolvers?.get(group.label);
             const meta = groupMetaResolver && (await groupMetaResolver(address, balances).catch(_ => undefined));
 
@@ -113,7 +115,7 @@ export class BalancePresentationService {
               ...(meta && { meta }),
             };
           }),
-        );
+        ).then(v => _.compact(v));
       }),
     );
 
