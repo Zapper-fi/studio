@@ -4,6 +4,15 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.325.1](https://github.com/Zapper-fi/studio/compare/v0.325.0...v0.325.1) (2022-12-14)
+
+
+### Bug Fixes
+
+* **apecoin:** Add description ([#1912](https://github.com/Zapper-fi/studio/issues/1912)) ([4c672cf](https://github.com/Zapper-fi/studio/commit/4c672cf1331800c4cac9c54db3a9e7c237673c83))
+* **presenter:** Catch and ignore presenter errors ([#1915](https://github.com/Zapper-fi/studio/issues/1915)) ([4553800](https://github.com/Zapper-fi/studio/commit/455380001fb22e5ba9b7c2f097c9ccccafba95c0))
+* **presenter:** ignore empty balance set ([#1916](https://github.com/Zapper-fi/studio/issues/1916)) ([bc9a28d](https://github.com/Zapper-fi/studio/commit/bc9a28d602c72c7c6c237123724eb7dbeff3744b))
+
 ## [0.325.0](https://github.com/Zapper-fi/studio/compare/v0.324.0...v0.325.0) (2022-12-13)
 
 
