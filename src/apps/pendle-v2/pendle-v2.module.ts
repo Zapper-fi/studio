@@ -7,6 +7,10 @@ import { PendleV2AppDefinition, PENDLE_V_2_DEFINITION } from './pendle-v2.defini
 
 @Register.AppModule({
   appId: PENDLE_V_2_DEFINITION.id,
-  providers: [EthereumPendleV2FarmTokenFetcher, PendleV2AppDefinition, PendleV2ContractFactory],
+  providers: [
+    EthereumPendleV2FarmTokenFetcher,
+    PendleV2AppDefinition,
+    PendleV2ContractFactory,
+  ],
 })
-export class PendleV2AppModule extends AbstractApp() {}
+export class PendleV2AppModule extends AbstractApp() { }

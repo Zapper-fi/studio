@@ -7,25 +7,24 @@ export const BACKEND_QUERIES = {
             markets(chainId: $chainId, where: { isWhitelistedPro: true }) {
                 results {
                     address
-                    symbol
                     aggregatedApy
                     proName
                     proIcon
-                    reserves {
-                        totalPt
-                        totalSy
-                    }
+                    expiry
                     sy {
+                        address
                         price {
                             usd
                         }
                     }
                     pt {
+                        address
                         price {
                             usd
                         }
                     }
                     lp {
+                        address
                         price {
                             usd
                         }

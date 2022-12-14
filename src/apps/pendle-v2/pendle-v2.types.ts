@@ -1,18 +1,15 @@
 export type TokenResponse = {
+    address: string;
     price: {
         usd: number;
     }
 };
 export type MarketResponse = {
     address: string;
-    symbol: string;
     aggregatedApy: number;
     proName: string;
     proIcon: string;
-    reserves: {
-        totalPt: number;
-        totalSy: number;
-    }
+    expiry: string;
     sy: TokenResponse;
     pt: TokenResponse;
     lp: TokenResponse;

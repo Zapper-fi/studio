@@ -16,6 +16,24 @@ export const PENDLE_V_2_DEFINITION = appDefinition({
       type: GroupType.TOKEN,
       label: 'Pools',
     },
+
+    yieldToken: {
+      id: 'yield-token',
+      type: GroupType.TOKEN,
+      label: 'YT',
+    },
+
+    principalToken: {
+      id: 'principal-token',
+      type: GroupType.TOKEN,
+      label: 'PT',
+    },
+
+    standardizedYieldToken: {
+      id: 'standardized-yield-token',
+      type: GroupType.TOKEN,
+      label: 'SY',
+    },
   },
 
   tags: [AppTag.DERIVATIVES],
