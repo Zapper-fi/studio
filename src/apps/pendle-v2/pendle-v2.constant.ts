@@ -9,6 +9,7 @@ export const BACKEND_QUERIES = {
                     address
                     aggregatedApy
                     ytFloatingApy
+                    impliedApy
                     proName
                     proIcon
                     expiry

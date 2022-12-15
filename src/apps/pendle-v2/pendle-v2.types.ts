@@ -10,6 +10,7 @@ export type MarketResponse = {
     address: string;
     aggregatedApy: number;
     ytFloatingApy: number;
+    impliedApy: number;
     proName: string;
     proIcon: string;
     expiry: string;
