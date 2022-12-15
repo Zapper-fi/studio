@@ -14,6 +14,7 @@ import {
 
 import { PendleV2ContractFactory, StandardizedYield } from '../contracts';
 import { PENDLE_V_2_DEFINITION } from '../pendle-v2.definition';
+
 import { PendleV2MarketDataProps } from './pendle-v2.pool.token-fetcher';
 
 export type PendleV2StandardizedYieldTokenDefinition = {
@@ -34,6 +35,7 @@ export class EthereumPendleV2StandardizedYieldTokenTokenFetcher extends AppToken
   PendleV2StandardizedYieldTokenDefinition
 > {
   groupLabel = 'Standardized Yield Tokens';
+
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
     @Inject(PendleV2ContractFactory) protected readonly pendleV2ContractFactory: PendleV2ContractFactory,
@@ -60,12 +62,12 @@ export class EthereumPendleV2StandardizedYieldTokenTokenFetcher extends AppToken
     return definitions;
   }
 
-  async getAddresses({ definitions }: GetAddressesParams): Promise<string[]> {
-    return definitions.map(definition => definition.address);
-  }
-
   getContract(address: string) {
     return this.pendleV2ContractFactory.standardizedYield({ address, network: this.network });
+  }
+
+  async getAddresses({ definitions }: GetAddressesParams): Promise<string[]> {
+    return definitions.map(definition => definition.address);
   }
 
   async getPrice({

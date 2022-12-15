@@ -7,6 +7,7 @@ export type TokenResponse = {
     usd: number;
   };
 };
+
 export type MarketResponse = {
   address: string;
   aggregatedApy: number;
@@ -26,6 +27,7 @@ export type MarketResponse = {
     };
   };
 };
+
 export type MarketsQueryResponse = {
   markets: {
     results: MarketResponse[];

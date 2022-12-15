@@ -16,6 +16,7 @@ import {
 
 import { PendleV2ContractFactory, PendleYieldToken } from '../contracts';
 import { PENDLE_V_2_DEFINITION } from '../pendle-v2.definition';
+
 import { PendleV2MarketDataProps } from './pendle-v2.pool.token-fetcher';
 
 export type PendleV2YieldTokenDefinition = {
@@ -43,6 +44,10 @@ export class EthereumPendleV2YieldTokenTokenFetcher extends AppTokenTemplatePosi
     super(appToolkit);
   }
 
+  getContract(address: string) {
+    return this.pendleV2ContractFactory.pendleYieldToken({ address, network: this.network });
+  }
+
   async getDefinitions(_params: GetDefinitionsParams): Promise<PendleV2YieldTokenDefinition[]> {
     const markets = await this.appToolkit.getAppTokenPositions<PendleV2MarketDataProps>({
       appId: 'pendle-v2',
@@ -65,10 +70,6 @@ export class EthereumPendleV2YieldTokenTokenFetcher extends AppTokenTemplatePosi
 
   async getAddresses({ definitions }: GetAddressesParams): Promise<string[]> {
     return definitions.map(definition => definition.address);
-  }
-
-  getContract(address: string) {
-    return this.pendleV2ContractFactory.pendleYieldToken({ address, network: this.network });
   }
 
   async getPrice({
