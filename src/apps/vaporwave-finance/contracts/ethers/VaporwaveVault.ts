@@ -17,7 +17,7 @@ import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi
 import type { Listener, Provider } from '@ethersproject/providers';
 import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
-export interface VaultInterface extends utils.Interface {
+export interface VaporwaveVaultInterface extends utils.Interface {
   functions: {
     'allowance(address,address)': FunctionFragment;
     'approve(address,uint256)': FunctionFragment;
@@ -206,12 +206,12 @@ export type VaultWithdrawEvent = TypedEvent<[BigNumber], VaultWithdrawEventObjec
 
 export type VaultWithdrawEventFilter = TypedEventFilter<VaultWithdrawEvent>;
 
-export interface Vault extends BaseContract {
+export interface VaporwaveVault extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
 
-  interface: VaultInterface;
+  interface: VaporwaveVaultInterface;
 
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,
