@@ -6,6 +6,7 @@ import { Network } from '~types/network.interface';
 
 import { PendleMarket__factory } from './ethers';
 import { PendleMarketFactory__factory } from './ethers';
+import { PendlePrincipalToken__factory } from './ethers';
 import { PendleYieldContractFactory__factory } from './ethers';
 import { PendleYieldToken__factory } from './ethers';
 import { StandardizedYield__factory } from './ethers';
@@ -25,6 +26,9 @@ export class PendleV2ContractFactory extends ContractFactory {
   pendleMarketFactory({ address, network }: ContractOpts) {
     return PendleMarketFactory__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
+  pendlePrincipalToken({ address, network }: ContractOpts) {
+    return PendlePrincipalToken__factory.connect(address, this.appToolkit.getNetworkProvider(network));
+  }
   pendleYieldContractFactory({ address, network }: ContractOpts) {
     return PendleYieldContractFactory__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
@@ -38,6 +42,7 @@ export class PendleV2ContractFactory extends ContractFactory {
 
 export type { PendleMarket } from './ethers';
 export type { PendleMarketFactory } from './ethers';
+export type { PendlePrincipalToken } from './ethers';
 export type { PendleYieldContractFactory } from './ethers';
 export type { PendleYieldToken } from './ethers';
 export type { StandardizedYield } from './ethers';
