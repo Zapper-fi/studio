@@ -1,8 +1,7 @@
-import { Inject, NotImplementedException } from '@nestjs/common';
+import { Inject } from '@nestjs/common';
 import { BigNumberish, Contract } from 'ethers/lib/ethers';
-import { compact, sumBy } from 'lodash';
+import { compact } from 'lodash';
 
-import { drillBalance } from '~app-toolkit';
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import {
   buildDollarDisplayItem,
@@ -11,9 +10,9 @@ import {
 import { getImagesFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { ContractType } from '~position/contract.interface';
 import { DefaultDataProps, DisplayProps, StatsItem } from '~position/display.interface';
-import { ContractPositionBalance, RawContractPositionBalance } from '~position/position-balance.interface';
+import { ContractPositionBalance } from '~position/position-balance.interface';
 import { PositionFetcher } from '~position/position-fetcher.interface';
-import { ContractPosition, MetaType } from '~position/position.interface';
+import { ContractPosition } from '~position/position.interface';
 import { metatyped } from '~position/position.utils';
 import { Network } from '~types/network.interface';
 
@@ -89,10 +88,6 @@ export abstract class CustomContractPositionTemplatePositionFetcher<
       statsItems.push({ label: 'APY', value: buildPercentageDisplayItem(contractPosition.dataProps.apy) });
 
     return statsItems;
-  }
-
-  getKey({ contractPosition }: { contractPosition: ContractPosition<V> }): string {
-    return this.appToolkit.getPositionKey(contractPosition);
   }
 
   // Default (adapted) Template Runner
@@ -172,7 +167,7 @@ export abstract class CustomContractPositionTemplatePositionFetcher<
         };
 
         const contractPosition = { ...baseFragment, dataProps, displayProps };
-        const key = this.getKey({ contractPosition });
+        const key = this.appToolkit.getPositionKey(contractPosition);
         return { key, ...contractPosition };
       }),
     );

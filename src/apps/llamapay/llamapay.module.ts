@@ -3,11 +3,16 @@ import { AbstractApp } from '~app/app.dynamic-module';
 
 import { LlamapayStreamApiClient } from './common/llamapay.stream.api-client';
 import { LlamapayContractFactory } from './contracts';
-import { EthereumLlamapayBalanceFetcher } from './ethereum/llamapay.balance-fetcher';
+import { EthereumLlamapayStreamContractPositionFetcher } from './ethereum/llamapay.stream.contract-position-fetcher';
 import { LlamapayAppDefinition, LLAMAPAY_DEFINITION } from './llamapay.definition';
 
 @Register.AppModule({
   appId: LLAMAPAY_DEFINITION.id,
-  providers: [EthereumLlamapayBalanceFetcher, LlamapayAppDefinition, LlamapayContractFactory, LlamapayStreamApiClient],
+  providers: [
+    LlamapayAppDefinition,
+    LlamapayContractFactory,
+    LlamapayStreamApiClient,
+    EthereumLlamapayStreamContractPositionFetcher,
+  ],
 })
 export class LlamapayAppModule extends AbstractApp() {}

@@ -8,7 +8,6 @@ import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.prese
 import { isMulticallUnderlyingError } from '~multicall/multicall.ethers';
 import { ContractPositionBalance } from '~position/position-balance.interface';
 import { MetaType, Standard } from '~position/position.interface';
-import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
 import {
   GetTokenDefinitionsParams,
   GetDisplayPropsParams,
@@ -23,6 +22,7 @@ type QiDaoVaultDataProps = {
   assetStandard: Standard;
   vaultInfoAddress: string;
   tokenId?: string;
+  positionKey?: string;
 };
 
 type QiDaoVaultDefinition = {
@@ -167,7 +167,11 @@ export abstract class QiDaoVaultContractPositionFetcher extends CustomContractPo
 
             const tokens = allTokens.filter(v => Math.abs(v.balanceUSD) > 0.01);
             const balanceUSD = sumBy(tokens, t => t.balanceUSD);
-            const dataProps = { ...contractPosition.dataProps, tokenId: tokenId.toString() };
+            const dataProps = {
+              ...contractPosition.dataProps,
+              tokenId: tokenId.toString(),
+              positionKey: tokenId.toString(),
+            };
             const displayProps = {
               ...contractPosition.displayProps,
               label: `${contractPosition.displayProps.label} (#${tokenId})`,
@@ -181,7 +185,7 @@ export abstract class QiDaoVaultContractPositionFetcher extends CustomContractPo
               balanceUSD,
             };
 
-            balance.key = this.appToolkit.getPositionKey(balance, ['tokenId']);
+            balance.key = this.appToolkit.getPositionKey(balance);
             return balance;
           }),
         );

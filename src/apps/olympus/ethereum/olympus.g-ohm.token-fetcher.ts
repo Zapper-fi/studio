@@ -2,57 +2,77 @@ import { Inject } from '@nestjs/common';
 import { BigNumber } from 'ethers';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
-import { Register } from '~app-toolkit/decorators';
-import { getAppImg } from '~app-toolkit/helpers/presentation/image.present';
-import { PositionFetcher } from '~position/position-fetcher.interface';
-import { AppTokenPosition } from '~position/position.interface';
-import { Network } from '~types/network.interface';
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
+import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
+import {
+  GetDataPropsParams,
+  GetPricePerShareParams,
+  GetUnderlyingTokensParams,
+} from '~position/template/app-token.template.types';
 
 import { OlympusContractFactory, OlympusGOhmToken } from '../contracts';
-import { OLYMPUS_DEFINITION } from '../olympus.definition';
 
-const appId = OLYMPUS_DEFINITION.id;
-const network = Network.ETHEREUM_MAINNET;
-const groupId = OLYMPUS_DEFINITION.groups.gOhm.id;
+@PositionTemplate()
+export class EthereumOlympusGOhmTokenFetcher extends AppTokenTemplatePositionFetcher<OlympusGOhmToken> {
+  groupLabel = 'gOHM';
 
-@Register.TokenPositionFetcher({
-  appId,
-  groupId,
-  network,
-})
-export class EthereumOlympusGOhmTokenFetcher implements PositionFetcher<AppTokenPosition> {
   constructor(
-    @Inject(OlympusContractFactory) private readonly contractFactory: OlympusContractFactory,
-    @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
-  ) {}
+    @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
+    @Inject(OlympusContractFactory) protected readonly contractFactory: OlympusContractFactory,
+  ) {
+    super(appToolkit);
+  }
 
-  async getPositions() {
-    return this.appToolkit.helpers.vaultTokenHelper.getTokens<OlympusGOhmToken>({
-      appId,
-      groupId,
-      network,
-      exchangeable: true,
-      dependencies: [{ appId, groupIds: [OLYMPUS_DEFINITION.groups.sOhm.id], network }],
-      resolveVaultAddresses: () => ['0x0ab87046fbb341d058f17cbc4c1133f25a20a52f'], // gOHM
-      resolveContract: ({ address, network }) => this.contractFactory.olympusGOhmToken({ address, network }),
-      resolveUnderlyingTokenAddress: ({ contract, multicall }) => multicall.wrap(contract).sOHM(),
-      resolvePricePerShare: async ({ multicall, contract, underlyingToken }) => {
-        const oneOhm = BigNumber.from(1).mul(10).pow(underlyingToken.decimals);
-        const [gOhmDecimalsRaw, gOhmConvertedAmountRaw] = await Promise.all([
-          multicall.wrap(contract).decimals(),
-          multicall.wrap(contract).balanceTo(oneOhm),
-        ]);
+  getContract(address: string): OlympusGOhmToken {
+    return this.contractFactory.olympusGOhmToken({ address, network: this.network });
+  }
 
-        const convertedAmount = Number(gOhmConvertedAmountRaw) / 10 ** gOhmDecimalsRaw;
-        const pricePerShare = 1 / convertedAmount;
-        return pricePerShare;
-      },
-      resolveImages: () => [getAppImg(OLYMPUS_DEFINITION.id)],
-      resolveReserve: ({ underlyingToken, network }) =>
-        this.contractFactory
-          .erc20({ address: underlyingToken.address, network })
-          .balanceOf('0xb63cac384247597756545b500253ff8e607a8020')
-          .then(v => Number(v) / 10 ** underlyingToken.decimals),
+  async getAddresses() {
+    return ['0x0ab87046fbb341d058f17cbc4c1133f25a20a52f'];
+  }
+
+  async getUnderlyingTokenAddresses({ contract }: GetUnderlyingTokensParams<OlympusGOhmToken>) {
+    return [await contract.sOHM()];
+  }
+
+  async getPricePerShare({ contract, appToken }: GetPricePerShareParams<OlympusGOhmToken>) {
+    const oneOhm = BigNumber.from(1).mul(10).pow(appToken.tokens[0].decimals);
+    const [gOhmDecimalsRaw, gOhmConvertedAmountRaw] = await Promise.all([
+      contract.decimals(),
+      contract.balanceTo(oneOhm),
+    ]);
+
+    const convertedAmount = Number(gOhmConvertedAmountRaw) / 10 ** gOhmDecimalsRaw;
+    const pricePerShare = 1 / convertedAmount;
+    return [pricePerShare];
+  }
+
+  async getLiquidity({ appToken, multicall }: GetDataPropsParams<OlympusGOhmToken>) {
+    const underlyingToken = appToken.tokens[0];
+    const reserveAddress = '0xb63cac384247597756545b500253ff8e607a8020';
+    const underlyingTokenContract = this.contractFactory.erc20({
+      address: underlyingToken.address,
+      network: this.network,
     });
+
+    const reserveRaw = await multicall.wrap(underlyingTokenContract).balanceOf(reserveAddress);
+    const reserve = Number(reserveRaw) / 10 ** underlyingToken.decimals;
+    return reserve * underlyingToken.price;
+  }
+
+  async getReserves({ appToken, multicall }: GetDataPropsParams<OlympusGOhmToken>) {
+    const underlyingToken = appToken.tokens[0];
+    const reserveAddress = '0xb63cac384247597756545b500253ff8e607a8020';
+    const underlyingTokenContract = this.contractFactory.erc20({
+      address: underlyingToken.address,
+      network: this.network,
+    });
+
+    const reserveRaw = await multicall.wrap(underlyingTokenContract).balanceOf(reserveAddress);
+    return [Number(reserveRaw) / 10 ** underlyingToken.decimals];
+  }
+
+  async getApy() {
+    return 0;
   }
 }

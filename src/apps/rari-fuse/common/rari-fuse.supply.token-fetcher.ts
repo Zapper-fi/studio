@@ -1,7 +1,6 @@
 import { Inject } from '@nestjs/common';
 import { BigNumber, BigNumberish, Contract } from 'ethers';
 
-import { drillBalance } from '~app-toolkit';
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { BLOCKS_PER_DAY } from '~app-toolkit/constants/blocks';
 import { buildDollarDisplayItem } from '~app-toolkit/helpers/presentation/display-item.present';
@@ -9,7 +8,7 @@ import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.prese
 import { IMulticallWrapper } from '~multicall';
 import { isMulticallUnderlyingError } from '~multicall/multicall.ethers';
 import { BalanceDisplayMode } from '~position/display.interface';
-import { AppTokenPositionBalance, RawTokenBalance } from '~position/position-balance.interface';
+import { RawTokenBalance } from '~position/position-balance.interface';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import {
   GetUnderlyingTokensParams,

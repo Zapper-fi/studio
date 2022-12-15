@@ -48,9 +48,10 @@ export class OptimismThalesBalanceFetcher implements BalanceFetcher {
       network,
       resolveBalances: async ({ address, contractPosition, multicall }) => {
         const stakedToken = contractPosition.tokens.find(isSupplied)!;
+        const rewardToken = contractPosition.tokens.find(isClaimable)!;
         const contract = this.thalesContractFactory.escrowThales(contractPosition);
         const escrowedBalanceRaw = await multicall.wrap(contract).totalAccountEscrowedAmount(address);
-        return [drillBalance(stakedToken, escrowedBalanceRaw.toString())];
+        return [drillBalance(stakedToken, escrowedBalanceRaw.toString()), drillBalance(rewardToken, '0')];
       },
     });
   }

@@ -8,21 +8,33 @@ export const JPEGD_DEFINITION = appDefinition({
   name: 'Jpegd',
   description: 'JPEGd is the leading NFT lending platform in the decentralized finance space.',
   url: 'https://jpegd.io/',
+  tags: [AppTag.COLLATERALIZED_DEBT_POSITION],
+  primaryColor: '#fff',
+
   links: {
     twitter: 'https://twitter.com/JPEGd_69',
     discord: 'https://discord.com/invite/jpegd',
     telegram: 'https://t.me/jpegd',
     medium: 'https://medium.com/@jpegd',
   },
+
   groups: {
-    pool: { id: 'pool', type: GroupType.POSITION, label: 'Pools' },
-    bond: { id: 'bond', type: GroupType.POSITION, label: 'Bonds' },
+    pool: {
+      id: 'pool',
+      type: GroupType.POSITION,
+      label: 'Pools',
+    },
+
+    bond: {
+      id: 'bond',
+      type: GroupType.POSITION,
+      label: 'Bonds',
+    },
   },
-  tags: [AppTag.COLLATERALIZED_DEBT_POSITION],
+
   supportedNetworks: {
     [Network.ETHEREUM_MAINNET]: [AppAction.VIEW],
   },
-  primaryColor: '#fff',
 });
 
 @Register.AppDefinition(JPEGD_DEFINITION.id)
@@ -31,5 +43,3 @@ export class JpegdAppDefinition extends AppDefinition {
     super(JPEGD_DEFINITION);
   }
 }
-
-export default JPEGD_DEFINITION;

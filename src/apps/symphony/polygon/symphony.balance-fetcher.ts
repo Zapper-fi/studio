@@ -47,7 +47,7 @@ export class PolygonSymphonyBalanceFetcher implements BalanceFetcher {
             new BigNumber(0),
           );
           const suppliedTokenBalance = drillBalance(claimableToken, totalSupplied.toString());
-          const tokens = [suppliedTokenBalance].filter(v => v.balanceUSD > 0);
+          const tokens = [suppliedTokenBalance];
           const balanceUSD = sumBy(tokens, t => t.balanceUSD);
           return { ...contractPosition, tokens, balanceUSD };
         }

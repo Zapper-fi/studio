@@ -4,7 +4,8 @@ import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { ContractFactory } from '~contract/contracts';
 import { Network } from '~types/network.interface';
 
-import { PositionManager__factory } from './ethers';
+import { AtlendisBorrowerPools__factory } from './ethers';
+import { AtlendisPositionManager__factory } from './ethers';
 
 // eslint-disable-next-line
 type ContractOpts = { address: string; network: Network };
@@ -15,9 +16,13 @@ export class AtlendisV1ContractFactory extends ContractFactory {
     super((network: Network) => appToolkit.getNetworkProvider(network));
   }
 
-  positionManager({ address, network }: ContractOpts) {
-    return PositionManager__factory.connect(address, this.appToolkit.getNetworkProvider(network));
+  atlendisBorrowerPools({ address, network }: ContractOpts) {
+    return AtlendisBorrowerPools__factory.connect(address, this.appToolkit.getNetworkProvider(network));
+  }
+  atlendisPositionManager({ address, network }: ContractOpts) {
+    return AtlendisPositionManager__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
 }
 
-export type { PositionManager } from './ethers';
+export type { AtlendisBorrowerPools } from './ethers';
+export type { AtlendisPositionManager } from './ethers';

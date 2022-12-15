@@ -1,5 +1,6 @@
 import { Inject } from '@nestjs/common';
 import { BigNumberish, Contract } from 'ethers/lib/ethers';
+import _ from 'lodash';
 import { compact, intersection, isArray, partition, sortBy, sum } from 'lodash';
 
 import { drillBalance } from '~app-toolkit';
@@ -160,19 +161,12 @@ export abstract class AppTokenTemplatePositionFetcher<
     return statsItems;
   }
 
-  getKey({ appToken }: { appToken: AppTokenPosition<V> }): string {
-    return this.appToolkit.getPositionKey(appToken);
-  }
-
-  // Default (adapted) Template Runner
-  // Note: This will be removed in favour of an orchestrator at a higher level once all groups are migrated
-  async getPositions(): Promise<AppTokenPosition<V>[]> {
+  async getPositionsForBatch(definitions: R[]) {
     const multicall = this.appToolkit.getMulticall(this.network);
     const tokenLoader = this.appToolkit.getTokenDependencySelector({
       tags: { network: this.network, context: `${this.appId}__template` },
     });
 
-    const definitions = await this.getDefinitions({ multicall, tokenLoader });
     const maybeSkeletons = await Promise.all(
       definitions.map(async definition => {
         const address = definition.address.toLowerCase();
@@ -269,7 +263,7 @@ export abstract class AppTokenTemplatePositionFetcher<
           };
 
           const appToken = { ...displayPropsStageFragment, displayProps };
-          const key = this.getKey({ appToken });
+          const key = this.appToolkit.getPositionKey(appToken);
           return { key, ...appToken };
         }),
       );
@@ -282,6 +276,18 @@ export abstract class AppTokenTemplatePositionFetcher<
       if (typeof t.dataProps.liquidity === 'number') return -t.dataProps.liquidity;
       return 1;
     });
+  }
+
+  // Default (adapted) Template Runner
+  // Note: This will be removed in favour of an orchestrator at a higher level once all groups are migrated
+  async getPositions(): Promise<AppTokenPosition<V>[]> {
+    const multicall = this.appToolkit.getMulticall(this.network);
+    const tokenLoader = this.appToolkit.getTokenDependencySelector({
+      tags: { network: this.network, context: `${this.appId}__template` },
+    });
+
+    const definitions = await this.getDefinitions({ multicall, tokenLoader });
+    return this.getPositionsForBatch(definitions);
   }
 
   async getAccountAddress(address: string) {
@@ -328,22 +334,34 @@ export abstract class AppTokenTemplatePositionFetcher<
   async getRawBalances(_address: string): Promise<RawAppTokenBalance[]> {
     const multicall = this.appToolkit.getMulticall(this.network);
     const address = await this.getAccountAddress(_address);
-    const appTokens = await this.getPositionsForBalances();
     if (address === ZERO_ADDRESS) return [];
 
-    return Promise.all(
-      appTokens.map(async appToken => ({
-        key: this.appToolkit.getPositionKey(appToken),
-        balance: (await this.getBalancePerToken({ multicall, address, appToken })).toString(),
-      })),
-    );
+    const appTokens = await this.getPositionsForBalances();
+    let results: RawAppTokenBalance[] = [];
+    for (const batch of _.chunk(appTokens, 100).values()) {
+      results = results.concat(
+        await Promise.all(
+          batch.map(async appToken => ({
+            key: this.appToolkit.getPositionKey(appToken),
+            balance: (await this.getBalancePerToken({ multicall, address, appToken })).toString(),
+          })),
+        ),
+      );
+    }
+    return results;
   }
 
   async drillRawBalances(balances: RawAppTokenBalance[]): Promise<AppTokenPositionBalance<V>[]> {
     const appTokens = await this.getPositionsForBalances();
 
+    const balancesByKey = _(balances)
+      .groupBy(b => b.key)
+      .mapValues(v => v[0])
+      .value();
+
     const appTokenBalances = appTokens.map(token => {
-      const tokenBalance = balances.find(b => b.key === this.appToolkit.getPositionKey(token));
+      const key = this.appToolkit.getPositionKey(token);
+      const tokenBalance = balancesByKey[key];
       if (!tokenBalance) return null;
 
       const result = drillBalance<typeof token, V>(token, tokenBalance.balance, { isDebt: this.isDebt });

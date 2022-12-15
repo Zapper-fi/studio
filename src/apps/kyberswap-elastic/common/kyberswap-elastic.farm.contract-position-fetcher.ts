@@ -5,8 +5,7 @@ import { compact, range } from 'lodash';
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { ContractPositionBalance } from '~position/position-balance.interface';
-import { ContractPosition, MetaType, Standard } from '~position/position.interface';
-import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
+import { MetaType, Standard } from '~position/position.interface';
 import {
   GetDataPropsParams,
   GetDefinitionsParams,
@@ -28,6 +27,7 @@ export type KyberswapElasticFarmPositionDataProps = {
   rangeStart?: number;
   rangeEnd?: number;
   apy?: number;
+  positionKey: string;
 };
 
 export type KyberswapElasticFarmPositionDefinition = {
@@ -139,7 +139,7 @@ export abstract class KyberswapElasticFarmContractPositionFetcher extends Custom
     const liquidity = reserves[0] * tokens[0].price + reserves[1] * tokens[1].price;
     const assetStandard = Standard.ERC_721;
 
-    return { feeTier, reserves, liquidity, poolAddress, assetStandard };
+    return { feeTier, reserves, liquidity, poolAddress, assetStandard, positionKey: `${feeTier}` };
   }
 
   async getLabel({
@@ -153,10 +153,6 @@ export abstract class KyberswapElasticFarmContractPositionFetcher extends Custom
     const symbolLabel = contractPosition.tokens.map(t => getLabelFromToken(t)).join(' / ');
     const label = `${symbolLabel} (${definition.feeTier.toFixed(4)}%)`;
     return label;
-  }
-
-  getKey({ contractPosition }: { contractPosition: ContractPosition<KyberswapElasticFarmPositionDataProps> }) {
-    return this.appToolkit.getPositionKey(contractPosition, ['feeTier']);
   }
 
   // @ts-ignore

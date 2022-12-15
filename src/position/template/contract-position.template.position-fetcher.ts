@@ -1,6 +1,6 @@
 import { Inject } from '@nestjs/common';
 import { BigNumberish, Contract } from 'ethers/lib/ethers';
-import { compact, sumBy } from 'lodash';
+import _, { compact, sumBy } from 'lodash';
 
 import { drillBalance } from '~app-toolkit';
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
@@ -92,10 +92,6 @@ export abstract class ContractPositionTemplatePositionFetcher<
     return statsItems;
   }
 
-  getKey({ contractPosition }: { contractPosition: ContractPosition<V> }): string {
-    return this.appToolkit.getPositionKey(contractPosition);
-  }
-
   // Default (adapted) Template Runner
   // Note: This will be removed in favour of an orchestrator at a higher level once all groups are migrated
   async getPositions() {
@@ -130,7 +126,7 @@ export abstract class ContractPositionTemplatePositionFetcher<
     const tokenDependencies = await tokenLoader.getMany(underlyingTokenRequests).then(tokenDeps => compact(tokenDeps));
 
     const skeletonsWithResolvedTokens = await Promise.all(
-      compact(skeletons).map(async ({ address, tokenDefinitions, definition }) => {
+      compact(skeletons).map(({ address, tokenDefinitions, definition }) => {
         const maybeTokens = tokenDefinitions.map(definition => {
           const match = tokenDependencies.find(token => {
             const isAddressMatch = token.address === definition.address;
@@ -141,7 +137,21 @@ export abstract class ContractPositionTemplatePositionFetcher<
             return isAddressMatch && isNetworkMatch && isMaybeErc1155TokenIdMatch;
           });
 
-          return match ? metatyped(match, definition.metaType) : null;
+          if (match) {
+            const tokenWithMetaType = metatyped(match, definition.metaType);
+
+            // Since the key generation is stateful and the key is already generated for an app token, we need to
+            // regenerate the key for underlying app tokens. Otherwise, we may end up in situations where underlying
+            // app tokens balances are double counted.
+            if (tokenWithMetaType.type === ContractType.APP_TOKEN) {
+              // eslint-disable-next-line @typescript-eslint/no-unused-vars
+              const { key, ...token } = tokenWithMetaType;
+              return { ...token, key: this.appToolkit.getPositionKey(token) };
+            }
+
+            return tokenWithMetaType;
+          }
+          return null;
         });
 
         const tokens = compact(maybeTokens);
@@ -181,7 +191,7 @@ export abstract class ContractPositionTemplatePositionFetcher<
         };
 
         const contractPosition = { ...baseFragment, dataProps, displayProps };
-        const key = this.getKey({ contractPosition });
+        const key = this.appToolkit.getPositionKey(contractPosition);
         return { key, ...contractPosition };
       }),
     );
@@ -236,35 +246,58 @@ export abstract class ContractPositionTemplatePositionFetcher<
   async getRawBalances(_address: string): Promise<RawContractPositionBalance[]> {
     const multicall = this.appToolkit.getMulticall(this.network);
     const address = await this.getAccountAddress(_address);
-    const contractPositions = await this.getPositionsForBalances();
     if (address === ZERO_ADDRESS) return [];
 
-    return Promise.all(
-      contractPositions.map(async contractPosition => {
-        const contract = multicall.wrap(this.getContract(contractPosition.address));
-        const balancesRaw = await this.getTokenBalancesPerPosition({ address, contract, contractPosition, multicall });
+    const contractPositions = await this.getPositionsForBalances();
+    let results: RawContractPositionBalance[] = [];
+    for (const batch of _.chunk(contractPositions, 100).values()) {
+      results = results.concat(
+        await Promise.all(
+          batch.map(async contractPosition => {
+            const contract = multicall.wrap(this.getContract(contractPosition.address));
+            const balancesRaw = await this.getTokenBalancesPerPosition({
+              address,
+              contract,
+              contractPosition,
+              multicall,
+            });
 
-        return {
-          key: this.appToolkit.getPositionKey(contractPosition),
-          tokens: contractPosition.tokens.map((token, i) => ({
-            key: this.appToolkit.getPositionKey(token),
-            balance: balancesRaw[i]?.toString() ?? '0',
-          })),
-        };
-      }),
-    );
+            return {
+              key: this.appToolkit.getPositionKey(contractPosition),
+              tokens: contractPosition.tokens.map((token, i) => ({
+                key: this.appToolkit.getPositionKey(token),
+                balance: balancesRaw[i]?.toString() ?? '0',
+              })),
+            };
+          }),
+        ),
+      );
+    }
+    return results;
   }
 
   async drillRawBalances(balances: RawContractPositionBalance[]): Promise<ContractPositionBalance<V>[]> {
     const contractPositions = await this.getPositionsForBalances();
 
+    const balancesByKey = _(balances)
+      .groupBy(b => b.key)
+      .mapValues(v => v[0])
+      .value();
+
     return compact(
       contractPositions.map(contractPosition => {
-        const positionBalances = balances.find(b => b.key === this.appToolkit.getPositionKey(contractPosition));
+        const key = this.appToolkit.getPositionKey(contractPosition);
+        const positionBalances = balancesByKey[key];
         if (!positionBalances) return null;
 
+        const positionTokensByKey = _(positionBalances.tokens)
+          .groupBy(t => t.key)
+          .mapValues(v => v[0])
+          .value();
+
         const allTokens = contractPosition.tokens.map(token => {
-          const tokenBalance = positionBalances.tokens.find(b => b.key === this.appToolkit.getPositionKey(token));
+          const key = this.appToolkit.getPositionKey(token);
+          const tokenBalance = positionTokensByKey[key];
           if (!tokenBalance) return null;
 
           return drillBalance<typeof token, V>(token, tokenBalance.balance, {

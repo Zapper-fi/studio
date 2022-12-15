@@ -60,7 +60,7 @@ export class OptimismPikaProtocolBalanceFetcher implements BalanceFetcher {
         ]);
 
         return [
-          drillBalance(stakedToken, (Number(stakedBalanceRaw) / 100).toString()),
+          drillBalance(stakedToken, (Number(stakedBalanceRaw) / 100).toFixed(0)),
           drillBalance(rewardToken, rewardBalanceRaw.toString()),
         ];
       },

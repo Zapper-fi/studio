@@ -33,7 +33,6 @@ export const PICKLE_DEFINITION = appDefinition({
     [Network.FANTOM_OPERA_MAINNET]: [AppAction.VIEW],
     [Network.GNOSIS_MAINNET]: [AppAction.VIEW],
     [Network.AURORA_MAINNET]: [AppAction.VIEW],
-    [Network.CRONOS_MAINNET]: [AppAction.VIEW],
     [Network.MOONRIVER_MAINNET]: [AppAction.VIEW],
   },
   token: {

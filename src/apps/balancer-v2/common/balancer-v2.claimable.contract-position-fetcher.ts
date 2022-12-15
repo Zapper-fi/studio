@@ -9,7 +9,6 @@ import { getLabelFromToken, getTokenImg } from '~app-toolkit/helpers/presentatio
 import { ContractType } from '~position/contract.interface';
 import { ContractPositionBalance } from '~position/position-balance.interface';
 import { claimable } from '~position/position.utils';
-import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
 import {
   DefaultContractPositionDefinition,
   GetDisplayPropsParams,
