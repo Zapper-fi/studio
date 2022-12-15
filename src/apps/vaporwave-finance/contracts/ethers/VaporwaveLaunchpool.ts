@@ -17,7 +17,7 @@ import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi
 import type { Listener, Provider } from '@ethersproject/providers';
 import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
-export interface LaunchpoolInterface extends utils.Interface {
+export interface VaporwaveLaunchpoolInterface extends utils.Interface {
   functions: {
     'balanceOf(address)': FunctionFragment;
     'duration()': FunctionFragment;
@@ -173,12 +173,12 @@ export type WithdrawnEvent = TypedEvent<[string, BigNumber], WithdrawnEventObjec
 
 export type WithdrawnEventFilter = TypedEventFilter<WithdrawnEvent>;
 
-export interface Launchpool extends BaseContract {
+export interface VaporwaveLaunchpool extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
 
-  interface: LaunchpoolInterface;
+  interface: VaporwaveLaunchpoolInterface;
 
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,
