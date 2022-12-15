@@ -43,7 +43,7 @@ export class EthereumPendleV2YieldTokenTokenFetcher extends AppTokenTemplatePosi
   async getDefinitions(_params: GetDefinitionsParams): Promise<PendleV2YieldTokenDefinition[]> {
     const markets = await this.appToolkit.getAppTokenPositions<PendleV2MarketDataProps>({
       appId: 'pendle-v2',
-      groupIds: ['farm'],
+      groupIds: ['pool'],
       network: this.network,
     });
     const definitions = markets.map((market) => {

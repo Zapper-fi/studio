@@ -11,8 +11,8 @@ export const PENDLE_V_2_DEFINITION = appDefinition({
   url: 'https://www.pendle.finance/',
 
   groups: {
-    farm: {
-      id: 'Pools',
+    pool: {
+      id: 'pools',
       type: GroupType.TOKEN,
       label: 'Pools',
     },
