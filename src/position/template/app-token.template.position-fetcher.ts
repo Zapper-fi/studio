@@ -55,17 +55,17 @@ export abstract class AppTokenTemplatePositionFetcher<
 
   constructor(@Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit) {}
 
-  // 1. Get token addresses
+  // 1. Get token contract instance
+  abstract getContract(address: string): T;
+
+  // 2. Get token addresses
   abstract getAddresses(params: GetAddressesParams): string[] | Promise<string[]>;
 
-  // 2. (Optional) Get token definitions (i.e.: token addresses and additional context)
+  // 3. (Optional) Get token definitions (i.e.: token addresses and additional context)
   async getDefinitions(params: GetDefinitionsParams): Promise<R[]> {
     const addresses = await this.getAddresses({ ...params, definitions: [] });
     return addresses.map(address => ({ address: address.toLowerCase() } as R));
   }
-
-  // 3. Get token contract instance
-  abstract getContract(address: string): T;
 
   // 4. Get underlying token addresses
   async getUnderlyingTokenAddresses(_params: GetUnderlyingTokensParams<T, R>): Promise<string | string[]> {
