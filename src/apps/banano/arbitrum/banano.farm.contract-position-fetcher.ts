@@ -3,7 +3,7 @@ import { PositionTemplate } from '~app-toolkit/decorators/position-template.deco
 import { BananoFarmContractPositionFetcher } from '../common/banano.farm.contract-position-fetcher';
 
 @PositionTemplate()
-export class EthereumBananoFarmContractPositionFetcher extends BananoFarmContractPositionFetcher {
+export class ArbitrumBananoFarmContractPositionFetcher extends BananoFarmContractPositionFetcher {
   groupLabel = 'Farms';
-  chefAddress = '0xd91f84d4e2d9f4fa508c61356a6cb81a306e5287';
+  chefAddress = '0x8cd4ded2b49736b1a1dbe18b9eb4ba6b6bf28227';
 }
