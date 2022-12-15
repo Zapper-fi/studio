@@ -15,7 +15,7 @@ import { AppTokenPosition } from '~position/position.interface';
 import { Network } from '~types';
 
 import { DefiedgeContractFactory } from '../contracts';
-import { expandTo18Decimals, filterNulls } from '../utils';
+import { expandTo18Decimals } from '../utils';
 
 import { DefiEdgeStrategyDefinitionsResolver } from './defiedge.strategy.definitions-resolver';
 
@@ -40,29 +40,27 @@ export abstract class DefiedgeStrategyTokenFetcher implements PositionFetcher<Ap
   async getPositions() {
     const multicall = this.appToolkit.getMulticall(this.network);
 
-    const [strategies, baseTokenAddressToDetails] = await Promise.all([
+    const [strategies, baseTokens] = await Promise.all([
       this.defiEdgeStrategyDefinitionsResolver.getStrategies(this.network),
-      this.appToolkit.getBaseTokenPrices(this.network).then(baseTokens => {
-        return _.keyBy(baseTokens, e => e.address.toLowerCase());
-      }),
+      this.appToolkit.getBaseTokenPrices(this.network),
     ]);
 
-    const appTokens = await Promise.allSettled(
+    const appTokens = await Promise.all(
       strategies.map(async strategy => {
-        const erc20Contract = this.defiedgeContractFactory.erc20({ address: strategy.id, network: this.network });
         const strategyContract = this.defiedgeContractFactory.strategy({
           address: strategy.id,
           network: this.network,
         });
 
-        const [decimals, totalSupplyBN, aumWithFee] = await Promise.all([
-          multicall.wrap(erc20Contract).decimals(),
-          multicall.wrap(erc20Contract).totalSupply(),
+        const [decimals, symbol, totalSupplyBN, aumWithFee] = await Promise.all([
+          multicall.wrap(strategyContract).decimals(),
+          multicall.wrap(strategyContract).symbol(),
+          multicall.wrap(strategyContract).totalSupply(),
           multicall.wrap(strategyContract).callStatic.getAUMWithFees(false),
         ]);
 
-        const token0 = baseTokenAddressToDetails[strategy.token0.id.toLowerCase()];
-        const token1 = baseTokenAddressToDetails[strategy.token1.id.toLowerCase()];
+        const token0 = baseTokens.find(x => x.address === strategy.token0.id.toLowerCase());
+        const token1 = baseTokens.find(x => x.address === strategy.token1.id.toLowerCase());
 
         if (!token0 || !token1 || totalSupplyBN.lte(BigNumber.from(0))) return null;
 
@@ -93,7 +91,7 @@ export abstract class DefiedgeStrategyTokenFetcher implements PositionFetcher<Ap
           groupId: this.groupId,
           network: this.network,
           supply,
-          symbol: strategy.title,
+          symbol,
           pricePerShare,
           price: sharePrice,
           dataProps: { aum, sharePrice, sinceInception: sharePrice - 100 },
@@ -117,6 +115,6 @@ export abstract class DefiedgeStrategyTokenFetcher implements PositionFetcher<Ap
       }),
     );
 
-    return appTokens.map(e => (e.status == 'fulfilled' ? e.value : null)).filter(filterNulls);
+    return _.compact(appTokens);
   }
 }
