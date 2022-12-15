@@ -15,6 +15,7 @@ import {
 } from '~position/template/app-token.template.types';
 
 import { PendleV2ContractFactory, PendleYieldToken } from '../contracts';
+import { PENDLE_V_2_DEFINITION } from '../pendle-v2.definition';
 import { PendleV2MarketDataProps } from './pendle-v2.pool.token-fetcher';
 
 export type PendleV2YieldTokenDefinition = {
@@ -45,7 +46,7 @@ export class EthereumPendleV2YieldTokenTokenFetcher extends AppTokenTemplatePosi
   async getDefinitions(_params: GetDefinitionsParams): Promise<PendleV2YieldTokenDefinition[]> {
     const markets = await this.appToolkit.getAppTokenPositions<PendleV2MarketDataProps>({
       appId: 'pendle-v2',
-      groupIds: ['pool'],
+      groupIds: [PENDLE_V_2_DEFINITION.groups.pool.id],
       network: this.network,
     });
     const definitions = markets.map(market => {

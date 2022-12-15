@@ -12,7 +12,7 @@ export const PENDLE_V_2_DEFINITION = appDefinition({
 
   groups: {
     pool: {
-      id: 'pools',
+      id: 'pool',
       type: GroupType.TOKEN,
       label: 'Pools',
     },
