@@ -1,22 +1,16 @@
 import { Inject } from '@nestjs/common';
-import request, { gql } from 'graphql-request';
+import request from 'graphql-request';
 import moment from 'moment';
 
-import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
-import { Register } from '~app-toolkit/decorators';
+import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
-import { ContractType } from '~position/contract.interface';
-import { DollarDisplayItem, PercentageDisplayItem, StatsItem } from '~position/display.interface';
-import { PositionFetcher } from '~position/position-fetcher.interface';
-import { AppTokenPosition } from '~position/position.interface';
+import { DollarDisplayItem, PercentageDisplayItem } from '~position/display.interface';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import { DefaultAppTokenDataProps, DefaultAppTokenDefinition, GetAddressesParams, GetDataPropsParams, GetDefinitionsParams, GetDisplayPropsParams, GetPriceParams, GetPricePerShareParams } from '~position/template/app-token.template.types';
-import { BaseToken } from '~position/token.interface';
-import { Network, NETWORK_IDS } from '~types/network.interface';
+import { NETWORK_IDS } from '~types/network.interface';
 
 import { PendleMarket, PendleV2ContractFactory } from '../contracts';
 import { BACKEND_QUERIES, PENDLE_V2_GRAPHQL_ENDPOINT } from '../pendle-v2.constant';
-import { PENDLE_V_2_DEFINITION } from '../pendle-v2.definition';
 import { MarketResponse, MarketsQueryResponse, TokenResponse } from '../pendle-v2.types';
 
 type Token = {
