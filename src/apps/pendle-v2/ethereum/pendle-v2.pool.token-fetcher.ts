@@ -51,12 +51,12 @@ function toToken(tokenResp: TokenResponse): Token {
 }
 
 @PositionTemplate()
-export class EthereumPendleV2FarmTokenFetcher extends AppTokenTemplatePositionFetcher<
+export class EthereumPendleV2PoolTokenFetcher extends AppTokenTemplatePositionFetcher<
   PendleMarket,
   PendleV2MarketDataProps,
   PendleV2MarketTokenDefinition
 >{
-  groupLabel = 'Farms';
+  groupLabel = 'Pools';
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
     @Inject(PendleV2ContractFactory) protected readonly pendleV2ContractFactory: PendleV2ContractFactory,

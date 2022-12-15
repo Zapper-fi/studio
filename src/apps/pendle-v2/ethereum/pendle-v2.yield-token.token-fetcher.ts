@@ -13,7 +13,7 @@ import { Network } from '~types/network.interface';
 
 import { PendleV2ContractFactory, PendleYieldToken } from '../contracts';
 import { PENDLE_V_2_DEFINITION } from '../pendle-v2.definition';
-import { PendleV2MarketDataProps } from './pendle-v2.farm.token-fetcher';
+import { PendleV2MarketDataProps } from './pendle-v2.pool.token-fetcher';
 
 export type PendleV2YieldTokenDefinition = {
   address: string;
@@ -32,7 +32,7 @@ export class EthereumPendleV2YieldTokenTokenFetcher extends AppTokenTemplatePosi
   PendleV2YieldTokenDataProps,
   PendleV2YieldTokenDefinition
 >{
-  groupLabel = 'Farms';
+  groupLabel = 'Yield Tokens';
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
     @Inject(PendleV2ContractFactory) protected readonly pendleV2ContractFactory: PendleV2ContractFactory,
