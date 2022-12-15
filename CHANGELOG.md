@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.330.0](https://github.com/Zapper-fi/studio/compare/v0.329.0...v0.330.0) (2022-12-15)
+
+
+### Features
+
+* **pendle-v2:** Update name ([658a672](https://github.com/Zapper-fi/studio/commit/658a672263ee49cfaf09290b4272fd6bdc05e639))
+
 ## [0.329.0](https://github.com/Zapper-fi/studio/compare/v0.328.0...v0.329.0) (2022-12-15)
 
 
