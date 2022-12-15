@@ -15,7 +15,9 @@ import { AppTokenPosition } from '~position/position.interface';
 import { Network } from '~types';
 
 import { DefiedgeContractFactory } from '../contracts';
-import { expandTo18Decimals, filterNulls, getDefiStrategies } from '../utils';
+import { expandTo18Decimals, filterNulls } from '../utils';
+
+import { DefiEdgeStrategyDefinitionsResolver } from './defiedge.strategy.definitions-resolver';
 
 export type StrategyTokenDataProps = {
   sinceInception: number;
@@ -31,13 +33,15 @@ export abstract class DefiedgeStrategyTokenFetcher implements PositionFetcher<Ap
   constructor(
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
     @Inject(DefiedgeContractFactory) private readonly defiedgeContractFactory: DefiedgeContractFactory,
+    @Inject(DefiEdgeStrategyDefinitionsResolver)
+    private readonly defiEdgeStrategyDefinitionsResolver: DefiEdgeStrategyDefinitionsResolver,
   ) {}
 
   async getPositions() {
     const multicall = this.appToolkit.getMulticall(this.network);
 
     const [strategies, baseTokenAddressToDetails] = await Promise.all([
-      getDefiStrategies(this.network),
+      this.defiEdgeStrategyDefinitionsResolver.getStrategies(this.network),
       this.appToolkit.getBaseTokenPrices(this.network).then(baseTokens => {
         return _.keyBy(baseTokens, e => e.address.toLowerCase());
       }),
