@@ -4,6 +4,23 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.329.0](https://github.com/Zapper-fi/studio/compare/v0.328.0...v0.329.0) (2022-12-15)
+
+
+### Features
+
+* **aura:** Aura pools upgrade ([#1923](https://github.com/Zapper-fi/studio/issues/1923)) ([63918fd](https://github.com/Zapper-fi/studio/commit/63918fd297969bb4145a6e49605ef8464643653a))
+* **cask-protocol:** Use latest patterns ([00ef652](https://github.com/Zapper-fi/studio/commit/00ef652c6f759a94010c9b43dfcde54eebc518c2))
+* **cask:** Support Cask vault token on all networks ([#1929](https://github.com/Zapper-fi/studio/issues/1929)) ([67fbeef](https://github.com/Zapper-fi/studio/commit/67fbeef3fddd6d7e13d6f71256394a051aa7ad04))
+* **sideshift:** add sideshift ([#1883](https://github.com/Zapper-fi/studio/issues/1883)) ([4504584](https://github.com/Zapper-fi/studio/commit/4504584d63856a756e5dd8f8ba11fb41dcfc2535))
+
+
+### Bug Fixes
+
+* **insurace:** Extend getDefinitions ([#1899](https://github.com/Zapper-fi/studio/issues/1899)) ([7eb6ecf](https://github.com/Zapper-fi/studio/commit/7eb6ecfff084d946610a9457d12e449d5eba4d54))
+* **pendle-v2:** Small linting fixes ([98dc39b](https://github.com/Zapper-fi/studio/commit/98dc39b0e6062d02b99c790444e57bf35d0531a0))
+* **vaporwave-finance:** Migrate to template ([#1925](https://github.com/Zapper-fi/studio/issues/1925)) ([703d1ca](https://github.com/Zapper-fi/studio/commit/703d1ca0f6a1b73bf4b8585df8cc86b7a189c45b))
+
 ## [0.328.0](https://github.com/Zapper-fi/studio/compare/v0.327.0...v0.328.0) (2022-12-15)
 
 
