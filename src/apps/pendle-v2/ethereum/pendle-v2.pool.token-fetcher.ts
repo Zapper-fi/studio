@@ -117,7 +117,7 @@ export class EthereumPendleV2PoolTokenFetcher extends AppTokenTemplatePositionFe
   }
 
   async getApy({ definition }: GetDataPropsParams<PendleMarket, PendleV2MarketDataProps, PendleV2MarketTokenDefinition>): Promise<number> {
-    return definition.aggregatedApy;
+    return definition.aggregatedApy * 100;
   }
 
   async getLabel({ definition }: GetDisplayPropsParams<PendleMarket, DefaultAppTokenDataProps, PendleV2MarketTokenDefinition>): Promise<string> {

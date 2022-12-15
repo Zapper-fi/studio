@@ -71,7 +71,7 @@ export class EthereumPendleV2StandardizedYieldTokenTokenFetcher extends AppToken
   }
 
   async getApy({ definition }: GetDataPropsParams<StandardizedYield, PendleV2StandardizedYieldTokenDataProps, PendleV2StandardizedYieldTokenDefinition>): Promise<number> {
-    return definition.underlyingApy;
+    return definition.underlyingApy * 100;
   }
 
   async getLabel({ definition }: GetDisplayPropsParams<StandardizedYield, PendleV2StandardizedYieldTokenDataProps, PendleV2StandardizedYieldTokenDefinition>): Promise<string> {

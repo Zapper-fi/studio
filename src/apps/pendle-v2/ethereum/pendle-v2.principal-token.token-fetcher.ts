@@ -75,7 +75,7 @@ export class EthereumPendleV2PrincipalTokenTokenFetcher extends AppTokenTemplate
   }
 
   async getApy({ definition }: GetDataPropsParams<PendlePrincipalToken, PendleV2PrincipalTokenDataProps, PendleV2PrincipalTokenDefinition>): Promise<number> {
-    return definition.impliedApy
+    return definition.impliedApy * 100;
   }
 
   async getLabel({ definition }: GetDisplayPropsParams<PendlePrincipalToken, PendleV2PrincipalTokenDataProps, PendleV2PrincipalTokenDefinition>): Promise<string> {

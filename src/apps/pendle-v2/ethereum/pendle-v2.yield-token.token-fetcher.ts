@@ -73,7 +73,7 @@ export class EthereumPendleV2YieldTokenTokenFetcher extends AppTokenTemplatePosi
   }
 
   async getApy({ definition }: GetDataPropsParams<PendleYieldToken, PendleV2YieldTokenDataProps, PendleV2YieldTokenDefinition>): Promise<number> {
-    return definition.ytFloatingApy;
+    return definition.ytFloatingApy * 100;
   }
 
   async getLabel({ definition }: GetDisplayPropsParams<PendleYieldToken, PendleV2YieldTokenDataProps, PendleV2YieldTokenDefinition>): Promise<string> {
