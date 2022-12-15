@@ -16,6 +16,7 @@ import {
 
 import { PendlePrincipalToken, PendleV2ContractFactory } from '../contracts';
 import { PENDLE_V_2_DEFINITION } from '../pendle-v2.definition';
+
 import { PendleV2MarketDataProps } from './pendle-v2.pool.token-fetcher';
 
 export type PendleV2PrincipalTokenDefinition = {
@@ -65,12 +66,12 @@ export class EthereumPendleV2PrincipalTokenTokenFetcher extends AppTokenTemplate
     return definitions;
   }
 
-  async getAddresses({ definitions }: GetAddressesParams): Promise<string[]> {
-    return definitions.map(definition => definition.address);
-  }
-
   getContract(address: string) {
     return this.pendleV2ContractFactory.pendlePrincipalToken({ address, network: this.network });
+  }
+
+  async getAddresses({ definitions }: GetAddressesParams): Promise<string[]> {
+    return definitions.map(definition => definition.address);
   }
 
   async getPrice({

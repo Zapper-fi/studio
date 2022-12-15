@@ -4,54 +4,29 @@
 
 import { Contract, Signer, utils } from 'ethers';
 import type { Provider } from '@ethersproject/providers';
-import type { Vault, VaultInterface } from '../Vault';
+import type { VaporwaveLaunchpool, VaporwaveLaunchpoolInterface } from '../VaporwaveLaunchpool';
 
 const _abi = [
   {
     inputs: [
       {
-        internalType: 'contract IStrategy',
-        name: '_strategy',
+        internalType: 'address',
+        name: '_stakedToken',
         type: 'address',
       },
       {
-        internalType: 'string',
-        name: '_name',
-        type: 'string',
+        internalType: 'address',
+        name: '_rewardToken',
+        type: 'address',
       },
       {
-        internalType: 'string',
-        name: '_symbol',
-        type: 'string',
+        internalType: 'uint256',
+        name: '_duration',
+        type: 'uint256',
       },
     ],
     stateMutability: 'nonpayable',
     type: 'constructor',
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: true,
-        internalType: 'address',
-        name: 'owner',
-        type: 'address',
-      },
-      {
-        indexed: true,
-        internalType: 'address',
-        name: 'spender',
-        type: 'address',
-      },
-      {
-        indexed: false,
-        internalType: 'uint256',
-        name: 'value',
-        type: 'uint256',
-      },
-    ],
-    name: 'Approval',
-    type: 'event',
   },
   {
     anonymous: false,
@@ -77,12 +52,12 @@ const _abi = [
     inputs: [
       {
         indexed: false,
-        internalType: 'address',
-        name: '_token',
-        type: 'address',
+        internalType: 'uint256',
+        name: 'reward',
+        type: 'uint256',
       },
     ],
-    name: 'TokensGotStuck',
+    name: 'RewardAdded',
     type: 'event',
   },
   {
@@ -91,124 +66,56 @@ const _abi = [
       {
         indexed: true,
         internalType: 'address',
-        name: 'from',
+        name: 'user',
         type: 'address',
       },
+      {
+        indexed: false,
+        internalType: 'uint256',
+        name: 'reward',
+        type: 'uint256',
+      },
+    ],
+    name: 'RewardPaid',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
       {
         indexed: true,
         internalType: 'address',
-        name: 'to',
+        name: 'user',
         type: 'address',
       },
       {
         indexed: false,
-        internalType: 'uint256',
-        name: 'value',
-        type: 'uint256',
-      },
-    ],
-    name: 'Transfer',
-    type: 'event',
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: false,
-        internalType: 'uint256',
-        name: '_amount',
-        type: 'uint256',
-      },
-    ],
-    name: 'VaultDeposit',
-    type: 'event',
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: false,
-        internalType: 'uint256',
-        name: 'r',
-        type: 'uint256',
-      },
-    ],
-    name: 'VaultWithdraw',
-    type: 'event',
-  },
-  {
-    inputs: [
-      {
-        internalType: 'address',
-        name: 'owner',
-        type: 'address',
-      },
-      {
-        internalType: 'address',
-        name: 'spender',
-        type: 'address',
-      },
-    ],
-    name: 'allowance',
-    outputs: [
-      {
-        internalType: 'uint256',
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        internalType: 'address',
-        name: 'spender',
-        type: 'address',
-      },
-      {
         internalType: 'uint256',
         name: 'amount',
         type: 'uint256',
       },
     ],
-    name: 'approve',
-    outputs: [
-      {
-        internalType: 'bool',
-        name: '',
-        type: 'bool',
-      },
-    ],
-    stateMutability: 'nonpayable',
-    type: 'function',
+    name: 'Staked',
+    type: 'event',
   },
   {
-    inputs: [],
-    name: 'available',
-    outputs: [
+    anonymous: false,
+    inputs: [
       {
+        indexed: true,
+        internalType: 'address',
+        name: 'user',
+        type: 'address',
+      },
+      {
+        indexed: false,
         internalType: 'uint256',
-        name: '',
+        name: 'amount',
         type: 'uint256',
       },
     ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'balance',
-    outputs: [
-      {
-        internalType: 'uint256',
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
+    name: 'Withdrawn',
+    type: 'event',
   },
   {
     inputs: [
@@ -231,12 +138,12 @@ const _abi = [
   },
   {
     inputs: [],
-    name: 'decimals',
+    name: 'duration',
     outputs: [
       {
-        internalType: 'uint8',
+        internalType: 'uint256',
         name: '',
-        type: 'uint8',
+        type: 'uint256',
       },
     ],
     stateMutability: 'view',
@@ -246,49 +153,11 @@ const _abi = [
     inputs: [
       {
         internalType: 'address',
-        name: 'spender',
+        name: 'account',
         type: 'address',
       },
-      {
-        internalType: 'uint256',
-        name: 'subtractedValue',
-        type: 'uint256',
-      },
     ],
-    name: 'decreaseAllowance',
-    outputs: [
-      {
-        internalType: 'bool',
-        name: '',
-        type: 'bool',
-      },
-    ],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        internalType: 'uint256',
-        name: '_amount',
-        type: 'uint256',
-      },
-    ],
-    name: 'deposit',
-    outputs: [],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'depositAll',
-    outputs: [],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'getPricePerFullShare',
+    name: 'earned',
     outputs: [
       {
         internalType: 'uint256',
@@ -297,6 +166,20 @@ const _abi = [
       },
     ],
     stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'exit',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'getReward',
+    outputs: [],
+    stateMutability: 'nonpayable',
     type: 'function',
   },
   {
@@ -313,40 +196,36 @@ const _abi = [
     type: 'function',
   },
   {
-    inputs: [
-      {
-        internalType: 'address',
-        name: 'spender',
-        type: 'address',
-      },
+    inputs: [],
+    name: 'lastTimeRewardApplicable',
+    outputs: [
       {
         internalType: 'uint256',
-        name: 'addedValue',
+        name: '',
         type: 'uint256',
       },
     ],
-    name: 'increaseAllowance',
-    outputs: [
-      {
-        internalType: 'bool',
-        name: '',
-        type: 'bool',
-      },
-    ],
-    stateMutability: 'nonpayable',
+    stateMutability: 'view',
     type: 'function',
   },
   {
     inputs: [],
-    name: 'name',
+    name: 'lastUpdateTime',
     outputs: [
       {
-        internalType: 'string',
+        internalType: 'uint256',
         name: '',
-        type: 'string',
+        type: 'uint256',
       },
     ],
     stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'notifyRewardAmount',
+    outputs: [],
+    stateMutability: 'nonpayable',
     type: 'function',
   },
   {
@@ -364,6 +243,19 @@ const _abi = [
   },
   {
     inputs: [],
+    name: 'periodFinish',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
     name: 'renounceOwnership',
     outputs: [],
     stateMutability: 'nonpayable',
@@ -371,17 +263,49 @@ const _abi = [
   },
   {
     inputs: [],
-    name: 'retireStrat',
-    outputs: [],
-    stateMutability: 'nonpayable',
+    name: 'rewardPerToken',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
     type: 'function',
   },
   {
     inputs: [],
-    name: 'strategy',
+    name: 'rewardPerTokenStored',
     outputs: [
       {
-        internalType: 'contract IStrategy',
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'rewardRate',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'rewardToken',
+    outputs: [
+      {
+        internalType: 'contract IERC20',
         name: '',
         type: 'address',
       },
@@ -390,13 +314,45 @@ const _abi = [
     type: 'function',
   },
   {
-    inputs: [],
-    name: 'symbol',
+    inputs: [
+      {
+        internalType: 'address',
+        name: '',
+        type: 'address',
+      },
+    ],
+    name: 'rewards',
     outputs: [
       {
-        internalType: 'string',
+        internalType: 'uint256',
         name: '',
-        type: 'string',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'uint256',
+        name: 'amount',
+        type: 'uint256',
+      },
+    ],
+    name: 'stake',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'stakedToken',
+    outputs: [
+      {
+        internalType: 'contract IERC20',
+        name: '',
+        type: 'address',
       },
     ],
     stateMutability: 'view',
@@ -419,59 +375,6 @@ const _abi = [
     inputs: [
       {
         internalType: 'address',
-        name: 'recipient',
-        type: 'address',
-      },
-      {
-        internalType: 'uint256',
-        name: 'amount',
-        type: 'uint256',
-      },
-    ],
-    name: 'transfer',
-    outputs: [
-      {
-        internalType: 'bool',
-        name: '',
-        type: 'bool',
-      },
-    ],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        internalType: 'address',
-        name: 'sender',
-        type: 'address',
-      },
-      {
-        internalType: 'address',
-        name: 'recipient',
-        type: 'address',
-      },
-      {
-        internalType: 'uint256',
-        name: 'amount',
-        type: 'uint256',
-      },
-    ],
-    name: 'transferFrom',
-    outputs: [
-      {
-        internalType: 'bool',
-        name: '',
-        type: 'bool',
-      },
-    ],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        internalType: 'address',
         name: 'newOwner',
         type: 'address',
       },
@@ -482,13 +385,19 @@ const _abi = [
     type: 'function',
   },
   {
-    inputs: [],
-    name: 'want',
-    outputs: [
+    inputs: [
       {
-        internalType: 'contract IERC20',
+        internalType: 'address',
         name: '',
         type: 'address',
+      },
+    ],
+    name: 'userRewardPerTokenPaid',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
       },
     ],
     stateMutability: 'view',
@@ -498,7 +407,7 @@ const _abi = [
     inputs: [
       {
         internalType: 'uint256',
-        name: '_shares',
+        name: 'amount',
         type: 'uint256',
       },
     ],
@@ -507,21 +416,14 @@ const _abi = [
     stateMutability: 'nonpayable',
     type: 'function',
   },
-  {
-    inputs: [],
-    name: 'withdrawAll',
-    outputs: [],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
 ];
 
-export class Vault__factory {
+export class VaporwaveLaunchpool__factory {
   static readonly abi = _abi;
-  static createInterface(): VaultInterface {
-    return new utils.Interface(_abi) as VaultInterface;
+  static createInterface(): VaporwaveLaunchpoolInterface {
+    return new utils.Interface(_abi) as VaporwaveLaunchpoolInterface;
   }
-  static connect(address: string, signerOrProvider: Signer | Provider): Vault {
-    return new Contract(address, _abi, signerOrProvider) as Vault;
+  static connect(address: string, signerOrProvider: Signer | Provider): VaporwaveLaunchpool {
+    return new Contract(address, _abi, signerOrProvider) as VaporwaveLaunchpool;
   }
 }

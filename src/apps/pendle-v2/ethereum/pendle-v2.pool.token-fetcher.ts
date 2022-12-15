@@ -11,7 +11,6 @@ import {
   DefaultAppTokenDefinition,
   GetAddressesParams,
   GetDataPropsParams,
-  GetDefinitionsParams,
   GetDisplayPropsParams,
   GetPriceParams,
   GetPricePerShareParams,
@@ -71,7 +70,7 @@ export class EthereumPendleV2PoolTokenFetcher extends AppTokenTemplatePositionFe
     super(appToolkit);
   }
 
-  async getDefinitions({ multicall }: GetDefinitionsParams): Promise<PendleV2MarketTokenDefinition[]> {
+  async getDefinitions(): Promise<PendleV2MarketTokenDefinition[]> {
     const resp: MarketsQueryResponse = await request(PENDLE_V2_GRAPHQL_ENDPOINT, BACKEND_QUERIES.getMarkets, {
       chainId: NETWORK_IDS[this.network],
     });
@@ -120,7 +119,7 @@ export class EthereumPendleV2PoolTokenFetcher extends AppTokenTemplatePositionFe
   }: GetPricePerShareParams<PendleMarket, PendleV2MarketDataProps, PendleV2MarketTokenDefinition>): Promise<
     number | number[]
   > {
-    let price = definition.price;
+    const price = definition.price;
     return [price / definition.pt.price, price / definition.sy.price];
   }
 
