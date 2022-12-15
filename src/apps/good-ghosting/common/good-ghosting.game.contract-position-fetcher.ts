@@ -14,7 +14,6 @@ import {
   GetDisplayPropsParams,
 } from '~position/template/contract-position.template.types';
 import { CustomContractPositionTemplatePositionFetcher } from '~position/template/custom-contract-position.template.position-fetcher';
-import { Network } from '~types';
 
 import { GoodGhostingContractFactory, GoodghostingAbiV001 } from '../contracts';
 
