@@ -12,7 +12,7 @@ const network = Network.ETHEREUM_MAINNET;
 
 @Register.BalanceFetcher(PENDLE_V_2_DEFINITION.id, network)
 export class EthereumPendleV2BalanceFetcher implements BalanceFetcher {
-  constructor(@Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit) { }
+  constructor(@Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit) {}
 
   private async fetchBalanceInGroup(address: string, groupId: string) {
     return this.appToolkit.helpers.tokenBalanceHelper.getTokenBalances({
@@ -23,12 +23,7 @@ export class EthereumPendleV2BalanceFetcher implements BalanceFetcher {
     });
   }
   async getBalances(address: string) {
-    const [
-      ptBalances,
-      ytBalances,
-      syBalances,
-      lpBalances,
-    ] = await Promise.all([
+    const [ptBalances, ytBalances, syBalances, lpBalances] = await Promise.all([
       this.fetchBalanceInGroup(address, PENDLE_V_2_DEFINITION.groups.principalToken.label),
       this.fetchBalanceInGroup(address, PENDLE_V_2_DEFINITION.groups.yieldToken.label),
       this.fetchBalanceInGroup(address, PENDLE_V_2_DEFINITION.groups.standardizedYieldToken.label),

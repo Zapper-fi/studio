@@ -5,7 +5,14 @@ import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import { DollarDisplayItem, PercentageDisplayItem } from '~position/display.interface';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
-import { DefaultAppTokenDataProps, GetAddressesParams, GetDataPropsParams, GetDefinitionsParams, GetDisplayPropsParams, GetPriceParams } from '~position/template/app-token.template.types';
+import {
+  DefaultAppTokenDataProps,
+  GetAddressesParams,
+  GetDataPropsParams,
+  GetDefinitionsParams,
+  GetDisplayPropsParams,
+  GetPriceParams,
+} from '~position/template/app-token.template.types';
 
 import { PendleV2ContractFactory, PendleYieldToken } from '../contracts';
 import { PendleV2MarketDataProps } from './pendle-v2.pool.token-fetcher';
@@ -26,7 +33,7 @@ export class EthereumPendleV2YieldTokenTokenFetcher extends AppTokenTemplatePosi
   PendleYieldToken,
   PendleV2YieldTokenDataProps,
   PendleV2YieldTokenDefinition
->{
+> {
   groupLabel = 'Yield Tokens';
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
@@ -41,7 +48,7 @@ export class EthereumPendleV2YieldTokenTokenFetcher extends AppTokenTemplatePosi
       groupIds: ['pool'],
       network: this.network,
     });
-    const definitions = markets.map((market) => {
+    const definitions = markets.map(market => {
       return {
         address: market.dataProps.yt.address,
         icon: market.dataProps.yt.icon,
@@ -56,34 +63,54 @@ export class EthereumPendleV2YieldTokenTokenFetcher extends AppTokenTemplatePosi
   }
 
   async getAddresses({ definitions }: GetAddressesParams): Promise<string[]> {
-    return definitions.map((definition) => definition.address);
+    return definitions.map(definition => definition.address);
   }
 
   getContract(address: string) {
     return this.pendleV2ContractFactory.pendleYieldToken({ address, network: this.network });
   }
 
-  async getPrice({ definition }: GetPriceParams<PendleYieldToken, PendleV2YieldTokenDataProps, PendleV2YieldTokenDefinition>): Promise<number> {
+  async getPrice({
+    definition,
+  }: GetPriceParams<PendleYieldToken, PendleV2YieldTokenDataProps, PendleV2YieldTokenDefinition>): Promise<number> {
     return definition.price;
   }
 
-  async getApy({ definition }: GetDataPropsParams<PendleYieldToken, PendleV2YieldTokenDataProps, PendleV2YieldTokenDefinition>): Promise<number> {
+  async getApy({
+    definition,
+  }: GetDataPropsParams<PendleYieldToken, PendleV2YieldTokenDataProps, PendleV2YieldTokenDefinition>): Promise<number> {
     return definition.ytFloatingApy * 100;
   }
 
-  async getLabel({ definition }: GetDisplayPropsParams<PendleYieldToken, PendleV2YieldTokenDataProps, PendleV2YieldTokenDefinition>): Promise<string> {
+  async getLabel({
+    definition,
+  }: GetDisplayPropsParams<
+    PendleYieldToken,
+    PendleV2YieldTokenDataProps,
+    PendleV2YieldTokenDefinition
+  >): Promise<string> {
     return definition.name;
   }
 
-  async getSecondaryLabel({ definition }: GetDisplayPropsParams<PendleYieldToken, PendleV2YieldTokenDataProps, PendleV2YieldTokenDefinition>): Promise<string | number | DollarDisplayItem | PercentageDisplayItem | undefined> {
+  async getSecondaryLabel({
+    definition,
+  }: GetDisplayPropsParams<PendleYieldToken, PendleV2YieldTokenDataProps, PendleV2YieldTokenDefinition>): Promise<
+    string | number | DollarDisplayItem | PercentageDisplayItem | undefined
+  > {
     return moment(definition.expiry).format('MMM DD, YYYY');
   }
 
-  async getImages({ definition }: GetDisplayPropsParams<PendleYieldToken, PendleV2YieldTokenDataProps, PendleV2YieldTokenDefinition>): Promise<string[]> {
+  async getImages({
+    definition,
+  }: GetDisplayPropsParams<PendleYieldToken, PendleV2YieldTokenDataProps, PendleV2YieldTokenDefinition>): Promise<
+    string[]
+  > {
     return [definition.icon];
   }
 
-  async getDataProps(params: GetDataPropsParams<PendleYieldToken, PendleV2YieldTokenDataProps, PendleV2YieldTokenDefinition>): Promise<PendleV2YieldTokenDataProps> {
+  async getDataProps(
+    params: GetDataPropsParams<PendleYieldToken, PendleV2YieldTokenDataProps, PendleV2YieldTokenDefinition>,
+  ): Promise<PendleV2YieldTokenDataProps> {
     const defaultDataProps = super.getDataProps(params);
     const { definition } = params;
     return {

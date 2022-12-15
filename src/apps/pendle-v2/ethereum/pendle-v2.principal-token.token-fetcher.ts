@@ -5,7 +5,14 @@ import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import { DollarDisplayItem, PercentageDisplayItem } from '~position/display.interface';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
-import { DefaultAppTokenDataProps, GetAddressesParams, GetDataPropsParams, GetDefinitionsParams, GetDisplayPropsParams, GetPriceParams } from '~position/template/app-token.template.types';
+import {
+  DefaultAppTokenDataProps,
+  GetAddressesParams,
+  GetDataPropsParams,
+  GetDefinitionsParams,
+  GetDisplayPropsParams,
+  GetPriceParams,
+} from '~position/template/app-token.template.types';
 
 import { PendlePrincipalToken, PendleV2ContractFactory } from '../contracts';
 import { PendleV2MarketDataProps } from './pendle-v2.pool.token-fetcher';
@@ -27,7 +34,7 @@ export class EthereumPendleV2PrincipalTokenTokenFetcher extends AppTokenTemplate
   PendlePrincipalToken,
   PendleV2PrincipalTokenDataProps,
   PendleV2PrincipalTokenDefinition
->{
+> {
   groupLabel = 'Principal Tokens';
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
@@ -42,7 +49,7 @@ export class EthereumPendleV2PrincipalTokenTokenFetcher extends AppTokenTemplate
       groupIds: ['pool'],
       network: this.network,
     });
-    const definitions = markets.map((market) => {
+    const definitions = markets.map(market => {
       return {
         address: market.dataProps.pt.address,
         icon: market.dataProps.pt.icon,
@@ -58,38 +65,76 @@ export class EthereumPendleV2PrincipalTokenTokenFetcher extends AppTokenTemplate
   }
 
   async getAddresses({ definitions }: GetAddressesParams): Promise<string[]> {
-    return definitions.map((definition) => definition.address);
+    return definitions.map(definition => definition.address);
   }
 
   getContract(address: string) {
     return this.pendleV2ContractFactory.pendlePrincipalToken({ address, network: this.network });
   }
 
-  async getPrice({ definition }: GetPriceParams<PendlePrincipalToken, PendleV2PrincipalTokenDataProps, PendleV2PrincipalTokenDefinition>): Promise<number> {
+  async getPrice({
+    definition,
+  }: GetPriceParams<
+    PendlePrincipalToken,
+    PendleV2PrincipalTokenDataProps,
+    PendleV2PrincipalTokenDefinition
+  >): Promise<number> {
     return definition.price;
   }
 
-  async getApy({ definition }: GetDataPropsParams<PendlePrincipalToken, PendleV2PrincipalTokenDataProps, PendleV2PrincipalTokenDefinition>): Promise<number> {
+  async getApy({
+    definition,
+  }: GetDataPropsParams<
+    PendlePrincipalToken,
+    PendleV2PrincipalTokenDataProps,
+    PendleV2PrincipalTokenDefinition
+  >): Promise<number> {
     return definition.impliedApy * 100;
   }
 
-  async getLabel({ definition }: GetDisplayPropsParams<PendlePrincipalToken, PendleV2PrincipalTokenDataProps, PendleV2PrincipalTokenDefinition>): Promise<string> {
+  async getLabel({
+    definition,
+  }: GetDisplayPropsParams<
+    PendlePrincipalToken,
+    PendleV2PrincipalTokenDataProps,
+    PendleV2PrincipalTokenDefinition
+  >): Promise<string> {
     return definition.name;
   }
 
-  async getSecondaryLabel({ definition }: GetDisplayPropsParams<PendlePrincipalToken, PendleV2PrincipalTokenDataProps, PendleV2PrincipalTokenDefinition>): Promise<string | number | DollarDisplayItem | PercentageDisplayItem | undefined> {
+  async getSecondaryLabel({
+    definition,
+  }: GetDisplayPropsParams<
+    PendlePrincipalToken,
+    PendleV2PrincipalTokenDataProps,
+    PendleV2PrincipalTokenDefinition
+  >): Promise<string | number | DollarDisplayItem | PercentageDisplayItem | undefined> {
     return 'Expire at ' + moment(definition.expiry).format('MMM DD, YYYY');
   }
 
-  async getTertiaryLabel({ definition }: GetDisplayPropsParams<PendlePrincipalToken, PendleV2PrincipalTokenDataProps, PendleV2PrincipalTokenDefinition>): Promise<string | number | DollarDisplayItem | PercentageDisplayItem | undefined> {
+  async getTertiaryLabel({
+    definition,
+  }: GetDisplayPropsParams<
+    PendlePrincipalToken,
+    PendleV2PrincipalTokenDataProps,
+    PendleV2PrincipalTokenDefinition
+  >): Promise<string | number | DollarDisplayItem | PercentageDisplayItem | undefined> {
     return 'Discount ' + (definition.ptDiscount * 100).toFixed(3) + '%';
   }
 
-  async getImages({ definition }: GetDisplayPropsParams<PendlePrincipalToken, PendleV2PrincipalTokenDataProps, PendleV2PrincipalTokenDefinition>): Promise<string[]> {
+  async getImages({
+    definition,
+  }: GetDisplayPropsParams<
+    PendlePrincipalToken,
+    PendleV2PrincipalTokenDataProps,
+    PendleV2PrincipalTokenDefinition
+  >): Promise<string[]> {
     return [definition.icon];
   }
 
-  async getDataProps(params: GetDataPropsParams<PendlePrincipalToken, PendleV2PrincipalTokenDataProps, PendleV2PrincipalTokenDefinition>): Promise<PendleV2PrincipalTokenDataProps> {
+  async getDataProps(
+    params: GetDataPropsParams<PendlePrincipalToken, PendleV2PrincipalTokenDataProps, PendleV2PrincipalTokenDefinition>,
+  ): Promise<PendleV2PrincipalTokenDataProps> {
     const defaultDataProps = super.getDataProps(params);
     const { definition } = params;
     return {

@@ -6,7 +6,16 @@ import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import { DollarDisplayItem, PercentageDisplayItem } from '~position/display.interface';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
-import { DefaultAppTokenDataProps, DefaultAppTokenDefinition, GetAddressesParams, GetDataPropsParams, GetDefinitionsParams, GetDisplayPropsParams, GetPriceParams, GetPricePerShareParams } from '~position/template/app-token.template.types';
+import {
+  DefaultAppTokenDataProps,
+  DefaultAppTokenDefinition,
+  GetAddressesParams,
+  GetDataPropsParams,
+  GetDefinitionsParams,
+  GetDisplayPropsParams,
+  GetPriceParams,
+  GetPricePerShareParams,
+} from '~position/template/app-token.template.types';
 import { NETWORK_IDS } from '~types/network.interface';
 
 import { PendleMarket, PendleV2ContractFactory } from '../contracts';
@@ -27,14 +36,14 @@ export type PendleV2MarketTokenDefinition = {
   impliedApy: number;
   underlyingApy: number;
   ptDiscount: number;
-  pt: Token,
-  sy: Token,
-  yt: Token,
+  pt: Token;
+  sy: Token;
+  yt: Token;
   price: number;
   expiry: string;
   name: string;
   icon: string;
-}
+};
 
 export type PendleV2MarketDataProps = DefaultAppTokenDataProps & PendleV2MarketTokenDefinition;
 
@@ -53,7 +62,7 @@ export class EthereumPendleV2PoolTokenFetcher extends AppTokenTemplatePositionFe
   PendleMarket,
   PendleV2MarketDataProps,
   PendleV2MarketTokenDefinition
->{
+> {
   groupLabel = 'Pools';
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
@@ -63,7 +72,6 @@ export class EthereumPendleV2PoolTokenFetcher extends AppTokenTemplatePositionFe
   }
 
   async getDefinitions({ multicall }: GetDefinitionsParams): Promise<PendleV2MarketTokenDefinition[]> {
-
     const resp: MarketsQueryResponse = await request(PENDLE_V2_GRAPHQL_ENDPOINT, BACKEND_QUERIES.getMarkets, {
       chainId: NETWORK_IDS[this.network],
     });
@@ -71,7 +79,7 @@ export class EthereumPendleV2PoolTokenFetcher extends AppTokenTemplatePositionFe
     const markets: MarketResponse[] = resp.markets.results;
 
     const definitions = await Promise.all(
-      markets.map(async (market) => {
+      markets.map(async market => {
         return {
           address: market.address,
           aggregatedApy: market.aggregatedApy,
@@ -86,47 +94,65 @@ export class EthereumPendleV2PoolTokenFetcher extends AppTokenTemplatePositionFe
           impliedApy: market.impliedApy,
           underlyingApy: market.underlyingApy,
           ptDiscount: market.ptDiscount,
-        }
-      })
-    )
+        };
+      }),
+    );
 
     return definitions;
   }
 
   async getAddresses({ definitions }: GetAddressesParams<DefaultAppTokenDefinition>) {
-    return definitions.map((definition) => definition.address);
+    return definitions.map(definition => definition.address);
   }
 
   getContract(address: string) {
     return this.pendleV2ContractFactory.pendleMarket({ address, network: this.network });
   }
 
-  async getPrice({ definition }: GetPriceParams<PendleMarket, PendleV2MarketDataProps, PendleV2MarketTokenDefinition>): Promise<number> {
+  async getPrice({
+    definition,
+  }: GetPriceParams<PendleMarket, PendleV2MarketDataProps, PendleV2MarketTokenDefinition>): Promise<number> {
     return definition.price;
   }
 
-  async getPricePerShare({ definition }: GetPricePerShareParams<PendleMarket, PendleV2MarketDataProps, PendleV2MarketTokenDefinition>): Promise<number | number[]> {
+  async getPricePerShare({
+    definition,
+  }: GetPricePerShareParams<PendleMarket, PendleV2MarketDataProps, PendleV2MarketTokenDefinition>): Promise<
+    number | number[]
+  > {
     let price = definition.price;
     return [price / definition.pt.price, price / definition.sy.price];
   }
 
-  async getApy({ definition }: GetDataPropsParams<PendleMarket, PendleV2MarketDataProps, PendleV2MarketTokenDefinition>): Promise<number> {
+  async getApy({
+    definition,
+  }: GetDataPropsParams<PendleMarket, PendleV2MarketDataProps, PendleV2MarketTokenDefinition>): Promise<number> {
     return definition.aggregatedApy * 100;
   }
 
-  async getLabel({ definition }: GetDisplayPropsParams<PendleMarket, DefaultAppTokenDataProps, PendleV2MarketTokenDefinition>): Promise<string> {
+  async getLabel({
+    definition,
+  }: GetDisplayPropsParams<PendleMarket, DefaultAppTokenDataProps, PendleV2MarketTokenDefinition>): Promise<string> {
     return definition.name;
   }
 
-  async getSecondaryLabel({ definition }: GetDisplayPropsParams<PendleMarket, DefaultAppTokenDataProps, PendleV2MarketTokenDefinition>): Promise<string | number | DollarDisplayItem | PercentageDisplayItem | undefined> {
+  async getSecondaryLabel({
+    definition,
+  }: GetDisplayPropsParams<PendleMarket, DefaultAppTokenDataProps, PendleV2MarketTokenDefinition>): Promise<
+    string | number | DollarDisplayItem | PercentageDisplayItem | undefined
+  > {
     return moment(definition.expiry).format('MMM DD, YYYY');
   }
 
-  async getImages({ definition }: GetDisplayPropsParams<PendleMarket, DefaultAppTokenDataProps, PendleV2MarketTokenDefinition>): Promise<string[]> {
+  async getImages({
+    definition,
+  }: GetDisplayPropsParams<PendleMarket, DefaultAppTokenDataProps, PendleV2MarketTokenDefinition>): Promise<string[]> {
     return [definition.icon];
   }
 
-  async getDataProps(params: GetDataPropsParams<PendleMarket, PendleV2MarketDataProps, PendleV2MarketTokenDefinition>): Promise<PendleV2MarketDataProps> {
+  async getDataProps(
+    params: GetDataPropsParams<PendleMarket, PendleV2MarketDataProps, PendleV2MarketTokenDefinition>,
+  ): Promise<PendleV2MarketDataProps> {
     const defaultDataProps = super.getDataProps(params);
     const { definition } = params;
     return {

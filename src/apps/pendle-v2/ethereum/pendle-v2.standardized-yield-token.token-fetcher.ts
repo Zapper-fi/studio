@@ -3,7 +3,14 @@ import { Inject } from '@nestjs/common';
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
-import { DefaultAppTokenDataProps, GetAddressesParams, GetDataPropsParams, GetDefinitionsParams, GetDisplayPropsParams, GetPriceParams } from '~position/template/app-token.template.types';
+import {
+  DefaultAppTokenDataProps,
+  GetAddressesParams,
+  GetDataPropsParams,
+  GetDefinitionsParams,
+  GetDisplayPropsParams,
+  GetPriceParams,
+} from '~position/template/app-token.template.types';
 
 import { PendleV2ContractFactory, StandardizedYield } from '../contracts';
 import { PendleV2MarketDataProps } from './pendle-v2.pool.token-fetcher';
@@ -16,14 +23,15 @@ export type PendleV2StandardizedYieldTokenDefinition = {
   underlyingApy: number;
 };
 
-export type PendleV2StandardizedYieldTokenDataProps = DefaultAppTokenDataProps & PendleV2StandardizedYieldTokenDefinition;
+export type PendleV2StandardizedYieldTokenDataProps = DefaultAppTokenDataProps &
+  PendleV2StandardizedYieldTokenDefinition;
 
 @PositionTemplate()
 export class EthereumPendleV2StandardizedYieldTokenTokenFetcher extends AppTokenTemplatePositionFetcher<
   StandardizedYield,
   PendleV2StandardizedYieldTokenDataProps,
   PendleV2StandardizedYieldTokenDefinition
->{
+> {
   groupLabel = 'Standardized Yield Tokens';
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
@@ -38,7 +46,7 @@ export class EthereumPendleV2StandardizedYieldTokenTokenFetcher extends AppToken
       groupIds: ['pool'],
       network: this.network,
     });
-    const definitions = markets.map((market) => {
+    const definitions = markets.map(market => {
       return {
         address: market.dataProps.sy.address,
         icon: market.dataProps.sy.icon,
@@ -52,30 +60,60 @@ export class EthereumPendleV2StandardizedYieldTokenTokenFetcher extends AppToken
   }
 
   async getAddresses({ definitions }: GetAddressesParams): Promise<string[]> {
-    return definitions.map((definition) => definition.address);
+    return definitions.map(definition => definition.address);
   }
 
   getContract(address: string) {
     return this.pendleV2ContractFactory.standardizedYield({ address, network: this.network });
   }
 
-  async getPrice({ definition }: GetPriceParams<StandardizedYield, PendleV2StandardizedYieldTokenDataProps, PendleV2StandardizedYieldTokenDefinition>): Promise<number> {
+  async getPrice({
+    definition,
+  }: GetPriceParams<
+    StandardizedYield,
+    PendleV2StandardizedYieldTokenDataProps,
+    PendleV2StandardizedYieldTokenDefinition
+  >): Promise<number> {
     return definition.price;
   }
 
-  async getApy({ definition }: GetDataPropsParams<StandardizedYield, PendleV2StandardizedYieldTokenDataProps, PendleV2StandardizedYieldTokenDefinition>): Promise<number> {
+  async getApy({
+    definition,
+  }: GetDataPropsParams<
+    StandardizedYield,
+    PendleV2StandardizedYieldTokenDataProps,
+    PendleV2StandardizedYieldTokenDefinition
+  >): Promise<number> {
     return definition.underlyingApy * 100;
   }
 
-  async getLabel({ definition }: GetDisplayPropsParams<StandardizedYield, PendleV2StandardizedYieldTokenDataProps, PendleV2StandardizedYieldTokenDefinition>): Promise<string> {
+  async getLabel({
+    definition,
+  }: GetDisplayPropsParams<
+    StandardizedYield,
+    PendleV2StandardizedYieldTokenDataProps,
+    PendleV2StandardizedYieldTokenDefinition
+  >): Promise<string> {
     return definition.name;
   }
 
-  async getImages({ definition }: GetDisplayPropsParams<StandardizedYield, PendleV2StandardizedYieldTokenDataProps, PendleV2StandardizedYieldTokenDefinition>): Promise<string[]> {
+  async getImages({
+    definition,
+  }: GetDisplayPropsParams<
+    StandardizedYield,
+    PendleV2StandardizedYieldTokenDataProps,
+    PendleV2StandardizedYieldTokenDefinition
+  >): Promise<string[]> {
     return [definition.icon];
   }
 
-  async getDataProps(params: GetDataPropsParams<StandardizedYield, PendleV2StandardizedYieldTokenDataProps, PendleV2StandardizedYieldTokenDefinition>): Promise<PendleV2StandardizedYieldTokenDataProps> {
+  async getDataProps(
+    params: GetDataPropsParams<
+      StandardizedYield,
+      PendleV2StandardizedYieldTokenDataProps,
+      PendleV2StandardizedYieldTokenDefinition
+    >,
+  ): Promise<PendleV2StandardizedYieldTokenDataProps> {
     const defaultDataProps = super.getDataProps(params);
     const { definition } = params;
     return {
