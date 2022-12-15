@@ -7,7 +7,7 @@ export const PENDLE_V_2_DEFINITION = appDefinition({
   id: 'pendle-v2',
   name: 'Pendle',
   description:
-    'Pendle is a permissionless DeFi yield-trading protocol, where users can execute various yield management strategies',
+    'The Pendle protocol enables the permissionless tokenization and trading of yield.Pendle allows anyone to purchase assets at a discount, obtain fixed yield, or long DeFi yield.',
   url: 'https://www.pendle.finance/',
 
   groups: {
