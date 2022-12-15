@@ -4,9 +4,23 @@ import { gql } from 'graphql-request';
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { Network } from '~types/network.interface';
 
+export const getTokensQuery = gql`
+  query getTokens {
+    tokens(first: 1000) {
+      id
+      contract {
+        id
+      }
+    }
+  }
+`;
+
 export type LlamapayTokensResponse = {
   tokens: {
     id: string;
+    contract: {
+      id: string;
+    };
   }[];
 };
 
@@ -67,6 +81,18 @@ export type LlamapayStreamsResponse = {
 export class LlamapayStreamApiClient {
   constructor(@Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit) {}
 
+  async getTokens() {
+    const tokensResponse = await this.appToolkit.helpers.theGraphHelper.request<LlamapayTokensResponse>({
+      endpoint: 'https://api.thegraph.com/subgraphs/name/nemusonaneko/llamapay-mainnet',
+      query: getTokensQuery,
+    });
+
+    return tokensResponse.tokens.map(token => ({
+      address: token.contract.id.toLowerCase(),
+      tokenAddress: token.id.toLowerCase(),
+    }));
+  }
+
   async getStreams(address: string, _network: Network) {
     const streamsResponse = await this.appToolkit.helpers.theGraphHelper.request<LlamapayStreamsResponse>({
       endpoint: 'https://api.thegraph.com/subgraphs/name/nemusonaneko/llamapay-mainnet',
@@ -74,8 +100,6 @@ export class LlamapayStreamApiClient {
       variables: { id: address, network: _network },
     });
 
-    if (!streamsResponse.user) return null;
-
-    return [...streamsResponse.user.streams];
+    return streamsResponse.user?.streams ?? [];
   }
 }

@@ -44,7 +44,6 @@ export const KYBERSWAP_CLASSIC_DEFINITION = appDefinition({
     [Network.BINANCE_SMART_CHAIN_MAINNET]: [AppAction.VIEW],
     [Network.OPTIMISM_MAINNET]: [AppAction.VIEW],
     [Network.ARBITRUM_MAINNET]: [AppAction.VIEW],
-    [Network.CRONOS_MAINNET]: [AppAction.VIEW],
     [Network.AVALANCHE_MAINNET]: [AppAction.VIEW],
   },
 });

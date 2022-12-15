@@ -1,5 +1,6 @@
 import { Inject } from '@nestjs/common';
 import { BigNumberish, Contract } from 'ethers/lib/ethers';
+import _ from 'lodash';
 import { compact, intersection, isArray, partition, sortBy, sum } from 'lodash';
 
 import { drillBalance } from '~app-toolkit';
@@ -54,17 +55,17 @@ export abstract class AppTokenTemplatePositionFetcher<
 
   constructor(@Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit) {}
 
-  // 1. Get token addresses
+  // 1. Get token contract instance
+  abstract getContract(address: string): T;
+
+  // 2. Get token addresses
   abstract getAddresses(params: GetAddressesParams): string[] | Promise<string[]>;
 
-  // 2. (Optional) Get token definitions (i.e.: token addresses and additional context)
+  // 3. (Optional) Get token definitions (i.e.: token addresses and additional context)
   async getDefinitions(params: GetDefinitionsParams): Promise<R[]> {
     const addresses = await this.getAddresses({ ...params, definitions: [] });
     return addresses.map(address => ({ address: address.toLowerCase() } as R));
   }
-
-  // 3. Get token contract instance
-  abstract getContract(address: string): T;
 
   // 4. Get underlying token addresses
   async getUnderlyingTokenAddresses(_params: GetUnderlyingTokensParams<T, R>): Promise<string | string[]> {
@@ -160,15 +161,12 @@ export abstract class AppTokenTemplatePositionFetcher<
     return statsItems;
   }
 
-  // Default (adapted) Template Runner
-  // Note: This will be removed in favour of an orchestrator at a higher level once all groups are migrated
-  async getPositions(): Promise<AppTokenPosition<V>[]> {
+  async getPositionsForBatch(definitions: R[]) {
     const multicall = this.appToolkit.getMulticall(this.network);
     const tokenLoader = this.appToolkit.getTokenDependencySelector({
       tags: { network: this.network, context: `${this.appId}__template` },
     });
 
-    const definitions = await this.getDefinitions({ multicall, tokenLoader });
     const maybeSkeletons = await Promise.all(
       definitions.map(async definition => {
         const address = definition.address.toLowerCase();
@@ -280,6 +278,18 @@ export abstract class AppTokenTemplatePositionFetcher<
     });
   }
 
+  // Default (adapted) Template Runner
+  // Note: This will be removed in favour of an orchestrator at a higher level once all groups are migrated
+  async getPositions(): Promise<AppTokenPosition<V>[]> {
+    const multicall = this.appToolkit.getMulticall(this.network);
+    const tokenLoader = this.appToolkit.getTokenDependencySelector({
+      tags: { network: this.network, context: `${this.appId}__template` },
+    });
+
+    const definitions = await this.getDefinitions({ multicall, tokenLoader });
+    return this.getPositionsForBatch(definitions);
+  }
+
   async getAccountAddress(address: string) {
     return address;
   }
@@ -324,23 +334,34 @@ export abstract class AppTokenTemplatePositionFetcher<
   async getRawBalances(_address: string): Promise<RawAppTokenBalance[]> {
     const multicall = this.appToolkit.getMulticall(this.network);
     const address = await this.getAccountAddress(_address);
-    const appTokens = await this.getPositionsForBalances();
     if (address === ZERO_ADDRESS) return [];
 
-    return Promise.all(
-      appTokens.map(async appToken => ({
-        key: this.appToolkit.getPositionKey(appToken),
-        balance: (await this.getBalancePerToken({ multicall, address, appToken })).toString(),
-      })),
-    );
+    const appTokens = await this.getPositionsForBalances();
+    let results: RawAppTokenBalance[] = [];
+    for (const batch of _.chunk(appTokens, 100).values()) {
+      results = results.concat(
+        await Promise.all(
+          batch.map(async appToken => ({
+            key: this.appToolkit.getPositionKey(appToken),
+            balance: (await this.getBalancePerToken({ multicall, address, appToken })).toString(),
+          })),
+        ),
+      );
+    }
+    return results;
   }
 
   async drillRawBalances(balances: RawAppTokenBalance[]): Promise<AppTokenPositionBalance<V>[]> {
     const appTokens = await this.getPositionsForBalances();
 
+    const balancesByKey = _(balances)
+      .groupBy(b => b.key)
+      .mapValues(v => v[0])
+      .value();
+
     const appTokenBalances = appTokens.map(token => {
       const key = this.appToolkit.getPositionKey(token);
-      const tokenBalance = balances.find(b => b.key === key);
+      const tokenBalance = balancesByKey[key];
       if (!tokenBalance) return null;
 
       const result = drillBalance<typeof token, V>(token, tokenBalance.balance, { isDebt: this.isDebt });

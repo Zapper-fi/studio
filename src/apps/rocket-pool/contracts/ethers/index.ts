@@ -3,8 +3,10 @@
 /* eslint-disable */
 export type { RocketDaoNodeTrusted } from './RocketDaoNodeTrusted';
 export type { RocketMinipoolManager } from './RocketMinipoolManager';
+export type { RocketNodeDeposit } from './RocketNodeDeposit';
 export type { RocketNodeStaking } from './RocketNodeStaking';
 export * as factories from './factories';
 export { RocketDaoNodeTrusted__factory } from './factories/RocketDaoNodeTrusted__factory';
 export { RocketMinipoolManager__factory } from './factories/RocketMinipoolManager__factory';
+export { RocketNodeDeposit__factory } from './factories/RocketNodeDeposit__factory';
 export { RocketNodeStaking__factory } from './factories/RocketNodeStaking__factory';

@@ -1,124 +1,31 @@
-import { Inject } from '@nestjs/common';
-import { compact, groupBy, sumBy, values } from 'lodash';
+import 'moment-duration-format';
 
-import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
-import { Register } from '~app-toolkit/decorators';
-import { getImagesFromToken, getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
-import { ContractType } from '~position/contract.interface';
-import { PositionFetcher } from '~position/position-fetcher.interface';
-import { ContractPosition, Standard } from '~position/position.interface';
-import { claimable, supplied } from '~position/position.utils';
-import { Network } from '~types/network.interface';
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 
-import { HUB_ADDRESS, POSITIONS_VERSIONS, PositionVersions } from '../helpers/addresses';
-import { getPositions } from '../helpers/graph';
-import { MEAN_FINANCE_DEFINITION } from '../mean-finance.definition';
+import { MeanFinanceDcaPositionContractPositionFetcher } from '../common/mean-finance.dca-position.contract-position-fetcher';
 
-const appId = MEAN_FINANCE_DEFINITION.id;
-const groupId = MEAN_FINANCE_DEFINITION.groups.dcaPosition.id;
-const network = Network.POLYGON_MAINNET;
-
-type MeanFinanceDcaPositionContractPositionDataProps = {
-  liquidity: number;
-  from: string;
-  to: string;
-  positionId: string;
-  assetStandard: Standard;
-};
-
-@Register.ContractPositionFetcher({ appId, groupId, network })
-export class PolygonMeanFinanceDcaPositionContractPositionFetcher implements PositionFetcher<ContractPosition> {
-  constructor(@Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit) {}
-
-  async getPositionsForVersion(version: PositionVersions) {
-    const dcaHubAddress = HUB_ADDRESS[version][network];
-    if (!dcaHubAddress) {
-      return Promise.resolve([]);
-    }
-
-    const graphHelper = this.appToolkit.helpers.theGraphHelper;
-    const positionsData = await getPositions(network, graphHelper, version);
-    const baseTokens = await this.appToolkit.getBaseTokenPrices(network);
-    const positions = positionsData.positions;
-
-    const maybePositions = positions.map(dcaPosition => {
-      const from = baseTokens.find(v => v.address === dcaPosition.from.address.toLowerCase());
-      const to = baseTokens.find(v => v.address === dcaPosition.to.address.toLowerCase());
-      if (!from || !to) return null;
-
-      const tokens = [supplied(from), claimable(to)];
-      const liquidityToSwapRaw = dcaPosition.remainingLiquidity;
-      const liquidityToWithdrawRaw = dcaPosition.toWithdraw;
-      const liquidityToSwap = (Number(liquidityToSwapRaw) / 10 ** from.decimals) * from.price;
-      const liquidityToWithdraw = (Number(liquidityToWithdrawRaw) / 10 ** to.decimals) * to.price;
-      const liquidity = liquidityToSwap + liquidityToWithdraw;
-
-      const label = `${getLabelFromToken(from)} to ${getLabelFromToken(to)}`;
-      const images = [...getImagesFromToken(from), ...getImagesFromToken(to)];
-
-      const position: ContractPosition<MeanFinanceDcaPositionContractPositionDataProps> = {
-        type: ContractType.POSITION,
-        address: dcaHubAddress,
-        appId: MEAN_FINANCE_DEFINITION.id,
-        groupId: MEAN_FINANCE_DEFINITION.groups.dcaPosition.id,
-        network,
-        tokens,
-        dataProps: {
-          from: from.address,
-          to: to.address,
-          liquidity,
-          positionId: dcaPosition.id,
-          assetStandard: Standard.ERC_721,
-        },
-        displayProps: {
-          label,
-          images,
-        },
-      };
-
-      return position;
-    });
-
-    const allPositions = compact(maybePositions);
-    const groupedPositionsRecord = groupBy(allPositions, v => `${v.dataProps.from}:${v.dataProps.to}`);
-    const groupedPositions = values(groupedPositionsRecord);
-
-    const mergedPositions = groupedPositions.map(positionsForDirectionalPair => {
-      const totalLiquidity = sumBy(positionsForDirectionalPair, v => v.dataProps.liquidity);
-
-      const anyPosition = positionsForDirectionalPair[0];
-      const mergedPosition: ContractPosition<MeanFinanceDcaPositionContractPositionDataProps> = {
-        type: ContractType.POSITION,
-        address: dcaHubAddress,
-        appId: MEAN_FINANCE_DEFINITION.id,
-        groupId: MEAN_FINANCE_DEFINITION.groups.dcaPosition.id,
-        network,
-        tokens: anyPosition.tokens,
-        dataProps: {
-          from: anyPosition.dataProps.from,
-          to: anyPosition.dataProps.to,
-          liquidity: totalLiquidity,
-          positionId: anyPosition.dataProps.positionId,
-          assetStandard: Standard.ERC_721,
-        },
-        displayProps: {
-          label: anyPosition.displayProps.label,
-          secondaryLabel: `${positionsForDirectionalPair.length} active positions`,
-          images: anyPosition.displayProps.images,
-        },
-      };
-
-      return mergedPosition;
-    });
-
-    return mergedPositions;
-  }
-
-  async getPositions() {
-    const positionResults = await Promise.all(POSITIONS_VERSIONS.map(version => this.getPositionsForVersion(version)));
-
-    const contractPositionBalances = positionResults.reduce((acc, positions) => [...acc, ...positions], []);
-
-    return contractPositionBalances;
-  }
+@PositionTemplate()
+export class PolygonMeanFinanceDcaPositionContractPositionFetcher extends MeanFinanceDcaPositionContractPositionFetcher {
+  groupLabel = 'DCA Positions';
+  hubs = [
+    {
+      // Version 2 Hub - VULN
+      hubAddress: '0x230c63702d1b5034461ab2ca889a30e343d81349',
+      tokenAddress: '0xb4edfb45446c6a207643ea846bfa42021ce5ae11',
+      subgraphUrl: 'https://api.thegraph.com/subgraphs/name/mean-finance/dca-v2-ys-vulnerable-polygon',
+    },
+    {
+      // Version 3 Hub - POST-VULN
+      hubAddress: '0x059d306a25c4ce8d7437d25743a8b94520536bd5',
+      tokenAddress: '0x6f54391fe0386d506b51d69deeb8b04e0544e088',
+      subgraphUrl: 'https://api.thegraph.com/subgraphs/name/mean-finance/dca-v2-ys-polygon',
+    },
+    {
+      // Version 4 Hub - YIELD
+      hubAddress: '0xa43cc0b95ec985bf45fc03262150c20cae180952',
+      tokenAddress: '0x516cb11697bf1ba2dbb5c081c23f169791c4bd01',
+      transformerAddress: '0xc0136591df365611b1452b5f8823def69ff3a685',
+      subgraphUrl: 'https://api.thegraph.com/subgraphs/name/mean-finance/dca-v2-yf-polygon',
+    },
+  ];
 }

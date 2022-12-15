@@ -2,7 +2,6 @@ import { Register } from '~app-toolkit/decorators';
 import { AbstractApp } from '~app/app.dynamic-module';
 
 import { AuroraPlusAppDefinition, AURORA_PLUS_DEFINITION } from './aurora-plus.definition';
-import { AuroraAuroraPlusBalanceFetcher } from './aurora/aurora-plus.balance-fetcher';
 import { AuroraAuroraPlusStakeContractPositionFetcher } from './aurora/aurora-plus.stake.contract-position-fetcher';
 import { AuroraPlusContractFactory } from './contracts';
 
@@ -12,7 +11,6 @@ import { AuroraPlusContractFactory } from './contracts';
     AuroraPlusAppDefinition,
     AuroraPlusContractFactory,
     // Aurora
-    AuroraAuroraPlusBalanceFetcher,
     AuroraAuroraPlusStakeContractPositionFetcher,
   ],
 })

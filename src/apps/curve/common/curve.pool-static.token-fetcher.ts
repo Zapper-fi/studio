@@ -126,8 +126,8 @@ export abstract class CurvePoolStaticTokenFetcher<T extends Contract> extends Ap
     const contract = multicall.wrap(this.resolvePoolContract(definition));
     const swapAddress = definition.swapAddress;
 
-    const fees = await this.resolvePoolFee({ contract, multicall });
-    const fee = Number(fees[0]) / 10 ** 8;
+    const feeRaw = await this.resolvePoolFee({ contract, multicall });
+    const fee = Number(feeRaw) / 10 ** 8;
     const volume = 0; // not supported
     const apy = 0; // not supported
 

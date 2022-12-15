@@ -1,7 +1,7 @@
 import { Inject } from '@nestjs/common';
 import DataLoader from 'dataloader';
 import { BigNumberish, Contract } from 'ethers';
-import { range } from 'lodash';
+import { compact, range } from 'lodash';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { ETH_ADDR_ALIAS, ZERO_ADDRESS } from '~app-toolkit/constants/address';
@@ -120,7 +120,7 @@ export abstract class CurvePoolDynamicTokenFetcher<T extends Contract> extends A
       }),
     );
 
-    return poolDefinitions.filter(v => !this.blacklistedSwapAddresses.includes(v.address));
+    return compact(poolDefinitions).filter(v => !this.blacklistedSwapAddresses.includes(v.address));
   }
 
   async getAddresses({ definitions }: GetAddressesParams<DefaultAppTokenDefinition>) {
@@ -143,6 +143,8 @@ export abstract class CurvePoolDynamicTokenFetcher<T extends Contract> extends A
     definition,
     appToken,
   }: GetPricePerShareParams<Erc20, CurvePoolTokenDataProps, CurvePoolDefinition>) {
+    if (appToken.supply === 0) return appToken.tokens.map(() => 0);
+
     const contract = multicall.wrap(this.resolveRegistry(this.registryAddress));
     const swapAddress = definition.swapAddress;
     const reservesRaw = await this.resolveReserves({ contract, swapAddress, multicall });
@@ -167,7 +169,7 @@ export abstract class CurvePoolDynamicTokenFetcher<T extends Contract> extends A
 
     const volume = await this.volumeDataLoader.load(definition.swapAddress);
     const feeVolume = fee * volume;
-    const apy = (feeVolume / defaultDataProps.liquidity) * 365;
+    const apy = defaultDataProps.liquidity > 0 ? (feeVolume / defaultDataProps.liquidity) * 365 : 0;
 
     return { ...defaultDataProps, fee, volume, apy, swapAddress };
   }
@@ -179,6 +181,8 @@ export abstract class CurvePoolDynamicTokenFetcher<T extends Contract> extends A
   async getSecondaryLabel({ appToken }: GetDisplayPropsParams<Erc20, CurvePoolTokenDataProps, CurvePoolDefinition>) {
     const reservesUSD = appToken.tokens.map((t, i) => appToken.dataProps.reserves[i] * t.price);
     const liquidity = reservesUSD.reduce((total, r) => total + r, 0);
+    if (liquidity === 0) return appToken.tokens.map(() => '0%').join(' / ');
+
     const reservePercentages = reservesUSD.map(reserveUSD => reserveUSD / liquidity);
     const ratio = reservePercentages.map(p => `${Math.floor(p * 100)}%`).join(' / ');
 

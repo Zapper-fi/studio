@@ -5,6 +5,7 @@ import { ContractFactory } from '~contract/contracts';
 import { Network } from '~types/network.interface';
 
 import { PieDaoReferralRewards__factory } from './ethers';
+import { PieDaoRewards__factory } from './ethers';
 import { PieDaoStaking__factory } from './ethers';
 import { PieDaoVoteLockedDough__factory } from './ethers';
 
@@ -20,6 +21,9 @@ export class PieDaoContractFactory extends ContractFactory {
   pieDaoReferralRewards({ address, network }: ContractOpts) {
     return PieDaoReferralRewards__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
+  pieDaoRewards({ address, network }: ContractOpts) {
+    return PieDaoRewards__factory.connect(address, this.appToolkit.getNetworkProvider(network));
+  }
   pieDaoStaking({ address, network }: ContractOpts) {
     return PieDaoStaking__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
@@ -29,5 +33,6 @@ export class PieDaoContractFactory extends ContractFactory {
 }
 
 export type { PieDaoReferralRewards } from './ethers';
+export type { PieDaoRewards } from './ethers';
 export type { PieDaoStaking } from './ethers';
 export type { PieDaoVoteLockedDough } from './ethers';
