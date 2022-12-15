@@ -8,23 +8,35 @@ export const BACKEND_QUERIES = {
                 results {
                     address
                     aggregatedApy
+                    ytFloatingApy
                     proName
                     proIcon
                     expiry
                     sy {
                         address
+                        proName
+                        proIcon
                         price {
                             usd
                         }
                     }
                     pt {
                         address
+                        proName
+                        proIcon
+                        price {
+                            usd
+                        }
+                    }
+                    yt {
+                        address
+                        proName
+                        proIcon
                         price {
                             usd
                         }
                     }
                     lp {
-                        address
                         price {
                             usd
                         }

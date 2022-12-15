@@ -17,25 +17,37 @@ import { Network, NETWORK_IDS } from '~types/network.interface';
 import { PendleMarket, PendleV2ContractFactory } from '../contracts';
 import { BACKEND_QUERIES, PENDLE_V2_GRAPHQL_ENDPOINT } from '../pendle-v2.constant';
 import { PENDLE_V_2_DEFINITION } from '../pendle-v2.definition';
-import { MarketResponse, MarketsQueryResponse } from '../pendle-v2.types';
+import { MarketResponse, MarketsQueryResponse, TokenResponse } from '../pendle-v2.types';
 
-export type PendleV2MarketDataProps = DefaultAppTokenDataProps;
+type Token = {
+  name: string;
+  icon: string;
+  address: string;
+  price: number;
+};
 
 export type PendleV2MarketTokenDefinition = {
   address: string;
   aggregatedApy: number;
-  pt: {
-    address: string;
-    price: number;
-  },
-  sy: {
-    address: string;
-    price: number;
-  },
+  ytFloatingApy: number;
+  pt: Token,
+  sy: Token,
+  yt: Token,
   price: number;
   expiry: string;
   name: string;
   icon: string;
+}
+
+export type PendleV2MarketDataProps = DefaultAppTokenDataProps & PendleV2MarketTokenDefinition;
+
+function toToken(tokenResp: TokenResponse): Token {
+  return {
+    name: tokenResp.proName,
+    icon: tokenResp.proIcon,
+    address: tokenResp.address,
+    price: tokenResp.price.usd,
+  };
 }
 
 @PositionTemplate()
@@ -65,14 +77,10 @@ export class EthereumPendleV2FarmTokenFetcher extends AppTokenTemplatePositionFe
         return {
           address: market.address,
           aggregatedApy: market.aggregatedApy,
-          pt: {
-            address: market.pt.address,
-            price: market.pt.price.usd,
-          },
-          sy: {
-            address: market.sy.address,
-            price: market.sy.price.usd,
-          },
+          ytFloatingApy: market.ytFloatingApy,
+          pt: toToken(market.pt),
+          sy: toToken(market.sy),
+          yt: toToken(market.yt),
           price: market.lp.price.usd,
           expiry: market.expiry,
           name: market.proName,
@@ -115,5 +123,14 @@ export class EthereumPendleV2FarmTokenFetcher extends AppTokenTemplatePositionFe
 
   async getImages({ definition }: GetDisplayPropsParams<PendleMarket, DefaultAppTokenDataProps, PendleV2MarketTokenDefinition>): Promise<string[]> {
     return [definition.icon];
+  }
+
+  async getDataProps(params: GetDataPropsParams<PendleMarket, PendleV2MarketDataProps, PendleV2MarketTokenDefinition>): Promise<PendleV2MarketDataProps> {
+    const defaultDataProps = super.getDataProps(params);
+    const { definition } = params;
+    return {
+      ...defaultDataProps,
+      ...definition,
+    };
   }
 }
