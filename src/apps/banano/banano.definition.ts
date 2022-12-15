@@ -9,6 +9,9 @@ export const BANANO_DEFINITION = appDefinition({
   description:
     'Banano is a feeless, instant, rich in potassium cryptocurrency powered by DAG technology disrupting the meme economy.',
   url: 'https://wrap.banano.cc',
+  tags: [AppTag.FARMING],
+  primaryColor: '#fff',
+
   links: {
     github: 'https://github.com/BananoCoin',
     twitter: 'https://twitter.com/bananocoin',
@@ -16,10 +19,15 @@ export const BANANO_DEFINITION = appDefinition({
     telegram: 'https://t.me/banano_official',
     medium: 'https://medium.com/banano',
   },
+
   groups: {
-    farm: { id: 'farm', type: GroupType.POSITION, label: 'Farms' },
+    farm: {
+      id: 'farm',
+      type: GroupType.POSITION,
+      label: 'Farms',
+    },
   },
-  tags: [AppTag.FARMING],
+
   supportedNetworks: {
     [Network.POLYGON_MAINNET]: [AppAction.VIEW],
     [Network.BINANCE_SMART_CHAIN_MAINNET]: [AppAction.VIEW],
@@ -27,7 +35,6 @@ export const BANANO_DEFINITION = appDefinition({
     [Network.ETHEREUM_MAINNET]: [AppAction.VIEW],
     [Network.ARBITRUM_MAINNET]: [AppAction.VIEW],
   },
-  primaryColor: '#fff',
 });
 
 @Register.AppDefinition(BANANO_DEFINITION.id)

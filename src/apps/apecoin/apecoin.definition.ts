@@ -6,7 +6,7 @@ import { Network } from '~types/network.interface';
 export const APECOIN_DEFINITION = appDefinition({
   id: 'apecoin',
   name: 'Apecoin',
-  description: '',
+  description: 'APE is a token made to support what’s next, controlled and built on by the community.',
   url: 'https://apecoin.com/',
 
   groups: {

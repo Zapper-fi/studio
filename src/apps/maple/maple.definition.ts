@@ -10,20 +10,6 @@ export const MAPLE_DEFINITION = appDefinition({
   url: 'https://www.maple.finance/',
 
   groups: {
-    farm: {
-      id: 'farm',
-      type: GroupType.POSITION,
-      label: 'Farms',
-      isHiddenFromExplore: true,
-    },
-
-    stakedBpt: {
-      id: 'staked-bpt',
-      type: GroupType.TOKEN,
-      label: 'Staked BPT',
-      isHiddenFromExplore: true,
-    },
-
     pool: {
       id: 'pool',
       type: GroupType.TOKEN,

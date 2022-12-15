@@ -4,6 +4,91 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.327.0](https://github.com/Zapper-fi/studio/compare/v0.326.0...v0.327.0) (2022-12-14)
+
+
+### Features
+
+* **balances:** Improve performance by doing O(1) lookups ([#1919](https://github.com/Zapper-fi/studio/issues/1919)) ([d373394](https://github.com/Zapper-fi/studio/commit/d373394ac17a7aa0c0b2ca03e2b97f4ea19deff6))
+
+
+### Bug Fixes
+
+* **synthetix:** Check if the contract position is undefined ([#1914](https://github.com/Zapper-fi/studio/issues/1914)) ([60b8def](https://github.com/Zapper-fi/studio/commit/60b8def07df3656821221f87b9e39568a21fcd11))
+
+## [0.326.0](https://github.com/Zapper-fi/studio/compare/v0.325.1...v0.326.0) (2022-12-14)
+
+
+### Features
+
+* **maple:** Implemented Maple v2 and migrate to template ([#1910](https://github.com/Zapper-fi/studio/issues/1910)) ([d4634a1](https://github.com/Zapper-fi/studio/commit/d4634a1397441bd130e242c6a97c0a5000c2dbc0))
+
+
+### Bug Fixes
+
+* **presenter:** Check against balances, not grouped balances ([#1917](https://github.com/Zapper-fi/studio/issues/1917)) ([d1c2f2f](https://github.com/Zapper-fi/studio/commit/d1c2f2f09a6d9c025c3bdb1e5cdc218cf1e34554))
+
+## [0.325.1](https://github.com/Zapper-fi/studio/compare/v0.325.0...v0.325.1) (2022-12-14)
+
+
+### Bug Fixes
+
+* **apecoin:** Add description ([#1912](https://github.com/Zapper-fi/studio/issues/1912)) ([4c672cf](https://github.com/Zapper-fi/studio/commit/4c672cf1331800c4cac9c54db3a9e7c237673c83))
+* **presenter:** Catch and ignore presenter errors ([#1915](https://github.com/Zapper-fi/studio/issues/1915)) ([4553800](https://github.com/Zapper-fi/studio/commit/455380001fb22e5ba9b7c2f097c9ccccafba95c0))
+* **presenter:** ignore empty balance set ([#1916](https://github.com/Zapper-fi/studio/issues/1916)) ([bc9a28d](https://github.com/Zapper-fi/studio/commit/bc9a28d602c72c7c6c237123724eb7dbeff3744b))
+
+## [0.325.0](https://github.com/Zapper-fi/studio/compare/v0.324.0...v0.325.0) (2022-12-13)
+
+
+### Features
+
+* **chef:** Add params for getDefinitions for overrides ([#1908](https://github.com/Zapper-fi/studio/issues/1908)) ([9068604](https://github.com/Zapper-fi/studio/commit/9068604b41be2aa56640b46ccfd9048ff6032e4d))
+
+## [0.324.0](https://github.com/Zapper-fi/studio/compare/v0.323.0...v0.324.0) (2022-12-13)
+
+
+### Features
+
+* **banano:** To templates ([#1906](https://github.com/Zapper-fi/studio/issues/1906)) ([0b7ceb1](https://github.com/Zapper-fi/studio/commit/0b7ceb15828a5409adb9c08a1397edbc48bb5a11))
+
+
+### Bug Fixes
+
+* **main:** Remove support for cronos network ([#1897](https://github.com/Zapper-fi/studio/issues/1897)) ([bc1a314](https://github.com/Zapper-fi/studio/commit/bc1a3142ab487c90f215399dc4c6c7a84a23566f))
+
+## [0.323.0](https://github.com/Zapper-fi/studio/compare/v0.322.0...v0.323.0) (2022-12-13)
+
+
+### Features
+
+* **uniswap-v2:** Get positions for balances from DB ([#1903](https://github.com/Zapper-fi/studio/issues/1903)) ([cd49935](https://github.com/Zapper-fi/studio/commit/cd4993593a9dab9df9168ea7202615b2a0b979af))
+
+## [0.322.0](https://github.com/Zapper-fi/studio/compare/v0.321.0...v0.322.0) (2022-12-13)
+
+
+### Features
+
+* **uniswap-v2:** Remove ShibaDoge pool ([#1902](https://github.com/Zapper-fi/studio/issues/1902)) ([3a2bd45](https://github.com/Zapper-fi/studio/commit/3a2bd45fc9a506692277b8ea94b165582469e973))
+
+
+### Bug Fixes
+
+* **art-gobbler:** Add description ([#1898](https://github.com/Zapper-fi/studio/issues/1898)) ([78c6539](https://github.com/Zapper-fi/studio/commit/78c65398e8346bb87d4ce3dfb54dad11f50d749c))
+
+## [0.321.0](https://github.com/Zapper-fi/studio/compare/v0.320.0...v0.321.0) (2022-12-13)
+
+
+### Features
+
+* **banano:** Banano on Arbitrum ([#1896](https://github.com/Zapper-fi/studio/issues/1896)) ([934c525](https://github.com/Zapper-fi/studio/commit/934c525a45ab049b8f808aeec935aaf3f9252ab9))
+* **uniswap-v2:** Enable fetching 5000 Uniswap V2 pools ([#1900](https://github.com/Zapper-fi/studio/issues/1900)) ([9ee1020](https://github.com/Zapper-fi/studio/commit/9ee1020b1279595071469cd264ab92ad8d9c94c3))
+
+
+### Bug Fixes
+
+* **iq:** Linting ([#1894](https://github.com/Zapper-fi/studio/issues/1894)) ([86c1692](https://github.com/Zapper-fi/studio/commit/86c1692e078d27b21f4a89afbeda67649032abd2))
+* **lemma-finance:** xUSDL price and underlying token ([#1892](https://github.com/Zapper-fi/studio/issues/1892)) ([726e5a6](https://github.com/Zapper-fi/studio/commit/726e5a6c03f49d764cc6d7de92dd5930a438310e))
+
 ## [0.320.0](https://github.com/Zapper-fi/studio/compare/v0.319.0...v0.320.0) (2022-12-10)
 
 
