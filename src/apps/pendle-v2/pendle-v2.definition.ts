@@ -38,7 +38,12 @@ export const PENDLE_V_2_DEFINITION = appDefinition({
 
   tags: [AppTag.DERIVATIVES],
   keywords: [],
-  links: {},
+  links: {
+    twitter: 'https://twitter.com/pendle_fi',
+    discord: 'https://pendle.finance/discord',
+    telegram: 'http://t.me/pendlefinance',
+    medium: 'https://pendle.medium.com/',
+  },
 
   supportedNetworks: {
     [Network.ETHEREUM_MAINNET]: [AppAction.VIEW],
