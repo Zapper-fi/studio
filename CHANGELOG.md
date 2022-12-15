@@ -4,6 +4,20 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.328.0](https://github.com/Zapper-fi/studio/compare/v0.327.0...v0.328.0) (2022-12-15)
+
+
+### Features
+
+* **good-ghosting:** adds support other V2 versions ([#1870](https://github.com/Zapper-fi/studio/issues/1870)) ([c35e6a8](https://github.com/Zapper-fi/studio/commit/c35e6a826a513f4afc0b1eac9e86d2e4929bcb9e))
+* **pendle-v2:** Integrate Pendle v2 ([#1924](https://github.com/Zapper-fi/studio/issues/1924)) ([23dae9b](https://github.com/Zapper-fi/studio/commit/23dae9b67c092a1cdf3b26010047d683700e12e0))
+* **uniswap-v2:** Fix volume data loader when graph is not synced ([#1927](https://github.com/Zapper-fi/studio/issues/1927)) ([e565b11](https://github.com/Zapper-fi/studio/commit/e565b11a02debc88a4039aac6b12e2e7c788627e))
+
+
+### Bug Fixes
+
+* **lint:** Little derp ([4e7a9c4](https://github.com/Zapper-fi/studio/commit/4e7a9c41e54667be7b5fd2d99a5494788fc23300))
+
 ## [0.327.0](https://github.com/Zapper-fi/studio/compare/v0.326.0...v0.327.0) (2022-12-14)
 
 
