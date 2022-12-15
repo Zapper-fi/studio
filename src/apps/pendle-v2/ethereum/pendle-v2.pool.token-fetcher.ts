@@ -32,6 +32,7 @@ export type PendleV2MarketTokenDefinition = {
   ytFloatingApy: number;
   impliedApy: number;
   underlyingApy: number;
+  ptDiscount: number;
   pt: Token,
   sy: Token,
   yt: Token,
@@ -45,7 +46,8 @@ export type PendleV2MarketDataProps = DefaultAppTokenDataProps & PendleV2MarketT
 
 function toToken(tokenResp: TokenResponse): Token {
   return {
-    name: tokenResp.proName,
+    // use simpleName if available, otherwise use proName
+    name: tokenResp.simpleName ?? tokenResp.proName,
     icon: tokenResp.proIcon,
     address: tokenResp.address,
     price: tokenResp.price.usd,
@@ -89,6 +91,7 @@ export class EthereumPendleV2PoolTokenFetcher extends AppTokenTemplatePositionFe
           icon: market.proIcon,
           impliedApy: market.impliedApy,
           underlyingApy: market.underlyingApy,
+          ptDiscount: market.ptDiscount,
         }
       })
     )

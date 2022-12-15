@@ -2,6 +2,7 @@ export type TokenResponse = {
     address: string;
     proName: string;
     proIcon: string;
+    simpleName?: string;
     price: {
         usd: number;
     }
@@ -12,6 +13,7 @@ export type MarketResponse = {
     ytFloatingApy: number;
     impliedApy: number;
     underlyingApy: number;
+    ptDiscount: number;
     proName: string;
     proIcon: string;
     expiry: string;

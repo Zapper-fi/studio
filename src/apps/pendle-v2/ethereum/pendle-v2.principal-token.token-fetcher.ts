@@ -22,6 +22,7 @@ export type PendleV2PrincipalTokenDefinition = {
   price: number;
   expiry: string;
   impliedApy: number;
+  ptDiscount: number;
 };
 
 export type PendleV2PrincipalTokenDataProps = DefaultAppTokenDataProps & PendleV2PrincipalTokenDefinition;
@@ -54,6 +55,7 @@ export class EthereumPendleV2PrincipalTokenTokenFetcher extends AppTokenTemplate
         price: market.dataProps.pt.price,
         expiry: market.dataProps.expiry,
         impliedApy: market.dataProps.impliedApy,
+        ptDiscount: market.dataProps.ptDiscount,
       };
     });
 
@@ -73,7 +75,7 @@ export class EthereumPendleV2PrincipalTokenTokenFetcher extends AppTokenTemplate
   }
 
   async getApy({ definition }: GetDataPropsParams<PendlePrincipalToken, PendleV2PrincipalTokenDataProps, PendleV2PrincipalTokenDefinition>): Promise<number> {
-    return definition.impliedApy;
+    return definition.impliedApy
   }
 
   async getLabel({ definition }: GetDisplayPropsParams<PendlePrincipalToken, PendleV2PrincipalTokenDataProps, PendleV2PrincipalTokenDefinition>): Promise<string> {
@@ -81,7 +83,11 @@ export class EthereumPendleV2PrincipalTokenTokenFetcher extends AppTokenTemplate
   }
 
   async getSecondaryLabel({ definition }: GetDisplayPropsParams<PendlePrincipalToken, PendleV2PrincipalTokenDataProps, PendleV2PrincipalTokenDefinition>): Promise<string | number | DollarDisplayItem | PercentageDisplayItem | undefined> {
-    return moment(definition.expiry).format('MMM DD, YYYY');
+    return 'Expire at ' + moment(definition.expiry).format('MMM DD, YYYY');
+  }
+
+  async getTertiaryLabel({ definition }: GetDisplayPropsParams<PendlePrincipalToken, PendleV2PrincipalTokenDataProps, PendleV2PrincipalTokenDefinition>): Promise<string | number | DollarDisplayItem | PercentageDisplayItem | undefined> {
+    return 'Discount ' + (definition.ptDiscount * 100).toFixed(3) + '%';
   }
 
   async getImages({ definition }: GetDisplayPropsParams<PendlePrincipalToken, PendleV2PrincipalTokenDataProps, PendleV2PrincipalTokenDefinition>): Promise<string[]> {

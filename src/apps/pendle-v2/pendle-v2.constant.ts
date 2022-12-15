@@ -11,6 +11,7 @@ export const BACKEND_QUERIES = {
                     ytFloatingApy
                     impliedApy
                     underlyingApy
+                    ptDiscount
                     proName
                     proIcon
                     expiry
@@ -25,6 +26,7 @@ export const BACKEND_QUERIES = {
                     pt {
                         address
                         proName
+                        simpleName
                         proIcon
                         price {
                             usd
