@@ -31,6 +31,7 @@ export type PendleV2MarketTokenDefinition = {
   aggregatedApy: number;
   ytFloatingApy: number;
   impliedApy: number;
+  underlyingApy: number;
   pt: Token,
   sy: Token,
   yt: Token,
@@ -87,6 +88,7 @@ export class EthereumPendleV2PoolTokenFetcher extends AppTokenTemplatePositionFe
           name: market.proName,
           icon: market.proIcon,
           impliedApy: market.impliedApy,
+          underlyingApy: market.underlyingApy,
         }
       })
     )

@@ -10,6 +10,7 @@ export const BACKEND_QUERIES = {
                     aggregatedApy
                     ytFloatingApy
                     impliedApy
+                    underlyingApy
                     proName
                     proIcon
                     expiry

@@ -11,6 +11,7 @@ export type MarketResponse = {
     aggregatedApy: number;
     ytFloatingApy: number;
     impliedApy: number;
+    underlyingApy: number;
     proName: string;
     proIcon: string;
     expiry: string;
