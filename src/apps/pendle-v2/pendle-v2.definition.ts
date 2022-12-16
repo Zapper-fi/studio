@@ -5,7 +5,7 @@ import { Network } from '~types/network.interface';
 
 export const PENDLE_V_2_DEFINITION = appDefinition({
   id: 'pendle-v2',
-  name: 'Pendle',
+  name: 'Pendle V2',
   description:
     'The Pendle protocol enables the permissionless tokenization and trading of yield.Pendle allows anyone to purchase assets at a discount, obtain fixed yield, or long DeFi yield.',
   url: 'https://www.pendle.finance/',
