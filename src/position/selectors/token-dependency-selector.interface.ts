@@ -1,4 +1,4 @@
-import { AppTokenPosition } from '~position/position.interface';
+import { AppTokenPosition, NonFungibleToken } from '~position/position.interface';
 import { BaseToken } from '~position/token.interface';
 import { Network } from '~types';
 
@@ -13,7 +13,7 @@ export type TokenDependencySelectorKey = {
   tokenId?: number;
 };
 
-export type TokenDependency = BaseToken | AppTokenPosition;
+export type TokenDependency = BaseToken | AppTokenPosition | NonFungibleToken;
 
 export type GetOne = (opts: TokenDependencySelectorKey) => Promise<TokenDependency | null>;
 export type GetMany = (opts: TokenDependencySelectorKey[]) => Promise<(TokenDependency | null)[]>;
