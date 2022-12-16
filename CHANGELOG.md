@@ -4,6 +4,20 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.332.0](https://github.com/Zapper-fi/studio/compare/v0.331.0...v0.332.0) (2022-12-16)
+
+
+### Features
+
+* **app-tokens:** Support definitions as underlying tokens ([#1935](https://github.com/Zapper-fi/studio/issues/1935)) ([ee22c7b](https://github.com/Zapper-fi/studio/commit/ee22c7b65102f1d1c013acf47079741d6972b8f6))
+* **cask-protocol:** Update app labels ([#1933](https://github.com/Zapper-fi/studio/issues/1933)) ([63657ca](https://github.com/Zapper-fi/studio/commit/63657ca64694dafb197f7be37b0f699b1b9b5888))
+* **mux:** Add lev-trades ContractPositionFetcher and add BalanceFetcher ([#1872](https://github.com/Zapper-fi/studio/issues/1872)) ([fa5012e](https://github.com/Zapper-fi/studio/commit/fa5012ee4b8b3c3c8ac4e4ffd340649ad48997b7))
+
+
+### Bug Fixes
+
+* **lemma-finance:** Rename lemma WBTC image ([#1936](https://github.com/Zapper-fi/studio/issues/1936)) ([8e7f377](https://github.com/Zapper-fi/studio/commit/8e7f377bff9403f67e5ef1491d8974b9c8897b56))
+
 ## [0.331.0](https://github.com/Zapper-fi/studio/compare/v0.330.0...v0.331.0) (2022-12-16)
 
 
