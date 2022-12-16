@@ -14,6 +14,8 @@ import {
   GetDisplayPropsParams,
   GetPriceParams,
   GetPricePerShareParams,
+  GetUnderlyingTokensParams,
+  UnderlyingTokenDefinition,
 } from '~position/template/app-token.template.types';
 import { NETWORK_IDS } from '~types/network.interface';
 
@@ -100,18 +102,27 @@ export class EthereumPendleV2PoolTokenFetcher extends AppTokenTemplatePositionFe
     return definitions;
   }
 
-  async getAddresses({ definitions }: GetAddressesParams<DefaultAppTokenDefinition>) {
-    return definitions.map(definition => definition.address);
-  }
-
   getContract(address: string) {
     return this.pendleV2ContractFactory.pendleMarket({ address, network: this.network });
+  }
+
+  async getAddresses({ definitions }: GetAddressesParams<DefaultAppTokenDefinition>) {
+    return definitions.map(definition => definition.address);
   }
 
   async getPrice({
     definition,
   }: GetPriceParams<PendleMarket, PendleV2MarketDataProps, PendleV2MarketTokenDefinition>): Promise<number> {
     return definition.price;
+  }
+
+  async getUnderlyingTokenDefinitions({
+    definition,
+  }: GetUnderlyingTokensParams<PendleMarket, PendleV2MarketTokenDefinition>): Promise<UnderlyingTokenDefinition[]> {
+    return [
+      { address: definition.pt.address, network: this.network },
+      { address: definition.sy.address, network: this.network },
+    ];
   }
 
   async getPricePerShare({
