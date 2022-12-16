@@ -97,7 +97,7 @@ export class MuxLevTradesBalanceHelper {
         return {
           ...levTrade,
           tokens: _.compact(tokenBalance),
-          balanceUSD: collateralAmountUsd.plus(pnlUsd),
+          balanceUSD: collateralAmountUsd.plus(pnlUsd).toNumber(),
         };
       }),
     );
