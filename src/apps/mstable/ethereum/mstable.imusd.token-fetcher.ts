@@ -27,8 +27,8 @@ export class EthereumMstableImusdTokenFetcher extends AppTokenTemplatePositionFe
     return ['0x30647a72dc82d7fbb1123ea74716ab8a317eac19'];
   }
 
-  async getUnderlyingTokenAddresses({ contract }: GetUnderlyingTokensParams<MstableAsset>) {
-    return contract.asset();
+  async getUnderlyingTokenDefinitions({ contract }: GetUnderlyingTokensParams<MstableAsset>) {
+    return [{ address: await contract.asset(), network: this.network }];
   }
 
   async getPricePerShare({ appToken, contract }: GetPricePerShareParams<MstableAsset>) {

@@ -49,8 +49,8 @@ export class EthereumMaplePoolTokenFetcher extends AppTokenTemplatePositionFetch
     return definitions.map(v => v.address);
   }
 
-  async getUnderlyingTokenAddresses({ contract }: GetUnderlyingTokensParams<MaplePool>) {
-    return contract.asset();
+  async getUnderlyingTokenDefinitions({ contract }: GetUnderlyingTokensParams<MaplePool>) {
+    return [{ address: await contract.asset(), network: this.network }];
   }
 
   async getApy({ definition }: GetDataPropsParams<MaplePool, DefaultAppTokenDataProps, MaplePoolTokenDefinition>) {

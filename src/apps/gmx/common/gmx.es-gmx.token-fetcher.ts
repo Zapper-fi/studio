@@ -25,8 +25,8 @@ export abstract class GmxEsGmxTokenFetcher extends AppTokenTemplatePositionFetch
     return [this.esGmxAddress];
   }
 
-  async getUnderlyingTokenAddresses() {
-    return [this.gmxAddress];
+  async getUnderlyingTokenDefinitions() {
+    return [{ address: this.gmxAddress, network: this.network }];
   }
 
   async getPricePerShare() {

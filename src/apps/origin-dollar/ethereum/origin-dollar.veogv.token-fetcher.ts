@@ -53,8 +53,8 @@ export class EthereumOriginDollarVeogvTokenFetcher extends AppTokenTemplatePosit
     return ['0x0c4576ca1c365868e162554af8e385dc3e7c66d9'];
   }
 
-  async getUnderlyingTokenAddresses({ contract }: GetUnderlyingTokensParams<Veogv>) {
-    return contract.ogv();
+  async getUnderlyingTokenDefinitions({ contract }: GetUnderlyingTokensParams<Veogv>) {
+    return [{ address: await contract.ogv(), network: this.network }];
   }
 
   async getPrice({ appToken, contract, multicall }: GetPriceParams<Veogv>): Promise<number> {

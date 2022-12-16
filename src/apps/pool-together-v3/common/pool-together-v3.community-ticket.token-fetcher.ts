@@ -123,17 +123,16 @@ export abstract class PoolTogetherV3CommunityTicketTokenFetcher extends AppToken
     return appToken.symbol;
   }
 
-  async getUnderlyingTokenAddresses({
+  async getUnderlyingTokenDefinitions({
     definition,
     multicall,
-  }: GetUnderlyingTokensParams<PoolTogetherV3Ticket, PoolTogetherV3CommunityTicketDefinition>): Promise<
-    string | string[]
-  > {
-    const contract = multicall.wrap(
-      this.contractFactory.poolTogetherV3CommunityPrizePool({ network: this.network, address: definition.prizePool }),
-    );
-    const underlyingTokenAddress = await contract.token().then(addr => addr.toLowerCase());
-    return [underlyingTokenAddress];
+  }: GetUnderlyingTokensParams<PoolTogetherV3Ticket, PoolTogetherV3CommunityTicketDefinition>) {
+    const prizePool = this.contractFactory.poolTogetherV3CommunityPrizePool({
+      network: this.network,
+      address: definition.prizePool,
+    });
+
+    return [{ address: await multicall.wrap(prizePool).token(), network: this.network }];
   }
 
   async getLiquidity({ appToken }: GetDataPropsParams<PoolTogetherV3Ticket>) {

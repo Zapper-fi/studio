@@ -70,6 +70,10 @@ export class EthereumPendleV2StandardizedYieldTokenTokenFetcher extends AppToken
     return definitions.map(definition => definition.address);
   }
 
+  async getUnderlyingTokenDefinitions() {
+    return [];
+  }
+
   async getPrice({
     definition,
   }: GetPriceParams<

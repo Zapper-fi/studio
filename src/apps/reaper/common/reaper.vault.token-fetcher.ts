@@ -48,8 +48,8 @@ export abstract class ReaperVaultTokenFetcher extends AppTokenTemplatePositionFe
     return definitions.map(v => v.address);
   }
 
-  async getUnderlyingTokenAddresses({ definition }: GetUnderlyingTokensParams<ReaperCrypt, ReaperVaultDefinition>) {
-    return [definition.underlyingAddress];
+  async getUnderlyingTokenDefinitions({ definition }: GetUnderlyingTokensParams<ReaperCrypt, ReaperVaultDefinition>) {
+    return [{ address: definition.underlyingAddress, network: this.network }];
   }
 
   async getPricePerShare({

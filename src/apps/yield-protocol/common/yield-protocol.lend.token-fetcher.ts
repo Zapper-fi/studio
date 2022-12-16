@@ -118,8 +118,8 @@ export abstract class YieldProtocolLendTokenFetcher extends AppTokenTemplatePosi
     return definitions.map(v => v.address);
   }
 
-  async getUnderlyingTokenAddresses({ contract }: GetUnderlyingTokensParams<YieldProtocolLendToken>) {
-    return contract.underlying();
+  async getUnderlyingTokenDefinitions({ contract }: GetUnderlyingTokensParams<YieldProtocolLendToken>) {
+    return [{ address: await contract.underlying(), network: this.network }];
   }
 
   async getPricePerShare({

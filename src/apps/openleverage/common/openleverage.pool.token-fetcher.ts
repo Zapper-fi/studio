@@ -53,8 +53,8 @@ export abstract class OpenleveragePoolTokenFetcher extends AppTokenTemplatePosit
     return this.contractFactory.openleverageLpool({ address, network: this.network });
   }
 
-  getUnderlyingTokenAddresses({ contract }: GetUnderlyingTokensParams<OpenleverageLpool>) {
-    return contract.underlying();
+  async getUnderlyingTokenDefinitions({ contract }: GetUnderlyingTokensParams<OpenleverageLpool>) {
+    return [{ address: await contract.underlying(), network: this.network }];
   }
 
   async getPricePerShare({ contract }: GetPricePerShareParams<OpenleverageLpool>) {

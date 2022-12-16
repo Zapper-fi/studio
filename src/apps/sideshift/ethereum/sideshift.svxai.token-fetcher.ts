@@ -31,8 +31,8 @@ export class EthereumSideshiftSvxaiTokenFetcher extends AppTokenTemplatePosition
     return ['0x3808708e761b988d23ae011ed0e12674fb66bd62'];
   }
 
-  async getUnderlyingTokenAddresses({ contract }: GetUnderlyingTokensParams<SvxaiVault>) {
-    return contract.asset();
+  async getUnderlyingTokenDefinitions({ contract }: GetUnderlyingTokensParams<SvxaiVault>) {
+    return [{ address: await contract.asset(), network: this.network }];
   }
 
   async getPricePerShare({ contract, appToken }: GetPricePerShareParams<SvxaiVault>) {

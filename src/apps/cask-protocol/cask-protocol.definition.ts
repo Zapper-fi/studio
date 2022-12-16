@@ -5,7 +5,7 @@ import { Network } from '~types/network.interface';
 
 export const CASK_PROTOCOL_DEFINITION = appDefinition({
   id: 'cask-protocol',
-  name: 'Cask Protocol',
+  name: 'Cask',
   description: 'Automation protocol for web3, including subscriptions, auto-investing and protocol top-ups.',
   url: 'https://app.cask.fi/',
 

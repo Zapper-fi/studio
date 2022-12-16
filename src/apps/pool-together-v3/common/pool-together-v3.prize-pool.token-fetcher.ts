@@ -46,10 +46,8 @@ export abstract class PoolTogetherV3PrizePoolTokenFetcher<T extends Contract> ex
 
   abstract getDefinitions(): Promise<PoolTogetherV3PrizePoolDefinition[]>;
 
-  async getUnderlyingTokenAddresses({
-    definition,
-  }: GetUnderlyingTokensParams<T, PoolTogetherV3PrizePoolDefinition>): Promise<string | string[]> {
-    return [definition.underlyingTokenAddress];
+  async getUnderlyingTokenDefinitions({ definition }: GetUnderlyingTokensParams<T, PoolTogetherV3PrizePoolDefinition>) {
+    return [{ address: definition.underlyingTokenAddress, network: this.network }];
   }
 
   async getLiquidity({ appToken }: GetDataPropsParams<T>) {

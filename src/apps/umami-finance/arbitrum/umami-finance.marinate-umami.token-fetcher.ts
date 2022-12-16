@@ -37,8 +37,8 @@ export class ArbitrumUmamiFinanceMarinateUmamiTokenFetcher extends AppTokenTempl
     return ['0x2adabd6e8ce3e82f52d9998a7f64a90d294a92a4'];
   }
 
-  async getUnderlyingTokenAddresses(): Promise<string> {
-    return '0x1622bf67e6e5747b81866fe0b85178a93c7f86e3';
+  async getUnderlyingTokenDefinitions() {
+    return [{ address: '0x1622bf67e6e5747b81866fe0b85178a93c7f86e3', network: this.network }];
   }
 
   async getReserves({ appToken }: GetDataPropsParams<UmamiFinanceMarinate>) {

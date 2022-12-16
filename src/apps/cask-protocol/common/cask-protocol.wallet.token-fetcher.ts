@@ -24,11 +24,15 @@ export abstract class CaskProtocolWalletTokenFetcher extends AppTokenTemplatePos
     return [this.caskVaultContractAddress];
   }
 
-  async getUnderlyingTokenAddresses({ contract }: GetUnderlyingTokensParams<CaskVaultToken>) {
-    return contract.getBaseAsset();
+  async getUnderlyingTokenDefinitions({ contract }: GetUnderlyingTokensParams<CaskVaultToken>) {
+    return [{ address: await contract.getBaseAsset(), network: this.network }];
   }
 
   async getPricePerShare({ appToken, contract }: GetPricePerShareParams<CaskVaultToken>) {
     return contract.pricePerShare().then(v => Number(v) / 10 ** appToken.tokens[0].decimals);
+  }
+
+  async getLabel() {
+    return 'Cask Wallet';
   }
 }

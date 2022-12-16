@@ -29,8 +29,8 @@ export abstract class AcrossV1PoolTokenFetcher extends AppTokenTemplatePositionF
     return this.poolAddresses;
   }
 
-  async getUnderlyingTokenAddresses({ contract }: GetUnderlyingTokensParams<BadgerPool>) {
-    return contract.l1Token();
+  async getUnderlyingTokenDefinitions({ contract }: GetUnderlyingTokensParams<BadgerPool>) {
+    return [{ address: await contract.l1Token(), network: this.network }];
   }
 
   async getPricePerShare({ contract, appToken, multicall }: GetPricePerShareParams<BadgerPool>) {

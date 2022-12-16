@@ -31,8 +31,8 @@ export abstract class ClearpoolPoolTokenFetcher extends AppTokenTemplatePosition
     return this.clearpoolContractFactory.clearpoolPool({ address, network: this.network });
   }
 
-  getUnderlyingTokenAddresses({ contract }: GetUnderlyingTokensParams<ClearpoolPool>) {
-    return contract.currency();
+  async getUnderlyingTokenDefinitions({ contract }: GetUnderlyingTokensParams<ClearpoolPool>) {
+    return [{ address: await contract.currency(), network: this.network }];
   }
 
   getPricePerShare({ contract }: GetPricePerShareParams<ClearpoolPool>): Promise<number | number[]> {

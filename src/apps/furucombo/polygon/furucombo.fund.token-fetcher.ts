@@ -107,10 +107,10 @@ export class PolygonFurucomboFundTokenFetcher extends AppTokenTemplatePositionFe
     return definitions.map(v => v.address);
   }
 
-  async getUnderlyingTokenAddresses({
+  async getUnderlyingTokenDefinitions({
     definition,
   }: GetUnderlyingTokensParams<FurucomboFundShareToken, FurucomboFundDefinition>) {
-    return definition.stakingTokenAddress;
+    return [{ address: definition.stakingTokenAddress, network: this.network }];
   }
 
   async getPricePerShare({

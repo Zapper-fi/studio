@@ -38,8 +38,8 @@ export class EthereumOokiLendTokenFetcher extends AppTokenTemplatePositionFetche
     return tokenAddresses.map(v => v.token);
   }
 
-  getUnderlyingTokenAddresses({ contract }: GetUnderlyingTokensParams<OokiIToken>) {
-    return contract.loanTokenAddress();
+  async getUnderlyingTokenDefinitions({ contract }: GetUnderlyingTokensParams<OokiIToken>) {
+    return [{ address: await contract.loanTokenAddress(), network: this.network }];
   }
 
   async getPricePerShare({ contract }: GetPricePerShareParams<OokiIToken>) {

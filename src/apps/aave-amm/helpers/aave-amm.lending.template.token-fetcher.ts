@@ -60,8 +60,8 @@ export abstract class AaveAmmLendingTemplateTokenFetcher extends AppTokenTemplat
     );
   }
 
-  async getUnderlyingTokenAddresses({ contract }: GetUnderlyingTokensParams<AaveAmmAToken>) {
-    return contract.UNDERLYING_ASSET_ADDRESS();
+  async getUnderlyingTokenDefinitions({ contract }: GetUnderlyingTokensParams<AaveAmmAToken>) {
+    return [{ address: await contract.UNDERLYING_ASSET_ADDRESS(), network: this.network }];
   }
 
   async getReserveConfigDataProps({

@@ -37,17 +37,18 @@ export class EthereumLlamaAirforceVaultTokenFetcher extends AppTokenTemplatePosi
     ];
   }
 
-  async getUnderlyingTokenAddresses({
+  async getUnderlyingTokenDefinitions({
     address,
     contract,
     multicall,
   }: GetUnderlyingTokensParams<LlamaAirforceUnionVault>) {
     if (address === '0x8659fc767cad6005de79af65dafe4249c57927af') {
       const pirexContract = this.contractFactory.llamaAirforceUnionVaultPirex({ address, network: this.network });
-      return multicall.wrap(pirexContract).asset();
+
+      return [{ address: await multicall.wrap(pirexContract).asset(), network: this.network }];
     }
 
-    return contract.underlying();
+    return [{ address: await contract.underlying(), network: this.network }];
   }
 
   async getPricePerShare({ contract, appToken, multicall }: GetPricePerShareParams<LlamaAirforceUnionVault>) {

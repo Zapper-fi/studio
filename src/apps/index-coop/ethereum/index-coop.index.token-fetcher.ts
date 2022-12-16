@@ -42,10 +42,8 @@ export class EthereumIndexCoopIndexTokenFetcher extends AppTokenTemplatePosition
     ];
   }
 
-  async getUnderlyingTokenAddresses({
-    contract,
-  }: GetUnderlyingTokensParams<IndexCoopToken>): Promise<string | string[]> {
-    return contract.getComponents();
+  async getUnderlyingTokenDefinitions({ contract }: GetUnderlyingTokensParams<IndexCoopToken>) {
+    return (await contract.getComponents()).map(address => ({ address, network: this.network }));
   }
 
   async getPrice({ contract, appToken }: GetPriceParams<IndexCoopToken>) {

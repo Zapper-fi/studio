@@ -127,15 +127,20 @@ export abstract class CurvePoolDynamicTokenFetcher<T extends Contract> extends A
     return definitions.map(v => v.address);
   }
 
-  async getUnderlyingTokenAddresses({ multicall, definition }: GetUnderlyingTokensParams<Erc20, CurvePoolDefinition>) {
+  async getUnderlyingTokenDefinitions({
+    multicall,
+    definition,
+  }: GetUnderlyingTokensParams<Erc20, CurvePoolDefinition>) {
     const contract = multicall.wrap(this.resolveRegistry(this.registryAddress));
     const swapAddress = definition.swapAddress;
     const coinsRaw = await this.resolveCoinAddresses({ contract, swapAddress, multicall });
 
-    return coinsRaw
+    const underlyingTokenAddresses = coinsRaw
       .map(v => v.toLowerCase())
       .filter(v => v !== ZERO_ADDRESS)
       .map(v => (v === ETH_ADDR_ALIAS ? ZERO_ADDRESS : v));
+
+    return underlyingTokenAddresses.map(address => ({ address, network: this.network }));
   }
 
   async getPricePerShare({
