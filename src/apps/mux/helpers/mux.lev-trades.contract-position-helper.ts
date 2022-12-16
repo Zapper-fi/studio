@@ -3,18 +3,18 @@ import _ from 'lodash';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { getTokenImg } from '~app-toolkit/helpers/presentation/image.present';
+import { MuxContractFactory } from '~apps/mux';
 import { getCollateralTokensByNetwork, getMarketTokensByNetwork, READER_ADDRESS } from '~apps/mux/helpers/common';
 import { ContractType } from '~position/contract.interface';
 import { ContractPosition } from '~position/position.interface';
 import { supplied } from '~position/position.utils';
 import { Network } from '~types/network.interface';
 
-import { MuxContractFactory } from '../contracts';
 import MUX_DEFINITION from '../mux.definition';
 
 export type MuxLevTradesContractPositionDataProps = {
-  collateralTokenSymbol: string;
-  marketTokenSymbol: string;
+  collateralTokenId: number;
+  marketTokenId: number;
   isLong: boolean;
 };
 
@@ -48,8 +48,8 @@ export class MuxLevTradesContractPositionHelper {
             network,
             tokens: [supplied(collateralToken), marketToken],
             dataProps: {
-              collateralTokenSymbol: collateralToken.symbol,
-              marketTokenSymbol: marketToken.symbol,
+              collateralTokenId: collateralToken.muxTokenId,
+              marketTokenId: marketToken.muxTokenId,
               isLong: false,
             },
             displayProps: {
@@ -67,8 +67,8 @@ export class MuxLevTradesContractPositionHelper {
             network,
             tokens: [supplied(collateralToken), marketToken],
             dataProps: {
-              collateralTokenSymbol: collateralToken.symbol,
-              marketTokenSymbol: marketToken.symbol,
+              collateralTokenId: collateralToken.muxTokenId,
+              marketTokenId: marketToken.muxTokenId,
               isLong: true,
             },
             displayProps: {

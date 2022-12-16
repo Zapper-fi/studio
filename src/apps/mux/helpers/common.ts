@@ -1,16 +1,16 @@
-import Axios, { AxiosInstance } from 'axios';
+import BigNumber from 'bignumber.js';
 import { ethers } from 'ethers';
+import _ from 'lodash';
 
 import { IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { ZERO_ADDRESS } from '~app-toolkit/constants/address';
 import { MuxContractFactory } from '~apps/mux';
-import { LiquidityAsset } from '~apps/mux/helpers/mux.mlp.token-helper';
-import { ContractType } from '~position/contract.interface';
 import { BaseToken } from '~position/token.interface';
 import { Network } from '~types/network.interface';
 
 interface ReaderAssets {
   symbol: string;
+  id: number;
   tokenAddress: string;
   decimals: number;
   isStable: boolean;
@@ -18,8 +18,19 @@ interface ReaderAssets {
   isOpenable: boolean;
   useStableTokenForProfit: boolean;
   isEnabled: boolean;
+  minProfitTime: number;
+  minProfitRate: BigNumber;
 }
 
+interface BaseTokenWithMuxTokenId {
+  muxTokenId: number;
+  minProfitTime: number;
+  minProfitRate: BigNumber;
+}
+
+type MuxBaseToken = BaseToken & BaseTokenWithMuxTokenId;
+
+export const _0: BigNumber = new BigNumber('0');
 export const DECIMALS = 18;
 export const RATIO_DECIMALS = 5;
 export const ASSET_IS_STABLE = 0x00000000000001; // is a usdt, usdc, ...
@@ -38,10 +49,6 @@ export const READER_ADDRESS = {
   [Network.FANTOM_OPERA_MAINNET]: '0x29f4dc996a0219838afecf868362e4df28a70a7b',
 };
 
-const muxAxios: AxiosInstance = Axios.create({
-  baseURL: 'https://app.mux.network',
-});
-
 export function formatMetaBaseData(cols: Array<any>, rows: Array<Array<any>>) {
   const keys = cols.map(col => {
     return col.display_name;
@@ -54,15 +61,6 @@ export function formatMetaBaseData(cols: Array<any>, rows: Array<Array<any>>) {
     });
     return obj;
   });
-}
-
-async function getLiquidityAssetPriceMap() {
-  const priceMap: Map<string, number> = new Map();
-  const { data: liquidityAsset } = await muxAxios.get<LiquidityAsset>('/api/liquidityAsset');
-  liquidityAsset.assets.map(asset => {
-    priceMap.set(asset.symbol, Number(asset.price));
-  });
-  return priceMap;
 }
 
 function and64(v1: number, v2: number): number {
@@ -81,6 +79,14 @@ function test64(v1: number, mask: number): boolean {
   return and64(v1, mask) !== 0;
 }
 
+function fromRate(n: number): BigNumber {
+  return new BigNumber(n.toString()).shiftedBy(-RATIO_DECIMALS);
+}
+
+export function fromWei(n: ethers.BigNumber): BigNumber {
+  return new BigNumber(n.toString()).shiftedBy(-DECIMALS);
+}
+
 async function getReaderAssets(network: Network, appToolkit: IAppToolkit): Promise<ReaderAssets[]> {
   const multicall = appToolkit.getMulticall(network);
   const readerContract = new MuxContractFactory(appToolkit).muxReader({ address: READER_ADDRESS[network], network });
@@ -91,6 +97,7 @@ async function getReaderAssets(network: Network, appToolkit: IAppToolkit): Promi
     .map(a => {
       return {
         symbol: ethers.utils.parseBytes32String(a.symbol),
+        id: a.id,
         tokenAddress: a.tokenAddress,
         decimals: a.decimals,
         isStable: test64(a.flags.toNumber(), ASSET_IS_STABLE),
@@ -98,52 +105,89 @@ async function getReaderAssets(network: Network, appToolkit: IAppToolkit): Promi
         isOpenable: test64(a.flags.toNumber(), ASSET_IS_OPENABLE),
         useStableTokenForProfit: test64(a.flags.toNumber(), ASSET_USE_STABLE_TOKEN_FOR_PROFIT),
         isEnabled: test64(a.flags.toNumber(), ASSET_IS_ENABLED),
+        minProfitTime: a.minProfitTime,
+        minProfitRate: fromRate(a.minProfitRate),
       };
     });
 }
 
-export async function getMarketTokensByNetwork(network: Network, appToolkit: IAppToolkit): Promise<BaseToken[]> {
+export async function getMarketTokensByNetwork(network: Network, appToolkit: IAppToolkit): Promise<MuxBaseToken[]> {
   const baseTokens = await appToolkit.getBaseTokenPrices(network);
-  const priceMap = await getLiquidityAssetPriceMap();
   const assets = await getReaderAssets(network, appToolkit);
 
-  return assets
-    .filter(item => !item.isStable && item.isTradable && item.isOpenable && item.isEnabled)
-    .map(token => {
-      let marketToken = baseTokens.find(x => x.address === token.tokenAddress);
-      if (!marketToken) {
-        marketToken = {
-          address: token.tokenAddress,
-          symbol: token.symbol,
-          decimals: token.decimals,
-          price: priceMap.get(token.symbol) || 0,
-          type: ContractType.BASE_TOKEN,
-          network: network,
+  return _.compact(
+    assets
+      .filter(item => !item.isStable && item.isTradable && item.isOpenable && item.isEnabled)
+      .map(token => {
+        const marketToken = baseTokens.find(x => x.address === token.tokenAddress.toLowerCase());
+        if (!marketToken) {
+          return;
+        }
+        return {
+          ...marketToken,
+          muxTokenId: token.id,
+          minProfitTime: token.minProfitTime,
+          minProfitRate: token.minProfitRate,
         };
-      }
-      return marketToken;
-    });
+      }),
+  );
 }
 
-export async function getCollateralTokensByNetwork(network: Network, appToolkit: IAppToolkit): Promise<BaseToken[]> {
+export async function getCollateralTokensByNetwork(network: Network, appToolkit: IAppToolkit): Promise<MuxBaseToken[]> {
   const baseTokens = await appToolkit.getBaseTokenPrices(network);
-  const priceMap = await getLiquidityAssetPriceMap();
   const assets = await getReaderAssets(network, appToolkit);
 
-  return assets
-    .filter(item => !item.useStableTokenForProfit && item.isEnabled)
-    .map(token => {
-      let collateralToken = baseTokens.find(x => x.address === token.tokenAddress);
-      if (!collateralToken) {
-        collateralToken = {
-          address: token.tokenAddress,
-          symbol: token.symbol,
-          decimals: token.decimals,
-          price: priceMap.get(token.symbol) || 0,
-          type: ContractType.BASE_TOKEN,
-          network: network,
+  return _.compact(
+    assets
+      .filter(item => !item.useStableTokenForProfit && item.isEnabled)
+      .map(token => {
+        const collateralToken = baseTokens.find(x => x.address === token.tokenAddress.toLowerCase());
+        if (!collateralToken) {
+          return;
+        }
+        return {
+          ...collateralToken,
+          muxTokenId: token.id,
+          minProfitTime: token.minProfitTime,
+          minProfitRate: token.minProfitRate,
         };
-      }
-      return collateralToken;
-    });
+      }),
+  );
+}
+
+export function computePositionPnlUsd(
+  asset: MuxBaseToken,
+  amount: BigNumber,
+  entryPrice: BigNumber,
+  lastIncreasedTime: number,
+  isLong: boolean,
+): { pendingPnlUsd: BigNumber; pnlUsd: BigNumber } {
+  if (amount.eq(_0)) {
+    return { pendingPnlUsd: _0, pnlUsd: _0 };
+  }
+  const priceDelta = isLong ? new BigNumber(asset.price).minus(entryPrice) : entryPrice.minus(asset.price);
+  const pendingPnlUsd = priceDelta.times(amount);
+  if (
+    priceDelta.gt(_0) &&
+    Math.ceil(Date.now() / 1000) < lastIncreasedTime + asset.minProfitTime &&
+    priceDelta.abs().lt(asset.minProfitRate.times(entryPrice))
+  ) {
+    return { pendingPnlUsd, pnlUsd: _0 };
+  }
+  return { pendingPnlUsd, pnlUsd: pendingPnlUsd };
+}
+
+export function encodeSubAccountId(
+  account: string,
+  collateralId: number,
+  assetId: number,
+  isLong: boolean,
+): string | null {
+  if (ethers.utils.arrayify(account).length !== 20) {
+    return null;
+  }
+  return (
+    ethers.utils.solidityPack(['address', 'uint8', 'uint8', 'bool'], [account, collateralId, assetId, isLong]) +
+    '000000000000000000'
+  );
 }
