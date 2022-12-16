@@ -66,7 +66,10 @@ export abstract class UniswapV2PoolOnChainTemplateTokenFetcher<
   }
 
   async getUnderlyingTokenDefinitions({ contract }: GetUnderlyingTokensParams<T>) {
-    return Promise.all([this.getPoolToken0(contract), this.getPoolToken1(contract)]);
+    return [
+      { address: await this.getPoolToken0(contract), network: this.network },
+      { address: await this.getPoolToken1(contract), network: this.network },
+    ];
   }
 
   async getPricePerShare({ appToken, contract }: GetPricePerShareParams<T, UniswapV2TokenDataProps>) {

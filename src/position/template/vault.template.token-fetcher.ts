@@ -20,7 +20,7 @@ export abstract class VaultTemplateTokenFetcher extends AppTokenTemplatePosition
   }
 
   async getUnderlyingTokenDefinitions(_params: GetUnderlyingTokensParams<Erc20>) {
-    return this.underlyingTokenAddress;
+    return [{ address: this.underlyingTokenAddress, network: this.network }];
   }
 
   async getPricePerShare({ multicall, appToken }: GetPricePerShareParams<Erc20>) {

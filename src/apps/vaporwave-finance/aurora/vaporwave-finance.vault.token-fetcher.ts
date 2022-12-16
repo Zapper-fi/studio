@@ -56,7 +56,7 @@ export class AuroraVaporwaveFinanceVaultTokenFetcher extends AppTokenTemplatePos
   async getUnderlyingTokenDefinitions({
     definition,
   }: GetUnderlyingTokensParams<VaporwaveVault, VaporwaveFinanceVaultDefinition>) {
-    return definition.underlyingTokenAddress;
+    return [{ address: definition.underlyingTokenAddress, network: this.network }];
   }
 
   async getPricePerShare({ contract, appToken }: GetPricePerShareParams<VaporwaveVault>) {

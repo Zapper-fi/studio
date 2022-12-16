@@ -27,7 +27,7 @@ export class EthereumYearnYCrvTokenTokenFetcher extends AppTokenTemplatePosition
   }
 
   async getUnderlyingTokenDefinitions() {
-    return '0xd533a949740bb3306d119cc777fa900ba034cd52';
+    return [{ address: '0xd533a949740bb3306d119cc777fa900ba034cd52', network: this.network }];
   }
 
   async getLiquidity({ appToken }: GetDataPropsParams<YearnYCrv>) {

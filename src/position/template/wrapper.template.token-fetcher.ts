@@ -15,7 +15,7 @@ export abstract class WrapperTemplateTokenFetcher extends AppTokenTemplatePositi
   }
 
   async getUnderlyingTokenDefinitions(_params: GetUnderlyingTokensParams<Erc20>) {
-    return this.underlyingTokenAddress;
+    return [{ address: this.underlyingTokenAddress, network: this.network }];
   }
 
   async getPricePerShare() {

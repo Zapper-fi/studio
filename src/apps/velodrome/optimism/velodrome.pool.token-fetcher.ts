@@ -45,7 +45,10 @@ export class OptimismVelodromePoolsTokenFetcher extends AppTokenTemplatePosition
   }
 
   async getUnderlyingTokenDefinitions({ contract }: GetUnderlyingTokensParams<VelodromePool>) {
-    return Promise.all([contract.token0(), contract.token1()]);
+    return [
+      { address: await contract.token0(), network: this.network },
+      { address: await contract.token1(), network: this.network },
+    ];
   }
 
   async getPricePerShare({ appToken, contract }: GetPricePerShareParams<VelodromePool, DefaultDataProps>) {

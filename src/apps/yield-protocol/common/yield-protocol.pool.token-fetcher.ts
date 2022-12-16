@@ -148,7 +148,7 @@ export abstract class YieldProtocolPoolTokenFetcher extends AppTokenTemplatePosi
   }
 
   async getUnderlyingTokenDefinitions({ contract }: GetUnderlyingTokensParams<YieldProtocolPoolToken>) {
-    return [await contract.base()];
+    return [{ address: await contract.base(), network: this.network }];
   }
 
   async getPricePerShare({ appToken, contract, multicall }: GetPricePerShareParams<YieldProtocolPoolToken>) {

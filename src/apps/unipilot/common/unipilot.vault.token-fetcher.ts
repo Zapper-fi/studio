@@ -54,7 +54,10 @@ export abstract class UnipilotVaultTokenFetcher extends AppTokenTemplatePosition
   async getUnderlyingTokenDefinitions({
     definition,
   }: GetUnderlyingTokensParams<UnipilotVault, UnipilotVaultDefinition>) {
-    return [definition.token0Address, definition.token1Address];
+    return [
+      { address: definition.token0Address, network: this.network },
+      { address: definition.token1Address, network: this.network },
+    ];
   }
 
   async getTokenDefinitions({ definition }: GetTokenDefinitionsParams<UnipilotVault, UnipilotVaultDefinition>) {
