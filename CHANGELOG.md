@@ -4,6 +4,20 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.331.0](https://github.com/Zapper-fi/studio/compare/v0.330.0...v0.331.0) (2022-12-16)
+
+
+### Features
+
+* **token-loader:** Support NFT as a token dependency ([#1931](https://github.com/Zapper-fi/studio/issues/1931)) ([5c40bb4](https://github.com/Zapper-fi/studio/commit/5c40bb43fa392a54157386491b573891958f131e))
+
+## [0.330.0](https://github.com/Zapper-fi/studio/compare/v0.329.0...v0.330.0) (2022-12-15)
+
+
+### Features
+
+* **pendle-v2:** Update name ([658a672](https://github.com/Zapper-fi/studio/commit/658a672263ee49cfaf09290b4272fd6bdc05e639))
+
 ## [0.329.0](https://github.com/Zapper-fi/studio/compare/v0.328.0...v0.329.0) (2022-12-15)
 
 
