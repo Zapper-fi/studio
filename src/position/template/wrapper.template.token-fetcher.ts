@@ -5,6 +5,7 @@ import { GetDataPropsParams, GetUnderlyingTokensParams } from '~position/templat
 export abstract class WrapperTemplateTokenFetcher extends AppTokenTemplatePositionFetcher<Erc20> {
   abstract vaultAddress: string;
   abstract underlyingTokenAddress: string;
+  fromNetwork = this.network;
 
   getContract(address: string): Erc20 {
     return this.appToolkit.globalContracts.erc20({ address, network: this.network });

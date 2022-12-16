@@ -51,7 +51,6 @@ export abstract class AppTokenTemplatePositionFetcher<
   isExcludedFromExplore = false;
   isExcludedFromTvl = false;
 
-  fromNetwork?: Network;
   minLiquidity = 1000;
 
   constructor(@Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit) {}
