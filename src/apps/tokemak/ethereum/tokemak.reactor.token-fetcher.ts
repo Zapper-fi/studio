@@ -50,7 +50,7 @@ export class EthereumTokemakReactorTokenFetcher extends AppTokenTemplatePosition
     ];
   }
 
-  async getUnderlyingTokenAddresses({ contract }: GetUnderlyingTokensParams<TokemakReactor>) {
-    return contract.underlyer();
+  async getUnderlyingTokenDefinitions({ contract }: GetUnderlyingTokensParams<TokemakReactor>) {
+    return [{ address: await contract.underlyer(), network: this.network }];
   }
 }

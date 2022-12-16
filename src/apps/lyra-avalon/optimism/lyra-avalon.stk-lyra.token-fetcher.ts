@@ -26,8 +26,8 @@ export class OptimismLyraAvalonStkLyraTokenFetcher extends AppTokenTemplatePosit
     return ['0xde48b1b5853cc63b1d05e507414d3e02831722f8'];
   }
 
-  async getUnderlyingTokenAddresses() {
-    return ['0x50c5725949a6f0c72e6c4a641f24049a917db0cb'];
+  async getUnderlyingTokenDefinitions() {
+    return [{ address: '0x50c5725949a6f0c72e6c4a641f24049a917db0cb', network: this.network }];
   }
 
   async getLiquidity({ appToken }: GetDataPropsParams<LyraStkLyra>) {

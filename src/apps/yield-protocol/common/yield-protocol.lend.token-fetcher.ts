@@ -118,7 +118,7 @@ export abstract class YieldProtocolLendTokenFetcher extends AppTokenTemplatePosi
     return definitions.map(v => v.address);
   }
 
-  async getUnderlyingTokenAddresses({ contract }: GetUnderlyingTokensParams<YieldProtocolLendToken>) {
+  async getUnderlyingTokenDefinitions({ contract }: GetUnderlyingTokensParams<YieldProtocolLendToken>) {
     return contract.underlying();
   }
 

@@ -14,7 +14,7 @@ export abstract class WrapperTemplateTokenFetcher extends AppTokenTemplatePositi
     return [this.vaultAddress];
   }
 
-  async getUnderlyingTokenAddresses(_params: GetUnderlyingTokensParams<Erc20>) {
+  async getUnderlyingTokenDefinitions(_params: GetUnderlyingTokensParams<Erc20>) {
     return this.underlyingTokenAddress;
   }
 

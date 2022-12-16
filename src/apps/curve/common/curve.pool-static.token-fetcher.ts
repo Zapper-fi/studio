@@ -85,7 +85,10 @@ export abstract class CurvePoolStaticTokenFetcher<T extends Contract> extends Ap
     return definitions.map(v => v.address);
   }
 
-  async getUnderlyingTokenAddresses({ multicall, definition }: GetUnderlyingTokensParams<Erc20, CurvePoolDefinition>) {
+  async getUnderlyingTokenDefinitions({
+    multicall,
+    definition,
+  }: GetUnderlyingTokensParams<Erc20, CurvePoolDefinition>) {
     const contract = multicall.wrap(this.resolvePoolContract(definition));
 
     const coinAddressesRaw = await Promise.all(
@@ -97,10 +100,12 @@ export abstract class CurvePoolStaticTokenFetcher<T extends Contract> extends Ap
       ),
     );
 
-    return compact(coinAddressesRaw)
+    const underlyingTokenAddresses = compact(coinAddressesRaw)
       .filter(v => v !== ZERO_ADDRESS)
       .map(v => v.toLowerCase())
       .map(v => v.replace(ETH_ADDR_ALIAS, ZERO_ADDRESS));
+
+    return underlyingTokenAddresses.map(address => ({ address, network: this.network }));
   }
 
   async getPricePerShare({

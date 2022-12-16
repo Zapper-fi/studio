@@ -37,7 +37,7 @@ export abstract class YearnVaultTokenFetcher<T extends Contract> extends AppToke
     return vaultDefinitions.map(({ address }) => address.toLowerCase());
   }
 
-  async getUnderlyingTokenAddresses({ contract }: GetUnderlyingTokensParams<T>): Promise<string[]> {
+  async getUnderlyingTokenDefinitions({ contract }: GetUnderlyingTokensParams<T>): Promise<string[]> {
     const vault = await this.selectVault(contract.address.toLowerCase());
     if (!vault) throw new Error('Cannot find specified vault');
 

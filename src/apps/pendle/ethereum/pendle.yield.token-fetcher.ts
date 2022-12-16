@@ -107,8 +107,8 @@ export class EthereumPendleYieldTokenFetcher extends AppTokenTemplatePositionFet
     return this.contractFactory.pendleYieldToken({ address, network: this.network });
   }
 
-  getUnderlyingTokenAddresses({ contract }: GetUnderlyingTokensParams<PendleYieldToken>) {
-    return contract.underlyingAsset();
+  async getUnderlyingTokenDefinitions({ contract }: GetUnderlyingTokensParams<PendleYieldToken>) {
+    return [{ address: await contract.underlyingAsset(), network: this.network }];
   }
 
   async getPricePerShare({

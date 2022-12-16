@@ -34,7 +34,7 @@ export class EthereumYearnYieldTokenFetcher extends AppTokenTemplatePositionFetc
     return Y_TOKENS.map(yToken => yToken.address);
   }
 
-  async getUnderlyingTokenAddresses({ contract }: GetUnderlyingTokensParams<YearnVault>): Promise<string[]> {
+  async getUnderlyingTokenDefinitions({ contract }: GetUnderlyingTokensParams<YearnVault>): Promise<string[]> {
     const match = Y_TOKENS.find(yToken => yToken.address === contract.address.toLowerCase());
     if (!match) throw new Error('Cannot find specified Y token');
     return [match.underlyingAddress];

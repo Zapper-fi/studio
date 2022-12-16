@@ -85,8 +85,8 @@ export class OptimismLyraAvalonPoolTokenFetcher extends AppTokenTemplatePosition
     return markets.map(market => market.liquidityTokens);
   }
 
-  async getUnderlyingTokenAddresses() {
-    return ['0x8c6f28f2f1a3c87f0f938b96d27520d9751ec8d9']; // sUSD
+  async getUnderlyingTokenDefinitions() {
+    return [{ address: '0x8c6f28f2f1a3c87f0f938b96d27520d9751ec8d9', network: this.network }];
   }
 
   async getPricePerShare({

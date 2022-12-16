@@ -29,8 +29,8 @@ export class EthereumMstableMetaVaultTokenFetcher extends AppTokenTemplatePositi
     ];
   }
 
-  async getUnderlyingTokenAddresses({ contract }: GetUnderlyingTokensParams<MstableMetavault4626>) {
-    return contract.asset();
+  async getUnderlyingTokenDefinitions({ contract }: GetUnderlyingTokensParams<MstableMetavault4626>) {
+    return [{ address: await contract.asset(), network: this.network }];
   }
 
   async getPricePerShare({ contract, appToken }: GetPricePerShareParams<MstableMetavault4626>) {

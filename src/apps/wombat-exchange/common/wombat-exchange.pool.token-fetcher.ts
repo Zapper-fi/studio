@@ -42,7 +42,7 @@ export abstract class WombatExchangePoolTokenFetcher extends AppTokenTemplatePos
     return tokenAddressesByPool.flat();
   }
 
-  async getUnderlyingTokenAddresses({ contract }: GetUnderlyingTokensParams<WombatExchangePoolToken>) {
+  async getUnderlyingTokenDefinitions({ contract }: GetUnderlyingTokensParams<WombatExchangePoolToken>) {
     return contract.underlyingToken();
   }
 

@@ -38,8 +38,8 @@ export abstract class DhedgeV2PoolTokenFetcher extends AppTokenTemplatePositionF
     return deployedFunds;
   }
 
-  async getUnderlyingTokenAddresses() {
-    return this.underlyingTokenAddress;
+  async getUnderlyingTokenDefinitions() {
+    return [{ address: this.underlyingTokenAddress, network: this.network }];
   }
 
   async getPricePerShare({ contract }: GetPricePerShareParams<DhedgeV2Token>) {

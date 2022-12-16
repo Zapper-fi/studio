@@ -38,7 +38,7 @@ export abstract class ImpermaxCollateralTokenFetcher extends AppTokenTemplatePos
     return _.compact(collateralAddresses);
   }
 
-  async getUnderlyingTokenAddresses({ contract }: GetUnderlyingTokensParams<Collateral>) {
-    return contract.underlying();
+  async getUnderlyingTokenDefinitions({ contract }: GetUnderlyingTokensParams<Collateral>) {
+    return [{ address: await contract.underlying(), network: this.network }];
   }
 }

@@ -35,8 +35,8 @@ export class AvalancheGroLabsTokenFetcher extends AppTokenTemplatePositionFetche
     ];
   }
 
-  async getUnderlyingTokenAddresses({ contract }: GetUnderlyingTokensParams<GroLabsVault>) {
-    return contract.token();
+  async getUnderlyingTokenDefinitions({ contract }: GetUnderlyingTokensParams<GroLabsVault>) {
+    return [{ address: await contract.token(), network: this.network }];
   }
 
   async getPricePerShare({ contract }: GetPricePerShareParams<GroLabsVault>) {

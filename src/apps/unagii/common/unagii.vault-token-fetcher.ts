@@ -79,12 +79,10 @@ export abstract class UnagiiVaultTokenFetcher extends AppTokenTemplatePositionFe
     return underlyingAssets / appToken.supply;
   }
 
-  async getUnderlyingTokenAddresses({
-    definition,
-  }: GetUnderlyingTokensParams<UnagiiUtoken, UnagiiTokenDefinition>): Promise<string[]> {
+  async getUnderlyingTokenDefinitions({ definition }: GetUnderlyingTokensParams<UnagiiUtoken, UnagiiTokenDefinition>) {
     const underlyingTokenAddress =
       definition.underlyingTokenAddress === ETH_ADDR_ALIAS ? ZERO_ADDRESS : definition.underlyingTokenAddress;
-    return [underlyingTokenAddress];
+    return [{ address: underlyingTokenAddress, network: this.network }];
   }
 
   async getLiquidity({ appToken }: GetDataPropsParams<UnagiiUtoken, DefaultDataProps, UnagiiTokenDefinition>) {

@@ -127,8 +127,8 @@ export class FantomTarotSupplyTokenFetcher extends AppTokenTemplatePositionFetch
     return definitions.map(({ address }) => address);
   }
 
-  async getUnderlyingTokenAddresses({ contract }: GetUnderlyingTokensParams<TarotBorrowable, Definition>) {
-    return contract.underlying();
+  async getUnderlyingTokenDefinitions({ contract }: GetUnderlyingTokensParams<TarotBorrowable, Definition>) {
+    return [{ address: await contract.underlying(), network: this.network }];
   }
 
   async getPricePerShare({ contract, appToken }: GetPricePerShareParams<TarotBorrowable>) {

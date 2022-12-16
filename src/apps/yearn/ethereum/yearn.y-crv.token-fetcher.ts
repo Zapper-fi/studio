@@ -26,7 +26,7 @@ export class EthereumYearnYCrvTokenTokenFetcher extends AppTokenTemplatePosition
     return ['0xfcc5c47be19d06bf83eb04298b026f81069ff65b'];
   }
 
-  async getUnderlyingTokenAddresses() {
+  async getUnderlyingTokenDefinitions() {
     return '0xd533a949740bb3306d119cc777fa900ba034cd52';
   }
 

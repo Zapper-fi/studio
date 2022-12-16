@@ -99,8 +99,11 @@ export class EthereumGearboxLendingTokenFetcher extends AppTokenTemplatePosition
     return [];
   }
 
-  async getUnderlyingTokenAddresses({ definition }: GetUnderlyingTokensParams<DieselToken, GearboxLendingDefinition>) {
-    return this._getPoolContract(definition).underlyingToken();
+  async getUnderlyingTokenDefinitions({
+    definition,
+  }: GetUnderlyingTokensParams<DieselToken, GearboxLendingDefinition>) {
+    const underlyingTokenAddress = await this._getPoolContract(definition).underlyingToken();
+    return [{ address: underlyingTokenAddress, network: this.network }];
   }
 
   async getPricePerShare({

@@ -44,7 +44,7 @@ export class OptimismVelodromePoolsTokenFetcher extends AppTokenTemplatePosition
     return data.data.map(pool => pool.address);
   }
 
-  async getUnderlyingTokenAddresses({ contract }: GetUnderlyingTokensParams<VelodromePool>) {
+  async getUnderlyingTokenDefinitions({ contract }: GetUnderlyingTokensParams<VelodromePool>) {
     return Promise.all([contract.token0(), contract.token1()]);
   }
 
