@@ -38,8 +38,8 @@ export class PolygonQiDaoYieldTokenFetcher extends AppTokenTemplatePositionFetch
     ];
   }
 
-  async getUnderlyingTokenAddresses({ contract }: GetUnderlyingTokensParams<QiDaoYieldToken>) {
-    return contract.Token();
+  async getUnderlyingTokenDefinitions({ contract }: GetUnderlyingTokensParams<QiDaoYieldToken>) {
+    return [{ address: await contract.Token(), network: this.network }];
   }
 
   async getPricePerShare({ appToken }: GetPricePerShareParams<QiDaoYieldToken>) {

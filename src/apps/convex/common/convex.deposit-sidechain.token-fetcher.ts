@@ -58,7 +58,7 @@ export abstract class ConvexDepositSidechainTokenFetcher extends AppTokenTemplat
     return definitions.map(v => v.address);
   }
 
-  async getUnderlyingTokenAddresses({
+  async getUnderlyingTokenDefinitions({
     definition,
   }: GetUnderlyingTokensParams<ConvexDepositToken, ConvexDepositTokenDefinition>) {
     const depositContract = this.contractFactory.convexBoosterSidechain({
@@ -67,7 +67,7 @@ export abstract class ConvexDepositSidechainTokenFetcher extends AppTokenTemplat
     });
 
     const poolInfo = await depositContract.poolInfo(definition.poolIndex);
-    return poolInfo.lptoken;
+    return [{ address: poolInfo.lptoken, network: this.network }];
   }
 
   async getLabel({ appToken }: GetDisplayPropsParams<ConvexDepositToken, DefaultAppTokenDataProps>) {

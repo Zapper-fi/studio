@@ -1,6 +1,6 @@
 import { Inject } from '@nestjs/common';
 import { BigNumberish, Contract } from 'ethers/lib/ethers';
-import _ from 'lodash';
+import _, { isEqual, uniqWith } from 'lodash';
 import { compact, intersection, isArray, partition, sortBy, sum } from 'lodash';
 
 import { drillBalance } from '~app-toolkit';
@@ -31,6 +31,7 @@ import {
   GetPriceParams,
   GetTokenPropsParams,
   GetUnderlyingTokensParams,
+  UnderlyingTokenDefinition,
 } from './app-token.template.types';
 import { PositionFetcherTemplateCommons } from './position-fetcher.template.types';
 
@@ -50,7 +51,6 @@ export abstract class AppTokenTemplatePositionFetcher<
   isExcludedFromExplore = false;
   isExcludedFromTvl = false;
 
-  fromNetwork?: Network;
   minLiquidity = 1000;
 
   constructor(@Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit) {}
@@ -68,9 +68,9 @@ export abstract class AppTokenTemplatePositionFetcher<
   }
 
   // 4. Get underlying token addresses
-  async getUnderlyingTokenAddresses(_params: GetUnderlyingTokensParams<T, R>): Promise<string | string[]> {
-    return [];
-  }
+  abstract getUnderlyingTokenDefinitions(
+    _params: GetUnderlyingTokensParams<T, R>,
+  ): Promise<UnderlyingTokenDefinition[]>;
 
   // 5A. Get symbol (ERC20 standard)
   async getSymbol({ address, multicall }: GetTokenPropsParams<T, R>): Promise<string> {
@@ -173,38 +173,37 @@ export abstract class AppTokenTemplatePositionFetcher<
         const contract = multicall.wrap(this.getContract(address));
         const context = { address, definition, contract, multicall, tokenLoader };
 
-        const underlyingTokenAddresses = await this.getUnderlyingTokenAddresses(context)
-          .then(v => (Array.isArray(v) ? v : [v]))
-          .then(v => v.map(t => t.toLowerCase()))
+        const underlyingTokenDefinitions = await this.getUnderlyingTokenDefinitions(context)
+          .then(v => v.map(t => ({ address: t.address.toLowerCase(), network: t.network, tokenId: t.tokenId })))
           .catch(err => {
             if (isMulticallUnderlyingError(err)) return null;
             throw err;
           });
 
-        if (!underlyingTokenAddresses) return null;
-        return { address, definition, underlyingTokenAddresses };
+        if (!underlyingTokenDefinitions) return null;
+        return { address, definition, underlyingTokenDefinitions };
       }),
     );
 
     const skeletons = compact(maybeSkeletons);
     const [base, meta] = partition(skeletons, t => {
       const tokenAddresses = skeletons.map(v => v.address);
-      return intersection(t.underlyingTokenAddresses, tokenAddresses).length === 0;
+      const underlyingTokenAddresses = t.underlyingTokenDefinitions.map(v => v.address);
+      return intersection(underlyingTokenAddresses, tokenAddresses).length === 0;
     });
 
     const currentTokens: AppTokenPosition<V>[] = [];
     for (const skeletonsSubset of [base, meta]) {
-      const underlyingTokenRequests = skeletons
-        .flatMap(v => v.underlyingTokenAddresses)
-        .map(v => ({ network: this.fromNetwork ?? this.network, address: v }));
+      const underlyingTokenQueries = skeletons.flatMap(v => v.underlyingTokenDefinitions);
+      const underlyingTokenRequestsUnique = uniqWith(underlyingTokenQueries, isEqual);
       const tokenDependencies = await tokenLoader
-        .getMany(underlyingTokenRequests)
+        .getMany(underlyingTokenRequestsUnique)
         .then(tokenDeps => compact(tokenDeps));
       const allTokens = [...currentTokens, ...tokenDependencies];
 
       const skeletonsWithResolvedTokens = await Promise.all(
-        skeletonsSubset.map(async ({ address, definition, underlyingTokenAddresses }) => {
-          const maybeTokens = underlyingTokenAddresses.map(v => allTokens.find(t => t.address === v));
+        skeletonsSubset.map(async ({ address, definition, underlyingTokenDefinitions }) => {
+          const maybeTokens = underlyingTokenDefinitions.map(v => allTokens.find(t => t.address === v.address));
           const tokens = compact(maybeTokens);
 
           if (maybeTokens.length !== tokens.length) return null;

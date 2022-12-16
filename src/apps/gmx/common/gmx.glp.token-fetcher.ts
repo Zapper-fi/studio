@@ -33,7 +33,7 @@ export abstract class GmxGlpTokenFetcher extends AppTokenTemplatePositionFetcher
     return [this.glpTokenAddress];
   }
 
-  async getUnderlyingTokenAddresses({ multicall }: GetUnderlyingTokensParams<Erc20>) {
+  async getUnderlyingTokenDefinitions({ multicall }: GetUnderlyingTokensParams<Erc20>) {
     const glpManagerContract = this.contractFactory.gmxAumManager({
       address: this.glmManagerAddress,
       network: this.network,
@@ -46,7 +46,8 @@ export abstract class GmxGlpTokenFetcher extends AppTokenTemplatePositionFetcher
     const tokenRange = range(0, Number(tokenCount));
     const tokenAddresses = await Promise.all(tokenRange.map(i => multicall.wrap(vault).allWhitelistedTokens(i)));
 
-    return tokenAddresses.filter(v => !this.blockedTokenAddresses.includes(v.toLowerCase()));
+    const validTokenAddresses = tokenAddresses.filter(v => !this.blockedTokenAddresses.includes(v.toLowerCase()));
+    return validTokenAddresses.map(address => ({ address, network: this.network }));
   }
 
   async getPricePerShare({ appToken, multicall }: GetPricePerShareParams<Erc20>) {

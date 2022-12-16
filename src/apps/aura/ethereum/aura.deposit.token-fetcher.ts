@@ -73,12 +73,12 @@ export class EthereumAuraDepositTokenFetcher extends AppTokenTemplatePositionFet
     return definitions.map(v => v.address);
   }
 
-  async getUnderlyingTokenAddresses({
+  async getUnderlyingTokenDefinitions({
     definition,
   }: GetUnderlyingTokensParams<AuraDepositToken, AuraDepositTokenDefinition>) {
     const boosterContract = this.contractFactory.auraBooster({ address: definition.booster, network: this.network });
     const poolInfo = await boosterContract.poolInfo(definition.poolIndex);
-    return poolInfo.lptoken;
+    return [{ address: poolInfo.lptoken, network: this.network }];
   }
 
   async getLiquidity({ appToken }: GetDataPropsParams<AuraDepositToken>) {

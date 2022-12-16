@@ -44,10 +44,10 @@ export abstract class InsuraceMiningTokenFetcher extends AppTokenTemplatePositio
     return definitions.map(v => v.address);
   }
 
-  async getUnderlyingTokenAddresses({
+  async getUnderlyingTokenDefinitions({
     definition,
   }: GetUnderlyingTokensParams<InsuracePoolToken, InsuraceMiningTokenDefinition>) {
-    return [definition.underlyingTokenAddress];
+    return [{ address: definition.underlyingTokenAddress, network: this.network }];
   }
 
   async getPricePerShare({

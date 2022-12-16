@@ -53,8 +53,8 @@ export class PolygonMeshswapSupplyTokenFetcher extends AppTokenTemplatePositionF
     return poolAddresses;
   }
 
-  async getUnderlyingTokenAddresses({ contract }: GetUnderlyingTokensParams<MeshswapSinglePool>) {
-    return contract.token();
+  async getUnderlyingTokenDefinitions({ contract }: GetUnderlyingTokensParams<MeshswapSinglePool>) {
+    return [{ address: await contract.token(), network: this.network }];
   }
 
   async getPricePerShare() {

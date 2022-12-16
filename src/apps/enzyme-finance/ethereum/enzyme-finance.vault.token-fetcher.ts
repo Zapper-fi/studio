@@ -53,8 +53,8 @@ export class EthereumEnzymeFinanceVaultTokenFetcher extends AppTokenTemplatePosi
     return contract.name();
   }
 
-  async getUnderlyingTokenAddresses({ contract }: GetUnderlyingTokensParams<EnzymeFinanceVault>) {
-    return (await contract.getTrackedAssets()).map(x => x.toLowerCase());
+  async getUnderlyingTokenDefinitions({ contract }: GetUnderlyingTokensParams<EnzymeFinanceVault>) {
+    return (await contract.getTrackedAssets()).map(x => ({ address: x.toLowerCase(), network: this.network }));
   }
 
   async getPricePerShare({

@@ -42,14 +42,15 @@ export abstract class CompoundSupplyTokenFetcher<
     return this.getMarkets({ ...params, contract: comptroller });
   }
 
-  async getUnderlyingTokenAddresses(params: GetUnderlyingTokensParams<R>) {
+  async getUnderlyingTokenDefinitions(params: GetUnderlyingTokensParams<R>) {
     const underlyingAddressRaw = await this.getUnderlyingAddress(params).catch(err => {
       // if the underlying call failed, it's the compound-wrapped native token
       if (isMulticallUnderlyingError(err)) return ZERO_ADDRESS;
       throw err;
     });
 
-    return underlyingAddressRaw.toLowerCase().replace(ETH_ADDR_ALIAS, ZERO_ADDRESS);
+    const underlyingAddress = underlyingAddressRaw.toLowerCase().replace(ETH_ADDR_ALIAS, ZERO_ADDRESS);
+    return [{ address: underlyingAddress, network: this.network }];
   }
 
   async getExchangeRateMantissa(params: GetPricePerShareParams<R>) {

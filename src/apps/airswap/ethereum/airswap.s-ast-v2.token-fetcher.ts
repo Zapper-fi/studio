@@ -26,8 +26,8 @@ export class EthereumAirswapSAstV2TokenFetcher extends AppTokenTemplatePositionF
     return ['0x579120871266ccd8de6c85ef59e2ff6743e7cd15'];
   }
 
-  async getUnderlyingTokenAddresses({ contract }: GetUnderlyingTokensParams<StakingV2>) {
-    return contract.token();
+  async getUnderlyingTokenDefinitions({ contract }: GetUnderlyingTokensParams<StakingV2>) {
+    return [{ address: await contract.token(), network: this.network }];
   }
 
   async getLabel(): Promise<string> {

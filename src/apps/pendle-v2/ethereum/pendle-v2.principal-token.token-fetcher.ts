@@ -38,6 +38,7 @@ export class EthereumPendleV2PrincipalTokenTokenFetcher extends AppTokenTemplate
   PendleV2PrincipalTokenDefinition
 > {
   groupLabel = 'Principal Tokens';
+
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
     @Inject(PendleV2ContractFactory) protected readonly pendleV2ContractFactory: PendleV2ContractFactory,
@@ -72,6 +73,10 @@ export class EthereumPendleV2PrincipalTokenTokenFetcher extends AppTokenTemplate
 
   async getAddresses({ definitions }: GetAddressesParams): Promise<string[]> {
     return definitions.map(definition => definition.address);
+  }
+
+  async getUnderlyingTokenDefinitions() {
+    return [];
   }
 
   async getPrice({

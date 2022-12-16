@@ -33,8 +33,8 @@ export class EthereumBalancerV2WrappedAaveTokenFetcher extends AppTokenTemplateP
     return this.contractFactory.balancerWrappedAaveToken({ address, network: this.network });
   }
 
-  async getUnderlyingTokenAddresses({ contract }: GetUnderlyingTokensParams<BalancerWrappedAaveToken>) {
-    return contract.callStatic.ATOKEN();
+  async getUnderlyingTokenDefinitions({ contract }: GetUnderlyingTokensParams<BalancerWrappedAaveToken>) {
+    return [{ address: await contract.callStatic.ATOKEN(), network: this.network }];
   }
 
   async getPricePerShare() {

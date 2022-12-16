@@ -32,10 +32,10 @@ export abstract class TempusPoolTokenFetcher extends AppTokenTemplatePositionFet
     return data.tempusPools.flatMap(v => [v.principalsAddress, v.yieldsAddress]);
   }
 
-  async getUnderlyingTokenAddresses({ contract, multicall }: GetUnderlyingTokensParams<TempusPyToken>) {
+  async getUnderlyingTokenDefinitions({ contract, multicall }: GetUnderlyingTokensParams<TempusPyToken>) {
     const poolAddress = await contract.pool();
     const pool = multicall.wrap(this.contractFactory.tempusPool({ address: poolAddress, network: this.network }));
-    return [await pool.backingToken()];
+    return [{ address: await pool.backingToken(), network: this.network }];
   }
 
   async getPricePerShare({ contract, appToken }: GetPricePerShareParams<TempusPyToken>) {

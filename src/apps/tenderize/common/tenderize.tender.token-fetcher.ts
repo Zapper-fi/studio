@@ -42,8 +42,10 @@ export abstract class TenderTokenFetcher extends AppTokenTemplatePositionFetcher
     return definitions.map(v => v.address);
   }
 
-  async getUnderlyingTokenAddresses({ definition }: GetUnderlyingTokensParams<TenderToken, TenderizeTokenDefinition>) {
-    return definition.steak;
+  async getUnderlyingTokenDefinitions({
+    definition,
+  }: GetUnderlyingTokensParams<TenderToken, TenderizeTokenDefinition>) {
+    return [{ address: definition.steak, network: this.network }];
   }
 
   async getPricePerShare({

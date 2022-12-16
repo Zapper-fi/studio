@@ -42,8 +42,8 @@ export abstract class WombatExchangePoolTokenFetcher extends AppTokenTemplatePos
     return tokenAddressesByPool.flat();
   }
 
-  async getUnderlyingTokenAddresses({ contract }: GetUnderlyingTokensParams<WombatExchangePoolToken>) {
-    return contract.underlyingToken();
+  async getUnderlyingTokenDefinitions({ contract }: GetUnderlyingTokensParams<WombatExchangePoolToken>) {
+    return [{ address: await contract.underlyingToken(), network: this.network }];
   }
 
   async getPricePerShare({ contract, multicall, appToken }: GetPricePerShareParams<WombatExchangePoolToken>) {

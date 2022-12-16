@@ -48,10 +48,10 @@ export abstract class BeefyVaultTokenFetcher extends AppTokenTemplatePositionFet
     return definitions.map(v => v.address);
   }
 
-  async getUnderlyingTokenAddresses({
+  async getUnderlyingTokenDefinitions({
     definition,
   }: GetUnderlyingTokensParams<BeefyVaultToken, BeefyVaultTokenDefinition>) {
-    return definition.underlyingAddress;
+    return [{ address: definition.underlyingAddress, network: this.network }];
   }
 
   async getPricePerShare({

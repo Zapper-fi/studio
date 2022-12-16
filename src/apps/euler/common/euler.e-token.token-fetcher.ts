@@ -46,10 +46,10 @@ export abstract class EulerETokenTokenFetcher extends AppTokenTemplatePositionFe
     return definitions.map(v => v.address);
   }
 
-  async getUnderlyingTokenAddresses({
+  async getUnderlyingTokenDefinitions({
     definition,
   }: GetUnderlyingTokensParams<EulerEtokenContract, EulerTokenDefinition>) {
-    return definition.underlyingTokenAddress;
+    return [{ address: definition.underlyingTokenAddress, network: this.network }];
   }
 
   async getSymbol({ address }): Promise<string> {

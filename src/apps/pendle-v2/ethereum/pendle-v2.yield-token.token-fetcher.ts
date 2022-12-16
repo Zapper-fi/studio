@@ -72,6 +72,10 @@ export class EthereumPendleV2YieldTokenTokenFetcher extends AppTokenTemplatePosi
     return definitions.map(definition => definition.address);
   }
 
+  async getUnderlyingTokenDefinitions() {
+    return [];
+  }
+
   async getPrice({
     definition,
   }: GetPriceParams<PendleYieldToken, PendleV2YieldTokenDataProps, PendleV2YieldTokenDefinition>): Promise<number> {
