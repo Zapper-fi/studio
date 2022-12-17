@@ -4,6 +4,14 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.334.0](https://github.com/Zapper-fi/studio/compare/v0.333.0...v0.334.0) (2022-12-17)
+
+
+### Features
+
+* **app-tokens:** Collapse NFT tokens into collections ([#1939](https://github.com/Zapper-fi/studio/issues/1939)) ([de0d989](https://github.com/Zapper-fi/studio/commit/de0d9895338afc06aad8c48f2b9f095d2a6e0d15))
+* defiedge token fetchers ([#1815](https://github.com/Zapper-fi/studio/issues/1815)) ([c20565e](https://github.com/Zapper-fi/studio/commit/c20565e978350f975e2e77be4d4a9bd6c953f75d))
+
 ## [0.333.0](https://github.com/Zapper-fi/studio/compare/v0.332.0...v0.333.0) (2022-12-16)
 
 
