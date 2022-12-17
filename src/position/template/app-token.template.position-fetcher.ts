@@ -1,6 +1,6 @@
 import { Inject } from '@nestjs/common';
 import { BigNumberish, Contract } from 'ethers/lib/ethers';
-import _, { isEqual, uniqWith } from 'lodash';
+import _, { isEqual, isNumber, uniqWith } from 'lodash';
 import { compact, intersection, isArray, partition, sortBy, sum } from 'lodash';
 
 import { drillBalance } from '~app-toolkit';
@@ -203,7 +203,22 @@ export abstract class AppTokenTemplatePositionFetcher<
 
       const skeletonsWithResolvedTokens = await Promise.all(
         skeletonsSubset.map(async ({ address, definition, underlyingTokenDefinitions }) => {
-          const maybeTokens = underlyingTokenDefinitions.map(v => allTokens.find(t => t.address === v.address));
+          const maybeTokens = underlyingTokenDefinitions.map(definition => {
+            const match = allTokens.find(token => {
+              const isAddressMatch = token.address === definition.address;
+              const isNetworkMatch = token.network === definition.network;
+              const isMaybeTokenIdMatch =
+                !isNumber(definition.tokenId) ||
+                (token.type === ContractType.APP_TOKEN && token.dataProps.tokenId === definition.tokenId) ||
+                (token.type === ContractType.NON_FUNGIBLE_TOKEN &&
+                  Number(token.assets?.[0].tokenId) === definition.tokenId);
+
+              return isAddressMatch && isNetworkMatch && isMaybeTokenIdMatch;
+            });
+
+            return match;
+          });
+
           const tokens = compact(maybeTokens);
 
           if (maybeTokens.length !== tokens.length) return null;
