@@ -17,7 +17,8 @@ import { ContractType } from '~position/contract.interface';
 import { DisplayProps, StatsItem } from '~position/display.interface';
 import { AppTokenPositionBalance, RawAppTokenBalance } from '~position/position-balance.interface';
 import { PositionFetcher } from '~position/position-fetcher.interface';
-import { AppTokenPosition } from '~position/position.interface';
+import { AppTokenPosition, isNonFungibleToken, NonFungibleToken } from '~position/position.interface';
+import { BaseToken } from '~position/token.interface';
 import { Network } from '~types/network.interface';
 
 import {
@@ -222,7 +223,27 @@ export abstract class AppTokenTemplatePositionFetcher<
           const tokens = compact(maybeTokens);
 
           if (maybeTokens.length !== tokens.length) return null;
-          return { address, definition, tokens };
+
+          // @TODO Temporary; the current shape of the underlying NFT token is by collection
+          // Collapse same-collection NFT tokens until we refactor the Studio NFT token domain model
+          const collapsedTokens = tokens.reduce<(BaseToken | AppTokenPosition | NonFungibleToken)[]>((acc, token) => {
+            if (token.type !== ContractType.NON_FUNGIBLE_TOKEN) return [...acc, token];
+
+            const existingNftCollection = acc
+              .filter(isNonFungibleToken)
+              .find(v => v.address === token.address && v.network === token.network);
+
+            if (existingNftCollection) {
+              existingNftCollection.assets ??= [];
+              existingNftCollection.assets.push(...(token.assets ?? []));
+              existingNftCollection.assets = existingNftCollection.assets.slice(0, 5);
+              return acc;
+            }
+
+            return [...acc, token];
+          }, []);
+
+          return { address, definition, tokens: collapsedTokens };
         }),
       );
 
