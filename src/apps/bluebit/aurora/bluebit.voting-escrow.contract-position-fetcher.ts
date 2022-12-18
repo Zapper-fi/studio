@@ -1,36 +1,33 @@
 import { Inject } from '@nestjs/common';
 
-import { Register } from '~app-toolkit/decorators';
-import { CurveVotingEscrowContractPositionHelper } from '~apps/curve/helpers/curve.voting-escrow.contract-position-helper';
-import { PositionFetcher } from '~position/position-fetcher.interface';
-import { ContractPosition } from '~position/position.interface';
-import { Network } from '~types/network.interface';
+import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
+import { GetTokenDefinitionsParams, GetTokenBalancesParams } from '~position/template/contract-position.template.types';
+import { VotingEscrowTemplateContractPositionFetcher } from '~position/template/voting-escrow.template.contract-position-fetcher';
 
-import BLUEBIT_DEFINITION from '../bluebit.definition';
-import { BluebitContractFactory } from '../contracts';
-import { BluebitVeToken } from '../contracts/ethers/BluebitVeToken';
+import { BluebitContractFactory, BluebitVeToken } from '../contracts';
 
-const appId = BLUEBIT_DEFINITION.id;
-const groupId = BLUEBIT_DEFINITION.groups.votingEscrow.id;
-const network = Network.AURORA_MAINNET;
+@PositionTemplate()
+export class AuroraBluebitVotingEscrowContractPositionFetcher extends VotingEscrowTemplateContractPositionFetcher<BluebitVeToken> {
+  groupLabel = 'Voting Escrow';
+  veTokenAddress = '0xdf7c547f332351a86db0d89a89799a7ab4ec9deb';
 
-@Register.ContractPositionFetcher({ appId, groupId, network })
-export class AuroraBluebitVotingEscrowContractPositionFetcher implements PositionFetcher<ContractPosition> {
   constructor(
-    @Inject(CurveVotingEscrowContractPositionHelper)
-    private readonly curveVotingEscrowContractPositionHelper: CurveVotingEscrowContractPositionHelper,
-    @Inject(BluebitContractFactory)
-    private readonly bluebitContractFactory: BluebitContractFactory,
-  ) {}
+    @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
+    @Inject(BluebitContractFactory) protected readonly contractFactory: BluebitContractFactory,
+  ) {
+    super(appToolkit);
+  }
 
-  async getPositions() {
-    return this.curveVotingEscrowContractPositionHelper.getContractPositions<BluebitVeToken>({
-      votingEscrowAddress: '0xdf7c547f332351a86db0d89a89799a7ab4ec9deb',
-      appId: BLUEBIT_DEFINITION.id,
-      groupId: BLUEBIT_DEFINITION.groups.votingEscrow.id,
-      network,
-      resolveContract: ({ address }) => this.bluebitContractFactory.bluebitVeToken({ network, address }),
-      resolveLockedTokenAddress: ({ contract, multicall }) => multicall.wrap(contract).token(),
-    });
+  getEscrowContract(address: string): BluebitVeToken {
+    return this.contractFactory.bluebitVeToken({ address, network: this.network });
+  }
+
+  getEscrowedTokenAddress({ contract }: GetTokenDefinitionsParams<BluebitVeToken>) {
+    return contract.token();
+  }
+
+  async getEscrowedTokenBalance({ contract, address }: GetTokenBalancesParams<BluebitVeToken>) {
+    return contract.lockedOf(address).then(v => v.amount);
   }
 }

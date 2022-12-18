@@ -21,6 +21,7 @@ export const BLUEBIT_DEFINITION = appDefinition({
       label: 'Voting Escrow',
     },
   },
+
   tags: [AppTag.YIELD_AGGREGATOR],
   keywords: [],
   links: {
