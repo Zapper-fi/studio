@@ -1,34 +1,45 @@
 import { Inject } from '@nestjs/common';
+import { sum, range } from 'lodash';
 
-import { Register } from '~app-toolkit/decorators';
-import { CurveVotingEscrowContractPositionHelper } from '~apps/curve/helpers/curve.voting-escrow.contract-position-helper';
-import { PositionFetcher } from '~position/position-fetcher.interface';
-import { ContractPosition } from '~position/position.interface';
-import { Network } from '~types/network.interface';
+import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
+import { GetTokenBalancesParams } from '~position/template/contract-position.template.types';
+import { VotingEscrowTemplateContractPositionFetcher } from '~position/template/voting-escrow.template.contract-position-fetcher';
 
 import { MahadaoContractFactory, MahadoMahaxLocker } from '../contracts';
-import { MAHADAO_DEFINITION } from '../mahadao.definition';
 
-const appId = MAHADAO_DEFINITION.id;
-const groupId = MAHADAO_DEFINITION.groups.locker.id;
-const network = Network.ETHEREUM_MAINNET;
+@PositionTemplate()
+export class EthereumMahadaoLockerContractPositionFetcher extends VotingEscrowTemplateContractPositionFetcher<MahadoMahaxLocker> {
+  groupLabel = 'Voting Escrow';
+  veTokenAddress = '0xbdd8f4daf71c2cb16cce7e54bb81ef3cfcf5aacb';
 
-@Register.ContractPositionFetcher({ appId, groupId, network })
-export class EthereumMahadaoLockerContractPositionFetcher implements PositionFetcher<ContractPosition> {
   constructor(
-    @Inject(CurveVotingEscrowContractPositionHelper)
-    private readonly curveVotingEscrowContractPositionHelper: CurveVotingEscrowContractPositionHelper,
-    @Inject(MahadaoContractFactory) private readonly mahadaoContractFactory: MahadaoContractFactory,
-  ) {}
+    @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
+    @Inject(MahadaoContractFactory) protected readonly contractFactory: MahadaoContractFactory,
+  ) {
+    super(appToolkit);
+  }
 
-  async getPositions() {
-    return this.curveVotingEscrowContractPositionHelper.getContractPositions<MahadoMahaxLocker>({
-      votingEscrowAddress: '0xbdd8f4daf71c2cb16cce7e54bb81ef3cfcf5aacb',
-      appId,
-      groupId,
-      network,
-      resolveContract: ({ address }) => this.mahadaoContractFactory.mahadoMahaxLocker({ network, address }),
-      resolveLockedTokenAddress: () => Promise.resolve('0xb4d930279552397bba2ee473229f89ec245bc365'),
-    });
+  getEscrowContract(address: string): MahadoMahaxLocker {
+    return this.contractFactory.mahadoMahaxLocker({ address, network: this.network });
+  }
+
+  async getEscrowedTokenAddress() {
+    return '0xb4d930279552397bba2ee473229f89ec245bc365';
+  }
+
+  async getEscrowedTokenBalance({ contract, address }: GetTokenBalancesParams<MahadoMahaxLocker>) {
+    const positionCount = Number(await contract.balanceOf(address));
+
+    const balances = await Promise.all(
+      range(positionCount).map(async i => {
+        const tokenId = await contract.tokenOfOwnerByIndex(address, i);
+        const lockedAmount = await contract.locked(tokenId);
+
+        return Number(lockedAmount.amount);
+      }),
+    );
+
+    return sum(balances);
   }
 }
