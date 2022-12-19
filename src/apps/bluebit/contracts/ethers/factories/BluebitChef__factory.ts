@@ -4,7 +4,7 @@
 
 import { Contract, Signer, utils } from 'ethers';
 import type { Provider } from '@ethersproject/providers';
-import type { Bluebit, BluebitInterface } from '../Bluebit';
+import type { BluebitChef, BluebitChefInterface } from '../BluebitChef';
 
 const _abi = [
   {
@@ -829,12 +829,12 @@ const _abi = [
   },
 ];
 
-export class Bluebit__factory {
+export class BluebitChef__factory {
   static readonly abi = _abi;
-  static createInterface(): BluebitInterface {
-    return new utils.Interface(_abi) as BluebitInterface;
+  static createInterface(): BluebitChefInterface {
+    return new utils.Interface(_abi) as BluebitChefInterface;
   }
-  static connect(address: string, signerOrProvider: Signer | Provider): Bluebit {
-    return new Contract(address, _abi, signerOrProvider) as Bluebit;
+  static connect(address: string, signerOrProvider: Signer | Provider): BluebitChef {
+    return new Contract(address, _abi, signerOrProvider) as BluebitChef;
   }
 }

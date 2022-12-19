@@ -17,7 +17,7 @@ import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi
 import type { Listener, Provider } from '@ethersproject/providers';
 import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
-export interface BluebitInterface extends utils.Interface {
+export interface BluebitChefInterface extends utils.Interface {
   functions: {
     'bluebitToken()': FunctionFragment;
     'factorWeight()': FunctionFragment;
@@ -315,12 +315,12 @@ export type veTokenChangedEvent = TypedEvent<[string, string], veTokenChangedEve
 
 export type veTokenChangedEventFilter = TypedEventFilter<veTokenChangedEvent>;
 
-export interface Bluebit extends BaseContract {
+export interface BluebitChef extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
 
-  interface: BluebitInterface;
+  interface: BluebitChefInterface;
 
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,
