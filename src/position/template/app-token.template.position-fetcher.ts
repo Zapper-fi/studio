@@ -1,6 +1,6 @@
 import { Inject } from '@nestjs/common';
 import { BigNumberish, Contract } from 'ethers/lib/ethers';
-import _, { isEqual, isNumber, uniqWith } from 'lodash';
+import _, { isEqual, isUndefined, uniqWith } from 'lodash';
 import { compact, intersection, isArray, partition, sortBy, sum } from 'lodash';
 
 import { drillBalance } from '~app-toolkit';
@@ -208,7 +208,7 @@ export abstract class AppTokenTemplatePositionFetcher<
               const isAddressMatch = token.address === definition.address;
               const isNetworkMatch = token.network === definition.network;
               const isMaybeTokenIdMatch =
-                !isNumber(definition.tokenId) ||
+                isUndefined(definition.tokenId) ||
                 (token.type === ContractType.APP_TOKEN && token.dataProps.tokenId === definition.tokenId) ||
                 (token.type === ContractType.NON_FUNGIBLE_TOKEN &&
                   Number(token.assets?.[0].tokenId) === definition.tokenId);
