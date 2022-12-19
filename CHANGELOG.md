@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.334.1](https://github.com/Zapper-fi/studio/compare/v0.334.0...v0.334.1) (2022-12-19)
+
+
+### Bug Fixes
+
+* **goldfinch:** Move app integration to studio ([#1945](https://github.com/Zapper-fi/studio/issues/1945)) ([7a4f104](https://github.com/Zapper-fi/studio/commit/7a4f1048af9a6f936e0b609f4a23c3e50f29bbf9))
+
 ## [0.334.0](https://github.com/Zapper-fi/studio/compare/v0.333.0...v0.334.0) (2022-12-17)
 
 
