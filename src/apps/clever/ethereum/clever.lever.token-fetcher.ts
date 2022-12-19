@@ -29,8 +29,8 @@ export class EthereumCleverLeverTokenFetcher extends AppTokenTemplatePositionFet
     return [CLEVCVX];
   }
 
-  async getUnderlyingTokenAddresses() {
-    return [CVX];
+  async getUnderlyingTokenDefinitions() {
+    return [{ address: CVX, network: this.network }];
   }
 
   async getPricePerShare() {

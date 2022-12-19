@@ -49,8 +49,8 @@ export abstract class AelinPoolTokenFetcher extends AppTokenTemplatePositionFetc
     return data.poolCreateds.map(v => v.id);
   }
 
-  getUnderlyingTokenAddresses({ contract }: GetUnderlyingTokensParams<AelinPool>) {
-    return contract.purchaseToken();
+  async getUnderlyingTokenDefinitions({ contract }: GetUnderlyingTokensParams<AelinPool>) {
+    return [{ address: await contract.purchaseToken(), network: this.network }];
   }
 
   async getLiquidity({ appToken }: GetDataPropsParams<AelinPool>) {

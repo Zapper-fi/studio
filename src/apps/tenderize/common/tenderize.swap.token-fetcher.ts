@@ -42,8 +42,13 @@ export abstract class SwapTokenFetcher extends AppTokenTemplatePositionFetcher<
     return definitions.map(v => v.lpToken);
   }
 
-  async getUnderlyingTokenAddresses({ definition }: GetUnderlyingTokensParams<TenderToken, TenderizeTokenDefinition>) {
-    return [definition.steak, definition.address];
+  async getUnderlyingTokenDefinitions({
+    definition,
+  }: GetUnderlyingTokensParams<TenderToken, TenderizeTokenDefinition>) {
+    return [
+      { address: definition.steak, network: this.network },
+      { address: definition.address, network: this.network },
+    ];
   }
 
   async getPricePerShare() {

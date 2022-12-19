@@ -31,13 +31,17 @@ export abstract class TempusAmmTokenFetcher extends AppTokenTemplatePositionFetc
     return data.tempusPools.map(v => v.ammAddress.toLowerCase());
   }
 
-  async getUnderlyingTokenAddresses({
+  async getUnderlyingTokenDefinitions({
     contract,
     multicall,
   }: GetUnderlyingTokensParams<TempusAmm, DefaultAppTokenDefinition>) {
     const poolAddress = await contract.tempusPool();
     const pool = multicall.wrap(this.contractFactory.tempusPool({ address: poolAddress, network: this.network }));
-    return [await pool.principalShare(), await pool.yieldShare()];
+
+    return [
+      { address: await pool.principalShare(), network: this.network },
+      { address: await pool.yieldShare(), network: this.network },
+    ];
   }
 
   async getPricePerShare({ contract, appToken }: GetPricePerShareParams<TempusAmm>) {

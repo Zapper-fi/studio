@@ -58,8 +58,8 @@ export class EthereumStakeDaoLockerTokenFetcher extends AppTokenTemplatePosition
     return LOCKERS.map(v => v.tokenAddress);
   }
 
-  async getUnderlyingTokenAddresses({ address }: GetUnderlyingTokensParams<Erc20>): Promise<string | string[]> {
-    return LOCKERS.find(v => v.tokenAddress == address)!.underlyingTokenAddress;
+  async getUnderlyingTokenDefinitions({ address }: GetUnderlyingTokensParams<Erc20>) {
+    return [{ address: LOCKERS.find(v => v.tokenAddress == address)!.underlyingTokenAddress, network: this.network }];
   }
 
   async getPricePerShare({ appToken, multicall }: GetPricePerShareParams<Erc20>) {

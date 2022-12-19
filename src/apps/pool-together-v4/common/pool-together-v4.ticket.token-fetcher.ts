@@ -80,10 +80,10 @@ export abstract class PoolTogetherV4TicketTokenFetcher extends AppTokenTemplateP
     return definitions;
   }
 
-  async getUnderlyingTokenAddresses({
+  async getUnderlyingTokenDefinitions({
     definition,
-  }: GetUnderlyingTokensParams<PoolTogetherV4Ticket, PoolTogetherV4TicketDefinition>): Promise<string | string[]> {
-    return [definition.underlyingTokenAddress];
+  }: GetUnderlyingTokensParams<PoolTogetherV4Ticket, PoolTogetherV4TicketDefinition>) {
+    return [{ address: definition.underlyingTokenAddress, network: this.network }];
   }
 
   async getLiquidity({ appToken }: GetDataPropsParams<PoolTogetherV4Ticket>) {

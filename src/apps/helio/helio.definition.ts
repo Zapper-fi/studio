@@ -10,22 +10,10 @@ export const HELIO_DEFINITION = appDefinition({
   url: 'https://helio.money',
 
   groups: {
-    tokens: {
-      id: 'tokens',
-      type: GroupType.TOKEN,
-      label: 'Token',
-    },
-
     staking: {
       id: 'staking',
       type: GroupType.POSITION,
       label: 'Staking',
-    },
-
-    farm: {
-      id: 'farm',
-      type: GroupType.POSITION,
-      label: 'Farms',
     },
   },
 

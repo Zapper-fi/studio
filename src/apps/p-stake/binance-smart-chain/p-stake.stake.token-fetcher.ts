@@ -28,8 +28,8 @@ export class BinanceSmartChainPStakeStakeTokenFetcher extends AppTokenTemplatePo
     return ['0xc2e9d07f66a89c44062459a47a0d2dc038e4fb16'];
   }
 
-  async getUnderlyingTokenAddresses() {
-    return [ZERO_ADDRESS];
+  async getUnderlyingTokenDefinitions() {
+    return [{ address: ZERO_ADDRESS, network: this.network }];
   }
 
   async getPricePerShare({ multicall }: GetPricePerShareParams<PStakeStkToken>) {

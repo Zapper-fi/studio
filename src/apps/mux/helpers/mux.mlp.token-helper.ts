@@ -21,7 +21,7 @@ type GetMuxMlpTokenParams = {
   mlpTokenAddress: string;
 };
 
-type LiquidityAsset = {
+export type LiquidityAsset = {
   muxLPPrice: number;
   assets: Asset[];
 };

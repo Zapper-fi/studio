@@ -46,8 +46,10 @@ export abstract class BadgerVaultTokenFetcher extends AppTokenTemplatePositionFe
     return definitions.map(v => v.address);
   }
 
-  async getUnderlyingTokenAddresses({ definition }: GetUnderlyingTokensParams<BadgerSett, BadgerVaultTokenDefinition>) {
-    return definition.underlyingTokenAddress;
+  async getUnderlyingTokenDefinitions({
+    definition,
+  }: GetUnderlyingTokensParams<BadgerSett, BadgerVaultTokenDefinition>) {
+    return [{ address: definition.underlyingTokenAddress, network: this.network }];
   }
 
   async getPricePerShare({ contract, appToken, multicall }: GetPricePerShareParams<BadgerSett>) {

@@ -51,11 +51,8 @@ export abstract class PoolTogetherV3PodTokenFetcher extends AppTokenTemplatePosi
     return Number(pricePerShareRaw) / 10 ** appToken.decimals;
   }
 
-  async getUnderlyingTokenAddresses({
-    contract,
-  }: GetUnderlyingTokensParams<PoolTogetherV3Pod, PoolTogetherV3PodDefinition>): Promise<string | string[]> {
-    const underlyingTokenAddress = await contract.token().then(addr => addr.toLowerCase());
-    return [underlyingTokenAddress];
+  async getUnderlyingTokenDefinitions({ contract }: GetUnderlyingTokensParams<PoolTogetherV3Pod>) {
+    return [{ address: await contract.token(), network: this.network }];
   }
 
   async getLiquidity({ appToken }: GetDataPropsParams<PoolTogetherV3Pod>) {

@@ -4,6 +4,7 @@ import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { ContractFactory } from '~contract/contracts';
 import { Network } from '~types/network.interface';
 
+import { MuxReader__factory } from './ethers';
 import { MuxRewardRouter__factory } from './ethers';
 import { MuxRewardTracker__factory } from './ethers';
 
@@ -16,6 +17,9 @@ export class MuxContractFactory extends ContractFactory {
     super((network: Network) => appToolkit.getNetworkProvider(network));
   }
 
+  muxReader({ address, network }: ContractOpts) {
+    return MuxReader__factory.connect(address, this.appToolkit.getNetworkProvider(network));
+  }
   muxRewardRouter({ address, network }: ContractOpts) {
     return MuxRewardRouter__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
@@ -24,5 +28,6 @@ export class MuxContractFactory extends ContractFactory {
   }
 }
 
+export type { MuxReader } from './ethers';
 export type { MuxRewardRouter } from './ethers';
 export type { MuxRewardTracker } from './ethers';

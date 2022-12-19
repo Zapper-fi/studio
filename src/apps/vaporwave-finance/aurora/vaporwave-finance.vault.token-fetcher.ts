@@ -1,182 +1,86 @@
 import { Inject } from '@nestjs/common';
-import Axios from 'axios';
-import { compact } from 'lodash';
+import 'moment-duration-format';
 
-import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
-import { Register } from '~app-toolkit/decorators';
-import { buildDollarDisplayItem } from '~app-toolkit/helpers/presentation/display-item.present';
-import { getImagesFromToken, getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
-import TRISOLARIS_DEFINITION from '~apps/trisolaris/trisolaris.definition';
-import { CacheOnInterval } from '~cache/cache-on-interval.decorator';
-import { ContractType } from '~position/contract.interface';
-import { DefaultDataProps } from '~position/display.interface';
-import { PositionFetcher } from '~position/position-fetcher.interface';
-import { AppTokenPosition } from '~position/position.interface';
-import { BaseToken } from '~position/token.interface';
-import { Network } from '~types/network.interface';
+import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
+import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
+import {
+  DefaultAppTokenDataProps,
+  DefaultAppTokenDefinition,
+  GetAddressesParams,
+  GetDataPropsParams,
+  GetDisplayPropsParams,
+  GetPricePerShareParams,
+  GetUnderlyingTokensParams,
+} from '~position/template/app-token.template.types';
 
-import { VaporwaveFinanceContractFactory } from '../contracts';
-import { VAPORWAVE_FINANCE_DEFINITION } from '../vaporwave-finance.definition';
+import { VaporwaveFinanceVaultDefinitionsResolver } from '../common/vaporwave-finance.vault.token-definitions-resolver';
+import { VaporwaveFinanceContractFactory, VaporwaveVault } from '../contracts';
 
-const appId = VAPORWAVE_FINANCE_DEFINITION.id;
-const groupId = VAPORWAVE_FINANCE_DEFINITION.groups.vault.id;
-const network = Network.AURORA_MAINNET;
-
-export type VaporwaveVaultDetails = {
+type VaporwaveFinanceVaultDefinition = {
+  address: string;
+  underlyingTokenAddress: string;
+  name: string;
   id: string;
-  name: string; // label
-  earnContractAddress: string; // vault address
-  earnedToken: string; // vault token
-
-  oracleId: string; // NOT a proper symbol
-  tokenAddress: string; // want
-  tokenDecimals: number; // decimal
-
-  pricePerFullShare: number; // ratio
-
-  logo: string;
-  status: string; // check for retired
-  assets: string[];
 };
 
-export async function getRegisteredToken(
-  tokenAddress: string,
-  symbol: string,
-  registeredTokens: (BaseToken | AppTokenPosition<DefaultDataProps>)[],
-) {
-  let wantToken: BaseToken | AppTokenPosition<DefaultDataProps> | undefined = undefined;
+@PositionTemplate()
+export class AuroraVaporwaveFinanceVaultTokenFetcher extends AppTokenTemplatePositionFetcher<
+  VaporwaveVault,
+  DefaultAppTokenDataProps,
+  VaporwaveFinanceVaultDefinition
+> {
+  groupLabel = 'Vaults';
 
-  if (tokenAddress) {
-    const underlyingTokenAddress = tokenAddress.toLowerCase();
-    wantToken = registeredTokens.find(p => p.address === underlyingTokenAddress);
-  } else {
-    const tokenSymbol = symbol;
-    wantToken = registeredTokens.find(p => p.symbol === tokenSymbol);
-  }
-
-  if (!wantToken) {
-    return null;
-  } else {
-    return wantToken;
-  }
-}
-
-@Register.TokenPositionFetcher({ appId, groupId, network })
-export class AuroraVaporwaveFinanceVaultTokenFetcher implements PositionFetcher<AppTokenPosition> {
   constructor(
-    @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
-    @Inject(VaporwaveFinanceContractFactory)
-    private readonly vaporwaveFinanceContractFactory: VaporwaveFinanceContractFactory,
-  ) {}
-
-  @CacheOnInterval({
-    key: `studio:${network}:${appId}:${groupId}:vaults`,
-    timeout: 15 * 60 * 1000,
-    failOnMissingData: false,
-  })
-  async getVaults() {
-    const vaultData = await Axios.get<VaporwaveVaultDetails[]>('https://api.vaporwave.farm/vaults').then(v => v.data);
-    return vaultData;
+    @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
+    @Inject(VaporwaveFinanceContractFactory) protected readonly contractFactory: VaporwaveFinanceContractFactory,
+    @Inject(VaporwaveFinanceVaultDefinitionsResolver)
+    protected readonly vaultDefinitionResolver: VaporwaveFinanceVaultDefinitionsResolver,
+  ) {
+    super(appToolkit);
   }
 
-  @CacheOnInterval({
-    key: `studio:${network}:${appId}:${groupId}:vaportokenprices`,
-    timeout: 15 * 60 * 1000,
-    failOnMissingData: false,
-  })
-  async getVTokenPrices() {
-    const vtokenPrices = await Axios.get('https://api.vaporwave.farm/vaportokenprices').then(v => v.data);
-    return vtokenPrices;
+  getContract(address: string): VaporwaveVault {
+    return this.contractFactory.vaporwaveVault({ network: this.network, address });
   }
 
-  @CacheOnInterval({
-    key: `studio:${network}:${appId}:${groupId}:apy`,
-    timeout: 15 * 60 * 1000,
-    failOnMissingData: false,
-  })
-  async getAPY() {
-    const apy = await Axios.get('https://api.vaporwave.farm/apy').then(v => v.data);
-    return apy;
+  async getDefinitions(): Promise<VaporwaveFinanceVaultDefinition[]> {
+    return this.vaultDefinitionResolver.getVaultDefinitions();
   }
 
-  async getPositions() {
-    // http://localhost:5001/apps/vaporwave-finance/tokens?groupIds[]=vault&network=aurora
-    const vaultData = await this.getVaults();
-    const vtokenPrices = await this.getVTokenPrices();
-    const apyData = await this.getAPY();
-    const multicall = this.appToolkit.getMulticall(network);
+  async getAddresses({ definitions }: GetAddressesParams<DefaultAppTokenDefinition>) {
+    return definitions.map(x => x.address);
+  }
 
-    const baseTokens = await this.appToolkit.getBaseTokenPrices(network);
-    const appTokens = await this.appToolkit.getAppTokenPositions({
-      appId: TRISOLARIS_DEFINITION.id,
-      groupIds: [TRISOLARIS_DEFINITION.groups.pool.id],
-      network,
-    });
-    const allTokens = [...appTokens, ...baseTokens];
+  async getUnderlyingTokenDefinitions({
+    definition,
+  }: GetUnderlyingTokensParams<VaporwaveVault, VaporwaveFinanceVaultDefinition>) {
+    return [{ address: definition.underlyingTokenAddress, network: this.network }];
+  }
 
-    const tokens = await Promise.all(
-      vaultData.map(async vault => {
-        if (vault.status != 'active') return null;
-        const vaultAddress = vault.earnContractAddress;
-        const contract = this.vaporwaveFinanceContractFactory.vault({
-          address: vaultAddress,
-          network,
-        });
+  async getPricePerShare({ contract, appToken }: GetPricePerShareParams<VaporwaveVault>) {
+    const reserveRaw = await contract.balance();
+    const reserve = Number(reserveRaw) / 10 ** appToken.decimals;
+    const pricePerShare = reserve / appToken.supply;
 
-        // Request the symbol, decimals, ands supply for the jar token
-        const [symbol, decimals, supplyRaw, balanceOfWant] = await Promise.all([
-          multicall.wrap(contract).symbol(),
-          multicall.wrap(contract).decimals(),
-          multicall.wrap(contract).totalSupply(),
-          multicall.wrap(contract).balance(),
-        ]);
+    return pricePerShare;
+  }
 
-        // Denormalize the supply
-        const supply = Number(supplyRaw) / 10 ** decimals;
-        const wantToken = allTokens.find(v => v.address === vault.tokenAddress || v.symbol === vault.oracleId);
-        if (!wantToken) return null;
+  async getApy({
+    definition,
+  }: GetDataPropsParams<VaporwaveVault, DefaultAppTokenDataProps, VaporwaveFinanceVaultDefinition>) {
+    const apyRaw = await this.vaultDefinitionResolver.getVaultApy(definition.id);
+    return apyRaw * 100;
+  }
 
-        // Denormalize the price per share
-        const pricePerShare = Number(vault.pricePerFullShare) / 10 ** 18;
-        const price = vtokenPrices[vault.earnedToken];
-
-        const tokens = [wantToken];
-        const reserve = Number(balanceOfWant) / 10 ** vault.tokenDecimals;
-        const liquidity = reserve * tokens[0].price;
-
-        const label = getLabelFromToken(wantToken);
-        const secondaryLabel = buildDollarDisplayItem(price);
-        const tertiaryLabel = `${(apyData[vault.id] * 100).toFixed(3)}% APY`;
-        const images = getImagesFromToken(wantToken);
-
-        const token: AppTokenPosition = {
-          type: ContractType.APP_TOKEN,
-          appId,
-          groupId,
-          address: vaultAddress,
-          network,
-          symbol,
-          decimals,
-          supply,
-          pricePerShare,
-          price,
-          tokens,
-          dataProps: {
-            apy: apyData[vault.id],
-            liquidity,
-          },
-          displayProps: {
-            label,
-            images,
-            secondaryLabel,
-            tertiaryLabel,
-          },
-        };
-
-        return token;
-      }),
-    );
-
-    return compact(tokens);
+  async getLabel({
+    definition,
+  }: GetDisplayPropsParams<
+    VaporwaveVault,
+    DefaultAppTokenDataProps,
+    VaporwaveFinanceVaultDefinition
+  >): Promise<string> {
+    return definition.name;
   }
 }

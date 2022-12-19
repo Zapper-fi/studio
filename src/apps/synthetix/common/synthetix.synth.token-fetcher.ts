@@ -73,7 +73,7 @@ export abstract class SynthetixSynthTokenFetcher extends AppTokenTemplatePositio
     return addresses;
   }
 
-  async getUnderlyingTokenAddresses() {
+  async getUnderlyingTokenDefinitions() {
     return [];
   }
 

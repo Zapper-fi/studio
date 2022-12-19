@@ -78,8 +78,9 @@ export class EthereumBalancerV1PoolTokenFetcher extends AppTokenTemplatePosition
     return poolsFromSubgraph.pools.map(v => v.id);
   }
 
-  async getUnderlyingTokenAddresses({ contract }: GetUnderlyingTokensParams<BalancerPoolToken>) {
-    return contract.getCurrentTokens();
+  async getUnderlyingTokenDefinitions({ contract }: GetUnderlyingTokensParams<BalancerPoolToken>) {
+    const tokenAddresses = await contract.getCurrentTokens();
+    return tokenAddresses.map(address => ({ address, network: this.network }));
   }
 
   async getPricePerShare({ contract, appToken }: GetPricePerShareParams<BalancerPoolToken>) {

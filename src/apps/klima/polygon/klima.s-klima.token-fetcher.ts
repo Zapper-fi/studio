@@ -26,8 +26,8 @@ export class PolygonKlimaSKlimaTokenFetcher extends AppTokenTemplatePositionFetc
     return ['0xb0c22d8d350c67420f06f48936654f567c73e8c8'];
   }
 
-  async getUnderlyingTokenAddresses() {
-    return ['0x4e78011ce80ee02d2c3e649fb657e45898257815'];
+  async getUnderlyingTokenDefinitions() {
+    return [{ address: '0x4e78011ce80ee02d2c3e649fb657e45898257815', network: this.network }];
   }
 
   async getPricePerShare() {

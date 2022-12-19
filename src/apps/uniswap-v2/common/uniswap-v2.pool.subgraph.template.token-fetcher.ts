@@ -128,7 +128,7 @@ export abstract class UniswapV2PoolSubgraphTemplateTokenFetcher<
       blockNumberLastSynced = graphMetaData._meta.block.number;
     }
 
-    if (block1DayAgo > blockNumberLastSynced) return [];
+    if (block1DayAgo > blockNumberLastSynced) return addresses.map(() => 0);
 
     // Retrieve volume data from TheGraph (@TODO Cache this)
     const [volumeByIDData, volumeByIDData1DayAgo] = await Promise.all([

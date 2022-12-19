@@ -26,8 +26,8 @@ export class PolygonKlimaWsKlimaTokenFetcher extends AppTokenTemplatePositionFet
     return ['0x6f370dba99e32a3cad959b341120db3c9e280ba6'];
   }
 
-  async getUnderlyingTokenAddresses({ contract }: GetUnderlyingTokensParams<KlimaWsKlima>) {
-    return [await contract.sKLIMA()];
+  async getUnderlyingTokenDefinitions({ contract }: GetUnderlyingTokensParams<KlimaWsKlima>) {
+    return [{ address: await contract.sKLIMA(), network: this.network }];
   }
 
   async getPricePerShare({ appToken, multicall }: GetPricePerShareParams<KlimaWsKlima>) {

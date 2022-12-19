@@ -42,8 +42,8 @@ export abstract class PlatypusFinancePoolTokenFetcher extends AppTokenTemplatePo
     return tokenAddressesByPool.flat();
   }
 
-  async getUnderlyingTokenAddresses({ contract }: GetUnderlyingTokensParams<PlatypusFinancePoolToken>) {
-    return contract.underlyingToken();
+  async getUnderlyingTokenDefinitions({ contract }: GetUnderlyingTokensParams<PlatypusFinancePoolToken>) {
+    return [{ address: await contract.underlyingToken(), network: this.network }];
   }
 
   async getPricePerShare({ contract, multicall, appToken }: GetPricePerShareParams<PlatypusFinancePoolToken>) {

@@ -26,8 +26,8 @@ export class EthereumConcentratorAcrvTokenFetcher extends AppTokenTemplatePositi
     return ['0x2b95a1dcc3d405535f9ed33c219ab38e8d7e0884'];
   }
 
-  async getUnderlyingTokenAddresses() {
-    return ['0x62b9c7356a2dc64a1969e19c23e4f579f9810aa7'];
+  async getUnderlyingTokenDefinitions() {
+    return [{ address: '0x62b9c7356a2dc64a1969e19c23e4f579f9810aa7', network: this.network }];
   }
 
   async getPricePerShare({ appToken, contract }: GetPricePerShareParams<AladdinCrv>) {

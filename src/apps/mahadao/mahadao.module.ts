@@ -4,7 +4,6 @@ import { CurveVotingEscrowContractPositionBalanceHelper } from '~apps/curve/help
 import { CurveVotingEscrowContractPositionHelper } from '~apps/curve/helpers/curve.voting-escrow.contract-position-helper';
 
 import { MahadaoContractFactory } from './contracts';
-import { EthereumMahadaoBalanceFetcher } from './ethereum/mahadao.balance-fetcher';
 import { EthereumMahadaoLockerContractPositionFetcher } from './ethereum/mahadao.locker.contract-position-fetcher';
 import { MahadaoAppDefinition, MAHADAO_DEFINITION } from './mahadao.definition';
 
@@ -15,7 +14,6 @@ import { MahadaoAppDefinition, MAHADAO_DEFINITION } from './mahadao.definition';
     MahadaoContractFactory,
     CurveVotingEscrowContractPositionBalanceHelper,
     CurveVotingEscrowContractPositionHelper,
-    EthereumMahadaoBalanceFetcher,
     EthereumMahadaoLockerContractPositionFetcher,
   ],
 })

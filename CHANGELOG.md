@@ -4,6 +4,107 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.336.0](https://github.com/Zapper-fi/studio/compare/v0.335.0...v0.336.0) (2022-12-19)
+
+
+### Features
+
+* **app-token:** Support string token ID ([#1953](https://github.com/Zapper-fi/studio/issues/1953)) ([3d2ad5a](https://github.com/Zapper-fi/studio/commit/3d2ad5a987f64935fbbc1ee53adaa5766aff02cf))
+
+## [0.335.0](https://github.com/Zapper-fi/studio/compare/v0.334.1...v0.335.0) (2022-12-19)
+
+
+### Features
+
+* **lyra-avalon:** Update subgraph links ([#1949](https://github.com/Zapper-fi/studio/issues/1949)) ([f28c372](https://github.com/Zapper-fi/studio/commit/f28c372bc10d091c32aea7d028a018e42e22cefc))
+
+
+### Bug Fixes
+
+* **jones-dao:** Migration to template ([#1951](https://github.com/Zapper-fi/studio/issues/1951)) ([49632d4](https://github.com/Zapper-fi/studio/commit/49632d4384ee04227002d18b4274db77a3d11ceb))
+* **mahadao:** Migration to template ([#1942](https://github.com/Zapper-fi/studio/issues/1942)) ([ca03145](https://github.com/Zapper-fi/studio/commit/ca03145b719995ed293d945db09a6a5dfdcd7b46))
+
+## [0.334.1](https://github.com/Zapper-fi/studio/compare/v0.334.0...v0.334.1) (2022-12-19)
+
+
+### Bug Fixes
+
+* **goldfinch:** Move app integration to studio ([#1945](https://github.com/Zapper-fi/studio/issues/1945)) ([7a4f104](https://github.com/Zapper-fi/studio/commit/7a4f1048af9a6f936e0b609f4a23c3e50f29bbf9))
+
+## [0.334.0](https://github.com/Zapper-fi/studio/compare/v0.333.0...v0.334.0) (2022-12-17)
+
+
+### Features
+
+* **app-tokens:** Collapse NFT tokens into collections ([#1939](https://github.com/Zapper-fi/studio/issues/1939)) ([de0d989](https://github.com/Zapper-fi/studio/commit/de0d9895338afc06aad8c48f2b9f095d2a6e0d15))
+* defiedge token fetchers ([#1815](https://github.com/Zapper-fi/studio/issues/1815)) ([c20565e](https://github.com/Zapper-fi/studio/commit/c20565e978350f975e2e77be4d4a9bd6c953f75d))
+
+## [0.333.0](https://github.com/Zapper-fi/studio/compare/v0.332.0...v0.333.0) (2022-12-16)
+
+
+### Features
+
+* **app-tokens:** Match on network and token ID as well ([#1937](https://github.com/Zapper-fi/studio/issues/1937)) ([b7c97cb](https://github.com/Zapper-fi/studio/commit/b7c97cbc8eccba9d1f94eacacd2d250c29dad0bd))
+
+## [0.332.0](https://github.com/Zapper-fi/studio/compare/v0.331.0...v0.332.0) (2022-12-16)
+
+
+### Features
+
+* **app-tokens:** Support definitions as underlying tokens ([#1935](https://github.com/Zapper-fi/studio/issues/1935)) ([ee22c7b](https://github.com/Zapper-fi/studio/commit/ee22c7b65102f1d1c013acf47079741d6972b8f6))
+* **cask-protocol:** Update app labels ([#1933](https://github.com/Zapper-fi/studio/issues/1933)) ([63657ca](https://github.com/Zapper-fi/studio/commit/63657ca64694dafb197f7be37b0f699b1b9b5888))
+* **mux:** Add lev-trades ContractPositionFetcher and add BalanceFetcher ([#1872](https://github.com/Zapper-fi/studio/issues/1872)) ([fa5012e](https://github.com/Zapper-fi/studio/commit/fa5012ee4b8b3c3c8ac4e4ffd340649ad48997b7))
+
+
+### Bug Fixes
+
+* **lemma-finance:** Rename lemma WBTC image ([#1936](https://github.com/Zapper-fi/studio/issues/1936)) ([8e7f377](https://github.com/Zapper-fi/studio/commit/8e7f377bff9403f67e5ef1491d8974b9c8897b56))
+
+## [0.331.0](https://github.com/Zapper-fi/studio/compare/v0.330.0...v0.331.0) (2022-12-16)
+
+
+### Features
+
+* **token-loader:** Support NFT as a token dependency ([#1931](https://github.com/Zapper-fi/studio/issues/1931)) ([5c40bb4](https://github.com/Zapper-fi/studio/commit/5c40bb43fa392a54157386491b573891958f131e))
+
+## [0.330.0](https://github.com/Zapper-fi/studio/compare/v0.329.0...v0.330.0) (2022-12-15)
+
+
+### Features
+
+* **pendle-v2:** Update name ([658a672](https://github.com/Zapper-fi/studio/commit/658a672263ee49cfaf09290b4272fd6bdc05e639))
+
+## [0.329.0](https://github.com/Zapper-fi/studio/compare/v0.328.0...v0.329.0) (2022-12-15)
+
+
+### Features
+
+* **aura:** Aura pools upgrade ([#1923](https://github.com/Zapper-fi/studio/issues/1923)) ([63918fd](https://github.com/Zapper-fi/studio/commit/63918fd297969bb4145a6e49605ef8464643653a))
+* **cask-protocol:** Use latest patterns ([00ef652](https://github.com/Zapper-fi/studio/commit/00ef652c6f759a94010c9b43dfcde54eebc518c2))
+* **cask:** Support Cask vault token on all networks ([#1929](https://github.com/Zapper-fi/studio/issues/1929)) ([67fbeef](https://github.com/Zapper-fi/studio/commit/67fbeef3fddd6d7e13d6f71256394a051aa7ad04))
+* **sideshift:** add sideshift ([#1883](https://github.com/Zapper-fi/studio/issues/1883)) ([4504584](https://github.com/Zapper-fi/studio/commit/4504584d63856a756e5dd8f8ba11fb41dcfc2535))
+
+
+### Bug Fixes
+
+* **insurace:** Extend getDefinitions ([#1899](https://github.com/Zapper-fi/studio/issues/1899)) ([7eb6ecf](https://github.com/Zapper-fi/studio/commit/7eb6ecfff084d946610a9457d12e449d5eba4d54))
+* **pendle-v2:** Small linting fixes ([98dc39b](https://github.com/Zapper-fi/studio/commit/98dc39b0e6062d02b99c790444e57bf35d0531a0))
+* **vaporwave-finance:** Migrate to template ([#1925](https://github.com/Zapper-fi/studio/issues/1925)) ([703d1ca](https://github.com/Zapper-fi/studio/commit/703d1ca0f6a1b73bf4b8585df8cc86b7a189c45b))
+
+## [0.328.0](https://github.com/Zapper-fi/studio/compare/v0.327.0...v0.328.0) (2022-12-15)
+
+
+### Features
+
+* **good-ghosting:** adds support other V2 versions ([#1870](https://github.com/Zapper-fi/studio/issues/1870)) ([c35e6a8](https://github.com/Zapper-fi/studio/commit/c35e6a826a513f4afc0b1eac9e86d2e4929bcb9e))
+* **pendle-v2:** Integrate Pendle v2 ([#1924](https://github.com/Zapper-fi/studio/issues/1924)) ([23dae9b](https://github.com/Zapper-fi/studio/commit/23dae9b67c092a1cdf3b26010047d683700e12e0))
+* **uniswap-v2:** Fix volume data loader when graph is not synced ([#1927](https://github.com/Zapper-fi/studio/issues/1927)) ([e565b11](https://github.com/Zapper-fi/studio/commit/e565b11a02debc88a4039aac6b12e2e7c788627e))
+
+
+### Bug Fixes
+
+* **lint:** Little derp ([4e7a9c4](https://github.com/Zapper-fi/studio/commit/4e7a9c41e54667be7b5fd2d99a5494788fc23300))
+
 ## [0.327.0](https://github.com/Zapper-fi/studio/compare/v0.326.0...v0.327.0) (2022-12-14)
 
 
