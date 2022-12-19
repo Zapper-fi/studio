@@ -52,24 +52,21 @@
       { "name": "end_time", "type": "uint256" },
       { "name": "cliff_length", "type": "uint256" }
     ],
-    "outputs": [{ "name": "", "type": "bool" }],
-    "gas": 402331
+    "outputs": [{ "name": "", "type": "bool" }]
   },
   {
     "stateMutability": "view",
     "type": "function",
     "name": "unclaimed",
     "inputs": [],
-    "outputs": [{ "name": "", "type": "uint256" }],
-    "gas": 26060
+    "outputs": [{ "name": "", "type": "uint256" }]
   },
   {
     "stateMutability": "view",
     "type": "function",
     "name": "locked",
     "inputs": [],
-    "outputs": [{ "name": "", "type": "uint256" }],
-    "gas": 26120
+    "outputs": [{ "name": "", "type": "uint256" }]
   },
   { "stateMutability": "nonpayable", "type": "function", "name": "claim", "inputs": [], "outputs": [] },
   {
@@ -94,127 +91,111 @@
     "type": "function",
     "name": "rug_pull",
     "inputs": [],
-    "outputs": [],
-    "gas": 72184
+    "outputs": []
   },
   {
     "stateMutability": "nonpayable",
     "type": "function",
     "name": "commit_transfer_ownership",
     "inputs": [{ "name": "addr", "type": "address" }],
-    "outputs": [],
-    "gas": 39595
+    "outputs": []
   },
   {
     "stateMutability": "nonpayable",
     "type": "function",
     "name": "apply_transfer_ownership",
     "inputs": [],
-    "outputs": [],
-    "gas": 59523
+    "outputs": []
   },
   {
     "stateMutability": "nonpayable",
     "type": "function",
     "name": "renounce_ownership",
     "inputs": [],
-    "outputs": [],
-    "gas": 44555
+    "outputs": []
   },
   {
     "stateMutability": "nonpayable",
     "type": "function",
     "name": "collect_dust",
     "inputs": [{ "name": "token", "type": "address" }],
-    "outputs": [],
-    "gas": 14120
+    "outputs": []
   },
   {
     "stateMutability": "view",
     "type": "function",
     "name": "recipient",
     "inputs": [],
-    "outputs": [{ "name": "", "type": "address" }],
-    "gas": 2658
+    "outputs": [{ "name": "", "type": "address" }]
   },
   {
     "stateMutability": "view",
     "type": "function",
     "name": "token",
     "inputs": [],
-    "outputs": [{ "name": "", "type": "address" }],
-    "gas": 2688
+    "outputs": [{ "name": "", "type": "address" }]
   },
   {
     "stateMutability": "view",
     "type": "function",
     "name": "start_time",
     "inputs": [],
-    "outputs": [{ "name": "", "type": "uint256" }],
-    "gas": 2718
+    "outputs": [{ "name": "", "type": "uint256" }]
   },
   {
     "stateMutability": "view",
     "type": "function",
     "name": "end_time",
     "inputs": [],
-    "outputs": [{ "name": "", "type": "uint256" }],
-    "gas": 2748
+    "outputs": [{ "name": "", "type": "uint256" }]
   },
   {
     "stateMutability": "view",
     "type": "function",
     "name": "cliff_length",
     "inputs": [],
-    "outputs": [{ "name": "", "type": "uint256" }],
-    "gas": 2778
+    "outputs": [{ "name": "", "type": "uint256" }]
   },
   {
     "stateMutability": "view",
     "type": "function",
     "name": "total_locked",
     "inputs": [],
-    "outputs": [{ "name": "", "type": "uint256" }],
-    "gas": 2808
+    "outputs": [{ "name": "", "type": "uint256" }]
   },
   {
     "stateMutability": "view",
     "type": "function",
     "name": "total_claimed",
     "inputs": [],
-    "outputs": [{ "name": "", "type": "uint256" }],
-    "gas": 2838
+    "outputs": [{ "name": "", "type": "uint256" }]
   },
   {
     "stateMutability": "view",
     "type": "function",
     "name": "disabled_at",
     "inputs": [],
-    "outputs": [{ "name": "", "type": "uint256" }],
-    "gas": 2868
+    "outputs": [{ "name": "", "type": "uint256" }]
   },
   {
     "stateMutability": "view",
     "type": "function",
     "name": "initialized",
     "inputs": [],
-    "outputs": [{ "name": "", "type": "bool" }],
-    "gas": 2898
+    "outputs": [{ "name": "", "type": "bool" }]
   },
   {
     "stateMutability": "view",
     "type": "function",
     "name": "admin",
     "inputs": [],
-    "outputs": [{ "name": "", "type": "address" }],
-    "gas": 2928
+    "outputs": [{ "name": "", "type": "address" }]
   },
   {
     "stateMutability": "view",
     "type": "function",
     "name": "future_admin",
     "inputs": [],
-    "outputs": [{ "name": "", "type": "address" }],
-    "gas": 2958
+    "outputs": [{ "name": "", "type": "address" }]
   }
 ]
