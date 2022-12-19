@@ -4,6 +4,26 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.336.0](https://github.com/Zapper-fi/studio/compare/v0.335.0...v0.336.0) (2022-12-19)
+
+
+### Features
+
+* **app-token:** Support string token ID ([#1953](https://github.com/Zapper-fi/studio/issues/1953)) ([3d2ad5a](https://github.com/Zapper-fi/studio/commit/3d2ad5a987f64935fbbc1ee53adaa5766aff02cf))
+
+## [0.335.0](https://github.com/Zapper-fi/studio/compare/v0.334.1...v0.335.0) (2022-12-19)
+
+
+### Features
+
+* **lyra-avalon:** Update subgraph links ([#1949](https://github.com/Zapper-fi/studio/issues/1949)) ([f28c372](https://github.com/Zapper-fi/studio/commit/f28c372bc10d091c32aea7d028a018e42e22cefc))
+
+
+### Bug Fixes
+
+* **jones-dao:** Migration to template ([#1951](https://github.com/Zapper-fi/studio/issues/1951)) ([49632d4](https://github.com/Zapper-fi/studio/commit/49632d4384ee04227002d18b4274db77a3d11ceb))
+* **mahadao:** Migration to template ([#1942](https://github.com/Zapper-fi/studio/issues/1942)) ([ca03145](https://github.com/Zapper-fi/studio/commit/ca03145b719995ed293d945db09a6a5dfdcd7b46))
+
 ## [0.334.1](https://github.com/Zapper-fi/studio/compare/v0.334.0...v0.334.1) (2022-12-19)
 
 

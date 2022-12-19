@@ -1,115 +1,70 @@
 import { Inject } from '@nestjs/common';
-import { compact } from 'lodash';
+import 'moment-duration-format';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { ZERO_ADDRESS } from '~app-toolkit/constants/address';
-import { Register } from '~app-toolkit/decorators';
-import { buildDollarDisplayItem } from '~app-toolkit/helpers/presentation/display-item.present';
-import { getImagesFromToken } from '~app-toolkit/helpers/presentation/image.present';
-import { OLYMPUS_DEFINITION } from '~apps/olympus';
-import { ContractType } from '~position/contract.interface';
-import { PositionFetcher } from '~position/position-fetcher.interface';
-import { AppTokenPosition } from '~position/position.interface';
-import { Network } from '~types/network.interface';
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
+import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
+import {
+  DefaultAppTokenDataProps,
+  GetAddressesParams,
+  GetUnderlyingTokensParams,
+} from '~position/template/app-token.template.types';
 
 import { JonesDaoContractFactory } from '../contracts';
-import { JONES_DAO_DEFINITION } from '../jones-dao.definition';
+import { JonesVault } from '../contracts/ethers/JonesVault';
 
-const vaults = [
-  {
-    vaultTokenAddress: '0x662d0f9ff837a51cf89a1fe7e0882a906dac08a3', // jETH
-    underlyingTokenAddress: ZERO_ADDRESS,
-  },
-  {
-    vaultTokenAddress: '0x5375616bb6c52a90439ff96882a986d8fcdce421', // jgOHM
-    underlyingTokenAddress: '0x8d9ba570d6cb60c7e3e0f31343efe75ab8e65fb1', // gOHM
-  },
-  {
-    vaultTokenAddress: '0xf018865b26ffab9cd1735dcca549d95b0cb9ea19', // jDPX
-    underlyingTokenAddress: '0x6c2c06790b3e3e3c38e12ee22f8183b37a13ee55', // DPX
-  },
-  {
-    vaultTokenAddress: '0x1f6fa7a58701b3773b08a1a16d06b656b0eccb23', // jrDPX
-    underlyingTokenAddress: '0x32eb7902d4134bf98a28b963d26de779af92a212', // rDPX
-  },
-];
+export type JonesDaoVaultTokenDefinition = {
+  address: string;
+  underlyingTokenAddress: string;
+};
 
-const appId = JONES_DAO_DEFINITION.id;
-const groupId = JONES_DAO_DEFINITION.groups.vault.id;
-const network = Network.ARBITRUM_MAINNET;
-
-@Register.TokenPositionFetcher({ appId, groupId, network })
-export class ArbitrumJonesDaoVaultTokenFetcher implements PositionFetcher<AppTokenPosition> {
+@PositionTemplate()
+export class ArbitrumJonesDaoVaultTokenFetcher extends AppTokenTemplatePositionFetcher<
+  JonesVault,
+  DefaultAppTokenDataProps,
+  JonesDaoVaultTokenDefinition
+> {
+  groupLabel = 'Vaults';
   constructor(
-    @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
-    @Inject(JonesDaoContractFactory) private readonly contractFactory: JonesDaoContractFactory,
-  ) {}
+    @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
+    @Inject(JonesDaoContractFactory) protected readonly contractFactory: JonesDaoContractFactory,
+  ) {
+    super(appToolkit);
+  }
 
-  async getPositions() {
-    const multicall = this.appToolkit.getMulticall(network);
+  getContract(address: string): JonesVault {
+    return this.contractFactory.jonesVault({ network: this.network, address });
+  }
 
-    const baseTokens = await this.appToolkit.getBaseTokenPrices(network);
-    const appTokens = await this.appToolkit.getAppTokenPositions({
-      appId: OLYMPUS_DEFINITION.id,
-      groupIds: [OLYMPUS_DEFINITION.groups.gOhm.id],
-      network,
-    });
-    const allTokens = [...appTokens, ...baseTokens];
+  async getDefinitions(): Promise<JonesDaoVaultTokenDefinition[]> {
+    return [
+      {
+        address: '0x662d0f9ff837a51cf89a1fe7e0882a906dac08a3', // jETH
+        underlyingTokenAddress: ZERO_ADDRESS,
+      },
+      {
+        address: '0x5375616bb6c52a90439ff96882a986d8fcdce421', // jgOHM
+        underlyingTokenAddress: '0x8d9ba570d6cb60c7e3e0f31343efe75ab8e65fb1', // gOHM
+      },
+      {
+        address: '0xf018865b26ffab9cd1735dcca549d95b0cb9ea19', // jDPX
+        underlyingTokenAddress: '0x6c2c06790b3e3e3c38e12ee22f8183b37a13ee55', // DPX
+      },
+      {
+        address: '0x1f6fa7a58701b3773b08a1a16d06b656b0eccb23', // jrDPX
+        underlyingTokenAddress: '0x32eb7902d4134bf98a28b963d26de779af92a212', // rDPX
+      },
+    ];
+  }
 
-    const tokens = await Promise.all(
-      vaults.flatMap(async ({ vaultTokenAddress, underlyingTokenAddress }) => {
-        const vaultTokenContract = this.contractFactory.jonesAsset({ network, address: vaultTokenAddress });
+  async getAddresses({ definitions }: GetAddressesParams) {
+    return definitions.map(v => v.address);
+  }
 
-        const [symbol, decimals, supplyRaw] = await Promise.all([
-          multicall.wrap(vaultTokenContract).symbol(),
-          multicall.wrap(vaultTokenContract).decimals(),
-          multicall.wrap(vaultTokenContract).totalSupply(),
-        ]);
-
-        const underlyingToken = allTokens.find(p => p.address === underlyingTokenAddress);
-        if (!underlyingToken) return null;
-
-        const supply = Number(supplyRaw) / 10 ** decimals;
-        const pricePerShare = 1;
-        const price = underlyingToken.price;
-        const liquidity = price * supply;
-        const tokens = [underlyingToken];
-
-        // Display Props
-        const label = symbol;
-        const secondaryLabel = buildDollarDisplayItem(price);
-        const images = getImagesFromToken(underlyingToken);
-        const statsItems = [{ label: 'Liquidity', value: buildDollarDisplayItem(liquidity) }];
-
-        const vaultToken: AppTokenPosition = {
-          type: ContractType.APP_TOKEN,
-          address: vaultTokenAddress,
-          network,
-          appId,
-          groupId,
-          symbol,
-          decimals,
-          supply,
-          price,
-          pricePerShare,
-          tokens,
-
-          dataProps: {
-            liquidity,
-          },
-
-          displayProps: {
-            label,
-            secondaryLabel,
-            images,
-            statsItems,
-          },
-        };
-
-        return vaultToken;
-      }),
-    );
-
-    return compact(tokens);
+  async getUnderlyingTokenDefinitions({
+    definition,
+  }: GetUnderlyingTokensParams<JonesVault, JonesDaoVaultTokenDefinition>) {
+    return [{ address: definition.underlyingTokenAddress, network: this.network }];
   }
 }

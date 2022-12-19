@@ -4,7 +4,7 @@
 
 import { Contract, Signer, utils } from 'ethers';
 import type { Provider } from '@ethersproject/providers';
-import type { JonesAsset, JonesAssetInterface } from '../JonesAsset';
+import type { JonesVault, JonesVaultInterface } from '../JonesVault';
 
 const _abi = [
   {
@@ -592,12 +592,12 @@ const _abi = [
   },
 ];
 
-export class JonesAsset__factory {
+export class JonesVault__factory {
   static readonly abi = _abi;
-  static createInterface(): JonesAssetInterface {
-    return new utils.Interface(_abi) as JonesAssetInterface;
+  static createInterface(): JonesVaultInterface {
+    return new utils.Interface(_abi) as JonesVaultInterface;
   }
-  static connect(address: string, signerOrProvider: Signer | Provider): JonesAsset {
-    return new Contract(address, _abi, signerOrProvider) as JonesAsset;
+  static connect(address: string, signerOrProvider: Signer | Provider): JonesVault {
+    return new Contract(address, _abi, signerOrProvider) as JonesVault;
   }
 }
