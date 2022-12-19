@@ -1,14 +1,12 @@
 import { Inject } from '@nestjs/common';
+import { BigNumberish } from 'ethers';
 
-import { Register } from '~app-toolkit/decorators';
-import { UniswapV2OnChainPoolTokenAddressStrategy } from '~apps/uniswap-v2';
-import { PositionFetcher } from '~position/position-fetcher.interface';
-import { AppTokenPosition } from '~position/position.interface';
-import { Network } from '~types/network.interface';
+import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
+import { UniswapV2PoolOnChainTemplateTokenFetcher } from '~apps/uniswap-v2/common/uniswap-v2.pool.on-chain.template.token-fetcher';
+import { GetTokenPropsParams, DefaultAppTokenDefinition } from '~position/template/app-token.template.types';
 
-import { HakuswapContractFactory } from '../contracts';
-import { HAKUSWAP_DEFINITION } from '../hakuswap.definition';
-import { HakuswapPoolTokenHelper } from '../helpers/hakuswap.pool.token-helper';
+import { HakuswapContractFactory, HakuswapFactory, HakuswapPool } from '../contracts';
 
 const poolNotUsingDecimals = [
   '0x519de4668ea6661d1870928a3033a62dc2acc503',
@@ -25,48 +23,55 @@ const poolNotUsingDecimals = [
   '0x8caf27646b392c7fdd49d8c55f3d93dd70cb1692',
 ];
 
-const appId = HAKUSWAP_DEFINITION.id;
-const groupId = HAKUSWAP_DEFINITION.groups.pool.id;
-const network = Network.AVALANCHE_MAINNET;
+@PositionTemplate()
+export class AvalancheHakuswapPoolTokenFetcher extends UniswapV2PoolOnChainTemplateTokenFetcher<
+  HakuswapPool,
+  HakuswapFactory
+> {
+  factoryAddress = '0x2db46feb38c57a6621bca4d97820e1fc1de40f41';
+  groupLabel = 'Pools';
 
-@Register.TokenPositionFetcher({ appId, groupId, network })
-export class AvalancheHakuswapPoolTokenFetcher implements PositionFetcher<AppTokenPosition> {
   constructor(
-    @Inject(HakuswapContractFactory) private readonly hakuswapContractFactory: HakuswapContractFactory,
-    @Inject(HakuswapPoolTokenHelper) private readonly poolTokenHelper: HakuswapPoolTokenHelper,
-    @Inject(UniswapV2OnChainPoolTokenAddressStrategy)
-    private readonly uniswapV2OnChainPoolTokenAddressStrategy: UniswapV2OnChainPoolTokenAddressStrategy,
-  ) {}
+    @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
+    @Inject(HakuswapContractFactory) protected readonly contractFactory: HakuswapContractFactory,
+  ) {
+    super(appToolkit);
+  }
 
-  async getPositions() {
-    return this.poolTokenHelper.getTokens({
-      network,
-      appId,
-      groupId,
-      minLiquidity: 10000,
-      fee: 0.003,
-      factoryAddress: '0x2db46feb38c57a6621bca4d97820e1fc1de40f41',
-      poolNotUsingDecimals,
-      resolveFactoryContract: ({ address, network }) =>
-        this.hakuswapContractFactory.hakuswapFactory({
-          address,
-          network,
-        }),
-      resolvePoolContract: ({ address, network }) => this.hakuswapContractFactory.hakuswapPool({ address, network }),
-      resolvePoolTokenAddresses: this.uniswapV2OnChainPoolTokenAddressStrategy.build({
-        resolvePoolsLength: ({ multicall, factoryContract }) => multicall.wrap(factoryContract).allPairsLength(),
-        resolvePoolAddress: ({ multicall, factoryContract, poolIndex }) =>
-          multicall.wrap(factoryContract).allPairs(poolIndex),
-      }),
-      resolvePoolTokenSymbol: ({ multicall, poolContract }) => multicall.wrap(poolContract).symbol(),
-      resolvePoolTokenSupply: ({ multicall, poolContract }) => multicall.wrap(poolContract).totalSupply(),
-      resolvePoolReserves: async ({ multicall, poolContract }) => {
-        const reserves = await multicall.wrap(poolContract).getReserves();
-        return [reserves[0], reserves[1]];
-      },
-      resolvePoolUnderlyingTokenAddresses: async ({ multicall, poolContract }) => {
-        return Promise.all([multicall.wrap(poolContract).token0(), multicall.wrap(poolContract).token1()]);
-      },
-    });
+  getPoolTokenContract(address: string): HakuswapPool {
+    return this.contractFactory.hakuswapPool({ address, network: this.network });
+  }
+
+  getPoolFactoryContract(address: string): HakuswapFactory {
+    return this.contractFactory.hakuswapFactory({ address, network: this.network });
+  }
+
+  getPoolsLength(contract: HakuswapFactory): Promise<BigNumberish> {
+    return contract.allPairsLength();
+  }
+
+  getPoolAddress(contract: HakuswapFactory, index: number): Promise<string> {
+    return contract.allPairs(index);
+  }
+
+  getPoolToken0(contract: HakuswapPool): Promise<string> {
+    return contract.token0();
+  }
+
+  getPoolToken1(contract: HakuswapPool): Promise<string> {
+    return contract.token1();
+  }
+
+  getPoolReserves(contract: HakuswapPool): Promise<BigNumberish[]> {
+    return contract.getReserves();
+  }
+
+  async getDecimals({
+    address,
+    contract,
+  }: GetTokenPropsParams<HakuswapPool, DefaultAppTokenDefinition, DefaultAppTokenDefinition>): Promise<number> {
+    const decimals = !poolNotUsingDecimals.includes(address) ? await contract.decimals() : 0;
+
+    return decimals;
   }
 }
