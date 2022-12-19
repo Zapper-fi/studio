@@ -1,57 +1,82 @@
 import { Inject } from '@nestjs/common';
+import { BigNumberish } from 'ethers';
 
-import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
-import { Register } from '~app-toolkit/decorators';
+import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import { RewardRateUnit } from '~app-toolkit/helpers/master-chef/master-chef.contract-position-helper';
-import { TRISOLARIS_DEFINITION } from '~apps/trisolaris';
-import { PositionFetcher } from '~position/position-fetcher.interface';
-import { ContractPosition } from '~position/position.interface';
-import { Network } from '~types/network.interface';
+import {
+  GetMasterChefDataPropsParams,
+  GetMasterChefTokenBalancesParams,
+  MasterChefTemplateContractPositionFetcher,
+} from '~position/template/master-chef.template.contract-position-fetcher';
 
-import { BLUEBIT_DEFINITION } from '../bluebit.definition';
-import { Bluebit, BluebitContractFactory } from '../contracts';
+import { BluebitChef, BluebitContractFactory } from '../contracts';
 
-const appId = BLUEBIT_DEFINITION.id;
-const groupId = BLUEBIT_DEFINITION.groups.farm.id;
-const network = Network.AURORA_MAINNET;
+@PositionTemplate()
+export class AuroraBluebitFarmContractPositionFetcher extends MasterChefTemplateContractPositionFetcher<BluebitChef> {
+  groupLabel = 'Farms';
+  chefAddress = '0x947dd92990343ae1d6cbe2102ea84ef73bc5790e';
+  rewardRateUnit = RewardRateUnit.BLOCK;
 
-@Register.ContractPositionFetcher({ appId, groupId, network })
-export class AuroraBluebitFarmContractPositionFetcher implements PositionFetcher<ContractPosition> {
   constructor(
-    @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
-    @Inject(BluebitContractFactory) private readonly bluebitContractFactory: BluebitContractFactory,
-  ) {}
+    @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
+    @Inject(BluebitContractFactory) protected readonly contractFactory: BluebitContractFactory,
+  ) {
+    super(appToolkit);
+  }
 
-  async getPositions() {
-    return this.appToolkit.helpers.masterChefContractPositionHelper.getContractPositions<Bluebit>({
-      address: '0x947dd92990343ae1d6cbe2102ea84ef73bc5790e',
-      appId,
-      groupId,
-      network,
-      dependencies: [{ appId: TRISOLARIS_DEFINITION.id, groupIds: [TRISOLARIS_DEFINITION.groups.pool.id], network }],
-      resolveContract: opts => this.bluebitContractFactory.bluebit(opts),
-      resolvePoolLength: async ({ multicall, contract }) => multicall.wrap(contract).poolLength(),
-      resolveDepositTokenAddress: async ({ poolIndex, contract, multicall }) => {
-        const pool = await multicall.wrap(contract).pools(poolIndex);
-        const vault = this.bluebitContractFactory.vault({ address: pool.vault, network: network });
-        return await multicall.wrap(vault).swapPair();
-      },
-      resolveLiquidity: async ({ multicall, contract, poolIndex }) => {
-        const pool = await multicall.wrap(contract).pools(poolIndex);
-        const vault = this.bluebitContractFactory.vault({ address: pool.vault, network: network });
-        return await multicall.wrap(vault).totalSupply();
-      },
-      resolveRewardTokenAddresses: async ({ multicall, contract }) => multicall.wrap(contract).bluebitToken(),
-      rewardRateUnit: RewardRateUnit.BLOCK,
-      resolveRewardRate: this.appToolkit.helpers.masterChefDefaultRewardsPerBlockStrategy.build({
-        resolvePoolAllocPoints: ({ poolIndex, contract, multicall }) =>
-          multicall
-            .wrap(contract)
-            .pools(poolIndex)
-            .then(v => v.allocPoint),
-        resolveTotalAllocPoints: ({ multicall, contract }) => multicall.wrap(contract).totalAllocPoint(),
-        resolveTotalRewardRate: ({ multicall, contract }) => multicall.wrap(contract).rewardPerBlock(),
-      }),
-    });
+  getContract(address: string): BluebitChef {
+    return this.contractFactory.bluebitChef({ address, network: this.network });
+  }
+
+  async getPoolLength(contract: BluebitChef) {
+    return contract.poolLength();
+  }
+
+  async getStakedTokenAddress(contract: BluebitChef, poolIndex: number) {
+    const multicall = this.appToolkit.getMulticall(this.network);
+    const pool = await contract.pools(poolIndex);
+    const vaultContract = this.contractFactory.vault({ address: pool.vault.toLowerCase(), network: this.network });
+    return multicall.wrap(vaultContract).swapPair();
+  }
+
+  async getRewardTokenAddress(contract: BluebitChef) {
+    return contract.bluebitToken();
+  }
+
+  async getTotalAllocPoints({ contract }: GetMasterChefDataPropsParams<BluebitChef>): Promise<BigNumberish> {
+    return contract.totalAllocPoint();
+  }
+
+  async getTotalRewardRate({ contract }: GetMasterChefDataPropsParams<BluebitChef>): Promise<BigNumberish> {
+    return contract.rewardPerBlock();
+  }
+
+  async getPoolAllocPoints({ contract, definition }: GetMasterChefDataPropsParams<BluebitChef>): Promise<BigNumberish> {
+    return contract.pools(definition.poolIndex).then(v => v.allocPoint);
+  }
+
+  async getStakedTokenBalance({
+    address,
+    contract,
+    contractPosition,
+  }: GetMasterChefTokenBalancesParams<BluebitChef>): Promise<BigNumberish> {
+    return contract.pendingRewards(contractPosition.dataProps.poolIndex, address);
+  }
+
+  async getRewardTokenBalance({
+    address,
+    contract,
+    contractPosition,
+  }: GetMasterChefTokenBalancesParams<BluebitChef>): Promise<BigNumberish> {
+    const [user, pool] = await Promise.all([
+      contract.users(contractPosition.dataProps.poolIndex, address),
+      contract.pools(contractPosition.dataProps.poolIndex),
+    ]);
+
+    if (Number(user.shares) === 0 || Number(pool.shares) === 0) return 0;
+
+    const vault = this.contractFactory.vault({ address: pool.vault, network: this.network });
+    return user.shares.mul(await vault.totalSupply()).div(pool.shares);
   }
 }

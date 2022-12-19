@@ -4,9 +4,30 @@
 
 import { Contract, Signer, utils } from 'ethers';
 import type { Provider } from '@ethersproject/providers';
-import type { HelioHay, HelioHayInterface } from '../HelioHay';
+import type { JonesVault, JonesVaultInterface } from '../JonesVault';
 
 const _abi = [
+  {
+    inputs: [
+      {
+        internalType: 'address',
+        name: '_multisigAddr',
+        type: 'address',
+      },
+      {
+        internalType: 'string',
+        name: '_name',
+        type: 'string',
+      },
+      {
+        internalType: 'string',
+        name: '_symbol',
+        type: 'string',
+      },
+    ],
+    stateMutability: 'nonpayable',
+    type: 'constructor',
+  },
   {
     anonymous: false,
     inputs: [
@@ -36,32 +57,75 @@ const _abi = [
     anonymous: false,
     inputs: [
       {
-        indexed: false,
-        internalType: 'uint8',
-        name: 'version',
-        type: 'uint8',
+        indexed: true,
+        internalType: 'bytes32',
+        name: 'role',
+        type: 'bytes32',
+      },
+      {
+        indexed: true,
+        internalType: 'bytes32',
+        name: 'previousAdminRole',
+        type: 'bytes32',
+      },
+      {
+        indexed: true,
+        internalType: 'bytes32',
+        name: 'newAdminRole',
+        type: 'bytes32',
       },
     ],
-    name: 'Initialized',
+    name: 'RoleAdminChanged',
     type: 'event',
   },
   {
     anonymous: false,
     inputs: [
       {
-        indexed: false,
-        internalType: 'uint256',
-        name: 'oldCap',
-        type: 'uint256',
+        indexed: true,
+        internalType: 'bytes32',
+        name: 'role',
+        type: 'bytes32',
       },
       {
-        indexed: false,
-        internalType: 'uint256',
-        name: 'newCap',
-        type: 'uint256',
+        indexed: true,
+        internalType: 'address',
+        name: 'account',
+        type: 'address',
+      },
+      {
+        indexed: true,
+        internalType: 'address',
+        name: 'sender',
+        type: 'address',
       },
     ],
-    name: 'SupplyCapSet',
+    name: 'RoleGranted',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: 'bytes32',
+        name: 'role',
+        type: 'bytes32',
+      },
+      {
+        indexed: true,
+        internalType: 'address',
+        name: 'account',
+        type: 'address',
+      },
+      {
+        indexed: true,
+        internalType: 'address',
+        name: 'sender',
+        type: 'address',
+      },
+    ],
+    name: 'RoleRevoked',
     type: 'event',
   },
   {
@@ -91,7 +155,7 @@ const _abi = [
   },
   {
     inputs: [],
-    name: 'DOMAIN_SEPARATOR',
+    name: 'DEFAULT_ADMIN_ROLE',
     outputs: [
       {
         internalType: 'bytes32',
@@ -104,7 +168,7 @@ const _abi = [
   },
   {
     inputs: [],
-    name: 'PERMIT_TYPEHASH',
+    name: 'MINTER_ROLE',
     outputs: [
       {
         internalType: 'bytes32',
@@ -119,12 +183,12 @@ const _abi = [
     inputs: [
       {
         internalType: 'address',
-        name: '',
+        name: 'owner',
         type: 'address',
       },
       {
         internalType: 'address',
-        name: '',
+        name: 'spender',
         type: 'address',
       },
     ],
@@ -143,12 +207,12 @@ const _abi = [
     inputs: [
       {
         internalType: 'address',
-        name: 'usr',
+        name: 'spender',
         type: 'address',
       },
       {
         internalType: 'uint256',
-        name: 'wad',
+        name: 'amount',
         type: 'uint256',
       },
     ],
@@ -167,7 +231,7 @@ const _abi = [
     inputs: [
       {
         internalType: 'address',
-        name: '',
+        name: 'account',
         type: 'address',
       },
     ],
@@ -185,17 +249,30 @@ const _abi = [
   {
     inputs: [
       {
-        internalType: 'address',
-        name: 'usr',
-        type: 'address',
-      },
-      {
         internalType: 'uint256',
-        name: 'wad',
+        name: 'amount',
         type: 'uint256',
       },
     ],
     name: 'burn',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'address',
+        name: 'account',
+        type: 'address',
+      },
+      {
+        internalType: 'uint256',
+        name: 'amount',
+        type: 'uint256',
+      },
+    ],
+    name: 'burnFrom',
     outputs: [],
     stateMutability: 'nonpayable',
     type: 'function',
@@ -240,14 +317,75 @@ const _abi = [
   {
     inputs: [
       {
+        internalType: 'bytes32',
+        name: 'role',
+        type: 'bytes32',
+      },
+    ],
+    name: 'getRoleAdmin',
+    outputs: [
+      {
+        internalType: 'bytes32',
+        name: '',
+        type: 'bytes32',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
         internalType: 'address',
-        name: 'guy',
+        name: '_minterContract',
         type: 'address',
       },
     ],
-    name: 'deny',
+    name: 'giveMinterRole',
     outputs: [],
     stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'bytes32',
+        name: 'role',
+        type: 'bytes32',
+      },
+      {
+        internalType: 'address',
+        name: 'account',
+        type: 'address',
+      },
+    ],
+    name: 'grantRole',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'bytes32',
+        name: 'role',
+        type: 'bytes32',
+      },
+      {
+        internalType: 'address',
+        name: 'account',
+        type: 'address',
+      },
+    ],
+    name: 'hasRole',
+    outputs: [
+      {
+        internalType: 'bool',
+        name: '',
+        type: 'bool',
+      },
+    ],
+    stateMutability: 'view',
     type: 'function',
   },
   {
@@ -277,63 +415,17 @@ const _abi = [
   {
     inputs: [
       {
-        internalType: 'uint256',
-        name: 'chainId_',
-        type: 'uint256',
-      },
-      {
-        internalType: 'string',
-        name: 'symbol_',
-        type: 'string',
-      },
-      {
-        internalType: 'uint256',
-        name: 'supplyCap_',
-        type: 'uint256',
-      },
-    ],
-    name: 'initialize',
-    outputs: [],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
         internalType: 'address',
-        name: 'usr',
+        name: '_to',
         type: 'address',
       },
       {
         internalType: 'uint256',
-        name: 'wad',
+        name: '_amount',
         type: 'uint256',
       },
     ],
     name: 'mint',
-    outputs: [],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        internalType: 'address',
-        name: 'src',
-        type: 'address',
-      },
-      {
-        internalType: 'address',
-        name: 'dst',
-        type: 'address',
-      },
-      {
-        internalType: 'uint256',
-        name: 'wad',
-        type: 'uint256',
-      },
-    ],
-    name: 'move',
     outputs: [],
     stateMutability: 'nonpayable',
     type: 'function',
@@ -354,140 +446,66 @@ const _abi = [
   {
     inputs: [
       {
+        internalType: 'bytes32',
+        name: 'role',
+        type: 'bytes32',
+      },
+      {
         internalType: 'address',
-        name: '',
+        name: 'account',
         type: 'address',
       },
     ],
-    name: 'nonces',
-    outputs: [
-      {
-        internalType: 'uint256',
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
+    name: 'renounceRole',
+    outputs: [],
+    stateMutability: 'nonpayable',
     type: 'function',
   },
   {
     inputs: [
       {
         internalType: 'address',
-        name: 'holder',
+        name: '_minterContract',
         type: 'address',
+      },
+    ],
+    name: 'revokeMinterRole',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'bytes32',
+        name: 'role',
+        type: 'bytes32',
       },
       {
         internalType: 'address',
-        name: 'spender',
+        name: 'account',
         type: 'address',
       },
+    ],
+    name: 'revokeRole',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
       {
-        internalType: 'uint256',
-        name: 'nonce',
-        type: 'uint256',
+        internalType: 'bytes4',
+        name: 'interfaceId',
+        type: 'bytes4',
       },
-      {
-        internalType: 'uint256',
-        name: 'expiry',
-        type: 'uint256',
-      },
+    ],
+    name: 'supportsInterface',
+    outputs: [
       {
         internalType: 'bool',
-        name: 'allowed',
-        type: 'bool',
-      },
-      {
-        internalType: 'uint8',
-        name: 'v',
-        type: 'uint8',
-      },
-      {
-        internalType: 'bytes32',
-        name: 'r',
-        type: 'bytes32',
-      },
-      {
-        internalType: 'bytes32',
-        name: 's',
-        type: 'bytes32',
-      },
-    ],
-    name: 'permit',
-    outputs: [],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        internalType: 'address',
-        name: 'usr',
-        type: 'address',
-      },
-      {
-        internalType: 'uint256',
-        name: 'wad',
-        type: 'uint256',
-      },
-    ],
-    name: 'pull',
-    outputs: [],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        internalType: 'address',
-        name: 'usr',
-        type: 'address',
-      },
-      {
-        internalType: 'uint256',
-        name: 'wad',
-        type: 'uint256',
-      },
-    ],
-    name: 'push',
-    outputs: [],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        internalType: 'address',
-        name: 'guy',
-        type: 'address',
-      },
-    ],
-    name: 'rely',
-    outputs: [],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        internalType: 'uint256',
-        name: 'wad',
-        type: 'uint256',
-      },
-    ],
-    name: 'setSupplyCap',
-    outputs: [],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'supplyCap',
-    outputs: [
-      {
-        internalType: 'uint256',
         name: '',
-        type: 'uint256',
+        type: 'bool',
       },
     ],
     stateMutability: 'view',
@@ -523,12 +541,12 @@ const _abi = [
     inputs: [
       {
         internalType: 'address',
-        name: 'dst',
+        name: 'recipient',
         type: 'address',
       },
       {
         internalType: 'uint256',
-        name: 'wad',
+        name: 'amount',
         type: 'uint256',
       },
     ],
@@ -547,17 +565,17 @@ const _abi = [
     inputs: [
       {
         internalType: 'address',
-        name: 'src',
+        name: 'sender',
         type: 'address',
       },
       {
         internalType: 'address',
-        name: 'dst',
+        name: 'recipient',
         type: 'address',
       },
       {
         internalType: 'uint256',
-        name: 'wad',
+        name: 'amount',
         type: 'uint256',
       },
     ],
@@ -572,46 +590,14 @@ const _abi = [
     stateMutability: 'nonpayable',
     type: 'function',
   },
-  {
-    inputs: [],
-    name: 'version',
-    outputs: [
-      {
-        internalType: 'string',
-        name: '',
-        type: 'string',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        internalType: 'address',
-        name: '',
-        type: 'address',
-      },
-    ],
-    name: 'wards',
-    outputs: [
-      {
-        internalType: 'uint256',
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
 ];
 
-export class HelioHay__factory {
+export class JonesVault__factory {
   static readonly abi = _abi;
-  static createInterface(): HelioHayInterface {
-    return new utils.Interface(_abi) as HelioHayInterface;
+  static createInterface(): JonesVaultInterface {
+    return new utils.Interface(_abi) as JonesVaultInterface;
   }
-  static connect(address: string, signerOrProvider: Signer | Provider): HelioHay {
-    return new Contract(address, _abi, signerOrProvider) as HelioHay;
+  static connect(address: string, signerOrProvider: Signer | Provider): JonesVault {
+    return new Contract(address, _abi, signerOrProvider) as JonesVault;
   }
 }

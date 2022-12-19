@@ -1,86 +1,33 @@
 import { Inject } from '@nestjs/common';
-import { compact } from 'lodash';
 
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
-import { Register } from '~app-toolkit/decorators';
-import { buildDollarDisplayItem } from '~app-toolkit/helpers/presentation/display-item.present';
-import { getImagesFromToken, getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
-import { ContractType } from '~position/contract.interface';
-import { PositionFetcher } from '~position/position-fetcher.interface';
-import { ContractPosition, Token } from '~position/position.interface';
-import { claimable, supplied } from '~position/position.utils';
-import { Network } from '~types/network.interface';
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
+import { GetTokenDefinitionsParams, GetTokenBalancesParams } from '~position/template/contract-position.template.types';
+import { VotingEscrowTemplateContractPositionFetcher } from '~position/template/voting-escrow.template.contract-position-fetcher';
 
-import { ThalesContractFactory } from '../contracts';
-import { THALES_DEFINITION } from '../thales.definition';
+import { EscrowThales, ThalesContractFactory } from '../contracts';
 
-export type ThalesStakingContractPositionDataProps = {
-  liquidity: number;
-};
+@PositionTemplate()
+export class OptimismThalesEscrowContractPositionFetcher extends VotingEscrowTemplateContractPositionFetcher<EscrowThales> {
+  groupLabel = 'Voting Escrow';
+  veTokenAddress = '0xa25816b9605009aa446d4d597f0aa46fd828f056';
 
-const appId = THALES_DEFINITION.id;
-const groupId = THALES_DEFINITION.groups.escrow.id;
-const network = Network.OPTIMISM_MAINNET;
-
-const farmDefinitions = [
-  {
-    address: '0xa25816b9605009aa446d4d597f0aa46fd828f056',
-    stakedTokenAddress: '0x217d47011b23bb961eb6d93ca9945b7501a5bb11',
-    rewardTokenAddress: '0x217d47011b23bb961eb6d93ca9945b7501a5bb11',
-  },
-];
-
-@Register.ContractPositionFetcher({ appId, groupId, network })
-export class OptimismThalesEscrowContractPositionFetcher implements PositionFetcher<ContractPosition> {
   constructor(
-    @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
-    @Inject(ThalesContractFactory) private readonly thalesContractFactory: ThalesContractFactory,
-  ) {}
+    @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
+    @Inject(ThalesContractFactory) protected readonly contractFactory: ThalesContractFactory,
+  ) {
+    super(appToolkit);
+  }
 
-  async getPositions() {
-    const baseTokens = await this.appToolkit.getBaseTokenPrices(network);
-    const multicall = this.appToolkit.getMulticall(network);
+  getEscrowContract(address: string): EscrowThales {
+    return this.contractFactory.escrowThales({ address, network: this.network });
+  }
 
-    const tokens = await Promise.all(
-      farmDefinitions.map(async ({ address, stakedTokenAddress, rewardTokenAddress }) => {
-        const stakedToken = baseTokens.find(t => t.address === stakedTokenAddress);
-        const rewardToken = baseTokens.find(t => t.address === rewardTokenAddress);
+  getEscrowedTokenAddress({ contract }: GetTokenDefinitionsParams<EscrowThales>) {
+    return contract.vestingToken();
+  }
 
-        if (!stakedToken || !rewardToken) return null;
-
-        const tokens = [supplied(stakedToken as Token), claimable(rewardToken)];
-        const contract = this.thalesContractFactory.escrowThales({ address: farmDefinitions[0].address, network });
-        const [balanceRaw] = await Promise.all([multicall.wrap(contract).totalEscrowBalanceNotIncludedInStaking()]);
-        const liquidity = Number(balanceRaw) / 10 ** stakedToken.decimals;
-
-        const label = `Escrowed ${getLabelFromToken(stakedToken)}`;
-        // For images, we'll use the underlying token images as well
-        const images = getImagesFromToken(stakedToken);
-        // For the secondary label, we'll use the price of the jar token
-        const secondaryLabel = buildDollarDisplayItem(stakedToken.price);
-
-        const position: ContractPosition<ThalesStakingContractPositionDataProps> = {
-          type: ContractType.POSITION,
-          appId,
-          groupId,
-          address,
-          network,
-          tokens,
-          dataProps: {
-            liquidity,
-          },
-          displayProps: {
-            label,
-            images,
-            secondaryLabel,
-            statsItems: [{ label: 'Liquidity', value: buildDollarDisplayItem(liquidity) }],
-          },
-        };
-
-        return position;
-      }),
-    );
-
-    return compact(tokens);
+  async getEscrowedTokenBalance({ contract, address }: GetTokenBalancesParams<EscrowThales>) {
+    return contract.totalAccountEscrowedAmount(address);
   }
 }
