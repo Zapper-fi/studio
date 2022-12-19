@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.336.0](https://github.com/Zapper-fi/studio/compare/v0.335.0...v0.336.0) (2022-12-19)
+
+
+### Features
+
+* **app-token:** Support string token ID ([#1953](https://github.com/Zapper-fi/studio/issues/1953)) ([3d2ad5a](https://github.com/Zapper-fi/studio/commit/3d2ad5a987f64935fbbc1ee53adaa5766aff02cf))
+
 ## [0.335.0](https://github.com/Zapper-fi/studio/compare/v0.334.1...v0.335.0) (2022-12-19)
 
 
