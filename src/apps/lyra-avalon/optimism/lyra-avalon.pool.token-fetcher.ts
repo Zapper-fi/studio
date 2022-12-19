@@ -74,7 +74,7 @@ export class OptimismLyraAvalonPoolTokenFetcher extends AppTokenTemplatePosition
     });
 
     const marketsResponse = await this.appToolkit.helpers.theGraphHelper.requestGraph<QueryResponse>({
-      endpoint: 'https://subgraph.satsuma-prod.com/lyra/optimism-mainnet/api',
+      endpoint: 'https://api.lyra.finance/subgraph/optimism/v1/api',
       query: QUERY,
     });
 
