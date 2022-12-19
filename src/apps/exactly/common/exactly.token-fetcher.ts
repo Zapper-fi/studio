@@ -52,8 +52,8 @@ export abstract class ExactlyTokenFetcher<
     return definitions.map(({ address }) => address);
   }
 
-  getUnderlyingTokenAddresses({ definition }: GetUnderlyingTokensParams<Market, ExactlyMarketDefinition>) {
-    return Promise.resolve([definition.asset]);
+  getUnderlyingTokenDefinitions({ definition }: GetUnderlyingTokensParams<Market, ExactlyMarketDefinition>) {
+    return Promise.resolve([{ address: definition.asset, network: this.network }]);
   }
 
   getSymbol({ definition }: GetTokenPropsParams<Market, V, ExactlyMarketDefinition>) {
