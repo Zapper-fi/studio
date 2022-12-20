@@ -35,8 +35,9 @@ export type ResolveVestingBalanceParams<T extends Contract> = {
 export abstract class OlympusBondContractPositionFetcher<
   T extends Contract,
   V extends DefaultDataProps = DefaultDataProps,
-> extends ContractPositionTemplatePositionFetcher<T, V, OlympusBondContractPositionDefinition> {
-  abstract resolveBondDefinitions(params: GetDefinitionsParams): Promise<OlympusBondContractPositionDefinition[]>;
+  R extends OlympusBondContractPositionDefinition = OlympusBondContractPositionDefinition,
+> extends ContractPositionTemplatePositionFetcher<T, V, R> {
+  abstract resolveBondDefinitions(params: GetDefinitionsParams): Promise<R[]>;
   abstract resolveVestingBalance(params: ResolveVestingBalanceParams<T>): Promise<BigNumberish>;
   abstract resolveClaimableBalance(params: ResolveClaimableBalanceParams<T>): Promise<BigNumberish>;
 
@@ -44,11 +45,11 @@ export abstract class OlympusBondContractPositionFetcher<
     super(appToolkit);
   }
 
-  async getDefinitions(params: GetDefinitionsParams): Promise<OlympusBondContractPositionDefinition[]> {
+  async getDefinitions(params: GetDefinitionsParams): Promise<R[]> {
     return this.resolveBondDefinitions(params);
   }
 
-  async getTokenDefinitions({ definition }: GetTokenDefinitionsParams<T, OlympusBondContractPositionDefinition>) {
+  async getTokenDefinitions({ definition }: GetTokenDefinitionsParams<T, R>) {
     return [
       { metaType: MetaType.VESTING, address: definition.mintedTokenAddress, network: this.network },
       { metaType: MetaType.CLAIMABLE, address: definition.mintedTokenAddress, network: this.network },
