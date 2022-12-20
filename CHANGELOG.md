@@ -4,6 +4,21 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.337.0](https://github.com/Zapper-fi/studio/compare/v0.336.0...v0.337.0) (2022-12-20)
+
+
+### Features
+
+* **olympus:** Update bond template to support async definitions and custom data props ([#1956](https://github.com/Zapper-fi/studio/issues/1956)) ([0b013ad](https://github.com/Zapper-fi/studio/commit/0b013adc8cc0aecf3effb48fbc8a923a43f090cc))
+
+
+### Bug Fixes
+
+* **bluebit:** Migration to template ([#1943](https://github.com/Zapper-fi/studio/issues/1943)) ([dbc5423](https://github.com/Zapper-fi/studio/commit/dbc5423806313fdeddf4f79d88ac8a111cb6b06f))
+* **hakuswap:** Migrate to template ([#1944](https://github.com/Zapper-fi/studio/issues/1944)) ([d8304fc](https://github.com/Zapper-fi/studio/commit/d8304fc8414afc9b137caa2c06e97ca79ada1142))
+* **helio:** Migration to template ([#1950](https://github.com/Zapper-fi/studio/issues/1950)) ([65f9757](https://github.com/Zapper-fi/studio/commit/65f9757f31fdb450463f3562bbe3780fdbbeccb4))
+* **thales:** Migration to template ([#1952](https://github.com/Zapper-fi/studio/issues/1952)) ([aa5bc72](https://github.com/Zapper-fi/studio/commit/aa5bc72a4f53a7159e0fd13ec2ac39e7ebd51aa0))
+
 ## [0.336.0](https://github.com/Zapper-fi/studio/compare/v0.335.0...v0.336.0) (2022-12-19)
 
 
