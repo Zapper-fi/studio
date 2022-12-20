@@ -33,6 +33,10 @@ export class EthereumOlympusBondContractPositionFetcher extends OlympusBondContr
     return this.contractFactory.olympusV2BondDepository({ address, network: this.network });
   }
 
+  async resolveBondDefinitions() {
+    return this.bondDefinitions;
+  }
+
   async resolveVestingBalance({ address, contract, multicall }: ResolveVestingBalanceParams<OlympusV2BondDepository>) {
     const indexes = await multicall.wrap(contract).indexesFor(address);
     const pendingBonds = await Promise.all(indexes.map(index => multicall.wrap(contract).pendingFor(address, index)));

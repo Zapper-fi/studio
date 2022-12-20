@@ -33,6 +33,10 @@ export class EthereumJpegdBondContractPositionFetcher extends OlympusBondContrac
     return this.contractFactory.jpegdBondDepository({ address, network: this.network });
   }
 
+  async resolveBondDefinitions() {
+    return this.bondDefinitions;
+  }
+
   async resolveVestingBalance({
     address,
     contract,
