@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.338.0](https://github.com/Zapper-fi/studio/compare/v0.337.0...v0.338.0) (2022-12-20)
+
+
+### Features
+
+* **olympus:** Allow extending olympus definition too ([#1957](https://github.com/Zapper-fi/studio/issues/1957)) ([a31420b](https://github.com/Zapper-fi/studio/commit/a31420ba6e817516f157dc9e52b6d4a673c39396))
+
 ## [0.337.0](https://github.com/Zapper-fi/studio/compare/v0.336.0...v0.337.0) (2022-12-20)
 
 
