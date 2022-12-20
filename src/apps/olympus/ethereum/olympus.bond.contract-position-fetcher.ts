@@ -3,12 +3,9 @@ import { BigNumber } from 'ethers';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
+import { GetTokenBalancesParams } from '~position/template/contract-position.template.types';
 
-import {
-  OlympusBondContractPositionFetcher,
-  ResolveClaimableBalanceParams,
-  ResolveVestingBalanceParams,
-} from '../common/olympus.bond.contract-position-fetcher';
+import { OlympusBondContractPositionFetcher } from '../common/olympus.bond.contract-position-fetcher';
 import { OlympusContractFactory, OlympusV2BondDepository } from '../contracts';
 
 @PositionTemplate()
@@ -37,7 +34,7 @@ export class EthereumOlympusBondContractPositionFetcher extends OlympusBondContr
     return this.bondDefinitions;
   }
 
-  async resolveVestingBalance({ address, contract, multicall }: ResolveVestingBalanceParams<OlympusV2BondDepository>) {
+  async resolveVestingBalance({ address, contract, multicall }: GetTokenBalancesParams<OlympusV2BondDepository>) {
     const indexes = await multicall.wrap(contract).indexesFor(address);
     const pendingBonds = await Promise.all(indexes.map(index => multicall.wrap(contract).pendingFor(address, index)));
     const vestingBonds = pendingBonds.filter(p => !p.matured_);
@@ -45,11 +42,7 @@ export class EthereumOlympusBondContractPositionFetcher extends OlympusBondContr
     return vestingAmount;
   }
 
-  async resolveClaimableBalance({
-    address,
-    contract,
-    multicall,
-  }: ResolveClaimableBalanceParams<OlympusV2BondDepository>) {
+  async resolveClaimableBalance({ address, contract, multicall }: GetTokenBalancesParams<OlympusV2BondDepository>) {
     const indexes = await multicall.wrap(contract).indexesFor(address);
     const pendingBonds = await Promise.all(indexes.map(index => multicall.wrap(contract).pendingFor(address, index)));
     const claimableBonds = pendingBonds.filter(p => p.matured_);
