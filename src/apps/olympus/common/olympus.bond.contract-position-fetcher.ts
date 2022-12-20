@@ -11,6 +11,7 @@ import {
   GetTokenDefinitionsParams,
   GetDisplayPropsParams,
   GetTokenBalancesParams,
+  GetDefinitionsParams,
 } from '~position/template/contract-position.template.types';
 
 export type OlympusBondContractPositionDefinition = {
@@ -33,9 +34,9 @@ export type ResolveVestingBalanceParams<T extends Contract> = {
 
 export abstract class OlympusBondContractPositionFetcher<
   T extends Contract,
-> extends ContractPositionTemplatePositionFetcher<T, DefaultDataProps, OlympusBondContractPositionDefinition> {
-  abstract bondDefinitions: OlympusBondContractPositionDefinition[];
-
+  V extends DefaultDataProps = DefaultDataProps,
+> extends ContractPositionTemplatePositionFetcher<T, V, OlympusBondContractPositionDefinition> {
+  abstract resolveBondDefinitions(params: GetDefinitionsParams): Promise<OlympusBondContractPositionDefinition[]>;
   abstract resolveVestingBalance(params: ResolveVestingBalanceParams<T>): Promise<BigNumberish>;
   abstract resolveClaimableBalance(params: ResolveClaimableBalanceParams<T>): Promise<BigNumberish>;
 
@@ -43,8 +44,8 @@ export abstract class OlympusBondContractPositionFetcher<
     super(appToolkit);
   }
 
-  async getDefinitions(): Promise<OlympusBondContractPositionDefinition[]> {
-    return this.bondDefinitions;
+  async getDefinitions(params: GetDefinitionsParams): Promise<OlympusBondContractPositionDefinition[]> {
+    return this.resolveBondDefinitions(params);
   }
 
   async getTokenDefinitions({ definition }: GetTokenDefinitionsParams<T, OlympusBondContractPositionDefinition>) {
@@ -63,7 +64,7 @@ export abstract class OlympusBondContractPositionFetcher<
     address,
     contract,
     multicall,
-  }: GetTokenBalancesParams<T, DefaultDataProps>): Promise<BigNumberish[]> {
+  }: GetTokenBalancesParams<T, V>): Promise<BigNumberish[]> {
     const vestingAmountRaw = await this.resolveVestingBalance({ address, contract, multicall });
     const claimableAmountRaw = await this.resolveClaimableBalance({ address, contract, multicall });
     return [vestingAmountRaw, claimableAmountRaw, 0];

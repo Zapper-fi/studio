@@ -58,6 +58,10 @@ export class PolygonKlimaBondContractPositionFetcher extends OlympusBondContract
     return this.contractFactory.klimaBondDepository({ address, network: this.network });
   }
 
+  async resolveBondDefinitions() {
+    return this.bondDefinitions;
+  }
+
   async resolveVestingBalance({
     address,
     contract,
