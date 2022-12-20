@@ -3,11 +3,8 @@ import { BigNumberish } from 'ethers';
 
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
-import {
-  OlympusBondContractPositionFetcher,
-  ResolveClaimableBalanceParams,
-  ResolveVestingBalanceParams,
-} from '~apps/olympus/common/olympus.bond.contract-position-fetcher';
+import { OlympusBondContractPositionFetcher } from '~apps/olympus/common/olympus.bond.contract-position-fetcher';
+import { GetTokenBalancesParams } from '~position/template/contract-position.template.types';
 
 import { KlimaBondDepository, KlimaContractFactory } from '../contracts';
 
@@ -58,10 +55,14 @@ export class PolygonKlimaBondContractPositionFetcher extends OlympusBondContract
     return this.contractFactory.klimaBondDepository({ address, network: this.network });
   }
 
+  async resolveBondDefinitions() {
+    return this.bondDefinitions;
+  }
+
   async resolveVestingBalance({
     address,
     contract,
-  }: ResolveVestingBalanceParams<KlimaBondDepository>): Promise<BigNumberish> {
+  }: GetTokenBalancesParams<KlimaBondDepository>): Promise<BigNumberish> {
     const [bondInfo, pendingPayout] = await Promise.all([
       contract.bondInfo(address),
       contract.pendingPayoutFor(address),
@@ -74,7 +75,7 @@ export class PolygonKlimaBondContractPositionFetcher extends OlympusBondContract
   async resolveClaimableBalance({
     address,
     contract,
-  }: ResolveClaimableBalanceParams<KlimaBondDepository>): Promise<BigNumberish> {
+  }: GetTokenBalancesParams<KlimaBondDepository>): Promise<BigNumberish> {
     return contract.pendingPayoutFor(address);
   }
 }

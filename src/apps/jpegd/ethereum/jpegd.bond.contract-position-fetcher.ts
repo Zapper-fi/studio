@@ -1,13 +1,9 @@
 import { Inject } from '@nestjs/common';
-import { BigNumberish } from 'ethers';
 
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
-import {
-  OlympusBondContractPositionFetcher,
-  ResolveClaimableBalanceParams,
-  ResolveVestingBalanceParams,
-} from '~apps/olympus/common/olympus.bond.contract-position-fetcher';
+import { OlympusBondContractPositionFetcher } from '~apps/olympus/common/olympus.bond.contract-position-fetcher';
+import { GetTokenBalancesParams } from '~position/template/contract-position.template.types';
 
 import { JpegdBondDepository, JpegdContractFactory } from '../contracts';
 
@@ -33,10 +29,11 @@ export class EthereumJpegdBondContractPositionFetcher extends OlympusBondContrac
     return this.contractFactory.jpegdBondDepository({ address, network: this.network });
   }
 
-  async resolveVestingBalance({
-    address,
-    contract,
-  }: ResolveVestingBalanceParams<JpegdBondDepository>): Promise<BigNumberish> {
+  async resolveBondDefinitions() {
+    return this.bondDefinitions;
+  }
+
+  async resolveVestingBalance({ address, contract }: GetTokenBalancesParams<JpegdBondDepository>) {
     const [bondInfo, pendingPayout] = await Promise.all([
       contract.bondInfo(address),
       contract.pendingPayoutFor(address),
@@ -46,10 +43,7 @@ export class EthereumJpegdBondContractPositionFetcher extends OlympusBondContrac
     return vestingBalanceRaw;
   }
 
-  resolveClaimableBalance({
-    address,
-    contract,
-  }: ResolveClaimableBalanceParams<JpegdBondDepository>): Promise<BigNumberish> {
+  resolveClaimableBalance({ address, contract }: GetTokenBalancesParams<JpegdBondDepository>) {
     return contract.pendingPayoutFor(address);
   }
 }
