@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.339.0](https://github.com/Zapper-fi/studio/compare/v0.338.0...v0.339.0) (2022-12-20)
+
+
+### Features
+
+* **olympus:** Make position available for balance methods ([#1959](https://github.com/Zapper-fi/studio/issues/1959)) ([acd3c73](https://github.com/Zapper-fi/studio/commit/acd3c73d6ff29515624ed0b788725819f560e045))
+
 ## [0.338.0](https://github.com/Zapper-fi/studio/compare/v0.337.0...v0.338.0) (2022-12-20)
 
 
