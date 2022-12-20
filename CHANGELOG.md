@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.340.0](https://github.com/Zapper-fi/studio/compare/v0.339.0...v0.340.0) (2022-12-20)
+
+
+### Features
+
+* **nftx:** Fix images ([#1963](https://github.com/Zapper-fi/studio/issues/1963)) ([2b23bb9](https://github.com/Zapper-fi/studio/commit/2b23bb9e3d8f92c3e1535d5c79d84a36c3a6b3e4))
+
 ## [0.339.0](https://github.com/Zapper-fi/studio/compare/v0.338.0...v0.339.0) (2022-12-20)
 
 
