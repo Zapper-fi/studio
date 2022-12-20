@@ -18,6 +18,7 @@ import {
   GetDataPropsParams,
   GetDisplayPropsParams,
   GetTokenBalancesParams,
+  GetDefinitionsParams,
 } from '~position/template/contract-position.template.types';
 
 export type MasterChefContractPositionDataProps = {
@@ -73,7 +74,7 @@ export abstract class MasterChefTemplateContractPositionFetcher<
   abstract getStakedTokenBalance(params: GetMasterChefTokenBalancesParams<T>): Promise<BigNumberish>;
   abstract getRewardTokenBalance(params: GetMasterChefTokenBalancesParams<T>): Promise<BigNumberish | BigNumberish[]>;
 
-  async getDefinitions() {
+  async getDefinitions(_params: GetDefinitionsParams): Promise<MasterChefContractPositionDefinition[]> {
     const contract = this.getContract(this.chefAddress);
     const poolLength = await this.getPoolLength(contract);
     return range(0, Number(poolLength)).map(poolIndex => ({ address: this.chefAddress, poolIndex }));

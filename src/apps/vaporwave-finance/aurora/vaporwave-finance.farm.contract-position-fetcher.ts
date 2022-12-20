@@ -1,73 +1,90 @@
 import { Inject } from '@nestjs/common';
-import _ from 'lodash';
 
-import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
-import { Register } from '~app-toolkit/decorators';
-import { getImagesFromToken, getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
-import { TRISOLARIS_DEFINITION } from '~apps/trisolaris/trisolaris.definition';
-import { ContractType } from '~position/contract.interface';
-import { PositionFetcher } from '~position/position-fetcher.interface';
-import { ContractPosition } from '~position/position.interface';
-import { claimable, supplied } from '~position/position.utils';
-import { Network } from '~types/network.interface';
+import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
+import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
+import { DefaultDataProps } from '~position/display.interface';
+import { MetaType } from '~position/position.interface';
+import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
+import {
+  GetDisplayPropsParams,
+  GetTokenBalancesParams,
+  GetTokenDefinitionsParams,
+  UnderlyingTokenDefinition,
+} from '~position/template/contract-position.template.types';
 
-import { VAPORWAVE_FINANCE_DEFINITION } from '../vaporwave-finance.definition';
+import { VaporwaveFinanceContractFactory, VaporwaveLaunchpool } from '../contracts';
 
-import auroraStakePools from './vaporwave-finance.stake.config';
+const FARMS = [
+  {
+    address: '0x586009baa80010833637f4c371bca2496ea70225',
+    underlyingTokenAddress: '0x2451db68ded81900c4f16ae1af597e9658689734',
+    rewardTokenAddress: '0xc9bdeed33cd01541e1eed10f90519d2c06fe3feb',
+  },
+  {
+    address: '0x1a753380e261f0eaffd7282ec978d90b4d3ce31e',
+    underlyingTokenAddress: '0xfd3fda44cd7f1ea9e9856b56d21f64fc1a417b8e',
+    rewardTokenAddress: '0x2451db68ded81900c4f16ae1af597e9658689734',
+  },
+];
 
-const appId = VAPORWAVE_FINANCE_DEFINITION.id;
-const groupId = VAPORWAVE_FINANCE_DEFINITION.groups.farm.id;
-const network = Network.AURORA_MAINNET;
+export type VaporwaveFinanceVaultDefinition = {
+  address: string;
+  underlyingTokenAddress: string;
+  rewardTokenAddress: string;
+};
 
-@Register.ContractPositionFetcher({ appId, groupId, network })
-export class AuroraVaporwaveFinanceFarmContractPositionFetcher implements PositionFetcher<ContractPosition> {
-  constructor(@Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit) {}
+@PositionTemplate()
+export class AuroraVaporwaveFinanceFarmContractPositionFetcher extends ContractPositionTemplatePositionFetcher<
+  VaporwaveLaunchpool,
+  DefaultDataProps,
+  VaporwaveFinanceVaultDefinition
+> {
+  groupLabel = 'Farms';
 
-  async getPositions() {
-    const multicall = this.appToolkit.getMulticall(network);
-    const baseTokens = await this.appToolkit.getBaseTokenPrices(network);
-    const appTokens = await this.appToolkit.getAppTokenPositions({
-      appId: TRISOLARIS_DEFINITION.id,
-      groupIds: [TRISOLARIS_DEFINITION.groups.pool.id],
-      network,
-    });
+  constructor(
+    @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
+    @Inject(VaporwaveFinanceContractFactory) protected readonly contractFactory: VaporwaveFinanceContractFactory,
+  ) {
+    super(appToolkit);
+  }
 
-    const allTokens = [...appTokens, ...baseTokens];
-    const positions = await Promise.all(
-      auroraStakePools.map(async ({ earnContractAddress, earnedTokenAddress, tokenAddress, token, earnedOracleId }) => {
-        const stakedToken = allTokens.find(v => v.address === tokenAddress || v.symbol === token);
-        const earnedToken = allTokens.find(v => v.address === earnedTokenAddress || v.symbol === earnedOracleId);
-        if (!stakedToken || !earnedToken) return null;
+  getContract(address: string): VaporwaveLaunchpool {
+    return this.contractFactory.vaporwaveLaunchpool({ address, network: this.network });
+  }
 
-        const tokens = [supplied(stakedToken), claimable(earnedToken)];
-        const stakedTokenContract = this.appToolkit.globalContracts.erc20({ address: tokenAddress, network });
-        const [balanceRaw] = await Promise.all([multicall.wrap(stakedTokenContract).balanceOf(earnContractAddress)]);
-        const liquidity = Number(balanceRaw) / 10 ** stakedToken.decimals;
+  async getDefinitions(): Promise<VaporwaveFinanceVaultDefinition[]> {
+    return FARMS;
+  }
 
-        const label = getLabelFromToken(stakedToken);
-        const images = getImagesFromToken(stakedToken);
+  async getTokenDefinitions({
+    definition,
+  }: GetTokenDefinitionsParams<VaporwaveLaunchpool, VaporwaveFinanceVaultDefinition>): Promise<
+    UnderlyingTokenDefinition[]
+  > {
+    return [
+      {
+        metaType: MetaType.SUPPLIED,
+        address: definition.underlyingTokenAddress,
+        network: this.network,
+      },
+      {
+        metaType: MetaType.CLAIMABLE,
+        address: definition.rewardTokenAddress,
+        network: this.network,
+      },
+    ];
+  }
 
-        // Create the contract position object
-        const position: ContractPosition = {
-          type: ContractType.POSITION,
-          appId,
-          groupId,
-          address: earnContractAddress,
-          network,
-          tokens,
-          dataProps: {
-            liquidity,
-          },
-          displayProps: {
-            label,
-            images,
-          },
-        };
+  async getLabel({ contractPosition }: GetDisplayPropsParams<VaporwaveLaunchpool>) {
+    return getLabelFromToken(contractPosition.tokens[0]);
+  }
 
-        return position;
-      }),
-    );
-
-    return _.compact(positions);
+  async getTokenBalancesPerPosition({ address, contract }: GetTokenBalancesParams<VaporwaveLaunchpool>) {
+    const [stakedBalanceRaw, rewardBalanceRaw] = await Promise.all([
+      contract.balanceOf(address),
+      contract.earned(address),
+    ]);
+    return [stakedBalanceRaw, rewardBalanceRaw];
   }
 }

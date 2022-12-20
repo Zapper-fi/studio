@@ -31,8 +31,8 @@ export class EthereumOlympusGOhmTokenFetcher extends AppTokenTemplatePositionFet
     return ['0x0ab87046fbb341d058f17cbc4c1133f25a20a52f'];
   }
 
-  async getUnderlyingTokenAddresses({ contract }: GetUnderlyingTokensParams<OlympusGOhmToken>) {
-    return [await contract.sOHM()];
+  async getUnderlyingTokenDefinitions({ contract }: GetUnderlyingTokensParams<OlympusGOhmToken>) {
+    return [{ address: await contract.sOHM(), network: this.network }];
   }
 
   async getPricePerShare({ contract, appToken }: GetPricePerShareParams<OlympusGOhmToken>) {

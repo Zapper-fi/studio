@@ -33,8 +33,8 @@ export class EthereumPodsYieldStrategyTokenFetcher extends AppTokenTemplatePosit
     return strategyAddresses;
   }
 
-  async getUnderlyingTokenAddresses({ contract }: GetUnderlyingTokensParams<PodsYieldVault>) {
-    return contract.asset();
+  async getUnderlyingTokenDefinitions({ contract }: GetUnderlyingTokensParams<PodsYieldVault>) {
+    return [{ address: await contract.asset(), network: this.network }];
   }
 
   async getPricePerShare({ contract, appToken }: GetPricePerShareParams<PodsYieldVault>) {

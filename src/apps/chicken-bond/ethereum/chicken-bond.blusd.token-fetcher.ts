@@ -27,8 +27,8 @@ export class EthereumChickenBondBlusdTokenFetcher extends AppTokenTemplatePositi
     return ['0xb9d7dddca9a4ac480991865efef82e01273f79c3'];
   }
 
-  async getUnderlyingTokenAddresses() {
-    return ['0x5f98805a4e8be255a32880fdec7f6728c6568ba0'];
+  async getUnderlyingTokenDefinitions() {
+    return [{ address: '0x5f98805a4e8be255a32880fdec7f6728c6568ba0', network: this.network }];
   }
 
   async getPrice({ multicall }: GetPriceParams<ChickenBondBlusd>): Promise<number> {

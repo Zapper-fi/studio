@@ -110,7 +110,7 @@ export abstract class BalancerV2PoolTokenFetcher extends AppTokenTemplatePositio
     return contract.totalSupply();
   }
 
-  async getUnderlyingTokenAddresses({ address, contract, multicall }: GetUnderlyingTokensParams<BalancerPool>) {
+  async getUnderlyingTokenDefinitions({ address, contract, multicall }: GetUnderlyingTokensParams<BalancerPool>) {
     const _vault = this.contractFactory.balancerVault({ address: this.vaultAddress, network: this.network });
     const vault = multicall.wrap(_vault);
 
@@ -121,7 +121,7 @@ export abstract class BalancerV2PoolTokenFetcher extends AppTokenTemplatePositio
     const underlyingTokenAddresses = poolTokens.tokens.map(v => v.toLowerCase());
     const redundantIndex = underlyingTokenAddresses.findIndex(v => v === address);
     const tokenAddresses = underlyingTokenAddresses.filter((_, i) => i !== redundantIndex);
-    return tokenAddresses;
+    return tokenAddresses.map(address => ({ address, network: this.network }));
   }
 
   async getPricePerShare({ appToken, contract, multicall }: GetPricePerShareParams<BalancerPool>) {

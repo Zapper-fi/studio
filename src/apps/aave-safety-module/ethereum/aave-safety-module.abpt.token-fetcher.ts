@@ -46,8 +46,11 @@ export class EthereumAaveSafetyModuleAbptTokenFetcher extends AppTokenTemplatePo
     return ['0x41a08648c3766f9f9d85598ff102a08f4ef84f84'];
   }
 
-  async getUnderlyingTokenAddresses(_params: GetUnderlyingTokensParams<AaveAbpt>): Promise<string | string[]> {
-    return [this.aaveAddress, this.wethAddress];
+  async getUnderlyingTokenDefinitions(_params: GetUnderlyingTokensParams<AaveAbpt>) {
+    return [
+      { address: this.aaveAddress, network: this.network },
+      { address: this.wethAddress, network: this.network },
+    ];
   }
 
   async getPricePerShare({

@@ -33,13 +33,12 @@ export abstract class PickleJarTokenFetcher extends AppTokenTemplatePositionFetc
     return vaults.map(v => v.vaultAddress);
   }
 
-  async getUnderlyingTokenAddresses({ contract }: GetUnderlyingTokensParams<PickleJar>) {
+  async getUnderlyingTokenDefinitions({ contract }: GetUnderlyingTokensParams<PickleJar>) {
     // If jar doesn't have the pool property, it's a "legacy" deposit token (e.g. UniV2 LP)
     try {
-      const pool = await contract.pool();
-      return pool;
+      return [{ address: await contract.pool(), network: this.network }];
     } catch {
-      return contract.token();
+      return [{ address: await contract.token(), network: this.network }];
     }
   }
 

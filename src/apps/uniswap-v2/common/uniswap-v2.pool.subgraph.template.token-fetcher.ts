@@ -1,6 +1,6 @@
 import DataLoader from 'dataloader';
 import { BigNumberish, Contract } from 'ethers';
-import { range, uniq } from 'lodash';
+import { difference, range, uniq } from 'lodash';
 
 import { BLOCKS_PER_DAY } from '~app-toolkit/constants/blocks';
 import { GetDataPropsParams } from '~position/template/app-token.template.types';
@@ -35,6 +35,7 @@ export abstract class UniswapV2PoolSubgraphTemplateTokenFetcher<
   poolsQuery = DEFAULT_POOLS_QUERY;
   poolsByIdQuery = DEFAULT_POOLS_BY_ID_QUERY;
   requiredPools: string[] = [];
+  ignoredPools: string[] = [];
 
   // Volume
   skipVolume = false;
@@ -69,8 +70,10 @@ export abstract class UniswapV2PoolSubgraphTemplateTokenFetcher<
     const poolsById = poolsByIdData.pairs ?? [];
 
     const poolIds = [...pools, ...poolsById].map(v => v.id.toLowerCase());
-    const uniquepoolIds = uniq(poolIds);
-    return uniquepoolIds;
+    const uniquePoolIds = uniq(poolIds);
+    const filteredPoolIds = difference(uniquePoolIds, this.ignoredPools);
+
+    return filteredPoolIds;
   }
 
   getPoolFactoryContract(_address: string) {
@@ -125,7 +128,7 @@ export abstract class UniswapV2PoolSubgraphTemplateTokenFetcher<
       blockNumberLastSynced = graphMetaData._meta.block.number;
     }
 
-    if (block1DayAgo > blockNumberLastSynced) return [];
+    if (block1DayAgo > blockNumberLastSynced) return addresses.map(() => 0);
 
     // Retrieve volume data from TheGraph (@TODO Cache this)
     const [volumeByIDData, volumeByIDData1DayAgo] = await Promise.all([

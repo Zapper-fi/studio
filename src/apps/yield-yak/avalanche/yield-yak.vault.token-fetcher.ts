@@ -48,8 +48,8 @@ export class AvalancheYieldyakVaultTokenFetcher extends AppTokenTemplatePosition
     return farms.map(farm => farm.address.toLowerCase());
   }
 
-  async getUnderlyingTokenAddresses({ contract }: GetUnderlyingTokensParams<YieldYakVault>) {
-    return contract.depositToken().then(addr => addr.toLowerCase());
+  async getUnderlyingTokenDefinitions({ contract }: GetUnderlyingTokensParams<YieldYakVault>) {
+    return [{ address: await contract.depositToken(), network: this.network }];
   }
 
   async getLabel({ appToken }: GetDisplayPropsParams<YieldYakVault>): Promise<string> {

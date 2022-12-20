@@ -58,16 +58,19 @@ export class AuroraBastionProtocolPoolTokenFetcher extends AppTokenTemplatePosit
     return definitions.map(v => v.address);
   }
 
-  async getUnderlyingTokenAddresses({
+  async getUnderlyingTokenDefinitions({
     definition,
     multicall,
-  }: GetUnderlyingTokensParams<Erc20, BastionProtocolPoolTokenDefinition>): Promise<string | string[]> {
+  }: GetUnderlyingTokensParams<Erc20, BastionProtocolPoolTokenDefinition>) {
     const swapContract = this.contractFactory.bastionProtocolSwap({
       address: definition.swapAddress,
       network: this.network,
     });
 
-    return Promise.all([multicall.wrap(swapContract).getToken(0), multicall.wrap(swapContract).getToken(1)]);
+    return [
+      { address: await multicall.wrap(swapContract).getToken(0), network: this.network },
+      { address: await multicall.wrap(swapContract).getToken(1), network: this.network },
+    ];
   }
 
   async getPricePerShare({

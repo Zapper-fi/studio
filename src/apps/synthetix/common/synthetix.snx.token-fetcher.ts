@@ -30,7 +30,7 @@ export abstract class SynthetixSnxTokenFetcher extends AppTokenTemplatePositionF
     return [this.snxAddress];
   }
 
-  async getUnderlyingTokenAddresses() {
+  async getUnderlyingTokenDefinitions() {
     return [];
   }
 

@@ -42,8 +42,8 @@ export abstract class ImpermaxLendTokenFetcher extends AppTokenTemplatePositionF
     return _.flatten(collateralAddresses);
   }
 
-  async getUnderlyingTokenAddresses({ contract }: GetUnderlyingTokensParams<Borrowable>) {
-    return contract.underlying();
+  async getUnderlyingTokenDefinitions({ contract }: GetUnderlyingTokensParams<Borrowable>) {
+    return [{ address: await contract.underlying(), network: this.network }];
   }
 
   async getPricePerShare({ contract, appToken }: GetPricePerShareParams<Borrowable>) {

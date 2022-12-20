@@ -59,8 +59,11 @@ export class PolygonDystopiaPairsTokenFetcher extends AppTokenTemplatePositionFe
     return data.pairs.map(v => v.id);
   }
 
-  async getUnderlyingTokenAddresses({ contract }: GetUnderlyingTokensParams<DystopiaPair>) {
-    return Promise.all([contract.token0(), contract.token1()]);
+  async getUnderlyingTokenDefinitions({ contract }: GetUnderlyingTokensParams<DystopiaPair>) {
+    return [
+      { address: await contract.token0(), network: this.network },
+      { address: await contract.token1(), network: this.network },
+    ];
   }
 
   async getPricePerShare({ appToken, contract }: GetPricePerShareParams<DystopiaPair, DefaultDataProps>) {

@@ -70,10 +70,10 @@ export abstract class BarnbridgeSmartAlphaJuniorPoolTokenFetcher extends AppToke
     return definitions.map(x => x.address);
   }
 
-  async getUnderlyingTokenAddresses({
+  async getUnderlyingTokenDefinitions({
     definition,
   }: GetUnderlyingTokensParams<BarnbridgeSmartAlphaToken, BarnbridgeSmartAlphaJuniorPoolTokenDefinition>) {
-    return [definition.underlyingTokenAddress];
+    return [{ address: definition.underlyingTokenAddress, network: this.network }];
   }
 
   async getPricePerShare({

@@ -36,8 +36,8 @@ export class EthereumBendDaoVariableDebtTokenFetcher extends AppTokenTemplatePos
     return [this.debtTokenAddress];
   }
 
-  async getUnderlyingTokenAddresses({ contract }: GetUnderlyingTokensParams<BendDaoDebtToken>) {
-    return contract.UNDERLYING_ASSET_ADDRESS();
+  async getUnderlyingTokenDefinitions({ contract }: GetUnderlyingTokensParams<BendDaoDebtToken>) {
+    return [{ address: await contract.UNDERLYING_ASSET_ADDRESS(), network: this.network }];
   }
 
   async getLiquidity({ appToken }: GetDataPropsParams<BendDaoDebtToken>): Promise<number> {

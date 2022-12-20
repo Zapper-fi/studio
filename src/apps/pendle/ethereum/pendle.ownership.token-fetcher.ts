@@ -111,8 +111,8 @@ export class EthereumPendleOwnershipTokenFetcher extends AppTokenTemplatePositio
     return this.contractFactory.pendleOwnershipToken({ address, network: this.network });
   }
 
-  getUnderlyingTokenAddresses({ contract }: GetUnderlyingTokensParams<PendleOwnershipToken>) {
-    return contract.underlyingYieldToken();
+  async getUnderlyingTokenDefinitions({ contract }: GetUnderlyingTokensParams<PendleOwnershipToken>) {
+    return [{ address: await contract.underlyingYieldToken(), network: this.network }];
   }
 
   async getPricePerShare({

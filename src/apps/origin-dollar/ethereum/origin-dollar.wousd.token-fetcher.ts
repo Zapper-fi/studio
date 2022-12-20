@@ -37,8 +37,8 @@ export class EthereumOriginDollarWousdTokenFetcher extends AppTokenTemplatePosit
     return ['0xd2af830e8cbdfed6cc11bab697bb25496ed6fa62'];
   }
 
-  async getUnderlyingTokenAddresses({ contract }: GetUnderlyingTokensParams<Wousd>) {
-    return contract.asset();
+  async getUnderlyingTokenDefinitions({ contract }: GetUnderlyingTokensParams<Wousd>) {
+    return [{ address: await contract.asset(), network: this.network }];
   }
 
   async getPrice({ appToken, contract, multicall }: GetPriceParams<Wousd>): Promise<number> {

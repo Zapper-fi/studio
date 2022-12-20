@@ -2,6 +2,7 @@ import { Inject } from '@nestjs/common';
 import BigNumber from 'bignumber.js';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
+import { ZERO_ADDRESS } from '~app-toolkit/constants/address';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import {
@@ -33,8 +34,8 @@ export class EthereumAlphaV1LendingTokenFetcher extends AppTokenTemplatePosition
     return ['0x67b66c99d3eb37fa76aa3ed1ff33e8e39f0b9c7a'];
   }
 
-  async getUnderlyingTokenAddresses() {
-    return ['0x0000000000000000000000000000000000000000'];
+  async getUnderlyingTokenDefinitions() {
+    return [{ address: ZERO_ADDRESS, network: this.network }];
   }
 
   async getPrice({

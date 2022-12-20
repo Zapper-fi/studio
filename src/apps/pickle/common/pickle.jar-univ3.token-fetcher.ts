@@ -51,20 +51,20 @@ export abstract class PickleJarUniv3TokenFetcher extends AppTokenTemplatePositio
         const contract = multicall.wrap(this.getContract(address));
         const context = { address, definition, contract, multicall, tokenLoader };
 
-        const underlyingTokenAddress = await this.getUnderlyingTokenAddresses(context)
-          .then(v => v.toLowerCase())
+        const underlyingTokenDefinitions = await this.getUnderlyingTokenDefinitions(context)
+          .then(v => v.map(t => ({ address: t.address.toLowerCase(), network: t.network })))
           .catch(err => {
             if (isMulticallUnderlyingError(err)) return null;
             throw err;
           });
 
-        if (!underlyingTokenAddress) return null;
+        if (!underlyingTokenDefinitions) return null;
 
         const controllerAddr = await contract.controller();
         const controller = multicall.wrap(
           this.contractFactory.pickleController({ address: controllerAddr, network: this.network }),
         );
-        const strategyAddr = await controller.strategies(underlyingTokenAddress);
+        const strategyAddr = await controller.strategies(underlyingTokenDefinitions[0].address);
         const strategy = multicall.wrap(
           this.contractFactory.pickleStrategyUniv3({ address: strategyAddr, network: this.network }),
         );
@@ -78,7 +78,7 @@ export abstract class PickleJarUniv3TokenFetcher extends AppTokenTemplatePositio
           });
         if (!tokenId) return null;
 
-        return { address, definition, underlyingTokenAddress, tokenId };
+        return { address, definition, underlyingTokenDefinitions, tokenId };
       }),
     );
 
@@ -157,9 +157,8 @@ export abstract class PickleJarUniv3TokenFetcher extends AppTokenTemplatePositio
     return vaults.map(v => v.vaultAddress);
   }
 
-  async getUnderlyingTokenAddresses({ contract }: GetUnderlyingTokensParams<PickleJarUniv3>): Promise<string> {
-    const pool = await contract.pool();
-    return pool;
+  async getUnderlyingTokenDefinitions({ contract }: GetUnderlyingTokensParams<PickleJarUniv3>) {
+    return [{ address: await contract.pool(), network: this.network }];
   }
 
   async getPricePerShare({ contract }: GetPricePerShareParams<PickleJarUniv3, DefaultDataProps>): Promise<number> {

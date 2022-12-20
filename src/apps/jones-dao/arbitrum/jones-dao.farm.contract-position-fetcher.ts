@@ -1,59 +1,86 @@
 import { Inject } from '@nestjs/common';
-import { compact, range } from 'lodash';
+import _, { range } from 'lodash';
 
-import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
-import { Register } from '~app-toolkit/decorators';
-import { SynthetixSingleStakingIsActiveStrategy, SynthetixSingleStakingRoiStrategy } from '~apps/synthetix';
-import { PositionFetcher } from '~position/position-fetcher.interface';
-import { ContractPosition } from '~position/position.interface';
-import { Network } from '~types/network.interface';
+import { APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
+import { AppToolkit } from '~app-toolkit/app-toolkit.service';
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
+import { GetDataPropsParams, GetTokenBalancesParams } from '~position/template/contract-position.template.types';
+import {
+  SingleStakingFarmDataProps,
+  SingleStakingFarmDefinition,
+  SingleStakingFarmTemplateContractPositionFetcher,
+} from '~position/template/single-staking.template.contract-position-fetcher';
 
 import { JonesDaoContractFactory, JonesStakingRewards } from '../contracts';
-import { JONES_DAO_DEFINITION } from '../jones-dao.definition';
 
-const appId = JONES_DAO_DEFINITION.id;
-const groupId = JONES_DAO_DEFINITION.groups.farm.id;
-const network = Network.ARBITRUM_MAINNET;
+@PositionTemplate()
+export class ArbitrumJonesDaoFarmContractPositionFetcher extends SingleStakingFarmTemplateContractPositionFetcher<JonesStakingRewards> {
+  groupLabel = 'Farms';
 
-@Register.ContractPositionFetcher({ appId, groupId, network })
-export class ArbitrumJonesDaoFarmContractPositionFetcher implements PositionFetcher<ContractPosition> {
   constructor(
-    @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
-    @Inject(JonesDaoContractFactory)
-    private readonly jonesDaoContractFactory: JonesDaoContractFactory,
-    @Inject(SynthetixSingleStakingIsActiveStrategy)
-    private readonly synthetixSingleStakingIsActiveStrategy: SynthetixSingleStakingIsActiveStrategy,
-    @Inject(SynthetixSingleStakingRoiStrategy)
-    private readonly synthetixSingleStakingRoiStrategy: SynthetixSingleStakingRoiStrategy,
-  ) {}
+    @Inject(APP_TOOLKIT) protected readonly appToolkit: AppToolkit,
+    @Inject(JonesDaoContractFactory) protected readonly contractFactory: JonesDaoContractFactory,
+  ) {
+    super(appToolkit);
+  }
 
-  async getPositions() {
-    const multicall = this.appToolkit.getMulticall(network);
-    const factoryAddress = '0x2c2082e4062bfd02141adc86cbd5e437201a1cf3';
-    const factory = this.jonesDaoContractFactory.jonesStakingRewardsFactory({ address: factoryAddress, network });
-    const mcf = multicall.wrap(factory);
+  getContract(address: string): JonesStakingRewards {
+    return this.contractFactory.jonesStakingRewards({ address, network: this.network });
+  }
 
-    const maybeStakingIds = await Promise.all(range(0, 50).map(i => mcf.stakingID(i).catch(() => null)));
-    const stakingIds = compact(maybeStakingIds).map(v => Number(v));
-    const stakingInfo = await Promise.all(stakingIds.map(i => mcf.stakingRewardsInfoByStakingToken(i)));
-    const stakingAddresses = stakingInfo.map(v => v.stakingRewards);
-
-    return this.appToolkit.helpers.singleStakingFarmContractPositionHelper.getContractPositions<JonesStakingRewards>({
-      network,
-      appId,
-      groupId,
-      dependencies: [{ appId: 'sushiswap', groupIds: ['pool'], network }],
-      resolveFarmContract: ({ network, address }) =>
-        this.jonesDaoContractFactory.jonesStakingRewards({ network, address }),
-      resolveFarmAddresses: async () => stakingAddresses,
-      resolveStakedTokenAddress: async ({ multicall, contract }) => multicall.wrap(contract).stakingToken(),
-      resolveRewardTokenAddresses: async () => '0x10393c20975cf177a3513071bc110f7962cd67da',
-      resolveIsActive: this.synthetixSingleStakingIsActiveStrategy.build({
-        resolvePeriodFinish: ({ contract, multicall }) => multicall.wrap(contract).periodFinish(),
-      }),
-      resolveRois: this.synthetixSingleStakingRoiStrategy.build({
-        resolveRewardRates: ({ contract, multicall }) => multicall.wrap(contract).rewardRateJONES(),
-      }),
+  async getFarmDefinitions(): Promise<SingleStakingFarmDefinition[]> {
+    const multicall = this.appToolkit.getMulticall(this.network);
+    const factoryContract = this.contractFactory.jonesStakingRewardsFactory({
+      address: '0x2c2082e4062bfd02141adc86cbd5e437201a1cf3',
+      network: this.network,
     });
+    const maybeStakingIds = await Promise.all(
+      range(0, 50).map(
+        async i =>
+          await multicall
+            .wrap(factoryContract)
+            .stakingID(i)
+            .catch(() => null),
+      ),
+    );
+    const stakingIds = _.compact(maybeStakingIds).map(v => Number(v));
+    const stakingInfo = await Promise.all(
+      stakingIds.map(async i => await multicall.wrap(factoryContract).stakingRewardsInfoByStakingToken(i)),
+    );
+    const stakingAddresses = stakingInfo.map(v => v.stakingRewards.toLowerCase());
+
+    return Promise.all(
+      stakingAddresses.map(async address => {
+        const jonesStakingContract = this.contractFactory.jonesStakingRewards({
+          address,
+          network: this.network,
+        });
+        const stakedTokenAddress = await multicall.wrap(jonesStakingContract).stakingToken();
+
+        return {
+          address,
+          stakedTokenAddress: stakedTokenAddress.toLowerCase(),
+          rewardTokenAddresses: ['0x10393c20975cf177a3513071bc110f7962cd67da'],
+        };
+      }),
+    );
+  }
+
+  getRewardRates({ contract }: GetDataPropsParams<JonesStakingRewards, SingleStakingFarmDataProps>) {
+    return contract.rewardRateJONES();
+  }
+
+  getStakedTokenBalance({
+    address,
+    contract,
+  }: GetTokenBalancesParams<JonesStakingRewards, SingleStakingFarmDataProps>) {
+    return contract.balanceOf(address);
+  }
+
+  getRewardTokenBalances({
+    address,
+    contract,
+  }: GetTokenBalancesParams<JonesStakingRewards, SingleStakingFarmDataProps>) {
+    return contract.earned(address);
   }
 }

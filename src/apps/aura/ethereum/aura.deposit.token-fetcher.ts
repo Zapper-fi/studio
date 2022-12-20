@@ -19,6 +19,7 @@ import { AuraContractFactory, AuraDepositToken } from '../contracts';
 type AuraDepositTokenDefinition = {
   address: string;
   poolIndex: number;
+  booster: string;
 };
 
 @PositionTemplate()
@@ -29,7 +30,8 @@ export class EthereumAuraDepositTokenFetcher extends AppTokenTemplatePositionFet
 > {
   groupLabel = 'Deposits';
 
-  BOOSTER_ADDRESS = '0x7818a1da7bd1e64c199029e86ba244a9798eee10';
+  BOOSTER_V1_ADDRESS = '0x7818a1da7bd1e64c199029e86ba244a9798eee10';
+  BOOSTER_V2_ADDRESS = '0xa57b8d98dae62b26ec3bcc4a365338157060b234';
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
@@ -43,29 +45,40 @@ export class EthereumAuraDepositTokenFetcher extends AppTokenTemplatePositionFet
   }
 
   async getDefinitions({ multicall }: GetDefinitionsParams): Promise<AuraDepositTokenDefinition[]> {
-    const boosterContract = this.contractFactory.auraBooster({ address: this.BOOSTER_ADDRESS, network: this.network });
-    const numOfPools = await boosterContract.poolLength();
-
     const definitions = await Promise.all(
-      range(0, Number(numOfPools)).flatMap(async poolIndex => {
-        const poolInfo = await multicall.wrap(boosterContract).poolInfo(poolIndex);
-        return { address: poolInfo.token.toLowerCase(), poolIndex };
+      [this.BOOSTER_V1_ADDRESS, this.BOOSTER_V2_ADDRESS].map(async booster => {
+        const boosterContract = this.contractFactory.auraBooster({
+          address: booster,
+          network: this.network,
+        });
+        const numOfPools = await boosterContract.poolLength();
+
+        return Promise.all(
+          range(0, Number(numOfPools)).flatMap(async poolIndex => {
+            const poolInfo = await multicall.wrap(boosterContract).poolInfo(poolIndex);
+            return {
+              address: poolInfo.token.toLowerCase(),
+              poolIndex,
+              booster,
+            };
+          }),
+        );
       }),
     );
 
-    return definitions;
+    return definitions.flat();
   }
 
   async getAddresses({ definitions }: GetAddressesParams) {
     return definitions.map(v => v.address);
   }
 
-  async getUnderlyingTokenAddresses({
+  async getUnderlyingTokenDefinitions({
     definition,
   }: GetUnderlyingTokensParams<AuraDepositToken, AuraDepositTokenDefinition>) {
-    const boosterContract = this.contractFactory.auraBooster({ address: this.BOOSTER_ADDRESS, network: this.network });
+    const boosterContract = this.contractFactory.auraBooster({ address: definition.booster, network: this.network });
     const poolInfo = await boosterContract.poolInfo(definition.poolIndex);
-    return poolInfo.lptoken;
+    return [{ address: poolInfo.lptoken, network: this.network }];
   }
 
   async getLiquidity({ appToken }: GetDataPropsParams<AuraDepositToken>) {
@@ -82,5 +95,14 @@ export class EthereumAuraDepositTokenFetcher extends AppTokenTemplatePositionFet
 
   async getLabel({ appToken }: GetDisplayPropsParams<AuraDepositToken, DefaultAppTokenDataProps>) {
     return getLabelFromToken(appToken.tokens[0]!);
+  }
+
+  async getTertiaryLabel(
+    params: GetDisplayPropsParams<AuraDepositToken, DefaultAppTokenDataProps, AuraDepositTokenDefinition>,
+  ) {
+    if (params.definition.booster === this.BOOSTER_V1_ADDRESS) {
+      return `Needs migration`;
+    }
+    return super.getTertiaryLabel(params);
   }
 }
