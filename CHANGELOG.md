@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.341.2](https://github.com/Zapper-fi/studio/compare/v0.341.1...v0.341.2) (2022-12-21)
+
+
+### Bug Fixes
+
+* **sushiswap-bentobox:** Migrate to template ([#1968](https://github.com/Zapper-fi/studio/issues/1968)) ([b722434](https://github.com/Zapper-fi/studio/commit/b722434ec15b3bdc5e786edf4a343724817460fb))
+
 ## [0.341.1](https://github.com/Zapper-fi/studio/compare/v0.341.0...v0.341.1) (2022-12-21)
 
 
