@@ -4,7 +4,7 @@
 
 import { Contract, Signer, utils } from 'ethers';
 import type { Provider } from '@ethersproject/providers';
-import type { MvlpManager, MvlpManagerInterface } from '../MvlpManager';
+import type { MetavaultTradeMvlpManager, MetavaultTradeMvlpManagerInterface } from '../MetavaultTradeMvlpManager';
 
 const _abi = [
   {
@@ -591,12 +591,12 @@ const _abi = [
   },
 ];
 
-export class MvlpManager__factory {
+export class MetavaultTradeMvlpManager__factory {
   static readonly abi = _abi;
-  static createInterface(): MvlpManagerInterface {
-    return new utils.Interface(_abi) as MvlpManagerInterface;
+  static createInterface(): MetavaultTradeMvlpManagerInterface {
+    return new utils.Interface(_abi) as MetavaultTradeMvlpManagerInterface;
   }
-  static connect(address: string, signerOrProvider: Signer | Provider): MvlpManager {
-    return new Contract(address, _abi, signerOrProvider) as MvlpManager;
+  static connect(address: string, signerOrProvider: Signer | Provider): MetavaultTradeMvlpManager {
+    return new Contract(address, _abi, signerOrProvider) as MetavaultTradeMvlpManager;
   }
 }

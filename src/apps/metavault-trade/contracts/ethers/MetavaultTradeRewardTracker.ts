@@ -17,7 +17,7 @@ import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi
 import type { Listener, Provider } from '@ethersproject/providers';
 import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
-export interface RewardTrackerInterface extends utils.Interface {
+export interface MetavaultTradeRewardTrackerInterface extends utils.Interface {
   functions: {
     'BASIS_POINTS_DIVISOR()': FunctionFragment;
     'PRECISION()': FunctionFragment;
@@ -285,12 +285,12 @@ export type TransferEvent = TypedEvent<[string, string, BigNumber], TransferEven
 
 export type TransferEventFilter = TypedEventFilter<TransferEvent>;
 
-export interface RewardTracker extends BaseContract {
+export interface MetavaultTradeRewardTracker extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
 
-  interface: RewardTrackerInterface;
+  interface: MetavaultTradeRewardTrackerInterface;
 
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,

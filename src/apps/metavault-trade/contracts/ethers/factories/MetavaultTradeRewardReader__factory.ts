@@ -4,7 +4,7 @@
 
 import { Contract, Signer, utils } from 'ethers';
 import type { Provider } from '@ethersproject/providers';
-import type { RewardReader, RewardReaderInterface } from '../RewardReader';
+import type { MetavaultTradeRewardReader, MetavaultTradeRewardReaderInterface } from '../MetavaultTradeRewardReader';
 
 const _abi = [
   {
@@ -86,12 +86,12 @@ const _abi = [
   },
 ];
 
-export class RewardReader__factory {
+export class MetavaultTradeRewardReader__factory {
   static readonly abi = _abi;
-  static createInterface(): RewardReaderInterface {
-    return new utils.Interface(_abi) as RewardReaderInterface;
+  static createInterface(): MetavaultTradeRewardReaderInterface {
+    return new utils.Interface(_abi) as MetavaultTradeRewardReaderInterface;
   }
-  static connect(address: string, signerOrProvider: Signer | Provider): RewardReader {
-    return new Contract(address, _abi, signerOrProvider) as RewardReader;
+  static connect(address: string, signerOrProvider: Signer | Provider): MetavaultTradeRewardReader {
+    return new Contract(address, _abi, signerOrProvider) as MetavaultTradeRewardReader;
   }
 }

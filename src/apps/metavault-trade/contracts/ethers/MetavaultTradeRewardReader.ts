@@ -6,7 +6,7 @@ import type { FunctionFragment, Result } from '@ethersproject/abi';
 import type { Listener, Provider } from '@ethersproject/providers';
 import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
-export interface RewardReaderInterface extends utils.Interface {
+export interface MetavaultTradeRewardReaderInterface extends utils.Interface {
   functions: {
     'getDepositBalances(address,address[],address[])': FunctionFragment;
     'getStakingInfo(address,address[])': FunctionFragment;
@@ -35,12 +35,12 @@ export interface RewardReaderInterface extends utils.Interface {
   events: {};
 }
 
-export interface RewardReader extends BaseContract {
+export interface MetavaultTradeRewardReader extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
 
-  interface: RewardReaderInterface;
+  interface: MetavaultTradeRewardReaderInterface;
 
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,

@@ -17,7 +17,7 @@ import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi
 import type { Listener, Provider } from '@ethersproject/providers';
 import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
-export interface MvlpManagerInterface extends utils.Interface {
+export interface MetavaultTradeMvlpManagerInterface extends utils.Interface {
   functions: {
     'MAX_COOLDOWN_DURATION()': FunctionFragment;
     'PRICE_PRECISION()': FunctionFragment;
@@ -206,12 +206,12 @@ export type RemoveLiquidityEvent = TypedEvent<
 
 export type RemoveLiquidityEventFilter = TypedEventFilter<RemoveLiquidityEvent>;
 
-export interface MvlpManager extends BaseContract {
+export interface MetavaultTradeMvlpManager extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
 
-  interface: MvlpManagerInterface;
+  interface: MetavaultTradeMvlpManagerInterface;
 
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,
