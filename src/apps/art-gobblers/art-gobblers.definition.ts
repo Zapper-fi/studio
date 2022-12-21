@@ -10,10 +10,10 @@ export const ART_GOBBLERS_DEFINITION = appDefinition({
   url: 'https://artgobblers.com/',
 
   groups: {
-    claimable: {
-      id: 'claimable',
+    factory: {
+      id: 'factory',
       type: GroupType.POSITION,
-      label: 'Claimable Goo',
+      label: 'GOO Factory',
     },
   },
 
