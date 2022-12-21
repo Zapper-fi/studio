@@ -107,6 +107,7 @@ export abstract class GoodGhostingGameContractPositionFetcher extends CustomCont
 
           const paidAmountRaw = paidAmount * 10 ** stakedToken.decimals;
           const interestAmountRaw = interestAmount * 10 ** stakedToken.decimals;
+
           const incentiveAmountRaw = incentiveAmount * 10 ** (incentiveOrRewardToken?.decimals ?? 0);
           const rewardAmountRaw = rewardAmount * 10 ** (rewardToken?.decimals ?? 0);
           const mayBeRewardAmountRaw = rewardAmountRaw < 0.01 ? incentiveAmountRaw : rewardAmountRaw;
@@ -117,8 +118,9 @@ export abstract class GoodGhostingGameContractPositionFetcher extends CustomCont
           if (incentiveToken && isWinner) balancesRaw.push(incentiveAmountRaw);
         }
 
+        const nonZeroBalancesRaw = balancesRaw.filter(balance => balance > 0);
         const allTokens = contractPosition.tokens.map((cp, idx) =>
-          drillBalance(cp, balancesRaw[idx]?.toString() ?? '0', { isDebt: cp.metaType === MetaType.BORROWED }),
+          drillBalance(cp, nonZeroBalancesRaw[idx]?.toString() ?? '0', { isDebt: cp.metaType === MetaType.BORROWED }),
         );
 
         const tokens = allTokens.filter(v => Math.abs(v.balanceUSD) > 0.01);
