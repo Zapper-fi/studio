@@ -36,16 +36,13 @@ export class EthereumKeeperKlpTokenFetcher implements PositionFetcher<AppTokenPo
     // Create a multicall wrapper instance to batch chain RPC calls together
     const multicall = this.appToolkit.getMulticall(network);
 
-    // We will build a token object for each jar address, using data retrieved on-chain with Ethers
     const tokens = await Promise.all(
       KLP_ADDRESSES.map(async (klpAddress) => {
-        // Instantiate a smart contract instance pointing to the jar token address
         const contract = this.keeperContractFactory.klp({
           address: klpAddress,
           network,
         });
 
-        // Request the symbol, decimals, ands supply for the jar token
         const [symbol, decimals, supplyRaw, underlyingToken0RawAddress, underlyingToken1RawAddress] = await Promise.all([
           multicall.wrap(contract).symbol(),
           multicall.wrap(contract).decimals(),
@@ -57,9 +54,7 @@ export class EthereumKeeperKlpTokenFetcher implements PositionFetcher<AppTokenPo
         // Denormalize the supply
         const supply = Number(supplyRaw) / 10 ** decimals;
 
-        // Find the underlying token in our dependencies.
-        // Note: If it is not found, then we have not indexed the underlying token, and we cannot
-        // index the jar token since its price depends on the underlying token price.
+        // Find the underlying token in our dependencies
         const underlyingToken0Address = underlyingToken0RawAddress.toLowerCase();
         const underlyingToken0 = allTokenDependencies.find(
           (v) => v.address === underlyingToken0Address
@@ -73,18 +68,18 @@ export class EthereumKeeperKlpTokenFetcher implements PositionFetcher<AppTokenPo
           console.log('did not find token0 or token1', underlyingToken0, underlyingToken1)
           return null;
         }
+
         // if (!underlyingToken) return null;
         const tokens = [underlyingToken0, underlyingToken1];
 
         // Denormalize the price per share
-        const pricePerShare = Number(1) / 10 ** 18;
-        const price = pricePerShare * 10 ** 18;
+        // const pricePerShare = Number(1) / 10 ** 18;
+        // const price = pricePerShare * 10 ** 18;
+        const pricePerShare = 1;
+        const price = 2 * Math.sqrt(underlyingToken0.price / underlyingToken1.price) * underlyingToken1.price;
 
-        // As a label, we'll use the underlying label (i.e.: 'LOOKS' or 'UNI-V2 LOOKS / ETH'), and suffix it with 'Jar'
         const label = 'KLP Token';
-        // For images, we'll use the underlying token images as well
         const images = [...getImagesFromToken(underlyingToken0), ...getImagesFromToken(underlyingToken1)];
-        // For the secondary label, we'll use the price of the jar token
         const secondaryLabel = buildDollarDisplayItem(price);
 
         // Create the token object
