@@ -61,7 +61,7 @@ export abstract class GmxPerpContractPositionFetcher extends ContractPositionTem
       whitelistedTokens.flatMap(t => {
         if (v === t) return null;
         const long = { address: this.vaultAddress, indexTokenAddress: v, collateralTokenAddress: t, isLong: true };
-        const short = { address: this.vaultAddress, indexTokenAddress: v, collateralTokenAddress: t, isLong: true };
+        const short = { address: this.vaultAddress, indexTokenAddress: v, collateralTokenAddress: t, isLong: false };
         return [long, short];
       }),
     );
