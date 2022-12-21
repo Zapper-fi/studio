@@ -44,7 +44,6 @@ export class EthereumLlamaAirforceVaultTokenFetcher extends AppTokenTemplatePosi
   }: GetUnderlyingTokensParams<LlamaAirforceUnionVault>) {
     if (address === '0x8659fc767cad6005de79af65dafe4249c57927af') {
       const pirexContract = this.contractFactory.llamaAirforceUnionVaultPirex({ address, network: this.network });
-
       return [{ address: await multicall.wrap(pirexContract).asset(), network: this.network }];
     }
 
