@@ -4,7 +4,7 @@
 
 import { Contract, Signer, utils } from 'ethers';
 import type { Provider } from '@ethersproject/providers';
-import type { RewardTracker, RewardTrackerInterface } from '../RewardTracker';
+import type { MetavaultTradeRewardTracker, MetavaultTradeRewardTrackerInterface } from '../MetavaultTradeRewardTracker';
 
 const _abi = [
   {
@@ -907,12 +907,12 @@ const _abi = [
   },
 ];
 
-export class RewardTracker__factory {
+export class MetavaultTradeRewardTracker__factory {
   static readonly abi = _abi;
-  static createInterface(): RewardTrackerInterface {
-    return new utils.Interface(_abi) as RewardTrackerInterface;
+  static createInterface(): MetavaultTradeRewardTrackerInterface {
+    return new utils.Interface(_abi) as MetavaultTradeRewardTrackerInterface;
   }
-  static connect(address: string, signerOrProvider: Signer | Provider): RewardTracker {
-    return new Contract(address, _abi, signerOrProvider) as RewardTracker;
+  static connect(address: string, signerOrProvider: Signer | Provider): MetavaultTradeRewardTracker {
+    return new Contract(address, _abi, signerOrProvider) as MetavaultTradeRewardTracker;
   }
 }

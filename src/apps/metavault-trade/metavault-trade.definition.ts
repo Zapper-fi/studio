@@ -23,23 +23,20 @@ export const METAVAULT_TRADE_DEFINITION = appDefinition({
       label: 'esMVX',
       isHiddenFromExplore: true,
     },
-
     mvlp: {
       id: 'mvlp',
       type: GroupType.TOKEN,
       label: 'MVLP',
     },
-
     farm: {
       id: 'farm',
       type: GroupType.POSITION,
       label: 'Farms',
     },
-
-    option: {
-      id: 'option',
+    perp: {
+      id: 'perp',
       type: GroupType.POSITION,
-      label: 'Options',
+      label: 'Perpetuals',
     },
   },
 

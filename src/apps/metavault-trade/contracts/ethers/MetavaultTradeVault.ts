@@ -17,7 +17,7 @@ import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi
 import type { Listener, Provider } from '@ethersproject/providers';
 import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
-export interface VaultInterface extends utils.Interface {
+export interface MetavaultTradeVaultInterface extends utils.Interface {
   functions: {
     'BASIS_POINTS_DIVISOR()': FunctionFragment;
     'FUNDING_RATE_PRECISION()': FunctionFragment;
@@ -988,12 +988,12 @@ export type UpdatePositionEvent = TypedEvent<
 
 export type UpdatePositionEventFilter = TypedEventFilter<UpdatePositionEvent>;
 
-export interface Vault extends BaseContract {
+export interface MetavaultTradeVault extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
 
-  interface: VaultInterface;
+  interface: MetavaultTradeVaultInterface;
 
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,

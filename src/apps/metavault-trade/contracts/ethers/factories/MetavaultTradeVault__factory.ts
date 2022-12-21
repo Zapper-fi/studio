@@ -4,7 +4,7 @@
 
 import { Contract, Signer, utils } from 'ethers';
 import type { Provider } from '@ethersproject/providers';
-import type { Vault, VaultInterface } from '../Vault';
+import type { MetavaultTradeVault, MetavaultTradeVaultInterface } from '../MetavaultTradeVault';
 
 const _abi = [
   {
@@ -3220,12 +3220,12 @@ const _abi = [
   },
 ];
 
-export class Vault__factory {
+export class MetavaultTradeVault__factory {
   static readonly abi = _abi;
-  static createInterface(): VaultInterface {
-    return new utils.Interface(_abi) as VaultInterface;
+  static createInterface(): MetavaultTradeVaultInterface {
+    return new utils.Interface(_abi) as MetavaultTradeVaultInterface;
   }
-  static connect(address: string, signerOrProvider: Signer | Provider): Vault {
-    return new Contract(address, _abi, signerOrProvider) as Vault;
+  static connect(address: string, signerOrProvider: Signer | Provider): MetavaultTradeVault {
+    return new Contract(address, _abi, signerOrProvider) as MetavaultTradeVault;
   }
 }
