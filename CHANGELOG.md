@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.341.0](https://github.com/Zapper-fi/studio/compare/v0.340.0...v0.341.0) (2022-12-21)
+
+
+### Features
+
+* **art-gobblers:** GOO factory ([#1965](https://github.com/Zapper-fi/studio/issues/1965)) ([0b90185](https://github.com/Zapper-fi/studio/commit/0b901851e925f2f96d80419838aaf2685fc973fd))
+
 ## [0.340.0](https://github.com/Zapper-fi/studio/compare/v0.339.0...v0.340.0) (2022-12-20)
 
 
