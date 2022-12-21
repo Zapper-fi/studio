@@ -21,6 +21,18 @@ export const KEEPER_DEFINITION = appDefinition({
       type: GroupType.POSITION,
       label: 'Job',
     },
+
+    keep3RBond: {
+      id: 'keeper-bond',
+      type: GroupType.POSITION,
+      label: 'Keep3r Bond',
+    },
+
+    keep3Unbond: {
+      id: 'keeper-unbond',
+      type: GroupType.POSITION,
+      label: 'Keep3r Unbond',
+    },
   },
 
   tags: [AppTag.BONDS, AppTag.INFRASTRUCTURE],
