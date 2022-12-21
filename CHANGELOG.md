@@ -4,6 +4,14 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.341.1](https://github.com/Zapper-fi/studio/compare/v0.341.0...v0.341.1) (2022-12-21)
+
+
+### Bug Fixes
+
+* **honeyswap:** Migrate to template ([#1962](https://github.com/Zapper-fi/studio/issues/1962)) ([1ba5724](https://github.com/Zapper-fi/studio/commit/1ba572450e921c0a7f53a4ff02899b9b90c96e88))
+* resolved an incorrect balance bug" ([#1961](https://github.com/Zapper-fi/studio/issues/1961)) ([98ffd56](https://github.com/Zapper-fi/studio/commit/98ffd566e1e2337a41a66e1833e1c694dacedcd6))
+
 ## [0.341.0](https://github.com/Zapper-fi/studio/compare/v0.340.0...v0.341.0) (2022-12-21)
 
 
