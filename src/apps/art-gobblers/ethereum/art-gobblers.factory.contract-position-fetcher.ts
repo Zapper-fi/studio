@@ -13,8 +13,8 @@ import {
 import { ArtGobblers, ArtGobblersContractFactory } from '../contracts';
 
 @PositionTemplate()
-export class EthereumArGobblersClaimableContractPositionFetcher extends ContractPositionTemplatePositionFetcher<ArtGobblers> {
-  groupLabel = 'Claimable Goo';
+export class EthereumArGobblersFactoryContractPositionFetcher extends ContractPositionTemplatePositionFetcher<ArtGobblers> {
+  groupLabel = 'GOO Factory';
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
@@ -30,7 +30,7 @@ export class EthereumArGobblersClaimableContractPositionFetcher extends Contract
   async getTokenDefinitions() {
     return [
       {
-        metaType: MetaType.CLAIMABLE,
+        metaType: MetaType.SUPPLIED,
         address: '0x600000000a36f3cd48407e35eb7c5c910dc1f7a8',
         network: this.network,
       },
@@ -42,7 +42,7 @@ export class EthereumArGobblersClaimableContractPositionFetcher extends Contract
   }
 
   async getLabel(): Promise<string> {
-    return `Claimable Goo`;
+    return `GOO in Factory`;
   }
 
   async getTokenBalancesPerPosition({
