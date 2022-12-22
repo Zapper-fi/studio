@@ -10,7 +10,7 @@ import { MetavaultTradeContractFactory } from '../contracts';
 
 @PositionTemplate()
 export class PolygonMetavaultTradeEsMvxTokenFetcher extends AppTokenTemplatePositionFetcher<Erc20> {
-  groupLabel: string;
+  groupLabel = 'esMVX';
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
