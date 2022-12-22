@@ -2,5 +2,7 @@
 /* tslint:disable */
 /* eslint-disable */
 export type { PikaProtocolVault } from './PikaProtocolVault';
+export type { PikaProtocolVaultReward } from './PikaProtocolVaultReward';
 export * as factories from './factories';
+export { PikaProtocolVaultReward__factory } from './factories/PikaProtocolVaultReward__factory';
 export { PikaProtocolVault__factory } from './factories/PikaProtocolVault__factory';
