@@ -1,101 +1,136 @@
 import { Inject } from '@nestjs/common';
+import { BigNumberish } from 'ethers';
+import { map, min, range, sumBy } from 'lodash';
 
-import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
-import { Register } from '~app-toolkit/decorators';
-import { PositionFetcher } from '~position/position-fetcher.interface';
-import { ContractPosition } from '~position/position.interface';
-import { Network } from '~types/network.interface';
+import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
+import { DefaultDataProps } from '~position/display.interface';
+import { MetaType } from '~position/position.interface';
+import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
+import {
+  GetDisplayPropsParams,
+  GetTokenBalancesParams,
+  GetTokenDefinitionsParams,
+} from '~position/template/contract-position.template.types';
 
-import { PolynomialContractFactory, PolynomialCoveredCall, PolynomialPutSelling } from '../contracts';
-import { resolveTitle, getVault, isUnderlyingDenominated } from '../helpers/formatters';
-import { PolynomialApiHelper } from '../helpers/polynomial.api';
-import { POLYNOMIAL_DEFINITION } from '../polynomial.definition';
+export type PolynomialOptionContractPositionDefinition = {
+  address: string;
+  suppliedTokenAddress: string;
+  rewardTokenAddress: string;
+  isCall: boolean;
+  name: string;
+};
 
-const appId = POLYNOMIAL_DEFINITION.id;
-const groupId = POLYNOMIAL_DEFINITION.groups.vaults.id;
-const network = Network.OPTIMISM_MAINNET;
+import { PolynomialVaultTokenDefinitionsResolver } from '../common/polynomial.vault.token-definition-resolver';
+import { PolynomialContractFactory, PolynomialCoveredCall } from '../contracts';
 
-@Register.ContractPositionFetcher({ appId, groupId, network })
-export class OptimismPolynomialVaultsContractPositionFetcher implements PositionFetcher<ContractPosition> {
+@PositionTemplate()
+export class OptimismPolynomialVaultsContractPositionFetcher extends ContractPositionTemplatePositionFetcher<
+  PolynomialCoveredCall,
+  DefaultDataProps,
+  PolynomialOptionContractPositionDefinition
+> {
+  groupLabel = 'Covered Calls';
+
   constructor(
-    @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
+    @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
     @Inject(PolynomialContractFactory) private readonly contractFactory: PolynomialContractFactory,
-    @Inject(PolynomialApiHelper) private readonly apiHelper: PolynomialApiHelper,
-  ) {}
+    @Inject(PolynomialVaultTokenDefinitionsResolver)
+    private readonly vaultDefinitionResolver: PolynomialVaultTokenDefinitionsResolver,
+  ) {
+    super(appToolkit);
+  }
 
-  async getPositions() {
-    const vaults = await this.apiHelper.getVaults();
+  async getDefinitions(): Promise<PolynomialOptionContractPositionDefinition[]> {
+    const vaultDefinitonsRaw = await this.vaultDefinitionResolver.getVaultDefinitions(this.network);
 
-    const callPositions =
-      await this.appToolkit.helpers.singleStakingFarmContractPositionHelper.getContractPositions<PolynomialCoveredCall>(
-        {
-          appId,
-          groupId,
-          network,
-          dependencies: [
-            { appId: POLYNOMIAL_DEFINITION.id, groupIds: [POLYNOMIAL_DEFINITION.groups.vaults.id], network },
-          ],
-          resolveFarmAddresses: () =>
-            vaults
-              .filter(vault => isUnderlyingDenominated(vault.vaultId))
-              .map(vault => vault.vaultAddress.toLowerCase()),
-          resolveStakedTokenAddress: async ({ multicall, contract }) => multicall.wrap(contract).UNDERLYING(),
-          resolveRewardTokenAddresses: ({ multicall, contract }) => multicall.wrap(contract).VAULT_TOKEN(),
-          resolveFarmContract: ({ address }) => this.contractFactory.polynomialCoveredCall({ address, network }),
-          resolveLiquidity: ({ multicall, contract }) => multicall.wrap(contract).totalFunds(),
-          resolveLabel: (address: string) => resolveTitle(getVault(vaults, address).vaultId),
-          resolveRois: ({ address }) => {
-            const apy = Number(getVault(vaults, address).apy);
-            if (!apy) {
-              return {
-                dailyROI: 0,
-                weeklyROI: 0,
-                yearlyROI: 0,
-              };
-            }
-            return {
-              dailyROI: apy / 365,
-              weeklyROI: apy / 52,
-              yearlyROI: apy,
-            };
-          },
-        },
-      );
+    const definitions = vaultDefinitonsRaw.map(vault => {
+      return {
+        address: vault.address,
+        suppliedTokenAddress: vault.underlyingTokenAddress,
+        rewardTokenAddress: vault.tokenAddress,
+        isCall: vault.underlyingDominated,
+        name: vault.vaultId,
+      };
+    });
 
-    const putPositions =
-      await this.appToolkit.helpers.singleStakingFarmContractPositionHelper.getContractPositions<PolynomialPutSelling>({
-        appId,
-        groupId,
-        network,
-        dependencies: [
-          { appId: POLYNOMIAL_DEFINITION.id, groupIds: [POLYNOMIAL_DEFINITION.groups.vaults.id], network },
-        ],
-        resolveFarmAddresses: () =>
-          vaults
-            .filter(vault => !isUnderlyingDenominated(vault.vaultId))
-            .map(vault => vault.vaultAddress.toLowerCase()), // Put and Gamma positions
-        resolveStakedTokenAddress: async ({ multicall, contract }) => multicall.wrap(contract).SUSD(),
-        resolveRewardTokenAddresses: ({ multicall, contract }) => multicall.wrap(contract).VAULT_TOKEN(),
-        resolveFarmContract: ({ address }) => this.contractFactory.polynomialPutSelling({ address, network }),
-        resolveLiquidity: ({ multicall, contract }) => multicall.wrap(contract).totalFunds(),
-        resolveLabel: (address: string) => resolveTitle(getVault(vaults, address).vaultId),
-        resolveRois: ({ address }) => {
-          const apy = Number(getVault(vaults, address).apy);
-          if (!apy) {
-            return {
-              dailyROI: 0,
-              weeklyROI: 0,
-              yearlyROI: 0,
-            };
-          }
-          return {
-            dailyROI: apy / 365,
-            weeklyROI: apy / 52,
-            yearlyROI: apy,
-          };
-        },
-      });
+    return definitions;
+  }
 
-    return [...putPositions, ...callPositions];
+  async getTokenDefinitions({
+    definition,
+  }: GetTokenDefinitionsParams<PolynomialCoveredCall, PolynomialOptionContractPositionDefinition>) {
+    return [
+      {
+        metaType: MetaType.SUPPLIED,
+        address: definition.suppliedTokenAddress,
+        network: this.network,
+      },
+      {
+        metaType: MetaType.CLAIMABLE,
+        address: definition.rewardTokenAddress,
+        network: this.network,
+      },
+    ];
+  }
+
+  getContract(address: string): PolynomialCoveredCall {
+    return this.contractFactory.polynomialCoveredCall({ network: this.network, address });
+  }
+
+  async getLabel({
+    definition,
+  }: GetDisplayPropsParams<
+    PolynomialCoveredCall,
+    DefaultDataProps,
+    PolynomialOptionContractPositionDefinition
+  >): Promise<string> {
+    return definition.name;
+  }
+
+  async getTokenBalancesPerPosition({
+    address,
+    contract,
+    multicall,
+  }: GetTokenBalancesParams<PolynomialCoveredCall>): Promise<BigNumberish[]> {
+    // supplied
+    const [depositHead, depositTail] = (
+      await Promise.all([multicall.wrap(contract).queuedDepositHead(), multicall.wrap(contract).nextQueuedDepositId()])
+    ).map(Number);
+
+    const pendingDeposits = await Promise.all(
+      map(range(depositHead, min([depositHead + 250, depositTail])), async i =>
+        multicall.wrap(contract).depositQueue(i),
+      ),
+    );
+    const pendingDepositBalance = sumBy(pendingDeposits, deposit => {
+      // Note: ignores partial deposits
+      if (deposit.user.toLowerCase() === address.toLowerCase() && !Number(deposit.mintedTokens)) {
+        return Number(deposit.depositedAmount);
+      }
+      return 0;
+    });
+
+    // rewards
+    const [withdrawalHead, withdrawalTail] = (
+      await Promise.all([
+        multicall.wrap(contract).queuedWithdrawalHead(),
+        multicall.wrap(contract).nextQueuedWithdrawalId(),
+      ])
+    ).map(Number);
+    const pendingWithdrawals = await Promise.all(
+      map(range(withdrawalHead, min([withdrawalHead + 250, withdrawalTail])), async i =>
+        multicall.wrap(contract).withdrawalQueue(i),
+      ),
+    );
+    const pendingWithdrawalBalance = sumBy(pendingWithdrawals, withdrawal => {
+      // Note: ignores partial withdrawals
+      if (withdrawal.user.toLowerCase() === address.toLowerCase() && !Number(withdrawal.returnedAmount)) {
+        return Number(withdrawal.withdrawnTokens);
+      }
+      return 0;
+    });
+
+    return [pendingDepositBalance, pendingWithdrawalBalance];
   }
 }
