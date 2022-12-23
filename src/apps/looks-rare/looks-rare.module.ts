@@ -3,7 +3,6 @@ import { AbstractApp } from '~app/app.dynamic-module';
 import { SynthetixAppModule } from '~apps/synthetix';
 
 import { LooksRareContractFactory } from './contracts';
-import { EthereumLooksRareBalanceFetcher } from './ethereum/looks-rare.balance-fetcher';
 import { EthereumLooksRareCompounderContractPositionFetcher } from './ethereum/looks-rare.compounder.contract-position-fetcher';
 import { EthereumLooksRareFarmContractPositionFetcher } from './ethereum/looks-rare.farm.contract-position-fetcher';
 import { LooksRareAppDefinition, LOOKS_RARE_DEFINITION } from './looks-rare.definition';
@@ -14,7 +13,6 @@ import { LooksRareAppDefinition, LOOKS_RARE_DEFINITION } from './looks-rare.defi
   providers: [
     LooksRareAppDefinition,
     LooksRareContractFactory,
-    EthereumLooksRareBalanceFetcher,
     EthereumLooksRareFarmContractPositionFetcher,
     EthereumLooksRareCompounderContractPositionFetcher,
   ],
