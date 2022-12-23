@@ -9,6 +9,15 @@ export const PHUTURE_DEFINITION = appDefinition({
   description:
     'Phuture is a decentralised crypto index platform that simplifies investments through automated, themed index funds.',
   url: 'https://phuture.finance',
+
+  groups: {
+    index: {
+      id: 'index',
+      type: GroupType.TOKEN,
+      label: 'Index',
+    },
+  },
+
   tags: [AppTag.ASSET_MANAGEMENT],
   keywords: ['index funds', 'asset management'],
 
@@ -21,17 +30,9 @@ export const PHUTURE_DEFINITION = appDefinition({
     medium: 'https://blog.phuture.finance',
   },
 
-  groups: {
-    index: {
-      id: 'index',
-      type: GroupType.TOKEN,
-      label: 'Index',
-    },
-  },
-
   supportedNetworks: {
-    [Network.ETHEREUM_MAINNET]: [AppAction.VIEW], // AppAction.TRANSACT
-    [Network.AVALANCHE_MAINNET]: [AppAction.VIEW], // AppAction.TRANSACT
+    [Network.ETHEREUM_MAINNET]: [AppAction.VIEW],
+    [Network.AVALANCHE_MAINNET]: [AppAction.VIEW],
   },
 
   primaryColor: '#3e1fff',
