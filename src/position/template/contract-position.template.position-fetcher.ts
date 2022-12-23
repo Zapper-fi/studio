@@ -46,11 +46,11 @@ export abstract class ContractPositionTemplatePositionFetcher<
 
   constructor(@Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit) {}
 
-  // 1. Get contract position definitions (i.e.: contract addresses and additional context)
-  abstract getDefinitions(params: GetDefinitionsParams): Promise<R[]>;
-
-  // 2. Get contract instance
+  // 1. Get contract instance
   abstract getContract(address: string): T;
+
+  // 2. Get contract position definitions (i.e.: contract addresses and additional context)
+  abstract getDefinitions(params: GetDefinitionsParams): Promise<R[]>;
 
   // 3. Get token definitions (supplied tokens, borrowed tokens, claimable tokens, etc.)
   abstract getTokenDefinitions(_params: GetTokenDefinitionsParams<T, R>): Promise<UnderlyingTokenDefinition[] | null>;

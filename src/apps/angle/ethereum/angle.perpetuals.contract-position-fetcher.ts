@@ -1,85 +1,102 @@
 import { Inject } from '@nestjs/common';
-import _ from 'lodash';
+import { BigNumber, BigNumberish, utils } from 'ethers';
+import { compact } from 'lodash';
 
+import { drillBalance } from '~app-toolkit';
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
-import { getImagesFromToken, getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
-import { ContractType } from '~position/contract.interface';
-import { PositionFetcher } from '~position/position-fetcher.interface';
-import { ContractPosition } from '~position/position.interface';
-import { supplied } from '~position/position.utils';
+import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
+import { DefaultDataProps } from '~position/display.interface';
+import { ContractPositionBalance } from '~position/position-balance.interface';
+import { MetaType } from '~position/position.interface';
+import { isSupplied } from '~position/position.utils';
+import {
+  DefaultContractPositionDefinition,
+  GetTokenDefinitionsParams,
+  GetDisplayPropsParams,
+} from '~position/template/contract-position.template.types';
+import { CustomContractPositionTemplatePositionFetcher } from '~position/template/custom-contract-position.template.position-fetcher';
 import { Network } from '~types/network.interface';
 
 import { ANGLE_DEFINITION } from '../angle.definition';
-import { AngleContractFactory } from '../contracts';
+import { AngleApiHelper } from '../common/angle.api';
+import { AngleContractFactory, AnglePerpetualManager } from '../contracts';
 
 const appId = ANGLE_DEFINITION.id;
 const groupId = ANGLE_DEFINITION.groups.perpetuals.id;
 const network = Network.ETHEREUM_MAINNET;
 
 @Register.ContractPositionFetcher({ appId, groupId, network })
-export class EthereumAnglePerpetualsContractPositionFetcher implements PositionFetcher<ContractPosition> {
+export class EthereumAnglePerpetualsContractPositionFetcher extends CustomContractPositionTemplatePositionFetcher<AnglePerpetualManager> {
+  groupLabel = 'Perpetuals';
+  perpetualManagerAddresses = [
+    '0xfc8f9eefc5fce1d9dace2b0a11a1e184381787c4',
+    '0x5efe48f8383921d950683c46b87e28e21dea9fb5',
+    '0x98fdbc5497599eff830923ea1ee152adb9a4cea5',
+    '0x4121a258674e507c990cdf390f74d4ef27592114',
+    '0xb924497a1157b1f8835c93cb7f3d4aa6d2f227ba',
+  ];
+
   constructor(
-    @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
-    @Inject(AngleContractFactory) private readonly angleContractFactory: AngleContractFactory,
-  ) {}
+    @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
+    @Inject(AngleContractFactory) protected readonly contractFactory: AngleContractFactory,
+    @Inject(AngleApiHelper) protected readonly angleApiHelper: AngleApiHelper,
+  ) {
+    super(appToolkit);
+  }
 
-  async getPositions() {
-    const multicall = this.appToolkit.getMulticall(network);
-    const baseTokenDependencies = await this.appToolkit.getBaseTokenPrices(network);
+  getContract(address: string): AnglePerpetualManager {
+    return this.contractFactory.anglePerpetualManager({ address, network: this.network });
+  }
 
-    const perpetualManagers = [
-      '0xfc8f9eefc5fce1d9dace2b0a11a1e184381787c4',
-      '0x5efe48f8383921d950683c46b87e28e21dea9fb5',
-      '0x98fdbc5497599eff830923ea1ee152adb9a4cea5',
-      '0x4121a258674e507c990cdf390f74d4ef27592114',
-      '0xb924497a1157b1f8835c93cb7f3d4aa6d2f227ba',
-    ];
+  async getDefinitions(): Promise<DefaultContractPositionDefinition[]> {
+    return this.perpetualManagerAddresses.map(address => ({ address }));
+  }
 
-    const perps = await Promise.all(
-      perpetualManagers.map(async perpetualManager => {
-        const perpContract = this.angleContractFactory.anglePerpetualManager({
-          address: perpetualManager,
-          network,
-        });
+  async getTokenDefinitions({ contract, multicall }: GetTokenDefinitionsParams<AnglePerpetualManager>) {
+    const poolManagerAddress = await contract.poolManager();
+    const poolManager = this.contractFactory.anglePoolManager({ address: poolManagerAddress, network: this.network });
+    return [{ metaType: MetaType.SUPPLIED, address: await multicall.wrap(poolManager).token(), network: this.network }];
+  }
 
-        const [poolManager, baseURI] = await Promise.all([
-          multicall.wrap(perpContract).poolManager(),
-          multicall.wrap(perpContract).baseURI(),
-        ]);
+  async getLabel({ contractPosition }: GetDisplayPropsParams<AnglePerpetualManager>) {
+    return `${getLabelFromToken(contractPosition.tokens[0])} / EUR Perp`;
+  }
 
-        const poolManagerContract = this.angleContractFactory.anglePoolManager({
-          address: poolManager,
-          network,
-        });
+  async getTokenBalancesPerPosition(): Promise<BigNumberish[]> {
+    throw new Error('Method not implemented.');
+  }
 
-        const underlyingTokenAddress = await multicall.wrap(poolManagerContract).token();
-        const underlyingToken = baseTokenDependencies.find(
-          v => v.address.toLowerCase() === underlyingTokenAddress.toLowerCase(),
-        );
+  async getBalances(address: string): Promise<ContractPositionBalance<DefaultDataProps>[]> {
+    const { perpetuals } = await this.angleApiHelper.getUserPerpetuals(address, network);
 
-        if (!underlyingToken) return null;
+    const contractPositions = await this.appToolkit.getAppContractPositions({
+      appId: this.appId,
+      network: this.network,
+      groupIds: [this.groupId],
+    });
 
-        const position: ContractPosition = {
-          type: ContractType.POSITION,
-          appId,
-          groupId,
-          address: perpetualManager,
-          network,
-          tokens: [supplied(underlyingToken)],
-          dataProps: {
-            baseURI,
-          },
-          displayProps: {
-            label: `${getLabelFromToken(underlyingToken)}/EUR Perp`,
-            images: getImagesFromToken(underlyingToken),
-          },
-        };
+    const balances = perpetuals.map(perp => {
+      const contractPosition = contractPositions.find(
+        v => v.address.toLowerCase() === perp.perpetualManager.toLowerCase(),
+      );
+      if (!contractPosition) return null;
 
-        return position;
-      }),
-    );
+      const collateralToken = contractPosition!.tokens.find(isSupplied)!;
 
-    return _.compact(perps);
+      const positionSize = BigNumber.from(perp.committedAmount);
+
+      const tokens = [drillBalance(collateralToken, positionSize.toString())];
+      const balance = positionSize.mul(utils.parseEther(collateralToken.price.toString())).div(utils.parseEther('1'));
+      const balanceUSD = Number(utils.formatUnits(balance, collateralToken.decimals));
+
+      return {
+        ...contractPosition,
+        balanceUSD,
+        tokens,
+      };
+    });
+
+    return compact(balances);
   }
 }
