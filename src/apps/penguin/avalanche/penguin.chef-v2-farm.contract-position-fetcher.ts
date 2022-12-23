@@ -108,7 +108,6 @@ export class AvalanchePenguinChefV2FarmContractPositionFetcher extends MasterChe
   }: GetMasterChefV2ExtraRewardTokenBalancesParams<PenguinChefV2, PenguinExtraRewarder>): Promise<
     BigNumberish | BigNumberish[]
   > {
-    console.log('wtf', contractPosition.dataProps.poolIndex);
     return rewarderContract.pendingTokens(contractPosition.dataProps.poolIndex, address, 0).then(v => v[1][0]);
   }
 }
