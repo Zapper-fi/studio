@@ -26,25 +26,28 @@ export const ANGLE_DEFINITION = appDefinition({
   },
 
   groups: {
-    santoken: {
-      id: 'santoken',
+    sanToken: {
+      id: 'san-token',
       type: GroupType.TOKEN,
       label: 'Yield Bearing',
     },
-    veangle: {
-      id: 'veangle',
+
+    votingEscrow: {
+      id: 'voting-escrow',
       type: GroupType.POSITION,
       label: 'Voting Escrow',
     },
-    perpetuals: {
-      id: 'perpetuals',
+
+    perpetual: {
+      id: 'perpetual',
       type: GroupType.POSITION,
-      label: 'Perpetual',
+      label: 'Perpetuals',
     },
-    vaults: {
-      id: 'vaults',
+
+    vault: {
+      id: 'vault',
       type: GroupType.POSITION,
-      label: 'Vault',
+      label: 'Vaults',
     },
   },
 

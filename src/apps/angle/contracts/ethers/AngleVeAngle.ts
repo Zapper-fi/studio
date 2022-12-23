@@ -17,7 +17,7 @@ import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi
 import type { Listener, Provider } from '@ethersproject/providers';
 import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
-export interface AngleVeangleInterface extends utils.Interface {
+export interface AngleVeAngleInterface extends utils.Interface {
   functions: {
     'initialize(address,address,address,string,string)': FunctionFragment;
     'commit_transfer_ownership(address)': FunctionFragment;
@@ -266,12 +266,12 @@ export type SupplyEvent = TypedEvent<[BigNumber, BigNumber], SupplyEventObject>;
 
 export type SupplyEventFilter = TypedEventFilter<SupplyEvent>;
 
-export interface AngleVeangle extends BaseContract {
+export interface AngleVeAngle extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
 
-  interface: AngleVeangleInterface;
+  interface: AngleVeAngleInterface;
 
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,

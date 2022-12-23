@@ -4,7 +4,7 @@ import { compact } from 'lodash';
 
 import { drillBalance } from '~app-toolkit';
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
-import { Register } from '~app-toolkit/decorators';
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { DefaultDataProps } from '~position/display.interface';
 import { ContractPositionBalance } from '~position/position-balance.interface';
@@ -16,17 +16,11 @@ import {
   GetDisplayPropsParams,
 } from '~position/template/contract-position.template.types';
 import { CustomContractPositionTemplatePositionFetcher } from '~position/template/custom-contract-position.template.position-fetcher';
-import { Network } from '~types/network.interface';
 
-import { ANGLE_DEFINITION } from '../angle.definition';
 import { AngleApiHelper } from '../common/angle.api';
 import { AngleContractFactory, AnglePerpetualManager } from '../contracts';
 
-const appId = ANGLE_DEFINITION.id;
-const groupId = ANGLE_DEFINITION.groups.perpetuals.id;
-const network = Network.ETHEREUM_MAINNET;
-
-@Register.ContractPositionFetcher({ appId, groupId, network })
+@PositionTemplate()
 export class EthereumAnglePerpetualsContractPositionFetcher extends CustomContractPositionTemplatePositionFetcher<AnglePerpetualManager> {
   groupLabel = 'Perpetuals';
   perpetualManagerAddresses = [
@@ -68,7 +62,7 @@ export class EthereumAnglePerpetualsContractPositionFetcher extends CustomContra
   }
 
   async getBalances(address: string): Promise<ContractPositionBalance<DefaultDataProps>[]> {
-    const { perpetuals } = await this.angleApiHelper.getUserPerpetuals(address, network);
+    const { perpetuals } = await this.angleApiHelper.getUserPerpetuals(address, this.network);
 
     const contractPositions = await this.appToolkit.getAppContractPositions({
       appId: this.appId,

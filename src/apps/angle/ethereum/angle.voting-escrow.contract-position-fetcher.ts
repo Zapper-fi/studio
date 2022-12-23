@@ -2,21 +2,15 @@ import { Inject } from '@nestjs/common';
 import { BigNumberish } from 'ethers';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
-import { Register } from '~app-toolkit/decorators';
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import { VotingEscrowWithRewardsTemplateContractPositionFetcher } from '~position/template/voting-escrow-with-rewards.template.contract-position-fetcher';
-import { Network } from '~types/network.interface';
 
-import { ANGLE_DEFINITION } from '../angle.definition';
 import { AngleApiHelper } from '../common/angle.api';
-import { AngleContractFactory, AngleVeangle, AngleLiquidityGauge } from '../contracts';
+import { AngleContractFactory, AngleVeAngle, AngleLiquidityGauge } from '../contracts';
 
-const appId = ANGLE_DEFINITION.id;
-const groupId = ANGLE_DEFINITION.groups.veangle.id;
-const network = Network.ETHEREUM_MAINNET;
-
-@Register.ContractPositionFetcher({ appId, groupId, network })
+@PositionTemplate()
 export class EthereumAngleVeAngleContractPositionFetcher extends VotingEscrowWithRewardsTemplateContractPositionFetcher<
-  AngleVeangle,
+  AngleVeAngle,
   AngleLiquidityGauge
 > {
   groupLabel = 'Voting Escrow';
@@ -31,15 +25,15 @@ export class EthereumAngleVeAngleContractPositionFetcher extends VotingEscrowWit
     super(appToolkit);
   }
 
-  getEscrowContract(address: string): AngleVeangle {
-    return this.contractFactory.angleVeangle({ address, network: this.network });
+  getEscrowContract(address: string): AngleVeAngle {
+    return this.contractFactory.angleVeAngle({ address, network: this.network });
   }
 
   getRewardContract(address: string): AngleLiquidityGauge {
     return this.contractFactory.angleLiquidityGauge({ address, network: this.network });
   }
 
-  async getEscrowedTokenAddress(contract: AngleVeangle): Promise<string> {
+  async getEscrowedTokenAddress(contract: AngleVeAngle): Promise<string> {
     return contract.token();
   }
 
@@ -47,12 +41,12 @@ export class EthereumAngleVeAngleContractPositionFetcher extends VotingEscrowWit
     return contract.staking_token();
   }
 
-  async getEscrowedTokenBalance(address: string, contract: AngleVeangle): Promise<BigNumberish> {
+  async getEscrowedTokenBalance(address: string, contract: AngleVeAngle): Promise<BigNumberish> {
     return contract.locked(address).then(v => v.amount);
   }
 
   async getRewardTokenBalance(address: string, _contract: AngleLiquidityGauge): Promise<BigNumberish> {
-    const { rewardsData } = await this.angleApiHelper.getRewardsData(address, network);
+    const { rewardsData } = await this.angleApiHelper.getRewardsData(address, this.network);
     return rewardsData.totalClaimable;
   }
 }

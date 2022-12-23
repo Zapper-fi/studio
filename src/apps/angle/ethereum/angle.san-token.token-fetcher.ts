@@ -2,14 +2,21 @@ import { Inject } from '@nestjs/common';
 
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
+import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
-import { GetPricePerShareParams, GetUnderlyingTokensParams } from '~position/template/app-token.template.types';
+import {
+  DefaultAppTokenDataProps,
+  DefaultAppTokenDefinition,
+  GetDisplayPropsParams,
+  GetPricePerShareParams,
+  GetUnderlyingTokensParams,
+} from '~position/template/app-token.template.types';
 
 import { AngleApiHelper } from '../common/angle.api';
-import { AngleContractFactory, AngleSantoken } from '../contracts';
+import { AngleContractFactory, AngleSanToken } from '../contracts';
 
 @PositionTemplate()
-export class EthereumAngleSantokenTokenFetcher extends AppTokenTemplatePositionFetcher<AngleSantoken> {
+export class EthereumAngleSanTokenTokenFetcher extends AppTokenTemplatePositionFetcher<AngleSanToken> {
   groupLabel = 'Yield Bearing';
 
   constructor(
@@ -20,8 +27,8 @@ export class EthereumAngleSantokenTokenFetcher extends AppTokenTemplatePositionF
     super(appToolkit);
   }
 
-  getContract(address: string): AngleSantoken {
-    return this.contractFactory.angleSantoken({ address, network: this.network });
+  getContract(address: string): AngleSanToken {
+    return this.contractFactory.angleSanToken({ address, network: this.network });
   }
 
   async getAddresses() {
@@ -35,7 +42,7 @@ export class EthereumAngleSantokenTokenFetcher extends AppTokenTemplatePositionF
     ];
   }
 
-  async getUnderlyingTokenDefinitions({ contract, multicall }: GetUnderlyingTokensParams<AngleSantoken>) {
+  async getUnderlyingTokenDefinitions({ contract, multicall }: GetUnderlyingTokensParams<AngleSanToken>) {
     const [stableMasterAddress, poolManagerAddress] = await Promise.all([
       contract.stableMaster(),
       contract.poolManager(),
@@ -50,7 +57,7 @@ export class EthereumAngleSantokenTokenFetcher extends AppTokenTemplatePositionF
     return [{ address: collateralMap.token, network: this.network }];
   }
 
-  async getPricePerShare({ contract, multicall }: GetPricePerShareParams<AngleSantoken>) {
+  async getPricePerShare({ contract, multicall }: GetPricePerShareParams<AngleSanToken>) {
     const [stableMasterAddress, poolManagerAddress] = await Promise.all([
       contract.stableMaster(),
       contract.poolManager(),
@@ -65,5 +72,11 @@ export class EthereumAngleSantokenTokenFetcher extends AppTokenTemplatePositionF
     const pricePerShare = Number(collateralMap.sanRate) / 10 ** 18;
 
     return [pricePerShare];
+  }
+
+  async getLabel({
+    appToken,
+  }: GetDisplayPropsParams<AngleSanToken, DefaultAppTokenDataProps, DefaultAppTokenDefinition>): Promise<string> {
+    return `san${getLabelFromToken(appToken.tokens[0])} / EUR`;
   }
 }
