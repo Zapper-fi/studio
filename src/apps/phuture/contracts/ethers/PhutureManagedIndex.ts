@@ -17,89 +17,87 @@ import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi
 import type { Listener, Provider } from '@ethersproject/providers';
 import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
-export interface AngleSantokenInterface extends utils.Interface {
+export interface PhutureManagedIndexInterface extends utils.Interface {
   functions: {
     'DOMAIN_SEPARATOR()': FunctionFragment;
     'allowance(address,address)': FunctionFragment;
+    'anatomy()': FunctionFragment;
     'approve(address,uint256)': FunctionFragment;
     'balanceOf(address)': FunctionFragment;
-    'burnFrom(uint256,address,address)': FunctionFragment;
-    'burnNoRedeem(uint256)': FunctionFragment;
-    'burnSelf(uint256,address)': FunctionFragment;
-    'decimal()': FunctionFragment;
+    'burn(address)': FunctionFragment;
     'decimals()': FunctionFragment;
     'decreaseAllowance(address,uint256)': FunctionFragment;
+    'factory()': FunctionFragment;
+    'inactiveAnatomy()': FunctionFragment;
     'increaseAllowance(address,uint256)': FunctionFragment;
-    'initialize(string,string,address)': FunctionFragment;
-    'mint(address,uint256)': FunctionFragment;
+    'initialize(address[],uint8[])': FunctionFragment;
+    'mint(address)': FunctionFragment;
     'name()': FunctionFragment;
     'nonces(address)': FunctionFragment;
     'permit(address,address,uint256,uint256,uint8,bytes32,bytes32)': FunctionFragment;
-    'poolManager()': FunctionFragment;
-    'stableMaster()': FunctionFragment;
+    'registry()': FunctionFragment;
+    'reweight(address[],uint8[])': FunctionFragment;
+    'supportsInterface(bytes4)': FunctionFragment;
     'symbol()': FunctionFragment;
     'totalSupply()': FunctionFragment;
     'transfer(address,uint256)': FunctionFragment;
     'transferFrom(address,address,uint256)': FunctionFragment;
+    'vTokenFactory()': FunctionFragment;
   };
 
   getFunction(
     nameOrSignatureOrTopic:
       | 'DOMAIN_SEPARATOR'
       | 'allowance'
+      | 'anatomy'
       | 'approve'
       | 'balanceOf'
-      | 'burnFrom'
-      | 'burnNoRedeem'
-      | 'burnSelf'
-      | 'decimal'
+      | 'burn'
       | 'decimals'
       | 'decreaseAllowance'
+      | 'factory'
+      | 'inactiveAnatomy'
       | 'increaseAllowance'
       | 'initialize'
       | 'mint'
       | 'name'
       | 'nonces'
       | 'permit'
-      | 'poolManager'
-      | 'stableMaster'
+      | 'registry'
+      | 'reweight'
+      | 'supportsInterface'
       | 'symbol'
       | 'totalSupply'
       | 'transfer'
-      | 'transferFrom',
+      | 'transferFrom'
+      | 'vTokenFactory',
   ): FunctionFragment;
 
   encodeFunctionData(functionFragment: 'DOMAIN_SEPARATOR', values?: undefined): string;
   encodeFunctionData(functionFragment: 'allowance', values: [PromiseOrValue<string>, PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'anatomy', values?: undefined): string;
   encodeFunctionData(
     functionFragment: 'approve',
     values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
   ): string;
   encodeFunctionData(functionFragment: 'balanceOf', values: [PromiseOrValue<string>]): string;
-  encodeFunctionData(
-    functionFragment: 'burnFrom',
-    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>, PromiseOrValue<string>],
-  ): string;
-  encodeFunctionData(functionFragment: 'burnNoRedeem', values: [PromiseOrValue<BigNumberish>]): string;
-  encodeFunctionData(
-    functionFragment: 'burnSelf',
-    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>],
-  ): string;
-  encodeFunctionData(functionFragment: 'decimal', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'burn', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'decimals', values?: undefined): string;
   encodeFunctionData(
     functionFragment: 'decreaseAllowance',
     values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
   ): string;
+  encodeFunctionData(functionFragment: 'factory', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'inactiveAnatomy', values?: undefined): string;
   encodeFunctionData(
     functionFragment: 'increaseAllowance',
     values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
   ): string;
   encodeFunctionData(
     functionFragment: 'initialize',
-    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<string>],
+    values: [PromiseOrValue<string>[], PromiseOrValue<BigNumberish>[]],
   ): string;
-  encodeFunctionData(functionFragment: 'mint', values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'mint', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'name', values?: undefined): string;
   encodeFunctionData(functionFragment: 'nonces', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(
@@ -114,8 +112,12 @@ export interface AngleSantokenInterface extends utils.Interface {
       PromiseOrValue<BytesLike>,
     ],
   ): string;
-  encodeFunctionData(functionFragment: 'poolManager', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'stableMaster', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'registry', values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: 'reweight',
+    values: [PromiseOrValue<string>[], PromiseOrValue<BigNumberish>[]],
+  ): string;
+  encodeFunctionData(functionFragment: 'supportsInterface', values: [PromiseOrValue<BytesLike>]): string;
   encodeFunctionData(functionFragment: 'symbol', values?: undefined): string;
   encodeFunctionData(functionFragment: 'totalSupply', values?: undefined): string;
   encodeFunctionData(
@@ -126,37 +128,44 @@ export interface AngleSantokenInterface extends utils.Interface {
     functionFragment: 'transferFrom',
     values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
   ): string;
+  encodeFunctionData(functionFragment: 'vTokenFactory', values?: undefined): string;
 
   decodeFunctionResult(functionFragment: 'DOMAIN_SEPARATOR', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'allowance', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'anatomy', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'approve', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'balanceOf', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'burnFrom', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'burnNoRedeem', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'burnSelf', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'decimal', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'burn', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'decimals', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'decreaseAllowance', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'factory', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'inactiveAnatomy', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'increaseAllowance', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'initialize', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'mint', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'name', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'nonces', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'permit', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'poolManager', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'stableMaster', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'registry', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'reweight', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'supportsInterface', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'symbol', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'totalSupply', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'transfer', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'transferFrom', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'vTokenFactory', data: BytesLike): Result;
 
   events: {
     'Approval(address,address,uint256)': EventFragment;
+    'AssetRemoved(address)': EventFragment;
     'Transfer(address,address,uint256)': EventFragment;
+    'UpdateAnatomy(address,uint8)': EventFragment;
   };
 
   getEvent(nameOrSignatureOrTopic: 'Approval'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'AssetRemoved'): EventFragment;
   getEvent(nameOrSignatureOrTopic: 'Transfer'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'UpdateAnatomy'): EventFragment;
 }
 
 export interface ApprovalEventObject {
@@ -168,6 +177,13 @@ export type ApprovalEvent = TypedEvent<[string, string, BigNumber], ApprovalEven
 
 export type ApprovalEventFilter = TypedEventFilter<ApprovalEvent>;
 
+export interface AssetRemovedEventObject {
+  asset: string;
+}
+export type AssetRemovedEvent = TypedEvent<[string], AssetRemovedEventObject>;
+
+export type AssetRemovedEventFilter = TypedEventFilter<AssetRemovedEvent>;
+
 export interface TransferEventObject {
   from: string;
   to: string;
@@ -177,12 +193,20 @@ export type TransferEvent = TypedEvent<[string, string, BigNumber], TransferEven
 
 export type TransferEventFilter = TypedEventFilter<TransferEvent>;
 
-export interface AngleSantoken extends BaseContract {
+export interface UpdateAnatomyEventObject {
+  asset: string;
+  weight: number;
+}
+export type UpdateAnatomyEvent = TypedEvent<[string, number], UpdateAnatomyEventObject>;
+
+export type UpdateAnatomyEventFilter = TypedEventFilter<UpdateAnatomyEvent>;
+
+export interface PhutureManagedIndex extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
 
-  interface: AngleSantokenInterface;
+  interface: PhutureManagedIndexInterface;
 
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,
@@ -208,6 +232,8 @@ export interface AngleSantoken extends BaseContract {
       overrides?: CallOverrides,
     ): Promise<[BigNumber]>;
 
+    anatomy(overrides?: CallOverrides): Promise<[string[], number[]] & { _assets: string[]; _weights: number[] }>;
+
     approve(
       spender: PromiseOrValue<string>,
       amount: PromiseOrValue<BigNumberish>,
@@ -216,25 +242,10 @@ export interface AngleSantoken extends BaseContract {
 
     balanceOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    burnFrom(
-      amount: PromiseOrValue<BigNumberish>,
-      burner: PromiseOrValue<string>,
-      sender: PromiseOrValue<string>,
+    burn(
+      _recipient: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
-
-    burnNoRedeem(
-      amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<ContractTransaction>;
-
-    burnSelf(
-      amount: PromiseOrValue<BigNumberish>,
-      burner: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<ContractTransaction>;
-
-    decimal(overrides?: CallOverrides): Promise<[number]>;
 
     decimals(overrides?: CallOverrides): Promise<[number]>;
 
@@ -244,6 +255,10 @@ export interface AngleSantoken extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
+    factory(overrides?: CallOverrides): Promise<[string]>;
+
+    inactiveAnatomy(overrides?: CallOverrides): Promise<[string[]]>;
+
     increaseAllowance(
       spender: PromiseOrValue<string>,
       addedValue: PromiseOrValue<BigNumberish>,
@@ -251,15 +266,13 @@ export interface AngleSantoken extends BaseContract {
     ): Promise<ContractTransaction>;
 
     initialize(
-      name_: PromiseOrValue<string>,
-      symbol_: PromiseOrValue<string>,
-      _poolManager: PromiseOrValue<string>,
+      _assets: PromiseOrValue<string>[],
+      _weights: PromiseOrValue<BigNumberish>[],
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     mint(
-      account: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
+      _recipient: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
@@ -278,26 +291,34 @@ export interface AngleSantoken extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    poolManager(overrides?: CallOverrides): Promise<[string]>;
+    registry(overrides?: CallOverrides): Promise<[string]>;
 
-    stableMaster(overrides?: CallOverrides): Promise<[string]>;
+    reweight(
+      _updatedAssets: PromiseOrValue<string>[],
+      _updatedWeights: PromiseOrValue<BigNumberish>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<ContractTransaction>;
+
+    supportsInterface(_interfaceId: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<[boolean]>;
 
     symbol(overrides?: CallOverrides): Promise<[string]>;
 
     totalSupply(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     transfer(
-      recipient: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
       amount: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     transferFrom(
-      sender: PromiseOrValue<string>,
-      recipient: PromiseOrValue<string>,
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
       amount: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
+
+    vTokenFactory(overrides?: CallOverrides): Promise<[string]>;
   };
 
   DOMAIN_SEPARATOR(overrides?: CallOverrides): Promise<string>;
@@ -308,6 +329,8 @@ export interface AngleSantoken extends BaseContract {
     overrides?: CallOverrides,
   ): Promise<BigNumber>;
 
+  anatomy(overrides?: CallOverrides): Promise<[string[], number[]] & { _assets: string[]; _weights: number[] }>;
+
   approve(
     spender: PromiseOrValue<string>,
     amount: PromiseOrValue<BigNumberish>,
@@ -316,25 +339,10 @@ export interface AngleSantoken extends BaseContract {
 
   balanceOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  burnFrom(
-    amount: PromiseOrValue<BigNumberish>,
-    burner: PromiseOrValue<string>,
-    sender: PromiseOrValue<string>,
+  burn(
+    _recipient: PromiseOrValue<string>,
     overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
-
-  burnNoRedeem(
-    amount: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> },
-  ): Promise<ContractTransaction>;
-
-  burnSelf(
-    amount: PromiseOrValue<BigNumberish>,
-    burner: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> },
-  ): Promise<ContractTransaction>;
-
-  decimal(overrides?: CallOverrides): Promise<number>;
 
   decimals(overrides?: CallOverrides): Promise<number>;
 
@@ -344,6 +352,10 @@ export interface AngleSantoken extends BaseContract {
     overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
+  factory(overrides?: CallOverrides): Promise<string>;
+
+  inactiveAnatomy(overrides?: CallOverrides): Promise<string[]>;
+
   increaseAllowance(
     spender: PromiseOrValue<string>,
     addedValue: PromiseOrValue<BigNumberish>,
@@ -351,15 +363,13 @@ export interface AngleSantoken extends BaseContract {
   ): Promise<ContractTransaction>;
 
   initialize(
-    name_: PromiseOrValue<string>,
-    symbol_: PromiseOrValue<string>,
-    _poolManager: PromiseOrValue<string>,
+    _assets: PromiseOrValue<string>[],
+    _weights: PromiseOrValue<BigNumberish>[],
     overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   mint(
-    account: PromiseOrValue<string>,
-    amount: PromiseOrValue<BigNumberish>,
+    _recipient: PromiseOrValue<string>,
     overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
@@ -378,26 +388,34 @@ export interface AngleSantoken extends BaseContract {
     overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  poolManager(overrides?: CallOverrides): Promise<string>;
+  registry(overrides?: CallOverrides): Promise<string>;
 
-  stableMaster(overrides?: CallOverrides): Promise<string>;
+  reweight(
+    _updatedAssets: PromiseOrValue<string>[],
+    _updatedWeights: PromiseOrValue<BigNumberish>[],
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
+  ): Promise<ContractTransaction>;
+
+  supportsInterface(_interfaceId: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<boolean>;
 
   symbol(overrides?: CallOverrides): Promise<string>;
 
   totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
   transfer(
-    recipient: PromiseOrValue<string>,
+    to: PromiseOrValue<string>,
     amount: PromiseOrValue<BigNumberish>,
     overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   transferFrom(
-    sender: PromiseOrValue<string>,
-    recipient: PromiseOrValue<string>,
+    from: PromiseOrValue<string>,
+    to: PromiseOrValue<string>,
     amount: PromiseOrValue<BigNumberish>,
     overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
+
+  vTokenFactory(overrides?: CallOverrides): Promise<string>;
 
   callStatic: {
     DOMAIN_SEPARATOR(overrides?: CallOverrides): Promise<string>;
@@ -408,6 +426,8 @@ export interface AngleSantoken extends BaseContract {
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
+    anatomy(overrides?: CallOverrides): Promise<[string[], number[]] & { _assets: string[]; _weights: number[] }>;
+
     approve(
       spender: PromiseOrValue<string>,
       amount: PromiseOrValue<BigNumberish>,
@@ -416,22 +436,7 @@ export interface AngleSantoken extends BaseContract {
 
     balanceOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    burnFrom(
-      amount: PromiseOrValue<BigNumberish>,
-      burner: PromiseOrValue<string>,
-      sender: PromiseOrValue<string>,
-      overrides?: CallOverrides,
-    ): Promise<void>;
-
-    burnNoRedeem(amount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
-
-    burnSelf(
-      amount: PromiseOrValue<BigNumberish>,
-      burner: PromiseOrValue<string>,
-      overrides?: CallOverrides,
-    ): Promise<void>;
-
-    decimal(overrides?: CallOverrides): Promise<number>;
+    burn(_recipient: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     decimals(overrides?: CallOverrides): Promise<number>;
 
@@ -441,6 +446,10 @@ export interface AngleSantoken extends BaseContract {
       overrides?: CallOverrides,
     ): Promise<boolean>;
 
+    factory(overrides?: CallOverrides): Promise<string>;
+
+    inactiveAnatomy(overrides?: CallOverrides): Promise<string[]>;
+
     increaseAllowance(
       spender: PromiseOrValue<string>,
       addedValue: PromiseOrValue<BigNumberish>,
@@ -448,17 +457,12 @@ export interface AngleSantoken extends BaseContract {
     ): Promise<boolean>;
 
     initialize(
-      name_: PromiseOrValue<string>,
-      symbol_: PromiseOrValue<string>,
-      _poolManager: PromiseOrValue<string>,
+      _assets: PromiseOrValue<string>[],
+      _weights: PromiseOrValue<BigNumberish>[],
       overrides?: CallOverrides,
     ): Promise<void>;
 
-    mint(
-      account: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides,
-    ): Promise<void>;
+    mint(_recipient: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     name(overrides?: CallOverrides): Promise<string>;
 
@@ -475,26 +479,34 @@ export interface AngleSantoken extends BaseContract {
       overrides?: CallOverrides,
     ): Promise<void>;
 
-    poolManager(overrides?: CallOverrides): Promise<string>;
+    registry(overrides?: CallOverrides): Promise<string>;
 
-    stableMaster(overrides?: CallOverrides): Promise<string>;
+    reweight(
+      _updatedAssets: PromiseOrValue<string>[],
+      _updatedWeights: PromiseOrValue<BigNumberish>[],
+      overrides?: CallOverrides,
+    ): Promise<void>;
+
+    supportsInterface(_interfaceId: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<boolean>;
 
     symbol(overrides?: CallOverrides): Promise<string>;
 
     totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
     transfer(
-      recipient: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
       amount: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<boolean>;
 
     transferFrom(
-      sender: PromiseOrValue<string>,
-      recipient: PromiseOrValue<string>,
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
       amount: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<boolean>;
+
+    vTokenFactory(overrides?: CallOverrides): Promise<string>;
   };
 
   filters: {
@@ -509,6 +521,9 @@ export interface AngleSantoken extends BaseContract {
       value?: null,
     ): ApprovalEventFilter;
 
+    'AssetRemoved(address)'(asset?: null): AssetRemovedEventFilter;
+    AssetRemoved(asset?: null): AssetRemovedEventFilter;
+
     'Transfer(address,address,uint256)'(
       from?: PromiseOrValue<string> | null,
       to?: PromiseOrValue<string> | null,
@@ -519,6 +534,9 @@ export interface AngleSantoken extends BaseContract {
       to?: PromiseOrValue<string> | null,
       value?: null,
     ): TransferEventFilter;
+
+    'UpdateAnatomy(address,uint8)'(asset?: null, weight?: null): UpdateAnatomyEventFilter;
+    UpdateAnatomy(asset?: null, weight?: null): UpdateAnatomyEventFilter;
   };
 
   estimateGas: {
@@ -530,6 +548,8 @@ export interface AngleSantoken extends BaseContract {
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
+    anatomy(overrides?: CallOverrides): Promise<BigNumber>;
+
     approve(
       spender: PromiseOrValue<string>,
       amount: PromiseOrValue<BigNumberish>,
@@ -538,25 +558,10 @@ export interface AngleSantoken extends BaseContract {
 
     balanceOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    burnFrom(
-      amount: PromiseOrValue<BigNumberish>,
-      burner: PromiseOrValue<string>,
-      sender: PromiseOrValue<string>,
+    burn(
+      _recipient: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
-
-    burnNoRedeem(
-      amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<BigNumber>;
-
-    burnSelf(
-      amount: PromiseOrValue<BigNumberish>,
-      burner: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<BigNumber>;
-
-    decimal(overrides?: CallOverrides): Promise<BigNumber>;
 
     decimals(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -566,6 +571,10 @@ export interface AngleSantoken extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
+    factory(overrides?: CallOverrides): Promise<BigNumber>;
+
+    inactiveAnatomy(overrides?: CallOverrides): Promise<BigNumber>;
+
     increaseAllowance(
       spender: PromiseOrValue<string>,
       addedValue: PromiseOrValue<BigNumberish>,
@@ -573,15 +582,13 @@ export interface AngleSantoken extends BaseContract {
     ): Promise<BigNumber>;
 
     initialize(
-      name_: PromiseOrValue<string>,
-      symbol_: PromiseOrValue<string>,
-      _poolManager: PromiseOrValue<string>,
+      _assets: PromiseOrValue<string>[],
+      _weights: PromiseOrValue<BigNumberish>[],
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     mint(
-      account: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
+      _recipient: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
@@ -600,26 +607,34 @@ export interface AngleSantoken extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    poolManager(overrides?: CallOverrides): Promise<BigNumber>;
+    registry(overrides?: CallOverrides): Promise<BigNumber>;
 
-    stableMaster(overrides?: CallOverrides): Promise<BigNumber>;
+    reweight(
+      _updatedAssets: PromiseOrValue<string>[],
+      _updatedWeights: PromiseOrValue<BigNumberish>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
+
+    supportsInterface(_interfaceId: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<BigNumber>;
 
     symbol(overrides?: CallOverrides): Promise<BigNumber>;
 
     totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
     transfer(
-      recipient: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
       amount: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     transferFrom(
-      sender: PromiseOrValue<string>,
-      recipient: PromiseOrValue<string>,
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
       amount: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
+
+    vTokenFactory(overrides?: CallOverrides): Promise<BigNumber>;
   };
 
   populateTransaction: {
@@ -631,6 +646,8 @@ export interface AngleSantoken extends BaseContract {
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
+    anatomy(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
     approve(
       spender: PromiseOrValue<string>,
       amount: PromiseOrValue<BigNumberish>,
@@ -639,25 +656,10 @@ export interface AngleSantoken extends BaseContract {
 
     balanceOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    burnFrom(
-      amount: PromiseOrValue<BigNumberish>,
-      burner: PromiseOrValue<string>,
-      sender: PromiseOrValue<string>,
+    burn(
+      _recipient: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
-
-    burnNoRedeem(
-      amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<PopulatedTransaction>;
-
-    burnSelf(
-      amount: PromiseOrValue<BigNumberish>,
-      burner: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<PopulatedTransaction>;
-
-    decimal(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     decimals(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
@@ -667,6 +669,10 @@ export interface AngleSantoken extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
+    factory(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    inactiveAnatomy(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
     increaseAllowance(
       spender: PromiseOrValue<string>,
       addedValue: PromiseOrValue<BigNumberish>,
@@ -674,15 +680,13 @@ export interface AngleSantoken extends BaseContract {
     ): Promise<PopulatedTransaction>;
 
     initialize(
-      name_: PromiseOrValue<string>,
-      symbol_: PromiseOrValue<string>,
-      _poolManager: PromiseOrValue<string>,
+      _assets: PromiseOrValue<string>[],
+      _weights: PromiseOrValue<BigNumberish>[],
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     mint(
-      account: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
+      _recipient: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
@@ -701,25 +705,36 @@ export interface AngleSantoken extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    poolManager(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    registry(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    stableMaster(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    reweight(
+      _updatedAssets: PromiseOrValue<string>[],
+      _updatedWeights: PromiseOrValue<BigNumberish>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<PopulatedTransaction>;
+
+    supportsInterface(
+      _interfaceId: PromiseOrValue<BytesLike>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
     symbol(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     totalSupply(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     transfer(
-      recipient: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
       amount: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     transferFrom(
-      sender: PromiseOrValue<string>,
-      recipient: PromiseOrValue<string>,
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
       amount: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
+
+    vTokenFactory(overrides?: CallOverrides): Promise<PopulatedTransaction>;
   };
 }

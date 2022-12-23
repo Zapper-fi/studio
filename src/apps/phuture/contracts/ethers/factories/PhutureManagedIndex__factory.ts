@@ -4,7 +4,7 @@
 
 import { Contract, Signer, utils } from 'ethers';
 import type { Provider } from '@ethersproject/providers';
-import type { ManagedIndex, ManagedIndexInterface } from '../ManagedIndex';
+import type { PhutureManagedIndex, PhutureManagedIndexInterface } from '../PhutureManagedIndex';
 
 const _abi = [
   {
@@ -537,12 +537,12 @@ const _abi = [
   },
 ];
 
-export class ManagedIndex__factory {
+export class PhutureManagedIndex__factory {
   static readonly abi = _abi;
-  static createInterface(): ManagedIndexInterface {
-    return new utils.Interface(_abi) as ManagedIndexInterface;
+  static createInterface(): PhutureManagedIndexInterface {
+    return new utils.Interface(_abi) as PhutureManagedIndexInterface;
   }
-  static connect(address: string, signerOrProvider: Signer | Provider): ManagedIndex {
-    return new Contract(address, _abi, signerOrProvider) as ManagedIndex;
+  static connect(address: string, signerOrProvider: Signer | Provider): PhutureManagedIndex {
+    return new Contract(address, _abi, signerOrProvider) as PhutureManagedIndex;
   }
 }

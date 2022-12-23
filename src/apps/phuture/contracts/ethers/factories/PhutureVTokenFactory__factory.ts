@@ -4,7 +4,7 @@
 
 import { Contract, Signer, utils } from 'ethers';
 import type { Provider } from '@ethersproject/providers';
-import type { VTokenFactory, VTokenFactoryInterface } from '../VTokenFactory';
+import type { PhutureVTokenFactory, PhutureVTokenFactoryInterface } from '../PhutureVTokenFactory';
 
 const _abi = [
   {
@@ -47,12 +47,12 @@ const _abi = [
   },
 ];
 
-export class VTokenFactory__factory {
+export class PhutureVTokenFactory__factory {
   static readonly abi = _abi;
-  static createInterface(): VTokenFactoryInterface {
-    return new utils.Interface(_abi) as VTokenFactoryInterface;
+  static createInterface(): PhutureVTokenFactoryInterface {
+    return new utils.Interface(_abi) as PhutureVTokenFactoryInterface;
   }
-  static connect(address: string, signerOrProvider: Signer | Provider): VTokenFactory {
-    return new Contract(address, _abi, signerOrProvider) as VTokenFactory;
+  static connect(address: string, signerOrProvider: Signer | Provider): PhutureVTokenFactory {
+    return new Contract(address, _abi, signerOrProvider) as PhutureVTokenFactory;
   }
 }

@@ -4,21 +4,13 @@
 
 import { Contract, Signer, utils } from 'ethers';
 import type { Provider } from '@ethersproject/providers';
-import type { VToken, VTokenInterface } from '../VToken';
+import type { AngleSanToken, AngleSanTokenInterface } from '../AngleSanToken';
 
 const _abi = [
   {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: false,
-        internalType: 'address',
-        name: 'vaultController',
-        type: 'address',
-      },
-    ],
-    name: 'SetVaultController',
-    type: 'event',
+    inputs: [],
+    stateMutability: 'nonpayable',
+    type: 'constructor',
   },
   {
     anonymous: false,
@@ -26,17 +18,23 @@ const _abi = [
       {
         indexed: true,
         internalType: 'address',
-        name: 'account',
+        name: 'owner',
+        type: 'address',
+      },
+      {
+        indexed: true,
+        internalType: 'address',
+        name: 'spender',
         type: 'address',
       },
       {
         indexed: false,
         internalType: 'uint256',
-        name: 'depositedAmount',
+        name: 'value',
         type: 'uint256',
       },
     ],
-    name: 'UpdateDeposit',
+    name: 'Approval',
     type: 'event',
   },
   {
@@ -57,35 +55,40 @@ const _abi = [
       {
         indexed: false,
         internalType: 'uint256',
-        name: 'amount',
+        name: 'value',
         type: 'uint256',
       },
     ],
-    name: 'VTokenTransfer',
+    name: 'Transfer',
     type: 'event',
   },
   {
     inputs: [],
-    name: 'asset',
+    name: 'DOMAIN_SEPARATOR',
     outputs: [
       {
-        internalType: 'address',
+        internalType: 'bytes32',
         name: '',
+        type: 'bytes32',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'address',
+        name: 'owner',
+        type: 'address',
+      },
+      {
+        internalType: 'address',
+        name: 'spender',
         type: 'address',
       },
     ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        internalType: 'uint256',
-        name: '_shares',
-        type: 'uint256',
-      },
-    ],
-    name: 'assetBalanceForShares',
+    name: 'allowance',
     outputs: [
       {
         internalType: 'uint256',
@@ -100,62 +103,31 @@ const _abi = [
     inputs: [
       {
         internalType: 'address',
-        name: '_account',
-        type: 'address',
-      },
-    ],
-    name: 'assetBalanceOf',
-    outputs: [
-      {
-        internalType: 'uint256',
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        internalType: 'address',
-        name: '_account',
+        name: 'spender',
         type: 'address',
       },
       {
         internalType: 'uint256',
-        name: '_shares',
+        name: 'amount',
         type: 'uint256',
       },
     ],
-    name: 'assetDataOf',
+    name: 'approve',
     outputs: [
       {
-        components: [
-          {
-            internalType: 'uint256',
-            name: 'maxShares',
-            type: 'uint256',
-          },
-          {
-            internalType: 'uint256',
-            name: 'amountInAsset',
-            type: 'uint256',
-          },
-        ],
-        internalType: 'struct IvToken.AssetData',
+        internalType: 'bool',
         name: '',
-        type: 'tuple',
+        type: 'bool',
       },
     ],
-    stateMutability: 'view',
+    stateMutability: 'nonpayable',
     type: 'function',
   },
   {
     inputs: [
       {
         internalType: 'address',
-        name: '_account',
+        name: 'account',
         type: 'address',
       },
     ],
@@ -173,69 +145,78 @@ const _abi = [
   {
     inputs: [
       {
+        internalType: 'uint256',
+        name: 'amount',
+        type: 'uint256',
+      },
+      {
         internalType: 'address',
-        name: '_recipient',
+        name: 'burner',
+        type: 'address',
+      },
+      {
+        internalType: 'address',
+        name: 'sender',
         type: 'address',
       },
     ],
-    name: 'burn',
-    outputs: [
+    name: 'burnFrom',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
       {
         internalType: 'uint256',
         name: 'amount',
         type: 'uint256',
       },
     ],
+    name: 'burnNoRedeem',
+    outputs: [],
     stateMutability: 'nonpayable',
     type: 'function',
   },
   {
     inputs: [
       {
+        internalType: 'uint256',
+        name: 'amount',
+        type: 'uint256',
+      },
+      {
         internalType: 'address',
-        name: '_recipient',
+        name: 'burner',
         type: 'address',
       },
     ],
-    name: 'burnFor',
-    outputs: [
-      {
-        internalType: 'uint256',
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'currentDepositedPercentageInBP',
-    outputs: [
-      {
-        internalType: 'uint256',
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'deposit',
+    name: 'burnSelf',
     outputs: [],
     stateMutability: 'nonpayable',
     type: 'function',
   },
   {
     inputs: [],
-    name: 'deposited',
+    name: 'decimal',
     outputs: [
       {
-        internalType: 'uint256',
+        internalType: 'uint8',
         name: '',
-        type: 'uint256',
+        type: 'uint8',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'decimals',
+    outputs: [
+      {
+        internalType: 'uint8',
+        name: '',
+        type: 'uint8',
       },
     ],
     stateMutability: 'view',
@@ -245,12 +226,65 @@ const _abi = [
     inputs: [
       {
         internalType: 'address',
-        name: '_asset',
+        name: 'spender',
         type: 'address',
       },
       {
+        internalType: 'uint256',
+        name: 'subtractedValue',
+        type: 'uint256',
+      },
+    ],
+    name: 'decreaseAllowance',
+    outputs: [
+      {
+        internalType: 'bool',
+        name: '',
+        type: 'bool',
+      },
+    ],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
         internalType: 'address',
-        name: '_registry',
+        name: 'spender',
+        type: 'address',
+      },
+      {
+        internalType: 'uint256',
+        name: 'addedValue',
+        type: 'uint256',
+      },
+    ],
+    name: 'increaseAllowance',
+    outputs: [
+      {
+        internalType: 'bool',
+        name: '',
+        type: 'bool',
+      },
+    ],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'string',
+        name: 'name_',
+        type: 'string',
+      },
+      {
+        internalType: 'string',
+        name: 'symbol_',
+        type: 'string',
+      },
+      {
+        internalType: 'address',
+        name: '_poolManager',
         type: 'address',
       },
     ],
@@ -260,177 +294,132 @@ const _abi = [
     type: 'function',
   },
   {
-    inputs: [],
-    name: 'lastAssetBalance',
-    outputs: [
-      {
-        internalType: 'uint256',
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
     inputs: [
       {
         internalType: 'address',
-        name: '_account',
+        name: 'account',
         type: 'address',
       },
-    ],
-    name: 'lastAssetBalanceOf',
-    outputs: [
       {
         internalType: 'uint256',
-        name: '',
+        name: 'amount',
         type: 'uint256',
       },
     ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [],
     name: 'mint',
-    outputs: [
-      {
-        internalType: 'uint256',
-        name: 'shares',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        internalType: 'address',
-        name: '_recipient',
-        type: 'address',
-      },
-    ],
-    name: 'mintFor',
-    outputs: [
-      {
-        internalType: 'uint256',
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        internalType: 'uint256',
-        name: '_amount',
-        type: 'uint256',
-      },
-    ],
-    name: 'mintableShares',
-    outputs: [
-      {
-        internalType: 'uint256',
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'registry',
-    outputs: [
-      {
-        internalType: 'address',
-        name: '',
-        type: 'address',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        internalType: 'address',
-        name: '_vaultController',
-        type: 'address',
-      },
-    ],
-    name: 'setController',
-    outputs: [],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        internalType: 'address',
-        name: '_account',
-        type: 'address',
-      },
-      {
-        internalType: 'uint256',
-        name: '_amountInAsset',
-        type: 'uint256',
-      },
-    ],
-    name: 'shareChange',
-    outputs: [
-      {
-        internalType: 'uint256',
-        name: 'newShares',
-        type: 'uint256',
-      },
-      {
-        internalType: 'uint256',
-        name: 'oldShares',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        internalType: 'bytes4',
-        name: '_interfaceId',
-        type: 'bytes4',
-      },
-    ],
-    name: 'supportsInterface',
-    outputs: [
-      {
-        internalType: 'bool',
-        name: '',
-        type: 'bool',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'sync',
     outputs: [],
     stateMutability: 'nonpayable',
     type: 'function',
   },
   {
     inputs: [],
-    name: 'totalAssetSupply',
+    name: 'name',
+    outputs: [
+      {
+        internalType: 'string',
+        name: '',
+        type: 'string',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'address',
+        name: 'owner',
+        type: 'address',
+      },
+    ],
+    name: 'nonces',
     outputs: [
       {
         internalType: 'uint256',
         name: '',
         type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'address',
+        name: 'owner',
+        type: 'address',
+      },
+      {
+        internalType: 'address',
+        name: 'spender',
+        type: 'address',
+      },
+      {
+        internalType: 'uint256',
+        name: 'value',
+        type: 'uint256',
+      },
+      {
+        internalType: 'uint256',
+        name: 'deadline',
+        type: 'uint256',
+      },
+      {
+        internalType: 'uint8',
+        name: 'v',
+        type: 'uint8',
+      },
+      {
+        internalType: 'bytes32',
+        name: 'r',
+        type: 'bytes32',
+      },
+      {
+        internalType: 'bytes32',
+        name: 's',
+        type: 'bytes32',
+      },
+    ],
+    name: 'permit',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'poolManager',
+    outputs: [
+      {
+        internalType: 'address',
+        name: '',
+        type: 'address',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'stableMaster',
+    outputs: [
+      {
+        internalType: 'address',
+        name: '',
+        type: 'address',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'symbol',
+    outputs: [
+      {
+        internalType: 'string',
+        name: '',
+        type: 'string',
       },
     ],
     stateMutability: 'view',
@@ -453,35 +442,23 @@ const _abi = [
     inputs: [
       {
         internalType: 'address',
-        name: '_recipient',
+        name: 'recipient',
         type: 'address',
       },
       {
         internalType: 'uint256',
-        name: '_amount',
+        name: 'amount',
         type: 'uint256',
       },
     ],
     name: 'transfer',
-    outputs: [],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [
+    outputs: [
       {
-        internalType: 'address',
-        name: '_recipient',
-        type: 'address',
-      },
-      {
-        internalType: 'uint256',
-        name: '_amount',
-        type: 'uint256',
+        internalType: 'bool',
+        name: '',
+        type: 'bool',
       },
     ],
-    name: 'transferAsset',
-    outputs: [],
     stateMutability: 'nonpayable',
     type: 'function',
   },
@@ -489,66 +466,39 @@ const _abi = [
     inputs: [
       {
         internalType: 'address',
-        name: '_from',
+        name: 'sender',
         type: 'address',
       },
       {
         internalType: 'address',
-        name: '_to',
+        name: 'recipient',
         type: 'address',
       },
       {
         internalType: 'uint256',
-        name: '_shares',
+        name: 'amount',
         type: 'uint256',
       },
     ],
     name: 'transferFrom',
-    outputs: [],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'vaultController',
     outputs: [
       {
-        internalType: 'address',
+        internalType: 'bool',
         name: '',
-        type: 'address',
+        type: 'bool',
       },
     ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'virtualTotalAssetSupply',
-    outputs: [
-      {
-        internalType: 'uint256',
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'withdraw',
-    outputs: [],
     stateMutability: 'nonpayable',
     type: 'function',
   },
 ];
 
-export class VToken__factory {
+export class AngleSanToken__factory {
   static readonly abi = _abi;
-  static createInterface(): VTokenInterface {
-    return new utils.Interface(_abi) as VTokenInterface;
+  static createInterface(): AngleSanTokenInterface {
+    return new utils.Interface(_abi) as AngleSanTokenInterface;
   }
-  static connect(address: string, signerOrProvider: Signer | Provider): VToken {
-    return new Contract(address, _abi, signerOrProvider) as VToken;
+  static connect(address: string, signerOrProvider: Signer | Provider): AngleSanToken {
+    return new Contract(address, _abi, signerOrProvider) as AngleSanToken;
   }
 }
