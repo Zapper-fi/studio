@@ -6,7 +6,7 @@ import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi
 import type { Listener, Provider } from '@ethersproject/providers';
 import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
-export interface VTokenFactoryInterface extends utils.Interface {
+export interface PhutureVTokenFactoryInterface extends utils.Interface {
   functions: {
     'vTokenOf(address)': FunctionFragment;
   };
@@ -32,12 +32,12 @@ export type VTokenCreatedEvent = TypedEvent<[string, string], VTokenCreatedEvent
 
 export type VTokenCreatedEventFilter = TypedEventFilter<VTokenCreatedEvent>;
 
-export interface VTokenFactory extends BaseContract {
+export interface PhutureVTokenFactory extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
 
-  interface: VTokenFactoryInterface;
+  interface: PhutureVTokenFactoryInterface;
 
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,

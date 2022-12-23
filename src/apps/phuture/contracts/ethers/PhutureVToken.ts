@@ -29,7 +29,7 @@ export declare namespace IvToken {
   };
 }
 
-export interface VTokenInterface extends utils.Interface {
+export interface PhutureVTokenInterface extends utils.Interface {
   functions: {
     'asset()': FunctionFragment;
     'assetBalanceForShares(uint256)': FunctionFragment;
@@ -205,12 +205,12 @@ export type VTokenTransferEvent = TypedEvent<[string, string, BigNumber], VToken
 
 export type VTokenTransferEventFilter = TypedEventFilter<VTokenTransferEvent>;
 
-export interface VToken extends BaseContract {
+export interface PhutureVToken extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
 
-  interface: VTokenInterface;
+  interface: PhutureVTokenInterface;
 
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,
