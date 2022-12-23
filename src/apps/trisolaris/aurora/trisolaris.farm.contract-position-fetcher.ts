@@ -1,9 +1,18 @@
 import { Inject } from '@nestjs/common';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
+import { ZERO_ADDRESS } from '~app-toolkit/constants/address';
 import { Register } from '~app-toolkit/decorators';
-import { PositionFetcher } from '~position/position-fetcher.interface';
-import { ContractPosition } from '~position/position.interface';
+import { RewardRateUnit } from '~app-toolkit/helpers/master-chef/master-chef.contract-position-helper';
+import {
+  GetMasterChefV2ExtraRewardTokenBalancesParams,
+  GetMasterChefV2ExtraRewardTokenRewardRates,
+  MasterChefV2TemplateContractPositionFetcher,
+} from '~position/template/master-chef-v2.template.contract-position-fetcher';
+import {
+  GetMasterChefDataPropsParams,
+  GetMasterChefTokenBalancesParams,
+} from '~position/template/master-chef.template.contract-position-fetcher';
 import { Network } from '~types/network.interface';
 
 import { TrisolarisMasterChef, TrisolarisRewarder, TrisolarisContractFactory } from '../contracts';
@@ -14,53 +23,90 @@ const groupId = TRISOLARIS_DEFINITION.groups.farm.id;
 const network = Network.AURORA_MAINNET;
 
 @Register.ContractPositionFetcher({ appId, groupId, network })
-export class AuroraTrisolarisFarmContractPositionFetcher implements PositionFetcher<ContractPosition> {
-  constructor(
-    @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
-    @Inject(TrisolarisContractFactory) private readonly contractFactory: TrisolarisContractFactory,
-  ) {}
+export class AuroraTrisolarisFarmContractPositionFetcher extends MasterChefV2TemplateContractPositionFetcher<
+  TrisolarisMasterChef,
+  TrisolarisRewarder
+> {
+  groupLabel = 'Farms';
+  chefAddress = '0x3838956710bcc9d122dd23863a0549ca8d5675d6';
+  rewardRateUnit = RewardRateUnit.BLOCK;
 
-  async getPositions() {
-    return this.appToolkit.helpers.masterChefContractPositionHelper.getContractPositions<TrisolarisMasterChef>({
-      address: '0x3838956710bcc9d122dd23863a0549ca8d5675d6',
-      appId,
-      groupId,
-      network,
-      dependencies: [{ appId: TRISOLARIS_DEFINITION.id, groupIds: [TRISOLARIS_DEFINITION.groups.pool.id], network }],
-      resolveContract: ({ address, network }) => this.contractFactory.trisolarisMasterChef({ address, network }),
-      resolvePoolLength: ({ multicall, contract }) => multicall.wrap(contract).poolLength(),
-      resolveDepositTokenAddress: ({ poolIndex, contract, multicall }) => multicall.wrap(contract).lpToken(poolIndex),
-      resolveRewardTokenAddresses: this.appToolkit.helpers.masterChefV2ClaimableTokenStrategy.build<
-        TrisolarisMasterChef,
-        TrisolarisRewarder
-      >({
-        resolvePrimaryClaimableToken: ({ multicall, contract }) => multicall.wrap(contract).TRI(),
-        resolveRewarderAddress: ({ multicall, contract, poolIndex }) => multicall.wrap(contract).rewarder(poolIndex),
-        resolveRewarderContract: ({ network, rewarderAddress }) =>
-          this.contractFactory.trisolarisRewarder({ address: rewarderAddress, network }),
-        resolveSecondaryClaimableToken: ({ multicall, rewarderContract }) =>
-          multicall.wrap(rewarderContract).rewardToken(),
-      }),
-      resolveRewardRate: this.appToolkit.helpers.masterChefV2RewardRateStrategy.build<
-        TrisolarisMasterChef,
-        TrisolarisRewarder
-      >({
-        resolvePoolAllocPoints: async ({ poolIndex, contract, multicall }) =>
-          multicall
-            .wrap(contract)
-            .poolInfo(poolIndex)
-            .then(v => v.allocPoint),
-        resolveTotalAllocPoints: ({ multicall, contract }) => multicall.wrap(contract).totalAllocPoint(),
-        resolvePrimaryTotalRewardRate: async ({ multicall, contract }) => multicall.wrap(contract).triPerBlock(),
-        resolveRewarderAddress: ({ multicall, contract, poolIndex }) => multicall.wrap(contract).rewarder(poolIndex),
-        resolveRewarderContract: ({ network, rewarderAddress }) =>
-          this.contractFactory.trisolarisRewarder({ address: rewarderAddress, network }),
-        resolveSecondaryTotalRewardRate: async ({ multicall, rewarderContract }) =>
-          multicall
-            .wrap(rewarderContract)
-            .tokenPerBlock()
-            .catch(() => '0'),
-      }),
-    });
+  constructor(
+    @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
+    @Inject(TrisolarisContractFactory) protected readonly contractFactory: TrisolarisContractFactory,
+  ) {
+    super(appToolkit);
+  }
+
+  getContract(address: string): TrisolarisMasterChef {
+    return this.contractFactory.trisolarisMasterChef({ address, network: this.network });
+  }
+
+  getExtraRewarderContract(address: string): TrisolarisRewarder {
+    return this.contractFactory.trisolarisRewarder({ address, network: this.network });
+  }
+
+  async getPoolLength(contract: TrisolarisMasterChef) {
+    return contract.poolLength();
+  }
+
+  async getStakedTokenAddress(contract: TrisolarisMasterChef, poolIndex: number) {
+    return contract.lpToken(poolIndex);
+  }
+
+  async getRewardTokenAddress(contract: TrisolarisMasterChef) {
+    return contract.TRI();
+  }
+
+  async getExtraRewarder(contract: TrisolarisMasterChef, poolIndex: number) {
+    return contract.rewarder(poolIndex);
+  }
+
+  async getExtraRewardTokenAddresses(contract: TrisolarisRewarder, poolIndex: number) {
+    return contract.pendingTokens(poolIndex, ZERO_ADDRESS, 0).then(v => [v.rewardTokens[0]]);
+  }
+
+  async getTotalAllocPoints({ contract }: GetMasterChefDataPropsParams<TrisolarisMasterChef>) {
+    return contract.totalAllocPoint();
+  }
+
+  async getTotalRewardRate({ contract }: GetMasterChefDataPropsParams<TrisolarisMasterChef>) {
+    return contract.triPerBlock();
+  }
+
+  async getPoolAllocPoints({ contract, definition }: GetMasterChefDataPropsParams<TrisolarisMasterChef>) {
+    return contract.poolInfo(definition.poolIndex).then(v => v.allocPoint);
+  }
+
+  async getExtraRewardTokenRewardRates({
+    rewarderContract,
+  }: GetMasterChefV2ExtraRewardTokenRewardRates<TrisolarisMasterChef, TrisolarisRewarder>) {
+    return rewarderContract.tokenPerBlock();
+  }
+
+  async getStakedTokenBalance({
+    address,
+    contract,
+    contractPosition,
+  }: GetMasterChefTokenBalancesParams<TrisolarisMasterChef>) {
+    return contract.userInfo(contractPosition.dataProps.poolIndex, address).then(v => v.amount);
+  }
+
+  async getRewardTokenBalance({
+    address,
+    contract,
+    contractPosition,
+  }: GetMasterChefTokenBalancesParams<TrisolarisMasterChef>) {
+    return contract.pendingTri(contractPosition.dataProps.poolIndex, address);
+  }
+
+  async getExtraRewardTokenBalances({
+    address,
+    rewarderContract,
+    contractPosition,
+  }: GetMasterChefV2ExtraRewardTokenBalancesParams<TrisolarisMasterChef, TrisolarisRewarder>) {
+    return rewarderContract
+      .pendingTokens(contractPosition.dataProps.poolIndex, address, 0)
+      .then(v => v.rewardAmounts[0]);
   }
 }
