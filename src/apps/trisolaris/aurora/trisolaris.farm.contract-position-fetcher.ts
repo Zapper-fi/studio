@@ -2,7 +2,7 @@ import { Inject } from '@nestjs/common';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { ZERO_ADDRESS } from '~app-toolkit/constants/address';
-import { Register } from '~app-toolkit/decorators';
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import { RewardRateUnit } from '~app-toolkit/helpers/master-chef/master-chef.contract-position-helper';
 import {
   GetMasterChefV2ExtraRewardTokenBalancesParams,
@@ -13,16 +13,10 @@ import {
   GetMasterChefDataPropsParams,
   GetMasterChefTokenBalancesParams,
 } from '~position/template/master-chef.template.contract-position-fetcher';
-import { Network } from '~types/network.interface';
 
 import { TrisolarisMasterChef, TrisolarisRewarder, TrisolarisContractFactory } from '../contracts';
-import TRISOLARIS_DEFINITION from '../trisolaris.definition';
 
-const appId = TRISOLARIS_DEFINITION.id;
-const groupId = TRISOLARIS_DEFINITION.groups.farm.id;
-const network = Network.AURORA_MAINNET;
-
-@Register.ContractPositionFetcher({ appId, groupId, network })
+@PositionTemplate()
 export class AuroraTrisolarisFarmContractPositionFetcher extends MasterChefV2TemplateContractPositionFetcher<
   TrisolarisMasterChef,
   TrisolarisRewarder
