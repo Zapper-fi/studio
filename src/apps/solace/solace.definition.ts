@@ -17,8 +17,8 @@ export const SOLACE_DEFINITION = appDefinition({
       label: 'SCP',
     },
 
-    xsolacev1: {
-      id: 'xsolacev1',
+    xSolaceV1: {
+      id: 'x-solace-v1',
       type: GroupType.TOKEN,
       label: 'xSOLACEv1',
     },
@@ -29,8 +29,8 @@ export const SOLACE_DEFINITION = appDefinition({
       label: 'Bonds',
     },
 
-    xslocker: {
-      id: 'xslocker',
+    xsLocker: {
+      id: 'xs-locker',
       type: GroupType.POSITION,
       label: 'xsLocker',
     },
