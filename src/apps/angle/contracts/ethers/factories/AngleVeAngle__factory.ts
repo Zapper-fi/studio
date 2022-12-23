@@ -4,7 +4,7 @@
 
 import { Contract, Signer, utils } from 'ethers';
 import type { Provider } from '@ethersproject/providers';
-import type { AngleVeangle, AngleVeangleInterface } from '../AngleVeangle';
+import type { AngleVeAngle, AngleVeAngleInterface } from '../AngleVeAngle';
 
 const _abi = [
   {
@@ -683,12 +683,12 @@ const _abi = [
   },
 ];
 
-export class AngleVeangle__factory {
+export class AngleVeAngle__factory {
   static readonly abi = _abi;
-  static createInterface(): AngleVeangleInterface {
-    return new utils.Interface(_abi) as AngleVeangleInterface;
+  static createInterface(): AngleVeAngleInterface {
+    return new utils.Interface(_abi) as AngleVeAngleInterface;
   }
-  static connect(address: string, signerOrProvider: Signer | Provider): AngleVeangle {
-    return new Contract(address, _abi, signerOrProvider) as AngleVeangle;
+  static connect(address: string, signerOrProvider: Signer | Provider): AngleVeAngle {
+    return new Contract(address, _abi, signerOrProvider) as AngleVeAngle;
   }
 }

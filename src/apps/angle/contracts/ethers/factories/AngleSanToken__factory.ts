@@ -4,7 +4,7 @@
 
 import { Contract, Signer, utils } from 'ethers';
 import type { Provider } from '@ethersproject/providers';
-import type { AngleSantoken, AngleSantokenInterface } from '../AngleSantoken';
+import type { AngleSanToken, AngleSanTokenInterface } from '../AngleSanToken';
 
 const _abi = [
   {
@@ -493,12 +493,12 @@ const _abi = [
   },
 ];
 
-export class AngleSantoken__factory {
+export class AngleSanToken__factory {
   static readonly abi = _abi;
-  static createInterface(): AngleSantokenInterface {
-    return new utils.Interface(_abi) as AngleSantokenInterface;
+  static createInterface(): AngleSanTokenInterface {
+    return new utils.Interface(_abi) as AngleSanTokenInterface;
   }
-  static connect(address: string, signerOrProvider: Signer | Provider): AngleSantoken {
-    return new Contract(address, _abi, signerOrProvider) as AngleSantoken;
+  static connect(address: string, signerOrProvider: Signer | Provider): AngleSanToken {
+    return new Contract(address, _abi, signerOrProvider) as AngleSanToken;
   }
 }
