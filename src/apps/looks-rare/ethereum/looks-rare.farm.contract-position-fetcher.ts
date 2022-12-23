@@ -1,13 +1,16 @@
 import { Inject } from '@nestjs/common';
 
-import { Register } from '~app-toolkit/decorators';
-import { SingleStakingFarmContractPositionHelper } from '~app-toolkit/helpers/position/single-staking-farm.contract-position-helper';
-import { PositionFetcher } from '~position/position-fetcher.interface';
-import { ContractPosition } from '~position/position.interface';
-import { Network } from '~types/network.interface';
+import { APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
+import { AppToolkit } from '~app-toolkit/app-toolkit.service';
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
+import { GetDataPropsParams, GetTokenBalancesParams } from '~position/template/contract-position.template.types';
+import {
+  SingleStakingFarmDataProps,
+  SingleStakingFarmDefinition,
+  SingleStakingFarmTemplateContractPositionFetcher,
+} from '~position/template/single-staking.template.contract-position-fetcher';
 
 import { LooksRareContractFactory, LooksRareFeeSharing } from '../contracts';
-import { LOOKS_RARE_DEFINITION } from '../looks-rare.definition';
 
 const FARMS = [
   {
@@ -17,29 +20,40 @@ const FARMS = [
   },
 ];
 
-const appId = LOOKS_RARE_DEFINITION.id;
-const groupId = LOOKS_RARE_DEFINITION.groups.farm.id;
-const network = Network.ETHEREUM_MAINNET;
+@PositionTemplate()
+export class EthereumLooksRareFarmContractPositionFetcher extends SingleStakingFarmTemplateContractPositionFetcher<LooksRareFeeSharing> {
+  groupLabel = 'Staking';
 
-@Register.ContractPositionFetcher({ appId, groupId, network })
-export class EthereumLooksRareFarmContractPositionFetcher implements PositionFetcher<ContractPosition> {
   constructor(
-    @Inject(SingleStakingFarmContractPositionHelper)
-    private readonly singleStakingFarmContractPositionHelper: SingleStakingFarmContractPositionHelper,
-    @Inject(LooksRareContractFactory)
-    private readonly looksRareContractFactory: LooksRareContractFactory,
-  ) {}
+    @Inject(APP_TOOLKIT) protected readonly appToolkit: AppToolkit,
+    @Inject(LooksRareContractFactory) protected readonly contractFactory: LooksRareContractFactory,
+  ) {
+    super(appToolkit);
+  }
 
-  async getPositions() {
-    return this.singleStakingFarmContractPositionHelper.getContractPositions<LooksRareFeeSharing>({
-      network: Network.ETHEREUM_MAINNET,
-      appId: LOOKS_RARE_DEFINITION.id,
-      groupId: LOOKS_RARE_DEFINITION.groups.farm.id,
-      resolveFarmDefinitions: async () => FARMS,
-      resolveFarmContract: ({ address, network }) =>
-        this.looksRareContractFactory.looksRareFeeSharing({ address, network }),
-      resolveIsActive: async () => true,
-      resolveRois: async () => ({ dailyROI: 0, weeklyROI: 0, yearlyROI: 0 }),
-    });
+  getContract(address: string): LooksRareFeeSharing {
+    return this.contractFactory.looksRareFeeSharing({ address, network: this.network });
+  }
+
+  async getFarmDefinitions(): Promise<SingleStakingFarmDefinition[]> {
+    return FARMS;
+  }
+
+  getRewardRates({ contract }: GetDataPropsParams<LooksRareFeeSharing, SingleStakingFarmDataProps>) {
+    return contract.rewardPerTokenStored();
+  }
+
+  getStakedTokenBalance({
+    address,
+    contract,
+  }: GetTokenBalancesParams<LooksRareFeeSharing, SingleStakingFarmDataProps>) {
+    return contract.calculateSharesValueInLOOKS(address);
+  }
+
+  getRewardTokenBalances({
+    address,
+    contract,
+  }: GetTokenBalancesParams<LooksRareFeeSharing, SingleStakingFarmDataProps>) {
+    return contract.calculatePendingRewards(address);
   }
 }
