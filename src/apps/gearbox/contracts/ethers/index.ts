@@ -2,9 +2,13 @@
 /* tslint:disable */
 /* eslint-disable */
 export type { ContractsRegister } from './ContractsRegister';
+export type { CreditManagerV2 } from './CreditManagerV2';
 export type { DieselToken } from './DieselToken';
+export type { PhantomToken } from './PhantomToken';
 export type { PoolService } from './PoolService';
 export * as factories from './factories';
 export { ContractsRegister__factory } from './factories/ContractsRegister__factory';
+export { CreditManagerV2__factory } from './factories/CreditManagerV2__factory';
 export { DieselToken__factory } from './factories/DieselToken__factory';
+export { PhantomToken__factory } from './factories/PhantomToken__factory';
 export { PoolService__factory } from './factories/PoolService__factory';
