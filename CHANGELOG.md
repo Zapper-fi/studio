@@ -4,6 +4,29 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.342.0](https://github.com/Zapper-fi/studio/compare/v0.341.2...v0.342.0) (2022-12-25)
+
+
+### Features
+
+* **angle:** To templates ([#1988](https://github.com/Zapper-fi/studio/issues/1988)) ([013c76d](https://github.com/Zapper-fi/studio/commit/013c76df36a3921ce06d237f24734ba3be21103c))
+* **trisolaris:** Migrate to templates ([#1985](https://github.com/Zapper-fi/studio/issues/1985)) ([3c64cc9](https://github.com/Zapper-fi/studio/commit/3c64cc9a22ff7c20bdbe7b8815680123c8a77c2f))
+
+
+### Bug Fixes
+
+* **dfx:** Migration to template ([#1989](https://github.com/Zapper-fi/studio/issues/1989)) ([a5f7068](https://github.com/Zapper-fi/studio/commit/a5f70689a560ba04732c853448fe0bd401a93d61))
+* **euler:** Remove RAD market ([#1993](https://github.com/Zapper-fi/studio/issues/1993)) ([1ffcd2a](https://github.com/Zapper-fi/studio/commit/1ffcd2a66f87440e179d9d24d4be5f91e0043188))
+* **gmx:** Fix label and balances in profit ([#1974](https://github.com/Zapper-fi/studio/issues/1974)) ([f8a571d](https://github.com/Zapper-fi/studio/commit/f8a571da332429e88b0c745e58c4796f81a02efa))
+* **looks-rare:** Migration to template ([#1987](https://github.com/Zapper-fi/studio/issues/1987)) ([6bd4c2d](https://github.com/Zapper-fi/studio/commit/6bd4c2db2a5fe01e940a8b5d98db8fa2ba8b06d6))
+* **metavault-trade:** Add group label to esMVX token-fetcher ([#1977](https://github.com/Zapper-fi/studio/issues/1977)) ([001827c](https://github.com/Zapper-fi/studio/commit/001827c96e9c5a0246ba392faa26bbc1599ef9f3))
+* **metavault-trade:** Migration to template ([#1973](https://github.com/Zapper-fi/studio/issues/1973)) ([0782092](https://github.com/Zapper-fi/studio/commit/0782092088906914d8ff3704994a85d3d8d8a164))
+* **penguin:** Migration to template ([#1984](https://github.com/Zapper-fi/studio/issues/1984)) ([befad35](https://github.com/Zapper-fi/studio/commit/befad35e15cb1bd11ba7bed98672cac8837b9502))
+* **phuture:** Migrate to template ([#1983](https://github.com/Zapper-fi/studio/issues/1983)) ([713bf8e](https://github.com/Zapper-fi/studio/commit/713bf8ed45d253ef96e773e74e603bc7b3f5da27))
+* **pika-protocol-v3:** Migration to template ([#1981](https://github.com/Zapper-fi/studio/issues/1981)) ([87ba72f](https://github.com/Zapper-fi/studio/commit/87ba72f1f6af030bf4667648d5553c38dcd789c8))
+* **pika-protocol:** Migration to template ([#1979](https://github.com/Zapper-fi/studio/issues/1979)) ([3040a94](https://github.com/Zapper-fi/studio/commit/3040a944b418d76aaef779ea7565f80e42868b26))
+* **solace:** Migration to template ([#1986](https://github.com/Zapper-fi/studio/issues/1986)) ([1a0852b](https://github.com/Zapper-fi/studio/commit/1a0852b978edd485b5d7921b9588ae88f6674629))
+
 ## [0.341.2](https://github.com/Zapper-fi/studio/compare/v0.341.1...v0.341.2) (2022-12-21)
 
 
