@@ -4,6 +4,7 @@ import _ from 'lodash';
 
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
+import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { DefaultDataProps } from '~position/display.interface';
 import { MetaType } from '~position/position.interface';
 import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
@@ -67,7 +68,7 @@ export class EthereumGearboxCreditAccountsContractPositionFetcher extends Contra
   async getLabel(
     params: GetDisplayPropsParams<CreditManagerV2, DefaultDataProps, DefaultContractPositionDefinition>,
   ): Promise<string> {
-    return '';
+    return getLabelFromToken(params.contractPosition.tokens[0]);
   }
 
   async getDefinitions(params: GetDefinitionsParams): Promise<DefaultContractPositionDefinition[]> {
