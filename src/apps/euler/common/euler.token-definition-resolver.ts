@@ -56,6 +56,8 @@ export enum EulerTokenType {
   P_TOKEN = 'pTokenAddress',
 }
 
+const brokenMarketAddress = ['0x31c8eacbffdd875c74b94b077895bd78cf1e64a3']; // RAD
+
 @Injectable()
 export class EulerTokenDefinitionsResolver {
   constructor(@Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit) {}
@@ -66,7 +68,9 @@ export class EulerTokenDefinitionsResolver {
       query: MARKET_QUERY,
     });
 
-    return data.eulerMarketStore.markets;
+    const marketRaw = data.eulerMarketStore.markets;
+
+    return marketRaw.filter(x => !brokenMarketAddress.includes(x.id));
   }
 
   async getTokenDefinitions(tokenType: EulerTokenType) {
@@ -79,6 +83,7 @@ export class EulerTokenDefinitionsResolver {
         underlyingTokenAddress: market.id.toLowerCase(),
       };
     });
+
     return _.compact(tokenDefinitions);
   }
 
