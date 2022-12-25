@@ -15,13 +15,9 @@ import {
   GetDisplayPropsParams,
   GetTokenBalancesParams,
 } from '~position/template/contract-position.template.types';
-import { Network } from '~types/network.interface';
 
 import { CreditManagerV2, GearboxContractFactory } from '../contracts';
 
-const network = Network.ETHEREUM_MAINNET;
-
-// @Register.ContractPositionFetcher({ appId, groupId, network })
 @PositionTemplate()
 export class EthereumGearboxCreditAccountsContractPositionFetcher extends ContractPositionTemplatePositionFetcher<CreditManagerV2> {
   constructor(
@@ -82,7 +78,7 @@ export class EthereumGearboxCreditAccountsContractPositionFetcher extends Contra
 
     const creditManagers = await contractsRegister.getCreditManagers();
     const creditManagerContracts = creditManagers.map(addr =>
-      this.gearboxContractFactory.creditManagerV2({ address: addr, network }),
+      this.gearboxContractFactory.creditManagerV2({ address: addr, network: this.network }),
     );
 
     const multicall = params.multicall;
@@ -107,7 +103,7 @@ export class EthereumGearboxCreditAccountsContractPositionFetcher extends Contra
     try {
       creditAccountAddress = await contract.getCreditAccountOrRevert(address);
     } catch (err) {
-      return [];
+      return Array(contractPosition.tokens.length).fill(0);
     }
 
     const balances = await Promise.all(
