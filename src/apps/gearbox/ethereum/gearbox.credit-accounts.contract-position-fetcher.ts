@@ -60,11 +60,6 @@ export class EthereumGearboxCreditAccountsContractPositionFetcher extends Contra
         metaType: MetaType.BORROWED,
         network: this.network,
       },
-      {
-        address: underlying,
-        metaType: MetaType.SUPPLIED,
-        network: this.network,
-      },
       ...collateralTokens.map(token => ({
         address: token,
         metaType: MetaType.SUPPLIED,
