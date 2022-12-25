@@ -10,11 +10,11 @@ import { GearboxAppDefinition, GEARBOX_DEFINITION } from './gearbox.definition';
 @Register.AppModule({
   appId: GEARBOX_DEFINITION.id,
   providers: [
+    GearboxAppDefinition,
+    GearboxContractFactory,
     EthereumGearboxCreditAccountsContractPositionFetcher,
     EthereumGearboxLendingTokenFetcher,
     EthereumGearboxPhantomTokenFetcher,
-    GearboxAppDefinition,
-    GearboxContractFactory,
   ],
 })
 export class GearboxAppModule extends AbstractApp() {}
