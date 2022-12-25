@@ -4,6 +4,18 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.343.0](https://github.com/Zapper-fi/studio/compare/v0.342.0...v0.343.0) (2022-12-25)
+
+
+### Features
+
+* **gearbox:** add credit accounts tracking ([#1991](https://github.com/Zapper-fi/studio/issues/1991)) ([41d2b4d](https://github.com/Zapper-fi/studio/commit/41d2b4dbff77a45351c412f08d891438e970976b))
+
+
+### Bug Fixes
+
+* **gearbox:** Fix Phantom tokens ([#1996](https://github.com/Zapper-fi/studio/issues/1996)) ([1bfb118](https://github.com/Zapper-fi/studio/commit/1bfb11883e9027ce31dcd0412e9002dde68aab02))
+
 ## [0.342.0](https://github.com/Zapper-fi/studio/compare/v0.341.2...v0.342.0) (2022-12-25)
 
 
