@@ -19,45 +19,76 @@ import {
 
 import { CreditManagerV2, GearboxContractFactory } from '../contracts';
 
+export type GearboxCreditAccountsDefinition = {
+  address: string;
+  underlyingTokenAddress: string;
+  collateralTokenAddresses: string[];
+};
+
 @PositionTemplate()
-export class EthereumGearboxCreditAccountsContractPositionFetcher extends ContractPositionTemplatePositionFetcher<CreditManagerV2> {
+export class EthereumGearboxCreditAccountsContractPositionFetcher extends ContractPositionTemplatePositionFetcher<
+  CreditManagerV2,
+  DefaultDataProps,
+  GearboxCreditAccountsDefinition
+> {
+  groupLabel = 'Credit Account';
+
   constructor(
     @Inject(APP_TOOLKIT) readonly appToolkit: IAppToolkit,
-    @Inject(GearboxContractFactory) private readonly gearboxContractFactory: GearboxContractFactory,
+    @Inject(GearboxContractFactory) private readonly contractFactory: GearboxContractFactory,
   ) {
     super(appToolkit);
   }
 
-  groupLabel = 'Credit Account';
-
   getContract(address: string): CreditManagerV2 {
-    return this.gearboxContractFactory.creditManagerV2({ address, network: this.network });
+    return this.contractFactory.creditManagerV2({ address, network: this.network });
   }
 
-  async getTokenDefinitions(
-    params: GetTokenDefinitionsParams<CreditManagerV2, DefaultContractPositionDefinition>,
-  ): Promise<UnderlyingTokenDefinition[] | null> {
-    const contract = params.contract;
-    const multicall = params.multicall;
+  async getDefinitions({ multicall }: GetDefinitionsParams): Promise<GearboxCreditAccountsDefinition[]> {
+    const contractsRegister = this.contractFactory.contractsRegister({
+      address: '0xa50d4e7d8946a7c90652339cdbd262c375d54d99',
+      network: this.network,
+    });
 
-    const underlying = await contract.underlying();
-    const collateralTokensCount = await contract.collateralTokensCount();
-    const collateralTokens = await Promise.all(
-      _.range(collateralTokensCount.toNumber()).map(idx =>
-        multicall
-          .wrap(contract)
-          .collateralTokens(idx)
-          .then(([token, _]) => token),
-      ),
+    const creditManagerAddresses = await multicall.wrap(contractsRegister).getCreditManagers();
+
+    const CreditManagerV2AddressesRaw = await Promise.all(
+      creditManagerAddresses.map(async address => {
+        const creditManagerV2Contract = this.contractFactory.creditManagerV2({ address, network: this.network });
+        const version = await multicall.wrap(creditManagerV2Contract).version();
+        if (Number(version) !== 2) return null;
+
+        const [underlyingTokenAddressRaw, collateralTokensCount] = await Promise.all([
+          multicall.wrap(creditManagerV2Contract).underlying(),
+          multicall.wrap(creditManagerV2Contract).collateralTokensCount(),
+        ]);
+
+        const collateralTokenAddresses = await Promise.all(
+          _.range(collateralTokensCount.toNumber()).map(async id => {
+            const collateralToken = await multicall.wrap(creditManagerV2Contract).collateralTokens(id);
+            return collateralToken.token;
+          }),
+        );
+
+        return { address, underlyingTokenAddress: underlyingTokenAddressRaw, collateralTokenAddresses };
+      }),
     );
 
+    return _.compact(CreditManagerV2AddressesRaw);
+  }
+
+  async getTokenDefinitions({
+    definition,
+  }: GetTokenDefinitionsParams<CreditManagerV2, GearboxCreditAccountsDefinition>): Promise<
+    UnderlyingTokenDefinition[]
+  > {
     return [
       {
-        address: underlying,
+        address: definition.underlyingTokenAddress,
         metaType: MetaType.BORROWED,
         network: this.network,
       },
-      ...collateralTokens.map(token => ({
+      ...definition.collateralTokenAddresses.map(token => ({
         address: token,
         metaType: MetaType.SUPPLIED,
         network: this.network,
@@ -69,28 +100,6 @@ export class EthereumGearboxCreditAccountsContractPositionFetcher extends Contra
     params: GetDisplayPropsParams<CreditManagerV2, DefaultDataProps, DefaultContractPositionDefinition>,
   ): Promise<string> {
     return getLabelFromToken(params.contractPosition.tokens[0]);
-  }
-
-  async getDefinitions(params: GetDefinitionsParams): Promise<DefaultContractPositionDefinition[]> {
-    const contractsRegister = this.gearboxContractFactory.contractsRegister({
-      address: '0xa50d4e7d8946a7c90652339cdbd262c375d54d99',
-      network: this.network,
-    });
-
-    const creditManagers = await contractsRegister.getCreditManagers();
-    const creditManagerContracts = creditManagers.map(addr =>
-      this.gearboxContractFactory.creditManagerV2({ address: addr, network: this.network }),
-    );
-
-    const multicall = params.multicall;
-    const creditManagerVersions = await Promise.all(
-      creditManagerContracts.map(contract => multicall.wrap(contract).version()),
-    );
-
-    // only v2 credit managers
-    return creditManagers
-      .filter((_, idx) => creditManagerVersions[idx].toNumber() === 2)
-      .map((address, idx) => ({ address, contract: creditManagerContracts[idx] }));
   }
 
   async getTokenBalancesPerPosition({
@@ -114,7 +123,7 @@ export class EthereumGearboxCreditAccountsContractPositionFetcher extends Contra
           return debt.borrowedAmountWithInterestAndFees;
         }
 
-        const tokenContract = this.gearboxContractFactory.erc20({ address: token.address, network: this.network });
+        const tokenContract = this.contractFactory.erc20({ address: token.address, network: this.network });
         return multicall.wrap(tokenContract).balanceOf(creditAccountAddress);
       }),
     );
