@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.343.1](https://github.com/Zapper-fi/studio/compare/v0.343.0...v0.343.1) (2022-12-26)
+
+
+### Bug Fixes
+
+* **gearbox:** Exclude phantom token from TIV and explorer ([#1997](https://github.com/Zapper-fi/studio/issues/1997)) ([c35b6d2](https://github.com/Zapper-fi/studio/commit/c35b6d2d436d29a802fc91eaac1c218e9ade972c))
+
 ## [0.343.0](https://github.com/Zapper-fi/studio/compare/v0.342.0...v0.343.0) (2022-12-25)
 
 
