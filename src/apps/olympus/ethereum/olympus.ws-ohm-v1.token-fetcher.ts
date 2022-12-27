@@ -26,8 +26,8 @@ export class EthereumOlympusWsOhmV1TokenFetcher extends AppTokenTemplatePosition
     return ['0xca76543cf381ebbb277be79574059e32108e3e65'];
   }
 
-  async getUnderlyingTokenAddresses({ contract }: GetUnderlyingTokensParams<OlympusWsOhmV1Token>) {
-    return [await contract.sOHM()];
+  async getUnderlyingTokenDefinitions({ contract }: GetUnderlyingTokensParams<OlympusWsOhmV1Token>) {
+    return [{ address: await contract.sOHM(), network: this.network }];
   }
 
   async getPricePerShare({ appToken, multicall }: GetPricePerShareParams<OlympusWsOhmV1Token>) {

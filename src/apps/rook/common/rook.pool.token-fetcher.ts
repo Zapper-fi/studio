@@ -33,9 +33,10 @@ export abstract class RookPoolTokenFetcher extends AppTokenTemplatePositionFetch
     return this.kTokenAddresses;
   }
 
-  async getUnderlyingTokenAddresses({ contract }: GetUnderlyingTokensParams<RookKToken>) {
-    const underlying = await contract.underlying();
-    return underlying.toLowerCase().replace(ETH_ADDR_ALIAS, ZERO_ADDRESS);
+  async getUnderlyingTokenDefinitions({ contract }: GetUnderlyingTokensParams<RookKToken>) {
+    const underlyingRaw = await contract.underlying();
+    const underlying = underlyingRaw.toLowerCase().replace(ETH_ADDR_ALIAS, ZERO_ADDRESS);
+    return [{ address: underlying, network: this.network }];
   }
 
   async getPricePerShare({ appToken, multicall }: GetPricePerShareParams<RookKToken>) {

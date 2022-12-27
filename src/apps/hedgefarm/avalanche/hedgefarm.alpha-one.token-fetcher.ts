@@ -29,8 +29,8 @@ export class AvalancheHedgefarmAlphaOneTokenFetcher extends AppTokenTemplatePosi
     return ['0xde4133f0cfa1a61ba94ec64b6fede4acc1fe929e'];
   }
 
-  async getUnderlyingTokenAddresses() {
-    return ['0xb97ef9ef8734c71904d8002f8b6bc66dd9c48a6e'];
+  async getUnderlyingTokenDefinitions() {
+    return [{ address: '0xb97ef9ef8734c71904d8002f8b6bc66dd9c48a6e', network: this.network }];
   }
 
   async getPricePerShare({ contract }: GetPricePerShareParams<AlphaOne>) {

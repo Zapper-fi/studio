@@ -1,91 +1,56 @@
 import { Inject } from '@nestjs/common';
-import _ from 'lodash';
+import { BigNumberish } from 'ethers';
 
-import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
-import { Register } from '~app-toolkit/decorators';
-import { buildDollarDisplayItem } from '~app-toolkit/helpers/presentation/display-item.present';
-import { getImagesFromToken, getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
-import { ARRAKIS_DEFINITION } from '~apps/arrakis/arrakis.definition';
-import { ContractType } from '~position/contract.interface';
-import { PositionFetcher } from '~position/position-fetcher.interface';
-import { ContractPosition, Token } from '~position/position.interface';
-import { claimable, supplied } from '~position/position.utils';
-import { Network } from '~types/network.interface';
+import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
+import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
+import { MetaType } from '~position/position.interface';
+import { isSupplied } from '~position/position.utils';
+import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
+import { GetDisplayPropsParams, GetTokenBalancesParams } from '~position/template/contract-position.template.types';
 
-import { ThalesContractFactory } from '../contracts';
-import { THALES_DEFINITION } from '../thales.definition';
+import { LpStaking, ThalesContractFactory } from '../contracts';
 
-export type ThalesStakingContractPositionDataProps = {
-  liquidity: number;
-};
+@PositionTemplate()
+export class OptimismThalesPool2ContractPositionFetcher extends ContractPositionTemplatePositionFetcher<LpStaking> {
+  groupLabel = 'LP Staking';
 
-const appId = THALES_DEFINITION.id;
-const groupId = THALES_DEFINITION.groups.pool2.id;
-const network = Network.OPTIMISM_MAINNET;
-
-const farmDefinitions = [
-  {
-    address: '0x31a20e5b7b1b067705419d57ab4f72e81cc1f6bf',
-    stakedTokenAddress: '0xac6705bc7f6a35eb194bdb89066049d6f1b0b1b5',
-    rewardTokenAddress: '0x217d47011b23bb961eb6d93ca9945b7501a5bb11',
-  },
-];
-
-@Register.ContractPositionFetcher({ appId, groupId, network })
-export class OptimismThalesPool2ContractPositionFetcher implements PositionFetcher<ContractPosition> {
   constructor(
-    @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
-    @Inject(ThalesContractFactory) private readonly thalesContractFactory: ThalesContractFactory,
-  ) {}
+    @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
+    @Inject(ThalesContractFactory) private readonly contractFactory: ThalesContractFactory,
+  ) {
+    super(appToolkit);
+  }
 
-  async getPositions() {
-    const baseTokens = await this.appToolkit.getBaseTokenPrices(network);
-    const appTokens = await this.appToolkit.getAppTokenPositions({
-      appId: ARRAKIS_DEFINITION.id,
-      groupIds: [ARRAKIS_DEFINITION.groups.pool.id],
-      network,
-    });
+  getContract(address: string): LpStaking {
+    return this.contractFactory.lpStaking({ network: this.network, address });
+  }
 
-    const allTokens = [...appTokens, ...baseTokens];
-    const multicall = this.appToolkit.getMulticall(network);
+  async getDefinitions() {
+    return [{ address: '0x31a20e5b7b1b067705419d57ab4f72e81cc1f6bf' }];
+  }
 
-    const positions = await Promise.all(
-      farmDefinitions.map(async ({ address, stakedTokenAddress, rewardTokenAddress }) => {
-        const stakedToken = allTokens.find(t => t.address === stakedTokenAddress);
-        const rewardToken = allTokens.find(t => t.address === rewardTokenAddress);
+  async getTokenDefinitions() {
+    return [
+      {
+        metaType: MetaType.SUPPLIED,
+        address: '0xac6705bc7f6a35eb194bdb89066049d6f1b0b1b5',
+        network: this.network,
+      },
+      {
+        metaType: MetaType.CLAIMABLE,
+        address: '0x217d47011b23bb961eb6d93ca9945b7501a5bb11',
+        network: this.network,
+      },
+    ];
+  }
 
-        if (!stakedToken || !rewardToken) return null;
-        const tokens = [supplied(stakedToken as Token), claimable(rewardToken)];
-        const contract = this.thalesContractFactory.lpStaking({ address: farmDefinitions[0].address, network });
-        const [balanceRaw] = await Promise.all([multicall.wrap(contract).totalSupply()]);
-        const liquidity = Number(balanceRaw) / 10 ** stakedToken.decimals;
-        const label = `Staked ${getLabelFromToken(stakedToken)}`;
-        // For images, we'll use the underlying token images as well
-        const images = getImagesFromToken(stakedToken);
-        // For the secondary label, we'll use the price of the jar token
-        const secondaryLabel = buildDollarDisplayItem(stakedToken.price);
+  async getLabel({ contractPosition }: GetDisplayPropsParams<LpStaking>) {
+    const suppliedToken = contractPosition.tokens.find(isSupplied)!;
+    return `Staked ${getLabelFromToken(suppliedToken)}`;
+  }
 
-        const position: ContractPosition = {
-          type: ContractType.POSITION,
-          appId,
-          groupId,
-          address,
-          network,
-          tokens,
-          dataProps: {
-            liquidity,
-          },
-          displayProps: {
-            label,
-            images,
-            secondaryLabel,
-            statsItems: [{ label: 'Liquidity', value: buildDollarDisplayItem(liquidity) }],
-          },
-        };
-
-        return position;
-      }),
-    );
-    return _.compact(positions);
+  async getTokenBalancesPerPosition({ address, contract }: GetTokenBalancesParams<LpStaking>): Promise<BigNumberish[]> {
+    return Promise.all([contract.balanceOf(address), contract.earned(address)]);
   }
 }

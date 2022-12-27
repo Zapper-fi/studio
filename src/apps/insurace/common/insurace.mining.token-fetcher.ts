@@ -28,9 +28,6 @@ export abstract class InsuraceMiningTokenFetcher extends AppTokenTemplatePositio
 > {
   abstract insurTokenAddress: string;
   abstract stakersPoolV2Address: string;
-  abstract governanceMiningPools: InsuraceMiningTokenDefinition[];
-  abstract underwritingMiningPools: InsuraceMiningTokenDefinition[];
-  abstract liquidityMiningPools: InsuraceMiningTokenDefinition[];
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
@@ -43,18 +40,14 @@ export abstract class InsuraceMiningTokenFetcher extends AppTokenTemplatePositio
     return this.contractFactory.insuracePoolToken({ address, network: this.network });
   }
 
-  async getDefinitions(): Promise<InsuraceMiningTokenDefinition[]> {
-    return [...this.governanceMiningPools, ...this.underwritingMiningPools, ...this.liquidityMiningPools];
-  }
-
   async getAddresses({ definitions }: GetAddressesParams<DefaultAppTokenDefinition>) {
     return definitions.map(v => v.address);
   }
 
-  async getUnderlyingTokenAddresses({
+  async getUnderlyingTokenDefinitions({
     definition,
   }: GetUnderlyingTokensParams<InsuracePoolToken, InsuraceMiningTokenDefinition>) {
-    return [definition.underlyingTokenAddress];
+    return [{ address: definition.underlyingTokenAddress, network: this.network }];
   }
 
   async getPricePerShare({

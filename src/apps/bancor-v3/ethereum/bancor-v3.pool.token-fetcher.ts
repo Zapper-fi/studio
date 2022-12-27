@@ -45,9 +45,10 @@ export class EthereumBancorV3PoolTokenFetcher extends AppTokenTemplatePositionFe
     return addresses;
   }
 
-  async getUnderlyingTokenAddresses({ contract }: GetUnderlyingTokensParams<PoolToken, DefaultAppTokenDefinition>) {
-    const underlyingTokenAddress = await contract.reserveToken();
-    return underlyingTokenAddress.toLowerCase().replace(ETH_ADDR_ALIAS, ZERO_ADDRESS);
+  async getUnderlyingTokenDefinitions({ contract }: GetUnderlyingTokensParams<PoolToken, DefaultAppTokenDefinition>) {
+    const underlyingTokenAddressRaw = await contract.reserveToken();
+    const underlyingTokenAddress = underlyingTokenAddressRaw.toLowerCase().replace(ETH_ADDR_ALIAS, ZERO_ADDRESS);
+    return [{ address: underlyingTokenAddress, network: this.network }];
   }
 
   async getPricePerShare({

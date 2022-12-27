@@ -26,8 +26,8 @@ export class EthereumOlympusSOhmV1TokenFetcher extends AppTokenTemplatePositionF
     return ['0x04f2694c8fcee23e8fd0dfea1d4f5bb8c352111f'];
   }
 
-  async getUnderlyingTokenAddresses() {
-    return ['0x383518188c0c6d7730d91b2c03a03c837814a899'];
+  async getUnderlyingTokenDefinitions() {
+    return [{ address: '0x383518188c0c6d7730d91b2c03a03c837814a899', network: this.network }];
   }
 
   async getPricePerShare() {

@@ -58,10 +58,10 @@ export abstract class AcrossV2PoolTokenFetcher extends AppTokenTemplatePositionF
     return definitions.map(v => v.address);
   }
 
-  async getUnderlyingTokenAddresses({
+  async getUnderlyingTokenDefinitions({
     definition,
   }: GetUnderlyingTokensParams<AcrossV2PoolToken, AcrossV2PoolTokenDefinition>) {
-    return [definition.underlyingTokenAddress];
+    return [{ address: definition.underlyingTokenAddress, network: this.network }];
   }
 
   async getPricePerShare({ appToken, multicall }: GetPricePerShareParams<AcrossV2PoolToken>) {

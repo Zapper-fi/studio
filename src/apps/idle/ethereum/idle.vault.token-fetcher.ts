@@ -38,8 +38,8 @@ export class EthereumIdleVaultTokenFetcher extends AppTokenTemplatePositionFetch
     return controller.getAllMarkets();
   }
 
-  async getUnderlyingTokenAddresses({ contract }: GetUnderlyingTokensParams<IdleToken>) {
-    return contract.token();
+  async getUnderlyingTokenDefinitions({ contract }: GetUnderlyingTokensParams<IdleToken>) {
+    return [{ address: await contract.token(), network: this.network }];
   }
 
   async getPricePerShare({ appToken, contract }: GetPricePerShareParams<IdleToken>) {

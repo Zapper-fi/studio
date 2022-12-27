@@ -14,7 +14,6 @@ import {
   GetDisplayPropsParams,
 } from '~position/template/contract-position.template.types';
 import { CustomContractPositionTemplatePositionFetcher } from '~position/template/custom-contract-position.template.position-fetcher';
-import { Network } from '~types';
 
 import { GoodGhostingContractFactory, GoodghostingAbiV001 } from '../contracts';
 
@@ -91,15 +90,13 @@ export abstract class GoodGhostingGameContractPositionFetcher extends CustomCont
       network: this.network,
     });
 
-    const interestTokenIndex = 2;
     const incentiveTokenIndex = 3;
-
     const balances = await Promise.all(
       contractPositions.map(async contractPosition => {
         const stakedToken = contractPosition.tokens.find(isSupplied)!;
         const rewardToken = contractPosition.tokens.find(isClaimable)!;
         const incentiveToken = contractPosition.tokens[incentiveTokenIndex];
-        const interestToken = contractPosition.tokens[interestTokenIndex];
+        const incentiveOrRewardToken = incentiveToken ?? rewardToken;
         const balancesRaw: BigNumberish[] = [];
 
         if (!playerGameBalances[contractPosition.address]) {
@@ -110,18 +107,20 @@ export abstract class GoodGhostingGameContractPositionFetcher extends CustomCont
 
           const paidAmountRaw = paidAmount * 10 ** stakedToken.decimals;
           const interestAmountRaw = interestAmount * 10 ** stakedToken.decimals;
-          const incentiveAmountRaw = incentiveAmount * 10 ** incentiveToken.decimals;
-          const maybeRewardAmountRaw = rewardAmount * 10 ** incentiveToken.decimals;
-          const rewardAmountRaw = this.network === Network.CELO_MAINNET ? incentiveAmountRaw : maybeRewardAmountRaw;
+
+          const incentiveAmountRaw = incentiveAmount * 10 ** (incentiveOrRewardToken?.decimals ?? 0);
+          const rewardAmountRaw = rewardAmount * 10 ** (rewardToken?.decimals ?? 0);
+          const mayBeRewardAmountRaw = rewardAmountRaw < 0.01 ? incentiveAmountRaw : rewardAmountRaw;
 
           balancesRaw.push(paidAmountRaw);
-          if (rewardToken && isWinner) balancesRaw.push(rewardAmountRaw);
-          if (interestToken && isWinner) balancesRaw.push(interestAmountRaw);
+          if (stakedToken && isWinner) balancesRaw.push(interestAmountRaw);
+          if (rewardToken && isWinner) balancesRaw.push(mayBeRewardAmountRaw);
           if (incentiveToken && isWinner) balancesRaw.push(incentiveAmountRaw);
         }
 
+        const nonZeroBalancesRaw = balancesRaw.filter(balance => balance > 0);
         const allTokens = contractPosition.tokens.map((cp, idx) =>
-          drillBalance(cp, balancesRaw[idx]?.toString() ?? '0', { isDebt: cp.metaType === MetaType.BORROWED }),
+          drillBalance(cp, nonZeroBalancesRaw[idx]?.toString() ?? '0', { isDebt: cp.metaType === MetaType.BORROWED }),
         );
 
         const tokens = allTokens.filter(v => Math.abs(v.balanceUSD) > 0.01);

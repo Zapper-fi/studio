@@ -8,6 +8,7 @@ import { PenguinChef__factory } from './ethers';
 import { PenguinChefV2__factory } from './ethers';
 import { PenguinExtraRewarder__factory } from './ethers';
 import { PenguinIPefi__factory } from './ethers';
+import { PenguinRewarderRate__factory } from './ethers';
 import { PenguinVault__factory } from './ethers';
 import { PenguinXPefi__factory } from './ethers';
 
@@ -32,6 +33,9 @@ export class PenguinContractFactory extends ContractFactory {
   penguinIPefi({ address, network }: ContractOpts) {
     return PenguinIPefi__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
+  penguinRewarderRate({ address, network }: ContractOpts) {
+    return PenguinRewarderRate__factory.connect(address, this.appToolkit.getNetworkProvider(network));
+  }
   penguinVault({ address, network }: ContractOpts) {
     return PenguinVault__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
@@ -44,5 +48,6 @@ export type { PenguinChef } from './ethers';
 export type { PenguinChefV2 } from './ethers';
 export type { PenguinExtraRewarder } from './ethers';
 export type { PenguinIPefi } from './ethers';
+export type { PenguinRewarderRate } from './ethers';
 export type { PenguinVault } from './ethers';
 export type { PenguinXPefi } from './ethers';

@@ -35,8 +35,8 @@ export class EthereumBendDaoSupplyTokenFetcher extends AppTokenTemplatePositionF
     return [this.bTokenAddress];
   }
 
-  async getUnderlyingTokenAddresses({ contract }: GetUnderlyingTokensParams<BendDaoBToken>) {
-    return contract.UNDERLYING_ASSET_ADDRESS();
+  async getUnderlyingTokenDefinitions({ contract }: GetUnderlyingTokensParams<BendDaoBToken>) {
+    return [{ address: await contract.UNDERLYING_ASSET_ADDRESS(), network: this.network }];
   }
 
   async getLiquidity({ appToken }: GetDataPropsParams<BendDaoBToken>): Promise<number> {

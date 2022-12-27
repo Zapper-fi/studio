@@ -100,10 +100,13 @@ export abstract class SushiswapKashiLendingTokenFetcher extends AppTokenTemplate
     return definitions.map(v => v.address);
   }
 
-  async getUnderlyingTokenAddresses({
+  async getUnderlyingTokenDefinitions({
     definition,
   }: GetUnderlyingTokensParams<SushiswapKashiLendingToken, SushiswapKashiLendingTokenDefinition>) {
-    return [definition.assetAddress, definition.collateralAddress];
+    return [
+      { address: definition.assetAddress, network: this.network },
+      { address: definition.collateralAddress, network: this.network },
+    ];
   }
 
   async getPricePerShare() {

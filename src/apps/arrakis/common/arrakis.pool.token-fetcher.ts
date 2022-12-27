@@ -58,10 +58,13 @@ export abstract class ArrakisPoolTokenFetcher extends AppTokenTemplatePositionFe
     return definitions.map(v => v.address);
   }
 
-  async getUnderlyingTokenAddresses({
+  async getUnderlyingTokenDefinitions({
     definition,
   }: GetUnderlyingTokensParams<ArrakisGelatoPool, ArrakisPoolDefinition>) {
-    return [definition.underlyingTokenAddress0, definition.underlyingTokenAddress1];
+    return [
+      { address: definition.underlyingTokenAddress0, network: this.network },
+      { address: definition.underlyingTokenAddress1, network: this.network },
+    ];
   }
 
   async getPricePerShare({

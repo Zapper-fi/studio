@@ -49,8 +49,8 @@ export abstract class RubiconBathTokenFetcher extends AppTokenTemplatePositionFe
     return definitions.map(v => v.address);
   }
 
-  async getUnderlyingTokenAddresses({ definition }: GetUnderlyingTokensParams<BathToken, RubiconPoolDefinition>) {
-    return definition.underlyingTokenAddress;
+  async getUnderlyingTokenDefinitions({ definition }: GetUnderlyingTokensParams<BathToken, RubiconPoolDefinition>) {
+    return [{ address: definition.underlyingTokenAddress, network: this.network }];
   }
 
   async getSupply({

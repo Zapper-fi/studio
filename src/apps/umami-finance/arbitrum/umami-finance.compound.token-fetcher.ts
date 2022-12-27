@@ -37,8 +37,8 @@ export class ArbitrumUmamiFinanceCompoundTokenFetcher extends AppTokenTemplatePo
     return ['0x1922c36f3bc762ca300b4a46bb2102f84b1684ab'];
   }
 
-  async getUnderlyingTokenAddresses(): Promise<string> {
-    return '0x2adabd6e8ce3e82f52d9998a7f64a90d294a92a4';
+  async getUnderlyingTokenDefinitions() {
+    return [{ address: '0x2adabd6e8ce3e82f52d9998a7f64a90d294a92a4', network: this.network }];
   }
 
   async getPricePerShare({

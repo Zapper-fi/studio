@@ -26,8 +26,8 @@ export class EthereumPieDaoEDoughTokenFetcher extends AppTokenTemplatePositionFe
     return ['0x63cbd1858bd79de1a06c3c26462db360b834912d'];
   }
 
-  async getUnderlyingTokenAddresses() {
-    return ['0xad32a8e6220741182940c5abf610bde99e737b2d']; // DOUGH
+  async getUnderlyingTokenDefinitions() {
+    return [{ address: '0xad32a8e6220741182940c5abf610bde99e737b2d', network: this.network }]; // DOUGH
   }
 
   async getPricePerShare() {

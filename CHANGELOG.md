@@ -4,6 +4,207 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.343.1](https://github.com/Zapper-fi/studio/compare/v0.343.0...v0.343.1) (2022-12-26)
+
+
+### Bug Fixes
+
+* **gearbox:** Exclude phantom token from TIV and explorer ([#1997](https://github.com/Zapper-fi/studio/issues/1997)) ([c35b6d2](https://github.com/Zapper-fi/studio/commit/c35b6d2d436d29a802fc91eaac1c218e9ade972c))
+
+## [0.343.0](https://github.com/Zapper-fi/studio/compare/v0.342.0...v0.343.0) (2022-12-25)
+
+
+### Features
+
+* **gearbox:** add credit accounts tracking ([#1991](https://github.com/Zapper-fi/studio/issues/1991)) ([41d2b4d](https://github.com/Zapper-fi/studio/commit/41d2b4dbff77a45351c412f08d891438e970976b))
+
+
+### Bug Fixes
+
+* **gearbox:** Fix Phantom tokens ([#1996](https://github.com/Zapper-fi/studio/issues/1996)) ([1bfb118](https://github.com/Zapper-fi/studio/commit/1bfb11883e9027ce31dcd0412e9002dde68aab02))
+
+## [0.342.0](https://github.com/Zapper-fi/studio/compare/v0.341.2...v0.342.0) (2022-12-25)
+
+
+### Features
+
+* **angle:** To templates ([#1988](https://github.com/Zapper-fi/studio/issues/1988)) ([013c76d](https://github.com/Zapper-fi/studio/commit/013c76df36a3921ce06d237f24734ba3be21103c))
+* **trisolaris:** Migrate to templates ([#1985](https://github.com/Zapper-fi/studio/issues/1985)) ([3c64cc9](https://github.com/Zapper-fi/studio/commit/3c64cc9a22ff7c20bdbe7b8815680123c8a77c2f))
+
+
+### Bug Fixes
+
+* **dfx:** Migration to template ([#1989](https://github.com/Zapper-fi/studio/issues/1989)) ([a5f7068](https://github.com/Zapper-fi/studio/commit/a5f70689a560ba04732c853448fe0bd401a93d61))
+* **euler:** Remove RAD market ([#1993](https://github.com/Zapper-fi/studio/issues/1993)) ([1ffcd2a](https://github.com/Zapper-fi/studio/commit/1ffcd2a66f87440e179d9d24d4be5f91e0043188))
+* **gmx:** Fix label and balances in profit ([#1974](https://github.com/Zapper-fi/studio/issues/1974)) ([f8a571d](https://github.com/Zapper-fi/studio/commit/f8a571da332429e88b0c745e58c4796f81a02efa))
+* **looks-rare:** Migration to template ([#1987](https://github.com/Zapper-fi/studio/issues/1987)) ([6bd4c2d](https://github.com/Zapper-fi/studio/commit/6bd4c2db2a5fe01e940a8b5d98db8fa2ba8b06d6))
+* **metavault-trade:** Add group label to esMVX token-fetcher ([#1977](https://github.com/Zapper-fi/studio/issues/1977)) ([001827c](https://github.com/Zapper-fi/studio/commit/001827c96e9c5a0246ba392faa26bbc1599ef9f3))
+* **metavault-trade:** Migration to template ([#1973](https://github.com/Zapper-fi/studio/issues/1973)) ([0782092](https://github.com/Zapper-fi/studio/commit/0782092088906914d8ff3704994a85d3d8d8a164))
+* **penguin:** Migration to template ([#1984](https://github.com/Zapper-fi/studio/issues/1984)) ([befad35](https://github.com/Zapper-fi/studio/commit/befad35e15cb1bd11ba7bed98672cac8837b9502))
+* **phuture:** Migrate to template ([#1983](https://github.com/Zapper-fi/studio/issues/1983)) ([713bf8e](https://github.com/Zapper-fi/studio/commit/713bf8ed45d253ef96e773e74e603bc7b3f5da27))
+* **pika-protocol-v3:** Migration to template ([#1981](https://github.com/Zapper-fi/studio/issues/1981)) ([87ba72f](https://github.com/Zapper-fi/studio/commit/87ba72f1f6af030bf4667648d5553c38dcd789c8))
+* **pika-protocol:** Migration to template ([#1979](https://github.com/Zapper-fi/studio/issues/1979)) ([3040a94](https://github.com/Zapper-fi/studio/commit/3040a944b418d76aaef779ea7565f80e42868b26))
+* **solace:** Migration to template ([#1986](https://github.com/Zapper-fi/studio/issues/1986)) ([1a0852b](https://github.com/Zapper-fi/studio/commit/1a0852b978edd485b5d7921b9588ae88f6674629))
+
+## [0.341.2](https://github.com/Zapper-fi/studio/compare/v0.341.1...v0.341.2) (2022-12-21)
+
+
+### Bug Fixes
+
+* **sushiswap-bentobox:** Migrate to template ([#1968](https://github.com/Zapper-fi/studio/issues/1968)) ([b722434](https://github.com/Zapper-fi/studio/commit/b722434ec15b3bdc5e786edf4a343724817460fb))
+
+## [0.341.1](https://github.com/Zapper-fi/studio/compare/v0.341.0...v0.341.1) (2022-12-21)
+
+
+### Bug Fixes
+
+* **honeyswap:** Migrate to template ([#1962](https://github.com/Zapper-fi/studio/issues/1962)) ([1ba5724](https://github.com/Zapper-fi/studio/commit/1ba572450e921c0a7f53a4ff02899b9b90c96e88))
+* resolved an incorrect balance bug" ([#1961](https://github.com/Zapper-fi/studio/issues/1961)) ([98ffd56](https://github.com/Zapper-fi/studio/commit/98ffd566e1e2337a41a66e1833e1c694dacedcd6))
+
+## [0.341.0](https://github.com/Zapper-fi/studio/compare/v0.340.0...v0.341.0) (2022-12-21)
+
+
+### Features
+
+* **art-gobblers:** GOO factory ([#1965](https://github.com/Zapper-fi/studio/issues/1965)) ([0b90185](https://github.com/Zapper-fi/studio/commit/0b901851e925f2f96d80419838aaf2685fc973fd))
+
+## [0.340.0](https://github.com/Zapper-fi/studio/compare/v0.339.0...v0.340.0) (2022-12-20)
+
+
+### Features
+
+* **nftx:** Fix images ([#1963](https://github.com/Zapper-fi/studio/issues/1963)) ([2b23bb9](https://github.com/Zapper-fi/studio/commit/2b23bb9e3d8f92c3e1535d5c79d84a36c3a6b3e4))
+
+## [0.339.0](https://github.com/Zapper-fi/studio/compare/v0.338.0...v0.339.0) (2022-12-20)
+
+
+### Features
+
+* **olympus:** Make position available for balance methods ([#1959](https://github.com/Zapper-fi/studio/issues/1959)) ([acd3c73](https://github.com/Zapper-fi/studio/commit/acd3c73d6ff29515624ed0b788725819f560e045))
+
+## [0.338.0](https://github.com/Zapper-fi/studio/compare/v0.337.0...v0.338.0) (2022-12-20)
+
+
+### Features
+
+* **olympus:** Allow extending olympus definition too ([#1957](https://github.com/Zapper-fi/studio/issues/1957)) ([a31420b](https://github.com/Zapper-fi/studio/commit/a31420ba6e817516f157dc9e52b6d4a673c39396))
+
+## [0.337.0](https://github.com/Zapper-fi/studio/compare/v0.336.0...v0.337.0) (2022-12-20)
+
+
+### Features
+
+* **olympus:** Update bond template to support async definitions and custom data props ([#1956](https://github.com/Zapper-fi/studio/issues/1956)) ([0b013ad](https://github.com/Zapper-fi/studio/commit/0b013adc8cc0aecf3effb48fbc8a923a43f090cc))
+
+
+### Bug Fixes
+
+* **bluebit:** Migration to template ([#1943](https://github.com/Zapper-fi/studio/issues/1943)) ([dbc5423](https://github.com/Zapper-fi/studio/commit/dbc5423806313fdeddf4f79d88ac8a111cb6b06f))
+* **hakuswap:** Migrate to template ([#1944](https://github.com/Zapper-fi/studio/issues/1944)) ([d8304fc](https://github.com/Zapper-fi/studio/commit/d8304fc8414afc9b137caa2c06e97ca79ada1142))
+* **helio:** Migration to template ([#1950](https://github.com/Zapper-fi/studio/issues/1950)) ([65f9757](https://github.com/Zapper-fi/studio/commit/65f9757f31fdb450463f3562bbe3780fdbbeccb4))
+* **thales:** Migration to template ([#1952](https://github.com/Zapper-fi/studio/issues/1952)) ([aa5bc72](https://github.com/Zapper-fi/studio/commit/aa5bc72a4f53a7159e0fd13ec2ac39e7ebd51aa0))
+
+## [0.336.0](https://github.com/Zapper-fi/studio/compare/v0.335.0...v0.336.0) (2022-12-19)
+
+
+### Features
+
+* **app-token:** Support string token ID ([#1953](https://github.com/Zapper-fi/studio/issues/1953)) ([3d2ad5a](https://github.com/Zapper-fi/studio/commit/3d2ad5a987f64935fbbc1ee53adaa5766aff02cf))
+
+## [0.335.0](https://github.com/Zapper-fi/studio/compare/v0.334.1...v0.335.0) (2022-12-19)
+
+
+### Features
+
+* **lyra-avalon:** Update subgraph links ([#1949](https://github.com/Zapper-fi/studio/issues/1949)) ([f28c372](https://github.com/Zapper-fi/studio/commit/f28c372bc10d091c32aea7d028a018e42e22cefc))
+
+
+### Bug Fixes
+
+* **jones-dao:** Migration to template ([#1951](https://github.com/Zapper-fi/studio/issues/1951)) ([49632d4](https://github.com/Zapper-fi/studio/commit/49632d4384ee04227002d18b4274db77a3d11ceb))
+* **mahadao:** Migration to template ([#1942](https://github.com/Zapper-fi/studio/issues/1942)) ([ca03145](https://github.com/Zapper-fi/studio/commit/ca03145b719995ed293d945db09a6a5dfdcd7b46))
+
+## [0.334.1](https://github.com/Zapper-fi/studio/compare/v0.334.0...v0.334.1) (2022-12-19)
+
+
+### Bug Fixes
+
+* **goldfinch:** Move app integration to studio ([#1945](https://github.com/Zapper-fi/studio/issues/1945)) ([7a4f104](https://github.com/Zapper-fi/studio/commit/7a4f1048af9a6f936e0b609f4a23c3e50f29bbf9))
+
+## [0.334.0](https://github.com/Zapper-fi/studio/compare/v0.333.0...v0.334.0) (2022-12-17)
+
+
+### Features
+
+* **app-tokens:** Collapse NFT tokens into collections ([#1939](https://github.com/Zapper-fi/studio/issues/1939)) ([de0d989](https://github.com/Zapper-fi/studio/commit/de0d9895338afc06aad8c48f2b9f095d2a6e0d15))
+* defiedge token fetchers ([#1815](https://github.com/Zapper-fi/studio/issues/1815)) ([c20565e](https://github.com/Zapper-fi/studio/commit/c20565e978350f975e2e77be4d4a9bd6c953f75d))
+
+## [0.333.0](https://github.com/Zapper-fi/studio/compare/v0.332.0...v0.333.0) (2022-12-16)
+
+
+### Features
+
+* **app-tokens:** Match on network and token ID as well ([#1937](https://github.com/Zapper-fi/studio/issues/1937)) ([b7c97cb](https://github.com/Zapper-fi/studio/commit/b7c97cbc8eccba9d1f94eacacd2d250c29dad0bd))
+
+## [0.332.0](https://github.com/Zapper-fi/studio/compare/v0.331.0...v0.332.0) (2022-12-16)
+
+
+### Features
+
+* **app-tokens:** Support definitions as underlying tokens ([#1935](https://github.com/Zapper-fi/studio/issues/1935)) ([ee22c7b](https://github.com/Zapper-fi/studio/commit/ee22c7b65102f1d1c013acf47079741d6972b8f6))
+* **cask-protocol:** Update app labels ([#1933](https://github.com/Zapper-fi/studio/issues/1933)) ([63657ca](https://github.com/Zapper-fi/studio/commit/63657ca64694dafb197f7be37b0f699b1b9b5888))
+* **mux:** Add lev-trades ContractPositionFetcher and add BalanceFetcher ([#1872](https://github.com/Zapper-fi/studio/issues/1872)) ([fa5012e](https://github.com/Zapper-fi/studio/commit/fa5012ee4b8b3c3c8ac4e4ffd340649ad48997b7))
+
+
+### Bug Fixes
+
+* **lemma-finance:** Rename lemma WBTC image ([#1936](https://github.com/Zapper-fi/studio/issues/1936)) ([8e7f377](https://github.com/Zapper-fi/studio/commit/8e7f377bff9403f67e5ef1491d8974b9c8897b56))
+
+## [0.331.0](https://github.com/Zapper-fi/studio/compare/v0.330.0...v0.331.0) (2022-12-16)
+
+
+### Features
+
+* **token-loader:** Support NFT as a token dependency ([#1931](https://github.com/Zapper-fi/studio/issues/1931)) ([5c40bb4](https://github.com/Zapper-fi/studio/commit/5c40bb43fa392a54157386491b573891958f131e))
+
+## [0.330.0](https://github.com/Zapper-fi/studio/compare/v0.329.0...v0.330.0) (2022-12-15)
+
+
+### Features
+
+* **pendle-v2:** Update name ([658a672](https://github.com/Zapper-fi/studio/commit/658a672263ee49cfaf09290b4272fd6bdc05e639))
+
+## [0.329.0](https://github.com/Zapper-fi/studio/compare/v0.328.0...v0.329.0) (2022-12-15)
+
+
+### Features
+
+* **aura:** Aura pools upgrade ([#1923](https://github.com/Zapper-fi/studio/issues/1923)) ([63918fd](https://github.com/Zapper-fi/studio/commit/63918fd297969bb4145a6e49605ef8464643653a))
+* **cask-protocol:** Use latest patterns ([00ef652](https://github.com/Zapper-fi/studio/commit/00ef652c6f759a94010c9b43dfcde54eebc518c2))
+* **cask:** Support Cask vault token on all networks ([#1929](https://github.com/Zapper-fi/studio/issues/1929)) ([67fbeef](https://github.com/Zapper-fi/studio/commit/67fbeef3fddd6d7e13d6f71256394a051aa7ad04))
+* **sideshift:** add sideshift ([#1883](https://github.com/Zapper-fi/studio/issues/1883)) ([4504584](https://github.com/Zapper-fi/studio/commit/4504584d63856a756e5dd8f8ba11fb41dcfc2535))
+
+
+### Bug Fixes
+
+* **insurace:** Extend getDefinitions ([#1899](https://github.com/Zapper-fi/studio/issues/1899)) ([7eb6ecf](https://github.com/Zapper-fi/studio/commit/7eb6ecfff084d946610a9457d12e449d5eba4d54))
+* **pendle-v2:** Small linting fixes ([98dc39b](https://github.com/Zapper-fi/studio/commit/98dc39b0e6062d02b99c790444e57bf35d0531a0))
+* **vaporwave-finance:** Migrate to template ([#1925](https://github.com/Zapper-fi/studio/issues/1925)) ([703d1ca](https://github.com/Zapper-fi/studio/commit/703d1ca0f6a1b73bf4b8585df8cc86b7a189c45b))
+
+## [0.328.0](https://github.com/Zapper-fi/studio/compare/v0.327.0...v0.328.0) (2022-12-15)
+
+
+### Features
+
+* **good-ghosting:** adds support other V2 versions ([#1870](https://github.com/Zapper-fi/studio/issues/1870)) ([c35e6a8](https://github.com/Zapper-fi/studio/commit/c35e6a826a513f4afc0b1eac9e86d2e4929bcb9e))
+* **pendle-v2:** Integrate Pendle v2 ([#1924](https://github.com/Zapper-fi/studio/issues/1924)) ([23dae9b](https://github.com/Zapper-fi/studio/commit/23dae9b67c092a1cdf3b26010047d683700e12e0))
+* **uniswap-v2:** Fix volume data loader when graph is not synced ([#1927](https://github.com/Zapper-fi/studio/issues/1927)) ([e565b11](https://github.com/Zapper-fi/studio/commit/e565b11a02debc88a4039aac6b12e2e7c788627e))
+
+
+### Bug Fixes
+
+* **lint:** Little derp ([4e7a9c4](https://github.com/Zapper-fi/studio/commit/4e7a9c41e54667be7b5fd2d99a5494788fc23300))
+
 ## [0.327.0](https://github.com/Zapper-fi/studio/compare/v0.326.0...v0.327.0) (2022-12-14)
 
 

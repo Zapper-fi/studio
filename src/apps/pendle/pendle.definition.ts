@@ -12,7 +12,7 @@ export const PENDLE_DEFINITION = appDefinition({
 
   links: {
     twitter: 'https://twitter.com/pendle_fi',
-    discord: 'discord.gg/uawbcnRMK9',
+    discord: 'https://pendle.finance/discord',
     telegram: 'http://t.me/pendlefinance',
     medium: 'https://pendle.medium.com/',
   },

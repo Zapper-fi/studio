@@ -1,10 +1,12 @@
 import { Erc20 } from '~contract/contracts';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import { GetDataPropsParams, GetUnderlyingTokensParams } from '~position/template/app-token.template.types';
+import { Network } from '~types';
 
 export abstract class WrapperTemplateTokenFetcher extends AppTokenTemplatePositionFetcher<Erc20> {
   abstract vaultAddress: string;
   abstract underlyingTokenAddress: string;
+  fromNetwork: Network;
 
   getContract(address: string): Erc20 {
     return this.appToolkit.globalContracts.erc20({ address, network: this.network });
@@ -14,8 +16,8 @@ export abstract class WrapperTemplateTokenFetcher extends AppTokenTemplatePositi
     return [this.vaultAddress];
   }
 
-  async getUnderlyingTokenAddresses(_params: GetUnderlyingTokensParams<Erc20>) {
-    return this.underlyingTokenAddress;
+  async getUnderlyingTokenDefinitions(_params: GetUnderlyingTokensParams<Erc20>) {
+    return [{ address: this.underlyingTokenAddress, network: this.fromNetwork ?? this.network }];
   }
 
   async getPricePerShare() {

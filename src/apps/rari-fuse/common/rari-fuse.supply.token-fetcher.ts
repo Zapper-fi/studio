@@ -85,8 +85,8 @@ export abstract class RariFuseSupplyTokenFetcher<
     return definitions.map(v => v.address);
   }
 
-  async getUnderlyingTokenAddresses({ contract }: GetUnderlyingTokensParams<R>) {
-    return this.getUnderlyingTokenAddress(contract);
+  async getUnderlyingTokenDefinitions({ contract }: GetUnderlyingTokensParams<R>) {
+    return [{ address: await this.getUnderlyingTokenAddress(contract), network: this.network }];
   }
 
   async getPricePerShare({

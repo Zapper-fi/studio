@@ -58,8 +58,8 @@ export class PolygonSuperfluidVaultTokenFetcher extends AppTokenTemplatePosition
     return tokenData.tokens?.filter(x => !this.brokenAddresses.includes(x.id)).map(v => v.id) ?? [];
   }
 
-  async getUnderlyingTokenAddresses({ contract }: GetUnderlyingTokensParams<VaultToken>) {
-    return await contract.getUnderlyingToken();
+  async getUnderlyingTokenDefinitions({ contract }: GetUnderlyingTokensParams<VaultToken>) {
+    return [{ address: await contract.getUnderlyingToken(), network: this.network }];
   }
 
   async getLiquidity({ appToken }: GetDataPropsParams<VaultToken>) {

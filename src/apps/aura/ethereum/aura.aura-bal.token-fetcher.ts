@@ -42,8 +42,8 @@ export class EthereumAuraAuraBalTokenFetcher extends AppTokenTemplatePositionFet
     return [this.AURA_BAL_ADDRESS];
   }
 
-  async getUnderlyingTokenAddresses() {
-    return [this.BAL_WETH_ADDRESS];
+  async getUnderlyingTokenDefinitions() {
+    return [{ address: this.BAL_WETH_ADDRESS, network: this.network }];
   }
 
   async getPrice(): Promise<number> {

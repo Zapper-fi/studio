@@ -27,8 +27,8 @@ export class PolygonMstableImusdTokenFetcher extends AppTokenTemplatePositionFet
     return ['0x5290ad3d83476ca6a2b178cd9727ee1ef72432af'];
   }
 
-  async getUnderlyingTokenAddresses({ contract }: GetUnderlyingTokensParams<MstableAsset>) {
-    return contract.asset();
+  async getUnderlyingTokenDefinitions({ contract }: GetUnderlyingTokensParams<MstableAsset>) {
+    return [{ address: await contract.asset(), network: this.network }];
   }
 
   async getPricePerShare({ appToken, contract }: GetPricePerShareParams<MstableAsset>) {
