@@ -1,58 +1,49 @@
 import { Inject } from '@nestjs/common';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
-import { Register } from '~app-toolkit/decorators';
-import { buildDollarDisplayItem } from '~app-toolkit/helpers/presentation/display-item.present';
-import { getImagesFromToken } from '~app-toolkit/helpers/presentation/image.present';
-import { ContractType } from '~position/contract.interface';
-import { PositionFetcher } from '~position/position-fetcher.interface';
-import { ContractPosition } from '~position/position.interface';
-import { Network } from '~types';
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
+import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
+import { MetaType } from '~position/position.interface';
+import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
+import { GetDisplayPropsParams, GetTokenBalancesParams } from '~position/template/contract-position.template.types';
 
-import { PENGUIN_DEFINITION } from '../penguin.definition';
+import { PenguinContractFactory, PenguinVault } from '../contracts';
 
-const appId = PENGUIN_DEFINITION.id;
-const groupId = PENGUIN_DEFINITION.groups.vaultClaimable.id;
-const network = Network.AVALANCHE_MAINNET;
+@PositionTemplate()
+export class AvalanchePenguinVaultClaimableContractPositionFetcher extends ContractPositionTemplatePositionFetcher<PenguinVault> {
+  groupLabel = 'Compounder Claimable xPEFI';
 
-@Register.ContractPositionFetcher({ appId, groupId, network })
-export class AvalanchePenguinVaultClaimableContractPositionFetcher implements PositionFetcher<ContractPosition> {
-  constructor(@Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit) {}
+  constructor(
+    @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
+    @Inject(PenguinContractFactory) protected readonly contractFactory: PenguinContractFactory,
+  ) {
+    super(appToolkit);
+  }
 
-  async getPositions() {
-    const vaultTokens = await this.appToolkit.getAppTokenPositions({
-      appId: PENGUIN_DEFINITION.id,
-      groupIds: [PENGUIN_DEFINITION.groups.vault.id],
-      network,
-    });
+  getContract(address: string): PenguinVault {
+    return this.contractFactory.penguinVault({ address, network: this.network });
+  }
 
-    const [xPefiToken] = await this.appToolkit.getAppTokenPositions({
-      appId: PENGUIN_DEFINITION.id,
-      groupIds: [PENGUIN_DEFINITION.groups.xPefi.id],
-      network,
-    });
+  async getDefinitions() {
+    return [{ address: '0xd79a36056c271b988c5f1953e664e61416a9820f' }];
+  }
 
-    if (!xPefiToken) return [];
+  async getTokenDefinitions() {
+    return [
+      {
+        metaType: MetaType.CLAIMABLE,
+        address: '0xd79a36056c271b988c5f1953e664e61416a9820f',
+        network: this.network,
+      },
+    ];
+  }
 
-    const positions = vaultTokens.map(token => {
-      const position: ContractPosition = {
-        type: ContractType.POSITION,
-        address: token.address,
-        appId,
-        groupId,
-        network,
-        tokens: [xPefiToken],
-        dataProps: {},
-        displayProps: {
-          label: `Claimable ${xPefiToken.symbol}`,
-          secondaryLabel: buildDollarDisplayItem(xPefiToken.price),
-          images: getImagesFromToken(xPefiToken),
-        },
-      };
+  async getLabel({ contractPosition }: GetDisplayPropsParams<PenguinVault>) {
+    return `Claimable ${getLabelFromToken(contractPosition.tokens[0])}`;
+  }
 
-      return position;
-    });
-
-    return positions;
+  async getTokenBalancesPerPosition({ address, contract }: GetTokenBalancesParams<PenguinVault>) {
+    const rewardBalance = await contract.pendingXPefi(address);
+    return [rewardBalance];
   }
 }

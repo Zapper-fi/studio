@@ -20,8 +20,10 @@ export const SUSHISWAP_BENTOBOX_DEFINITION = appDefinition({
   },
   supportedNetworks: {
     [Network.ARBITRUM_MAINNET]: [AppAction.VIEW],
+    [Network.AVALANCHE_MAINNET]: [AppAction.VIEW],
     [Network.BINANCE_SMART_CHAIN_MAINNET]: [AppAction.VIEW],
     [Network.ETHEREUM_MAINNET]: [AppAction.VIEW],
+    [Network.FANTOM_OPERA_MAINNET]: [AppAction.VIEW],
     [Network.POLYGON_MAINNET]: [AppAction.VIEW],
   },
   primaryColor: '#887eb3',
