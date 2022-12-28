@@ -13,11 +13,11 @@ import {
   GetDisplayPropsParams,
   GetPriceParams,
 } from '~position/template/app-token.template.types';
+import { NETWORK_IDS } from '~types';
 
 import { PendlePrincipalToken, PendleV2ContractFactory } from '../contracts';
-import { PENDLE_V_2_DEFINITION } from '../pendle-v2.definition';
-
-import { PendleV2MarketDataProps } from './pendle-v2.pool.token-fetcher';
+import { BACKEND_QUERIES, PENDLE_V2_GRAPHQL_ENDPOINT } from '../pendle-v2.constant';
+import { MarketsQueryResponse } from '../pendle-v2.types';
 
 export type PendleV2PrincipalTokenDefinition = {
   address: string;
@@ -32,7 +32,7 @@ export type PendleV2PrincipalTokenDefinition = {
 export type PendleV2PrincipalTokenDataProps = DefaultAppTokenDataProps & PendleV2PrincipalTokenDefinition;
 
 @PositionTemplate()
-export class EthereumPendleV2PrincipalTokenTokenFetcher extends AppTokenTemplatePositionFetcher<
+export class EthereumPendleV2PrincipalTokenFetcher extends AppTokenTemplatePositionFetcher<
   PendlePrincipalToken,
   PendleV2PrincipalTokenDataProps,
   PendleV2PrincipalTokenDefinition
@@ -47,22 +47,25 @@ export class EthereumPendleV2PrincipalTokenTokenFetcher extends AppTokenTemplate
   }
 
   async getDefinitions(_params: GetDefinitionsParams): Promise<PendleV2PrincipalTokenDefinition[]> {
-    const markets = await this.appToolkit.getAppTokenPositions<PendleV2MarketDataProps>({
-      appId: 'pendle-v2',
-      groupIds: [PENDLE_V_2_DEFINITION.groups.pool.id],
-      network: this.network,
+    const marketsResponse = await this.appToolkit.helpers.theGraphHelper.request<MarketsQueryResponse>({
+      endpoint: PENDLE_V2_GRAPHQL_ENDPOINT,
+      query: BACKEND_QUERIES.getMarkets,
+      variables: { chainIds: NETWORK_IDS[this.network] },
     });
-    const definitions = markets.map(market => {
-      return {
-        address: market.dataProps.pt.address,
-        icon: market.dataProps.pt.icon,
-        name: market.dataProps.pt.name,
-        price: market.dataProps.pt.price,
-        expiry: market.dataProps.expiry,
-        impliedApy: market.dataProps.impliedApy,
-        ptDiscount: market.dataProps.ptDiscount,
-      };
-    });
+
+    const definitions = await Promise.all(
+      marketsResponse.markets.results.map(async market => {
+        return {
+          address: market.pt.address,
+          icon: market.pt.proIcon,
+          name: market.pt.proName,
+          price: market.pt.price.usd,
+          expiry: market.expiry,
+          impliedApy: market.impliedApy,
+          ptDiscount: market.ptDiscount,
+        };
+      }),
+    );
 
     return definitions;
   }

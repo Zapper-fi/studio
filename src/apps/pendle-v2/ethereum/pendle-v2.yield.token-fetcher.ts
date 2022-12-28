@@ -13,11 +13,11 @@ import {
   GetDisplayPropsParams,
   GetPriceParams,
 } from '~position/template/app-token.template.types';
+import { NETWORK_IDS } from '~types';
 
 import { PendleV2ContractFactory, PendleYieldToken } from '../contracts';
-import { PENDLE_V_2_DEFINITION } from '../pendle-v2.definition';
-
-import { PendleV2MarketDataProps } from './pendle-v2.pool.token-fetcher';
+import { PENDLE_V2_GRAPHQL_ENDPOINT, BACKEND_QUERIES } from '../pendle-v2.constant';
+import { MarketsQueryResponse } from '../pendle-v2.types';
 
 export type PendleV2YieldTokenDefinition = {
   address: string;
@@ -31,7 +31,7 @@ export type PendleV2YieldTokenDefinition = {
 export type PendleV2YieldTokenDataProps = DefaultAppTokenDataProps & PendleV2YieldTokenDefinition;
 
 @PositionTemplate()
-export class EthereumPendleV2YieldTokenTokenFetcher extends AppTokenTemplatePositionFetcher<
+export class EthereumPendleV2YieldTokenFetcher extends AppTokenTemplatePositionFetcher<
   PendleYieldToken,
   PendleV2YieldTokenDataProps,
   PendleV2YieldTokenDefinition
@@ -49,21 +49,24 @@ export class EthereumPendleV2YieldTokenTokenFetcher extends AppTokenTemplatePosi
   }
 
   async getDefinitions(_params: GetDefinitionsParams): Promise<PendleV2YieldTokenDefinition[]> {
-    const markets = await this.appToolkit.getAppTokenPositions<PendleV2MarketDataProps>({
-      appId: 'pendle-v2',
-      groupIds: [PENDLE_V_2_DEFINITION.groups.pool.id],
-      network: this.network,
+    const marketsResponse = await this.appToolkit.helpers.theGraphHelper.request<MarketsQueryResponse>({
+      endpoint: PENDLE_V2_GRAPHQL_ENDPOINT,
+      query: BACKEND_QUERIES.getMarkets,
+      variables: { chainIds: NETWORK_IDS[this.network] },
     });
-    const definitions = markets.map(market => {
-      return {
-        address: market.dataProps.yt.address,
-        icon: market.dataProps.yt.icon,
-        name: market.dataProps.yt.name,
-        price: market.dataProps.yt.price,
-        expiry: market.dataProps.expiry,
-        ytFloatingApy: market.dataProps.ytFloatingApy,
-      };
-    });
+
+    const definitions = await Promise.all(
+      marketsResponse.markets.results.map(async market => {
+        return {
+          address: market.yt.address,
+          icon: market.yt.proIcon,
+          name: market.yt.proName,
+          price: market.yt.price.usd,
+          expiry: market.expiry,
+          ytFloatingApy: market.ytFloatingApy,
+        };
+      }),
+    );
 
     return definitions;
   }
