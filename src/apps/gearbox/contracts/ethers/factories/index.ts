@@ -2,5 +2,7 @@
 /* tslint:disable */
 /* eslint-disable */
 export { ContractsRegister__factory } from './ContractsRegister__factory';
+export { CreditManagerV2__factory } from './CreditManagerV2__factory';
 export { DieselToken__factory } from './DieselToken__factory';
+export { PhantomToken__factory } from './PhantomToken__factory';
 export { PoolService__factory } from './PoolService__factory';

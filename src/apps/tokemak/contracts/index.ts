@@ -4,6 +4,7 @@ import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { ContractFactory } from '~contract/contracts';
 import { Network } from '~types/network.interface';
 
+import { TokemakAccToke__factory } from './ethers';
 import { TokemakReactor__factory } from './ethers';
 import { TokemakRewards__factory } from './ethers';
 import { TokemakRewardsHash__factory } from './ethers';
@@ -18,6 +19,9 @@ export class TokemakContractFactory extends ContractFactory {
     super((network: Network) => appToolkit.getNetworkProvider(network));
   }
 
+  tokemakAccToke({ address, network }: ContractOpts) {
+    return TokemakAccToke__factory.connect(address, this.appToolkit.getNetworkProvider(network));
+  }
   tokemakReactor({ address, network }: ContractOpts) {
     return TokemakReactor__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
@@ -32,6 +36,7 @@ export class TokemakContractFactory extends ContractFactory {
   }
 }
 
+export type { TokemakAccToke } from './ethers';
 export type { TokemakReactor } from './ethers';
 export type { TokemakRewards } from './ethers';
 export type { TokemakRewardsHash } from './ethers';

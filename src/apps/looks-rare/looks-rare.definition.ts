@@ -9,8 +9,6 @@ export const LOOKS_RARE_DEFINITION = appDefinition({
   description: `LooksRare is the community-first NFT marketplace with rewards for participating.`,
   url: 'https://looksrare.org/',
 
-  tags: [AppTag.NFT_MARKETPLACE],
-
   groups: {
     farm: {
       id: 'farm',
@@ -24,6 +22,8 @@ export const LOOKS_RARE_DEFINITION = appDefinition({
       label: 'Compounder',
     },
   },
+
+  tags: [AppTag.NFT_MARKETPLACE],
 
   supportedNetworks: {
     [Network.ETHEREUM_MAINNET]: [AppAction.VIEW],

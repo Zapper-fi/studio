@@ -35,26 +35,34 @@ export class MuxLevTradesContractPositionHelper {
   async getPosition({ network }: GetLevTradesContractPositionHelperParams) {
     const marketTokensList = await getMarketTokensByNetwork(network, this.appToolkit);
     const collateralTokensList = await getCollateralTokensByNetwork(network, this.appToolkit);
+    const baseTokens = await this.appToolkit.getBaseTokenPrices(network);
+    // USDC may be included in the user's position income
+    let extraToken = await baseTokens.find(x => x.symbol == 'USDC');
 
     const positions = await Promise.all(
       collateralTokensList.map(collateralToken => {
         const positionsForGivenPair = marketTokensList.map(marketToken => {
+          // Avoid showing the same balance twice
+          if (marketToken.symbol === collateralToken.symbol) return;
+          if (marketToken.symbol === 'USDC' || collateralToken.symbol === 'USDC') {
+            extraToken = undefined;
+          }
           const shortPosition: ContractPosition<MuxLevTradesContractPositionDataProps> = {
             type: ContractType.POSITION,
             appId,
             groupId,
             address: READER_ADDRESS[network],
-            key: `${collateralToken.symbol}:${marketToken.symbol}:short`,
+            key: `${marketToken.symbol}:${collateralToken.symbol}:short`,
             network,
-            tokens: [supplied(collateralToken), marketToken],
+            tokens: _.compact([marketToken, supplied(collateralToken), extraToken]),
             dataProps: {
               collateralTokenId: collateralToken.muxTokenId,
               marketTokenId: marketToken.muxTokenId,
               isLong: false,
             },
             displayProps: {
-              label: `Short ${marketToken.symbol}`,
-              images: [getTokenImg(collateralToken.address, network), getTokenImg(marketToken.address, network)],
+              label: `Short ${marketToken.symbol} / ${collateralToken.symbol}`,
+              images: [getTokenImg(marketToken.address, network), getTokenImg(collateralToken.address, network)],
               statsItems: [],
             },
           };
@@ -63,17 +71,17 @@ export class MuxLevTradesContractPositionHelper {
             appId,
             groupId,
             address: READER_ADDRESS[network],
-            key: `${collateralToken.symbol}:${marketToken.symbol}:long`,
+            key: `${marketToken.symbol}:${collateralToken.symbol}:long`,
             network,
-            tokens: [supplied(collateralToken), marketToken],
+            tokens: _.compact([marketToken, supplied(collateralToken), extraToken]),
             dataProps: {
               collateralTokenId: collateralToken.muxTokenId,
               marketTokenId: marketToken.muxTokenId,
               isLong: true,
             },
             displayProps: {
-              label: `Long ${marketToken.symbol}`,
-              images: [getTokenImg(collateralToken.address, network), getTokenImg(marketToken.address, network)],
+              label: `Long ${marketToken.symbol} / ${collateralToken.symbol}`,
+              images: [getTokenImg(marketToken.address, network), getTokenImg(collateralToken.address, network)],
               statsItems: [],
             },
           };

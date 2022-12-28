@@ -1,94 +1,35 @@
-import { Inject } from '@nestjs/common';
-import _ from 'lodash';
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 
-import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
-import { Register } from '~app-toolkit/decorators';
-import { buildDollarDisplayItem } from '~app-toolkit/helpers/presentation/display-item.present';
-import { getImagesFromToken, getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
-import { ContractType } from '~position/contract.interface';
-import { PositionFetcher } from '~position/position-fetcher.interface';
-import { ContractPosition } from '~position/position.interface';
-import { claimable, supplied } from '~position/position.utils';
-import { Network } from '~types/network.interface';
+import { DfxStakingContractPositionFetcher } from '../common/dfx.staking.contract-position-fetcher';
 
-import { Addresses } from '../addresses';
-import { DfxContractFactory } from '../contracts';
-import { DFX_DEFINITION } from '../dfx.definition';
-
-const appId = DFX_DEFINITION.id;
-const groupId = DFX_DEFINITION.groups.staking.id;
-const network = Network.POLYGON_MAINNET;
-
-@Register.ContractPositionFetcher({ appId, groupId, network })
-export class PolygonDfxStakingContractPositionFetcher implements PositionFetcher<ContractPosition> {
-  constructor(
-    @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
-    @Inject(DfxContractFactory) private readonly dfxContractFactory: DfxContractFactory,
-  ) {}
-
-  async getPositions() {
-    const stakingDefinitions = Addresses[network].amm.map(({ staking: stakingAddress, curve: curveAddress }) => ({
-      address: stakingAddress,
-      stakedTokenAddress: curveAddress,
-      rewardTokenAddress: Addresses[network].dfx,
-    }));
-
-    // Reward token is DFX which is a base token
-    const baseTokens = await this.appToolkit.getBaseTokenPrices(network);
-    // Staked tokens are DFX LPs so resolve these
-    const appTokens = await this.appToolkit.getAppTokenPositions({
-      appId: DFX_DEFINITION.id,
-      groupIds: [DFX_DEFINITION.groups.dfxCurve.id],
-      network,
-    });
-    const allTokens = [...baseTokens, ...appTokens];
-
-    // Create a multicall wrapper instance to batch chain RPC calls together
-    const multicall = this.appToolkit.getMulticall(network);
-
-    const positions = await Promise.all(
-      stakingDefinitions.map(async ({ address, stakedTokenAddress, rewardTokenAddress }) => {
-        const stakedToken = allTokens.find(v => v.address === stakedTokenAddress);
-        const rewardToken = allTokens.find(v => v.address === rewardTokenAddress);
-        if (!stakedToken || !rewardToken) return null;
-
-        const tokens = [supplied(stakedToken), claimable(rewardToken)];
-
-        // Instantiate a smart contract instance pointing to the jar token address
-        const contract = this.dfxContractFactory.dfxCurve({ address: stakedToken.address, network });
-
-        // Request the jar token balance of this farm
-        const [balanceRaw] = await Promise.all([multicall.wrap(contract).balanceOf(address)]);
-
-        // Denormalize the balance as the TVL
-        const liquidity = Number(balanceRaw) / 10 ** stakedToken.decimals;
-
-        // Prepare display props
-        const label = getLabelFromToken(stakedToken);
-        const images = tokens.map(v => getImagesFromToken(v)).flat();
-        const secondaryLabel = buildDollarDisplayItem(stakedToken.price);
-        const statsItems = [{ label: 'Liquidity', value: buildDollarDisplayItem(liquidity) }];
-
-        const position: ContractPosition = {
-          type: ContractType.POSITION,
-          appId,
-          groupId,
-          address,
-          network,
-          tokens,
-          dataProps: {
-            liquidity,
-          },
-          displayProps: {
-            label,
-            secondaryLabel,
-            images,
-            statsItems,
-          },
-        };
-        return position;
-      }),
-    );
-    return _.compact(positions);
-  }
+@PositionTemplate()
+export class PolygonDfxStakingContractPositionFetcher extends DfxStakingContractPositionFetcher {
+  groupLabel = 'DFX Staking';
+  stakingDefinitions = [
+    {
+      address: '0xa523959588e51b5bea8d39fd861ab34101181a19',
+      stakedTokenAddress: '0x288ab1b113c666abb097bb2ba51b8f3759d7729e',
+      rewardTokenAddress: '0xe7804d91dfcde7f776c90043e03eaa6df87e6395',
+    },
+    {
+      address: '0x419062c0dbec658a943333bc783617c58d25f316',
+      stakedTokenAddress: '0xb72d390e07f40d37d42dfcc43e954ae7c738ad44',
+      rewardTokenAddress: '0xe7804d91dfcde7f776c90043e03eaa6df87e6395',
+    },
+    {
+      address: '0x600e825f058a93146acd5877084e7d4525c5d846',
+      stakedTokenAddress: '0x8e3e9cb46e593ec0caf4a1dcd6df3a79a87b1fd7',
+      rewardTokenAddress: '0xe7804d91dfcde7f776c90043e03eaa6df87e6395',
+    },
+    {
+      address: '0x308ce99a085a25a9c3d0f2b96bb511017e955711',
+      stakedTokenAddress: '0x931d6a6cc3f992beee80a1a14a6530d34104b000',
+      rewardTokenAddress: '0xe7804d91dfcde7f776c90043e03eaa6df87e6395',
+    },
+    {
+      address: '0x19914181a811ab9eb25c81d6df1972bf02c45cbe',
+      stakedTokenAddress: '0xea75cd0b12a8b48f5bddad37ceb15f8cb3d2cc75',
+      rewardTokenAddress: '0xe7804d91dfcde7f776c90043e03eaa6df87e6395',
+    },
+  ];
 }
