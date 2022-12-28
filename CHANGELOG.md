@@ -4,6 +4,22 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.344.0](https://github.com/Zapper-fi/studio/compare/v0.343.1...v0.344.0) (2022-12-28)
+
+
+### Features
+
+* **keep3r:** Add keep3r job integration ([#1972](https://github.com/Zapper-fi/studio/issues/1972)) ([d50db5d](https://github.com/Zapper-fi/studio/commit/d50db5dfb9aa5fd021b9d5955f67f68d3c0355d2))
+* **keeper:** Add missing positions ([6f67371](https://github.com/Zapper-fi/studio/commit/6f67371a766dbba85695955b608945e205e22fac))
+* **pendle-v2:** Use API response to populate all token groups ([#2001](https://github.com/Zapper-fi/studio/issues/2001)) ([6b0c0d8](https://github.com/Zapper-fi/studio/commit/6b0c0d8f1ed2fc1563d4a13716b7b69857187832))
+* **pods:** updated pods-yield new strategy ([#1992](https://github.com/Zapper-fi/studio/issues/1992)) ([a53984c](https://github.com/Zapper-fi/studio/commit/a53984c637486f5e627f9c4a132b888c42a0f1e8))
+* **tokemak:** Add accTOKE ([31c4458](https://github.com/Zapper-fi/studio/commit/31c4458192560a9259b0060ea2fa964de8dee820))
+
+
+### Bug Fixes
+
+* resolve rewards token mis-alignment issues ([#1999](https://github.com/Zapper-fi/studio/issues/1999)) ([c186743](https://github.com/Zapper-fi/studio/commit/c18674304a94f10cee176f3f2b9446ff97d5f370))
+
 ## [0.343.1](https://github.com/Zapper-fi/studio/compare/v0.343.0...v0.343.1) (2022-12-26)
 
 
