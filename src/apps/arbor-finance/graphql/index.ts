@@ -29,7 +29,7 @@ export type BondHolders = {
   }[];
 };
 
-export const graphQuery = () => gql`
+export const BONDS_QUERY = gql`
   {
     bonds {
       id

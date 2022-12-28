@@ -3,16 +3,10 @@ import { AbstractApp } from '~app/app.dynamic-module';
 
 import { ArborFinanceAppDefinition, ARBOR_FINANCE_DEFINITION } from './arbor-finance.definition';
 import { ArborFinanceContractFactory } from './contracts';
-import { EthereumArborFinanceArborFinanceTokenFetcher } from './ethereum/arbor-finance.arbor-finance.token-fetcher';
-import { EthereumArborFinanceBalanceFetcher } from './ethereum/arbor-finance.balance-fetcher';
+import { EthereumArborFinanceBondTokenFetcher } from './ethereum/arbor-finance.bond.token-fetcher';
 
 @Register.AppModule({
   appId: ARBOR_FINANCE_DEFINITION.id,
-  providers: [
-    ArborFinanceAppDefinition,
-    ArborFinanceContractFactory,
-    EthereumArborFinanceArborFinanceTokenFetcher,
-    EthereumArborFinanceBalanceFetcher,
-  ],
+  providers: [ArborFinanceAppDefinition, ArborFinanceContractFactory, EthereumArborFinanceBondTokenFetcher],
 })
 export class ArborFinanceAppModule extends AbstractApp() {}

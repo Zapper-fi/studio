@@ -4,7 +4,7 @@ import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { ContractFactory } from '~contract/contracts';
 import { Network } from '~types/network.interface';
 
-import { ArborFinance__factory } from './ethers';
+import { ArborFinanceBondToken__factory } from './ethers';
 
 // eslint-disable-next-line
 type ContractOpts = { address: string; network: Network };
@@ -15,9 +15,9 @@ export class ArborFinanceContractFactory extends ContractFactory {
     super((network: Network) => appToolkit.getNetworkProvider(network));
   }
 
-  arborFinance({ address, network }: ContractOpts) {
-    return ArborFinance__factory.connect(address, this.appToolkit.getNetworkProvider(network));
+  arborFinanceBondToken({ address, network }: ContractOpts) {
+    return ArborFinanceBondToken__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
 }
 
-export type { ArborFinance } from './ethers';
+export type { ArborFinanceBondToken } from './ethers';
