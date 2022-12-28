@@ -17,7 +17,7 @@ import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi
 import type { Listener, Provider } from '@ethersproject/providers';
 import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
-export interface ArborFinanceInterface extends utils.Interface {
+export interface ArborFinanceBondTokenInterface extends utils.Interface {
   functions: {
     'allowance(address,address)': FunctionFragment;
     'amountUnpaid()': FunctionFragment;
@@ -337,12 +337,12 @@ export type TransferEvent = TypedEvent<[string, string, BigNumber], TransferEven
 
 export type TransferEventFilter = TypedEventFilter<TransferEvent>;
 
-export interface ArborFinance extends BaseContract {
+export interface ArborFinanceBondToken extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
 
-  interface: ArborFinanceInterface;
+  interface: ArborFinanceBondTokenInterface;
 
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,

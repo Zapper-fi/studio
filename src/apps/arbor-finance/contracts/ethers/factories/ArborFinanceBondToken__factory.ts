@@ -4,7 +4,7 @@
 
 import { Contract, Signer, utils } from 'ethers';
 import type { Provider } from '@ethersproject/providers';
-import type { ArborFinance, ArborFinanceInterface } from '../ArborFinance';
+import type { ArborFinanceBondToken, ArborFinanceBondTokenInterface } from '../ArborFinanceBondToken';
 
 const _abi = [
   {
@@ -960,12 +960,12 @@ const _abi = [
   },
 ];
 
-export class ArborFinance__factory {
+export class ArborFinanceBondToken__factory {
   static readonly abi = _abi;
-  static createInterface(): ArborFinanceInterface {
-    return new utils.Interface(_abi) as ArborFinanceInterface;
+  static createInterface(): ArborFinanceBondTokenInterface {
+    return new utils.Interface(_abi) as ArborFinanceBondTokenInterface;
   }
-  static connect(address: string, signerOrProvider: Signer | Provider): ArborFinance {
-    return new Contract(address, _abi, signerOrProvider) as ArborFinance;
+  static connect(address: string, signerOrProvider: Signer | Provider): ArborFinanceBondToken {
+    return new Contract(address, _abi, signerOrProvider) as ArborFinanceBondToken;
   }
 }
