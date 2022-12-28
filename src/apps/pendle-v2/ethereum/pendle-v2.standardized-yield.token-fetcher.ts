@@ -11,11 +11,11 @@ import {
   GetDisplayPropsParams,
   GetPriceParams,
 } from '~position/template/app-token.template.types';
+import { NETWORK_IDS } from '~types';
 
 import { PendleV2ContractFactory, StandardizedYield } from '../contracts';
-import { PENDLE_V_2_DEFINITION } from '../pendle-v2.definition';
-
-import { PendleV2MarketDataProps } from './pendle-v2.pool.token-fetcher';
+import { BACKEND_QUERIES, PENDLE_V2_GRAPHQL_ENDPOINT } from '../pendle-v2.constant';
+import { MarketsQueryResponse } from '../pendle-v2.types';
 
 export type PendleV2StandardizedYieldTokenDefinition = {
   address: string;
@@ -29,7 +29,7 @@ export type PendleV2StandardizedYieldTokenDataProps = DefaultAppTokenDataProps &
   PendleV2StandardizedYieldTokenDefinition;
 
 @PositionTemplate()
-export class EthereumPendleV2StandardizedYieldTokenTokenFetcher extends AppTokenTemplatePositionFetcher<
+export class EthereumPendleV2StandardizedYieldTokenFetcher extends AppTokenTemplatePositionFetcher<
   StandardizedYield,
   PendleV2StandardizedYieldTokenDataProps,
   PendleV2StandardizedYieldTokenDefinition
@@ -43,27 +43,30 @@ export class EthereumPendleV2StandardizedYieldTokenTokenFetcher extends AppToken
     super(appToolkit);
   }
 
-  async getDefinitions(_params: GetDefinitionsParams): Promise<PendleV2StandardizedYieldTokenDefinition[]> {
-    const markets = await this.appToolkit.getAppTokenPositions<PendleV2MarketDataProps>({
-      appId: 'pendle-v2',
-      groupIds: [PENDLE_V_2_DEFINITION.groups.pool.id],
-      network: this.network,
-    });
-    const definitions = markets.map(market => {
-      return {
-        address: market.dataProps.sy.address,
-        icon: market.dataProps.sy.icon,
-        name: market.dataProps.sy.name,
-        price: market.dataProps.sy.price,
-        underlyingApy: market.dataProps.underlyingApy,
-      };
-    });
-
-    return definitions;
-  }
-
   getContract(address: string) {
     return this.pendleV2ContractFactory.standardizedYield({ address, network: this.network });
+  }
+
+  async getDefinitions(_params: GetDefinitionsParams): Promise<PendleV2StandardizedYieldTokenDefinition[]> {
+    const marketsResponse = await this.appToolkit.helpers.theGraphHelper.request<MarketsQueryResponse>({
+      endpoint: PENDLE_V2_GRAPHQL_ENDPOINT,
+      query: BACKEND_QUERIES.getMarkets,
+      variables: { chainId: NETWORK_IDS[this.network] },
+    });
+
+    const definitions = await Promise.all(
+      marketsResponse.markets.results.map(async market => {
+        return {
+          address: market.sy.address,
+          icon: market.sy.proIcon,
+          name: market.sy.proName,
+          price: market.sy.price.usd,
+          underlyingApy: market.underlyingApy,
+        };
+      }),
+    );
+
+    return definitions;
   }
 
   async getAddresses({ definitions }: GetAddressesParams): Promise<string[]> {
