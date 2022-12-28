@@ -9,6 +9,15 @@ export const TRISOLARIS_DEFINITION = appDefinition({
   description:
     "Trisolaris is the most popular decentralized exchange (DEX) on NEAR's Aurora engine. Swap, pool, and farm at less than a fraction of the cost of Ethereum",
   url: 'https://www.trisolaris.io',
+  tags: [AppTag.LIQUIDITY_POOL],
+  keywords: [],
+
+  links: {
+    discord: 'https://discord.com/invite/my6GtSTmmX',
+    github: 'https://github.com/trisolaris-labs',
+    telegram: 'https://t.me/TrisolarisLabs',
+    twitter: 'https://twitter.com/trisolarislabs',
+  },
 
   groups: {
     pool: {
@@ -24,20 +33,9 @@ export const TRISOLARIS_DEFINITION = appDefinition({
     },
   },
 
-  tags: [AppTag.LIQUIDITY_POOL],
-  keywords: [],
-  links: {
-    discord: 'https://discord.com/invite/my6GtSTmmX',
-    github: 'https://github.com/trisolaris-labs',
-    telegram: 'https://t.me/TrisolarisLabs',
-    twitter: 'https://twitter.com/trisolarislabs',
-  },
-
   supportedNetworks: {
     [Network.AURORA_MAINNET]: [AppAction.VIEW],
   },
-
-  primaryColor: '#fff',
 });
 
 @Register.AppDefinition(TRISOLARIS_DEFINITION.id)
@@ -46,5 +44,3 @@ export class TrisolarisAppDefinition extends AppDefinition {
     super(TRISOLARIS_DEFINITION);
   }
 }
-
-export default TRISOLARIS_DEFINITION;

@@ -1,89 +1,17 @@
-import { Inject } from '@nestjs/common';
-import { compact } from 'lodash';
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 
-import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
-import { Register } from '~app-toolkit/decorators';
-import { buildDollarDisplayItem } from '~app-toolkit/helpers/presentation/display-item.present';
-import { getImagesFromToken } from '~app-toolkit/helpers/presentation/image.present';
-import { ContractType } from '~position/contract.interface';
-import { PositionFetcher } from '~position/position-fetcher.interface';
-import { ContractPosition } from '~position/position.interface';
-import { claimable, supplied } from '~position/position.utils';
-import { Network } from '~types/network.interface';
+import { SolaceBondsContractPositionFetcher } from '../common/solace.bonds.contract-position-fetcher';
 
-import { SolaceContractFactory } from '../contracts';
-import { SOLACE_DEFINITION } from '../solace.definition';
-
-const appId = SOLACE_DEFINITION.id;
-const groupId = SOLACE_DEFINITION.groups.bonds.id;
-const network = Network.POLYGON_MAINNET;
-
-export const SOLACE_ADDRESS = '0x501ace9c35e60f03a2af4d484f49f9b1efde9f40';
-
-const BOND_TELLER_ADDRESSES = [
-  '0x501ace677634fd09a876e88126076933b686967a', // DAI Bond
-  '0x501ace367f1865dea154236d5a8016b80a49e8a9', // ETH Bond
-  '0x501ace7e977e06a3cb55f9c28d5654c9d74d5ca9', // USDC Bond
-  '0x501acef0d0c73bd103337e6e9fd49d58c426dc27', // WBTC Bond
-  '0x501ace5ceec693df03198755ee80d4ce0b5c55fe', // USDT Bond
-  '0x501acef4f8397413c33b13cb39670ad2f17bfe62', // FRAX Bond
-  '0x501ace133452d4df83ca68c684454fcba608b9dd', // MATIC Bond
-];
-
-@Register.ContractPositionFetcher({ appId, groupId, network })
-export class PolygonSolaceBondsContractPositionFetcher implements PositionFetcher<ContractPosition> {
-  constructor(
-    @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
-    @Inject(SolaceContractFactory) private readonly solaceContractFactory: SolaceContractFactory,
-  ) {}
-
-  async getPositions() {
-    const multicall = this.appToolkit.getMulticall(network);
-    const baseTokens = await this.appToolkit.getBaseTokenPrices(network);
-    const solaceToken = baseTokens.find(t => t.address === SOLACE_ADDRESS)!;
-
-    const positions = await Promise.all(
-      BOND_TELLER_ADDRESSES.map(async bondTellerAddress => {
-        const bondTellerContract = this.solaceContractFactory.bondTellerErc20({ address: bondTellerAddress, network });
-
-        const [underlyingAddressRaw, underWritingPoolAddress, name] = await Promise.all([
-          multicall.wrap(bondTellerContract).principal(),
-          multicall.wrap(bondTellerContract).underwritingPool(),
-          multicall.wrap(bondTellerContract).name(),
-        ]);
-
-        const underlyingAddress = underlyingAddressRaw.toLowerCase();
-
-        const depositToken = baseTokens.find(v => v.address === underlyingAddress);
-        if (!depositToken || !solaceToken) return null;
-        const tokens = [supplied(depositToken), claimable(solaceToken)];
-
-        const baseTokenContract = this.solaceContractFactory.erc20({ address: underlyingAddress, network });
-        const balanceOfRaw = await multicall.wrap(baseTokenContract).balanceOf(underWritingPoolAddress);
-        const balanceOf = Number(balanceOfRaw) / 10 ** depositToken.decimals;
-        const liquidity = balanceOf * depositToken.price;
-
-        const position: ContractPosition = {
-          type: ContractType.POSITION,
-          appId,
-          groupId,
-          address: bondTellerAddress,
-          network,
-          tokens,
-          dataProps: {
-            liquidity,
-          },
-          displayProps: {
-            label: name,
-            images: getImagesFromToken(depositToken),
-            statsItems: [{ label: 'Liquidity', value: buildDollarDisplayItem(liquidity) }],
-          },
-        };
-
-        return position;
-      }),
-    );
-
-    return compact(positions);
-  }
+@PositionTemplate()
+export class PolygonSolaceBondsContractPositionFetcher extends SolaceBondsContractPositionFetcher {
+  groupLabel = 'Bonds';
+  bondTellerAddresses = [
+    '0x501ace677634fd09a876e88126076933b686967a', // DAI Bond
+    '0x501ace367f1865dea154236d5a8016b80a49e8a9', // ETH Bond
+    '0x501ace7e977e06a3cb55f9c28d5654c9d74d5ca9', // USDC Bond
+    '0x501acef0d0c73bd103337e6e9fd49d58c426dc27', // WBTC Bond
+    '0x501ace5ceec693df03198755ee80d4ce0b5c55fe', // USDT Bond
+    '0x501acef4f8397413c33b13cb39670ad2f17bfe62', // FRAX Bond
+    '0x501ace133452d4df83ca68c684454fcba608b9dd', // MATIC Bond
+  ];
 }

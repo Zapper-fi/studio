@@ -1,92 +1,73 @@
 import { Inject } from '@nestjs/common';
-import { compact } from 'lodash';
 
-import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
-import { Register } from '~app-toolkit/decorators';
-import { buildDollarDisplayItem } from '~app-toolkit/helpers/presentation/display-item.present';
-import { getImagesFromToken, getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
-import { ContractType } from '~position/contract.interface';
-import { PositionFetcher } from '~position/position-fetcher.interface';
-import { ContractPosition } from '~position/position.interface';
-import { claimable, supplied } from '~position/position.utils';
-import { Network } from '~types/network.interface';
+import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
+import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
+import { MetaType } from '~position/position.interface';
+import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
+import {
+  DefaultContractPositionDefinition,
+  GetDisplayPropsParams,
+  GetTokenBalancesParams,
+  GetTokenDefinitionsParams,
+} from '~position/template/contract-position.template.types';
 
-import { PikaProtocolV3ContractFactory } from '../contracts';
-import { PIKA_PROTOCOL_V_3_DEFINITION } from '../pika-protocol-v3.definition';
+import { PikaProtocolV3ContractFactory, PikaProtocolV3Vault } from '../contracts';
 
-const appId = PIKA_PROTOCOL_V_3_DEFINITION.id;
-const groupId = PIKA_PROTOCOL_V_3_DEFINITION.groups.vault.id;
-const network = Network.OPTIMISM_MAINNET;
+@PositionTemplate()
+export class OptimismPikaProtocolV3VaultContractPositionFetcher extends ContractPositionTemplatePositionFetcher<PikaProtocolV3Vault> {
+  groupLabel = 'Vaults';
 
-const VAULTS = [
-  // USDC
-  {
-    address: '0xd5a8f233cbddb40368d55c3320644fb36e597002',
-    stakedTokenAddress: '0x7f5c764cbc14f9669b88837ca1490cca17c31607',
-    rewardTokenAddress: '0x7f5c764cbc14f9669b88837ca1490cca17c31607',
-  },
-];
-
-@Register.ContractPositionFetcher({ appId, groupId, network })
-export class OptimismPikaProtocolV3VaultContractPositionFetcher implements PositionFetcher<ContractPosition> {
   constructor(
-    @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
-    @Inject(PikaProtocolV3ContractFactory)
-    private readonly pikaProtocolV3ContractFactory: PikaProtocolV3ContractFactory,
-  ) {}
-
-  async getVaultBalance(vaultContractAddress: string, depositTokenAddress: string) {
-    const multicall = this.appToolkit.getMulticall(network);
-    const depositTokenContract = multicall.wrap(
-      this.appToolkit.globalContracts.erc20({
-        network,
-        address: depositTokenAddress,
-      }),
-    );
-
-    return await Promise.all([depositTokenContract.balanceOf(vaultContractAddress)]);
+    @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
+    @Inject(PikaProtocolV3ContractFactory) protected readonly contractFactory: PikaProtocolV3ContractFactory,
+  ) {
+    super(appToolkit);
   }
 
-  async getPositions() {
-    const baseTokens = await this.appToolkit.getBaseTokenPrices(network);
-    const appTokens = await this.appToolkit.getAppTokenPositions({ appId, groupIds: [groupId], network });
+  getContract(address: string): PikaProtocolV3Vault {
+    return this.contractFactory.pikaProtocolV3Vault({ address, network: this.network });
+  }
 
-    const allTokens = [...appTokens, ...baseTokens];
+  async getDefinitions(): Promise<DefaultContractPositionDefinition[]> {
+    return [{ address: '0xd5a8f233cbddb40368d55c3320644fb36e597002' }];
+  }
 
-    const positions = await Promise.all(
-      VAULTS.map(async ({ address, stakedTokenAddress, rewardTokenAddress }) => {
-        const stakedToken = allTokens.find(v => v.address === stakedTokenAddress);
-        const rewardToken = allTokens.find(v => v.address === rewardTokenAddress);
-        if (!stakedToken || !rewardToken) return null;
+  async getTokenDefinitions(_params: GetTokenDefinitionsParams<PikaProtocolV3Vault>) {
+    return [
+      {
+        metaType: MetaType.SUPPLIED,
+        address: '0x7f5c764cbc14f9669b88837ca1490cca17c31607',
+        network: this.network,
+      },
+      {
+        metaType: MetaType.CLAIMABLE,
+        address: '0x7f5c764cbc14f9669b88837ca1490cca17c31607',
+        network: this.network,
+      },
+    ];
+  }
 
-        const contract = this.pikaProtocolV3ContractFactory.pikaProtocolV3Vault({ address, network });
-        const balanceRaw = await this.getVaultBalance(contract.address, stakedToken.address);
-        const liquidity = Number(balanceRaw) / 10 ** stakedToken.decimals;
-        const tokens = [supplied(stakedToken), claimable(rewardToken)];
+  async getLabel({ contractPosition }: GetDisplayPropsParams<PikaProtocolV3Vault>) {
+    return `Staked ${getLabelFromToken(contractPosition.tokens[0])}`;
+  }
 
-        const label = `Staked ${getLabelFromToken(stakedToken)}`;
-        const images = getImagesFromToken(stakedToken);
-        const secondaryLabel = buildDollarDisplayItem(stakedToken.price);
+  async getTokenBalancesPerPosition({ address, contract }: GetTokenBalancesParams<PikaProtocolV3Vault>) {
+    const multicall = this.appToolkit.getMulticall(this.network);
+    const rewardContract = this.contractFactory.pikaProtocolV3Rewards({
+      address: '0x939c11c596b851447e5220584d37f12854ba02ae',
+      network: this.network,
+    });
+    const [userShare, vault, totalShare, rewardBalance] = await Promise.all([
+      contract.getShare(address),
+      contract.getVault(),
+      contract.getTotalShare(),
+      multicall.wrap(rewardContract).getClaimableReward(address),
+    ]);
 
-        const position: ContractPosition = {
-          type: ContractType.POSITION,
-          appId,
-          groupId,
-          address,
-          network,
-          tokens,
-          dataProps: { liquidity },
-          displayProps: {
-            label,
-            secondaryLabel,
-            images,
-            statsItems: [{ label: 'Liquidity', value: buildDollarDisplayItem(liquidity) }],
-          },
-        };
+    const stakedBalanceRaw = userShare.mul(vault.balance).div(totalShare);
+    const stakedBalance = stakedBalanceRaw.div(100);
 
-        return position;
-      }),
-    );
-    return compact(positions);
+    return [stakedBalance, rewardBalance];
   }
 }

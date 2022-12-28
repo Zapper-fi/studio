@@ -1,5 +1,4 @@
 import { Inject } from '@nestjs/common';
-import request from 'graphql-request';
 import moment from 'moment';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
@@ -21,7 +20,7 @@ import { NETWORK_IDS } from '~types/network.interface';
 
 import { PendleMarket, PendleV2ContractFactory } from '../contracts';
 import { BACKEND_QUERIES, PENDLE_V2_GRAPHQL_ENDPOINT } from '../pendle-v2.constant';
-import { MarketResponse, MarketsQueryResponse, TokenResponse } from '../pendle-v2.types';
+import { MarketsQueryResponse, TokenResponse } from '../pendle-v2.types';
 
 type Token = {
   name: string;
@@ -73,14 +72,14 @@ export class EthereumPendleV2PoolTokenFetcher extends AppTokenTemplatePositionFe
   }
 
   async getDefinitions(): Promise<PendleV2MarketTokenDefinition[]> {
-    const resp: MarketsQueryResponse = await request(PENDLE_V2_GRAPHQL_ENDPOINT, BACKEND_QUERIES.getMarkets, {
-      chainId: NETWORK_IDS[this.network],
+    const marketsResponse = await this.appToolkit.helpers.theGraphHelper.request<MarketsQueryResponse>({
+      endpoint: PENDLE_V2_GRAPHQL_ENDPOINT,
+      query: BACKEND_QUERIES.getMarkets,
+      variables: { chainId: NETWORK_IDS[this.network] },
     });
 
-    const markets: MarketResponse[] = resp.markets.results;
-
     const definitions = await Promise.all(
-      markets.map(async market => {
+      marketsResponse.markets.results.map(async market => {
         return {
           address: market.address,
           aggregatedApy: market.aggregatedApy,

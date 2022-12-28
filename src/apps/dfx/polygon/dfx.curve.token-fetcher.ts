@@ -1,115 +1,15 @@
-import { Inject } from '@nestjs/common';
-import _ from 'lodash';
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 
-import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
-import { Register } from '~app-toolkit/decorators';
-import { buildDollarDisplayItem } from '~app-toolkit/helpers/presentation/display-item.present';
-import { getImagesFromToken } from '~app-toolkit/helpers/presentation/image.present';
-import { ContractType } from '~position/contract.interface';
-import { PositionFetcher } from '~position/position-fetcher.interface';
-import { AppTokenPosition } from '~position/position.interface';
-import { Network } from '~types/network.interface';
+import { DfxCurveTokenFetcher } from '../common/dfx.curve.token-fetcher';
 
-import { Addresses } from '../addresses';
-import { DfxContractFactory } from '../contracts';
-import { DFX_DEFINITION } from '../dfx.definition';
-
-const appId = DFX_DEFINITION.id;
-const groupId = DFX_DEFINITION.groups.dfxCurve.id;
-const network = Network.POLYGON_MAINNET;
-
-@Register.TokenPositionFetcher({ appId, groupId, network })
-export class PolygonDfxCurveTokenFetcher implements PositionFetcher<AppTokenPosition> {
-  constructor(
-    @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
-    @Inject(DfxContractFactory) private readonly dfxContractFactory: DfxContractFactory,
-  ) {}
-
-  async getPositions() {
-    const curveAddresses = Addresses[network].amm.map(v => v.curve);
-
-    const baseTokenDependencies = await this.appToolkit.getBaseTokenPrices(network);
-
-    // Create multipcall wrapper for batch RPC calls
-    const multicall = this.appToolkit.getMulticall(network);
-
-    const lpTokens = await Promise.all(
-      curveAddresses.map(async curveAddress => {
-        // Fetch data from DFX curve contract
-        const contract = this.dfxContractFactory.dfxCurve({ address: curveAddress, network });
-        const [
-          name,
-          symbol,
-          decimals,
-          supplyRaw,
-          token0AddressRaw,
-          token1AddressRaw,
-          [totalLiquidityRaw, underlyingLiquidityRaw],
-        ] = await Promise.all([
-          multicall.wrap(contract).name(),
-          multicall.wrap(contract).symbol(),
-          multicall.wrap(contract).decimals(),
-          multicall.wrap(contract).totalSupply(),
-          multicall.wrap(contract).numeraires(0),
-          multicall.wrap(contract).numeraires(1),
-          multicall.wrap(contract).liquidity(),
-        ]);
-        const underlyingTokenAddresses = [token0AddressRaw.toLowerCase(), token1AddressRaw.toLowerCase()];
-
-        // Find underlying tokens from base dependencies
-        const [token0, token1] = underlyingTokenAddresses.map(tokenAddress =>
-          baseTokenDependencies.find(v => v.address === tokenAddress.toLowerCase()),
-        );
-
-        // Remove any pools containing tokens that aren't available
-        if (!token0 || !token1) return null;
-        const tokens = [token0, token1];
-
-        // Denormalize big integer values
-        const supply = Number(supplyRaw) / 10 ** decimals;
-        const liquidity = Number(totalLiquidityRaw) / 1e18;
-        const reserves = underlyingLiquidityRaw.map(reserveRaw => Number(reserveRaw) / 10 ** 18); // DFX report all token liquidity in 10**18
-        const pricePerShare = reserves.map(r => r / supply);
-        const price = liquidity / supply;
-
-        // Prepare display props
-        const [, baseToken, quoteToken] = name.split('-');
-        const label = `${baseToken.toUpperCase()}/${quoteToken.toUpperCase()}`;
-        const secondaryLabel = buildDollarDisplayItem(price);
-        const images = tokens.map(v => getImagesFromToken(v)).flat();
-
-        // Create token object
-        const lpToken: AppTokenPosition = {
-          type: ContractType.APP_TOKEN,
-          appId,
-          groupId,
-          address: curveAddress,
-          network,
-          symbol,
-          decimals,
-          supply,
-          price,
-          pricePerShare,
-          tokens,
-          dataProps: {
-            liquidity,
-          },
-          displayProps: {
-            label,
-            secondaryLabel,
-            images,
-            statsItems: [
-              {
-                label: 'Liquidity',
-                value: buildDollarDisplayItem(liquidity),
-              },
-            ],
-          },
-        };
-        return lpToken;
-      }),
-    );
-
-    return _.compact(lpTokens);
-  }
+@PositionTemplate()
+export class PolygonDfxCurveTokenFetcher extends DfxCurveTokenFetcher {
+  groupLabel = 'DFX Curves';
+  poolAddresses = [
+    '0x288ab1b113c666abb097bb2ba51b8f3759d7729e', // cadc-Usdc
+    '0xb72d390e07f40d37d42dfcc43e954ae7c738ad44', // eurs-Usdc
+    '0x8e3e9cb46e593ec0caf4a1dcd6df3a79a87b1fd7', // xsgd-Usdc
+    '0x931d6a6cc3f992beee80a1a14a6530d34104b000', // nzds-Usdc
+    '0xea75cd0b12a8b48f5bddad37ceb15f8cb3d2cc75', // tryb-Usdc
+  ];
 }
