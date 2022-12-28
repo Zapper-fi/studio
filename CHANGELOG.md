@@ -4,6 +4,23 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.345.0](https://github.com/Zapper-fi/studio/compare/v0.344.0...v0.345.0) (2022-12-28)
+
+
+### Features
+
+* **arbor-finance:** Add bond tokens ([#1982](https://github.com/Zapper-fi/studio/issues/1982)) ([0680761](https://github.com/Zapper-fi/studio/commit/06807611c907e6ea782168656ac39ba7f3c42160))
+* **arbor-finance:** Convert to templates ([#2006](https://github.com/Zapper-fi/studio/issues/2006)) ([9e75ffd](https://github.com/Zapper-fi/studio/commit/9e75ffdac031d66fe18928ccacbd8a18c9f80262))
+* **keeper:** KLP to templates ([#2005](https://github.com/Zapper-fi/studio/issues/2005)) ([7c174e1](https://github.com/Zapper-fi/studio/commit/7c174e1defbf4feb8f6b383b4697d704237cfdd9))
+* **llamapay:** Vesting ([#1941](https://github.com/Zapper-fi/studio/issues/1941)) ([d5a3136](https://github.com/Zapper-fi/studio/commit/d5a31369eeff4e04f62404f8280df164d6529043))
+* **mean-finance:** Add Ethereum Mainnet support for Mean Finance integration ([#2003](https://github.com/Zapper-fi/studio/issues/2003)) ([d5cb1c4](https://github.com/Zapper-fi/studio/commit/d5cb1c40d940d2d808e63be4282a499fffa4228d))
+* **pendle-v2:** Implement vePendle fetcher ([#2002](https://github.com/Zapper-fi/studio/issues/2002)) ([a0fc054](https://github.com/Zapper-fi/studio/commit/a0fc0543e44be51ab9e115d556283db439e5a15b))
+
+
+### Bug Fixes
+
+* **mycelium:** Migration to template ([#1978](https://github.com/Zapper-fi/studio/issues/1978)) ([38a6e6b](https://github.com/Zapper-fi/studio/commit/38a6e6bd434fcc18f2209e4d108e2aa3198d6507))
+
 ## [0.344.0](https://github.com/Zapper-fi/studio/compare/v0.343.1...v0.344.0) (2022-12-28)
 
 
