@@ -52,7 +52,7 @@ export class EthereumPendleV2YieldTokenFetcher extends AppTokenTemplatePositionF
     const marketsResponse = await this.appToolkit.helpers.theGraphHelper.request<MarketsQueryResponse>({
       endpoint: PENDLE_V2_GRAPHQL_ENDPOINT,
       query: BACKEND_QUERIES.getMarkets,
-      variables: { chainIds: NETWORK_IDS[this.network] },
+      variables: { chainId: NETWORK_IDS[this.network] },
     });
 
     const definitions = await Promise.all(
