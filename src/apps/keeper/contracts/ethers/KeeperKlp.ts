@@ -17,7 +17,7 @@ import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi
 import type { Listener, Provider } from '@ethersproject/providers';
 import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
-export interface KlpInterface extends utils.Interface {
+export interface KeeperKlpInterface extends utils.Interface {
   functions: {
     'acceptGovernance()': FunctionFragment;
     'allowance(address,address)': FunctionFragment;
@@ -213,12 +213,12 @@ export type TransferEvent = TypedEvent<[string, string, BigNumber], TransferEven
 
 export type TransferEventFilter = TypedEventFilter<TransferEvent>;
 
-export interface Klp extends BaseContract {
+export interface KeeperKlp extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
 
-  interface: KlpInterface;
+  interface: KeeperKlpInterface;
 
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,

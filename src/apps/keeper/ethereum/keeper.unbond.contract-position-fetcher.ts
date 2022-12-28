@@ -6,5 +6,5 @@ import { KeeperUnbondContractPositionFetcher } from '../common/keeper.keeper-unb
 
 @PositionTemplate()
 export class EthereumKeeperUnbondContractPositionFetcher extends KeeperUnbondContractPositionFetcher {
-  groupLabel = 'Keep3r Unbond';
+  groupLabel = 'Keep3r Unbonds';
 }

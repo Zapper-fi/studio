@@ -4,7 +4,7 @@
 
 import { Contract, Signer, utils } from 'ethers';
 import type { Provider } from '@ethersproject/providers';
-import type { Klp, KlpInterface } from '../Klp';
+import type { KeeperKlp, KeeperKlpInterface } from '../KeeperKlp';
 
 const _abi = [
   {
@@ -631,12 +631,12 @@ const _abi = [
   },
 ];
 
-export class Klp__factory {
+export class KeeperKlp__factory {
   static readonly abi = _abi;
-  static createInterface(): KlpInterface {
-    return new utils.Interface(_abi) as KlpInterface;
+  static createInterface(): KeeperKlpInterface {
+    return new utils.Interface(_abi) as KeeperKlpInterface;
   }
-  static connect(address: string, signerOrProvider: Signer | Provider): Klp {
-    return new Contract(address, _abi, signerOrProvider) as Klp;
+  static connect(address: string, signerOrProvider: Signer | Provider): KeeperKlp {
+    return new Contract(address, _abi, signerOrProvider) as KeeperKlp;
   }
 }

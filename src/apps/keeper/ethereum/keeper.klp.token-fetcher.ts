@@ -1,112 +1,85 @@
 import { Inject } from '@nestjs/common';
+import { Token as TokenWrapper } from '@uniswap/sdk-core';
+import { Pool, Position } from '@uniswap/v3-sdk';
 
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
-import { Register } from '~app-toolkit/decorators';
-import { buildDollarDisplayItem } from '~app-toolkit/helpers/presentation/display-item.present';
-import { getImagesFromToken, getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
-import { ContractType } from '~position/contract.interface';
-import { PositionFetcher } from '~position/position-fetcher.interface';
-import { AppTokenPosition } from '~position/position.interface';
-import { Network } from '~types/network.interface';
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
+import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
+import { UniswapV3ContractFactory } from '~apps/uniswap-v3/contracts';
+import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
+import {
+  GetDisplayPropsParams,
+  GetPricePerShareParams,
+  GetUnderlyingTokensParams,
+} from '~position/template/app-token.template.types';
+import { NETWORK_IDS } from '~types';
 
-import { KeeperContractFactory } from '../contracts';
-import { KEEPER_DEFINITION } from '../keeper.definition';
+import { KeeperContractFactory, KeeperKlp } from '../contracts';
 
-const appId = KEEPER_DEFINITION.id;
-const groupId = KEEPER_DEFINITION.groups.klp.id;
-const network = Network.ETHEREUM_MAINNET;
-const KLP_ADDRESSES = ['0x3f6740b5898c5d3650ec6eace9a649ac791e44d7'];
+@PositionTemplate()
+export class EthereumKeeperKlpTokenFetcher extends AppTokenTemplatePositionFetcher<KeeperKlp> {
+  groupLabel = 'Keep3r LP';
 
-@Register.TokenPositionFetcher({ appId, groupId, network })
-export class EthereumKeeperKlpTokenFetcher implements PositionFetcher<AppTokenPosition> {
   constructor(
-    @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
-    @Inject(KeeperContractFactory) private readonly keeperContractFactory: KeeperContractFactory,
-  ) { }
+    @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
+    @Inject(KeeperContractFactory) protected readonly contractFactory: KeeperContractFactory,
+    @Inject(UniswapV3ContractFactory) protected readonly uniswapV3ContractFactory: UniswapV3ContractFactory,
+  ) {
+    super(appToolkit);
+  }
 
-  async getPositions() {
-    // A user can deposit base tokens like LOOKS or LQTY
-    const baseTokenDependencies = await this.appToolkit.getBaseTokenPrices(
-      network
-    );
-    const allTokenDependencies = [
-      ...baseTokenDependencies,
+  getContract(address: string) {
+    return this.contractFactory.keeperKlp({ address, network: this.network });
+  }
+
+  getAddresses() {
+    return ['0x3f6740b5898c5d3650ec6eace9a649ac791e44d7'];
+  }
+
+  async getUnderlyingTokenDefinitions({ contract }: GetUnderlyingTokensParams<KeeperKlp>) {
+    return [
+      { address: await contract.token0(), network: this.network },
+      { address: await contract.token1(), network: this.network },
     ];
+  }
 
-    // Create a multicall wrapper instance to batch chain RPC calls together
-    const multicall = this.appToolkit.getMulticall(network);
+  async getPricePerShare({ contract, multicall, appToken }: GetPricePerShareParams<KeeperKlp>) {
+    const [poolAddress, position, tickLower, tickUpper] = await Promise.all([
+      contract.pool(),
+      contract.position(),
+      contract.tickLower(),
+      contract.tickUpper(),
+    ]);
 
-    const tokens = await Promise.all(
-      KLP_ADDRESSES.map(async (klpAddress) => {
-        const contract = this.keeperContractFactory.klp({
-          address: klpAddress,
-          network,
-        });
+    const poolContract = this.uniswapV3ContractFactory.uniswapV3Pool({ address: poolAddress, network: this.network });
+    const [slot, fee, liquidity] = await Promise.all([
+      multicall.wrap(poolContract).slot0(),
+      multicall.wrap(poolContract).fee(),
+      multicall.wrap(poolContract).liquidity(),
+    ]);
 
-        const [symbol, decimals, supplyRaw, underlyingToken0RawAddress, underlyingToken1RawAddress] = await Promise.all([
-          multicall.wrap(contract).symbol(),
-          multicall.wrap(contract).decimals(),
-          multicall.wrap(contract).totalSupply(),
-          multicall.wrap(contract).token0(),
-          multicall.wrap(contract).token1(),
-        ]);
+    const [token0, token1] = appToken.tokens;
+    const t0 = new TokenWrapper(NETWORK_IDS[this.network]!, token0.address, token0.decimals, token0.symbol);
+    const t1 = new TokenWrapper(NETWORK_IDS[this.network]!, token1.address, token1.decimals, token1.symbol);
+    const pool = new Pool(t0, t1, Number(fee), slot.sqrtPriceX96.toString(), liquidity.toString(), Number(slot.tick));
+    const pos = new Position({ pool, liquidity: position.liquidity.toString(), tickLower, tickUpper });
 
-        // Denormalize the supply
-        const supply = Number(supplyRaw) / 10 ** decimals;
+    const reserve0Raw = pos.amount0.multiply(10 ** token0.decimals).toFixed(0);
+    const reserve1Raw = pos.amount1.multiply(10 ** token1.decimals).toFixed(0);
+    const reservesRaw = [reserve0Raw, reserve1Raw];
+    const reserves = reservesRaw.map((r, i) => Number(r) / 10 ** appToken.tokens[i].decimals);
+    const pricePerShare = reserves.map(r => Number(r) / appToken.supply);
 
-        // Find the underlying token in our dependencies
-        const underlyingToken0Address = underlyingToken0RawAddress.toLowerCase();
-        const underlyingToken0 = allTokenDependencies.find(
-          (v) => v.address === underlyingToken0Address
-        );
-        const underlyingToken1Address = underlyingToken1RawAddress.toLowerCase();
-        const underlyingToken1 = allTokenDependencies.find(
-          (v) => v.address === underlyingToken1Address
-        );
+    return pricePerShare;
+  }
 
-        if (!underlyingToken0 || !underlyingToken1) {
-          console.log('did not find token0 or token1', underlyingToken0, underlyingToken1)
-          return null;
-        }
+  async getLabel({ appToken }: GetDisplayPropsParams<KeeperKlp>) {
+    return appToken.tokens.map(v => getLabelFromToken(v)).join(' / ');
+  }
 
-        // if (!underlyingToken) return null;
-        const tokens = [underlyingToken0, underlyingToken1];
-
-        // Denormalize the price per share
-        // const pricePerShare = Number(1) / 10 ** 18;
-        // const price = pricePerShare * 10 ** 18;
-        const pricePerShare = 1;
-        const price = 2 * Math.sqrt(underlyingToken0.price / underlyingToken1.price) * underlyingToken1.price;
-
-        const label = 'KLP Token';
-        const images = [...getImagesFromToken(underlyingToken0), ...getImagesFromToken(underlyingToken1)];
-        const secondaryLabel = buildDollarDisplayItem(price);
-
-        // Create the token object
-        const token: AppTokenPosition = {
-          type: ContractType.APP_TOKEN,
-          appId,
-          groupId,
-          address: klpAddress,
-          network,
-          symbol,
-          decimals,
-          supply,
-          tokens,
-          price,
-          pricePerShare,
-          dataProps: {},
-          displayProps: {
-            label,
-            images,
-            secondaryLabel,
-          },
-        };
-
-        return token;
-      })
-    );
-
-    return tokens.filter(token => !!token) as AppTokenPosition[];
+  async getSecondaryLabel({ appToken }: GetDisplayPropsParams<KeeperKlp>) {
+    const { reserves, liquidity } = appToken.dataProps;
+    const reservePercentages = appToken.tokens.map((t, i) => reserves[i] * (t.price / liquidity));
+    return reservePercentages.map(p => `${Math.round(p * 100)}%`).join(' / ');
   }
 }

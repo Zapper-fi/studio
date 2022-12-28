@@ -1,21 +1,14 @@
 import { Inject } from '@nestjs/common';
-import { BigNumber, BigNumberish } from 'ethers';
-import { compact, find, merge, reduce, sumBy, uniqBy } from 'lodash';
+import { BigNumberish } from 'ethers';
+import { compact, find, merge, sumBy } from 'lodash';
 import moment from 'moment';
 import 'moment-duration-format';
 
 import { drillBalance } from '~app-toolkit';
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
-import { ETH_ADDR_ALIAS, ZERO_ADDRESS } from '~app-toolkit/constants/address';
-import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
-import { DefaultDataProps, WithMetaType } from '~position/display.interface';
-import { AppTokenPositionBalance, BaseTokenBalance, ContractPositionBalance } from '~position/position-balance.interface';
-import { MetaType, Standard } from '~position/position.interface';
-import {
-  GetTokenDefinitionsParams,
-  GetDisplayPropsParams,
-  GetDataPropsParams,
-} from '~position/template/contract-position.template.types';
+import { ContractPositionBalance } from '~position/position-balance.interface';
+import { MetaType } from '~position/position.interface';
+import { GetTokenDefinitionsParams, GetDataPropsParams } from '~position/template/contract-position.template.types';
 import { CustomContractPositionTemplatePositionFetcher } from '~position/template/custom-contract-position.template.position-fetcher';
 
 import { KeeperContractFactory, KeeperJobManager } from '../contracts';
@@ -41,7 +34,7 @@ type KeeperJobDefinition = {
       name: string;
       symbol: string;
       decimals: string;
-    }
+    };
   }[];
   owner: string;
 };
@@ -95,51 +88,39 @@ export abstract class KeeperJobContractPositionFetcher extends CustomContractPos
     return jobs.flat();
   }
 
-  async getTokenDefinitions({
-    definition,
-  }: GetTokenDefinitionsParams<KeeperJobManager, KeeperJobDefinition>) {
+  async getTokenDefinitions({ definition }: GetTokenDefinitionsParams<KeeperJobManager, KeeperJobDefinition>) {
     return [
       ...definition.liquidities.map(v => {
         if (v.pendingUnbonds !== '0' && moment().unix() > Number(v.withdrawableAfter)) {
-          return ({ metaType: MetaType.CLAIMABLE, address: v.klp.id, network: this.network })
+          return { metaType: MetaType.CLAIMABLE, address: v.klp.id, network: this.network };
         }
-        return ({ metaType: MetaType.LOCKED, address: v.klp.id, network: this.network })
+        return { metaType: MetaType.LOCKED, address: v.klp.id, network: this.network };
       }),
       ...definition.credits.map(v => ({ metaType: MetaType.SUPPLIED, address: v.token.id, network: this.network })),
     ];
   }
 
   async getLabel() {
-    return 'Keep3r job';
-  }
-
-  async getTokenBalancesPerPosition(): Promise<BigNumberish[]> {
-    throw new Error('Method not implemented.');
+    return 'Keep3r Job';
   }
 
   async getDataProps({
     definition,
-  }: GetDataPropsParams<
-    KeeperJobManager,
-    KeeperJobDataProps,
-    KeeperJobDefinition
-  >): Promise<KeeperJobDataProps> {
+  }: GetDataPropsParams<KeeperJobManager, KeeperJobDataProps, KeeperJobDefinition>): Promise<KeeperJobDataProps> {
     return {
       credits: definition.credits.map(({ id, amount, token }) => ({ id, amount, token: token.id })),
-      liquidities: definition.liquidities.map(({
-        id,
-        amount,
-        pendingUnbonds,
-        withdrawableAfter,
-        klp,
-      }) => ({
+      liquidities: definition.liquidities.map(({ id, amount, pendingUnbonds, withdrawableAfter, klp }) => ({
         id,
         amount,
         pendingUnbonds,
         withdrawableAfter,
         token: klp.id,
-      }))
+      })),
     };
+  }
+
+  async getTokenBalancesPerPosition(): Promise<BigNumberish[]> {
+    throw new Error('Method not implemented.');
   }
 
   async getBalances(address: string): Promise<ContractPositionBalance<KeeperJobDataProps>[]> {
@@ -157,29 +138,22 @@ export abstract class KeeperJobContractPositionFetcher extends CustomContractPos
     });
 
     const userJobs = userJobsData.jobs.map(userJob => {
-      const position = positions
-        .find(v => v.address === userJob.id);
+      const position = positions.find(v => v.address === userJob.id);
       if (!position) return null;
 
-      const rawTokens = [
-        ...position.dataProps.liquidities,
-        ...position.dataProps.credits,
-      ]
+      const rawTokens = [...position.dataProps.liquidities, ...position.dataProps.credits];
 
-      const tokens = rawTokens.map(rawToken => {
+      const maybeTokens = rawTokens.map(rawToken => {
         const token = find(position.tokens, { address: rawToken.token });
-        if (!token) {
-          return null;
-        }
-
+        if (!token) return null;
         return drillBalance(token, rawToken.amount);
-      }).filter(token => !!token) as (WithMetaType<BaseTokenBalance> | WithMetaType<AppTokenPositionBalance<DefaultDataProps>>)[];
+      });
 
-
+      const tokens = compact(maybeTokens);
       const balanceUSD = sumBy(tokens, v => v.balanceUSD);
 
       // Display Properties
-      const label = 'Keep3r job';
+      const label = 'Keep3r Job';
       const secondaryLabel = '';
       const displayProps = { label, secondaryLabel };
 
@@ -192,6 +166,7 @@ export abstract class KeeperJobContractPositionFetcher extends CustomContractPos
 
       return positionBalance;
     });
+
     return compact(userJobs.flat());
   }
 }

@@ -5,16 +5,16 @@ export const SUBGRAPH_URL = 'https://api.thegraph.com/subgraphs/name/0xged/keep3
 export type KeeperUnbond = {
   bonds: {
     pendingUnbonds: string;
-    withdrawableAfter
+    withdrawableAfter;
     token: {
       id: string;
       name: string;
       symbol: string;
       decimals: string;
-    }
+    };
     keeper: {
       id: string;
-    }
+    };
   }[];
 };
 
