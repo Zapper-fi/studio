@@ -6,5 +6,5 @@ import { KeeperBondContractPositionFetcher } from '../common/keeper.keeper-bond.
 
 @PositionTemplate()
 export class EthereumKeeperBondContractPositionFetcher extends KeeperBondContractPositionFetcher {
-  groupLabel = 'Keep3r Bond';
+  groupLabel = 'Keep3r Bonds';
 }

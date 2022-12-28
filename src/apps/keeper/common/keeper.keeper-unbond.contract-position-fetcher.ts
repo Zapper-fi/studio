@@ -8,12 +8,13 @@ import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { getImagesFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { ContractType } from '~position/contract.interface';
 import { DefaultDataProps, WithMetaType } from '~position/display.interface';
-import { AppTokenPositionBalance, BaseTokenBalance, ContractPositionBalance } from '~position/position-balance.interface';
-import { MetaType } from '~position/position.interface';
 import {
-  GetTokenDefinitionsParams,
-  GetDataPropsParams,
-} from '~position/template/contract-position.template.types';
+  AppTokenPositionBalance,
+  BaseTokenBalance,
+  ContractPositionBalance,
+} from '~position/position-balance.interface';
+import { MetaType } from '~position/position.interface';
+import { GetTokenDefinitionsParams } from '~position/template/contract-position.template.types';
 import { CustomContractPositionTemplatePositionFetcher } from '~position/template/custom-contract-position.template.position-fetcher';
 
 import { KeeperContractFactory, KeeperJobManager } from '../contracts';
@@ -29,13 +30,13 @@ type KeeperUnbondDefinition = {
     name: string;
     symbol: string;
     decimals: string;
-  }
+  };
   keeper: {
     id: string;
-  }
+  };
 };
 
-type KeeperUnbondDataProps = {};
+type KeeperUnbondDataProps = DefaultDataProps;
 
 export abstract class KeeperUnbondContractPositionFetcher extends CustomContractPositionTemplatePositionFetcher<
   KeeperJobManager,
@@ -66,30 +67,20 @@ export abstract class KeeperUnbondContractPositionFetcher extends CustomContract
     return unbonds.flat();
   }
 
-  async getTokenDefinitions({
-    definition,
-  }: GetTokenDefinitionsParams<KeeperJobManager, KeeperUnbondDefinition>) {
+  async getTokenDefinitions({ definition }: GetTokenDefinitionsParams<KeeperJobManager, KeeperUnbondDefinition>) {
     return [
-      (moment().unix() > Number(definition.withdrawableAfter)) ? ({ metaType: MetaType.CLAIMABLE, address: definition.token.id, network: this.network }) : { metaType: MetaType.LOCKED, address: definition.token.id, network: this.network },
+      moment().unix() > Number(definition.withdrawableAfter)
+        ? { metaType: MetaType.CLAIMABLE, address: definition.token.id, network: this.network }
+        : { metaType: MetaType.LOCKED, address: definition.token.id, network: this.network },
     ];
   }
 
   async getLabel() {
-    return 'Keep3r Unbonded tokens';
+    return 'Keep3r Unbonded Tokens';
   }
 
   async getTokenBalancesPerPosition(): Promise<BigNumberish[]> {
     throw new Error('Method not implemented.');
-  }
-
-  async getDataProps({
-    definition,
-  }: GetDataPropsParams<
-    KeeperJobManager,
-    KeeperUnbondDataProps,
-    KeeperUnbondDefinition
-  >): Promise<KeeperUnbondDataProps> {
-    return {};
   }
 
   async getBalances(address: string): Promise<ContractPositionBalance<KeeperUnbondDataProps>[]> {
@@ -106,24 +97,28 @@ export abstract class KeeperUnbondContractPositionFetcher extends CustomContract
       dataToSearch: 'bonds',
     });
 
-    const parsedUnbonds = userUnbondsData.bonds.map(userUnbond => {
-      const position = positions
-        .find(v => v.address === userUnbond.keeper.id);
-      if (!position) return null;
+    const parsedUnbonds = userUnbondsData.bonds
+      .map(userUnbond => {
+        const position = positions.find(v => v.address === userUnbond.keeper.id);
+        if (!position) return null;
 
-      const token = find(position.tokens, { address: userUnbond.token.id });
-      if (!token) {
-        return null;
-      }
+        const token = find(position.tokens, { address: userUnbond.token.id });
+        if (!token) {
+          return null;
+        }
 
-      return drillBalance(token, userUnbond.pendingUnbonds);
-    }).filter(unbond => !!unbond) as (WithMetaType<BaseTokenBalance> | WithMetaType<AppTokenPositionBalance<DefaultDataProps>>)[];
+        return drillBalance(token, userUnbond.pendingUnbonds);
+      })
+      .filter(unbond => !!unbond) as (
+      | WithMetaType<BaseTokenBalance>
+      | WithMetaType<AppTokenPositionBalance<DefaultDataProps>>
+    )[];
 
     const balanceUSD = sumBy(parsedUnbonds, v => v.balanceUSD);
     const images = parsedUnbonds.map(unbond => getImagesFromToken(unbond)).flat();
 
     // Display Properties
-    const label = 'Keep3r unbond';
+    const label = 'Keep3r Unbonded Tokens';
     const secondaryLabel = '';
     const displayProps = { label, secondaryLabel, images };
     const positionBalance: ContractPositionBalance = {

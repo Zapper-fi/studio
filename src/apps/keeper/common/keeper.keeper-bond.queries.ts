@@ -10,10 +10,10 @@ export type KeeperBond = {
       name: string;
       symbol: string;
       decimals: string;
-    }
+    };
     keeper: {
       id: string;
-    }
+    };
   }[];
 };
 

@@ -8,12 +8,15 @@ export const KEEPER_DEFINITION = appDefinition({
   name: 'keeper',
   description: 'Keep3r',
   url: 'https://keep3r.network/',
+  tags: [AppTag.BONDS, AppTag.INFRASTRUCTURE],
+  keywords: [],
+  links: {},
 
   groups: {
     klp: {
       id: 'klp',
       type: GroupType.TOKEN,
-      label: 'klp',
+      label: 'Keep3r LP',
     },
 
     job: {
@@ -22,14 +25,14 @@ export const KEEPER_DEFINITION = appDefinition({
       label: 'Job',
     },
 
-    keep3RBond: {
-      id: 'keeper-bond',
+    bond: {
+      id: 'bond',
       type: GroupType.POSITION,
       label: 'Keep3r Bond',
     },
 
-    keep3Unbond: {
-      id: 'keeper-unbond',
+    unbond: {
+      id: 'unbond',
       type: GroupType.POSITION,
       label: 'Keep3r Unbond',
     },
@@ -47,15 +50,9 @@ export const KEEPER_DEFINITION = appDefinition({
     },
   },
 
-  tags: [AppTag.BONDS, AppTag.INFRASTRUCTURE],
-  keywords: [],
-  links: {},
-
   supportedNetworks: {
     [Network.ETHEREUM_MAINNET]: [AppAction.VIEW],
   },
-
-  primaryColor: '#fff',
 });
 
 @Register.AppDefinition(KEEPER_DEFINITION.id)

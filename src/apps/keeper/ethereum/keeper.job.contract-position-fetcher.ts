@@ -6,5 +6,5 @@ import { KeeperJobContractPositionFetcher } from '../common/keeper.job.contract-
 
 @PositionTemplate()
 export class EthereumKeeperJobContractPositionFetcher extends KeeperJobContractPositionFetcher {
-  groupLabel = 'Keeper Job';
+  groupLabel = 'Keep3r Jobs';
 }

@@ -11,9 +11,9 @@ export type KeeperJob = {
       pendingUnbonds: string;
       withdrawableAfter: string;
       klp: {
-        id;
-      }
-    }[]
+        id: string;
+      };
+    }[];
     credits: {
       id: string;
       amount: string;
@@ -22,8 +22,8 @@ export type KeeperJob = {
         name: string;
         symbol: string;
         decimals: string;
-      }
-    }[]
+      };
+    }[];
     owner: string;
   }[];
 };

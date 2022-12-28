@@ -7,12 +7,13 @@ import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { getImagesFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { ContractType } from '~position/contract.interface';
 import { DefaultDataProps, WithMetaType } from '~position/display.interface';
-import { AppTokenPositionBalance, BaseTokenBalance, ContractPositionBalance } from '~position/position-balance.interface';
-import { MetaType } from '~position/position.interface';
 import {
-  GetTokenDefinitionsParams,
-  GetDataPropsParams,
-} from '~position/template/contract-position.template.types';
+  AppTokenPositionBalance,
+  BaseTokenBalance,
+  ContractPositionBalance,
+} from '~position/position-balance.interface';
+import { MetaType } from '~position/position.interface';
+import { GetTokenDefinitionsParams } from '~position/template/contract-position.template.types';
 import { CustomContractPositionTemplatePositionFetcher } from '~position/template/custom-contract-position.template.position-fetcher';
 
 import { KeeperContractFactory, KeeperJobManager } from '../contracts';
@@ -27,13 +28,13 @@ type KeeperBondDefinition = {
     name: string;
     symbol: string;
     decimals: string;
-  }
+  };
   keeper: {
     id: string;
-  }
+  };
 };
 
-type KeeperBondDataProps = {};
+type KeeperBondDataProps = DefaultDataProps;
 
 export abstract class KeeperBondContractPositionFetcher extends CustomContractPositionTemplatePositionFetcher<
   KeeperJobManager,
@@ -64,30 +65,16 @@ export abstract class KeeperBondContractPositionFetcher extends CustomContractPo
     return bonds.flat();
   }
 
-  async getTokenDefinitions({
-    definition,
-  }: GetTokenDefinitionsParams<KeeperJobManager, KeeperBondDefinition>) {
-    return [
-      { metaType: MetaType.LOCKED, address: definition.token.id, network: this.network },
-    ];
+  async getTokenDefinitions({ definition }: GetTokenDefinitionsParams<KeeperJobManager, KeeperBondDefinition>) {
+    return [{ metaType: MetaType.LOCKED, address: definition.token.id, network: this.network }];
   }
 
   async getLabel() {
-    return 'Keep3r Bonded tokens';
+    return 'Keep3r Bonded Tokens';
   }
 
   async getTokenBalancesPerPosition(): Promise<BigNumberish[]> {
     throw new Error('Method not implemented.');
-  }
-
-  async getDataProps({
-    definition,
-  }: GetDataPropsParams<
-    KeeperJobManager,
-    KeeperBondDataProps,
-    KeeperBondDefinition
-  >): Promise<KeeperBondDataProps> {
-    return {};
   }
 
   async getBalances(address: string): Promise<ContractPositionBalance<KeeperBondDataProps>[]> {
@@ -104,24 +91,28 @@ export abstract class KeeperBondContractPositionFetcher extends CustomContractPo
       dataToSearch: 'bonds',
     });
 
-    const parsedBonds = userBondsData.bonds.map(userBond => {
-      const position = positions
-        .find(v => v.address === userBond.keeper.id);
-      if (!position) return null;
+    const parsedBonds = userBondsData.bonds
+      .map(userBond => {
+        const position = positions.find(v => v.address === userBond.keeper.id);
+        if (!position) return null;
 
-      const token = find(position.tokens, { address: userBond.token.id });
-      if (!token) {
-        return null;
-      }
+        const token = find(position.tokens, { address: userBond.token.id });
+        if (!token) {
+          return null;
+        }
 
-      return drillBalance(token, userBond.bonded);
-    }).filter(bond => !!bond) as (WithMetaType<BaseTokenBalance> | WithMetaType<AppTokenPositionBalance<DefaultDataProps>>)[];
+        return drillBalance(token, userBond.bonded);
+      })
+      .filter(bond => !!bond) as (
+      | WithMetaType<BaseTokenBalance>
+      | WithMetaType<AppTokenPositionBalance<DefaultDataProps>>
+    )[];
 
     const balanceUSD = sumBy(parsedBonds, v => v.balanceUSD);
     const images = parsedBonds.map(bond => getImagesFromToken(bond)).flat();
 
     // Display Properties
-    const label = 'Keep3r bond';
+    const label = 'Keep3r Bonded Tokens';
     const secondaryLabel = '';
     const displayProps = { label, secondaryLabel, images };
     const positionBalance: ContractPositionBalance = {
