@@ -6,6 +6,8 @@ import { EthereumKeeperJobContractPositionFetcher } from './ethereum/keeper.job.
 import { EthereumKeeperBondContractPositionFetcher } from './ethereum/keeper.keeper-bond.contract-position-fetcher';
 import { EthereumKeeperUnbondContractPositionFetcher } from './ethereum/keeper.keeper-unbond.contract-position-fetcher';
 import { EthereumKeeperKlpTokenFetcher } from './ethereum/keeper.klp.token-fetcher';
+import { EthereumKeeperRedeemableTokenFetcher } from './ethereum/keeper.redeemable.token-fetcher';
+import { EthereumKeeperVestContractPositionFetcher } from './ethereum/keeper.vest.contract-position-fetcher';
 import { KeeperAppDefinition, KEEPER_DEFINITION } from './keeper.definition';
 
 @Register.AppModule({
@@ -15,8 +17,10 @@ import { KeeperAppDefinition, KEEPER_DEFINITION } from './keeper.definition';
     EthereumKeeperBondContractPositionFetcher,
     EthereumKeeperJobContractPositionFetcher,
     EthereumKeeperKlpTokenFetcher,
+    EthereumKeeperRedeemableTokenFetcher,
+    EthereumKeeperVestContractPositionFetcher,
     KeeperAppDefinition,
     KeeperContractFactory,
   ],
 })
-export class KeeperAppModule extends AbstractApp() { }
+export class KeeperAppModule extends AbstractApp() {}

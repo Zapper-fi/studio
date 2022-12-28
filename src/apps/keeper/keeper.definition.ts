@@ -33,6 +33,18 @@ export const KEEPER_DEFINITION = appDefinition({
       type: GroupType.POSITION,
       label: 'Keep3r Unbond',
     },
+
+    vest: {
+      id: 'vest',
+      type: GroupType.POSITION,
+      label: 'Vesting',
+    },
+
+    redeemable: {
+      id: 'redeemable',
+      type: GroupType.TOKEN,
+      label: 'rKP3R',
+    },
   },
 
   tags: [AppTag.BONDS, AppTag.INFRASTRUCTURE],

@@ -5,6 +5,8 @@ import { ContractFactory } from '~contract/contracts';
 import { Network } from '~types/network.interface';
 
 import { KeeperJobManager__factory } from './ethers';
+import { KeeperRedeemableToken__factory } from './ethers';
+import { KeeperVest__factory } from './ethers';
 import { Klp__factory } from './ethers';
 
 // eslint-disable-next-line
@@ -19,10 +21,18 @@ export class KeeperContractFactory extends ContractFactory {
   keeperJobManager({ address, network }: ContractOpts) {
     return KeeperJobManager__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
+  keeperRedeemableToken({ address, network }: ContractOpts) {
+    return KeeperRedeemableToken__factory.connect(address, this.appToolkit.getNetworkProvider(network));
+  }
+  keeperVest({ address, network }: ContractOpts) {
+    return KeeperVest__factory.connect(address, this.appToolkit.getNetworkProvider(network));
+  }
   klp({ address, network }: ContractOpts) {
     return Klp__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
 }
 
 export type { KeeperJobManager } from './ethers';
+export type { KeeperRedeemableToken } from './ethers';
+export type { KeeperVest } from './ethers';
 export type { Klp } from './ethers';
