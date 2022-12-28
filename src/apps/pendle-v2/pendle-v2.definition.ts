@@ -34,10 +34,17 @@ export const PENDLE_V_2_DEFINITION = appDefinition({
       type: GroupType.TOKEN,
       label: 'SY',
     },
+
+    votingEscrow: {
+      id: 'voting-escrow',
+      type: GroupType.POSITION,
+      label: 'Voting Escrow',
+    },
   },
 
   tags: [AppTag.DERIVATIVES],
   keywords: [],
+
   links: {
     twitter: 'https://twitter.com/pendle_fi',
     discord: 'https://pendle.finance/discord',
