@@ -6,6 +6,7 @@ import { MeanFinanceContractFactory } from './contracts';
 import { MeanFinanceAppDefinition, MEAN_FINANCE_DEFINITION } from './mean-finance.definition';
 import { OptimismMeanFinanceDcaPositionContractPositionFetcher } from './optimism/mean-finance.dca-position.contract-position-fetcher';
 import { PolygonMeanFinanceDcaPositionContractPositionFetcher } from './polygon/mean-finance.dca-position.contract-position-fetcher';
+import { EthereumMeanFinanceDcaPositionContractPositionFetcher } from './ethereum/mean-finance.dca-position.contract-position-fetcher';
 
 @Register.AppModule({
   appId: MEAN_FINANCE_DEFINITION.id,
@@ -15,6 +16,7 @@ import { PolygonMeanFinanceDcaPositionContractPositionFetcher } from './polygon/
     OptimismMeanFinanceDcaPositionContractPositionFetcher,
     PolygonMeanFinanceDcaPositionContractPositionFetcher,
     ArbitrumMeanFinanceDcaPositionContractPositionFetcher,
+    EthereumMeanFinanceDcaPositionContractPositionFetcher,
   ],
 })
-export class MeanFinanceAppModule extends AbstractApp() {}
+export class MeanFinanceAppModule extends AbstractApp() { }
