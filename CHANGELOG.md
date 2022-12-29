@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.347.1](https://github.com/Zapper-fi/studio/compare/v0.347.0...v0.347.1) (2022-12-29)
+
+
+### Bug Fixes
+
+* **metavault-trade:** Fix small issues while migrating ([49613fd](https://github.com/Zapper-fi/studio/commit/49613fdc60c4e8f6e1f2280ecad7f956035f5c37))
+
 ## [0.347.0](https://github.com/Zapper-fi/studio/compare/v0.346.0...v0.347.0) (2022-12-29)
 
 
