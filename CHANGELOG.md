@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.346.0](https://github.com/Zapper-fi/studio/compare/v0.345.0...v0.346.0) (2022-12-29)
+
+
+### Features
+
+* **exactly:** Support Exactly protocol ([#1895](https://github.com/Zapper-fi/studio/issues/1895)) ([003f050](https://github.com/Zapper-fi/studio/commit/003f05028099ee3ab168eb0165ac30d30b57165b))
+
 ## [0.345.0](https://github.com/Zapper-fi/studio/compare/v0.344.0...v0.345.0) (2022-12-28)
 
 
