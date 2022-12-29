@@ -22,6 +22,5 @@ import { ExactlyAppDefinition, EXACTLY_DEFINITION } from './exactly.definition';
     EthereumExactlyFixedBorrowFetcher,
     EthereumExactlyFixedDepositFetcher,
   ],
-  exports: [ExactlyAppDefinition, ExactlyContractFactory, ExactlyDefinitionsResolver],
 })
 export class ExactlyAppModule extends AbstractApp() {}
