@@ -5,7 +5,7 @@ import { MetavaultTradeFarmContractPositionFetcher } from '../common/metavault-t
 @PositionTemplate()
 export class PolygonMetavaultTradeFarmContractPositionFetcher extends MetavaultTradeFarmContractPositionFetcher {
   groupLabel = 'Farms';
-  readerAddress = '0x956d63dd6540230487eb7e599ef8b0c6fdca4ab8';
+  readerAddress = '0x398cab94dea3b44861e7ad7efcd23a6a35d57c3a';
   farms = [
     {
       address: '0xe8e2e78d8ca52f238caf69f020fa961f8a7632e9',
