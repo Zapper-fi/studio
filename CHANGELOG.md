@@ -4,6 +4,14 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.347.0](https://github.com/Zapper-fi/studio/compare/v0.346.0...v0.347.0) (2022-12-29)
+
+
+### Features
+
+* **gamma:** To templates ([#2010](https://github.com/Zapper-fi/studio/issues/2010)) ([0495596](https://github.com/Zapper-fi/studio/commit/0495596c5c91b9fc29838557a6474af3214d9b23))
+* **symphony:** To templates ([#2013](https://github.com/Zapper-fi/studio/issues/2013)) ([cbae673](https://github.com/Zapper-fi/studio/commit/cbae6736b9eae1d9536840d76c5508a4aac1cdc4))
+
 ## [0.346.0](https://github.com/Zapper-fi/studio/compare/v0.345.0...v0.346.0) (2022-12-29)
 
 
