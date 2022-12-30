@@ -92,6 +92,7 @@ export declare namespace Previewer {
     symbol: PromiseOrValue<string>;
     decimals: PromiseOrValue<BigNumberish>;
     asset: PromiseOrValue<string>;
+    assetName: PromiseOrValue<string>;
     assetSymbol: PromiseOrValue<string>;
     interestRateModel: Previewer.InterestRateModelStruct;
     usdPrice: PromiseOrValue<BigNumberish>;
@@ -99,6 +100,8 @@ export declare namespace Previewer {
     adjustFactor: PromiseOrValue<BigNumberish>;
     maxFuturePools: PromiseOrValue<BigNumberish>;
     fixedPools: Previewer.FixedPoolStruct[];
+    floatingBorrowRate: PromiseOrValue<BigNumberish>;
+    floatingUtilization: PromiseOrValue<BigNumberish>;
     floatingBackupBorrowed: PromiseOrValue<BigNumberish>;
     floatingAvailableAssets: PromiseOrValue<BigNumberish>;
     totalFloatingBorrowAssets: PromiseOrValue<BigNumberish>;
@@ -121,12 +124,15 @@ export declare namespace Previewer {
     number,
     string,
     string,
+    string,
     Previewer.InterestRateModelStructOutput,
     BigNumber,
     BigNumber,
     BigNumber,
     number,
     Previewer.FixedPoolStructOutput[],
+    BigNumber,
+    BigNumber,
     BigNumber,
     BigNumber,
     BigNumber,
@@ -146,6 +152,7 @@ export declare namespace Previewer {
     symbol: string;
     decimals: number;
     asset: string;
+    assetName: string;
     assetSymbol: string;
     interestRateModel: Previewer.InterestRateModelStructOutput;
     usdPrice: BigNumber;
@@ -153,6 +160,8 @@ export declare namespace Previewer {
     adjustFactor: BigNumber;
     maxFuturePools: number;
     fixedPools: Previewer.FixedPoolStructOutput[];
+    floatingBorrowRate: BigNumber;
+    floatingUtilization: BigNumber;
     floatingBackupBorrowed: BigNumber;
     floatingAvailableAssets: BigNumber;
     totalFloatingBorrowAssets: BigNumber;
@@ -347,15 +356,15 @@ export interface Previewer extends BaseContract {
       positionAssets: PromiseOrValue<BigNumberish>,
       borrower: PromiseOrValue<string>,
       overrides?: CallOverrides,
-    ): Promise<[BigNumber] & { repayAssets: BigNumber }>;
+    ): Promise<[Previewer.FixedPreviewStructOutput]>;
 
     previewWithdrawAtMaturity(
       market: PromiseOrValue<string>,
       maturity: PromiseOrValue<BigNumberish>,
       positionAssets: PromiseOrValue<BigNumberish>,
-      arg3: PromiseOrValue<string>,
+      owner: PromiseOrValue<string>,
       overrides?: CallOverrides,
-    ): Promise<[BigNumber] & { withdrawAssets: BigNumber }>;
+    ): Promise<[Previewer.FixedPreviewStructOutput]>;
   };
 
   auditor(overrides?: CallOverrides): Promise<string>;
@@ -396,15 +405,15 @@ export interface Previewer extends BaseContract {
     positionAssets: PromiseOrValue<BigNumberish>,
     borrower: PromiseOrValue<string>,
     overrides?: CallOverrides,
-  ): Promise<BigNumber>;
+  ): Promise<Previewer.FixedPreviewStructOutput>;
 
   previewWithdrawAtMaturity(
     market: PromiseOrValue<string>,
     maturity: PromiseOrValue<BigNumberish>,
     positionAssets: PromiseOrValue<BigNumberish>,
-    arg3: PromiseOrValue<string>,
+    owner: PromiseOrValue<string>,
     overrides?: CallOverrides,
-  ): Promise<BigNumber>;
+  ): Promise<Previewer.FixedPreviewStructOutput>;
 
   callStatic: {
     auditor(overrides?: CallOverrides): Promise<string>;
@@ -445,15 +454,15 @@ export interface Previewer extends BaseContract {
       positionAssets: PromiseOrValue<BigNumberish>,
       borrower: PromiseOrValue<string>,
       overrides?: CallOverrides,
-    ): Promise<BigNumber>;
+    ): Promise<Previewer.FixedPreviewStructOutput>;
 
     previewWithdrawAtMaturity(
       market: PromiseOrValue<string>,
       maturity: PromiseOrValue<BigNumberish>,
       positionAssets: PromiseOrValue<BigNumberish>,
-      arg3: PromiseOrValue<string>,
+      owner: PromiseOrValue<string>,
       overrides?: CallOverrides,
-    ): Promise<BigNumber>;
+    ): Promise<Previewer.FixedPreviewStructOutput>;
   };
 
   filters: {};
@@ -503,7 +512,7 @@ export interface Previewer extends BaseContract {
       market: PromiseOrValue<string>,
       maturity: PromiseOrValue<BigNumberish>,
       positionAssets: PromiseOrValue<BigNumberish>,
-      arg3: PromiseOrValue<string>,
+      owner: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
   };
@@ -553,7 +562,7 @@ export interface Previewer extends BaseContract {
       market: PromiseOrValue<string>,
       maturity: PromiseOrValue<BigNumberish>,
       positionAssets: PromiseOrValue<BigNumberish>,
-      arg3: PromiseOrValue<string>,
+      owner: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
   };

@@ -9,7 +9,7 @@ import { ExactlyContractFactory } from '../contracts';
 import type { Previewer } from '../contracts';
 
 export const PREVIEWER_ADDRESSES = {
-  [Network.ETHEREUM_MAINNET]: '0x0aa3529ae5fdbceb69cf8ab2b9e2d3af85860469',
+  [Network.ETHEREUM_MAINNET]: '0x37ac9c4a26db589ee35215c7053009ee645585bb',
 } as Partial<Record<Network, string>>;
 
 export type ExactlyMarketDefinition = DefaultAppTokenDefinition & Previewer.MarketAccountStructOutput;
