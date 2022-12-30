@@ -1,5 +1,3 @@
-import { constants } from 'ethers';
-
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import type { IMulticallWrapper } from '~multicall/multicall.interface';
 import type { AppTokenPosition } from '~position/position.interface';
@@ -23,6 +21,10 @@ export class EthereumExactlyBorrowFetcher extends ExactlyTokenFetcher {
     return definition.totalFloatingBorrowAssets;
   }
 
+  getApr({ definition }: GetDataPropsParams<Market, ExactlyMarketProps, ExactlyMarketDefinition>) {
+    return Number(definition.floatingBorrowRate) / 1e18;
+  }
+
   async getBalancePerToken({
     address,
     appToken,
@@ -39,21 +41,5 @@ export class EthereumExactlyBorrowFetcher extends ExactlyTokenFetcher {
       market: appToken.address,
     });
     return floatingBorrowShares;
-  }
-
-  async getApr({
-    contract,
-    multicall,
-    definition: { interestRateModel },
-  }: GetDataPropsParams<Market, ExactlyMarketProps, ExactlyMarketDefinition>) {
-    const [debt, assets, utilization] = await Promise.all([
-      contract.floatingDebt(),
-      contract.floatingAssets(),
-      contract.floatingUtilization(),
-    ]);
-    const rate = await multicall
-      .wrap(this.contractFactory.interestRateModel({ address: interestRateModel.id, network: this.network }))
-      .floatingBorrowRate(utilization, assets.isZero() ? 0 : debt.mul(constants.WeiPerEther).div(assets));
-    return Number(rate) / 1e18;
   }
 }
