@@ -25,7 +25,7 @@ export type GearboxCreditAccountsDefinition = {
   collateralTokenAddresses: string[];
 };
 
-const ACCOUNT_FACTORY_ADDRESS = '0x444CD42BaEdDEB707eeD823f7177b9ABcC779C04';
+const ACCOUNT_FACTORY_ADDRESS = '0x444cd42baeddeb707eed823f7177b9abcc779c04';
 
 @PositionTemplate()
 export class EthereumGearboxCreditAccountsContractPositionFetcher extends ContractPositionTemplatePositionFetcher<
@@ -113,14 +113,15 @@ export class EthereumGearboxCreditAccountsContractPositionFetcher extends Contra
     let creditAccountAddress = '';
     const emptyBalances = Array(contractPosition.tokens.length).fill(0);
 
-    const accountFactory = this.contractFactory.accountFactory({
+    const accountFactoryContract = this.contractFactory.accountFactory({
       address: ACCOUNT_FACTORY_ADDRESS,
       network: this.network,
     });
+    const isCreditAccount = await multicall.wrap(accountFactoryContract).isCreditAccount(address);
     // credit acccounts themselves cannot have other credit accounts
     // also this helps prevent double counting of convex positions via
     // phantom tokens and convex position fetcher
-    if (await accountFactory.isCreditAccount(address)) {
+    if (isCreditAccount) {
       return emptyBalances;
     }
 
