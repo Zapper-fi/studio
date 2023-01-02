@@ -5,7 +5,7 @@ import { Network } from '~types/network.interface';
 
 export const KEEPER_DEFINITION = appDefinition({
   id: 'keeper',
-  name: 'keeper',
+  name: 'Keep3r',
   description: 'Keep3r',
   url: 'https://keep3r.network/',
   tags: [AppTag.BONDS, AppTag.INFRASTRUCTURE],
