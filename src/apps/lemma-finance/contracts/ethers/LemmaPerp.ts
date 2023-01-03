@@ -17,7 +17,7 @@ import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi
 import type { Listener, Provider } from '@ethersproject/providers';
 import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
-export interface PerpLemmaInterface extends utils.Interface {
+export interface LemmaPerpInterface extends utils.Interface {
   functions: {
     'ADMIN_ROLE()': FunctionFragment;
     'DEFAULT_ADMIN_ROLE()': FunctionFragment;
@@ -629,12 +629,12 @@ export type USDLemmaUpdatedEvent = TypedEvent<[string], USDLemmaUpdatedEventObje
 
 export type USDLemmaUpdatedEventFilter = TypedEventFilter<USDLemmaUpdatedEvent>;
 
-export interface PerpLemma extends BaseContract {
+export interface LemmaPerp extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
 
-  interface: PerpLemmaInterface;
+  interface: LemmaPerpInterface;
 
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,

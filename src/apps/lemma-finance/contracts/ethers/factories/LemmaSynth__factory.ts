@@ -4,7 +4,7 @@
 
 import { Contract, Signer, utils } from 'ethers';
 import type { Provider } from '@ethersproject/providers';
-import type { Usdl, UsdlInterface } from '../Usdl';
+import type { LemmaSynth, LemmaSynthInterface } from '../LemmaSynth';
 
 const _abi = [
   {
@@ -37,9 +37,9 @@ const _abi = [
     inputs: [
       {
         indexed: true,
-        internalType: 'uint256',
-        name: 'dexIndex',
-        type: 'uint256',
+        internalType: 'address',
+        name: 'perpLemma',
+        type: 'address',
       },
       {
         indexed: true,
@@ -80,19 +80,6 @@ const _abi = [
       },
     ],
     name: 'FeesUpdated',
-    type: 'event',
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: true,
-        internalType: 'address',
-        name: 'current',
-        type: 'address',
-      },
-    ],
-    name: 'LemmaTreasuryUpdated',
     type: 'event',
   },
   {
@@ -201,11 +188,11 @@ const _abi = [
       {
         indexed: true,
         internalType: 'address',
-        name: '_settlementTokenManager',
+        name: 'tailCollateral',
         type: 'address',
       },
     ],
-    name: 'SetSettlementTokenManager',
+    name: 'SetTailCollateral',
     type: 'event',
   },
   {
@@ -238,9 +225,9 @@ const _abi = [
     inputs: [
       {
         indexed: true,
-        internalType: 'uint256',
-        name: 'dexIndex',
-        type: 'uint256',
+        internalType: 'address',
+        name: 'perpLemma',
+        type: 'address',
       },
       {
         indexed: true,
@@ -540,7 +527,7 @@ const _abi = [
       },
       {
         internalType: 'uint256',
-        name: 'minUSDLToMint',
+        name: 'minSynthToMint',
         type: 'uint256',
       },
       {
@@ -561,30 +548,6 @@ const _abi = [
       {
         internalType: 'uint256',
         name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        internalType: 'uint256',
-        name: 'perpetualDEXIndex',
-        type: 'uint256',
-      },
-      {
-        internalType: 'address',
-        name: 'collateral',
-        type: 'address',
-      },
-    ],
-    name: 'getAvailableSettlementToken',
-    outputs: [
-      {
-        internalType: 'uint256',
-        name: 'res',
         type: 'uint256',
       },
     ],
@@ -757,23 +720,28 @@ const _abi = [
       },
       {
         internalType: 'address',
-        name: '_collateralAddress',
+        name: '_perpLemma',
         type: 'address',
       },
       {
         internalType: 'address',
-        name: '_perpetualDEXWrapperAddress',
+        name: '_usdc',
         type: 'address',
       },
       {
         internalType: 'address',
-        name: '_settlementTokenManager',
+        name: '_tailCollateral',
         type: 'address',
       },
       {
-        internalType: 'address',
-        name: '_perpSettlementToken',
-        type: 'address',
+        internalType: 'string',
+        name: '_name',
+        type: 'string',
+      },
+      {
+        internalType: 'string',
+        name: '_symbol',
+        type: 'string',
       },
     ],
     name: 'initialize',
@@ -817,25 +785,6 @@ const _abi = [
     inputs: [
       {
         internalType: 'address',
-        name: '',
-        type: 'address',
-      },
-    ],
-    name: 'isSupportedStableForMinting',
-    outputs: [
-      {
-        internalType: 'bool',
-        name: '',
-        type: 'bool',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        internalType: 'address',
         name: 'forwarder',
         type: 'address',
       },
@@ -846,19 +795,6 @@ const _abi = [
         internalType: 'bool',
         name: '',
         type: 'bool',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'lemmaTreasury',
-    outputs: [
-      {
-        internalType: 'address',
-        name: '',
-        type: 'address',
       },
     ],
     stateMutability: 'view',
@@ -954,7 +890,7 @@ const _abi = [
   },
   {
     inputs: [],
-    name: 'perpSettlementToken',
+    name: 'perpLemma',
     outputs: [
       {
         internalType: 'address',
@@ -1010,19 +946,6 @@ const _abi = [
   {
     inputs: [
       {
-        internalType: 'uint256',
-        name: 'usdcAmount',
-        type: 'uint256',
-      },
-    ],
-    name: 'requestLossesRecap',
-    outputs: [],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
         internalType: 'bytes32',
         name: 'role',
         type: 'bytes32',
@@ -1055,11 +978,11 @@ const _abi = [
     inputs: [
       {
         internalType: 'address',
-        name: '_lemmaTreasury',
+        name: '_tailCollateral',
         type: 'address',
       },
     ],
-    name: 'setLemmaTreasury',
+    name: 'setTailCollateral',
     outputs: [],
     stateMutability: 'nonpayable',
     type: 'function',
@@ -1068,39 +991,13 @@ const _abi = [
     inputs: [
       {
         internalType: 'address',
-        name: '_settlementTokenManager',
+        name: '_xSynth',
         type: 'address',
       },
     ],
-    name: 'setSettlementTokenManager',
+    name: 'setXSynth',
     outputs: [],
     stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        internalType: 'address',
-        name: '_xUsdl',
-        type: 'address',
-      },
-    ],
-    name: 'setXUsdl',
-    outputs: [],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'settlementTokenManager',
-    outputs: [
-      {
-        internalType: 'address',
-        name: '',
-        type: 'address',
-      },
-    ],
-    stateMutability: 'view',
     type: 'function',
   },
   {
@@ -1130,6 +1027,19 @@ const _abi = [
         internalType: 'string',
         name: '',
         type: 'string',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'tailCollateral',
+    outputs: [
+      {
+        internalType: 'address',
+        name: '',
+        type: 'address',
       },
     ],
     stateMutability: 'view',
@@ -1202,6 +1112,19 @@ const _abi = [
     type: 'function',
   },
   {
+    inputs: [],
+    name: 'usdc',
+    outputs: [
+      {
+        internalType: 'address',
+        name: '',
+        type: 'address',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
     inputs: [
       {
         internalType: 'address',
@@ -1253,7 +1176,7 @@ const _abi = [
       },
       {
         internalType: 'uint256',
-        name: 'maxUSDLToBurn',
+        name: 'maxSynthToBurn',
         type: 'uint256',
       },
       {
@@ -1269,7 +1192,7 @@ const _abi = [
   },
   {
     inputs: [],
-    name: 'xUsdl',
+    name: 'xSynth',
     outputs: [
       {
         internalType: 'address',
@@ -1282,12 +1205,12 @@ const _abi = [
   },
 ];
 
-export class Usdl__factory {
+export class LemmaSynth__factory {
   static readonly abi = _abi;
-  static createInterface(): UsdlInterface {
-    return new utils.Interface(_abi) as UsdlInterface;
+  static createInterface(): LemmaSynthInterface {
+    return new utils.Interface(_abi) as LemmaSynthInterface;
   }
-  static connect(address: string, signerOrProvider: Signer | Provider): Usdl {
-    return new Contract(address, _abi, signerOrProvider) as Usdl;
+  static connect(address: string, signerOrProvider: Signer | Provider): LemmaSynth {
+    return new Contract(address, _abi, signerOrProvider) as LemmaSynth;
   }
 }

@@ -8,6 +8,13 @@ export const LEMMA_FINANCE_DEFINITION = appDefinition({
   name: 'Lemma Finance',
   description: 'A basis trading stablecoin protocol.',
   url: 'https://v2.lemma.finance/',
+  tags: [AppTag.ALGORITHMIC_STABLECOIN],
+  keywords: [],
+
+  links: {
+    discord: 'https://discord.com/invite/AvCEkVbtQt',
+    twitter: 'https://twitter.com/LemmaFinance',
+  },
 
   groups: {
     usdl: {
@@ -32,18 +39,9 @@ export const LEMMA_FINANCE_DEFINITION = appDefinition({
     },
   },
 
-  tags: [AppTag.ALGORITHMIC_STABLECOIN],
-  keywords: [],
-  links: {
-    discord: 'https://discord.com/invite/AvCEkVbtQt',
-    twitter: 'https://twitter.com/LemmaFinance',
-  },
-
   supportedNetworks: {
     [Network.OPTIMISM_MAINNET]: [AppAction.VIEW],
   },
-
-  primaryColor: '#fff',
 });
 
 @Register.AppDefinition(LEMMA_FINANCE_DEFINITION.id)
@@ -52,5 +50,3 @@ export class LemmaFinanceAppDefinition extends AppDefinition {
     super(LEMMA_FINANCE_DEFINITION);
   }
 }
-
-export default LEMMA_FINANCE_DEFINITION;
