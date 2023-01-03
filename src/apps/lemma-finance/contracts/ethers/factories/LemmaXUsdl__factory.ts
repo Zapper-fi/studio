@@ -4,7 +4,7 @@
 
 import { Contract, Signer, utils } from 'ethers';
 import type { Provider } from '@ethersproject/providers';
-import type { XSynth, XSynthInterface } from '../XSynth';
+import type { LemmaXUsdl, LemmaXUsdlInterface } from '../LemmaXUsdl';
 
 const _abi = [
   {
@@ -383,23 +383,13 @@ const _abi = [
       },
       {
         internalType: 'address',
-        name: '_lSynth',
+        name: '_usdl',
         type: 'address',
       },
       {
         internalType: 'address',
         name: '_periphery',
         type: 'address',
-      },
-      {
-        internalType: 'string',
-        name: '_name',
-        type: 'string',
-      },
-      {
-        internalType: 'string',
-        name: '_symbol',
-        type: 'string',
       },
     ],
     name: 'initialize',
@@ -421,19 +411,6 @@ const _abi = [
         internalType: 'bool',
         name: '',
         type: 'bool',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'lSynth',
-    outputs: [
-      {
-        internalType: 'contract IERC20Upgradeable',
-        name: '',
-        type: 'address',
       },
     ],
     stateMutability: 'view',
@@ -880,6 +857,19 @@ const _abi = [
     type: 'function',
   },
   {
+    inputs: [],
+    name: 'usdl',
+    outputs: [
+      {
+        internalType: 'contract IERC20Upgradeable',
+        name: '',
+        type: 'address',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
     inputs: [
       {
         internalType: 'address',
@@ -929,12 +919,12 @@ const _abi = [
   },
 ];
 
-export class XSynth__factory {
+export class LemmaXUsdl__factory {
   static readonly abi = _abi;
-  static createInterface(): XSynthInterface {
-    return new utils.Interface(_abi) as XSynthInterface;
+  static createInterface(): LemmaXUsdlInterface {
+    return new utils.Interface(_abi) as LemmaXUsdlInterface;
   }
-  static connect(address: string, signerOrProvider: Signer | Provider): XSynth {
-    return new Contract(address, _abi, signerOrProvider) as XSynth;
+  static connect(address: string, signerOrProvider: Signer | Provider): LemmaXUsdl {
+    return new Contract(address, _abi, signerOrProvider) as LemmaXUsdl;
   }
 }

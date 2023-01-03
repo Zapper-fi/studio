@@ -4,7 +4,7 @@
 
 import { Contract, Signer, utils } from 'ethers';
 import type { Provider } from '@ethersproject/providers';
-import type { PerpLemma, PerpLemmaInterface } from '../PerpLemma';
+import type { LemmaPerp, LemmaPerpInterface } from '../LemmaPerp';
 
 const _abi = [
   {
@@ -1894,12 +1894,12 @@ const _abi = [
   },
 ];
 
-export class PerpLemma__factory {
+export class LemmaPerp__factory {
   static readonly abi = _abi;
-  static createInterface(): PerpLemmaInterface {
-    return new utils.Interface(_abi) as PerpLemmaInterface;
+  static createInterface(): LemmaPerpInterface {
+    return new utils.Interface(_abi) as LemmaPerpInterface;
   }
-  static connect(address: string, signerOrProvider: Signer | Provider): PerpLemma {
-    return new Contract(address, _abi, signerOrProvider) as PerpLemma;
+  static connect(address: string, signerOrProvider: Signer | Provider): LemmaPerp {
+    return new Contract(address, _abi, signerOrProvider) as LemmaPerp;
   }
 }

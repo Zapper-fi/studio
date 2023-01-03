@@ -17,7 +17,7 @@ import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi
 import type { Listener, Provider } from '@ethersproject/providers';
 import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
-export interface SynthInterface extends utils.Interface {
+export interface LemmaUsdlInterface extends utils.Interface {
   functions: {
     'ADMIN_ROLE()': FunctionFragment;
     'DEFAULT_ADMIN_ROLE()': FunctionFragment;
@@ -35,6 +35,7 @@ export interface SynthInterface extends utils.Interface {
     'depositTo(address,uint256,uint256,uint256,address)': FunctionFragment;
     'depositToWExactCollateral(address,uint256,uint256,uint256,address)': FunctionFragment;
     'fees()': FunctionFragment;
+    'getAvailableSettlementToken(uint256,address)': FunctionFragment;
     'getFees(uint256,address)': FunctionFragment;
     'getIndexPrice(uint256,address)': FunctionFragment;
     'getRoleAdmin(bytes32)': FunctionFragment;
@@ -42,31 +43,34 @@ export interface SynthInterface extends utils.Interface {
     'grantRole(bytes32,address)': FunctionFragment;
     'hasRole(bytes32,address)': FunctionFragment;
     'increaseAllowance(address,uint256)': FunctionFragment;
-    'initialize(address,address,address,address,string,string)': FunctionFragment;
+    'initialize(address,address,address,address,address)': FunctionFragment;
     'interactionBlock()': FunctionFragment;
     'isSupportedPerpetualDEXWrapper(address)': FunctionFragment;
+    'isSupportedStableForMinting(address)': FunctionFragment;
     'isTrustedForwarder(address)': FunctionFragment;
+    'lemmaTreasury()': FunctionFragment;
     'mintToStackingContract(uint256)': FunctionFragment;
     'name()': FunctionFragment;
     'nonces(address)': FunctionFragment;
     'permit(address,address,uint256,uint256,uint8,bytes32,bytes32)': FunctionFragment;
-    'perpLemma()': FunctionFragment;
+    'perpSettlementToken()': FunctionFragment;
     'perpetualDEXWrappers(uint256,address)': FunctionFragment;
     'renounceRole(bytes32,address)': FunctionFragment;
+    'requestLossesRecap(uint256)': FunctionFragment;
     'revokeRole(bytes32,address)': FunctionFragment;
     'setFees(uint256)': FunctionFragment;
-    'setTailCollateral(address)': FunctionFragment;
-    'setXSynth(address)': FunctionFragment;
+    'setLemmaTreasury(address)': FunctionFragment;
+    'setSettlementTokenManager(address)': FunctionFragment;
+    'setXUsdl(address)': FunctionFragment;
+    'settlementTokenManager()': FunctionFragment;
     'supportsInterface(bytes4)': FunctionFragment;
     'symbol()': FunctionFragment;
-    'tailCollateral()': FunctionFragment;
     'totalSupply()': FunctionFragment;
     'transfer(address,uint256)': FunctionFragment;
     'transferFrom(address,address,uint256)': FunctionFragment;
-    'usdc()': FunctionFragment;
     'withdrawTo(address,uint256,uint256,uint256,address)': FunctionFragment;
     'withdrawToWExactCollateral(address,uint256,uint256,uint256,address)': FunctionFragment;
-    'xSynth()': FunctionFragment;
+    'xUsdl()': FunctionFragment;
   };
 
   getFunction(
@@ -87,6 +91,7 @@ export interface SynthInterface extends utils.Interface {
       | 'depositTo'
       | 'depositToWExactCollateral'
       | 'fees'
+      | 'getAvailableSettlementToken'
       | 'getFees'
       | 'getIndexPrice'
       | 'getRoleAdmin'
@@ -97,28 +102,31 @@ export interface SynthInterface extends utils.Interface {
       | 'initialize'
       | 'interactionBlock'
       | 'isSupportedPerpetualDEXWrapper'
+      | 'isSupportedStableForMinting'
       | 'isTrustedForwarder'
+      | 'lemmaTreasury'
       | 'mintToStackingContract'
       | 'name'
       | 'nonces'
       | 'permit'
-      | 'perpLemma'
+      | 'perpSettlementToken'
       | 'perpetualDEXWrappers'
       | 'renounceRole'
+      | 'requestLossesRecap'
       | 'revokeRole'
       | 'setFees'
-      | 'setTailCollateral'
-      | 'setXSynth'
+      | 'setLemmaTreasury'
+      | 'setSettlementTokenManager'
+      | 'setXUsdl'
+      | 'settlementTokenManager'
       | 'supportsInterface'
       | 'symbol'
-      | 'tailCollateral'
       | 'totalSupply'
       | 'transfer'
       | 'transferFrom'
-      | 'usdc'
       | 'withdrawTo'
       | 'withdrawToWExactCollateral'
-      | 'xSynth',
+      | 'xUsdl',
   ): FunctionFragment;
 
   encodeFunctionData(functionFragment: 'ADMIN_ROLE', values?: undefined): string;
@@ -165,6 +173,10 @@ export interface SynthInterface extends utils.Interface {
   ): string;
   encodeFunctionData(functionFragment: 'fees', values?: undefined): string;
   encodeFunctionData(
+    functionFragment: 'getAvailableSettlementToken',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>],
+  ): string;
+  encodeFunctionData(
     functionFragment: 'getFees',
     values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>],
   ): string;
@@ -194,12 +206,13 @@ export interface SynthInterface extends utils.Interface {
       PromiseOrValue<string>,
       PromiseOrValue<string>,
       PromiseOrValue<string>,
-      PromiseOrValue<string>,
     ],
   ): string;
   encodeFunctionData(functionFragment: 'interactionBlock', values?: undefined): string;
   encodeFunctionData(functionFragment: 'isSupportedPerpetualDEXWrapper', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'isSupportedStableForMinting', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'isTrustedForwarder', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'lemmaTreasury', values?: undefined): string;
   encodeFunctionData(functionFragment: 'mintToStackingContract', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'name', values?: undefined): string;
   encodeFunctionData(functionFragment: 'nonces', values: [PromiseOrValue<string>]): string;
@@ -215,7 +228,7 @@ export interface SynthInterface extends utils.Interface {
       PromiseOrValue<BytesLike>,
     ],
   ): string;
-  encodeFunctionData(functionFragment: 'perpLemma', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'perpSettlementToken', values?: undefined): string;
   encodeFunctionData(
     functionFragment: 'perpetualDEXWrappers',
     values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>],
@@ -224,16 +237,18 @@ export interface SynthInterface extends utils.Interface {
     functionFragment: 'renounceRole',
     values: [PromiseOrValue<BytesLike>, PromiseOrValue<string>],
   ): string;
+  encodeFunctionData(functionFragment: 'requestLossesRecap', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(
     functionFragment: 'revokeRole',
     values: [PromiseOrValue<BytesLike>, PromiseOrValue<string>],
   ): string;
   encodeFunctionData(functionFragment: 'setFees', values: [PromiseOrValue<BigNumberish>]): string;
-  encodeFunctionData(functionFragment: 'setTailCollateral', values: [PromiseOrValue<string>]): string;
-  encodeFunctionData(functionFragment: 'setXSynth', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'setLemmaTreasury', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'setSettlementTokenManager', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'setXUsdl', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'settlementTokenManager', values?: undefined): string;
   encodeFunctionData(functionFragment: 'supportsInterface', values: [PromiseOrValue<BytesLike>]): string;
   encodeFunctionData(functionFragment: 'symbol', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'tailCollateral', values?: undefined): string;
   encodeFunctionData(functionFragment: 'totalSupply', values?: undefined): string;
   encodeFunctionData(
     functionFragment: 'transfer',
@@ -243,7 +258,6 @@ export interface SynthInterface extends utils.Interface {
     functionFragment: 'transferFrom',
     values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
   ): string;
-  encodeFunctionData(functionFragment: 'usdc', values?: undefined): string;
   encodeFunctionData(
     functionFragment: 'withdrawTo',
     values: [
@@ -264,7 +278,7 @@ export interface SynthInterface extends utils.Interface {
       PromiseOrValue<string>,
     ],
   ): string;
-  encodeFunctionData(functionFragment: 'xSynth', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'xUsdl', values?: undefined): string;
 
   decodeFunctionResult(functionFragment: 'ADMIN_ROLE', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'DEFAULT_ADMIN_ROLE', data: BytesLike): Result;
@@ -282,6 +296,7 @@ export interface SynthInterface extends utils.Interface {
   decodeFunctionResult(functionFragment: 'depositTo', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'depositToWExactCollateral', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'fees', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'getAvailableSettlementToken', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'getFees', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'getIndexPrice', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'getRoleAdmin', data: BytesLike): Result;
@@ -292,50 +307,55 @@ export interface SynthInterface extends utils.Interface {
   decodeFunctionResult(functionFragment: 'initialize', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'interactionBlock', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'isSupportedPerpetualDEXWrapper', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'isSupportedStableForMinting', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'isTrustedForwarder', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'lemmaTreasury', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'mintToStackingContract', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'name', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'nonces', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'permit', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'perpLemma', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'perpSettlementToken', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'perpetualDEXWrappers', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'renounceRole', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'requestLossesRecap', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'revokeRole', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'setFees', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'setTailCollateral', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'setXSynth', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'setLemmaTreasury', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'setSettlementTokenManager', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'setXUsdl', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'settlementTokenManager', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'supportsInterface', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'symbol', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'tailCollateral', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'totalSupply', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'transfer', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'transferFrom', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'usdc', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'withdrawTo', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'withdrawToWExactCollateral', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'xSynth', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'xUsdl', data: BytesLike): Result;
 
   events: {
     'Approval(address,address,uint256)': EventFragment;
-    'DepositTo(address,address,address,uint256,uint256)': EventFragment;
+    'DepositTo(uint256,address,address,uint256,uint256)': EventFragment;
     'FeesUpdated(uint256)': EventFragment;
+    'LemmaTreasuryUpdated(address)': EventFragment;
     'PerpetualDexWrapperAdded(uint256,address,address)': EventFragment;
     'RoleAdminChanged(bytes32,bytes32,bytes32)': EventFragment;
     'RoleGranted(bytes32,address,address)': EventFragment;
     'RoleRevoked(bytes32,address,address)': EventFragment;
-    'SetTailCollateral(address)': EventFragment;
+    'SetSettlementTokenManager(address)': EventFragment;
     'Transfer(address,address,uint256)': EventFragment;
-    'WithdrawTo(address,address,address,uint256,uint256)': EventFragment;
+    'WithdrawTo(uint256,address,address,uint256,uint256)': EventFragment;
   };
 
   getEvent(nameOrSignatureOrTopic: 'Approval'): EventFragment;
   getEvent(nameOrSignatureOrTopic: 'DepositTo'): EventFragment;
   getEvent(nameOrSignatureOrTopic: 'FeesUpdated'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'LemmaTreasuryUpdated'): EventFragment;
   getEvent(nameOrSignatureOrTopic: 'PerpetualDexWrapperAdded'): EventFragment;
   getEvent(nameOrSignatureOrTopic: 'RoleAdminChanged'): EventFragment;
   getEvent(nameOrSignatureOrTopic: 'RoleGranted'): EventFragment;
   getEvent(nameOrSignatureOrTopic: 'RoleRevoked'): EventFragment;
-  getEvent(nameOrSignatureOrTopic: 'SetTailCollateral'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'SetSettlementTokenManager'): EventFragment;
   getEvent(nameOrSignatureOrTopic: 'Transfer'): EventFragment;
   getEvent(nameOrSignatureOrTopic: 'WithdrawTo'): EventFragment;
 }
@@ -350,13 +370,13 @@ export type ApprovalEvent = TypedEvent<[string, string, BigNumber], ApprovalEven
 export type ApprovalEventFilter = TypedEventFilter<ApprovalEvent>;
 
 export interface DepositToEventObject {
-  perpLemma: string;
+  dexIndex: BigNumber;
   collateral: string;
   to: string;
   amount: BigNumber;
   collateralRequired: BigNumber;
 }
-export type DepositToEvent = TypedEvent<[string, string, string, BigNumber, BigNumber], DepositToEventObject>;
+export type DepositToEvent = TypedEvent<[BigNumber, string, string, BigNumber, BigNumber], DepositToEventObject>;
 
 export type DepositToEventFilter = TypedEventFilter<DepositToEvent>;
 
@@ -366,6 +386,13 @@ export interface FeesUpdatedEventObject {
 export type FeesUpdatedEvent = TypedEvent<[BigNumber], FeesUpdatedEventObject>;
 
 export type FeesUpdatedEventFilter = TypedEventFilter<FeesUpdatedEvent>;
+
+export interface LemmaTreasuryUpdatedEventObject {
+  current: string;
+}
+export type LemmaTreasuryUpdatedEvent = TypedEvent<[string], LemmaTreasuryUpdatedEventObject>;
+
+export type LemmaTreasuryUpdatedEventFilter = TypedEventFilter<LemmaTreasuryUpdatedEvent>;
 
 export interface PerpetualDexWrapperAddedEventObject {
   dexIndex: BigNumber;
@@ -406,12 +433,12 @@ export type RoleRevokedEvent = TypedEvent<[string, string, string], RoleRevokedE
 
 export type RoleRevokedEventFilter = TypedEventFilter<RoleRevokedEvent>;
 
-export interface SetTailCollateralEventObject {
-  tailCollateral: string;
+export interface SetSettlementTokenManagerEventObject {
+  _settlementTokenManager: string;
 }
-export type SetTailCollateralEvent = TypedEvent<[string], SetTailCollateralEventObject>;
+export type SetSettlementTokenManagerEvent = TypedEvent<[string], SetSettlementTokenManagerEventObject>;
 
-export type SetTailCollateralEventFilter = TypedEventFilter<SetTailCollateralEvent>;
+export type SetSettlementTokenManagerEventFilter = TypedEventFilter<SetSettlementTokenManagerEvent>;
 
 export interface TransferEventObject {
   from: string;
@@ -423,22 +450,22 @@ export type TransferEvent = TypedEvent<[string, string, BigNumber], TransferEven
 export type TransferEventFilter = TypedEventFilter<TransferEvent>;
 
 export interface WithdrawToEventObject {
-  perpLemma: string;
+  dexIndex: BigNumber;
   collateral: string;
   to: string;
   amount: BigNumber;
   collateralGotBack: BigNumber;
 }
-export type WithdrawToEvent = TypedEvent<[string, string, string, BigNumber, BigNumber], WithdrawToEventObject>;
+export type WithdrawToEvent = TypedEvent<[BigNumber, string, string, BigNumber, BigNumber], WithdrawToEventObject>;
 
 export type WithdrawToEventFilter = TypedEventFilter<WithdrawToEvent>;
 
-export interface Synth extends BaseContract {
+export interface LemmaUsdl extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
 
-  interface: SynthInterface;
+  interface: LemmaUsdlInterface;
 
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,
@@ -518,12 +545,18 @@ export interface Synth extends BaseContract {
       to: PromiseOrValue<string>,
       collateralAmount: PromiseOrValue<BigNumberish>,
       perpetualDEXIndex: PromiseOrValue<BigNumberish>,
-      minSynthToMint: PromiseOrValue<BigNumberish>,
+      minUSDLToMint: PromiseOrValue<BigNumberish>,
       collateral: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     fees(overrides?: CallOverrides): Promise<[BigNumber]>;
+
+    getAvailableSettlementToken(
+      perpetualDEXIndex: PromiseOrValue<BigNumberish>,
+      collateral: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber] & { res: BigNumber }>;
 
     getFees(
       dexIndex: PromiseOrValue<BigNumberish>,
@@ -565,11 +598,10 @@ export interface Synth extends BaseContract {
 
     initialize(
       _trustedForwarder: PromiseOrValue<string>,
-      _perpLemma: PromiseOrValue<string>,
-      _usdc: PromiseOrValue<string>,
-      _tailCollateral: PromiseOrValue<string>,
-      _name: PromiseOrValue<string>,
-      _symbol: PromiseOrValue<string>,
+      _collateralAddress: PromiseOrValue<string>,
+      _perpetualDEXWrapperAddress: PromiseOrValue<string>,
+      _settlementTokenManager: PromiseOrValue<string>,
+      _perpSettlementToken: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
@@ -577,7 +609,11 @@ export interface Synth extends BaseContract {
 
     isSupportedPerpetualDEXWrapper(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[boolean]>;
 
+    isSupportedStableForMinting(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[boolean]>;
+
     isTrustedForwarder(forwarder: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[boolean]>;
+
+    lemmaTreasury(overrides?: CallOverrides): Promise<[string]>;
 
     mintToStackingContract(
       amount: PromiseOrValue<BigNumberish>,
@@ -599,7 +635,7 @@ export interface Synth extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    perpLemma(overrides?: CallOverrides): Promise<[string]>;
+    perpSettlementToken(overrides?: CallOverrides): Promise<[string]>;
 
     perpetualDEXWrappers(
       arg0: PromiseOrValue<BigNumberish>,
@@ -610,6 +646,11 @@ export interface Synth extends BaseContract {
     renounceRole(
       role: PromiseOrValue<BytesLike>,
       account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<ContractTransaction>;
+
+    requestLossesRecap(
+      usdcAmount: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
@@ -624,21 +665,26 @@ export interface Synth extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    setTailCollateral(
-      _tailCollateral: PromiseOrValue<string>,
+    setLemmaTreasury(
+      _lemmaTreasury: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    setXSynth(
-      _xSynth: PromiseOrValue<string>,
+    setSettlementTokenManager(
+      _settlementTokenManager: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
+
+    setXUsdl(
+      _xUsdl: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<ContractTransaction>;
+
+    settlementTokenManager(overrides?: CallOverrides): Promise<[string]>;
 
     supportsInterface(interfaceId: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<[boolean]>;
 
     symbol(overrides?: CallOverrides): Promise<[string]>;
-
-    tailCollateral(overrides?: CallOverrides): Promise<[string]>;
 
     totalSupply(overrides?: CallOverrides): Promise<[BigNumber]>;
 
@@ -655,8 +701,6 @@ export interface Synth extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    usdc(overrides?: CallOverrides): Promise<[string]>;
-
     withdrawTo(
       to: PromiseOrValue<string>,
       amount: PromiseOrValue<BigNumberish>,
@@ -670,12 +714,12 @@ export interface Synth extends BaseContract {
       to: PromiseOrValue<string>,
       collateralAmount: PromiseOrValue<BigNumberish>,
       perpetualDEXIndex: PromiseOrValue<BigNumberish>,
-      maxSynthToBurn: PromiseOrValue<BigNumberish>,
+      maxUSDLToBurn: PromiseOrValue<BigNumberish>,
       collateral: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    xSynth(overrides?: CallOverrides): Promise<[string]>;
+    xUsdl(overrides?: CallOverrides): Promise<[string]>;
   };
 
   ADMIN_ROLE(overrides?: CallOverrides): Promise<string>;
@@ -740,12 +784,18 @@ export interface Synth extends BaseContract {
     to: PromiseOrValue<string>,
     collateralAmount: PromiseOrValue<BigNumberish>,
     perpetualDEXIndex: PromiseOrValue<BigNumberish>,
-    minSynthToMint: PromiseOrValue<BigNumberish>,
+    minUSDLToMint: PromiseOrValue<BigNumberish>,
     collateral: PromiseOrValue<string>,
     overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   fees(overrides?: CallOverrides): Promise<BigNumber>;
+
+  getAvailableSettlementToken(
+    perpetualDEXIndex: PromiseOrValue<BigNumberish>,
+    collateral: PromiseOrValue<string>,
+    overrides?: CallOverrides,
+  ): Promise<BigNumber>;
 
   getFees(
     dexIndex: PromiseOrValue<BigNumberish>,
@@ -787,11 +837,10 @@ export interface Synth extends BaseContract {
 
   initialize(
     _trustedForwarder: PromiseOrValue<string>,
-    _perpLemma: PromiseOrValue<string>,
-    _usdc: PromiseOrValue<string>,
-    _tailCollateral: PromiseOrValue<string>,
-    _name: PromiseOrValue<string>,
-    _symbol: PromiseOrValue<string>,
+    _collateralAddress: PromiseOrValue<string>,
+    _perpetualDEXWrapperAddress: PromiseOrValue<string>,
+    _settlementTokenManager: PromiseOrValue<string>,
+    _perpSettlementToken: PromiseOrValue<string>,
     overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
@@ -799,7 +848,11 @@ export interface Synth extends BaseContract {
 
   isSupportedPerpetualDEXWrapper(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
+  isSupportedStableForMinting(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
+
   isTrustedForwarder(forwarder: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
+
+  lemmaTreasury(overrides?: CallOverrides): Promise<string>;
 
   mintToStackingContract(
     amount: PromiseOrValue<BigNumberish>,
@@ -821,7 +874,7 @@ export interface Synth extends BaseContract {
     overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  perpLemma(overrides?: CallOverrides): Promise<string>;
+  perpSettlementToken(overrides?: CallOverrides): Promise<string>;
 
   perpetualDEXWrappers(
     arg0: PromiseOrValue<BigNumberish>,
@@ -832,6 +885,11 @@ export interface Synth extends BaseContract {
   renounceRole(
     role: PromiseOrValue<BytesLike>,
     account: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
+  ): Promise<ContractTransaction>;
+
+  requestLossesRecap(
+    usdcAmount: PromiseOrValue<BigNumberish>,
     overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
@@ -846,21 +904,26 @@ export interface Synth extends BaseContract {
     overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  setTailCollateral(
-    _tailCollateral: PromiseOrValue<string>,
+  setLemmaTreasury(
+    _lemmaTreasury: PromiseOrValue<string>,
     overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  setXSynth(
-    _xSynth: PromiseOrValue<string>,
+  setSettlementTokenManager(
+    _settlementTokenManager: PromiseOrValue<string>,
     overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
+
+  setXUsdl(
+    _xUsdl: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
+  ): Promise<ContractTransaction>;
+
+  settlementTokenManager(overrides?: CallOverrides): Promise<string>;
 
   supportsInterface(interfaceId: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<boolean>;
 
   symbol(overrides?: CallOverrides): Promise<string>;
-
-  tailCollateral(overrides?: CallOverrides): Promise<string>;
 
   totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -877,8 +940,6 @@ export interface Synth extends BaseContract {
     overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  usdc(overrides?: CallOverrides): Promise<string>;
-
   withdrawTo(
     to: PromiseOrValue<string>,
     amount: PromiseOrValue<BigNumberish>,
@@ -892,12 +953,12 @@ export interface Synth extends BaseContract {
     to: PromiseOrValue<string>,
     collateralAmount: PromiseOrValue<BigNumberish>,
     perpetualDEXIndex: PromiseOrValue<BigNumberish>,
-    maxSynthToBurn: PromiseOrValue<BigNumberish>,
+    maxUSDLToBurn: PromiseOrValue<BigNumberish>,
     collateral: PromiseOrValue<string>,
     overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  xSynth(overrides?: CallOverrides): Promise<string>;
+  xUsdl(overrides?: CallOverrides): Promise<string>;
 
   callStatic: {
     ADMIN_ROLE(overrides?: CallOverrides): Promise<string>;
@@ -956,12 +1017,18 @@ export interface Synth extends BaseContract {
       to: PromiseOrValue<string>,
       collateralAmount: PromiseOrValue<BigNumberish>,
       perpetualDEXIndex: PromiseOrValue<BigNumberish>,
-      minSynthToMint: PromiseOrValue<BigNumberish>,
+      minUSDLToMint: PromiseOrValue<BigNumberish>,
       collateral: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
     fees(overrides?: CallOverrides): Promise<BigNumber>;
+
+    getAvailableSettlementToken(
+      perpetualDEXIndex: PromiseOrValue<BigNumberish>,
+      collateral: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     getFees(
       dexIndex: PromiseOrValue<BigNumberish>,
@@ -1003,11 +1070,10 @@ export interface Synth extends BaseContract {
 
     initialize(
       _trustedForwarder: PromiseOrValue<string>,
-      _perpLemma: PromiseOrValue<string>,
-      _usdc: PromiseOrValue<string>,
-      _tailCollateral: PromiseOrValue<string>,
-      _name: PromiseOrValue<string>,
-      _symbol: PromiseOrValue<string>,
+      _collateralAddress: PromiseOrValue<string>,
+      _perpetualDEXWrapperAddress: PromiseOrValue<string>,
+      _settlementTokenManager: PromiseOrValue<string>,
+      _perpSettlementToken: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
@@ -1015,7 +1081,11 @@ export interface Synth extends BaseContract {
 
     isSupportedPerpetualDEXWrapper(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
+    isSupportedStableForMinting(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
+
     isTrustedForwarder(forwarder: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
+
+    lemmaTreasury(overrides?: CallOverrides): Promise<string>;
 
     mintToStackingContract(amount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
@@ -1034,7 +1104,7 @@ export interface Synth extends BaseContract {
       overrides?: CallOverrides,
     ): Promise<void>;
 
-    perpLemma(overrides?: CallOverrides): Promise<string>;
+    perpSettlementToken(overrides?: CallOverrides): Promise<string>;
 
     perpetualDEXWrappers(
       arg0: PromiseOrValue<BigNumberish>,
@@ -1048,6 +1118,8 @@ export interface Synth extends BaseContract {
       overrides?: CallOverrides,
     ): Promise<void>;
 
+    requestLossesRecap(usdcAmount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
+
     revokeRole(
       role: PromiseOrValue<BytesLike>,
       account: PromiseOrValue<string>,
@@ -1056,15 +1128,20 @@ export interface Synth extends BaseContract {
 
     setFees(_fees: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
-    setTailCollateral(_tailCollateral: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
+    setLemmaTreasury(_lemmaTreasury: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    setXSynth(_xSynth: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
+    setSettlementTokenManager(
+      _settlementTokenManager: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
+
+    setXUsdl(_xUsdl: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
+
+    settlementTokenManager(overrides?: CallOverrides): Promise<string>;
 
     supportsInterface(interfaceId: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<boolean>;
 
     symbol(overrides?: CallOverrides): Promise<string>;
-
-    tailCollateral(overrides?: CallOverrides): Promise<string>;
 
     totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -1081,8 +1158,6 @@ export interface Synth extends BaseContract {
       overrides?: CallOverrides,
     ): Promise<boolean>;
 
-    usdc(overrides?: CallOverrides): Promise<string>;
-
     withdrawTo(
       to: PromiseOrValue<string>,
       amount: PromiseOrValue<BigNumberish>,
@@ -1096,12 +1171,12 @@ export interface Synth extends BaseContract {
       to: PromiseOrValue<string>,
       collateralAmount: PromiseOrValue<BigNumberish>,
       perpetualDEXIndex: PromiseOrValue<BigNumberish>,
-      maxSynthToBurn: PromiseOrValue<BigNumberish>,
+      maxUSDLToBurn: PromiseOrValue<BigNumberish>,
       collateral: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
-    xSynth(overrides?: CallOverrides): Promise<string>;
+    xUsdl(overrides?: CallOverrides): Promise<string>;
   };
 
   filters: {
@@ -1116,15 +1191,15 @@ export interface Synth extends BaseContract {
       value?: null,
     ): ApprovalEventFilter;
 
-    'DepositTo(address,address,address,uint256,uint256)'(
-      perpLemma?: PromiseOrValue<string> | null,
+    'DepositTo(uint256,address,address,uint256,uint256)'(
+      dexIndex?: PromiseOrValue<BigNumberish> | null,
       collateral?: PromiseOrValue<string> | null,
       to?: PromiseOrValue<string> | null,
       amount?: null,
       collateralRequired?: null,
     ): DepositToEventFilter;
     DepositTo(
-      perpLemma?: PromiseOrValue<string> | null,
+      dexIndex?: PromiseOrValue<BigNumberish> | null,
       collateral?: PromiseOrValue<string> | null,
       to?: PromiseOrValue<string> | null,
       amount?: null,
@@ -1133,6 +1208,9 @@ export interface Synth extends BaseContract {
 
     'FeesUpdated(uint256)'(newFees?: PromiseOrValue<BigNumberish> | null): FeesUpdatedEventFilter;
     FeesUpdated(newFees?: PromiseOrValue<BigNumberish> | null): FeesUpdatedEventFilter;
+
+    'LemmaTreasuryUpdated(address)'(current?: PromiseOrValue<string> | null): LemmaTreasuryUpdatedEventFilter;
+    LemmaTreasuryUpdated(current?: PromiseOrValue<string> | null): LemmaTreasuryUpdatedEventFilter;
 
     'PerpetualDexWrapperAdded(uint256,address,address)'(
       dexIndex?: PromiseOrValue<BigNumberish> | null,
@@ -1178,8 +1256,12 @@ export interface Synth extends BaseContract {
       sender?: PromiseOrValue<string> | null,
     ): RoleRevokedEventFilter;
 
-    'SetTailCollateral(address)'(tailCollateral?: PromiseOrValue<string> | null): SetTailCollateralEventFilter;
-    SetTailCollateral(tailCollateral?: PromiseOrValue<string> | null): SetTailCollateralEventFilter;
+    'SetSettlementTokenManager(address)'(
+      _settlementTokenManager?: PromiseOrValue<string> | null,
+    ): SetSettlementTokenManagerEventFilter;
+    SetSettlementTokenManager(
+      _settlementTokenManager?: PromiseOrValue<string> | null,
+    ): SetSettlementTokenManagerEventFilter;
 
     'Transfer(address,address,uint256)'(
       from?: PromiseOrValue<string> | null,
@@ -1192,15 +1274,15 @@ export interface Synth extends BaseContract {
       value?: null,
     ): TransferEventFilter;
 
-    'WithdrawTo(address,address,address,uint256,uint256)'(
-      perpLemma?: PromiseOrValue<string> | null,
+    'WithdrawTo(uint256,address,address,uint256,uint256)'(
+      dexIndex?: PromiseOrValue<BigNumberish> | null,
       collateral?: PromiseOrValue<string> | null,
       to?: PromiseOrValue<string> | null,
       amount?: null,
       collateralGotBack?: null,
     ): WithdrawToEventFilter;
     WithdrawTo(
-      perpLemma?: PromiseOrValue<string> | null,
+      dexIndex?: PromiseOrValue<BigNumberish> | null,
       collateral?: PromiseOrValue<string> | null,
       to?: PromiseOrValue<string> | null,
       amount?: null,
@@ -1271,12 +1353,18 @@ export interface Synth extends BaseContract {
       to: PromiseOrValue<string>,
       collateralAmount: PromiseOrValue<BigNumberish>,
       perpetualDEXIndex: PromiseOrValue<BigNumberish>,
-      minSynthToMint: PromiseOrValue<BigNumberish>,
+      minUSDLToMint: PromiseOrValue<BigNumberish>,
       collateral: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     fees(overrides?: CallOverrides): Promise<BigNumber>;
+
+    getAvailableSettlementToken(
+      perpetualDEXIndex: PromiseOrValue<BigNumberish>,
+      collateral: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     getFees(
       dexIndex: PromiseOrValue<BigNumberish>,
@@ -1318,11 +1406,10 @@ export interface Synth extends BaseContract {
 
     initialize(
       _trustedForwarder: PromiseOrValue<string>,
-      _perpLemma: PromiseOrValue<string>,
-      _usdc: PromiseOrValue<string>,
-      _tailCollateral: PromiseOrValue<string>,
-      _name: PromiseOrValue<string>,
-      _symbol: PromiseOrValue<string>,
+      _collateralAddress: PromiseOrValue<string>,
+      _perpetualDEXWrapperAddress: PromiseOrValue<string>,
+      _settlementTokenManager: PromiseOrValue<string>,
+      _perpSettlementToken: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
@@ -1330,7 +1417,11 @@ export interface Synth extends BaseContract {
 
     isSupportedPerpetualDEXWrapper(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
+    isSupportedStableForMinting(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
+
     isTrustedForwarder(forwarder: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
+
+    lemmaTreasury(overrides?: CallOverrides): Promise<BigNumber>;
 
     mintToStackingContract(
       amount: PromiseOrValue<BigNumberish>,
@@ -1352,7 +1443,7 @@ export interface Synth extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    perpLemma(overrides?: CallOverrides): Promise<BigNumber>;
+    perpSettlementToken(overrides?: CallOverrides): Promise<BigNumber>;
 
     perpetualDEXWrappers(
       arg0: PromiseOrValue<BigNumberish>,
@@ -1363,6 +1454,11 @@ export interface Synth extends BaseContract {
     renounceRole(
       role: PromiseOrValue<BytesLike>,
       account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
+
+    requestLossesRecap(
+      usdcAmount: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
@@ -1377,21 +1473,26 @@ export interface Synth extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    setTailCollateral(
-      _tailCollateral: PromiseOrValue<string>,
+    setLemmaTreasury(
+      _lemmaTreasury: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    setXSynth(
-      _xSynth: PromiseOrValue<string>,
+    setSettlementTokenManager(
+      _settlementTokenManager: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
+
+    setXUsdl(
+      _xUsdl: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
+
+    settlementTokenManager(overrides?: CallOverrides): Promise<BigNumber>;
 
     supportsInterface(interfaceId: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<BigNumber>;
 
     symbol(overrides?: CallOverrides): Promise<BigNumber>;
-
-    tailCollateral(overrides?: CallOverrides): Promise<BigNumber>;
 
     totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -1408,8 +1509,6 @@ export interface Synth extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    usdc(overrides?: CallOverrides): Promise<BigNumber>;
-
     withdrawTo(
       to: PromiseOrValue<string>,
       amount: PromiseOrValue<BigNumberish>,
@@ -1423,12 +1522,12 @@ export interface Synth extends BaseContract {
       to: PromiseOrValue<string>,
       collateralAmount: PromiseOrValue<BigNumberish>,
       perpetualDEXIndex: PromiseOrValue<BigNumberish>,
-      maxSynthToBurn: PromiseOrValue<BigNumberish>,
+      maxUSDLToBurn: PromiseOrValue<BigNumberish>,
       collateral: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    xSynth(overrides?: CallOverrides): Promise<BigNumber>;
+    xUsdl(overrides?: CallOverrides): Promise<BigNumber>;
   };
 
   populateTransaction: {
@@ -1494,12 +1593,18 @@ export interface Synth extends BaseContract {
       to: PromiseOrValue<string>,
       collateralAmount: PromiseOrValue<BigNumberish>,
       perpetualDEXIndex: PromiseOrValue<BigNumberish>,
-      minSynthToMint: PromiseOrValue<BigNumberish>,
+      minUSDLToMint: PromiseOrValue<BigNumberish>,
       collateral: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     fees(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    getAvailableSettlementToken(
+      perpetualDEXIndex: PromiseOrValue<BigNumberish>,
+      collateral: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
     getFees(
       dexIndex: PromiseOrValue<BigNumberish>,
@@ -1541,11 +1646,10 @@ export interface Synth extends BaseContract {
 
     initialize(
       _trustedForwarder: PromiseOrValue<string>,
-      _perpLemma: PromiseOrValue<string>,
-      _usdc: PromiseOrValue<string>,
-      _tailCollateral: PromiseOrValue<string>,
-      _name: PromiseOrValue<string>,
-      _symbol: PromiseOrValue<string>,
+      _collateralAddress: PromiseOrValue<string>,
+      _perpetualDEXWrapperAddress: PromiseOrValue<string>,
+      _settlementTokenManager: PromiseOrValue<string>,
+      _perpSettlementToken: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
@@ -1556,7 +1660,11 @@ export interface Synth extends BaseContract {
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
+    isSupportedStableForMinting(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
     isTrustedForwarder(forwarder: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    lemmaTreasury(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     mintToStackingContract(
       amount: PromiseOrValue<BigNumberish>,
@@ -1578,7 +1686,7 @@ export interface Synth extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    perpLemma(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    perpSettlementToken(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     perpetualDEXWrappers(
       arg0: PromiseOrValue<BigNumberish>,
@@ -1589,6 +1697,11 @@ export interface Synth extends BaseContract {
     renounceRole(
       role: PromiseOrValue<BytesLike>,
       account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<PopulatedTransaction>;
+
+    requestLossesRecap(
+      usdcAmount: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
@@ -1603,21 +1716,26 @@ export interface Synth extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    setTailCollateral(
-      _tailCollateral: PromiseOrValue<string>,
+    setLemmaTreasury(
+      _lemmaTreasury: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    setXSynth(
-      _xSynth: PromiseOrValue<string>,
+    setSettlementTokenManager(
+      _settlementTokenManager: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
+
+    setXUsdl(
+      _xUsdl: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<PopulatedTransaction>;
+
+    settlementTokenManager(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     supportsInterface(interfaceId: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     symbol(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    tailCollateral(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     totalSupply(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
@@ -1634,8 +1752,6 @@ export interface Synth extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    usdc(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
     withdrawTo(
       to: PromiseOrValue<string>,
       amount: PromiseOrValue<BigNumberish>,
@@ -1649,11 +1765,11 @@ export interface Synth extends BaseContract {
       to: PromiseOrValue<string>,
       collateralAmount: PromiseOrValue<BigNumberish>,
       perpetualDEXIndex: PromiseOrValue<BigNumberish>,
-      maxSynthToBurn: PromiseOrValue<BigNumberish>,
+      maxUSDLToBurn: PromiseOrValue<BigNumberish>,
       collateral: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    xSynth(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    xUsdl(overrides?: CallOverrides): Promise<PopulatedTransaction>;
   };
 }
