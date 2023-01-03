@@ -33,6 +33,6 @@ export class OptimismLemmaFinanceXUsdlTokenFetcher extends AppTokenTemplatePosit
   async getPricePerShare({ contract, appToken }: GetPricePerShareParams<LemmaXUsdl>) {
     const pricePerShareRaw = await contract.assetsPerShare();
     const pricePerShare = Number(pricePerShareRaw) / 10 ** appToken.decimals;
-    return [pricePerShare];
+    return [1 / pricePerShare];
   }
 }

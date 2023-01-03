@@ -45,7 +45,7 @@ const synthDefinitions = [
 ];
 
 @PositionTemplate()
-export class OptimismLemmaFinanceLemmaSynthTokenFetcher extends AppTokenTemplatePositionFetcher<
+export class OptimismLemmaFinanceSynthTokenFetcher extends AppTokenTemplatePositionFetcher<
   LemmaSynth,
   DefaultAppTokenDataProps,
   LemmaFinanceSynthDefinition
@@ -75,7 +75,7 @@ export class OptimismLemmaFinanceLemmaSynthTokenFetcher extends AppTokenTemplate
     definition,
     multicall,
   }: GetUnderlyingTokensParams<LemmaSynth, LemmaFinanceSynthDefinition>) {
-    const synthContract = this.contractFactory.lemmaSynth({ address: definition.perpAddress, network: this.network });
+    const synthContract = this.contractFactory.lemmaSynth({ address: definition.address, network: this.network });
     const perpContract = this.contractFactory.lemmaPerp({ address: definition.perpAddress, network: this.network });
 
     const [collateralTokenAddress, usdcAddress] = await Promise.all([
