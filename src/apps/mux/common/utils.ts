@@ -1,12 +1,13 @@
-import BigNumber from 'bignumber.js';
+import { BigNumber } from 'bignumber.js';
 import { ethers } from 'ethers';
 import _ from 'lodash';
 
 import { IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { ZERO_ADDRESS } from '~app-toolkit/constants/address';
-import { MuxContractFactory } from '~apps/mux';
 import { BaseToken } from '~position/token.interface';
 import { Network } from '~types/network.interface';
+
+import { MuxContractFactory } from '../contracts';
 
 interface ReaderAssets {
   symbol: string;
@@ -156,38 +157,30 @@ export async function getCollateralTokensByNetwork(network: Network, appToolkit:
 }
 
 export function computePositionPnlUsd(
-  asset: MuxBaseToken,
-  amount: BigNumber,
-  entryPrice: BigNumber,
+  assetPrice: number,
+  assetMinProfitTime: number,
+  assetMinProfitRate: string,
+  amount: string,
+  entryPrice: string,
   lastIncreasedTime: number,
   isLong: boolean,
 ): { pendingPnlUsd: BigNumber; pnlUsd: BigNumber } {
-  if (amount.eq(_0)) {
-    return { pendingPnlUsd: _0, pnlUsd: _0 };
-  }
-  const priceDelta = isLong ? new BigNumber(asset.price).minus(entryPrice) : entryPrice.minus(asset.price);
+  if (new BigNumber(amount).eq(_0)) return { pendingPnlUsd: _0, pnlUsd: _0 };
+
+  const priceDelta = isLong ? new BigNumber(assetPrice).minus(entryPrice) : new BigNumber(entryPrice).minus(assetPrice);
   const pendingPnlUsd = priceDelta.times(amount);
-  if (
-    priceDelta.gt(_0) &&
-    Math.ceil(Date.now() / 1000) < lastIncreasedTime + asset.minProfitTime &&
-    priceDelta.abs().lt(asset.minProfitRate.times(entryPrice))
-  ) {
-    return { pendingPnlUsd, pnlUsd: _0 };
-  }
+
+  const isPendingMinTime = Math.ceil(Date.now() / 1000) < lastIncreasedTime + assetMinProfitTime;
+  const isPendingMinProfitRate = priceDelta.abs().lt(new BigNumber(assetMinProfitRate).times(entryPrice));
+
+  if (priceDelta.gt(_0) && isPendingMinTime && isPendingMinProfitRate) return { pendingPnlUsd, pnlUsd: _0 };
   return { pendingPnlUsd, pnlUsd: pendingPnlUsd };
 }
 
-export function encodeSubAccountId(
-  account: string,
-  collateralId: number,
-  assetId: number,
-  isLong: boolean,
-): string | null {
-  if (ethers.utils.arrayify(account).length !== 20) {
-    return null;
-  }
-  return (
-    ethers.utils.solidityPack(['address', 'uint8', 'uint8', 'bool'], [account, collateralId, assetId, isLong]) +
-    '000000000000000000'
-  );
+export function encodeSubAccountId(account: string, collateralId: number, assetId: number, isLong: boolean) {
+  if (ethers.utils.arrayify(account).length !== 20) return null;
+  const params = [account, collateralId, assetId, isLong];
+  const packed = ethers.utils.solidityPack(['address', 'uint8', 'uint8', 'bool'], params);
+  const padded = packed + '000000000000000000';
+  return padded;
 }

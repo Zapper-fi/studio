@@ -3,7 +3,7 @@ import { AbstractApp } from '~app/app.dynamic-module';
 
 import { ArbitrumMyceliumEsMycTokenFetcher } from './arbitrum/mycelium.es-myc.token-fetcher';
 import { ArbitrumMyceliumMlpTokenFetcher } from './arbitrum/mycelium.mlp.token-fetcher';
-import { ArbitrumPerpContractPositionFetcher } from './arbitrum/mycelium.perp.contract-position-fetcher';
+import { ArbitrumMycellilumPerpContractPositionFetcher } from './arbitrum/mycelium.perp.contract-position-fetcher';
 import { MyceliumContractFactory } from './contracts';
 import MYCELIUM_DEFINITION, { MyceliumAppDefinition } from './mycelium.definition';
 
@@ -15,7 +15,7 @@ import MYCELIUM_DEFINITION, { MyceliumAppDefinition } from './mycelium.definitio
     // Arbitrum
     ArbitrumMyceliumEsMycTokenFetcher,
     ArbitrumMyceliumMlpTokenFetcher,
-    ArbitrumPerpContractPositionFetcher,
+    ArbitrumMycellilumPerpContractPositionFetcher,
   ],
 })
 export class MyceliumAppModule extends AbstractApp() {}
