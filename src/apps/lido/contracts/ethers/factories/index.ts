@@ -2,4 +2,5 @@
 /* tslint:disable */
 /* eslint-disable */
 export { Steth__factory } from './Steth__factory';
+export { StethEthOracle__factory } from './StethEthOracle__factory';
 export { Wsteth__factory } from './Wsteth__factory';
