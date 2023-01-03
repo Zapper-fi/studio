@@ -6,9 +6,9 @@ import { MuxMlpTokenHelper } from '~apps/mux/helpers/mux.mlp.token-helper';
 
 import { ArbitrumMuxBalanceFetcher } from './arbitrum/mux.balance-fetcher';
 import { ArbitrumMuxFarmContractPositionFetcher } from './arbitrum/mux.farm.contract-position-fetcher';
-import { ArbitrumMuxLevTradesContractPositionFetcher } from './arbitrum/mux.lev-trades.contract-position-fetcher';
 import { ArbitrumMuxMlpTokenFetcher } from './arbitrum/mux.mlp.token-fetcher';
 import { ArbitrumMuxMuxTokenFetcher } from './arbitrum/mux.mux.token-fetcher';
+import { ArbitrumMuxPerpContractPositionFetcher } from './arbitrum/mux.perp.contract-position-fetcher';
 import { AvalancheMuxBalanceFetcher } from './avalanche/mux.balance-fetcher';
 import { AvalancheMuxLevTradesContractPositionFetcher } from './avalanche/mux.lev-trades.contract-position-fetcher';
 import { AvalancheMuxMlpTokenFetcher } from './avalanche/mux.mlp.token-fetcher';
@@ -33,7 +33,7 @@ import { MuxAppDefinition, MUX_DEFINITION } from './mux.definition';
     // Arbitrum
     ArbitrumMuxBalanceFetcher,
     ArbitrumMuxFarmContractPositionFetcher,
-    ArbitrumMuxLevTradesContractPositionFetcher,
+    ArbitrumMuxPerpContractPositionFetcher,
     ArbitrumMuxMlpTokenFetcher,
     ArbitrumMuxMuxTokenFetcher,
     // Avalanche

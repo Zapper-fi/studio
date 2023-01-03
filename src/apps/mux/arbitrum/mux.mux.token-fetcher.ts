@@ -1,77 +1,41 @@
 import { Inject } from '@nestjs/common';
 
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
-import { Register } from '~app-toolkit/decorators';
-import { buildDollarDisplayItem } from '~app-toolkit/helpers/presentation/display-item.present';
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import { getAppAssetImage } from '~app-toolkit/helpers/presentation/image.present';
-import { ContractType } from '~position/contract.interface';
-import { PositionFetcher } from '~position/position-fetcher.interface';
-import { AppTokenPosition } from '~position/position.interface';
-import { Network } from '~types/network.interface';
+import { Erc20 } from '~contract/contracts';
+import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 
 import { MuxContractFactory } from '../contracts';
-import { MUX_DEFINITION } from '../mux.definition';
 
-const appId = MUX_DEFINITION.id;
-const groupId = MUX_DEFINITION.groups.mux.id;
-const network = Network.ARBITRUM_MAINNET;
+@PositionTemplate()
+export class ArbitrumMuxMuxTokenFetcher extends AppTokenTemplatePositionFetcher<Erc20> {
+  groupLabel = 'MUX';
 
-@Register.TokenPositionFetcher({ appId, groupId, network })
-export class ArbitrumMuxMuxTokenFetcher implements PositionFetcher<AppTokenPosition> {
   constructor(
-    @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
-    @Inject(MuxContractFactory) private readonly muxContractFactory: MuxContractFactory,
-  ) {}
+    @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
+    @Inject(MuxContractFactory) protected readonly contractFactory: MuxContractFactory,
+  ) {
+    super(appToolkit);
+  }
 
-  async getPositions() {
-    const muxTokenAddress = '0x8bb2ac0dcf1e86550534cee5e9c8ded4269b679b';
-    const multicall = this.appToolkit.getMulticall(network);
-    const baseTokens = await this.appToolkit.getBaseTokenPrices(network);
-    const underlyingToken = baseTokens.find(p => p.symbol === 'MCB')!;
+  getContract(address: string): Erc20 {
+    return this.contractFactory.erc20({ address, network: this.network });
+  }
 
-    const muxContract = this.muxContractFactory.erc20({ address: muxTokenAddress, network });
-    const [symbol, decimals, supplyRaw] = await Promise.all([
-      multicall.wrap(muxContract).symbol(),
-      multicall.wrap(muxContract).decimals(),
-      multicall.wrap(muxContract).totalSupply(),
-    ]);
+  async getAddresses() {
+    return ['0x8bb2ac0dcf1e86550534cee5e9c8ded4269b679b'];
+  }
 
-    // Data Props
-    const pricePerShare = 1; // Minted 1:1
-    const supply = Number(supplyRaw) / 10 ** decimals;
-    const price = pricePerShare * underlyingToken.price;
-    const tokens = [underlyingToken];
-    const liquidity = price * supply;
+  async getUnderlyingTokenDefinitions() {
+    return [{ address: '0x4e352cf164e64adcbad318c3a1e222e9eba4ce42', network: this.network }];
+  }
 
-    // Display Props
-    const label = symbol;
-    const secondaryLabel = buildDollarDisplayItem(price);
-    const images = [getAppAssetImage('mux', 'MUX')];
+  async getPricePerShare() {
+    return [1];
+  }
 
-    const muxToken: AppTokenPosition = {
-      type: ContractType.APP_TOKEN,
-      address: muxTokenAddress,
-      appId: MUX_DEFINITION.id,
-      groupId: MUX_DEFINITION.groups.mux.id,
-      network,
-      symbol,
-      decimals,
-      supply,
-      price,
-      pricePerShare,
-      tokens,
-
-      dataProps: {
-        liquidity,
-      },
-
-      displayProps: {
-        label,
-        secondaryLabel,
-        images,
-      },
-    };
-
-    return [muxToken];
+  async getImages() {
+    return [getAppAssetImage('mux', 'MUX')];
   }
 }

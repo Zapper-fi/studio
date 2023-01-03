@@ -4,7 +4,9 @@
 export type { MuxReader } from './MuxReader';
 export type { MuxRewardRouter } from './MuxRewardRouter';
 export type { MuxRewardTracker } from './MuxRewardTracker';
+export type { MuxVault } from './MuxVault';
 export * as factories from './factories';
 export { MuxReader__factory } from './factories/MuxReader__factory';
 export { MuxRewardRouter__factory } from './factories/MuxRewardRouter__factory';
 export { MuxRewardTracker__factory } from './factories/MuxRewardTracker__factory';
+export { MuxVault__factory } from './factories/MuxVault__factory';
