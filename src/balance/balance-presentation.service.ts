@@ -19,7 +19,7 @@ import { TokenBalanceResponse } from './balance-fetcher.interface';
 
 type Balances = (AppTokenPositionBalance | ContractPositionBalance)[];
 
-type DataPropsByGroupLabel<T extends DefaultDataProps = DefaultDataProps> = { [k: string]: T };
+type DataPropsByGroupLabel = { [k: string]: DefaultDataProps };
 
 interface IAppService {
   getApp(appId: string): Promise<AppDefinition | undefined>;

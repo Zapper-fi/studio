@@ -85,7 +85,7 @@ export abstract class SynthetixPositionPresenter extends PositionPresenterTempla
     const escrowed = collateralBalance - unlockedSnx;
     const unescrowed = unlockedSnx;
 
-    return { collateralUSD, debtBalanceUSD, cRatio, escrowed, unescrowed, snxPrice: snxBalance.price };
+    return { collateralUSD, debtBalanceUSD, cRatio, escrowed, unescrowed, snxPrice };
   }
 
   presentDataProps(dataProps: SynthetixPositionPresenterDataProps): MetadataItemWithLabel[] {
