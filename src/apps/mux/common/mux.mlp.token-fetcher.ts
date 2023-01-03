@@ -1,19 +1,24 @@
 import { Inject } from '@nestjs/common';
 import axios from 'axios';
+import BigNumber from 'bignumber.js';
 import { gql } from 'graphql-request';
+import { compact } from 'lodash';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
-import { MuxContractFactory } from '~apps/mux';
+import { ZERO_ADDRESS } from '~app-toolkit/constants/address';
 import { Erc20 } from '~contract/contracts';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import {
-  DefaultAppTokenDefinition,
   GetUnderlyingTokensParams,
+  DefaultAppTokenDefinition,
+  UnderlyingTokenDefinition,
   GetPricePerShareParams,
-  DefaultAppTokenDataProps,
 } from '~position/template/app-token.template.types';
 
+import { MuxContractFactory } from '../contracts';
+
 export type LiquidityAsset = {
+  muxLPTotalBalance: number;
   muxLPPrice: number;
   assets: Asset[];
 };
@@ -50,6 +55,7 @@ const ASSETS_TOKENS_QUERY = gql`
 
 export abstract class MuxMlpTokenFetcher extends AppTokenTemplatePositionFetcher<Erc20> {
   abstract mlpAddress: string;
+  abstract poolAddress: string;
   abstract subgraphUrl: string;
 
   constructor(
@@ -67,18 +73,32 @@ export abstract class MuxMlpTokenFetcher extends AppTokenTemplatePositionFetcher
     return [this.mlpAddress];
   }
 
-  async getUnderlyingTokenDefinitions(_params: GetUnderlyingTokensParams<Erc20, DefaultAppTokenDefinition>) {
+  async getUnderlyingTokenDefinitions({
+    tokenLoader,
+  }: GetUnderlyingTokensParams<Erc20, DefaultAppTokenDefinition>): Promise<UnderlyingTokenDefinition[]> {
     const response = await this.appToolkit.helpers.theGraphHelper.request<TokensResponse>({
       endpoint: this.subgraphUrl,
       query: ASSETS_TOKENS_QUERY,
     });
 
-    return (response.assets ?? []).map(({ tokenAddress }) => ({ address: tokenAddress, network: this.network }));
+    const tokensRaw = (response.assets ?? []).filter(v => v.tokenAddress !== ZERO_ADDRESS);
+    const baseTokens = await tokenLoader.getMany(
+      tokensRaw.map(v => ({ address: v.tokenAddress, network: this.network })),
+    );
+
+    return compact(baseTokens).map(v => ({ address: v.address, network: this.network }));
   }
 
-  async getPricePerShare(_params: GetPricePerShareParams<Erc20, DefaultAppTokenDataProps, DefaultAppTokenDefinition>) {
-    // @TODO Use https://arbiscan.io/address/0x3e0199792ce69dc29a0a36146bfa68bd7c8d6633
-    return [];
+  async getSupply() {
+    const { data: liquidityAsset } = await axios.get<LiquidityAsset>('/api/liquidityAsset', {
+      baseURL: 'https://app.mux.network',
+    });
+
+    return new BigNumber(liquidityAsset.muxLPTotalBalance).times(10 ** 18).toFixed(0);
+  }
+
+  async getPricePerShare({ appToken }: GetPricePerShareParams<Erc20>) {
+    return appToken.tokens.map(() => 0);
   }
 
   async getPrice() {
