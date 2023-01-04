@@ -20,36 +20,6 @@ export class EthereumInverseFirmBalanceFetcher implements BalanceFetcher {
     @Inject(InverseFirmContractFactory) private readonly inverseFirmContractFactory: InverseFirmContractFactory,
   ) { }
 
-  async getDbrBalances(address: string) {
-    return this.appToolkit.helpers.contractPositionBalanceHelper.getContractPositionBalances(
-      {
-        address,
-        appId: INVERSE_FIRM_DEFINITION.id,
-        groupId: INVERSE_FIRM_DEFINITION.groups.dbr.id,
-        network: Network.ETHEREUM_MAINNET,
-        resolveBalances: async ({ address, contractPosition, multicall }) => {
-          const dbrToken = contractPosition.tokens[0];
-          const contract =
-            this.inverseFirmContractFactory.dbr({ address: contractPosition.address, network });
-
-          const [debtRaw, balanceRaw] = await Promise.all([
-            multicall.wrap(contract).debts(address),
-            multicall.wrap(contract).balanceOf(address),
-          ]);
-
-          return [
-            drillBalance({
-              ...dbrToken, symbol: 'DBR Balance in wallet'
-            }, balanceRaw.toString()),
-            drillBalance({
-              ...dbrToken, symbol: 'DBR Yearly Spend Rate'
-            }, debtRaw.toString(), { isDebt: true }),
-          ];
-        },
-      }
-    );
-  }
-
   async getLoanBalances(address: string) {
     return this.appToolkit.helpers.contractPositionBalanceHelper.getContractPositionBalances(
       {
@@ -84,15 +54,12 @@ export class EthereumInverseFirmBalanceFetcher implements BalanceFetcher {
   }
 
   async getBalances(address: string) {
-    const [loans, dbrBalances] = await Promise.all([
-      this.getLoanBalances(address),
-      this.getDbrBalances(address),
-    ]);
+    const loans = await this.getLoanBalances(address);
 
     return presentBalanceFetcherResponse([
       {
         label: "Lending",
-        assets: loans.concat(dbrBalances),
+        assets: loans,
       },
     ]);
   }
