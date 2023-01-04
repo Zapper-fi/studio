@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.351.0](https://github.com/Zapper-fi/studio/compare/v0.350.0...v0.351.0) (2023-01-04)
+
+
+### Features
+
+* **trader-joe:** Add veJOE token with zero price to fix veJOE staking ([0c87a30](https://github.com/Zapper-fi/studio/commit/0c87a304f1b79bd095d97e7cde51699ec7171da2))
+
 ## [0.350.0](https://github.com/Zapper-fi/studio/compare/v0.349.0...v0.350.0) (2023-01-04)
 
 
