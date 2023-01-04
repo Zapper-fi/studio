@@ -1,25 +1,11 @@
-import { Inject } from '@nestjs/common';
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 
-import { Register } from '~app-toolkit/decorators';
-import { MuxMlpTokenHelper } from '~apps/mux/helpers/mux.mlp.token-helper';
-import { PositionFetcher } from '~position/position-fetcher.interface';
-import { AppTokenPosition } from '~position/position.interface';
-import { Network } from '~types/network.interface';
+import { MuxMlpTokenFetcher } from '../common/mux.mlp.token-fetcher';
 
-import { MUX_DEFINITION } from '../mux.definition';
-
-const appId = MUX_DEFINITION.id;
-const groupId = MUX_DEFINITION.groups.mlp.id;
-const network = Network.FANTOM_OPERA_MAINNET;
-
-@Register.TokenPositionFetcher({ appId, groupId, network })
-export class FantomMuxMlpTokenFetcher implements PositionFetcher<AppTokenPosition> {
-  constructor(@Inject(MuxMlpTokenHelper) private readonly muxMlpTokenHelper: MuxMlpTokenHelper) {}
-
-  async getPositions() {
-    return this.muxMlpTokenHelper.getTokens({
-      network,
-      mlpTokenAddress: '0xddade9a8da4851960dfcff1ae4a18ee75c39edd2',
-    });
-  }
+@PositionTemplate()
+export class FantomMuxMlpTokenFetcher extends MuxMlpTokenFetcher {
+  groupLabel = 'MUX LP';
+  mlpAddress = '0xddade9a8da4851960dfcff1ae4a18ee75c39edd2';
+  poolAddress = '0x2e81f443a11a943196c88afcb5a0d807721a88e6';
+  subgraphUrl = 'https://api.thegraph.com/subgraphs/name/mux-world/mux-ftm';
 }

@@ -1,25 +1,11 @@
-import { Inject } from '@nestjs/common';
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 
-import { Register } from '~app-toolkit/decorators';
-import { PositionFetcher } from '~position/position-fetcher.interface';
-import { AppTokenPosition } from '~position/position.interface';
-import { Network } from '~types/network.interface';
+import { MuxMlpTokenFetcher } from '../common/mux.mlp.token-fetcher';
 
-import { MuxMlpTokenHelper } from '../helpers/mux.mlp.token-helper';
-import { MUX_DEFINITION } from '../mux.definition';
-
-const appId = MUX_DEFINITION.id;
-const groupId = MUX_DEFINITION.groups.mlp.id;
-const network = Network.AVALANCHE_MAINNET;
-
-@Register.TokenPositionFetcher({ appId, groupId, network })
-export class AvalancheMuxMlpTokenFetcher implements PositionFetcher<AppTokenPosition> {
-  constructor(@Inject(MuxMlpTokenHelper) private readonly muxMlpTokenHelper: MuxMlpTokenHelper) {}
-
-  async getPositions() {
-    return this.muxMlpTokenHelper.getTokens({
-      network,
-      mlpTokenAddress: '0xaf2d365e668baafedcfd256c0fbbe519e594e390',
-    });
-  }
+@PositionTemplate()
+export class AvalancheMuxMlpTokenFetcher extends MuxMlpTokenFetcher {
+  groupLabel = 'MUX LP';
+  mlpAddress = '0xaf2d365e668baafedcfd256c0fbbe519e594e390';
+  poolAddress = '0x0ba2e492e8427fad51692ee8958ebf936bee1d84';
+  subgraphUrl = 'https://api.thegraph.com/subgraphs/name/mux-world/mux-ava';
 }

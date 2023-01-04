@@ -2,7 +2,9 @@
 /* tslint:disable */
 /* eslint-disable */
 export type { Steth } from './Steth';
+export type { StethEthOracle } from './StethEthOracle';
 export type { Wsteth } from './Wsteth';
 export * as factories from './factories';
+export { StethEthOracle__factory } from './factories/StethEthOracle__factory';
 export { Steth__factory } from './factories/Steth__factory';
 export { Wsteth__factory } from './factories/Wsteth__factory';
