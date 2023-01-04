@@ -4,6 +4,21 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.349.0](https://github.com/Zapper-fi/studio/compare/v0.348.0...v0.349.0) (2023-01-04)
+
+
+### Features
+
+* **jones-dao:** Add metavaults ([#2025](https://github.com/Zapper-fi/studio/issues/2025)) ([6cbad1d](https://github.com/Zapper-fi/studio/commit/6cbad1d074767928f6680a9d6d16746db63f91cf))
+* **lemma-finance:** To templates ([#2021](https://github.com/Zapper-fi/studio/issues/2021)) ([8081196](https://github.com/Zapper-fi/studio/commit/8081196fe32be8526de90601f9bcdd802355b7cc))
+* **mux:** To templates 💤  ([#2023](https://github.com/Zapper-fi/studio/issues/2023)) ([d9c8c94](https://github.com/Zapper-fi/studio/commit/d9c8c9449154f309f9f4bc1935d1491ffee5e78b))
+
+
+### Bug Fixes
+
+* **inverse:** Extract to Studio ([#2015](https://github.com/Zapper-fi/studio/issues/2015)) ([2f016e3](https://github.com/Zapper-fi/studio/commit/2f016e3089f731a1a6bf34a758d0f094e3b9e6b8))
+* **lido:** Migration to template ([#2024](https://github.com/Zapper-fi/studio/issues/2024)) ([8cab9af](https://github.com/Zapper-fi/studio/commit/8cab9af24a4b22499559610dd510ce26c903d7d5))
+
 ## [0.348.0](https://github.com/Zapper-fi/studio/compare/v0.347.1...v0.348.0) (2023-01-02)
 
 
