@@ -26,20 +26,91 @@ import type {
   OnEvent,
 } from "./common";
 
-export interface AladdinConcentratorAfxsVaultInterface extends utils.Interface {
+export declare namespace ConcentratorGeneralVault {
+  export type PoolSupplyInfoStruct = {
+    totalUnderlying: BigNumberish;
+    totalShare: BigNumberish;
+  };
+
+  export type PoolSupplyInfoStructOutput = [BigNumber, BigNumber] & {
+    totalUnderlying: BigNumber;
+    totalShare: BigNumber;
+  };
+
+  export type PoolStrategyInfoStruct = {
+    token: string;
+    strategy: string;
+    pauseDeposit: boolean;
+    pauseWithdraw: boolean;
+  };
+
+  export type PoolStrategyInfoStructOutput = [
+    string,
+    string,
+    boolean,
+    boolean
+  ] & {
+    token: string;
+    strategy: string;
+    pauseDeposit: boolean;
+    pauseWithdraw: boolean;
+  };
+
+  export type PoolRewardInfoStruct = {
+    rate: BigNumberish;
+    periodLength: BigNumberish;
+    lastUpdate: BigNumberish;
+    finishAt: BigNumberish;
+    accRewardPerShare: BigNumberish;
+  };
+
+  export type PoolRewardInfoStructOutput = [
+    BigNumber,
+    number,
+    number,
+    number,
+    BigNumber
+  ] & {
+    rate: BigNumber;
+    periodLength: number;
+    lastUpdate: number;
+    finishAt: number;
+    accRewardPerShare: BigNumber;
+  };
+
+  export type PoolFeeInfoStruct = {
+    withdrawFeeRatio: BigNumberish;
+    platformFeeRatio: BigNumberish;
+    harvestBountyRatio: BigNumberish;
+    reserved: BigNumberish;
+  };
+
+  export type PoolFeeInfoStructOutput = [number, number, number, BigNumber] & {
+    withdrawFeeRatio: number;
+    platformFeeRatio: number;
+    harvestBountyRatio: number;
+    reserved: BigNumber;
+  };
+}
+
+export interface AladdinConcentratorAfrxEthVaultInterface
+  extends utils.Interface {
   functions: {
-    "addPool(uint256,address[],uint256,uint256,uint256)": FunctionFragment;
-    "aladdinFXS()": FunctionFragment;
+    "addPool(address,address,uint32,uint32,uint32)": FunctionFragment;
     "allowance(uint256,address,address)": FunctionFragment;
     "approve(uint256,address,uint256)": FunctionFragment;
+    "checkpoint(uint256,address)": FunctionFragment;
     "claim(uint256,address,uint256,address)": FunctionFragment;
     "claimAll(uint256,address,address)": FunctionFragment;
+    "claimMulti(uint256[],address,uint256,address)": FunctionFragment;
     "deposit(uint256,address,uint256)": FunctionFragment;
+    "getFeeRate(bytes32,address)": FunctionFragment;
     "getTotalShare(uint256)": FunctionFragment;
     "getTotalUnderlying(uint256)": FunctionFragment;
     "getUserShare(uint256,address)": FunctionFragment;
     "harvest(uint256,address,uint256)": FunctionFragment;
     "initialize(address,address,address)": FunctionFragment;
+    "migrateStrategy(uint256,address)": FunctionFragment;
     "owner()": FunctionFragment;
     "pausePoolDeposit(uint256,bool)": FunctionFragment;
     "pausePoolWithdraw(uint256,bool)": FunctionFragment;
@@ -49,16 +120,14 @@ export interface AladdinConcentratorAfxsVaultInterface extends utils.Interface {
     "poolInfo(uint256)": FunctionFragment;
     "poolLength()": FunctionFragment;
     "renounceOwnership()": FunctionFragment;
-    "rewardInfo(uint256)": FunctionFragment;
     "rewardToken()": FunctionFragment;
+    "setWithdrawFeeForUser(uint256,address,uint32)": FunctionFragment;
     "transferOwnership(address)": FunctionFragment;
     "underlying(uint256)": FunctionFragment;
-    "updateHarvestBountyPercentage(uint256,uint256)": FunctionFragment;
     "updatePlatform(address)": FunctionFragment;
-    "updatePlatformFeePercentage(uint256,uint256)": FunctionFragment;
+    "updatePoolFeeRatio(uint256,uint32,uint32,uint32)": FunctionFragment;
     "updatePoolRewardTokens(uint256,address[])": FunctionFragment;
     "updateRewardPeriod(uint256,uint32)": FunctionFragment;
-    "updateWithdrawFeePercentage(uint256,uint256)": FunctionFragment;
     "updateZap(address)": FunctionFragment;
     "userInfo(uint256,address)": FunctionFragment;
     "withdraw(uint256,uint256,address,address)": FunctionFragment;
@@ -68,17 +137,20 @@ export interface AladdinConcentratorAfxsVaultInterface extends utils.Interface {
   getFunction(
     nameOrSignatureOrTopic:
       | "addPool"
-      | "aladdinFXS"
       | "allowance"
       | "approve"
+      | "checkpoint"
       | "claim"
       | "claimAll"
+      | "claimMulti"
       | "deposit"
+      | "getFeeRate"
       | "getTotalShare"
       | "getTotalUnderlying"
       | "getUserShare"
       | "harvest"
       | "initialize"
+      | "migrateStrategy"
       | "owner"
       | "pausePoolDeposit"
       | "pausePoolWithdraw"
@@ -88,16 +160,14 @@ export interface AladdinConcentratorAfxsVaultInterface extends utils.Interface {
       | "poolInfo"
       | "poolLength"
       | "renounceOwnership"
-      | "rewardInfo"
       | "rewardToken"
+      | "setWithdrawFeeForUser"
       | "transferOwnership"
       | "underlying"
-      | "updateHarvestBountyPercentage"
       | "updatePlatform"
-      | "updatePlatformFeePercentage"
+      | "updatePoolFeeRatio"
       | "updatePoolRewardTokens"
       | "updateRewardPeriod"
-      | "updateWithdrawFeePercentage"
       | "updateZap"
       | "userInfo"
       | "withdraw"
@@ -106,11 +176,7 @@ export interface AladdinConcentratorAfxsVaultInterface extends utils.Interface {
 
   encodeFunctionData(
     functionFragment: "addPool",
-    values: [BigNumberish, string[], BigNumberish, BigNumberish, BigNumberish]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "aladdinFXS",
-    values?: undefined
+    values: [string, string, BigNumberish, BigNumberish, BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "allowance",
@@ -121,6 +187,10 @@ export interface AladdinConcentratorAfxsVaultInterface extends utils.Interface {
     values: [BigNumberish, string, BigNumberish]
   ): string;
   encodeFunctionData(
+    functionFragment: "checkpoint",
+    values: [BigNumberish, string]
+  ): string;
+  encodeFunctionData(
     functionFragment: "claim",
     values: [BigNumberish, string, BigNumberish, string]
   ): string;
@@ -129,8 +199,16 @@ export interface AladdinConcentratorAfxsVaultInterface extends utils.Interface {
     values: [BigNumberish, string, string]
   ): string;
   encodeFunctionData(
+    functionFragment: "claimMulti",
+    values: [BigNumberish[], string, BigNumberish, string]
+  ): string;
+  encodeFunctionData(
     functionFragment: "deposit",
     values: [BigNumberish, string, BigNumberish]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "getFeeRate",
+    values: [BytesLike, string]
   ): string;
   encodeFunctionData(
     functionFragment: "getTotalShare",
@@ -151,6 +229,10 @@ export interface AladdinConcentratorAfxsVaultInterface extends utils.Interface {
   encodeFunctionData(
     functionFragment: "initialize",
     values: [string, string, string]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "migrateStrategy",
+    values: [BigNumberish, string]
   ): string;
   encodeFunctionData(functionFragment: "owner", values?: undefined): string;
   encodeFunctionData(
@@ -183,12 +265,12 @@ export interface AladdinConcentratorAfxsVaultInterface extends utils.Interface {
     values?: undefined
   ): string;
   encodeFunctionData(
-    functionFragment: "rewardInfo",
-    values: [BigNumberish]
-  ): string;
-  encodeFunctionData(
     functionFragment: "rewardToken",
     values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "setWithdrawFeeForUser",
+    values: [BigNumberish, string, BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "transferOwnership",
@@ -199,16 +281,12 @@ export interface AladdinConcentratorAfxsVaultInterface extends utils.Interface {
     values: [BigNumberish]
   ): string;
   encodeFunctionData(
-    functionFragment: "updateHarvestBountyPercentage",
-    values: [BigNumberish, BigNumberish]
-  ): string;
-  encodeFunctionData(
     functionFragment: "updatePlatform",
     values: [string]
   ): string;
   encodeFunctionData(
-    functionFragment: "updatePlatformFeePercentage",
-    values: [BigNumberish, BigNumberish]
+    functionFragment: "updatePoolFeeRatio",
+    values: [BigNumberish, BigNumberish, BigNumberish, BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "updatePoolRewardTokens",
@@ -216,10 +294,6 @@ export interface AladdinConcentratorAfxsVaultInterface extends utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "updateRewardPeriod",
-    values: [BigNumberish, BigNumberish]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "updateWithdrawFeePercentage",
     values: [BigNumberish, BigNumberish]
   ): string;
   encodeFunctionData(functionFragment: "updateZap", values: [string]): string;
@@ -234,12 +308,14 @@ export interface AladdinConcentratorAfxsVaultInterface extends utils.Interface {
   encodeFunctionData(functionFragment: "zap", values?: undefined): string;
 
   decodeFunctionResult(functionFragment: "addPool", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "aladdinFXS", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "allowance", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "approve", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "checkpoint", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "claim", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "claimAll", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "claimMulti", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "deposit", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "getFeeRate", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "getTotalShare",
     data: BytesLike
@@ -254,6 +330,10 @@ export interface AladdinConcentratorAfxsVaultInterface extends utils.Interface {
   ): Result;
   decodeFunctionResult(functionFragment: "harvest", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "initialize", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "migrateStrategy",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(functionFragment: "owner", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "pausePoolDeposit",
@@ -278,9 +358,12 @@ export interface AladdinConcentratorAfxsVaultInterface extends utils.Interface {
     functionFragment: "renounceOwnership",
     data: BytesLike
   ): Result;
-  decodeFunctionResult(functionFragment: "rewardInfo", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "rewardToken",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "setWithdrawFeeForUser",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -289,15 +372,11 @@ export interface AladdinConcentratorAfxsVaultInterface extends utils.Interface {
   ): Result;
   decodeFunctionResult(functionFragment: "underlying", data: BytesLike): Result;
   decodeFunctionResult(
-    functionFragment: "updateHarvestBountyPercentage",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
     functionFragment: "updatePlatform",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "updatePlatformFeePercentage",
+    functionFragment: "updatePoolFeeRatio",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -308,65 +387,57 @@ export interface AladdinConcentratorAfxsVaultInterface extends utils.Interface {
     functionFragment: "updateRewardPeriod",
     data: BytesLike
   ): Result;
-  decodeFunctionResult(
-    functionFragment: "updateWithdrawFeePercentage",
-    data: BytesLike
-  ): Result;
   decodeFunctionResult(functionFragment: "updateZap", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "userInfo", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "withdraw", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "zap", data: BytesLike): Result;
 
   events: {
-    "AddPool(uint256,uint256,address[])": EventFragment;
+    "AddPool(uint256,address,address)": EventFragment;
     "Approval(uint256,address,address,uint256)": EventFragment;
+    "CancleCustomizeFee(bytes32,address)": EventFragment;
     "Claim(uint256,address,address,uint256)": EventFragment;
+    "CustomizeFee(bytes32,address,uint256)": EventFragment;
     "Deposit(uint256,address,address,uint256,uint256)": EventFragment;
     "Harvest(uint256,address,address,uint256,uint256,uint256)": EventFragment;
+    "Migrate(uint256,address,address)": EventFragment;
     "OwnershipTransferred(address,address)": EventFragment;
     "PausePoolDeposit(uint256,bool)": EventFragment;
     "PausePoolWithdraw(uint256,bool)": EventFragment;
-    "UpdateHarvestBountyPercentage(uint256,uint256)": EventFragment;
     "UpdatePlatform(address)": EventFragment;
-    "UpdatePlatformFeePercentage(uint256,uint256)": EventFragment;
+    "UpdatePoolFeeRatio(uint256,uint32,uint32,uint32)": EventFragment;
     "UpdatePoolRewardTokens(uint256,address[])": EventFragment;
     "UpdateRewardPeriod(uint256,uint32)": EventFragment;
-    "UpdateWithdrawalFeePercentage(uint256,uint256)": EventFragment;
     "UpdateZap(address)": EventFragment;
     "Withdraw(uint256,address,address,address,uint256,uint256)": EventFragment;
   };
 
   getEvent(nameOrSignatureOrTopic: "AddPool"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "Approval"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "CancleCustomizeFee"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "Claim"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "CustomizeFee"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "Deposit"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "Harvest"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "Migrate"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "OwnershipTransferred"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "PausePoolDeposit"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "PausePoolWithdraw"): EventFragment;
-  getEvent(
-    nameOrSignatureOrTopic: "UpdateHarvestBountyPercentage"
-  ): EventFragment;
   getEvent(nameOrSignatureOrTopic: "UpdatePlatform"): EventFragment;
-  getEvent(
-    nameOrSignatureOrTopic: "UpdatePlatformFeePercentage"
-  ): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "UpdatePoolFeeRatio"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "UpdatePoolRewardTokens"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "UpdateRewardPeriod"): EventFragment;
-  getEvent(
-    nameOrSignatureOrTopic: "UpdateWithdrawalFeePercentage"
-  ): EventFragment;
   getEvent(nameOrSignatureOrTopic: "UpdateZap"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "Withdraw"): EventFragment;
 }
 
 export interface AddPoolEventObject {
   _pid: BigNumber;
-  _convexPid: BigNumber;
-  _rewardTokens: string[];
+  _underlying: string;
+  _strategy: string;
 }
 export type AddPoolEvent = TypedEvent<
-  [BigNumber, BigNumber, string[]],
+  [BigNumber, string, string],
   AddPoolEventObject
 >;
 
@@ -385,6 +456,18 @@ export type ApprovalEvent = TypedEvent<
 
 export type ApprovalEventFilter = TypedEventFilter<ApprovalEvent>;
 
+export interface CancleCustomizeFeeEventObject {
+  _feeType: string;
+  _user: string;
+}
+export type CancleCustomizeFeeEvent = TypedEvent<
+  [string, string],
+  CancleCustomizeFeeEventObject
+>;
+
+export type CancleCustomizeFeeEventFilter =
+  TypedEventFilter<CancleCustomizeFeeEvent>;
+
 export interface ClaimEventObject {
   pid: BigNumber;
   sender: string;
@@ -397,6 +480,18 @@ export type ClaimEvent = TypedEvent<
 >;
 
 export type ClaimEventFilter = TypedEventFilter<ClaimEvent>;
+
+export interface CustomizeFeeEventObject {
+  _feeType: string;
+  _user: string;
+  _rate: BigNumber;
+}
+export type CustomizeFeeEvent = TypedEvent<
+  [string, string, BigNumber],
+  CustomizeFeeEventObject
+>;
+
+export type CustomizeFeeEventFilter = TypedEventFilter<CustomizeFeeEvent>;
 
 export interface DepositEventObject {
   pid: BigNumber;
@@ -426,6 +521,18 @@ export type HarvestEvent = TypedEvent<
 >;
 
 export type HarvestEventFilter = TypedEventFilter<HarvestEvent>;
+
+export interface MigrateEventObject {
+  _pid: BigNumber;
+  _oldStrategy: string;
+  _newStrategy: string;
+}
+export type MigrateEvent = TypedEvent<
+  [BigNumber, string, string],
+  MigrateEventObject
+>;
+
+export type MigrateEventFilter = TypedEventFilter<MigrateEvent>;
 
 export interface OwnershipTransferredEventObject {
   previousOwner: string;
@@ -463,18 +570,6 @@ export type PausePoolWithdrawEvent = TypedEvent<
 export type PausePoolWithdrawEventFilter =
   TypedEventFilter<PausePoolWithdrawEvent>;
 
-export interface UpdateHarvestBountyPercentageEventObject {
-  _pid: BigNumber;
-  _feePercentage: BigNumber;
-}
-export type UpdateHarvestBountyPercentageEvent = TypedEvent<
-  [BigNumber, BigNumber],
-  UpdateHarvestBountyPercentageEventObject
->;
-
-export type UpdateHarvestBountyPercentageEventFilter =
-  TypedEventFilter<UpdateHarvestBountyPercentageEvent>;
-
 export interface UpdatePlatformEventObject {
   _platform: string;
 }
@@ -485,17 +580,19 @@ export type UpdatePlatformEvent = TypedEvent<
 
 export type UpdatePlatformEventFilter = TypedEventFilter<UpdatePlatformEvent>;
 
-export interface UpdatePlatformFeePercentageEventObject {
+export interface UpdatePoolFeeRatioEventObject {
   _pid: BigNumber;
-  _feePercentage: BigNumber;
+  _withdrawFeeRatio: number;
+  _platformFeeRatio: number;
+  _harvestBountyRatio: number;
 }
-export type UpdatePlatformFeePercentageEvent = TypedEvent<
-  [BigNumber, BigNumber],
-  UpdatePlatformFeePercentageEventObject
+export type UpdatePoolFeeRatioEvent = TypedEvent<
+  [BigNumber, number, number, number],
+  UpdatePoolFeeRatioEventObject
 >;
 
-export type UpdatePlatformFeePercentageEventFilter =
-  TypedEventFilter<UpdatePlatformFeePercentageEvent>;
+export type UpdatePoolFeeRatioEventFilter =
+  TypedEventFilter<UpdatePoolFeeRatioEvent>;
 
 export interface UpdatePoolRewardTokensEventObject {
   _pid: BigNumber;
@@ -521,18 +618,6 @@ export type UpdateRewardPeriodEvent = TypedEvent<
 export type UpdateRewardPeriodEventFilter =
   TypedEventFilter<UpdateRewardPeriodEvent>;
 
-export interface UpdateWithdrawalFeePercentageEventObject {
-  _pid: BigNumber;
-  _feePercentage: BigNumber;
-}
-export type UpdateWithdrawalFeePercentageEvent = TypedEvent<
-  [BigNumber, BigNumber],
-  UpdateWithdrawalFeePercentageEventObject
->;
-
-export type UpdateWithdrawalFeePercentageEventFilter =
-  TypedEventFilter<UpdateWithdrawalFeePercentageEvent>;
-
 export interface UpdateZapEventObject {
   _zap: string;
 }
@@ -555,12 +640,12 @@ export type WithdrawEvent = TypedEvent<
 
 export type WithdrawEventFilter = TypedEventFilter<WithdrawEvent>;
 
-export interface AladdinConcentratorAfxsVault extends BaseContract {
+export interface AladdinConcentratorAfrxEthVault extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
 
-  interface: AladdinConcentratorAfxsVaultInterface;
+  interface: AladdinConcentratorAfrxEthVaultInterface;
 
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,
@@ -583,15 +668,13 @@ export interface AladdinConcentratorAfxsVault extends BaseContract {
 
   functions: {
     addPool(
-      _convexPid: BigNumberish,
-      _rewardTokens: string[],
-      _withdrawFeePercentage: BigNumberish,
-      _platformFeePercentage: BigNumberish,
-      _harvestBountyPercentage: BigNumberish,
+      _underlying: string,
+      _strategy: string,
+      _withdrawFeeRatio: BigNumberish,
+      _platformFeeRatio: BigNumberish,
+      _harvestBountyRatio: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
-
-    aladdinFXS(overrides?: CallOverrides): Promise<[string]>;
 
     allowance(
       _pid: BigNumberish,
@@ -604,6 +687,12 @@ export interface AladdinConcentratorAfxsVault extends BaseContract {
       _pid: BigNumberish,
       _spender: string,
       _amount: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
+
+    checkpoint(
+      _pid: BigNumberish,
+      _account: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
@@ -622,12 +711,26 @@ export interface AladdinConcentratorAfxsVault extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
+    claimMulti(
+      _pids: BigNumberish[],
+      _recipient: string,
+      _minOut: BigNumberish,
+      _claimAsToken: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
+
     deposit(
       _pid: BigNumberish,
       _recipient: string,
       _assetsIn: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
+
+    getFeeRate(
+      _feeType: BytesLike,
+      _user: string,
+      overrides?: CallOverrides
+    ): Promise<[BigNumber] & { rate: BigNumber }>;
 
     getTotalShare(
       _pid: BigNumberish,
@@ -653,9 +756,15 @@ export interface AladdinConcentratorAfxsVault extends BaseContract {
     ): Promise<ContractTransaction>;
 
     initialize(
-      _aladdinFXS: string,
+      _aladdinETH: string,
       _zap: string,
       _platform: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
+
+    migrateStrategy(
+      _pid: BigNumberish,
+      _newStrategy: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
@@ -691,29 +800,15 @@ export interface AladdinConcentratorAfxsVault extends BaseContract {
       overrides?: CallOverrides
     ): Promise<
       [
-        BigNumber,
-        BigNumber,
-        BigNumber,
-        BigNumber,
-        string,
-        string,
-        BigNumber,
-        BigNumber,
-        BigNumber,
-        boolean,
-        boolean
+        ConcentratorGeneralVault.PoolSupplyInfoStructOutput,
+        ConcentratorGeneralVault.PoolStrategyInfoStructOutput,
+        ConcentratorGeneralVault.PoolRewardInfoStructOutput,
+        ConcentratorGeneralVault.PoolFeeInfoStructOutput
       ] & {
-        totalUnderlying: BigNumber;
-        totalShare: BigNumber;
-        accRewardPerShare: BigNumber;
-        convexPoolId: BigNumber;
-        lpToken: string;
-        crvRewards: string;
-        withdrawFeePercentage: BigNumber;
-        platformFeePercentage: BigNumber;
-        harvestBountyPercentage: BigNumber;
-        pauseDeposit: boolean;
-        pauseWithdraw: boolean;
+        supply: ConcentratorGeneralVault.PoolSupplyInfoStructOutput;
+        strategy: ConcentratorGeneralVault.PoolStrategyInfoStructOutput;
+        reward: ConcentratorGeneralVault.PoolRewardInfoStructOutput;
+        fee: ConcentratorGeneralVault.PoolFeeInfoStructOutput;
       }
     >;
 
@@ -725,19 +820,14 @@ export interface AladdinConcentratorAfxsVault extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
-    rewardInfo(
-      arg0: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<
-      [BigNumber, number, number, number] & {
-        rate: BigNumber;
-        periodLength: number;
-        lastUpdate: number;
-        finishAt: number;
-      }
-    >;
-
     rewardToken(overrides?: CallOverrides): Promise<[string]>;
+
+    setWithdrawFeeForUser(
+      _pid: BigNumberish,
+      _user: string,
+      _ratio: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
 
     transferOwnership(
       newOwner: string,
@@ -749,20 +839,16 @@ export interface AladdinConcentratorAfxsVault extends BaseContract {
       overrides?: CallOverrides
     ): Promise<[string]>;
 
-    updateHarvestBountyPercentage(
-      _pid: BigNumberish,
-      _percentage: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<ContractTransaction>;
-
     updatePlatform(
       _platform: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
-    updatePlatformFeePercentage(
+    updatePoolFeeRatio(
       _pid: BigNumberish,
-      _feePercentage: BigNumberish,
+      _withdrawFeeRatio: BigNumberish,
+      _platformFeeRatio: BigNumberish,
+      _harvestBountyRatio: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
@@ -775,12 +861,6 @@ export interface AladdinConcentratorAfxsVault extends BaseContract {
     updateRewardPeriod(
       _pid: BigNumberish,
       _period: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<ContractTransaction>;
-
-    updateWithdrawFeePercentage(
-      _pid: BigNumberish,
-      _feePercentage: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
@@ -813,15 +893,13 @@ export interface AladdinConcentratorAfxsVault extends BaseContract {
   };
 
   addPool(
-    _convexPid: BigNumberish,
-    _rewardTokens: string[],
-    _withdrawFeePercentage: BigNumberish,
-    _platformFeePercentage: BigNumberish,
-    _harvestBountyPercentage: BigNumberish,
+    _underlying: string,
+    _strategy: string,
+    _withdrawFeeRatio: BigNumberish,
+    _platformFeeRatio: BigNumberish,
+    _harvestBountyRatio: BigNumberish,
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
-
-  aladdinFXS(overrides?: CallOverrides): Promise<string>;
 
   allowance(
     _pid: BigNumberish,
@@ -834,6 +912,12 @@ export interface AladdinConcentratorAfxsVault extends BaseContract {
     _pid: BigNumberish,
     _spender: string,
     _amount: BigNumberish,
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
+
+  checkpoint(
+    _pid: BigNumberish,
+    _account: string,
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
@@ -852,12 +936,26 @@ export interface AladdinConcentratorAfxsVault extends BaseContract {
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
+  claimMulti(
+    _pids: BigNumberish[],
+    _recipient: string,
+    _minOut: BigNumberish,
+    _claimAsToken: string,
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
+
   deposit(
     _pid: BigNumberish,
     _recipient: string,
     _assetsIn: BigNumberish,
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
+
+  getFeeRate(
+    _feeType: BytesLike,
+    _user: string,
+    overrides?: CallOverrides
+  ): Promise<BigNumber>;
 
   getTotalShare(
     _pid: BigNumberish,
@@ -883,9 +981,15 @@ export interface AladdinConcentratorAfxsVault extends BaseContract {
   ): Promise<ContractTransaction>;
 
   initialize(
-    _aladdinFXS: string,
+    _aladdinETH: string,
     _zap: string,
     _platform: string,
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
+
+  migrateStrategy(
+    _pid: BigNumberish,
+    _newStrategy: string,
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
@@ -921,29 +1025,15 @@ export interface AladdinConcentratorAfxsVault extends BaseContract {
     overrides?: CallOverrides
   ): Promise<
     [
-      BigNumber,
-      BigNumber,
-      BigNumber,
-      BigNumber,
-      string,
-      string,
-      BigNumber,
-      BigNumber,
-      BigNumber,
-      boolean,
-      boolean
+      ConcentratorGeneralVault.PoolSupplyInfoStructOutput,
+      ConcentratorGeneralVault.PoolStrategyInfoStructOutput,
+      ConcentratorGeneralVault.PoolRewardInfoStructOutput,
+      ConcentratorGeneralVault.PoolFeeInfoStructOutput
     ] & {
-      totalUnderlying: BigNumber;
-      totalShare: BigNumber;
-      accRewardPerShare: BigNumber;
-      convexPoolId: BigNumber;
-      lpToken: string;
-      crvRewards: string;
-      withdrawFeePercentage: BigNumber;
-      platformFeePercentage: BigNumber;
-      harvestBountyPercentage: BigNumber;
-      pauseDeposit: boolean;
-      pauseWithdraw: boolean;
+      supply: ConcentratorGeneralVault.PoolSupplyInfoStructOutput;
+      strategy: ConcentratorGeneralVault.PoolStrategyInfoStructOutput;
+      reward: ConcentratorGeneralVault.PoolRewardInfoStructOutput;
+      fee: ConcentratorGeneralVault.PoolFeeInfoStructOutput;
     }
   >;
 
@@ -953,19 +1043,14 @@ export interface AladdinConcentratorAfxsVault extends BaseContract {
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
-  rewardInfo(
-    arg0: BigNumberish,
-    overrides?: CallOverrides
-  ): Promise<
-    [BigNumber, number, number, number] & {
-      rate: BigNumber;
-      periodLength: number;
-      lastUpdate: number;
-      finishAt: number;
-    }
-  >;
-
   rewardToken(overrides?: CallOverrides): Promise<string>;
+
+  setWithdrawFeeForUser(
+    _pid: BigNumberish,
+    _user: string,
+    _ratio: BigNumberish,
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
 
   transferOwnership(
     newOwner: string,
@@ -974,20 +1059,16 @@ export interface AladdinConcentratorAfxsVault extends BaseContract {
 
   underlying(_pid: BigNumberish, overrides?: CallOverrides): Promise<string>;
 
-  updateHarvestBountyPercentage(
-    _pid: BigNumberish,
-    _percentage: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> }
-  ): Promise<ContractTransaction>;
-
   updatePlatform(
     _platform: string,
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
-  updatePlatformFeePercentage(
+  updatePoolFeeRatio(
     _pid: BigNumberish,
-    _feePercentage: BigNumberish,
+    _withdrawFeeRatio: BigNumberish,
+    _platformFeeRatio: BigNumberish,
+    _harvestBountyRatio: BigNumberish,
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
@@ -1000,12 +1081,6 @@ export interface AladdinConcentratorAfxsVault extends BaseContract {
   updateRewardPeriod(
     _pid: BigNumberish,
     _period: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> }
-  ): Promise<ContractTransaction>;
-
-  updateWithdrawFeePercentage(
-    _pid: BigNumberish,
-    _feePercentage: BigNumberish,
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
@@ -1038,15 +1113,13 @@ export interface AladdinConcentratorAfxsVault extends BaseContract {
 
   callStatic: {
     addPool(
-      _convexPid: BigNumberish,
-      _rewardTokens: string[],
-      _withdrawFeePercentage: BigNumberish,
-      _platformFeePercentage: BigNumberish,
-      _harvestBountyPercentage: BigNumberish,
+      _underlying: string,
+      _strategy: string,
+      _withdrawFeeRatio: BigNumberish,
+      _platformFeeRatio: BigNumberish,
+      _harvestBountyRatio: BigNumberish,
       overrides?: CallOverrides
     ): Promise<void>;
-
-    aladdinFXS(overrides?: CallOverrides): Promise<string>;
 
     allowance(
       _pid: BigNumberish,
@@ -1059,6 +1132,12 @@ export interface AladdinConcentratorAfxsVault extends BaseContract {
       _pid: BigNumberish,
       _spender: string,
       _amount: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    checkpoint(
+      _pid: BigNumberish,
+      _account: string,
       overrides?: CallOverrides
     ): Promise<void>;
 
@@ -1077,10 +1156,24 @@ export interface AladdinConcentratorAfxsVault extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
+    claimMulti(
+      _pids: BigNumberish[],
+      _recipient: string,
+      _minOut: BigNumberish,
+      _claimAsToken: string,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
     deposit(
       _pid: BigNumberish,
       _recipient: string,
       _assetsIn: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
+    getFeeRate(
+      _feeType: BytesLike,
+      _user: string,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
@@ -1108,9 +1201,15 @@ export interface AladdinConcentratorAfxsVault extends BaseContract {
     ): Promise<BigNumber>;
 
     initialize(
-      _aladdinFXS: string,
+      _aladdinETH: string,
       _zap: string,
       _platform: string,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    migrateStrategy(
+      _pid: BigNumberish,
+      _newStrategy: string,
       overrides?: CallOverrides
     ): Promise<void>;
 
@@ -1146,29 +1245,15 @@ export interface AladdinConcentratorAfxsVault extends BaseContract {
       overrides?: CallOverrides
     ): Promise<
       [
-        BigNumber,
-        BigNumber,
-        BigNumber,
-        BigNumber,
-        string,
-        string,
-        BigNumber,
-        BigNumber,
-        BigNumber,
-        boolean,
-        boolean
+        ConcentratorGeneralVault.PoolSupplyInfoStructOutput,
+        ConcentratorGeneralVault.PoolStrategyInfoStructOutput,
+        ConcentratorGeneralVault.PoolRewardInfoStructOutput,
+        ConcentratorGeneralVault.PoolFeeInfoStructOutput
       ] & {
-        totalUnderlying: BigNumber;
-        totalShare: BigNumber;
-        accRewardPerShare: BigNumber;
-        convexPoolId: BigNumber;
-        lpToken: string;
-        crvRewards: string;
-        withdrawFeePercentage: BigNumber;
-        platformFeePercentage: BigNumber;
-        harvestBountyPercentage: BigNumber;
-        pauseDeposit: boolean;
-        pauseWithdraw: boolean;
+        supply: ConcentratorGeneralVault.PoolSupplyInfoStructOutput;
+        strategy: ConcentratorGeneralVault.PoolStrategyInfoStructOutput;
+        reward: ConcentratorGeneralVault.PoolRewardInfoStructOutput;
+        fee: ConcentratorGeneralVault.PoolFeeInfoStructOutput;
       }
     >;
 
@@ -1176,19 +1261,14 @@ export interface AladdinConcentratorAfxsVault extends BaseContract {
 
     renounceOwnership(overrides?: CallOverrides): Promise<void>;
 
-    rewardInfo(
-      arg0: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<
-      [BigNumber, number, number, number] & {
-        rate: BigNumber;
-        periodLength: number;
-        lastUpdate: number;
-        finishAt: number;
-      }
-    >;
-
     rewardToken(overrides?: CallOverrides): Promise<string>;
+
+    setWithdrawFeeForUser(
+      _pid: BigNumberish,
+      _user: string,
+      _ratio: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<void>;
 
     transferOwnership(
       newOwner: string,
@@ -1197,17 +1277,13 @@ export interface AladdinConcentratorAfxsVault extends BaseContract {
 
     underlying(_pid: BigNumberish, overrides?: CallOverrides): Promise<string>;
 
-    updateHarvestBountyPercentage(
-      _pid: BigNumberish,
-      _percentage: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<void>;
-
     updatePlatform(_platform: string, overrides?: CallOverrides): Promise<void>;
 
-    updatePlatformFeePercentage(
+    updatePoolFeeRatio(
       _pid: BigNumberish,
-      _feePercentage: BigNumberish,
+      _withdrawFeeRatio: BigNumberish,
+      _platformFeeRatio: BigNumberish,
+      _harvestBountyRatio: BigNumberish,
       overrides?: CallOverrides
     ): Promise<void>;
 
@@ -1220,12 +1296,6 @@ export interface AladdinConcentratorAfxsVault extends BaseContract {
     updateRewardPeriod(
       _pid: BigNumberish,
       _period: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<void>;
-
-    updateWithdrawFeePercentage(
-      _pid: BigNumberish,
-      _feePercentage: BigNumberish,
       overrides?: CallOverrides
     ): Promise<void>;
 
@@ -1255,15 +1325,15 @@ export interface AladdinConcentratorAfxsVault extends BaseContract {
   };
 
   filters: {
-    "AddPool(uint256,uint256,address[])"(
+    "AddPool(uint256,address,address)"(
       _pid?: BigNumberish | null,
-      _convexPid?: null,
-      _rewardTokens?: null
+      _underlying?: null,
+      _strategy?: null
     ): AddPoolEventFilter;
     AddPool(
       _pid?: BigNumberish | null,
-      _convexPid?: null,
-      _rewardTokens?: null
+      _underlying?: null,
+      _strategy?: null
     ): AddPoolEventFilter;
 
     "Approval(uint256,address,address,uint256)"(
@@ -1279,6 +1349,15 @@ export interface AladdinConcentratorAfxsVault extends BaseContract {
       value?: null
     ): ApprovalEventFilter;
 
+    "CancleCustomizeFee(bytes32,address)"(
+      _feeType?: null,
+      _user?: null
+    ): CancleCustomizeFeeEventFilter;
+    CancleCustomizeFee(
+      _feeType?: null,
+      _user?: null
+    ): CancleCustomizeFeeEventFilter;
+
     "Claim(uint256,address,address,uint256)"(
       pid?: BigNumberish | null,
       sender?: string | null,
@@ -1291,6 +1370,17 @@ export interface AladdinConcentratorAfxsVault extends BaseContract {
       recipient?: string | null,
       rewards?: null
     ): ClaimEventFilter;
+
+    "CustomizeFee(bytes32,address,uint256)"(
+      _feeType?: null,
+      _user?: null,
+      _rate?: null
+    ): CustomizeFeeEventFilter;
+    CustomizeFee(
+      _feeType?: null,
+      _user?: null,
+      _rate?: null
+    ): CustomizeFeeEventFilter;
 
     "Deposit(uint256,address,address,uint256,uint256)"(
       pid?: BigNumberish | null,
@@ -1324,6 +1414,17 @@ export interface AladdinConcentratorAfxsVault extends BaseContract {
       harvestBounty?: null
     ): HarvestEventFilter;
 
+    "Migrate(uint256,address,address)"(
+      _pid?: BigNumberish | null,
+      _oldStrategy?: null,
+      _newStrategy?: null
+    ): MigrateEventFilter;
+    Migrate(
+      _pid?: BigNumberish | null,
+      _oldStrategy?: null,
+      _newStrategy?: null
+    ): MigrateEventFilter;
+
     "OwnershipTransferred(address,address)"(
       previousOwner?: string | null,
       newOwner?: string | null
@@ -1351,28 +1452,23 @@ export interface AladdinConcentratorAfxsVault extends BaseContract {
       _status?: null
     ): PausePoolWithdrawEventFilter;
 
-    "UpdateHarvestBountyPercentage(uint256,uint256)"(
-      _pid?: BigNumberish | null,
-      _feePercentage?: null
-    ): UpdateHarvestBountyPercentageEventFilter;
-    UpdateHarvestBountyPercentage(
-      _pid?: BigNumberish | null,
-      _feePercentage?: null
-    ): UpdateHarvestBountyPercentageEventFilter;
-
     "UpdatePlatform(address)"(
       _platform?: string | null
     ): UpdatePlatformEventFilter;
     UpdatePlatform(_platform?: string | null): UpdatePlatformEventFilter;
 
-    "UpdatePlatformFeePercentage(uint256,uint256)"(
+    "UpdatePoolFeeRatio(uint256,uint32,uint32,uint32)"(
       _pid?: BigNumberish | null,
-      _feePercentage?: null
-    ): UpdatePlatformFeePercentageEventFilter;
-    UpdatePlatformFeePercentage(
+      _withdrawFeeRatio?: null,
+      _platformFeeRatio?: null,
+      _harvestBountyRatio?: null
+    ): UpdatePoolFeeRatioEventFilter;
+    UpdatePoolFeeRatio(
       _pid?: BigNumberish | null,
-      _feePercentage?: null
-    ): UpdatePlatformFeePercentageEventFilter;
+      _withdrawFeeRatio?: null,
+      _platformFeeRatio?: null,
+      _harvestBountyRatio?: null
+    ): UpdatePoolFeeRatioEventFilter;
 
     "UpdatePoolRewardTokens(uint256,address[])"(
       _pid?: BigNumberish | null,
@@ -1391,15 +1487,6 @@ export interface AladdinConcentratorAfxsVault extends BaseContract {
       _pid?: BigNumberish | null,
       _period?: null
     ): UpdateRewardPeriodEventFilter;
-
-    "UpdateWithdrawalFeePercentage(uint256,uint256)"(
-      _pid?: BigNumberish | null,
-      _feePercentage?: null
-    ): UpdateWithdrawalFeePercentageEventFilter;
-    UpdateWithdrawalFeePercentage(
-      _pid?: BigNumberish | null,
-      _feePercentage?: null
-    ): UpdateWithdrawalFeePercentageEventFilter;
 
     "UpdateZap(address)"(_zap?: string | null): UpdateZapEventFilter;
     UpdateZap(_zap?: string | null): UpdateZapEventFilter;
@@ -1424,15 +1511,13 @@ export interface AladdinConcentratorAfxsVault extends BaseContract {
 
   estimateGas: {
     addPool(
-      _convexPid: BigNumberish,
-      _rewardTokens: string[],
-      _withdrawFeePercentage: BigNumberish,
-      _platformFeePercentage: BigNumberish,
-      _harvestBountyPercentage: BigNumberish,
+      _underlying: string,
+      _strategy: string,
+      _withdrawFeeRatio: BigNumberish,
+      _platformFeeRatio: BigNumberish,
+      _harvestBountyRatio: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
-
-    aladdinFXS(overrides?: CallOverrides): Promise<BigNumber>;
 
     allowance(
       _pid: BigNumberish,
@@ -1445,6 +1530,12 @@ export interface AladdinConcentratorAfxsVault extends BaseContract {
       _pid: BigNumberish,
       _spender: string,
       _amount: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
+
+    checkpoint(
+      _pid: BigNumberish,
+      _account: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
@@ -1463,11 +1554,25 @@ export interface AladdinConcentratorAfxsVault extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
+    claimMulti(
+      _pids: BigNumberish[],
+      _recipient: string,
+      _minOut: BigNumberish,
+      _claimAsToken: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
+
     deposit(
       _pid: BigNumberish,
       _recipient: string,
       _assetsIn: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
+
+    getFeeRate(
+      _feeType: BytesLike,
+      _user: string,
+      overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     getTotalShare(
@@ -1494,9 +1599,15 @@ export interface AladdinConcentratorAfxsVault extends BaseContract {
     ): Promise<BigNumber>;
 
     initialize(
-      _aladdinFXS: string,
+      _aladdinETH: string,
       _zap: string,
       _platform: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
+
+    migrateStrategy(
+      _pid: BigNumberish,
+      _newStrategy: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
@@ -1535,12 +1646,14 @@ export interface AladdinConcentratorAfxsVault extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
-    rewardInfo(
-      arg0: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
-
     rewardToken(overrides?: CallOverrides): Promise<BigNumber>;
+
+    setWithdrawFeeForUser(
+      _pid: BigNumberish,
+      _user: string,
+      _ratio: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
 
     transferOwnership(
       newOwner: string,
@@ -1552,20 +1665,16 @@ export interface AladdinConcentratorAfxsVault extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    updateHarvestBountyPercentage(
-      _pid: BigNumberish,
-      _percentage: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<BigNumber>;
-
     updatePlatform(
       _platform: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
-    updatePlatformFeePercentage(
+    updatePoolFeeRatio(
       _pid: BigNumberish,
-      _feePercentage: BigNumberish,
+      _withdrawFeeRatio: BigNumberish,
+      _platformFeeRatio: BigNumberish,
+      _harvestBountyRatio: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
@@ -1578,12 +1687,6 @@ export interface AladdinConcentratorAfxsVault extends BaseContract {
     updateRewardPeriod(
       _pid: BigNumberish,
       _period: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<BigNumber>;
-
-    updateWithdrawFeePercentage(
-      _pid: BigNumberish,
-      _feePercentage: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
@@ -1611,15 +1714,13 @@ export interface AladdinConcentratorAfxsVault extends BaseContract {
 
   populateTransaction: {
     addPool(
-      _convexPid: BigNumberish,
-      _rewardTokens: string[],
-      _withdrawFeePercentage: BigNumberish,
-      _platformFeePercentage: BigNumberish,
-      _harvestBountyPercentage: BigNumberish,
+      _underlying: string,
+      _strategy: string,
+      _withdrawFeeRatio: BigNumberish,
+      _platformFeeRatio: BigNumberish,
+      _harvestBountyRatio: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
-
-    aladdinFXS(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     allowance(
       _pid: BigNumberish,
@@ -1632,6 +1733,12 @@ export interface AladdinConcentratorAfxsVault extends BaseContract {
       _pid: BigNumberish,
       _spender: string,
       _amount: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
+
+    checkpoint(
+      _pid: BigNumberish,
+      _account: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
@@ -1650,11 +1757,25 @@ export interface AladdinConcentratorAfxsVault extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
+    claimMulti(
+      _pids: BigNumberish[],
+      _recipient: string,
+      _minOut: BigNumberish,
+      _claimAsToken: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
+
     deposit(
       _pid: BigNumberish,
       _recipient: string,
       _assetsIn: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
+
+    getFeeRate(
+      _feeType: BytesLike,
+      _user: string,
+      overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     getTotalShare(
@@ -1681,9 +1802,15 @@ export interface AladdinConcentratorAfxsVault extends BaseContract {
     ): Promise<PopulatedTransaction>;
 
     initialize(
-      _aladdinFXS: string,
+      _aladdinETH: string,
       _zap: string,
       _platform: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
+
+    migrateStrategy(
+      _pid: BigNumberish,
+      _newStrategy: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
@@ -1725,12 +1852,14 @@ export interface AladdinConcentratorAfxsVault extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
-    rewardInfo(
-      arg0: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
     rewardToken(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    setWithdrawFeeForUser(
+      _pid: BigNumberish,
+      _user: string,
+      _ratio: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
 
     transferOwnership(
       newOwner: string,
@@ -1742,20 +1871,16 @@ export interface AladdinConcentratorAfxsVault extends BaseContract {
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
-    updateHarvestBountyPercentage(
-      _pid: BigNumberish,
-      _percentage: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<PopulatedTransaction>;
-
     updatePlatform(
       _platform: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
-    updatePlatformFeePercentage(
+    updatePoolFeeRatio(
       _pid: BigNumberish,
-      _feePercentage: BigNumberish,
+      _withdrawFeeRatio: BigNumberish,
+      _platformFeeRatio: BigNumberish,
+      _harvestBountyRatio: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
@@ -1768,12 +1893,6 @@ export interface AladdinConcentratorAfxsVault extends BaseContract {
     updateRewardPeriod(
       _pid: BigNumberish,
       _period: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<PopulatedTransaction>;
-
-    updateWithdrawFeePercentage(
-      _pid: BigNumberish,
-      _feePercentage: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 

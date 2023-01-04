@@ -26,25 +26,28 @@ import type {
   OnEvent,
 } from "./common";
 
-export interface AladdinFxsInterface extends utils.Interface {
+export interface AladdinFrxEthInterface extends utils.Interface {
   functions: {
     "allowance(address,address)": FunctionFragment;
     "approve(address,uint256)": FunctionFragment;
     "asset()": FunctionFragment;
     "balanceOf(address)": FunctionFragment;
+    "checkpoint()": FunctionFragment;
     "convertToAssets(uint256)": FunctionFragment;
     "convertToShares(uint256)": FunctionFragment;
     "decimals()": FunctionFragment;
     "decreaseAllowance(address,uint256)": FunctionFragment;
     "deposit(uint256,address)": FunctionFragment;
     "feeInfo()": FunctionFragment;
+    "getFeeRate(bytes32,address)": FunctionFragment;
     "harvest(address,uint256)": FunctionFragment;
     "increaseAllowance(address,uint256)": FunctionFragment;
-    "initialize(address,address[])": FunctionFragment;
+    "initialize(address,address,address,string,string)": FunctionFragment;
     "maxDeposit(address)": FunctionFragment;
     "maxMint(address)": FunctionFragment;
     "maxRedeem(address)": FunctionFragment;
     "maxWithdraw(address)": FunctionFragment;
+    "migrateStrategy(address)": FunctionFragment;
     "mint(uint256,address)": FunctionFragment;
     "name()": FunctionFragment;
     "owner()": FunctionFragment;
@@ -55,7 +58,8 @@ export interface AladdinFxsInterface extends utils.Interface {
     "redeem(uint256,address,address)": FunctionFragment;
     "renounceOwnership()": FunctionFragment;
     "rewardInfo()": FunctionFragment;
-    "rewards(uint256)": FunctionFragment;
+    "setWithdrawFeeForUser(address,uint32)": FunctionFragment;
+    "strategy()": FunctionFragment;
     "symbol()": FunctionFragment;
     "totalAssets()": FunctionFragment;
     "totalSupply()": FunctionFragment;
@@ -76,12 +80,14 @@ export interface AladdinFxsInterface extends utils.Interface {
       | "approve"
       | "asset"
       | "balanceOf"
+      | "checkpoint"
       | "convertToAssets"
       | "convertToShares"
       | "decimals"
       | "decreaseAllowance"
       | "deposit"
       | "feeInfo"
+      | "getFeeRate"
       | "harvest"
       | "increaseAllowance"
       | "initialize"
@@ -89,6 +95,7 @@ export interface AladdinFxsInterface extends utils.Interface {
       | "maxMint"
       | "maxRedeem"
       | "maxWithdraw"
+      | "migrateStrategy"
       | "mint"
       | "name"
       | "owner"
@@ -99,7 +106,8 @@ export interface AladdinFxsInterface extends utils.Interface {
       | "redeem"
       | "renounceOwnership"
       | "rewardInfo"
-      | "rewards"
+      | "setWithdrawFeeForUser"
+      | "strategy"
       | "symbol"
       | "totalAssets"
       | "totalSupply"
@@ -125,6 +133,10 @@ export interface AladdinFxsInterface extends utils.Interface {
   encodeFunctionData(functionFragment: "asset", values?: undefined): string;
   encodeFunctionData(functionFragment: "balanceOf", values: [string]): string;
   encodeFunctionData(
+    functionFragment: "checkpoint",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
     functionFragment: "convertToAssets",
     values: [BigNumberish]
   ): string;
@@ -143,6 +155,10 @@ export interface AladdinFxsInterface extends utils.Interface {
   ): string;
   encodeFunctionData(functionFragment: "feeInfo", values?: undefined): string;
   encodeFunctionData(
+    functionFragment: "getFeeRate",
+    values: [BytesLike, string]
+  ): string;
+  encodeFunctionData(
     functionFragment: "harvest",
     values: [string, BigNumberish]
   ): string;
@@ -152,12 +168,16 @@ export interface AladdinFxsInterface extends utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "initialize",
-    values: [string, string[]]
+    values: [string, string, string, string, string]
   ): string;
   encodeFunctionData(functionFragment: "maxDeposit", values: [string]): string;
   encodeFunctionData(functionFragment: "maxMint", values: [string]): string;
   encodeFunctionData(functionFragment: "maxRedeem", values: [string]): string;
   encodeFunctionData(functionFragment: "maxWithdraw", values: [string]): string;
+  encodeFunctionData(
+    functionFragment: "migrateStrategy",
+    values: [string]
+  ): string;
   encodeFunctionData(
     functionFragment: "mint",
     values: [BigNumberish, string]
@@ -193,9 +213,10 @@ export interface AladdinFxsInterface extends utils.Interface {
     values?: undefined
   ): string;
   encodeFunctionData(
-    functionFragment: "rewards",
-    values: [BigNumberish]
+    functionFragment: "setWithdrawFeeForUser",
+    values: [string, BigNumberish]
   ): string;
+  encodeFunctionData(functionFragment: "strategy", values?: undefined): string;
   encodeFunctionData(functionFragment: "symbol", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "totalAssets",
@@ -240,6 +261,7 @@ export interface AladdinFxsInterface extends utils.Interface {
   decodeFunctionResult(functionFragment: "approve", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "asset", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "balanceOf", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "checkpoint", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "convertToAssets",
     data: BytesLike
@@ -255,6 +277,7 @@ export interface AladdinFxsInterface extends utils.Interface {
   ): Result;
   decodeFunctionResult(functionFragment: "deposit", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "feeInfo", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "getFeeRate", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "harvest", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "increaseAllowance",
@@ -266,6 +289,10 @@ export interface AladdinFxsInterface extends utils.Interface {
   decodeFunctionResult(functionFragment: "maxRedeem", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "maxWithdraw",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "migrateStrategy",
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "mint", data: BytesLike): Result;
@@ -293,7 +320,11 @@ export interface AladdinFxsInterface extends utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "rewardInfo", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "rewards", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "setWithdrawFeeForUser",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(functionFragment: "strategy", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "symbol", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "totalAssets",
@@ -330,8 +361,11 @@ export interface AladdinFxsInterface extends utils.Interface {
 
   events: {
     "Approval(address,address,uint256)": EventFragment;
+    "CancleCustomizeFee(bytes32,address)": EventFragment;
+    "CustomizeFee(bytes32,address,uint256)": EventFragment;
     "Deposit(address,address,uint256,uint256)": EventFragment;
     "Harvest(address,address,uint256,uint256,uint256)": EventFragment;
+    "Migrate(address,address)": EventFragment;
     "OwnershipTransferred(address,address)": EventFragment;
     "Transfer(address,address,uint256)": EventFragment;
     "UpdateFeeInfo(address,uint32,uint32,uint32)": EventFragment;
@@ -341,8 +375,11 @@ export interface AladdinFxsInterface extends utils.Interface {
   };
 
   getEvent(nameOrSignatureOrTopic: "Approval"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "CancleCustomizeFee"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "CustomizeFee"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "Deposit"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "Harvest"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "Migrate"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "OwnershipTransferred"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "Transfer"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "UpdateFeeInfo"): EventFragment;
@@ -362,6 +399,30 @@ export type ApprovalEvent = TypedEvent<
 >;
 
 export type ApprovalEventFilter = TypedEventFilter<ApprovalEvent>;
+
+export interface CancleCustomizeFeeEventObject {
+  _feeType: string;
+  _user: string;
+}
+export type CancleCustomizeFeeEvent = TypedEvent<
+  [string, string],
+  CancleCustomizeFeeEventObject
+>;
+
+export type CancleCustomizeFeeEventFilter =
+  TypedEventFilter<CancleCustomizeFeeEvent>;
+
+export interface CustomizeFeeEventObject {
+  _feeType: string;
+  _user: string;
+  _rate: BigNumber;
+}
+export type CustomizeFeeEvent = TypedEvent<
+  [string, string, BigNumber],
+  CustomizeFeeEventObject
+>;
+
+export type CustomizeFeeEventFilter = TypedEventFilter<CustomizeFeeEvent>;
 
 export interface DepositEventObject {
   sender: string;
@@ -389,6 +450,14 @@ export type HarvestEvent = TypedEvent<
 >;
 
 export type HarvestEventFilter = TypedEventFilter<HarvestEvent>;
+
+export interface MigrateEventObject {
+  _oldStrategy: string;
+  _newStrategy: string;
+}
+export type MigrateEvent = TypedEvent<[string, string], MigrateEventObject>;
+
+export type MigrateEventFilter = TypedEventFilter<MigrateEvent>;
 
 export interface OwnershipTransferredEventObject {
   previousOwner: string;
@@ -459,12 +528,12 @@ export type WithdrawEvent = TypedEvent<
 
 export type WithdrawEventFilter = TypedEventFilter<WithdrawEvent>;
 
-export interface AladdinFxs extends BaseContract {
+export interface AladdinFrxEth extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
 
-  interface: AladdinFxsInterface;
+  interface: AladdinFrxEthInterface;
 
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,
@@ -502,6 +571,10 @@ export interface AladdinFxs extends BaseContract {
 
     balanceOf(account: string, overrides?: CallOverrides): Promise<[BigNumber]>;
 
+    checkpoint(
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
+
     convertToAssets(
       _shares: BigNumberish,
       overrides?: CallOverrides
@@ -537,6 +610,12 @@ export interface AladdinFxs extends BaseContract {
       }
     >;
 
+    getFeeRate(
+      _feeType: BytesLike,
+      _user: string,
+      overrides?: CallOverrides
+    ): Promise<[BigNumber] & { rate: BigNumber }>;
+
     harvest(
       _recipient: string,
       _minAssets: BigNumberish,
@@ -551,7 +630,10 @@ export interface AladdinFxs extends BaseContract {
 
     initialize(
       _zap: string,
-      _rewards: string[],
+      _underlying: string,
+      _strategy: string,
+      _name: string,
+      _symbol: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
@@ -562,6 +644,11 @@ export interface AladdinFxs extends BaseContract {
     maxRedeem(arg0: string, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     maxWithdraw(arg0: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+
+    migrateStrategy(
+      _newStrategy: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
 
     mint(
       _shares: BigNumberish,
@@ -615,7 +702,13 @@ export interface AladdinFxs extends BaseContract {
       }
     >;
 
-    rewards(arg0: BigNumberish, overrides?: CallOverrides): Promise<[string]>;
+    setWithdrawFeeForUser(
+      _user: string,
+      _percentage: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
+
+    strategy(overrides?: CallOverrides): Promise<[string]>;
 
     symbol(overrides?: CallOverrides): Promise<[string]>;
 
@@ -690,6 +783,10 @@ export interface AladdinFxs extends BaseContract {
 
   balanceOf(account: string, overrides?: CallOverrides): Promise<BigNumber>;
 
+  checkpoint(
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
+
   convertToAssets(
     _shares: BigNumberish,
     overrides?: CallOverrides
@@ -725,6 +822,12 @@ export interface AladdinFxs extends BaseContract {
     }
   >;
 
+  getFeeRate(
+    _feeType: BytesLike,
+    _user: string,
+    overrides?: CallOverrides
+  ): Promise<BigNumber>;
+
   harvest(
     _recipient: string,
     _minAssets: BigNumberish,
@@ -739,7 +842,10 @@ export interface AladdinFxs extends BaseContract {
 
   initialize(
     _zap: string,
-    _rewards: string[],
+    _underlying: string,
+    _strategy: string,
+    _name: string,
+    _symbol: string,
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
@@ -750,6 +856,11 @@ export interface AladdinFxs extends BaseContract {
   maxRedeem(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
 
   maxWithdraw(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+
+  migrateStrategy(
+    _newStrategy: string,
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
 
   mint(
     _shares: BigNumberish,
@@ -803,7 +914,13 @@ export interface AladdinFxs extends BaseContract {
     }
   >;
 
-  rewards(arg0: BigNumberish, overrides?: CallOverrides): Promise<string>;
+  setWithdrawFeeForUser(
+    _user: string,
+    _percentage: BigNumberish,
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
+
+  strategy(overrides?: CallOverrides): Promise<string>;
 
   symbol(overrides?: CallOverrides): Promise<string>;
 
@@ -878,6 +995,8 @@ export interface AladdinFxs extends BaseContract {
 
     balanceOf(account: string, overrides?: CallOverrides): Promise<BigNumber>;
 
+    checkpoint(overrides?: CallOverrides): Promise<void>;
+
     convertToAssets(
       _shares: BigNumberish,
       overrides?: CallOverrides
@@ -913,6 +1032,12 @@ export interface AladdinFxs extends BaseContract {
       }
     >;
 
+    getFeeRate(
+      _feeType: BytesLike,
+      _user: string,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
     harvest(
       _recipient: string,
       _minAssets: BigNumberish,
@@ -927,7 +1052,10 @@ export interface AladdinFxs extends BaseContract {
 
     initialize(
       _zap: string,
-      _rewards: string[],
+      _underlying: string,
+      _strategy: string,
+      _name: string,
+      _symbol: string,
       overrides?: CallOverrides
     ): Promise<void>;
 
@@ -938,6 +1066,11 @@ export interface AladdinFxs extends BaseContract {
     maxRedeem(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
 
     maxWithdraw(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+
+    migrateStrategy(
+      _newStrategy: string,
+      overrides?: CallOverrides
+    ): Promise<void>;
 
     mint(
       _shares: BigNumberish,
@@ -989,7 +1122,13 @@ export interface AladdinFxs extends BaseContract {
       }
     >;
 
-    rewards(arg0: BigNumberish, overrides?: CallOverrides): Promise<string>;
+    setWithdrawFeeForUser(
+      _user: string,
+      _percentage: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    strategy(overrides?: CallOverrides): Promise<string>;
 
     symbol(overrides?: CallOverrides): Promise<string>;
 
@@ -1054,6 +1193,26 @@ export interface AladdinFxs extends BaseContract {
       value?: null
     ): ApprovalEventFilter;
 
+    "CancleCustomizeFee(bytes32,address)"(
+      _feeType?: null,
+      _user?: null
+    ): CancleCustomizeFeeEventFilter;
+    CancleCustomizeFee(
+      _feeType?: null,
+      _user?: null
+    ): CancleCustomizeFeeEventFilter;
+
+    "CustomizeFee(bytes32,address,uint256)"(
+      _feeType?: null,
+      _user?: null,
+      _rate?: null
+    ): CustomizeFeeEventFilter;
+    CustomizeFee(
+      _feeType?: null,
+      _user?: null,
+      _rate?: null
+    ): CustomizeFeeEventFilter;
+
     "Deposit(address,address,uint256,uint256)"(
       sender?: string | null,
       owner?: string | null,
@@ -1081,6 +1240,12 @@ export interface AladdinFxs extends BaseContract {
       platformFee?: null,
       harvestBounty?: null
     ): HarvestEventFilter;
+
+    "Migrate(address,address)"(
+      _oldStrategy?: null,
+      _newStrategy?: null
+    ): MigrateEventFilter;
+    Migrate(_oldStrategy?: null, _newStrategy?: null): MigrateEventFilter;
 
     "OwnershipTransferred(address,address)"(
       previousOwner?: string | null,
@@ -1158,6 +1323,10 @@ export interface AladdinFxs extends BaseContract {
 
     balanceOf(account: string, overrides?: CallOverrides): Promise<BigNumber>;
 
+    checkpoint(
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
+
     convertToAssets(
       _shares: BigNumberish,
       overrides?: CallOverrides
@@ -1184,6 +1353,12 @@ export interface AladdinFxs extends BaseContract {
 
     feeInfo(overrides?: CallOverrides): Promise<BigNumber>;
 
+    getFeeRate(
+      _feeType: BytesLike,
+      _user: string,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
     harvest(
       _recipient: string,
       _minAssets: BigNumberish,
@@ -1198,7 +1373,10 @@ export interface AladdinFxs extends BaseContract {
 
     initialize(
       _zap: string,
-      _rewards: string[],
+      _underlying: string,
+      _strategy: string,
+      _name: string,
+      _symbol: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
@@ -1209,6 +1387,11 @@ export interface AladdinFxs extends BaseContract {
     maxRedeem(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
 
     maxWithdraw(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+
+    migrateStrategy(
+      _newStrategy: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
 
     mint(
       _shares: BigNumberish,
@@ -1253,7 +1436,13 @@ export interface AladdinFxs extends BaseContract {
 
     rewardInfo(overrides?: CallOverrides): Promise<BigNumber>;
 
-    rewards(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    setWithdrawFeeForUser(
+      _user: string,
+      _percentage: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
+
+    strategy(overrides?: CallOverrides): Promise<BigNumber>;
 
     symbol(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -1332,6 +1521,10 @@ export interface AladdinFxs extends BaseContract {
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
+    checkpoint(
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
+
     convertToAssets(
       _shares: BigNumberish,
       overrides?: CallOverrides
@@ -1358,6 +1551,12 @@ export interface AladdinFxs extends BaseContract {
 
     feeInfo(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
+    getFeeRate(
+      _feeType: BytesLike,
+      _user: string,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
     harvest(
       _recipient: string,
       _minAssets: BigNumberish,
@@ -1372,7 +1571,10 @@ export interface AladdinFxs extends BaseContract {
 
     initialize(
       _zap: string,
-      _rewards: string[],
+      _underlying: string,
+      _strategy: string,
+      _name: string,
+      _symbol: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
@@ -1394,6 +1596,11 @@ export interface AladdinFxs extends BaseContract {
     maxWithdraw(
       arg0: string,
       overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    migrateStrategy(
+      _newStrategy: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
     mint(
@@ -1439,10 +1646,13 @@ export interface AladdinFxs extends BaseContract {
 
     rewardInfo(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    rewards(
-      arg0: BigNumberish,
-      overrides?: CallOverrides
+    setWithdrawFeeForUser(
+      _user: string,
+      _percentage: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
+
+    strategy(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     symbol(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
