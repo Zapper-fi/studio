@@ -36,12 +36,14 @@ export abstract class ExactlyFixedPositionFetcher<
   };
 
   getApr(params: GetDataPropsParams<Market, ExactlyMarketProps, ExactlyMarketDefinition>) {
-    return Number(this.getBestRate(params).rate) / 1e18;
+    return Number(this.getBestRate(params).rate) / 1e16;
   }
 
   getApy(params: GetDataPropsParams<Market, ExactlyMarketProps, ExactlyMarketDefinition>) {
     const { maturity, rate } = this.getBestRate(params);
     const timeLeft = maturity.toNumber() - Math.round(Date.now() / 1_000);
-    return Promise.resolve((1 + ((Number(rate) / 1e18) * timeLeft) / 31_536_000) ** (31_536_000 / timeLeft) - 1);
+    return Promise.resolve(
+      ((1 + ((Number(rate) / 1e18) * timeLeft) / 31_536_000) ** (31_536_000 / timeLeft) - 1) * 100,
+    );
   }
 }

@@ -80,7 +80,7 @@ export abstract class ExactlyTokenFetcher<
   }
 
   async getApy(params: GetDataPropsParams<Market, V, ExactlyMarketDefinition>) {
-    return Promise.resolve((1 + (await this.getApr(params)) / 31_536_000) ** 31_536_000 - 1);
+    return ((1 + (await this.getApr(params)) / (100 * 31_536_000)) ** 31_536_000 - 1) * 100;
   }
 
   async getDataProps(params: GetDataPropsParams<Market, V, ExactlyMarketDefinition>) {

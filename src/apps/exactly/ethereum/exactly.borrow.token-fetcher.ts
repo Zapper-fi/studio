@@ -21,7 +21,7 @@ export class EthereumExactlyBorrowFetcher extends ExactlyTokenFetcher {
   }
 
   getApr({ definition }: GetDataPropsParams<Market, ExactlyMarketProps, ExactlyMarketDefinition>) {
-    return Number(definition.floatingBorrowRate) / 1e18;
+    return Number(definition.floatingBorrowRate) / 1e16;
   }
 
   async getBalancePerToken({
