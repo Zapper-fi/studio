@@ -4,6 +4,18 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.350.0](https://github.com/Zapper-fi/studio/compare/v0.349.0...v0.350.0) (2023-01-04)
+
+
+### Features
+
+* **concentrator:** Add frxETH vaults ([#2029](https://github.com/Zapper-fi/studio/issues/2029)) ([43109e4](https://github.com/Zapper-fi/studio/commit/43109e45af84566abfd835a53917b8d2bf817cc2))
+
+
+### Bug Fixes
+
+* **dependencies:** Fix missing peer dependencies ([#2031](https://github.com/Zapper-fi/studio/issues/2031)) ([e2e1520](https://github.com/Zapper-fi/studio/commit/e2e152099682fb28517171fdb39a9c421075c694))
+
 ## [0.349.0](https://github.com/Zapper-fi/studio/compare/v0.348.0...v0.349.0) (2023-01-04)
 
 
