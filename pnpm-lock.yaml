@@ -117,8 +117,6 @@ dependencies:
   '@golevelup/nestjs-modules': 0.5.0_i3vvyrpmvytyggqwb6cgka6ccm
   '@kyberswap/ks-sdk-core': 0.0.13
   '@kyberswap/ks-sdk-elastic': 0.0.43_mlpnattj6uaqe7xwzj357oi6fm
-  '@nestjs/common': 8.4.2_vxit34wn5s2lmlgt65te5kboda
-  '@nestjs/core': 8.4.2_ygos5qxglvmaixv4w45msfva4a
   '@nestjs/platform-express': 8.4.2_ithql7ga4sptmu4cnjc25qhlkq
   '@nestjs/schedule': 2.1.0_7o3lftxivihh5tsq4a6jxsybhu
   '@pendle/sdk': 2.5.8_l43fxkogyn4j2cxwg23hh2cfly
@@ -142,7 +140,9 @@ dependencies:
 devDependencies:
   '@alex_neo/jest-expect-message': 1.0.5
   '@nestjs/cli': 8.2.4_i6d5gvchbvxeufvupypt7hojj4
+  '@nestjs/common': 8.4.2_vxit34wn5s2lmlgt65te5kboda
   '@nestjs/config': 1.2.1_6d336j5z3wdgfwg6g6i43w4msm
+  '@nestjs/core': 8.4.2_ygos5qxglvmaixv4w45msfva4a
   '@nestjs/swagger': 5.2.1_riec2wihjrfz6l57wm5jzapubu
   '@nestjs/testing': 8.4.2_ss6lzi3khz7tpzkxjapkvsj32y
   '@oclif/core': 1.6.3
