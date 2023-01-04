@@ -49,3 +49,7 @@ Thumbs.db
 
 # local env files
 .env
+
+# asdf, nodenv, nvm, etc
+.*-version*
+.nvmrc
