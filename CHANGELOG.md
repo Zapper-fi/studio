@@ -4,6 +4,19 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.348.0](https://github.com/Zapper-fi/studio/compare/v0.347.1...v0.348.0) (2023-01-02)
+
+
+### Features
+
+* **keeper:** Add keep3r job names ([#2020](https://github.com/Zapper-fi/studio/issues/2020)) ([93a7854](https://github.com/Zapper-fi/studio/commit/93a7854c863b22d580a2d6a3f3ce7ef230100c7d))
+
+
+### Bug Fixes
+
+* **gearbox:** Linting ([#2018](https://github.com/Zapper-fi/studio/issues/2018)) ([b741d45](https://github.com/Zapper-fi/studio/commit/b741d45664bf0632f37230f7b71d577e71e1c92d))
+* **gearbox:** no credit account positions for credit accounts ([#2016](https://github.com/Zapper-fi/studio/issues/2016)) ([9972bfc](https://github.com/Zapper-fi/studio/commit/9972bfc1ee1f3b23172621ba5a22374335ffa41a))
+
 ## [0.347.1](https://github.com/Zapper-fi/studio/compare/v0.347.0...v0.347.1) (2022-12-29)
 
 

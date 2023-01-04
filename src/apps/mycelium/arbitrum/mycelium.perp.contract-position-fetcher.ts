@@ -17,23 +17,23 @@ import {
 
 import { MyceliumContractFactory, MyceliumVault } from '../contracts';
 
-export type MyceliumOptionContractPositionDefinition = {
+export type MyceliumPerpContractPositionDefinition = {
   address: string;
   collateralTokenAddress: string;
   indexTokenAddress: string;
   isLong: boolean;
 };
 
-export type MyceliumOptionContractPositionDataProps = {
+export type MyceliumPerpContractPositionDataProps = {
   isLong: boolean;
   positionKey: string;
 };
 
 @PositionTemplate()
-export class ArbitrumPerpContractPositionFetcher extends ContractPositionTemplatePositionFetcher<
+export class ArbitrumMycellilumPerpContractPositionFetcher extends ContractPositionTemplatePositionFetcher<
   MyceliumVault,
-  MyceliumOptionContractPositionDataProps,
-  MyceliumOptionContractPositionDefinition
+  MyceliumPerpContractPositionDataProps,
+  MyceliumPerpContractPositionDefinition
 > {
   groupLabel = 'Perpetuals';
   vaultAddress = '0xdfba8ad57d2c62f61f0a60b2c508bcdeb182f855';
@@ -50,7 +50,7 @@ export class ArbitrumPerpContractPositionFetcher extends ContractPositionTemplat
     return this.contractFactory.myceliumVault({ address, network: this.network });
   }
 
-  async getDefinitions({ multicall }: GetDefinitionsParams): Promise<MyceliumOptionContractPositionDefinition[]> {
+  async getDefinitions({ multicall }: GetDefinitionsParams): Promise<MyceliumPerpContractPositionDefinition[]> {
     const vaultContract = this.contractFactory.myceliumVault({
       address: this.vaultAddress,
       network: this.network,
@@ -62,10 +62,11 @@ export class ArbitrumPerpContractPositionFetcher extends ContractPositionTemplat
       tokensRange.map(async tokenIndex => multicall.wrap(vaultContract).allWhitelistedTokens(tokenIndex)),
     );
 
-    const definitions = whitelistedTokens.flatMap(v =>
-      whitelistedTokens.flatMap(t => {
-        const long = { address: this.vaultAddress, indexTokenAddress: v, collateralTokenAddress: t, isLong: true };
-        const short = { address: this.vaultAddress, indexTokenAddress: v, collateralTokenAddress: t, isLong: false };
+    const definitions = whitelistedTokens.flatMap(indexTokenAddress =>
+      whitelistedTokens.flatMap(collateralTokenAddress => {
+        if (indexTokenAddress === collateralTokenAddress) return [];
+        const long = { address: this.vaultAddress, indexTokenAddress, collateralTokenAddress, isLong: true };
+        const short = { address: this.vaultAddress, indexTokenAddress, collateralTokenAddress, isLong: false };
         return [long, short];
       }),
     );
@@ -75,7 +76,7 @@ export class ArbitrumPerpContractPositionFetcher extends ContractPositionTemplat
 
   async getTokenDefinitions({
     definition,
-  }: GetTokenDefinitionsParams<MyceliumVault, MyceliumOptionContractPositionDefinition>) {
+  }: GetTokenDefinitionsParams<MyceliumVault, MyceliumPerpContractPositionDefinition>) {
     return [
       { metaType: MetaType.SUPPLIED, address: definition.collateralTokenAddress, network: this.network },
       { metaType: MetaType.SUPPLIED, address: definition.indexTokenAddress, network: this.network },
@@ -85,11 +86,7 @@ export class ArbitrumPerpContractPositionFetcher extends ContractPositionTemplat
 
   async getDataProps({
     definition,
-  }: GetDataPropsParams<
-    MyceliumVault,
-    MyceliumOptionContractPositionDataProps,
-    MyceliumOptionContractPositionDefinition
-  >) {
+  }: GetDataPropsParams<MyceliumVault, MyceliumPerpContractPositionDataProps, MyceliumPerpContractPositionDefinition>) {
     return { isLong: definition.isLong, positionKey: `${definition.isLong}` };
   }
 
@@ -97,9 +94,9 @@ export class ArbitrumPerpContractPositionFetcher extends ContractPositionTemplat
     contractPosition,
   }: GetDisplayPropsParams<
     MyceliumVault,
-    MyceliumOptionContractPositionDataProps,
-    MyceliumOptionContractPositionDefinition
-  >): Promise<string> {
+    MyceliumPerpContractPositionDataProps,
+    MyceliumPerpContractPositionDefinition
+  >) {
     const [collateralToken, indexToken] = contractPosition.tokens;
     const marketLabel = [indexToken, collateralToken].map(v => getLabelFromToken(v)).join(' / ');
     return `${contractPosition.dataProps.isLong ? 'Long' : 'Short'} ${marketLabel}`;
@@ -107,7 +104,7 @@ export class ArbitrumPerpContractPositionFetcher extends ContractPositionTemplat
 
   async getImages({
     contractPosition,
-  }: GetDisplayPropsParams<MyceliumVault, MyceliumOptionContractPositionDataProps, DefaultContractPositionDefinition>) {
+  }: GetDisplayPropsParams<MyceliumVault, MyceliumPerpContractPositionDataProps, DefaultContractPositionDefinition>) {
     const [collateralToken, indexToken] = contractPosition.tokens;
     return [indexToken, collateralToken].flatMap(v => getImagesFromToken(v));
   }
@@ -116,7 +113,7 @@ export class ArbitrumPerpContractPositionFetcher extends ContractPositionTemplat
     address,
     contractPosition,
     contract,
-  }: GetTokenBalancesParams<MyceliumVault, MyceliumOptionContractPositionDataProps>) {
+  }: GetTokenBalancesParams<MyceliumVault, MyceliumPerpContractPositionDataProps>) {
     const [collateralToken, indexToken, usdcToken] = contractPosition.tokens;
     const isLong = contractPosition.dataProps.isLong;
 
