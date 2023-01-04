@@ -27,6 +27,11 @@ export const JONES_DAO_DEFINITION = appDefinition({
       type: GroupType.TOKEN,
       label: 'Vault',
     },
+    metavault: {
+      id: 'metavault',
+      type: GroupType.POSITION,
+      label: 'Metavault',
+    },
   },
 
   tags: [AppTag.DERIVATIVES, AppTag.OPTIONS],
