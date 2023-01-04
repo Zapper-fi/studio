@@ -1,9 +1,7 @@
 import { Inject } from '@nestjs/common';
-import { constants } from 'ethers';
-import type { BigNumber } from 'ethers';
+import { constants, type BigNumber } from 'ethers';
 
-import { APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
-import type { IAppToolkit } from '~app-toolkit/app-toolkit.interface';
+import { APP_TOOLKIT, type IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { BalanceDisplayMode } from '~position/display.interface';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
@@ -18,12 +16,10 @@ import type {
   GetDisplayPropsParams,
 } from '~position/template/app-token.template.types';
 
-import { ExactlyContractFactory } from '../contracts';
-import type { Market } from '../contracts';
+import { ExactlyContractFactory, type Market } from '../contracts';
 import { EXACTLY_DEFINITION } from '../exactly.definition';
 
-import { ExactlyDefinitionsResolver } from './exactly.definitions-resolver';
-import type { ExactlyMarketDefinition } from './exactly.definitions-resolver';
+import { ExactlyDefinitionsResolver, type ExactlyMarketDefinition } from './exactly.definitions-resolver';
 
 export type ExactlyMarketProps = DefaultAppTokenDataProps & { apr: number };
 

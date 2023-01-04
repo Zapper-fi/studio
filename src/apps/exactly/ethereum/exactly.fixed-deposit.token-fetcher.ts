@@ -6,8 +6,7 @@ import type { AppTokenPosition } from '~position/position.interface';
 import type { GetDataPropsParams, GetTokenPropsParams } from '~position/template/app-token.template.types';
 
 import type { ExactlyMarketDefinition } from '../common/exactly.definitions-resolver';
-import { ExactlyFixedPositionFetcher } from '../common/exactly.fixed-position-fetcher';
-import type { ExactlyFixedMarketProps } from '../common/exactly.fixed-position-fetcher';
+import { type ExactlyFixedMarketProps, ExactlyFixedPositionFetcher } from '../common/exactly.fixed-position-fetcher';
 import type { ExactlyMarketProps } from '../common/exactly.token-fetcher';
 import type { Market } from '../contracts';
 

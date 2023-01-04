@@ -1,18 +1,14 @@
 import { Inject } from '@nestjs/common';
 import type { BigNumber } from 'ethers';
 
-import { APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
-import type { IAppToolkit } from '~app-toolkit/app-toolkit.interface';
+import { APP_TOOLKIT, type IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import type { GetDataPropsParams, GetTokenPropsParams } from '~position/template/app-token.template.types';
 
-import { ExactlyContractFactory } from '../contracts';
-import type { Market } from '../contracts';
+import { ExactlyContractFactory, type Market } from '../contracts';
 import { EXACTLY_DEFINITION } from '../exactly.definition';
 
-import { ExactlyDefinitionsResolver } from './exactly.definitions-resolver';
-import type { ExactlyMarketDefinition } from './exactly.definitions-resolver';
-import { ExactlyTokenFetcher } from './exactly.token-fetcher';
-import type { ExactlyMarketProps } from './exactly.token-fetcher';
+import { ExactlyDefinitionsResolver, type ExactlyMarketDefinition } from './exactly.definitions-resolver';
+import { type ExactlyMarketProps, ExactlyTokenFetcher } from './exactly.token-fetcher';
 
 export type ExactlyFixedMarketProps = ExactlyMarketProps & { maturity: number };
 
