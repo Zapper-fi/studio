@@ -1,24 +1,17 @@
 import { Register } from '~app-toolkit/decorators';
 import { AbstractApp } from '~app/app.dynamic-module';
-import { MuxLevTradesBalanceHelper } from '~apps/mux/helpers/mux.lev-trades.balance-helper';
-import { MuxLevTradesContractPositionHelper } from '~apps/mux/helpers/mux.lev-trades.contract-position-helper';
-import { MuxMlpTokenHelper } from '~apps/mux/helpers/mux.mlp.token-helper';
 
-import { ArbitrumMuxBalanceFetcher } from './arbitrum/mux.balance-fetcher';
 import { ArbitrumMuxFarmContractPositionFetcher } from './arbitrum/mux.farm.contract-position-fetcher';
-import { ArbitrumMuxLevTradesContractPositionFetcher } from './arbitrum/mux.lev-trades.contract-position-fetcher';
 import { ArbitrumMuxMlpTokenFetcher } from './arbitrum/mux.mlp.token-fetcher';
 import { ArbitrumMuxMuxTokenFetcher } from './arbitrum/mux.mux.token-fetcher';
-import { AvalancheMuxBalanceFetcher } from './avalanche/mux.balance-fetcher';
-import { AvalancheMuxLevTradesContractPositionFetcher } from './avalanche/mux.lev-trades.contract-position-fetcher';
+import { ArbitrumMuxPerpContractPositionFetcher } from './arbitrum/mux.perp.contract-position-fetcher';
 import { AvalancheMuxMlpTokenFetcher } from './avalanche/mux.mlp.token-fetcher';
-import { BinanceSmartChainMuxBalanceFetcher } from './binance-smart-chain/mux.balance-fetcher';
-import { BinanceSmartChainMuxLevTradesContractPositionFetcher } from './binance-smart-chain/mux.lev-trades.contract-position-fetcher';
+import { AvalancheMuxPerpContractPositionFetcher } from './avalanche/mux.perp.contract-position-fetcher';
 import { BinanceSmartChainMuxMlpTokenFetcher } from './binance-smart-chain/mux.mlp.token-fetcher';
+import { BinanceSmartChainMuxPerpContractPositionFetcher } from './binance-smart-chain/mux.perp.contract-position-fetcher';
 import { MuxContractFactory } from './contracts';
-import { FantomMuxBalanceFetcher } from './fantom/mux.balance-fetcher';
-import { FantomMuxLevTradesContractPositionFetcher } from './fantom/mux.lev-trades.contract-position-fetcher';
 import { FantomMuxMlpTokenFetcher } from './fantom/mux.mlp.token-fetcher';
+import { FantomMuxPerpContractPositionFetcher } from './fantom/mux.perp.contract-position-fetcher';
 import { MuxAppDefinition, MUX_DEFINITION } from './mux.definition';
 
 @Register.AppModule({
@@ -26,27 +19,19 @@ import { MuxAppDefinition, MUX_DEFINITION } from './mux.definition';
   providers: [
     MuxAppDefinition,
     MuxContractFactory,
-    // Helper
-    MuxLevTradesBalanceHelper,
-    MuxMlpTokenHelper,
-    MuxLevTradesContractPositionHelper,
     // Arbitrum
-    ArbitrumMuxBalanceFetcher,
     ArbitrumMuxFarmContractPositionFetcher,
-    ArbitrumMuxLevTradesContractPositionFetcher,
+    ArbitrumMuxPerpContractPositionFetcher,
     ArbitrumMuxMlpTokenFetcher,
     ArbitrumMuxMuxTokenFetcher,
     // Avalanche
-    AvalancheMuxBalanceFetcher,
-    AvalancheMuxLevTradesContractPositionFetcher,
+    AvalancheMuxPerpContractPositionFetcher,
     AvalancheMuxMlpTokenFetcher,
     // Binance-smart-chain
-    BinanceSmartChainMuxBalanceFetcher,
-    BinanceSmartChainMuxLevTradesContractPositionFetcher,
+    BinanceSmartChainMuxPerpContractPositionFetcher,
     BinanceSmartChainMuxMlpTokenFetcher,
     // Fantom
-    FantomMuxBalanceFetcher,
-    FantomMuxLevTradesContractPositionFetcher,
+    FantomMuxPerpContractPositionFetcher,
     FantomMuxMlpTokenFetcher,
   ],
 })

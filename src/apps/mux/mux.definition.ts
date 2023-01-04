@@ -9,31 +9,35 @@ export const MUX_DEFINITION = appDefinition({
   description:
     'Trade crypto on the MUX protocol with zero price impact, up to 100x leverage and no counterparty risks.',
   url: 'https://mux.network/',
+  tags: [AppTag.PERPETUALS_EXCHANGE],
+  keywords: [],
+
   groups: {
     mlp: {
       id: 'mlp',
       type: GroupType.TOKEN,
       label: 'MUXLP',
     },
+
     mux: {
       id: 'mux',
       type: GroupType.TOKEN,
       label: 'MUX',
-      isHiddenFromExplore: true,
     },
+
     farm: {
       id: 'farm',
       type: GroupType.POSITION,
       label: 'Farms',
     },
-    levTrades: {
-      id: 'lev-trades',
+
+    perp: {
+      id: 'perp',
       type: GroupType.POSITION,
-      label: 'Leveraged trades',
+      label: 'Perpetuals',
     },
   },
-  tags: [AppTag.MARGIN_TRADING],
-  keywords: [],
+
   links: {
     discord: 'https://discord.com/invite/bd88NrzN3N',
     github: 'https://github.com/mux-world/mux-protocol',
@@ -47,8 +51,6 @@ export const MUX_DEFINITION = appDefinition({
     [Network.AVALANCHE_MAINNET]: [AppAction.VIEW],
     [Network.ARBITRUM_MAINNET]: [AppAction.VIEW],
   },
-
-  primaryColor: '#fff',
 });
 
 @Register.AppDefinition(MUX_DEFINITION.id)
@@ -57,5 +59,3 @@ export class MuxAppDefinition extends AppDefinition {
     super(MUX_DEFINITION);
   }
 }
-
-export default MUX_DEFINITION;
