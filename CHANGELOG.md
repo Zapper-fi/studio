@@ -4,6 +4,93 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.348.0](https://github.com/Zapper-fi/studio/compare/v0.347.1...v0.348.0) (2023-01-02)
+
+
+### Features
+
+* **keeper:** Add keep3r job names ([#2020](https://github.com/Zapper-fi/studio/issues/2020)) ([93a7854](https://github.com/Zapper-fi/studio/commit/93a7854c863b22d580a2d6a3f3ce7ef230100c7d))
+
+
+### Bug Fixes
+
+* **gearbox:** Linting ([#2018](https://github.com/Zapper-fi/studio/issues/2018)) ([b741d45](https://github.com/Zapper-fi/studio/commit/b741d45664bf0632f37230f7b71d577e71e1c92d))
+* **gearbox:** no credit account positions for credit accounts ([#2016](https://github.com/Zapper-fi/studio/issues/2016)) ([9972bfc](https://github.com/Zapper-fi/studio/commit/9972bfc1ee1f3b23172621ba5a22374335ffa41a))
+
+## [0.347.1](https://github.com/Zapper-fi/studio/compare/v0.347.0...v0.347.1) (2022-12-29)
+
+
+### Bug Fixes
+
+* **metavault-trade:** Fix small issues while migrating ([49613fd](https://github.com/Zapper-fi/studio/commit/49613fdc60c4e8f6e1f2280ecad7f956035f5c37))
+
+## [0.347.0](https://github.com/Zapper-fi/studio/compare/v0.346.0...v0.347.0) (2022-12-29)
+
+
+### Features
+
+* **gamma:** To templates ([#2010](https://github.com/Zapper-fi/studio/issues/2010)) ([0495596](https://github.com/Zapper-fi/studio/commit/0495596c5c91b9fc29838557a6474af3214d9b23))
+* **symphony:** To templates ([#2013](https://github.com/Zapper-fi/studio/issues/2013)) ([cbae673](https://github.com/Zapper-fi/studio/commit/cbae6736b9eae1d9536840d76c5508a4aac1cdc4))
+
+## [0.346.0](https://github.com/Zapper-fi/studio/compare/v0.345.0...v0.346.0) (2022-12-29)
+
+
+### Features
+
+* **exactly:** Support Exactly protocol ([#1895](https://github.com/Zapper-fi/studio/issues/1895)) ([003f050](https://github.com/Zapper-fi/studio/commit/003f05028099ee3ab168eb0165ac30d30b57165b))
+
+## [0.345.0](https://github.com/Zapper-fi/studio/compare/v0.344.0...v0.345.0) (2022-12-28)
+
+
+### Features
+
+* **arbor-finance:** Add bond tokens ([#1982](https://github.com/Zapper-fi/studio/issues/1982)) ([0680761](https://github.com/Zapper-fi/studio/commit/06807611c907e6ea782168656ac39ba7f3c42160))
+* **arbor-finance:** Convert to templates ([#2006](https://github.com/Zapper-fi/studio/issues/2006)) ([9e75ffd](https://github.com/Zapper-fi/studio/commit/9e75ffdac031d66fe18928ccacbd8a18c9f80262))
+* **keeper:** KLP to templates ([#2005](https://github.com/Zapper-fi/studio/issues/2005)) ([7c174e1](https://github.com/Zapper-fi/studio/commit/7c174e1defbf4feb8f6b383b4697d704237cfdd9))
+* **llamapay:** Vesting ([#1941](https://github.com/Zapper-fi/studio/issues/1941)) ([d5a3136](https://github.com/Zapper-fi/studio/commit/d5a31369eeff4e04f62404f8280df164d6529043))
+* **mean-finance:** Add Ethereum Mainnet support for Mean Finance integration ([#2003](https://github.com/Zapper-fi/studio/issues/2003)) ([d5cb1c4](https://github.com/Zapper-fi/studio/commit/d5cb1c40d940d2d808e63be4282a499fffa4228d))
+* **pendle-v2:** Implement vePendle fetcher ([#2002](https://github.com/Zapper-fi/studio/issues/2002)) ([a0fc054](https://github.com/Zapper-fi/studio/commit/a0fc0543e44be51ab9e115d556283db439e5a15b))
+
+
+### Bug Fixes
+
+* **mycelium:** Migration to template ([#1978](https://github.com/Zapper-fi/studio/issues/1978)) ([38a6e6b](https://github.com/Zapper-fi/studio/commit/38a6e6bd434fcc18f2209e4d108e2aa3198d6507))
+
+## [0.344.0](https://github.com/Zapper-fi/studio/compare/v0.343.1...v0.344.0) (2022-12-28)
+
+
+### Features
+
+* **keep3r:** Add keep3r job integration ([#1972](https://github.com/Zapper-fi/studio/issues/1972)) ([d50db5d](https://github.com/Zapper-fi/studio/commit/d50db5dfb9aa5fd021b9d5955f67f68d3c0355d2))
+* **keeper:** Add missing positions ([6f67371](https://github.com/Zapper-fi/studio/commit/6f67371a766dbba85695955b608945e205e22fac))
+* **pendle-v2:** Use API response to populate all token groups ([#2001](https://github.com/Zapper-fi/studio/issues/2001)) ([6b0c0d8](https://github.com/Zapper-fi/studio/commit/6b0c0d8f1ed2fc1563d4a13716b7b69857187832))
+* **pods:** updated pods-yield new strategy ([#1992](https://github.com/Zapper-fi/studio/issues/1992)) ([a53984c](https://github.com/Zapper-fi/studio/commit/a53984c637486f5e627f9c4a132b888c42a0f1e8))
+* **tokemak:** Add accTOKE ([31c4458](https://github.com/Zapper-fi/studio/commit/31c4458192560a9259b0060ea2fa964de8dee820))
+
+
+### Bug Fixes
+
+* resolve rewards token mis-alignment issues ([#1999](https://github.com/Zapper-fi/studio/issues/1999)) ([c186743](https://github.com/Zapper-fi/studio/commit/c18674304a94f10cee176f3f2b9446ff97d5f370))
+
+## [0.343.1](https://github.com/Zapper-fi/studio/compare/v0.343.0...v0.343.1) (2022-12-26)
+
+
+### Bug Fixes
+
+* **gearbox:** Exclude phantom token from TIV and explorer ([#1997](https://github.com/Zapper-fi/studio/issues/1997)) ([c35b6d2](https://github.com/Zapper-fi/studio/commit/c35b6d2d436d29a802fc91eaac1c218e9ade972c))
+
+## [0.343.0](https://github.com/Zapper-fi/studio/compare/v0.342.0...v0.343.0) (2022-12-25)
+
+
+### Features
+
+* **gearbox:** add credit accounts tracking ([#1991](https://github.com/Zapper-fi/studio/issues/1991)) ([41d2b4d](https://github.com/Zapper-fi/studio/commit/41d2b4dbff77a45351c412f08d891438e970976b))
+
+
+### Bug Fixes
+
+* **gearbox:** Fix Phantom tokens ([#1996](https://github.com/Zapper-fi/studio/issues/1996)) ([1bfb118](https://github.com/Zapper-fi/studio/commit/1bfb11883e9027ce31dcd0412e9002dde68aab02))
+
 ## [0.342.0](https://github.com/Zapper-fi/studio/compare/v0.341.2...v0.342.0) (2022-12-25)
 
 

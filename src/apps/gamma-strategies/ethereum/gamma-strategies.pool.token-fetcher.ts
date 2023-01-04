@@ -1,18 +1,20 @@
 import { Inject } from '@nestjs/common';
-import _ from 'lodash';
+import { difference } from 'lodash';
 import { range } from 'lodash';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
-import { Register } from '~app-toolkit/decorators';
-import { buildDollarDisplayItem } from '~app-toolkit/helpers/presentation/display-item.present';
-import { getTokenImg } from '~app-toolkit/helpers/presentation/image.present';
-import { ContractType } from '~position/contract.interface';
-import { PositionFetcher } from '~position/position-fetcher.interface';
-import { AppTokenPosition } from '~position/position.interface';
-import { Network } from '~types/network.interface';
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
+import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
+import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
+import {
+  DefaultAppTokenDefinition,
+  GetAddressesParams,
+  GetDisplayPropsParams,
+  GetPricePerShareParams,
+  GetUnderlyingTokensParams,
+} from '~position/template/app-token.template.types';
 
-import { GammaStrategiesContractFactory } from '../contracts';
-import { GAMMA_STRATEGIES_DEFINITION } from '../gamma-strategies.definition';
+import { GammaStrategiesContractFactory, GammaStrategiesHypervisor } from '../contracts';
 
 const FACTORY_ADDRESSES = [
   '0xd12fa3e3b60cfb96a735ab57a071f0f324860929',
@@ -25,104 +27,65 @@ const DEPRECATED_HYPERVISORS = [
   '0x0e9e16f6291ba2aaaf41ccffdf19d32ab3691d15',
 ];
 
-const appId = GAMMA_STRATEGIES_DEFINITION.id;
-const groupId = GAMMA_STRATEGIES_DEFINITION.groups.pool.id;
-const network = Network.ETHEREUM_MAINNET;
+@PositionTemplate()
+export class EthereumGammaStrategiesPoolTokenFetcher extends AppTokenTemplatePositionFetcher<GammaStrategiesHypervisor> {
+  groupLabel = 'Pools';
 
-@Register.TokenPositionFetcher({ appId, groupId, network })
-export class EthereumGammaStrategiesPoolTokenFetcher implements PositionFetcher<AppTokenPosition> {
   constructor(
-    @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
-    @Inject(GammaStrategiesContractFactory)
-    private readonly gammaStrategiesContractFactory: GammaStrategiesContractFactory,
-  ) {}
+    @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
+    @Inject(GammaStrategiesContractFactory) protected readonly contractFactory: GammaStrategiesContractFactory,
+  ) {
+    super(appToolkit);
+  }
 
-  async getPositions() {
-    const multicall = this.appToolkit.getMulticall(network);
-    const tokenSelector = this.appToolkit.getTokenDependencySelector({ tags: { network, context: appId } });
+  getContract(address: string): GammaStrategiesHypervisor {
+    return this.contractFactory.gammaStrategiesHypervisor({ address, network: this.network });
+  }
 
+  async getAddresses({ multicall }: GetAddressesParams<DefaultAppTokenDefinition>) {
     const hypervisorAddresses = await Promise.all(
       FACTORY_ADDRESSES.map(async factoryAddress => {
-        const factoryContract = this.gammaStrategiesContractFactory.gammaStrategiesHypervisorFactory({
-          network,
+        const factoryContract = this.contractFactory.gammaStrategiesHypervisorFactory({
           address: factoryAddress,
+          network: this.network,
         });
+
         const numTokens = await multicall.wrap(factoryContract).allHypervisorsLength();
         const addresses = await Promise.all(
-          range(0, Number(numTokens)).map(i =>
-            multicall
-              .wrap(factoryContract)
-              .allHypervisors(i)
-              .then(v => v.toLowerCase()),
-          ),
+          range(0, Number(numTokens)).map(i => multicall.wrap(factoryContract).allHypervisors(i)),
         );
 
         return addresses;
       }),
     );
 
-    const tokens = await Promise.all(
-      hypervisorAddresses.flat().map(async tokenAddress => {
-        if (DEPRECATED_HYPERVISORS.includes(tokenAddress)) return null;
+    return difference(hypervisorAddresses.flat(), DEPRECATED_HYPERVISORS);
+  }
 
-        const hypervisorContract = this.gammaStrategiesContractFactory.gammaStrategiesHypervisor({
-          network,
-          address: tokenAddress,
-        });
-        const [token0AddressRaw, token1AddressRaw, totalSupplyRaw, totalAmountInfo, symbol, name] = await Promise.all([
-          multicall.wrap(hypervisorContract).token0(),
-          multicall.wrap(hypervisorContract).token1(),
-          multicall.wrap(hypervisorContract).totalSupply(),
-          multicall.wrap(hypervisorContract).getTotalAmounts(),
-          multicall.wrap(hypervisorContract).symbol(),
-          multicall.wrap(hypervisorContract).name(),
-        ]);
+  async getUnderlyingTokenDefinitions({
+    contract,
+  }: GetUnderlyingTokensParams<GammaStrategiesHypervisor, DefaultAppTokenDefinition>) {
+    return [
+      { address: await contract.token0(), network: this.network },
+      { address: await contract.token1(), network: this.network },
+    ];
+  }
 
-        const [token0, token1] = await tokenSelector.getMany([
-          { network, address: token0AddressRaw.toLowerCase() },
-          { network, address: token1AddressRaw.toLowerCase() },
-        ]);
-        if (!token0 || !token1) return null;
+  async getPricePerShare({ appToken, contract }: GetPricePerShareParams<GammaStrategiesHypervisor>) {
+    const totalAmountInfo = await contract.getTotalAmounts();
+    const reserve0 = Number(totalAmountInfo.total0) / 10 ** appToken.tokens[0].decimals;
+    const reserve1 = Number(totalAmountInfo.total1) / 10 ** appToken.tokens[1].decimals;
+    const pricePerShare = [reserve0, reserve1].map(r => r / appToken.supply);
+    return pricePerShare;
+  }
 
-        const token0Reserve = Number(totalAmountInfo.total0) / 10 ** token0.decimals;
-        const token0ReserveUSD = token0Reserve * token0.price;
-        const token1Reserve = Number(totalAmountInfo.total1) / 10 ** token1.decimals;
-        const token1ReserveUSD = token1Reserve * token1.price;
-        const liquidity = token0ReserveUSD + token1ReserveUSD;
-        const tokens = [token0, token1];
+  async getLabel({ appToken }: GetDisplayPropsParams<GammaStrategiesHypervisor>) {
+    return appToken.tokens.map(v => getLabelFromToken(v)).join(' / ');
+  }
 
-        const supply = Number(totalSupplyRaw) / 1e18;
-        const price = (token0ReserveUSD + token1ReserveUSD) / supply;
-        const pricePerShare = [token0Reserve, token1Reserve].map(r => r / supply);
-
-        const poolToken: AppTokenPosition = {
-          type: ContractType.APP_TOKEN,
-          address: tokenAddress,
-          appId,
-          groupId,
-          network,
-          decimals: 18,
-          symbol,
-          supply,
-          price,
-          pricePerShare,
-          tokens,
-
-          dataProps: {
-            liquidity,
-          },
-
-          displayProps: {
-            label: name,
-            images: tokens.map(t => getTokenImg(t.address, t.network)),
-            statsItems: [{ label: 'Liquidity', value: buildDollarDisplayItem(liquidity) }],
-          },
-        };
-
-        return poolToken;
-      }),
-    );
-
-    return _.compact(tokens);
+  async getSecondaryLabel({ appToken }: GetDisplayPropsParams<GammaStrategiesHypervisor>) {
+    const { reserves, liquidity } = appToken.dataProps;
+    const reservePercentages = appToken.tokens.map((t, i) => reserves[i] * (t.price / liquidity));
+    return reservePercentages.map(p => `${Math.round(p * 100)}%`).join(' / ');
   }
 }

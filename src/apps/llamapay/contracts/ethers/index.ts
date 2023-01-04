@@ -2,5 +2,7 @@
 /* tslint:disable */
 /* eslint-disable */
 export type { LlamapayStream } from './LlamapayStream';
+export type { LlamapayVestingEscrow } from './LlamapayVestingEscrow';
 export * as factories from './factories';
 export { LlamapayStream__factory } from './factories/LlamapayStream__factory';
+export { LlamapayVestingEscrow__factory } from './factories/LlamapayVestingEscrow__factory';

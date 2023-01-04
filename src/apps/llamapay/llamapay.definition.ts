@@ -16,6 +16,12 @@ export const LLAMAPAY_DEFINITION = appDefinition({
       type: GroupType.POSITION,
       label: 'Stream',
     },
+
+    vestingEscrow: {
+      id: 'vesting-escrow',
+      type: GroupType.POSITION,
+      label: 'Vesting Escrow',
+    },
   },
 
   tags: [AppTag.PAYMENTS],

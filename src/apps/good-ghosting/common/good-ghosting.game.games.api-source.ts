@@ -57,11 +57,10 @@ export class GoodGhostingGameGamesApiSource {
       const isCeloGame = NetworkId.CeloMainnet === networkId;
 
       if (isV2Game) {
-        rewardTokens[RewardType.Deposit] = depositTokenAddress;
         rewards?.map(reward => {
           rewardTokens[reward.type] = reward.address;
         });
-
+        rewardTokens[RewardType.Deposit] = depositTokenAddress;
         const rewardTokenAddress = Object.values(rewardTokens);
         rewardTokenAddresses = [...rewardTokenAddress];
       }

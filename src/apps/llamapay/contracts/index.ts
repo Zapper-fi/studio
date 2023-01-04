@@ -5,6 +5,7 @@ import { ContractFactory } from '~contract/contracts';
 import { Network } from '~types/network.interface';
 
 import { LlamapayStream__factory } from './ethers';
+import { LlamapayVestingEscrow__factory } from './ethers';
 
 // eslint-disable-next-line
 type ContractOpts = { address: string; network: Network };
@@ -18,6 +19,10 @@ export class LlamapayContractFactory extends ContractFactory {
   llamapayStream({ address, network }: ContractOpts) {
     return LlamapayStream__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
+  llamapayVestingEscrow({ address, network }: ContractOpts) {
+    return LlamapayVestingEscrow__factory.connect(address, this.appToolkit.getNetworkProvider(network));
+  }
 }
 
 export type { LlamapayStream } from './ethers';
+export type { LlamapayVestingEscrow } from './ethers';

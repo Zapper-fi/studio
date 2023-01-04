@@ -77,6 +77,36 @@ export type LlamapayStreamsResponse = {
   }[];
 };
 
+export const getVestingEscrowsQuery = gql`
+  query VestingEscrows($id: ID!, $network: String!) {
+    vestingEscrows(where: { recipient: $id }) {
+      id
+      admin
+      recipient
+      token {
+        id
+        symbol
+        name
+        decimals
+      }
+    }
+  }
+`;
+
+export type LlamapayVestingEscrowsResponse = {
+  vestingEscrows: {
+    id: string;
+    admin: string;
+    recipient: string;
+    token: {
+      id: string;
+      symbol: string;
+      name: string;
+      decimals: number;
+    };
+  }[];
+};
+
 @Injectable()
 export class LlamapayStreamApiClient {
   constructor(@Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit) {}
@@ -101,5 +131,17 @@ export class LlamapayStreamApiClient {
     });
 
     return streamsResponse.user?.streams ?? [];
+  }
+
+  async getVestingEscrows(address: string, _network: Network) {
+    const vestingEscrowsResponse = await this.appToolkit.helpers.theGraphHelper.request<LlamapayVestingEscrowsResponse>(
+      {
+        endpoint: 'https://api.thegraph.com/subgraphs/name/nemusonaneko/llamapay-vesting-mainnet',
+        query: getVestingEscrowsQuery,
+        variables: { id: address, network: _network },
+      },
+    );
+
+    return vestingEscrowsResponse.vestingEscrows ?? [];
   }
 }

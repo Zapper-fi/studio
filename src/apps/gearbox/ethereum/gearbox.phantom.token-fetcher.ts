@@ -10,7 +10,8 @@ import { GearboxContractFactory, PhantomToken } from '../contracts';
 @PositionTemplate()
 export class EthereumGearboxPhantomTokenFetcher extends AppTokenTemplatePositionFetcher<PhantomToken> {
   groupLabel = 'Phantom Tokens';
-  isExcludedFromExplore = false;
+  isExcludedFromExplore = true;
+  isExcludedFromTvl = true;
 
   constructor(
     @Inject(APP_TOOLKIT) readonly appToolkit: IAppToolkit,

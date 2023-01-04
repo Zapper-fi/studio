@@ -113,9 +113,9 @@ export abstract class GoodGhostingGameContractPositionFetcher extends CustomCont
           const mayBeRewardAmountRaw = rewardAmountRaw < 0.01 ? incentiveAmountRaw : rewardAmountRaw;
 
           balancesRaw.push(paidAmountRaw);
-          if (stakedToken && isWinner) balancesRaw.push(interestAmountRaw);
           if (rewardToken && isWinner) balancesRaw.push(mayBeRewardAmountRaw);
           if (incentiveToken && isWinner) balancesRaw.push(incentiveAmountRaw);
+          if (stakedToken && isWinner) balancesRaw.push(interestAmountRaw);
         }
 
         const nonZeroBalancesRaw = balancesRaw.filter(balance => balance > 0);
