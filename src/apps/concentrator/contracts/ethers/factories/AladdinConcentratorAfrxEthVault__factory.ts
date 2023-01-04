@@ -5,9 +5,9 @@
 import { Contract, Signer, utils } from "ethers";
 import type { Provider } from "@ethersproject/providers";
 import type {
-  AladdinConcentratorAcrvVault,
-  AladdinConcentratorAcrvVaultInterface,
-} from "../AladdinConcentratorAcrvVault";
+  AladdinConcentratorAfrxEthVault,
+  AladdinConcentratorAfrxEthVaultInterface,
+} from "../AladdinConcentratorAfrxEthVault";
 
 const _abi = [
   {
@@ -21,15 +21,15 @@ const _abi = [
       },
       {
         indexed: false,
-        internalType: "uint256",
-        name: "_convexPid",
-        type: "uint256",
+        internalType: "address",
+        name: "_underlying",
+        type: "address",
       },
       {
         indexed: false,
-        internalType: "address[]",
-        name: "_rewardTokens",
-        type: "address[]",
+        internalType: "address",
+        name: "_strategy",
+        type: "address",
       },
     ],
     name: "AddPool",
@@ -40,21 +40,77 @@ const _abi = [
     inputs: [
       {
         indexed: true,
+        internalType: "uint256",
+        name: "pid",
+        type: "uint256",
+      },
+      {
+        indexed: true,
         internalType: "address",
-        name: "_sender",
+        name: "owner",
+        type: "address",
+      },
+      {
+        indexed: true,
+        internalType: "address",
+        name: "spender",
         type: "address",
       },
       {
         indexed: false,
         internalType: "uint256",
-        name: "_reward",
+        name: "value",
         type: "uint256",
+      },
+    ],
+    name: "Approval",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: false,
+        internalType: "bytes32",
+        name: "_feeType",
+        type: "bytes32",
       },
       {
         indexed: false,
-        internalType: "enum IAladdinConvexVault.ClaimOption",
-        name: "_option",
-        type: "uint8",
+        internalType: "address",
+        name: "_user",
+        type: "address",
+      },
+    ],
+    name: "CancleCustomizeFee",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: "uint256",
+        name: "pid",
+        type: "uint256",
+      },
+      {
+        indexed: true,
+        internalType: "address",
+        name: "sender",
+        type: "address",
+      },
+      {
+        indexed: true,
+        internalType: "address",
+        name: "recipient",
+        type: "address",
+      },
+      {
+        indexed: false,
+        internalType: "uint256",
+        name: "rewards",
+        type: "uint256",
       },
     ],
     name: "Claim",
@@ -64,31 +120,25 @@ const _abi = [
     anonymous: false,
     inputs: [
       {
-        indexed: true,
-        internalType: "uint256",
-        name: "_pid",
-        type: "uint256",
-      },
-      {
-        indexed: true,
-        internalType: "address",
-        name: "_caller",
-        type: "address",
+        indexed: false,
+        internalType: "bytes32",
+        name: "_feeType",
+        type: "bytes32",
       },
       {
         indexed: false,
         internalType: "address",
-        name: "_recipient",
+        name: "_user",
         type: "address",
       },
       {
         indexed: false,
         internalType: "uint256",
-        name: "_amount",
+        name: "_rate",
         type: "uint256",
       },
     ],
-    name: "ClaimCTR",
+    name: "CustomizeFee",
     type: "event",
   },
   {
@@ -97,19 +147,31 @@ const _abi = [
       {
         indexed: true,
         internalType: "uint256",
-        name: "_pid",
+        name: "pid",
         type: "uint256",
       },
       {
         indexed: true,
         internalType: "address",
-        name: "_sender",
+        name: "sender",
+        type: "address",
+      },
+      {
+        indexed: true,
+        internalType: "address",
+        name: "recipient",
         type: "address",
       },
       {
         indexed: false,
         internalType: "uint256",
-        name: "_amount",
+        name: "assetsIn",
+        type: "uint256",
+      },
+      {
+        indexed: false,
+        internalType: "uint256",
+        name: "sharesOut",
         type: "uint256",
       },
     ],
@@ -121,43 +183,42 @@ const _abi = [
     inputs: [
       {
         indexed: true,
+        internalType: "uint256",
+        name: "pid",
+        type: "uint256",
+      },
+      {
+        indexed: true,
         internalType: "address",
-        name: "_caller",
+        name: "caller",
+        type: "address",
+      },
+      {
+        indexed: true,
+        internalType: "address",
+        name: "recipient",
         type: "address",
       },
       {
         indexed: false,
         internalType: "uint256",
-        name: "_reward",
+        name: "rewards",
         type: "uint256",
       },
       {
         indexed: false,
         internalType: "uint256",
-        name: "_platformFee",
+        name: "platformFee",
         type: "uint256",
       },
       {
         indexed: false,
         internalType: "uint256",
-        name: "_harvestBounty",
+        name: "harvestBounty",
         type: "uint256",
       },
     ],
     name: "Harvest",
-    type: "event",
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: false,
-        internalType: "uint256",
-        name: "_amount",
-        type: "uint256",
-      },
-    ],
-    name: "IFOMineCTR",
     type: "event",
   },
   {
@@ -170,34 +231,16 @@ const _abi = [
         type: "uint256",
       },
       {
-        indexed: true,
-        internalType: "address",
-        name: "_caller",
-        type: "address",
-      },
-      {
-        indexed: false,
-        internalType: "uint256",
-        name: "_share",
-        type: "uint256",
-      },
-      {
         indexed: false,
         internalType: "address",
-        name: "_recipient",
+        name: "_oldStrategy",
         type: "address",
       },
       {
         indexed: false,
         internalType: "address",
-        name: "_migrator",
+        name: "_newStrategy",
         type: "address",
-      },
-      {
-        indexed: false,
-        internalType: "uint256",
-        name: "_newPid",
-        type: "uint256",
       },
     ],
     name: "Migrate",
@@ -265,63 +308,6 @@ const _abi = [
     inputs: [
       {
         indexed: true,
-        internalType: "uint256",
-        name: "_pid",
-        type: "uint256",
-      },
-      {
-        indexed: false,
-        internalType: "uint256",
-        name: "_percentage",
-        type: "uint256",
-      },
-    ],
-    name: "UpdateHarvestBountyPercentage",
-    type: "event",
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: false,
-        internalType: "address",
-        name: "_ctr",
-        type: "address",
-      },
-      {
-        indexed: false,
-        internalType: "uint256",
-        name: "_startTime",
-        type: "uint256",
-      },
-      {
-        indexed: false,
-        internalType: "uint256",
-        name: "_endTime",
-        type: "uint256",
-      },
-    ],
-    name: "UpdateIFOConfig",
-    type: "event",
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: false,
-        internalType: "address",
-        name: "_migrator",
-        type: "address",
-      },
-    ],
-    name: "UpdateMigrator",
-    type: "event",
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: true,
         internalType: "address",
         name: "_platform",
         type: "address",
@@ -341,12 +327,24 @@ const _abi = [
       },
       {
         indexed: false,
-        internalType: "uint256",
-        name: "_feePercentage",
-        type: "uint256",
+        internalType: "uint32",
+        name: "_withdrawFeeRatio",
+        type: "uint32",
+      },
+      {
+        indexed: false,
+        internalType: "uint32",
+        name: "_platformFeeRatio",
+        type: "uint32",
+      },
+      {
+        indexed: false,
+        internalType: "uint32",
+        name: "_harvestBountyRatio",
+        type: "uint32",
       },
     ],
-    name: "UpdatePlatformFeePercentage",
+    name: "UpdatePoolFeeRatio",
     type: "event",
   },
   {
@@ -379,12 +377,12 @@ const _abi = [
       },
       {
         indexed: false,
-        internalType: "uint256",
-        name: "_feePercentage",
-        type: "uint256",
+        internalType: "uint32",
+        name: "_period",
+        type: "uint32",
       },
     ],
-    name: "UpdateWithdrawalFeePercentage",
+    name: "UpdateRewardPeriod",
     type: "event",
   },
   {
@@ -406,19 +404,37 @@ const _abi = [
       {
         indexed: true,
         internalType: "uint256",
-        name: "_pid",
+        name: "pid",
         type: "uint256",
       },
       {
         indexed: true,
         internalType: "address",
-        name: "_sender",
+        name: "sender",
+        type: "address",
+      },
+      {
+        indexed: true,
+        internalType: "address",
+        name: "owner",
+        type: "address",
+      },
+      {
+        indexed: false,
+        internalType: "address",
+        name: "recipient",
         type: "address",
       },
       {
         indexed: false,
         internalType: "uint256",
-        name: "_shares",
+        name: "sharesIn",
+        type: "uint256",
+      },
+      {
+        indexed: false,
+        internalType: "uint256",
+        name: "assetsOut",
         type: "uint256",
       },
     ],
@@ -428,48 +444,29 @@ const _abi = [
   {
     inputs: [
       {
-        internalType: "uint256",
-        name: "",
-        type: "uint256",
-      },
-    ],
-    name: "accCTRPerShare",
-    outputs: [
-      {
-        internalType: "uint256",
-        name: "",
-        type: "uint256",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "uint256",
-        name: "_convexPid",
-        type: "uint256",
+        internalType: "address",
+        name: "_underlying",
+        type: "address",
       },
       {
-        internalType: "address[]",
-        name: "_rewardTokens",
-        type: "address[]",
+        internalType: "address",
+        name: "_strategy",
+        type: "address",
       },
       {
-        internalType: "uint256",
-        name: "_withdrawFeePercentage",
-        type: "uint256",
+        internalType: "uint32",
+        name: "_withdrawFeeRatio",
+        type: "uint32",
       },
       {
-        internalType: "uint256",
-        name: "_platformFeePercentage",
-        type: "uint256",
+        internalType: "uint32",
+        name: "_platformFeeRatio",
+        type: "uint32",
       },
       {
-        internalType: "uint256",
-        name: "_harvestBountyPercentage",
-        type: "uint256",
+        internalType: "uint32",
+        name: "_harvestBountyRatio",
+        type: "uint32",
       },
     ],
     name: "addPool",
@@ -478,13 +475,29 @@ const _abi = [
     type: "function",
   },
   {
-    inputs: [],
-    name: "aladdinCRV",
-    outputs: [
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "_pid",
+        type: "uint256",
+      },
       {
         internalType: "address",
-        name: "",
+        name: "_owner",
         type: "address",
+      },
+      {
+        internalType: "address",
+        name: "_spender",
+        type: "address",
+      },
+    ],
+    name: "allowance",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
       },
     ],
     stateMutability: "view",
@@ -498,21 +511,67 @@ const _abi = [
         type: "uint256",
       },
       {
+        internalType: "address",
+        name: "_spender",
+        type: "address",
+      },
+      {
+        internalType: "uint256",
+        name: "_amount",
+        type: "uint256",
+      },
+    ],
+    name: "approve",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "_pid",
+        type: "uint256",
+      },
+      {
+        internalType: "address",
+        name: "_account",
+        type: "address",
+      },
+    ],
+    name: "checkpoint",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "_pid",
+        type: "uint256",
+      },
+      {
+        internalType: "address",
+        name: "_recipient",
+        type: "address",
+      },
+      {
         internalType: "uint256",
         name: "_minOut",
         type: "uint256",
       },
       {
-        internalType: "enum IAladdinConvexVault.ClaimOption",
-        name: "_option",
-        type: "uint8",
+        internalType: "address",
+        name: "_claimAsToken",
+        type: "address",
       },
     ],
     name: "claim",
     outputs: [
       {
         internalType: "uint256",
-        name: "claimed",
+        name: "",
         type: "uint256",
       },
     ],
@@ -527,16 +586,21 @@ const _abi = [
         type: "uint256",
       },
       {
-        internalType: "enum IAladdinConvexVault.ClaimOption",
-        name: "_option",
-        type: "uint8",
+        internalType: "address",
+        name: "_recipient",
+        type: "address",
+      },
+      {
+        internalType: "address",
+        name: "_claimAsToken",
+        type: "address",
       },
     ],
     name: "claimAll",
     outputs: [
       {
         internalType: "uint256",
-        name: "claimed",
+        name: "",
         type: "uint256",
       },
     ],
@@ -546,12 +610,27 @@ const _abi = [
   {
     inputs: [
       {
+        internalType: "uint256[]",
+        name: "_pids",
+        type: "uint256[]",
+      },
+      {
         internalType: "address",
         name: "_recipient",
         type: "address",
       },
+      {
+        internalType: "uint256",
+        name: "_minOut",
+        type: "uint256",
+      },
+      {
+        internalType: "address",
+        name: "_claimAsToken",
+        type: "address",
+      },
     ],
-    name: "claimAllCTR",
+    name: "claimMulti",
     outputs: [
       {
         internalType: "uint256",
@@ -574,59 +653,9 @@ const _abi = [
         name: "_recipient",
         type: "address",
       },
-    ],
-    name: "claimCTR",
-    outputs: [
       {
         internalType: "uint256",
-        name: "",
-        type: "uint256",
-      },
-    ],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "ctr",
-    outputs: [
-      {
-        internalType: "address",
-        name: "",
-        type: "address",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "ctrMined",
-    outputs: [
-      {
-        internalType: "uint128",
-        name: "",
-        type: "uint128",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "uint256",
-        name: "_pid",
-        type: "uint256",
-      },
-      {
-        internalType: "address",
-        name: "_recipient",
-        type: "address",
-      },
-      {
-        internalType: "uint256",
-        name: "_amount",
+        name: "_assetsIn",
         type: "uint256",
       },
     ],
@@ -634,7 +663,7 @@ const _abi = [
     outputs: [
       {
         internalType: "uint256",
-        name: "share",
+        name: "",
         type: "uint256",
       },
     ],
@@ -644,78 +673,22 @@ const _abi = [
   {
     inputs: [
       {
-        internalType: "uint256",
-        name: "_pid",
-        type: "uint256",
-      },
-      {
-        internalType: "uint256",
-        name: "_amount",
-        type: "uint256",
-      },
-    ],
-    name: "deposit",
-    outputs: [
-      {
-        internalType: "uint256",
-        name: "share",
-        type: "uint256",
-      },
-    ],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "uint256",
-        name: "_pid",
-        type: "uint256",
+        internalType: "bytes32",
+        name: "_feeType",
+        type: "bytes32",
       },
       {
         internalType: "address",
-        name: "_recipient",
+        name: "_user",
         type: "address",
       },
     ],
-    name: "depositAll",
+    name: "getFeeRate",
     outputs: [
       {
         internalType: "uint256",
-        name: "share",
+        name: "rate",
         type: "uint256",
-      },
-    ],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "uint256",
-        name: "_pid",
-        type: "uint256",
-      },
-    ],
-    name: "depositAll",
-    outputs: [
-      {
-        internalType: "uint256",
-        name: "share",
-        type: "uint256",
-      },
-    ],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "endTime",
-    outputs: [
-      {
-        internalType: "uint64",
-        name: "",
-        type: "uint64",
       },
     ],
     stateMutability: "view",
@@ -797,7 +770,7 @@ const _abi = [
       },
       {
         internalType: "uint256",
-        name: "_minimumOut",
+        name: "_minOut",
         type: "uint256",
       },
     ],
@@ -805,7 +778,7 @@ const _abi = [
     outputs: [
       {
         internalType: "uint256",
-        name: "harvested",
+        name: "",
         type: "uint256",
       },
     ],
@@ -816,7 +789,7 @@ const _abi = [
     inputs: [
       {
         internalType: "address",
-        name: "_aladdinCRV",
+        name: "_aladdinETH",
         type: "address",
       },
       {
@@ -844,31 +817,13 @@ const _abi = [
       },
       {
         internalType: "address",
-        name: "_recipient",
+        name: "_newStrategy",
         type: "address",
       },
-      {
-        internalType: "uint256",
-        name: "_newPid",
-        type: "uint256",
-      },
     ],
-    name: "migrate",
+    name: "migrateStrategy",
     outputs: [],
     stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "migrator",
-    outputs: [
-      {
-        internalType: "address",
-        name: "",
-        type: "address",
-      },
-    ],
-    stateMutability: "view",
     type: "function",
   },
   {
@@ -918,30 +873,6 @@ const _abi = [
     name: "pausePoolWithdraw",
     outputs: [],
     stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "uint256",
-        name: "_pid",
-        type: "uint256",
-      },
-      {
-        internalType: "address",
-        name: "_account",
-        type: "address",
-      },
-    ],
-    name: "pendingCTR",
-    outputs: [
-      {
-        internalType: "uint256",
-        name: "",
-        type: "uint256",
-      },
-    ],
-    stateMutability: "view",
     type: "function",
   },
   {
@@ -1011,59 +942,107 @@ const _abi = [
     name: "poolInfo",
     outputs: [
       {
-        internalType: "uint128",
-        name: "totalUnderlying",
-        type: "uint128",
+        components: [
+          {
+            internalType: "uint128",
+            name: "totalUnderlying",
+            type: "uint128",
+          },
+          {
+            internalType: "uint128",
+            name: "totalShare",
+            type: "uint128",
+          },
+        ],
+        internalType: "struct ConcentratorGeneralVault.PoolSupplyInfo",
+        name: "supply",
+        type: "tuple",
       },
       {
-        internalType: "uint128",
-        name: "totalShare",
-        type: "uint128",
+        components: [
+          {
+            internalType: "address",
+            name: "token",
+            type: "address",
+          },
+          {
+            internalType: "address",
+            name: "strategy",
+            type: "address",
+          },
+          {
+            internalType: "bool",
+            name: "pauseDeposit",
+            type: "bool",
+          },
+          {
+            internalType: "bool",
+            name: "pauseWithdraw",
+            type: "bool",
+          },
+        ],
+        internalType: "struct ConcentratorGeneralVault.PoolStrategyInfo",
+        name: "strategy",
+        type: "tuple",
       },
       {
-        internalType: "uint256",
-        name: "accRewardPerShare",
-        type: "uint256",
+        components: [
+          {
+            internalType: "uint128",
+            name: "rate",
+            type: "uint128",
+          },
+          {
+            internalType: "uint32",
+            name: "periodLength",
+            type: "uint32",
+          },
+          {
+            internalType: "uint48",
+            name: "lastUpdate",
+            type: "uint48",
+          },
+          {
+            internalType: "uint48",
+            name: "finishAt",
+            type: "uint48",
+          },
+          {
+            internalType: "uint256",
+            name: "accRewardPerShare",
+            type: "uint256",
+          },
+        ],
+        internalType: "struct ConcentratorGeneralVault.PoolRewardInfo",
+        name: "reward",
+        type: "tuple",
       },
       {
-        internalType: "uint256",
-        name: "convexPoolId",
-        type: "uint256",
-      },
-      {
-        internalType: "address",
-        name: "lpToken",
-        type: "address",
-      },
-      {
-        internalType: "address",
-        name: "crvRewards",
-        type: "address",
-      },
-      {
-        internalType: "uint256",
-        name: "withdrawFeePercentage",
-        type: "uint256",
-      },
-      {
-        internalType: "uint256",
-        name: "platformFeePercentage",
-        type: "uint256",
-      },
-      {
-        internalType: "uint256",
-        name: "harvestBountyPercentage",
-        type: "uint256",
-      },
-      {
-        internalType: "bool",
-        name: "pauseDeposit",
-        type: "bool",
-      },
-      {
-        internalType: "bool",
-        name: "pauseWithdraw",
-        type: "bool",
+        components: [
+          {
+            internalType: "uint32",
+            name: "withdrawFeeRatio",
+            type: "uint32",
+          },
+          {
+            internalType: "uint32",
+            name: "platformFeeRatio",
+            type: "uint32",
+          },
+          {
+            internalType: "uint32",
+            name: "harvestBountyRatio",
+            type: "uint32",
+          },
+          {
+            internalType: "uint160",
+            name: "reserved",
+            type: "uint160",
+          },
+        ],
+        internalType: "struct ConcentratorGeneralVault.PoolFeeInfo",
+        name: "fee",
+        type: "tuple",
       },
     ],
     stateMutability: "view",
@@ -1091,15 +1070,38 @@ const _abi = [
   },
   {
     inputs: [],
-    name: "startTime",
+    name: "rewardToken",
     outputs: [
       {
-        internalType: "uint64",
+        internalType: "address",
         name: "",
-        type: "uint64",
+        type: "address",
       },
     ],
     stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "_pid",
+        type: "uint256",
+      },
+      {
+        internalType: "address",
+        name: "_user",
+        type: "address",
+      },
+      {
+        internalType: "uint32",
+        name: "_ratio",
+        type: "uint32",
+      },
+    ],
+    name: "setWithdrawFeeForUser",
+    outputs: [],
+    stateMutability: "nonpayable",
     type: "function",
   },
   {
@@ -1122,51 +1124,16 @@ const _abi = [
         name: "_pid",
         type: "uint256",
       },
-      {
-        internalType: "uint256",
-        name: "_percentage",
-        type: "uint256",
-      },
     ],
-    name: "updateHarvestBountyPercentage",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [
+    name: "underlying",
+    outputs: [
       {
         internalType: "address",
-        name: "_ctr",
-        type: "address",
-      },
-      {
-        internalType: "uint64",
-        name: "_startTime",
-        type: "uint64",
-      },
-      {
-        internalType: "uint64",
-        name: "_endTime",
-        type: "uint64",
-      },
-    ],
-    name: "updateIFOConfig",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "address",
-        name: "_migrator",
+        name: "",
         type: "address",
       },
     ],
-    name: "updateMigrator",
-    outputs: [],
-    stateMutability: "nonpayable",
+    stateMutability: "view",
     type: "function",
   },
   {
@@ -1190,12 +1157,22 @@ const _abi = [
         type: "uint256",
       },
       {
-        internalType: "uint256",
-        name: "_feePercentage",
-        type: "uint256",
+        internalType: "uint32",
+        name: "_withdrawFeeRatio",
+        type: "uint32",
+      },
+      {
+        internalType: "uint32",
+        name: "_platformFeeRatio",
+        type: "uint32",
+      },
+      {
+        internalType: "uint32",
+        name: "_harvestBountyRatio",
+        type: "uint32",
       },
     ],
-    name: "updatePlatformFeePercentage",
+    name: "updatePoolFeeRatio",
     outputs: [],
     stateMutability: "nonpayable",
     type: "function",
@@ -1226,12 +1203,12 @@ const _abi = [
         type: "uint256",
       },
       {
-        internalType: "uint256",
-        name: "_feePercentage",
-        type: "uint256",
+        internalType: "uint32",
+        name: "_period",
+        type: "uint32",
       },
     ],
-    name: "updateWithdrawFeePercentage",
+    name: "updateRewardPeriod",
     outputs: [],
     stateMutability: "nonpayable",
     type: "function",
@@ -1292,127 +1269,25 @@ const _abi = [
       },
       {
         internalType: "uint256",
-        name: "_minOut",
-        type: "uint256",
-      },
-      {
-        internalType: "enum IAladdinConvexVault.ClaimOption",
-        name: "_option",
-        type: "uint8",
-      },
-    ],
-    name: "withdrawAllAndClaim",
-    outputs: [
-      {
-        internalType: "uint256",
-        name: "withdrawn",
-        type: "uint256",
-      },
-      {
-        internalType: "uint256",
-        name: "claimed",
-        type: "uint256",
-      },
-    ],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "uint256",
-        name: "_pid",
+        name: "_sharesIn",
         type: "uint256",
       },
       {
         internalType: "address",
-        name: "_token",
+        name: "_recipient",
         type: "address",
-      },
-      {
-        internalType: "uint256",
-        name: "_minOut",
-        type: "uint256",
-      },
-    ],
-    name: "withdrawAllAndZap",
-    outputs: [
-      {
-        internalType: "uint256",
-        name: "withdrawn",
-        type: "uint256",
-      },
-    ],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "uint256",
-        name: "_pid",
-        type: "uint256",
-      },
-      {
-        internalType: "uint256",
-        name: "_shares",
-        type: "uint256",
-      },
-      {
-        internalType: "uint256",
-        name: "_minOut",
-        type: "uint256",
-      },
-      {
-        internalType: "enum IAladdinConvexVault.ClaimOption",
-        name: "_option",
-        type: "uint8",
-      },
-    ],
-    name: "withdrawAndClaim",
-    outputs: [
-      {
-        internalType: "uint256",
-        name: "withdrawn",
-        type: "uint256",
-      },
-      {
-        internalType: "uint256",
-        name: "claimed",
-        type: "uint256",
-      },
-    ],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "uint256",
-        name: "_pid",
-        type: "uint256",
-      },
-      {
-        internalType: "uint256",
-        name: "_shares",
-        type: "uint256",
       },
       {
         internalType: "address",
-        name: "_token",
+        name: "_owner",
         type: "address",
       },
-      {
-        internalType: "uint256",
-        name: "_minOut",
-        type: "uint256",
-      },
     ],
-    name: "withdrawAndZap",
+    name: "withdraw",
     outputs: [
       {
         internalType: "uint256",
-        name: "withdrawn",
+        name: "",
         type: "uint256",
       },
     ],
@@ -1433,160 +1308,26 @@ const _abi = [
     type: "function",
   },
   {
-    inputs: [
-      {
-        internalType: "uint256",
-        name: "_pid",
-        type: "uint256",
-      },
-      {
-        internalType: "address",
-        name: "_recipient",
-        type: "address",
-      },
-      {
-        internalType: "address",
-        name: "_token",
-        type: "address",
-      },
-      {
-        internalType: "uint256",
-        name: "_minAmount",
-        type: "uint256",
-      },
-    ],
-    name: "zapAllAndDeposit",
-    outputs: [
-      {
-        internalType: "uint256",
-        name: "",
-        type: "uint256",
-      },
-    ],
-    stateMutability: "payable",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "uint256",
-        name: "_pid",
-        type: "uint256",
-      },
-      {
-        internalType: "address",
-        name: "_token",
-        type: "address",
-      },
-      {
-        internalType: "uint256",
-        name: "_minAmount",
-        type: "uint256",
-      },
-    ],
-    name: "zapAllAndDeposit",
-    outputs: [
-      {
-        internalType: "uint256",
-        name: "",
-        type: "uint256",
-      },
-    ],
-    stateMutability: "payable",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "uint256",
-        name: "_pid",
-        type: "uint256",
-      },
-      {
-        internalType: "address",
-        name: "_recipient",
-        type: "address",
-      },
-      {
-        internalType: "address",
-        name: "_token",
-        type: "address",
-      },
-      {
-        internalType: "uint256",
-        name: "_amount",
-        type: "uint256",
-      },
-      {
-        internalType: "uint256",
-        name: "_minAmount",
-        type: "uint256",
-      },
-    ],
-    name: "zapAndDeposit",
-    outputs: [
-      {
-        internalType: "uint256",
-        name: "share",
-        type: "uint256",
-      },
-    ],
-    stateMutability: "payable",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "uint256",
-        name: "_pid",
-        type: "uint256",
-      },
-      {
-        internalType: "address",
-        name: "_token",
-        type: "address",
-      },
-      {
-        internalType: "uint256",
-        name: "_amount",
-        type: "uint256",
-      },
-      {
-        internalType: "uint256",
-        name: "_minAmount",
-        type: "uint256",
-      },
-    ],
-    name: "zapAndDeposit",
-    outputs: [
-      {
-        internalType: "uint256",
-        name: "share",
-        type: "uint256",
-      },
-    ],
-    stateMutability: "payable",
-    type: "function",
-  },
-  {
     stateMutability: "payable",
     type: "receive",
   },
 ];
 
-export class AladdinConcentratorAcrvVault__factory {
+export class AladdinConcentratorAfrxEthVault__factory {
   static readonly abi = _abi;
-  static createInterface(): AladdinConcentratorAcrvVaultInterface {
-    return new utils.Interface(_abi) as AladdinConcentratorAcrvVaultInterface;
+  static createInterface(): AladdinConcentratorAfrxEthVaultInterface {
+    return new utils.Interface(
+      _abi
+    ) as AladdinConcentratorAfrxEthVaultInterface;
   }
   static connect(
     address: string,
     signerOrProvider: Signer | Provider
-  ): AladdinConcentratorAcrvVault {
+  ): AladdinConcentratorAfrxEthVault {
     return new Contract(
       address,
       _abi,
       signerOrProvider
-    ) as AladdinConcentratorAcrvVault;
+    ) as AladdinConcentratorAfrxEthVault;
   }
 }
