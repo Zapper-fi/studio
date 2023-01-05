@@ -20,6 +20,5 @@ import { UniswapV3AppDefinition } from './uniswap-v3.definition';
     OptimismUniswapV3LiquidityContractPositionFetcher,
     PolygonUniswapV3LiquidityContractPositionFetcher,
   ],
-  exports: [UniswapV3ContractFactory],
 })
 export class UniswapV3AppModule extends AbstractApp() {}

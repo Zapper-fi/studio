@@ -46,6 +46,5 @@ import { PoolTogetherV3AppDefinition } from './pool-together-v3.definition';
     PolygonPoolTogetherV3SponsorshipTokenFetcher,
     PolygonPoolTogetherV3TicketTokenFetcher,
   ],
-  exports: [PoolTogetherV3ApiPrizePoolRegistry],
 })
 export class PoolTogetherV3AppModule extends AbstractApp() {}

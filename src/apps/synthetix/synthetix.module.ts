@@ -44,12 +44,5 @@ import { SynthetixAppDefinition } from './synthetix.definition';
     OptimismSynthetixLoanContractPositionFetcher,
     OptimismSynthetixPositionPresenter,
   ],
-  exports: [
-    SynthetixContractFactory,
-    SynthetixSingleStakingIsActiveStrategy,
-    SynthetixSingleStakingRoiStrategy,
-    SynthetixSingleStakingFarmContractPositionHelper,
-    SynthetixSingleStakingFarmContractPositionBalanceHelper,
-  ],
 })
 export class SynthetixAppModule extends AbstractApp() {}

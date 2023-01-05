@@ -32,12 +32,5 @@ import { POLYGON_CURVE_PROVIDERS } from './polygon';
     CurveVotingEscrowContractPositionHelper,
     CurveVotingEscrowContractPositionBalanceHelper,
   ],
-  exports: [
-    CurveAppDefinition,
-    CurveContractFactory,
-    // Legacy Helpers
-    CurveVotingEscrowContractPositionHelper,
-    CurveVotingEscrowContractPositionBalanceHelper,
-  ],
 })
 export class CurveAppModule extends AbstractApp() {}

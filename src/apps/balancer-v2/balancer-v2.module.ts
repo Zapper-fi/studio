@@ -42,6 +42,5 @@ import { PolygonBalancerV2StaticYieldTokenFetcher } from './polygon/balancer-v2.
     BalancerV2ClaimableCacheManager,
     BalancerV2SpotPriceHelper,
   ],
-  exports: [BalancerV2SpotPriceHelper, BalancerV2ContractFactory],
 })
 export class BalancerV2AppModule extends AbstractApp() {}

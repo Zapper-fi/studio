@@ -8,6 +8,5 @@ import { NaosAppDefinition } from './naos.definition';
 
 @Module({
   providers: [NaosAppDefinition, NaosContractFactory, EthereumNaosFarmContractPositionFetcher],
-  exports: [NaosContractFactory],
 })
 export class NaosAppModule extends AbstractApp() {}

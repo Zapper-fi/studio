@@ -44,12 +44,5 @@ import { PolygonOlympusGOhmTokenFetcher } from './polygon/olympus.g-ohm.token-fe
     OlympusBondContractPositionHelper,
     OlympusBondV1ContractPositionBalanceHelper,
   ],
-  exports: [
-    OlympusAppDefinition,
-    OlympusContractFactory,
-    OlympusBondContractPositionHelper,
-    OlympusBondV1ContractPositionBalanceHelper,
-    OlympusBridgeTokenHelper,
-  ],
 })
 export class OlympusAppModule extends AbstractApp() {}

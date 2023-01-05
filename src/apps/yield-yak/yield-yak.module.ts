@@ -14,6 +14,5 @@ import { YieldYakAppDefinition } from './yield-yak.definition';
     AvalancheYieldyakVaultTokenFetcher,
     AvalancheYieldyakFarmContractPositionFetcher,
   ],
-  exports: [YieldYakAppDefinition, YieldYakContractFactory],
 })
 export class YieldYakAppModule extends AbstractApp() {}
