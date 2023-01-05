@@ -18,7 +18,7 @@ import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi
 import type { Listener, Provider } from '@ethersproject/providers';
 import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
-export interface StethInterface extends utils.Interface {
+export interface LidoStethInterface extends utils.Interface {
   functions: {
     'resume()': FunctionFragment;
     'name()': FunctionFragment;
@@ -453,12 +453,12 @@ export type WithdrawalEvent = TypedEvent<[string, BigNumber, BigNumber, string, 
 
 export type WithdrawalEventFilter = TypedEventFilter<WithdrawalEvent>;
 
-export interface Steth extends BaseContract {
+export interface LidoSteth extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
 
-  interface: StethInterface;
+  interface: LidoStethInterface;
 
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,

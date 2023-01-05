@@ -4,7 +4,7 @@
 
 import { Contract, Signer, utils } from 'ethers';
 import type { Provider } from '@ethersproject/providers';
-import type { Steth, StethInterface } from '../Steth';
+import type { LidoSteth, LidoStethInterface } from '../LidoSteth';
 
 const _abi = [
   {
@@ -1289,12 +1289,12 @@ const _abi = [
   },
 ];
 
-export class Steth__factory {
+export class LidoSteth__factory {
   static readonly abi = _abi;
-  static createInterface(): StethInterface {
-    return new utils.Interface(_abi) as StethInterface;
+  static createInterface(): LidoStethInterface {
+    return new utils.Interface(_abi) as LidoStethInterface;
   }
-  static connect(address: string, signerOrProvider: Signer | Provider): Steth {
-    return new Contract(address, _abi, signerOrProvider) as Steth;
+  static connect(address: string, signerOrProvider: Signer | Provider): LidoSteth {
+    return new Contract(address, _abi, signerOrProvider) as LidoSteth;
   }
 }

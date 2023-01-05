@@ -4,7 +4,7 @@
 
 import { Contract, Signer, utils } from 'ethers';
 import type { Provider } from '@ethersproject/providers';
-import type { StethEthOracle, StethEthOracleInterface } from '../StethEthOracle';
+import type { LidoStethEthOracle, LidoStethEthOracleInterface } from '../LidoStethEthOracle';
 
 const _abi = [
   {
@@ -516,12 +516,12 @@ const _abi = [
   },
 ];
 
-export class StethEthOracle__factory {
+export class LidoStethEthOracle__factory {
   static readonly abi = _abi;
-  static createInterface(): StethEthOracleInterface {
-    return new utils.Interface(_abi) as StethEthOracleInterface;
+  static createInterface(): LidoStethEthOracleInterface {
+    return new utils.Interface(_abi) as LidoStethEthOracleInterface;
   }
-  static connect(address: string, signerOrProvider: Signer | Provider): StethEthOracle {
-    return new Contract(address, _abi, signerOrProvider) as StethEthOracle;
+  static connect(address: string, signerOrProvider: Signer | Provider): LidoStethEthOracle {
+    return new Contract(address, _abi, signerOrProvider) as LidoStethEthOracle;
   }
 }

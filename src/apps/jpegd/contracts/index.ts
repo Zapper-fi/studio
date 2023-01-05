@@ -4,8 +4,7 @@ import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { ContractFactory } from '~contract/contracts';
 import { Network } from '~types/network.interface';
 
-import { JpegdBondDepository__factory } from './ethers';
-import { JpegdLpFarm__factory } from './ethers';
+import { JpegdBondDepository__factory, JpegdLpFarm__factory, JpegdLpFarmV2__factory } from './ethers';
 
 // eslint-disable-next-line
 type ContractOpts = { address: string; network: Network };
@@ -22,7 +21,11 @@ export class JpegdContractFactory extends ContractFactory {
   jpegdLpFarm({ address, network }: ContractOpts) {
     return JpegdLpFarm__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
+  jpegdLpFarmV2({ address, network }: ContractOpts) {
+    return JpegdLpFarmV2__factory.connect(address, this.appToolkit.getNetworkProvider(network));
+  }
 }
 
 export type { JpegdBondDepository } from './ethers';
 export type { JpegdLpFarm } from './ethers';
+export type { JpegdLpFarmV2 } from './ethers';

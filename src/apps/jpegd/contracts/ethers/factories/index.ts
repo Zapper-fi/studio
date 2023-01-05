@@ -3,3 +3,4 @@
 /* eslint-disable */
 export { JpegdBondDepository__factory } from './JpegdBondDepository__factory';
 export { JpegdLpFarm__factory } from './JpegdLpFarm__factory';
+export { JpegdLpFarmV2__factory } from './JpegdLpFarmV2__factory';

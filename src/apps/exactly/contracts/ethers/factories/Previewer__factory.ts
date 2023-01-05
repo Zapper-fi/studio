@@ -88,6 +88,11 @@ const _abi = [
           },
           {
             internalType: 'string',
+            name: 'assetName',
+            type: 'string',
+          },
+          {
+            internalType: 'string',
             name: 'assetSymbol',
             type: 'string',
           },
@@ -199,6 +204,16 @@ const _abi = [
             internalType: 'struct Previewer.FixedPool[]',
             name: 'fixedPools',
             type: 'tuple[]',
+          },
+          {
+            internalType: 'uint256',
+            name: 'floatingBorrowRate',
+            type: 'uint256',
+          },
+          {
+            internalType: 'uint256',
+            name: 'floatingUtilization',
+            type: 'uint256',
           },
           {
             internalType: 'uint256',
@@ -537,9 +552,26 @@ const _abi = [
     name: 'previewRepayAtMaturity',
     outputs: [
       {
-        internalType: 'uint256',
-        name: 'repayAssets',
-        type: 'uint256',
+        components: [
+          {
+            internalType: 'uint256',
+            name: 'maturity',
+            type: 'uint256',
+          },
+          {
+            internalType: 'uint256',
+            name: 'assets',
+            type: 'uint256',
+          },
+          {
+            internalType: 'uint256',
+            name: 'utilization',
+            type: 'uint256',
+          },
+        ],
+        internalType: 'struct Previewer.FixedPreview',
+        name: '',
+        type: 'tuple',
       },
     ],
     stateMutability: 'view',
@@ -564,16 +596,33 @@ const _abi = [
       },
       {
         internalType: 'address',
-        name: '',
+        name: 'owner',
         type: 'address',
       },
     ],
     name: 'previewWithdrawAtMaturity',
     outputs: [
       {
-        internalType: 'uint256',
-        name: 'withdrawAssets',
-        type: 'uint256',
+        components: [
+          {
+            internalType: 'uint256',
+            name: 'maturity',
+            type: 'uint256',
+          },
+          {
+            internalType: 'uint256',
+            name: 'assets',
+            type: 'uint256',
+          },
+          {
+            internalType: 'uint256',
+            name: 'utilization',
+            type: 'uint256',
+          },
+        ],
+        internalType: 'struct Previewer.FixedPreview',
+        name: '',
+        type: 'tuple',
       },
     ],
     stateMutability: 'view',

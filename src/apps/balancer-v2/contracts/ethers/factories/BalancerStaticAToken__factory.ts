@@ -4,20 +4,9 @@
 
 import { Contract, Signer, utils } from 'ethers';
 import type { Provider } from '@ethersproject/providers';
-import type { Wsteth, WstethInterface } from '../Wsteth';
+import type { BalancerStaticAToken, BalancerStaticATokenInterface } from '../BalancerStaticAToken';
 
 const _abi = [
-  {
-    inputs: [
-      {
-        internalType: 'contract IStETH',
-        name: '_stETH',
-        type: 'address',
-      },
-    ],
-    stateMutability: 'nonpayable',
-    type: 'constructor',
-  },
   {
     anonymous: false,
     inputs: [
@@ -70,15 +59,60 @@ const _abi = [
   },
   {
     inputs: [],
-    name: 'DOMAIN_SEPARATOR',
+    name: 'ASSET',
     outputs: [
       {
-        internalType: 'bytes32',
+        internalType: 'contract IERC20',
         name: '',
-        type: 'bytes32',
+        type: 'address',
       },
     ],
-    stateMutability: 'view',
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'ATOKEN',
+    outputs: [
+      {
+        internalType: 'contract IERC20',
+        name: '',
+        type: 'address',
+      },
+    ],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'LENDING_POOL',
+    outputs: [
+      {
+        internalType: 'address',
+        name: '',
+        type: 'address',
+      },
+    ],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'address',
+        name: 'owner',
+        type: 'address',
+      },
+    ],
+    name: '_nonces',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'nonpayable',
     type: 'function',
   },
   {
@@ -149,37 +183,34 @@ const _abi = [
     type: 'function',
   },
   {
-    inputs: [],
-    name: 'decimals',
-    outputs: [
-      {
-        internalType: 'uint8',
-        name: '',
-        type: 'uint8',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
     inputs: [
       {
         internalType: 'address',
-        name: 'spender',
+        name: 'recipient',
         type: 'address',
       },
       {
         internalType: 'uint256',
-        name: 'subtractedValue',
+        name: 'amount',
         type: 'uint256',
       },
-    ],
-    name: 'decreaseAllowance',
-    outputs: [
+      {
+        internalType: 'uint16',
+        name: 'referralCode',
+        type: 'uint16',
+      },
       {
         internalType: 'bool',
-        name: '',
+        name: 'fromUnderlying',
         type: 'bool',
+      },
+    ],
+    name: 'deposit',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
       },
     ],
     stateMutability: 'nonpayable',
@@ -188,76 +219,129 @@ const _abi = [
   {
     inputs: [
       {
-        internalType: 'uint256',
-        name: '_wstETHAmount',
-        type: 'uint256',
-      },
-    ],
-    name: 'getStETHByWstETH',
-    outputs: [
-      {
-        internalType: 'uint256',
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        internalType: 'uint256',
-        name: '_stETHAmount',
-        type: 'uint256',
-      },
-    ],
-    name: 'getWstETHByStETH',
-    outputs: [
-      {
-        internalType: 'uint256',
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
         internalType: 'address',
-        name: 'spender',
+        name: 'account',
         type: 'address',
       },
+    ],
+    name: 'dynamicBalanceOf',
+    outputs: [
       {
         internalType: 'uint256',
-        name: 'addedValue',
+        name: '',
         type: 'uint256',
       },
     ],
-    name: 'increaseAllowance',
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'uint256',
+        name: 'amount',
+        type: 'uint256',
+      },
+    ],
+    name: 'dynamicToStaticAmount',
     outputs: [
       {
-        internalType: 'bool',
+        internalType: 'uint256',
+        name: 'staticAmount',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'uint256',
+        name: 'chainId',
+        type: 'uint256',
+      },
+    ],
+    name: 'getDomainSeparator',
+    outputs: [
+      {
+        internalType: 'bytes32',
         name: '',
-        type: 'bool',
+        type: 'bytes32',
       },
     ],
     stateMutability: 'nonpayable',
     type: 'function',
   },
   {
-    inputs: [],
-    name: 'name',
-    outputs: [
+    inputs: [
       {
-        internalType: 'string',
-        name: '',
-        type: 'string',
+        internalType: 'address',
+        name: 'depositor',
+        type: 'address',
+      },
+      {
+        internalType: 'address',
+        name: 'recipient',
+        type: 'address',
+      },
+      {
+        internalType: 'uint256',
+        name: 'value',
+        type: 'uint256',
+      },
+      {
+        internalType: 'uint16',
+        name: 'referralCode',
+        type: 'uint16',
+      },
+      {
+        internalType: 'bool',
+        name: 'fromUnderlying',
+        type: 'bool',
+      },
+      {
+        internalType: 'uint256',
+        name: 'deadline',
+        type: 'uint256',
+      },
+      {
+        components: [
+          {
+            internalType: 'uint8',
+            name: 'v',
+            type: 'uint8',
+          },
+          {
+            internalType: 'bytes32',
+            name: 'r',
+            type: 'bytes32',
+          },
+          {
+            internalType: 'bytes32',
+            name: 's',
+            type: 'bytes32',
+          },
+        ],
+        internalType: 'struct IStaticAToken.SignatureParams',
+        name: 'sigParams',
+        type: 'tuple',
+      },
+      {
+        internalType: 'uint256',
+        name: 'chainId',
+        type: 'uint256',
       },
     ],
-    stateMutability: 'view',
+    name: 'metaDeposit',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'nonpayable',
     type: 'function',
   },
   {
@@ -267,16 +351,73 @@ const _abi = [
         name: 'owner',
         type: 'address',
       },
+      {
+        internalType: 'address',
+        name: 'recipient',
+        type: 'address',
+      },
+      {
+        internalType: 'uint256',
+        name: 'staticAmount',
+        type: 'uint256',
+      },
+      {
+        internalType: 'uint256',
+        name: 'dynamicAmount',
+        type: 'uint256',
+      },
+      {
+        internalType: 'bool',
+        name: 'toUnderlying',
+        type: 'bool',
+      },
+      {
+        internalType: 'uint256',
+        name: 'deadline',
+        type: 'uint256',
+      },
+      {
+        components: [
+          {
+            internalType: 'uint8',
+            name: 'v',
+            type: 'uint8',
+          },
+          {
+            internalType: 'bytes32',
+            name: 'r',
+            type: 'bytes32',
+          },
+          {
+            internalType: 'bytes32',
+            name: 's',
+            type: 'bytes32',
+          },
+        ],
+        internalType: 'struct IStaticAToken.SignatureParams',
+        name: 'sigParams',
+        type: 'tuple',
+      },
+      {
+        internalType: 'uint256',
+        name: 'chainId',
+        type: 'uint256',
+      },
     ],
-    name: 'nonces',
+    name: 'metaWithdraw',
     outputs: [
       {
         internalType: 'uint256',
         name: '',
         type: 'uint256',
       },
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
+      },
     ],
-    stateMutability: 'view',
+    stateMutability: 'nonpayable',
     type: 'function',
   },
   {
@@ -316,6 +457,11 @@ const _abi = [
         name: 's',
         type: 'bytes32',
       },
+      {
+        internalType: 'uint256',
+        name: 'chainId',
+        type: 'uint256',
+      },
     ],
     name: 'permit',
     outputs: [],
@@ -324,20 +470,7 @@ const _abi = [
   },
   {
     inputs: [],
-    name: 'stETH',
-    outputs: [
-      {
-        internalType: 'contract IStETH',
-        name: '',
-        type: 'address',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'stEthPerToken',
+    name: 'rate',
     outputs: [
       {
         internalType: 'uint256',
@@ -349,25 +482,18 @@ const _abi = [
     type: 'function',
   },
   {
-    inputs: [],
-    name: 'symbol',
-    outputs: [
+    inputs: [
       {
-        internalType: 'string',
-        name: '',
-        type: 'string',
+        internalType: 'uint256',
+        name: 'amount',
+        type: 'uint256',
       },
     ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'tokensPerStEth',
+    name: 'staticToDynamicAmount',
     outputs: [
       {
         internalType: 'uint256',
-        name: '',
+        name: 'dynamicAmount',
         type: 'uint256',
       },
     ],
@@ -391,7 +517,7 @@ const _abi = [
     inputs: [
       {
         internalType: 'address',
-        name: 'recipient',
+        name: 'to',
         type: 'address',
       },
       {
@@ -415,12 +541,12 @@ const _abi = [
     inputs: [
       {
         internalType: 'address',
-        name: 'sender',
+        name: 'from',
         type: 'address',
       },
       {
         internalType: 'address',
-        name: 'recipient',
+        name: 'to',
         type: 'address',
       },
       {
@@ -443,13 +569,28 @@ const _abi = [
   {
     inputs: [
       {
+        internalType: 'address',
+        name: 'recipient',
+        type: 'address',
+      },
+      {
         internalType: 'uint256',
-        name: '_wstETHAmount',
+        name: 'amount',
         type: 'uint256',
       },
+      {
+        internalType: 'bool',
+        name: 'toUnderlying',
+        type: 'bool',
+      },
     ],
-    name: 'unwrap',
+    name: 'withdraw',
     outputs: [
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
+      },
       {
         internalType: 'uint256',
         name: '',
@@ -462,13 +603,28 @@ const _abi = [
   {
     inputs: [
       {
+        internalType: 'address',
+        name: 'recipient',
+        type: 'address',
+      },
+      {
         internalType: 'uint256',
-        name: '_stETHAmount',
+        name: 'amount',
         type: 'uint256',
       },
+      {
+        internalType: 'bool',
+        name: 'toUnderlying',
+        type: 'bool',
+      },
     ],
-    name: 'wrap',
+    name: 'withdrawDynamicAmount',
     outputs: [
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
+      },
       {
         internalType: 'uint256',
         name: '',
@@ -478,18 +634,14 @@ const _abi = [
     stateMutability: 'nonpayable',
     type: 'function',
   },
-  {
-    stateMutability: 'payable',
-    type: 'receive',
-  },
 ];
 
-export class Wsteth__factory {
+export class BalancerStaticAToken__factory {
   static readonly abi = _abi;
-  static createInterface(): WstethInterface {
-    return new utils.Interface(_abi) as WstethInterface;
+  static createInterface(): BalancerStaticATokenInterface {
+    return new utils.Interface(_abi) as BalancerStaticATokenInterface;
   }
-  static connect(address: string, signerOrProvider: Signer | Provider): Wsteth {
-    return new Contract(address, _abi, signerOrProvider) as Wsteth;
+  static connect(address: string, signerOrProvider: Signer | Provider): BalancerStaticAToken {
+    return new Contract(address, _abi, signerOrProvider) as BalancerStaticAToken;
   }
 }
