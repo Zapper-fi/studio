@@ -40,6 +40,7 @@ export const LIDO_DEFINITION = appDefinition({
 
   supportedNetworks: {
     [Network.ETHEREUM_MAINNET]: [AppAction.VIEW],
+    [Network.MOONRIVER_MAINNET]: [AppAction.VIEW],
   },
 });
 
