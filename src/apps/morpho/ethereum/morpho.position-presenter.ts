@@ -8,7 +8,11 @@ import { MorphoContractPositionDataProps } from '~apps/morpho/helpers/position-f
 import { MetadataItemWithLabel } from '~balance/balance-fetcher.interface';
 import { isMulticallUnderlyingError } from '~multicall/multicall.ethers';
 import { ContractPositionBalance } from '~position/position-balance.interface';
-import { PositionPresenterTemplate, ReadonlyBalances } from '~position/template/position-presenter.template';
+import {
+  PositionDataPropsParams,
+  PositionPresenterTemplate,
+  ReadonlyBalances,
+} from '~position/template/position-presenter.template';
 
 import { MorphoContractFactory } from '../contracts';
 
@@ -45,11 +49,7 @@ export class EthereumMorphoPositionPresenter extends PositionPresenterTemplate<E
     address,
     groupLabel,
     balances,
-  }: {
-    address: string;
-    groupLabel: string;
-    balances: ReadonlyBalances;
-  }): Promise<EthereumMorphoPositionPresenterDataProps | undefined> {
+  }: PositionDataPropsParams): Promise<EthereumMorphoPositionPresenterDataProps | undefined> {
     switch (groupLabel) {
       case 'Morpho Aave': {
         const healthFactor = await this.getMorphoAaveHealthFactor(address);

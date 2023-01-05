@@ -2,7 +2,7 @@ import { Inject } from '@nestjs/common';
 
 import { PresentationConfig } from '~app/app.interface';
 import { MetadataItemWithLabel } from '~balance/balance-fetcher.interface';
-import { PositionPresenterTemplate, ReadonlyBalances } from '~position/template/position-presenter.template';
+import { PositionDataPropsParams, PositionPresenterTemplate } from '~position/template/position-presenter.template';
 
 import { AaveV2ContractFactory } from '../contracts';
 
@@ -61,11 +61,7 @@ export abstract class AaveV2PositionPresenter extends PositionPresenterTemplate<
     address,
     groupLabel,
     balances,
-  }: {
-    address: string;
-    groupLabel: string;
-    balances: ReadonlyBalances;
-  }): Promise<AaveV2PositionPresenterDataProps | undefined> {
+  }: PositionDataPropsParams): Promise<AaveV2PositionPresenterDataProps | undefined> {
     if (groupLabel !== 'Lending') return;
     if (!balances.some(balance => balance.balanceUSD < 0)) return;
 

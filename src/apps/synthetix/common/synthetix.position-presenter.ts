@@ -9,7 +9,7 @@ import {
 } from '~app-toolkit/helpers/presentation/display-item.present';
 import { MetadataItemWithLabel } from '~balance/balance-fetcher.interface';
 import { ContractType } from '~position/contract.interface';
-import { PositionPresenterTemplate, ReadonlyBalances } from '~position/template/position-presenter.template';
+import { PositionDataPropsParams, PositionPresenterTemplate } from '~position/template/position-presenter.template';
 
 import { SynthetixContractFactory } from '../contracts';
 
@@ -33,11 +33,7 @@ export abstract class SynthetixPositionPresenter extends PositionPresenterTempla
     address,
     groupLabel,
     balances,
-  }: {
-    address: string;
-    groupLabel: string;
-    balances: ReadonlyBalances;
-  }): Promise<SynthetixPositionPresenterDataProps | undefined> {
+  }: PositionDataPropsParams): Promise<SynthetixPositionPresenterDataProps | undefined> {
     if (groupLabel !== 'Mintr') return;
 
     let snxPrice: number | undefined;

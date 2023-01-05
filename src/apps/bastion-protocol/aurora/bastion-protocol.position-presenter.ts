@@ -2,7 +2,7 @@ import { PresenterTemplate } from '~app-toolkit/decorators/presenter-template.de
 import { PresentationConfig } from '~app/app.interface';
 import { MetadataItemWithLabel } from '~balance/balance-fetcher.interface';
 import { lendingDataProps, LendingDataProps, presentLendingDataProps } from '~position/position-presenter.utils';
-import { PositionPresenterTemplate, ReadonlyBalances } from '~position/template/position-presenter.template';
+import { PositionDataPropsParams, PositionPresenterTemplate } from '~position/template/position-presenter.template';
 
 @PresenterTemplate()
 export class AuroraBastionProtocolPositionPresenter extends PositionPresenterTemplate<LendingDataProps> {
@@ -80,14 +80,7 @@ export class AuroraBastionProtocolPositionPresenter extends PositionPresenterTem
     ],
   };
 
-  async positionDataProps({
-    balances,
-    groupLabel,
-  }: {
-    address: string;
-    groupLabel: string;
-    balances: ReadonlyBalances;
-  }): Promise<LendingDataProps | undefined> {
+  async positionDataProps({ balances, groupLabel }: PositionDataPropsParams): Promise<LendingDataProps | undefined> {
     if (['Aurora Ecosystem Realm', 'Main Hub Realm', 'Multichain Realm', 'Staked NEAR Realm'].includes(groupLabel)) {
       return lendingDataProps(balances);
     }

@@ -1,7 +1,7 @@
 import { PresentationConfig } from '~app/app.interface';
 import { MetadataItemWithLabel } from '~balance/balance-fetcher.interface';
 import { lendingDataProps, LendingDataProps, presentLendingDataProps } from '~position/position-presenter.utils';
-import { PositionPresenterTemplate, ReadonlyBalances } from '~position/template/position-presenter.template';
+import { PositionDataPropsParams, PositionPresenterTemplate } from '~position/template/position-presenter.template';
 
 export abstract class CompoundPositionPresenter extends PositionPresenterTemplate<LendingDataProps> {
   explorePresentationConfig?: PresentationConfig = {
@@ -25,14 +25,7 @@ export abstract class CompoundPositionPresenter extends PositionPresenterTemplat
     ],
   };
 
-  async positionDataProps({
-    balances,
-    groupLabel,
-  }: {
-    address: string;
-    groupLabel: string;
-    balances: ReadonlyBalances;
-  }): Promise<LendingDataProps | undefined> {
+  async positionDataProps({ balances, groupLabel }: PositionDataPropsParams): Promise<LendingDataProps | undefined> {
     if (groupLabel === 'Lending') {
       return lendingDataProps(balances);
     }

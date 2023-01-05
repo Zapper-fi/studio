@@ -4,6 +4,12 @@ import { DefaultDataProps } from '~position/display.interface';
 import { ContractPositionBalance, TokenBalance } from '~position/position-balance.interface';
 import { Network } from '~types';
 
+export type PositionDataPropsParams = {
+  address: string;
+  groupLabel: string;
+  balances: ReadonlyBalances;
+};
+
 export abstract class PositionPresenterTemplate<T extends DefaultDataProps = DefaultDataProps> {
   network: Network;
   appId: string;
@@ -11,14 +17,11 @@ export abstract class PositionPresenterTemplate<T extends DefaultDataProps = Def
   positionGroups?: PositionGroup[];
   explorePresentationConfig?: PresentationConfig;
 
-  async positionDataProps(_opts: {
-    address: string;
-    groupLabel: string;
-    balances: ReadonlyBalances;
-  }): Promise<T | undefined> {
+  async positionDataProps(_opts: PositionDataPropsParams): Promise<T | undefined> {
     return undefined;
   }
 
+  // NOTE: This method is not async on purpose since it is called inline when rendering each positions.
   presentDataProps(_dataProps: T): MetadataItemWithLabel[] {
     return [];
   }
