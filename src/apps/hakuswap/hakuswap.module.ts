@@ -1,13 +1,13 @@
-import { Register } from '~app-toolkit/decorators';
+import { Module } from '@nestjs/common';
+
 import { AbstractApp } from '~app/app.dynamic-module';
 
 import { AvalancheHakuswapFarmContractPositionFetcher } from './avalanche/hakuswap.farm.contract-position-fetcher';
 import { AvalancheHakuswapPoolTokenFetcher } from './avalanche/hakuswap.pool.token-fetcher';
 import { HakuswapContractFactory } from './contracts';
-import { HakuswapAppDefinition, HAKUSWAP_DEFINITION } from './hakuswap.definition';
+import { HakuswapAppDefinition } from './hakuswap.definition';
 
-@Register.AppModule({
-  appId: HAKUSWAP_DEFINITION.id,
+@Module({
   providers: [
     HakuswapAppDefinition,
     HakuswapContractFactory,

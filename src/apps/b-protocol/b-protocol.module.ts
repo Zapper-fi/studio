@@ -1,4 +1,5 @@
-import { Register } from '~app-toolkit/decorators';
+import { Module } from '@nestjs/common';
+
 import { AbstractApp } from '~app/app.dynamic-module';
 import { CompoundContractFactory } from '~apps/compound';
 import { MakerContractFactory } from '~apps/maker';
@@ -9,10 +10,9 @@ import { EthereumBProtocolCompoundSupplyTokenFetcher } from './ethereum/b-protoc
 import { EthereumLiquityStabilityPoolContractPositionFetcher } from './ethereum/b-protocol.liquity-stability-pool.contract-position-fetcher';
 import { EthereumBProtocolMakerVaultContractPositionFetcher } from './ethereum/b-protocol.maker-vault.contract-position-fetcher';
 
-import { BProtocolAppDefinition, B_PROTOCOL_DEFINITION } from '.';
+import { BProtocolAppDefinition } from '.';
 
-@Register.AppModule({
-  appId: B_PROTOCOL_DEFINITION.id,
+@Module({
   providers: [
     BProtocolAppDefinition,
     BProtocolContractFactory,

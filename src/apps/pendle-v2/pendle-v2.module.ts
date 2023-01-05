@@ -1,4 +1,5 @@
-import { Register } from '~app-toolkit/decorators';
+import { Module } from '@nestjs/common';
+
 import { AbstractApp } from '~app/app.dynamic-module';
 
 import { PendleV2ContractFactory } from './contracts';
@@ -7,10 +8,9 @@ import { EthereumPendleV2PrincipalTokenFetcher } from './ethereum/pendle-v2.prin
 import { EthereumPendleV2StandardizedYieldTokenFetcher } from './ethereum/pendle-v2.standardized-yield.token-fetcher';
 import { EthereumPendleV2VotingEscrowContractPositionFetcher } from './ethereum/pendle-v2.voting-escrow.contract-position-fetcher';
 import { EthereumPendleV2YieldTokenFetcher } from './ethereum/pendle-v2.yield.token-fetcher';
-import { PendleV2AppDefinition, PENDLE_V_2_DEFINITION } from './pendle-v2.definition';
+import { PendleV2AppDefinition } from './pendle-v2.definition';
 
-@Register.AppModule({
-  appId: PENDLE_V_2_DEFINITION.id,
+@Module({
   providers: [
     EthereumPendleV2PoolTokenFetcher,
     EthereumPendleV2PrincipalTokenFetcher,

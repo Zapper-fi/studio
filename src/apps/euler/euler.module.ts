@@ -1,4 +1,5 @@
-import { Register } from '~app-toolkit/decorators';
+import { Module } from '@nestjs/common';
+
 import { AbstractApp } from '~app/app.dynamic-module';
 
 import { EthereumEulerPositionPresenter } from './common/euler.position-presenter';
@@ -7,10 +8,9 @@ import { EulerContractFactory } from './contracts';
 import { EthereumEulerDTokenTokenFetcher } from './ethereum/euler.d-token.token-fetcher';
 import { EthereumEulerETokenTokenFetcher } from './ethereum/euler.e-token.token-fetcher';
 import { EthereumEulerPTokenTokenFetcher } from './ethereum/euler.p-token.token-fetcher';
-import { EulerAppDefinition, EULER_DEFINITION } from './euler.definition';
+import { EulerAppDefinition } from './euler.definition';
 
-@Register.AppModule({
-  appId: EULER_DEFINITION.id,
+@Module({
   providers: [
     EulerAppDefinition,
     EulerContractFactory,

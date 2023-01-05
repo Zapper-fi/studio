@@ -1,4 +1,5 @@
-import { Register } from '~app-toolkit/decorators';
+import { Module } from '@nestjs/common';
+
 import { AbstractApp } from '~app/app.dynamic-module';
 
 import { AvalanchePlatypusFinanceChefContractPositionFetcher } from './avalanche/platypus-finance.chef.contract-position-fetcher';
@@ -6,10 +7,9 @@ import { AvalanchePlatypusFinanceFarmContractPositionFetcher } from './avalanche
 import { AvalanchePlatypusFinancePoolTokenFetcher } from './avalanche/platypus-finance.pool.token-fetcher';
 import { AvalanchePlatypusFinanceVotingEscrowContractPositionFetcher } from './avalanche/platypus-finance.voting-escrow.contract-position-fetcher';
 import { PlatypusFinanceContractFactory } from './contracts';
-import { PlatypusFinanceAppDefinition, PLATYPUS_FINANCE_DEFINITION } from './platypus-finance.definition';
+import { PlatypusFinanceAppDefinition } from './platypus-finance.definition';
 
-@Register.AppModule({
-  appId: PLATYPUS_FINANCE_DEFINITION.id,
+@Module({
   providers: [
     PlatypusFinanceAppDefinition,
     PlatypusFinanceContractFactory,

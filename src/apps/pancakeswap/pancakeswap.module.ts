@@ -1,4 +1,5 @@
-import { Register } from '~app-toolkit/decorators';
+import { Module } from '@nestjs/common';
+
 import { AbstractApp } from '~app/app.dynamic-module';
 import { UniswapV2ContractFactory } from '~apps/uniswap-v2';
 
@@ -12,10 +13,9 @@ import { BinanceSmartChainPancakeSwapPoolTokenFetcher } from './binance-smart-ch
 import { BinanceSmartChainPancakeswapSyrupCakeContractPositionFetcher } from './binance-smart-chain/pancakeswap.syrup-cake.contract-position-fetcher';
 import { BinanceSmartChainPancakeswapSyrupStakingContractPositionFetcher } from './binance-smart-chain/pancakeswap.syrup-staking.contract-position-fetcher';
 import { PancakeswapContractFactory } from './contracts';
-import { PancakeswapAppDefinition, PANCAKESWAP_DEFINITION } from './pancakeswap.definition';
+import { PancakeswapAppDefinition } from './pancakeswap.definition';
 
-@Register.AppModule({
-  appId: PANCAKESWAP_DEFINITION.id,
+@Module({
   providers: [
     PancakeswapAppDefinition,
     PancakeswapContractFactory,

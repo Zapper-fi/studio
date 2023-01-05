@@ -1,4 +1,5 @@
-import { Register } from '~app-toolkit/decorators';
+import { Module } from '@nestjs/common';
+
 import { AbstractApp } from '~app/app.dynamic-module';
 
 import { TokemakClaimableResolver } from './common/tokemak.claimable.resolver';
@@ -7,10 +8,9 @@ import { EthereumTokemakAccTokeTokenFetcher } from './ethereum/tokemak.acc-toke.
 import { EthereumTokemakClaimableContractPositionFetcher } from './ethereum/tokemak.claimable.contract-position-fetcher';
 import { EthereumTokemakFarmContractPositionFetcher } from './ethereum/tokemak.farm.contract-position-fetcher';
 import { EthereumTokemakReactorTokenFetcher } from './ethereum/tokemak.reactor.token-fetcher';
-import { TokemakAppDefinition, TOKEMAK_DEFINITION } from './tokemak.definition';
+import { TokemakAppDefinition } from './tokemak.definition';
 
-@Register.AppModule({
-  appId: TOKEMAK_DEFINITION.id,
+@Module({
   providers: [
     TokemakAppDefinition,
     TokemakContractFactory,

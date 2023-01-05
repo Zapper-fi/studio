@@ -1,13 +1,13 @@
-import { Register } from '~app-toolkit/decorators';
+import { Module } from '@nestjs/common';
+
 import { AbstractApp } from '~app/app.dynamic-module';
 
 import { IdleContractFactory } from './contracts';
 import { EthereumIdleVaultContractPositionFetcher } from './ethereum/idle.vault.contract-position-fetcher';
 import { EthereumIdleVaultTokenFetcher } from './ethereum/idle.vault.token-fetcher';
-import IDLE_DEFINITION, { IdleAppDefinition } from './idle.definition';
+import { IdleAppDefinition } from './idle.definition';
 
-@Register.AppModule({
-  appId: IDLE_DEFINITION.id,
+@Module({
   providers: [
     IdleAppDefinition,
     IdleContractFactory,

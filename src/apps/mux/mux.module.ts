@@ -1,4 +1,5 @@
-import { Register } from '~app-toolkit/decorators';
+import { Module } from '@nestjs/common';
+
 import { AbstractApp } from '~app/app.dynamic-module';
 
 import { ArbitrumMuxFarmContractPositionFetcher } from './arbitrum/mux.farm.contract-position-fetcher';
@@ -12,10 +13,9 @@ import { BinanceSmartChainMuxPerpContractPositionFetcher } from './binance-smart
 import { MuxContractFactory } from './contracts';
 import { FantomMuxMlpTokenFetcher } from './fantom/mux.mlp.token-fetcher';
 import { FantomMuxPerpContractPositionFetcher } from './fantom/mux.perp.contract-position-fetcher';
-import { MuxAppDefinition, MUX_DEFINITION } from './mux.definition';
+import { MuxAppDefinition } from './mux.definition';
 
-@Register.AppModule({
-  appId: MUX_DEFINITION.id,
+@Module({
   providers: [
     MuxAppDefinition,
     MuxContractFactory,
