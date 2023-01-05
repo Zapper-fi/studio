@@ -1,116 +1,109 @@
 import { Inject } from '@nestjs/common';
-import _ from 'lodash';
+import { BigNumberish } from 'ethers';
+import { uniq } from 'lodash';
 
-import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
-import { Register } from '~app-toolkit/decorators';
-import { getImagesFromToken } from '~app-toolkit/helpers/presentation/image.present';
-import { ContractType } from '~position/contract.interface';
-import { PositionFetcher } from '~position/position-fetcher.interface';
-import { ContractPosition, MetaType } from '~position/position.interface';
-import { borrowed, supplied } from '~position/position.utils';
-import { Network } from '~types/network.interface';
+import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
+import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
+import { DefaultDataProps } from '~position/display.interface';
+import { MetaType } from '~position/position.interface';
+import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
+import {
+  GetDisplayPropsParams,
+  GetTokenBalancesParams,
+  GetTokenDefinitionsParams,
+} from '~position/template/contract-position.template.types';
 
-import { getMarkets } from '../common/inverse-firm.utils';
-import { InverseFirmContractFactory } from '../contracts';
-import { INVERSE_FIRM_DEFINITION } from '../inverse-firm.definition';
+import { InverseFirmContractFactory, SimpleMarket } from '../contracts';
 
-const appId = INVERSE_FIRM_DEFINITION.id;
-const dola = INVERSE_FIRM_DEFINITION.dola;
-const dbr = INVERSE_FIRM_DEFINITION.dbr;
-const groupId = INVERSE_FIRM_DEFINITION.groups.loan.id;
-const network = Network.ETHEREUM_MAINNET;
+export type InverseFirmLoanContractPositionDefinition = {
+  address: string;
+  suppliedTokenAddress: string;
+  borrowedTokenAddress: string;
+};
 
-@Register.ContractPositionFetcher({ appId, groupId, network })
-export class EthereumInverseFirmLoanContractPositionFetcher implements PositionFetcher<ContractPosition> {
+@PositionTemplate()
+export class EthereumInverseFirmLoanContractPositionFetcher extends ContractPositionTemplatePositionFetcher<
+  SimpleMarket,
+  DefaultDataProps,
+  InverseFirmLoanContractPositionDefinition
+> {
+  groupLabel = 'Lending';
+
   constructor(
-    @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
-    @Inject(InverseFirmContractFactory) private readonly inverseFirmContractFactory: InverseFirmContractFactory,
-  ) {}
-
-  async getMarkets() {
-    const dbrContract = this.inverseFirmContractFactory.dbr({ address: dbr, network });
-    return getMarkets(dbrContract);
+    @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
+    @Inject(InverseFirmContractFactory) private readonly contractFactory: InverseFirmContractFactory,
+  ) {
+    super(appToolkit);
   }
 
-  async getPositions() {
-    const baseTokens = await this.appToolkit.getBaseTokenPrices(network);
-    const dolaToken = baseTokens.find(bt => bt.address === dola.toLowerCase())!;
-    const dolaAsBorrowToken = borrowed(dolaToken);
+  getContract(address: string): SimpleMarket {
+    return this.contractFactory.simpleMarket({ network: this.network, address });
+  }
 
-    const markets = await this.getMarkets();
+  async getDefinitions(): Promise<InverseFirmLoanContractPositionDefinition[]> {
+    const multicall = this.appToolkit.getMulticall(this.network);
 
-    const multicall = this.appToolkit.getMulticall(network);
-    const dolaContract = this.appToolkit.globalContracts.erc20({ address: dola, network });
+    const dolaBorrowRightContract = this.contractFactory.dbr({
+      address: '0xad038eb671c44b853887a7e32528fab35dc5d710',
+      network: this.network,
+    });
 
-    const marketsData = await Promise.all(
-      markets.map(m => {
-        const contract = this.inverseFirmContractFactory.simpleMarket({ address: m, network });
-        return Promise.all([
-          multicall.wrap(contract).totalDebt(),
-          multicall.wrap(contract).collateral(),
-          multicall.wrap(dolaContract).balanceOf(m),
-        ]);
+    const logs = await dolaBorrowRightContract.queryFilter(dolaBorrowRightContract.filters.AddMarket(), 16155757);
+    const markets = uniq(logs.map(l => l.args.market.toLowerCase()));
+
+    const definitions = await Promise.all(
+      markets.map(async address => {
+        const simpleMarketContract = this.contractFactory.simpleMarket({ address, network: this.network });
+        const collateralTokenAddressRaw = await multicall.wrap(simpleMarketContract).collateral();
+
+        return {
+          address,
+          suppliedTokenAddress: collateralTokenAddressRaw.toLowerCase(),
+          borrowedTokenAddress: '0x865377367054516e17014ccded1e7d814edc9ce4', // dola
+        };
       }),
     );
 
-    const positions: ContractPosition[] = marketsData.map((data, i) => {
-      const collateralAddress = data[1];
-      const dolaBalance = data[2];
-      const liquidity = Number(dolaBalance) / 1e18;
-      const token = baseTokens.find(bt => bt.address === collateralAddress.toLowerCase())!;
-      const suppliedToken = supplied(token);
+    return definitions;
+  }
 
-      const tokens = [
-        {
-          type: suppliedToken.type,
-          network: suppliedToken.network,
-          address: suppliedToken.address,
-          symbol: suppliedToken.symbol,
-          decimals: suppliedToken.decimals,
-          price: suppliedToken.price,
-          metaType: MetaType.SUPPLIED,
-        },
-        {
-          type: dolaAsBorrowToken.type,
-          network: dolaAsBorrowToken.network,
-          address: dolaAsBorrowToken.address,
-          symbol: dolaAsBorrowToken.symbol,
-          decimals: dolaAsBorrowToken.decimals,
-          price: dolaAsBorrowToken.price,
-          metaType: MetaType.BORROWED,
-        },
-      ];
+  async getTokenDefinitions({
+    definition,
+  }: GetTokenDefinitionsParams<SimpleMarket, InverseFirmLoanContractPositionDefinition>) {
+    return [
+      {
+        metaType: MetaType.SUPPLIED,
+        address: definition.suppliedTokenAddress,
+        network: this.network,
+      },
+      {
+        metaType: MetaType.BORROWED,
+        address: definition.borrowedTokenAddress,
+        network: this.network,
+      },
+    ];
+  }
 
-      return {
-        type: ContractType.POSITION,
-        address: markets[i],
-        appId,
-        groupId,
-        network,
-        tokens,
-        dataProps: {
-          liquidity,
-        },
-        displayProps: {
-          label: `${suppliedToken.symbol} Market`,
-          secondaryLabel: {
-            type: 'dollar',
-            value: suppliedToken.price,
-          },
-          images: getImagesFromToken(suppliedToken),
-        },
-        statsItems: [
-          {
-            label: 'Total Liquidity',
-            value: {
-              type: 'dollar',
-              value: liquidity,
-            },
-          },
-        ],
-      };
+  async getLabel({ contractPosition }: GetDisplayPropsParams<SimpleMarket>): Promise<string> {
+    return `${getLabelFromToken(contractPosition.tokens[0])} Market`;
+  }
+
+  async getTokenBalancesPerPosition({
+    address,
+    contract,
+    multicall,
+  }: GetTokenBalancesParams<SimpleMarket>): Promise<BigNumberish[]> {
+    const personalEscrow = await contract.escrows(address);
+
+    const simpleEscrowContract = this.contractFactory.simpleEscrow({
+      address: personalEscrow.toLowerCase(),
+      network: this.network,
     });
+    const supplied = await multicall.wrap(simpleEscrowContract).balance();
 
-    return _.compact(positions);
+    const borrowed = await contract.debts(address);
+
+    return [supplied, borrowed];
   }
 }
