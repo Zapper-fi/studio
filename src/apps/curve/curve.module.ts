@@ -1,11 +1,12 @@
-import { Register } from '~app-toolkit/decorators';
+import { Module } from '@nestjs/common';
+
 import { AbstractApp } from '~app/app.dynamic-module';
 
 import { ARBITRUM_CURVE_PROVIDERS } from './arbitrum';
 import { AVALANCHE_CURVE_PROVIDERS } from './avalanche';
 import { CurveVolumeDataLoader } from './common/curve.volume.data-loader';
 import { CurveContractFactory } from './contracts';
-import { CurveAppDefinition, CURVE_DEFINITION } from './curve.definition';
+import { CurveAppDefinition } from './curve.definition';
 import { ETHEREUM_CURVE_PROVIDERS } from './ethereum';
 import { FANTOM_CURVE_PROVIDERS } from './fantom';
 import { GNOSIS_CURVE_PROVIDERS } from './gnosis';
@@ -14,8 +15,7 @@ import { CurveVotingEscrowContractPositionHelper } from './helpers/curve.voting-
 import { OPTIMISM_CURVE_PROVIDERS } from './optimism';
 import { POLYGON_CURVE_PROVIDERS } from './polygon';
 
-@Register.AppModule({
-  appId: CURVE_DEFINITION.id,
+@Module({
   providers: [
     CurveAppDefinition,
     CurveContractFactory,

@@ -1,4 +1,5 @@
-import { Register } from '~app-toolkit/decorators';
+import { Module } from '@nestjs/common';
+
 import { AbstractApp } from '~app/app.dynamic-module';
 
 import { UniswapV2ContractFactory } from './contracts';
@@ -9,10 +10,9 @@ import { UniswapV2PoolTokenHelper } from './helpers/uniswap-v2.pool.token-helper
 import { UniswapV2TheGraphPoolTokenAddressStrategy } from './helpers/uniswap-v2.the-graph.pool-token-address-strategy';
 import { UniswapV2TheGraphPoolTokenBalanceHelper } from './helpers/uniswap-v2.the-graph.pool-token-balance-helper';
 import { UniswapV2TheGraphPoolVolumeStrategy } from './helpers/uniswap-v2.the-graph.pool-volume-strategy';
-import { UNISWAP_V2_DEFINITION, UniswapV2AppDefinition } from './uniswap-v2.definition';
+import { UniswapV2AppDefinition } from './uniswap-v2.definition';
 
-@Register.AppModule({
-  appId: UNISWAP_V2_DEFINITION.id,
+@Module({
   providers: [
     UniswapV2AppDefinition,
     UniswapV2ContractFactory,

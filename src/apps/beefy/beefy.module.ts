@@ -1,11 +1,12 @@
-import { Register } from '~app-toolkit/decorators';
+import { Module } from '@nestjs/common';
+
 import { AbstractApp } from '~app/app.dynamic-module';
 
 import { ArbitrumBeefyBoostVaultContractPositionFetcher } from './arbitrum/beefy.boost-vault.contract-position-fetcher';
 import { ArbitrumBeefyVaultTokenFetcher } from './arbitrum/beefy.vault.token-fetcher';
 import { AvalancheBeefyBoostVaultContractPositionFetcher } from './avalanche/beefy.boost-vault.contract-position-fetcher';
 import { AvalancheBeefyVaultTokenFetcher } from './avalanche/beefy.vault.token-fetcher';
-import { BeefyAppDefinition, BEEFY_DEFINITION } from './beefy.definition';
+import { BeefyAppDefinition } from './beefy.definition';
 import { BinanceSmartChainBeefyBoostVaultContractPositionFetcher } from './binance-smart-chain/beefy.boost-vault.contract-position-fetcher';
 import { BinanceSmartChainBeefyVaultTokenFetcher } from './binance-smart-chain/beefy.vault.token-fetcher';
 import { BeefyBoostVaultDefinitionsResolver } from './common/beefy.boost-vault.definition-resolver';
@@ -18,8 +19,7 @@ import { OptimismBeefyVaultTokenFetcher } from './optimism/beefy.vault.token-fet
 import { PolygonBeefyBoostVaultContractPositionFetcher } from './polygon/beefy.boost-vault.contract-position-fetcher';
 import { PolygonBeefyVaultTokenFetcher } from './polygon/beefy.vault.token-fetcher';
 
-@Register.AppModule({
-  appId: BEEFY_DEFINITION.id,
+@Module({
   providers: [
     BeefyAppDefinition,
     BeefyContractFactory,

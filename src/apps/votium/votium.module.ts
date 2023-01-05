@@ -1,13 +1,13 @@
-import { Register } from '~app-toolkit/decorators';
+import { Module } from '@nestjs/common';
+
 import { AbstractApp } from '~app/app.dynamic-module';
 
 import { VotiumContractFactory } from './contracts';
 import { EthereumVotiumClaimableContractPositionFetcher } from './ethereum/votium.claimable.contract-position-fetcher';
 import { EthereumVotiumMerkleCache } from './ethereum/votium.merkle-cache';
-import { VotiumAppDefinition, VOTIUM_DEFINITION } from './votium.definition';
+import { VotiumAppDefinition } from './votium.definition';
 
-@Register.AppModule({
-  appId: VOTIUM_DEFINITION.id,
+@Module({
   providers: [
     EthereumVotiumClaimableContractPositionFetcher,
     EthereumVotiumMerkleCache,

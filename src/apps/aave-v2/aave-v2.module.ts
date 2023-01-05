@@ -1,7 +1,8 @@
-import { Register } from '~app-toolkit/decorators';
+import { Module } from '@nestjs/common';
+
 import { AbstractApp } from '~app/app.dynamic-module';
 
-import { AaveV2AppDefinition, AAVE_V2_DEFINITION } from './aave-v2.definition';
+import { AaveV2AppDefinition } from './aave-v2.definition';
 import { AvalancheAaveV2ClaimableContractPositionFetcher } from './avalanche/aave-v2.claimable.contract-position-fetcher';
 import { AvalancheAaveV2PositionPresenter } from './avalanche/aave-v2.position-presenter';
 import { AvalancheAaveV2StableDebtTokenFetcher } from './avalanche/aave-v2.stable-debt.token-fetcher';
@@ -21,8 +22,7 @@ import { PolygonAaveV2StableDebtTokenFetcher } from './polygon/aave-v2.stable-de
 import { PolygonAaveV2SupplyTokenFetcher } from './polygon/aave-v2.supply.token-fetcher';
 import { PolygonAaveV2VariableDebtTokenFetcher } from './polygon/aave-v2.variable-debt.token-fetcher';
 
-@Register.AppModule({
-  appId: AAVE_V2_DEFINITION.id,
+@Module({
   providers: [
     AaveV2AppDefinition,
     AaveV2ClaimableBalanceHelper,

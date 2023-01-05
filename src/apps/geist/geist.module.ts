@@ -1,4 +1,5 @@
-import { Register } from '~app-toolkit/decorators';
+import { Module } from '@nestjs/common';
+
 import { AbstractApp } from '~app/app.dynamic-module';
 import { AaveV2ContractFactory } from '~apps/aave-v2';
 
@@ -9,10 +10,9 @@ import { FantomGeistPositionPresenter } from './fantom/geist.position-presentati
 import { FantomGeistStableDebtTokenFetcher } from './fantom/geist.stable-debt.token-fetcher';
 import { FantomGeistSupplyTokenFetcher } from './fantom/geist.supply.token-fetcher';
 import { FantomGeistVariableDebtTokenFetcher } from './fantom/geist.variable-debt.token-fetcher';
-import { GeistAppDefinition, GEIST_DEFINITION } from './geist.definition';
+import { GeistAppDefinition } from './geist.definition';
 
-@Register.AppModule({
-  appId: GEIST_DEFINITION.id,
+@Module({
   providers: [
     GeistAppDefinition,
     GeistContractFactory,

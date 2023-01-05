@@ -1,12 +1,12 @@
-import { Register } from '~app-toolkit/decorators';
+import { Module } from '@nestjs/common';
+
 import { AbstractApp } from '~app/app.dynamic-module';
 
-import { AuroraPlusAppDefinition, AURORA_PLUS_DEFINITION } from './aurora-plus.definition';
+import { AuroraPlusAppDefinition } from './aurora-plus.definition';
 import { AuroraAuroraPlusStakeContractPositionFetcher } from './aurora/aurora-plus.stake.contract-position-fetcher';
 import { AuroraPlusContractFactory } from './contracts';
 
-@Register.AppModule({
-  appId: AURORA_PLUS_DEFINITION.id,
+@Module({
   providers: [
     AuroraPlusAppDefinition,
     AuroraPlusContractFactory,

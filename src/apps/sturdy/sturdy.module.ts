@@ -1,4 +1,5 @@
-import { Register } from '~app-toolkit/decorators';
+import { Module } from '@nestjs/common';
+
 import { AbstractApp } from '~app/app.dynamic-module';
 import { AaveAmmContractFactory } from '~apps/aave-amm/contracts';
 import { AaveV2ContractFactory } from '~apps/aave-v2';
@@ -12,10 +13,9 @@ import { FantomSturdyPositionPresenter } from './fantom/sturdy.position-presente
 import { FantomSturdyStableDebtTokenFetcher } from './fantom/sturdy.stable-debt.token-fetcher';
 import { FantomSturdySupplyTokenFetcher } from './fantom/sturdy.supply.token-fetcher';
 import { FantomSturdyVariableDebtTokenFetcher } from './fantom/sturdy.variable-debt.token-fetcher';
-import { SturdyAppDefinition, STURDY_DEFINITION } from './sturdy.definition';
+import { SturdyAppDefinition } from './sturdy.definition';
 
-@Register.AppModule({
-  appId: STURDY_DEFINITION.id,
+@Module({
   providers: [
     SturdyAppDefinition,
     SturdyContractFactory,

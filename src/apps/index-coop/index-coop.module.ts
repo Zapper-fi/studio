@@ -1,13 +1,13 @@
-import { Register } from '~app-toolkit/decorators';
+import { Module } from '@nestjs/common';
+
 import { AbstractApp } from '~app/app.dynamic-module';
 
 import { IndexCoopContractFactory } from './contracts';
 import { EthereumIndexCoopFarmContractPositionFetcher } from './ethereum/index-coop.farm.contract-position-fetcher';
 import { EthereumIndexCoopIndexTokenFetcher } from './ethereum/index-coop.index.token-fetcher';
-import { IndexCoopAppDefinition, INDEX_COOP_DEFINITION } from './index-coop.definition';
+import { IndexCoopAppDefinition } from './index-coop.definition';
 
-@Register.AppModule({
-  appId: INDEX_COOP_DEFINITION.id,
+@Module({
   providers: [
     IndexCoopAppDefinition,
     IndexCoopContractFactory,

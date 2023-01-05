@@ -1,4 +1,5 @@
-import { Register } from '~app-toolkit/decorators';
+import { Module } from '@nestjs/common';
+
 import { AbstractApp } from '~app/app.dynamic-module';
 
 import { AvalancheMarketXyzBorrowContractPositionFetcher } from './avalanche/market-xyz.borrow.contract-position-fetcher';
@@ -8,13 +9,12 @@ import { MarketXyzContractFactory } from './contracts';
 import { FantomMarketXyzBorrowContractPositionFetcher } from './fantom/market-xyz.borrow.contract-position-fetcher';
 import { FantomMarketXyzPositionPresenter } from './fantom/market-xyz.position-presenter';
 import { FantomMarketXyzSupplyTokenFetcher } from './fantom/market-xyz.supply.token-fetcher';
-import { MarketXyzAppDefinition, MARKET_XYZ_DEFINITION } from './market-xyz.definition';
+import { MarketXyzAppDefinition } from './market-xyz.definition';
 import { PolygonMarketXyzBorrowContractPositionFetcher } from './polygon/market-xyz.borrow.contract-position-fetcher';
 import { PolygonMarketXyzPositionPresenter } from './polygon/market-xyz.position-presenter';
 import { PolygonMarketXyzSupplyTokenFetcher } from './polygon/market-xyz.supply.token-fetcher';
 
-@Register.AppModule({
-  appId: MARKET_XYZ_DEFINITION.id,
+@Module({
   providers: [
     MarketXyzAppDefinition,
     MarketXyzContractFactory,

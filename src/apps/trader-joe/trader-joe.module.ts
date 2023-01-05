@@ -1,4 +1,5 @@
-import { Register } from '~app-toolkit/decorators';
+import { Module } from '@nestjs/common';
+
 import { AbstractApp } from '~app/app.dynamic-module';
 import { UniswapV2ContractFactory } from '~apps/uniswap-v2';
 
@@ -11,10 +12,9 @@ import { AvalancheTraderJoeVeJoeContractPositionFetcher } from './avalanche/trad
 import { AvalancheTraderJoeVeJoeTokenFetcher } from './avalanche/trader-joe.ve-joe.token-fetcher';
 import { AvalancheTraderJoeXJoeTokenFetcher } from './avalanche/trader-joe.x-joe.token-fetcher';
 import { TraderJoeContractFactory } from './contracts';
-import { TraderJoeAppDefinition, TRADER_JOE_DEFINITION } from './trader-joe.definition';
+import { TraderJoeAppDefinition } from './trader-joe.definition';
 
-@Register.AppModule({
-  appId: TRADER_JOE_DEFINITION.id,
+@Module({
   providers: [
     TraderJoeAppDefinition,
     TraderJoeContractFactory,

@@ -1,4 +1,5 @@
-import { Register } from '~app-toolkit/decorators';
+import { Module } from '@nestjs/common';
+
 import { AbstractApp } from '~app/app.dynamic-module';
 
 import { ExactlyDefinitionsResolver } from './common/exactly.definitions-resolver';
@@ -8,10 +9,9 @@ import { EthereumExactlyDepositFetcher } from './ethereum/exactly.deposit.token-
 import { EthereumExactlyFixedBorrowFetcher } from './ethereum/exactly.fixed-borrow.token-fetcher';
 import { EthereumExactlyFixedDepositFetcher } from './ethereum/exactly.fixed-deposit.token-fetcher';
 import { EthereumExactlyPositionPresenter } from './ethereum/exactly.position-presenter';
-import { ExactlyAppDefinition, EXACTLY_DEFINITION } from './exactly.definition';
+import { ExactlyAppDefinition } from './exactly.definition';
 
-@Register.AppModule({
-  appId: EXACTLY_DEFINITION.id,
+@Module({
   providers: [
     ExactlyAppDefinition,
     ExactlyContractFactory,

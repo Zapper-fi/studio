@@ -1,12 +1,12 @@
-import { Register } from '~app-toolkit/decorators';
+import { Module } from '@nestjs/common';
+
 import { AbstractApp } from '~app/app.dynamic-module';
 
 import { IqContractFactory } from './contracts';
 import { EthereumIqHiiqContractPositionFetcher } from './ethereum/iq.hiiq.contract-position-fetcher';
-import { IqAppDefinition, IQ_DEFINITION } from './iq.definition';
+import { IqAppDefinition } from './iq.definition';
 
-@Register.AppModule({
-  appId: IQ_DEFINITION.id,
+@Module({
   providers: [EthereumIqHiiqContractPositionFetcher, IqAppDefinition, IqContractFactory],
 })
 export class IqAppModule extends AbstractApp() {}

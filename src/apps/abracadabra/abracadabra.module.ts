@@ -1,7 +1,8 @@
-import { Register } from '~app-toolkit/decorators';
+import { Module } from '@nestjs/common';
+
 import { AbstractApp } from '~app/app.dynamic-module';
 
-import { AbracadabraAppDefinition, ABRACADABRA_DEFINITION } from './abracadabra.definition';
+import { AbracadabraAppDefinition } from './abracadabra.definition';
 import { ArbitrumAbracadabraCauldronContractPositionFetcher } from './arbitrum/abracadabra.cauldron.contract-position-fetcher';
 import { ArbitrumAbracadabraFarmContractPositionFetcher } from './arbitrum/abracadabra.farm.contract-position-fetcher';
 import { ArbitrumAbracadabraMspellContractPositionFetcher } from './arbitrum/abracadabra.m-spell.contract-position-fetcher';
@@ -21,8 +22,7 @@ import { FantomAbracadabraFarmContractPositionFetcher } from './fantom/abracadab
 import { FantomAbracadabraMspellContractPositionFetcher } from './fantom/abracadabra.m-spell.contract-position-fetcher';
 import { FantomAbracadabraStakedSpellTokenFetcher } from './fantom/abracadabra.staked-spell.token-fetcher';
 
-@Register.AppModule({
-  appId: ABRACADABRA_DEFINITION.id,
+@Module({
   providers: [
     AbracadabraAppDefinition,
     AbracadabraContractFactory,
