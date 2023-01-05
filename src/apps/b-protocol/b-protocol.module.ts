@@ -1,7 +1,7 @@
 import { Register } from '~app-toolkit/decorators';
 import { AbstractApp } from '~app/app.dynamic-module';
-import { CompoundAppModule } from '~apps/compound/compound.module';
-import { MakerAppModule } from '~apps/maker';
+import { CompoundContractFactory } from '~apps/compound';
+import { MakerContractFactory } from '~apps/maker';
 
 import { BProtocolContractFactory } from './contracts';
 import { EthereumBProtocolCompoundBorrowContractPositionFetcher } from './ethereum/b-protocol.compound-borrow.contract-position-fetcher';
@@ -13,10 +13,11 @@ import { BProtocolAppDefinition, B_PROTOCOL_DEFINITION } from '.';
 
 @Register.AppModule({
   appId: B_PROTOCOL_DEFINITION.id,
-  imports: [CompoundAppModule, MakerAppModule],
   providers: [
     BProtocolAppDefinition,
     BProtocolContractFactory,
+    CompoundContractFactory,
+    MakerContractFactory,
     EthereumBProtocolCompoundSupplyTokenFetcher,
     EthereumBProtocolCompoundBorrowContractPositionFetcher,
     EthereumLiquityStabilityPoolContractPositionFetcher,

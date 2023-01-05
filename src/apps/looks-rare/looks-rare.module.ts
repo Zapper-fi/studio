@@ -1,6 +1,5 @@
 import { Register } from '~app-toolkit/decorators';
 import { AbstractApp } from '~app/app.dynamic-module';
-import { SynthetixAppModule } from '~apps/synthetix';
 
 import { LooksRareContractFactory } from './contracts';
 import { EthereumLooksRareCompounderContractPositionFetcher } from './ethereum/looks-rare.compounder.contract-position-fetcher';
@@ -9,7 +8,6 @@ import { LooksRareAppDefinition, LOOKS_RARE_DEFINITION } from './looks-rare.defi
 
 @Register.AppModule({
   appId: LOOKS_RARE_DEFINITION.id,
-  imports: [SynthetixAppModule],
   providers: [
     LooksRareAppDefinition,
     LooksRareContractFactory,

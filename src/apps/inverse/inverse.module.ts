@@ -1,6 +1,6 @@
 import { Register } from '~app-toolkit/decorators';
 import { AbstractApp } from '~app/app.dynamic-module';
-import { SynthetixAppModule } from '~apps/synthetix';
+import { SynthetixContractFactory } from '~apps/synthetix';
 
 import { InverseContractFactory } from './contracts';
 import { EthereumInverseBorrowContractPositionFetcher } from './ethereum/inverse.borrow.contract-position-fetcher';
@@ -13,10 +13,10 @@ import { InverseAppDefinition, INVERSE_DEFINITION } from './inverse.definition';
 
 @Register.AppModule({
   appId: INVERSE_DEFINITION.id,
-  imports: [SynthetixAppModule],
   providers: [
     InverseAppDefinition,
     InverseContractFactory,
+    SynthetixContractFactory,
     EthereumInverseBorrowContractPositionFetcher,
     EthereumInverseClaimableContractPositionFetcher,
     EthereumInverseDcaVaultTokenFetcher,
