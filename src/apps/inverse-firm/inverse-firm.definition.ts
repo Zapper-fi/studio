@@ -9,7 +9,12 @@ export const INVERSE_FIRM_DEFINITION = appDefinition({
   description: `FiRM is a Fixed-Rate lending protocol by Inverse Finance which allows borrowing the DOLA stablecoin at a fixed-rate through the utility token named DOLA Borrowing Right (DBR).`,
   url: 'https://www.inverse.finance/firm',
   tags: [AppTag.YIELD_AGGREGATOR, AppTag.LENDING],
-  links: {},
+  links: {
+    discord: 'https://discord.com/invite/YpYJC7R5nv',
+    github: 'https://github.com/InverseFinance',
+    telegram: 'https://t.me/InverseFinance',
+    twitter: 'https://twitter.com/InverseFinance',
+  },
 
   groups: {
     loan: {
