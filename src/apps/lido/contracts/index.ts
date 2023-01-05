@@ -4,7 +4,7 @@ import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { ContractFactory } from '~contract/contracts';
 import { Network } from '~types/network.interface';
 
-import { Steth__factory, StethEthOracle__factory, Wsteth__factory } from './ethers';
+import { LidoSteth__factory, LidoStethEthOracle__factory, LidoStksm__factory, LidoWsteth__factory } from './ethers';
 
 // eslint-disable-next-line
 type ContractOpts = { address: string; network: Network };
@@ -15,17 +15,21 @@ export class LidoContractFactory extends ContractFactory {
     super((network: Network) => appToolkit.getNetworkProvider(network));
   }
 
-  steth({ address, network }: ContractOpts) {
-    return Steth__factory.connect(address, this.appToolkit.getNetworkProvider(network));
+  lidoSteth({ address, network }: ContractOpts) {
+    return LidoSteth__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
-  stethEthOracle({ address, network }: ContractOpts) {
-    return StethEthOracle__factory.connect(address, this.appToolkit.getNetworkProvider(network));
+  lidoStethEthOracle({ address, network }: ContractOpts) {
+    return LidoStethEthOracle__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
-  wsteth({ address, network }: ContractOpts) {
-    return Wsteth__factory.connect(address, this.appToolkit.getNetworkProvider(network));
+  lidoStksm({ address, network }: ContractOpts) {
+    return LidoStksm__factory.connect(address, this.appToolkit.getNetworkProvider(network));
+  }
+  lidoWsteth({ address, network }: ContractOpts) {
+    return LidoWsteth__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
 }
 
-export type { Steth } from './ethers';
-export type { StethEthOracle } from './ethers';
-export type { Wsteth } from './ethers';
+export type { LidoSteth } from './ethers';
+export type { LidoStethEthOracle } from './ethers';
+export type { LidoStksm } from './ethers';
+export type { LidoWsteth } from './ethers';

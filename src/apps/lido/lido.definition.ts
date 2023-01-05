@@ -8,6 +8,8 @@ export const LIDO_DEFINITION = appDefinition({
   name: 'Lido',
   description: 'Liquidity for staked assets',
   url: 'https://lido.fi/',
+  tags: [AppTag.LIQUID_STAKING],
+
   links: {
     github: 'https://github.com/lidofinance',
     twitter: 'https://twitter.com/lidofinance',
@@ -15,15 +17,30 @@ export const LIDO_DEFINITION = appDefinition({
     telegram: 'https://t.me/lidofinance',
     medium: 'https://lidofinance.medium.com/',
   },
+
   groups: {
-    steth: { id: 'steth', type: GroupType.TOKEN, label: 'Stake' },
-    wsteth: { id: 'wsteth', type: GroupType.TOKEN, label: 'Wrap' },
+    steth: {
+      id: 'steth',
+      type: GroupType.TOKEN,
+      label: 'Stake',
+    },
+
+    wsteth: {
+      id: 'wsteth',
+      type: GroupType.TOKEN,
+      label: 'Wrap',
+    },
+
+    stksm: {
+      id: 'stksm',
+      type: GroupType.TOKEN,
+      label: 'Stake',
+    },
   },
-  tags: [AppTag.LIQUID_STAKING],
+
   supportedNetworks: {
     [Network.ETHEREUM_MAINNET]: [AppAction.VIEW],
   },
-  primaryColor: '#fff',
 });
 
 @Register.AppDefinition(LIDO_DEFINITION.id)
@@ -32,5 +49,3 @@ export class LidoAppDefinition extends AppDefinition {
     super(LIDO_DEFINITION);
   }
 }
-
-export default LIDO_DEFINITION;
