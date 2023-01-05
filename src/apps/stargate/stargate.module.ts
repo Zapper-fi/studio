@@ -1,4 +1,5 @@
-import { Register } from '~app-toolkit/decorators';
+import { Module } from '@nestjs/common';
+
 import { AbstractApp } from '~app/app.dynamic-module';
 
 import { ArbitrumStargateEthTokenFetcher } from './arbitrum/stargate.eth.token-fetcher';
@@ -27,10 +28,9 @@ import { OptimismStargateVotingEscrowContractPositionFetcher } from './optimism/
 import { PolygonStargateFarmContractPositionFetcher } from './polygon/stargate.farm.contract-position-fetcher';
 import { PolygonStargatePoolTokenFetcher } from './polygon/stargate.pool.token-fetcher';
 import { PolygonStargateVotingEscrowContractPositionFetcher } from './polygon/stargate.voting-escrow.contract-position-fetcher';
-import { StargateAppDefinition, STARGATE_DEFINITION } from './stargate.definition';
+import { StargateAppDefinition } from './stargate.definition';
 
-@Register.AppModule({
-  appId: STARGATE_DEFINITION.id,
+@Module({
   providers: [
     StargateAppDefinition,
     StargateContractFactory,

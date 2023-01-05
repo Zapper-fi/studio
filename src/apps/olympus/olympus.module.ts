@@ -1,4 +1,5 @@
-import { Register } from '~app-toolkit/decorators';
+import { Module } from '@nestjs/common';
+
 import { AbstractApp } from '~app/app.dynamic-module';
 
 import { ArbitrumOlympusGOhmTokenFetcher } from './arbitrum/olympus.g-ohm.token-fetcher';
@@ -15,11 +16,10 @@ import { FantomOlympusGOhmTokenFetcher } from './fantom/olympus.g-ohm.token-fetc
 import { OlympusBondV1ContractPositionBalanceHelper } from './helpers/olympus.bond-v1.contract-position-balance-helper';
 import { OlympusBondContractPositionHelper } from './helpers/olympus.bond.contract-position-helper';
 import { OlympusBridgeTokenHelper } from './helpers/olympus.bridge-token-helper';
-import { OlympusAppDefinition, OLYMPUS_DEFINITION } from './olympus.definition';
+import { OlympusAppDefinition } from './olympus.definition';
 import { PolygonOlympusGOhmTokenFetcher } from './polygon/olympus.g-ohm.token-fetcher';
 
-@Register.AppModule({
-  appId: OLYMPUS_DEFINITION.id,
+@Module({
   providers: [
     OlympusAppDefinition,
     OlympusContractFactory,

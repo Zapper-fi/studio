@@ -1,14 +1,14 @@
-import { Register } from '~app-toolkit/decorators';
+import { Module } from '@nestjs/common';
+
 import { AbstractApp } from '~app/app.dynamic-module';
 
 import { AvalancheGroLabsTokenFetcher } from './avalanche/gro.labs.token-fetcher';
 import { GroContractFactory } from './contracts';
 import { EthereumGroFarmContractPositionFetcher } from './ethereum/gro.farm.contract-position-fetcher';
 import { EthereumGroVestingContractPositionFetcher } from './ethereum/gro.vesting.contract-position-fetcher';
-import { GroAppDefinition, GRO_DEFINITION } from './gro.definition';
+import { GroAppDefinition } from './gro.definition';
 
-@Register.AppModule({
-  appId: GRO_DEFINITION.id,
+@Module({
   providers: [
     GroAppDefinition,
     GroContractFactory,

@@ -1,4 +1,5 @@
-import { Register } from '~app-toolkit/decorators';
+import { Module } from '@nestjs/common';
+
 import { AbstractApp } from '~app/app.dynamic-module';
 
 import { MstableContractFactory } from './contracts';
@@ -8,12 +9,11 @@ import { EthereumMstableMetaVaultTokenFetcher } from './ethereum/mstable.meta-va
 import { EthereumMstableMtaV1FarmContractPositionFetcher } from './ethereum/mstable.mta-v1-farm.contract-position-fetcher';
 import { EthereumMstableMtaV2FarmContractPositionFetcher } from './ethereum/mstable.mta-v2-farm.contract-position-fetcher';
 import { EthereumMstableSavingsVaultContractPositionFetcher } from './ethereum/mstable.savings-vault.contract-position-fetcher';
-import { MstableAppDefinition, MSTABLE_DEFINITION } from './mstable.definition';
+import { MstableAppDefinition } from './mstable.definition';
 import { PolygonMstableImusdTokenFetcher } from './polygon/mstable.imusd.token-fetcher';
 import { PolygonMstableSavingsVaultContractPositionFetcher } from './polygon/mstable.savings-vault-farm.contract-position-fetcher';
 
-@Register.AppModule({
-  appId: MSTABLE_DEFINITION.id,
+@Module({
   providers: [
     MstableAppDefinition,
     MstableContractFactory,

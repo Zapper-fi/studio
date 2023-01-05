@@ -1,4 +1,5 @@
-import { Register } from '~app-toolkit/decorators';
+import { Module } from '@nestjs/common';
+
 import { AbstractApp } from '~app/app.dynamic-module';
 
 import { SynthetixMintrSnxHoldersCache } from './common/synthetix.mintr.snx-holders.cache';
@@ -18,10 +19,9 @@ import { OptimismSynthetixMintrContractPositionFetcher } from './optimism/synthe
 import { OptimismSynthetixPositionPresenter } from './optimism/synthetix.position-presenter';
 import { OptimismSynthetixSnxTokenFetcher } from './optimism/synthetix.snx.token-fetcher';
 import { OptimismSynthetixSynthTokenFetcher } from './optimism/synthetix.synth.token-fetcher';
-import { SynthetixAppDefinition, SYNTHETIX_DEFINITION } from './synthetix.definition';
+import { SynthetixAppDefinition } from './synthetix.definition';
 
-@Register.AppModule({
-  appId: SYNTHETIX_DEFINITION.id,
+@Module({
   providers: [
     SynthetixAppDefinition,
     SynthetixContractFactory,

@@ -1,4 +1,5 @@
-import { Register } from '~app-toolkit/decorators';
+import { Module } from '@nestjs/common';
+
 import { AbstractApp } from '~app/app.dynamic-module';
 
 import { ArbitrumQiDaoVaultPositionFetcher } from './arbitrum/qi-dao.vault.contract-position-fetcher';
@@ -11,10 +12,9 @@ import { PolygonQiDaoEscrowedQiContractPositionFetcher } from './polygon/qi-dao.
 import { PolygonQiDaoFarmContractPositionFetcher } from './polygon/qi-dao.farm.contract-position-fetcher';
 import { PolygonQiDaoVaultPositionFetcher } from './polygon/qi-dao.vault.contract-position-fetcher';
 import { PolygonQiDaoYieldTokenFetcher } from './polygon/qi-dao.yield.token-fetcher';
-import { QiDaoAppDefinition, QI_DAO_DEFINITION } from './qi-dao.definition';
+import { QiDaoAppDefinition } from './qi-dao.definition';
 
-@Register.AppModule({
-  appId: QI_DAO_DEFINITION.id,
+@Module({
   providers: [
     QiDaoAppDefinition,
     QiDaoContractFactory,

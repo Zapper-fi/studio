@@ -1,4 +1,5 @@
-import { Register } from '~app-toolkit/decorators';
+import { Module } from '@nestjs/common';
+
 import { AbstractApp } from '~app/app.dynamic-module';
 import { SynthetixContractFactory } from '~apps/synthetix';
 
@@ -9,10 +10,9 @@ import { EthereumInverseDcaVaultDividendContractPositionFetcher } from './ethere
 import { EthereumInverseDcaVaultTokenFetcher } from './ethereum/inverse.dca-vault.token-fetcher';
 import { EthereumInverseFarmContractPositionFetcher } from './ethereum/inverse.farm.contract-position-fetcher';
 import { EthereumInverseSupplyTokenFetcher } from './ethereum/inverse.supply.token-fetcher';
-import { InverseAppDefinition, INVERSE_DEFINITION } from './inverse.definition';
+import { InverseAppDefinition } from './inverse.definition';
 
-@Register.AppModule({
-  appId: INVERSE_DEFINITION.id,
+@Module({
   providers: [
     InverseAppDefinition,
     InverseContractFactory,

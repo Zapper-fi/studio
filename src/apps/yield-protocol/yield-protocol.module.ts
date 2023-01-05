@@ -1,4 +1,5 @@
-import { Register } from '~app-toolkit/decorators';
+import { Module } from '@nestjs/common';
+
 import { AbstractApp } from '~app/app.dynamic-module';
 
 import { ArbitrumYieldProtocolBorrowContractPositionFetcher } from './arbitrum/yield-protocol.borrow.contract-position-fetcher';
@@ -8,10 +9,9 @@ import { YieldProtocolContractFactory } from './contracts';
 import { EthereumYieldProtocolBorrowContractPositionFetcher } from './ethereum/yield-protocol.borrow.contract-position-fetcher';
 import { EthereumYieldProtocolLendTokenFetcher } from './ethereum/yield-protocol.lend.token-fetcher';
 import { EthereumYieldProtocolPoolTokenFetcher } from './ethereum/yield-protocol.pool.token-fetcher';
-import { YieldProtocolAppDefinition, YIELD_PROTOCOL_DEFINITION } from './yield-protocol.definition';
+import { YieldProtocolAppDefinition } from './yield-protocol.definition';
 
-@Register.AppModule({
-  appId: YIELD_PROTOCOL_DEFINITION.id,
+@Module({
   providers: [
     YieldProtocolAppDefinition,
     YieldProtocolContractFactory,

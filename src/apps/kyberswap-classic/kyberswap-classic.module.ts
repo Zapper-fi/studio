@@ -1,4 +1,5 @@
-import { Register } from '~app-toolkit/decorators';
+import { Module } from '@nestjs/common';
+
 import { AbstractApp } from '~app/app.dynamic-module';
 import { UniswapV2ContractFactory } from '~apps/uniswap-v2';
 
@@ -12,14 +13,13 @@ import { CronosKyberSwapClassicPoolTokenFetcher } from './cronos/kyberswap-class
 import { EthereumKyberSwapClassicFarmContractPositionFetcher } from './ethereum/kyberswap-classic.farm.contract-position-fetcher';
 import { EthereumKyberSwapClassicPoolTokenFetcher } from './ethereum/kyberswap-classic.pool.token-fetcher';
 import { FantomKyberSwapClassicPoolTokenFetcher } from './fantom/kyberswap-classic.pool.token-fetcher';
-import { KyberSwapClassicAppDefinition, KYBERSWAP_CLASSIC_DEFINITION } from './kyberswap-classic.definition';
+import { KyberSwapClassicAppDefinition } from './kyberswap-classic.definition';
 import { OptimismKyberSwapClassicPoolTokenFetcher } from './optimism/kyberswap-classic.pool.token-fetcher';
 import { PolygonKyberSwapClassicFarmContractPositionFetcher } from './polygon/kyberswap-classic.farm.contract-position-fetcher';
 import { PolygonKyberSwapClassicLegacyFarmContractPositionFetcher } from './polygon/kyberswap-classic.legacy-farm.contract-position-fetcher';
 import { PolygonKyberSwapClassicPoolTokenFetcher } from './polygon/kyberswap-classic.pool.token-fetcher';
 
-@Register.AppModule({
-  appId: KYBERSWAP_CLASSIC_DEFINITION.id,
+@Module({
   providers: [
     KyberSwapClassicAppDefinition,
     KyberswapClassicContractFactory,
