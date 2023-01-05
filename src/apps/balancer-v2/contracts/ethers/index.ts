@@ -8,6 +8,7 @@ export type { BalancerMerkleOrchard } from './BalancerMerkleOrchard';
 export type { BalancerMerkleRedeem } from './BalancerMerkleRedeem';
 export type { BalancerPool } from './BalancerPool';
 export type { BalancerStablePhantomPool } from './BalancerStablePhantomPool';
+export type { BalancerStaticAToken } from './BalancerStaticAToken';
 export type { BalancerVault } from './BalancerVault';
 export type { BalancerVeBal } from './BalancerVeBal';
 export type { BalancerWrappedAaveToken } from './BalancerWrappedAaveToken';
@@ -19,6 +20,7 @@ export { BalancerMerkleOrchard__factory } from './factories/BalancerMerkleOrchar
 export { BalancerMerkleRedeem__factory } from './factories/BalancerMerkleRedeem__factory';
 export { BalancerPool__factory } from './factories/BalancerPool__factory';
 export { BalancerStablePhantomPool__factory } from './factories/BalancerStablePhantomPool__factory';
+export { BalancerStaticAToken__factory } from './factories/BalancerStaticAToken__factory';
 export { BalancerVault__factory } from './factories/BalancerVault__factory';
 export { BalancerVeBal__factory } from './factories/BalancerVeBal__factory';
 export { BalancerWrappedAaveToken__factory } from './factories/BalancerWrappedAaveToken__factory';
