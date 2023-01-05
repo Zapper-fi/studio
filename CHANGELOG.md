@@ -4,6 +4,20 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.354.0](https://github.com/Zapper-fi/studio/compare/v0.353.1...v0.354.0) (2023-01-05)
+
+
+### Features
+
+* **apps:** Remove app module decorator ([#2049](https://github.com/Zapper-fi/studio/issues/2049)) ([4e28bed](https://github.com/Zapper-fi/studio/commit/4e28bed6df69b5201b0635403a932f4de9870820))
+* **mux:** Fix reader address ([#2052](https://github.com/Zapper-fi/studio/issues/2052)) ([b389af7](https://github.com/Zapper-fi/studio/commit/b389af73c45c0aada5e2f7beb6e1342d62fbcbc8))
+
+
+### Bug Fixes
+
+* **inverse-firm:** Fix escrow address for nil balances ([#2053](https://github.com/Zapper-fi/studio/issues/2053)) ([52c4eca](https://github.com/Zapper-fi/studio/commit/52c4ecaa74e09fc9d5ea85f1c9d1f3ad31a969cb))
+* **sushiswap-kashi:** Updated subgraph url ([#2048](https://github.com/Zapper-fi/studio/issues/2048)) ([e23f6fe](https://github.com/Zapper-fi/studio/commit/e23f6fe02786c0e9d60ea3cb9df32e6d4fd41fc1))
+
 ## [0.353.1](https://github.com/Zapper-fi/studio/compare/v0.353.0...v0.353.1) (2023-01-05)
 
 
