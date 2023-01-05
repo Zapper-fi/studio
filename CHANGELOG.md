@@ -4,6 +4,15 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.353.0](https://github.com/Zapper-fi/studio/compare/v0.352.0...v0.353.0) (2023-01-05)
+
+
+### Features
+
+* Add FiRM protocol from Inverse Finance ([#2028](https://github.com/Zapper-fi/studio/issues/2028)) ([e371fb2](https://github.com/Zapper-fi/studio/commit/e371fb272367eef56d243f414974454e934a00c0))
+* **apps:** Remove app to app dependencies ([#2044](https://github.com/Zapper-fi/studio/issues/2044)) ([dee3f10](https://github.com/Zapper-fi/studio/commit/dee3f10a85c1521a589bc9304accff72bdce08b3))
+* **apps:** Simplify apps importer ([#2045](https://github.com/Zapper-fi/studio/issues/2045)) ([de47de0](https://github.com/Zapper-fi/studio/commit/de47de0f00c797326e18c0e227f0f46e07ea39d2))
+
 ## [0.352.0](https://github.com/Zapper-fi/studio/compare/v0.351.1...v0.352.0) (2023-01-05)
 
 
