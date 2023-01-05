@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.353.1](https://github.com/Zapper-fi/studio/compare/v0.353.0...v0.353.1) (2023-01-05)
+
+
+### Bug Fixes
+
+* **inverse-firm:** Migration to template ([#2046](https://github.com/Zapper-fi/studio/issues/2046)) ([701dc99](https://github.com/Zapper-fi/studio/commit/701dc990cac4925583eb21b4edabc55b7aa31432))
+
 ## [0.353.0](https://github.com/Zapper-fi/studio/compare/v0.352.0...v0.353.0) (2023-01-05)
 
 
