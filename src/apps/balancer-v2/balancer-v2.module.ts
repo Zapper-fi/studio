@@ -16,6 +16,7 @@ import { EthereumBalancerV2WrappedAaveTokenFetcher } from './ethereum/balancer-v
 import { PolygonBalancerV2ClaimableContractPositionFetcher } from './polygon/balancer-v2.claimable.contract-position-fetcher';
 import { PolygonBalancerV2FarmContractPositionFetcher } from './polygon/balancer-v2.farm.contract-position-fetcher';
 import { PolygonBalancerV2PoolTokenFetcher } from './polygon/balancer-v2.pool.token-fetcher';
+import { PolygonBalancerV2StaticYieldTokenFetcher } from './polygon/balancer-v2.static-yield.token-fetcher';
 
 @Register.AppModule({
   appId: BALANCER_V2_DEFINITION.id,
@@ -36,6 +37,7 @@ import { PolygonBalancerV2PoolTokenFetcher } from './polygon/balancer-v2.pool.to
     PolygonBalancerV2PoolTokenFetcher,
     PolygonBalancerV2FarmContractPositionFetcher,
     PolygonBalancerV2ClaimableContractPositionFetcher,
+    PolygonBalancerV2StaticYieldTokenFetcher,
     // Helpers
     BalancerV2ClaimableCacheManager,
     BalancerV2SpotPriceHelper,
