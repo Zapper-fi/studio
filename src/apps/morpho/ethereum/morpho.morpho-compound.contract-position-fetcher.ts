@@ -4,13 +4,13 @@ import { formatUnits } from 'ethers/lib/utils';
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { BLOCKS_PER_DAY } from '~app-toolkit/constants/blocks';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
+import { MorphoSupplyContractPositionFetcher } from '~apps/morpho/common/morpho.supply.contract-position-fetcher';
 import { MorphoCompound, MorphoContractFactory } from '~apps/morpho/contracts';
-import { BaseEthereumMorphoSupplyContractPositionFetcher } from '~apps/morpho/helpers/position-fetcher.common';
 import { isMulticallUnderlyingError } from '~multicall/multicall.ethers';
 import { GetDefinitionsParams } from '~position/template/contract-position.template.types';
 
 @PositionTemplate()
-export class EthereumMorphoCompoundSupplyContractPositionFetcher extends BaseEthereumMorphoSupplyContractPositionFetcher<MorphoCompound> {
+export class EthereumMorphoCompoundSupplyContractPositionFetcher extends MorphoSupplyContractPositionFetcher<MorphoCompound> {
   groupLabel = 'Morpho Compound';
 
   morphoAddress = '0x8888882f8f843896699869179fb6e4f7e3b58888';

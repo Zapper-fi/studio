@@ -1,6 +1,6 @@
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
+import { AaveAmmLendingTemplateTokenFetcher } from '~apps/aave-amm/common/aave-amm.lending.template.token-fetcher';
 import { AaveAmmAToken } from '~apps/aave-amm/contracts';
-import { AaveAmmLendingTemplateTokenFetcher } from '~apps/aave-amm/helpers/aave-amm.lending.template.token-fetcher';
 import {
   AaveV2LendingTokenDataProps,
   AaveV2ReserveApyData,

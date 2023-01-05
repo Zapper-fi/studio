@@ -35,7 +35,8 @@ export type MorphoContractPositionDataProps = {
   borrowUSD: number;
   matchedUSD: number;
 };
-export abstract class BaseEthereumMorphoSupplyContractPositionFetcher<
+
+export abstract class MorphoSupplyContractPositionFetcher<
   T extends Contract,
 > extends ContractPositionTemplatePositionFetcher<
   T,
