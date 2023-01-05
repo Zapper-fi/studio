@@ -10,10 +10,6 @@ import { EthereumSynthetixMintrContractPositionFetcher } from './ethereum/synthe
 import { EthereumSynthetixPositionPresenter } from './ethereum/synthetix.position-presenter';
 import { EthereumSynthetixSnxTokenFetcher } from './ethereum/synthetix.snx.token-fetcher';
 import { EthereumSynthetixSynthTokenFetcher } from './ethereum/synthetix.synth.token-fetcher';
-import { SynthetixSingleStakingFarmContractPositionBalanceHelper } from './helpers/synthetix.single-staking-farm-contract-position-balance-helper';
-import { SynthetixSingleStakingFarmContractPositionHelper } from './helpers/synthetix.single-staking-farm-contract-position-helper';
-import { SynthetixSingleStakingIsActiveStrategy } from './helpers/synthetix.single-staking.is-active-strategy';
-import { SynthetixSingleStakingRoiStrategy } from './helpers/synthetix.single-staking.roi-strategy';
 import { OptimismSynthetixLoanContractPositionFetcher } from './optimism/synthetix.loan.contract-position-fetcher';
 import { OptimismSynthetixMintrContractPositionFetcher } from './optimism/synthetix.mintr.contract-position-fetcher';
 import { OptimismSynthetixPositionPresenter } from './optimism/synthetix.position-presenter';
@@ -25,10 +21,6 @@ import { SynthetixAppDefinition } from './synthetix.definition';
   providers: [
     SynthetixAppDefinition,
     SynthetixContractFactory,
-    SynthetixSingleStakingIsActiveStrategy,
-    SynthetixSingleStakingRoiStrategy,
-    SynthetixSingleStakingFarmContractPositionHelper,
-    SynthetixSingleStakingFarmContractPositionBalanceHelper,
     SynthetixMintrSnxHoldersCache,
     // Ethereum
     EthereumSynthetixFarmContractPositionFetcher,
