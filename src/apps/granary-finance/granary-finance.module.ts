@@ -1,6 +1,6 @@
 import { Register } from '~app-toolkit/decorators';
 import { AbstractApp } from '~app/app.dynamic-module';
-import { AaveV2AppModule } from '~apps/aave-v2';
+import { AaveV2ContractFactory } from '~apps/aave-v2';
 
 import { GranaryFinanceContractFactory } from './contracts';
 import { EthereumGranaryFinancePositionPresenter } from './ethereum/granary-finance.position-presenter';
@@ -15,8 +15,10 @@ import { OptimismGranaryFinanceVariableDebtTokenFetcher } from './optimism/grana
 
 @Register.AppModule({
   appId: GRANARY_FINANCE_DEFINITION.id,
-  imports: [AaveV2AppModule],
   providers: [
+    GranaryFinanceAppDefinition,
+    GranaryFinanceContractFactory,
+    AaveV2ContractFactory,
     EthereumGranaryFinancePositionPresenter,
     EthereumGranaryFinanceStableDebtTokenFetcher,
     EthereumGranaryFinanceSupplyTokenFetcher,
@@ -25,8 +27,6 @@ import { OptimismGranaryFinanceVariableDebtTokenFetcher } from './optimism/grana
     OptimismGranaryFinanceStableDebtTokenFetcher,
     OptimismGranaryFinanceSupplyTokenFetcher,
     OptimismGranaryFinanceVariableDebtTokenFetcher,
-    GranaryFinanceAppDefinition,
-    GranaryFinanceContractFactory,
   ],
 })
 export class GranaryFinanceAppModule extends AbstractApp() {}

@@ -1,6 +1,6 @@
 import { Register } from '~app-toolkit/decorators';
 import { AbstractApp } from '~app/app.dynamic-module';
-import { AaveV2AppModule } from '~apps/aave-v2/aave-v2.module';
+import { AaveV2ContractFactory } from '~apps/aave-v2';
 
 import { GeistContractFactory } from './contracts';
 import { FantomGeistIncentivesPositionFetcher } from './fantom/geist.incentives.contract-position-fetcher';
@@ -13,16 +13,16 @@ import { GeistAppDefinition, GEIST_DEFINITION } from './geist.definition';
 
 @Register.AppModule({
   appId: GEIST_DEFINITION.id,
-  imports: [AaveV2AppModule],
   providers: [
+    GeistAppDefinition,
+    GeistContractFactory,
+    AaveV2ContractFactory,
     FantomGeistIncentivesPositionFetcher,
     FantomGeistPlatformFeesPositionFetcher,
     FantomGeistPositionPresenter,
     FantomGeistStableDebtTokenFetcher,
     FantomGeistSupplyTokenFetcher,
     FantomGeistVariableDebtTokenFetcher,
-    GeistAppDefinition,
-    GeistContractFactory,
   ],
 })
 export class GeistAppModule extends AbstractApp() {}

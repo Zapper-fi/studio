@@ -1,6 +1,5 @@
 import { Register } from '~app-toolkit/decorators';
 import { AbstractApp } from '~app/app.dynamic-module';
-import { UniswapV2AppModule } from '~apps/uniswap-v2';
 
 import { ArrakisAppDefinition, ARRAKIS_DEFINITION } from './arrakis.definition';
 import { ArrakisPoolDefinitionsResolver } from './common/arrakis.pool-definition-resolver';
@@ -11,16 +10,12 @@ import { PolygonArrakisPoolTokenFetcher } from './polygon/arrakis.pool.token-fet
 
 @Register.AppModule({
   appId: ARRAKIS_DEFINITION.id,
-  imports: [UniswapV2AppModule],
   providers: [
     ArrakisAppDefinition,
     ArrakisContractFactory,
     ArrakisPoolDefinitionsResolver,
-    // Ethereum
     EthereumArrakisPoolTokenFetcher,
-    // Optimism
     OptimismArrakisPoolTokenFetcher,
-    // Polygon
     PolygonArrakisPoolTokenFetcher,
   ],
 })
