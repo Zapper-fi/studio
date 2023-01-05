@@ -3,6 +3,7 @@ import { BigNumberish } from 'ethers';
 import { uniq } from 'lodash';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
+import { ZERO_ADDRESS } from '~app-toolkit/constants/address';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { DefaultDataProps } from '~position/display.interface';
@@ -95,6 +96,7 @@ export class EthereumInverseFirmLoanContractPositionFetcher extends ContractPosi
     multicall,
   }: GetTokenBalancesParams<SimpleMarket>): Promise<BigNumberish[]> {
     const personalEscrow = await contract.escrows(address);
+    if (personalEscrow === ZERO_ADDRESS) return [0, 0];
 
     const simpleEscrowContract = this.contractFactory.simpleEscrow({
       address: personalEscrow.toLowerCase(),
