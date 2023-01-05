@@ -4,6 +4,23 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.352.0](https://github.com/Zapper-fi/studio/compare/v0.351.1...v0.352.0) (2023-01-05)
+
+
+### Features
+
+* **balancer-v2:** Fix bb-usd on Polygon ([#2038](https://github.com/Zapper-fi/studio/issues/2038)) ([6ce85b7](https://github.com/Zapper-fi/studio/commit/6ce85b70dd561587b60ebf337d925af231f83761))
+* **beefy:** Show paused vaults ([#2040](https://github.com/Zapper-fi/studio/issues/2040)) ([7602d32](https://github.com/Zapper-fi/studio/commit/7602d326f0053a7c03fa6b663129fa2bdfd52ecd))
+* **exactly:** 🩹 Fix rates (x100), add deposit rates, update metadata ([#2033](https://github.com/Zapper-fi/studio/issues/2033)) ([004354c](https://github.com/Zapper-fi/studio/commit/004354c2696c716f6e58d5f0a5fa41245743db55))
+* **jarvis:** Support Jarvis synths ([#2039](https://github.com/Zapper-fi/studio/issues/2039)) ([e40fe39](https://github.com/Zapper-fi/studio/commit/e40fe39bd31b4fbe020f07de95bcec2f3d291821))
+* **jpegd:** Add new staking pool ([#2036](https://github.com/Zapper-fi/studio/issues/2036)) ([0450194](https://github.com/Zapper-fi/studio/commit/0450194525c8b27281091e2ec5f95f5febbaae15))
+* **lido:** Add stKSM ([#2041](https://github.com/Zapper-fi/studio/issues/2041)) ([09639bb](https://github.com/Zapper-fi/studio/commit/09639bbb072ce41c8ef66ea2958a3f0fa633fb53))
+
+
+### Bug Fixes
+
+* **lido:** Add missing network ([b3400d6](https://github.com/Zapper-fi/studio/commit/b3400d619677d6f7787e0e1de51dd0050d701285))
+
 ## [0.351.1](https://github.com/Zapper-fi/studio/compare/v0.351.0...v0.351.1) (2023-01-04)
 
 
