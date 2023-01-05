@@ -1,11 +1,12 @@
 import { Inject } from '@nestjs/common';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
+import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import {
   DefaultAppTokenDataProps,
   GetAddressesParams,
-  GetDataPropsParams,
+  GetDisplayPropsParams,
   GetPricePerShareParams,
   GetUnderlyingTokensParams,
 } from '~position/template/app-token.template.types';
@@ -65,15 +66,7 @@ export abstract class BeefyVaultTokenFetcher extends AppTokenTemplatePositionFet
     return Number(ratioRaw) / 10 ** decimals;
   }
 
-  async getLiquidity({ appToken }: GetDataPropsParams<BeefyVaultToken>) {
-    return appToken.supply * appToken.price;
-  }
-
-  async getReserves({ appToken }: GetDataPropsParams<BeefyVaultToken>) {
-    return [appToken.pricePerShare[0] * appToken.supply];
-  }
-
-  async getApy(_params: GetDataPropsParams<BeefyVaultToken>) {
-    return 0;
+  async getLabel({ appToken }: GetDisplayPropsParams<BeefyVaultToken>) {
+    return `${getLabelFromToken(appToken.tokens[0])} Vault`;
   }
 }
