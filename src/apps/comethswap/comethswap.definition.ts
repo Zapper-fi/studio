@@ -40,5 +40,3 @@ export class ComethswapAppDefinition extends AppDefinition {
     super(COMETHSWAP_DEFINITION);
   }
 }
-
-export default COMETHSWAP_DEFINITION;

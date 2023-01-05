@@ -461,7 +461,6 @@ export interface InverseControllerInterface extends utils.Interface {
   decodeFunctionResult(functionFragment: 'updateContributorRewards', data: BytesLike): Result;
 
   events: {
-    'ActionPaused(string,bool)': EventFragment;
     'ActionPaused(address,string,bool)': EventFragment;
     'CompGranted(address,uint256)': EventFragment;
     'CompSpeedUpdated(address,uint256)': EventFragment;
@@ -481,8 +480,7 @@ export interface InverseControllerInterface extends utils.Interface {
     'NewPriceOracle(address,address)': EventFragment;
   };
 
-  getEvent(nameOrSignatureOrTopic: 'ActionPaused(string,bool)'): EventFragment;
-  getEvent(nameOrSignatureOrTopic: 'ActionPaused(address,string,bool)'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'ActionPaused'): EventFragment;
   getEvent(nameOrSignatureOrTopic: 'CompGranted'): EventFragment;
   getEvent(nameOrSignatureOrTopic: 'CompSpeedUpdated'): EventFragment;
   getEvent(nameOrSignatureOrTopic: 'ContributorCompSpeedUpdated'): EventFragment;
@@ -501,25 +499,14 @@ export interface InverseControllerInterface extends utils.Interface {
   getEvent(nameOrSignatureOrTopic: 'NewPriceOracle'): EventFragment;
 }
 
-export interface ActionPaused_string_bool_EventObject {
-  action: string;
-  pauseState: boolean;
-}
-export type ActionPaused_string_bool_Event = TypedEvent<[string, boolean], ActionPaused_string_bool_EventObject>;
-
-export type ActionPaused_string_bool_EventFilter = TypedEventFilter<ActionPaused_string_bool_Event>;
-
-export interface ActionPaused_address_string_bool_EventObject {
+export interface ActionPausedEventObject {
   cToken: string;
   action: string;
   pauseState: boolean;
 }
-export type ActionPaused_address_string_bool_Event = TypedEvent<
-  [string, string, boolean],
-  ActionPaused_address_string_bool_EventObject
->;
+export type ActionPausedEvent = TypedEvent<[string, string, boolean], ActionPausedEventObject>;
 
-export type ActionPaused_address_string_bool_EventFilter = TypedEventFilter<ActionPaused_address_string_bool_Event>;
+export type ActionPausedEventFilter = TypedEventFilter<ActionPausedEvent>;
 
 export interface CompGrantedEventObject {
   recipient: string;
@@ -1728,12 +1715,8 @@ export interface InverseController extends BaseContract {
   };
 
   filters: {
-    'ActionPaused(string,bool)'(action?: null, pauseState?: null): ActionPaused_string_bool_EventFilter;
-    'ActionPaused(address,string,bool)'(
-      cToken?: null,
-      action?: null,
-      pauseState?: null,
-    ): ActionPaused_address_string_bool_EventFilter;
+    'ActionPaused(address,string,bool)'(cToken?: null, action?: null, pauseState?: null): ActionPausedEventFilter;
+    ActionPaused(cToken?: null, action?: null, pauseState?: null): ActionPausedEventFilter;
 
     'CompGranted(address,uint256)'(recipient?: null, amount?: null): CompGrantedEventFilter;
     CompGranted(recipient?: null, amount?: null): CompGrantedEventFilter;
