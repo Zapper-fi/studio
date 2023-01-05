@@ -5,7 +5,7 @@ import { uniq } from 'lodash';
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
 import { PresenterTemplate } from '~app-toolkit/decorators/presenter-template.decorator';
-import { MorphoContractPositionDataProps } from '~apps/morpho/helpers/position-fetcher.common';
+import { MorphoContractPositionDataProps } from '~apps/morpho/common/morpho.supply.contract-position-fetcher';
 import { isMulticallUnderlyingError } from '~multicall/multicall.ethers';
 import { ContractPositionBalance } from '~position/position-balance.interface';
 import { PositionPresenterTemplate, ReadonlyBalances } from '~position/template/position-presenter.template';

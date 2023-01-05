@@ -13,9 +13,6 @@ import { EthereumOlympusSOhmV1TokenFetcher } from './ethereum/olympus.s-ohm-v1.t
 import { EthereumOlympusSOhmTokenFetcher } from './ethereum/olympus.s-ohm.token-fetcher';
 import { EthereumOlympusWsOhmV1TokenFetcher } from './ethereum/olympus.ws-ohm-v1.token-fetcher';
 import { FantomOlympusGOhmTokenFetcher } from './fantom/olympus.g-ohm.token-fetcher';
-import { OlympusBondV1ContractPositionBalanceHelper } from './helpers/olympus.bond-v1.contract-position-balance-helper';
-import { OlympusBondContractPositionHelper } from './helpers/olympus.bond.contract-position-helper';
-import { OlympusBridgeTokenHelper } from './helpers/olympus.bridge-token-helper';
 import { OlympusAppDefinition } from './olympus.definition';
 import { PolygonOlympusGOhmTokenFetcher } from './polygon/olympus.g-ohm.token-fetcher';
 
@@ -23,26 +20,17 @@ import { PolygonOlympusGOhmTokenFetcher } from './polygon/olympus.g-ohm.token-fe
   providers: [
     OlympusAppDefinition,
     OlympusContractFactory,
-    // Arbitrum
     ArbitrumOlympusGOhmTokenFetcher,
     ArbitrumOlympusWsOhmV1TokenFetcher,
-    // // Avalanche
     AvalancheOlympusGOhmTokenFetcher,
     AvalancheOlympusWsOhmV1TokenFetcher,
-    // // Ethereum
     EthereumOlympusBondContractPositionFetcher,
     EthereumOlympusSOhmTokenFetcher,
     EthereumOlympusSOhmV1TokenFetcher,
     EthereumOlympusGOhmTokenFetcher,
     EthereumOlympusWsOhmV1TokenFetcher,
-    // // Fantom
     FantomOlympusGOhmTokenFetcher,
-    // // Polygon
     PolygonOlympusGOhmTokenFetcher,
-    // Helpers
-    OlympusBridgeTokenHelper,
-    OlympusBondContractPositionHelper,
-    OlympusBondV1ContractPositionBalanceHelper,
   ],
 })
 export class OlympusAppModule extends AbstractApp() {}
