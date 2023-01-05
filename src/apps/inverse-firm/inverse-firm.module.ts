@@ -1,8 +1,9 @@
 import { Register } from '~app-toolkit/decorators';
 import { AbstractApp } from '~app/app.dynamic-module';
+
 import { InverseFirmContractFactory } from './contracts';
-import { EthereumInverseFirmLoanContractPositionFetcher } from './ethereum/inverse-firm.loan.contract-position-fetcher';
 import { EthereumInverseFirmBalanceFetcher } from './ethereum/inverse-firm.balance-fetcher';
+import { EthereumInverseFirmLoanContractPositionFetcher } from './ethereum/inverse-firm.loan.contract-position-fetcher';
 import { InverseFirmAppDefinition, INVERSE_FIRM_DEFINITION } from './inverse-firm.definition';
 
 @Register.AppModule({
@@ -15,4 +16,4 @@ import { InverseFirmAppDefinition, INVERSE_FIRM_DEFINITION } from './inverse-fir
     EthereumInverseFirmBalanceFetcher,
   ],
 })
-export class InverseFirmAppModule extends AbstractApp() { }
+export class InverseFirmAppModule extends AbstractApp() {}

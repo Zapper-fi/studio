@@ -10,8 +10,8 @@ export const INVERSE_FIRM_DEFINITION = appDefinition({
   url: 'https://www.inverse.finance/firm',
   tags: [AppTag.YIELD_AGGREGATOR, AppTag.LENDING],
   links: {},
-  dola: '0x865377367054516e17014CcdED1e7d814EDC9ce4',
-  dbr: '0xAD038Eb671c44b853887A7E32528FaB35dC5D710',
+  dola: '0x865377367054516e17014ccded1e7d814edc9ce4',
+  dbr: '0xad038eb671c44b853887a7e32528fab35dc5d710',
 
   groups: {
     loan: {

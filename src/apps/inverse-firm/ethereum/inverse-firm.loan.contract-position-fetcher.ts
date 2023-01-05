@@ -1,18 +1,18 @@
 import { Inject } from '@nestjs/common';
+import _ from 'lodash';
 
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
+import { getImagesFromToken } from '~app-toolkit/helpers/presentation/image.present';
+import { ContractType } from '~position/contract.interface';
 import { PositionFetcher } from '~position/position-fetcher.interface';
 import { ContractPosition, MetaType } from '~position/position.interface';
+import { borrowed, supplied } from '~position/position.utils';
 import { Network } from '~types/network.interface';
 
+import { getMarkets } from '../common/inverse-firm.utils';
 import { InverseFirmContractFactory } from '../contracts';
 import { INVERSE_FIRM_DEFINITION } from '../inverse-firm.definition';
-import _ from 'lodash';
-import { ContractType } from '~position/contract.interface';
-import { borrowed, supplied } from '~position/position.utils';
-import { getMarkets } from '../common/inverse-firm.utils';
-import { getImagesFromToken } from '~app-toolkit/helpers/presentation/image.present';
 
 const appId = INVERSE_FIRM_DEFINITION.id;
 const dola = INVERSE_FIRM_DEFINITION.dola;
@@ -25,7 +25,7 @@ export class EthereumInverseFirmLoanContractPositionFetcher implements PositionF
   constructor(
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
     @Inject(InverseFirmContractFactory) private readonly inverseFirmContractFactory: InverseFirmContractFactory,
-  ) { }
+  ) {}
 
   async getMarkets() {
     const dbrContract = this.inverseFirmContractFactory.dbr({ address: dbr, network });
@@ -45,14 +45,12 @@ export class EthereumInverseFirmLoanContractPositionFetcher implements PositionF
     const marketsData = await Promise.all(
       markets.map(m => {
         const contract = this.inverseFirmContractFactory.simpleMarket({ address: m, network });
-        return Promise.all(
-          [
-            multicall.wrap(contract).totalDebt(),
-            multicall.wrap(contract).collateral(),
-            multicall.wrap(dolaContract).balanceOf(m),
-          ]
-        );
-      })
+        return Promise.all([
+          multicall.wrap(contract).totalDebt(),
+          multicall.wrap(contract).collateral(),
+          multicall.wrap(dolaContract).balanceOf(m),
+        ]);
+      }),
     );
 
     const positions: ContractPosition[] = marketsData.map((data, i) => {
@@ -64,21 +62,21 @@ export class EthereumInverseFirmLoanContractPositionFetcher implements PositionF
 
       const tokens = [
         {
-          "type": suppliedToken.type,
-          "network": suppliedToken.network,
-          "address": suppliedToken.address,
-          "symbol": suppliedToken.symbol,
-          "decimals": suppliedToken.decimals,
-          "price": suppliedToken.price,
+          type: suppliedToken.type,
+          network: suppliedToken.network,
+          address: suppliedToken.address,
+          symbol: suppliedToken.symbol,
+          decimals: suppliedToken.decimals,
+          price: suppliedToken.price,
           metaType: MetaType.SUPPLIED,
         },
         {
-          "type": dolaAsBorrowToken.type,
-          "network": dolaAsBorrowToken.network,
-          "address": dolaAsBorrowToken.address,
-          "symbol": dolaAsBorrowToken.symbol,
-          "decimals": dolaAsBorrowToken.decimals,
-          "price": dolaAsBorrowToken.price,
+          type: dolaAsBorrowToken.type,
+          network: dolaAsBorrowToken.network,
+          address: dolaAsBorrowToken.address,
+          symbol: dolaAsBorrowToken.symbol,
+          decimals: dolaAsBorrowToken.decimals,
+          price: dolaAsBorrowToken.price,
           metaType: MetaType.BORROWED,
         },
       ];
@@ -103,15 +101,15 @@ export class EthereumInverseFirmLoanContractPositionFetcher implements PositionF
         },
         statsItems: [
           {
-            "label": "Total Liquidity",
-            "value": {
-              "type": "dollar",
-              "value": liquidity,
-            }
+            label: 'Total Liquidity',
+            value: {
+              type: 'dollar',
+              value: liquidity,
+            },
           },
         ],
-      }
-    })
+      };
+    });
 
     return _.compact(positions);
   }
