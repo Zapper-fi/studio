@@ -20,6 +20,5 @@ import { EthereumAaveAmmVariableDebtTokenFetcher } from './ethereum/aave-amm.var
     EthereumAaveAmmSupplyTokenFetcher,
     EthereumAaveAmmVariableDebtTokenFetcher,
   ],
-  exports: [AaveAmmAppDefinition, AaveAmmContractFactory],
 })
 export class AaveAmmAppModule extends AbstractApp() {}

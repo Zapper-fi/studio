@@ -45,6 +45,5 @@ import { PolygonBeefyVaultTokenFetcher } from './polygon/beefy.vault.token-fetch
     OptimismBeefyVaultTokenFetcher,
     OptimismBeefyBoostVaultContractPositionFetcher,
   ],
-  exports: [BeefyAppDefinition, BeefyContractFactory],
 })
 export class BeefyAppModule extends AbstractApp() {}

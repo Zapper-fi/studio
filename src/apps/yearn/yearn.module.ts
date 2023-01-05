@@ -30,6 +30,5 @@ import { YearnAppDefinition } from './yearn.definition';
     // Arbitrum
     ArbitrumYearnV2VaultTokenFetcher,
   ],
-  exports: [YearnContractFactory],
 })
 export class YearnAppModule extends AbstractApp() {}

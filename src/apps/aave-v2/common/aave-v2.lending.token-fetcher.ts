@@ -13,7 +13,7 @@ import {
 import { AaveV2ContractFactory } from '../contracts';
 import { AaveV2AToken } from '../contracts/ethers/AaveV2AToken';
 
-export type AaveV2TemplateTokenDataProps = {
+export type AaveV2TokenDataProps = {
   apy: number;
   enabledAsCollateral: boolean;
   liquidity: number;
@@ -43,7 +43,7 @@ export type AaveV2LendingTokenDataProps = DefaultAppTokenDataProps & {
   liquidationThreshold: number;
 };
 
-export abstract class AaveV2LendingTemplateTokenFetcher extends AppTokenTemplatePositionFetcher<
+export abstract class AaveV2LendingTokenFetcher extends AppTokenTemplatePositionFetcher<
   AaveV2AToken,
   AaveV2LendingTokenDataProps
 > {
@@ -91,7 +91,7 @@ export abstract class AaveV2LendingTemplateTokenFetcher extends AppTokenTemplate
   async getReserveConfigDataProps({
     appToken,
     multicall,
-  }: GetDataPropsParams<AaveV2AToken, AaveV2TemplateTokenDataProps>): Promise<AaveV2ReserveConfigurationData> {
+  }: GetDataPropsParams<AaveV2AToken, AaveV2TokenDataProps>): Promise<AaveV2ReserveConfigurationData> {
     const pool = multicall.wrap(
       this.contractFactory.aaveProtocolDataProvider({
         network: this.network,

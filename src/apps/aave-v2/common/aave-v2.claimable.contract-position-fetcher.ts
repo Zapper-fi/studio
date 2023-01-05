@@ -15,7 +15,7 @@ export type AaveV2ClaimableDataProps = {
   protocolDataProviderAddress: string;
 };
 
-export abstract class AaveV2ClaimableTemplatePositionFetcher extends ContractPositionTemplatePositionFetcher<
+export abstract class AaveV2ClaimablePositionFetcher extends ContractPositionTemplatePositionFetcher<
   AaveStakedTokenIncentivesController,
   AaveV2ClaimableDataProps
 > {

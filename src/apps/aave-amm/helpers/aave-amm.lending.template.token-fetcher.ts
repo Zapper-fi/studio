@@ -6,7 +6,7 @@ import {
   AaveV2LendingTokenDataProps,
   AaveV2ReserveApyData,
   AaveV2ReserveTokenAddressesData,
-} from '~apps/aave-v2/helpers/aave-v2.lending.template.token-fetcher';
+} from '~apps/aave-v2/common/aave-v2.lending.token-fetcher';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import {
   GetDataPropsParams,
