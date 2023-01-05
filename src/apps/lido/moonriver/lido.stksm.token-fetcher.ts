@@ -1,4 +1,5 @@
 import { Inject } from '@nestjs/common';
+import { BigNumber } from 'bignumber.js';
 import 'moment-duration-format';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
@@ -7,12 +8,11 @@ import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.te
 import { GetPricePerShareParams } from '~position/template/app-token.template.types';
 
 import { LidoContractFactory } from '../contracts';
-import { LidoSteth } from '../contracts/ethers/LidoSteth';
+import { LidoStksm } from '../contracts/ethers/LidoStksm';
 
 @PositionTemplate()
-export class EthereumLidoStethTokenFetcher extends AppTokenTemplatePositionFetcher<LidoSteth> {
-  groupLabel = 'stETH';
-  isExcludedFromBalances = true;
+export class MoonriverLidoStksmTokenFetcher extends AppTokenTemplatePositionFetcher<LidoStksm> {
+  groupLabel = 'stKSM';
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
@@ -21,27 +21,20 @@ export class EthereumLidoStethTokenFetcher extends AppTokenTemplatePositionFetch
     super(appToolkit);
   }
 
-  getContract(address: string): LidoSteth {
-    return this.contractFactory.lidoSteth({ network: this.network, address });
+  getContract(address: string): LidoStksm {
+    return this.contractFactory.lidoStksm({ network: this.network, address });
   }
 
   async getAddresses() {
-    return ['0xae7ab96520de3a18e5e111b5eaab095312d7fe84'];
+    return ['0xffc7780c34b450d917d557e728f033033cb4fa8c'];
   }
 
   async getUnderlyingTokenDefinitions() {
     return [{ address: '0x0000000000000000000000000000000000000000', network: this.network }];
   }
 
-  async getPricePerShare({ appToken, multicall }: GetPricePerShareParams<LidoSteth>) {
-    const oracleContract = this.contractFactory.lidoStethEthOracle({
-      address: '0x86392dc19c0b719886221c78ab11eb8cf5c52812',
-      network: this.network,
-    });
-
-    const latestRound = await multicall.wrap(oracleContract).latestRound();
-    const pricePerShareRaw = await multicall.wrap(oracleContract).getAnswer(latestRound);
-
-    return Number(pricePerShareRaw) / 10 ** appToken.decimals;
+  async getPricePerShare({ contract }: GetPricePerShareParams<LidoStksm>) {
+    const pricePerShareRaw = await contract.getPooledKSMByShares(new BigNumber(10).pow(18).toFixed(0));
+    return Number(pricePerShareRaw) / 10 ** 18;
   }
 }
