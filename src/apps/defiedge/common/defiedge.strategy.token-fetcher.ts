@@ -14,6 +14,7 @@ import {
   GetPricePerShareParams,
   GetDataPropsParams,
   GetDisplayPropsParams,
+  GetTokenPropsParams,
 } from '~position/template/app-token.template.types';
 
 import { DefiedgeContractFactory, Strategy } from '../contracts';
@@ -73,6 +74,10 @@ export abstract class DefiedgeStrategyTokenFetcher extends AppTokenTemplatePosit
     return definitions.map(v => v.address);
   }
 
+  async getSymbol({ contract }: GetTokenPropsParams<Strategy>) {
+    return contract.symbol();
+  }
+
   async getUnderlyingTokenDefinitions({ definition }: GetUnderlyingTokensParams<Strategy, DefiedgeStrategyDefinition>) {
     return [
       { address: definition.token0Address, network: this.network },
@@ -122,7 +127,7 @@ export abstract class DefiedgeStrategyTokenFetcher extends AppTokenTemplatePosit
       .mul(t0Price)
       .add(expandTo18Decimals(amount1, token1.decimals).mul(t1Price));
     const aum = +formatEther(aumBN) / 1e18;
-    const sharePrice = +Number(+formatEther(aumBN.div(totalSupplyBN))).toFixed(8) || 100;
+    const sharePrice = totalSupplyBN.eq(0) ? 0 : +Number(+formatEther(aumBN.div(totalSupplyBN))).toFixed(8) || 100;
 
     return { ...defaultDataProps, aum, sharePrice, sinceInception: sharePrice - 100 };
   }
