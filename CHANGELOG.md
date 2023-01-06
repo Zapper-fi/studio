@@ -4,6 +4,14 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.358.0](https://github.com/Zapper-fi/studio/compare/v0.357.0...v0.358.0) (2023-01-06)
+
+
+### Features
+
+* **defiedge:** Sneaky boi to templates ([#2066](https://github.com/Zapper-fi/studio/issues/2066)) ([2e22407](https://github.com/Zapper-fi/studio/commit/2e22407427844b49c7f57659b43acfb6e5b44c00))
+* **keeper:** use official keep3r graph ([#2064](https://github.com/Zapper-fi/studio/issues/2064)) ([f46f812](https://github.com/Zapper-fi/studio/commit/f46f812d077614f75ff79ea32ae3641064e219b6))
+
 ## [0.357.0](https://github.com/Zapper-fi/studio/compare/v0.356.0...v0.357.0) (2023-01-06)
 
 
