@@ -1,7 +1,6 @@
 import { Inject } from '@nestjs/common';
 import { BigNumberish, Contract } from 'ethers/lib/ethers';
-import _, { isEqual, isUndefined, uniqWith } from 'lodash';
-import { compact, intersection, isArray, partition, sortBy, sum } from 'lodash';
+import _, { isEqual, isUndefined, uniqWith, compact, intersection, isArray, partition, sortBy, sum } from 'lodash';
 
 import { drillBalance } from '~app-toolkit';
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
