@@ -4,6 +4,7 @@ import { min, range } from 'lodash';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
+import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { DefaultDataProps } from '~position/display.interface';
 import { MetaType } from '~position/position.interface';
 import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
@@ -17,17 +18,8 @@ import { PolynomialContractFactory, PolynomialCoveredCall } from '../contracts';
 import { isUnderlyingDenominated } from '../helpers/formatters';
 import { PolynomialApiHelper } from '../helpers/polynomial.api';
 
-type PolynomialCoveredCallVaultDefinition = {
-  address: string;
-  label: string;
-};
-
 @PositionTemplate()
-export class OptimismPolynomialCoveredCallVaultContractPositionFetcher extends ContractPositionTemplatePositionFetcher<
-  PolynomialCoveredCall,
-  DefaultDataProps,
-  PolynomialCoveredCallVaultDefinition
-> {
+export class OptimismPolynomialCoveredCallVaultContractPositionFetcher extends ContractPositionTemplatePositionFetcher<PolynomialCoveredCall> {
   groupLabel = 'Covered Call Vaults';
 
   constructor(
@@ -55,10 +47,8 @@ export class OptimismPolynomialCoveredCallVaultContractPositionFetcher extends C
     ];
   }
 
-  async getLabel({
-    definition,
-  }: GetDisplayPropsParams<PolynomialCoveredCall, DefaultDataProps, PolynomialCoveredCallVaultDefinition>) {
-    return definition.label;
+  async getLabel({ contractPosition }: GetDisplayPropsParams<PolynomialCoveredCall, DefaultDataProps>) {
+    return `${getLabelFromToken(contractPosition.tokens[0])} Call Selling`;
   }
 
   async getTokenBalancesPerPosition({

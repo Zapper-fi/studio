@@ -4,6 +4,7 @@ import { min, range } from 'lodash';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
+import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { DefaultDataProps } from '~position/display.interface';
 import { MetaType } from '~position/position.interface';
 import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
@@ -17,17 +18,8 @@ import { PolynomialContractFactory, PolynomialPutSelling } from '../contracts';
 import { isUnderlyingDenominated } from '../helpers/formatters';
 import { PolynomialApiHelper } from '../helpers/polynomial.api';
 
-type PolynomialPutSellingVaultDefinition = {
-  address: string;
-  label: string;
-};
-
 @PositionTemplate()
-export class OptimismPolynomialPutSellingVaultContractPositionFetcher extends ContractPositionTemplatePositionFetcher<
-  PolynomialPutSelling,
-  DefaultDataProps,
-  PolynomialPutSellingVaultDefinition
-> {
+export class OptimismPolynomialPutSellingVaultContractPositionFetcher extends ContractPositionTemplatePositionFetcher<PolynomialPutSelling> {
   groupLabel = 'Put Selling Vaults';
 
   constructor(
@@ -55,10 +47,8 @@ export class OptimismPolynomialPutSellingVaultContractPositionFetcher extends Co
     ];
   }
 
-  async getLabel({
-    definition,
-  }: GetDisplayPropsParams<PolynomialPutSelling, DefaultDataProps, PolynomialPutSellingVaultDefinition>) {
-    return definition.label;
+  async getLabel({ contractPosition }: GetDisplayPropsParams<PolynomialPutSelling, DefaultDataProps>) {
+    return `${getLabelFromToken(contractPosition.tokens[0])} Put Selling`;
   }
 
   async getTokenBalancesPerPosition({
