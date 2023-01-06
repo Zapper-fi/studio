@@ -40,7 +40,7 @@ export abstract class DefiedgeStrategyTokenFetcher extends AppTokenTemplatePosit
   DefiedgeStrategyTokenDataProps,
   DefiedgeStrategyDefinition
 > {
-  groupLabel: string;
+  groupLabel = 'Strategies';
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
