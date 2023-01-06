@@ -14,18 +14,18 @@ import { PolynomialContractFactory, PolynomialVaultToken } from '../contracts';
 import { isUnderlyingDenominated } from '../helpers/formatters';
 import { PolynomialApiHelper } from '../helpers/polynomial.api';
 
-type PolynomialCoveredCallPoolTokenDefinition = {
+type PolynomialCallSellingVaultTokenDefinition = {
   address: string;
   vaultAddress: string;
 };
 
 @PositionTemplate()
-export class OptimismPolynomialCoveredCallPoolTokenFetcher extends AppTokenTemplatePositionFetcher<
+export class OptimismPolynomialCallSellingVaultTokenFetcher extends AppTokenTemplatePositionFetcher<
   PolynomialVaultToken,
   DefaultAppTokenDataProps,
-  PolynomialCoveredCallPoolTokenDefinition
+  PolynomialCallSellingVaultTokenDefinition
 > {
-  groupLabel = 'Vaults';
+  groupLabel = 'Call Selling Vaults';
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
@@ -39,7 +39,7 @@ export class OptimismPolynomialCoveredCallPoolTokenFetcher extends AppTokenTempl
     return this.contractFactory.polynomialVaultToken({ address, network: this.network });
   }
 
-  async getDefinitions(): Promise<PolynomialCoveredCallPoolTokenDefinition[]> {
+  async getDefinitions(): Promise<PolynomialCallSellingVaultTokenDefinition[]> {
     const vaults = await this.apiHelper.getVaults();
     const coveredCallVaults = vaults.filter(vault => isUnderlyingDenominated(vault.vaultId));
     return coveredCallVaults.map(v => ({
@@ -48,14 +48,14 @@ export class OptimismPolynomialCoveredCallPoolTokenFetcher extends AppTokenTempl
     }));
   }
 
-  async getAddresses({ definitions }: GetAddressesParams<PolynomialCoveredCallPoolTokenDefinition>) {
+  async getAddresses({ definitions }: GetAddressesParams<PolynomialCallSellingVaultTokenDefinition>) {
     return definitions.map(v => v.address);
   }
 
   async getUnderlyingTokenDefinitions({
     definition,
     multicall,
-  }: GetUnderlyingTokensParams<PolynomialVaultToken, PolynomialCoveredCallPoolTokenDefinition>) {
+  }: GetUnderlyingTokensParams<PolynomialVaultToken, PolynomialCallSellingVaultTokenDefinition>) {
     const vaultContract = this.contractFactory.polynomialCoveredCall({
       address: definition.vaultAddress,
       network: this.network,
@@ -68,7 +68,11 @@ export class OptimismPolynomialCoveredCallPoolTokenFetcher extends AppTokenTempl
     definition,
     multicall,
     appToken,
-  }: GetPricePerShareParams<PolynomialVaultToken, DefaultAppTokenDataProps, PolynomialCoveredCallPoolTokenDefinition>) {
+  }: GetPricePerShareParams<
+    PolynomialVaultToken,
+    DefaultAppTokenDataProps,
+    PolynomialCallSellingVaultTokenDefinition
+  >) {
     const vaultContract = this.contractFactory.polynomialCoveredCall({
       address: definition.vaultAddress,
       network: this.network,
@@ -77,6 +81,6 @@ export class OptimismPolynomialCoveredCallPoolTokenFetcher extends AppTokenTempl
     const pricePerShareRaw = await multicall.wrap(vaultContract).getTokenPrice();
     const pricePerShare = Number(pricePerShareRaw) / 10 ** appToken.tokens[0].decimals;
 
-    return pricePerShare;
+    return [pricePerShare];
   }
 }
