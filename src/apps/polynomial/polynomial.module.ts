@@ -4,19 +4,21 @@ import { AbstractApp } from '~app/app.dynamic-module';
 
 import { PolynomialContractFactory } from './contracts';
 import { PolynomialApiHelper } from './helpers/polynomial.api';
-import { OptimismPolynomialBalanceFetcher } from './optimism/polynomial.balance-fetcher';
-import { OptimismPolynomialVaultsContractPositionFetcher } from './optimism/polynomial.vaults.contract-position-fetcher';
-import { OptimismPolynomialVaultsTokenFetcher } from './optimism/polynomial.vaults.token-fetcher';
+import { OptimismPolynomialCoveredCallPoolTokenFetcher } from './optimism/polynomial.covered-call-pool.token-fetcher';
+import { OptimismPolynomialCoveredCallVaultContractPositionFetcher } from './optimism/polynomial.covered-call-vault.contract-position-fetcher';
+import { OptimismPolynomialPutSellingPoolTokenFetcher } from './optimism/polynomial.put-sellilng-pool.token-fetcher';
+import { OptimismPolynomialPutSellingVaultContractPositionFetcher } from './optimism/polynomial.put-selling-vault.contract-position-fetcher';
 import { PolynomialAppDefinition } from './polynomial.definition';
 
 @Module({
   providers: [
     PolynomialApiHelper,
-    OptimismPolynomialBalanceFetcher,
-    OptimismPolynomialVaultsContractPositionFetcher,
-    OptimismPolynomialVaultsTokenFetcher,
     PolynomialAppDefinition,
     PolynomialContractFactory,
+    OptimismPolynomialCoveredCallPoolTokenFetcher,
+    OptimismPolynomialCoveredCallVaultContractPositionFetcher,
+    OptimismPolynomialPutSellingPoolTokenFetcher,
+    OptimismPolynomialPutSellingVaultContractPositionFetcher,
   ],
 })
 export class PolynomialAppModule extends AbstractApp() {}
