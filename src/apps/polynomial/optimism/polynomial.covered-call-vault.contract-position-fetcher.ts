@@ -3,6 +3,7 @@ import { BigNumber, BigNumberish } from 'ethers';
 import { min, range } from 'lodash';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import { DefaultDataProps } from '~position/display.interface';
 import { MetaType } from '~position/position.interface';
 import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
@@ -21,6 +22,7 @@ type PolynomialCoveredCallVaultDefinition = {
   label: string;
 };
 
+@PositionTemplate()
 export class OptimismPolynomialCoveredCallVaultContractPositionFetcher extends ContractPositionTemplatePositionFetcher<
   PolynomialCoveredCall,
   DefaultDataProps,
