@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.357.0](https://github.com/Zapper-fi/studio/compare/v0.356.0...v0.357.0) (2023-01-06)
+
+
+### Features
+
+* **presenter:** Add presenter dataProps ([#2054](https://github.com/Zapper-fi/studio/issues/2054)) ([75993ed](https://github.com/Zapper-fi/studio/commit/75993eda36837b216d2d4403ab61dac9eb4cd8a2))
+
 ## [0.356.0](https://github.com/Zapper-fi/studio/compare/v0.355.0...v0.356.0) (2023-01-06)
 
 
