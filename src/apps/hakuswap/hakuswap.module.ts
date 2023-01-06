@@ -4,6 +4,7 @@ import { AbstractApp } from '~app/app.dynamic-module';
 
 import { AvalancheHakuswapFarmContractPositionFetcher } from './avalanche/hakuswap.farm.contract-position-fetcher';
 import { AvalancheHakuswapPoolTokenFetcher } from './avalanche/hakuswap.pool.token-fetcher';
+import { AvalancheHakuswapXHakuTokenFetcher } from './avalanche/hakuswap.x-haku.token-fetcher';
 import { HakuswapContractFactory } from './contracts';
 import { HakuswapAppDefinition } from './hakuswap.definition';
 
@@ -13,6 +14,7 @@ import { HakuswapAppDefinition } from './hakuswap.definition';
     HakuswapContractFactory,
     AvalancheHakuswapFarmContractPositionFetcher,
     AvalancheHakuswapPoolTokenFetcher,
+    AvalancheHakuswapXHakuTokenFetcher,
   ],
 })
 export class HakuswapAppModule extends AbstractApp() {}
