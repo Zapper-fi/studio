@@ -13,7 +13,7 @@ import {
   GetTokenBalancesParams,
 } from '~position/template/contract-position.template.types';
 
-import { PolynomialContractFactory, PolynomialCoveredCall } from '../contracts';
+import { PolynomialContractFactory, PolynomialPutSelling } from '../contracts';
 import { isUnderlyingDenominated } from '../helpers/formatters';
 import { PolynomialApiHelper } from '../helpers/polynomial.api';
 
@@ -24,7 +24,7 @@ type PolynomialPutSellingVaultDefinition = {
 
 @PositionTemplate()
 export class OptimismPolynomialPutSellingVaultContractPositionFetcher extends ContractPositionTemplatePositionFetcher<
-  PolynomialCoveredCall,
+  PolynomialPutSelling,
   DefaultDataProps,
   PolynomialPutSellingVaultDefinition
 > {
@@ -38,8 +38,8 @@ export class OptimismPolynomialPutSellingVaultContractPositionFetcher extends Co
     super(appToolkit);
   }
 
-  getContract(address: string): PolynomialCoveredCall {
-    return this.contractFactory.polynomialCoveredCall({ address, network: this.network });
+  getContract(address: string): PolynomialPutSelling {
+    return this.contractFactory.polynomialPutSelling({ address, network: this.network });
   }
 
   async getDefinitions() {
@@ -48,23 +48,23 @@ export class OptimismPolynomialPutSellingVaultContractPositionFetcher extends Co
     return putSellingVaults.map(vault => ({ address: vault.vaultAddress, label: vault.vaultId }));
   }
 
-  async getTokenDefinitions({ contract }: GetTokenDefinitionsParams<PolynomialCoveredCall>) {
+  async getTokenDefinitions({ contract }: GetTokenDefinitionsParams<PolynomialPutSelling>) {
     return [
-      { metaType: MetaType.SUPPLIED, address: await contract.UNDERLYING(), network: this.network },
+      { metaType: MetaType.SUPPLIED, address: await contract.SUSD(), network: this.network },
       { metaType: MetaType.CLAIMABLE, address: await contract.VAULT_TOKEN(), network: this.network },
     ];
   }
 
   async getLabel({
     definition,
-  }: GetDisplayPropsParams<PolynomialCoveredCall, DefaultDataProps, PolynomialPutSellingVaultDefinition>) {
+  }: GetDisplayPropsParams<PolynomialPutSelling, DefaultDataProps, PolynomialPutSellingVaultDefinition>) {
     return definition.label;
   }
 
   async getTokenBalancesPerPosition({
     address,
     contract,
-  }: GetTokenBalancesParams<PolynomialCoveredCall, DefaultDataProps>): Promise<BigNumberish[]> {
+  }: GetTokenBalancesParams<PolynomialPutSelling, DefaultDataProps>): Promise<BigNumberish[]> {
     const [depositHead, depositTail, withdrawalHead, withdrawalTail] = await Promise.all([
       contract.queuedDepositHead(),
       contract.nextQueuedDepositId(),
