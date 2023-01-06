@@ -19,28 +19,28 @@ export const POLYNOMIAL_DEFINITION = appDefinition({
   },
 
   groups: {
-    coveredCallPool: {
-      id: 'covered-call-pool',
+    callSellingVault: {
+      id: 'call-selling-vault',
       type: GroupType.TOKEN,
-      label: 'Vaults',
+      label: 'Call Selling Vaults',
     },
 
-    coveredCallVault: {
-      id: 'covered-call-vault',
-      type: GroupType.TOKEN,
-      label: 'Vaults',
-    },
-
-    putSellingPool: {
-      id: 'put-selling-pool',
-      type: GroupType.TOKEN,
-      label: 'Vaults',
+    callSellingVaultQueue: {
+      id: 'call-selling-vault-queue',
+      type: GroupType.POSITION,
+      label: 'Call Selling Vault Queue',
     },
 
     putSellingVault: {
       id: 'put-selling-vault',
       type: GroupType.TOKEN,
-      label: 'Vaults',
+      label: 'Put Selling Vaults',
+    },
+
+    putSellingVaultQueue: {
+      id: 'put-selling-vault-queue',
+      type: GroupType.POSITION,
+      label: 'Put Selling Vault Queue',
     },
   },
 

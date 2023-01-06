@@ -1,10 +1,9 @@
 import { Inject } from '@nestjs/common';
-import { BigNumber, BigNumberish } from 'ethers';
+import { BigNumber, BigNumberish, ethers } from 'ethers';
 import { min, range } from 'lodash';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
-import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { DefaultDataProps } from '~position/display.interface';
 import { MetaType } from '~position/position.interface';
 import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
@@ -14,13 +13,13 @@ import {
   GetTokenBalancesParams,
 } from '~position/template/contract-position.template.types';
 
-import { PolynomialContractFactory, PolynomialPutSelling } from '../contracts';
+import { PolynomialContractFactory, PolynomialCoveredCall } from '../contracts';
 import { isUnderlyingDenominated } from '../helpers/formatters';
 import { PolynomialApiHelper } from '../helpers/polynomial.api';
 
 @PositionTemplate()
-export class OptimismPolynomialPutSellingVaultContractPositionFetcher extends ContractPositionTemplatePositionFetcher<PolynomialPutSelling> {
-  groupLabel = 'Vaults';
+export class OptimismPolynomialCallSellingVaultQueueContractPositionFetcher extends ContractPositionTemplatePositionFetcher<PolynomialCoveredCall> {
+  groupLabel = 'Call Selling Vault Queue';
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
@@ -30,31 +29,31 @@ export class OptimismPolynomialPutSellingVaultContractPositionFetcher extends Co
     super(appToolkit);
   }
 
-  getContract(address: string): PolynomialPutSelling {
-    return this.contractFactory.polynomialPutSelling({ address, network: this.network });
+  getContract(address: string): PolynomialCoveredCall {
+    return this.contractFactory.polynomialCoveredCall({ address, network: this.network });
   }
 
   async getDefinitions() {
     const vaults = await this.apiHelper.getVaults();
-    const putSellingVaults = vaults.filter(vault => !isUnderlyingDenominated(vault.vaultId));
-    return putSellingVaults.map(vault => ({ address: vault.vaultAddress, label: vault.vaultId }));
+    const coveredCallVaults = vaults.filter(vault => isUnderlyingDenominated(vault.vaultId));
+    return coveredCallVaults.map(vault => ({ address: vault.vaultAddress, label: vault.vaultId }));
   }
 
-  async getTokenDefinitions({ contract }: GetTokenDefinitionsParams<PolynomialPutSelling>) {
+  async getTokenDefinitions({ contract }: GetTokenDefinitionsParams<PolynomialCoveredCall>) {
     return [
-      { metaType: MetaType.SUPPLIED, address: await contract.SUSD(), network: this.network },
+      { metaType: MetaType.SUPPLIED, address: await contract.UNDERLYING(), network: this.network },
       { metaType: MetaType.CLAIMABLE, address: await contract.VAULT_TOKEN(), network: this.network },
     ];
   }
 
-  async getLabel({ contractPosition }: GetDisplayPropsParams<PolynomialPutSelling, DefaultDataProps>) {
-    return `${getLabelFromToken(contractPosition.tokens[0])} Put Selling`;
+  async getLabel({ contract }: GetDisplayPropsParams<PolynomialCoveredCall, DefaultDataProps>) {
+    return ethers.utils.parseBytes32String(await contract.name());
   }
 
   async getTokenBalancesPerPosition({
     address,
     contract,
-  }: GetTokenBalancesParams<PolynomialPutSelling, DefaultDataProps>): Promise<BigNumberish[]> {
+  }: GetTokenBalancesParams<PolynomialCoveredCall, DefaultDataProps>): Promise<BigNumberish[]> {
     const [depositHead, depositTail, withdrawalHead, withdrawalTail] = await Promise.all([
       contract.queuedDepositHead(),
       contract.nextQueuedDepositId(),

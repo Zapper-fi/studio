@@ -4,10 +4,10 @@ import { AbstractApp } from '~app/app.dynamic-module';
 
 import { PolynomialContractFactory } from './contracts';
 import { PolynomialApiHelper } from './helpers/polynomial.api';
-import { OptimismPolynomialCoveredCallPoolTokenFetcher } from './optimism/polynomial.covered-call-pool.token-fetcher';
-import { OptimismPolynomialCoveredCallVaultContractPositionFetcher } from './optimism/polynomial.covered-call-vault.contract-position-fetcher';
-import { OptimismPolynomialPutSellingPoolTokenFetcher } from './optimism/polynomial.put-sellilng-pool.token-fetcher';
-import { OptimismPolynomialPutSellingVaultContractPositionFetcher } from './optimism/polynomial.put-selling-vault.contract-position-fetcher';
+import { OptimismPolynomialCallSellingVaultQueueContractPositionFetcher } from './optimism/polynomial.call-selling-vault-queue.contract-position-fetcher';
+import { OptimismPolynomialCallSellingVaultTokenFetcher } from './optimism/polynomial.call-selling-vault.token-fetcher';
+import { OptimismPolynomialPutSellingVaultQueueContractPositionFetcher } from './optimism/polynomial.put-selling-vault-queue.contract-position-fetcher';
+import { OptimismPolynomialPutSellingVaultTokenFetcher } from './optimism/polynomial.put-selling-vault.token-fetcher';
 import { PolynomialAppDefinition } from './polynomial.definition';
 
 @Module({
@@ -15,10 +15,10 @@ import { PolynomialAppDefinition } from './polynomial.definition';
     PolynomialApiHelper,
     PolynomialAppDefinition,
     PolynomialContractFactory,
-    OptimismPolynomialCoveredCallPoolTokenFetcher,
-    OptimismPolynomialCoveredCallVaultContractPositionFetcher,
-    OptimismPolynomialPutSellingPoolTokenFetcher,
-    OptimismPolynomialPutSellingVaultContractPositionFetcher,
+    OptimismPolynomialCallSellingVaultTokenFetcher,
+    OptimismPolynomialCallSellingVaultQueueContractPositionFetcher,
+    OptimismPolynomialPutSellingVaultTokenFetcher,
+    OptimismPolynomialPutSellingVaultQueueContractPositionFetcher,
   ],
 })
 export class PolynomialAppModule extends AbstractApp() {}
