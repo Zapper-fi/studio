@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.356.0](https://github.com/Zapper-fi/studio/compare/v0.355.0...v0.356.0) (2023-01-06)
+
+
+### Features
+
+* **polynomial:** Clean clean clean ([#2060](https://github.com/Zapper-fi/studio/issues/2060)) ([74476e7](https://github.com/Zapper-fi/studio/commit/74476e7871aeed27e44425239799eebf5ab3938f))
+
 ## [0.355.0](https://github.com/Zapper-fi/studio/compare/v0.354.0...v0.355.0) (2023-01-06)
 
 
