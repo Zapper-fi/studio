@@ -130,13 +130,13 @@ export class EthereumSpoolVaultContractPositionFetcher extends ContractPositionT
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(SpoolContractFactory) protected readonly spoolContractFactory: SpoolContractFactory,
+    @Inject(SpoolContractFactory) protected readonly contractFactory: SpoolContractFactory,
   ) {
     super(appToolkit);
   }
 
   getContract(address: string): SpoolVault {
-    return this.spoolContractFactory.spoolVault({ address, network: this.network });
+    return this.contractFactory.spoolVault({ address, network: this.network });
   }
 
   async getDefinitions() {
@@ -207,9 +207,13 @@ export class EthereumSpoolVaultContractPositionFetcher extends ContractPositionT
     return getLabelFromToken(contractPosition.tokens[0]);
   }
 
+  async getTertiaryLabel({ contractPosition }: GetDisplayPropsParams<SpoolVault, SpoolVaultDataProps>) {
+    return `${contractPosition.dataProps.adjustedApy.toFixed(3)}% APY`;
+  }
+
   async getStatsItems({ definition }: GetDisplayPropsParams<SpoolVault, SpoolVaultDataProps, SpoolVaultDefinition>) {
     return [
-      { label: 'APY', value: buildPercentageDisplayItem(definition.stats.adjustedApy * 100) },
+      { label: 'APY', value: buildPercentageDisplayItem(definition.stats.adjustedApy) },
       { label: 'TVR', value: buildDollarDisplayItem(definition.stats.tvr) },
       { label: 'Risk Model', value: buildStringDisplayItem(riskModels[definition.riskModel]) },
       {
@@ -314,11 +318,11 @@ export class EthereumSpoolVaultContractPositionFetcher extends ContractPositionT
 
     return {
       riskTolerance,
-      adjustedApy,
-      incentivizedApy,
-      apy,
       tvr,
       fees,
+      adjustedApy: adjustedApy * 100,
+      incentivizedApy: incentivizedApy * 100,
+      apy: apy * 100,
     };
   }
 
