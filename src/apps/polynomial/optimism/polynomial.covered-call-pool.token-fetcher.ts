@@ -25,7 +25,7 @@ export class OptimismPolynomialCoveredCallPoolTokenFetcher extends AppTokenTempl
   DefaultAppTokenDataProps,
   PolynomialCoveredCallPoolTokenDefinition
 > {
-  groupLabel = 'Covered Call Pools';
+  groupLabel = 'Vaults';
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,

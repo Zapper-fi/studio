@@ -20,7 +20,7 @@ import { PolynomialApiHelper } from '../helpers/polynomial.api';
 
 @PositionTemplate()
 export class OptimismPolynomialPutSellingVaultContractPositionFetcher extends ContractPositionTemplatePositionFetcher<PolynomialPutSelling> {
-  groupLabel = 'Put Selling Vaults';
+  groupLabel = 'Vaults';
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,

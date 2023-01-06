@@ -25,7 +25,7 @@ export class OptimismPolynomialPutSellingPoolTokenFetcher extends AppTokenTempla
   DefaultAppTokenDataProps,
   PolynomialPutSellingPoolTokenDefinition
 > {
-  groupLabel = 'Put Selling Pools';
+  groupLabel = 'Vaults';
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,

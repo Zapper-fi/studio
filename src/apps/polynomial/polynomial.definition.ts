@@ -22,25 +22,25 @@ export const POLYNOMIAL_DEFINITION = appDefinition({
     coveredCallPool: {
       id: 'covered-call-pool',
       type: GroupType.TOKEN,
-      label: 'Covered Call Pools',
+      label: 'Vaults',
     },
 
     coveredCallVault: {
       id: 'covered-call-vault',
       type: GroupType.TOKEN,
-      label: 'Covered Call Vaults',
+      label: 'Vaults',
     },
 
     putSellingPool: {
       id: 'put-selling-pool',
       type: GroupType.TOKEN,
-      label: 'Put Selling Pools',
+      label: 'Vaults',
     },
 
     putSellingVault: {
       id: 'put-selling-vault',
       type: GroupType.TOKEN,
-      label: 'Put Selling Vaults',
+      label: 'Vaults',
     },
   },
 
