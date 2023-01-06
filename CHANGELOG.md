@@ -4,6 +4,15 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.355.0](https://github.com/Zapper-fi/studio/compare/v0.354.0...v0.355.0) (2023-01-06)
+
+
+### Features
+
+* **apps:** Remove exports from app modules and remove old helper cla… ([#2055](https://github.com/Zapper-fi/studio/issues/2055)) ([a040f6e](https://github.com/Zapper-fi/studio/commit/a040f6ed06532363df8078bafad1b1d86b5f6e88))
+* **polynomial:** To templates ([#2059](https://github.com/Zapper-fi/studio/issues/2059)) ([241ebd7](https://github.com/Zapper-fi/studio/commit/241ebd7afaaee83b6fd3177c3f65d759ec6600b8))
+* **spool:** To templates ([#2058](https://github.com/Zapper-fi/studio/issues/2058)) ([8153b97](https://github.com/Zapper-fi/studio/commit/8153b97d31de6ad1cc2b306c40403a4ca767e2a7))
+
 ## [0.354.0](https://github.com/Zapper-fi/studio/compare/v0.353.1...v0.354.0) (2023-01-05)
 
 
