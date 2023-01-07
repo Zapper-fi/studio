@@ -2,5 +2,5 @@
 /* tslint:disable */
 /* eslint-disable */
 export { SonneComptroller__factory } from './SonneComptroller__factory';
-export { SonneSSonne__factory } from './SonneSSonne__factory';
 export { SonneSoToken__factory } from './SonneSoToken__factory';
+export { SonneStakedSonne__factory } from './SonneStakedSonne__factory';

@@ -17,7 +17,7 @@ import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi
 import type { Listener, Provider } from '@ethersproject/providers';
 import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
-export interface SonneSSonneInterface extends utils.Interface {
+export interface SonneStakedSonneInterface extends utils.Interface {
   functions: {
     'addReward(address,uint256)': FunctionFragment;
     'addToken(address)': FunctionFragment;
@@ -279,12 +279,12 @@ export type WithdrawEvent = TypedEvent<[string, BigNumber], WithdrawEventObject>
 
 export type WithdrawEventFilter = TypedEventFilter<WithdrawEvent>;
 
-export interface SonneSSonne extends BaseContract {
+export interface SonneStakedSonne extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
 
-  interface: SonneSSonneInterface;
+  interface: SonneStakedSonneInterface;
 
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,

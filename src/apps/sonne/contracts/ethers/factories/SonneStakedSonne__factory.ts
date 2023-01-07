@@ -4,7 +4,7 @@
 
 import { Contract, Signer, utils } from 'ethers';
 import type { Provider } from '@ethersproject/providers';
-import type { SonneSSonne, SonneSSonneInterface } from '../SonneSSonne';
+import type { SonneStakedSonne, SonneStakedSonneInterface } from '../SonneStakedSonne';
 
 const _abi = [
   {
@@ -821,12 +821,12 @@ const _abi = [
   },
 ];
 
-export class SonneSSonne__factory {
+export class SonneStakedSonne__factory {
   static readonly abi = _abi;
-  static createInterface(): SonneSSonneInterface {
-    return new utils.Interface(_abi) as SonneSSonneInterface;
+  static createInterface(): SonneStakedSonneInterface {
+    return new utils.Interface(_abi) as SonneStakedSonneInterface;
   }
-  static connect(address: string, signerOrProvider: Signer | Provider): SonneSSonne {
-    return new Contract(address, _abi, signerOrProvider) as SonneSSonne;
+  static connect(address: string, signerOrProvider: Signer | Provider): SonneStakedSonne {
+    return new Contract(address, _abi, signerOrProvider) as SonneStakedSonne;
   }
 }
