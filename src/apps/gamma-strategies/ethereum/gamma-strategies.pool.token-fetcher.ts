@@ -1,14 +1,14 @@
 import { Inject } from '@nestjs/common';
-import { difference } from 'lodash';
-import { range } from 'lodash';
+import Axios from 'axios';
+import { keys } from 'lodash';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
+import { Cache } from '~cache/cache.decorator';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import {
   DefaultAppTokenDefinition,
-  GetAddressesParams,
   GetDisplayPropsParams,
   GetPricePerShareParams,
   GetUnderlyingTokensParams,
@@ -16,16 +16,7 @@ import {
 
 import { GammaStrategiesContractFactory, GammaStrategiesHypervisor } from '../contracts';
 
-const FACTORY_ADDRESSES = [
-  '0xd12fa3e3b60cfb96a735ab57a071f0f324860929',
-  '0xc878c38f0df509a833d10de892e1cf7d361e3a67',
-  '0x0ac51fb63d1915a77ab7a7bb53b031407584dd4c',
-];
-
-const DEPRECATED_HYPERVISORS = [
-  '0xce721b5dc9624548188b5451bb95989a7927080a',
-  '0x0e9e16f6291ba2aaaf41ccffdf19d32ab3691d15',
-];
+type GammaApiTokensResponse = Record<string, object>;
 
 @PositionTemplate()
 export class EthereumGammaStrategiesPoolTokenFetcher extends AppTokenTemplatePositionFetcher<GammaStrategiesHypervisor> {
@@ -42,24 +33,18 @@ export class EthereumGammaStrategiesPoolTokenFetcher extends AppTokenTemplatePos
     return this.contractFactory.gammaStrategiesHypervisor({ address, network: this.network });
   }
 
-  async getAddresses({ multicall }: GetAddressesParams<DefaultAppTokenDefinition>) {
-    const hypervisorAddresses = await Promise.all(
-      FACTORY_ADDRESSES.map(async factoryAddress => {
-        const factoryContract = this.contractFactory.gammaStrategiesHypervisorFactory({
-          address: factoryAddress,
-          network: this.network,
-        });
+  @Cache({
+    key: network => `studio:gamma:${network}:vaults`,
+    ttl: 5 * 60, // 60 minutes
+  })
+  private async getVaultDefinitionsData() {
+    const { data } = await Axios.get<GammaApiTokensResponse>(`https://gammawire.net/hypervisors/allData`);
+    return data;
+  }
 
-        const numTokens = await multicall.wrap(factoryContract).allHypervisorsLength();
-        const addresses = await Promise.all(
-          range(0, Number(numTokens)).map(i => multicall.wrap(factoryContract).allHypervisors(i)),
-        );
-
-        return addresses;
-      }),
-    );
-
-    return difference(hypervisorAddresses.flat(), DEPRECATED_HYPERVISORS);
+  async getAddresses() {
+    const vaultData = await this.getVaultDefinitionsData();
+    return keys(vaultData);
   }
 
   async getUnderlyingTokenDefinitions({
