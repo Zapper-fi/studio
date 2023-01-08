@@ -4,7 +4,6 @@ import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import {
-  DefaultAppTokenDataProps,
   GetDataPropsParams,
   GetDisplayPropsParams,
   GetUnderlyingTokensParams,
@@ -35,10 +34,7 @@ export type UwuLendReserveConfigurationData = {
   liquidationThreshold: number;
 };
 
-export abstract class UwuLendLendingTokenFetcher extends AppTokenTemplatePositionFetcher<
-  UwuLendUToken,
-  DefaultAppTokenDataProps
-> {
+export abstract class UwuLendLendingTokenFetcher extends AppTokenTemplatePositionFetcher<UwuLendUToken> {
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
     @Inject(UwuLendContractFactory) protected readonly contractFactory: UwuLendContractFactory,
@@ -94,7 +90,7 @@ export abstract class UwuLendLendingTokenFetcher extends AppTokenTemplatePositio
     return this.getApyFromReserveData({ supplyApy, stableBorrowApy, variableBorrowApy });
   }
 
-  async getDataProps(params: GetDataPropsParams<UwuLendUToken, DefaultAppTokenDataProps>) {
+  async getDataProps(params: GetDataPropsParams<UwuLendUToken>) {
     const defaultDataProps = await super.getDataProps(params);
     const isActive = Math.abs(defaultDataProps.liquidity) > 0;
     return { ...defaultDataProps, isActive };

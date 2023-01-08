@@ -19,6 +19,12 @@ export const UWU_LEND_DEFINITION = appDefinition({
       type: GroupType.TOKEN,
       label: 'Lending',
     },
+
+    lpStakingV1: {
+      id: 'lp-staking-v1',
+      type: GroupType.POSITION,
+      label: 'Lp Staking V1',
+    },
   },
   url: 'https://app.uwulend.fi/',
   links: {
