@@ -3,11 +3,11 @@ import {
   AaveV2LendingTokenDataProps,
   AaveV2ReserveApyData,
   AaveV2ReserveTokenAddressesData,
-} from '~apps/aave-v2/helpers/aave-v2.lending.template.token-fetcher';
+} from '~apps/aave-v2/common/aave-v2.lending.token-fetcher';
 import { GetDisplayPropsParams } from '~position/template/app-token.template.types';
 
+import { AaveAmmLendingTemplateTokenFetcher } from '../common/aave-amm.lending.template.token-fetcher';
 import { AaveAmmAToken } from '../contracts';
-import { AaveAmmLendingTemplateTokenFetcher } from '../helpers/aave-amm.lending.template.token-fetcher';
 
 @PositionTemplate()
 export class EthereumAaveAmmSupplyTokenFetcher extends AaveAmmLendingTemplateTokenFetcher {

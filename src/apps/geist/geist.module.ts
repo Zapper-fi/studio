@@ -1,6 +1,7 @@
-import { Register } from '~app-toolkit/decorators';
+import { Module } from '@nestjs/common';
+
 import { AbstractApp } from '~app/app.dynamic-module';
-import { AaveV2AppModule } from '~apps/aave-v2/aave-v2.module';
+import { AaveV2ContractFactory } from '~apps/aave-v2';
 
 import { GeistContractFactory } from './contracts';
 import { FantomGeistIncentivesPositionFetcher } from './fantom/geist.incentives.contract-position-fetcher';
@@ -9,20 +10,19 @@ import { FantomGeistPositionPresenter } from './fantom/geist.position-presentati
 import { FantomGeistStableDebtTokenFetcher } from './fantom/geist.stable-debt.token-fetcher';
 import { FantomGeistSupplyTokenFetcher } from './fantom/geist.supply.token-fetcher';
 import { FantomGeistVariableDebtTokenFetcher } from './fantom/geist.variable-debt.token-fetcher';
-import { GeistAppDefinition, GEIST_DEFINITION } from './geist.definition';
+import { GeistAppDefinition } from './geist.definition';
 
-@Register.AppModule({
-  appId: GEIST_DEFINITION.id,
-  imports: [AaveV2AppModule],
+@Module({
   providers: [
+    GeistAppDefinition,
+    GeistContractFactory,
+    AaveV2ContractFactory,
     FantomGeistIncentivesPositionFetcher,
     FantomGeistPlatformFeesPositionFetcher,
     FantomGeistPositionPresenter,
     FantomGeistStableDebtTokenFetcher,
     FantomGeistSupplyTokenFetcher,
     FantomGeistVariableDebtTokenFetcher,
-    GeistAppDefinition,
-    GeistContractFactory,
   ],
 })
 export class GeistAppModule extends AbstractApp() {}

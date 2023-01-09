@@ -5,12 +5,12 @@ import { AaveV2AToken } from '../contracts/ethers/AaveV2AToken';
 import {
   AaveV2ReserveApyData,
   AaveV2ReserveTokenAddressesData,
-  AaveV2LendingTemplateTokenFetcher,
+  AaveV2LendingTokenFetcher,
   AaveV2LendingTokenDataProps,
-} from '../helpers/aave-v2.lending.template.token-fetcher';
+} from '../common/aave-v2.lending.token-fetcher';
 
 @PositionTemplate()
-export class PolygonAaveV2SupplyTokenFetcher extends AaveV2LendingTemplateTokenFetcher {
+export class PolygonAaveV2SupplyTokenFetcher extends AaveV2LendingTokenFetcher {
   groupLabel = 'Lending';
   providerAddress = '0x7551b5d2763519d4e37e8b81929d336de671d46d';
   isDebt = false;

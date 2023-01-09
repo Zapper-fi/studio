@@ -1,14 +1,14 @@
-import { Register } from '~app-toolkit/decorators';
+import { Module } from '@nestjs/common';
+
 import { AbstractApp } from '~app/app.dynamic-module';
 
-import { BancorV3AppDefinition, BANCOR_V3_DEFINITION } from './bancor-v3.definition';
+import { BancorV3AppDefinition } from './bancor-v3.definition';
 import { BancorV3ContractFactory } from './contracts';
 import { EthereumBancorV3BntPoolTokenFetcher } from './ethereum/bancor-v3.bnt-pool.token-fetcher';
 import { EthereumBancorV3FarmContractPositionFetcher } from './ethereum/bancor-v3.farm.contract-position-fetcher';
 import { EthereumBancorV3PoolTokenFetcher } from './ethereum/bancor-v3.pool.token-fetcher';
 
-@Register.AppModule({
-  appId: BANCOR_V3_DEFINITION.id,
+@Module({
   providers: [
     BancorV3AppDefinition,
     BancorV3ContractFactory,

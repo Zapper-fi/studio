@@ -1,7 +1,8 @@
-import { Register } from '~app-toolkit/decorators';
+import { Module } from '@nestjs/common';
+
 import { AbstractApp } from '~app/app.dynamic-module';
 
-import { AngleAppDefinition, ANGLE_DEFINITION } from './angle.definition';
+import { AngleAppDefinition } from './angle.definition';
 import { AngleApiHelper } from './common/angle.api';
 import { AngleContractFactory } from './contracts';
 import { EthereumAnglePerpetualsContractPositionFetcher } from './ethereum/angle.perpetual.contract-position-fetcher';
@@ -9,8 +10,7 @@ import { EthereumAngleSanTokenTokenFetcher } from './ethereum/angle.san-token.to
 import { EthereumAngleVaultsContractPositionFetcher } from './ethereum/angle.vault.contract-position-fetcher';
 import { EthereumAngleVeAngleContractPositionFetcher } from './ethereum/angle.voting-escrow.contract-position-fetcher';
 
-@Register.AppModule({
-  appId: ANGLE_DEFINITION.id,
+@Module({
   providers: [
     AngleAppDefinition,
     AngleContractFactory,

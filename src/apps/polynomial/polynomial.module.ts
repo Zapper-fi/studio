@@ -1,22 +1,24 @@
-import { Register } from '~app-toolkit/decorators';
+import { Module } from '@nestjs/common';
+
 import { AbstractApp } from '~app/app.dynamic-module';
 
 import { PolynomialContractFactory } from './contracts';
 import { PolynomialApiHelper } from './helpers/polynomial.api';
-import { OptimismPolynomialBalanceFetcher } from './optimism/polynomial.balance-fetcher';
-import { OptimismPolynomialVaultsContractPositionFetcher } from './optimism/polynomial.vaults.contract-position-fetcher';
-import { OptimismPolynomialVaultsTokenFetcher } from './optimism/polynomial.vaults.token-fetcher';
-import { PolynomialAppDefinition, POLYNOMIAL_DEFINITION } from './polynomial.definition';
+import { OptimismPolynomialCallSellingVaultQueueContractPositionFetcher } from './optimism/polynomial.call-selling-vault-queue.contract-position-fetcher';
+import { OptimismPolynomialCallSellingVaultTokenFetcher } from './optimism/polynomial.call-selling-vault.token-fetcher';
+import { OptimismPolynomialPutSellingVaultQueueContractPositionFetcher } from './optimism/polynomial.put-selling-vault-queue.contract-position-fetcher';
+import { OptimismPolynomialPutSellingVaultTokenFetcher } from './optimism/polynomial.put-selling-vault.token-fetcher';
+import { PolynomialAppDefinition } from './polynomial.definition';
 
-@Register.AppModule({
-  appId: POLYNOMIAL_DEFINITION.id,
+@Module({
   providers: [
     PolynomialApiHelper,
-    OptimismPolynomialBalanceFetcher,
-    OptimismPolynomialVaultsContractPositionFetcher,
-    OptimismPolynomialVaultsTokenFetcher,
     PolynomialAppDefinition,
     PolynomialContractFactory,
+    OptimismPolynomialCallSellingVaultTokenFetcher,
+    OptimismPolynomialCallSellingVaultQueueContractPositionFetcher,
+    OptimismPolynomialPutSellingVaultTokenFetcher,
+    OptimismPolynomialPutSellingVaultQueueContractPositionFetcher,
   ],
 })
 export class PolynomialAppModule extends AbstractApp() {}

@@ -1,4 +1,5 @@
-import { Register } from '~app-toolkit/decorators';
+import { Module } from '@nestjs/common';
+
 import { AbstractApp } from '~app/app.dynamic-module';
 
 import { ArbitrumYearnV2VaultTokenFetcher } from './arbitrum/yearn.v2-vault.token-fetcher';
@@ -10,10 +11,9 @@ import { EthereumYearnV2VaultTokenFetcher } from './ethereum/yearn.v2-vault.toke
 import { EthereumYearnYCrvTokenTokenFetcher } from './ethereum/yearn.y-crv.token-fetcher';
 import { EthereumYearnYieldTokenFetcher } from './ethereum/yearn.yield.token-fetcher';
 import { FantomYearnV2VaultTokenFetcher } from './fantom/yearn.v2-vault.token-fetcher';
-import { YearnAppDefinition, YEARN_DEFINITION } from './yearn.definition';
+import { YearnAppDefinition } from './yearn.definition';
 
-@Register.AppModule({
-  appId: YEARN_DEFINITION.id,
+@Module({
   providers: [
     YearnAppDefinition,
     YearnContractFactory,
@@ -30,6 +30,5 @@ import { YearnAppDefinition, YEARN_DEFINITION } from './yearn.definition';
     // Arbitrum
     ArbitrumYearnV2VaultTokenFetcher,
   ],
-  exports: [YearnContractFactory],
 })
 export class YearnAppModule extends AbstractApp() {}

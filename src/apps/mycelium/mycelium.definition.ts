@@ -10,38 +10,25 @@ export const MYCELIUM_DEFINITION = appDefinition({
   url: 'https://swaps.mycelium.xyz/',
 
   groups: {
-    mlp: {
-      id: 'mlp',
-      type: GroupType.TOKEN,
-      label: 'MLP',
-    },
-
     esMyc: {
       id: 'es-myc',
       type: GroupType.TOKEN,
       label: 'esMYC',
       isHiddenFromExplore: true,
     },
-
-    levTrades: {
-      id: 'lev-trades',
-      type: GroupType.POSITION,
-      label: 'Leveraged trades',
-    },
-
-    perpTokens: {
-      id: 'perp-tokens',
+    mpl: {
+      id: 'mlp',
       type: GroupType.TOKEN,
-      label: 'Perpetual pools tokens',
+      label: 'MLP',
+    },
+    perp: {
+      id: 'perp',
+      type: GroupType.POSITION,
+      label: 'Perpetuals',
     },
   },
 
-  token: {
-    address: '0xc74fe4c715510ec2f8c61d70d397b32043f55abe',
-    network: Network.ARBITRUM_MAINNET,
-  },
-
-  tags: [AppTag.DECENTRALIZED_EXCHANGE, AppTag.DERIVATIVES, AppTag.MARGIN_TRADING],
+  tags: [AppTag.MARGIN_TRADING],
   keywords: [],
   links: {
     discord: 'https://discord.com/invite/mycelium-xyz',
@@ -53,7 +40,10 @@ export const MYCELIUM_DEFINITION = appDefinition({
     [Network.ARBITRUM_MAINNET]: [AppAction.VIEW],
   },
 
-  primaryColor: '#fff',
+  token: {
+    address: '0xc74fe4c715510ec2f8c61d70d397b32043f55abe',
+    network: Network.ARBITRUM_MAINNET,
+  },
 });
 
 @Register.AppDefinition(MYCELIUM_DEFINITION.id)

@@ -1,4 +1,5 @@
-import { Register } from '~app-toolkit/decorators';
+import { Module } from '@nestjs/common';
+
 import { AbstractApp } from '~app/app.dynamic-module';
 
 import { RookContractFactory } from './contracts';
@@ -6,10 +7,9 @@ import { EthereumRookClaimableContractPositionFetcher } from './ethereum/rook.cl
 import { EthereumRookV2PoolTokenFetcher } from './ethereum/rook.v2-pool.token-fetcher';
 import { EthereumRookV3PoolTokenFetcher } from './ethereum/rook.v3-pool.token-fetcher';
 import { EthereumRookXRookTokenFetcher } from './ethereum/rook.x-rook.token-fetcher';
-import { RookAppDefinition, ROOK_DEFINITION } from './rook.definition';
+import { RookAppDefinition } from './rook.definition';
 
-@Register.AppModule({
-  appId: ROOK_DEFINITION.id,
+@Module({
   providers: [
     RookAppDefinition,
     RookContractFactory,

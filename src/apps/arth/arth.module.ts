@@ -1,13 +1,13 @@
-import { Register } from '~app-toolkit/decorators';
+import { Module } from '@nestjs/common';
+
 import { AbstractApp } from '~app/app.dynamic-module';
 
-import { ArthAppDefinition, ARTH_DEFINITION } from './arth.definition';
+import { ArthAppDefinition } from './arth.definition';
 import { ArthContractFactory } from './contracts';
 import { EthereumArthStabilityPoolContractPositionFetcher } from './ethereum/arth.stability-pool.contract-position-fetcher';
 import { EthereumArthTroveContractPositionFetcher } from './ethereum/arth.trove.contract-position-fetcher';
 
-@Register.AppModule({
-  appId: ARTH_DEFINITION.id,
+@Module({
   providers: [
     ArthAppDefinition,
     ArthContractFactory,

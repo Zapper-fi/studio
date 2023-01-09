@@ -1,14 +1,14 @@
-import { Register } from '~app-toolkit/decorators';
+import { Module } from '@nestjs/common';
+
 import { AbstractApp } from '~app/app.dynamic-module';
 
 import { MaplePoolDefinitionResolver } from './common/maple.pool.definition-resolver';
 import { MapleContractFactory } from './contracts';
 import { EthereumMaplePoolTokenFetcher } from './ethereum/maple.pool.token-fetcher';
 import { EthereumMapleXMplTokenFetcher } from './ethereum/maple.x-mpl.token-fetcher';
-import { MapleAppDefinition, MAPLE_DEFINITION } from './maple.definition';
+import { MapleAppDefinition } from './maple.definition';
 
-@Register.AppModule({
-  appId: MAPLE_DEFINITION.id,
+@Module({
   providers: [
     MapleAppDefinition,
     MapleContractFactory,

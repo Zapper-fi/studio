@@ -1,6 +1,6 @@
 import { gql } from 'graphql-request';
 
-export const SUBGRAPH_URL = 'https://api.thegraph.com/subgraphs/name/0xged/keep3r-v2-canary';
+export const SUBGRAPH_URL = 'https://api.thegraph.com/subgraphs/name/keep3r-network/keep3r-network';
 
 export type KeeperJob = {
   jobs: {

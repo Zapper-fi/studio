@@ -4,6 +4,177 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.358.0](https://github.com/Zapper-fi/studio/compare/v0.357.0...v0.358.0) (2023-01-06)
+
+
+### Features
+
+* **defiedge:** Sneaky boi to templates ([#2066](https://github.com/Zapper-fi/studio/issues/2066)) ([2e22407](https://github.com/Zapper-fi/studio/commit/2e22407427844b49c7f57659b43acfb6e5b44c00))
+* **keeper:** use official keep3r graph ([#2064](https://github.com/Zapper-fi/studio/issues/2064)) ([f46f812](https://github.com/Zapper-fi/studio/commit/f46f812d077614f75ff79ea32ae3641064e219b6))
+
+## [0.357.0](https://github.com/Zapper-fi/studio/compare/v0.356.0...v0.357.0) (2023-01-06)
+
+
+### Features
+
+* **presenter:** Add presenter dataProps ([#2054](https://github.com/Zapper-fi/studio/issues/2054)) ([75993ed](https://github.com/Zapper-fi/studio/commit/75993eda36837b216d2d4403ab61dac9eb4cd8a2))
+
+## [0.356.0](https://github.com/Zapper-fi/studio/compare/v0.355.0...v0.356.0) (2023-01-06)
+
+
+### Features
+
+* **polynomial:** Clean clean clean ([#2060](https://github.com/Zapper-fi/studio/issues/2060)) ([74476e7](https://github.com/Zapper-fi/studio/commit/74476e7871aeed27e44425239799eebf5ab3938f))
+
+## [0.355.0](https://github.com/Zapper-fi/studio/compare/v0.354.0...v0.355.0) (2023-01-06)
+
+
+### Features
+
+* **apps:** Remove exports from app modules and remove old helper cla… ([#2055](https://github.com/Zapper-fi/studio/issues/2055)) ([a040f6e](https://github.com/Zapper-fi/studio/commit/a040f6ed06532363df8078bafad1b1d86b5f6e88))
+* **polynomial:** To templates ([#2059](https://github.com/Zapper-fi/studio/issues/2059)) ([241ebd7](https://github.com/Zapper-fi/studio/commit/241ebd7afaaee83b6fd3177c3f65d759ec6600b8))
+* **spool:** To templates ([#2058](https://github.com/Zapper-fi/studio/issues/2058)) ([8153b97](https://github.com/Zapper-fi/studio/commit/8153b97d31de6ad1cc2b306c40403a4ca767e2a7))
+
+## [0.354.0](https://github.com/Zapper-fi/studio/compare/v0.353.1...v0.354.0) (2023-01-05)
+
+
+### Features
+
+* **apps:** Remove app module decorator ([#2049](https://github.com/Zapper-fi/studio/issues/2049)) ([4e28bed](https://github.com/Zapper-fi/studio/commit/4e28bed6df69b5201b0635403a932f4de9870820))
+* **mux:** Fix reader address ([#2052](https://github.com/Zapper-fi/studio/issues/2052)) ([b389af7](https://github.com/Zapper-fi/studio/commit/b389af73c45c0aada5e2f7beb6e1342d62fbcbc8))
+
+
+### Bug Fixes
+
+* **inverse-firm:** Fix escrow address for nil balances ([#2053](https://github.com/Zapper-fi/studio/issues/2053)) ([52c4eca](https://github.com/Zapper-fi/studio/commit/52c4ecaa74e09fc9d5ea85f1c9d1f3ad31a969cb))
+* **sushiswap-kashi:** Updated subgraph url ([#2048](https://github.com/Zapper-fi/studio/issues/2048)) ([e23f6fe](https://github.com/Zapper-fi/studio/commit/e23f6fe02786c0e9d60ea3cb9df32e6d4fd41fc1))
+
+## [0.353.1](https://github.com/Zapper-fi/studio/compare/v0.353.0...v0.353.1) (2023-01-05)
+
+
+### Bug Fixes
+
+* **inverse-firm:** Migration to template ([#2046](https://github.com/Zapper-fi/studio/issues/2046)) ([701dc99](https://github.com/Zapper-fi/studio/commit/701dc990cac4925583eb21b4edabc55b7aa31432))
+
+## [0.353.0](https://github.com/Zapper-fi/studio/compare/v0.352.0...v0.353.0) (2023-01-05)
+
+
+### Features
+
+* Add FiRM protocol from Inverse Finance ([#2028](https://github.com/Zapper-fi/studio/issues/2028)) ([e371fb2](https://github.com/Zapper-fi/studio/commit/e371fb272367eef56d243f414974454e934a00c0))
+* **apps:** Remove app to app dependencies ([#2044](https://github.com/Zapper-fi/studio/issues/2044)) ([dee3f10](https://github.com/Zapper-fi/studio/commit/dee3f10a85c1521a589bc9304accff72bdce08b3))
+* **apps:** Simplify apps importer ([#2045](https://github.com/Zapper-fi/studio/issues/2045)) ([de47de0](https://github.com/Zapper-fi/studio/commit/de47de0f00c797326e18c0e227f0f46e07ea39d2))
+
+## [0.352.0](https://github.com/Zapper-fi/studio/compare/v0.351.1...v0.352.0) (2023-01-05)
+
+
+### Features
+
+* **balancer-v2:** Fix bb-usd on Polygon ([#2038](https://github.com/Zapper-fi/studio/issues/2038)) ([6ce85b7](https://github.com/Zapper-fi/studio/commit/6ce85b70dd561587b60ebf337d925af231f83761))
+* **beefy:** Show paused vaults ([#2040](https://github.com/Zapper-fi/studio/issues/2040)) ([7602d32](https://github.com/Zapper-fi/studio/commit/7602d326f0053a7c03fa6b663129fa2bdfd52ecd))
+* **exactly:** 🩹 Fix rates (x100), add deposit rates, update metadata ([#2033](https://github.com/Zapper-fi/studio/issues/2033)) ([004354c](https://github.com/Zapper-fi/studio/commit/004354c2696c716f6e58d5f0a5fa41245743db55))
+* **jarvis:** Support Jarvis synths ([#2039](https://github.com/Zapper-fi/studio/issues/2039)) ([e40fe39](https://github.com/Zapper-fi/studio/commit/e40fe39bd31b4fbe020f07de95bcec2f3d291821))
+* **jpegd:** Add new staking pool ([#2036](https://github.com/Zapper-fi/studio/issues/2036)) ([0450194](https://github.com/Zapper-fi/studio/commit/0450194525c8b27281091e2ec5f95f5febbaae15))
+* **lido:** Add stKSM ([#2041](https://github.com/Zapper-fi/studio/issues/2041)) ([09639bb](https://github.com/Zapper-fi/studio/commit/09639bbb072ce41c8ef66ea2958a3f0fa633fb53))
+
+
+### Bug Fixes
+
+* **lido:** Add missing network ([b3400d6](https://github.com/Zapper-fi/studio/commit/b3400d619677d6f7787e0e1de51dd0050d701285))
+
+## [0.351.1](https://github.com/Zapper-fi/studio/compare/v0.351.0...v0.351.1) (2023-01-04)
+
+
+### Bug Fixes
+
+* **dependencies:** Fix nestjs dependency issues ([#2034](https://github.com/Zapper-fi/studio/issues/2034)) ([1ccd205](https://github.com/Zapper-fi/studio/commit/1ccd20548632f087eebb12a1610c6ffe4d798c87))
+
+## [0.351.0](https://github.com/Zapper-fi/studio/compare/v0.350.0...v0.351.0) (2023-01-04)
+
+
+### Features
+
+* **trader-joe:** Add veJOE token with zero price to fix veJOE staking ([0c87a30](https://github.com/Zapper-fi/studio/commit/0c87a304f1b79bd095d97e7cde51699ec7171da2))
+
+## [0.350.0](https://github.com/Zapper-fi/studio/compare/v0.349.0...v0.350.0) (2023-01-04)
+
+
+### Features
+
+* **concentrator:** Add frxETH vaults ([#2029](https://github.com/Zapper-fi/studio/issues/2029)) ([43109e4](https://github.com/Zapper-fi/studio/commit/43109e45af84566abfd835a53917b8d2bf817cc2))
+
+
+### Bug Fixes
+
+* **dependencies:** Fix missing peer dependencies ([#2031](https://github.com/Zapper-fi/studio/issues/2031)) ([e2e1520](https://github.com/Zapper-fi/studio/commit/e2e152099682fb28517171fdb39a9c421075c694))
+
+## [0.349.0](https://github.com/Zapper-fi/studio/compare/v0.348.0...v0.349.0) (2023-01-04)
+
+
+### Features
+
+* **jones-dao:** Add metavaults ([#2025](https://github.com/Zapper-fi/studio/issues/2025)) ([6cbad1d](https://github.com/Zapper-fi/studio/commit/6cbad1d074767928f6680a9d6d16746db63f91cf))
+* **lemma-finance:** To templates ([#2021](https://github.com/Zapper-fi/studio/issues/2021)) ([8081196](https://github.com/Zapper-fi/studio/commit/8081196fe32be8526de90601f9bcdd802355b7cc))
+* **mux:** To templates 💤  ([#2023](https://github.com/Zapper-fi/studio/issues/2023)) ([d9c8c94](https://github.com/Zapper-fi/studio/commit/d9c8c9449154f309f9f4bc1935d1491ffee5e78b))
+
+
+### Bug Fixes
+
+* **inverse:** Extract to Studio ([#2015](https://github.com/Zapper-fi/studio/issues/2015)) ([2f016e3](https://github.com/Zapper-fi/studio/commit/2f016e3089f731a1a6bf34a758d0f094e3b9e6b8))
+* **lido:** Migration to template ([#2024](https://github.com/Zapper-fi/studio/issues/2024)) ([8cab9af](https://github.com/Zapper-fi/studio/commit/8cab9af24a4b22499559610dd510ce26c903d7d5))
+
+## [0.348.0](https://github.com/Zapper-fi/studio/compare/v0.347.1...v0.348.0) (2023-01-02)
+
+
+### Features
+
+* **keeper:** Add keep3r job names ([#2020](https://github.com/Zapper-fi/studio/issues/2020)) ([93a7854](https://github.com/Zapper-fi/studio/commit/93a7854c863b22d580a2d6a3f3ce7ef230100c7d))
+
+
+### Bug Fixes
+
+* **gearbox:** Linting ([#2018](https://github.com/Zapper-fi/studio/issues/2018)) ([b741d45](https://github.com/Zapper-fi/studio/commit/b741d45664bf0632f37230f7b71d577e71e1c92d))
+* **gearbox:** no credit account positions for credit accounts ([#2016](https://github.com/Zapper-fi/studio/issues/2016)) ([9972bfc](https://github.com/Zapper-fi/studio/commit/9972bfc1ee1f3b23172621ba5a22374335ffa41a))
+
+## [0.347.1](https://github.com/Zapper-fi/studio/compare/v0.347.0...v0.347.1) (2022-12-29)
+
+
+### Bug Fixes
+
+* **metavault-trade:** Fix small issues while migrating ([49613fd](https://github.com/Zapper-fi/studio/commit/49613fdc60c4e8f6e1f2280ecad7f956035f5c37))
+
+## [0.347.0](https://github.com/Zapper-fi/studio/compare/v0.346.0...v0.347.0) (2022-12-29)
+
+
+### Features
+
+* **gamma:** To templates ([#2010](https://github.com/Zapper-fi/studio/issues/2010)) ([0495596](https://github.com/Zapper-fi/studio/commit/0495596c5c91b9fc29838557a6474af3214d9b23))
+* **symphony:** To templates ([#2013](https://github.com/Zapper-fi/studio/issues/2013)) ([cbae673](https://github.com/Zapper-fi/studio/commit/cbae6736b9eae1d9536840d76c5508a4aac1cdc4))
+
+## [0.346.0](https://github.com/Zapper-fi/studio/compare/v0.345.0...v0.346.0) (2022-12-29)
+
+
+### Features
+
+* **exactly:** Support Exactly protocol ([#1895](https://github.com/Zapper-fi/studio/issues/1895)) ([003f050](https://github.com/Zapper-fi/studio/commit/003f05028099ee3ab168eb0165ac30d30b57165b))
+
+## [0.345.0](https://github.com/Zapper-fi/studio/compare/v0.344.0...v0.345.0) (2022-12-28)
+
+
+### Features
+
+* **arbor-finance:** Add bond tokens ([#1982](https://github.com/Zapper-fi/studio/issues/1982)) ([0680761](https://github.com/Zapper-fi/studio/commit/06807611c907e6ea782168656ac39ba7f3c42160))
+* **arbor-finance:** Convert to templates ([#2006](https://github.com/Zapper-fi/studio/issues/2006)) ([9e75ffd](https://github.com/Zapper-fi/studio/commit/9e75ffdac031d66fe18928ccacbd8a18c9f80262))
+* **keeper:** KLP to templates ([#2005](https://github.com/Zapper-fi/studio/issues/2005)) ([7c174e1](https://github.com/Zapper-fi/studio/commit/7c174e1defbf4feb8f6b383b4697d704237cfdd9))
+* **llamapay:** Vesting ([#1941](https://github.com/Zapper-fi/studio/issues/1941)) ([d5a3136](https://github.com/Zapper-fi/studio/commit/d5a31369eeff4e04f62404f8280df164d6529043))
+* **mean-finance:** Add Ethereum Mainnet support for Mean Finance integration ([#2003](https://github.com/Zapper-fi/studio/issues/2003)) ([d5cb1c4](https://github.com/Zapper-fi/studio/commit/d5cb1c40d940d2d808e63be4282a499fffa4228d))
+* **pendle-v2:** Implement vePendle fetcher ([#2002](https://github.com/Zapper-fi/studio/issues/2002)) ([a0fc054](https://github.com/Zapper-fi/studio/commit/a0fc0543e44be51ab9e115d556283db439e5a15b))
+
+
+### Bug Fixes
+
+* **mycelium:** Migration to template ([#1978](https://github.com/Zapper-fi/studio/issues/1978)) ([38a6e6b](https://github.com/Zapper-fi/studio/commit/38a6e6bd434fcc18f2209e4d108e2aa3198d6507))
+
 ## [0.344.0](https://github.com/Zapper-fi/studio/compare/v0.343.1...v0.344.0) (2022-12-28)
 
 

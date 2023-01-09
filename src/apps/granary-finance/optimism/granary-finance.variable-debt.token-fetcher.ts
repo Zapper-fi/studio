@@ -1,15 +1,15 @@
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import { AaveV2AToken } from '~apps/aave-v2/contracts';
 import {
-  AaveV2LendingTemplateTokenFetcher,
+  AaveV2LendingTokenFetcher,
   AaveV2LendingTokenDataProps,
   AaveV2ReserveApyData,
   AaveV2ReserveTokenAddressesData,
-} from '~apps/aave-v2/helpers/aave-v2.lending.template.token-fetcher';
+} from '~apps/aave-v2/common/aave-v2.lending.token-fetcher';
 import { GetDisplayPropsParams } from '~position/template/app-token.template.types';
 
 @PositionTemplate()
-export class OptimismGranaryFinanceVariableDebtTokenFetcher extends AaveV2LendingTemplateTokenFetcher {
+export class OptimismGranaryFinanceVariableDebtTokenFetcher extends AaveV2LendingTokenFetcher {
   groupLabel = 'Lending';
   providerAddress = '0x9546f673ef71ff666ae66d01fd6e7c6dae5a9995';
   isDebt = true;

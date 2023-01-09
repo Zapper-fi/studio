@@ -1,12 +1,12 @@
-import { Register } from '~app-toolkit/decorators';
+import { Module } from '@nestjs/common';
+
 import { AbstractApp } from '~app/app.dynamic-module';
 
-import { ArborFinanceAppDefinition, ARBOR_FINANCE_DEFINITION } from './arbor-finance.definition';
+import { ArborFinanceAppDefinition } from './arbor-finance.definition';
 import { ArborFinanceContractFactory } from './contracts';
 import { EthereumArborFinanceBondTokenFetcher } from './ethereum/arbor-finance.bond.token-fetcher';
 
-@Register.AppModule({
-  appId: ARBOR_FINANCE_DEFINITION.id,
+@Module({
   providers: [ArborFinanceAppDefinition, ArborFinanceContractFactory, EthereumArborFinanceBondTokenFetcher],
 })
 export class ArborFinanceAppModule extends AbstractApp() {}

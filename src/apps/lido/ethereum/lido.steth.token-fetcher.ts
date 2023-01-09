@@ -1,70 +1,47 @@
 import { Inject } from '@nestjs/common';
+import 'moment-duration-format';
 
-import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
-import { Register } from '~app-toolkit/decorators';
-import { buildDollarDisplayItem } from '~app-toolkit/helpers/presentation/display-item.present';
-import { getTokenImg } from '~app-toolkit/helpers/presentation/image.present';
-import { ContractType } from '~position/contract.interface';
-import { PositionFetcher } from '~position/position-fetcher.interface';
-import { AppTokenPosition } from '~position/position.interface';
-import { Network } from '~types/network.interface';
+import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
+import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
+import { GetPricePerShareParams } from '~position/template/app-token.template.types';
 
 import { LidoContractFactory } from '../contracts';
-import { LIDO_DEFINITION } from '../lido.definition';
+import { LidoSteth } from '../contracts/ethers/LidoSteth';
 
-const appId = LIDO_DEFINITION.id;
-const groupId = LIDO_DEFINITION.groups.steth.id;
-const network = Network.ETHEREUM_MAINNET;
+@PositionTemplate()
+export class EthereumLidoStethTokenFetcher extends AppTokenTemplatePositionFetcher<LidoSteth> {
+  groupLabel = 'stETH';
+  isExcludedFromBalances = true;
 
-@Register.TokenPositionFetcher({ appId, groupId, network })
-export class EthereumLidoStethTokenFetcher implements PositionFetcher<AppTokenPosition> {
   constructor(
-    @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
-    @Inject(LidoContractFactory) private readonly lidoContractFactory: LidoContractFactory,
-  ) {}
+    @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
+    @Inject(LidoContractFactory) protected readonly contractFactory: LidoContractFactory,
+  ) {
+    super(appToolkit);
+  }
 
-  async getPositions() {
-    const address = '0xae7ab96520de3a18e5e111b5eaab095312d7fe84';
-    const multicall = this.appToolkit.getMulticall(network);
-    const contract = this.lidoContractFactory.steth({ address, network });
-    const baseTokenDependencies = await this.appToolkit.getBaseTokenPrices(network);
-    const stethToken = baseTokenDependencies.find(v => v.address === address)!;
-    const [symbol, decimals, totalSupply] = await Promise.all([
-      multicall.wrap(contract).symbol(),
-      multicall.wrap(contract).decimals(),
-      multicall.wrap(contract).totalSupply(),
-    ]);
-    const supply = Number(totalSupply) / 10 ** decimals;
-    const liquidity = stethToken.price * supply;
+  getContract(address: string): LidoSteth {
+    return this.contractFactory.lidoSteth({ network: this.network, address });
+  }
 
-    const token: AppTokenPosition = {
-      address,
-      network,
-      appId,
-      groupId,
-      symbol,
-      decimals,
-      supply,
-      tokens: [],
-      dataProps: {
-        liquidity,
-      },
-      pricePerShare: 1,
-      price: stethToken.price,
-      type: ContractType.APP_TOKEN,
-      displayProps: {
-        label: symbol,
-        secondaryLabel: buildDollarDisplayItem(stethToken.price),
-        images: [getTokenImg(address, network)],
-        statsItems: [
-          {
-            label: 'Liquidity',
-            value: buildDollarDisplayItem(liquidity),
-          },
-        ],
-      },
-    };
+  async getAddresses() {
+    return ['0xae7ab96520de3a18e5e111b5eaab095312d7fe84'];
+  }
 
-    return [token];
+  async getUnderlyingTokenDefinitions() {
+    return [{ address: '0x0000000000000000000000000000000000000000', network: this.network }];
+  }
+
+  async getPricePerShare({ appToken, multicall }: GetPricePerShareParams<LidoSteth>) {
+    const oracleContract = this.contractFactory.lidoStethEthOracle({
+      address: '0x86392dc19c0b719886221c78ab11eb8cf5c52812',
+      network: this.network,
+    });
+
+    const latestRound = await multicall.wrap(oracleContract).latestRound();
+    const pricePerShareRaw = await multicall.wrap(oracleContract).getAnswer(latestRound);
+
+    return Number(pricePerShareRaw) / 10 ** appToken.decimals;
   }
 }

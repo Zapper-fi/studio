@@ -12,205 +12,343 @@ import type {
   PopulatedTransaction,
   Signer,
   utils,
-} from 'ethers';
-import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
-import type { Listener, Provider } from '@ethersproject/providers';
-import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
+} from "ethers";
+import type {
+  FunctionFragment,
+  Result,
+  EventFragment,
+} from "@ethersproject/abi";
+import type { Listener, Provider } from "@ethersproject/providers";
+import type {
+  TypedEventFilter,
+  TypedEvent,
+  TypedListener,
+  OnEvent,
+} from "./common";
 
 export interface AladdinFxsInterface extends utils.Interface {
   functions: {
-    'allowance(address,address)': FunctionFragment;
-    'approve(address,uint256)': FunctionFragment;
-    'asset()': FunctionFragment;
-    'balanceOf(address)': FunctionFragment;
-    'convertToAssets(uint256)': FunctionFragment;
-    'convertToShares(uint256)': FunctionFragment;
-    'decimals()': FunctionFragment;
-    'decreaseAllowance(address,uint256)': FunctionFragment;
-    'deposit(uint256,address)': FunctionFragment;
-    'feeInfo()': FunctionFragment;
-    'harvest(address,uint256)': FunctionFragment;
-    'increaseAllowance(address,uint256)': FunctionFragment;
-    'initialize(address,address[])': FunctionFragment;
-    'maxDeposit(address)': FunctionFragment;
-    'maxMint(address)': FunctionFragment;
-    'maxRedeem(address)': FunctionFragment;
-    'maxWithdraw(address)': FunctionFragment;
-    'mint(uint256,address)': FunctionFragment;
-    'name()': FunctionFragment;
-    'owner()': FunctionFragment;
-    'previewDeposit(uint256)': FunctionFragment;
-    'previewMint(uint256)': FunctionFragment;
-    'previewRedeem(uint256)': FunctionFragment;
-    'previewWithdraw(uint256)': FunctionFragment;
-    'redeem(uint256,address,address)': FunctionFragment;
-    'renounceOwnership()': FunctionFragment;
-    'rewardInfo()': FunctionFragment;
-    'rewards(uint256)': FunctionFragment;
-    'symbol()': FunctionFragment;
-    'totalAssets()': FunctionFragment;
-    'totalSupply()': FunctionFragment;
-    'transfer(address,uint256)': FunctionFragment;
-    'transferFrom(address,address,uint256)': FunctionFragment;
-    'transferOwnership(address)': FunctionFragment;
-    'updateFeeInfo(address,uint32,uint32,uint32)': FunctionFragment;
-    'updateRewardPeriodLength(uint32)': FunctionFragment;
-    'updateRewards(address[])': FunctionFragment;
-    'updateZap(address)': FunctionFragment;
-    'withdraw(uint256,address,address)': FunctionFragment;
-    'zap()': FunctionFragment;
+    "allowance(address,address)": FunctionFragment;
+    "approve(address,uint256)": FunctionFragment;
+    "asset()": FunctionFragment;
+    "balanceOf(address)": FunctionFragment;
+    "convertToAssets(uint256)": FunctionFragment;
+    "convertToShares(uint256)": FunctionFragment;
+    "decimals()": FunctionFragment;
+    "decreaseAllowance(address,uint256)": FunctionFragment;
+    "deposit(uint256,address)": FunctionFragment;
+    "feeInfo()": FunctionFragment;
+    "harvest(address,uint256)": FunctionFragment;
+    "increaseAllowance(address,uint256)": FunctionFragment;
+    "initialize(address,address[])": FunctionFragment;
+    "maxDeposit(address)": FunctionFragment;
+    "maxMint(address)": FunctionFragment;
+    "maxRedeem(address)": FunctionFragment;
+    "maxWithdraw(address)": FunctionFragment;
+    "mint(uint256,address)": FunctionFragment;
+    "name()": FunctionFragment;
+    "owner()": FunctionFragment;
+    "previewDeposit(uint256)": FunctionFragment;
+    "previewMint(uint256)": FunctionFragment;
+    "previewRedeem(uint256)": FunctionFragment;
+    "previewWithdraw(uint256)": FunctionFragment;
+    "redeem(uint256,address,address)": FunctionFragment;
+    "renounceOwnership()": FunctionFragment;
+    "rewardInfo()": FunctionFragment;
+    "rewards(uint256)": FunctionFragment;
+    "symbol()": FunctionFragment;
+    "totalAssets()": FunctionFragment;
+    "totalSupply()": FunctionFragment;
+    "transfer(address,uint256)": FunctionFragment;
+    "transferFrom(address,address,uint256)": FunctionFragment;
+    "transferOwnership(address)": FunctionFragment;
+    "updateFeeInfo(address,uint32,uint32,uint32)": FunctionFragment;
+    "updateRewardPeriodLength(uint32)": FunctionFragment;
+    "updateRewards(address[])": FunctionFragment;
+    "updateZap(address)": FunctionFragment;
+    "withdraw(uint256,address,address)": FunctionFragment;
+    "zap()": FunctionFragment;
   };
 
   getFunction(
     nameOrSignatureOrTopic:
-      | 'allowance'
-      | 'approve'
-      | 'asset'
-      | 'balanceOf'
-      | 'convertToAssets'
-      | 'convertToShares'
-      | 'decimals'
-      | 'decreaseAllowance'
-      | 'deposit'
-      | 'feeInfo'
-      | 'harvest'
-      | 'increaseAllowance'
-      | 'initialize'
-      | 'maxDeposit'
-      | 'maxMint'
-      | 'maxRedeem'
-      | 'maxWithdraw'
-      | 'mint'
-      | 'name'
-      | 'owner'
-      | 'previewDeposit'
-      | 'previewMint'
-      | 'previewRedeem'
-      | 'previewWithdraw'
-      | 'redeem'
-      | 'renounceOwnership'
-      | 'rewardInfo'
-      | 'rewards'
-      | 'symbol'
-      | 'totalAssets'
-      | 'totalSupply'
-      | 'transfer'
-      | 'transferFrom'
-      | 'transferOwnership'
-      | 'updateFeeInfo'
-      | 'updateRewardPeriodLength'
-      | 'updateRewards'
-      | 'updateZap'
-      | 'withdraw'
-      | 'zap',
+      | "allowance"
+      | "approve"
+      | "asset"
+      | "balanceOf"
+      | "convertToAssets"
+      | "convertToShares"
+      | "decimals"
+      | "decreaseAllowance"
+      | "deposit"
+      | "feeInfo"
+      | "harvest"
+      | "increaseAllowance"
+      | "initialize"
+      | "maxDeposit"
+      | "maxMint"
+      | "maxRedeem"
+      | "maxWithdraw"
+      | "mint"
+      | "name"
+      | "owner"
+      | "previewDeposit"
+      | "previewMint"
+      | "previewRedeem"
+      | "previewWithdraw"
+      | "redeem"
+      | "renounceOwnership"
+      | "rewardInfo"
+      | "rewards"
+      | "symbol"
+      | "totalAssets"
+      | "totalSupply"
+      | "transfer"
+      | "transferFrom"
+      | "transferOwnership"
+      | "updateFeeInfo"
+      | "updateRewardPeriodLength"
+      | "updateRewards"
+      | "updateZap"
+      | "withdraw"
+      | "zap"
   ): FunctionFragment;
 
-  encodeFunctionData(functionFragment: 'allowance', values: [string, string]): string;
-  encodeFunctionData(functionFragment: 'approve', values: [string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'asset', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'balanceOf', values: [string]): string;
-  encodeFunctionData(functionFragment: 'convertToAssets', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'convertToShares', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'decimals', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'decreaseAllowance', values: [string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'deposit', values: [BigNumberish, string]): string;
-  encodeFunctionData(functionFragment: 'feeInfo', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'harvest', values: [string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'increaseAllowance', values: [string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'initialize', values: [string, string[]]): string;
-  encodeFunctionData(functionFragment: 'maxDeposit', values: [string]): string;
-  encodeFunctionData(functionFragment: 'maxMint', values: [string]): string;
-  encodeFunctionData(functionFragment: 'maxRedeem', values: [string]): string;
-  encodeFunctionData(functionFragment: 'maxWithdraw', values: [string]): string;
-  encodeFunctionData(functionFragment: 'mint', values: [BigNumberish, string]): string;
-  encodeFunctionData(functionFragment: 'name', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'owner', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'previewDeposit', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'previewMint', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'previewRedeem', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'previewWithdraw', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'redeem', values: [BigNumberish, string, string]): string;
-  encodeFunctionData(functionFragment: 'renounceOwnership', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'rewardInfo', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'rewards', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'symbol', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'totalAssets', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'totalSupply', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'transfer', values: [string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'transferFrom', values: [string, string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'transferOwnership', values: [string]): string;
   encodeFunctionData(
-    functionFragment: 'updateFeeInfo',
-    values: [string, BigNumberish, BigNumberish, BigNumberish],
+    functionFragment: "allowance",
+    values: [string, string]
   ): string;
-  encodeFunctionData(functionFragment: 'updateRewardPeriodLength', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'updateRewards', values: [string[]]): string;
-  encodeFunctionData(functionFragment: 'updateZap', values: [string]): string;
-  encodeFunctionData(functionFragment: 'withdraw', values: [BigNumberish, string, string]): string;
-  encodeFunctionData(functionFragment: 'zap', values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: "approve",
+    values: [string, BigNumberish]
+  ): string;
+  encodeFunctionData(functionFragment: "asset", values?: undefined): string;
+  encodeFunctionData(functionFragment: "balanceOf", values: [string]): string;
+  encodeFunctionData(
+    functionFragment: "convertToAssets",
+    values: [BigNumberish]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "convertToShares",
+    values: [BigNumberish]
+  ): string;
+  encodeFunctionData(functionFragment: "decimals", values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: "decreaseAllowance",
+    values: [string, BigNumberish]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "deposit",
+    values: [BigNumberish, string]
+  ): string;
+  encodeFunctionData(functionFragment: "feeInfo", values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: "harvest",
+    values: [string, BigNumberish]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "increaseAllowance",
+    values: [string, BigNumberish]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "initialize",
+    values: [string, string[]]
+  ): string;
+  encodeFunctionData(functionFragment: "maxDeposit", values: [string]): string;
+  encodeFunctionData(functionFragment: "maxMint", values: [string]): string;
+  encodeFunctionData(functionFragment: "maxRedeem", values: [string]): string;
+  encodeFunctionData(functionFragment: "maxWithdraw", values: [string]): string;
+  encodeFunctionData(
+    functionFragment: "mint",
+    values: [BigNumberish, string]
+  ): string;
+  encodeFunctionData(functionFragment: "name", values?: undefined): string;
+  encodeFunctionData(functionFragment: "owner", values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: "previewDeposit",
+    values: [BigNumberish]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "previewMint",
+    values: [BigNumberish]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "previewRedeem",
+    values: [BigNumberish]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "previewWithdraw",
+    values: [BigNumberish]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "redeem",
+    values: [BigNumberish, string, string]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "renounceOwnership",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "rewardInfo",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "rewards",
+    values: [BigNumberish]
+  ): string;
+  encodeFunctionData(functionFragment: "symbol", values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: "totalAssets",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "totalSupply",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "transfer",
+    values: [string, BigNumberish]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "transferFrom",
+    values: [string, string, BigNumberish]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "transferOwnership",
+    values: [string]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "updateFeeInfo",
+    values: [string, BigNumberish, BigNumberish, BigNumberish]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "updateRewardPeriodLength",
+    values: [BigNumberish]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "updateRewards",
+    values: [string[]]
+  ): string;
+  encodeFunctionData(functionFragment: "updateZap", values: [string]): string;
+  encodeFunctionData(
+    functionFragment: "withdraw",
+    values: [BigNumberish, string, string]
+  ): string;
+  encodeFunctionData(functionFragment: "zap", values?: undefined): string;
 
-  decodeFunctionResult(functionFragment: 'allowance', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'approve', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'asset', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'balanceOf', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'convertToAssets', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'convertToShares', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'decimals', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'decreaseAllowance', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'deposit', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'feeInfo', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'harvest', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'increaseAllowance', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'initialize', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'maxDeposit', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'maxMint', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'maxRedeem', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'maxWithdraw', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'mint', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'name', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'owner', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'previewDeposit', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'previewMint', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'previewRedeem', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'previewWithdraw', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'redeem', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'renounceOwnership', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'rewardInfo', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'rewards', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'symbol', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'totalAssets', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'totalSupply', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'transfer', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'transferFrom', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'transferOwnership', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'updateFeeInfo', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'updateRewardPeriodLength', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'updateRewards', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'updateZap', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'withdraw', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'zap', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "allowance", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "approve", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "asset", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "balanceOf", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "convertToAssets",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "convertToShares",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(functionFragment: "decimals", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "decreaseAllowance",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(functionFragment: "deposit", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "feeInfo", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "harvest", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "increaseAllowance",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(functionFragment: "initialize", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "maxDeposit", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "maxMint", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "maxRedeem", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "maxWithdraw",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(functionFragment: "mint", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "name", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "owner", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "previewDeposit",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "previewMint",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "previewRedeem",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "previewWithdraw",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(functionFragment: "redeem", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "renounceOwnership",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(functionFragment: "rewardInfo", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "rewards", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "symbol", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "totalAssets",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "totalSupply",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(functionFragment: "transfer", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "transferFrom",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "transferOwnership",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "updateFeeInfo",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "updateRewardPeriodLength",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "updateRewards",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(functionFragment: "updateZap", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "withdraw", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "zap", data: BytesLike): Result;
 
   events: {
-    'Approval(address,address,uint256)': EventFragment;
-    'Deposit(address,address,uint256,uint256)': EventFragment;
-    'Harvest(address,address,uint256,uint256,uint256)': EventFragment;
-    'OwnershipTransferred(address,address)': EventFragment;
-    'Transfer(address,address,uint256)': EventFragment;
-    'UpdateFeeInfo(address,uint32,uint32,uint32)': EventFragment;
-    'UpdateRewardPeriodLength(uint256)': EventFragment;
-    'UpdateZap(address)': EventFragment;
-    'Withdraw(address,address,address,uint256,uint256)': EventFragment;
+    "Approval(address,address,uint256)": EventFragment;
+    "Deposit(address,address,uint256,uint256)": EventFragment;
+    "Harvest(address,address,uint256,uint256,uint256)": EventFragment;
+    "OwnershipTransferred(address,address)": EventFragment;
+    "Transfer(address,address,uint256)": EventFragment;
+    "UpdateFeeInfo(address,uint32,uint32,uint32)": EventFragment;
+    "UpdateRewardPeriodLength(uint256)": EventFragment;
+    "UpdateZap(address)": EventFragment;
+    "Withdraw(address,address,address,uint256,uint256)": EventFragment;
   };
 
-  getEvent(nameOrSignatureOrTopic: 'Approval'): EventFragment;
-  getEvent(nameOrSignatureOrTopic: 'Deposit'): EventFragment;
-  getEvent(nameOrSignatureOrTopic: 'Harvest'): EventFragment;
-  getEvent(nameOrSignatureOrTopic: 'OwnershipTransferred'): EventFragment;
-  getEvent(nameOrSignatureOrTopic: 'Transfer'): EventFragment;
-  getEvent(nameOrSignatureOrTopic: 'UpdateFeeInfo'): EventFragment;
-  getEvent(nameOrSignatureOrTopic: 'UpdateRewardPeriodLength'): EventFragment;
-  getEvent(nameOrSignatureOrTopic: 'UpdateZap'): EventFragment;
-  getEvent(nameOrSignatureOrTopic: 'Withdraw'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "Approval"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "Deposit"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "Harvest"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "OwnershipTransferred"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "Transfer"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "UpdateFeeInfo"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "UpdateRewardPeriodLength"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "UpdateZap"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "Withdraw"): EventFragment;
 }
 
 export interface ApprovalEventObject {
@@ -218,7 +356,10 @@ export interface ApprovalEventObject {
   spender: string;
   value: BigNumber;
 }
-export type ApprovalEvent = TypedEvent<[string, string, BigNumber], ApprovalEventObject>;
+export type ApprovalEvent = TypedEvent<
+  [string, string, BigNumber],
+  ApprovalEventObject
+>;
 
 export type ApprovalEventFilter = TypedEventFilter<ApprovalEvent>;
 
@@ -228,7 +369,10 @@ export interface DepositEventObject {
   assets: BigNumber;
   shares: BigNumber;
 }
-export type DepositEvent = TypedEvent<[string, string, BigNumber, BigNumber], DepositEventObject>;
+export type DepositEvent = TypedEvent<
+  [string, string, BigNumber, BigNumber],
+  DepositEventObject
+>;
 
 export type DepositEventFilter = TypedEventFilter<DepositEvent>;
 
@@ -239,7 +383,10 @@ export interface HarvestEventObject {
   platformFee: BigNumber;
   harvestBounty: BigNumber;
 }
-export type HarvestEvent = TypedEvent<[string, string, BigNumber, BigNumber, BigNumber], HarvestEventObject>;
+export type HarvestEvent = TypedEvent<
+  [string, string, BigNumber, BigNumber, BigNumber],
+  HarvestEventObject
+>;
 
 export type HarvestEventFilter = TypedEventFilter<HarvestEvent>;
 
@@ -247,16 +394,23 @@ export interface OwnershipTransferredEventObject {
   previousOwner: string;
   newOwner: string;
 }
-export type OwnershipTransferredEvent = TypedEvent<[string, string], OwnershipTransferredEventObject>;
+export type OwnershipTransferredEvent = TypedEvent<
+  [string, string],
+  OwnershipTransferredEventObject
+>;
 
-export type OwnershipTransferredEventFilter = TypedEventFilter<OwnershipTransferredEvent>;
+export type OwnershipTransferredEventFilter =
+  TypedEventFilter<OwnershipTransferredEvent>;
 
 export interface TransferEventObject {
   from: string;
   to: string;
   value: BigNumber;
 }
-export type TransferEvent = TypedEvent<[string, string, BigNumber], TransferEventObject>;
+export type TransferEvent = TypedEvent<
+  [string, string, BigNumber],
+  TransferEventObject
+>;
 
 export type TransferEventFilter = TypedEventFilter<TransferEvent>;
 
@@ -266,16 +420,23 @@ export interface UpdateFeeInfoEventObject {
   _bountyPercentage: number;
   _repayPercentage: number;
 }
-export type UpdateFeeInfoEvent = TypedEvent<[string, number, number, number], UpdateFeeInfoEventObject>;
+export type UpdateFeeInfoEvent = TypedEvent<
+  [string, number, number, number],
+  UpdateFeeInfoEventObject
+>;
 
 export type UpdateFeeInfoEventFilter = TypedEventFilter<UpdateFeeInfoEvent>;
 
 export interface UpdateRewardPeriodLengthEventObject {
   _length: BigNumber;
 }
-export type UpdateRewardPeriodLengthEvent = TypedEvent<[BigNumber], UpdateRewardPeriodLengthEventObject>;
+export type UpdateRewardPeriodLengthEvent = TypedEvent<
+  [BigNumber],
+  UpdateRewardPeriodLengthEventObject
+>;
 
-export type UpdateRewardPeriodLengthEventFilter = TypedEventFilter<UpdateRewardPeriodLengthEvent>;
+export type UpdateRewardPeriodLengthEventFilter =
+  TypedEventFilter<UpdateRewardPeriodLengthEvent>;
 
 export interface UpdateZapEventObject {
   _zap: string;
@@ -291,7 +452,10 @@ export interface WithdrawEventObject {
   assets: BigNumber;
   shares: BigNumber;
 }
-export type WithdrawEvent = TypedEvent<[string, string, string, BigNumber, BigNumber], WithdrawEventObject>;
+export type WithdrawEvent = TypedEvent<
+  [string, string, string, BigNumber, BigNumber],
+  WithdrawEventObject
+>;
 
 export type WithdrawEventFilter = TypedEventFilter<WithdrawEvent>;
 
@@ -305,12 +469,16 @@ export interface AladdinFxs extends BaseContract {
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,
     fromBlockOrBlockhash?: string | number | undefined,
-    toBlock?: string | number | undefined,
+    toBlock?: string | number | undefined
   ): Promise<Array<TEvent>>;
 
-  listeners<TEvent extends TypedEvent>(eventFilter?: TypedEventFilter<TEvent>): Array<TypedListener<TEvent>>;
+  listeners<TEvent extends TypedEvent>(
+    eventFilter?: TypedEventFilter<TEvent>
+  ): Array<TypedListener<TEvent>>;
   listeners(eventName?: string): Array<Listener>;
-  removeAllListeners<TEvent extends TypedEvent>(eventFilter: TypedEventFilter<TEvent>): this;
+  removeAllListeners<TEvent extends TypedEvent>(
+    eventFilter: TypedEventFilter<TEvent>
+  ): this;
   removeAllListeners(eventName?: string): this;
   off: OnEvent<this>;
   on: OnEvent<this>;
@@ -318,37 +486,49 @@ export interface AladdinFxs extends BaseContract {
   removeListener: OnEvent<this>;
 
   functions: {
-    allowance(owner: string, spender: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    allowance(
+      owner: string,
+      spender: string,
+      overrides?: CallOverrides
+    ): Promise<[BigNumber]>;
 
     approve(
       spender: string,
       amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
     asset(overrides?: CallOverrides): Promise<[string]>;
 
     balanceOf(account: string, overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    convertToAssets(_shares: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber]>;
+    convertToAssets(
+      _shares: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<[BigNumber]>;
 
-    convertToShares(_assets: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber]>;
+    convertToShares(
+      _assets: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<[BigNumber]>;
 
     decimals(overrides?: CallOverrides): Promise<[number]>;
 
     decreaseAllowance(
       spender: string,
       subtractedValue: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
     deposit(
       _assets: BigNumberish,
       _receiver: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
-    feeInfo(overrides?: CallOverrides): Promise<
+    feeInfo(
+      overrides?: CallOverrides
+    ): Promise<
       [string, number, number, number] & {
         platform: string;
         platformPercentage: number;
@@ -360,19 +540,19 @@ export interface AladdinFxs extends BaseContract {
     harvest(
       _recipient: string,
       _minAssets: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
     increaseAllowance(
       spender: string,
       addedValue: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
     initialize(
       _zap: string,
       _rewards: string[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
     maxDeposit(arg0: string, overrides?: CallOverrides): Promise<[BigNumber]>;
@@ -386,31 +566,47 @@ export interface AladdinFxs extends BaseContract {
     mint(
       _shares: BigNumberish,
       _receiver: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
     name(overrides?: CallOverrides): Promise<[string]>;
 
     owner(overrides?: CallOverrides): Promise<[string]>;
 
-    previewDeposit(_assets: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber]>;
+    previewDeposit(
+      _assets: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<[BigNumber]>;
 
-    previewMint(_shares: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber]>;
+    previewMint(
+      _shares: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<[BigNumber]>;
 
-    previewRedeem(_shares: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber]>;
+    previewRedeem(
+      _shares: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<[BigNumber]>;
 
-    previewWithdraw(_assets: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber]>;
+    previewWithdraw(
+      _assets: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<[BigNumber]>;
 
     redeem(
       _shares: BigNumberish,
       _receiver: string,
       _owner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
-    renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    renounceOwnership(
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
 
-    rewardInfo(overrides?: CallOverrides): Promise<
+    rewardInfo(
+      overrides?: CallOverrides
+    ): Promise<
       [BigNumber, number, number, number] & {
         rate: BigNumber;
         periodLength: number;
@@ -430,19 +626,19 @@ export interface AladdinFxs extends BaseContract {
     transfer(
       recipient: string,
       amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
     transferFrom(
       sender: string,
       recipient: string,
       amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
     transferOwnership(
       newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
     updateFeeInfo(
@@ -450,62 +646,77 @@ export interface AladdinFxs extends BaseContract {
       _platformPercentage: BigNumberish,
       _bountyPercentage: BigNumberish,
       _withdrawPercentage: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
     updateRewardPeriodLength(
       _length: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
     updateRewards(
       _rewards: string[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
-    updateZap(_zap: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    updateZap(
+      _zap: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
 
     withdraw(
       _assets: BigNumberish,
       _receiver: string,
       _owner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
     zap(overrides?: CallOverrides): Promise<[string]>;
   };
 
-  allowance(owner: string, spender: string, overrides?: CallOverrides): Promise<BigNumber>;
+  allowance(
+    owner: string,
+    spender: string,
+    overrides?: CallOverrides
+  ): Promise<BigNumber>;
 
   approve(
     spender: string,
     amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
   asset(overrides?: CallOverrides): Promise<string>;
 
   balanceOf(account: string, overrides?: CallOverrides): Promise<BigNumber>;
 
-  convertToAssets(_shares: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+  convertToAssets(
+    _shares: BigNumberish,
+    overrides?: CallOverrides
+  ): Promise<BigNumber>;
 
-  convertToShares(_assets: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+  convertToShares(
+    _assets: BigNumberish,
+    overrides?: CallOverrides
+  ): Promise<BigNumber>;
 
   decimals(overrides?: CallOverrides): Promise<number>;
 
   decreaseAllowance(
     spender: string,
     subtractedValue: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
   deposit(
     _assets: BigNumberish,
     _receiver: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
-  feeInfo(overrides?: CallOverrides): Promise<
+  feeInfo(
+    overrides?: CallOverrides
+  ): Promise<
     [string, number, number, number] & {
       platform: string;
       platformPercentage: number;
@@ -517,19 +728,19 @@ export interface AladdinFxs extends BaseContract {
   harvest(
     _recipient: string,
     _minAssets: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
   increaseAllowance(
     spender: string,
     addedValue: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
   initialize(
     _zap: string,
     _rewards: string[],
-    overrides?: Overrides & { from?: string | Promise<string> },
+    overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
   maxDeposit(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
@@ -543,31 +754,47 @@ export interface AladdinFxs extends BaseContract {
   mint(
     _shares: BigNumberish,
     _receiver: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
   name(overrides?: CallOverrides): Promise<string>;
 
   owner(overrides?: CallOverrides): Promise<string>;
 
-  previewDeposit(_assets: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+  previewDeposit(
+    _assets: BigNumberish,
+    overrides?: CallOverrides
+  ): Promise<BigNumber>;
 
-  previewMint(_shares: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+  previewMint(
+    _shares: BigNumberish,
+    overrides?: CallOverrides
+  ): Promise<BigNumber>;
 
-  previewRedeem(_shares: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+  previewRedeem(
+    _shares: BigNumberish,
+    overrides?: CallOverrides
+  ): Promise<BigNumber>;
 
-  previewWithdraw(_assets: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+  previewWithdraw(
+    _assets: BigNumberish,
+    overrides?: CallOverrides
+  ): Promise<BigNumber>;
 
   redeem(
     _shares: BigNumberish,
     _receiver: string,
     _owner: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
-  renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  renounceOwnership(
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
 
-  rewardInfo(overrides?: CallOverrides): Promise<
+  rewardInfo(
+    overrides?: CallOverrides
+  ): Promise<
     [BigNumber, number, number, number] & {
       rate: BigNumber;
       periodLength: number;
@@ -587,19 +814,19 @@ export interface AladdinFxs extends BaseContract {
   transfer(
     recipient: string,
     amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
   transferFrom(
     sender: string,
     recipient: string,
     amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
   transferOwnership(
     newOwner: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
   updateFeeInfo(
@@ -607,50 +834,77 @@ export interface AladdinFxs extends BaseContract {
     _platformPercentage: BigNumberish,
     _bountyPercentage: BigNumberish,
     _withdrawPercentage: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
   updateRewardPeriodLength(
     _length: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
   updateRewards(
     _rewards: string[],
-    overrides?: Overrides & { from?: string | Promise<string> },
+    overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
-  updateZap(_zap: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  updateZap(
+    _zap: string,
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
 
   withdraw(
     _assets: BigNumberish,
     _receiver: string,
     _owner: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
   zap(overrides?: CallOverrides): Promise<string>;
 
   callStatic: {
-    allowance(owner: string, spender: string, overrides?: CallOverrides): Promise<BigNumber>;
+    allowance(
+      owner: string,
+      spender: string,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
 
-    approve(spender: string, amount: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+    approve(
+      spender: string,
+      amount: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<boolean>;
 
     asset(overrides?: CallOverrides): Promise<string>;
 
     balanceOf(account: string, overrides?: CallOverrides): Promise<BigNumber>;
 
-    convertToAssets(_shares: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    convertToAssets(
+      _shares: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
 
-    convertToShares(_assets: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    convertToShares(
+      _assets: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
 
     decimals(overrides?: CallOverrides): Promise<number>;
 
-    decreaseAllowance(spender: string, subtractedValue: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+    decreaseAllowance(
+      spender: string,
+      subtractedValue: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<boolean>;
 
-    deposit(_assets: BigNumberish, _receiver: string, overrides?: CallOverrides): Promise<BigNumber>;
+    deposit(
+      _assets: BigNumberish,
+      _receiver: string,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
 
-    feeInfo(overrides?: CallOverrides): Promise<
+    feeInfo(
+      overrides?: CallOverrides
+    ): Promise<
       [string, number, number, number] & {
         platform: string;
         platformPercentage: number;
@@ -659,11 +913,23 @@ export interface AladdinFxs extends BaseContract {
       }
     >;
 
-    harvest(_recipient: string, _minAssets: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    harvest(
+      _recipient: string,
+      _minAssets: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
 
-    increaseAllowance(spender: string, addedValue: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+    increaseAllowance(
+      spender: string,
+      addedValue: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<boolean>;
 
-    initialize(_zap: string, _rewards: string[], overrides?: CallOverrides): Promise<void>;
+    initialize(
+      _zap: string,
+      _rewards: string[],
+      overrides?: CallOverrides
+    ): Promise<void>;
 
     maxDeposit(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -673,25 +939,48 @@ export interface AladdinFxs extends BaseContract {
 
     maxWithdraw(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
 
-    mint(_shares: BigNumberish, _receiver: string, overrides?: CallOverrides): Promise<BigNumber>;
+    mint(
+      _shares: BigNumberish,
+      _receiver: string,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
 
     name(overrides?: CallOverrides): Promise<string>;
 
     owner(overrides?: CallOverrides): Promise<string>;
 
-    previewDeposit(_assets: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    previewDeposit(
+      _assets: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
 
-    previewMint(_shares: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    previewMint(
+      _shares: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
 
-    previewRedeem(_shares: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    previewRedeem(
+      _shares: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
 
-    previewWithdraw(_assets: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    previewWithdraw(
+      _assets: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
 
-    redeem(_shares: BigNumberish, _receiver: string, _owner: string, overrides?: CallOverrides): Promise<BigNumber>;
+    redeem(
+      _shares: BigNumberish,
+      _receiver: string,
+      _owner: string,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
 
     renounceOwnership(overrides?: CallOverrides): Promise<void>;
 
-    rewardInfo(overrides?: CallOverrides): Promise<
+    rewardInfo(
+      overrides?: CallOverrides
+    ): Promise<
       [BigNumber, number, number, number] & {
         rate: BigNumber;
         periodLength: number;
@@ -708,135 +997,189 @@ export interface AladdinFxs extends BaseContract {
 
     totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
-    transfer(recipient: string, amount: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+    transfer(
+      recipient: string,
+      amount: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<boolean>;
 
-    transferFrom(sender: string, recipient: string, amount: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+    transferFrom(
+      sender: string,
+      recipient: string,
+      amount: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<boolean>;
 
-    transferOwnership(newOwner: string, overrides?: CallOverrides): Promise<void>;
+    transferOwnership(
+      newOwner: string,
+      overrides?: CallOverrides
+    ): Promise<void>;
 
     updateFeeInfo(
       _platform: string,
       _platformPercentage: BigNumberish,
       _bountyPercentage: BigNumberish,
       _withdrawPercentage: BigNumberish,
-      overrides?: CallOverrides,
+      overrides?: CallOverrides
     ): Promise<void>;
 
-    updateRewardPeriodLength(_length: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    updateRewardPeriodLength(
+      _length: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<void>;
 
     updateRewards(_rewards: string[], overrides?: CallOverrides): Promise<void>;
 
     updateZap(_zap: string, overrides?: CallOverrides): Promise<void>;
 
-    withdraw(_assets: BigNumberish, _receiver: string, _owner: string, overrides?: CallOverrides): Promise<BigNumber>;
+    withdraw(
+      _assets: BigNumberish,
+      _receiver: string,
+      _owner: string,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
 
     zap(overrides?: CallOverrides): Promise<string>;
   };
 
   filters: {
-    'Approval(address,address,uint256)'(
+    "Approval(address,address,uint256)"(
       owner?: string | null,
       spender?: string | null,
-      value?: null,
+      value?: null
     ): ApprovalEventFilter;
-    Approval(owner?: string | null, spender?: string | null, value?: null): ApprovalEventFilter;
+    Approval(
+      owner?: string | null,
+      spender?: string | null,
+      value?: null
+    ): ApprovalEventFilter;
 
-    'Deposit(address,address,uint256,uint256)'(
+    "Deposit(address,address,uint256,uint256)"(
       sender?: string | null,
       owner?: string | null,
       assets?: null,
-      shares?: null,
+      shares?: null
     ): DepositEventFilter;
-    Deposit(sender?: string | null, owner?: string | null, assets?: null, shares?: null): DepositEventFilter;
+    Deposit(
+      sender?: string | null,
+      owner?: string | null,
+      assets?: null,
+      shares?: null
+    ): DepositEventFilter;
 
-    'Harvest(address,address,uint256,uint256,uint256)'(
+    "Harvest(address,address,uint256,uint256,uint256)"(
       caller?: string | null,
       recipient?: string | null,
       assets?: null,
       platformFee?: null,
-      harvestBounty?: null,
+      harvestBounty?: null
     ): HarvestEventFilter;
     Harvest(
       caller?: string | null,
       recipient?: string | null,
       assets?: null,
       platformFee?: null,
-      harvestBounty?: null,
+      harvestBounty?: null
     ): HarvestEventFilter;
 
-    'OwnershipTransferred(address,address)'(
+    "OwnershipTransferred(address,address)"(
       previousOwner?: string | null,
-      newOwner?: string | null,
+      newOwner?: string | null
     ): OwnershipTransferredEventFilter;
-    OwnershipTransferred(previousOwner?: string | null, newOwner?: string | null): OwnershipTransferredEventFilter;
+    OwnershipTransferred(
+      previousOwner?: string | null,
+      newOwner?: string | null
+    ): OwnershipTransferredEventFilter;
 
-    'Transfer(address,address,uint256)'(from?: string | null, to?: string | null, value?: null): TransferEventFilter;
-    Transfer(from?: string | null, to?: string | null, value?: null): TransferEventFilter;
+    "Transfer(address,address,uint256)"(
+      from?: string | null,
+      to?: string | null,
+      value?: null
+    ): TransferEventFilter;
+    Transfer(
+      from?: string | null,
+      to?: string | null,
+      value?: null
+    ): TransferEventFilter;
 
-    'UpdateFeeInfo(address,uint32,uint32,uint32)'(
+    "UpdateFeeInfo(address,uint32,uint32,uint32)"(
       _platform?: string | null,
       _platformPercentage?: null,
       _bountyPercentage?: null,
-      _repayPercentage?: null,
+      _repayPercentage?: null
     ): UpdateFeeInfoEventFilter;
     UpdateFeeInfo(
       _platform?: string | null,
       _platformPercentage?: null,
       _bountyPercentage?: null,
-      _repayPercentage?: null,
+      _repayPercentage?: null
     ): UpdateFeeInfoEventFilter;
 
-    'UpdateRewardPeriodLength(uint256)'(_length?: null): UpdateRewardPeriodLengthEventFilter;
-    UpdateRewardPeriodLength(_length?: null): UpdateRewardPeriodLengthEventFilter;
+    "UpdateRewardPeriodLength(uint256)"(
+      _length?: null
+    ): UpdateRewardPeriodLengthEventFilter;
+    UpdateRewardPeriodLength(
+      _length?: null
+    ): UpdateRewardPeriodLengthEventFilter;
 
-    'UpdateZap(address)'(_zap?: null): UpdateZapEventFilter;
+    "UpdateZap(address)"(_zap?: null): UpdateZapEventFilter;
     UpdateZap(_zap?: null): UpdateZapEventFilter;
 
-    'Withdraw(address,address,address,uint256,uint256)'(
+    "Withdraw(address,address,address,uint256,uint256)"(
       sender?: string | null,
       receiver?: string | null,
       owner?: string | null,
       assets?: null,
-      shares?: null,
+      shares?: null
     ): WithdrawEventFilter;
     Withdraw(
       sender?: string | null,
       receiver?: string | null,
       owner?: string | null,
       assets?: null,
-      shares?: null,
+      shares?: null
     ): WithdrawEventFilter;
   };
 
   estimateGas: {
-    allowance(owner: string, spender: string, overrides?: CallOverrides): Promise<BigNumber>;
+    allowance(
+      owner: string,
+      spender: string,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
 
     approve(
       spender: string,
       amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
     asset(overrides?: CallOverrides): Promise<BigNumber>;
 
     balanceOf(account: string, overrides?: CallOverrides): Promise<BigNumber>;
 
-    convertToAssets(_shares: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    convertToAssets(
+      _shares: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
 
-    convertToShares(_assets: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    convertToShares(
+      _assets: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
 
     decimals(overrides?: CallOverrides): Promise<BigNumber>;
 
     decreaseAllowance(
       spender: string,
       subtractedValue: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
     deposit(
       _assets: BigNumberish,
       _receiver: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
     feeInfo(overrides?: CallOverrides): Promise<BigNumber>;
@@ -844,19 +1187,19 @@ export interface AladdinFxs extends BaseContract {
     harvest(
       _recipient: string,
       _minAssets: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
     increaseAllowance(
       spender: string,
       addedValue: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
     initialize(
       _zap: string,
       _rewards: string[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
     maxDeposit(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
@@ -870,29 +1213,43 @@ export interface AladdinFxs extends BaseContract {
     mint(
       _shares: BigNumberish,
       _receiver: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
     name(overrides?: CallOverrides): Promise<BigNumber>;
 
     owner(overrides?: CallOverrides): Promise<BigNumber>;
 
-    previewDeposit(_assets: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    previewDeposit(
+      _assets: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
 
-    previewMint(_shares: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    previewMint(
+      _shares: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
 
-    previewRedeem(_shares: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    previewRedeem(
+      _shares: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
 
-    previewWithdraw(_assets: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    previewWithdraw(
+      _assets: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
 
     redeem(
       _shares: BigNumberish,
       _receiver: string,
       _owner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
-    renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    renounceOwnership(
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
 
     rewardInfo(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -907,19 +1264,19 @@ export interface AladdinFxs extends BaseContract {
     transfer(
       recipient: string,
       amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
     transferFrom(
       sender: string,
       recipient: string,
       amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
     transferOwnership(
       newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
     updateFeeInfo(
@@ -927,57 +1284,76 @@ export interface AladdinFxs extends BaseContract {
       _platformPercentage: BigNumberish,
       _bountyPercentage: BigNumberish,
       _withdrawPercentage: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
     updateRewardPeriodLength(
       _length: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
-    updateRewards(_rewards: string[], overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    updateRewards(
+      _rewards: string[],
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
 
-    updateZap(_zap: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    updateZap(
+      _zap: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
 
     withdraw(
       _assets: BigNumberish,
       _receiver: string,
       _owner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
     zap(overrides?: CallOverrides): Promise<BigNumber>;
   };
 
   populateTransaction: {
-    allowance(owner: string, spender: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    allowance(
+      owner: string,
+      spender: string,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
 
     approve(
       spender: string,
       amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
     asset(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    balanceOf(account: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    balanceOf(
+      account: string,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
 
-    convertToAssets(_shares: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    convertToAssets(
+      _shares: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
 
-    convertToShares(_assets: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    convertToShares(
+      _assets: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
 
     decimals(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     decreaseAllowance(
       spender: string,
       subtractedValue: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
     deposit(
       _assets: BigNumberish,
       _receiver: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
     feeInfo(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -985,59 +1361,88 @@ export interface AladdinFxs extends BaseContract {
     harvest(
       _recipient: string,
       _minAssets: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
     increaseAllowance(
       spender: string,
       addedValue: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
     initialize(
       _zap: string,
       _rewards: string[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
-    maxDeposit(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    maxDeposit(
+      arg0: string,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
 
-    maxMint(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    maxMint(
+      arg0: string,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
 
-    maxRedeem(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    maxRedeem(
+      arg0: string,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
 
-    maxWithdraw(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    maxWithdraw(
+      arg0: string,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
 
     mint(
       _shares: BigNumberish,
       _receiver: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
     name(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    previewDeposit(_assets: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    previewDeposit(
+      _assets: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
 
-    previewMint(_shares: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    previewMint(
+      _shares: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
 
-    previewRedeem(_shares: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    previewRedeem(
+      _shares: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
 
-    previewWithdraw(_assets: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    previewWithdraw(
+      _assets: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
 
     redeem(
       _shares: BigNumberish,
       _receiver: string,
       _owner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
-    renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    renounceOwnership(
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
 
     rewardInfo(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    rewards(arg0: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    rewards(
+      arg0: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
 
     symbol(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
@@ -1048,19 +1453,19 @@ export interface AladdinFxs extends BaseContract {
     transfer(
       recipient: string,
       amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
     transferFrom(
       sender: string,
       recipient: string,
       amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
     transferOwnership(
       newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
     updateFeeInfo(
@@ -1068,26 +1473,29 @@ export interface AladdinFxs extends BaseContract {
       _platformPercentage: BigNumberish,
       _bountyPercentage: BigNumberish,
       _withdrawPercentage: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
     updateRewardPeriodLength(
       _length: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
     updateRewards(
       _rewards: string[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
-    updateZap(_zap: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    updateZap(
+      _zap: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
 
     withdraw(
       _assets: BigNumberish,
       _receiver: string,
       _owner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
     zap(overrides?: CallOverrides): Promise<PopulatedTransaction>;

@@ -1,12 +1,12 @@
-import { Register } from '~app-toolkit/decorators';
+import { Module } from '@nestjs/common';
+
 import { AbstractApp } from '~app/app.dynamic-module';
 
 import { ManifoldFinanceContractFactory } from './contracts';
 import { EthereumManifoldFinanceStakingTokenFetcher } from './ethereum/manifold-finance.staking.token-fetcher';
-import { ManifoldFinanceAppDefinition, MANIFOLD_FINANCE_DEFINITION } from './manifold-finance.definition';
+import { ManifoldFinanceAppDefinition } from './manifold-finance.definition';
 
-@Register.AppModule({
-  appId: MANIFOLD_FINANCE_DEFINITION.id,
+@Module({
   providers: [EthereumManifoldFinanceStakingTokenFetcher, ManifoldFinanceAppDefinition, ManifoldFinanceContractFactory],
 })
 export class ManifoldFinanceAppModule extends AbstractApp() {}

@@ -1,13 +1,12 @@
-import { Register } from '~app-toolkit/decorators';
+import { Module } from '@nestjs/common';
+
 import { AbstractApp } from '~app/app.dynamic-module';
 
 import { NaosContractFactory } from './contracts';
 import { EthereumNaosFarmContractPositionFetcher } from './ethereum/naos.farm.contract-position-fetcher';
-import { NaosAppDefinition, NAOS_DEFINITION } from './naos.definition';
+import { NaosAppDefinition } from './naos.definition';
 
-@Register.AppModule({
-  appId: NAOS_DEFINITION.id,
+@Module({
   providers: [NaosAppDefinition, NaosContractFactory, EthereumNaosFarmContractPositionFetcher],
-  exports: [NaosContractFactory],
 })
 export class NaosAppModule extends AbstractApp() {}

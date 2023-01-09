@@ -1,4 +1,5 @@
-import { Register } from '~app-toolkit/decorators';
+import { Module } from '@nestjs/common';
+
 import { AbstractApp } from '~app/app.dynamic-module';
 import { UniswapV3ContractFactory } from '~apps/uniswap-v3/contracts';
 
@@ -9,10 +10,9 @@ import { EthereumKeeperKlpTokenFetcher } from './ethereum/keeper.klp.token-fetch
 import { EthereumKeeperRedeemableTokenFetcher } from './ethereum/keeper.redeemable.token-fetcher';
 import { EthereumKeeperUnbondContractPositionFetcher } from './ethereum/keeper.unbond.contract-position-fetcher';
 import { EthereumKeeperVestContractPositionFetcher } from './ethereum/keeper.vest.contract-position-fetcher';
-import { KeeperAppDefinition, KEEPER_DEFINITION } from './keeper.definition';
+import { KeeperAppDefinition } from './keeper.definition';
 
-@Register.AppModule({
-  appId: KEEPER_DEFINITION.id,
+@Module({
   providers: [
     KeeperAppDefinition,
     KeeperContractFactory,
