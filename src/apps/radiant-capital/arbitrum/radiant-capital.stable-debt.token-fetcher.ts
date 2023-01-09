@@ -9,9 +9,9 @@ import { AaveV2AToken } from '~apps/aave-v2/contracts';
 import { GetDisplayPropsParams } from '~position/template/app-token.template.types';
 
 @PositionTemplate()
-export class OptimismGranaryFinanceStableDebtTokenFetcher extends AaveV2LendingTokenFetcher {
+export class ArbitrumRadiantCapitalStableDebtTokenFetcher extends AaveV2LendingTokenFetcher {
   groupLabel = 'Lending';
-  providerAddress = '0x9546f673ef71ff666ae66d01fd6e7c6dae5a9995';
+  providerAddress = '0xa3e42d11d8cc148160cc3aced757fb44696a9cca';
   isDebt = true;
 
   getTokenAddress(reserveTokenAddressesData: AaveV2ReserveTokenAddressesData): string {

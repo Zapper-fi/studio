@@ -41,7 +41,6 @@ export const GRANARY_FINANCE_DEFINITION = appDefinition({
     [Network.ETHEREUM_MAINNET]: [AppAction.VIEW],
     [Network.OPTIMISM_MAINNET]: [AppAction.VIEW],
     [Network.FANTOM_OPERA_MAINNET]: [AppAction.VIEW],
-    [Network.AVALANCHE_MAINNET]: [AppAction.VIEW],
   },
 
   primaryColor: '#fff',
