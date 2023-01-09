@@ -9,21 +9,21 @@ import { MetaType } from '~position/position.interface';
 import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
 import { GetTokenBalancesParams, GetTokenDefinitionsParams } from '~position/template/contract-position.template.types';
 
-import { UwuLendContractFactory, UwuLendMultiFeeV1 } from '../contracts';
+import { UwuLendContractFactory, UwuLendMultiFeeV2 } from '../contracts';
 
-export type UwuLendLpStakingV1ContractPositionDefinition = {
+export type UwuLendLpStakingV2ContractPositionDefinition = {
   address: string;
   underlyingTokenAddress: string;
   rewardTokenAddresses: string[];
 };
 
 @PositionTemplate()
-export class EthereumUwuLendLpStakingV1ContractPositionFetcher extends ContractPositionTemplatePositionFetcher<
-  UwuLendMultiFeeV1,
+export class EthereumUwuLendLpStakingV2ContractPositionFetcher extends ContractPositionTemplatePositionFetcher<
+  UwuLendMultiFeeV2,
   DefaultDataProps,
-  UwuLendLpStakingV1ContractPositionDefinition
+  UwuLendLpStakingV2ContractPositionDefinition
 > {
-  groupLabel = 'Lp Staking V1';
+  groupLabel = 'Lp Staking V2';
 
   // Temporary removed from rewards until CG support SIFUM
   NotSupportedToken = '0x8028ea7da2ea9bcb9288c1f6f603169b8aea90a6';
@@ -35,16 +35,16 @@ export class EthereumUwuLendLpStakingV1ContractPositionFetcher extends ContractP
     super(appToolkit);
   }
 
-  async getDefinitions(): Promise<UwuLendLpStakingV1ContractPositionDefinition[]> {
+  async getDefinitions(): Promise<UwuLendLpStakingV2ContractPositionDefinition[]> {
     const multicall = this.appToolkit.getMulticall(this.network);
-    const multiFeeV1Address = '0x7c0bf1108935e7105e218bbb4f670e5942c5e237';
-    const multiFeeV1Contract = this.contractFactory.uwuLendMultiFeeV1({
-      address: multiFeeV1Address,
+    const multiFeeV2Address = '0x0a7b2a21027f92243c5e5e777aa30bb7969b0188';
+    const multiFeeV2Contract = this.contractFactory.uwuLendMultiFeeV1({
+      address: multiFeeV2Address,
       network: this.network,
     });
     const [rewards, underlyingTokenAddressRaw] = await Promise.all([
-      multicall.wrap(multiFeeV1Contract).claimableRewards(ZERO_ADDRESS),
-      multicall.wrap(multiFeeV1Contract).stakingToken(),
+      multicall.wrap(multiFeeV2Contract).claimableRewards(ZERO_ADDRESS),
+      multicall.wrap(multiFeeV2Contract).stakingToken(),
     ]);
     const rewardTokenAddressesRaw = rewards.map(x => x.token.toLowerCase());
 
@@ -52,7 +52,7 @@ export class EthereumUwuLendLpStakingV1ContractPositionFetcher extends ContractP
 
     return [
       {
-        address: multiFeeV1Address,
+        address: multiFeeV2Address,
         underlyingTokenAddress: underlyingTokenAddressRaw.toLowerCase(),
         rewardTokenAddresses,
       },
@@ -61,7 +61,7 @@ export class EthereumUwuLendLpStakingV1ContractPositionFetcher extends ContractP
 
   async getTokenDefinitions({
     definition,
-  }: GetTokenDefinitionsParams<UwuLendMultiFeeV1, UwuLendLpStakingV1ContractPositionDefinition>) {
+  }: GetTokenDefinitionsParams<UwuLendMultiFeeV2, UwuLendLpStakingV2ContractPositionDefinition>) {
     return [
       {
         metaType: MetaType.SUPPLIED,
@@ -78,15 +78,15 @@ export class EthereumUwuLendLpStakingV1ContractPositionFetcher extends ContractP
     ];
   }
 
-  getContract(address: string): UwuLendMultiFeeV1 {
-    return this.contractFactory.uwuLendMultiFeeV1({ network: this.network, address });
+  getContract(address: string): UwuLendMultiFeeV2 {
+    return this.contractFactory.uwuLendMultiFeeV2({ network: this.network, address });
   }
 
   async getLabel(): Promise<string> {
-    return `Lp Staking V1`;
+    return `Lp Staking V2`;
   }
 
-  async getTokenBalancesPerPosition({ address, contract }: GetTokenBalancesParams<UwuLendMultiFeeV1>) {
+  async getTokenBalancesPerPosition({ address, contract }: GetTokenBalancesParams<UwuLendMultiFeeV2>) {
     const lockedBalances = await contract.lockedBalances(address);
     const supplied = lockedBalances.total;
     const rewardBalances = await contract.claimableRewards(address);
