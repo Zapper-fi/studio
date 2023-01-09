@@ -17,7 +17,7 @@ import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi
 import type { Listener, Provider } from '@ethersproject/providers';
 import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
-export declare namespace MultiFeeDistribution {
+export declare namespace MultiFeeDistributionV2 {
   export type RewardDataStruct = {
     token: PromiseOrValue<string>;
     amount: PromiseOrValue<BigNumberish>;
@@ -39,7 +39,7 @@ export declare namespace MultiFeeDistribution {
   };
 }
 
-export interface UwuLendMultiFeeV1Interface extends utils.Interface {
+export interface UwuLendStakingV2Interface extends utils.Interface {
   functions: {
     'addReward(address)': FunctionFragment;
     'claimableRewards(address)': FunctionFragment;
@@ -47,6 +47,7 @@ export interface UwuLendMultiFeeV1Interface extends utils.Interface {
     'earnedBalances(address)': FunctionFragment;
     'exitDelegatee(address)': FunctionFragment;
     'exitEarly(address)': FunctionFragment;
+    'getMinters()': FunctionFragment;
     'getReward(address[])': FunctionFragment;
     'incentivesController()': FunctionFragment;
     'lastTimeRewardApplicable(address)': FunctionFragment;
@@ -54,10 +55,13 @@ export interface UwuLendMultiFeeV1Interface extends utils.Interface {
     'lockDuration()': FunctionFragment;
     'lockedBalances(address)': FunctionFragment;
     'lockedSupply()': FunctionFragment;
+    'migration()': FunctionFragment;
+    'migrationAreSet()': FunctionFragment;
     'mint(address,uint256)': FunctionFragment;
-    'minters(address)': FunctionFragment;
-    'mintersAreSet()': FunctionFragment;
     'owner()': FunctionFragment;
+    'publicExit()': FunctionFragment;
+    'publicExitAreSet()': FunctionFragment;
+    'removeMigration()': FunctionFragment;
     'renounceOwnership()': FunctionFragment;
     'rewardData(address)': FunctionFragment;
     'rewardLookback()': FunctionFragment;
@@ -67,16 +71,17 @@ export interface UwuLendMultiFeeV1Interface extends utils.Interface {
     'rewards(address,address)': FunctionFragment;
     'rewardsDuration()': FunctionFragment;
     'setIncentivesController(address)': FunctionFragment;
+    'setMigration(address)': FunctionFragment;
     'setMinters(address[])': FunctionFragment;
-    'setStakingRewards(address)': FunctionFragment;
     'setTeamRewardFee(uint256)': FunctionFragment;
     'setTeamRewardVault(address)': FunctionFragment;
-    'stakingRewards()': FunctionFragment;
-    'stakingRewardsAreSet()': FunctionFragment;
     'stakingToken()': FunctionFragment;
     'teamRewardFee()': FunctionFragment;
     'teamRewardVault()': FunctionFragment;
+    'totalAccountLocked(address)': FunctionFragment;
+    'totalLockedSupply()': FunctionFragment;
     'transferOwnership(address)': FunctionFragment;
+    'updateReward(address)': FunctionFragment;
     'userRewardPerTokenPaid(address,address)': FunctionFragment;
     'vestingDuration()': FunctionFragment;
     'withdraw()': FunctionFragment;
@@ -92,6 +97,7 @@ export interface UwuLendMultiFeeV1Interface extends utils.Interface {
       | 'earnedBalances'
       | 'exitDelegatee'
       | 'exitEarly'
+      | 'getMinters'
       | 'getReward'
       | 'incentivesController'
       | 'lastTimeRewardApplicable'
@@ -99,10 +105,13 @@ export interface UwuLendMultiFeeV1Interface extends utils.Interface {
       | 'lockDuration'
       | 'lockedBalances'
       | 'lockedSupply'
+      | 'migration'
+      | 'migrationAreSet'
       | 'mint'
-      | 'minters'
-      | 'mintersAreSet'
       | 'owner'
+      | 'publicExit'
+      | 'publicExitAreSet'
+      | 'removeMigration'
       | 'renounceOwnership'
       | 'rewardData'
       | 'rewardLookback'
@@ -112,16 +121,17 @@ export interface UwuLendMultiFeeV1Interface extends utils.Interface {
       | 'rewards'
       | 'rewardsDuration'
       | 'setIncentivesController'
+      | 'setMigration'
       | 'setMinters'
-      | 'setStakingRewards'
       | 'setTeamRewardFee'
       | 'setTeamRewardVault'
-      | 'stakingRewards'
-      | 'stakingRewardsAreSet'
       | 'stakingToken'
       | 'teamRewardFee'
       | 'teamRewardVault'
+      | 'totalAccountLocked'
+      | 'totalLockedSupply'
       | 'transferOwnership'
+      | 'updateReward'
       | 'userRewardPerTokenPaid'
       | 'vestingDuration'
       | 'withdraw'
@@ -135,6 +145,7 @@ export interface UwuLendMultiFeeV1Interface extends utils.Interface {
   encodeFunctionData(functionFragment: 'earnedBalances', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'exitDelegatee', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'exitEarly', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'getMinters', values?: undefined): string;
   encodeFunctionData(functionFragment: 'getReward', values: [PromiseOrValue<string>[]]): string;
   encodeFunctionData(functionFragment: 'incentivesController', values?: undefined): string;
   encodeFunctionData(functionFragment: 'lastTimeRewardApplicable', values: [PromiseOrValue<string>]): string;
@@ -142,10 +153,13 @@ export interface UwuLendMultiFeeV1Interface extends utils.Interface {
   encodeFunctionData(functionFragment: 'lockDuration', values?: undefined): string;
   encodeFunctionData(functionFragment: 'lockedBalances', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'lockedSupply', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'migration', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'migrationAreSet', values?: undefined): string;
   encodeFunctionData(functionFragment: 'mint', values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]): string;
-  encodeFunctionData(functionFragment: 'minters', values: [PromiseOrValue<string>]): string;
-  encodeFunctionData(functionFragment: 'mintersAreSet', values?: undefined): string;
   encodeFunctionData(functionFragment: 'owner', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'publicExit', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'publicExitAreSet', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'removeMigration', values?: undefined): string;
   encodeFunctionData(functionFragment: 'renounceOwnership', values?: undefined): string;
   encodeFunctionData(functionFragment: 'rewardData', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'rewardLookback', values?: undefined): string;
@@ -155,16 +169,17 @@ export interface UwuLendMultiFeeV1Interface extends utils.Interface {
   encodeFunctionData(functionFragment: 'rewards', values: [PromiseOrValue<string>, PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'rewardsDuration', values?: undefined): string;
   encodeFunctionData(functionFragment: 'setIncentivesController', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'setMigration', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'setMinters', values: [PromiseOrValue<string>[]]): string;
-  encodeFunctionData(functionFragment: 'setStakingRewards', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'setTeamRewardFee', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'setTeamRewardVault', values: [PromiseOrValue<string>]): string;
-  encodeFunctionData(functionFragment: 'stakingRewards', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'stakingRewardsAreSet', values?: undefined): string;
   encodeFunctionData(functionFragment: 'stakingToken', values?: undefined): string;
   encodeFunctionData(functionFragment: 'teamRewardFee', values?: undefined): string;
   encodeFunctionData(functionFragment: 'teamRewardVault', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'totalAccountLocked', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'totalLockedSupply', values?: undefined): string;
   encodeFunctionData(functionFragment: 'transferOwnership', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'updateReward', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(
     functionFragment: 'userRewardPerTokenPaid',
     values: [PromiseOrValue<string>, PromiseOrValue<string>],
@@ -180,6 +195,7 @@ export interface UwuLendMultiFeeV1Interface extends utils.Interface {
   decodeFunctionResult(functionFragment: 'earnedBalances', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'exitDelegatee', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'exitEarly', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'getMinters', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'getReward', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'incentivesController', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'lastTimeRewardApplicable', data: BytesLike): Result;
@@ -187,10 +203,13 @@ export interface UwuLendMultiFeeV1Interface extends utils.Interface {
   decodeFunctionResult(functionFragment: 'lockDuration', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'lockedBalances', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'lockedSupply', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'migration', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'migrationAreSet', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'mint', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'minters', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'mintersAreSet', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'owner', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'publicExit', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'publicExitAreSet', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'removeMigration', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'renounceOwnership', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'rewardData', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'rewardLookback', data: BytesLike): Result;
@@ -200,16 +219,17 @@ export interface UwuLendMultiFeeV1Interface extends utils.Interface {
   decodeFunctionResult(functionFragment: 'rewards', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'rewardsDuration', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'setIncentivesController', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'setMigration', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'setMinters', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'setStakingRewards', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'setTeamRewardFee', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'setTeamRewardVault', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'stakingRewards', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'stakingRewardsAreSet', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'stakingToken', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'teamRewardFee', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'teamRewardVault', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'totalAccountLocked', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'totalLockedSupply', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'transferOwnership', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'updateReward', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'userRewardPerTokenPaid', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'vestingDuration', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'withdraw', data: BytesLike): Result;
@@ -221,6 +241,7 @@ export interface UwuLendMultiFeeV1Interface extends utils.Interface {
     'Locked(address,uint256)': EventFragment;
     'Minted(address,uint256)': EventFragment;
     'OwnershipTransferred(address,address)': EventFragment;
+    'PublicExit()': EventFragment;
     'RewardPaid(address,address,uint256)': EventFragment;
     'Withdrawn(address,uint256)': EventFragment;
     'WithdrawnExpiredLocks(address,uint256)': EventFragment;
@@ -230,6 +251,7 @@ export interface UwuLendMultiFeeV1Interface extends utils.Interface {
   getEvent(nameOrSignatureOrTopic: 'Locked'): EventFragment;
   getEvent(nameOrSignatureOrTopic: 'Minted'): EventFragment;
   getEvent(nameOrSignatureOrTopic: 'OwnershipTransferred'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'PublicExit'): EventFragment;
   getEvent(nameOrSignatureOrTopic: 'RewardPaid'): EventFragment;
   getEvent(nameOrSignatureOrTopic: 'Withdrawn'): EventFragment;
   getEvent(nameOrSignatureOrTopic: 'WithdrawnExpiredLocks'): EventFragment;
@@ -268,6 +290,11 @@ export type OwnershipTransferredEvent = TypedEvent<[string, string], OwnershipTr
 
 export type OwnershipTransferredEventFilter = TypedEventFilter<OwnershipTransferredEvent>;
 
+export interface PublicExitEventObject {}
+export type PublicExitEvent = TypedEvent<[], PublicExitEventObject>;
+
+export type PublicExitEventFilter = TypedEventFilter<PublicExitEvent>;
+
 export interface RewardPaidEventObject {
   user: string;
   rewardsToken: string;
@@ -293,12 +320,12 @@ export type WithdrawnExpiredLocksEvent = TypedEvent<[string, BigNumber], Withdra
 
 export type WithdrawnExpiredLocksEventFilter = TypedEventFilter<WithdrawnExpiredLocksEvent>;
 
-export interface UwuLendMultiFeeV1 extends BaseContract {
+export interface UwuLendStakingV2 extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
 
-  interface: UwuLendMultiFeeV1Interface;
+  interface: UwuLendStakingV2Interface;
 
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,
@@ -325,8 +352,8 @@ export interface UwuLendMultiFeeV1 extends BaseContract {
       account: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<
-      [MultiFeeDistribution.RewardDataStructOutput[]] & {
-        rewards: MultiFeeDistribution.RewardDataStructOutput[];
+      [MultiFeeDistributionV2.RewardDataStructOutput[]] & {
+        rewards: MultiFeeDistributionV2.RewardDataStructOutput[];
       }
     >;
 
@@ -339,9 +366,9 @@ export interface UwuLendMultiFeeV1 extends BaseContract {
       user: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<
-      [BigNumber, MultiFeeDistribution.LockedBalanceStructOutput[]] & {
+      [BigNumber, MultiFeeDistributionV2.LockedBalanceStructOutput[]] & {
         total: BigNumber;
-        earningsData: MultiFeeDistribution.LockedBalanceStructOutput[];
+        earningsData: MultiFeeDistributionV2.LockedBalanceStructOutput[];
       }
     >;
 
@@ -351,6 +378,8 @@ export interface UwuLendMultiFeeV1 extends BaseContract {
       onBehalfOf: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
+
+    getMinters(overrides?: CallOverrides): Promise<[string[]]>;
 
     getReward(
       _rewardTokens: PromiseOrValue<string>[],
@@ -373,15 +402,19 @@ export interface UwuLendMultiFeeV1 extends BaseContract {
       user: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<
-      [BigNumber, BigNumber, BigNumber, MultiFeeDistribution.LockedBalanceStructOutput[]] & {
+      [BigNumber, BigNumber, BigNumber, MultiFeeDistributionV2.LockedBalanceStructOutput[]] & {
         total: BigNumber;
         unlockable: BigNumber;
         locked: BigNumber;
-        lockData: MultiFeeDistribution.LockedBalanceStructOutput[];
+        lockData: MultiFeeDistributionV2.LockedBalanceStructOutput[];
       }
     >;
 
     lockedSupply(overrides?: CallOverrides): Promise<[BigNumber]>;
+
+    migration(overrides?: CallOverrides): Promise<[string]>;
+
+    migrationAreSet(overrides?: CallOverrides): Promise<[boolean]>;
 
     mint(
       user: PromiseOrValue<string>,
@@ -389,11 +422,13 @@ export interface UwuLendMultiFeeV1 extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    minters(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[boolean]>;
-
-    mintersAreSet(overrides?: CallOverrides): Promise<[boolean]>;
-
     owner(overrides?: CallOverrides): Promise<[string]>;
+
+    publicExit(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
+
+    publicExitAreSet(overrides?: CallOverrides): Promise<[boolean]>;
+
+    removeMigration(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
@@ -431,13 +466,13 @@ export interface UwuLendMultiFeeV1 extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    setMinters(
-      _minters: PromiseOrValue<string>[],
+    setMigration(
+      _migration: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    setStakingRewards(
-      _stakingRewards: PromiseOrValue<string>,
+    setMinters(
+      _minters: PromiseOrValue<string>[],
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
@@ -451,18 +486,23 @@ export interface UwuLendMultiFeeV1 extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    stakingRewards(overrides?: CallOverrides): Promise<[string]>;
-
-    stakingRewardsAreSet(overrides?: CallOverrides): Promise<[boolean]>;
-
     stakingToken(overrides?: CallOverrides): Promise<[string]>;
 
     teamRewardFee(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     teamRewardVault(overrides?: CallOverrides): Promise<[string]>;
 
+    totalAccountLocked(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
+
+    totalLockedSupply(overrides?: CallOverrides): Promise<[BigNumber]>;
+
     transferOwnership(
       newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<ContractTransaction>;
+
+    updateReward(
+      account: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
@@ -498,7 +538,7 @@ export interface UwuLendMultiFeeV1 extends BaseContract {
   claimableRewards(
     account: PromiseOrValue<string>,
     overrides?: CallOverrides,
-  ): Promise<MultiFeeDistribution.RewardDataStructOutput[]>;
+  ): Promise<MultiFeeDistributionV2.RewardDataStructOutput[]>;
 
   delegateExit(
     delegatee: PromiseOrValue<string>,
@@ -509,9 +549,9 @@ export interface UwuLendMultiFeeV1 extends BaseContract {
     user: PromiseOrValue<string>,
     overrides?: CallOverrides,
   ): Promise<
-    [BigNumber, MultiFeeDistribution.LockedBalanceStructOutput[]] & {
+    [BigNumber, MultiFeeDistributionV2.LockedBalanceStructOutput[]] & {
       total: BigNumber;
-      earningsData: MultiFeeDistribution.LockedBalanceStructOutput[];
+      earningsData: MultiFeeDistributionV2.LockedBalanceStructOutput[];
     }
   >;
 
@@ -521,6 +561,8 @@ export interface UwuLendMultiFeeV1 extends BaseContract {
     onBehalfOf: PromiseOrValue<string>,
     overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
+
+  getMinters(overrides?: CallOverrides): Promise<string[]>;
 
   getReward(
     _rewardTokens: PromiseOrValue<string>[],
@@ -543,15 +585,19 @@ export interface UwuLendMultiFeeV1 extends BaseContract {
     user: PromiseOrValue<string>,
     overrides?: CallOverrides,
   ): Promise<
-    [BigNumber, BigNumber, BigNumber, MultiFeeDistribution.LockedBalanceStructOutput[]] & {
+    [BigNumber, BigNumber, BigNumber, MultiFeeDistributionV2.LockedBalanceStructOutput[]] & {
       total: BigNumber;
       unlockable: BigNumber;
       locked: BigNumber;
-      lockData: MultiFeeDistribution.LockedBalanceStructOutput[];
+      lockData: MultiFeeDistributionV2.LockedBalanceStructOutput[];
     }
   >;
 
   lockedSupply(overrides?: CallOverrides): Promise<BigNumber>;
+
+  migration(overrides?: CallOverrides): Promise<string>;
+
+  migrationAreSet(overrides?: CallOverrides): Promise<boolean>;
 
   mint(
     user: PromiseOrValue<string>,
@@ -559,11 +605,13 @@ export interface UwuLendMultiFeeV1 extends BaseContract {
     overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  minters(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
-
-  mintersAreSet(overrides?: CallOverrides): Promise<boolean>;
-
   owner(overrides?: CallOverrides): Promise<string>;
+
+  publicExit(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
+
+  publicExitAreSet(overrides?: CallOverrides): Promise<boolean>;
+
+  removeMigration(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
@@ -597,13 +645,13 @@ export interface UwuLendMultiFeeV1 extends BaseContract {
     overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  setMinters(
-    _minters: PromiseOrValue<string>[],
+  setMigration(
+    _migration: PromiseOrValue<string>,
     overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  setStakingRewards(
-    _stakingRewards: PromiseOrValue<string>,
+  setMinters(
+    _minters: PromiseOrValue<string>[],
     overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
@@ -617,18 +665,23 @@ export interface UwuLendMultiFeeV1 extends BaseContract {
     overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  stakingRewards(overrides?: CallOverrides): Promise<string>;
-
-  stakingRewardsAreSet(overrides?: CallOverrides): Promise<boolean>;
-
   stakingToken(overrides?: CallOverrides): Promise<string>;
 
   teamRewardFee(overrides?: CallOverrides): Promise<BigNumber>;
 
   teamRewardVault(overrides?: CallOverrides): Promise<string>;
 
+  totalAccountLocked(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
+
+  totalLockedSupply(overrides?: CallOverrides): Promise<BigNumber>;
+
   transferOwnership(
     newOwner: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
+  ): Promise<ContractTransaction>;
+
+  updateReward(
+    account: PromiseOrValue<string>,
     overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
@@ -661,7 +714,7 @@ export interface UwuLendMultiFeeV1 extends BaseContract {
     claimableRewards(
       account: PromiseOrValue<string>,
       overrides?: CallOverrides,
-    ): Promise<MultiFeeDistribution.RewardDataStructOutput[]>;
+    ): Promise<MultiFeeDistributionV2.RewardDataStructOutput[]>;
 
     delegateExit(delegatee: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
@@ -669,15 +722,17 @@ export interface UwuLendMultiFeeV1 extends BaseContract {
       user: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<
-      [BigNumber, MultiFeeDistribution.LockedBalanceStructOutput[]] & {
+      [BigNumber, MultiFeeDistributionV2.LockedBalanceStructOutput[]] & {
         total: BigNumber;
-        earningsData: MultiFeeDistribution.LockedBalanceStructOutput[];
+        earningsData: MultiFeeDistributionV2.LockedBalanceStructOutput[];
       }
     >;
 
     exitDelegatee(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<string>;
 
     exitEarly(onBehalfOf: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
+
+    getMinters(overrides?: CallOverrides): Promise<string[]>;
 
     getReward(_rewardTokens: PromiseOrValue<string>[], overrides?: CallOverrides): Promise<void>;
 
@@ -697,23 +752,29 @@ export interface UwuLendMultiFeeV1 extends BaseContract {
       user: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<
-      [BigNumber, BigNumber, BigNumber, MultiFeeDistribution.LockedBalanceStructOutput[]] & {
+      [BigNumber, BigNumber, BigNumber, MultiFeeDistributionV2.LockedBalanceStructOutput[]] & {
         total: BigNumber;
         unlockable: BigNumber;
         locked: BigNumber;
-        lockData: MultiFeeDistribution.LockedBalanceStructOutput[];
+        lockData: MultiFeeDistributionV2.LockedBalanceStructOutput[];
       }
     >;
 
     lockedSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
+    migration(overrides?: CallOverrides): Promise<string>;
+
+    migrationAreSet(overrides?: CallOverrides): Promise<boolean>;
+
     mint(user: PromiseOrValue<string>, amount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
-    minters(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
-
-    mintersAreSet(overrides?: CallOverrides): Promise<boolean>;
-
     owner(overrides?: CallOverrides): Promise<string>;
+
+    publicExit(overrides?: CallOverrides): Promise<void>;
+
+    publicExitAreSet(overrides?: CallOverrides): Promise<boolean>;
+
+    removeMigration(overrides?: CallOverrides): Promise<void>;
 
     renounceOwnership(overrides?: CallOverrides): Promise<void>;
 
@@ -744,17 +805,13 @@ export interface UwuLendMultiFeeV1 extends BaseContract {
 
     setIncentivesController(_controller: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    setMinters(_minters: PromiseOrValue<string>[], overrides?: CallOverrides): Promise<void>;
+    setMigration(_migration: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    setStakingRewards(_stakingRewards: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
+    setMinters(_minters: PromiseOrValue<string>[], overrides?: CallOverrides): Promise<void>;
 
     setTeamRewardFee(fee: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
     setTeamRewardVault(vault: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
-
-    stakingRewards(overrides?: CallOverrides): Promise<string>;
-
-    stakingRewardsAreSet(overrides?: CallOverrides): Promise<boolean>;
 
     stakingToken(overrides?: CallOverrides): Promise<string>;
 
@@ -762,7 +819,13 @@ export interface UwuLendMultiFeeV1 extends BaseContract {
 
     teamRewardVault(overrides?: CallOverrides): Promise<string>;
 
+    totalAccountLocked(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
+
+    totalLockedSupply(overrides?: CallOverrides): Promise<BigNumber>;
+
     transferOwnership(newOwner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
+
+    updateReward(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     userRewardPerTokenPaid(
       arg0: PromiseOrValue<string>,
@@ -811,6 +874,9 @@ export interface UwuLendMultiFeeV1 extends BaseContract {
       newOwner?: PromiseOrValue<string> | null,
     ): OwnershipTransferredEventFilter;
 
+    'PublicExit()'(): PublicExitEventFilter;
+    PublicExit(): PublicExitEventFilter;
+
     'RewardPaid(address,address,uint256)'(
       user?: PromiseOrValue<string> | null,
       rewardsToken?: PromiseOrValue<string> | null,
@@ -854,6 +920,8 @@ export interface UwuLendMultiFeeV1 extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
+    getMinters(overrides?: CallOverrides): Promise<BigNumber>;
+
     getReward(
       _rewardTokens: PromiseOrValue<string>[],
       overrides?: Overrides & { from?: PromiseOrValue<string> },
@@ -875,17 +943,23 @@ export interface UwuLendMultiFeeV1 extends BaseContract {
 
     lockedSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
+    migration(overrides?: CallOverrides): Promise<BigNumber>;
+
+    migrationAreSet(overrides?: CallOverrides): Promise<BigNumber>;
+
     mint(
       user: PromiseOrValue<string>,
       amount: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    minters(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
-
-    mintersAreSet(overrides?: CallOverrides): Promise<BigNumber>;
-
     owner(overrides?: CallOverrides): Promise<BigNumber>;
+
+    publicExit(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
+
+    publicExitAreSet(overrides?: CallOverrides): Promise<BigNumber>;
+
+    removeMigration(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
@@ -908,13 +982,13 @@ export interface UwuLendMultiFeeV1 extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    setMinters(
-      _minters: PromiseOrValue<string>[],
+    setMigration(
+      _migration: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    setStakingRewards(
-      _stakingRewards: PromiseOrValue<string>,
+    setMinters(
+      _minters: PromiseOrValue<string>[],
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
@@ -928,18 +1002,23 @@ export interface UwuLendMultiFeeV1 extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    stakingRewards(overrides?: CallOverrides): Promise<BigNumber>;
-
-    stakingRewardsAreSet(overrides?: CallOverrides): Promise<BigNumber>;
-
     stakingToken(overrides?: CallOverrides): Promise<BigNumber>;
 
     teamRewardFee(overrides?: CallOverrides): Promise<BigNumber>;
 
     teamRewardVault(overrides?: CallOverrides): Promise<BigNumber>;
 
+    totalAccountLocked(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
+
+    totalLockedSupply(overrides?: CallOverrides): Promise<BigNumber>;
+
     transferOwnership(
       newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
+
+    updateReward(
+      account: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
@@ -980,6 +1059,8 @@ export interface UwuLendMultiFeeV1 extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
+    getMinters(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
     getReward(
       _rewardTokens: PromiseOrValue<string>[],
       overrides?: Overrides & { from?: PromiseOrValue<string> },
@@ -1004,17 +1085,23 @@ export interface UwuLendMultiFeeV1 extends BaseContract {
 
     lockedSupply(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
+    migration(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    migrationAreSet(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
     mint(
       user: PromiseOrValue<string>,
       amount: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    minters(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    mintersAreSet(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
     owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    publicExit(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
+
+    publicExitAreSet(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    removeMigration(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
@@ -1041,13 +1128,13 @@ export interface UwuLendMultiFeeV1 extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    setMinters(
-      _minters: PromiseOrValue<string>[],
+    setMigration(
+      _migration: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    setStakingRewards(
-      _stakingRewards: PromiseOrValue<string>,
+    setMinters(
+      _minters: PromiseOrValue<string>[],
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
@@ -1061,18 +1148,23 @@ export interface UwuLendMultiFeeV1 extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    stakingRewards(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    stakingRewardsAreSet(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
     stakingToken(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     teamRewardFee(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     teamRewardVault(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
+    totalAccountLocked(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    totalLockedSupply(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
     transferOwnership(
       newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<PopulatedTransaction>;
+
+    updateReward(
+      account: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 

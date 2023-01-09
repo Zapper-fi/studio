@@ -4,7 +4,7 @@
 
 import { Contract, Signer, utils } from 'ethers';
 import type { Provider } from '@ethersproject/providers';
-import type { UwuLendMultiFeeV2, UwuLendMultiFeeV2Interface } from '../UwuLendMultiFeeV2';
+import type { UwuLendStakingV2, UwuLendStakingV2Interface } from '../UwuLendStakingV2';
 
 const _abi = [
   {
@@ -921,12 +921,12 @@ const _abi = [
   },
 ];
 
-export class UwuLendMultiFeeV2__factory {
+export class UwuLendStakingV2__factory {
   static readonly abi = _abi;
-  static createInterface(): UwuLendMultiFeeV2Interface {
-    return new utils.Interface(_abi) as UwuLendMultiFeeV2Interface;
+  static createInterface(): UwuLendStakingV2Interface {
+    return new utils.Interface(_abi) as UwuLendStakingV2Interface;
   }
-  static connect(address: string, signerOrProvider: Signer | Provider): UwuLendMultiFeeV2 {
-    return new Contract(address, _abi, signerOrProvider) as UwuLendMultiFeeV2;
+  static connect(address: string, signerOrProvider: Signer | Provider): UwuLendStakingV2 {
+    return new Contract(address, _abi, signerOrProvider) as UwuLendStakingV2;
   }
 }

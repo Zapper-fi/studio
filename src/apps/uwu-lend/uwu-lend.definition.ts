@@ -20,22 +20,16 @@ export const UWU_LEND_DEFINITION = appDefinition({
       label: 'Lending',
     },
 
-    lpStakingV1: {
-      id: 'lp-staking-v1',
+    platformFeesV1: {
+      id: 'platform-fees-v1',
       type: GroupType.POSITION,
-      label: 'Lp Staking V1',
+      label: 'Platform Fees V1',
     },
 
-    vestingV1: {
-      id: 'vesting-v1',
+    platformFeesV2: {
+      id: 'platform-fees-v2',
       type: GroupType.POSITION,
-      label: 'Vesting V1',
-    },
-
-    vestingV2: {
-      id: 'vesting-v2',
-      type: GroupType.POSITION,
-      label: 'Vesting V2',
+      label: 'Platform Fees V2',
     },
   },
   url: 'https://app.uwulend.fi/',

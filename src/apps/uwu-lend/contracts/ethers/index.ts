@@ -2,11 +2,11 @@
 /* tslint:disable */
 /* eslint-disable */
 export type { UwuLendDataProvider } from './UwuLendDataProvider';
-export type { UwuLendMultiFeeV1 } from './UwuLendMultiFeeV1';
-export type { UwuLendMultiFeeV2 } from './UwuLendMultiFeeV2';
+export type { UwuLendStakingV1 } from './UwuLendStakingV1';
+export type { UwuLendStakingV2 } from './UwuLendStakingV2';
 export type { UwuLendUToken } from './UwuLendUToken';
 export * as factories from './factories';
 export { UwuLendDataProvider__factory } from './factories/UwuLendDataProvider__factory';
-export { UwuLendMultiFeeV1__factory } from './factories/UwuLendMultiFeeV1__factory';
-export { UwuLendMultiFeeV2__factory } from './factories/UwuLendMultiFeeV2__factory';
+export { UwuLendStakingV1__factory } from './factories/UwuLendStakingV1__factory';
+export { UwuLendStakingV2__factory } from './factories/UwuLendStakingV2__factory';
 export { UwuLendUToken__factory } from './factories/UwuLendUToken__factory';

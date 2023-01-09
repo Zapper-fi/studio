@@ -2,6 +2,6 @@
 /* tslint:disable */
 /* eslint-disable */
 export { UwuLendDataProvider__factory } from './UwuLendDataProvider__factory';
-export { UwuLendMultiFeeV1__factory } from './UwuLendMultiFeeV1__factory';
-export { UwuLendMultiFeeV2__factory } from './UwuLendMultiFeeV2__factory';
+export { UwuLendStakingV1__factory } from './UwuLendStakingV1__factory';
+export { UwuLendStakingV2__factory } from './UwuLendStakingV2__factory';
 export { UwuLendUToken__factory } from './UwuLendUToken__factory';
