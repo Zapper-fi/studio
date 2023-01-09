@@ -79,7 +79,7 @@ export class EthereumOriginDollarVeogvTokenFetcher extends AppTokenTemplatePosit
     const underlyingBalance = await multicall.wrap(underlyingTokenContract).balanceOf(appToken.address);
     const ratio = Number(supplyRaw) / Number(underlyingBalance);
 
-    return 1 / ratio;
+    return [1 / ratio];
   }
 
   async getLiquidity({ appToken }: GetDataPropsParams<Veogv>) {

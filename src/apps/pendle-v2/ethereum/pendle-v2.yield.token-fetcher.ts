@@ -37,6 +37,7 @@ export class EthereumPendleV2YieldTokenFetcher extends AppTokenTemplatePositionF
   PendleV2YieldTokenDefinition
 > {
   groupLabel = 'Yield Tokens';
+
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
     @Inject(PendleV2ContractFactory) protected readonly pendleV2ContractFactory: PendleV2ContractFactory,
@@ -77,6 +78,10 @@ export class EthereumPendleV2YieldTokenFetcher extends AppTokenTemplatePositionF
 
   async getUnderlyingTokenDefinitions() {
     return [];
+  }
+
+  async getPricePerShare() {
+    return [1];
   }
 
   async getPrice({

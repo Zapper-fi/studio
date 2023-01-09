@@ -96,8 +96,9 @@ export class OptimismLyraAvalonPoolTokenFetcher extends AppTokenTemplatePosition
   }: GetPricePerShareParams<LyraLiquidityToken, DefaultAppTokenDataProps, DefaultAppTokenDefinition>) {
     const pool = await contract.liquidityPool();
     const poolContract = this.contractFactory.lyraLiquidityPool({ address: pool, network: this.network });
-    const ratio = await multicall.wrap(poolContract).getTokenPrice();
-    return Number(ratio) / 10 ** appToken.tokens[0].decimals;
+    const ratioRaw = await multicall.wrap(poolContract).getTokenPrice();
+    const ratio = Number(ratioRaw) / 10 ** appToken.tokens[0].decimals;
+    return [ratio];
   }
 
   async getLiquidity({ appToken }: GetDataPropsParams<LyraLiquidityToken>) {

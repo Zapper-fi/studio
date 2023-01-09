@@ -30,6 +30,6 @@ export abstract class BalancerV2StaticYieldTokenFetcher extends AppTokenTemplate
   }
 
   async getPricePerShare() {
-    return 1;
+    return [1];
   }
 }

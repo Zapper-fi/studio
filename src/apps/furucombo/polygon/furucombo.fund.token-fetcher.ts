@@ -117,7 +117,7 @@ export class PolygonFurucomboFundTokenFetcher extends AppTokenTemplatePositionFe
     appToken,
     definition,
   }: GetPricePerShareParams<FurucomboFundShareToken, DefaultAppTokenDataProps, FurucomboFundDefinition>) {
-    return Number(definition.price) / appToken.tokens[0].price;
+    return [Number(definition.price) / appToken.tokens[0].price];
   }
 
   async getLiquidity({

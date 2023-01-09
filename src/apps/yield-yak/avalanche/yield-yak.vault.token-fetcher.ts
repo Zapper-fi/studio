@@ -68,7 +68,7 @@ export class AvalancheYieldyakVaultTokenFetcher extends AppTokenTemplatePosition
     return 0;
   }
 
-  async getPricePerShare(_params: GetPricePerShareParams<YieldYakVault>): Promise<number | number[]> {
+  async getPricePerShare(_params: GetPricePerShareParams<YieldYakVault>) {
     const one_receipt_token = BigNumber.from(10).pow(_params.appToken.decimals);
     try {
       const depositToken = await _params.contract.depositToken();
@@ -80,9 +80,9 @@ export class AvalancheYieldyakVaultTokenFetcher extends AppTokenTemplatePosition
 
       const underlying = await _params.contract.getDepositTokensForShares(one_receipt_token);
       const pps = ethers.utils.formatUnits(underlying, depositTokenDecimals);
-      return +pps;
+      return [+pps];
     } catch (err) {
-      return 1;
+      return [1];
     }
   }
 }

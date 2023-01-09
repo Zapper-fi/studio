@@ -35,7 +35,7 @@ export class EthereumSpoolVoSpoolTokenFetcher extends AppTokenTemplatePositionFe
   }
 
   async getPricePerShare() {
-    return 1;
+    return [1];
   }
 
   async getPrice() {

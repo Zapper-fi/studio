@@ -55,6 +55,10 @@ export class EthereumTokemakReactorTokenFetcher extends AppTokenTemplatePosition
     return [{ address: await contract.underlyer(), network: this.network }];
   }
 
+  async getPricePerShare() {
+    return [1];
+  }
+
   async getLabel({ appToken }: GetDisplayPropsParams<TokemakReactor>) {
     return `${getLabelFromToken(appToken.tokens[0])} Reactor`;
   }

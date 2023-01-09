@@ -31,6 +31,10 @@ export class EthereumChickenBondBlusdTokenFetcher extends AppTokenTemplatePositi
     return [{ address: '0x5f98805a4e8be255a32880fdec7f6728c6568ba0', network: this.network }];
   }
 
+  async getPricePerShare() {
+    return [1];
+  }
+
   async getPrice({ multicall }: GetPriceParams<ChickenBondBlusd>): Promise<number> {
     // Temporary solution until Curve is migrated to template
     const curvePoolContract = this.contractFactory.curvePool({

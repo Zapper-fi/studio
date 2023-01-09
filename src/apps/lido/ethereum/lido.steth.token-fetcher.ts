@@ -42,6 +42,6 @@ export class EthereumLidoStethTokenFetcher extends AppTokenTemplatePositionFetch
     const latestRound = await multicall.wrap(oracleContract).latestRound();
     const pricePerShareRaw = await multicall.wrap(oracleContract).getAnswer(latestRound);
 
-    return Number(pricePerShareRaw) / 10 ** appToken.decimals;
+    return [Number(pricePerShareRaw) / 10 ** appToken.decimals];
   }
 }

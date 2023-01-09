@@ -33,12 +33,8 @@ export class EthereumAaveSafetyModuleStkAbptTokenFetcher extends AppTokenTemplat
     return [{ address: '0x41a08648c3766f9f9d85598ff102a08f4ef84f84', network: this.network }];
   }
 
-  async getLiquidity({ appToken }: GetDataPropsParams<AaveStkAbpt>) {
-    return appToken.price * appToken.supply;
-  }
-
-  async getReserves({ appToken }: GetDataPropsParams<AaveStkAbpt>) {
-    return [appToken.pricePerShare[0] * appToken.supply];
+  async getPricePerShare() {
+    return [1];
   }
 
   async getApy({ multicall }: GetDataPropsParams<AaveStkAbpt>) {

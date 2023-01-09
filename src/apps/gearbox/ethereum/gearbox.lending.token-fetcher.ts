@@ -122,9 +122,9 @@ export class EthereumGearboxLendingTokenFetcher extends AppTokenTemplatePosition
 
     const underlyingTokenContract = this.gearboxContractFactory.erc20({ address: underlyingToken, network });
     const underlyingTokenDecimals = await underlyingTokenContract.decimals();
+    const pricePerShare =
+      +formatUnits(underlying, underlyingTokenDecimals) / +formatUnits(dieselTokenTotalSupply, dieselTokenDecimals);
 
-    return (
-      +formatUnits(underlying, underlyingTokenDecimals) / +formatUnits(dieselTokenTotalSupply, dieselTokenDecimals)
-    );
+    return [pricePerShare];
   }
 }

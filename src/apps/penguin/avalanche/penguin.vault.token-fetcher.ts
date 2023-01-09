@@ -51,6 +51,6 @@ export class AvalanchePenguinVaultTokenFetcher extends AppTokenTemplatePositionF
   async getPricePerShare({ contract, appToken }: GetPricePerShareParams<PenguinVault>) {
     const reserveRaw = await contract.totalDeposits();
     const reserve = Number(reserveRaw) / 10 ** appToken.tokens[0].decimals;
-    return reserve / appToken.supply;
+    return [reserve / appToken.supply];
   }
 }

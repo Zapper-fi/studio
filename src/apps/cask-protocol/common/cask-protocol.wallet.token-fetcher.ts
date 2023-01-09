@@ -29,7 +29,9 @@ export abstract class CaskProtocolWalletTokenFetcher extends AppTokenTemplatePos
   }
 
   async getPricePerShare({ appToken, contract }: GetPricePerShareParams<CaskVaultToken>) {
-    return contract.pricePerShare().then(v => Number(v) / 10 ** appToken.tokens[0].decimals);
+    const pricePerShareRaw = await contract.pricePerShare();
+    const pricePerShare = Number(pricePerShareRaw) / 10 ** appToken.tokens[0].decimals;
+    return [pricePerShare];
   }
 
   async getLabel() {

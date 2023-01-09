@@ -128,11 +128,11 @@ export abstract class YieldProtocolLendTokenFetcher extends AppTokenTemplatePosi
     contract,
     multicall,
   }: GetPricePerShareParams<YieldProtocolLendToken, DefaultAppTokenDataProps, FyTokenDefinition>) {
-    if (!definition.poolAddress) return 1;
+    if (!definition.poolAddress) return [1];
 
     const maturity = await contract.maturity();
     const isMatured = Math.floor(new Date().getTime() / 1000) > Number(maturity);
-    if (isMatured) return 1;
+    if (isMatured) return [1];
 
     const pool = this.contractFactory.yieldProtocolPool({ address: definition.poolAddress, network: this.network });
 
@@ -142,7 +142,7 @@ export abstract class YieldProtocolLendTokenFetcher extends AppTokenTemplatePosi
         ? (await multicall.wrap(pool).sellFYTokenPreview(ethers.utils.parseUnits('.01', appToken.decimals))).mul(100)
         : await multicall.wrap(pool).sellFYTokenPreview(ethers.utils.parseUnits('1', appToken.decimals));
 
-    return +ethers.utils.formatUnits(estimateRaw, appToken.decimals);
+    return [+ethers.utils.formatUnits(estimateRaw, appToken.decimals)];
   }
 
   async getLiquidity({ appToken }: GetDataPropsParams<YieldProtocolLendToken>) {

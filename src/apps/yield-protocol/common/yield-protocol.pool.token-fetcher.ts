@@ -164,7 +164,8 @@ export abstract class YieldProtocolPoolTokenFetcher extends AppTokenTemplatePosi
     const realFyTokenReserves = fyTokenReserves.sub(poolTotalSupply);
     const reserveRaw = baseReserves.add(realFyTokenReserves);
     const reserve = Number(reserveRaw) / 10 ** appToken.tokens[0].decimals;
-    return reserve / appToken.supply;
+    const pricePerShare = reserve / appToken.supply;
+    return [pricePerShare];
   }
 
   async getLiquidity({ appToken }: GetDataPropsParams<YieldProtocolPoolToken>) {

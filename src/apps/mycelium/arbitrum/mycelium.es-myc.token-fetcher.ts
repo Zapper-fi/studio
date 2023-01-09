@@ -30,4 +30,8 @@ export class ArbitrumMyceliumEsMycTokenFetcher extends AppTokenTemplatePositionF
   async getUnderlyingTokenDefinitions() {
     return [{ address: '0xc74fe4c715510ec2f8c61d70d397b32043f55abe', network: this.network }];
   }
+
+  async getPricePerShare() {
+    return [1];
+  }
 }

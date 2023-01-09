@@ -36,7 +36,7 @@ export abstract class AcrossV1PoolTokenFetcher extends AppTokenTemplatePositionF
   async getPricePerShare({ contract, appToken, multicall }: GetPricePerShareParams<BadgerPool>) {
     const pricePerShareRaw = await multicall.wrap(contract).callStatic.exchangeRateCurrent();
     const decimals = appToken.tokens[0].decimals;
-    return Number(pricePerShareRaw) / 10 ** decimals;
+    return [Number(pricePerShareRaw) / 10 ** decimals];
   }
 
   async getLiquidity({ contract, appToken }: GetDataPropsParams<BadgerPool>) {

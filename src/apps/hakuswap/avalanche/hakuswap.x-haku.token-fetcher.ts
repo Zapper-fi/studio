@@ -37,6 +37,6 @@ export class AvalancheHakuswapXHakuTokenFetcher extends AppTokenTemplatePosition
     const pricePerShareRaw = await multicall.wrap(contract).xHAKUForHAKU(oneUnit);
     const decimals = appToken.tokens[0].decimals;
 
-    return Number(pricePerShareRaw) / 10 ** decimals;
+    return [Number(pricePerShareRaw) / 10 ** decimals];
   }
 }

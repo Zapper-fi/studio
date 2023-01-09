@@ -29,4 +29,8 @@ export class EthereumKeeperRedeemableTokenFetcher extends AppTokenTemplatePositi
   async getUnderlyingTokenDefinitions() {
     return [{ address: '0x1ceb5cb57c4d4e2b2433641b95dd330a33185a44', network: this.network }];
   }
+
+  async getPricePerShare() {
+    return [1];
+  }
 }

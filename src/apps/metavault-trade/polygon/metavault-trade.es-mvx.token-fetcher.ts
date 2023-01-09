@@ -30,4 +30,8 @@ export class PolygonMetavaultTradeEsMvxTokenFetcher extends AppTokenTemplatePosi
   async getUnderlyingTokenDefinitions() {
     return [{ address: '0x2760e46d9bb43dafcbecaad1f64b93207f9f0ed7', network: this.network }];
   }
+
+  async getPricePerShare() {
+    return [1];
+  }
 }

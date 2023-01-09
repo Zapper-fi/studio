@@ -40,6 +40,6 @@ export class EthereumInverseDcaVaultTokenFetcher extends AppTokenTemplatePositio
   }
 
   async getPricePerShare() {
-    return 1;
+    return [1];
   }
 }

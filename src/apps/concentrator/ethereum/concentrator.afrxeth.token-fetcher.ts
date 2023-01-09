@@ -33,7 +33,8 @@ export class EthereumConcentratorAfrxethTokenFetcher extends AppTokenTemplatePos
   async getPricePerShare({ appToken, contract }: GetPricePerShareParams<AladdinFrxEth>) {
     const reserveRaw = await contract.totalAssets();
     const reserve = Number(reserveRaw) / 10 ** appToken.tokens[0].decimals;
-    return reserve / appToken.supply;
+    const pricePerShare = appToken.supply > 0 ? reserve / appToken.supply : 0;
+    return [pricePerShare];
   }
 
   async getLiquidity({ appToken }: GetDataPropsParams<AladdinFrxEth>) {

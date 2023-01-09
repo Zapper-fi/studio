@@ -88,9 +88,7 @@ export abstract class DefiedgeStrategyTokenFetcher extends AppTokenTemplatePosit
   async getPricePerShare({
     contract,
     appToken,
-  }: GetPricePerShareParams<Strategy, DefiedgeStrategyTokenDataProps, DefiedgeStrategyDefinition>): Promise<
-    number | number[]
-  > {
+  }: GetPricePerShareParams<Strategy, DefiedgeStrategyTokenDataProps, DefiedgeStrategyDefinition>) {
     const aumWithFee = await contract.callStatic.getAUMWithFees(false);
     const { amount0, amount1 } = aumWithFee;
     const [token0, token1] = appToken.tokens;

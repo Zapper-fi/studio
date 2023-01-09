@@ -34,6 +34,7 @@ export abstract class SolaceXSolacev1TokenFetcher extends AppTokenTemplatePositi
   async getPricePerShare({ contract, appToken, multicall }: GetPricePerShareParams<XSolacev1>) {
     const pricePerShareRaw = await multicall.wrap(contract).xSolaceToSolace(ONE_UNIT);
     const decimals = appToken.tokens[0].decimals;
-    return Number(pricePerShareRaw) / 10 ** decimals;
+    const pricePerShare = Number(pricePerShareRaw) / 10 ** decimals;
+    return [pricePerShare];
   }
 }

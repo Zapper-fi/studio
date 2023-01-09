@@ -34,7 +34,7 @@ export class AvalancheTraderJoeVeJoeTokenFetcher extends AppTokenTemplatePositio
   }
 
   async getPricePerShare() {
-    return 1;
+    return [1];
   }
 
   async getPrice() {

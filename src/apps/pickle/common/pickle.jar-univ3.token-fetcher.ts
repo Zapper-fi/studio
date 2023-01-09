@@ -161,8 +161,8 @@ export abstract class PickleJarUniv3TokenFetcher extends AppTokenTemplatePositio
     return [{ address: await contract.pool(), network: this.network }];
   }
 
-  async getPricePerShare({ contract }: GetPricePerShareParams<PickleJarUniv3, DefaultDataProps>): Promise<number> {
-    return contract.getRatio().then(v => Number(v) / 10 ** 18);
+  async getPricePerShare({ contract }: GetPricePerShareParams<PickleJarUniv3, DefaultDataProps>) {
+    return contract.getRatio().then(v => [Number(v) / 10 ** 18]);
   }
 
   async getLiquidity() {

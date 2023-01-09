@@ -47,7 +47,7 @@ export abstract class DhedgeV2PoolTokenFetcher extends AppTokenTemplatePositionF
       if (isMulticallUnderlyingError(err)) return 0;
       throw err;
     });
-    return Number(pricePerShareRaw) / 10 ** 18;
+    return [Number(pricePerShareRaw) / 10 ** 18];
   }
 
   async getLiquidity({ appToken }: GetDataPropsParams<DhedgeV2Token>) {
