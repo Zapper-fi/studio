@@ -38,6 +38,10 @@ export const GAMMA_STRATEGIES_DEFINITION = appDefinition({
 
   supportedNetworks: {
     [Network.ETHEREUM_MAINNET]: [AppAction.VIEW],
+    [Network.OPTIMISM_MAINNET]: [AppAction.VIEW],
+    [Network.ARBITRUM_MAINNET]: [AppAction.VIEW],
+    [Network.POLYGON_MAINNET]: [AppAction.VIEW],
+    [Network.CELO_MAINNET]: [AppAction.VIEW],
   },
 
   token: {
