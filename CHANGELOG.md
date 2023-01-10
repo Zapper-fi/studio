@@ -4,6 +4,27 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.359.0](https://github.com/Zapper-fi/studio/compare/v0.358.0...v0.359.0) (2023-01-10)
+
+
+### Features
+
+* **app-token:** Make pricePerShare abstract and required as an array ([#2083](https://github.com/Zapper-fi/studio/issues/2083)) ([5608e5d](https://github.com/Zapper-fi/studio/commit/5608e5de81f1ccb9e3a01cf3eb6d526804872833))
+* **cli:** Update generator to use templates ([#2085](https://github.com/Zapper-fi/studio/issues/2085)) ([f9de204](https://github.com/Zapper-fi/studio/commit/f9de204dfdfacd0c6551f3cb2e087d79659a6298))
+* **gamma-strategies:** implement other networks and exchanges ([#2073](https://github.com/Zapper-fi/studio/issues/2073)) ([7721b21](https://github.com/Zapper-fi/studio/commit/7721b21494579058681bab6cbd98a8be8ad13ebc))
+* **granary-finance:** Add positions on Fantom ([#2078](https://github.com/Zapper-fi/studio/issues/2078)) ([6c5e481](https://github.com/Zapper-fi/studio/commit/6c5e481abea0b3d33523a033e75c8c4ce0d8cda2))
+* **radiant-capital:** Add lending markets and platform fees positions ([#2080](https://github.com/Zapper-fi/studio/issues/2080)) ([bd531ac](https://github.com/Zapper-fi/studio/commit/bd531ac5a8b7fa0c7aeaa65d180d3714c7306e82))
+* **sonne:** Add supply and borrow markets ([#2069](https://github.com/Zapper-fi/studio/issues/2069)) ([d839a46](https://github.com/Zapper-fi/studio/commit/d839a467df4d4f9deb94c1ae1de0b9906fb6508d))
+* **uwu-lend:** Implement Uwu-lend ([#2072](https://github.com/Zapper-fi/studio/issues/2072)) ([7a19133](https://github.com/Zapper-fi/studio/commit/7a1913361f8860a2ef9d68d3df0b0199083f6437))
+
+
+### Bug Fixes
+
+* **build:** Pin version of upload to GCS action ([5797470](https://github.com/Zapper-fi/studio/commit/57974702bb21dd4ad7ecdcec3617cb39d160cee5))
+* **build:** Remove test image ([019113f](https://github.com/Zapper-fi/studio/commit/019113f4ae6c9b3f66cd7a4ecca41d8f43ea8008))
+* **granary-finance:** Fix typo in abi filename ([#2081](https://github.com/Zapper-fi/studio/issues/2081)) ([a5c4d4a](https://github.com/Zapper-fi/studio/commit/a5c4d4a1d9dc019b7b752e88a8863bf06072ba11))
+* **hakuswap:** Add xHaku app token ([#2067](https://github.com/Zapper-fi/studio/issues/2067)) ([4f35868](https://github.com/Zapper-fi/studio/commit/4f35868b547ac3e5523582c7769880d118d51954))
+
 ## [0.358.0](https://github.com/Zapper-fi/studio/compare/v0.357.0...v0.358.0) (2023-01-06)
 
 
