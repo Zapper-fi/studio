@@ -1,8 +1,8 @@
 import { dirname } from 'path';
 
 import { ESLint } from 'eslint';
-import fse from 'fs-extra';
-import prettier from 'prettier';
+import fse, { ensureDirSync } from 'fs-extra';
+import { resolveConfig, format } from 'prettier';
 
 import { AppDefinitionObject } from '../../src/app/app.interface';
 
@@ -15,11 +15,11 @@ export const loadAppDefinition = async (appId: string) => {
 };
 
 export const formatAndWrite = async (filename: string, content: string) => {
-  fse.ensureDirSync(dirname(filename));
+  ensureDirSync(dirname(filename));
 
   const eslint = new ESLint({ fix: true });
-  const config = await prettier.resolveConfig(process.cwd());
-  const formatted = prettier.format(content, { ...config, parser: 'typescript' });
+  const config = await resolveConfig(process.cwd());
+  const formatted = format(content, { ...config, parser: 'typescript' });
   fse.writeFileSync(filename, formatted);
 
   const results = await eslint.lintFiles(filename);
