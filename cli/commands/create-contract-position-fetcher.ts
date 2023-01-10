@@ -20,8 +20,8 @@ export default class CreateContractPositionFetcher extends Command {
     const appId = args.appId;
 
     const definition = await loadAppDefinition(appId);
-    const groupIds = Object.values(definition.groups).map(v => v.id);
-    const networks = Object.keys(definition.supportedNetworks);
+    const groupIds = Object.values(definition.groups ?? {}).map(v => v.id);
+    const networks = Object.keys(definition.supportedNetworks ?? {});
 
     let groupId = await promptAppGroupId(groupIds);
     let group: AppGroup | null = null;
