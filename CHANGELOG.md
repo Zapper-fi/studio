@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.361.0](https://github.com/Zapper-fi/studio/compare/v0.360.0...v0.361.0) (2023-01-10)
+
+
+### Features
+
+* **app-toolkit:** Remove all legacy helpers ([#2089](https://github.com/Zapper-fi/studio/issues/2089)) ([f9e4df4](https://github.com/Zapper-fi/studio/commit/f9e4df4391862ea17ad6802745ffb022a4e12f30))
+
 ## [0.360.0](https://github.com/Zapper-fi/studio/compare/v0.359.1...v0.360.0) (2023-01-10)
 
 
