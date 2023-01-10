@@ -11,9 +11,9 @@ export const MIDAS_DEFINITION = appDefinition({
   url: 'https://app.midascapital.xyz/',
   groups: {
     pool: {
-      id: 'pool',
+      id: 'market',
       type: GroupType.TOKEN,
-      label: 'Pools',
+      label: 'Markets',
     },
   },
   tags: [AppTag.LIQUIDITY_POOL],

@@ -4,9 +4,7 @@ import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { ContractFactory } from '~contract/contracts';
 import { Network } from '~types/network.interface';
 
-import { MidasCToken__factory } from './ethers';
-import { MidasPoolDirectory__factory } from './ethers';
-import { MidasPoolLens__factory } from './ethers';
+import { MidasCToken__factory, MidasPoolDirectory__factory, MidasPoolLens__factory } from './ethers';
 
 // eslint-disable-next-line
 type ContractOpts = { address: string; network: Network };
