@@ -2,7 +2,6 @@ import { Command } from '@oclif/core';
 
 import ClearCache from './clear-cache';
 import CreateApp from './create-app';
-import CreateBalanceFetcher from './create-balance-fetcher';
 import CreateContractPositionFetcher from './create-contract-position-fetcher';
 import CreateGroup from './create-group';
 import CreateTokenFetcher from './create-token-fetcher';
@@ -19,7 +18,6 @@ export const commands: Record<string, typeof Command> = {
   'create-app': CreateApp,
   'create-group': CreateGroup,
   'create-token-fetcher': CreateTokenFetcher,
-  'create-balance-fetcher': CreateBalanceFetcher,
   'create-contract-position-fetcher': CreateContractPositionFetcher,
   'clear-cache': ClearCache,
   'set-network-provider': SetNetworkProvider,

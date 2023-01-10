@@ -1,10 +1,9 @@
 import { Command } from '@oclif/core';
-import fse from 'fs-extra';
+import { ensureDir } from 'fs-extra';
 import { zipObject } from 'lodash';
 
 import { AppAction } from '../../src/app/app.interface';
 import { generateAppDefinition } from '../generators/generate-app-definition';
-import { generateAppIndex } from '../generators/generate-app-index';
 import { generateAppModule } from '../generators/generate-app-module';
 import {
   promptAppDescription,
@@ -32,22 +31,22 @@ export default class CreateApp extends Command {
     const networks = await promptAppNetworks();
     const tags = await promptAppTags();
 
-    fse.ensureDir(`./src/apps/${appId}`);
-    fse.ensureDir(`./src/apps/${appId}/assets`);
-    fse.ensureDir(`./src/apps/${appId}/contracts`);
-    fse.ensureDir(`./src/apps/${appId}/contracts/abis`);
+    await ensureDir(`./src/apps/${appId}`);
+    await ensureDir(`./src/apps/${appId}/assets`);
+    await ensureDir(`./src/apps/${appId}/contracts`);
+    await ensureDir(`./src/apps/${appId}/contracts/abis`);
     for (const network of networks) {
-      fse.ensureDir(`./src/apps/${appId}/${network}`);
+      await ensureDir(`./src/apps/${appId}/${network}`);
     }
 
     await generateAppModule(appId);
-    await generateAppIndex(appId);
     await generateAppDefinition({
       id: appId,
       name: appName,
       description: appDescription,
       url: appUrl,
       tags,
+      links: {},
       supportedNetworks: zipObject(
         networks,
         networks.map(() => [AppAction.VIEW]),

@@ -66,16 +66,16 @@ export default class SetNetworkProvider extends Command {
     }
   }
 
-  private deleteLineEnv(network: Network) {
+  private async deleteLineEnv(network: Network) {
     const envVarKey = NetworkProviderService.getEnvVarKey(network);
 
     // Create .env file if not exist
-    this.upsertFile(this.envFileName);
+    await this.upsertFile(this.envFileName);
 
     // Delete the line related to the specified network if exists
     const envFileLines = fs.readFileSync(this.envFileName).toString().trim().split('\n');
     const envFileLine = envFileLines.findIndex(line => line.startsWith(`${envVarKey}=`));
-    if (envFileLine >= 0) envFileLines[envFileLine] = null;
+    if (envFileLine >= 0) envFileLines[envFileLine] = '';
 
     // Rewrite file without the line
     const newEnvFile = compact(envFileLines).join('\n');
@@ -96,11 +96,11 @@ export default class SetNetworkProvider extends Command {
     const network = await this.promptNetwork();
     const action = await this.promptAction();
 
-    this.deleteLineEnv(network);
+    await this.deleteLineEnv(network);
 
     if (action === 'custom') {
       const url = await this.promptNetworkProviderUrl();
-      this.setCustomProvider(network, url);
+      await this.setCustomProvider(network, url);
     }
   }
 }

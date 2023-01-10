@@ -6,40 +6,64 @@ import { strings } from '../strings';
 import { formatAndWrite } from './utils';
 
 export async function generateContractPositionFetcher(appId: string, groupId: string, network: Network) {
-  const appDefinitionName = `${strings.upperCase(appId)}_DEFINITION`;
   const appCamelCase = strings.camelCase(appId);
   const appTitleCase = strings.titleCase(appCamelCase);
   const groupKey = strings.camelCase(groupId);
   const groupTitleCase = strings.titleCase(groupKey);
-
-  const networkKey = Object.keys(Network).filter(k => network.includes(Network[k]));
   const networkTitleCase = strings.titleCase(network);
 
   const content = dedent`
     import { Inject } from '@nestjs/common';
-
-    import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
-    import { Register } from '~app-toolkit/decorators';
-    import { PositionFetcher } from '~position/position-fetcher.interface';
-    import { ContractPosition } from '~position/position.interface';
-    import { Network } from '~types/network.interface';
+    import { BigNumberish, Contract } from 'ethers';
+    
+    import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
+    import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
+    import { DefaultDataProps } from '~position/display.interface';
+    import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
+    import {
+      GetDefinitionsParams,
+      DefaultContractPositionDefinition,
+      GetTokenDefinitionsParams,
+      UnderlyingTokenDefinition,
+      GetDisplayPropsParams,
+      GetTokenBalancesParams,
+    } from '~position/template/contract-position.template.types';
     
     import { ${appTitleCase}ContractFactory } from '../contracts';
-    import { ${appDefinitionName} } from '../${appId}.definition';
     
-    const appId = ${appDefinitionName}.id;
-    const groupId = ${appDefinitionName}.groups.${groupKey}.id;
-    const network = Network.${networkKey};
-    
-    @Register.ContractPositionFetcher({ appId, groupId, network })
-    export class ${networkTitleCase}${appTitleCase}${groupTitleCase}ContractPositionFetcher implements PositionFetcher<ContractPosition> {
+    @PositionTemplate()
+    export class ${networkTitleCase}${appTitleCase}${groupTitleCase}ContractPositionFetcher extends ContractPositionTemplatePositionFetcher<Contract> {
+      groupLabel: string;
+
       constructor(
-        @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
-        @Inject(${appTitleCase}ContractFactory) private readonly ${appCamelCase}ContractFactory: ${appTitleCase}ContractFactory,
-      ) {}
-    
-      async getPositions() {
-        return [];
+        @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
+        @Inject(${appTitleCase}ContractFactory) protected readonly ${appCamelCase}ContractFactory: ${appTitleCase}ContractFactory,
+      ) {
+        super(appToolkit);
+      }
+        
+      getContract(_address: string): Contract {
+        throw new Error('Method not implemented.');
+      }
+
+      getDefinitions(_params: GetDefinitionsParams): Promise<DefaultContractPositionDefinition[]> {
+        throw new Error('Method not implemented.');
+      }
+
+      getTokenDefinitions(
+        _params: GetTokenDefinitionsParams<Contract, DefaultContractPositionDefinition>,
+      ): Promise<UnderlyingTokenDefinition[] | null> {
+        throw new Error('Method not implemented.');
+      }
+
+      getLabel(
+        _params: GetDisplayPropsParams<Contract, DefaultDataProps, DefaultContractPositionDefinition>,
+      ): Promise<string> {
+        throw new Error('Method not implemented.');
+      }
+
+      getTokenBalancesPerPosition(_params: GetTokenBalancesParams<Contract, DefaultDataProps>): Promise<BigNumberish[]> {
+        throw new Error('Method not implemented.');
       }
     }
   `;

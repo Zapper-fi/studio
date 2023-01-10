@@ -15,21 +15,13 @@ export default class CreateTokenFetcher extends Command {
   static args = [{ name: 'appId', description: 'The application id ', required: true }];
   static flags = {};
 
-  private async loadDefinition(appId: string) {
-    const modPath = `../src/apps/${appId}/${appId}.definition`;
-    const mod = require(modPath);
-    const key = Object.keys(mod).find(v => /_DEFINITION/.test(v));
-    if (!key) throw new Error(`No matched export found in ${modPath}`);
-    return mod[key];
-  }
-
   async run(): Promise<void> {
     const { args } = await this.parse(CreateTokenFetcher);
     const appId = args.appId;
 
     const definition = await loadAppDefinition(appId);
-    const groupIds = Object.values(definition.groups).map(v => v.id);
-    const networks = Object.keys(definition.supportedNetworks);
+    const groupIds = Object.values(definition.groups ?? {}).map(v => v.id);
+    const networks = Object.keys(definition.supportedNetworks ?? {});
 
     let groupId = await promptAppGroupId(groupIds);
     let group: AppGroup | null = null;
