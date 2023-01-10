@@ -68,6 +68,6 @@ export class EthereumArborFinanceBondTokenFetcher extends AppTokenTemplatePositi
     const date = dayjs(new Date());
     const yearsUntilMaturity = m.diff(date, 'year', true);
     const ytm = 1 / definition.clearingPrice - 1;
-    return yearsUntilMaturity > 0 ? 1 / (1 + ytm) ** yearsUntilMaturity : 1;
+    return yearsUntilMaturity > 0 ? [1 / (1 + ytm) ** yearsUntilMaturity] : [1];
   }
 }

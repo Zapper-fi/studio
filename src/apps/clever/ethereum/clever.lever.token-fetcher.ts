@@ -35,7 +35,7 @@ export class EthereumCleverLeverTokenFetcher extends AppTokenTemplatePositionFet
 
   async getPricePerShare() {
     // TODO: use Curve pool to determine price
-    return 1;
+    return [1];
   }
 
   async getLiquidity({ appToken }: GetDataPropsParams<Erc20>) {

@@ -6,7 +6,6 @@ import { PositionTemplate } from '~app-toolkit/decorators/position-template.deco
 import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import {
-  GetDataPropsParams,
   DefaultAppTokenDataProps,
   GetDefinitionsParams,
   GetAddressesParams,
@@ -81,16 +80,8 @@ export class EthereumAuraDepositTokenFetcher extends AppTokenTemplatePositionFet
     return [{ address: poolInfo.lptoken, network: this.network }];
   }
 
-  async getLiquidity({ appToken }: GetDataPropsParams<AuraDepositToken>) {
-    return appToken.supply * appToken.price;
-  }
-
-  async getReserves({ appToken }: GetDataPropsParams<AuraDepositToken>) {
-    return [appToken.pricePerShare[0] * appToken.supply];
-  }
-
-  async getApy(_params: GetDataPropsParams<AuraDepositToken>) {
-    return 0;
+  async getPricePerShare() {
+    return [1];
   }
 
   async getLabel({ appToken }: GetDisplayPropsParams<AuraDepositToken, DefaultAppTokenDataProps>) {

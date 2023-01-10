@@ -50,7 +50,7 @@ export abstract class ImpermaxLendTokenFetcher extends AppTokenTemplatePositionF
   async getPricePerShare({ contract, appToken }: GetPricePerShareParams<Borrowable>) {
     const [underlyingToken] = appToken.tokens;
     const exchangeRate = await contract.exchangeRateLast();
-    return Number(exchangeRate) / 10 ** underlyingToken.decimals;
+    return [Number(exchangeRate) / 10 ** underlyingToken.decimals];
   }
 
   async getLiquidity({ appToken }: GetDataPropsParams<Borrowable>) {

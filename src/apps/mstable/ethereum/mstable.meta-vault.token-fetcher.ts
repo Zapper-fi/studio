@@ -36,6 +36,7 @@ export class EthereumMstableMetaVaultTokenFetcher extends AppTokenTemplatePositi
   async getPricePerShare({ contract, appToken }: GetPricePerShareParams<MstableMetavault4626>) {
     const reserveRaw = await contract.totalAssets();
     const reserve = Number(reserveRaw) / 10 ** appToken.tokens[0].decimals;
-    return reserve / appToken.supply;
+    const pricePerShare = reserve / appToken.supply;
+    return [pricePerShare];
   }
 }

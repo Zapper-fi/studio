@@ -30,4 +30,8 @@ export class EthereumTokemakAccTokeTokenFetcher extends AppTokenTemplatePosition
   async getUnderlyingTokenDefinitions({ contract }: GetUnderlyingTokensParams<TokemakAccToke>) {
     return [{ address: await contract.toke(), network: this.network }];
   }
+
+  async getPricePerShare() {
+    return [1];
+  }
 }

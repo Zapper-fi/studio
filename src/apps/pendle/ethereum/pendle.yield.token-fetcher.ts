@@ -121,7 +121,7 @@ export class EthereumPendleYieldTokenFetcher extends AppTokenTemplatePositionFet
     const { expiry, baseTokenAddress } = definition;
 
     const baseToken = await tokenLoader.getOne({ address: baseTokenAddress.toLowerCase(), network: this.network });
-    if (!baseToken || Date.now() / 1000 > Number(expiry)) return 0;
+    if (!baseToken || Date.now() / 1000 > Number(expiry)) return [0];
 
     const reserves = await multicall.wrap(market).getReserves();
 
@@ -134,7 +134,7 @@ export class EthereumPendleYieldTokenFetcher extends AppTokenTemplatePositionFet
       .times(baseToken.price)
       .toNumber();
 
-    return price / appToken.tokens[0].price;
+    return [price / appToken.tokens[0].price];
   }
 
   async getLiquidity({ appToken }: GetDataPropsParams<PendleYieldToken>) {

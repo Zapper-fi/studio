@@ -59,8 +59,9 @@ export abstract class OpenleveragePoolTokenFetcher extends AppTokenTemplatePosit
   }
 
   async getPricePerShare({ contract }: GetPricePerShareParams<OpenleverageLpool>) {
-    const exchangeRateCurrent = await contract.exchangeRateStored();
-    return Number(exchangeRateCurrent) / 10 ** 18;
+    const exchangeRateCurrentRaw = await contract.exchangeRateStored();
+    const exchangeRate = Number(exchangeRateCurrentRaw) / 10 ** 18;
+    return [exchangeRate];
   }
 
   async getLiquidity({ appToken }: GetDataPropsParams<OpenleverageLpool>) {

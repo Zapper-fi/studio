@@ -46,7 +46,7 @@ export class EthereumIdleVaultTokenFetcher extends AppTokenTemplatePositionFetch
     const priceRaw = await contract.tokenPrice();
     const price = Number(priceRaw) / 10 ** appToken.tokens[0].decimals;
 
-    return price / appToken.tokens[0].price;
+    return [price / appToken.tokens[0].price];
   }
 
   async getApy({ contract }: GetDataPropsParams<IdleToken>): Promise<number> {

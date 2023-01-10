@@ -40,7 +40,9 @@ export abstract class TempusPoolTokenFetcher extends AppTokenTemplatePositionFet
 
   async getPricePerShare({ contract, appToken }: GetPricePerShareParams<TempusPyToken>) {
     const pricePerShareRaw = await contract.getPricePerFullShareStored();
-    return Number(pricePerShareRaw) / 10 ** Number(appToken.decimals);
+    const decimals = appToken.decimals;
+    const pricePerShare = Number(pricePerShareRaw) / 10 ** decimals;
+    return [pricePerShare];
   }
 
   async getLabel({ appToken, contract, multicall }: GetDisplayPropsParams<TempusPyToken>) {

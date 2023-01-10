@@ -42,4 +42,8 @@ export class EthereumGearboxPhantomTokenFetcher extends AppTokenTemplatePosition
   }: GetUnderlyingTokensParams<PhantomToken>): Promise<UnderlyingTokenDefinition[]> {
     return [{ address: await contract.underlying(), network: this.network }];
   }
+
+  async getPricePerShare() {
+    return [1];
+  }
 }

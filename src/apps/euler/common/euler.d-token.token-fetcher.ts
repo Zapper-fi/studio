@@ -42,23 +42,19 @@ export abstract class EulerDTokenTokenFetcher extends AppTokenTemplatePositionFe
     return definitions.map(v => v.address);
   }
 
+  async getSymbol({ address }): Promise<string> {
+    const market = await this.tokenDefinitionsResolver.getMarket(address, this.tokenType);
+    return `D${market!.symbol}`;
+  }
+
   async getUnderlyingTokenDefinitions({
     definition,
   }: GetUnderlyingTokensParams<EulerDtokenContract, EulerTokenDefinition>) {
     return [{ address: definition.underlyingTokenAddress, network: this.network }];
   }
 
-  async getSymbol({ address }): Promise<string> {
-    const market = await this.tokenDefinitionsResolver.getMarket(address, this.tokenType);
-    return `D${market!.symbol}`;
-  }
-
-  async getLiquidity({ appToken }: GetDataPropsParams<EulerDtokenContract>) {
-    return (this.isDebt ? -1 : 1) * appToken.price * appToken.supply;
-  }
-
-  async getReserves({ appToken }: GetDataPropsParams<EulerDtokenContract>) {
-    return [appToken.pricePerShare[0] * appToken.supply];
+  async getPricePerShare() {
+    return [1];
   }
 
   async getApy({ appToken }: GetDataPropsParams<EulerDtokenContract>) {

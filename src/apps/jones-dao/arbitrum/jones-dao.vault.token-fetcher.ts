@@ -67,4 +67,8 @@ export class ArbitrumJonesDaoVaultTokenFetcher extends AppTokenTemplatePositionF
   }: GetUnderlyingTokensParams<JonesVault, JonesDaoVaultTokenDefinition>) {
     return [{ address: definition.underlyingTokenAddress, network: this.network }];
   }
+
+  async getPricePerShare() {
+    return [1];
+  }
 }

@@ -40,14 +40,14 @@ export class EthereumYearnYieldTokenFetcher extends AppTokenTemplatePositionFetc
     return [{ address: match.underlyingAddress, network: this.network }];
   }
 
-  async getPricePerShare({ contract }: GetPricePerShareParams<YearnVault>): Promise<number> {
+  async getPricePerShare({ contract }: GetPricePerShareParams<YearnVault>) {
     return contract
       .getPricePerFullShare()
       .catch(err => {
         if (isMulticallUnderlyingError(err)) return 0;
         throw err;
       })
-      .then(pps => Number(pps) / 10 ** 18);
+      .then(pps => [Number(pps) / 10 ** 18]);
   }
 
   async getLiquidity({ appToken }: GetDataPropsParams<YearnVault>) {

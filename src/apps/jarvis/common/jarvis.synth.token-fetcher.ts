@@ -60,7 +60,7 @@ export abstract class JarvisSynthTokenFetcher extends AppTokenTemplatePositionFe
   }
 
   async getPricePerShare() {
-    return 1;
+    return [1];
   }
 
   async getPrice({

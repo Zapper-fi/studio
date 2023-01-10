@@ -76,6 +76,10 @@ export abstract class UwuLendLendingTokenFetcher extends AppTokenTemplatePositio
     return [{ address: await contract.UNDERLYING_ASSET_ADDRESS(), network: this.network }];
   }
 
+  async getPricePerShare() {
+    return [1];
+  }
+
   async getApy({ appToken, multicall }: GetDataPropsParams<UwuLendUToken>): Promise<number> {
     const pool = this.contractFactory.uwuLendDataProvider({
       network: this.network,

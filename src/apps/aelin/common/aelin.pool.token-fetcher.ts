@@ -4,11 +4,7 @@ import { gql } from 'graphql-request';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
-import {
-  GetUnderlyingTokensParams,
-  GetDisplayPropsParams,
-  GetDataPropsParams,
-} from '~position/template/app-token.template.types';
+import { GetUnderlyingTokensParams, GetDisplayPropsParams } from '~position/template/app-token.template.types';
 
 import { AelinContractFactory, AelinPool } from '../contracts';
 
@@ -53,16 +49,8 @@ export abstract class AelinPoolTokenFetcher extends AppTokenTemplatePositionFetc
     return [{ address: await contract.purchaseToken(), network: this.network }];
   }
 
-  async getLiquidity({ appToken }: GetDataPropsParams<AelinPool>) {
-    return appToken.supply * appToken.price;
-  }
-
-  async getReserves({ appToken }: GetDataPropsParams<AelinPool>) {
-    return [appToken.supply]; // 1:1
-  }
-
-  async getApy() {
-    return 0;
+  async getPricePerShare() {
+    return [1];
   }
 
   async getLabel({ contract }: GetDisplayPropsParams<AelinPool>) {

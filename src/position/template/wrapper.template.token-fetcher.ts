@@ -21,7 +21,7 @@ export abstract class WrapperTemplateTokenFetcher extends AppTokenTemplatePositi
   }
 
   async getPricePerShare() {
-    return 1;
+    return [1];
   }
 
   async getLiquidity({ appToken }: GetDataPropsParams<Erc20>) {

@@ -64,6 +64,10 @@ export abstract class AaveAmmLendingTemplateTokenFetcher extends AppTokenTemplat
     return [{ address: await contract.UNDERLYING_ASSET_ADDRESS(), network: this.network }];
   }
 
+  async getPricePerShare() {
+    return [1];
+  }
+
   async getReserveConfigDataProps({
     appToken,
     multicall,

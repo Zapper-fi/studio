@@ -58,7 +58,7 @@ export class PolygonMeshswapSupplyTokenFetcher extends AppTokenTemplatePositionF
   }
 
   async getPricePerShare() {
-    return 1;
+    return [1];
   }
 
   async getLabel({ contract }: GetDisplayPropsParams<MeshswapSinglePool>): Promise<string> {

@@ -59,12 +59,14 @@ export class EthereumLlamaAirforceVaultTokenFetcher extends AppTokenTemplatePosi
 
       const reserveRaw = await multicall.wrap(pirexContract).totalAssets();
       const reserve = Number(reserveRaw) / 10 ** appToken.tokens[0].decimals;
-      return reserve / appToken.supply;
+      const pricePerShare = reserve / appToken.supply;
+      return [pricePerShare];
     }
 
     const reserveRaw = await contract.totalUnderlying();
     const reserve = Number(reserveRaw) / 10 ** appToken.tokens[0].decimals;
-    return reserve / appToken.supply;
+    const pricePerShare = reserve / appToken.supply;
+    return [pricePerShare];
   }
 
   async getLiquidity({ appToken }: GetDataPropsParams<LlamaAirforceUnionVault>) {

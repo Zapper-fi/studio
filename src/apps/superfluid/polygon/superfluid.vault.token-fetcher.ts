@@ -4,7 +4,7 @@ import { gql } from 'graphql-request';
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
-import { GetUnderlyingTokensParams, GetDataPropsParams } from '~position/template/app-token.template.types';
+import { GetUnderlyingTokensParams } from '~position/template/app-token.template.types';
 
 import { SuperfluidContractFactory, VaultToken } from '../contracts';
 
@@ -62,15 +62,7 @@ export class PolygonSuperfluidVaultTokenFetcher extends AppTokenTemplatePosition
     return [{ address: await contract.getUnderlyingToken(), network: this.network }];
   }
 
-  async getLiquidity({ appToken }: GetDataPropsParams<VaultToken>) {
-    return appToken.supply * appToken.price;
-  }
-
-  async getReserves({ appToken }: GetDataPropsParams<VaultToken>) {
-    return [appToken.pricePerShare[0] * appToken.supply];
-  }
-
-  async getApy() {
-    return 0;
+  async getPricePerShare() {
+    return [1];
   }
 }

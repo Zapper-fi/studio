@@ -88,6 +88,10 @@ export abstract class AaveV2LendingTokenFetcher extends AppTokenTemplatePosition
     return [{ address: await contract.UNDERLYING_ASSET_ADDRESS(), network: this.network }];
   }
 
+  async getPricePerShare() {
+    return [1];
+  }
+
   async getReserveConfigDataProps({
     appToken,
     multicall,
@@ -104,14 +108,6 @@ export abstract class AaveV2LendingTokenFetcher extends AppTokenTemplatePosition
     const enabledAsCollateral = reserveConfigurationData.usageAsCollateralEnabled;
 
     return { liquidationThreshold, enabledAsCollateral };
-  }
-
-  async getLiquidity({ appToken }: GetDataPropsParams<AaveV2AToken, AaveV2LendingTokenDataProps>): Promise<number> {
-    return (this.isDebt ? -1 : 1) * appToken.price * appToken.supply;
-  }
-
-  async getReserves({ appToken }: GetDataPropsParams<AaveV2AToken, AaveV2LendingTokenDataProps>): Promise<number[]> {
-    return [appToken.pricePerShare[0] * appToken.supply];
   }
 
   async getApy({

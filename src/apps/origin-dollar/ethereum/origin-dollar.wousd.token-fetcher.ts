@@ -63,7 +63,7 @@ export class EthereumOriginDollarWousdTokenFetcher extends AppTokenTemplatePosit
     const underlyingBalance = await multicall.wrap(underlyingTokenContract).balanceOf(appToken.address);
     const ratio = parseFloat(format(supplyRaw.mul(oneEther).div(underlyingBalance)));
 
-    return 1 / ratio;
+    return [1 / ratio];
   }
 
   async getLiquidity({ appToken }: GetDataPropsParams<Wousd>) {

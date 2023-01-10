@@ -8,8 +8,9 @@ import {
   GetAddressesParams,
   GetDisplayPropsParams,
   GetPricePerShareParams,
+  GetUnderlyingTokensParams,
+  GetDataPropsParams,
 } from '~position/template/app-token.template.types';
-import { GetUnderlyingTokensParams, GetDataPropsParams } from '~position/template/app-token.template.types';
 
 import { PoolTogetherV3ContractFactory, PoolTogetherV3Pod } from '../contracts';
 
@@ -48,7 +49,8 @@ export abstract class PoolTogetherV3PodTokenFetcher extends AppTokenTemplatePosi
 
   async getPricePerShare({ contract, appToken }: GetPricePerShareParams<PoolTogetherV3Pod>) {
     const pricePerShareRaw = await contract.getPricePerShare();
-    return Number(pricePerShareRaw) / 10 ** appToken.decimals;
+    const pricePerShare = Number(pricePerShareRaw) / 10 ** appToken.decimals;
+    return [pricePerShare];
   }
 
   async getUnderlyingTokenDefinitions({ contract }: GetUnderlyingTokensParams<PoolTogetherV3Pod>) {

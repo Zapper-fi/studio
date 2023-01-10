@@ -53,6 +53,10 @@ export class EthereumMaplePoolTokenFetcher extends AppTokenTemplatePositionFetch
     return [{ address: await contract.asset(), network: this.network }];
   }
 
+  async getPricePerShare() {
+    return [1];
+  }
+
   async getApy({ definition }: GetDataPropsParams<MaplePool, DefaultAppTokenDataProps, MaplePoolTokenDefinition>) {
     return Number(definition.apy) / 10 ** 28;
   }
