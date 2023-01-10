@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.360.0](https://github.com/Zapper-fi/studio/compare/v0.359.1...v0.360.0) (2023-01-10)
+
+
+### Features
+
+* **pirex:** To template ([#2087](https://github.com/Zapper-fi/studio/issues/2087)) ([1c46899](https://github.com/Zapper-fi/studio/commit/1c468996ba0b0113f14811a7efad946dea002a65))
+
 ## [0.359.1](https://github.com/Zapper-fi/studio/compare/v0.359.0...v0.359.1) (2023-01-10)
 
 
