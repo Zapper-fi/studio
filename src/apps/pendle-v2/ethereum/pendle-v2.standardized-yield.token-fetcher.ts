@@ -2,6 +2,7 @@ import { Inject } from '@nestjs/common';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
+import { gqlFetch } from '~app-toolkit/helpers/the-graph.helper';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import {
   DefaultAppTokenDataProps,
@@ -48,7 +49,7 @@ export class EthereumPendleV2StandardizedYieldTokenFetcher extends AppTokenTempl
   }
 
   async getDefinitions(_params: GetDefinitionsParams): Promise<PendleV2StandardizedYieldTokenDefinition[]> {
-    const marketsResponse = await this.appToolkit.helpers.theGraphHelper.request<MarketsQueryResponse>({
+    const marketsResponse = await gqlFetch<MarketsQueryResponse>({
       endpoint: PENDLE_V2_GRAPHQL_ENDPOINT,
       query: BACKEND_QUERIES.getMarkets,
       variables: { chainId: NETWORK_IDS[this.network] },

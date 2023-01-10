@@ -3,6 +3,7 @@ import { gql } from 'graphql-request';
 
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
+import { gqlFetch } from '~app-toolkit/helpers/the-graph.helper';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import {
   DefaultAppTokenDataProps,
@@ -41,7 +42,7 @@ export class EthereumEnzymeFinanceVaultTokenFetcher extends AppTokenTemplatePosi
 
   async getAddresses(): Promise<string[]> {
     const endpoint = `https://api.thegraph.com/subgraphs/name/enzymefinance/enzyme`;
-    const data = await this.appToolkit.helpers.theGraphHelper.request<EnzymeFinanceVaultsResponse>({ endpoint, query });
+    const data = await gqlFetch<EnzymeFinanceVaultsResponse>({ endpoint, query });
     return data.funds.map(v => v.id.toLowerCase());
   }
 

@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import Axios from 'axios';
 import { fromPairs } from 'lodash';
 
-import { MerkleCache } from '~app-toolkit/helpers/merkle/merkle.cache';
+import { MerkleCache } from '~position/template/merkle.cache';
 import { Network } from '~types/network.interface';
 
 import { VOTIUM_DEFINITION } from '../votium.definition';

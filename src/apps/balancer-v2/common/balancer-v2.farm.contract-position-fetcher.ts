@@ -5,6 +5,7 @@ import { range } from 'lodash';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { ZERO_ADDRESS } from '~app-toolkit/constants/address';
+import { gqlFetch } from '~app-toolkit/helpers/the-graph.helper';
 import { isClaimable } from '~position/position.utils';
 import {
   GetDataPropsParams,
@@ -47,7 +48,7 @@ export abstract class BalancerV2FarmContractPositionFetcher extends SingleStakin
   }
 
   async getFarmAddresses() {
-    const gaugesResponse = await this.appToolkit.helpers.theGraphHelper.requestGraph<GaugesResponse>({
+    const gaugesResponse = await gqlFetch<GaugesResponse>({
       endpoint: this.subgraphUrl,
       query: GAUGES_QUERY,
     });

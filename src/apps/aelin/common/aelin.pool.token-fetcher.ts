@@ -3,6 +3,7 @@ import { ethers } from 'ethers';
 import { gql } from 'graphql-request';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
+import { gqlFetch } from '~app-toolkit/helpers/the-graph.helper';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import { GetUnderlyingTokensParams, GetDisplayPropsParams } from '~position/template/app-token.template.types';
 
@@ -38,10 +39,7 @@ export abstract class AelinPoolTokenFetcher extends AppTokenTemplatePositionFetc
   }
 
   async getAddresses() {
-    const data = await this.appToolkit.helpers.theGraphHelper.request<AelinPoolsResponse>({
-      endpoint: this.subgraphUrl,
-      query,
-    });
+    const data = await gqlFetch<AelinPoolsResponse>({ endpoint: this.subgraphUrl, query });
     return data.poolCreateds.map(v => v.id);
   }
 

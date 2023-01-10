@@ -3,6 +3,7 @@ import moment from 'moment';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
+import { gqlFetch } from '~app-toolkit/helpers/the-graph.helper';
 import { DollarDisplayItem, PercentageDisplayItem } from '~position/display.interface';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import {
@@ -72,7 +73,7 @@ export class EthereumPendleV2PoolTokenFetcher extends AppTokenTemplatePositionFe
   }
 
   async getDefinitions(): Promise<PendleV2MarketTokenDefinition[]> {
-    const marketsResponse = await this.appToolkit.helpers.theGraphHelper.request<MarketsQueryResponse>({
+    const marketsResponse = await gqlFetch<MarketsQueryResponse>({
       endpoint: PENDLE_V2_GRAPHQL_ENDPOINT,
       query: BACKEND_QUERIES.getMarkets,
       variables: { chainId: NETWORK_IDS[this.network] },

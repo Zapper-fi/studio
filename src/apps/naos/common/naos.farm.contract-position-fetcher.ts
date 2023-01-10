@@ -2,11 +2,11 @@ import { Inject } from '@nestjs/common';
 import { BigNumberish } from 'ethers';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
-import { RewardRateUnit } from '~app-toolkit/helpers/master-chef/master-chef.contract-position-helper';
 import {
   GetMasterChefDataPropsParams,
   GetMasterChefTokenBalancesParams,
   MasterChefTemplateContractPositionFetcher,
+  RewardRateUnit,
 } from '~position/template/master-chef.template.contract-position-fetcher';
 
 import { NaosContractFactory, NaosStakingPools } from '../contracts';

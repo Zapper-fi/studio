@@ -4,6 +4,7 @@ import { gql } from 'graphql-request';
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { buildPercentageDisplayItem } from '~app-toolkit/helpers/presentation/display-item.present';
 import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
+import { gqlFetch } from '~app-toolkit/helpers/the-graph.helper';
 import { StatsItem } from '~position/display.interface';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import {
@@ -81,7 +82,7 @@ export abstract class SushiswapKashiLendingTokenFetcher extends AppTokenTemplate
   }
 
   async getDefinitions(): Promise<SushiswapKashiLendingTokenDefinition[]> {
-    const pairsData = await this.appToolkit.helpers.theGraphHelper.request<KashiSubgraphPairsResponse>({
+    const pairsData = await gqlFetch<KashiSubgraphPairsResponse>({
       endpoint: this.subgraphUrl,
       query: kashiSubgraphPairsQuery,
       variables: { first: 500 },

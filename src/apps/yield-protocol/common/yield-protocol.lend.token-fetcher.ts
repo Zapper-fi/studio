@@ -5,6 +5,7 @@ import moment from 'moment';
 
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
+import { gqlFetch } from '~app-toolkit/helpers/the-graph.helper';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import {
   GetDataPropsParams,
@@ -103,7 +104,7 @@ export abstract class YieldProtocolLendTokenFetcher extends AppTokenTemplatePosi
   }
 
   async getDefinitions(): Promise<FyTokenDefinition[]> {
-    const { pools, seriesEntities } = await this.appToolkit.helpers.theGraphHelper.request<YieldRes>({
+    const { pools, seriesEntities } = await gqlFetch<YieldRes>({
       endpoint: this.subgraphUrl,
       query,
     });

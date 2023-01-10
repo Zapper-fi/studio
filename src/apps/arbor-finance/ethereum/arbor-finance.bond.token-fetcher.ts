@@ -3,6 +3,7 @@ import dayjs from 'dayjs';
 
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
+import { gqlFetch } from '~app-toolkit/helpers/the-graph.helper';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import {
   DefaultAppTokenDataProps,
@@ -40,8 +41,7 @@ export class EthereumArborFinanceBondTokenFetcher extends AppTokenTemplatePositi
   }
 
   async getDefinitions(): Promise<ArborFinanceBondTokenDefinition[]> {
-    const graphHelper = this.appToolkit.helpers.theGraphHelper;
-    const data = await graphHelper.requestGraph<BondHolders>({
+    const data = await gqlFetch<BondHolders>({
       endpoint: 'https://api.thegraph.com/subgraphs/name/alwaysbegrowing/arbor-v1',
       query: BONDS_QUERY,
     });

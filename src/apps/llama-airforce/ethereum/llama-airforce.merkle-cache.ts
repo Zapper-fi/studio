@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import Axios from 'axios';
 
-import { MerkleCache } from '~app-toolkit/helpers/merkle/merkle.cache';
+import { MerkleCache } from '~position/template/merkle.cache';
 import { Network } from '~types/network.interface';
 
 import { LLAMA_AIRFORCE_DEFINITION } from '../llama-airforce.definition';

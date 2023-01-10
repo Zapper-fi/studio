@@ -1,10 +1,11 @@
 import { Inject } from '@nestjs/common';
 import { gql } from 'graphql-request';
 
-import { drillBalance } from '~app-toolkit';
 import { APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { AppToolkit } from '~app-toolkit/app-toolkit.service';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
+import { drillBalance } from '~app-toolkit/helpers/drill-balance.helper';
+import { gqlFetch } from '~app-toolkit/helpers/the-graph.helper';
 import { DefaultDataProps } from '~position/display.interface';
 import { ContractPositionBalance } from '~position/position-balance.interface';
 import { MetaType } from '~position/position.interface';
@@ -70,7 +71,7 @@ export class EthereumWolfGameWoolPouchContractPositionFetcher extends CustomCont
       network: this.network,
       groupIds: [this.groupId],
     });
-    const result = await this.appToolKit.helpers.theGraphHelper.request<PouchesResult>({
+    const result = await gqlFetch<PouchesResult>({
       endpoint: 'https://api.thegraph.com/subgraphs/name/wolfgamedev/wolf-game',
       query: pouchesQuery,
       variables: { owner: address },

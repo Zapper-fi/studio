@@ -3,6 +3,7 @@ import Axios from 'axios';
 import { gql } from 'graphql-request';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
+import { gqlFetch } from '~app-toolkit/helpers/the-graph.helper';
 import { Cache } from '~cache/cache.decorator';
 import { Network } from '~types/network.interface';
 
@@ -47,7 +48,7 @@ export class TenderizeTokenDefinitionsResolver {
     ttl: 5 * 60, // 5 minutes
   })
   private async getVaultDefinitionsData(network: Network) {
-    const data = await this.appToolkit.helpers.theGraphHelper.request<TenderTokenFetcherResponse>({
+    const data = await gqlFetch<TenderTokenFetcherResponse>({
       endpoint: `https://api.thegraph.com/subgraphs/name/tenderize/tenderize-${network}`,
       query: TOKEN_QUERY,
     });
