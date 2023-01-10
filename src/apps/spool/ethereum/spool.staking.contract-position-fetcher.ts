@@ -7,6 +7,7 @@ import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import { buildDollarDisplayItem, buildNumberDisplayItem } from '~app-toolkit/helpers/presentation/display-item.present';
 import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
+import { gqlFetch } from '~app-toolkit/helpers/the-graph.helper';
 import { SpoolContractFactory } from '~apps/spool';
 import {
   REWARDS_QUERY,
@@ -58,7 +59,7 @@ export class EthereumSpoolStakingContractPositionFetcher extends ContractPositio
 
   async getTokenDefinitions() {
     const now = parseInt(String(new Date().getTime() / 1000));
-    const stakingRewards = await this.appToolkit.helpers.theGraphHelper.requestGraph<StakingReward>({
+    const stakingRewards = await gqlFetch<StakingReward>({
       endpoint: SUBGRAPH_API_BASE_URL,
       query: REWARDS_QUERY,
     });
@@ -128,7 +129,7 @@ export class EthereumSpoolStakingContractPositionFetcher extends ContractPositio
       ...rewardTokens.map(reward => multicall.wrap(staking).earned(reward.address, address)),
     ]);
 
-    const stakedSpool = await graphHelper.requestGraph<UserSpoolStaking>({
+    const stakedSpool = await graphHelper.request<UserSpoolStaking>({
       endpoint: SUBGRAPH_API_BASE_URL,
       query: SPOOL_STAKED_QUERY,
       variables: { address },

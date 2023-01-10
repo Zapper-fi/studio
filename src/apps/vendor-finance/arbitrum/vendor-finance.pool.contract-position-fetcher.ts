@@ -7,6 +7,7 @@ import {
   buildPercentageDisplayItem,
 } from '~app-toolkit/helpers/presentation/display-item.present';
 import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
+import { gqlFetch } from '~app-toolkit/helpers/the-graph.helper';
 import { DefaultDataProps } from '~position/display.interface';
 import { MetaType } from '~position/position.interface';
 import { isBorrowed } from '~position/position.utils';
@@ -57,7 +58,7 @@ export class ArbitrumVendorFinancePoolContractPositionFetcher extends ContractPo
   }
 
   async getDefinitions() {
-    const data = await this.appToolkit.helpers.theGraphHelper.requestGraph<VendorLendingPoolsGraphResponse>({
+    const data = await gqlFetch<VendorLendingPoolsGraphResponse>({
       endpoint: VENDOR_GRAPH_URL,
       query: lendingPoolsQuery,
     });
@@ -159,7 +160,7 @@ export class ArbitrumVendorFinancePoolContractPositionFetcher extends ContractPo
     // --! Lender logic !---
 
     // --- Borrower logic ----
-    const data = await this.appToolkit.helpers.theGraphHelper.requestGraph<VendorBorrowerGraphResponse>({
+    const data = await gqlFetch<VendorBorrowerGraphResponse>({
       endpoint: VENDOR_GRAPH_URL,
       query: borrowerInfosQuery(address),
     });

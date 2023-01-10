@@ -7,6 +7,7 @@ import { drillBalance } from '~app-toolkit';
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import { getImagesFromToken, getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
+import { gqlFetchAll } from '~app-toolkit/helpers/the-graph.helper';
 import { CacheOnInterval } from '~cache/cache-on-interval.decorator';
 import { ContractPositionBalance } from '~position/position-balance.interface';
 import { MetaType } from '~position/position.interface';
@@ -166,7 +167,7 @@ export class EthereumPolygonStakingContractPositionFetcher extends CustomContrac
   async getBalances(address: string): Promise<ContractPositionBalance<PolygonStakingDepositDataProps>[]> {
     const multicall = this.appToolkit.getMulticall(this.network);
 
-    const data = await this.appToolkit.helpers.theGraphHelper.gqlFetchAll<DelegatedMaticResponse>({
+    const data = await gqlFetchAll<DelegatedMaticResponse>({
       endpoint: GQL_ENDPOINT,
       query: DELEGATED_MATIC_QUERY,
       dataToSearch: 'delegators',

@@ -6,6 +6,7 @@ import moment from 'moment';
 import { drillBalance } from '~app-toolkit';
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { getImagesFromToken } from '~app-toolkit/helpers/presentation/image.present';
+import { gqlFetchAll } from '~app-toolkit/helpers/the-graph.helper';
 import { ContractType } from '~position/contract.interface';
 import { DefaultDataProps, WithMetaType } from '~position/display.interface';
 import {
@@ -55,7 +56,7 @@ export abstract class KeeperUnbondContractPositionFetcher extends CustomContract
   }
 
   async getDefinitions() {
-    const unbondData = await this.appToolkit.helpers.theGraphHelper.gqlFetchAll<KeeperUnbond>({
+    const unbondData = await gqlFetchAll<KeeperUnbond>({
       endpoint: SUBGRAPH_URL,
       query: GET_UNBONDS,
       variables: {},
@@ -90,7 +91,7 @@ export abstract class KeeperUnbondContractPositionFetcher extends CustomContract
       groupIds: [this.groupId],
     });
 
-    const userUnbondsData = await this.appToolkit.helpers.theGraphHelper.gqlFetchAll<KeeperUnbond>({
+    const userUnbondsData = await gqlFetchAll<KeeperUnbond>({
       endpoint: SUBGRAPH_URL,
       query: GET_USER_UNBONDS,
       variables: { address },

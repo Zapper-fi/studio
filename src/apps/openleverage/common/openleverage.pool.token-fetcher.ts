@@ -3,6 +3,7 @@ import { gql } from 'graphql-request';
 
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
+import { gqlFetch } from '~app-toolkit/helpers/the-graph.helper';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import {
   GetUnderlyingTokensParams,
@@ -42,7 +43,7 @@ export abstract class OpenleveragePoolTokenFetcher extends AppTokenTemplatePosit
   }
 
   async getAddresses() {
-    const data = await this.appToolkit.helpers.theGraphHelper.request<OpenLeveragePoolsResponse>({
+    const data = await gqlFetch<OpenLeveragePoolsResponse>({
       endpoint: this.subgraphUrl,
       query,
     });

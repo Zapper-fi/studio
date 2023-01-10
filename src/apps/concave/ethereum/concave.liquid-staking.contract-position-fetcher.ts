@@ -8,6 +8,7 @@ import moment from 'moment';
 import { drillBalance } from '~app-toolkit';
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
+import { gqlFetch } from '~app-toolkit/helpers/the-graph.helper';
 import { ContractType } from '~position/contract.interface';
 import { DefaultDataProps } from '~position/display.interface';
 import { ContractPositionBalance } from '~position/position-balance.interface';
@@ -108,7 +109,7 @@ export class EthereumConcaveLiquidStakingContractPositionFetcher extends CustomC
     const balanceRaw = await contract.balanceOf(address);
     if (Number(balanceRaw) === 0) return [];
 
-    const lockData = await this.appToolkit.helpers.theGraphHelper.requestGraph<ConcaveStakingV1LockData>({
+    const lockData = await gqlFetch<ConcaveStakingV1LockData>({
       endpoint: 'https://concave.hasura.app/v1/graphql',
       query: GET_STAKING_V1_LOCK_EVENTS,
       variables: { address: getAddress(address) },

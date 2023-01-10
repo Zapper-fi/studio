@@ -3,6 +3,7 @@ import { filter, range } from 'lodash';
 
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
+import { gqlFetch } from '~app-toolkit/helpers/the-graph.helper';
 import { isClaimable } from '~position/position.utils';
 import {
   GetTokenDefinitionsParams,
@@ -34,7 +35,7 @@ export class PolygonDystopiaStakingContractPositionFetcher extends SingleStaking
   }
 
   async getFarmAddresses() {
-    const data = await this.appToolkit.helpers.theGraphHelper.request<DystopiaQueryResponse>({
+    const data = await gqlFetch<DystopiaQueryResponse>({
       endpoint: 'https://api.thegraph.com/subgraphs/name/dystopia-exchange/dystopia',
       query: DYSTOPIA_QUERY,
     });

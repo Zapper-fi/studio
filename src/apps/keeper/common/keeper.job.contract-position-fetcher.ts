@@ -7,9 +7,14 @@ import 'moment-duration-format';
 
 import { drillBalance } from '~app-toolkit';
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
+import { gqlFetchAll } from '~app-toolkit/helpers/the-graph.helper';
 import { ContractPositionBalance } from '~position/position-balance.interface';
 import { MetaType } from '~position/position.interface';
-import { GetTokenDefinitionsParams, GetDataPropsParams, GetDisplayPropsParams } from '~position/template/contract-position.template.types';
+import {
+  GetTokenDefinitionsParams,
+  GetDataPropsParams,
+  GetDisplayPropsParams,
+} from '~position/template/contract-position.template.types';
 import { CustomContractPositionTemplatePositionFetcher } from '~position/template/custom-contract-position.template.position-fetcher';
 import { NETWORK_IDS } from '~types';
 
@@ -23,7 +28,7 @@ type KeeperJobRegistryApiResponse = {
   chainID: number;
   address: string;
   name: string;
-}[]
+}[];
 
 type KeeperJobDefinition = {
   address: string;
@@ -81,7 +86,7 @@ export abstract class KeeperJobContractPositionFetcher extends CustomContractPos
   }
 
   async getDefinitions() {
-    const jobData = await this.appToolkit.helpers.theGraphHelper.gqlFetchAll<KeeperJob>({
+    const jobData = await gqlFetchAll<KeeperJob>({
       endpoint: SUBGRAPH_URL,
       query: GET_JOBS,
       variables: {},
@@ -112,19 +117,15 @@ export abstract class KeeperJobContractPositionFetcher extends CustomContractPos
 
   async getLabel({
     definition,
-  }: GetDisplayPropsParams<
-    KeeperJobManager,
-    KeeperJobDataProps,
-    KeeperJobDefinition
-  >): Promise<string> {
-    const data = await Axios.get<KeeperJobRegistryApiResponse>(KEEP3R_JOB_NAME_API).then(
-      (v) => Object.values(v.data).map(job => ({ ...job, address: job.address.toLowerCase() }))
+  }: GetDisplayPropsParams<KeeperJobManager, KeeperJobDataProps, KeeperJobDefinition>): Promise<string> {
+    const data = await Axios.get<KeeperJobRegistryApiResponse>(KEEP3R_JOB_NAME_API).then(v =>
+      Object.values(v.data).map(job => ({ ...job, address: job.address.toLowerCase() })),
     );
     const filteredData = data.filter(job => job.chainID === NETWORK_IDS[this.network]);
 
     const foundJob = find(filteredData, { address: definition.address.toLowerCase() });
 
-    return foundJob && `${foundJob.name} Keep3r Job` || 'Keep3r Job';
+    return (foundJob && `${foundJob.name} Keep3r Job`) || 'Keep3r Job';
   }
 
   async getDataProps({
@@ -153,13 +154,13 @@ export abstract class KeeperJobContractPositionFetcher extends CustomContractPos
       groupIds: [this.groupId],
     });
 
-    const data = await Axios.get<KeeperJobRegistryApiResponse>(KEEP3R_JOB_NAME_API).then(
-      (v) => Object.values(v.data).map(job => ({ ...job, address: job.address.toLowerCase() }))
+    const data = await Axios.get<KeeperJobRegistryApiResponse>(KEEP3R_JOB_NAME_API).then(v =>
+      Object.values(v.data).map(job => ({ ...job, address: job.address.toLowerCase() })),
     );
 
     const filteredData = data.filter(job => job.chainID === NETWORK_IDS[this.network]);
 
-    const userJobsData = await this.appToolkit.helpers.theGraphHelper.gqlFetchAll<KeeperJob>({
+    const userJobsData = await gqlFetchAll<KeeperJob>({
       endpoint: SUBGRAPH_URL,
       query: GET_USER_JOBS,
       variables: { address },
@@ -183,7 +184,7 @@ export abstract class KeeperJobContractPositionFetcher extends CustomContractPos
 
       // Display Properties
       const foundJob = find(filteredData, { address: userJob.id.toLowerCase() });
-      const label = foundJob && `${foundJob.name} Keep3r Job` || 'Keep3r Job';
+      const label = (foundJob && `${foundJob.name} Keep3r Job`) || 'Keep3r Job';
       const secondaryLabel = '';
       const displayProps = { label, secondaryLabel };
 

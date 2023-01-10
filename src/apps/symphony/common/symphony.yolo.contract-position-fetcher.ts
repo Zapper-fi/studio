@@ -8,6 +8,7 @@ import { sumBy } from 'lodash';
 import { drillBalance } from '~app-toolkit';
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
+import { gqlFetch } from '~app-toolkit/helpers/the-graph.helper';
 import { DefaultDataProps } from '~position/display.interface';
 import { ContractPositionBalance } from '~position/position-balance.interface';
 import { MetaType } from '~position/position.interface';
@@ -86,7 +87,7 @@ export abstract class SymphonyYoloContractPositionFetcher extends CustomContract
       network: this.network,
     });
 
-    const openOrdersData = await this.appToolkit.helpers.theGraphHelper.requestGraph<UserOpenOrders>({
+    const openOrdersData = await gqlFetch<UserOpenOrders>({
       endpoint: this.subgraphUrl,
       query: USER_OPEN_ORDERS_QUERY,
       variables: { creator: address },

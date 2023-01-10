@@ -4,6 +4,7 @@ import { gql } from 'graphql-request';
 
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
+import { gqlFetch } from '~app-toolkit/helpers/the-graph.helper';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import {
   DefaultAppTokenDefinition,
@@ -73,7 +74,7 @@ export class OptimismLyraAvalonPoolTokenFetcher extends AppTokenTemplatePosition
       network: this.network,
     });
 
-    const marketsResponse = await this.appToolkit.helpers.theGraphHelper.requestGraph<QueryResponse>({
+    const marketsResponse = await gqlFetch<QueryResponse>({
       endpoint: 'https://api.lyra.finance/subgraph/optimism/v1/api',
       query: QUERY,
     });

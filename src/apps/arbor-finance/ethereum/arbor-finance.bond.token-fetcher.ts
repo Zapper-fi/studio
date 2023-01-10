@@ -41,7 +41,7 @@ export class EthereumArborFinanceBondTokenFetcher extends AppTokenTemplatePositi
 
   async getDefinitions(): Promise<ArborFinanceBondTokenDefinition[]> {
     const graphHelper = this.appToolkit.helpers.theGraphHelper;
-    const data = await graphHelper.requestGraph<BondHolders>({
+    const data = await graphHelper.request<BondHolders>({
       endpoint: 'https://api.thegraph.com/subgraphs/name/alwaysbegrowing/arbor-v1',
       query: BONDS_QUERY,
     });
