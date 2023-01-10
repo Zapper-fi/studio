@@ -4,11 +4,11 @@ import { BigNumberish } from 'ethers';
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { ZERO_ADDRESS } from '~app-toolkit/constants/address';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
-import { RewardRateUnit } from '~app-toolkit/helpers/master-chef/master-chef.contract-position-helper';
 import {
   GetMasterChefV2ExtraRewardTokenBalancesParams,
   GetMasterChefV2ExtraRewardTokenRewardRates,
   MasterChefV2TemplateContractPositionFetcher,
+  RewardRateUnit,
 } from '~position/template/master-chef-v2.template.contract-position-fetcher';
 import {
   GetMasterChefDataPropsParams,
