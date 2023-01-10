@@ -4,9 +4,9 @@ import { compact, merge, reduce, sumBy, uniqBy } from 'lodash';
 import moment from 'moment';
 import 'moment-duration-format';
 
-import { drillBalance } from '~app-toolkit';
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { ETH_ADDR_ALIAS, ZERO_ADDRESS } from '~app-toolkit/constants/address';
+import { drillBalance } from '~app-toolkit/helpers/drill-balance.helper';
 import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { gqlFetchAll } from '~app-toolkit/helpers/the-graph.helper';
 import { ContractPositionBalance } from '~position/position-balance.interface';

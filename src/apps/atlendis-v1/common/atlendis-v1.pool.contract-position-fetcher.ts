@@ -4,8 +4,8 @@ import { BigNumberish } from 'ethers';
 import { gql } from 'graphql-request';
 import { compact, merge } from 'lodash';
 
-import { drillBalance } from '~app-toolkit';
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
+import { drillBalance } from '~app-toolkit/helpers/drill-balance.helper';
 import { gqlFetch } from '~app-toolkit/helpers/the-graph.helper';
 import { ContractPositionBalance } from '~position/position-balance.interface';
 import { MetaType, Standard } from '~position/position.interface';

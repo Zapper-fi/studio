@@ -1,9 +1,9 @@
 import { gql } from 'graphql-request';
 import { chunk, compact } from 'lodash';
 
-import { drillBalance } from '~app-toolkit';
 import { ZERO_ADDRESS } from '~app-toolkit/constants/address';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
+import { drillBalance } from '~app-toolkit/helpers/drill-balance.helper';
 import { gqlFetch } from '~app-toolkit/helpers/the-graph.helper';
 import { AppTokenPositionBalance, RawAppTokenBalance } from '~position/position-balance.interface';
 import { isAppToken } from '~position/position.interface';

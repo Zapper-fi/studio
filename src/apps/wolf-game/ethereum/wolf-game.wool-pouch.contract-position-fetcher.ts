@@ -1,10 +1,10 @@
 import { Inject } from '@nestjs/common';
 import { gql } from 'graphql-request';
 
-import { drillBalance } from '~app-toolkit';
 import { APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { AppToolkit } from '~app-toolkit/app-toolkit.service';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
+import { drillBalance } from '~app-toolkit/helpers/drill-balance.helper';
 import { gqlFetch } from '~app-toolkit/helpers/the-graph.helper';
 import { DefaultDataProps } from '~position/display.interface';
 import { ContractPositionBalance } from '~position/position-balance.interface';

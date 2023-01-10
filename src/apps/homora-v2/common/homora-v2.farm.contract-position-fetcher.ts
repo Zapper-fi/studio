@@ -1,9 +1,9 @@
 import { Inject, NotImplementedException } from '@nestjs/common';
 import { compact, sumBy } from 'lodash';
 
-import { drillBalance } from '~app-toolkit';
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { ZERO_ADDRESS } from '~app-toolkit/constants/address';
+import { drillBalance } from '~app-toolkit/helpers/drill-balance.helper';
 import { Cache } from '~cache/cache.decorator';
 import { ContractPositionBalance } from '~position/position-balance.interface';
 import { MetaType } from '~position/position.interface';

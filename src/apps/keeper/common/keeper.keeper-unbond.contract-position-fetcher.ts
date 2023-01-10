@@ -3,8 +3,8 @@ import { BigNumberish } from 'ethers';
 import { compact, find, sumBy } from 'lodash';
 import moment from 'moment';
 
-import { drillBalance } from '~app-toolkit';
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
+import { drillBalance } from '~app-toolkit/helpers/drill-balance.helper';
 import { getImagesFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { gqlFetchAll } from '~app-toolkit/helpers/the-graph.helper';
 import { ContractType } from '~position/contract.interface';

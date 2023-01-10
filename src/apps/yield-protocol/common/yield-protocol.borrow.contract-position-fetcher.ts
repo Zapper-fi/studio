@@ -4,8 +4,8 @@ import { parseUnits } from 'ethers/lib/utils';
 import { gql } from 'graphql-request';
 import { compact, isEqual, sumBy, uniqWith } from 'lodash';
 
-import { drillBalance } from '~app-toolkit';
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
+import { drillBalance } from '~app-toolkit/helpers/drill-balance.helper';
 import { getImagesFromToken, getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { gqlFetch } from '~app-toolkit/helpers/the-graph.helper';
 import { ContractType } from '~position/contract.interface';
