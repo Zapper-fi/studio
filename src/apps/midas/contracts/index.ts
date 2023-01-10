@@ -4,6 +4,7 @@ import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { ContractFactory } from '~contract/contracts';
 import { Network } from '~types/network.interface';
 
+import { MidasCToken__factory } from './ethers';
 import { MidasPoolDirectory__factory } from './ethers';
 import { MidasPoolLens__factory } from './ethers';
 
@@ -16,6 +17,9 @@ export class MidasContractFactory extends ContractFactory {
     super((network: Network) => appToolkit.getNetworkProvider(network));
   }
 
+  midasCToken({ address, network }: ContractOpts) {
+    return MidasCToken__factory.connect(address, this.appToolkit.getNetworkProvider(network));
+  }
   midasPoolDirectory({ address, network }: ContractOpts) {
     return MidasPoolDirectory__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
@@ -24,5 +28,6 @@ export class MidasContractFactory extends ContractFactory {
   }
 }
 
+export type { MidasCToken } from './ethers';
 export type { MidasPoolDirectory } from './ethers';
 export type { MidasPoolLens } from './ethers';

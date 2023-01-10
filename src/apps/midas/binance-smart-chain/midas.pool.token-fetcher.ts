@@ -49,14 +49,29 @@ export class BinanceSmartChainMidasPoolTokenFetcher implements PositionFetcher<A
           const { comptroller, name } = await poolDirectoryContract.callStatic.pools(Number(poolId));
 
           let supply = 0;
+          let pricePerShare: number[] = [];
 
           const assets = await poolLensContract.callStatic.getPoolAssetsWithData(comptroller);
 
-          assets.map(value => {
-            if (value.totalSupply) {
-              supply += Number(utils.formatUnits(value.totalSupply, value.underlyingDecimals));
-            }
-          });
+          await Promise.all(
+            assets.map(async value => {
+              if (value.totalSupply) {
+                supply += Number(utils.formatUnits(value.totalSupply, value.underlyingDecimals));
+              }
+
+              const cTokenDecimals = 8; // all cTokens have 8 decimal places
+              const cTokenContract = this.midasContractFactory.midasCToken({
+                address: value.cToken,
+                network,
+              });
+              const underlyingDecimals = Number(value.underlyingDecimals);
+              const exchangeRateCurrent = Number(await cTokenContract.callStatic.exchangeRateCurrent());
+              const mantissa = 18 + underlyingDecimals - cTokenDecimals;
+              const oneCTokenInUnderlying = exchangeRateCurrent / Math.pow(10, mantissa);
+
+              pricePerShare = [...pricePerShare, oneCTokenInUnderlying];
+            }),
+          );
 
           const token: AppTokenPosition = {
             type: ContractType.APP_TOKEN,
@@ -74,7 +89,7 @@ export class BinanceSmartChainMidasPoolTokenFetcher implements PositionFetcher<A
             },
             appId,
             groupId,
-            pricePerShare: 0,
+            pricePerShare: pricePerShare,
           };
 
           return token;
