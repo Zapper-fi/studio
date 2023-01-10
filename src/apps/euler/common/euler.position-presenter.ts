@@ -1,16 +1,9 @@
-import { Injectable } from '@nestjs/common';
-
+import { PresenterTemplate } from '~app-toolkit/decorators/presenter-template.decorator';
 import { PresentationConfig } from '~app/app.interface';
 import { PositionPresenterTemplate } from '~position/template/position-presenter.template';
-import { Network } from '~types';
 
-import EULER_DEFINITION from '../euler.definition';
-
-@Injectable()
+@PresenterTemplate()
 export class EthereumEulerPositionPresenter extends PositionPresenterTemplate {
-  appId = EULER_DEFINITION.id;
-  network = Network.ETHEREUM_MAINNET;
-
   explorePresentationConfig?: PresentationConfig = {
     tabs: [
       {
