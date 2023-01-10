@@ -51,7 +51,7 @@ export class BeefyVaultTokenDefinitionsResolver {
 
   async getVaultDefinitions(network: Network) {
     const definitionsDataRaw = await this.getVaultDefinitionsData(network);
-    const definitionsData = definitionsDataRaw.filter(x => x.status != 'paused' && x.tokenAddress);
+    const definitionsData = definitionsDataRaw.filter(x => x.tokenAddress);
 
     const vaultDefinitions = definitionsData.map(t => {
       return {

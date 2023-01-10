@@ -1,12 +1,12 @@
-import { Register } from '~app-toolkit/decorators';
+import { Module } from '@nestjs/common';
+
 import { AbstractApp } from '~app/app.dynamic-module';
 
 import { ArbitrumVendorFinancePoolContractPositionFetcher } from './arbitrum/vendor-finance.pool.contract-position-fetcher';
 import { VendorFinanceContractFactory } from './contracts';
-import { VendorFinanceAppDefinition, VENDOR_FINANCE_DEFINITION } from './vendor-finance.definition';
+import { VendorFinanceAppDefinition } from './vendor-finance.definition';
 
-@Register.AppModule({
-  appId: VENDOR_FINANCE_DEFINITION.id,
+@Module({
   providers: [
     ArbitrumVendorFinancePoolContractPositionFetcher,
     VendorFinanceAppDefinition,

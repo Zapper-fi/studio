@@ -1,4 +1,5 @@
-import { Register } from '~app-toolkit/decorators';
+import { Module } from '@nestjs/common';
+
 import { AbstractApp } from '~app/app.dynamic-module';
 
 import { PieDaoContractFactory } from './contracts';
@@ -6,10 +7,9 @@ import { EthereumPieDaoEDoughTokenFetcher } from './ethereum/pie-dao.e-dough.tok
 import { EthereumPieDaoFarmMasterChefContractPositionFetcher } from './ethereum/pie-dao.farm-master-chef.contract-position-fetcher';
 import { EthereumPieDaoFarmSingleStakingContractPositionFetcher } from './ethereum/pie-dao.farm-single-staking.contract-position-fetcher';
 import { EthereumPieDaoVotingEscrowContractPositionFether } from './ethereum/pie-dao.voting-escrow.contract-position-fetcher';
-import { PieDaoAppDefinition, PIE_DAO_DEFINITION } from './pie-dao.definition';
+import { PieDaoAppDefinition } from './pie-dao.definition';
 
-@Register.AppModule({
-  appId: PIE_DAO_DEFINITION.id,
+@Module({
   providers: [
     PieDaoAppDefinition,
     PieDaoContractFactory,

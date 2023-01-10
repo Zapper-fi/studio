@@ -22,6 +22,12 @@ export const CONCENTRATOR_DEFINITION = appDefinition({
       label: 'aFXS',
     },
 
+    afrxeth: {
+      id: 'afrxeth',
+      type: GroupType.TOKEN,
+      label: 'afrxETH',
+    },
+
     poolcrv: {
       id: 'poolcrv',
       type: GroupType.POSITION,
@@ -40,10 +46,22 @@ export const CONCENTRATOR_DEFINITION = appDefinition({
       label: 'aFXS Vaults',
     },
 
+    poolfrxeth: {
+      id: 'poolfrxeth',
+      type: GroupType.POSITION,
+      label: 'afrxETH Vaults',
+    },
+
     ve: {
       id: 've',
       type: GroupType.POSITION,
       label: 'Voting Escrow',
+    },
+
+    vesting: {
+      id: 'vesting',
+      type: GroupType.POSITION,
+      label: 'Vesting',
     },
   },
 

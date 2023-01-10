@@ -9,26 +9,44 @@ export const POLYNOMIAL_DEFINITION = appDefinition({
   description:
     'Polynomial automates financial derivative strategies to create products that deliver passive yield on various assets.',
   url: 'https://earn.polynomial.fi/',
-  groups: {
-    vaults: {
-      id: 'vaults',
-      type: GroupType.TOKEN,
-      label: 'Vaults',
-    },
-  },
   tags: [AppTag.ASSET_MANAGEMENT, AppTag.OPTIONS],
   keywords: [],
+
   links: {
     discord: 'https://discord.com/invite/polynomial',
     medium: 'https://medium.com/polynomial-protocol',
     twitter: 'https://twitter.com/polynomialfi',
   },
 
+  groups: {
+    callSellingVault: {
+      id: 'call-selling-vault',
+      type: GroupType.TOKEN,
+      label: 'Call Selling Vaults',
+    },
+
+    callSellingVaultQueue: {
+      id: 'call-selling-vault-queue',
+      type: GroupType.POSITION,
+      label: 'Call Selling Vault Queue',
+    },
+
+    putSellingVault: {
+      id: 'put-selling-vault',
+      type: GroupType.TOKEN,
+      label: 'Put Selling Vaults',
+    },
+
+    putSellingVaultQueue: {
+      id: 'put-selling-vault-queue',
+      type: GroupType.POSITION,
+      label: 'Put Selling Vault Queue',
+    },
+  },
+
   supportedNetworks: {
     [Network.OPTIMISM_MAINNET]: [AppAction.VIEW],
   },
-
-  primaryColor: '#fff',
 });
 
 @Register.AppDefinition(POLYNOMIAL_DEFINITION.id)
@@ -37,5 +55,3 @@ export class PolynomialAppDefinition extends AppDefinition {
     super(POLYNOMIAL_DEFINITION);
   }
 }
-
-export default POLYNOMIAL_DEFINITION;

@@ -8,6 +8,7 @@ export type { TraderJoeChefV2Rewarder } from './TraderJoeChefV2Rewarder';
 export type { TraderJoeChefV3 } from './TraderJoeChefV3';
 export type { TraderJoeChefV3Rewarder } from './TraderJoeChefV3Rewarder';
 export type { TraderJoeStableStaking } from './TraderJoeStableStaking';
+export type { TraderJoeVeJoe } from './TraderJoeVeJoe';
 export type { TraderJoeVeJoeStaking } from './TraderJoeVeJoeStaking';
 export type { TraderJoeXJoe } from './TraderJoeXJoe';
 export * as factories from './factories';
@@ -19,4 +20,5 @@ export { TraderJoeChefV3Rewarder__factory } from './factories/TraderJoeChefV3Rew
 export { TraderJoeChefV3__factory } from './factories/TraderJoeChefV3__factory';
 export { TraderJoeStableStaking__factory } from './factories/TraderJoeStableStaking__factory';
 export { TraderJoeVeJoeStaking__factory } from './factories/TraderJoeVeJoeStaking__factory';
+export { TraderJoeVeJoe__factory } from './factories/TraderJoeVeJoe__factory';
 export { TraderJoeXJoe__factory } from './factories/TraderJoeXJoe__factory';

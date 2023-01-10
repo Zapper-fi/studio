@@ -17,6 +17,12 @@ export const HAKUSWAP_DEFINITION = appDefinition({
       label: 'Pools',
     },
 
+    xHaku: {
+      id: 'x-haku',
+      type: GroupType.TOKEN,
+      label: 'xHaku',
+    },
+
     farm: {
       id: 'farm',
       type: GroupType.POSITION,

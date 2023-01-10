@@ -1,12 +1,12 @@
-import { Register } from '~app-toolkit/decorators';
+import { Module } from '@nestjs/common';
+
 import { AbstractApp } from '~app/app.dynamic-module';
 
-import { ConcaveAppDefinition, CONCAVE_DEFINITION } from './concave.definition';
+import { ConcaveAppDefinition } from './concave.definition';
 import { ConcaveContractFactory } from './contracts';
 import { EthereumConcaveLiquidStakingContractPositionFetcher } from './ethereum/concave.liquid-staking.contract-position-fetcher';
 
-@Register.AppModule({
-  appId: CONCAVE_DEFINITION.id,
+@Module({
   providers: [
     ConcaveAppDefinition,
     ConcaveContractFactory,

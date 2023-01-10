@@ -14,7 +14,7 @@ import {
 import { GetTokenDefinitionsParams } from '~position/template/contract-position.template.types';
 
 import { UnipilotContractFactory, UnipilotVault } from '../contracts';
-import { UnipilotVaultAPYHelper } from '../helpers/unipilot-vault.apy.helper';
+import { UnipilotVaultAPYHelper } from './unipilot-vault.apy.helper';
 import { UnipilotVaultDefinition } from '../utils/generalTypes';
 
 import { UnipilotVaultDefinitionsResolver } from './unipilot.vault-definition-resolver';

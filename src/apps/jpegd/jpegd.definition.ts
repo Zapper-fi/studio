@@ -19,10 +19,16 @@ export const JPEGD_DEFINITION = appDefinition({
   },
 
   groups: {
-    pool: {
-      id: 'pool',
+    chefV1: {
+      id: 'chef-v1',
       type: GroupType.POSITION,
-      label: 'Pools',
+      label: 'Staking',
+    },
+
+    chefV2: {
+      id: 'chef-v2',
+      type: GroupType.POSITION,
+      label: 'Staking',
     },
 
     bond: {

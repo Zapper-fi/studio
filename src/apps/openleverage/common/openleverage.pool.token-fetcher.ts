@@ -12,7 +12,8 @@ import {
 } from '~position/template/app-token.template.types';
 
 import { OpenleverageContractFactory, OpenleverageLpool } from '../contracts';
-import { OpenleveragePoolAPYHelper } from '../helpers/openleverage-pool.apy-helper';
+
+import { OpenleveragePoolAPYHelper } from './openleverage-pool.apy-helper';
 
 type OpenLeveragePoolsResponse = {
   pools: {

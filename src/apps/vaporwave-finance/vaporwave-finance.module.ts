@@ -1,14 +1,14 @@
-import { Register } from '~app-toolkit/decorators';
+import { Module } from '@nestjs/common';
+
 import { AbstractApp } from '~app/app.dynamic-module';
 
 import { AuroraVaporwaveFinanceFarmContractPositionFetcher } from './aurora/vaporwave-finance.farm.contract-position-fetcher';
 import { AuroraVaporwaveFinanceVaultTokenFetcher } from './aurora/vaporwave-finance.vault.token-fetcher';
 import { VaporwaveFinanceVaultDefinitionsResolver } from './common/vaporwave-finance.vault.token-definitions-resolver';
 import { VaporwaveFinanceContractFactory } from './contracts';
-import { VaporwaveFinanceAppDefinition, VAPORWAVE_FINANCE_DEFINITION } from './vaporwave-finance.definition';
+import { VaporwaveFinanceAppDefinition } from './vaporwave-finance.definition';
 
-@Register.AppModule({
-  appId: VAPORWAVE_FINANCE_DEFINITION.id,
+@Module({
   providers: [
     VaporwaveFinanceAppDefinition,
     VaporwaveFinanceContractFactory,

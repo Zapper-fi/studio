@@ -60,12 +60,21 @@ export class BalanceService {
 
     const addressBalancePairs = await Promise.all(
       addresses.map(async address => {
-        const balances = await Promise.all(balanceEnabledTemplates.map(template => template.getBalances(address)));
-        const presentedBalances = await this.balancePresentationService.presentTemplates({
+        const balances = await Promise.all(balanceEnabledTemplates.map(template => template.getBalances(address))).then(
+          v => v.flat(),
+        );
+
+        const dataProps = await this.balancePresentationService.balanceDataProps({
           appId,
           network,
           address,
-          balances: balances.flat(),
+        });
+
+        const presentedBalances = await this.balancePresentationService.presentTemplates({
+          appId,
+          network,
+          balances,
+          dataProps,
         });
         return [address, presentedBalances];
       }),
@@ -118,12 +127,10 @@ export class BalanceService {
           ),
         ]);
 
-        const preprocessed = [...tokenBalances.flat(), ...contractPositionBalances.flat()];
+        const balances = [...tokenBalances.flat(), ...contractPositionBalances.flat()];
         const presentedBalances = await this.balancePresentationService.present({
           appId,
-          network,
-          address,
-          balances: preprocessed,
+          balances,
         });
         return [address, presentedBalances];
       }),

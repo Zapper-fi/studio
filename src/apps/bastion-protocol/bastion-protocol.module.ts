@@ -1,4 +1,5 @@
-import { Register } from '~app-toolkit/decorators';
+import { Module } from '@nestjs/common';
+
 import { AbstractApp } from '~app/app.dynamic-module';
 
 import { AuroraBastionProtocolAuroraEcosystemBorrowContractPositionFetcher } from './aurora/bastion-protocol.aurora-ecosystem-borrow.contract-position-fetcher';
@@ -11,11 +12,10 @@ import { AuroraBastionProtocolPoolTokenFetcher } from './aurora/bastion-protocol
 import { AuroraBastionProtocolPositionPresenter } from './aurora/bastion-protocol.position-presenter';
 import { AuroraBastionProtocolStakedNearBorrowContractPositionFetcher } from './aurora/bastion-protocol.staked-near-borrow.contract-position-fetcher';
 import { AuroraBastionProtocolStakedNearSupplyTokenFetcher } from './aurora/bastion-protocol.staked-near-supply.token-fetcher';
-import { BastionProtocolAppDefinition, BASTION_PROTOCOL_DEFINITION } from './bastion-protocol.definition';
+import { BastionProtocolAppDefinition } from './bastion-protocol.definition';
 import { BastionProtocolContractFactory } from './contracts';
 
-@Register.AppModule({
-  appId: BASTION_PROTOCOL_DEFINITION.id,
+@Module({
   providers: [
     BastionProtocolAppDefinition,
     BastionProtocolContractFactory,

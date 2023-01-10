@@ -1,12 +1,12 @@
-import { Register } from '~app-toolkit/decorators';
+import { Module } from '@nestjs/common';
+
 import { AbstractApp } from '~app/app.dynamic-module';
 
 import { SideshiftContractFactory } from './contracts';
 import { EthereumSideshiftSvxaiTokenFetcher } from './ethereum/sideshift.svxai.token-fetcher';
-import { SideshiftAppDefinition, SIDESHIFT_DEFINITION } from './sideshift.definition';
+import { SideshiftAppDefinition } from './sideshift.definition';
 
-@Register.AppModule({
-  appId: SIDESHIFT_DEFINITION.id,
+@Module({
   providers: [EthereumSideshiftSvxaiTokenFetcher, SideshiftAppDefinition, SideshiftContractFactory],
 })
 export class SideshiftAppModule extends AbstractApp() {}
