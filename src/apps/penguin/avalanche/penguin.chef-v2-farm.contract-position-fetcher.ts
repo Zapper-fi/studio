@@ -8,11 +8,11 @@ import {
   GetMasterChefV2ExtraRewardTokenBalancesParams,
   GetMasterChefV2ExtraRewardTokenRewardRates,
   MasterChefV2TemplateContractPositionFetcher,
-  RewardRateUnit,
 } from '~position/template/master-chef-v2.template.contract-position-fetcher';
 import {
   GetMasterChefDataPropsParams,
   GetMasterChefTokenBalancesParams,
+  RewardRateUnit,
 } from '~position/template/master-chef.template.contract-position-fetcher';
 
 import { PenguinChefV2, PenguinContractFactory, PenguinExtraRewarder } from '../contracts';

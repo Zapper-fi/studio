@@ -116,7 +116,6 @@ export class EthereumSpoolStakingContractPositionFetcher extends ContractPositio
     contractPosition,
     multicall,
   }: GetTokenBalancesParams<SpoolStaking, SpoolStakingDataProps>) {
-    const graphHelper = this.appToolkit.helpers.theGraphHelper;
     const suppliedToken = contractPosition.tokens.find(isSupplied)!;
     const rewardTokens = contractPosition.tokens.filter(isClaimable);
 
@@ -129,7 +128,7 @@ export class EthereumSpoolStakingContractPositionFetcher extends ContractPositio
       ...rewardTokens.map(reward => multicall.wrap(staking).earned(reward.address, address)),
     ]);
 
-    const stakedSpool = await graphHelper.request<UserSpoolStaking>({
+    const stakedSpool = await gqlFetch<UserSpoolStaking>({
       endpoint: SUBGRAPH_API_BASE_URL,
       query: SPOOL_STAKED_QUERY,
       variables: { address },
