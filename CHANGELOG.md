@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.359.1](https://github.com/Zapper-fi/studio/compare/v0.359.0...v0.359.1) (2023-01-10)
+
+
+### Bug Fixes
+
+* **build:** Remove cli from include ([453028f](https://github.com/Zapper-fi/studio/commit/453028f2a237306af6abfafcaae31151f73a5b4b))
+
 ## [0.359.0](https://github.com/Zapper-fi/studio/compare/v0.358.0...v0.359.0) (2023-01-10)
 
 
