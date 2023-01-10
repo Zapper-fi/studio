@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.362.0](https://github.com/Zapper-fi/studio/compare/v0.361.1...v0.362.0) (2023-01-10)
+
+
+### Features
+
+* midas integration on binance ([#2007](https://github.com/Zapper-fi/studio/issues/2007)) ([dbcf218](https://github.com/Zapper-fi/studio/commit/dbcf218eee1b773517238ab407ae211c3bf02bb5))
+
 ## [0.361.1](https://github.com/Zapper-fi/studio/compare/v0.361.0...v0.361.1) (2023-01-10)
 
 
