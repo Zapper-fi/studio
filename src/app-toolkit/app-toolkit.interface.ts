@@ -15,8 +15,6 @@ import {
 import { BaseToken } from '~position/token.interface';
 import { Network } from '~types/network.interface';
 
-import { AppToolkitHelperRegistry } from './app-toolkit.helpers';
-
 export const APP_TOOLKIT = Symbol('APP_TOOLKIT');
 
 export interface IAppToolkit {
@@ -64,8 +62,6 @@ export interface IAppToolkit {
   setManyToCache<T = any>(entries: [string, T][], ttl?: number): Promise<void>;
 
   // Global Helpers
-
-  get helpers(): AppToolkitHelperRegistry;
 
   getBigNumber(source: BigNumberJS.Value | ethers.BigNumber): BigNumberJS;
 }

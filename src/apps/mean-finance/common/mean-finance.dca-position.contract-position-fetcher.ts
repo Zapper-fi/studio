@@ -4,10 +4,11 @@ import { compact, merge, reduce, sumBy, uniqBy } from 'lodash';
 import moment from 'moment';
 import 'moment-duration-format';
 
-import { drillBalance } from '~app-toolkit';
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { ETH_ADDR_ALIAS, ZERO_ADDRESS } from '~app-toolkit/constants/address';
+import { drillBalance } from '~app-toolkit/helpers/drill-balance.helper';
 import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
+import { gqlFetchAll } from '~app-toolkit/helpers/the-graph.helper';
 import { ContractPositionBalance } from '~position/position-balance.interface';
 import { MetaType, Standard } from '~position/position.interface';
 import {
@@ -64,7 +65,7 @@ export abstract class MeanFinanceDcaPositionContractPositionFetcher extends Cust
   async getDefinitions() {
     const allPositions = await Promise.all(
       this.hubs.map(async ({ tokenAddress, hubAddress, subgraphUrl }) => {
-        const positionData = await this.appToolkit.helpers.theGraphHelper.gqlFetchAll<MeanFinancePosition>({
+        const positionData = await gqlFetchAll<MeanFinancePosition>({
           endpoint: subgraphUrl,
           query: GET_POSITIONS,
           variables: {},
@@ -145,7 +146,7 @@ export abstract class MeanFinanceDcaPositionContractPositionFetcher extends Cust
 
     const allUserPositions = await Promise.all(
       this.hubs.map(async ({ transformerAddress, subgraphUrl }) => {
-        const userPositionsData = await this.appToolkit.helpers.theGraphHelper.gqlFetchAll<MeanFinancePosition>({
+        const userPositionsData = await gqlFetchAll<MeanFinancePosition>({
           endpoint: subgraphUrl,
           query: GET_USER_POSITIONS,
           variables: { address },

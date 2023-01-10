@@ -2,6 +2,7 @@ import { Inject, Injectable } from '@nestjs/common';
 import { gql } from 'graphql-request';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
+import { gqlFetch } from '~app-toolkit/helpers/the-graph.helper';
 import { Network } from '~types/network.interface';
 
 export const getTokensQuery = gql`
@@ -112,7 +113,7 @@ export class LlamapayStreamApiClient {
   constructor(@Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit) {}
 
   async getTokens() {
-    const tokensResponse = await this.appToolkit.helpers.theGraphHelper.request<LlamapayTokensResponse>({
+    const tokensResponse = await gqlFetch<LlamapayTokensResponse>({
       endpoint: 'https://api.thegraph.com/subgraphs/name/nemusonaneko/llamapay-mainnet',
       query: getTokensQuery,
     });
@@ -124,7 +125,7 @@ export class LlamapayStreamApiClient {
   }
 
   async getStreams(address: string, _network: Network) {
-    const streamsResponse = await this.appToolkit.helpers.theGraphHelper.request<LlamapayStreamsResponse>({
+    const streamsResponse = await gqlFetch<LlamapayStreamsResponse>({
       endpoint: 'https://api.thegraph.com/subgraphs/name/nemusonaneko/llamapay-mainnet',
       query: getStreamsQuery,
       variables: { id: address, network: _network },
@@ -134,13 +135,11 @@ export class LlamapayStreamApiClient {
   }
 
   async getVestingEscrows(address: string, _network: Network) {
-    const vestingEscrowsResponse = await this.appToolkit.helpers.theGraphHelper.request<LlamapayVestingEscrowsResponse>(
-      {
-        endpoint: 'https://api.thegraph.com/subgraphs/name/nemusonaneko/llamapay-vesting-mainnet',
-        query: getVestingEscrowsQuery,
-        variables: { id: address, network: _network },
-      },
-    );
+    const vestingEscrowsResponse = await gqlFetch<LlamapayVestingEscrowsResponse>({
+      endpoint: 'https://api.thegraph.com/subgraphs/name/nemusonaneko/llamapay-vesting-mainnet',
+      query: getVestingEscrowsQuery,
+      variables: { id: address, network: _network },
+    });
 
     return vestingEscrowsResponse.vestingEscrows ?? [];
   }

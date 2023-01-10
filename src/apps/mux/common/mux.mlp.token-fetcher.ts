@@ -6,6 +6,7 @@ import { compact } from 'lodash';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { ZERO_ADDRESS } from '~app-toolkit/constants/address';
+import { gqlFetch } from '~app-toolkit/helpers/the-graph.helper';
 import { Erc20 } from '~contract/contracts';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import {
@@ -76,7 +77,7 @@ export abstract class MuxMlpTokenFetcher extends AppTokenTemplatePositionFetcher
   async getUnderlyingTokenDefinitions({
     tokenLoader,
   }: GetUnderlyingTokensParams<Erc20, DefaultAppTokenDefinition>): Promise<UnderlyingTokenDefinition[]> {
-    const response = await this.appToolkit.helpers.theGraphHelper.request<TokensResponse>({
+    const response = await gqlFetch<TokensResponse>({
       endpoint: this.subgraphUrl,
       query: ASSETS_TOKENS_QUERY,
     });

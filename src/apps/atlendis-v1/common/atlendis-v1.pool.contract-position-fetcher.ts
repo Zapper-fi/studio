@@ -4,8 +4,9 @@ import { BigNumberish } from 'ethers';
 import { gql } from 'graphql-request';
 import { compact, merge } from 'lodash';
 
-import { drillBalance } from '~app-toolkit';
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
+import { drillBalance } from '~app-toolkit/helpers/drill-balance.helper';
+import { gqlFetch } from '~app-toolkit/helpers/the-graph.helper';
 import { ContractPositionBalance } from '~position/position-balance.interface';
 import { MetaType, Standard } from '~position/position.interface';
 import {
@@ -100,7 +101,7 @@ export abstract class AtlendisV1PoolContractPositionFetcher extends CustomContra
   }
 
   async getDefinitions(): Promise<AtlendisV1PoolDefinition[]> {
-    const data = await this.appToolkit.helpers.theGraphHelper.request<GetPoolResponse>({
+    const data = await gqlFetch<GetPoolResponse>({
       endpoint: this.subgraphUrl,
       query: GET_POOLS_QUERY,
     });
@@ -138,7 +139,7 @@ export abstract class AtlendisV1PoolContractPositionFetcher extends CustomContra
   async getBalances(address: string): Promise<ContractPositionBalance<AtlendisV1PoolDataProps>[]> {
     const multicall = this.appToolkit.getMulticall(this.network);
 
-    const userPositionsData = await this.appToolkit.helpers.theGraphHelper.request<GetUserPositionsResponse>({
+    const userPositionsData = await gqlFetch<GetUserPositionsResponse>({
       endpoint: this.subgraphUrl,
       query: GET_USER_POSITIONS,
       variables: { address },

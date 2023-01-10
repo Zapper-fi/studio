@@ -1,6 +1,7 @@
 import { Inject, Injectable } from '@nestjs/common';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
+import { gqlFetch } from '~app-toolkit/helpers/the-graph.helper';
 import { Cache } from '~cache/cache.decorator';
 
 import { REN_DEFINITION } from '../ren.definition';
@@ -17,7 +18,7 @@ export class RenApiClient {
     ttl: 5 * 60, // 5 minutes
   })
   async getDarknodeAssets() {
-    const data = await this.appToolkit.helpers.theGraphHelper.requestGraph<GetAssetsResponse>({
+    const data = await gqlFetch<GetAssetsResponse>({
       endpoint: 'https://api.thegraph.com/subgraphs/name/renproject/renvm',
       query: GET_ASSETS_QUERY,
     });
@@ -31,7 +32,7 @@ export class RenApiClient {
     ttl: 5 * 60, // 5 minutes
   })
   async getDarknodeBalance(address: string) {
-    const data = await this.appToolkit.helpers.theGraphHelper.requestGraph<GetDarknodesResponse>({
+    const data = await gqlFetch<GetDarknodesResponse>({
       endpoint: 'https://api.thegraph.com/subgraphs/name/renproject/renvm',
       query: GET_DARKNODES_QUERY,
       variables: {

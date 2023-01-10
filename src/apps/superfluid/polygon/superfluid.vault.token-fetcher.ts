@@ -3,6 +3,7 @@ import { gql } from 'graphql-request';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
+import { gqlFetch } from '~app-toolkit/helpers/the-graph.helper';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import { GetUnderlyingTokensParams } from '~position/template/app-token.template.types';
 
@@ -50,7 +51,7 @@ export class PolygonSuperfluidVaultTokenFetcher extends AppTokenTemplatePosition
 
   async getAddresses(): Promise<string[]> {
     const subgraphUrl = 'https://api.thegraph.com/subgraphs/name/superfluid-finance/superfluid-matic';
-    const tokenData = await this.appToolkit.helpers.theGraphHelper.request<TokensResponse>({
+    const tokenData = await gqlFetch<TokensResponse>({
       endpoint: subgraphUrl,
       query: ALL_TOKENS_QUERY,
     });

@@ -5,6 +5,7 @@ import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import { buildDollarDisplayItem } from '~app-toolkit/helpers/presentation/display-item.present';
 import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
+import { gqlFetch } from '~app-toolkit/helpers/the-graph.helper';
 import { DefaultDataProps } from '~position/display.interface';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import {
@@ -52,7 +53,7 @@ export class PolygonDystopiaPairsTokenFetcher extends AppTokenTemplatePositionFe
   }
 
   async getAddresses() {
-    const data = await this.appToolkit.helpers.theGraphHelper.request<DystopiaQueryResponse>({
+    const data = await gqlFetch<DystopiaQueryResponse>({
       endpoint: 'https://api.thegraph.com/subgraphs/name/dystopia-exchange/dystopia',
       query: DYSTOPIA_QUERY,
     });

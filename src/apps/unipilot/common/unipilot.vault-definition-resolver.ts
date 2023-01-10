@@ -1,6 +1,7 @@
 import { Inject, Injectable } from '@nestjs/common';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
+import { gqlFetch } from '~app-toolkit/helpers/the-graph.helper';
 import { Cache } from '~cache/cache.decorator';
 import { Network } from '~types/network.interface';
 
@@ -19,7 +20,7 @@ export class UnipilotVaultDefinitionsResolver {
   private async getVaultDefinitionsData(network: Network) {
     const Query = network === Network.ETHEREUM_MAINNET ? UNIPILOT_VAULTS : UNIPILOT_VAULTS_POLYGON;
 
-    const data = await this.appToolkit.helpers.theGraphHelper.request<UnipilotVaultFetcherResponse>({
+    const data = await gqlFetch<UnipilotVaultFetcherResponse>({
       endpoint: SUBGRAPH_ENDPOINTS[network].stats,
       query: Query,
       variables: {
