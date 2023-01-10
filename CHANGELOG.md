@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.361.1](https://github.com/Zapper-fi/studio/compare/v0.361.0...v0.361.1) (2023-01-10)
+
+
+### Bug Fixes
+
+* **apps:** Cleanup deprecated apps ([#2090](https://github.com/Zapper-fi/studio/issues/2090)) ([5a4492d](https://github.com/Zapper-fi/studio/commit/5a4492d769e60fd2be273a8ee0b08ace502a751c))
+
 ## [0.361.0](https://github.com/Zapper-fi/studio/compare/v0.360.0...v0.361.0) (2023-01-10)
 
 
