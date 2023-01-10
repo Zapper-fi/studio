@@ -41,12 +41,8 @@ export class ArbitrumUmamiFinanceMarinateUmamiTokenFetcher extends AppTokenTempl
     return [{ address: '0x1622bf67e6e5747b81866fe0b85178a93c7f86e3', network: this.network }];
   }
 
-  async getReserves({ appToken }: GetDataPropsParams<UmamiFinanceMarinate>) {
-    return [Number(appToken.pricePerShare[0]) * appToken.supply];
-  }
-
-  async getLiquidity({ appToken }: GetDataPropsParams<UmamiFinanceMarinate>) {
-    return appToken.supply * appToken.price;
+  async getPricePerShare() {
+    return [1];
   }
 
   async getApy(_params: GetDataPropsParams<UmamiFinanceMarinate>) {

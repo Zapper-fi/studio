@@ -133,7 +133,8 @@ export class FantomTarotSupplyTokenFetcher extends AppTokenTemplatePositionFetch
 
   async getPricePerShare({ contract, appToken }: GetPricePerShareParams<TarotBorrowable>) {
     const exchangeRateRaw = await contract.callStatic.exchangeRate();
-    return Number(exchangeRateRaw) / 10 ** appToken.decimals;
+    const exchangeRate = Number(exchangeRateRaw) / 10 ** appToken.decimals;
+    return [exchangeRate];
   }
 
   async getLabel({

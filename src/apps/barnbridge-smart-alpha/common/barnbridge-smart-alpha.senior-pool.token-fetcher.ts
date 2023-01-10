@@ -83,7 +83,7 @@ export abstract class BarnbridgeSmartAlphaSeniorPoolTokenFetcher extends AppToke
     BarnbridgeSmartAlphaToken,
     DefaultAppTokenDataProps,
     BarnbridgeSmartAlphaSeniorPoolTokenDefinition
-  >): Promise<number | number[]> {
+  >) {
     const alphaPoolContract = this.contractFactory.barnbridgeSmartAlphaPool({
       address: definition.smartPoolAddress,
       network: this.network,
@@ -91,7 +91,7 @@ export abstract class BarnbridgeSmartAlphaSeniorPoolTokenFetcher extends AppToke
 
     const pricePerShareRaw = await multicall.wrap(alphaPoolContract).estimateCurrentSeniorTokenPrice();
     const pricePerShare = Number(pricePerShareRaw) / 10 ** 18;
-    return pricePerShare;
+    return [pricePerShare];
   }
 
   async getLabel({

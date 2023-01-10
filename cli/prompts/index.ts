@@ -1,5 +1,7 @@
 import inquirer from 'inquirer';
 
+import { ArrayOfOneOrMore } from '~types/utils';
+
 import { AppTag, GroupType } from '../../src/app/app.interface';
 import { Network } from '../../src/types/network.interface';
 
@@ -97,7 +99,7 @@ export const promptAppTags = async () => {
         return true;
       },
     })
-    .then(v => v.tags);
+    .then(v => v.tags as ArrayOfOneOrMore<AppTag>);
 };
 
 export const promptAppGroupId = async (groupIds: string[]) => {

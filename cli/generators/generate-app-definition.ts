@@ -11,7 +11,7 @@ import { formatAndWrite } from './utils';
 
 import t = recast.types.namedTypes;
 
-export async function generateAppDefinition(appDefinition: Partial<AppDefinitionObject>) {
+export async function generateAppDefinition(appDefinition: AppDefinitionObject) {
   const appDefinitionName = `${strings.upperCase(appDefinition.id)}_DEFINITION`;
   const appClassName = strings.titleCase(appDefinition.id);
 
@@ -39,10 +39,9 @@ export async function generateAppDefinition(appDefinition: Partial<AppDefinition
       links: ${JSON.stringify(appDefinition.links ?? {})},
       supportedNetworks: {
         ${entries(appDefinition.supportedNetworks)
-          .map(([nk, n]) => `[Network.${networkToKey[nk]}]: [${n.map(v => `AppAction.${actionToKey[v]}`).join(',')}]`)
+          .map(([nk, n]) => `[Network.${networkToKey[nk]}]: [${n!.map(v => `AppAction.${actionToKey[v]}`).join(',')}]`)
           .join(',')}
       },
-      primaryColor: '${appDefinition.primaryColor ?? '#fff'}',
     });
 
     @Register.AppDefinition(${appDefinitionName}.id)
@@ -71,11 +70,11 @@ export const addGroupToAppDefinition = async ({ appId, group }: { appId: string;
       const imports = value.body.filter((v): v is t.ImportDeclaration => v.type === 'ImportDeclaration');
 
       const appInterfaceImport = imports.find(v => v.source.value === '~app/app.interface');
-      const appInterfaceImportedNames = appInterfaceImport.specifiers.map(v => v as t.ImportSpecifier);
+      const appInterfaceImportedNames = appInterfaceImport!.specifiers!.map(v => v as t.ImportSpecifier);
       const hasGroupTypeImport = appInterfaceImportedNames.find(t => t.imported.name === 'GroupType');
 
       if (!hasGroupTypeImport) {
-        appInterfaceImport.specifiers.push(b.importSpecifier(b.identifier('GroupType')));
+        appInterfaceImport!.specifiers!.push(b.importSpecifier(b.identifier('GroupType')));
       }
 
       this.traverse(path);
@@ -101,7 +100,7 @@ export const addGroupToAppDefinition = async ({ appId, group }: { appId: string;
           ]),
         );
 
-        (groups.value as t.ObjectExpression).properties.push(newGroupProperty);
+        (groups!.value as t.ObjectExpression).properties.push(newGroupProperty);
       }
 
       this.traverse(path);

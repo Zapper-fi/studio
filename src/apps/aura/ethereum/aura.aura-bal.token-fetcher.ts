@@ -4,7 +4,7 @@ import { BigNumber, utils } from 'ethers';
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
-import { GetDataPropsParams, DefaultAppTokenDataProps } from '~position/template/app-token.template.types';
+import { DefaultAppTokenDataProps } from '~position/template/app-token.template.types';
 
 import { AuraBalancerPoolResolver } from '../common/aura.balancer-pool.resolver';
 import { AuraBalToken, AuraContractFactory } from '../contracts';
@@ -46,6 +46,10 @@ export class EthereumAuraAuraBalTokenFetcher extends AppTokenTemplatePositionFet
     return [{ address: this.BAL_WETH_ADDRESS, network: this.network }];
   }
 
+  async getPricePerShare() {
+    return [1];
+  }
+
   async getPrice(): Promise<number> {
     const balancerPool = await this.balancerPoolResolver.getBalancerPool(this.POOL_ID);
 
@@ -67,17 +71,5 @@ export class EthereumAuraAuraBalTokenFetcher extends AppTokenTemplatePositionFet
     const bptPrice = totalLiquidity / totalShares;
     const auraBALPrice = bptPrice / bptPerAuraBAL;
     return auraBALPrice;
-  }
-
-  async getLiquidity({ appToken }: GetDataPropsParams<AuraBalToken>) {
-    return appToken.supply * appToken.price;
-  }
-
-  async getReserves({ appToken }: GetDataPropsParams<AuraBalToken>) {
-    return [appToken.pricePerShare[0] * appToken.supply];
-  }
-
-  async getApy() {
-    return 0;
   }
 }

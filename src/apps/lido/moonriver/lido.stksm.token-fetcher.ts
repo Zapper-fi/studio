@@ -35,6 +35,6 @@ export class MoonriverLidoStksmTokenFetcher extends AppTokenTemplatePositionFetc
 
   async getPricePerShare({ contract }: GetPricePerShareParams<LidoStksm>) {
     const pricePerShareRaw = await contract.getPooledKSMByShares(new BigNumber(10).pow(18).toFixed(0));
-    return Number(pricePerShareRaw) / 10 ** 18;
+    return [Number(pricePerShareRaw) / 10 ** 18];
   }
 }

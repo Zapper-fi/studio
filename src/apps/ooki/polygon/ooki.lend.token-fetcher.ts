@@ -44,7 +44,8 @@ export class PolygonOokiLendTokenFetcher extends AppTokenTemplatePositionFetcher
 
   async getPricePerShare({ contract }: GetPricePerShareParams<OokiIToken>) {
     const exchangeRateRaw = await contract.tokenPrice();
-    return Number(exchangeRateRaw) / 10 ** 18;
+    const exchangeRate = Number(exchangeRateRaw) / 10 ** 18;
+    return [exchangeRate];
   }
 
   async getLiquidity({ appToken }: GetDataPropsParams<OokiIToken>) {

@@ -7,13 +7,7 @@ import { addGroupToAppDefinition } from '../generators/generate-app-definition';
 import { addContractPositionFetcherToAppModule } from '../generators/generate-app-module';
 import { generateContractPositionFetcher } from '../generators/generate-contract-position-fetcher';
 import { loadAppDefinition } from '../generators/utils';
-import {
-  promptAppGroupId,
-  promptAppNetwork,
-  promptNewGroupId,
-  promptNewGroupLabel,
-  promptNewGroupType,
-} from '../prompts';
+import { promptAppGroupId, promptAppNetwork, promptNewGroupId, promptNewGroupLabel } from '../prompts';
 
 export default class CreateContractPositionFetcher extends Command {
   static description = 'Creates a contract position fetcher in a given app';
@@ -26,15 +20,14 @@ export default class CreateContractPositionFetcher extends Command {
     const appId = args.appId;
 
     const definition = await loadAppDefinition(appId);
-    const groupIds = Object.values(definition.groups).map(v => v.id);
-    const networks = Object.keys(definition.supportedNetworks);
+    const groupIds = Object.values(definition.groups ?? {}).map(v => v.id);
+    const networks = Object.keys(definition.supportedNetworks ?? {});
 
     let groupId = await promptAppGroupId(groupIds);
     let group: AppGroup | null = null;
     if (!groupId) {
       const newGroupId = await promptNewGroupId(groupIds);
       const newGroupLabel = await promptNewGroupLabel();
-      const newGroupType = await promptNewGroupType();
       group = { id: newGroupId, label: newGroupLabel, type: GroupType.POSITION };
       groupId = newGroupId;
     }

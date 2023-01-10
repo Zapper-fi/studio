@@ -75,7 +75,7 @@ export abstract class ExactlyTokenFetcher<
 
   async getPricePerShare(params: GetPricePerShareParams<Market, V, ExactlyMarketDefinition>) {
     const [supply, totalAssets] = await Promise.all([this.getSupply(params), this.getTotalAssets(params)]);
-    if (!BigInt(String(supply))) return 1;
+    if (!BigInt(String(supply))) return [1];
     return [Number(totalAssets.mul(constants.WeiPerEther).div(supply)) / 1e18];
   }
 

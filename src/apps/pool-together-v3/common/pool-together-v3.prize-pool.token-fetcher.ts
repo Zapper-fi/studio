@@ -8,8 +8,9 @@ import {
   DefaultAppTokenDataProps,
   DefaultAppTokenDefinition,
   GetAddressesParams,
+  GetUnderlyingTokensParams,
+  GetDataPropsParams,
 } from '~position/template/app-token.template.types';
-import { GetUnderlyingTokensParams, GetDataPropsParams } from '~position/template/app-token.template.types';
 
 import { PoolTogetherV3ContractFactory } from '../contracts';
 
@@ -50,12 +51,8 @@ export abstract class PoolTogetherV3PrizePoolTokenFetcher<T extends Contract> ex
     return [{ address: definition.underlyingTokenAddress, network: this.network }];
   }
 
-  async getLiquidity({ appToken }: GetDataPropsParams<T>) {
-    return appToken.supply * appToken.price;
-  }
-
-  async getReserves({ appToken }: GetDataPropsParams<T>) {
-    return [appToken.pricePerShare[0] * appToken.supply];
+  async getPricePerShare() {
+    return [1];
   }
 
   async getApy({

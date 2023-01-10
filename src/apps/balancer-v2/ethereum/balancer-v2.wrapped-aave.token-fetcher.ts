@@ -38,7 +38,7 @@ export class EthereumBalancerV2WrappedAaveTokenFetcher extends AppTokenTemplateP
   }
 
   async getPricePerShare() {
-    return 1;
+    return [1];
   }
 
   async getLiquidity({ appToken }: GetDataPropsParams<BalancerWrappedAaveToken>) {

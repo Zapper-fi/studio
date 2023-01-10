@@ -41,7 +41,7 @@ export class AvalancheGroLabsTokenFetcher extends AppTokenTemplatePositionFetche
 
   async getPricePerShare({ contract }: GetPricePerShareParams<GroLabsVault>) {
     const pricePerShareRaw = await contract.getPricePerShare();
-    return Number(pricePerShareRaw) / 10 ** 18;
+    return [Number(pricePerShareRaw) / 10 ** 18];
   }
 
   async getLiquidity({ appToken }: GetDataPropsParams<GroLabsVault>) {

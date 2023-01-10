@@ -91,17 +91,15 @@ export abstract class AppTokenTemplatePositionFetcher<
   }
 
   // 6. Get price per share (ratio between token and underlying token)
-  async getPricePerShare(_params: GetPricePerShareParams<T, V, R>): Promise<number | number[]> {
-    return 1;
-  }
+  abstract getPricePerShare(_params: GetPricePerShareParams<T, V, R>): Promise<number[]>;
 
   // 7. Get price using the price per share
   async getPrice({ appToken }: GetPriceParams<T, V, R>): Promise<number> {
     return sum(appToken.tokens.map((v, i) => v.price * appToken.pricePerShare[i]));
   }
 
-  async getLiquidity({ appToken }: GetDataPropsParams<T, V, R>) {
-    return appToken.supply * appToken.price;
+  async getLiquidity({ appToken }: GetDataPropsParams<T, V, R>): Promise<number> {
+    return (this.isDebt ? -1 : 1) * appToken.price * appToken.supply;
   }
 
   async getReserves({ appToken }: GetDataPropsParams<T, V, R>) {

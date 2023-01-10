@@ -55,15 +55,10 @@ export abstract class BeefyVaultTokenFetcher extends AppTokenTemplatePositionFet
     return [{ address: definition.underlyingAddress, network: this.network }];
   }
 
-  async getPricePerShare({
-    contract,
-    appToken,
-    multicall,
-  }: GetPricePerShareParams<BeefyVaultToken>): Promise<number | number[]> {
+  async getPricePerShare({ contract, appToken, multicall }: GetPricePerShareParams<BeefyVaultToken>) {
     const ratioRaw = await multicall.wrap(contract).getPricePerFullShare();
-    const decimals = appToken.decimals;
-
-    return Number(ratioRaw) / 10 ** decimals;
+    const ratio = Number(ratioRaw) / 10 ** appToken.decimals;
+    return [ratio];
   }
 
   async getLabel({ appToken }: GetDisplayPropsParams<BeefyVaultToken>) {

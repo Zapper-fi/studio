@@ -33,6 +33,7 @@ export abstract class SolaceScpTokenFetcher extends AppTokenTemplatePositionFetc
   async getPricePerShare({ contract, appToken, multicall }: GetPricePerShareParams<Scp>) {
     const pricePerShareRaw = await multicall.wrap(contract).pricePerShare();
     const decimals = appToken.tokens[0].decimals;
-    return Number(pricePerShareRaw) / 10 ** decimals;
+    const pricePerShare = Number(pricePerShareRaw) / 10 ** decimals;
+    return [pricePerShare];
   }
 }

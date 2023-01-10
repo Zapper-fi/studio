@@ -3,7 +3,6 @@ import { Inject } from '@nestjs/common';
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
-import { GetDataPropsParams } from '~position/template/app-token.template.types';
 
 import { LyraAvalonContractFactory, LyraStkLyra } from '../contracts';
 
@@ -30,16 +29,7 @@ export class OptimismLyraAvalonStkLyraTokenFetcher extends AppTokenTemplatePosit
     return [{ address: '0x50c5725949a6f0c72e6c4a641f24049a917db0cb', network: this.network }];
   }
 
-  async getLiquidity({ appToken }: GetDataPropsParams<LyraStkLyra>) {
-    return appToken.price * appToken.supply;
-  }
-
-  async getReserves({ appToken }: GetDataPropsParams<LyraStkLyra>) {
-    return [appToken.pricePerShare[0] * appToken.supply];
-  }
-
-  async getApy() {
-    // @TODO Probably a Lyra Avalon APY helper contract somewhere
-    return 0;
+  async getPricePerShare() {
+    return [1];
   }
 }

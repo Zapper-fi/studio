@@ -70,6 +70,10 @@ export abstract class ConvexDepositSidechainTokenFetcher extends AppTokenTemplat
     return [{ address: poolInfo.lptoken, network: this.network }];
   }
 
+  async getPricePerShare() {
+    return [1];
+  }
+
   async getLabel({ appToken }: GetDisplayPropsParams<ConvexDepositToken, DefaultAppTokenDataProps>) {
     return getLabelFromToken(appToken.tokens[0]!);
   }

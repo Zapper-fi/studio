@@ -29,6 +29,8 @@ export abstract class YearnV1VaultTokenFetcher extends YearnVaultTokenFetcher<Ye
       if (isMulticallUnderlyingError(err)) return 0;
       throw err;
     });
-    return Number(pricePerShareRaw) / 10 ** 18;
+
+    const pricePerShare = Number(pricePerShareRaw) / 10 ** 18;
+    return [pricePerShare];
   }
 }

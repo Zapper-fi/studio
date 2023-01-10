@@ -82,6 +82,10 @@ export class EthereumPendleV2PrincipalTokenFetcher extends AppTokenTemplatePosit
     return [];
   }
 
+  async getPricePerShare() {
+    return [1];
+  }
+
   async getPrice({
     definition,
   }: GetPriceParams<

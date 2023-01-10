@@ -10,8 +10,7 @@ import {
   GetUnderlyingTokensParams,
 } from '~position/template/app-token.template.types';
 
-import { RookContractFactory } from '../contracts';
-import { RookKToken } from '../contracts';
+import { RookContractFactory, RookKToken } from '../contracts';
 
 export abstract class RookPoolTokenFetcher extends AppTokenTemplatePositionFetcher<RookKToken> {
   abstract kTokenAddresses: string[];
@@ -59,7 +58,8 @@ export abstract class RookPoolTokenFetcher extends AppTokenTemplatePositionFetch
     }
 
     const reserve = Number(reserveRaw) / 10 ** appToken.tokens[0].decimals;
-    return reserve / appToken.supply;
+    const pricePerShare = reserve / appToken.supply;
+    return [pricePerShare];
   }
 
   async getLiquidity({ appToken }: GetDataPropsParams<RookKToken>) {

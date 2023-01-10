@@ -55,7 +55,7 @@ export abstract class ReaperVaultTokenFetcher extends AppTokenTemplatePositionFe
   async getPricePerShare({
     appToken,
     contract,
-  }: GetPricePerShareParams<ReaperCrypt, DefaultAppTokenDataProps, ReaperVaultDefinition>): Promise<number | number[]> {
+  }: GetPricePerShareParams<ReaperCrypt, DefaultAppTokenDataProps, ReaperVaultDefinition>) {
     const pricePerShareRaw = await contract.getPricePerFullShare().catch(err => {
       if (isMulticallUnderlyingError(err)) return 0;
       throw err;

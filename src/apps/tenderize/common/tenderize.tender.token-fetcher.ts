@@ -60,7 +60,7 @@ export abstract class TenderTokenFetcher extends AppTokenTemplatePositionFetcher
 
     const pricePerShareRaw = await multicall.wrap(tenderSwapContract).getVirtualPrice();
     const pricePerShare = Number(pricePerShareRaw) / 10 ** appToken.decimals;
-    return pricePerShare;
+    return [pricePerShare];
   }
 
   async getLiquidity({ appToken }: GetDataPropsParams<TenderToken, DefaultDataProps, TenderizeTokenDefinition>) {

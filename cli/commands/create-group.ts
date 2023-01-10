@@ -17,7 +17,7 @@ export default class CreateGroup extends Command {
     const appId = args.appId;
 
     const definition = await loadAppDefinition(appId);
-    const groupIds = Object.values(definition.groups).map(v => v.id);
+    const groupIds = Object.values(definition.groups ?? {}).map(v => v.id);
 
     const id = await promptNewGroupId(groupIds);
     const label = await promptNewGroupLabel();

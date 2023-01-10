@@ -99,7 +99,8 @@ export abstract class RariFuseSupplyTokenFetcher<
     });
 
     const mantissa = 18 + appToken.tokens[0]!.decimals - appToken.decimals;
-    return Number(supplyRateRaw) / 10 ** mantissa;
+    const supplyRate = Number(supplyRateRaw) / 10 ** mantissa;
+    return [supplyRate];
   }
 
   async getLiquidity({ appToken }: GetDataPropsParams<R>) {

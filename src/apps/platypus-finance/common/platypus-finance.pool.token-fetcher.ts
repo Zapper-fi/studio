@@ -53,7 +53,8 @@ export abstract class PlatypusFinancePoolTokenFetcher extends AppTokenTemplatePo
 
     const amount = new BigNumber(10).pow(appToken.tokens[0].decimals).toFixed(0);
     const pricePerShareRaw = await pool.quotePotentialWithdraw(appToken.tokens[0].address, amount);
-    return Number(pricePerShareRaw.amount) / 10 ** appToken.decimals;
+    const pricePerShare = Number(pricePerShareRaw.amount) / 10 ** appToken.decimals;
+    return [pricePerShare];
   }
 
   async getLiquidity({ appToken }: GetDataPropsParams<PlatypusFinancePoolToken>) {

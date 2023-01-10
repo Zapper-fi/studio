@@ -33,7 +33,7 @@ export class EthereumConcentratorAcrvTokenFetcher extends AppTokenTemplatePositi
   async getPricePerShare({ appToken, contract }: GetPricePerShareParams<AladdinCrv>) {
     const reserveRaw = await contract.totalUnderlying();
     const reserve = Number(reserveRaw) / 10 ** appToken.tokens[0].decimals;
-    return reserve / appToken.supply;
+    return [reserve / appToken.supply];
   }
 
   async getLiquidity({ appToken }: GetDataPropsParams<AladdinCrv>) {

@@ -126,9 +126,7 @@ export class EthereumPendleV2PoolTokenFetcher extends AppTokenTemplatePositionFe
 
   async getPricePerShare({
     definition,
-  }: GetPricePerShareParams<PendleMarket, PendleV2MarketDataProps, PendleV2MarketTokenDefinition>): Promise<
-    number | number[]
-  > {
+  }: GetPricePerShareParams<PendleMarket, PendleV2MarketDataProps, PendleV2MarketTokenDefinition>) {
     const price = definition.price;
     return [price / definition.pt.price, price / definition.sy.price];
   }

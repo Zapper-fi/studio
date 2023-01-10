@@ -34,6 +34,6 @@ export class EthereumLidoWstethTokenFetcher extends AppTokenTemplatePositionFetc
 
   async getPricePerShare({ appToken, contract }: GetPricePerShareParams<LidoWsteth>) {
     const pricePerShareRaw = await contract.stEthPerToken();
-    return Number(pricePerShareRaw) / 10 ** appToken.decimals;
+    return [Number(pricePerShareRaw) / 10 ** appToken.decimals];
   }
 }

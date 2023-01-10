@@ -61,7 +61,7 @@ export abstract class CompoundSupplyTokenFetcher<
 
   async getPricePerShare(params: GetPricePerShareParams<R>) {
     const [rateRaw, mantissa] = await Promise.all([this.getExchangeRate(params), this.getExchangeRateMantissa(params)]);
-    return Number(rateRaw) / 10 ** mantissa;
+    return [Number(rateRaw) / 10 ** mantissa];
   }
 
   async getLabel({ appToken }: GetDisplayPropsParams<R>): Promise<DisplayProps['label']> {

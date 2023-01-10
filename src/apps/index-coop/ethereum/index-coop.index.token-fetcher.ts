@@ -5,7 +5,6 @@ import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import {
-  GetDataPropsParams,
   GetDisplayPropsParams,
   GetPriceParams,
   GetUnderlyingTokensParams,
@@ -66,19 +65,7 @@ export class EthereumIndexCoopIndexTokenFetcher extends AppTokenTemplatePosition
   }
 
   async getPricePerShare() {
-    return 1;
-  }
-
-  async getLiquidity({ appToken }: GetDataPropsParams<IndexCoopToken>) {
-    return appToken.supply * appToken.price;
-  }
-
-  async getReserves({ appToken }: GetDataPropsParams<IndexCoopToken>) {
-    return (appToken.pricePerShare as number[]).map(v => v * appToken.supply);
-  }
-
-  async getApy() {
-    return 0;
+    return [1];
   }
 
   async getLabel({ appToken }: GetDisplayPropsParams<IndexCoopToken>) {

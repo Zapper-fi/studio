@@ -65,7 +65,7 @@ export class EthereumStakeDaoLockerTokenFetcher extends AppTokenTemplatePosition
   async getPricePerShare({ appToken, multicall }: GetPricePerShareParams<Erc20>) {
     // Lockers are minted 1:1; if an exchange market exists in Curve, use it to derive the price
     const locker = LOCKERS.find(v => v.tokenAddress == appToken.address)!;
-    if (!locker.poolAddress) return 1;
+    if (!locker.poolAddress) return [1];
 
     const pool = this.contractFactory.stakeDaoCurvePool({ address: locker.poolAddress, network: this.network });
     const token0 = await multicall.wrap(pool).coins(0);
@@ -73,7 +73,8 @@ export class EthereumStakeDaoLockerTokenFetcher extends AppTokenTemplatePosition
     const amount = new BigNumber(1e18).toFixed(0);
 
     const pricePerShareRaw = await multicall.wrap(pool).get_dy(1 - knownIndex, knownIndex, amount);
-    return Number(pricePerShareRaw) / 10 ** 18;
+    const pricePerShare = Number(pricePerShareRaw) / 10 ** 18;
+    return [pricePerShare];
   }
 
   async getLiquidity({ appToken }: GetDataPropsParams<Erc20>) {
