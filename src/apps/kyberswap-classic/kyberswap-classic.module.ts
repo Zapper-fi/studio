@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 
 import { AbstractApp } from '~app/app.dynamic-module';
-import { UniswapV2ContractFactory } from '~apps/uniswap-v2';
+import { UniswapV2ContractFactory } from '~apps/uniswap-v2/contracts';
 
 import { ArbitrumKyberSwapClassicPoolTokenFetcher } from './arbitrum/kyberswap-classic.pool.token-fetcher';
 import { AvalancheKyberSwapClassicFarmContractPositionFetcher } from './avalanche/kyberswap-classic.farm.contract-position-fetcher';

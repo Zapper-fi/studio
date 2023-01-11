@@ -3,8 +3,6 @@ import Axios from 'axios';
 
 import { Cache } from '~cache/cache.decorator';
 
-import { POLYNOMIAL_DEFINITION } from '../polynomial.definition';
-
 export interface VaultObject {
   tokenAddress: string;
   vaultAddress: string;
@@ -24,7 +22,7 @@ export class PolynomialApiHelper {
 
   @Cache({
     instance: 'business',
-    key: () => `studio:${POLYNOMIAL_DEFINITION.id}:vaults`,
+    key: () => `studio:polynomial:vaults`,
     ttl: 15 * 60,
   })
   async getVaults() {

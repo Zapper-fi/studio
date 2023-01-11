@@ -3,7 +3,6 @@ import path from 'path';
 import { IConfigurableDynamicRootModule } from '@golevelup/nestjs-modules';
 import { Type } from '@nestjs/common';
 
-import { AppDefinition } from './app.definition';
 import { AppModuleOptions } from './app.dynamic-module';
 
 type BuildImporterParams = {
@@ -24,9 +23,4 @@ const buildImporter =
 export const importAppModule = buildImporter<IConfigurableDynamicRootModule<Type, AppModuleOptions>>({
   match: /AppModule$/,
   filename: appId => `${appId}.module`,
-});
-
-export const importAppDefinition = buildImporter<AppDefinition>({
-  match: /_DEFINITION$/,
-  filename: appId => `${appId}.definition`,
 });

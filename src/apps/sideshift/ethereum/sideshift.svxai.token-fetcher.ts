@@ -8,13 +8,12 @@ import { Network } from '~types/network.interface';
 
 import { SideshiftContractFactory } from '../contracts';
 import { SvxaiVault } from '../contracts/ethers';
-import { SIDESHIFT_DEFINITION } from '../sideshift.definition';
 
 const network = Network.ETHEREUM_MAINNET;
 
 @PositionTemplate()
 export class EthereumSideshiftSvxaiTokenFetcher extends AppTokenTemplatePositionFetcher<SvxaiVault> {
-  groupLabel = SIDESHIFT_DEFINITION.groups.svxai.label;
+  groupLabel = 'xvXAI';
 
   constructor(
     @Inject(APP_TOOLKIT) readonly appToolkit: IAppToolkit,

@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 
 import { AbstractApp } from '~app/app.dynamic-module';
-import { UniswapV2ContractFactory } from '~apps/uniswap-v2';
+import { UniswapV2ContractFactory } from '~apps/uniswap-v2/contracts';
 
 import { BinanceSmartChainPancakeswapAutoCakeContractPositionFetcher } from './binance-smart-chain/pancakeswap.auto-cake.contract-position-fetcher';
 import { BinanceSmartChainPancakeSwapBoostedFarmV2ContractPositionFetcher } from './binance-smart-chain/pancakeswap.boosted-farm-v2.contract-position-fetcher';

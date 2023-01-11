@@ -15,10 +15,9 @@ import {
   GetAddressesParams,
   DefaultAppTokenDataProps,
 } from '~position/template/app-token.template.types';
-import { Network, NETWORK_IDS } from '~types/network.interface';
+import { NETWORK_IDS } from '~types/network.interface';
 
 import { FurucomboContractFactory, FurucomboFundShareToken } from '../contracts';
-import { FURUCOMBO_DEFINITION } from '../furucombo.definition';
 
 interface FurucomboFund {
   address: string;
@@ -52,10 +51,6 @@ type FurucomboFundDefinition = {
   price: string;
 };
 
-const appId = FURUCOMBO_DEFINITION.id;
-const groupId = FURUCOMBO_DEFINITION.groups.fund.id;
-const network = Network.POLYGON_MAINNET;
-
 @PositionTemplate()
 export class PolygonFurucomboFundTokenFetcher extends AppTokenTemplatePositionFetcher<
   FurucomboFundShareToken,
@@ -77,7 +72,7 @@ export class PolygonFurucomboFundTokenFetcher extends AppTokenTemplatePositionFe
   }
 
   @CacheOnInterval({
-    key: `studio:${appId}:${groupId}:${network}:funds`,
+    key: `studio:furucombo:fund:ethereum:funds`,
     timeout: 15 * 60 * 1000,
     failOnMissingData: false,
   })
