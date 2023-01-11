@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.364.0](https://github.com/Zapper-fi/studio/compare/v0.363.0...v0.364.0) (2023-01-11)
+
+
+### Features
+
+* **apps:** Remove remaining app definition uses ([#2108](https://github.com/Zapper-fi/studio/issues/2108)) ([b86c478](https://github.com/Zapper-fi/studio/commit/b86c478d466df5bd59adb14143980115af1f429f))
+
 ## [0.363.0](https://github.com/Zapper-fi/studio/compare/v0.362.0...v0.363.0) (2023-01-11)
 
 
