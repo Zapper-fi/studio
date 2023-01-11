@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.364.1](https://github.com/Zapper-fi/studio/compare/v0.364.0...v0.364.1) (2023-01-11)
+
+
+### Bug Fixes
+
+* **radiant-capital:** Fix platform-fees position supplied address and add lp staking position ([#2110](https://github.com/Zapper-fi/studio/issues/2110)) ([ed37811](https://github.com/Zapper-fi/studio/commit/ed3781120f916122f54ce090de6afdccf91d0d5a))
+
 ## [0.364.0](https://github.com/Zapper-fi/studio/compare/v0.363.0...v0.364.0) (2023-01-11)
 
 
