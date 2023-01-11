@@ -34,6 +34,7 @@ export class EthereumLlamaAirforceVaultTokenFetcher extends AppTokenTemplatePosi
       '0xf964b0e3ffdea659c44a5a52bc0b82a24b89ce0e', // uFXS
       '0x8659fc767cad6005de79af65dafe4249c57927af', // uCVX
       '0xd6fc1ecd9965ba9cac895654979564a291c74c29', // uauraBAL
+      '0x8c4eb0fc6805ee7337ac126f89a807271a88dd67', // uauraBAL v2
     ];
   }
 
