@@ -3,12 +3,12 @@ import { Inject } from '@nestjs/common';
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { ZERO_ADDRESS } from '~app-toolkit/constants/address';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
-import { CompoundContractFactory } from '~apps/compound';
 import {
   CompoundBorrowContractPositionFetcher,
   CompoundBorrowTokenDataProps,
   GetMarketsParams,
 } from '~apps/compound/common/compound.borrow.contract-position-fetcher';
+import { CompoundContractFactory } from '~apps/compound/contracts';
 import {
   GetTokenDefinitionsParams,
   GetDataPropsParams,
