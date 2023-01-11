@@ -5,19 +5,19 @@ import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 
 import { MidasMarketTokenFetcher } from '../common/midas.market.token-fetcher';
-import { MidasContractFactory, MidasCErc20Token, MidasPoolDirectory, MidasPoolLens } from '../contracts';
+import { MidasCErc20Token, MidasContractFactory, MidasPoolDirectory, MidasPoolLens } from '../contracts';
 import { FusePoolDirectory } from '../contracts/ethers/MidasPoolDirectory';
 
 @PositionTemplate()
-export class BinanceSmartChainMidasMarketTokenFetcher extends MidasMarketTokenFetcher<
+export class EvmosMidasMarketTokenFetcher extends MidasMarketTokenFetcher<
   MidasPoolDirectory,
   MidasCErc20Token,
   MidasPoolLens
 > {
   groupLabel = 'Lending';
 
-  poolDirectoryAddress = '0x295d7347606f4bd810c8296bb8d75d657001fcf7';
-  poolLensAddress = '0x6f4e0b5405f3751f7327cf8095004c34fc307f55';
+  poolDirectoryAddress = '0x68e8f59ea33fbcca716f56f89f47e53c73d47830';
+  poolLensAddress = '0xa250a585a8cf8caa687edf1895f8de00b6dc6951';
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
