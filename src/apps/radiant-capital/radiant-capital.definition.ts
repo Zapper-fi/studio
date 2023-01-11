@@ -34,6 +34,12 @@ export const RADIANT_CAPITAL_DEFINITION = appDefinition({
       type: GroupType.POSITION,
       label: 'Platform Fees',
     },
+
+    staking: {
+      id: 'staking',
+      type: GroupType.POSITION,
+      label: 'Staking',
+    },
   },
 
   tags: [AppTag.LENDING],

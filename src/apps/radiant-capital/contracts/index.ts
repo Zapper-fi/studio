@@ -7,6 +7,7 @@ import { Network } from '~types/network.interface';
 import {
   RadiantCapitalDataProvider__factory,
   RadiantCapitalLendingProvider__factory,
+  RadiantCapitalPlatformFees__factory,
   RadiantCapitalStaking__factory,
 } from './ethers';
 
@@ -25,6 +26,9 @@ export class RadiantCapitalContractFactory extends ContractFactory {
   radiantCapitalLendingProvider({ address, network }: ContractOpts) {
     return RadiantCapitalLendingProvider__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
+  radiantCapitalPlatformFees({ address, network }: ContractOpts) {
+    return RadiantCapitalPlatformFees__factory.connect(address, this.appToolkit.getNetworkProvider(network));
+  }
   radiantCapitalStaking({ address, network }: ContractOpts) {
     return RadiantCapitalStaking__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
@@ -32,4 +36,5 @@ export class RadiantCapitalContractFactory extends ContractFactory {
 
 export type { RadiantCapitalDataProvider } from './ethers';
 export type { RadiantCapitalLendingProvider } from './ethers';
+export type { RadiantCapitalPlatformFees } from './ethers';
 export type { RadiantCapitalStaking } from './ethers';
