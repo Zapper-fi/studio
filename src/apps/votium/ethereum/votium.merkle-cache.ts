@@ -5,8 +5,6 @@ import { fromPairs } from 'lodash';
 import { MerkleCache } from '~position/template/merkle.cache';
 import { Network } from '~types/network.interface';
 
-import { VOTIUM_DEFINITION } from '../votium.definition';
-
 type VotiumRewardsClaim = {
   index: number;
   amount: string;
@@ -28,8 +26,8 @@ export type VotiumActiveTokenData = {
 
 @Injectable()
 export class EthereumVotiumMerkleCache extends MerkleCache<VotiumRewardsClaim> {
-  appId = VOTIUM_DEFINITION.id;
-  groupId = VOTIUM_DEFINITION.groups.claimable.id;
+  appId = 'votium';
+  groupId = 'claimable';
   network = Network.ETHEREUM_MAINNET;
 
   async resolveMerkleData() {

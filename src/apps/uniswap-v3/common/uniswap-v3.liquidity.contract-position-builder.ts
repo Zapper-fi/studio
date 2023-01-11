@@ -16,7 +16,6 @@ import { TokenDependencySelector } from '~position/selectors/token-dependency-se
 import { Network } from '~types/network.interface';
 
 import { UniswapV3ContractFactory } from '../contracts';
-import { UNISWAP_V3_DEFINITION } from '../uniswap-v3.definition';
 
 import { UniswapV3LiquidityPositionDataProps } from './uniswap-v3.liquidity.contract-position-fetcher';
 import { getSupplied, getClaimable, getRange } from './uniswap-v3.liquidity.utils';
@@ -132,8 +131,8 @@ export class UniswapV3LiquidityContractPositionBuilder {
     const balance: ContractPositionBalance<UniswapV3LiquidityPositionDataProps> = {
       type: ContractType.POSITION,
       address: this.managerAddress,
-      appId: UNISWAP_V3_DEFINITION.id,
-      groupId: UNISWAP_V3_DEFINITION.groups.liquidity.id,
+      appId: 'uniswap-v3',
+      groupId: 'liquidity',
       network,
       tokens,
       dataProps,

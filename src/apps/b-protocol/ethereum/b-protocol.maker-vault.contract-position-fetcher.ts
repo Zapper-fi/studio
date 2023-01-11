@@ -3,6 +3,7 @@ import BigNumber from 'bignumber.js';
 import { ethers } from 'ethers';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import { MakerContractFactory, MakerGemJoin } from '~apps/maker/contracts';
 import { MetaType } from '~position/position.interface';
 import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
@@ -13,9 +14,7 @@ import {
   GetDataPropsParams,
   GetTokenBalancesParams,
 } from '~position/template/contract-position.template.types';
-import { Network } from '~types/network.interface';
 
-import { B_PROTOCOL_DEFINITION } from '../b-protocol.definition';
 import { BProtocolContractFactory } from '../contracts';
 
 export type BProtocolVaultDefinition = {
@@ -32,14 +31,12 @@ export type BProtocolVaultDataProps = {
   cdpId?: number;
 };
 
+@PositionTemplate()
 export class EthereumBProtocolMakerVaultContractPositionFetcher extends ContractPositionTemplatePositionFetcher<
   MakerGemJoin,
   BProtocolVaultDataProps,
   BProtocolVaultDefinition
 > {
-  appId = B_PROTOCOL_DEFINITION.id;
-  groupId = B_PROTOCOL_DEFINITION.groups.makerVault.id;
-  network = Network.ETHEREUM_MAINNET;
   groupLabel = 'Maker Vaults';
 
   private readonly BCDP_MANGER = '0x3f30c2381cd8b917dd96eb2f1a4f96d91324bbed';
