@@ -3,6 +3,7 @@ import { Inject, Injectable } from '@nestjs/common';
 import Axios from 'axios';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
+import { gqlFetch } from '~app-toolkit/helpers/the-graph.helper';
 import { CacheOnInterval } from '~cache/cache-on-interval.decorator';
 import { Network } from '~types';
 
@@ -23,12 +24,12 @@ export class UnipilotVaultAPYHelper {
     failOnMissingData: false,
   })
   async getApy() {
-    const ethData = await this.appToolkit.helpers.theGraphHelper.request<VaultAddressesResponse>({
+    const ethData = await gqlFetch<VaultAddressesResponse>({
       endpoint: SUBGRAPH_ENDPOINTS[Network.ETHEREUM_MAINNET].stats,
       query: VAULT_ADDRESSES,
     });
 
-    const polygonData = await this.appToolkit.helpers.theGraphHelper.request<VaultAddressesResponse>({
+    const polygonData = await gqlFetch<VaultAddressesResponse>({
       endpoint: SUBGRAPH_ENDPOINTS[Network.POLYGON_MAINNET].stats,
       query: VAULT_ADDRESSES,
     });

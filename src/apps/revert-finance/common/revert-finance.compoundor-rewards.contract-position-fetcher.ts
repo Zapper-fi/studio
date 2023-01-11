@@ -2,8 +2,8 @@ import { Inject } from '@nestjs/common';
 import { BigNumberish } from 'ethers';
 import { compact, merge, range, sumBy, uniqBy } from 'lodash';
 
-import { drillBalance } from '~app-toolkit';
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
+import { drillBalance } from '~app-toolkit/helpers/drill-balance.helper';
 import { getImagesFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { UniswapV3LiquidityContractPositionBuilder } from '~apps/uniswap-v3/common/uniswap-v3.liquidity.contract-position-builder';
 import { DefaultDataProps } from '~position/display.interface';

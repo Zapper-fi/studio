@@ -3,6 +3,7 @@ import { BigNumber, ethers } from 'ethers';
 import { gql } from 'graphql-request';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
+import { gqlFetch } from '~app-toolkit/helpers/the-graph.helper';
 import { Cache } from '~cache/cache.decorator';
 import { Network } from '~types/network.interface';
 
@@ -96,7 +97,7 @@ export class AuraBalancerPoolResolver {
   })
   private async getBalancerPoolData(poolId: string) {
     const endpoint = `https://api.thegraph.com/subgraphs/name/balancer-labs/balancer-v2`;
-    const { pool } = await this.appToolkit.helpers.theGraphHelper.request<GetPoolResponse>({
+    const { pool } = await gqlFetch<GetPoolResponse>({
       endpoint,
       query: GET_POOL_QUERY,
       variables: { id: poolId },

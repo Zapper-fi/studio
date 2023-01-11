@@ -2,9 +2,9 @@ import { Inject } from '@nestjs/common';
 import { BigNumberish } from 'ethers';
 import { compact, range, sumBy } from 'lodash';
 
-import { drillBalance } from '~app-toolkit';
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
+import { drillBalance } from '~app-toolkit/helpers/drill-balance.helper';
 import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { ContractPositionBalance } from '~position/position-balance.interface';
 import { MetaType, Standard } from '~position/position.interface';

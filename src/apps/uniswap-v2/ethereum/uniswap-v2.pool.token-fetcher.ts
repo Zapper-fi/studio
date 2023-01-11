@@ -1,9 +1,10 @@
 import { gql } from 'graphql-request';
 import { chunk, compact } from 'lodash';
 
-import { drillBalance } from '~app-toolkit';
 import { ZERO_ADDRESS } from '~app-toolkit/constants/address';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
+import { drillBalance } from '~app-toolkit/helpers/drill-balance.helper';
+import { gqlFetch } from '~app-toolkit/helpers/the-graph.helper';
 import { AppTokenPositionBalance, RawAppTokenBalance } from '~position/position-balance.interface';
 import { isAppToken } from '~position/position.interface';
 
@@ -56,7 +57,7 @@ export class EthereumUniswapV2PoolTokenFetcher extends UniswapV2DefaultPoolSubgr
     if (address === ZERO_ADDRESS) return [];
 
     // Use the subgraph to determine holdings. Later, we'll optimize this to use our own holdings by default.
-    const data = await this.appToolkit.helpers.theGraphHelper.requestGraph<UniswapV2BalancesData>({
+    const data = await gqlFetch<UniswapV2BalancesData>({
       endpoint: this.subgraphUrl,
       query: UNISWAP_V2_BALANCES_QUERY,
       variables: { address: address.toLowerCase() },
@@ -84,7 +85,7 @@ export class EthereumUniswapV2PoolTokenFetcher extends UniswapV2DefaultPoolSubgr
     if (address === ZERO_ADDRESS) return [];
 
     // Use the subgraph to determine holdings. Later, we'll optimize this to use our own holdings by default.
-    const data = await this.appToolkit.helpers.theGraphHelper.requestGraph<UniswapV2BalancesData>({
+    const data = await gqlFetch<UniswapV2BalancesData>({
       endpoint: this.subgraphUrl,
       query: UNISWAP_V2_BALANCES_QUERY,
       variables: { address: address.toLowerCase() },

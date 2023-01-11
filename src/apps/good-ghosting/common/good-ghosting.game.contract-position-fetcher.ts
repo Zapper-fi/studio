@@ -2,8 +2,8 @@ import { Inject, Injectable } from '@nestjs/common';
 import { BigNumberish } from 'ethers';
 import { compact, sumBy } from 'lodash';
 
-import { drillBalance } from '~app-toolkit';
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
+import { drillBalance } from '~app-toolkit/helpers/drill-balance.helper';
 import { DefaultDataProps } from '~position/display.interface';
 import { ContractPositionBalance } from '~position/position-balance.interface';
 import { MetaType } from '~position/position.interface';

@@ -1,4 +1,4 @@
-import { CACHE_MANAGER, forwardRef, Inject, Injectable } from '@nestjs/common';
+import { CACHE_MANAGER, Inject, Injectable } from '@nestjs/common';
 import { BigNumber as BigNumberJS } from 'bignumber.js';
 import { Cache } from 'cache-manager';
 import { ethers } from 'ethers';
@@ -17,15 +17,12 @@ import { BaseToken } from '~position/token.interface';
 import { PriceSelectorService } from '~token/selectors/token-price-selector.service';
 import { Network } from '~types/network.interface';
 
-import { AppToolkitHelperRegistry } from './app-toolkit.helpers';
 import { IAppToolkit } from './app-toolkit.interface';
 
 @Injectable()
 export class AppToolkit implements IAppToolkit {
   private readonly contractFactory: ContractFactory;
   constructor(
-    // We need the forward ref here, since there is a circular dependency on the AppToolkit, since each helper needs the toolkit
-    @Inject(forwardRef(() => AppToolkitHelperRegistry)) private readonly helperRegistry: AppToolkitHelperRegistry,
     @Inject(AppService) private readonly appService: AppService,
     @Inject(NetworkProviderService) private readonly networkProviderService: NetworkProviderService,
     @Inject(PositionService) private readonly positionService: PositionService,
@@ -110,12 +107,6 @@ export class AppToolkit implements IAppToolkit {
   async setManyToCache<T = any>(entries: [string, T][], ttl = 60) {
     // In production, this is a Redis pipeline of `set` commands
     await Promise.all(entries.map(([key, value]) => this.cacheManager.set(key, value, { ttl })));
-  }
-
-  // Global Helpers
-
-  get helpers() {
-    return this.helperRegistry;
   }
 
   getBigNumber(source: BigNumberJS.Value | ethers.BigNumber): BigNumberJS {

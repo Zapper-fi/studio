@@ -1,10 +1,9 @@
 import { Inject, NotImplementedException } from '@nestjs/common';
-import _ from 'lodash';
-import { range } from 'lodash';
+import _, { range } from 'lodash';
 
-import { drillBalance } from '~app-toolkit';
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
+import { drillBalance } from '~app-toolkit/helpers/drill-balance.helper';
 import { DefaultDataProps } from '~position/display.interface';
 import { ContractPositionBalance } from '~position/position-balance.interface';
 import { MetaType } from '~position/position.interface';

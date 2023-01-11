@@ -4,6 +4,7 @@ import { compact, range } from 'lodash';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
+import { gqlFetch } from '~app-toolkit/helpers/the-graph.helper';
 import { ContractPositionBalance } from '~position/position-balance.interface';
 import { MetaType, Standard } from '~position/position.interface';
 import {
@@ -86,7 +87,7 @@ export abstract class KyberswapElasticLiquidityContractPositionFetcher extends C
       blockSubgraphUrl: this.blockSubgraphUrl,
     });
 
-    const data = await this.appToolkit.helpers.theGraphHelper.requestGraph<GetTopPoolsResponse>({
+    const data = await gqlFetch<GetTopPoolsResponse>({
       endpoint: this.subgraphUrl,
       query: GET_TOP_POOLS_QUERY,
     });

@@ -3,6 +3,7 @@ import { gql } from 'graphql-request';
 import moment from 'moment';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
+import { gqlFetch } from '~app-toolkit/helpers/the-graph.helper';
 import { Cache } from '~cache/cache.decorator';
 import { Network } from '~types/network.interface';
 
@@ -58,11 +59,7 @@ export class SynthetixMintrSnxHoldersCache {
     let lastId = '';
 
     do {
-      lastResult = await this.appToolkit.helpers.theGraphHelper.request<HoldersResponse>({
-        endpoint,
-        query: HOLDERS_QUERY,
-        variables: { lastId },
-      });
+      lastResult = await gqlFetch<HoldersResponse>({ endpoint, query: HOLDERS_QUERY, variables: { lastId } });
       lastId = lastResult.snxholders[lastResult.snxholders.length - 1].id;
       lastResult.snxholders.forEach(v => holders.set(v.id, v));
     } while (lastResult.snxholders.length === 1000);

@@ -12,6 +12,7 @@ import {
   buildStringDisplayItem,
 } from '~app-toolkit/helpers/presentation/display-item.present';
 import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
+import { gqlFetch } from '~app-toolkit/helpers/the-graph.helper';
 import { SpoolContractFactory } from '~apps/spool';
 import { ANALYTICS_API_BASE_URL, SUBGRAPH_API_BASE_URL } from '~apps/spool/ethereum/spool.constants';
 import { WithMetaType } from '~position/display.interface';
@@ -141,13 +142,13 @@ export class EthereumSpoolVaultContractPositionFetcher extends ContractPositionT
 
   async getDefinitions() {
     // Request all vaults
-    const vaultsData = await this.appToolkit.helpers.theGraphHelper.requestGraph<SpoolVaults>({
+    const vaultsData = await gqlFetch<SpoolVaults>({
       endpoint: SUBGRAPH_API_BASE_URL,
       query: vaultsQuery,
     });
 
     // Request platform fees
-    const platformFees = await this.appToolkit.helpers.theGraphHelper.requestGraph<Platform>({
+    const platformFees = await gqlFetch<Platform>({
       endpoint: SUBGRAPH_API_BASE_URL,
       query: platformQuery,
     });

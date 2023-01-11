@@ -4,9 +4,10 @@ import { parseUnits } from 'ethers/lib/utils';
 import { gql } from 'graphql-request';
 import { compact, isEqual, sumBy, uniqWith } from 'lodash';
 
-import { drillBalance } from '~app-toolkit';
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
+import { drillBalance } from '~app-toolkit/helpers/drill-balance.helper';
 import { getImagesFromToken, getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
+import { gqlFetch } from '~app-toolkit/helpers/the-graph.helper';
 import { ContractType } from '~position/contract.interface';
 import { ContractPositionBalance } from '~position/position-balance.interface';
 import { MetaType } from '~position/position.interface';
@@ -161,12 +162,12 @@ export abstract class YieldProtocolBorrowContractPositionFetcher extends CustomC
       network: this.network,
     });
 
-    const { assets: ilks } = await this.appToolkit.helpers.theGraphHelper.request<YieldIlksRes>({
+    const { assets: ilks } = await gqlFetch<YieldIlksRes>({
       endpoint: this.subgraphUrl,
       query: ilksQuery,
     });
 
-    const { seriesEntities: artsRes } = await this.appToolkit.helpers.theGraphHelper.request<YieldArtsRes>({
+    const { seriesEntities: artsRes } = await gqlFetch<YieldArtsRes>({
       endpoint: this.subgraphUrl,
       query: artsQuery,
     });
@@ -240,7 +241,7 @@ export abstract class YieldProtocolBorrowContractPositionFetcher extends CustomC
       network: this.network,
     });
 
-    const data = await this.appToolkit.helpers.theGraphHelper.request<YieldVaultRes>({
+    const data = await gqlFetch<YieldVaultRes>({
       endpoint: this.subgraphUrl,
       query: vaultsQuery,
       variables: { address },

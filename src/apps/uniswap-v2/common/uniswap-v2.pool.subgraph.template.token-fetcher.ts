@@ -3,6 +3,7 @@ import { BigNumberish, Contract } from 'ethers';
 import { difference, range, uniq } from 'lodash';
 
 import { BLOCKS_PER_DAY } from '~app-toolkit/constants/blocks';
+import { gqlFetch } from '~app-toolkit/helpers/the-graph.helper';
 import { GetDataPropsParams } from '~position/template/app-token.template.types';
 
 import {
@@ -51,7 +52,7 @@ export abstract class UniswapV2PoolSubgraphTemplateTokenFetcher<
     const chunks = await Promise.all(
       range(0, this.first, 1000).map(skip => {
         const count = Math.min(1000, this.first - skip);
-        return this.appToolkit.helpers.theGraphHelper.request<PoolsResponse>({
+        return gqlFetch<PoolsResponse>({
           endpoint: this.subgraphUrl,
           query: this.poolsQuery,
           variables: { first: count, skip, orderBy: this.orderBy },
@@ -60,7 +61,7 @@ export abstract class UniswapV2PoolSubgraphTemplateTokenFetcher<
     );
 
     const poolsData = chunks.flat();
-    const poolsByIdData = await this.appToolkit.helpers.theGraphHelper.request<PoolsResponse>({
+    const poolsByIdData = await gqlFetch<PoolsResponse>({
       endpoint: this.subgraphUrl,
       query: this.poolsByIdQuery,
       variables: { ids: this.requiredPools },
@@ -112,7 +113,7 @@ export abstract class UniswapV2PoolSubgraphTemplateTokenFetcher<
     // Get last block synced on graph; if the graph is not caught up to yesterday, exit early
     if (this.subgraphUrl.includes('api.fura.org')) {
       const subgraphName = this.subgraphUrl.substring(this.subgraphUrl.lastIndexOf('/') + 1);
-      const graphMetaData = await this.appToolkit.helpers.theGraphHelper.request<LastBlockSyncedFuraResponse>({
+      const graphMetaData = await gqlFetch<LastBlockSyncedFuraResponse>({
         endpoint: this.subgraphUrl,
         query: FURA_LAST_BLOCK_SYNCED_ON_GRAPH_QUERY,
         variables: { subgraphName },
@@ -120,7 +121,7 @@ export abstract class UniswapV2PoolSubgraphTemplateTokenFetcher<
 
       blockNumberLastSynced = graphMetaData.indexingStatusForCurrentVersion.chains[0].latestBlock.number;
     } else {
-      const graphMetaData = await this.appToolkit.helpers.theGraphHelper.request<LastBlockSyncedResponse>({
+      const graphMetaData = await gqlFetch<LastBlockSyncedResponse>({
         endpoint: this.subgraphUrl,
         query: this.lastBlockSyncedOnGraphQuery,
       });
@@ -132,12 +133,12 @@ export abstract class UniswapV2PoolSubgraphTemplateTokenFetcher<
 
     // Retrieve volume data from TheGraph (@TODO Cache this)
     const [volumeByIDData, volumeByIDData1DayAgo] = await Promise.all([
-      this.appToolkit.helpers.theGraphHelper.request<PoolVolumesResponse>({
+      gqlFetch<PoolVolumesResponse>({
         endpoint: this.subgraphUrl,
         query: this.poolVolumesByIdQuery,
         variables: { ids: addresses },
       }),
-      this.appToolkit.helpers.theGraphHelper.request<PoolVolumesResponse>({
+      gqlFetch<PoolVolumesResponse>({
         endpoint: this.subgraphUrl,
         query: this.poolVolumesByIdAtBlockQuery,
         variables: { ids: addresses, block: block1DayAgo },

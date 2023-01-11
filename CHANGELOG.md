@@ -4,6 +4,41 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.362.0](https://github.com/Zapper-fi/studio/compare/v0.361.1...v0.362.0) (2023-01-10)
+
+
+### Features
+
+* midas integration on binance ([#2007](https://github.com/Zapper-fi/studio/issues/2007)) ([dbcf218](https://github.com/Zapper-fi/studio/commit/dbcf218eee1b773517238ab407ae211c3bf02bb5))
+
+## [0.361.1](https://github.com/Zapper-fi/studio/compare/v0.361.0...v0.361.1) (2023-01-10)
+
+
+### Bug Fixes
+
+* **apps:** Cleanup deprecated apps ([#2090](https://github.com/Zapper-fi/studio/issues/2090)) ([5a4492d](https://github.com/Zapper-fi/studio/commit/5a4492d769e60fd2be273a8ee0b08ace502a751c))
+
+## [0.361.0](https://github.com/Zapper-fi/studio/compare/v0.360.0...v0.361.0) (2023-01-10)
+
+
+### Features
+
+* **app-toolkit:** Remove all legacy helpers ([#2089](https://github.com/Zapper-fi/studio/issues/2089)) ([f9e4df4](https://github.com/Zapper-fi/studio/commit/f9e4df4391862ea17ad6802745ffb022a4e12f30))
+
+## [0.360.0](https://github.com/Zapper-fi/studio/compare/v0.359.1...v0.360.0) (2023-01-10)
+
+
+### Features
+
+* **pirex:** To template ([#2087](https://github.com/Zapper-fi/studio/issues/2087)) ([1c46899](https://github.com/Zapper-fi/studio/commit/1c468996ba0b0113f14811a7efad946dea002a65))
+
+## [0.359.1](https://github.com/Zapper-fi/studio/compare/v0.359.0...v0.359.1) (2023-01-10)
+
+
+### Bug Fixes
+
+* **build:** Remove cli from include ([453028f](https://github.com/Zapper-fi/studio/commit/453028f2a237306af6abfafcaae31151f73a5b4b))
+
 ## [0.359.0](https://github.com/Zapper-fi/studio/compare/v0.358.0...v0.359.0) (2023-01-10)
 
 

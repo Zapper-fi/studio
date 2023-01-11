@@ -2,9 +2,10 @@ import { Inject } from '@nestjs/common';
 import { BigNumberish } from 'ethers';
 import { compact, find, sumBy } from 'lodash';
 
-import { drillBalance } from '~app-toolkit';
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
+import { drillBalance } from '~app-toolkit/helpers/drill-balance.helper';
 import { getImagesFromToken } from '~app-toolkit/helpers/presentation/image.present';
+import { gqlFetchAll } from '~app-toolkit/helpers/the-graph.helper';
 import { ContractType } from '~position/contract.interface';
 import { DefaultDataProps, WithMetaType } from '~position/display.interface';
 import {
@@ -53,7 +54,7 @@ export abstract class KeeperBondContractPositionFetcher extends CustomContractPo
   }
 
   async getDefinitions() {
-    const bondData = await this.appToolkit.helpers.theGraphHelper.gqlFetchAll<KeeperBond>({
+    const bondData = await gqlFetchAll<KeeperBond>({
       endpoint: SUBGRAPH_URL,
       query: GET_BONDS,
       variables: {},
@@ -84,7 +85,7 @@ export abstract class KeeperBondContractPositionFetcher extends CustomContractPo
       groupIds: [this.groupId],
     });
 
-    const userBondsData = await this.appToolkit.helpers.theGraphHelper.gqlFetchAll<KeeperBond>({
+    const userBondsData = await gqlFetchAll<KeeperBond>({
       endpoint: SUBGRAPH_URL,
       query: GET_USER_BONDS,
       variables: { address },

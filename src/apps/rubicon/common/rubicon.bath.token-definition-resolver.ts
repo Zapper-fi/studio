@@ -2,6 +2,7 @@ import { Inject, Injectable } from '@nestjs/common';
 import { gql } from 'graphql-request';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
+import { gqlFetch } from '~app-toolkit/helpers/the-graph.helper';
 import { Cache } from '~cache/cache.decorator';
 
 export type RubiconPoolFetcherResponse = {
@@ -29,7 +30,7 @@ export class RubiconBathTokenDefinitionResolver {
     ttl: 5 * 60, // 5 minutes
   })
   private async getPoolDefinitionsData() {
-    const data = await this.appToolkit.helpers.theGraphHelper.request<RubiconPoolFetcherResponse>({
+    const data = await gqlFetch<RubiconPoolFetcherResponse>({
       endpoint: `https://api.thegraph.com/subgraphs/name/denverbaumgartner/bathtokenoptimism`,
       query: POOL_QUERY,
     });

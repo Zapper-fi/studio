@@ -5,6 +5,7 @@ import _, { flattenDeep, omit } from 'lodash';
 
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
+import { gqlFetch } from '~app-toolkit/helpers/the-graph.helper';
 import { DefaultDataProps } from '~position/display.interface';
 import { MetaType } from '~position/position.interface';
 import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
@@ -127,7 +128,7 @@ export class OptimismLyraAvalonOptionsContractPositionFetcher extends ContractPo
   }
 
   async getDefinitions(): Promise<LyraAvalonOptionTokenDefinition[]> {
-    const response = await this.appToolkit.helpers.theGraphHelper.request<OptionsResponse>({
+    const response = await gqlFetch<OptionsResponse>({
       endpoint: 'https://api.lyra.finance/subgraph/optimism/v1/api',
       query: OPTIONS_QUERY,
     });

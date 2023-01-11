@@ -1,5 +1,6 @@
 import { gql } from 'graphql-request';
 
+import { gqlFetch } from '~app-toolkit/helpers/the-graph.helper';
 import {
   BalancerV2PoolTokenDataProps,
   BalancerV2PoolTokenDefinition,
@@ -41,7 +42,7 @@ export abstract class BeethovenXPoolTokenFetcher extends BalancerV2PoolTokenFetc
   abstract weightedPoolV2Factory: string;
 
   async getDefinitions() {
-    const poolsResponse = await this.appToolkit.helpers.theGraphHelper.request<GetPoolsResponse>({
+    const poolsResponse = await gqlFetch<GetPoolsResponse>({
       endpoint: this.subgraphUrl,
       query: GET_POOLS_QUERY,
       headers: { 'Content-Type': 'application/json' },
