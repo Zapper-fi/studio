@@ -17,7 +17,6 @@ import type {
 } from '~position/template/app-token.template.types';
 
 import { ExactlyContractFactory, type Market } from '../contracts';
-import { EXACTLY_DEFINITION } from '../exactly.definition';
 
 import { ExactlyDefinitionsResolver, type ExactlyMarketDefinition } from './exactly.definitions-resolver';
 
@@ -26,8 +25,6 @@ export type ExactlyMarketProps = DefaultAppTokenDataProps & { apr: number };
 export abstract class ExactlyTokenFetcher<
   V extends ExactlyMarketProps = ExactlyMarketProps,
 > extends AppTokenTemplatePositionFetcher<Market, V, ExactlyMarketDefinition> {
-  appId = EXACTLY_DEFINITION.id;
-
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
     @Inject(ExactlyContractFactory) protected readonly contractFactory: ExactlyContractFactory,

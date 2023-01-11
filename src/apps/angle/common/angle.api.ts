@@ -6,8 +6,6 @@ import Axios from 'axios';
 import { Cache } from '~cache/cache.decorator';
 import { Network } from '~types/network.interface';
 
-import { ANGLE_DEFINITION } from '../angle.definition';
-
 const BASE_URL = 'https://api.angle.money/v1';
 
 type TAPR = {
@@ -103,7 +101,7 @@ export class AngleApiHelper {
 
   @Cache({
     instance: 'business',
-    key: (network: Network) => `studio:${ANGLE_DEFINITION.id}:apr:${network}:angle`,
+    key: (network: Network) => `studio:angle:apr:${network}:angle`,
     ttl: 15 * 60,
   })
   async getApr(_network: Network) {
@@ -112,7 +110,7 @@ export class AngleApiHelper {
 
   @Cache({
     instance: 'business',
-    key: (network: Network) => `studio:${ANGLE_DEFINITION.id}:vaultmanagers:${network}:angle`,
+    key: (network: Network) => `studio:angle:vaultmanagers:${network}:angle`,
     ttl: 15 * 60,
   })
   async getVaultManagers(_network: Network) {
@@ -121,7 +119,7 @@ export class AngleApiHelper {
 
   @Cache({
     instance: 'user',
-    key: (network: Network) => `studio:${ANGLE_DEFINITION.id}:perpetuals:${network}:angle`,
+    key: (network: Network) => `studio:angle:perpetuals:${network}:angle`,
     ttl: 15 * 60,
   })
   async getUserPerpetuals(address: string, _network: Network) {
@@ -133,7 +131,7 @@ export class AngleApiHelper {
 
   @Cache({
     instance: 'user',
-    key: (network: Network) => `studio:${ANGLE_DEFINITION.id}:vaults:${network}:angle`,
+    key: (network: Network) => `studio:angle:vaults:${network}:angle`,
     ttl: 15 * 60,
   })
   async getUserVaults(address: string, _network: Network) {
@@ -145,7 +143,7 @@ export class AngleApiHelper {
 
   @Cache({
     instance: 'user',
-    key: (network: Network) => `studio:${ANGLE_DEFINITION.id}:rewardsdata:${network}:angle`,
+    key: (network: Network) => `studio:angle:rewardsdata:${network}:angle`,
     ttl: 30 * 60,
   })
   async getRewardsData(address: string, _network: Network) {
@@ -157,7 +155,7 @@ export class AngleApiHelper {
 
   @Cache({
     instance: 'business',
-    key: (network: Network) => `studio:${ANGLE_DEFINITION.id}:tokenlist:${network}:angle`,
+    key: (network: Network) => `studio:angle:tokenlist:${network}:angle`,
     ttl: 60 * 60,
   })
   async fetchTokenList(_network: Network, networkName = 'mainnet') {

@@ -6,7 +6,6 @@ import { CacheOnInterval } from '~cache/cache-on-interval.decorator';
 import { Network } from '~types/network.interface';
 
 import { PancakeswapContractFactory } from '../contracts';
-import { PANCAKESWAP_DEFINITION } from '../pancakeswap.definition';
 
 @Injectable()
 export class BinanceSmartChainPancakeswapPoolAddressCacheManager {
@@ -16,7 +15,7 @@ export class BinanceSmartChainPancakeswapPoolAddressCacheManager {
   ) {}
 
   @CacheOnInterval({
-    key: `studio:${PANCAKESWAP_DEFINITION.id}:graph-top-pool-addresses`,
+    key: `studio:pancakeswap:graph-top-pool-addresses`,
     timeout: 15 * 60 * 1000,
     failOnMissingData: false,
   })
@@ -27,7 +26,7 @@ export class BinanceSmartChainPancakeswapPoolAddressCacheManager {
   }
 
   @CacheOnInterval({
-    key: `studio:${PANCAKESWAP_DEFINITION.id}:chef-pool-addresses`,
+    key: `studio:pancakeswap:chef-pool-addresses`,
     timeout: 15 * 60 * 1000,
     failOnMissingData: false,
   })
@@ -75,7 +74,7 @@ export class BinanceSmartChainPancakeswapPoolAddressCacheManager {
   }
 
   @CacheOnInterval({
-    key: `studio:${PANCAKESWAP_DEFINITION.id}:chef-v2-pool-addresses`,
+    key: `studio:pancakeswap:chef-v2-pool-addresses`,
     timeout: 15 * 60 * 1000,
     failOnMissingData: false,
   })
@@ -123,7 +122,7 @@ export class BinanceSmartChainPancakeswapPoolAddressCacheManager {
   }
 
   @CacheOnInterval({
-    key: `studio:${PANCAKESWAP_DEFINITION.id}:static-pool-addresses`,
+    key: `studio:pancakeswap:static-pool-addresses`,
     timeout: 15 * 60 * 1000,
     failOnMissingData: false,
   })

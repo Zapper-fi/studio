@@ -13,7 +13,7 @@ import {
 } from '~app-toolkit/helpers/presentation/display-item.present';
 import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { gqlFetch } from '~app-toolkit/helpers/the-graph.helper';
-import { SpoolContractFactory } from '~apps/spool';
+import { SpoolContractFactory, SpoolVault } from '~apps/spool/contracts';
 import { ANALYTICS_API_BASE_URL, SUBGRAPH_API_BASE_URL } from '~apps/spool/ethereum/spool.constants';
 import { WithMetaType } from '~position/display.interface';
 import { MetaType, Token } from '~position/position.interface';
@@ -26,8 +26,6 @@ import {
   GetTokenDefinitionsParams,
 } from '~position/template/contract-position.template.types';
 import { BaseToken } from '~position/token.interface';
-
-import { SpoolVault } from '../contracts';
 
 import { Platform, RewardAnalytics, VaultDetails, SpoolVaults, StrategyAnalytics, VaultAnalytics } from './spool.types';
 

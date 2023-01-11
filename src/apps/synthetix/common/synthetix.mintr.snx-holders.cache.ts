@@ -7,8 +7,6 @@ import { gqlFetch } from '~app-toolkit/helpers/the-graph.helper';
 import { Cache } from '~cache/cache.decorator';
 import { Network } from '~types/network.interface';
 
-import { SYNTHETIX_DEFINITION } from '../synthetix.definition';
-
 type Holder = {
   id: string;
   collateral: string;
@@ -48,7 +46,7 @@ export class SynthetixMintrSnxHoldersCache {
 
   @Cache({
     instance: 'business',
-    key: (network: Network) => `studio:${SYNTHETIX_DEFINITION.id}:${network}:all-snx-holders`,
+    key: (network: Network) => `studio:synthetix:${network}:all-snx-holders`,
     ttl: moment.duration('15', 'minutes').asSeconds(),
   })
   async getSynthetixHolders(network: Network) {

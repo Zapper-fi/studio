@@ -14,7 +14,6 @@ import {
 } from '~position/template/app-token.template.types';
 
 import { SynthetixContractFactory, SynthetixSynthToken } from '../contracts';
-import { SYNTHETIX_DEFINITION } from '../synthetix.definition';
 
 type SynthetixSynthDataProps = DefaultAppTokenDataProps & {
   exchangeable: boolean;
@@ -124,6 +123,6 @@ export abstract class SynthetixSynthTokenFetcher extends AppTokenTemplatePositio
   }
 
   async getImages({ appToken }: GetDisplayPropsParams<SynthetixSynthToken>) {
-    return [getAppAssetImage(SYNTHETIX_DEFINITION.id, appToken.symbol)];
+    return [getAppAssetImage(this.appId, appToken.symbol)];
   }
 }
