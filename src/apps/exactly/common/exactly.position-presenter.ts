@@ -3,8 +3,6 @@ import { PositionPresenterTemplate } from '~position/template/position-presenter
 import { EXACTLY_DEFINITION } from '../exactly.definition';
 
 export abstract class ExactlyPositionPresenter extends PositionPresenterTemplate {
-  appId = EXACTLY_DEFINITION.id;
-
   explorePresentationConfig = {
     tabs: [
       {

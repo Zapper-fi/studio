@@ -2,6 +2,7 @@ import { Inject } from '@nestjs/common';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { ZERO_ADDRESS } from '~app-toolkit/constants/address';
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import { CompoundContractFactory } from '~apps/compound';
 import { CompoundSupplyTokenFetcher, GetMarketsParams } from '~apps/compound/common/compound.supply.token-fetcher';
 import {
@@ -9,18 +10,14 @@ import {
   GetPricePerShareParams,
   GetUnderlyingTokensParams,
 } from '~position/template/app-token.template.types';
-import { Network } from '~types/network.interface';
 
-import { B_PROTOCOL_DEFINITION } from '../b-protocol.definition';
 import { BProtocolContractFactory, BProtocolCompoundComptroller, BProtocolCompoundToken } from '../contracts';
 
+@PositionTemplate()
 export class EthereumBProtocolCompoundSupplyTokenFetcher extends CompoundSupplyTokenFetcher<
   BProtocolCompoundToken,
   BProtocolCompoundComptroller
 > {
-  appId = B_PROTOCOL_DEFINITION.id;
-  groupId = B_PROTOCOL_DEFINITION.groups.compoundSupply.id;
-  network = Network.ETHEREUM_MAINNET;
   groupLabel = 'Compound Lending';
   comptrollerAddress = '0x9db10b9429989cc13408d7368644d4a1cb704ea3';
 

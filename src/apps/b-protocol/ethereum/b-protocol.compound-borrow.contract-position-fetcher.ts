@@ -2,6 +2,7 @@ import { Inject } from '@nestjs/common';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { ZERO_ADDRESS } from '~app-toolkit/constants/address';
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import { CompoundContractFactory } from '~apps/compound';
 import {
   CompoundBorrowContractPositionFetcher,
@@ -13,18 +14,14 @@ import {
   GetDataPropsParams,
   GetTokenBalancesParams,
 } from '~position/template/contract-position.template.types';
-import { Network } from '~types/network.interface';
 
-import { B_PROTOCOL_DEFINITION } from '../b-protocol.definition';
 import { BProtocolCompoundComptroller, BProtocolCompoundToken, BProtocolContractFactory } from '../contracts';
 
+@PositionTemplate()
 export class EthereumBProtocolCompoundBorrowContractPositionFetcher extends CompoundBorrowContractPositionFetcher<
   BProtocolCompoundToken,
   BProtocolCompoundComptroller
 > {
-  appId = B_PROTOCOL_DEFINITION.id;
-  groupId = B_PROTOCOL_DEFINITION.groups.compoundBorrow.id;
-  network = Network.ETHEREUM_MAINNET;
   groupLabel = 'Compound Lending';
   comptrollerAddress = '0x9db10b9429989cc13408d7368644d4a1cb704ea3';
 
