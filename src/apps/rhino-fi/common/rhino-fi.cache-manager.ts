@@ -5,8 +5,6 @@ import { toPairs } from 'lodash';
 import { ZERO_ADDRESS } from '~app-toolkit/constants/address';
 import { CacheOnInterval } from '~cache/cache-on-interval.decorator';
 
-import { RHINO_FI_DEFINITION } from '../rhino-fi.definition';
-
 type TokenRegistryResponse = {
   decimals: number;
   quantization: number;
@@ -28,7 +26,7 @@ export class RhinoFiCacheManager {
   constructor() {}
 
   @CacheOnInterval({
-    key: `studio:${RHINO_FI_DEFINITION.id}:supported-tokens:data`,
+    key: `studio:rhino-fi:supported-tokens:data`,
     timeout: 15 * 60 * 1000,
     failOnMissingData: false,
   })

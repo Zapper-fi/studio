@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 
 import { AbstractApp } from '~app/app.dynamic-module';
-import { AaveV2ContractFactory } from '~apps/aave-v2';
+import { AaveV2ContractFactory } from '~apps/aave-v2/contracts';
 
 import { ArbitrumRadiantCapitalPlatformFeesPositionFetcher } from './arbitrum/radiant-capital.platform-fees.contract-position-fetcher';
 import { ArbitrumRadiantCapitalPositionPresenter } from './arbitrum/radiant-capital.position-presenter';

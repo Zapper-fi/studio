@@ -4,8 +4,6 @@ import Axios from 'axios';
 import { CacheOnInterval } from '~cache/cache-on-interval.decorator';
 import { Network } from '~types/network.interface';
 
-import { PICKLE_DEFINITION } from '../pickle.definition';
-
 export type PicklePoolDetails = {
   identifier: string;
   liquidity_locked: number;
@@ -33,7 +31,7 @@ const NETWORK_MAPPING = {
 @Injectable()
 export class PickleApiJarRegistry {
   @CacheOnInterval({
-    key: `studio:${PICKLE_DEFINITION.id}:${PICKLE_DEFINITION.groups.jar.id}:jar-definitions-data`,
+    key: `studio:pickle:jar:jar-definitions-data`,
     timeout: 5 * 60 * 1000,
     failOnMissingData: false,
   })

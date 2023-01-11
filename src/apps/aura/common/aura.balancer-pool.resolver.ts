@@ -7,7 +7,6 @@ import { gqlFetch } from '~app-toolkit/helpers/the-graph.helper';
 import { Cache } from '~cache/cache.decorator';
 import { Network } from '~types/network.interface';
 
-import AURA_DEFINITION from '../aura.definition';
 import { AuraContractFactory } from '../contracts';
 
 export type BalancerPool = {
@@ -92,7 +91,7 @@ export class AuraBalancerPoolResolver {
   ) {}
 
   @Cache({
-    key: (poolId: string) => `studio:${AURA_DEFINITION.id}:balancer-pools-${poolId}`,
+    key: (poolId: string) => `studio:aura:balancer-pools-${poolId}`,
     ttl: 15 * 60,
   })
   private async getBalancerPoolData(poolId: string) {

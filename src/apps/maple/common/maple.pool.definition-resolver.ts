@@ -2,9 +2,6 @@ import { Injectable } from '@nestjs/common';
 import { gql, GraphQLClient } from 'graphql-request';
 
 import { CacheOnInterval } from '~cache/cache-on-interval.decorator';
-import { Network } from '~types/network.interface';
-
-import { MAPLE_DEFINITION } from '../maple.definition';
 
 type MaplePoolResponse = {
   poolV2S?: {
@@ -31,7 +28,7 @@ const ALL_POOLS_QUERY = gql`
 @Injectable()
 export class MaplePoolDefinitionResolver {
   @CacheOnInterval({
-    key: `studio:${MAPLE_DEFINITION.id}:${MAPLE_DEFINITION.groups.pool.id}:${Network.ETHEREUM_MAINNET}:pool-data`,
+    key: `studio:maple:pool:ethereum:pool-data`,
     timeout: 15 * 60 * 1000,
     failOnMissingData: false,
   })
