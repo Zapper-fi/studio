@@ -3,4 +3,5 @@
 /* eslint-disable */
 export { RadiantCapitalDataProvider__factory } from './RadiantCapitalDataProvider__factory';
 export { RadiantCapitalLendingProvider__factory } from './RadiantCapitalLendingProvider__factory';
+export { RadiantCapitalPlatformFees__factory } from './RadiantCapitalPlatformFees__factory';
 export { RadiantCapitalStaking__factory } from './RadiantCapitalStaking__factory';

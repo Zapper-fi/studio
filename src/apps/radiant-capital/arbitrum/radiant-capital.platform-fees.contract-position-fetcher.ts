@@ -14,13 +14,12 @@ import {
   GetTokenDefinitionsParams,
 } from '~position/template/contract-position.template.types';
 
-import { RadiantCapitalContractFactory, RadiantCapitalStaking } from '../contracts';
+import { RadiantCapitalContractFactory } from '../contracts';
+import { RadiantCapitalPlatformFees } from '../contracts/ethers/RadiantCapitalPlatformFees';
 
 @PositionTemplate()
-export class ArbitrumRadiantCapitalPlatformFeesPositionFetcher extends ContractPositionTemplatePositionFetcher<RadiantCapitalStaking> {
+export class ArbitrumRadiantCapitalPlatformFeesPositionFetcher extends ContractPositionTemplatePositionFetcher<RadiantCapitalPlatformFees> {
   groupLabel = 'Platform Fees';
-
-  radiantLpTokenAddress = '0x24704aff49645d32655a76df6d407e02d146dafc';
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
@@ -35,10 +34,10 @@ export class ArbitrumRadiantCapitalPlatformFeesPositionFetcher extends ContractP
   }
 
   getContract(address: string) {
-    return this.contractFactory.radiantCapitalStaking({ address, network: this.network });
+    return this.contractFactory.radiantCapitalPlatformFees({ address, network: this.network });
   }
 
-  async getTokenDefinitions({ contract }: GetTokenDefinitionsParams<RadiantCapitalStaking>) {
+  async getTokenDefinitions({ contract }: GetTokenDefinitionsParams<RadiantCapitalPlatformFees>) {
     const [rewards, radiantTokenAddressRaw] = await Promise.all([
       contract.claimableRewards(ZERO_ADDRESS),
       contract.stakingToken(),
@@ -50,7 +49,7 @@ export class ArbitrumRadiantCapitalPlatformFeesPositionFetcher extends ContractP
     return [
       {
         metaType: MetaType.LOCKED,
-        address: this.radiantLpTokenAddress, // Locked RDNT/WETH LP
+        address: radiantTokenAddressRaw.toLowerCase(), // Locked RDNT
         network: this.network,
       },
       {
@@ -73,13 +72,13 @@ export class ArbitrumRadiantCapitalPlatformFeesPositionFetcher extends ContractP
   }
 
   async getSecondaryLabel(
-    params: GetDisplayPropsParams<RadiantCapitalStaking>,
+    params: GetDisplayPropsParams<RadiantCapitalPlatformFees>,
   ): Promise<DisplayProps['secondaryLabel']> {
     const rewardToken = params.contractPosition.tokens[0];
     return buildDollarDisplayItem(rewardToken.price);
   }
 
-  async getImages({ contractPosition }: GetDisplayPropsParams<RadiantCapitalStaking>): Promise<string[]> {
+  async getImages({ contractPosition }: GetDisplayPropsParams<RadiantCapitalPlatformFees>): Promise<string[]> {
     return [getTokenImg(contractPosition.tokens[1].address, this.network)];
   }
 
@@ -87,7 +86,7 @@ export class ArbitrumRadiantCapitalPlatformFeesPositionFetcher extends ContractP
     address,
     contract,
     contractPosition,
-  }: GetTokenBalancesParams<RadiantCapitalStaking>) {
+  }: GetTokenBalancesParams<RadiantCapitalPlatformFees>) {
     const [lockedBalancesData, withdrawableDataRaw, platformFeesPlatformFees] = await Promise.all([
       contract.lockedBalances(address),
       contract.withdrawableBalance(address),
@@ -97,7 +96,7 @@ export class ArbitrumRadiantCapitalPlatformFeesPositionFetcher extends ContractP
     const withdrawableBalanceRaw = withdrawableDataRaw.amount.sub(withdrawableDataRaw.penaltyAmount).toString();
 
     return contractPosition.tokens.map((token, idx) => {
-      if (idx === 0) return lockedBalancesData.total; // Locked RDNT/WETH LP
+      if (idx === 0) return lockedBalancesData.total; // Locked RDNT
       if (idx === 1) return withdrawableBalanceRaw; // Vested/Unlocked RDNT
 
       const rewardTokenMatch = platformFeesPlatformFees.find(

@@ -17,216 +17,175 @@ import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi
 import type { Listener, Provider } from '@ethersproject/providers';
 import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
-export declare namespace MultiFeeDistribution {
-  export type RewardDataStruct = {
-    token: PromiseOrValue<string>;
-    amount: PromiseOrValue<BigNumberish>;
-  };
-
-  export type RewardDataStructOutput = [string, BigNumber] & {
-    token: string;
-    amount: BigNumber;
-  };
-
-  export type LockedBalanceStruct = {
-    amount: PromiseOrValue<BigNumberish>;
-    unlockTime: PromiseOrValue<BigNumberish>;
-  };
-
-  export type LockedBalanceStructOutput = [BigNumber, BigNumber] & {
-    amount: BigNumber;
-    unlockTime: BigNumber;
-  };
-}
-
 export interface RadiantCapitalStakingInterface extends utils.Interface {
   functions: {
-    'addReward(address)': FunctionFragment;
-    'claimableRewards(address)': FunctionFragment;
-    'delegateExit(address)': FunctionFragment;
-    'earnedBalances(address)': FunctionFragment;
-    'exit(bool,address)': FunctionFragment;
-    'exitDelegatee(address)': FunctionFragment;
-    'getReward(address[])': FunctionFragment;
-    'getRewardForDuration(address)': FunctionFragment;
-    'incentivesController()': FunctionFragment;
-    'lastTimeRewardApplicable(address)': FunctionFragment;
-    'lockDuration()': FunctionFragment;
-    'lockedBalances(address)': FunctionFragment;
-    'lockedSupply()': FunctionFragment;
-    'mint(address,uint256,bool)': FunctionFragment;
-    'minters(address)': FunctionFragment;
-    'mintersAreSet()': FunctionFragment;
+    'addPool(address,uint256)': FunctionFragment;
+    'batchUpdateAllocPoint(address[],uint256[])': FunctionFragment;
+    'claim(address,address[])': FunctionFragment;
+    'claimReceiver(address)': FunctionFragment;
+    'claimableReward(address,address[])': FunctionFragment;
+    'deposit(address,uint256)': FunctionFragment;
+    'emergencyWithdraw(address)': FunctionFragment;
+    'emissionSchedule(uint256)': FunctionFragment;
+    'maxMintableTokens()': FunctionFragment;
+    'mintedTokens()': FunctionFragment;
     'owner()': FunctionFragment;
-    'recoverERC20(address,uint256)': FunctionFragment;
+    'poolConfigurator()': FunctionFragment;
+    'poolInfo(address)': FunctionFragment;
+    'poolLength()': FunctionFragment;
+    'registeredTokens(uint256)': FunctionFragment;
     'renounceOwnership()': FunctionFragment;
-    'rewardData(address)': FunctionFragment;
-    'rewardLookback()': FunctionFragment;
-    'rewardPerToken(address)': FunctionFragment;
-    'rewardTokens(uint256)': FunctionFragment;
-    'rewards(address,address)': FunctionFragment;
-    'rewardsDuration()': FunctionFragment;
-    'setIncentivesController(address)': FunctionFragment;
-    'setMinters(address[])': FunctionFragment;
-    'stake(uint256,bool,address)': FunctionFragment;
-    'stakingToken()': FunctionFragment;
-    'totalBalance(address)': FunctionFragment;
-    'totalSupply()': FunctionFragment;
+    'rewardMinter()': FunctionFragment;
+    'rewardsPerSecond()': FunctionFragment;
+    'setClaimReceiver(address,address)': FunctionFragment;
+    'setOnwardIncentives(address,address)': FunctionFragment;
+    'start()': FunctionFragment;
+    'startTime()': FunctionFragment;
+    'totalAllocPoint()': FunctionFragment;
     'transferOwnership(address)': FunctionFragment;
-    'unlockedBalance(address)': FunctionFragment;
-    'userRewardPerTokenPaid(address,address)': FunctionFragment;
-    'withdraw(uint256)': FunctionFragment;
-    'withdrawExpiredLocks()': FunctionFragment;
-    'withdrawableBalance(address)': FunctionFragment;
+    'userBaseClaimable(address)': FunctionFragment;
+    'userInfo(address,address)': FunctionFragment;
+    'withdraw(address,uint256)': FunctionFragment;
   };
 
   getFunction(
     nameOrSignatureOrTopic:
-      | 'addReward'
-      | 'claimableRewards'
-      | 'delegateExit'
-      | 'earnedBalances'
-      | 'exit'
-      | 'exitDelegatee'
-      | 'getReward'
-      | 'getRewardForDuration'
-      | 'incentivesController'
-      | 'lastTimeRewardApplicable'
-      | 'lockDuration'
-      | 'lockedBalances'
-      | 'lockedSupply'
-      | 'mint'
-      | 'minters'
-      | 'mintersAreSet'
+      | 'addPool'
+      | 'batchUpdateAllocPoint'
+      | 'claim'
+      | 'claimReceiver'
+      | 'claimableReward'
+      | 'deposit'
+      | 'emergencyWithdraw'
+      | 'emissionSchedule'
+      | 'maxMintableTokens'
+      | 'mintedTokens'
       | 'owner'
-      | 'recoverERC20'
+      | 'poolConfigurator'
+      | 'poolInfo'
+      | 'poolLength'
+      | 'registeredTokens'
       | 'renounceOwnership'
-      | 'rewardData'
-      | 'rewardLookback'
-      | 'rewardPerToken'
-      | 'rewardTokens'
-      | 'rewards'
-      | 'rewardsDuration'
-      | 'setIncentivesController'
-      | 'setMinters'
-      | 'stake'
-      | 'stakingToken'
-      | 'totalBalance'
-      | 'totalSupply'
+      | 'rewardMinter'
+      | 'rewardsPerSecond'
+      | 'setClaimReceiver'
+      | 'setOnwardIncentives'
+      | 'start'
+      | 'startTime'
+      | 'totalAllocPoint'
       | 'transferOwnership'
-      | 'unlockedBalance'
-      | 'userRewardPerTokenPaid'
-      | 'withdraw'
-      | 'withdrawExpiredLocks'
-      | 'withdrawableBalance',
+      | 'userBaseClaimable'
+      | 'userInfo'
+      | 'withdraw',
   ): FunctionFragment;
 
-  encodeFunctionData(functionFragment: 'addReward', values: [PromiseOrValue<string>]): string;
-  encodeFunctionData(functionFragment: 'claimableRewards', values: [PromiseOrValue<string>]): string;
-  encodeFunctionData(functionFragment: 'delegateExit', values: [PromiseOrValue<string>]): string;
-  encodeFunctionData(functionFragment: 'earnedBalances', values: [PromiseOrValue<string>]): string;
-  encodeFunctionData(functionFragment: 'exit', values: [PromiseOrValue<boolean>, PromiseOrValue<string>]): string;
-  encodeFunctionData(functionFragment: 'exitDelegatee', values: [PromiseOrValue<string>]): string;
-  encodeFunctionData(functionFragment: 'getReward', values: [PromiseOrValue<string>[]]): string;
-  encodeFunctionData(functionFragment: 'getRewardForDuration', values: [PromiseOrValue<string>]): string;
-  encodeFunctionData(functionFragment: 'incentivesController', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'lastTimeRewardApplicable', values: [PromiseOrValue<string>]): string;
-  encodeFunctionData(functionFragment: 'lockDuration', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'lockedBalances', values: [PromiseOrValue<string>]): string;
-  encodeFunctionData(functionFragment: 'lockedSupply', values?: undefined): string;
   encodeFunctionData(
-    functionFragment: 'mint',
-    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>, PromiseOrValue<boolean>],
-  ): string;
-  encodeFunctionData(functionFragment: 'minters', values: [PromiseOrValue<string>]): string;
-  encodeFunctionData(functionFragment: 'mintersAreSet', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'owner', values?: undefined): string;
-  encodeFunctionData(
-    functionFragment: 'recoverERC20',
+    functionFragment: 'addPool',
     values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
   ): string;
-  encodeFunctionData(functionFragment: 'renounceOwnership', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'rewardData', values: [PromiseOrValue<string>]): string;
-  encodeFunctionData(functionFragment: 'rewardLookback', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'rewardPerToken', values: [PromiseOrValue<string>]): string;
-  encodeFunctionData(functionFragment: 'rewardTokens', values: [PromiseOrValue<BigNumberish>]): string;
-  encodeFunctionData(functionFragment: 'rewards', values: [PromiseOrValue<string>, PromiseOrValue<string>]): string;
-  encodeFunctionData(functionFragment: 'rewardsDuration', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'setIncentivesController', values: [PromiseOrValue<string>]): string;
-  encodeFunctionData(functionFragment: 'setMinters', values: [PromiseOrValue<string>[]]): string;
   encodeFunctionData(
-    functionFragment: 'stake',
-    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<boolean>, PromiseOrValue<string>],
+    functionFragment: 'batchUpdateAllocPoint',
+    values: [PromiseOrValue<string>[], PromiseOrValue<BigNumberish>[]],
   ): string;
-  encodeFunctionData(functionFragment: 'stakingToken', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'totalBalance', values: [PromiseOrValue<string>]): string;
-  encodeFunctionData(functionFragment: 'totalSupply', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'transferOwnership', values: [PromiseOrValue<string>]): string;
-  encodeFunctionData(functionFragment: 'unlockedBalance', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'claim', values: [PromiseOrValue<string>, PromiseOrValue<string>[]]): string;
+  encodeFunctionData(functionFragment: 'claimReceiver', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(
-    functionFragment: 'userRewardPerTokenPaid',
+    functionFragment: 'claimableReward',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>[]],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'deposit',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'emergencyWithdraw', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'emissionSchedule', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'maxMintableTokens', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'mintedTokens', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'owner', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'poolConfigurator', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'poolInfo', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'poolLength', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'registeredTokens', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'renounceOwnership', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'rewardMinter', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'rewardsPerSecond', values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: 'setClaimReceiver',
     values: [PromiseOrValue<string>, PromiseOrValue<string>],
   ): string;
-  encodeFunctionData(functionFragment: 'withdraw', values: [PromiseOrValue<BigNumberish>]): string;
-  encodeFunctionData(functionFragment: 'withdrawExpiredLocks', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'withdrawableBalance', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'setOnwardIncentives',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>],
+  ): string;
+  encodeFunctionData(functionFragment: 'start', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'startTime', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'totalAllocPoint', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'transferOwnership', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'userBaseClaimable', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'userInfo', values: [PromiseOrValue<string>, PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'withdraw',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
 
-  decodeFunctionResult(functionFragment: 'addReward', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'claimableRewards', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'delegateExit', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'earnedBalances', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'exit', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'exitDelegatee', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'getReward', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'getRewardForDuration', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'incentivesController', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'lastTimeRewardApplicable', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'lockDuration', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'lockedBalances', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'lockedSupply', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'mint', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'minters', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'mintersAreSet', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'addPool', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'batchUpdateAllocPoint', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'claim', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'claimReceiver', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'claimableReward', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'deposit', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'emergencyWithdraw', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'emissionSchedule', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'maxMintableTokens', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'mintedTokens', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'owner', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'recoverERC20', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'poolConfigurator', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'poolInfo', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'poolLength', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'registeredTokens', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'renounceOwnership', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'rewardData', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'rewardLookback', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'rewardPerToken', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'rewardTokens', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'rewards', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'rewardsDuration', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'setIncentivesController', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'setMinters', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'stake', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'stakingToken', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'totalBalance', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'totalSupply', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'rewardMinter', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'rewardsPerSecond', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'setClaimReceiver', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'setOnwardIncentives', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'start', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'startTime', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'totalAllocPoint', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'transferOwnership', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'unlockedBalance', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'userRewardPerTokenPaid', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'userBaseClaimable', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'userInfo', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'withdraw', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'withdrawExpiredLocks', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'withdrawableBalance', data: BytesLike): Result;
 
   events: {
+    'Deposit(address,address,uint256)': EventFragment;
+    'EmergencyWithdraw(address,address,uint256)': EventFragment;
     'OwnershipTransferred(address,address)': EventFragment;
-    'Recovered(address,uint256)': EventFragment;
-    'RewardAdded(uint256)': EventFragment;
-    'RewardPaid(address,address,uint256)': EventFragment;
-    'RewardsDurationUpdated(address,uint256)': EventFragment;
-    'Staked(address,uint256,bool)': EventFragment;
-    'Withdrawn(address,uint256,uint256)': EventFragment;
+    'Withdraw(address,address,uint256)': EventFragment;
   };
 
+  getEvent(nameOrSignatureOrTopic: 'Deposit'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'EmergencyWithdraw'): EventFragment;
   getEvent(nameOrSignatureOrTopic: 'OwnershipTransferred'): EventFragment;
-  getEvent(nameOrSignatureOrTopic: 'Recovered'): EventFragment;
-  getEvent(nameOrSignatureOrTopic: 'RewardAdded'): EventFragment;
-  getEvent(nameOrSignatureOrTopic: 'RewardPaid'): EventFragment;
-  getEvent(nameOrSignatureOrTopic: 'RewardsDurationUpdated'): EventFragment;
-  getEvent(nameOrSignatureOrTopic: 'Staked'): EventFragment;
-  getEvent(nameOrSignatureOrTopic: 'Withdrawn'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'Withdraw'): EventFragment;
 }
+
+export interface DepositEventObject {
+  token: string;
+  user: string;
+  amount: BigNumber;
+}
+export type DepositEvent = TypedEvent<[string, string, BigNumber], DepositEventObject>;
+
+export type DepositEventFilter = TypedEventFilter<DepositEvent>;
+
+export interface EmergencyWithdrawEventObject {
+  token: string;
+  user: string;
+  amount: BigNumber;
+}
+export type EmergencyWithdrawEvent = TypedEvent<[string, string, BigNumber], EmergencyWithdrawEventObject>;
+
+export type EmergencyWithdrawEventFilter = TypedEventFilter<EmergencyWithdrawEvent>;
 
 export interface OwnershipTransferredEventObject {
   previousOwner: string;
@@ -236,55 +195,14 @@ export type OwnershipTransferredEvent = TypedEvent<[string, string], OwnershipTr
 
 export type OwnershipTransferredEventFilter = TypedEventFilter<OwnershipTransferredEvent>;
 
-export interface RecoveredEventObject {
+export interface WithdrawEventObject {
   token: string;
+  user: string;
   amount: BigNumber;
 }
-export type RecoveredEvent = TypedEvent<[string, BigNumber], RecoveredEventObject>;
+export type WithdrawEvent = TypedEvent<[string, string, BigNumber], WithdrawEventObject>;
 
-export type RecoveredEventFilter = TypedEventFilter<RecoveredEvent>;
-
-export interface RewardAddedEventObject {
-  reward: BigNumber;
-}
-export type RewardAddedEvent = TypedEvent<[BigNumber], RewardAddedEventObject>;
-
-export type RewardAddedEventFilter = TypedEventFilter<RewardAddedEvent>;
-
-export interface RewardPaidEventObject {
-  user: string;
-  rewardsToken: string;
-  reward: BigNumber;
-}
-export type RewardPaidEvent = TypedEvent<[string, string, BigNumber], RewardPaidEventObject>;
-
-export type RewardPaidEventFilter = TypedEventFilter<RewardPaidEvent>;
-
-export interface RewardsDurationUpdatedEventObject {
-  token: string;
-  newDuration: BigNumber;
-}
-export type RewardsDurationUpdatedEvent = TypedEvent<[string, BigNumber], RewardsDurationUpdatedEventObject>;
-
-export type RewardsDurationUpdatedEventFilter = TypedEventFilter<RewardsDurationUpdatedEvent>;
-
-export interface StakedEventObject {
-  user: string;
-  amount: BigNumber;
-  locked: boolean;
-}
-export type StakedEvent = TypedEvent<[string, BigNumber, boolean], StakedEventObject>;
-
-export type StakedEventFilter = TypedEventFilter<StakedEvent>;
-
-export interface WithdrawnEventObject {
-  user: string;
-  receivedAmount: BigNumber;
-  penaltyPaid: BigNumber;
-}
-export type WithdrawnEvent = TypedEvent<[string, BigNumber, BigNumber], WithdrawnEventObject>;
-
-export type WithdrawnEventFilter = TypedEventFilter<WithdrawnEvent>;
+export type WithdrawEventFilter = TypedEventFilter<WithdrawEvent>;
 
 export interface RadiantCapitalStaking extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
@@ -309,456 +227,364 @@ export interface RadiantCapitalStaking extends BaseContract {
   removeListener: OnEvent<this>;
 
   functions: {
-    addReward(
-      _rewardsToken: PromiseOrValue<string>,
+    addPool(
+      _token: PromiseOrValue<string>,
+      _allocPoint: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    claimableRewards(
-      account: PromiseOrValue<string>,
+    batchUpdateAllocPoint(
+      _tokens: PromiseOrValue<string>[],
+      _allocPoints: PromiseOrValue<BigNumberish>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<ContractTransaction>;
+
+    claim(
+      _user: PromiseOrValue<string>,
+      _tokens: PromiseOrValue<string>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<ContractTransaction>;
+
+    claimReceiver(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[string]>;
+
+    claimableReward(
+      _user: PromiseOrValue<string>,
+      _tokens: PromiseOrValue<string>[],
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber[]]>;
+
+    deposit(
+      _token: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<ContractTransaction>;
+
+    emergencyWithdraw(
+      _token: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<ContractTransaction>;
+
+    emissionSchedule(
+      arg0: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<
-      [MultiFeeDistribution.RewardDataStructOutput[]] & {
-        rewards: MultiFeeDistribution.RewardDataStructOutput[];
+      [BigNumber, BigNumber] & {
+        startTimeOffset: BigNumber;
+        rewardsPerSecond: BigNumber;
       }
     >;
 
-    delegateExit(
-      delegatee: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<ContractTransaction>;
+    maxMintableTokens(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    earnedBalances(
-      user: PromiseOrValue<string>,
-      overrides?: CallOverrides,
-    ): Promise<
-      [BigNumber, MultiFeeDistribution.LockedBalanceStructOutput[]] & {
-        total: BigNumber;
-        earningsData: MultiFeeDistribution.LockedBalanceStructOutput[];
-      }
-    >;
-
-    exit(
-      claimRewards: PromiseOrValue<boolean>,
-      onBehalfOf: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<ContractTransaction>;
-
-    exitDelegatee(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[string]>;
-
-    getReward(
-      _rewardTokens: PromiseOrValue<string>[],
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<ContractTransaction>;
-
-    getRewardForDuration(_rewardsToken: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
-
-    incentivesController(overrides?: CallOverrides): Promise<[string]>;
-
-    lastTimeRewardApplicable(_rewardsToken: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
-
-    lockDuration(overrides?: CallOverrides): Promise<[BigNumber]>;
-
-    lockedBalances(
-      user: PromiseOrValue<string>,
-      overrides?: CallOverrides,
-    ): Promise<
-      [BigNumber, BigNumber, BigNumber, MultiFeeDistribution.LockedBalanceStructOutput[]] & {
-        total: BigNumber;
-        unlockable: BigNumber;
-        locked: BigNumber;
-        lockData: MultiFeeDistribution.LockedBalanceStructOutput[];
-      }
-    >;
-
-    lockedSupply(overrides?: CallOverrides): Promise<[BigNumber]>;
-
-    mint(
-      user: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
-      withPenalty: PromiseOrValue<boolean>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<ContractTransaction>;
-
-    minters(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[boolean]>;
-
-    mintersAreSet(overrides?: CallOverrides): Promise<[boolean]>;
+    mintedTokens(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     owner(overrides?: CallOverrides): Promise<[string]>;
 
-    recoverERC20(
-      tokenAddress: PromiseOrValue<string>,
-      tokenAmount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<ContractTransaction>;
+    poolConfigurator(overrides?: CallOverrides): Promise<[string]>;
 
-    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
-
-    rewardData(
+    poolInfo(
       arg0: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<
-      [BigNumber, BigNumber, BigNumber, BigNumber, BigNumber] & {
-        periodFinish: BigNumber;
-        rewardRate: BigNumber;
-        lastUpdateTime: BigNumber;
-        rewardPerTokenStored: BigNumber;
-        balance: BigNumber;
+      [BigNumber, BigNumber, BigNumber, string] & {
+        allocPoint: BigNumber;
+        lastRewardTime: BigNumber;
+        accRewardPerShare: BigNumber;
+        onwardIncentives: string;
       }
     >;
 
-    rewardLookback(overrides?: CallOverrides): Promise<[BigNumber]>;
+    poolLength(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    rewardPerToken(_rewardsToken: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
+    registeredTokens(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[string]>;
 
-    rewardTokens(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[string]>;
+    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
-    rewards(
-      arg0: PromiseOrValue<string>,
-      arg1: PromiseOrValue<string>,
-      overrides?: CallOverrides,
-    ): Promise<[BigNumber]>;
+    rewardMinter(overrides?: CallOverrides): Promise<[string]>;
 
-    rewardsDuration(overrides?: CallOverrides): Promise<[BigNumber]>;
+    rewardsPerSecond(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    setIncentivesController(
-      _controller: PromiseOrValue<string>,
+    setClaimReceiver(
+      _user: PromiseOrValue<string>,
+      _receiver: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    setMinters(
-      _minters: PromiseOrValue<string>[],
+    setOnwardIncentives(
+      _token: PromiseOrValue<string>,
+      _incentives: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    stake(
-      amount: PromiseOrValue<BigNumberish>,
-      lock: PromiseOrValue<boolean>,
-      onBehalfOf: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<ContractTransaction>;
+    start(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
-    stakingToken(overrides?: CallOverrides): Promise<[string]>;
+    startTime(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    totalBalance(user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber] & { amount: BigNumber }>;
-
-    totalSupply(overrides?: CallOverrides): Promise<[BigNumber]>;
+    totalAllocPoint(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     transferOwnership(
       newOwner: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    unlockedBalance(
-      user: PromiseOrValue<string>,
-      overrides?: CallOverrides,
-    ): Promise<[BigNumber] & { amount: BigNumber }>;
+    userBaseClaimable(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    userRewardPerTokenPaid(
+    userInfo(
       arg0: PromiseOrValue<string>,
       arg1: PromiseOrValue<string>,
       overrides?: CallOverrides,
-    ): Promise<[BigNumber]>;
+    ): Promise<[BigNumber, BigNumber] & { amount: BigNumber; rewardDebt: BigNumber }>;
 
     withdraw(
-      amount: PromiseOrValue<BigNumberish>,
+      _token: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
-
-    withdrawExpiredLocks(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
-
-    withdrawableBalance(
-      user: PromiseOrValue<string>,
-      overrides?: CallOverrides,
-    ): Promise<[BigNumber, BigNumber] & { amount: BigNumber; penaltyAmount: BigNumber }>;
   };
 
-  addReward(
-    _rewardsToken: PromiseOrValue<string>,
+  addPool(
+    _token: PromiseOrValue<string>,
+    _allocPoint: PromiseOrValue<BigNumberish>,
     overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  claimableRewards(
-    account: PromiseOrValue<string>,
+  batchUpdateAllocPoint(
+    _tokens: PromiseOrValue<string>[],
+    _allocPoints: PromiseOrValue<BigNumberish>[],
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
+  ): Promise<ContractTransaction>;
+
+  claim(
+    _user: PromiseOrValue<string>,
+    _tokens: PromiseOrValue<string>[],
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
+  ): Promise<ContractTransaction>;
+
+  claimReceiver(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<string>;
+
+  claimableReward(
+    _user: PromiseOrValue<string>,
+    _tokens: PromiseOrValue<string>[],
     overrides?: CallOverrides,
-  ): Promise<MultiFeeDistribution.RewardDataStructOutput[]>;
+  ): Promise<BigNumber[]>;
 
-  delegateExit(
-    delegatee: PromiseOrValue<string>,
+  deposit(
+    _token: PromiseOrValue<string>,
+    _amount: PromiseOrValue<BigNumberish>,
     overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  earnedBalances(
-    user: PromiseOrValue<string>,
+  emergencyWithdraw(
+    _token: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
+  ): Promise<ContractTransaction>;
+
+  emissionSchedule(
+    arg0: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides,
   ): Promise<
-    [BigNumber, MultiFeeDistribution.LockedBalanceStructOutput[]] & {
-      total: BigNumber;
-      earningsData: MultiFeeDistribution.LockedBalanceStructOutput[];
+    [BigNumber, BigNumber] & {
+      startTimeOffset: BigNumber;
+      rewardsPerSecond: BigNumber;
     }
   >;
 
-  exit(
-    claimRewards: PromiseOrValue<boolean>,
-    onBehalfOf: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> },
-  ): Promise<ContractTransaction>;
+  maxMintableTokens(overrides?: CallOverrides): Promise<BigNumber>;
 
-  exitDelegatee(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<string>;
-
-  getReward(
-    _rewardTokens: PromiseOrValue<string>[],
-    overrides?: Overrides & { from?: PromiseOrValue<string> },
-  ): Promise<ContractTransaction>;
-
-  getRewardForDuration(_rewardsToken: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
-
-  incentivesController(overrides?: CallOverrides): Promise<string>;
-
-  lastTimeRewardApplicable(_rewardsToken: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
-
-  lockDuration(overrides?: CallOverrides): Promise<BigNumber>;
-
-  lockedBalances(
-    user: PromiseOrValue<string>,
-    overrides?: CallOverrides,
-  ): Promise<
-    [BigNumber, BigNumber, BigNumber, MultiFeeDistribution.LockedBalanceStructOutput[]] & {
-      total: BigNumber;
-      unlockable: BigNumber;
-      locked: BigNumber;
-      lockData: MultiFeeDistribution.LockedBalanceStructOutput[];
-    }
-  >;
-
-  lockedSupply(overrides?: CallOverrides): Promise<BigNumber>;
-
-  mint(
-    user: PromiseOrValue<string>,
-    amount: PromiseOrValue<BigNumberish>,
-    withPenalty: PromiseOrValue<boolean>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> },
-  ): Promise<ContractTransaction>;
-
-  minters(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
-
-  mintersAreSet(overrides?: CallOverrides): Promise<boolean>;
+  mintedTokens(overrides?: CallOverrides): Promise<BigNumber>;
 
   owner(overrides?: CallOverrides): Promise<string>;
 
-  recoverERC20(
-    tokenAddress: PromiseOrValue<string>,
-    tokenAmount: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> },
-  ): Promise<ContractTransaction>;
+  poolConfigurator(overrides?: CallOverrides): Promise<string>;
 
-  renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
-
-  rewardData(
+  poolInfo(
     arg0: PromiseOrValue<string>,
     overrides?: CallOverrides,
   ): Promise<
-    [BigNumber, BigNumber, BigNumber, BigNumber, BigNumber] & {
-      periodFinish: BigNumber;
-      rewardRate: BigNumber;
-      lastUpdateTime: BigNumber;
-      rewardPerTokenStored: BigNumber;
-      balance: BigNumber;
+    [BigNumber, BigNumber, BigNumber, string] & {
+      allocPoint: BigNumber;
+      lastRewardTime: BigNumber;
+      accRewardPerShare: BigNumber;
+      onwardIncentives: string;
     }
   >;
 
-  rewardLookback(overrides?: CallOverrides): Promise<BigNumber>;
+  poolLength(overrides?: CallOverrides): Promise<BigNumber>;
 
-  rewardPerToken(_rewardsToken: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
+  registeredTokens(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
 
-  rewardTokens(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
+  renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
-  rewards(arg0: PromiseOrValue<string>, arg1: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
+  rewardMinter(overrides?: CallOverrides): Promise<string>;
 
-  rewardsDuration(overrides?: CallOverrides): Promise<BigNumber>;
+  rewardsPerSecond(overrides?: CallOverrides): Promise<BigNumber>;
 
-  setIncentivesController(
-    _controller: PromiseOrValue<string>,
+  setClaimReceiver(
+    _user: PromiseOrValue<string>,
+    _receiver: PromiseOrValue<string>,
     overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  setMinters(
-    _minters: PromiseOrValue<string>[],
+  setOnwardIncentives(
+    _token: PromiseOrValue<string>,
+    _incentives: PromiseOrValue<string>,
     overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  stake(
-    amount: PromiseOrValue<BigNumberish>,
-    lock: PromiseOrValue<boolean>,
-    onBehalfOf: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> },
-  ): Promise<ContractTransaction>;
+  start(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
-  stakingToken(overrides?: CallOverrides): Promise<string>;
+  startTime(overrides?: CallOverrides): Promise<BigNumber>;
 
-  totalBalance(user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
-
-  totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
+  totalAllocPoint(overrides?: CallOverrides): Promise<BigNumber>;
 
   transferOwnership(
     newOwner: PromiseOrValue<string>,
     overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  unlockedBalance(user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
+  userBaseClaimable(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  userRewardPerTokenPaid(
+  userInfo(
     arg0: PromiseOrValue<string>,
     arg1: PromiseOrValue<string>,
     overrides?: CallOverrides,
-  ): Promise<BigNumber>;
+  ): Promise<[BigNumber, BigNumber] & { amount: BigNumber; rewardDebt: BigNumber }>;
 
   withdraw(
-    amount: PromiseOrValue<BigNumberish>,
+    _token: PromiseOrValue<string>,
+    _amount: PromiseOrValue<BigNumberish>,
     overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  withdrawExpiredLocks(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
-
-  withdrawableBalance(
-    user: PromiseOrValue<string>,
-    overrides?: CallOverrides,
-  ): Promise<[BigNumber, BigNumber] & { amount: BigNumber; penaltyAmount: BigNumber }>;
-
   callStatic: {
-    addReward(_rewardsToken: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
-
-    claimableRewards(
-      account: PromiseOrValue<string>,
-      overrides?: CallOverrides,
-    ): Promise<MultiFeeDistribution.RewardDataStructOutput[]>;
-
-    delegateExit(delegatee: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
-
-    earnedBalances(
-      user: PromiseOrValue<string>,
-      overrides?: CallOverrides,
-    ): Promise<
-      [BigNumber, MultiFeeDistribution.LockedBalanceStructOutput[]] & {
-        total: BigNumber;
-        earningsData: MultiFeeDistribution.LockedBalanceStructOutput[];
-      }
-    >;
-
-    exit(
-      claimRewards: PromiseOrValue<boolean>,
-      onBehalfOf: PromiseOrValue<string>,
+    addPool(
+      _token: PromiseOrValue<string>,
+      _allocPoint: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
-    exitDelegatee(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<string>;
-
-    getReward(_rewardTokens: PromiseOrValue<string>[], overrides?: CallOverrides): Promise<void>;
-
-    getRewardForDuration(_rewardsToken: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
-
-    incentivesController(overrides?: CallOverrides): Promise<string>;
-
-    lastTimeRewardApplicable(_rewardsToken: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
-
-    lockDuration(overrides?: CallOverrides): Promise<BigNumber>;
-
-    lockedBalances(
-      user: PromiseOrValue<string>,
-      overrides?: CallOverrides,
-    ): Promise<
-      [BigNumber, BigNumber, BigNumber, MultiFeeDistribution.LockedBalanceStructOutput[]] & {
-        total: BigNumber;
-        unlockable: BigNumber;
-        locked: BigNumber;
-        lockData: MultiFeeDistribution.LockedBalanceStructOutput[];
-      }
-    >;
-
-    lockedSupply(overrides?: CallOverrides): Promise<BigNumber>;
-
-    mint(
-      user: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
-      withPenalty: PromiseOrValue<boolean>,
+    batchUpdateAllocPoint(
+      _tokens: PromiseOrValue<string>[],
+      _allocPoints: PromiseOrValue<BigNumberish>[],
       overrides?: CallOverrides,
     ): Promise<void>;
 
-    minters(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
+    claim(_user: PromiseOrValue<string>, _tokens: PromiseOrValue<string>[], overrides?: CallOverrides): Promise<void>;
 
-    mintersAreSet(overrides?: CallOverrides): Promise<boolean>;
+    claimReceiver(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<string>;
+
+    claimableReward(
+      _user: PromiseOrValue<string>,
+      _tokens: PromiseOrValue<string>[],
+      overrides?: CallOverrides,
+    ): Promise<BigNumber[]>;
+
+    deposit(
+      _token: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
+
+    emergencyWithdraw(_token: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
+
+    emissionSchedule(
+      arg0: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<
+      [BigNumber, BigNumber] & {
+        startTimeOffset: BigNumber;
+        rewardsPerSecond: BigNumber;
+      }
+    >;
+
+    maxMintableTokens(overrides?: CallOverrides): Promise<BigNumber>;
+
+    mintedTokens(overrides?: CallOverrides): Promise<BigNumber>;
 
     owner(overrides?: CallOverrides): Promise<string>;
 
-    recoverERC20(
-      tokenAddress: PromiseOrValue<string>,
-      tokenAmount: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides,
-    ): Promise<void>;
+    poolConfigurator(overrides?: CallOverrides): Promise<string>;
 
-    renounceOwnership(overrides?: CallOverrides): Promise<void>;
-
-    rewardData(
+    poolInfo(
       arg0: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<
-      [BigNumber, BigNumber, BigNumber, BigNumber, BigNumber] & {
-        periodFinish: BigNumber;
-        rewardRate: BigNumber;
-        lastUpdateTime: BigNumber;
-        rewardPerTokenStored: BigNumber;
-        balance: BigNumber;
+      [BigNumber, BigNumber, BigNumber, string] & {
+        allocPoint: BigNumber;
+        lastRewardTime: BigNumber;
+        accRewardPerShare: BigNumber;
+        onwardIncentives: string;
       }
     >;
 
-    rewardLookback(overrides?: CallOverrides): Promise<BigNumber>;
+    poolLength(overrides?: CallOverrides): Promise<BigNumber>;
 
-    rewardPerToken(_rewardsToken: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
+    registeredTokens(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
 
-    rewardTokens(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
+    renounceOwnership(overrides?: CallOverrides): Promise<void>;
 
-    rewards(arg0: PromiseOrValue<string>, arg1: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
+    rewardMinter(overrides?: CallOverrides): Promise<string>;
 
-    rewardsDuration(overrides?: CallOverrides): Promise<BigNumber>;
+    rewardsPerSecond(overrides?: CallOverrides): Promise<BigNumber>;
 
-    setIncentivesController(_controller: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
-
-    setMinters(_minters: PromiseOrValue<string>[], overrides?: CallOverrides): Promise<void>;
-
-    stake(
-      amount: PromiseOrValue<BigNumberish>,
-      lock: PromiseOrValue<boolean>,
-      onBehalfOf: PromiseOrValue<string>,
+    setClaimReceiver(
+      _user: PromiseOrValue<string>,
+      _receiver: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
-    stakingToken(overrides?: CallOverrides): Promise<string>;
+    setOnwardIncentives(
+      _token: PromiseOrValue<string>,
+      _incentives: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    totalBalance(user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
+    start(overrides?: CallOverrides): Promise<void>;
 
-    totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
+    startTime(overrides?: CallOverrides): Promise<BigNumber>;
+
+    totalAllocPoint(overrides?: CallOverrides): Promise<BigNumber>;
 
     transferOwnership(newOwner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    unlockedBalance(user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
+    userBaseClaimable(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    userRewardPerTokenPaid(
+    userInfo(
       arg0: PromiseOrValue<string>,
       arg1: PromiseOrValue<string>,
       overrides?: CallOverrides,
-    ): Promise<BigNumber>;
+    ): Promise<[BigNumber, BigNumber] & { amount: BigNumber; rewardDebt: BigNumber }>;
 
-    withdraw(amount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
-
-    withdrawExpiredLocks(overrides?: CallOverrides): Promise<void>;
-
-    withdrawableBalance(
-      user: PromiseOrValue<string>,
+    withdraw(
+      _token: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
-    ): Promise<[BigNumber, BigNumber] & { amount: BigNumber; penaltyAmount: BigNumber }>;
+    ): Promise<void>;
   };
 
   filters: {
+    'Deposit(address,address,uint256)'(
+      token?: PromiseOrValue<string> | null,
+      user?: PromiseOrValue<string> | null,
+      amount?: null,
+    ): DepositEventFilter;
+    Deposit(
+      token?: PromiseOrValue<string> | null,
+      user?: PromiseOrValue<string> | null,
+      amount?: null,
+    ): DepositEventFilter;
+
+    'EmergencyWithdraw(address,address,uint256)'(
+      token?: PromiseOrValue<string> | null,
+      user?: PromiseOrValue<string> | null,
+      amount?: null,
+    ): EmergencyWithdrawEventFilter;
+    EmergencyWithdraw(
+      token?: PromiseOrValue<string> | null,
+      user?: PromiseOrValue<string> | null,
+      amount?: null,
+    ): EmergencyWithdrawEventFilter;
+
     'OwnershipTransferred(address,address)'(
       previousOwner?: PromiseOrValue<string> | null,
       newOwner?: PromiseOrValue<string> | null,
@@ -768,286 +594,207 @@ export interface RadiantCapitalStaking extends BaseContract {
       newOwner?: PromiseOrValue<string> | null,
     ): OwnershipTransferredEventFilter;
 
-    'Recovered(address,uint256)'(token?: null, amount?: null): RecoveredEventFilter;
-    Recovered(token?: null, amount?: null): RecoveredEventFilter;
-
-    'RewardAdded(uint256)'(reward?: null): RewardAddedEventFilter;
-    RewardAdded(reward?: null): RewardAddedEventFilter;
-
-    'RewardPaid(address,address,uint256)'(
-      user?: PromiseOrValue<string> | null,
-      rewardsToken?: PromiseOrValue<string> | null,
-      reward?: null,
-    ): RewardPaidEventFilter;
-    RewardPaid(
-      user?: PromiseOrValue<string> | null,
-      rewardsToken?: PromiseOrValue<string> | null,
-      reward?: null,
-    ): RewardPaidEventFilter;
-
-    'RewardsDurationUpdated(address,uint256)'(token?: null, newDuration?: null): RewardsDurationUpdatedEventFilter;
-    RewardsDurationUpdated(token?: null, newDuration?: null): RewardsDurationUpdatedEventFilter;
-
-    'Staked(address,uint256,bool)'(
+    'Withdraw(address,address,uint256)'(
+      token?: PromiseOrValue<string> | null,
       user?: PromiseOrValue<string> | null,
       amount?: null,
-      locked?: null,
-    ): StakedEventFilter;
-    Staked(user?: PromiseOrValue<string> | null, amount?: null, locked?: null): StakedEventFilter;
-
-    'Withdrawn(address,uint256,uint256)'(
+    ): WithdrawEventFilter;
+    Withdraw(
+      token?: PromiseOrValue<string> | null,
       user?: PromiseOrValue<string> | null,
-      receivedAmount?: null,
-      penaltyPaid?: null,
-    ): WithdrawnEventFilter;
-    Withdrawn(user?: PromiseOrValue<string> | null, receivedAmount?: null, penaltyPaid?: null): WithdrawnEventFilter;
+      amount?: null,
+    ): WithdrawEventFilter;
   };
 
   estimateGas: {
-    addReward(
-      _rewardsToken: PromiseOrValue<string>,
+    addPool(
+      _token: PromiseOrValue<string>,
+      _allocPoint: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    claimableRewards(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
-
-    delegateExit(
-      delegatee: PromiseOrValue<string>,
+    batchUpdateAllocPoint(
+      _tokens: PromiseOrValue<string>[],
+      _allocPoints: PromiseOrValue<BigNumberish>[],
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    earnedBalances(user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
-
-    exit(
-      claimRewards: PromiseOrValue<boolean>,
-      onBehalfOf: PromiseOrValue<string>,
+    claim(
+      _user: PromiseOrValue<string>,
+      _tokens: PromiseOrValue<string>[],
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    exitDelegatee(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
+    claimReceiver(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    getReward(
-      _rewardTokens: PromiseOrValue<string>[],
+    claimableReward(
+      _user: PromiseOrValue<string>,
+      _tokens: PromiseOrValue<string>[],
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
+
+    deposit(
+      _token: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    getRewardForDuration(_rewardsToken: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
-
-    incentivesController(overrides?: CallOverrides): Promise<BigNumber>;
-
-    lastTimeRewardApplicable(_rewardsToken: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
-
-    lockDuration(overrides?: CallOverrides): Promise<BigNumber>;
-
-    lockedBalances(user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
-
-    lockedSupply(overrides?: CallOverrides): Promise<BigNumber>;
-
-    mint(
-      user: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
-      withPenalty: PromiseOrValue<boolean>,
+    emergencyWithdraw(
+      _token: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    minters(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
+    emissionSchedule(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    mintersAreSet(overrides?: CallOverrides): Promise<BigNumber>;
+    maxMintableTokens(overrides?: CallOverrides): Promise<BigNumber>;
+
+    mintedTokens(overrides?: CallOverrides): Promise<BigNumber>;
 
     owner(overrides?: CallOverrides): Promise<BigNumber>;
 
-    recoverERC20(
-      tokenAddress: PromiseOrValue<string>,
-      tokenAmount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<BigNumber>;
+    poolConfigurator(overrides?: CallOverrides): Promise<BigNumber>;
+
+    poolInfo(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
+
+    poolLength(overrides?: CallOverrides): Promise<BigNumber>;
+
+    registeredTokens(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
-    rewardData(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
+    rewardMinter(overrides?: CallOverrides): Promise<BigNumber>;
 
-    rewardLookback(overrides?: CallOverrides): Promise<BigNumber>;
+    rewardsPerSecond(overrides?: CallOverrides): Promise<BigNumber>;
 
-    rewardPerToken(_rewardsToken: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
-
-    rewardTokens(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
-
-    rewards(arg0: PromiseOrValue<string>, arg1: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
-
-    rewardsDuration(overrides?: CallOverrides): Promise<BigNumber>;
-
-    setIncentivesController(
-      _controller: PromiseOrValue<string>,
+    setClaimReceiver(
+      _user: PromiseOrValue<string>,
+      _receiver: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    setMinters(
-      _minters: PromiseOrValue<string>[],
+    setOnwardIncentives(
+      _token: PromiseOrValue<string>,
+      _incentives: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    stake(
-      amount: PromiseOrValue<BigNumberish>,
-      lock: PromiseOrValue<boolean>,
-      onBehalfOf: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<BigNumber>;
+    start(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
-    stakingToken(overrides?: CallOverrides): Promise<BigNumber>;
+    startTime(overrides?: CallOverrides): Promise<BigNumber>;
 
-    totalBalance(user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
-
-    totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
+    totalAllocPoint(overrides?: CallOverrides): Promise<BigNumber>;
 
     transferOwnership(
       newOwner: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    unlockedBalance(user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
+    userBaseClaimable(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    userRewardPerTokenPaid(
-      arg0: PromiseOrValue<string>,
-      arg1: PromiseOrValue<string>,
-      overrides?: CallOverrides,
-    ): Promise<BigNumber>;
+    userInfo(arg0: PromiseOrValue<string>, arg1: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     withdraw(
-      amount: PromiseOrValue<BigNumberish>,
+      _token: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
-
-    withdrawExpiredLocks(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
-
-    withdrawableBalance(user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
   };
 
   populateTransaction: {
-    addReward(
-      _rewardsToken: PromiseOrValue<string>,
+    addPool(
+      _token: PromiseOrValue<string>,
+      _allocPoint: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    claimableRewards(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    delegateExit(
-      delegatee: PromiseOrValue<string>,
+    batchUpdateAllocPoint(
+      _tokens: PromiseOrValue<string>[],
+      _allocPoints: PromiseOrValue<BigNumberish>[],
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    earnedBalances(user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    exit(
-      claimRewards: PromiseOrValue<boolean>,
-      onBehalfOf: PromiseOrValue<string>,
+    claim(
+      _user: PromiseOrValue<string>,
+      _tokens: PromiseOrValue<string>[],
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    exitDelegatee(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    claimReceiver(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    getReward(
-      _rewardTokens: PromiseOrValue<string>[],
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<PopulatedTransaction>;
-
-    getRewardForDuration(
-      _rewardsToken: PromiseOrValue<string>,
+    claimableReward(
+      _user: PromiseOrValue<string>,
+      _tokens: PromiseOrValue<string>[],
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
-    incentivesController(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    lastTimeRewardApplicable(
-      _rewardsToken: PromiseOrValue<string>,
-      overrides?: CallOverrides,
-    ): Promise<PopulatedTransaction>;
-
-    lockDuration(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    lockedBalances(user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    lockedSupply(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    mint(
-      user: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
-      withPenalty: PromiseOrValue<boolean>,
+    deposit(
+      _token: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    minters(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    emergencyWithdraw(
+      _token: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<PopulatedTransaction>;
 
-    mintersAreSet(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    emissionSchedule(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    maxMintableTokens(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    mintedTokens(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    recoverERC20(
-      tokenAddress: PromiseOrValue<string>,
-      tokenAmount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<PopulatedTransaction>;
+    poolConfigurator(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    poolInfo(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    poolLength(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    registeredTokens(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
-    rewardData(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    rewardMinter(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    rewardLookback(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    rewardsPerSecond(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    rewardPerToken(_rewardsToken: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    rewardTokens(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    rewards(
-      arg0: PromiseOrValue<string>,
-      arg1: PromiseOrValue<string>,
-      overrides?: CallOverrides,
-    ): Promise<PopulatedTransaction>;
-
-    rewardsDuration(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    setIncentivesController(
-      _controller: PromiseOrValue<string>,
+    setClaimReceiver(
+      _user: PromiseOrValue<string>,
+      _receiver: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    setMinters(
-      _minters: PromiseOrValue<string>[],
+    setOnwardIncentives(
+      _token: PromiseOrValue<string>,
+      _incentives: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    stake(
-      amount: PromiseOrValue<BigNumberish>,
-      lock: PromiseOrValue<boolean>,
-      onBehalfOf: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<PopulatedTransaction>;
+    start(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
-    stakingToken(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    startTime(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    totalBalance(user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    totalSupply(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    totalAllocPoint(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     transferOwnership(
       newOwner: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    unlockedBalance(user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    userBaseClaimable(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    userRewardPerTokenPaid(
+    userInfo(
       arg0: PromiseOrValue<string>,
       arg1: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     withdraw(
-      amount: PromiseOrValue<BigNumberish>,
+      _token: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
-
-    withdrawExpiredLocks(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
-
-    withdrawableBalance(user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
   };
 }
