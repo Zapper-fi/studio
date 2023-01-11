@@ -1,10 +1,8 @@
 import { Injectable } from '@nestjs/common';
-import Axios from 'axios';
+import axios from 'axios';
 
 import { MerkleCache } from '~position/template/merkle.cache';
 import { Network } from '~types/network.interface';
-
-import { LLAMA_AIRFORCE_DEFINITION } from '../llama-airforce.definition';
 
 type LlamaAirforceMerkleClaim = {
   index: number;
@@ -20,19 +18,19 @@ type LlamaAirforceMerkleData = {
 
 @Injectable()
 export class EthereumLlamaAirforceMerkleCache extends MerkleCache<LlamaAirforceMerkleClaim> {
-  appId = LLAMA_AIRFORCE_DEFINITION.id;
-  groupId = LLAMA_AIRFORCE_DEFINITION.groups.airdrop.id;
+  appId = 'llama-airforce';
+  groupId = 'airdrop';
   network = Network.ETHEREUM_MAINNET;
 
   async resolveMerkleData() {
     const [{ data: uCrvData }, { data: uFxsData }, { data: uCvxData }] = await Promise.all([
-      Axios.get<LlamaAirforceMerkleData>(
+      axios.get<LlamaAirforceMerkleData>(
         'https://raw.githubusercontent.com/0xAlunara/Llama-Airforce-Airdrops/master/ucrv/latest.json',
       ),
-      Axios.get<LlamaAirforceMerkleData>(
+      axios.get<LlamaAirforceMerkleData>(
         'https://raw.githubusercontent.com/0xAlunara/Llama-Airforce-Airdrops/master/ufxs/latest.json',
       ),
-      Axios.get<LlamaAirforceMerkleData>(
+      axios.get<LlamaAirforceMerkleData>(
         'https://raw.githubusercontent.com/0xAlunara/Llama-Airforce-Airdrops/master/ucvx/latest.json',
       ),
     ]);

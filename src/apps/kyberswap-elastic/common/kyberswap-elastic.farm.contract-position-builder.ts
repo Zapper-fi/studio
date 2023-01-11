@@ -16,7 +16,6 @@ import { TokenDependencySelector } from '~position/selectors/token-dependency-se
 import { Network } from '~types/network.interface';
 
 import { KyberswapElasticContractFactory } from '../contracts';
-import { KYBERSWAP_ELASTIC_DEFINITION } from '../kyberswap-elastic.definition';
 
 import { KyberswapElasticLiquidityPositionDataProps } from './kyberswap-elastic.liquidity.contract-position-fetcher';
 import {
@@ -147,8 +146,8 @@ export class KyberswapElasticFarmContractPositionBuilder {
     const balance: ContractPositionBalance<KyberswapElasticLiquidityPositionDataProps> = {
       type: ContractType.POSITION,
       address: this.managerAddress,
-      appId: KYBERSWAP_ELASTIC_DEFINITION.id,
-      groupId: KYBERSWAP_ELASTIC_DEFINITION.groups.farm.id,
+      appId: 'kyberswap',
+      groupId: 'farm',
       network,
       tokens,
       dataProps,

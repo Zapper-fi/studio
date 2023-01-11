@@ -5,7 +5,6 @@ import { gql } from 'graphql-request';
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { getAppAssetImage } from '~app-toolkit/helpers/presentation/image.present';
 import { gqlFetch } from '~app-toolkit/helpers/the-graph.helper';
-import { SYNTHETIX_DEFINITION } from '~apps/synthetix/synthetix.definition';
 import { MetaType } from '~position/position.interface';
 import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
 import {
@@ -81,7 +80,7 @@ export abstract class OptimismKwentaPerpContractPositionFetcher extends Contract
 
   async getImages({ contractPosition }: GetDisplayPropsParams<KwentaFutures>) {
     const baseAsset = await this.getBaseAsset({ contractPosition });
-    return [getAppAssetImage(SYNTHETIX_DEFINITION.id, `s${baseAsset}`)];
+    return [getAppAssetImage('synthetix', `s${baseAsset}`)];
   }
 
   async getTokenBalancesPerPosition({ address, contract }: GetTokenBalancesParams<KwentaFutures>) {

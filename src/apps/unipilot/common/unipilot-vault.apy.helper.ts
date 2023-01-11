@@ -8,7 +8,6 @@ import { CacheOnInterval } from '~cache/cache-on-interval.decorator';
 import { Network } from '~types';
 
 import { VAULT_ADDRESSES } from '../graphql/queries';
-import UNIPILOT_DEFINITION from '../unipilot.definition';
 import { SERVER_ENDPOINTS, SUBGRAPH_ENDPOINTS } from '../utils/constants';
 import { ResponseAPRData, VaultAddressesResponse } from '../utils/generalTypes';
 import { convertToQueryString } from '../utils/helpers';
@@ -19,7 +18,7 @@ export class UnipilotVaultAPYHelper {
 
   //getting apys sepearately for each network
   @CacheOnInterval({
-    key: `studio:${UNIPILOT_DEFINITION.id}:${UNIPILOT_DEFINITION.groups.pool.id}:unipilot-definitions-data`,
+    key: `studio:unipilot:pool:definitions-data`,
     timeout: 5 * 60 * 1000,
     failOnMissingData: false,
   })

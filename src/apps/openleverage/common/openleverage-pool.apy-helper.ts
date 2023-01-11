@@ -3,12 +3,10 @@ import Axios from 'axios';
 
 import { CacheOnInterval } from '~cache/cache-on-interval.decorator';
 
-import { OPENLEVERAGE_DEFINITION } from '../openleverage.definition';
-
 @Injectable()
 export class OpenleveragePoolAPYHelper {
   @CacheOnInterval({
-    key: `studio:${OPENLEVERAGE_DEFINITION.id}:${OPENLEVERAGE_DEFINITION.groups.pool.id}:openleverage-definitions-data`,
+    key: `studio:openleverage:pool:openleverage-definitions-data`,
     timeout: 5 * 60 * 1000,
     failOnMissingData: false,
   })
