@@ -1,8 +1,8 @@
 import { Inject } from '@nestjs/common';
 import { parseBytes32String } from 'ethers/lib/utils';
-import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import { getAppAssetImage } from '~app-toolkit/helpers/presentation/image.present';
 import { SYNTHETIX_DEFINITION } from '~apps/synthetix/synthetix.definition';
 import { MetaType } from '~position/position.interface';
@@ -30,7 +30,7 @@ export class OptimismSynthetixPerpV2ContractPositionFetcher extends ContractPosi
   }
 
   async getDefinitions(): Promise<DefaultContractPositionDefinition[]> {
-    return [{ address: '0xa1245E5B52555e40aa8A3Ffb95C5C426c7c7ef12' }];
+    return [{ address: '0xa1245e5b52555e40aa8a3ffb95c5c426c7c7ef12' }];
   }
 
   async getTokenDefinitions() {
