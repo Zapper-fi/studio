@@ -37,6 +37,12 @@ export const SYNTHETIX_DEFINITION = appDefinition({
       type: GroupType.POSITION,
       label: 'Loan',
     },
+
+    perpV2: {
+      id: 'perp-v2',
+      type: GroupType.POSITION,
+      label: 'Perp v2',
+    },
   },
   url: 'https://synthetix.io/',
   links: {
