@@ -8,7 +8,7 @@ import { PositionTemplate } from '~app-toolkit/decorators/position-template.deco
 import { buildDollarDisplayItem, buildNumberDisplayItem } from '~app-toolkit/helpers/presentation/display-item.present';
 import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { gqlFetch } from '~app-toolkit/helpers/the-graph.helper';
-import { SpoolContractFactory } from '~apps/spool';
+import { SpoolContractFactory, SpoolStaking } from '~apps/spool/contracts';
 import {
   REWARDS_QUERY,
   SPOOL_ADDRESS,
@@ -26,8 +26,6 @@ import {
   GetDisplayPropsParams,
   GetTokenBalancesParams,
 } from '~position/template/contract-position.template.types';
-
-import { SpoolStaking } from '../contracts';
 
 type SpoolStakingDataProps = {
   tvl: number;

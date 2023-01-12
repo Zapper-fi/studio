@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 
 import { AbstractApp } from '~app/app.dynamic-module';
 import { AaveAmmContractFactory } from '~apps/aave-amm/contracts';
-import { AaveV2ContractFactory } from '~apps/aave-v2';
+import { AaveV2ContractFactory } from '~apps/aave-v2/contracts';
 
 import { SturdyContractFactory } from './contracts';
 import { EthereumSturdyPositionPresenter } from './ethereum/sturdy.position-presenter';

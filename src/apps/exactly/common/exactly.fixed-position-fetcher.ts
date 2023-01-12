@@ -5,7 +5,6 @@ import { APP_TOOLKIT, type IAppToolkit } from '~app-toolkit/app-toolkit.interfac
 import type { GetDataPropsParams, GetTokenPropsParams } from '~position/template/app-token.template.types';
 
 import { ExactlyContractFactory, type Market } from '../contracts';
-import { EXACTLY_DEFINITION } from '../exactly.definition';
 
 import { ExactlyDefinitionsResolver, type ExactlyMarketDefinition } from './exactly.definitions-resolver';
 import { type ExactlyMarketProps, ExactlyTokenFetcher } from './exactly.token-fetcher';
@@ -15,7 +14,6 @@ export type ExactlyFixedMarketProps = ExactlyMarketProps & { maturity: number };
 export abstract class ExactlyFixedPositionFetcher<
   V extends ExactlyMarketProps = ExactlyMarketProps,
 > extends ExactlyTokenFetcher<V> {
-  appId = EXACTLY_DEFINITION.id;
   isDebt = false;
 
   constructor(

@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 
 import { AbstractApp } from '~app/app.dynamic-module';
-import { UniswapV2ContractFactory } from '~apps/uniswap-v2';
+import { UniswapV2ContractFactory } from '~apps/uniswap-v2/contracts';
 
 import { MeshswapContractFactory } from './contracts';
 import { MeshswapAppDefinition } from './meshswap.definition';

@@ -4,6 +4,33 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.364.1](https://github.com/Zapper-fi/studio/compare/v0.364.0...v0.364.1) (2023-01-11)
+
+
+### Bug Fixes
+
+* **radiant-capital:** Fix platform-fees position supplied address and add lp staking position ([#2110](https://github.com/Zapper-fi/studio/issues/2110)) ([ed37811](https://github.com/Zapper-fi/studio/commit/ed3781120f916122f54ce090de6afdccf91d0d5a))
+
+## [0.364.0](https://github.com/Zapper-fi/studio/compare/v0.363.0...v0.364.0) (2023-01-11)
+
+
+### Features
+
+* **apps:** Remove remaining app definition uses ([#2108](https://github.com/Zapper-fi/studio/issues/2108)) ([b86c478](https://github.com/Zapper-fi/studio/commit/b86c478d466df5bd59adb14143980115af1f429f))
+
+## [0.363.0](https://github.com/Zapper-fi/studio/compare/v0.362.0...v0.363.0) (2023-01-11)
+
+
+### Features
+
+* **apps:** Remove index files and most references of definitions ([#2105](https://github.com/Zapper-fi/studio/issues/2105)) ([40f3cf5](https://github.com/Zapper-fi/studio/commit/40f3cf5146866016a0becef464101d95dc7b8efe))
+
+
+### Bug Fixes
+
+* **llama-airforce:** New auraBAL pounder and project logo ([#2096](https://github.com/Zapper-fi/studio/issues/2096)) ([e209e81](https://github.com/Zapper-fi/studio/commit/e209e816ec9f7530d2ef5894e0321a1feea0821e))
+* **presenters:** Use PresenterTemplate decorator ([#2097](https://github.com/Zapper-fi/studio/issues/2097)) ([8286814](https://github.com/Zapper-fi/studio/commit/828681475205190146267158004be0708d136c97))
+
 ## [0.362.0](https://github.com/Zapper-fi/studio/compare/v0.361.1...v0.362.0) (2023-01-10)
 
 

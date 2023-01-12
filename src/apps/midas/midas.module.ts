@@ -1,12 +1,20 @@
-import { Register } from '~app-toolkit/decorators';
+import { Module } from '@nestjs/common';
+
 import { AbstractApp } from '~app/app.dynamic-module';
 
 import { BinanceSmartChainMidasMarketTokenFetcher } from './binance-smart-chain/midas.market.token-fetcher';
 import { MidasContractFactory } from './contracts';
-import { MidasAppDefinition, MIDAS_DEFINITION } from './midas.definition';
+import { EvmosMidasMarketTokenFetcher } from './evmos/midas.market.token-fetcher';
+import { MidasAppDefinition } from './midas.definition';
+import { PolygonMidasMarketTokenFetcher } from './polygon/midas.market.token-fetcher';
 
-@Register.AppModule({
-  appId: MIDAS_DEFINITION.id,
-  providers: [BinanceSmartChainMidasMarketTokenFetcher, MidasAppDefinition, MidasContractFactory],
+@Module({
+  providers: [
+    BinanceSmartChainMidasMarketTokenFetcher,
+    EvmosMidasMarketTokenFetcher,
+    MidasAppDefinition,
+    MidasContractFactory,
+    PolygonMidasMarketTokenFetcher,
+  ],
 })
 export class MidasAppModule extends AbstractApp() {}
