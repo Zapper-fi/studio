@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.367.0](https://github.com/Zapper-fi/studio/compare/v0.366.1...v0.367.0) (2023-01-13)
+
+
+### Features
+
+* **euler:** Fix folder of euler position presenter ([72d88e5](https://github.com/Zapper-fi/studio/commit/72d88e5e3f62df91efe345c2e11aa7e57110021a))
+
 ## [0.366.1](https://github.com/Zapper-fi/studio/compare/v0.366.0...v0.366.1) (2023-01-13)
 
 
