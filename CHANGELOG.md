@@ -4,6 +4,14 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.366.1](https://github.com/Zapper-fi/studio/compare/v0.366.0...v0.366.1) (2023-01-13)
+
+
+### Bug Fixes
+
+* **apps:** Revert removal of constructor ([4ee2eb8](https://github.com/Zapper-fi/studio/commit/4ee2eb867bfdf977dcabce0bcecb6f56bb00952f))
+* **apps:** Small OCD change ([df51f78](https://github.com/Zapper-fi/studio/commit/df51f78a7897e55a26c6b6fbb807c53655b5b83f))
+
 ## [0.366.0](https://github.com/Zapper-fi/studio/compare/v0.365.0...v0.366.0) (2023-01-13)
 
 
