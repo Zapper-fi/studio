@@ -52,7 +52,7 @@ type GetTopPoolsResponse = {
 
 const GET_TOP_POOLS_QUERY = gql`
   query topPools {
-    pools(first: 50, orderBy: totalValueLockedUSD, orderDirection: desc, subgraphError: allow) {
+    pools(first: 300, orderBy: totalValueLockedUSD, orderDirection: desc, subgraphError: allow) {
       id
       feeTier
       token0 {
