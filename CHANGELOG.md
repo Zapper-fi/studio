@@ -4,6 +4,20 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.365.0](https://github.com/Zapper-fi/studio/compare/v0.364.1...v0.365.0) (2023-01-13)
+
+
+### Features
+
+* further Integration midas on polygon, evmos ([#2107](https://github.com/Zapper-fi/studio/issues/2107)) ([8a4f284](https://github.com/Zapper-fi/studio/commit/8a4f2843e6ee15533b2cd21d4b52d73e6522ef50))
+* **synthetix:** perp v2 ([#2112](https://github.com/Zapper-fi/studio/issues/2112)) ([69a6adb](https://github.com/Zapper-fi/studio/commit/69a6adbd1635569746f3a4bf4a452e8e75940cc0))
+
+
+### Bug Fixes
+
+* **decorators:** Add more info to Position decorator to enable debugging ([#2116](https://github.com/Zapper-fi/studio/issues/2116)) ([a4f65de](https://github.com/Zapper-fi/studio/commit/a4f65de974f76156c7a1dfcc9d2eeead03ef35bd))
+* **synthethix:** Linting ([#2114](https://github.com/Zapper-fi/studio/issues/2114)) ([71c7fcb](https://github.com/Zapper-fi/studio/commit/71c7fcb8b3cb7be6c7ff313e141aa0e6d7d3efd8))
+
 ## [0.364.1](https://github.com/Zapper-fi/studio/compare/v0.364.0...v0.364.1) (2023-01-11)
 
 
