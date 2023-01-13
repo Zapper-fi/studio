@@ -11,7 +11,6 @@ import { PolygonInsuraceMiningTokenFetcher } from './polygon/insurace.mining.tok
 
 @Module({
   providers: [
-    InsuraceAppDefinition,
     InsuraceContractFactory,
     // Avalanche
     AvalancheInsuraceMiningTokenFetcher,

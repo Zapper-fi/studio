@@ -13,7 +13,6 @@ import { YieldProtocolAppDefinition } from './yield-protocol.definition';
 
 @Module({
   providers: [
-    YieldProtocolAppDefinition,
     YieldProtocolContractFactory,
     ArbitrumYieldProtocolBorrowContractPositionFetcher,
     ArbitrumYieldProtocolLendTokenFetcher,

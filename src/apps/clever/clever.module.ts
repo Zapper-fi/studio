@@ -10,7 +10,6 @@ import { EthereumCleverLockContractPositionFetcher } from './ethereum/clever.loc
 
 @Module({
   providers: [
-    CleverAppDefinition,
     CleverContractFactory,
     EthereumCleverLeverTokenFetcher,
     EthereumCleverFurnaceContractPositionFetcher,

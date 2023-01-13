@@ -13,7 +13,7 @@ import { VelodromeAppDefinition } from './velodrome.definition';
     OptimismVelodromePoolsTokenFetcher,
     OptimismVelodromeStakingContractPositionFetcher,
     OptimismVelodromeVotingEscrowContractPositionFetcher,
-    VelodromeAppDefinition,
+
     VelodromeContractFactory,
   ],
 })

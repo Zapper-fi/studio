@@ -7,6 +7,6 @@ import { EthereumMahadaoLockerContractPositionFetcher } from './ethereum/mahadao
 import { MahadaoAppDefinition } from './mahadao.definition';
 
 @Module({
-  providers: [MahadaoAppDefinition, MahadaoContractFactory, EthereumMahadaoLockerContractPositionFetcher],
+  providers: [MahadaoContractFactory, EthereumMahadaoLockerContractPositionFetcher],
 })
 export class MahadaoAppModule extends AbstractApp() {}

@@ -19,10 +19,9 @@ export async function generateAppModule(appId: string) {
     import { AbstractApp } from '~app/app.dynamic-module';
     
     import { ${appTitleCase}ContractFactory } from './contracts';
-    import { ${appTitleCase}AppDefinition } from './${appId}.definition';
 
     @Module({
-      providers: [${appTitleCase}AppDefinition, ${appTitleCase}ContractFactory],
+      providers: [${appTitleCase}ContractFactory],
     })
     export class ${appTitleCase}AppModule extends AbstractApp() {}
   `;

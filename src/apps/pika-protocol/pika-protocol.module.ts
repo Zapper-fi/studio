@@ -7,6 +7,6 @@ import { OptimismPikaProtocolVaultContractPositionFetcher } from './optimism/pik
 import { PikaProtocolAppDefinition } from './pika-protocol.definition';
 
 @Module({
-  providers: [PikaProtocolAppDefinition, PikaProtocolContractFactory, OptimismPikaProtocolVaultContractPositionFetcher],
+  providers: [PikaProtocolContractFactory, OptimismPikaProtocolVaultContractPositionFetcher],
 })
 export class PikaProtocolAppModule extends AbstractApp() {}

@@ -10,7 +10,6 @@ import { SaddleAppDefinition } from './saddle.definition';
 
 @Module({
   providers: [
-    SaddleAppDefinition,
     SaddleContractFactory,
     // Ethereum
     EthereumSaddleCommunalFarmContractPositionFetcher,

@@ -8,11 +8,6 @@ import { OptimismDhedgeV2PoolTokenFetcher } from './optimism/dhedge-v2.pool.toke
 import { PolygonDhedgeV2PoolTokenFetcher } from './polygon/dhedge-v2.pool.token-fetcher';
 
 @Module({
-  providers: [
-    DhedgeV2AppDefinition,
-    DhedgeV2ContractFactory,
-    OptimismDhedgeV2PoolTokenFetcher,
-    PolygonDhedgeV2PoolTokenFetcher,
-  ],
+  providers: [DhedgeV2ContractFactory, OptimismDhedgeV2PoolTokenFetcher, PolygonDhedgeV2PoolTokenFetcher],
 })
 export class DhedgeV2AppModule extends AbstractApp() {}

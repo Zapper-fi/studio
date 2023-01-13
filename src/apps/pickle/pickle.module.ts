@@ -44,7 +44,7 @@ import { PolygonPickleFarmContractPositionFetcher } from './polygon/pickle.maste
     OptimismPickleJarTokenFetcher,
     OptimismUniV3PickleJarTokenFetcher,
     PickleApiJarRegistry,
-    PickleAppDefinition,
+
     PickleContractFactory,
     PolygonPickleFarmContractPositionFetcher,
     PolygonPickleJarTokenFetcher,

@@ -10,7 +10,6 @@ import { JpegdAppDefinition } from './jpegd.definition';
 
 @Module({
   providers: [
-    JpegdAppDefinition,
     JpegdContractFactory,
     EthereumJpegdChefV1ContractPositionFetcher,
     EthereumJpegdChefV2ContractPositionFetcher,

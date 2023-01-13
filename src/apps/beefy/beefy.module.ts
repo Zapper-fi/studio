@@ -21,7 +21,6 @@ import { PolygonBeefyVaultTokenFetcher } from './polygon/beefy.vault.token-fetch
 
 @Module({
   providers: [
-    BeefyAppDefinition,
     BeefyContractFactory,
     // Helpers
     BeefyVaultTokenDefinitionsResolver,

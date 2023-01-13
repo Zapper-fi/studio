@@ -9,7 +9,6 @@ import { PolygonHoneyswapPoolTokenFetcher } from './polygon/honeyswap.pool.token
 
 @Module({
   providers: [
-    HoneyswapAppDefinition,
     HoneyswapContractFactory,
     // Gnosis
     GnosisHoneyswapPoolTokenFetcher,

@@ -11,7 +11,6 @@ import { OptimismHomoraV2FarmContractPositionFetcher } from './optimism/homora-v
 
 @Module({
   providers: [
-    HomoraV2AppDefinition,
     HomoraV2ContractFactory,
     // Ethereum
     EthereumHomoraV2FarmContractPositionFetcher,

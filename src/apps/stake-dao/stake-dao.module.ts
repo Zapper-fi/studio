@@ -11,7 +11,6 @@ import { StakeDaoAppDefinition } from './stake-dao.definition';
 
 @Module({
   providers: [
-    StakeDaoAppDefinition,
     StakeDaoContractFactory,
     EthereumStakeDaoLockerTokenFetcher,
     EthereumStakeDaoGaugeContractPositionFetcher,

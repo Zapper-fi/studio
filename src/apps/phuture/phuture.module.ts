@@ -9,7 +9,6 @@ import { PhutureAppDefinition } from './phuture.definition';
 
 @Module({
   providers: [
-    PhutureAppDefinition,
     PhutureContractFactory,
     // Avalanche
     AvalanchePhutureIndexTokenFetcher,

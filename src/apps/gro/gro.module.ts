@@ -10,7 +10,6 @@ import { GroAppDefinition } from './gro.definition';
 
 @Module({
   providers: [
-    GroAppDefinition,
     GroContractFactory,
     // Ethereum
     EthereumGroFarmContractPositionFetcher,

@@ -10,7 +10,6 @@ import { PolygonMeshswapSupplyTokenFetcher } from './polygon/meshswap.supply.tok
 
 @Module({
   providers: [
-    MeshswapAppDefinition,
     MeshswapContractFactory,
     UniswapV2ContractFactory,
     PolygonMeshswapPoolTokenFetcher,

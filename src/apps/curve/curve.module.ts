@@ -15,7 +15,6 @@ import { POLYGON_CURVE_PROVIDERS } from './polygon';
 
 @Module({
   providers: [
-    CurveAppDefinition,
     CurveContractFactory,
     CurveVolumeDataLoader,
     // Providers by Network

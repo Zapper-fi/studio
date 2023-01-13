@@ -9,7 +9,6 @@ import { EthereumBalancerV1PoolSubgraphVolumeDataLoader } from './ethereum/balan
 
 @Module({
   providers: [
-    BalancerV1AppDefinition,
     BalancerV1ContractFactory,
     EthereumBalancerV1PoolTokenFetcher,
     EthereumBalancerV1PoolSubgraphVolumeDataLoader,

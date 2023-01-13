@@ -11,7 +11,6 @@ import { EthereumBendDaoVariableDebtTokenFetcher } from './ethereum/bend-dao.var
 
 @Module({
   providers: [
-    BendDaoAppDefinition,
     BendDaoContractFactory,
     AaveV2ContractFactory,
     EthereumBendDaoVariableDebtTokenFetcher,

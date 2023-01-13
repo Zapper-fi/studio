@@ -10,7 +10,6 @@ import { GearboxAppDefinition } from './gearbox.definition';
 
 @Module({
   providers: [
-    GearboxAppDefinition,
     GearboxContractFactory,
     EthereumGearboxCreditAccountsContractPositionFetcher,
     EthereumGearboxLendingTokenFetcher,

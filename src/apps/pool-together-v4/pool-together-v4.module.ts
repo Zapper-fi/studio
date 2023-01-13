@@ -17,7 +17,7 @@ import { PoolTogetherV4AppDefinition } from './pool-together-v4.definition';
     OptimismPoolTogetherV4TicketTokenFetcher,
     PolygonPoolTogetherV4TicketTokenFetcher,
     PoolTogetherV4ApiPrizePoolRegistry,
-    PoolTogetherV4AppDefinition,
+
     PoolTogetherV4ContractFactory,
   ],
 })

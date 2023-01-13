@@ -14,7 +14,6 @@ import { InverseAppDefinition } from './inverse.definition';
 
 @Module({
   providers: [
-    InverseAppDefinition,
     InverseContractFactory,
     SynthetixContractFactory,
     EthereumInverseBorrowContractPositionFetcher,

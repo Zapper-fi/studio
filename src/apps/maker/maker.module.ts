@@ -9,7 +9,6 @@ import { MakerAppDefinition } from './maker.definition';
 
 @Module({
   providers: [
-    MakerAppDefinition,
     MakerContractFactory,
     EthereumMakerGovernanceContractPositionFetcher,
     EthereumMakerVaultContractPositionFetcher,

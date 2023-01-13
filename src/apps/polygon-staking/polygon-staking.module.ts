@@ -7,10 +7,6 @@ import { EthereumPolygonStakingContractPositionFetcher } from './ethereum/polygo
 import { PolygonStakingAppDefinition } from './polygon-staking.definition';
 
 @Module({
-  providers: [
-    PolygonStakingAppDefinition,
-    PolygonStakingContractFactory,
-    EthereumPolygonStakingContractPositionFetcher,
-  ],
+  providers: [PolygonStakingContractFactory, EthereumPolygonStakingContractPositionFetcher],
 })
 export class PolygonStakingAppModule extends AbstractApp() {}

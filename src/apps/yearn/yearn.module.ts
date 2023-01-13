@@ -15,7 +15,6 @@ import { YearnAppDefinition } from './yearn.definition';
 
 @Module({
   providers: [
-    YearnAppDefinition,
     YearnContractFactory,
     // Helpers
     YearnVaultTokenDefinitionsResolver,

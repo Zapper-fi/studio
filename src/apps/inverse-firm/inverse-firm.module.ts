@@ -7,6 +7,6 @@ import { EthereumInverseFirmLoanContractPositionFetcher } from './ethereum/inver
 import { InverseFirmAppDefinition } from './inverse-firm.definition';
 
 @Module({
-  providers: [InverseFirmAppDefinition, InverseFirmContractFactory, EthereumInverseFirmLoanContractPositionFetcher],
+  providers: [InverseFirmContractFactory, EthereumInverseFirmLoanContractPositionFetcher],
 })
 export class InverseFirmAppModule extends AbstractApp() {}

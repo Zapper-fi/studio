@@ -28,7 +28,7 @@ import { OptimismIronBankSupplyTokenFetcher } from './optimism/iron-bank.supply.
     FantomIronBankBorrowContractPositionFetcher,
     FantomIronBankPositionPresenter,
     FantomIronBankSupplyTokenFetcher,
-    IronBankAppDefinition,
+
     IronBankContractFactory,
     IronBankContractFactory,
     OptimismIronBankBorrowContractPositionFetcher,

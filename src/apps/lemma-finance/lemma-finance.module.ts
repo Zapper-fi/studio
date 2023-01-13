@@ -11,7 +11,6 @@ import { OptimismLemmaFinanceXUsdlTokenFetcher } from './optimism/lemma-finance.
 
 @Module({
   providers: [
-    LemmaFinanceAppDefinition,
     LemmaFinanceContractFactory,
     // Optimism
     OptimismLemmaFinanceSynthTokenFetcher,

@@ -13,7 +13,6 @@ import { PenguinAppDefinition } from './penguin.definition';
 
 @Module({
   providers: [
-    PenguinAppDefinition,
     PenguinContractFactory,
     AvalanchePenguinChefV1FarmContractPositionFetcher,
     AvalanchePenguinChefV2FarmContractPositionFetcher,

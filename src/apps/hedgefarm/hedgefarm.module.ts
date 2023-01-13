@@ -7,6 +7,6 @@ import { HedgefarmContractFactory } from './contracts';
 import { HedgefarmAppDefinition } from './hedgefarm.definition';
 
 @Module({
-  providers: [AvalancheHedgefarmAlphaOneTokenFetcher, HedgefarmAppDefinition, HedgefarmContractFactory],
+  providers: [AvalancheHedgefarmAlphaOneTokenFetcher, HedgefarmContractFactory],
 })
 export class HedgefarmAppModule extends AbstractApp() {}

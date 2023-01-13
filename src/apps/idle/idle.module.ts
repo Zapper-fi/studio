@@ -8,11 +8,6 @@ import { EthereumIdleVaultTokenFetcher } from './ethereum/idle.vault.token-fetch
 import { IdleAppDefinition } from './idle.definition';
 
 @Module({
-  providers: [
-    IdleAppDefinition,
-    IdleContractFactory,
-    EthereumIdleVaultContractPositionFetcher,
-    EthereumIdleVaultTokenFetcher,
-  ],
+  providers: [IdleContractFactory, EthereumIdleVaultContractPositionFetcher, EthereumIdleVaultTokenFetcher],
 })
 export class IdleAppModule extends AbstractApp() {}

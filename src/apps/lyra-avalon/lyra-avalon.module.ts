@@ -12,7 +12,6 @@ import { OptimismLyraAvalonStkLyraTokenFetcher } from './optimism/lyra-avalon.st
 
 @Module({
   providers: [
-    LyraAvalonAppDefinition,
     LyraAvalonContractFactory,
     OptimismLyraAvalonOptionsContractPositionFetcher,
     OptimismLyraAvalonPoolTokenFetcher,

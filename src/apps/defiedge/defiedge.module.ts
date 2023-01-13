@@ -12,7 +12,6 @@ import { PolygonDefiedgeStrategyTokenFetcher } from './polygon/defiedge.strategy
 
 @Module({
   providers: [
-    DefiedgeAppDefinition,
     DefiedgeContractFactory,
     DefiEdgeStrategyDefinitionsResolver,
     ArbitrumDefiedgeStrategyTokenFetcher,

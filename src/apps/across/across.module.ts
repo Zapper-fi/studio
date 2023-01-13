@@ -8,11 +8,6 @@ import { EthereumAcrossV1PoolTokenFetcher } from './ethereum/across.v1-pool.toke
 import { EthereumAcrossV2PoolTokenFetcher } from './ethereum/across.v2-pool.token-fetcher';
 
 @Module({
-  providers: [
-    AcrossAppDefinition,
-    AcrossContractFactory,
-    EthereumAcrossV1PoolTokenFetcher,
-    EthereumAcrossV2PoolTokenFetcher,
-  ],
+  providers: [AcrossContractFactory, EthereumAcrossV1PoolTokenFetcher, EthereumAcrossV2PoolTokenFetcher],
 })
 export class AcrossAppModule extends AbstractApp() {}

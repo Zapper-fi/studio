@@ -24,7 +24,7 @@ import { PoolTogetherV3AppDefinition } from './pool-together-v3.definition';
 @Module({
   providers: [
     PoolTogetherV3ApiPrizePoolRegistry,
-    PoolTogetherV3AppDefinition,
+
     PoolTogetherV3ContractFactory,
     PoolTogetherV3LogProvider,
     // Celo

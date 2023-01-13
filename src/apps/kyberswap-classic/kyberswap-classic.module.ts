@@ -21,7 +21,6 @@ import { PolygonKyberSwapClassicPoolTokenFetcher } from './polygon/kyberswap-cla
 
 @Module({
   providers: [
-    KyberSwapClassicAppDefinition,
     KyberswapClassicContractFactory,
     UniswapV2ContractFactory,
     EthereumKyberSwapClassicPoolTokenFetcher,

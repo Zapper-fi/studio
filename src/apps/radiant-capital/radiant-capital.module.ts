@@ -14,7 +14,6 @@ import { RadiantCapitalAppDefinition } from './radiant-capital.definition';
 
 @Module({
   providers: [
-    RadiantCapitalAppDefinition,
     RadiantCapitalContractFactory,
     AaveV2ContractFactory,
     ArbitrumRadiantCapitalPositionPresenter,

@@ -9,7 +9,6 @@ import { BluebitContractFactory } from './contracts';
 
 @Module({
   providers: [
-    BluebitAppDefinition,
     BluebitContractFactory,
     // Aurora
     AuroraBluebitFarmContractPositionFetcher,

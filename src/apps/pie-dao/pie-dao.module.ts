@@ -11,7 +11,6 @@ import { PieDaoAppDefinition } from './pie-dao.definition';
 
 @Module({
   providers: [
-    PieDaoAppDefinition,
     PieDaoContractFactory,
     // Ethereum
     EthereumPieDaoEDoughTokenFetcher,

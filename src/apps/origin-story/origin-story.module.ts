@@ -7,6 +7,6 @@ import { EthereumOriginStorySeriesContractPositionFetcher } from './ethereum/ori
 import { OriginStoryAppDefinition } from './origin-story.definition';
 
 @Module({
-  providers: [OriginStoryAppDefinition, OriginStoryContractFactory, EthereumOriginStorySeriesContractPositionFetcher],
+  providers: [OriginStoryContractFactory, EthereumOriginStorySeriesContractPositionFetcher],
 })
 export class OriginStoryAppModule extends AbstractApp() {}

@@ -8,6 +8,6 @@ import { EthereumRenDarknodeContractPositionFetcher } from './ethereum/ren.darkn
 import { RenModuleAppDefinition } from './ren.definition';
 
 @Module({
-  providers: [RenModuleAppDefinition, RenContractFactory, RenApiClient, EthereumRenDarknodeContractPositionFetcher],
+  providers: [RenContractFactory, RenApiClient, EthereumRenDarknodeContractPositionFetcher],
 })
 export class RenAppModule extends AbstractApp() {}

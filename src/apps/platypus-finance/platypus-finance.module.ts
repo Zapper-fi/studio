@@ -11,7 +11,6 @@ import { PlatypusFinanceAppDefinition } from './platypus-finance.definition';
 
 @Module({
   providers: [
-    PlatypusFinanceAppDefinition,
     PlatypusFinanceContractFactory,
     // Avalanche
     AvalanchePlatypusFinancePoolTokenFetcher,

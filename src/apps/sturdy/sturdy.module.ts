@@ -17,7 +17,6 @@ import { SturdyAppDefinition } from './sturdy.definition';
 
 @Module({
   providers: [
-    SturdyAppDefinition,
     SturdyContractFactory,
     AaveV2ContractFactory,
     AaveAmmContractFactory,

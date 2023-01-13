@@ -21,7 +21,7 @@ import { PolygonGammaStrategiesPoolTokenFetcher } from './polygon/gamma-strategi
     EthereumGammaStrategiesPoolTokenFetcher,
     EthereumGammaStrategiesTGammaTokenFetcher,
     EthereumGammaStrategiesXGammaTokenFetcher,
-    GammaStrategiesAppDefinition,
+
     GammaStrategiesContractFactory,
     OptimismGammaStrategiesPoolTokenFetcher,
     PolygonGammaStrategiesPoolTokenFetcher,

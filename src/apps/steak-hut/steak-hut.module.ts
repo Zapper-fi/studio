@@ -13,7 +13,7 @@ import { SteakHutAppDefinition } from './steak-hut.definition';
     AvalancheSteakHutPoolContractPositionFetcher,
     AvalancheSteakHutStakingContractPositionFetcher,
     AvalancheSteakHutVeTokenFetcher,
-    SteakHutAppDefinition,
+
     SteakHutContractFactory,
   ],
 })

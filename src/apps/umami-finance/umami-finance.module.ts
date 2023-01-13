@@ -12,7 +12,6 @@ import { UmamiFinanceAppDefinition } from './umami-finance.definition';
 
 @Module({
   providers: [
-    UmamiFinanceAppDefinition,
     UmamiFinanceContractFactory,
     UmamiFinanceYieldResolver,
     // Arbitrum

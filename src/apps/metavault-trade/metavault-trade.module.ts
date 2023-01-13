@@ -11,7 +11,6 @@ import { PolygonPerpContractPositionFetcher } from './polygon/metavault-trade.pe
 
 @Module({
   providers: [
-    MetavaultTradeAppDefinition,
     MetavaultTradeContractFactory,
     //Polygon
     PolygonMetavaultTradeEsMvxTokenFetcher,

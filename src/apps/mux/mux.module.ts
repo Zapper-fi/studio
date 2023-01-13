@@ -17,7 +17,6 @@ import { MuxAppDefinition } from './mux.definition';
 
 @Module({
   providers: [
-    MuxAppDefinition,
     MuxContractFactory,
     // Arbitrum
     ArbitrumMuxFarmContractPositionFetcher,

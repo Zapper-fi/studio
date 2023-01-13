@@ -9,7 +9,6 @@ import { EthereumBottoGovernanceContractPositionFetcher } from './ethereum/botto
 
 @Module({
   providers: [
-    BottoAppDefinition,
     BottoContractFactory,
     EthereumBottoFarmContractPositionFetcher,
     EthereumBottoGovernanceContractPositionFetcher,

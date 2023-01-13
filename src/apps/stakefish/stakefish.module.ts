@@ -7,6 +7,6 @@ import { EthereumStakefishStakingContractPositionFetcher } from './ethereum/stak
 import { StakefishAppDefinition } from './stakefish.definition';
 
 @Module({
-  providers: [EthereumStakefishStakingContractPositionFetcher, StakefishAppDefinition, StakefishContractFactory],
+  providers: [EthereumStakefishStakingContractPositionFetcher, StakefishContractFactory],
 })
 export class StakefishAppModule extends AbstractApp() {}

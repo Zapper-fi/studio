@@ -20,7 +20,6 @@ import { SynthetixAppDefinition } from './synthetix.definition';
 
 @Module({
   providers: [
-    SynthetixAppDefinition,
     SynthetixContractFactory,
     SynthetixMintrSnxHoldersCache,
     // Ethereum

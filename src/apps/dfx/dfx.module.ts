@@ -11,7 +11,6 @@ import { PolygonDfxStakingContractPositionFetcher } from './polygon/dfx.staking.
 
 @Module({
   providers: [
-    DfxAppDefinition,
     DfxContractFactory,
     // Ethereum
     EthereumDfxCurveTokenFetcher,

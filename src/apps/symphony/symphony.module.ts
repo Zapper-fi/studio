@@ -10,7 +10,6 @@ import { SymphonyAppDefinition } from './symphony.definition';
 
 @Module({
   providers: [
-    SymphonyAppDefinition,
     SymphonyContractFactory,
     AvalancheSymphonyYoloContractPositionFetcher,
     PolygonSymphonyYoloContractPositionFetcher,

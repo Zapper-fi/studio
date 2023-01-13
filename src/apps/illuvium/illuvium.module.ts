@@ -9,7 +9,6 @@ import { IlluviumAppDefinition } from './illuvium.definition';
 
 @Module({
   providers: [
-    IlluviumAppDefinition,
     IlluviumContractFactory,
     EthereumIlluviumFarmContractPositionFetcher,
     EthereumIlluviumFarmV2ContractPositionFetcher,

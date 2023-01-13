@@ -11,7 +11,6 @@ import { PolygonMeanFinanceDcaPositionContractPositionFetcher } from './polygon/
 
 @Module({
   providers: [
-    MeanFinanceAppDefinition,
     MeanFinanceContractFactory,
     OptimismMeanFinanceDcaPositionContractPositionFetcher,
     PolygonMeanFinanceDcaPositionContractPositionFetcher,

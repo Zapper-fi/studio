@@ -7,6 +7,6 @@ import { EthereumUniswapV2PoolTokenFetcher } from './ethereum/uniswap-v2.pool.to
 import { UniswapV2AppDefinition } from './uniswap-v2.definition';
 
 @Module({
-  providers: [UniswapV2AppDefinition, UniswapV2ContractFactory, EthereumUniswapV2PoolTokenFetcher],
+  providers: [UniswapV2ContractFactory, EthereumUniswapV2PoolTokenFetcher],
 })
 export class UniswapV2AppModule extends AbstractApp() {}

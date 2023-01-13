@@ -12,7 +12,7 @@ import { RoboVaultAppDefinition } from './robo-vault.definition';
   providers: [
     AvalancheRoboVaultVaultTokenFetcher,
     FantomRoboVaultVaultTokenFetcher,
-    RoboVaultAppDefinition,
+
     RoboVaultContractFactory,
     RoboVaultApiClient,
   ],

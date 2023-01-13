@@ -17,7 +17,6 @@ import { PancakeswapAppDefinition } from './pancakeswap.definition';
 
 @Module({
   providers: [
-    PancakeswapAppDefinition,
     PancakeswapContractFactory,
     UniswapV2ContractFactory,
     BinanceSmartChainPancakeswapAutoCakeContractPositionFetcher,

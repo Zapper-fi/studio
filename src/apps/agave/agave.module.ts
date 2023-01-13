@@ -13,7 +13,6 @@ import { GnosisAgaveVariableBorrowTokenFetcher } from './gnosis/agave.variable-b
 
 @Module({
   providers: [
-    AgaveAppDefinition,
     AgaveContractFactory,
     AaveV2ContractFactory,
     GnosisAgaveClaimableContractPositionFetcher,

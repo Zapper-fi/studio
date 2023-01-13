@@ -10,7 +10,6 @@ import { VaporwaveFinanceAppDefinition } from './vaporwave-finance.definition';
 
 @Module({
   providers: [
-    VaporwaveFinanceAppDefinition,
     VaporwaveFinanceContractFactory,
     VaporwaveFinanceVaultDefinitionsResolver,
     AuroraVaporwaveFinanceFarmContractPositionFetcher,

@@ -11,7 +11,6 @@ import { SonneAppDefinition } from './sonne.definition';
 
 @Module({
   providers: [
-    SonneAppDefinition,
     SonneContractFactory,
     OptimismSonnePositionPresenter,
     OptimismSonneBorrowContractPositionFetcher,

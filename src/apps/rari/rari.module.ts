@@ -10,7 +10,6 @@ import { RariAppDefinition } from './rari.definition';
 
 @Module({
   providers: [
-    RariAppDefinition,
     RariContractFactory,
     EthereumRariFarmContractPositionFetcher,
     EthereumRariFundTokenFetcher,

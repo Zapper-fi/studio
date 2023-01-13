@@ -7,6 +7,6 @@ import { EthereumSideshiftSvxaiTokenFetcher } from './ethereum/sideshift.svxai.t
 import { SideshiftAppDefinition } from './sideshift.definition';
 
 @Module({
-  providers: [EthereumSideshiftSvxaiTokenFetcher, SideshiftAppDefinition, SideshiftContractFactory],
+  providers: [EthereumSideshiftSvxaiTokenFetcher, SideshiftContractFactory],
 })
 export class SideshiftAppModule extends AbstractApp() {}

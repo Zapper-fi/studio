@@ -20,7 +20,6 @@ import { OptimismGranaryFinanceVariableDebtTokenFetcher } from './optimism/grana
 
 @Module({
   providers: [
-    GranaryFinanceAppDefinition,
     GranaryFinanceContractFactory,
     AaveV2ContractFactory,
     // Ethereum

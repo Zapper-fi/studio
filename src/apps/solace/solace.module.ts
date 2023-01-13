@@ -21,7 +21,6 @@ import { SolaceAppDefinition } from './solace.definition';
 
 @Module({
   providers: [
-    SolaceAppDefinition,
     SolaceContractFactory,
     // Ethereum
     EthereumSolaceBondsContractPositionFetcher,

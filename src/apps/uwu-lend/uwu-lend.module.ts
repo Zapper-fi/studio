@@ -11,7 +11,6 @@ import { UwuLendAppDefinition } from './uwu-lend.definition';
 
 @Module({
   providers: [
-    UwuLendAppDefinition,
     UwuLendContractFactory,
     EthereumUwuLendSupplyTokenFetcher,
     EthereumUwuLendVariableDebtTokenFetcher,

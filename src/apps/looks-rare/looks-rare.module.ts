@@ -9,7 +9,6 @@ import { LooksRareAppDefinition } from './looks-rare.definition';
 
 @Module({
   providers: [
-    LooksRareAppDefinition,
     LooksRareContractFactory,
     EthereumLooksRareFarmContractPositionFetcher,
     EthereumLooksRareCompounderContractPositionFetcher,

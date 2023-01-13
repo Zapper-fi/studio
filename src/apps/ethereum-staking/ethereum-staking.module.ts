@@ -7,10 +7,6 @@ import { EthereumStakingAppDefinition } from './ethereum-staking.definition';
 import { EthereumEthereumStakingDepositContractPositionFetcher } from './ethereum/ethereum-staking.deposit.contract-position-fetcher';
 
 @Module({
-  providers: [
-    EthereumStakingAppDefinition,
-    EthereumStakingContractFactory,
-    EthereumEthereumStakingDepositContractPositionFetcher,
-  ],
+  providers: [EthereumStakingContractFactory, EthereumEthereumStakingDepositContractPositionFetcher],
 })
 export class EthereumStakingAppModule extends AbstractApp() {}

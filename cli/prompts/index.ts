@@ -33,32 +33,6 @@ export const promptAppId = async (defaultId?: string) => {
     .then(v => v.id);
 };
 
-export const promptAppDescription = async () => {
-  return inquirer
-    .prompt<{ description: string }>({
-      name: 'description',
-      message: 'What is the description of your app?',
-      validate: v => {
-        if (v.length === 0) return 'Description is required';
-        return true;
-      },
-    })
-    .then(v => v.description);
-};
-
-export const promptAppUrl = async () => {
-  return inquirer
-    .prompt<{ url: string }>({
-      name: 'url',
-      message: 'What is the URL of your app?',
-      validate: v => {
-        if (v.length === 0) return 'URL is required';
-        return true;
-      },
-    })
-    .then(v => v.url);
-};
-
 export const promptAppNetwork = async (networks: string[]) => {
   return inquirer
     .prompt<{ network: Network }>({
@@ -87,28 +61,15 @@ export const promptAppNetworks = async () => {
     .then(v => v.networks);
 };
 
-export const promptAppTags = async () => {
+export const promptAppGroupId = async () => {
   return inquirer
-    .prompt<{ tags: AppTag[] }>({
-      name: 'tags',
-      message: 'Select (at least one) tag representing your app',
-      type: 'checkbox',
-      choices: Object.values(AppTag).map(name => ({ name })),
+    .prompt<{ groupId: string }>({
+      name: 'groupId',
+      message: 'What is the group ID of your app?',
       validate: v => {
-        if (v.length === 0) return 'At least one tag is required';
+        if (v.length === 0) return 'Group ID is required';
         return true;
       },
-    })
-    .then(v => v.tags as ArrayOfOneOrMore<AppTag>);
-};
-
-export const promptAppGroupId = async (groupIds: string[]) => {
-  return inquirer
-    .prompt<{ groupId: string | null }>({
-      name: 'groupId',
-      message: 'Select an existing group or create new:',
-      type: 'list',
-      choices: [...groupIds.map(name => ({ name })), { name: 'Create New', value: null }],
     })
     .then(v => v.groupId);
 };

@@ -7,6 +7,6 @@ import { EthereumHexStakeContractPositionFetcher } from './ethereum/hex.stake.co
 import { HexAppDefinition } from './hex.definition';
 
 @Module({
-  providers: [HexAppDefinition, HexContractFactory, EthereumHexStakeContractPositionFetcher],
+  providers: [HexContractFactory, EthereumHexStakeContractPositionFetcher],
 })
 export class HexAppModule extends AbstractApp() {}

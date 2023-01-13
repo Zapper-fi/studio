@@ -10,7 +10,6 @@ import { TarotAppDefinition } from './tarot.definition';
 
 @Module({
   providers: [
-    TarotAppDefinition,
     TarotContractFactory,
     FantomTarotBorrowContractPositionFetcher,
     FantomTarotSupplyTokenFetcher,

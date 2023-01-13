@@ -11,7 +11,7 @@ import { PodsYieldAppDefinition } from './pods-yield.definition';
   providers: [
     EthereumPodsYieldQueueContractPositionFetcher,
     EthereumPodsYieldStrategyTokenFetcher,
-    PodsYieldAppDefinition,
+
     PodsYieldContractFactory,
   ],
 })

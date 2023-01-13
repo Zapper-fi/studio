@@ -14,7 +14,6 @@ import { GeistAppDefinition } from './geist.definition';
 
 @Module({
   providers: [
-    GeistAppDefinition,
     GeistContractFactory,
     AaveV2ContractFactory,
     FantomGeistIncentivesPositionFetcher,

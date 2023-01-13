@@ -11,7 +11,6 @@ import { TempusAppDefinition } from './tempus.definition';
 
 @Module({
   providers: [
-    TempusAppDefinition,
     TempusContractFactory,
     // Ethereum
     EthereumTempusAmmTokenFetcher,

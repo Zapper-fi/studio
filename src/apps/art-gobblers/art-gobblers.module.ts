@@ -7,6 +7,6 @@ import { ArtGobblersContractFactory } from './contracts';
 import { EthereumArGobblersFactoryContractPositionFetcher } from './ethereum/art-gobblers.factory.contract-position-fetcher';
 
 @Module({
-  providers: [ArtGobblersAppDefinition, ArtGobblersContractFactory, EthereumArGobblersFactoryContractPositionFetcher],
+  providers: [ArtGobblersContractFactory, EthereumArGobblersFactoryContractPositionFetcher],
 })
 export class ArtGobblersAppModule extends AbstractApp() {}

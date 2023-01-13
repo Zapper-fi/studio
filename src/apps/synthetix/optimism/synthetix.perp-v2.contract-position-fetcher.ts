@@ -4,7 +4,6 @@ import { parseBytes32String } from 'ethers/lib/utils';
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import { getAppAssetImage } from '~app-toolkit/helpers/presentation/image.present';
-import { SYNTHETIX_DEFINITION } from '~apps/synthetix/synthetix.definition';
 import { MetaType } from '~position/position.interface';
 import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
 import {
@@ -63,7 +62,7 @@ export class OptimismSynthetixPerpV2ContractPositionFetcher extends ContractPosi
 
   async getImages({ contractPosition }: GetDisplayPropsParams<SynthetixPerpV2>) {
     const baseAsset = await this.getBaseAsset({ contractPosition });
-    return [getAppAssetImage(SYNTHETIX_DEFINITION.id, `s${baseAsset}`)];
+    return [getAppAssetImage('synthetix', `s${baseAsset}`)];
   }
 
   async getTokenBalancesPerPosition({ address, contract }: GetTokenBalancesParams<SynthetixPerpV2>) {

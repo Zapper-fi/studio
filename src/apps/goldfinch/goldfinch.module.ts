@@ -10,7 +10,6 @@ import { GoldfinchAppDefinition } from './goldfinch.definition';
 
 @Module({
   providers: [
-    GoldfinchAppDefinition,
     GoldfinchContractFactory,
     EthereumGoldfinchFiduTokenFetcher,
     EthereumGoldfinchSeniorBondContractPositionFetcher,

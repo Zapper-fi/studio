@@ -13,7 +13,7 @@ import { PolygonDystopiaVotingEscrowContractPositionFetcher } from './polygon/dy
     PolygonDystopiaPairsTokenFetcher,
     PolygonDystopiaStakingContractPositionFetcher,
     PolygonDystopiaVotingEscrowContractPositionFetcher,
-    DystopiaAppDefinition,
+
     DystopiaContractFactory,
   ],
 })

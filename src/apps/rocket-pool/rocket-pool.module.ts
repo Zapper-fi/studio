@@ -10,7 +10,6 @@ import { RocketPoolAppDefinition } from './rocket-pool.definition';
 
 @Module({
   providers: [
-    RocketPoolAppDefinition,
     RocketPoolContractFactory,
     // Ethereum
     EthereumRocketPoolOracleDaoBondContractPositionFetcher,

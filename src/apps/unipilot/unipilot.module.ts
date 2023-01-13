@@ -11,7 +11,6 @@ import { UnipilotAppDefinition } from './unipilot.definition';
 
 @Module({
   providers: [
-    UnipilotAppDefinition,
     UnipilotContractFactory,
     UnipilotVaultDefinitionsResolver,
     UnipilotVaultAPYHelper,

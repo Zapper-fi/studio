@@ -14,7 +14,6 @@ import { KeeperAppDefinition } from './keeper.definition';
 
 @Module({
   providers: [
-    KeeperAppDefinition,
     KeeperContractFactory,
     UniswapV3ContractFactory,
     EthereumKeeperUnbondContractPositionFetcher,

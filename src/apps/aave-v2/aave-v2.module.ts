@@ -22,7 +22,6 @@ import { PolygonAaveV2VariableDebtTokenFetcher } from './polygon/aave-v2.variabl
 
 @Module({
   providers: [
-    AaveV2AppDefinition,
     AaveV2ContractFactory,
     AvalancheAaveV2ClaimableContractPositionFetcher,
     AvalancheAaveV2PositionPresenter,

@@ -14,7 +14,6 @@ import { PolygonKoyoPoolTokenFetcher } from './polygon/koyo.pool.token-fetcher';
     AuroraKoyoPoolTokenFetcher,
     MoonriverKoyoPoolTokenFetcher,
     PolygonKoyoPoolTokenFetcher,
-    KoyoAppDefinition,
   ],
 })
 export class KoyoAppModule extends AbstractApp() {}

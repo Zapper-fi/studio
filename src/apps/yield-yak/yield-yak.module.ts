@@ -9,7 +9,6 @@ import { YieldYakAppDefinition } from './yield-yak.definition';
 
 @Module({
   providers: [
-    YieldYakAppDefinition,
     YieldYakContractFactory,
     AvalancheYieldyakVaultTokenFetcher,
     AvalancheYieldyakFarmContractPositionFetcher,

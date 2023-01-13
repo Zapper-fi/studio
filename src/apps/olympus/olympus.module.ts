@@ -18,7 +18,6 @@ import { PolygonOlympusGOhmTokenFetcher } from './polygon/olympus.g-ohm.token-fe
 
 @Module({
   providers: [
-    OlympusAppDefinition,
     OlympusContractFactory,
     ArbitrumOlympusGOhmTokenFetcher,
     ArbitrumOlympusWsOhmV1TokenFetcher,

@@ -17,7 +17,6 @@ import { BastionProtocolContractFactory } from './contracts';
 
 @Module({
   providers: [
-    BastionProtocolAppDefinition,
     BastionProtocolContractFactory,
     AuroraBastionProtocolPoolTokenFetcher,
     AuroraBastionProtocolMainHubSupplyTokenFetcher,

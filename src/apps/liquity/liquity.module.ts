@@ -10,7 +10,6 @@ import { LiquityAppDefinition } from './liquity.definition';
 
 @Module({
   providers: [
-    LiquityAppDefinition,
     LiquityContractFactory,
     EthereumLiquityStabilityPoolContractPositionFetcher,
     EthereumLiquityStakingContractPositionFetcher,

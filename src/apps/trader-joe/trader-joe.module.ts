@@ -16,7 +16,6 @@ import { TraderJoeAppDefinition } from './trader-joe.definition';
 
 @Module({
   providers: [
-    TraderJoeAppDefinition,
     TraderJoeContractFactory,
     UniswapV2ContractFactory,
     AvalancheTraderJoeChefV2FarmContractPositionFetcher,

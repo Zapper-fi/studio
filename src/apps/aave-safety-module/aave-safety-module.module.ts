@@ -12,7 +12,6 @@ import { EthereumAaveSafetyModuleStkAbptTokenFetcher } from './ethereum/aave-saf
 
 @Module({
   providers: [
-    AaveSafetyModuleAppDefinition,
     AaveSafetyModuleContractFactory,
     EthereumAaveSafetyModuleAbptTokenFetcher,
     EthereumAaveSafetyModuleStkAaveTokenFetcher,

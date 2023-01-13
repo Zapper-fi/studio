@@ -12,7 +12,6 @@ import { UniswapV3AppDefinition } from './uniswap-v3.definition';
 
 @Module({
   providers: [
-    UniswapV3AppDefinition,
     UniswapV3ContractFactory,
     UniswapV3LiquidityContractPositionBuilder,
     ArbitrumUniswapV3LiquidityContractPositionFetcher,

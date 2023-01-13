@@ -23,7 +23,7 @@ import { HectorNetworkAppDefinition } from './hector-network.definition';
     FantomHectorNetworkSHecV2TokenFetcher,
     FantomHectorNetworkStakeBondContractPositionFetcher,
     FantomHectorNetworkWsHecTokenFetcher,
-    HectorNetworkAppDefinition,
+
     HectorNetworkContractFactory,
   ],
 })

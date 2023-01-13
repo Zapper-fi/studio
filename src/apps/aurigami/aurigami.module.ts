@@ -11,7 +11,6 @@ import { AurigamiContractFactory } from './contracts';
 
 @Module({
   providers: [
-    AurigamiAppDefinition,
     AurigamiContractFactory,
     AuroraAurigamiBorrowContractPositionFetcher,
     AuroraAurigamiClaimableContractPositionFetcher,

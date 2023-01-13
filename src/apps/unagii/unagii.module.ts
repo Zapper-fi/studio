@@ -7,6 +7,6 @@ import { EthereumUnagiiVaultTokenFetcher } from './ethereum/unagii.vault.token-f
 import { UnagiiAppDefinition } from './unagii.definition';
 
 @Module({
-  providers: [UnagiiAppDefinition, UnagiiContractFactory, EthereumUnagiiVaultTokenFetcher],
+  providers: [UnagiiContractFactory, EthereumUnagiiVaultTokenFetcher],
 })
 export class UnagiiAppModule extends AbstractApp() {}

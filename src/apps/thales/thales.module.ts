@@ -10,7 +10,6 @@ import { ThalesAppDefinition } from './thales.definition';
 
 @Module({
   providers: [
-    ThalesAppDefinition,
     ThalesContractFactory,
     OptimismThalesStakingContractPositionFetcher,
     OptimismThalesEscrowContractPositionFetcher,

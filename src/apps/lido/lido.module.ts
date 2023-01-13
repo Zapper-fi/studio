@@ -10,7 +10,6 @@ import { MoonriverLidoStksmTokenFetcher } from './moonriver/lido.stksm.token-fet
 
 @Module({
   providers: [
-    LidoAppDefinition,
     LidoContractFactory,
     EthereumLidoStethTokenFetcher,
     EthereumLidoWstethTokenFetcher,

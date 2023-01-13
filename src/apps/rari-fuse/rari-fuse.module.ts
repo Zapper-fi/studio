@@ -10,7 +10,6 @@ import { RariFuseAppDefinition } from './rari-fuse.definition';
 
 @Module({
   providers: [
-    RariFuseAppDefinition,
     RariFuseContractFactory,
     // Ethereum
     EthereumRariFuseBorrowContractPositionFetcher,

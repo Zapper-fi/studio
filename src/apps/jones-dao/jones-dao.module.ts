@@ -11,7 +11,6 @@ import { JonesDaoAppDefinition } from './jones-dao.definition';
 
 @Module({
   providers: [
-    JonesDaoAppDefinition,
     JonesDaoContractFactory,
     ArbitrumJonesDaoFarmContractPositionFetcher,
     ArbitrumJonesDaoMillinerV2ContractPositionFetcher,

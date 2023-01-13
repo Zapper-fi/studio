@@ -10,7 +10,6 @@ import { LlamapayAppDefinition } from './llamapay.definition';
 
 @Module({
   providers: [
-    LlamapayAppDefinition,
     LlamapayContractFactory,
     LlamapayStreamApiClient,
     EthereumLlamapayStreamContractPositionFetcher,

@@ -7,6 +7,6 @@ import { EthereumWolfGameWoolPouchContractPositionFetcher } from './ethereum/wol
 import { WolfGameAppDefinition } from './wolf-game.definition';
 
 @Module({
-  providers: [WolfGameAppDefinition, WolfGameContractFactory, EthereumWolfGameWoolPouchContractPositionFetcher],
+  providers: [WolfGameContractFactory, EthereumWolfGameWoolPouchContractPositionFetcher],
 })
 export class WolfGameAppModule extends AbstractApp() {}

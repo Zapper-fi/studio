@@ -7,6 +7,6 @@ import { EthereumIqHiiqContractPositionFetcher } from './ethereum/iq.hiiq.contra
 import { IqAppDefinition } from './iq.definition';
 
 @Module({
-  providers: [EthereumIqHiiqContractPositionFetcher, IqAppDefinition, IqContractFactory],
+  providers: [EthereumIqHiiqContractPositionFetcher, IqContractFactory],
 })
 export class IqAppModule extends AbstractApp() {}

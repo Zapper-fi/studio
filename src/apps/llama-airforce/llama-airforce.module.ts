@@ -10,7 +10,6 @@ import { LlamaAirforceAppDefinition } from './llama-airforce.definition';
 
 @Module({
   providers: [
-    LlamaAirforceAppDefinition,
     LlamaAirforceContractFactory,
     // Ethereum
     EthereumLlamaAirforceMerkleCache,

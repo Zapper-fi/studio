@@ -17,7 +17,7 @@ import { PendleV2AppDefinition } from './pendle-v2.definition';
     EthereumPendleV2StandardizedYieldTokenFetcher,
     EthereumPendleV2VotingEscrowContractPositionFetcher,
     EthereumPendleV2YieldTokenFetcher,
-    PendleV2AppDefinition,
+
     PendleV2ContractFactory,
   ],
 })

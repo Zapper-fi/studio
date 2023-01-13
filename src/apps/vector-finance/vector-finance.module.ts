@@ -7,6 +7,6 @@ import { VectorFinanceContractFactory } from './contracts';
 import { VectorFinanceAppDefinition } from './vector-finance.definition';
 
 @Module({
-  providers: [VectorFinanceAppDefinition, VectorFinanceContractFactory, VectorFinanceFarmContractPositionFetcher],
+  providers: [VectorFinanceContractFactory, VectorFinanceFarmContractPositionFetcher],
 })
 export class VectorFinanceAppModule extends AbstractApp() {}

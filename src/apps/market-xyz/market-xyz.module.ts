@@ -16,7 +16,6 @@ import { PolygonMarketXyzSupplyTokenFetcher } from './polygon/market-xyz.supply.
 
 @Module({
   providers: [
-    MarketXyzAppDefinition,
     MarketXyzContractFactory,
     // Avalanche
     AvalancheMarketXyzBorrowContractPositionFetcher,

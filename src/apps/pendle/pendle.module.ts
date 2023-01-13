@@ -10,7 +10,6 @@ import { PendleAppDefinition } from './pendle.definition';
 
 @Module({
   providers: [
-    PendleAppDefinition,
     PendleContractFactory,
     EthereumPendleYieldTokenFetcher,
     EthereumPendleOwnershipTokenFetcher,

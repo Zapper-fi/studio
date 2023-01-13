@@ -8,11 +8,6 @@ import { EthereumAirswapSAstV2TokenFetcher } from './ethereum/airswap.s-ast-v2.t
 import { EthereumAirswapSAstV3TokenFetcher } from './ethereum/airswap.s-ast-v3.token-fetcher';
 
 @Module({
-  providers: [
-    AirswapAppDefinition,
-    AirswapContractFactory,
-    EthereumAirswapSAstV2TokenFetcher,
-    EthereumAirswapSAstV3TokenFetcher,
-  ],
+  providers: [AirswapContractFactory, EthereumAirswapSAstV2TokenFetcher, EthereumAirswapSAstV3TokenFetcher],
 })
 export class AirswapAppModule extends AbstractApp() {}

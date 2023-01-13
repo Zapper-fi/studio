@@ -13,7 +13,6 @@ import { ExactlyAppDefinition } from './exactly.definition';
 
 @Module({
   providers: [
-    ExactlyAppDefinition,
     ExactlyContractFactory,
     ExactlyDefinitionsResolver,
     EthereumExactlyPositionPresenter,

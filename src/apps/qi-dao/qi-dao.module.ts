@@ -16,7 +16,6 @@ import { QiDaoAppDefinition } from './qi-dao.definition';
 
 @Module({
   providers: [
-    QiDaoAppDefinition,
     QiDaoContractFactory,
     // Fantom
     FantomQiDaoFarmContractPositionFetcher,

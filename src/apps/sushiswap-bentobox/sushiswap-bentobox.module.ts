@@ -14,7 +14,6 @@ import { SushiSwapBentoBoxAppDefinition } from './sushiswap-bentobox.definition'
 
 @Module({
   providers: [
-    SushiSwapBentoBoxAppDefinition,
     SushiswapBentoboxContractFactory,
     SushiswapBentoboxVaultTokensResolver,
     // Arbitrum

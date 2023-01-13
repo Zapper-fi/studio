@@ -12,7 +12,6 @@ import { NereusFinanceAppDefinition } from './nereus-finance.definition';
 
 @Module({
   providers: [
-    NereusFinanceAppDefinition,
     NereusFinanceContractFactory,
     AaveV2ContractFactory,
     AvalancheNereusFinancePositionPresenter,

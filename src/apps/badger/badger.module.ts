@@ -4,7 +4,6 @@ import { AbstractApp } from '~app/app.dynamic-module';
 
 import { ArbitrumBadgerClaimableContractPositionFetcher } from './arbitrum/badger.claimable.contract-position-fetcher';
 import { ArbitrumBadgerVaultTokenFetcher } from './arbitrum/badger.vault.token-fetcher';
-import { BadgerAppDefinition } from './badger.definition';
 import { BadgerClaimableRewardsResolver } from './common/badger.claimable.rewards-resolver';
 import { BadgerVaultTokenDefinitionsResolver } from './common/badger.vault.token-definition-resolver';
 import { BadgerContractFactory } from './contracts';
@@ -15,7 +14,6 @@ import { PolygonBadgerVaultTokenFetcher } from './polygon/badger.vault.token-fet
 
 @Module({
   providers: [
-    BadgerAppDefinition,
     BadgerContractFactory,
     BadgerVaultTokenDefinitionsResolver,
     BadgerClaimableRewardsResolver,

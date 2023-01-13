@@ -10,7 +10,6 @@ import { MorphoAppDefinition } from './morpho.definition';
 
 @Module({
   providers: [
-    MorphoAppDefinition,
     MorphoContractFactory,
     // Ethereum
     EthereumMorphoCompoundSupplyContractPositionFetcher,

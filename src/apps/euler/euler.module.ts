@@ -12,7 +12,6 @@ import { EulerAppDefinition } from './euler.definition';
 
 @Module({
   providers: [
-    EulerAppDefinition,
     EulerContractFactory,
     EulerTokenDefinitionsResolver,
     EthereumEulerPositionPresenter,

@@ -13,7 +13,6 @@ import { EthereumCozyFinanceSupplyTokenFetcher } from './ethereum/cozy-finance.s
 
 @Module({
   providers: [
-    CozyFinanceAppDefinition,
     CozyFinanceContractFactory,
     // Arbitrum
     ArbitrumCozyFinanceBorrowContractPositionFetcher,

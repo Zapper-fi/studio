@@ -16,7 +16,6 @@ import { DopexAppDefinition } from './dopex.definition';
 
 @Module({
   providers: [
-    DopexAppDefinition,
     DopexContractFactory,
     // Arbitrum
     ArbitrumDopexFarmContractPositionFetcher,

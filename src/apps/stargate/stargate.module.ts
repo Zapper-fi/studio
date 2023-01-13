@@ -32,7 +32,6 @@ import { StargateAppDefinition } from './stargate.definition';
 
 @Module({
   providers: [
-    StargateAppDefinition,
     StargateContractFactory,
     // Arbitrum
     ArbitrumStargateEthTokenFetcher,

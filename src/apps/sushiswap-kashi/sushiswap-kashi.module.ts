@@ -11,11 +11,9 @@ import { EthereumSushiswapKashiLendingTokenFetcher } from './ethereum/sushiswap-
 import { EthereumSushiswapKashiLeverageContractPositionFetcher } from './ethereum/sushiswap-kashi.leverage.contract-position-fetcher';
 import { PolygonSushiswapKashiLendingTokenFetcher } from './polygon/sushiswap-kashi.lending.token-fetcher';
 import { PolygonSushiswapKashiLeverageContractPositionFetcher } from './polygon/sushiswap-kashi.leverage.contract-position-fetcher';
-import { SushiswapKashiAppDefinition } from './sushiswap-kashi.definition';
 
 @Module({
   providers: [
-    SushiswapKashiAppDefinition,
     SushiswapKashiContractFactory,
     // Arbitrum
     ArbitrumSushiswapKashiLendingTokenFetcher,

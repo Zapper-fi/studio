@@ -7,6 +7,6 @@ import { JarvisAppDefinition } from './jarvis.definition';
 import { PolygonJarvisSynthTokenFetcher } from './polygon/jarvis.synth.token-fetcher';
 
 @Module({
-  providers: [JarvisAppDefinition, JarvisContractFactory, PolygonJarvisSynthTokenFetcher],
+  providers: [JarvisContractFactory, PolygonJarvisSynthTokenFetcher],
 })
 export class JarvisAppModule extends AbstractApp() {}

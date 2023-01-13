@@ -12,7 +12,6 @@ import { TokemakAppDefinition } from './tokemak.definition';
 
 @Module({
   providers: [
-    TokemakAppDefinition,
     TokemakContractFactory,
     TokemakClaimableResolver,
     EthereumTokemakReactorTokenFetcher,

@@ -24,7 +24,6 @@ import { FantomAbracadabraStakedSpellTokenFetcher } from './fantom/abracadabra.s
 
 @Module({
   providers: [
-    AbracadabraAppDefinition,
     AbracadabraContractFactory,
     // Arbitrum
     ArbitrumAbracadabraStakedSpellTokenFetcher,

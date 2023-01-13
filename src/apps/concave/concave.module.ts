@@ -8,7 +8,6 @@ import { EthereumConcaveLiquidStakingContractPositionFetcher } from './ethereum/
 
 @Module({
   providers: [
-    ConcaveAppDefinition,
     ConcaveContractFactory,
     // Ethereum
     EthereumConcaveLiquidStakingContractPositionFetcher,

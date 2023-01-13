@@ -16,7 +16,6 @@ import { PolygonCaskProtocolWalletTokenFetcher } from './polygon/cask-protocol.w
 
 @Module({
   providers: [
-    CaskProtocolAppDefinition,
     CaskProtocolContractFactory,
     ArbitrumCaskProtocolWalletTokenFetcher,
     AuroraCaskProtocolWalletTokenFetcher,

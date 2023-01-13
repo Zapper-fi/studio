@@ -10,7 +10,6 @@ import { SablierAppDefinition } from './sablier.definition';
 
 @Module({
   providers: [
-    SablierAppDefinition,
     SablierContractFactory,
     SablierStreamApiClient,
     EthereumSablierStreamLegacyContractPositionFetcher,

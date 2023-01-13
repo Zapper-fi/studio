@@ -10,7 +10,6 @@ import { MapleAppDefinition } from './maple.definition';
 
 @Module({
   providers: [
-    MapleAppDefinition,
     MapleContractFactory,
     MaplePoolDefinitionResolver,
     EthereumMaplePoolTokenFetcher,

@@ -15,7 +15,6 @@ import { GmxAppDefinition } from './gmx.definition';
 
 @Module({
   providers: [
-    GmxAppDefinition,
     GmxContractFactory,
     // Arbitrum
     ArbitrumGmxEsGmxTokenFetcher,

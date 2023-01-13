@@ -11,7 +11,6 @@ import { RhinoFiAppDefinition } from './rhino-fi.definition';
 
 @Module({
   providers: [
-    RhinoFiAppDefinition,
     RhinoFiContractFactory,
     RhinoFiCacheManager,
     RhinoFiApiClient,

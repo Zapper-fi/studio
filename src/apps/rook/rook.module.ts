@@ -11,7 +11,6 @@ import { RookAppDefinition } from './rook.definition';
 
 @Module({
   providers: [
-    RookAppDefinition,
     RookContractFactory,
     // Ethereum
     EthereumRookV2PoolTokenFetcher,

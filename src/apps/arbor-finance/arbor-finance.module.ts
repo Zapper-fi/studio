@@ -7,6 +7,6 @@ import { ArborFinanceContractFactory } from './contracts';
 import { EthereumArborFinanceBondTokenFetcher } from './ethereum/arbor-finance.bond.token-fetcher';
 
 @Module({
-  providers: [ArborFinanceAppDefinition, ArborFinanceContractFactory, EthereumArborFinanceBondTokenFetcher],
+  providers: [ArborFinanceContractFactory, EthereumArborFinanceBondTokenFetcher],
 })
 export class ArborFinanceAppModule extends AbstractApp() {}

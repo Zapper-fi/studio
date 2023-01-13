@@ -10,7 +10,6 @@ import { ReaperAppDefinition } from './reaper.definition';
 
 @Module({
   providers: [
-    ReaperAppDefinition,
     ReaperContractFactory,
     ReaperVaultCacheManager,
     FantomReaperVaultTokenFetcher,

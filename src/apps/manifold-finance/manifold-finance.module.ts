@@ -7,6 +7,6 @@ import { EthereumManifoldFinanceStakingTokenFetcher } from './ethereum/manifold-
 import { ManifoldFinanceAppDefinition } from './manifold-finance.definition';
 
 @Module({
-  providers: [EthereumManifoldFinanceStakingTokenFetcher, ManifoldFinanceAppDefinition, ManifoldFinanceContractFactory],
+  providers: [EthereumManifoldFinanceStakingTokenFetcher, ManifoldFinanceContractFactory],
 })
 export class ManifoldFinanceAppModule extends AbstractApp() {}

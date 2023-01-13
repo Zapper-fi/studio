@@ -12,7 +12,7 @@ import { PolygonMidasMarketTokenFetcher } from './polygon/midas.market.token-fet
   providers: [
     BinanceSmartChainMidasMarketTokenFetcher,
     EvmosMidasMarketTokenFetcher,
-    MidasAppDefinition,
+
     MidasContractFactory,
     PolygonMidasMarketTokenFetcher,
   ],

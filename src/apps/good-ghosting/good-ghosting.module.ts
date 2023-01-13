@@ -11,7 +11,6 @@ import { PolygonGoodGhostingGameContractPositionFetcher } from './polygon/good-g
 
 @Module({
   providers: [
-    GoodGhostingAppDefinition,
     GoodGhostingContractFactory,
     // Helpers
     GoodGhostingGameBalancesApiSource,

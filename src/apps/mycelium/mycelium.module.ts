@@ -10,7 +10,6 @@ import { MyceliumAppDefinition } from './mycelium.definition';
 
 @Module({
   providers: [
-    MyceliumAppDefinition,
     MyceliumContractFactory,
     // Arbitrum
     ArbitrumMyceliumEsMycTokenFetcher,

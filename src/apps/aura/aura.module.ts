@@ -14,7 +14,6 @@ import { EthereumAuraLpFarmContractPositionFetcher } from './ethereum/aura.lp-fa
 
 @Module({
   providers: [
-    AuraAppDefinition,
     AuraContractFactory,
     // helpers
     AuraBalancerPoolResolver,

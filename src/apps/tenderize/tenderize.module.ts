@@ -12,7 +12,6 @@ import { TenderizeAppDefinition } from './tenderize.definition';
 
 @Module({
   providers: [
-    TenderizeAppDefinition,
     TenderizeContractFactory,
     TenderizeTokenDefinitionsResolver,
     // Arbitrum

@@ -7,10 +7,6 @@ import { VendorFinanceContractFactory } from './contracts';
 import { VendorFinanceAppDefinition } from './vendor-finance.definition';
 
 @Module({
-  providers: [
-    ArbitrumVendorFinancePoolContractPositionFetcher,
-    VendorFinanceAppDefinition,
-    VendorFinanceContractFactory,
-  ],
+  providers: [ArbitrumVendorFinancePoolContractPositionFetcher, VendorFinanceContractFactory],
 })
 export class VendorFinanceAppModule extends AbstractApp() {}

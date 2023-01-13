@@ -11,7 +11,6 @@ import { OptimismAelinVAelinTokenFetcher } from './optimism/aelin.v-aelin.token-
 
 @Module({
   providers: [
-    AelinAppDefinition,
     AelinContractFactory,
     // Ethereum
     EthereumAelinPoolTokenFetcher,

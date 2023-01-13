@@ -16,7 +16,6 @@ import { EthereumConcentratorVestingContractPositionFetcher } from './ethereum/c
 
 @Module({
   providers: [
-    ConcentratorAppDefinition,
     ConcentratorContractFactory,
     EthereumConcentratorAcrvTokenFetcher,
     EthereumConcentratorAcrvVaultContractPositionFetcher,

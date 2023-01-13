@@ -12,7 +12,7 @@ import { OpenleverageAppDefinition } from './openleverage.definition';
   providers: [
     EthereumOpenleveragePoolTokenFetcher,
     BinanceSmartChainOpenleveragePoolTokenFetcher,
-    OpenleverageAppDefinition,
+
     OpenleverageContractFactory,
     OpenleveragePoolAPYHelper,
   ],

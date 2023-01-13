@@ -10,7 +10,6 @@ import { TrisolarisAppDefinition } from './trisolaris.definition';
 
 @Module({
   providers: [
-    TrisolarisAppDefinition,
     TrisolarisContractFactory,
     UniswapV2ContractFactory,
     AuroraTrisolarisFarmContractPositionFetcher,

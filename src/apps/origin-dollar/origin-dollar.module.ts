@@ -10,7 +10,6 @@ import { OriginDollarAppDefinition } from './origin-dollar.definition';
 
 @Module({
   providers: [
-    OriginDollarAppDefinition,
     OriginDollarContractFactory,
     // Ethereum
     EthereumOriginDollarRewardsContractPositionFetcher,
