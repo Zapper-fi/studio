@@ -3,12 +3,16 @@ import { Module } from '@nestjs/common';
 import { AbstractApp } from '~app/app.dynamic-module';
 
 import { ArbitrumQiDaoVaultPositionFetcher } from './arbitrum/qi-dao.vault.contract-position-fetcher';
+import { AvalancheQiDaoFarmV3ContractPositionFetcher } from './avalanche/qi-dao.farm-v3.contract-position-fetcher';
 import { QiDaoContractFactory } from './contracts';
+import { FantomQiDaoFarmV3ContractPositionFetcher } from './fantom/qi-dao.farm-v3.contract-position-fetcher';
 import { FantomQiDaoFarmContractPositionFetcher } from './fantom/qi-dao.farm.contract-position-fetcher';
 import { FantomQiDaoVaultPositionFetcher } from './fantom/qi-dao.vault.contract-position-fetcher';
 import { GnosisQiDaoVaultPositionFetcher } from './gnosis/qi-dao.vault.contract-position-fetcher';
+import { OptimismQiDaoFarmV3ContractPositionFetcher } from './optimism/qi-dao.farm-v3.contract-position-fetcher';
 import { OptimismQiDaoVaultPositionFetcher } from './optimism/qi-dao.vault.contract-position-fetcher';
 import { PolygonQiDaoEscrowedQiContractPositionFetcher } from './polygon/qi-dao.escrowed-qi.contract-position-fetcher';
+import { PolygonQiDaoFarmV3ContractPositionFetcher } from './polygon/qi-dao.farm-v3.contract-position-fetcher';
 import { PolygonQiDaoFarmContractPositionFetcher } from './polygon/qi-dao.farm.contract-position-fetcher';
 import { PolygonQiDaoVaultPositionFetcher } from './polygon/qi-dao.vault.contract-position-fetcher';
 import { PolygonQiDaoYieldTokenFetcher } from './polygon/qi-dao.yield.token-fetcher';
@@ -16,20 +20,25 @@ import { PolygonQiDaoYieldTokenFetcher } from './polygon/qi-dao.yield.token-fetc
 @Module({
   providers: [
     QiDaoContractFactory,
+    // Arbitrum
+    ArbitrumQiDaoVaultPositionFetcher,
+    // Avalanche
+    AvalancheQiDaoFarmV3ContractPositionFetcher,
     // Fantom
     FantomQiDaoFarmContractPositionFetcher,
+    FantomQiDaoFarmV3ContractPositionFetcher,
     FantomQiDaoVaultPositionFetcher,
+    // Gnosis
+    GnosisQiDaoVaultPositionFetcher,
+    // Optimism
+    OptimismQiDaoVaultPositionFetcher,
+    OptimismQiDaoFarmV3ContractPositionFetcher,
     // Polygon
     PolygonQiDaoEscrowedQiContractPositionFetcher,
     PolygonQiDaoFarmContractPositionFetcher,
+    PolygonQiDaoFarmV3ContractPositionFetcher,
     PolygonQiDaoVaultPositionFetcher,
     PolygonQiDaoYieldTokenFetcher,
-    // Gnosis
-    GnosisQiDaoVaultPositionFetcher,
-    // Arbitrum
-    ArbitrumQiDaoVaultPositionFetcher,
-    // Optimism
-    OptimismQiDaoVaultPositionFetcher,
   ],
 })
 export class QiDaoAppModule extends AbstractApp() {}
