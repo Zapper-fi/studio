@@ -13,7 +13,6 @@ import { BinanceSmartChainMuxPerpContractPositionFetcher } from './binance-smart
 import { MuxContractFactory } from './contracts';
 import { FantomMuxMlpTokenFetcher } from './fantom/mux.mlp.token-fetcher';
 import { FantomMuxPerpContractPositionFetcher } from './fantom/mux.perp.contract-position-fetcher';
-import { MuxAppDefinition } from './mux.definition';
 
 @Module({
   providers: [

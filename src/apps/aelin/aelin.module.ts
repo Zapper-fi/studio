@@ -2,7 +2,6 @@ import { Module } from '@nestjs/common';
 
 import { AbstractApp } from '~app/app.dynamic-module';
 
-import { AelinAppDefinition } from './aelin.definition';
 import { AelinContractFactory } from './contracts';
 import { EthereumAelinPoolTokenFetcher } from './ethereum/aelin.pool.token-fetcher';
 import { OptimismAelinFarmContractPositionFetcher } from './optimism/aelin.farm.contract-position-fetcher';

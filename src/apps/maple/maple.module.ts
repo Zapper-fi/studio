@@ -6,7 +6,6 @@ import { MaplePoolDefinitionResolver } from './common/maple.pool.definition-reso
 import { MapleContractFactory } from './contracts';
 import { EthereumMaplePoolTokenFetcher } from './ethereum/maple.pool.token-fetcher';
 import { EthereumMapleXMplTokenFetcher } from './ethereum/maple.x-mpl.token-fetcher';
-import { MapleAppDefinition } from './maple.definition';
 
 @Module({
   providers: [

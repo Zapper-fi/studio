@@ -13,7 +13,6 @@ import { FantomSturdyPositionPresenter } from './fantom/sturdy.position-presente
 import { FantomSturdyStableDebtTokenFetcher } from './fantom/sturdy.stable-debt.token-fetcher';
 import { FantomSturdySupplyTokenFetcher } from './fantom/sturdy.supply.token-fetcher';
 import { FantomSturdyVariableDebtTokenFetcher } from './fantom/sturdy.variable-debt.token-fetcher';
-import { SturdyAppDefinition } from './sturdy.definition';
 
 @Module({
   providers: [

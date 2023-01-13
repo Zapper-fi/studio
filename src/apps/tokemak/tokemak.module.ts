@@ -8,7 +8,6 @@ import { EthereumTokemakAccTokeTokenFetcher } from './ethereum/tokemak.acc-toke.
 import { EthereumTokemakClaimableContractPositionFetcher } from './ethereum/tokemak.claimable.contract-position-fetcher';
 import { EthereumTokemakFarmContractPositionFetcher } from './ethereum/tokemak.farm.contract-position-fetcher';
 import { EthereumTokemakReactorTokenFetcher } from './ethereum/tokemak.reactor.token-fetcher';
-import { TokemakAppDefinition } from './tokemak.definition';
 
 @Module({
   providers: [

@@ -7,7 +7,6 @@ import { EthereumStakeDaoFarmContractPositionFetcher } from './ethereum/stake-da
 import { EthereumStakeDaoGaugeContractPositionFetcher } from './ethereum/stake-dao.gauge.contract-position-fetcher';
 import { EthereumStakeDaoLockerTokenFetcher } from './ethereum/stake-dao.locker.token-fetcher';
 import { EthereumStakeDaoEscrowedQiContractPositionFetcher } from './ethereum/stake-dao.voting-escrow.contract-position-fetcher';
-import { StakeDaoAppDefinition } from './stake-dao.definition';
 
 @Module({
   providers: [

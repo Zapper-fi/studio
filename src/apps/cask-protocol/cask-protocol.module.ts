@@ -6,7 +6,6 @@ import { ArbitrumCaskProtocolWalletTokenFetcher } from './arbitrum/cask-protocol
 import { AuroraCaskProtocolWalletTokenFetcher } from './aurora/cask-protocol.wallet.token-fetcher';
 import { AvalancheCaskProtocolWalletTokenFetcher } from './avalanche/cask-protocol.wallet.token-fetcher';
 import { BinanceSmartChainCaskProtocolWalletTokenFetcher } from './binance-smart-chain/cask-protocol.wallet.token-fetcher';
-import { CaskProtocolAppDefinition } from './cask-protocol.definition';
 import { CeloCaskProtocolWalletTokenFetcher } from './celo/cask-protocol.wallet.token-fetcher';
 import { CaskProtocolContractFactory } from './contracts';
 import { FantomCaskProtocolWalletTokenFetcher } from './fantom/cask-protocol.wallet.token-fetcher';

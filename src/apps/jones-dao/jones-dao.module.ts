@@ -7,7 +7,6 @@ import { ArbitrumJonesDaoMetavaultTokenFetcher } from './arbitrum/jones-dao.meta
 import { ArbitrumJonesDaoMillinerV2ContractPositionFetcher } from './arbitrum/jones-dao.milliner-v2.contract-position-fetcher';
 import { ArbitrumJonesDaoVaultTokenFetcher } from './arbitrum/jones-dao.vault.token-fetcher';
 import { JonesDaoContractFactory } from './contracts';
-import { JonesDaoAppDefinition } from './jones-dao.definition';
 
 @Module({
   providers: [

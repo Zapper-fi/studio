@@ -4,7 +4,6 @@ import { AbstractApp } from '~app/app.dynamic-module';
 import { CompoundContractFactory } from '~apps/compound/contracts';
 import { MakerContractFactory } from '~apps/maker/contracts';
 
-import { BProtocolAppDefinition } from './b-protocol.definition';
 import { BProtocolContractFactory } from './contracts';
 import { EthereumBProtocolCompoundBorrowContractPositionFetcher } from './ethereum/b-protocol.compound-borrow.contract-position-fetcher';
 import { EthereumBProtocolCompoundSupplyTokenFetcher } from './ethereum/b-protocol.compound-supply.token-fetcher';

@@ -12,7 +12,6 @@ import { PolygonQiDaoEscrowedQiContractPositionFetcher } from './polygon/qi-dao.
 import { PolygonQiDaoFarmContractPositionFetcher } from './polygon/qi-dao.farm.contract-position-fetcher';
 import { PolygonQiDaoVaultPositionFetcher } from './polygon/qi-dao.vault.contract-position-fetcher';
 import { PolygonQiDaoYieldTokenFetcher } from './polygon/qi-dao.yield.token-fetcher';
-import { QiDaoAppDefinition } from './qi-dao.definition';
 
 @Module({
   providers: [

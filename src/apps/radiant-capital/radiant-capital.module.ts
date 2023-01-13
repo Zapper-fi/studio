@@ -10,7 +10,6 @@ import { ArbitrumRadiantCapitalStakingContractPositionFetcher } from './arbitrum
 import { ArbitrumRadiantCapitalSupplyTokenFetcher } from './arbitrum/radiant-capital.supply.token-fetcher';
 import { ArbitrumRadiantCapitalVariableDebtTokenFetcher } from './arbitrum/radiant-capital.variable-debt.token-fetcher';
 import { RadiantCapitalContractFactory } from './contracts';
-import { RadiantCapitalAppDefinition } from './radiant-capital.definition';
 
 @Module({
   providers: [

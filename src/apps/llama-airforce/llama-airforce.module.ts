@@ -6,7 +6,6 @@ import { LlamaAirforceContractFactory } from './contracts';
 import { EthereumLlamaAirforceAirdropContractPositionFetcher } from './ethereum/llama-airforce.airdrop.contract-position-fetcher';
 import { EthereumLlamaAirforceMerkleCache } from './ethereum/llama-airforce.merkle-cache';
 import { EthereumLlamaAirforceVaultTokenFetcher } from './ethereum/llama-airforce.vault.token-fetcher';
-import { LlamaAirforceAppDefinition } from './llama-airforce.definition';
 
 @Module({
   providers: [

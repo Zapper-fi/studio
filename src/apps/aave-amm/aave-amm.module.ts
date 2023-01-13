@@ -3,7 +3,6 @@ import { Module } from '@nestjs/common';
 import { AbstractApp } from '~app/app.dynamic-module';
 import { AaveV2ContractFactory } from '~apps/aave-v2/contracts';
 
-import { AaveAmmAppDefinition } from './aave-amm.definition';
 import { AaveAmmContractFactory } from './contracts';
 import { EthereumAaveAmmPositionPresenter } from './ethereum/aave-amm.position-presenter';
 import { EthereumAaveAmmStableDebtTokenFetcher } from './ethereum/aave-amm.stable-debt.token-fetcher';

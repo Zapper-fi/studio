@@ -8,7 +8,6 @@ import { EthereumPendleV2PrincipalTokenFetcher } from './ethereum/pendle-v2.prin
 import { EthereumPendleV2StandardizedYieldTokenFetcher } from './ethereum/pendle-v2.standardized-yield.token-fetcher';
 import { EthereumPendleV2VotingEscrowContractPositionFetcher } from './ethereum/pendle-v2.voting-escrow.contract-position-fetcher';
 import { EthereumPendleV2YieldTokenFetcher } from './ethereum/pendle-v2.yield.token-fetcher';
-import { PendleV2AppDefinition } from './pendle-v2.definition';
 
 @Module({
   providers: [

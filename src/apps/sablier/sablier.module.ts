@@ -6,7 +6,6 @@ import { SablierStreamApiClient } from './common/sablier.stream.api-client';
 import { SablierContractFactory } from './contracts';
 import { EthereumSablierStreamLegacyContractPositionFetcher } from './ethereum/sablier.stream-legacy.contract-position-fetcher';
 import { EthereumSablierStreamContractPositionFetcher } from './ethereum/sablier.stream.contract-position-fetcher';
-import { SablierAppDefinition } from './sablier.definition';
 
 @Module({
   providers: [

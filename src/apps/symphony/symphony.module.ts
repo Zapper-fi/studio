@@ -6,7 +6,6 @@ import { AvalancheSymphonyYoloContractPositionFetcher } from './avalanche/sympho
 import { SymphonyContractFactory } from './contracts';
 import { OptimismSymphonyYoloContractPositionFetcher } from './optimism/symphony.yolo.contract-position-fetcher';
 import { PolygonSymphonyYoloContractPositionFetcher } from './polygon/symphony.yolo.contract-position-fetcher';
-import { SymphonyAppDefinition } from './symphony.definition';
 
 @Module({
   providers: [

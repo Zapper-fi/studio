@@ -10,7 +10,6 @@ import { EthereumKeeperKlpTokenFetcher } from './ethereum/keeper.klp.token-fetch
 import { EthereumKeeperRedeemableTokenFetcher } from './ethereum/keeper.redeemable.token-fetcher';
 import { EthereumKeeperUnbondContractPositionFetcher } from './ethereum/keeper.unbond.contract-position-fetcher';
 import { EthereumKeeperVestContractPositionFetcher } from './ethereum/keeper.vest.contract-position-fetcher';
-import { KeeperAppDefinition } from './keeper.definition';
 
 @Module({
   providers: [

@@ -21,7 +21,6 @@ import { MoonriverPickleJarTokenFetcher } from './moonriver/pickle.jar.token-fet
 import { OptimismUniV3PickleJarTokenFetcher } from './optimism/pickle.jar-univ3.token-fetcher';
 import { OptimismPickleJarTokenFetcher } from './optimism/pickle.jar.token-fetcher';
 import { OptimismPickleFarmContractPositionFetcher } from './optimism/pickle.masterchef-v2-farm.contract-position-fetcher';
-import { PickleAppDefinition } from './pickle.definition';
 import { PolygonUniV3PickleJarTokenFetcher } from './polygon/pickle.jar-univ3.token-fetcher';
 import { PolygonPickleJarTokenFetcher } from './polygon/pickle.jar.token-fetcher';
 import { PolygonPickleFarmContractPositionFetcher } from './polygon/pickle.masterchef-v2-farm.contract-position-fetcher';

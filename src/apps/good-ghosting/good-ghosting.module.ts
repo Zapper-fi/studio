@@ -6,7 +6,6 @@ import { CeloGoodGhostingGameContractPositionFetcher } from './celo/good-ghostin
 import { GoodGhostingGameBalancesApiSource } from './common/good-ghosting.game.balances.api-source';
 import { GoodGhostingGameGamesApiSource } from './common/good-ghosting.game.games.api-source';
 import { GoodGhostingContractFactory } from './contracts';
-import { GoodGhostingAppDefinition } from './good-ghosting.definition';
 import { PolygonGoodGhostingGameContractPositionFetcher } from './polygon/good-ghosting.game.contract-position-fetcher';
 
 @Module({

@@ -6,7 +6,6 @@ import { AuroraVaporwaveFinanceFarmContractPositionFetcher } from './aurora/vapo
 import { AuroraVaporwaveFinanceVaultTokenFetcher } from './aurora/vaporwave-finance.vault.token-fetcher';
 import { VaporwaveFinanceVaultDefinitionsResolver } from './common/vaporwave-finance.vault.token-definitions-resolver';
 import { VaporwaveFinanceContractFactory } from './contracts';
-import { VaporwaveFinanceAppDefinition } from './vaporwave-finance.definition';
 
 @Module({
   providers: [

@@ -10,7 +10,6 @@ import { EthereumInverseDcaVaultDividendContractPositionFetcher } from './ethere
 import { EthereumInverseDcaVaultTokenFetcher } from './ethereum/inverse.dca-vault.token-fetcher';
 import { EthereumInverseFarmContractPositionFetcher } from './ethereum/inverse.farm.contract-position-fetcher';
 import { EthereumInverseSupplyTokenFetcher } from './ethereum/inverse.supply.token-fetcher';
-import { InverseAppDefinition } from './inverse.definition';
 
 @Module({
   providers: [

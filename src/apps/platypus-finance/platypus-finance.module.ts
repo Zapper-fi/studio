@@ -7,7 +7,6 @@ import { AvalanchePlatypusFinanceFarmContractPositionFetcher } from './avalanche
 import { AvalanchePlatypusFinancePoolTokenFetcher } from './avalanche/platypus-finance.pool.token-fetcher';
 import { AvalanchePlatypusFinanceVotingEscrowContractPositionFetcher } from './avalanche/platypus-finance.voting-escrow.contract-position-fetcher';
 import { PlatypusFinanceContractFactory } from './contracts';
-import { PlatypusFinanceAppDefinition } from './platypus-finance.definition';
 
 @Module({
   providers: [

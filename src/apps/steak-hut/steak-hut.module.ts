@@ -6,7 +6,6 @@ import { AvalancheSteakHutPoolContractPositionFetcher } from './avalanche/steak-
 import { AvalancheSteakHutStakingContractPositionFetcher } from './avalanche/steak-hut.staking.contract-position-fetcher';
 import { AvalancheSteakHutVeTokenFetcher } from './avalanche/steak-hut.ve.token-fetcher';
 import { SteakHutContractFactory } from './contracts';
-import { SteakHutAppDefinition } from './steak-hut.definition';
 
 @Module({
   providers: [

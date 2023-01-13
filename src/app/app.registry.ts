@@ -20,6 +20,10 @@ export class AppRegistry implements OnModuleInit {
 
   constructor(@Inject(DiscoveryService) private readonly discoveryService: DiscoveryService) {}
 
+  get(appId: string) {
+    return this.registry.get(appId);
+  }
+
   async onModuleInit() {
     // Resolve stubs for apps dynamically; in production, static app configurations exist in a database
     const fetchers = await this.resolvePositionFetchers();
@@ -78,9 +82,5 @@ export class AppRegistry implements OnModuleInit {
       .map(wrapper => wrapper.instance as AnyFetcher);
 
     return fetchers;
-  }
-
-  get(appId: string) {
-    return this.registry.get(appId);
   }
 }

@@ -11,7 +11,6 @@ import { EthereumYearnV2VaultTokenFetcher } from './ethereum/yearn.v2-vault.toke
 import { EthereumYearnYCrvTokenTokenFetcher } from './ethereum/yearn.y-crv.token-fetcher';
 import { EthereumYearnYieldTokenFetcher } from './ethereum/yearn.yield.token-fetcher';
 import { FantomYearnV2VaultTokenFetcher } from './fantom/yearn.v2-vault.token-fetcher';
-import { YearnAppDefinition } from './yearn.definition';
 
 @Module({
   providers: [

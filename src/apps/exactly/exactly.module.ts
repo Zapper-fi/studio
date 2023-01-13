@@ -9,7 +9,6 @@ import { EthereumExactlyDepositFetcher } from './ethereum/exactly.deposit.token-
 import { EthereumExactlyFixedBorrowFetcher } from './ethereum/exactly.fixed-borrow.token-fetcher';
 import { EthereumExactlyFixedDepositFetcher } from './ethereum/exactly.fixed-deposit.token-fetcher';
 import { EthereumExactlyPositionPresenter } from './ethereum/exactly.position-presenter';
-import { ExactlyAppDefinition } from './exactly.definition';
 
 @Module({
   providers: [

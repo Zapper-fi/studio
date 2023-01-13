@@ -10,7 +10,6 @@ import { SushiswapBentoboxContractFactory } from './contracts';
 import { EthereumSushiSwapBentoBoxContractPositionFetcher } from './ethereum/sushiswap-bentobox.vault.contract-position-fetcher';
 import { FantomSushiSwapBentoBoxContractPositionFetcher } from './fantom/sushiswap-bentobox.vault.contract-position-fetcher';
 import { PolygonSushiSwapBentoBoxContractPositionFetcher } from './polygon/sushiswap-bentobox.vault.contract-position-fetcher';
-import { SushiSwapBentoBoxAppDefinition } from './sushiswap-bentobox.definition';
 
 @Module({
   providers: [

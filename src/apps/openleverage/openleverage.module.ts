@@ -6,7 +6,6 @@ import { BinanceSmartChainOpenleveragePoolTokenFetcher } from './binance-smart-c
 import { OpenleveragePoolAPYHelper } from './common/openleverage-pool.apy-helper';
 import { OpenleverageContractFactory } from './contracts';
 import { EthereumOpenleveragePoolTokenFetcher } from './ethereum/openleverage.pool.token-fetcher';
-import { OpenleverageAppDefinition } from './openleverage.definition';
 
 @Module({
   providers: [

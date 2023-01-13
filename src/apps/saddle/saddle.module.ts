@@ -6,7 +6,6 @@ import { SaddleContractFactory } from './contracts';
 import { EthereumSaddleCommunalFarmContractPositionFetcher } from './ethereum/saddle.communal-farm.contract-position-fetcher';
 import { EthereumSaddleMiniChefV2FarmContractPositionFetcher } from './ethereum/saddle.mini-chef-v2-farm.contract-position-fetcher';
 import { EthereumSaddlePoolTokenFetcher } from './ethereum/saddle.pool.token-fetcher';
-import { SaddleAppDefinition } from './saddle.definition';
 
 @Module({
   providers: [

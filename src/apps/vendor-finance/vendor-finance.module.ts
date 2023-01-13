@@ -4,7 +4,6 @@ import { AbstractApp } from '~app/app.dynamic-module';
 
 import { ArbitrumVendorFinancePoolContractPositionFetcher } from './arbitrum/vendor-finance.pool.contract-position-fetcher';
 import { VendorFinanceContractFactory } from './contracts';
-import { VendorFinanceAppDefinition } from './vendor-finance.definition';
 
 @Module({
   providers: [ArbitrumVendorFinancePoolContractPositionFetcher, VendorFinanceContractFactory],

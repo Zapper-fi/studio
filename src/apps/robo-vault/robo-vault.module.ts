@@ -6,7 +6,6 @@ import { AvalancheRoboVaultVaultTokenFetcher } from './avalanche/robo-vault.vaul
 import { RoboVaultApiClient } from './common/robo-vault.api.client';
 import { RoboVaultContractFactory } from './contracts';
 import { FantomRoboVaultVaultTokenFetcher } from './fantom/robo-vault.vault.token-fetcher';
-import { RoboVaultAppDefinition } from './robo-vault.definition';
 
 @Module({
   providers: [

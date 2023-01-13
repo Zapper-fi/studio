@@ -11,7 +11,6 @@ import { FantomHectorNetworkSHecV1TokenFetcher } from './fantom/hector-network.s
 import { FantomHectorNetworkSHecV2TokenFetcher } from './fantom/hector-network.s-hec-v2.token-fetcher';
 import { FantomHectorNetworkStakeBondContractPositionFetcher } from './fantom/hector-network.stake-bond.contract-position-fetcher';
 import { FantomHectorNetworkWsHecTokenFetcher } from './fantom/hector-network.ws-hec.token-fetcher';
-import { HectorNetworkAppDefinition } from './hector-network.definition';
 
 @Module({
   providers: [

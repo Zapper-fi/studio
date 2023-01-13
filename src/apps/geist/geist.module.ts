@@ -10,7 +10,6 @@ import { FantomGeistPositionPresenter } from './fantom/geist.position-presentati
 import { FantomGeistStableDebtTokenFetcher } from './fantom/geist.stable-debt.token-fetcher';
 import { FantomGeistSupplyTokenFetcher } from './fantom/geist.supply.token-fetcher';
 import { FantomGeistVariableDebtTokenFetcher } from './fantom/geist.variable-debt.token-fetcher';
-import { GeistAppDefinition } from './geist.definition';
 
 @Module({
   providers: [

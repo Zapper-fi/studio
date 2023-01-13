@@ -12,7 +12,6 @@ import { EthereumIronBankSupplyTokenFetcher } from './ethereum/iron-bank.supply.
 import { FantomIronBankBorrowContractPositionFetcher } from './fantom/iron-bank.borrow.contract-position-fetcher';
 import { FantomIronBankPositionPresenter } from './fantom/iron-bank.position-presenter';
 import { FantomIronBankSupplyTokenFetcher } from './fantom/iron-bank.supply.token-fetcher';
-import { IronBankAppDefinition } from './iron-bank.definition';
 import { OptimismIronBankBorrowContractPositionFetcher } from './optimism/iron-bank.borrow.contract-position-fetcher';
 import { OptimismIronBankPositionPresenter } from './optimism/iron-bank.position-presenter';
 import { OptimismIronBankSupplyTokenFetcher } from './optimism/iron-bank.supply.token-fetcher';

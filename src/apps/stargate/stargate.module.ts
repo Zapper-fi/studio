@@ -28,7 +28,6 @@ import { OptimismStargateVotingEscrowContractPositionFetcher } from './optimism/
 import { PolygonStargateFarmContractPositionFetcher } from './polygon/stargate.farm.contract-position-fetcher';
 import { PolygonStargatePoolTokenFetcher } from './polygon/stargate.pool.token-fetcher';
 import { PolygonStargateVotingEscrowContractPositionFetcher } from './polygon/stargate.voting-escrow.contract-position-fetcher';
-import { StargateAppDefinition } from './stargate.definition';
 
 @Module({
   providers: [

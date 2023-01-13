@@ -5,7 +5,6 @@ import { AbstractApp } from '~app/app.dynamic-module';
 import { AvalanchePhutureIndexTokenFetcher } from './avalanche/phuture.index.token-fetcher';
 import { PhutureContractFactory } from './contracts';
 import { EthereumPhutureIndexTokenFetcher } from './ethereum/phuture.index.token-fetcher';
-import { PhutureAppDefinition } from './phuture.definition';
 
 @Module({
   providers: [

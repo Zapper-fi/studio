@@ -4,7 +4,6 @@ import { AbstractApp } from '~app/app.dynamic-module';
 
 import { OriginStoryContractFactory } from './contracts';
 import { EthereumOriginStorySeriesContractPositionFetcher } from './ethereum/origin-story.series.contract-position-fetcher';
-import { OriginStoryAppDefinition } from './origin-story.definition';
 
 @Module({
   providers: [OriginStoryContractFactory, EthereumOriginStorySeriesContractPositionFetcher],

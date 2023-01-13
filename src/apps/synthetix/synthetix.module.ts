@@ -16,7 +16,6 @@ import { OptimismSynthetixPerpV2ContractPositionFetcher } from './optimism/synth
 import { OptimismSynthetixPositionPresenter } from './optimism/synthetix.position-presenter';
 import { OptimismSynthetixSnxTokenFetcher } from './optimism/synthetix.snx.token-fetcher';
 import { OptimismSynthetixSynthTokenFetcher } from './optimism/synthetix.synth.token-fetcher';
-import { SynthetixAppDefinition } from './synthetix.definition';
 
 @Module({
   providers: [

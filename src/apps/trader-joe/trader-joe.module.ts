@@ -12,7 +12,6 @@ import { AvalancheTraderJoeVeJoeContractPositionFetcher } from './avalanche/trad
 import { AvalancheTraderJoeVeJoeTokenFetcher } from './avalanche/trader-joe.ve-joe.token-fetcher';
 import { AvalancheTraderJoeXJoeTokenFetcher } from './avalanche/trader-joe.x-joe.token-fetcher';
 import { TraderJoeContractFactory } from './contracts';
-import { TraderJoeAppDefinition } from './trader-joe.definition';
 
 @Module({
   providers: [

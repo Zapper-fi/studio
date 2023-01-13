@@ -12,7 +12,6 @@ import { ArbitrumDopexRdpxSsovContractPositionFetcher } from './arbitrum/dopex.r
 import { ArbitrumDopexVotingEscrowRewardsContractPositionFetcher } from './arbitrum/dopex.voting-escrow-rewards.contract-position-fetcher';
 import { ArbitrumDopexVotingEscrowContractPositionFetcher } from './arbitrum/dopex.voting-escrow.contract-position-fetcher';
 import { DopexContractFactory } from './contracts';
-import { DopexAppDefinition } from './dopex.definition';
 
 @Module({
   providers: [

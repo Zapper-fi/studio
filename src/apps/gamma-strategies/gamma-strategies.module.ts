@@ -8,7 +8,6 @@ import { GammaStrategiesContractFactory } from './contracts';
 import { EthereumGammaStrategiesPoolTokenFetcher } from './ethereum/gamma-strategies.pool.token-fetcher';
 import { EthereumGammaStrategiesTGammaTokenFetcher } from './ethereum/gamma-strategies.t-gamma.token-fetcher';
 import { EthereumGammaStrategiesXGammaTokenFetcher } from './ethereum/gamma-strategies.x-gamma.token-fetcher';
-import { GammaStrategiesAppDefinition } from './gamma-strategies.definition';
 import { GammaApiHelper } from './helpers/gamma-strategies.api';
 import { OptimismGammaStrategiesPoolTokenFetcher } from './optimism/gamma-strategies.pool.token-fetcher';
 import { PolygonGammaStrategiesPoolTokenFetcher } from './polygon/gamma-strategies.pool.token-fetcher';

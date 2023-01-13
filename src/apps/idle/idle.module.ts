@@ -5,7 +5,6 @@ import { AbstractApp } from '~app/app.dynamic-module';
 import { IdleContractFactory } from './contracts';
 import { EthereumIdleVaultContractPositionFetcher } from './ethereum/idle.vault.contract-position-fetcher';
 import { EthereumIdleVaultTokenFetcher } from './ethereum/idle.vault.token-fetcher';
-import { IdleAppDefinition } from './idle.definition';
 
 @Module({
   providers: [IdleContractFactory, EthereumIdleVaultContractPositionFetcher, EthereumIdleVaultTokenFetcher],

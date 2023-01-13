@@ -8,7 +8,6 @@ import { AvalancheNereusFinanceStableDebtTokenFetcher } from './avalanche/nereus
 import { AvalancheNereusFinanceSupplyTokenFetcher } from './avalanche/nereus-finance.supply.token-fetcher';
 import { AvalancheNereusFinanceVariableDebtTokenFetcher } from './avalanche/nereus-finance.variable-debt.token-fetcher';
 import { NereusFinanceContractFactory } from './contracts';
-import { NereusFinanceAppDefinition } from './nereus-finance.definition';
 
 @Module({
   providers: [

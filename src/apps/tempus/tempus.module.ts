@@ -7,7 +7,6 @@ import { EthereumTempusAmmTokenFetcher } from './ethereum/tempus.amm.token-fetch
 import { EthereumTempusPoolTokenFetcher } from './ethereum/tempus.pool.token-fetcher';
 import { FantomTempusAmmTokenFetcher } from './fantom/tempus.amm.token-fetcher';
 import { FantomTempusPoolTokenFetcher } from './fantom/tempus.pool.token-fetcher';
-import { TempusAppDefinition } from './tempus.definition';
 
 @Module({
   providers: [

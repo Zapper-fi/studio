@@ -6,7 +6,6 @@ import { TarotContractFactory } from './contracts';
 import { FantomTarotBorrowContractPositionFetcher } from './fantom/tarot.borrow.contract-position-fetcher';
 import { FantomTarotSupplyTokenFetcher } from './fantom/tarot.supply.token-fetcher';
 import { FantomTarotVaultTokenFetcher } from './fantom/tarot.vault.token-fetcher';
-import { TarotAppDefinition } from './tarot.definition';
 
 @Module({
   providers: [

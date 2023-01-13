@@ -7,7 +7,6 @@ import { EthereumUwuLendPlatformFeesV1PositionFetcher } from './ethereum/uwu-len
 import { EthereumUwuLendPlatformFeesV2PositionFetcher } from './ethereum/uwu-lend.platform-fees-v2.contract-position-fetcher';
 import { EthereumUwuLendSupplyTokenFetcher } from './ethereum/uwu-lend.supply.token-fetcher';
 import { EthereumUwuLendVariableDebtTokenFetcher } from './ethereum/uwu-lend.variable-debt.token-fetcher';
-import { UwuLendAppDefinition } from './uwu-lend.definition';
 
 @Module({
   providers: [
