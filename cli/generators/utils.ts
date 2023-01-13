@@ -21,7 +21,7 @@ export const formatAndWrite = async (filename: string, content: string) => {
 export const resolveNetworks = (appId: string) => {
   const networks = fse
     .readdirSync(`./src/apps/${appId}`)
-    .filter(file => fse.statSync(`${location}/${file}`).isDirectory())
+    .filter(file => fse.statSync(`src/apps/${appId}/${file}`).isDirectory())
     .filter((file): file is Network => Object.values(Network).includes(file as Network));
   return networks;
 };
