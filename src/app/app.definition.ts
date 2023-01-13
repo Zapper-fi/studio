@@ -4,6 +4,15 @@ import { AppDefinitionObject, AppGroup, AppLinks, AppAction, AppTag, Presentatio
 
 export const appDefinition = <T extends AppDefinitionObject>(definition: T) => definition;
 
+function toNetworkWithActionsArray(
+  supportedNetworks: Record<string, AppAction[]>,
+): { network: Network; actions: AppAction[] }[] {
+  return Object.keys(supportedNetworks).map((network: Network) => ({
+    network,
+    actions: supportedNetworks[network],
+  }));
+}
+
 class AppDefinitionToken {
   address: string;
   network: Network;
@@ -15,6 +24,22 @@ class AppSupportedNetwork {
 }
 
 export class AppDefinition {
+  constructor(definitionRaw: AppDefinitionObject) {
+    this.id = definitionRaw.id;
+    this.name = definitionRaw.name;
+    this.description = definitionRaw.description ?? '';
+    this.url = definitionRaw.url;
+    this.links = definitionRaw.links;
+    this.keywords = definitionRaw.keywords ?? [];
+    this.tags = definitionRaw.tags;
+    this.groups = definitionRaw.groups;
+    this.presentationConfig = definitionRaw.presentationConfig;
+    this.supportedNetworks = definitionRaw.supportedNetworks
+      ? toNetworkWithActionsArray(definitionRaw.supportedNetworks)
+      : undefined;
+    this.token = definitionRaw.token;
+  }
+
   readonly id: string;
   readonly name: string;
   readonly description: string;
