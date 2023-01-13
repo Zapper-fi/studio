@@ -2,7 +2,6 @@ import { Inject, Injectable } from '@nestjs/common';
 import _, { get, groupBy } from 'lodash';
 
 import { presentBalanceFetcherResponse } from '~app-toolkit/helpers/presentation/balance-fetcher-response.present';
-import { AppDefinition } from '~app/app.definition';
 import { AppService } from '~app/app.service';
 import { DefaultDataProps } from '~position/display.interface';
 import {
@@ -19,17 +18,13 @@ import { TokenBalanceResponse } from './balance-fetcher.interface';
 
 type Balances = (AppTokenPositionBalance | ContractPositionBalance)[];
 
-interface IAppService {
-  getApp(appId: string): Promise<AppDefinition | undefined>;
-}
-
 @Injectable()
 export class BalancePresentationService {
   constructor(
     @Inject(PositionPresenterRegistry) private readonly positionPresenterRegistry: PositionPresenterRegistry,
     @Inject(PositionFetcherTemplateRegistry)
     private readonly positionFetcherTemplateRegistry: PositionFetcherTemplateRegistry,
-    @Inject(AppService) private readonly appService: IAppService,
+    @Inject(AppService) private readonly appService: AppService,
   ) {}
 
   private groupBalancesByPositionGroup(

@@ -6,12 +6,10 @@ import { AvalancheInsuraceMiningTokenFetcher } from './avalanche/insurace.mining
 import { BinanceSmartChainInsuraceMiningTokenFetcher } from './binance-smart-chain/insurace.mining.token-fetcher';
 import { InsuraceContractFactory } from './contracts';
 import { EthereumInsuraceMiningTokenFetcher } from './ethereum/insurace.mining.token-fetcher';
-import { InsuraceAppDefinition } from './insurace.definition';
 import { PolygonInsuraceMiningTokenFetcher } from './polygon/insurace.mining.token-fetcher';
 
 @Module({
   providers: [
-    InsuraceAppDefinition,
     InsuraceContractFactory,
     // Avalanche
     AvalancheInsuraceMiningTokenFetcher,

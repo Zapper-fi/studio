@@ -9,7 +9,6 @@ import { ImpermaxContractFactory } from './contracts';
 import { EthereumImpermaxBorrowContractPositionFetcher } from './ethereum/impermax.borrow.contract-position-fetcher';
 import { EthereumImpermaxCollateralTokenFetcher } from './ethereum/impermax.collateral.token-fetcher';
 import { EthereumImpermaxLendTokenFetcher } from './ethereum/impermax.lend.token-fetcher';
-import { ImpermaxAppDefinition } from './impermax.definition';
 import { PolygonImpermaxBorrowContractPositionFetcher } from './polygon/impermax.borrow.contract-position-fetcher';
 import { PolygonImpermaxCollateralTokenFetcher } from './polygon/impermax.collateral.token-fetcher';
 import { PolygonImpermaxLendTokenFetcher } from './polygon/impermax.lend.token-fetcher';
@@ -22,7 +21,7 @@ import { PolygonImpermaxLendTokenFetcher } from './polygon/impermax.lend.token-f
     EthereumImpermaxBorrowContractPositionFetcher,
     EthereumImpermaxCollateralTokenFetcher,
     EthereumImpermaxLendTokenFetcher,
-    ImpermaxAppDefinition,
+
     ImpermaxContractFactory,
     PolygonImpermaxBorrowContractPositionFetcher,
     PolygonImpermaxCollateralTokenFetcher,

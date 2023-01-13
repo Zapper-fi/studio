@@ -15,7 +15,6 @@ import { CronosKyberswapElasticLiquidityContractPositionFetcher } from './cronos
 import { EthereumKyberswapElasticFarmContractPositionFetcher } from './ethereum/kyberswap-elastic.farm.contract-position-fetcher';
 import { EthereumKyberswapElasticLiquidityContractPositionFetcher } from './ethereum/kyberswap-elastic.liquidity.contract-position-fetcher';
 import { FantomKyberswapElasticLiquidityContractPositionFetcher } from './fantom/kyberswap-elastic.liquidity.contract-position-fetcher';
-import { KyberswapElasticAppDefinition } from './kyberswap-elastic.definition';
 import { OptimismKyberswapElasticFarmContractPositionFetcher } from './optimism/kyberswap-elastic.farm.contract-position-fetcher';
 import { OptimismKyberswapElasticLiquidityContractPositionFetcher } from './optimism/kyberswap-elastic.liquidity.contract-position-fetcher';
 import { PolygonKyberswapElasticFarmContractPositionFetcher } from './polygon/kyberswap-elastic.farm.contract-position-fetcher';
@@ -23,7 +22,6 @@ import { PolygonKyberswapElasticLiquidityContractPositionFetcher } from './polyg
 
 @Module({
   providers: [
-    KyberswapElasticAppDefinition,
     KyberswapElasticContractFactory,
     KyberswapElasticApyDataLoader,
     KyberswapElasticFarmContractPositionBuilder,

@@ -12,12 +12,10 @@ import { AuroraBastionProtocolPoolTokenFetcher } from './aurora/bastion-protocol
 import { AuroraBastionProtocolPositionPresenter } from './aurora/bastion-protocol.position-presenter';
 import { AuroraBastionProtocolStakedNearBorrowContractPositionFetcher } from './aurora/bastion-protocol.staked-near-borrow.contract-position-fetcher';
 import { AuroraBastionProtocolStakedNearSupplyTokenFetcher } from './aurora/bastion-protocol.staked-near-supply.token-fetcher';
-import { BastionProtocolAppDefinition } from './bastion-protocol.definition';
 import { BastionProtocolContractFactory } from './contracts';
 
 @Module({
   providers: [
-    BastionProtocolAppDefinition,
     BastionProtocolContractFactory,
     AuroraBastionProtocolPoolTokenFetcher,
     AuroraBastionProtocolMainHubSupplyTokenFetcher,

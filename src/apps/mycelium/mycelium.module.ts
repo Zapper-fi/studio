@@ -6,11 +6,9 @@ import { ArbitrumMyceliumEsMycTokenFetcher } from './arbitrum/mycelium.es-myc.to
 import { ArbitrumMyceliumMlpTokenFetcher } from './arbitrum/mycelium.mlp.token-fetcher';
 import { ArbitrumMycellilumPerpContractPositionFetcher } from './arbitrum/mycelium.perp.contract-position-fetcher';
 import { MyceliumContractFactory } from './contracts';
-import { MyceliumAppDefinition } from './mycelium.definition';
 
 @Module({
   providers: [
-    MyceliumAppDefinition,
     MyceliumContractFactory,
     // Arbitrum
     ArbitrumMyceliumEsMycTokenFetcher,

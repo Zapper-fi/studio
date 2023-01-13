@@ -6,11 +6,9 @@ import { LiquityContractFactory } from './contracts';
 import { EthereumLiquityStabilityPoolContractPositionFetcher } from './ethereum/liquity.stability-pool.contract-position-fetcher';
 import { EthereumLiquityStakingContractPositionFetcher } from './ethereum/liquity.staking.contract-position-fetcher';
 import { EthereumLiquityTroveContractPositionFetcher } from './ethereum/liquity.trove.contract-position-fetcher';
-import { LiquityAppDefinition } from './liquity.definition';
 
 @Module({
   providers: [
-    LiquityAppDefinition,
     LiquityContractFactory,
     EthereumLiquityStabilityPoolContractPositionFetcher,
     EthereumLiquityStakingContractPositionFetcher,

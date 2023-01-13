@@ -6,7 +6,6 @@ import { ArbitrumOokiLendTokenFetcher } from './arbitrum/ooki.lend.token-fetcher
 import { BinanceSmartChainOokiLendTokenFetcher } from './binance-smart-chain/ooki.lend.token-fetcher';
 import { OokiContractFactory } from './contracts';
 import { EthereumOokiLendTokenFetcher } from './ethereum/ooki.lend.token-fetcher';
-import { OokiAppDefinition } from './ooki.definition';
 import { OptimismOokiLendTokenFetcher } from './optimism/ooki.lend.token-fetcher';
 import { PolygonOokiLendTokenFetcher } from './polygon/ooki.lend.token-fetcher';
 
@@ -17,7 +16,7 @@ import { PolygonOokiLendTokenFetcher } from './polygon/ooki.lend.token-fetcher';
     EthereumOokiLendTokenFetcher,
     OptimismOokiLendTokenFetcher,
     PolygonOokiLendTokenFetcher,
-    OokiAppDefinition,
+
     OokiContractFactory,
   ],
 })

@@ -9,14 +9,12 @@ import { MarketXyzContractFactory } from './contracts';
 import { FantomMarketXyzBorrowContractPositionFetcher } from './fantom/market-xyz.borrow.contract-position-fetcher';
 import { FantomMarketXyzPositionPresenter } from './fantom/market-xyz.position-presenter';
 import { FantomMarketXyzSupplyTokenFetcher } from './fantom/market-xyz.supply.token-fetcher';
-import { MarketXyzAppDefinition } from './market-xyz.definition';
 import { PolygonMarketXyzBorrowContractPositionFetcher } from './polygon/market-xyz.borrow.contract-position-fetcher';
 import { PolygonMarketXyzPositionPresenter } from './polygon/market-xyz.position-presenter';
 import { PolygonMarketXyzSupplyTokenFetcher } from './polygon/market-xyz.supply.token-fetcher';
 
 @Module({
   providers: [
-    MarketXyzAppDefinition,
     MarketXyzContractFactory,
     // Avalanche
     AvalancheMarketXyzBorrowContractPositionFetcher,

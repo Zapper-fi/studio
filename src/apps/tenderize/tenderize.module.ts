@@ -8,11 +8,9 @@ import { TenderizeTokenDefinitionsResolver } from './common/tenderize.token-defi
 import { TenderizeContractFactory } from './contracts';
 import { EthereumTenderizeSwapTokenFetcher } from './ethereum/tenderize.swap.token-fetcher';
 import { EthereumTenderizeTenderTokenFetcher } from './ethereum/tenderize.tender.token-fetcher';
-import { TenderizeAppDefinition } from './tenderize.definition';
 
 @Module({
   providers: [
-    TenderizeAppDefinition,
     TenderizeContractFactory,
     TenderizeTokenDefinitionsResolver,
     // Arbitrum

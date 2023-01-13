@@ -37,16 +37,6 @@ export class AppToolkit implements IAppToolkit {
     this.contractFactory = new ContractFactory((network: Network) => this.networkProviderService.getProvider(network));
   }
 
-  // Apps
-
-  async getApps() {
-    return this.appService.getApps();
-  }
-
-  async getApp(appId: string) {
-    return this.appService.getApp(appId);
-  }
-
   // Network Related
 
   get globalContracts() {

@@ -6,14 +6,13 @@ import { EthereumSpoolStakingContractPositionFetcher } from '~apps/spool/ethereu
 import { SpoolContractFactory } from './contracts';
 import { EthereumSpoolVaultContractPositionFetcher } from './ethereum/spool.vault.contract-position-fetcher';
 import { EthereumSpoolVoSpoolTokenFetcher } from './ethereum/spool.vo-spool.token-fetcher';
-import { SpoolAppDefinition } from './spool.definition';
 
 @Module({
   providers: [
     EthereumSpoolVoSpoolTokenFetcher,
     EthereumSpoolVaultContractPositionFetcher,
     EthereumSpoolStakingContractPositionFetcher,
-    SpoolAppDefinition,
+
     SpoolContractFactory,
   ],
 })

@@ -13,12 +13,10 @@ import { EthereumOlympusSOhmV1TokenFetcher } from './ethereum/olympus.s-ohm-v1.t
 import { EthereumOlympusSOhmTokenFetcher } from './ethereum/olympus.s-ohm.token-fetcher';
 import { EthereumOlympusWsOhmV1TokenFetcher } from './ethereum/olympus.ws-ohm-v1.token-fetcher';
 import { FantomOlympusGOhmTokenFetcher } from './fantom/olympus.g-ohm.token-fetcher';
-import { OlympusAppDefinition } from './olympus.definition';
 import { PolygonOlympusGOhmTokenFetcher } from './polygon/olympus.g-ohm.token-fetcher';
 
 @Module({
   providers: [
-    OlympusAppDefinition,
     OlympusContractFactory,
     ArbitrumOlympusGOhmTokenFetcher,
     ArbitrumOlympusWsOhmV1TokenFetcher,

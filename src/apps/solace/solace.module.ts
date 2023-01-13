@@ -17,11 +17,9 @@ import { FantomSolaceXslockerContractPositionFetcher } from './fantom/solace.xs-
 import { PolygonSolaceBondsContractPositionFetcher } from './polygon/solace.bonds.contract-position-fetcher';
 import { PolygonSolacePoliciesContractPositionFetcher } from './polygon/solace.policies.contract-position-fetcher';
 import { PolygonSolaceXslockerContractPositionFetcher } from './polygon/solace.xs-locker.contract-position-fetcher';
-import { SolaceAppDefinition } from './solace.definition';
 
 @Module({
   providers: [
-    SolaceAppDefinition,
     SolaceContractFactory,
     // Ethereum
     EthereumSolaceBondsContractPositionFetcher,

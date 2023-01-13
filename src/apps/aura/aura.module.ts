@@ -2,7 +2,6 @@ import { Module } from '@nestjs/common';
 
 import { AbstractApp } from '~app/app.dynamic-module';
 
-import { AuraAppDefinition } from './aura.definition';
 import { AuraBalancerPoolResolver } from './common/aura.balancer-pool.resolver';
 import { AuraContractFactory } from './contracts';
 import { EthereumAuraAuraBalStakingContractPositionFetcher } from './ethereum/aura.aura-bal-staking.contract-position-fetcher';
@@ -14,7 +13,6 @@ import { EthereumAuraLpFarmContractPositionFetcher } from './ethereum/aura.lp-fa
 
 @Module({
   providers: [
-    AuraAppDefinition,
     AuraContractFactory,
     // helpers
     AuraBalancerPoolResolver,

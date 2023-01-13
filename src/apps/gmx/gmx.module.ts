@@ -11,11 +11,9 @@ import { AvalancheGmxFarmContractPositionFetcher } from './avalanche/gmx.farm.co
 import { AvalancheGmxGlpTokenFetcher } from './avalanche/gmx.glp.token-fetcher';
 import { AvalancheGmxPerpContractPositionFetcher } from './avalanche/gmx.perp.contract-position-fetcher';
 import { GmxContractFactory } from './contracts';
-import { GmxAppDefinition } from './gmx.definition';
 
 @Module({
   providers: [
-    GmxAppDefinition,
     GmxContractFactory,
     // Arbitrum
     ArbitrumGmxEsGmxTokenFetcher,

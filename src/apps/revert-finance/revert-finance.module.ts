@@ -13,11 +13,9 @@ import { OptimismRevertFinanceCompoundorRewardsContractPositionFetcher } from '.
 import { OptimismRevertFinanceCompoundorContractPositionFetcher } from './optimism/revert-finance.compoundor.contract-position-fetcher';
 import { PolygonRevertFinanceCompoundorRewardsContractPositionFetcher } from './polygon/revert-finance.compoundor-rewards.contract-position-fetcher';
 import { PolygonRevertFinanceCompoundorContractPositionFetcher } from './polygon/revert-finance.compoundor.contract-position-fetcher';
-import { RevertFinanceAppDefinition } from './revert-finance.definition';
 
 @Module({
   providers: [
-    RevertFinanceAppDefinition,
     RevertFinanceContractFactory,
     UniswapV3ContractFactory,
     UniswapV3LiquidityContractPositionBuilder,

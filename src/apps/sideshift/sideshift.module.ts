@@ -4,9 +4,8 @@ import { AbstractApp } from '~app/app.dynamic-module';
 
 import { SideshiftContractFactory } from './contracts';
 import { EthereumSideshiftSvxaiTokenFetcher } from './ethereum/sideshift.svxai.token-fetcher';
-import { SideshiftAppDefinition } from './sideshift.definition';
 
 @Module({
-  providers: [EthereumSideshiftSvxaiTokenFetcher, SideshiftAppDefinition, SideshiftContractFactory],
+  providers: [EthereumSideshiftSvxaiTokenFetcher, SideshiftContractFactory],
 })
 export class SideshiftAppModule extends AbstractApp() {}

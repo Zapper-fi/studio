@@ -8,11 +8,9 @@ import { EthereumRedactedCartelRevenueLockContractPositionFetcher } from './ethe
 import { EthereumRedactedCartelWxBtrflyV1TokenFetcher } from './ethereum/redacted-cartel.wx-btrfly-v1.token-fetcher';
 import { EthereumRedactedCartelWxBtrflyTokenFetcher } from './ethereum/redacted-cartel.wx-btrfly.token-fetcher';
 import { EthereumRedactedCartelXBtrflyTokenFetcher } from './ethereum/redacted-cartel.x-btrfly.token-fetcher';
-import { RedactedCartelAppDefinition } from './redacted-cartel.definition';
 
 @Module({
   providers: [
-    RedactedCartelAppDefinition,
     RedactedCartelContractFactory,
     EthereumRedactedCartelXBtrflyTokenFetcher,
     EthereumRedactedCartelWxBtrflyTokenFetcher,

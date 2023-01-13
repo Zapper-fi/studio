@@ -8,12 +8,11 @@ import { OptimismPolynomialCallSellingVaultQueueContractPositionFetcher } from '
 import { OptimismPolynomialCallSellingVaultTokenFetcher } from './optimism/polynomial.call-selling-vault.token-fetcher';
 import { OptimismPolynomialPutSellingVaultQueueContractPositionFetcher } from './optimism/polynomial.put-selling-vault-queue.contract-position-fetcher';
 import { OptimismPolynomialPutSellingVaultTokenFetcher } from './optimism/polynomial.put-selling-vault.token-fetcher';
-import { PolynomialAppDefinition } from './polynomial.definition';
 
 @Module({
   providers: [
     PolynomialApiHelper,
-    PolynomialAppDefinition,
+
     PolynomialContractFactory,
     OptimismPolynomialCallSellingVaultTokenFetcher,
     OptimismPolynomialCallSellingVaultQueueContractPositionFetcher,

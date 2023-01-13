@@ -8,11 +8,9 @@ import { UniswapV3ContractFactory } from './contracts';
 import { EthereumUniswapV3LiquidityContractPositionFetcher } from './ethereum/uniswap-v3.liquidity.contract-position-fetcher';
 import { OptimismUniswapV3LiquidityContractPositionFetcher } from './optimism/uniswap-v3.liquidity.contract-position-fetcher';
 import { PolygonUniswapV3LiquidityContractPositionFetcher } from './polygon/uniswap-v3.liquidity.contract-position-fetcher';
-import { UniswapV3AppDefinition } from './uniswap-v3.definition';
 
 @Module({
   providers: [
-    UniswapV3AppDefinition,
     UniswapV3ContractFactory,
     UniswapV3LiquidityContractPositionBuilder,
     ArbitrumUniswapV3LiquidityContractPositionFetcher,

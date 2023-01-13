@@ -4,9 +4,8 @@ import { AbstractApp } from '~app/app.dynamic-module';
 
 import { PikaProtocolContractFactory } from './contracts';
 import { OptimismPikaProtocolVaultContractPositionFetcher } from './optimism/pika-protocol.vault.contract-position-fetcher';
-import { PikaProtocolAppDefinition } from './pika-protocol.definition';
 
 @Module({
-  providers: [PikaProtocolAppDefinition, PikaProtocolContractFactory, OptimismPikaProtocolVaultContractPositionFetcher],
+  providers: [PikaProtocolContractFactory, OptimismPikaProtocolVaultContractPositionFetcher],
 })
 export class PikaProtocolAppModule extends AbstractApp() {}

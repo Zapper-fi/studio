@@ -16,7 +16,6 @@ import { ArbitrumPlutusPlsJonesTokenFetcher } from './arbitrum/plutus.pls-jones.
 import { ArbitrumPlutusPlvGlpTokenFetcher } from './arbitrum/plutus.plv-glp.token-fetcher';
 import { ArbitrumPlutusTgeClaimableContractPositionFetcher } from './arbitrum/plutus.tge-claimable.contract-position-fetcher';
 import { PlutusContractFactory } from './contracts';
-import { PlutusAppDefinition } from './plutus.definition';
 
 @Module({
   providers: [
@@ -33,7 +32,7 @@ import { PlutusAppDefinition } from './plutus.definition';
     ArbitrumPlutusPlsGlpTokenFetcher,
     ArbitrumPlutusPlvGlpTokenFetcher,
     ArbitrumPlutusTgeClaimableContractPositionFetcher,
-    PlutusAppDefinition,
+
     PlutusContractFactory,
   ],
 })

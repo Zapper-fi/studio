@@ -2,7 +2,6 @@ import { Module } from '@nestjs/common';
 
 import { AbstractApp } from '~app/app.dynamic-module';
 
-import { AngleAppDefinition } from './angle.definition';
 import { AngleApiHelper } from './common/angle.api';
 import { AngleContractFactory } from './contracts';
 import { EthereumAnglePerpetualsContractPositionFetcher } from './ethereum/angle.perpetual.contract-position-fetcher';
@@ -12,7 +11,6 @@ import { EthereumAngleVeAngleContractPositionFetcher } from './ethereum/angle.vo
 
 @Module({
   providers: [
-    AngleAppDefinition,
     AngleContractFactory,
     AngleApiHelper,
     // Ethereum

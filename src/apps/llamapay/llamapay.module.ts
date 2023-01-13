@@ -6,11 +6,9 @@ import { LlamapayStreamApiClient } from './common/llamapay.stream.api-client';
 import { LlamapayContractFactory } from './contracts';
 import { EthereumLlamapayStreamContractPositionFetcher } from './ethereum/llamapay.stream.contract-position-fetcher';
 import { EthereumLlamapayVestingEscrowContractPositionFetcher } from './ethereum/llamapay.vesting-escrow.contract-position-fetcher';
-import { LlamapayAppDefinition } from './llamapay.definition';
 
 @Module({
   providers: [
-    LlamapayAppDefinition,
     LlamapayContractFactory,
     LlamapayStreamApiClient,
     EthereumLlamapayStreamContractPositionFetcher,

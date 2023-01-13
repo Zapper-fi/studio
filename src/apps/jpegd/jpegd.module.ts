@@ -6,11 +6,9 @@ import { JpegdContractFactory } from './contracts';
 import { EthereumJpegdBondContractPositionFetcher } from './ethereum/jpegd.bond.contract-position-fetcher';
 import { EthereumJpegdChefV1ContractPositionFetcher } from './ethereum/jpegd.chef-v1.contract-position-fetcher';
 import { EthereumJpegdChefV2ContractPositionFetcher } from './ethereum/jpegd.chef-v2.contract-position-fetcher';
-import { JpegdAppDefinition } from './jpegd.definition';
 
 @Module({
   providers: [
-    JpegdAppDefinition,
     JpegdContractFactory,
     EthereumJpegdChefV1ContractPositionFetcher,
     EthereumJpegdChefV2ContractPositionFetcher,

@@ -2,7 +2,6 @@ import { Module } from '@nestjs/common';
 
 import { AbstractApp } from '~app/app.dynamic-module';
 
-import { AurigamiAppDefinition } from './aurigami.definition';
 import { AuroraAurigamiBorrowContractPositionFetcher } from './aurora/aurigami.borrow.contract-position-fetcher';
 import { AuroraAurigamiClaimableContractPositionFetcher } from './aurora/aurigami.claimable.contract-position-fetcher';
 import { AuroraAurigamiPositionPresenter } from './aurora/aurigami.position-presenter';
@@ -11,7 +10,6 @@ import { AurigamiContractFactory } from './contracts';
 
 @Module({
   providers: [
-    AurigamiAppDefinition,
     AurigamiContractFactory,
     AuroraAurigamiBorrowContractPositionFetcher,
     AuroraAurigamiClaimableContractPositionFetcher,

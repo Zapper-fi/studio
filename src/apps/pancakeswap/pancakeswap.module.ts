@@ -13,11 +13,9 @@ import { BinanceSmartChainPancakeSwapPoolTokenFetcher } from './binance-smart-ch
 import { BinanceSmartChainPancakeswapSyrupCakeContractPositionFetcher } from './binance-smart-chain/pancakeswap.syrup-cake.contract-position-fetcher';
 import { BinanceSmartChainPancakeswapSyrupStakingContractPositionFetcher } from './binance-smart-chain/pancakeswap.syrup-staking.contract-position-fetcher';
 import { PancakeswapContractFactory } from './contracts';
-import { PancakeswapAppDefinition } from './pancakeswap.definition';
 
 @Module({
   providers: [
-    PancakeswapAppDefinition,
     PancakeswapContractFactory,
     UniswapV2ContractFactory,
     BinanceSmartChainPancakeswapAutoCakeContractPositionFetcher,

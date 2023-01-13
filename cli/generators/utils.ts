@@ -4,7 +4,7 @@ import { ESLint } from 'eslint';
 import fse, { ensureDirSync } from 'fs-extra';
 import { resolveConfig, format } from 'prettier';
 
-import { AppDefinitionObject } from '../../src/app/app.interface';
+import { Network } from '../../src/types/network.interface';
 
 export const formatAndWrite = async (filename: string, content: string) => {
   ensureDirSync(dirname(filename));
@@ -16,4 +16,12 @@ export const formatAndWrite = async (filename: string, content: string) => {
 
   const results = await eslint.lintFiles(filename);
   await ESLint.outputFixes(results);
+};
+
+export const resolveNetworks = (appId: string) => {
+  const networks = fse
+    .readdirSync(`./src/apps/${appId}`)
+    .filter(file => fse.statSync(`${location}/${file}`).isDirectory())
+    .filter((file): file is Network => Object.values(Network).includes(file as Network));
+  return networks;
 };

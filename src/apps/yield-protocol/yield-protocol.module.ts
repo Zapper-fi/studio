@@ -9,11 +9,9 @@ import { YieldProtocolContractFactory } from './contracts';
 import { EthereumYieldProtocolBorrowContractPositionFetcher } from './ethereum/yield-protocol.borrow.contract-position-fetcher';
 import { EthereumYieldProtocolLendTokenFetcher } from './ethereum/yield-protocol.lend.token-fetcher';
 import { EthereumYieldProtocolPoolTokenFetcher } from './ethereum/yield-protocol.pool.token-fetcher';
-import { YieldProtocolAppDefinition } from './yield-protocol.definition';
 
 @Module({
   providers: [
-    YieldProtocolAppDefinition,
     YieldProtocolContractFactory,
     ArbitrumYieldProtocolBorrowContractPositionFetcher,
     ArbitrumYieldProtocolLendTokenFetcher,

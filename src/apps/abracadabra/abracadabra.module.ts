@@ -2,7 +2,6 @@ import { Module } from '@nestjs/common';
 
 import { AbstractApp } from '~app/app.dynamic-module';
 
-import { AbracadabraAppDefinition } from './abracadabra.definition';
 import { ArbitrumAbracadabraCauldronContractPositionFetcher } from './arbitrum/abracadabra.cauldron.contract-position-fetcher';
 import { ArbitrumAbracadabraFarmContractPositionFetcher } from './arbitrum/abracadabra.farm.contract-position-fetcher';
 import { ArbitrumAbracadabraMspellContractPositionFetcher } from './arbitrum/abracadabra.m-spell.contract-position-fetcher';
@@ -24,7 +23,6 @@ import { FantomAbracadabraStakedSpellTokenFetcher } from './fantom/abracadabra.s
 
 @Module({
   providers: [
-    AbracadabraAppDefinition,
     AbracadabraContractFactory,
     // Arbitrum
     ArbitrumAbracadabraStakedSpellTokenFetcher,

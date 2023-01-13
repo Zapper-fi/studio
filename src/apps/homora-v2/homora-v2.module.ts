@@ -6,12 +6,10 @@ import { AvalancheHomoraV2FarmContractPositionFetcher } from './avalanche/homora
 import { HomoraV2ContractFactory } from './contracts';
 import { EthereumHomoraV2FarmContractPositionFetcher } from './ethereum/homora-v2.farm.contract-position-fetcher';
 import { FantomHomoraV2FarmContractPositionFetcher } from './fantom/homora-v2.farm.contract-position-fetcher';
-import { HomoraV2AppDefinition } from './homora-v2.definition';
 import { OptimismHomoraV2FarmContractPositionFetcher } from './optimism/homora-v2.farm.contract-position-fetcher';
 
 @Module({
   providers: [
-    HomoraV2AppDefinition,
     HomoraV2ContractFactory,
     // Ethereum
     EthereumHomoraV2FarmContractPositionFetcher,

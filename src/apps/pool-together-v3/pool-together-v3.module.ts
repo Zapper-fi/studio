@@ -19,12 +19,11 @@ import { PolygonPoolTogetherV3ClaimableContractPositionFetcher } from './polygon
 import { PolygonPoolTogetherV3CommunityTicketTokenFetcher } from './polygon/pool-together-v3.community-ticket.token-fetcher';
 import { PolygonPoolTogetherV3SponsorshipTokenFetcher } from './polygon/pool-together-v3.sponsorship.token-fetcher';
 import { PolygonPoolTogetherV3TicketTokenFetcher } from './polygon/pool-together-v3.ticket.token-fetcher';
-import { PoolTogetherV3AppDefinition } from './pool-together-v3.definition';
 
 @Module({
   providers: [
     PoolTogetherV3ApiPrizePoolRegistry,
-    PoolTogetherV3AppDefinition,
+
     PoolTogetherV3ContractFactory,
     PoolTogetherV3LogProvider,
     // Celo

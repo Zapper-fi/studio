@@ -8,11 +8,9 @@ import { ArbitrumUmamiFinanceMarinateContractPositionFetcher } from './arbitrum/
 import { ArbitrumUmamiFinanceVaultsTokenFetcher } from './arbitrum/umami-finance.vaults.token-fetcher';
 import { UmamiFinanceYieldResolver } from './common/umami-finance.marinate.token-definition-resolver';
 import { UmamiFinanceContractFactory } from './contracts';
-import { UmamiFinanceAppDefinition } from './umami-finance.definition';
 
 @Module({
   providers: [
-    UmamiFinanceAppDefinition,
     UmamiFinanceContractFactory,
     UmamiFinanceYieldResolver,
     // Arbitrum

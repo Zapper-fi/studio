@@ -7,11 +7,9 @@ import { OptimismSonneBorrowContractPositionFetcher } from './optimism/sonne.bor
 import { OptimismSonnePositionPresenter } from './optimism/sonne.position-presenter';
 import { OptimismSonneStakingContractPositionFetcher } from './optimism/sonne.staking.contract-position-fetcher';
 import { OptimismSonneSupplyTokenFetcher } from './optimism/sonne.supply.token-fetcher';
-import { SonneAppDefinition } from './sonne.definition';
 
 @Module({
   providers: [
-    SonneAppDefinition,
     SonneContractFactory,
     OptimismSonnePositionPresenter,
     OptimismSonneBorrowContractPositionFetcher,

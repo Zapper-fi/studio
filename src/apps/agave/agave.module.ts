@@ -3,7 +3,6 @@ import { Module } from '@nestjs/common';
 import { AbstractApp } from '~app/app.dynamic-module';
 import { AaveV2ContractFactory } from '~apps/aave-v2/contracts';
 
-import { AgaveAppDefinition } from './agave.definition';
 import { AgaveContractFactory } from './contracts';
 import { GnosisAgaveClaimableContractPositionFetcher } from './gnosis/agave.claimable.contract-position-fetcher';
 import { GnosisAgaveDepositTokenFetcher } from './gnosis/agave.deposit.token-fetcher';
@@ -13,7 +12,6 @@ import { GnosisAgaveVariableBorrowTokenFetcher } from './gnosis/agave.variable-b
 
 @Module({
   providers: [
-    AgaveAppDefinition,
     AgaveContractFactory,
     AaveV2ContractFactory,
     GnosisAgaveClaimableContractPositionFetcher,

@@ -9,11 +9,9 @@ import { AvalanchePenguinVaultClaimableContractPositionFetcher } from './avalanc
 import { AvalanchePenguinVaultTokenFetcher } from './avalanche/penguin.vault.token-fetcher';
 import { AvalanchePenguinXPefiTokenFetcher } from './avalanche/penguin.x-pefi.token-fetcher';
 import { PenguinContractFactory } from './contracts';
-import { PenguinAppDefinition } from './penguin.definition';
 
 @Module({
   providers: [
-    PenguinAppDefinition,
     PenguinContractFactory,
     AvalanchePenguinChefV1FarmContractPositionFetcher,
     AvalanchePenguinChefV2FarmContractPositionFetcher,

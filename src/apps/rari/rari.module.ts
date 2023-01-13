@@ -6,11 +6,9 @@ import { RariContractFactory } from './contracts';
 import { EthereumRariFarmContractPositionFetcher } from './ethereum/rari.farm.contract-position-fetcher';
 import { EthereumRariFundTokenFetcher } from './ethereum/rari.fund.token-fetcher';
 import { EthereumRariGovernanceContractPositionFetcher } from './ethereum/rari.governance.contract-position-fetcher';
-import { RariAppDefinition } from './rari.definition';
 
 @Module({
   providers: [
-    RariAppDefinition,
     RariContractFactory,
     EthereumRariFarmContractPositionFetcher,
     EthereumRariFundTokenFetcher,

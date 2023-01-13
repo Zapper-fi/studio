@@ -1,18 +1,8 @@
 import { Command } from '@oclif/core';
 import { ensureDir } from 'fs-extra';
-import { zipObject } from 'lodash';
 
-import { AppAction } from '../../src/app/app.interface';
-import { generateAppDefinition } from '../generators/generate-app-definition';
 import { generateAppModule } from '../generators/generate-app-module';
-import {
-  promptAppDescription,
-  promptAppId,
-  promptAppName,
-  promptAppNetworks,
-  promptAppTags,
-  promptAppUrl,
-} from '../prompts';
+import { promptAppId, promptAppName, promptAppNetworks } from '../prompts';
 import { strings } from '../strings';
 
 import { generateContractFactory } from './generate-contract-factory';
@@ -26,10 +16,7 @@ export default class CreateApp extends Command {
   async run(): Promise<void> {
     const appName = await promptAppName();
     const appId = await promptAppId(strings.kebabCase(appName));
-    const appDescription = await promptAppDescription();
-    const appUrl = await promptAppUrl();
     const networks = await promptAppNetworks();
-    const tags = await promptAppTags();
 
     await ensureDir(`./src/apps/${appId}`);
     await ensureDir(`./src/apps/${appId}/assets`);
@@ -40,20 +27,8 @@ export default class CreateApp extends Command {
     }
 
     await generateAppModule(appId);
-    await generateAppDefinition({
-      id: appId,
-      name: appName,
-      description: appDescription,
-      url: appUrl,
-      tags,
-      links: {},
-      supportedNetworks: zipObject(
-        networks,
-        networks.map(() => [AppAction.VIEW]),
-      ),
-    });
-
     await generateContractFactory(`./src/apps/${appId}`);
-    this.log(`You can now fill/update ${appId}.definition.ts`);
+
+    this.log(`Done! Your app ${appName} has been generated`);
   }
 }

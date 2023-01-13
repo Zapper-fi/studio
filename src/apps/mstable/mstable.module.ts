@@ -9,13 +9,11 @@ import { EthereumMstableMetaVaultTokenFetcher } from './ethereum/mstable.meta-va
 import { EthereumMstableMtaV1FarmContractPositionFetcher } from './ethereum/mstable.mta-v1-farm.contract-position-fetcher';
 import { EthereumMstableMtaV2FarmContractPositionFetcher } from './ethereum/mstable.mta-v2-farm.contract-position-fetcher';
 import { EthereumMstableSavingsVaultContractPositionFetcher } from './ethereum/mstable.savings-vault.contract-position-fetcher';
-import { MstableAppDefinition } from './mstable.definition';
 import { PolygonMstableImusdTokenFetcher } from './polygon/mstable.imusd.token-fetcher';
 import { PolygonMstableSavingsVaultContractPositionFetcher } from './polygon/mstable.savings-vault-farm.contract-position-fetcher';
 
 @Module({
   providers: [
-    MstableAppDefinition,
     MstableContractFactory,
     EthereumMstableEarnContractPositionFetcher,
     EthereumMstableImusdTokenFetcher,

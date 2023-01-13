@@ -7,11 +7,9 @@ import { EthereumRookClaimableContractPositionFetcher } from './ethereum/rook.cl
 import { EthereumRookV2PoolTokenFetcher } from './ethereum/rook.v2-pool.token-fetcher';
 import { EthereumRookV3PoolTokenFetcher } from './ethereum/rook.v3-pool.token-fetcher';
 import { EthereumRookXRookTokenFetcher } from './ethereum/rook.x-rook.token-fetcher';
-import { RookAppDefinition } from './rook.definition';
 
 @Module({
   providers: [
-    RookAppDefinition,
     RookContractFactory,
     // Ethereum
     EthereumRookV2PoolTokenFetcher,

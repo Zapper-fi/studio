@@ -4,9 +4,8 @@ import { AbstractApp } from '~app/app.dynamic-module';
 
 import { SuperfluidContractFactory } from './contracts';
 import { PolygonSuperfluidVaultTokenFetcher } from './polygon/superfluid.vault.token-fetcher';
-import { SuperfluidAppDefinition } from './superfluid.definition';
 
 @Module({
-  providers: [SuperfluidAppDefinition, SuperfluidContractFactory, PolygonSuperfluidVaultTokenFetcher],
+  providers: [SuperfluidContractFactory, PolygonSuperfluidVaultTokenFetcher],
 })
 export class SuperfluidAppModule extends AbstractApp() {}

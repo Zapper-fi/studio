@@ -4,9 +4,8 @@ import { AbstractApp } from '~app/app.dynamic-module';
 
 import { BinanceSmartChainHelioStakingContractPositionFetcher } from './binance-smart-chain/helio.staking.contract-position-fetcher';
 import { HelioContractFactory } from './contracts';
-import { HelioAppDefinition } from './helio.definition';
 
 @Module({
-  providers: [HelioAppDefinition, HelioContractFactory, BinanceSmartChainHelioStakingContractPositionFetcher],
+  providers: [HelioContractFactory, BinanceSmartChainHelioStakingContractPositionFetcher],
 })
 export class HelioAppModule extends AbstractApp() {}
