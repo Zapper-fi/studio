@@ -4,6 +4,18 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.366.0](https://github.com/Zapper-fi/studio/compare/v0.365.0...v0.366.0) (2023-01-13)
+
+
+### Features
+
+* **apps:** Remove app definitions ([#2118](https://github.com/Zapper-fi/studio/issues/2118)) ([83e8117](https://github.com/Zapper-fi/studio/commit/83e8117a03a131792519b3a91566769f2c6536de))
+
+
+### Bug Fixes
+
+* **generator:** Fix generator ([8c3fde3](https://github.com/Zapper-fi/studio/commit/8c3fde30df7ba04da6a51ecd0ac3885e9969a662))
+
 ## [0.365.0](https://github.com/Zapper-fi/studio/compare/v0.364.1...v0.365.0) (2023-01-13)
 
 
