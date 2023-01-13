@@ -8,7 +8,7 @@ export class PolygonQiDaoVaultPositionFetcher extends QiDaoVaultContractPosition
 
   vaultDefinitions = [
     {
-      address: '0x6af1d9376a7060488558cfb443939ed67bb9b48d',
+      address: '0xa3fa99a148fa48d14ed51d610c367c61876997f1', // MATIC Vault
       vaultInfoAddress: '0xa3fa99a148fa48d14ed51d610c367c61876997f1',
     },
     {
@@ -94,6 +94,26 @@ export class PolygonQiDaoVaultPositionFetcher extends QiDaoVaultContractPosition
     {
       address: '0x1dcc1f864a4bd0b8f4ad33594b758b68e9fa872c', // SAND Vault
       vaultInfoAddress: '0x1dcc1f864a4bd0b8f4ad33594b758b68e9fa872c',
+    },
+    {
+      address: '0xaa19d0e397c964a35e6e80262c692dbfc9c23451', // Tetu xxDAI Vault
+      vaultInfoAddress: '0xaa19d0e397c964a35e6e80262c692dbfc9c23451',
+    },
+    {
+      address: '0x11826d20b6a16a22450978642404da95b4640123', // Tetu xxLINK Vault
+      vaultInfoAddress: '0x11826d20b6a16a22450978642404da95b4640123',
+    },
+    {
+      address: '0x57cbf36788113237d64e46f25a88855c3dff1691', // Stake DAO USD Vault
+      vaultInfoAddress: '0x57cbf36788113237d64e46f25a88855c3dff1691',
+    },
+    {
+      address: '0xa3b0a659f2147d77a443f70d96b3cc95e7a26390', // Kyber Network Crystal Vault
+      vaultInfoAddress: '0xa3b0a659f2147d77a443f70d96b3cc95e7a26390',
+    },
+    {
+      address: '0x7d75f83f0abe2ece0b9daf41cceddf38cb66146b', // MAI DAI Arrakis Vault
+      vaultInfoAddress: '0x7d75f83f0abe2ece0b9daf41cceddf38cb66146b',
     },
   ];
 }

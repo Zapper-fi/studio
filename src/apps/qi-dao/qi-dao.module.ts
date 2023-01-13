@@ -4,7 +4,9 @@ import { AbstractApp } from '~app/app.dynamic-module';
 
 import { ArbitrumQiDaoVaultPositionFetcher } from './arbitrum/qi-dao.vault.contract-position-fetcher';
 import { AvalancheQiDaoFarmV3ContractPositionFetcher } from './avalanche/qi-dao.farm-v3.contract-position-fetcher';
+import { AvalancheQiDaoVaultPositionFetcher } from './avalanche/qi-dao.vault.contract-position-fetcher';
 import { QiDaoContractFactory } from './contracts';
+import { EthereumQiDaoVaultPositionFetcher } from './ethereum/qi-dao.vault.contract-position-fetcher';
 import { FantomQiDaoFarmV3ContractPositionFetcher } from './fantom/qi-dao.farm-v3.contract-position-fetcher';
 import { FantomQiDaoFarmContractPositionFetcher } from './fantom/qi-dao.farm.contract-position-fetcher';
 import { FantomQiDaoVaultPositionFetcher } from './fantom/qi-dao.vault.contract-position-fetcher';
@@ -24,6 +26,9 @@ import { PolygonQiDaoYieldTokenFetcher } from './polygon/qi-dao.yield.token-fetc
     ArbitrumQiDaoVaultPositionFetcher,
     // Avalanche
     AvalancheQiDaoFarmV3ContractPositionFetcher,
+    AvalancheQiDaoVaultPositionFetcher,
+    // Ethereum
+    EthereumQiDaoVaultPositionFetcher,
     // Fantom
     FantomQiDaoFarmContractPositionFetcher,
     FantomQiDaoFarmV3ContractPositionFetcher,
