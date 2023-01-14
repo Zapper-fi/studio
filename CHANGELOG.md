@@ -4,6 +4,16 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.367.1](https://github.com/Zapper-fi/studio/compare/v0.367.0...v0.367.1) (2023-01-14)
+
+
+### Bug Fixes
+
+* **illuvium:** Add sIlv2 app token position ([#2125](https://github.com/Zapper-fi/studio/issues/2125)) ([f84f7ae](https://github.com/Zapper-fi/studio/commit/f84f7aed0a8dfe35f2cf35f01fa300dda0a1b56d))
+* **illuvium:** Add sIlv2 app token position ([#2125](https://github.com/Zapper-fi/studio/issues/2125)) ([7d83a16](https://github.com/Zapper-fi/studio/commit/7d83a1603eac56017cc5fdd641311438cc6d7148))
+* **illuvium:** Remove console log ([#2127](https://github.com/Zapper-fi/studio/issues/2127)) ([4a2ee1f](https://github.com/Zapper-fi/studio/commit/4a2ee1fecd0a1637e3f7c0e574dcf38e03794d5a))
+* **qi-dao:** Add missing vaults and farms ([#2122](https://github.com/Zapper-fi/studio/issues/2122)) ([b8dc9b4](https://github.com/Zapper-fi/studio/commit/b8dc9b46f5ff97f78f81ffdc59220b1df8893254))
+
 ## [0.367.0](https://github.com/Zapper-fi/studio/compare/v0.366.1...v0.367.0) (2023-01-13)
 
 
