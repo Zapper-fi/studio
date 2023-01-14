@@ -22,7 +22,6 @@ export class EthereumIlluviumSIlv2TokenFetcher extends AppTokenTemplatePositionF
   }
 
   async getAddresses() {
-    console.log(this.network, this.appId, this.groupId);
     return ['0x7e77dcb127f99ece88230a64db8d595f31f1b068'];
   }
 
