@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.368.0](https://github.com/Zapper-fi/studio/compare/v0.367.1...v0.368.0) (2023-01-16)
+
+
+### Features
+
+* **gains-network:** Add GNS staking position ([#2128](https://github.com/Zapper-fi/studio/issues/2128)) ([453e887](https://github.com/Zapper-fi/studio/commit/453e887cb5a5fd73c30b54804cc284575878f957))
+
 ## [0.367.1](https://github.com/Zapper-fi/studio/compare/v0.367.0...v0.367.1) (2023-01-14)
 
 
