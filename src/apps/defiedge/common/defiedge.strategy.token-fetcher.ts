@@ -111,7 +111,7 @@ export abstract class DefiedgeStrategyTokenFetcher extends AppTokenTemplatePosit
   async getDataProps(
     params: GetDataPropsParams<Strategy, DefiedgeStrategyTokenDataProps, DefiedgeStrategyDefinition>,
   ): Promise<DefiedgeStrategyTokenDataProps> {
-    const defaultDataProps = super.getDataProps(params);
+    const defaultDataProps = await super.getDataProps(params);
 
     const { contract, appToken } = params;
     const aumWithFee = await contract.callStatic.getAUMWithFees(false);
