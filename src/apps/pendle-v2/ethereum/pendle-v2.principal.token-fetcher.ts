@@ -150,7 +150,7 @@ export class EthereumPendleV2PrincipalTokenFetcher extends AppTokenTemplatePosit
   async getDataProps(
     params: GetDataPropsParams<PendlePrincipalToken, PendleV2PrincipalTokenDataProps, PendleV2PrincipalTokenDefinition>,
   ): Promise<PendleV2PrincipalTokenDataProps> {
-    const defaultDataProps = super.getDataProps(params);
+    const defaultDataProps = await super.getDataProps(params);
     const { definition } = params;
     return {
       ...defaultDataProps,

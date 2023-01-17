@@ -126,7 +126,7 @@ export class EthereumPendleV2YieldTokenFetcher extends AppTokenTemplatePositionF
   async getDataProps(
     params: GetDataPropsParams<PendleYieldToken, PendleV2YieldTokenDataProps, PendleV2YieldTokenDefinition>,
   ): Promise<PendleV2YieldTokenDataProps> {
-    const defaultDataProps = super.getDataProps(params);
+    const defaultDataProps = await super.getDataProps(params);
     const { definition } = params;
     return {
       ...defaultDataProps,
