@@ -161,7 +161,7 @@ export class EthereumPendleV2PoolTokenFetcher extends AppTokenTemplatePositionFe
   async getDataProps(
     params: GetDataPropsParams<PendleMarket, PendleV2MarketDataProps, PendleV2MarketTokenDefinition>,
   ): Promise<PendleV2MarketDataProps> {
-    const defaultDataProps = super.getDataProps(params);
+    const defaultDataProps = await super.getDataProps(params);
     const { definition } = params;
     return {
       ...defaultDataProps,
