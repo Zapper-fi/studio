@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.368.1](https://github.com/Zapper-fi/studio/compare/v0.368.0...v0.368.1) (2023-01-17)
+
+
+### Bug Fixes
+
+* **pendle-v2:** Fix app tokens default dataProps ([#2133](https://github.com/Zapper-fi/studio/issues/2133)) ([1690603](https://github.com/Zapper-fi/studio/commit/16906036977260113a23c29fdcdc107968db23d1))
+
 ## [0.368.0](https://github.com/Zapper-fi/studio/compare/v0.367.1...v0.368.0) (2023-01-16)
 
 
