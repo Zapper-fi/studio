@@ -4,9 +4,40 @@
 
 import { Contract, Signer, utils } from 'ethers';
 import type { Provider } from '@ethersproject/providers';
-import type { GoldfinchSeniorBond, GoldfinchSeniorBondInterface } from '../GoldfinchSeniorBond';
+import type { GoldfinchStakingRewards, GoldfinchStakingRewardsInterface } from '../GoldfinchStakingRewards';
 
 const _abi = [
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: 'address',
+        name: 'user',
+        type: 'address',
+      },
+      {
+        indexed: true,
+        internalType: 'uint256',
+        name: 'tokenId',
+        type: 'uint256',
+      },
+      {
+        indexed: false,
+        internalType: 'uint256',
+        name: 'amount',
+        type: 'uint256',
+      },
+      {
+        indexed: false,
+        internalType: 'enum StakedPositionType',
+        name: 'positionType',
+        type: 'uint8',
+      },
+    ],
+    name: 'AddToStake',
+    type: 'event',
+  },
   {
     anonymous: false,
     inputs: [
@@ -429,68 +460,6 @@ const _abi = [
       },
     ],
     name: 'Unstaked',
-    type: 'event',
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: true,
-        internalType: 'address',
-        name: 'user',
-        type: 'address',
-      },
-      {
-        indexed: false,
-        internalType: 'uint256',
-        name: 'usdcReceivedAmount',
-        type: 'uint256',
-      },
-      {
-        indexed: true,
-        internalType: 'uint256',
-        name: 'tokenId',
-        type: 'uint256',
-      },
-      {
-        indexed: false,
-        internalType: 'uint256',
-        name: 'amount',
-        type: 'uint256',
-      },
-    ],
-    name: 'UnstakedAndWithdrew',
-    type: 'event',
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: true,
-        internalType: 'address',
-        name: 'user',
-        type: 'address',
-      },
-      {
-        indexed: false,
-        internalType: 'uint256',
-        name: 'usdcReceivedAmount',
-        type: 'uint256',
-      },
-      {
-        indexed: false,
-        internalType: 'uint256[]',
-        name: 'tokenIds',
-        type: 'uint256[]',
-      },
-      {
-        indexed: false,
-        internalType: 'uint256[]',
-        name: 'amounts',
-        type: 'uint256[]',
-      },
-    ],
-    name: 'UnstakedAndWithdrewMultiple',
     type: 'event',
   },
   {
@@ -970,7 +939,7 @@ const _abi = [
                 type: 'uint256',
               },
             ],
-            internalType: 'struct StakingRewardsVesting.Rewards',
+            internalType: 'struct Rewards',
             name: 'rewards',
             type: 'tuple',
           },
@@ -1397,7 +1366,7 @@ const _abi = [
             type: 'uint256',
           },
         ],
-        internalType: 'struct StakingRewardsVesting.Rewards',
+        internalType: 'struct Rewards',
         name: 'rewards',
         type: 'tuple',
       },
@@ -1557,6 +1526,19 @@ const _abi = [
       },
     ],
     name: 'setApprovalForAll',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'string',
+        name: 'baseURI_',
+        type: 'string',
+      },
+    ],
+    name: 'setBaseURI',
     outputs: [],
     stateMutability: 'nonpayable',
     type: 'function',
@@ -1892,78 +1874,6 @@ const _abi = [
   {
     inputs: [
       {
-        internalType: 'uint256',
-        name: 'tokenId',
-        type: 'uint256',
-      },
-      {
-        internalType: 'uint256',
-        name: 'usdcAmount',
-        type: 'uint256',
-      },
-    ],
-    name: 'unstakeAndWithdraw',
-    outputs: [],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        internalType: 'uint256',
-        name: 'tokenId',
-        type: 'uint256',
-      },
-      {
-        internalType: 'uint256',
-        name: 'fiduAmount',
-        type: 'uint256',
-      },
-    ],
-    name: 'unstakeAndWithdrawInFidu',
-    outputs: [],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        internalType: 'uint256[]',
-        name: 'tokenIds',
-        type: 'uint256[]',
-      },
-      {
-        internalType: 'uint256[]',
-        name: 'usdcAmounts',
-        type: 'uint256[]',
-      },
-    ],
-    name: 'unstakeAndWithdrawMultiple',
-    outputs: [],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        internalType: 'uint256[]',
-        name: 'tokenIds',
-        type: 'uint256[]',
-      },
-      {
-        internalType: 'uint256[]',
-        name: 'fiduAmounts',
-        type: 'uint256[]',
-      },
-    ],
-    name: 'unstakeAndWithdrawMultipleInFidu',
-    outputs: [],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
         internalType: 'uint256[]',
         name: 'tokenIds',
         type: 'uint256[]',
@@ -2007,12 +1917,12 @@ const _abi = [
   },
 ];
 
-export class GoldfinchSeniorBond__factory {
+export class GoldfinchStakingRewards__factory {
   static readonly abi = _abi;
-  static createInterface(): GoldfinchSeniorBondInterface {
-    return new utils.Interface(_abi) as GoldfinchSeniorBondInterface;
+  static createInterface(): GoldfinchStakingRewardsInterface {
+    return new utils.Interface(_abi) as GoldfinchStakingRewardsInterface;
   }
-  static connect(address: string, signerOrProvider: Signer | Provider): GoldfinchSeniorBond {
-    return new Contract(address, _abi, signerOrProvider) as GoldfinchSeniorBond;
+  static connect(address: string, signerOrProvider: Signer | Provider): GoldfinchStakingRewards {
+    return new Contract(address, _abi, signerOrProvider) as GoldfinchStakingRewards;
   }
 }
