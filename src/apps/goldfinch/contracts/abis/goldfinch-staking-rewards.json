@@ -2,6 +2,17 @@
   {
     "anonymous": false,
     "inputs": [
+      { "indexed": true, "internalType": "address", "name": "user", "type": "address" },
+      { "indexed": true, "internalType": "uint256", "name": "tokenId", "type": "uint256" },
+      { "indexed": false, "internalType": "uint256", "name": "amount", "type": "uint256" },
+      { "indexed": false, "internalType": "enum StakedPositionType", "name": "positionType", "type": "uint8" }
+    ],
+    "name": "AddToStake",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
       { "indexed": true, "internalType": "address", "name": "owner", "type": "address" },
       { "indexed": true, "internalType": "address", "name": "approved", "type": "address" },
       { "indexed": true, "internalType": "uint256", "name": "tokenId", "type": "uint256" }
@@ -155,28 +166,6 @@
       { "indexed": false, "internalType": "enum StakedPositionType", "name": "positionType", "type": "uint8" }
     ],
     "name": "Unstaked",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      { "indexed": true, "internalType": "address", "name": "user", "type": "address" },
-      { "indexed": false, "internalType": "uint256", "name": "usdcReceivedAmount", "type": "uint256" },
-      { "indexed": true, "internalType": "uint256", "name": "tokenId", "type": "uint256" },
-      { "indexed": false, "internalType": "uint256", "name": "amount", "type": "uint256" }
-    ],
-    "name": "UnstakedAndWithdrew",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      { "indexed": true, "internalType": "address", "name": "user", "type": "address" },
-      { "indexed": false, "internalType": "uint256", "name": "usdcReceivedAmount", "type": "uint256" },
-      { "indexed": false, "internalType": "uint256[]", "name": "tokenIds", "type": "uint256[]" },
-      { "indexed": false, "internalType": "uint256[]", "name": "amounts", "type": "uint256[]" }
-    ],
-    "name": "UnstakedAndWithdrewMultiple",
     "type": "event"
   },
   {
@@ -391,7 +380,7 @@
               { "internalType": "uint256", "name": "startTime", "type": "uint256" },
               { "internalType": "uint256", "name": "endTime", "type": "uint256" }
             ],
-            "internalType": "struct StakingRewardsVesting.Rewards",
+            "internalType": "struct Rewards",
             "name": "rewards",
             "type": "tuple"
           },
@@ -576,7 +565,7 @@
           { "internalType": "uint256", "name": "startTime", "type": "uint256" },
           { "internalType": "uint256", "name": "endTime", "type": "uint256" }
         ],
-        "internalType": "struct StakingRewardsVesting.Rewards",
+        "internalType": "struct Rewards",
         "name": "rewards",
         "type": "tuple"
       },
@@ -652,6 +641,13 @@
       { "internalType": "bool", "name": "approved", "type": "bool" }
     ],
     "name": "setApprovalForAll",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [{ "internalType": "string", "name": "baseURI_", "type": "string" }],
+    "name": "setBaseURI",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -792,46 +788,6 @@
       { "internalType": "uint256", "name": "amount", "type": "uint256" }
     ],
     "name": "unstake",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      { "internalType": "uint256", "name": "tokenId", "type": "uint256" },
-      { "internalType": "uint256", "name": "usdcAmount", "type": "uint256" }
-    ],
-    "name": "unstakeAndWithdraw",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      { "internalType": "uint256", "name": "tokenId", "type": "uint256" },
-      { "internalType": "uint256", "name": "fiduAmount", "type": "uint256" }
-    ],
-    "name": "unstakeAndWithdrawInFidu",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      { "internalType": "uint256[]", "name": "tokenIds", "type": "uint256[]" },
-      { "internalType": "uint256[]", "name": "usdcAmounts", "type": "uint256[]" }
-    ],
-    "name": "unstakeAndWithdrawMultiple",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      { "internalType": "uint256[]", "name": "tokenIds", "type": "uint256[]" },
-      { "internalType": "uint256[]", "name": "fiduAmounts", "type": "uint256[]" }
-    ],
-    "name": "unstakeAndWithdrawMultipleInFidu",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
