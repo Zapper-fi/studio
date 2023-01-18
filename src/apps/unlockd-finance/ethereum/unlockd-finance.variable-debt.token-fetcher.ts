@@ -20,7 +20,7 @@ const SECONDS_PER_YEAR = 31536000;
 @PositionTemplate()
 export class EthereumUnlockdFinanceVariableDebtTokenFetcher extends AppTokenTemplatePositionFetcher<UnlockdFinanceUToken> {
   groupLabel = 'Lending';
-  debtTokenAddress = '0xe4bc9e74428b5e8c4fadb53d5ef39c9a9902909c'; // Mainnet DebtToken Address
+  debtTokenAddress = '0xd11cf5512a775591b3258d976af51d3a70a6660e'; // Mainnet DebtToken Address
   wethAddress = '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2'; // Mainnet WETH Address
   dataProviderAddress = '0x4abde724f8d7cb5ec7b22a9b86824591be9fdc86'; // Mainnet Data Provider Address
   isDebt = true;
