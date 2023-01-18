@@ -129,8 +129,9 @@ export class EthereumPendleV2StandardizedYieldTokenFetcher extends AppTokenTempl
       PendleV2StandardizedYieldTokenDefinition
     >,
   ): Promise<PendleV2StandardizedYieldTokenDataProps> {
-    const defaultDataProps = super.getDataProps(params);
+    const defaultDataProps = await super.getDataProps(params);
     const { definition } = params;
+
     return {
       ...defaultDataProps,
       ...definition,

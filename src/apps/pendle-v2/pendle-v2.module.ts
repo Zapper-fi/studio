@@ -11,13 +11,12 @@ import { EthereumPendleV2YieldTokenFetcher } from './ethereum/pendle-v2.yield.to
 
 @Module({
   providers: [
+    PendleV2ContractFactory,
     EthereumPendleV2PoolTokenFetcher,
     EthereumPendleV2PrincipalTokenFetcher,
     EthereumPendleV2StandardizedYieldTokenFetcher,
     EthereumPendleV2VotingEscrowContractPositionFetcher,
     EthereumPendleV2YieldTokenFetcher,
-
-    PendleV2ContractFactory,
   ],
 })
 export class PendleV2AppModule extends AbstractApp() {}
