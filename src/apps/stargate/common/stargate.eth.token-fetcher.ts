@@ -25,8 +25,12 @@ export abstract class StargateEthTokenFetcher extends AppTokenTemplatePositionFe
     return [this.stargateEthAddress];
   }
 
-  async getUnderlyingTokenAddresses() {
-    return [ZERO_ADDRESS];
+  async getUnderlyingTokenDefinitions() {
+    return [{ address: ZERO_ADDRESS, network: this.network }];
+  }
+
+  async getPricePerShare() {
+    return [1];
   }
 
   async getLiquidity({ appToken }: GetDataPropsParams<StargateEth>) {

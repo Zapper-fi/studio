@@ -2,25 +2,26 @@ import { Inject, NotImplementedException } from '@nestjs/common';
 import BigNumber from 'bignumber.js';
 import { compact, range, sum, sumBy } from 'lodash';
 
-import { drillBalance } from '~app-toolkit';
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
+import { drillBalance } from '~app-toolkit/helpers/drill-balance.helper';
 import { buildDollarDisplayItem } from '~app-toolkit/helpers/presentation/display-item.present';
 import { getLabelFromToken, getTokenImg } from '~app-toolkit/helpers/presentation/image.present';
 import { ContractType } from '~position/contract.interface';
 import { ContractPositionBalance } from '~position/position-balance.interface';
 import { claimable } from '~position/position.utils';
-import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
 import {
   DefaultContractPositionDefinition,
   GetDisplayPropsParams,
+  UnderlyingTokenDefinition,
 } from '~position/template/contract-position.template.types';
+import { CustomContractPositionTemplatePositionFetcher } from '~position/template/custom-contract-position.template.position-fetcher';
 
 import { BalancerMerkleOrchard, BalancerV2ContractFactory } from '../contracts';
 
 import { BalancerV2ClaimableCacheManager } from './balancer-v2.claimable.cache-manager';
 import { BALANCER_V2_CLAIMABLE_CONFIG } from './balancer-v2.claimable.config';
 
-export abstract class BalancerV2ClaimableContractPositionFetcher extends ContractPositionTemplatePositionFetcher<BalancerMerkleOrchard> {
+export abstract class BalancerV2ClaimableContractPositionFetcher extends CustomContractPositionTemplatePositionFetcher<BalancerMerkleOrchard> {
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
     @Inject(BalancerV2ContractFactory) protected readonly contractFactory: BalancerV2ContractFactory,
@@ -34,6 +35,10 @@ export abstract class BalancerV2ClaimableContractPositionFetcher extends Contrac
   }
 
   async getDefinitions(): Promise<DefaultContractPositionDefinition[]> {
+    return [];
+  }
+
+  async getTokenDefinitions(): Promise<UnderlyingTokenDefinition[] | null> {
     return [];
   }
 

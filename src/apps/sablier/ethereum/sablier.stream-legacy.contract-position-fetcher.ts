@@ -1,17 +1,17 @@
 import { Inject, NotImplementedException } from '@nestjs/common';
 import { compact } from 'lodash';
 
-import { drillBalance } from '~app-toolkit';
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
+import { drillBalance } from '~app-toolkit/helpers/drill-balance.helper';
 import { buildDollarDisplayItem } from '~app-toolkit/helpers/presentation/display-item.present';
 import { getImagesFromToken, getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { isMulticallUnderlyingError } from '~multicall/multicall.ethers';
 import { ContractType } from '~position/contract.interface';
 import { ContractPositionBalance } from '~position/position-balance.interface';
 import { MetaType } from '~position/position.interface';
-import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
 import { GetDisplayPropsParams, GetTokenDefinitionsParams } from '~position/template/contract-position.template.types';
+import { CustomContractPositionTemplatePositionFetcher } from '~position/template/custom-contract-position.template.position-fetcher';
 
 import { SablierStreamApiClient } from '../common/sablier.stream.api-client';
 import { SablierContractFactory, SablierStream } from '../contracts';
@@ -27,7 +27,7 @@ export type SablierStreamLegacyContractPositionDefinition = {
 };
 
 @PositionTemplate()
-export class EthereumSablierStreamLegacyContractPositionFetcher extends ContractPositionTemplatePositionFetcher<
+export class EthereumSablierStreamLegacyContractPositionFetcher extends CustomContractPositionTemplatePositionFetcher<
   SablierStream,
   SablierStreamLegacyContractPositionDataProps,
   SablierStreamLegacyContractPositionDefinition
@@ -55,7 +55,13 @@ export class EthereumSablierStreamLegacyContractPositionFetcher extends Contract
   async getTokenDefinitions({
     definition,
   }: GetTokenDefinitionsParams<SablierStream, SablierStreamLegacyContractPositionDefinition>) {
-    return [{ address: definition.tokenAddress, metaType: MetaType.SUPPLIED }];
+    return [
+      {
+        address: definition.tokenAddress,
+        metaType: MetaType.SUPPLIED,
+        network: this.network,
+      },
+    ];
   }
 
   async getLabel({

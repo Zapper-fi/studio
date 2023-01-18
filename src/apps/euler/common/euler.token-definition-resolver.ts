@@ -4,7 +4,7 @@ import _ from 'lodash';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { ZERO_ADDRESS } from '~app-toolkit/constants/address';
-import { Cache } from '~cache/cache.decorator';
+import { gqlFetch } from '~app-toolkit/helpers/the-graph.helper';
 
 export type EulerTokenDefinition = {
   address: string;
@@ -33,7 +33,7 @@ interface EulerMarketsResponse {
 export const MARKET_QUERY = gql`
   {
     eulerMarketStore(id: "euler-market-store") {
-      markets {
+      markets(first: 1000) {
         id
         interestRate
         borrowAPY
@@ -57,21 +57,21 @@ export enum EulerTokenType {
   P_TOKEN = 'pTokenAddress',
 }
 
+const brokenMarketAddress = ['0x31c8eacbffdd875c74b94b077895bd78cf1e64a3']; // RAD
+
 @Injectable()
 export class EulerTokenDefinitionsResolver {
   constructor(@Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit) {}
 
-  @Cache({
-    key: `studio:euler:ethereum:token-data`,
-    ttl: 5 * 60, // 5 minutes
-  })
   private async getTokenDefinitionsData() {
-    const data = await this.appToolkit.helpers.theGraphHelper.request<EulerMarketsResponse>({
+    const data = await gqlFetch<EulerMarketsResponse>({
       endpoint: `https://api.thegraph.com/subgraphs/name/euler-xyz/euler-mainnet`,
       query: MARKET_QUERY,
     });
 
-    return data.eulerMarketStore.markets;
+    const marketRaw = data.eulerMarketStore.markets;
+
+    return marketRaw.filter(x => !brokenMarketAddress.includes(x.id));
   }
 
   async getTokenDefinitions(tokenType: EulerTokenType) {
@@ -84,6 +84,7 @@ export class EulerTokenDefinitionsResolver {
         underlyingTokenAddress: market.id.toLowerCase(),
       };
     });
+
     return _.compact(tokenDefinitions);
   }
 

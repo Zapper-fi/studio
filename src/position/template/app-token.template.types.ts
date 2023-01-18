@@ -1,6 +1,7 @@
 import { IMulticallWrapper } from '~multicall/multicall.interface';
 import { AppTokenPosition } from '~position/position.interface';
 import { TokenDependencySelector } from '~position/selectors/token-dependency-selector.interface';
+import { Network } from '~types/network.interface';
 
 export type DefaultAppTokenDefinition = {
   address: string;
@@ -10,6 +11,12 @@ export type DefaultAppTokenDataProps = {
   liquidity: number;
   reserves: number[];
   apy: number;
+};
+
+export type UnderlyingTokenDefinition = {
+  address: string;
+  network: Network;
+  tokenId?: number;
 };
 
 // PHASE 1: List addresses and definitions
@@ -43,7 +50,16 @@ type PositionBuilderContextWithAppToken<
 
 export type GetUnderlyingTokensParams<T, R = DefaultAppTokenDefinition> = PositionBuilderContext<T, R>;
 
-export type GetTokenPropsParams<T, R = DefaultAppTokenDefinition> = PositionBuilderContext<T, R>;
+export type GetTokenPropsParams<
+  T,
+  V = DefaultAppTokenDataProps,
+  R = DefaultAppTokenDefinition,
+> = PositionBuilderContextWithAppToken<
+  T,
+  V,
+  R,
+  'symbol' | 'decimals' | 'supply' | 'pricePerShare' | 'price' | 'dataProps' | 'displayProps'
+>;
 
 export type GetPricePerShareParams<
   T,

@@ -19,15 +19,16 @@ export abstract class VaultTemplateTokenFetcher extends AppTokenTemplatePosition
     return [this.vaultAddress];
   }
 
-  async getUnderlyingTokenAddresses(_params: GetUnderlyingTokensParams<Erc20>) {
-    return this.underlyingTokenAddress;
+  async getUnderlyingTokenDefinitions(_params: GetUnderlyingTokensParams<Erc20>) {
+    return [{ address: this.underlyingTokenAddress, network: this.network }];
   }
 
   async getPricePerShare({ multicall, appToken }: GetPricePerShareParams<Erc20>) {
     const underlying = multicall.wrap(this.appToolkit.globalContracts.erc20(appToken.tokens[0]));
     const reserveRaw = await underlying.balanceOf(this.reserveAddress ?? this.vaultAddress);
     const reserve = Number(reserveRaw) / 10 ** appToken.tokens[0].decimals;
-    return reserve / appToken.supply;
+    const pricePerShare = reserve / appToken.supply;
+    return [pricePerShare];
   }
 
   async getLiquidity({ multicall, appToken }: GetDataPropsParams<Erc20>) {

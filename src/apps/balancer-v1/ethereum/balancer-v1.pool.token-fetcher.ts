@@ -11,6 +11,7 @@ import {
   buildPercentageDisplayItem,
 } from '~app-toolkit/helpers/presentation/display-item.present';
 import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
+import { gqlFetch } from '~app-toolkit/helpers/the-graph.helper';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import {
   GetUnderlyingTokensParams,
@@ -70,7 +71,7 @@ export class EthereumBalancerV1PoolTokenFetcher extends AppTokenTemplatePosition
   async getAddresses() {
     this.volumeDataLoader = this.volumeDataLoaderBuilder.getLoader();
 
-    const poolsFromSubgraph = await this.appToolkit.helpers.theGraphHelper.requestGraph<GetAllPoolsData>({
+    const poolsFromSubgraph = await gqlFetch<GetAllPoolsData>({
       endpoint: 'https://api.thegraph.com/subgraphs/name/balancer-labs/balancer',
       query: getPoolsQuery,
     });
@@ -78,11 +79,13 @@ export class EthereumBalancerV1PoolTokenFetcher extends AppTokenTemplatePosition
     return poolsFromSubgraph.pools.map(v => v.id);
   }
 
-  async getUnderlyingTokenAddresses({ contract }: GetUnderlyingTokensParams<BalancerPoolToken>) {
-    return contract.getCurrentTokens();
+  async getUnderlyingTokenDefinitions({ contract }: GetUnderlyingTokensParams<BalancerPoolToken>) {
+    const tokenAddresses = await contract.getCurrentTokens();
+    return tokenAddresses.map(address => ({ address, network: this.network }));
   }
 
   async getPricePerShare({ contract, appToken }: GetPricePerShareParams<BalancerPoolToken>) {
+    if (appToken.supply === 0) return appToken.tokens.map(() => 0);
     const reservesRaw = await Promise.all(appToken.tokens.map(t => contract.getBalance(t.address)));
     const reserves = reservesRaw.map((r, i) => Number(r) / 10 ** appToken.tokens[i].decimals);
     const pricePerShare = reserves.map(r => r / appToken.supply);

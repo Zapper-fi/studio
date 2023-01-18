@@ -46,8 +46,11 @@ export class EthereumAaveSafetyModuleAbptTokenFetcher extends AppTokenTemplatePo
     return ['0x41a08648c3766f9f9d85598ff102a08f4ef84f84'];
   }
 
-  async getUnderlyingTokenAddresses(_params: GetUnderlyingTokensParams<AaveAbpt>): Promise<string | string[]> {
-    return [this.aaveAddress, this.wethAddress];
+  async getUnderlyingTokenDefinitions(_params: GetUnderlyingTokensParams<AaveAbpt>) {
+    return [
+      { address: this.aaveAddress, network: this.network },
+      { address: this.wethAddress, network: this.network },
+    ];
   }
 
   async getPricePerShare({
@@ -69,17 +72,17 @@ export class EthereumAaveSafetyModuleAbptTokenFetcher extends AppTokenTemplatePo
     return [aaveReserve / appToken.supply, wethReserve / appToken.supply];
   }
 
-  getLiquidity({ appToken }: GetDataPropsParams<AaveAbpt, AaveSafetyModuleAbptTokenDataProps>) {
+  async getLiquidity({ appToken }: GetDataPropsParams<AaveAbpt, AaveSafetyModuleAbptTokenDataProps>) {
     const reserves = (appToken.pricePerShare as number[]).map(v => v * appToken.supply);
     const liquidity = sum(reserves.map((v, i) => v * appToken.tokens[i].price));
     return liquidity;
   }
 
-  getReserves({ appToken }: GetDataPropsParams<AaveAbpt, AaveSafetyModuleAbptTokenDataProps>) {
+  async getReserves({ appToken }: GetDataPropsParams<AaveAbpt, AaveSafetyModuleAbptTokenDataProps>) {
     return (appToken.pricePerShare as number[]).map(v => v * appToken.supply);
   }
 
-  getApy(): number | Promise<number> {
+  async getApy() {
     return 0;
   }
 

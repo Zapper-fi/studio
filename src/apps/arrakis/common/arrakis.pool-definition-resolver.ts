@@ -2,6 +2,7 @@ import { Inject, Injectable } from '@nestjs/common';
 import { gql } from 'graphql-request';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
+import { gqlFetch } from '~app-toolkit/helpers/the-graph.helper';
 import { Cache } from '~cache/cache.decorator';
 import { Network } from '~types/network.interface';
 
@@ -46,7 +47,7 @@ export class ArrakisPoolDefinitionsResolver {
     ttl: 5 * 60, // 5 minutes
   })
   private async getPoolDefinitionsData(network: Network) {
-    const data = await this.appToolkit.helpers.theGraphHelper.request<ArrakisPoolFetcherResponse>({
+    const data = await gqlFetch<ArrakisPoolFetcherResponse>({
       endpoint: `https://api.thegraph.com/subgraphs/name/gelatodigital/g-uni${NETWORK_NAME[network]}`,
       query: POOL_ADDRESSES_QUERY,
     });

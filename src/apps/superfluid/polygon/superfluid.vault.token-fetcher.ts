@@ -3,8 +3,9 @@ import { gql } from 'graphql-request';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
+import { gqlFetch } from '~app-toolkit/helpers/the-graph.helper';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
-import { GetUnderlyingTokensParams, GetDataPropsParams } from '~position/template/app-token.template.types';
+import { GetUnderlyingTokensParams } from '~position/template/app-token.template.types';
 
 import { SuperfluidContractFactory, VaultToken } from '../contracts';
 
@@ -50,7 +51,7 @@ export class PolygonSuperfluidVaultTokenFetcher extends AppTokenTemplatePosition
 
   async getAddresses(): Promise<string[]> {
     const subgraphUrl = 'https://api.thegraph.com/subgraphs/name/superfluid-finance/superfluid-matic';
-    const tokenData = await this.appToolkit.helpers.theGraphHelper.request<TokensResponse>({
+    const tokenData = await gqlFetch<TokensResponse>({
       endpoint: subgraphUrl,
       query: ALL_TOKENS_QUERY,
     });
@@ -58,19 +59,11 @@ export class PolygonSuperfluidVaultTokenFetcher extends AppTokenTemplatePosition
     return tokenData.tokens?.filter(x => !this.brokenAddresses.includes(x.id)).map(v => v.id) ?? [];
   }
 
-  async getUnderlyingTokenAddresses({ contract }: GetUnderlyingTokensParams<VaultToken>) {
-    return await contract.getUnderlyingToken();
+  async getUnderlyingTokenDefinitions({ contract }: GetUnderlyingTokensParams<VaultToken>) {
+    return [{ address: await contract.getUnderlyingToken(), network: this.network }];
   }
 
-  async getLiquidity({ appToken }: GetDataPropsParams<VaultToken>) {
-    return appToken.supply * appToken.price;
-  }
-
-  async getReserves({ appToken }: GetDataPropsParams<VaultToken>) {
-    return [appToken.pricePerShare[0] * appToken.supply];
-  }
-
-  async getApy() {
-    return 0;
+  async getPricePerShare() {
+    return [1];
   }
 }

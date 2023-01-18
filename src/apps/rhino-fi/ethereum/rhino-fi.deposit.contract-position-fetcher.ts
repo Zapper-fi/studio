@@ -5,13 +5,13 @@ import { compact, sumBy } from 'lodash';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
-import { drillBalance } from '~app-toolkit/helpers/balance/token-balance.helper';
+import { drillBalance } from '~app-toolkit/helpers/drill-balance.helper';
 import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { DefaultDataProps } from '~position/display.interface';
 import { ContractPositionBalance } from '~position/position-balance.interface';
 import { MetaType } from '~position/position.interface';
-import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
 import { GetDisplayPropsParams, GetTokenDefinitionsParams } from '~position/template/contract-position.template.types';
+import { CustomContractPositionTemplatePositionFetcher } from '~position/template/custom-contract-position.template.position-fetcher';
 
 import { RhinoFiApiClient } from '../common/rhino-fi.api-client';
 import { RhinoFiCacheManager } from '../common/rhino-fi.cache-manager';
@@ -23,7 +23,7 @@ type RhinoFiDepositDefinition = {
 };
 
 @PositionTemplate()
-export class EthereumRhinoFiDepositContractPositionFetcher extends ContractPositionTemplatePositionFetcher<
+export class EthereumRhinoFiDepositContractPositionFetcher extends CustomContractPositionTemplatePositionFetcher<
   RhinoFiStarkEx,
   DefaultDataProps,
   RhinoFiDepositDefinition
@@ -53,8 +53,16 @@ export class EthereumRhinoFiDepositContractPositionFetcher extends ContractPosit
 
   async getTokenDefinitions({ definition }: GetTokenDefinitionsParams<RhinoFiStarkEx, RhinoFiDepositDefinition>) {
     return [
-      { metaType: MetaType.SUPPLIED, address: definition.tokenAddress },
-      { metaType: MetaType.LOCKED, address: definition.tokenAddress },
+      {
+        metaType: MetaType.SUPPLIED,
+        address: definition.tokenAddress,
+        network: this.network,
+      },
+      {
+        metaType: MetaType.LOCKED,
+        address: definition.tokenAddress,
+        network: this.network,
+      },
     ];
   }
 

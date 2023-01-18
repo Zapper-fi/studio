@@ -1,39 +1,49 @@
 import { Inject } from '@nestjs/common';
 
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
-import { Register } from '~app-toolkit/decorators';
-import { OlympusBondContractPositionHelper } from '~apps/olympus/helpers/olympus.bond.contract-position-helper';
-import { PositionFetcher } from '~position/position-fetcher.interface';
-import { ContractPosition } from '~position/position.interface';
-import { Network } from '~types/network.interface';
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
+import { OlympusBondContractPositionFetcher } from '~apps/olympus/common/olympus.bond.contract-position-fetcher';
+import { GetTokenBalancesParams } from '~position/template/contract-position.template.types';
 
-import { JPEGD_DEFINITION } from '../jpegd.definition';
+import { JpegdBondDepository, JpegdContractFactory } from '../contracts';
 
-const appId = JPEGD_DEFINITION.id;
-const groupId = JPEGD_DEFINITION.groups.bond.id;
-const network = Network.ETHEREUM_MAINNET;
+@PositionTemplate()
+export class EthereumJpegdBondContractPositionFetcher extends OlympusBondContractPositionFetcher<JpegdBondDepository> {
+  groupLabel = 'Bonds';
+  bondDefinitions = [
+    {
+      address: '0x84f0015998021fe53fdc7f1c299bd7c92fccd455',
+      bondedTokenAddress: '0xe0abce449a0e368eaf657f6f1c0ed5711174c46f',
+      mintedTokenAddress: '0xe80c0cd204d654cebe8dd64a4857cab6be8345a3',
+    },
+  ];
 
-@Register.ContractPositionFetcher({ appId, groupId, network })
-export class EthereumJpegdBondContractPositionFetcher implements PositionFetcher<ContractPosition> {
   constructor(
-    @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
-    @Inject(OlympusBondContractPositionHelper)
-    private readonly olympusContractPositionHelper: OlympusBondContractPositionHelper,
-  ) {}
+    @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
+    @Inject(JpegdContractFactory) protected readonly contractFactory: JpegdContractFactory,
+  ) {
+    super(appToolkit);
+  }
 
-  async getPositions() {
-    const baseTokens = await this.appToolkit.getBaseTokenPrices(network);
-    const depositories = [{ depositoryAddress: '0x84f0015998021fe53fdc7f1c299bd7c92fccd455', symbol: 'JPEG-ETH LP' }];
+  getContract(address: string): JpegdBondDepository {
+    return this.contractFactory.jpegdBondDepository({ address, network: this.network });
+  }
 
-    const jpegToken = baseTokens.find(x => x.address === '0xe80c0cd204d654cebe8dd64a4857cab6be8345a3');
-    if (!jpegToken) return [];
+  async resolveBondDefinitions() {
+    return this.bondDefinitions;
+  }
 
-    return this.olympusContractPositionHelper.getPositions({
-      appId,
-      network,
-      groupId,
-      depositories,
-      mintedTokenAddress: jpegToken.address,
-    });
+  async resolveVestingBalance({ address, contract }: GetTokenBalancesParams<JpegdBondDepository>) {
+    const [bondInfo, pendingPayout] = await Promise.all([
+      contract.bondInfo(address),
+      contract.pendingPayoutFor(address),
+    ]);
+
+    const vestingBalanceRaw = bondInfo.payout.gt(pendingPayout) ? bondInfo.payout.sub(pendingPayout) : 0;
+    return vestingBalanceRaw;
+  }
+
+  resolveClaimableBalance({ address, contract }: GetTokenBalancesParams<JpegdBondDepository>) {
+    return contract.pendingPayoutFor(address);
   }
 }

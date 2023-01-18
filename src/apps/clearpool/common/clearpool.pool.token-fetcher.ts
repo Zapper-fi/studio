@@ -31,12 +31,12 @@ export abstract class ClearpoolPoolTokenFetcher extends AppTokenTemplatePosition
     return this.clearpoolContractFactory.clearpoolPool({ address, network: this.network });
   }
 
-  getUnderlyingTokenAddresses({ contract }: GetUnderlyingTokensParams<ClearpoolPool>) {
-    return contract.currency();
+  async getUnderlyingTokenDefinitions({ contract }: GetUnderlyingTokensParams<ClearpoolPool>) {
+    return [{ address: await contract.currency(), network: this.network }];
   }
 
-  getPricePerShare({ contract }: GetPricePerShareParams<ClearpoolPool>): Promise<number | number[]> {
-    return contract.getCurrentExchangeRate().then(v => Number(v) / 10 ** 18);
+  async getPricePerShare({ contract }: GetPricePerShareParams<ClearpoolPool>) {
+    return contract.getCurrentExchangeRate().then(v => [Number(v) / 10 ** 18]);
   }
 
   async getLiquidity({ appToken, contract }: GetDataPropsParams<ClearpoolPool>) {

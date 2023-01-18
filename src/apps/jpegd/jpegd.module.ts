@@ -1,21 +1,17 @@
-import { Register } from '~app-toolkit/decorators';
+import { Module } from '@nestjs/common';
+
 import { AbstractApp } from '~app/app.dynamic-module';
-import { OlympusAppModule } from '~apps/olympus';
 
 import { JpegdContractFactory } from './contracts';
-import { EthereumJpegdBalanceFetcher } from './ethereum/jpegd.balance-fetcher';
 import { EthereumJpegdBondContractPositionFetcher } from './ethereum/jpegd.bond.contract-position-fetcher';
-import { EthereumJpegdPoolContractPositionFetcher } from './ethereum/jpegd.pool.contract-position-fetcher';
-import JPEGD_DEFINITION, { JpegdAppDefinition } from './jpegd.definition';
+import { EthereumJpegdChefV1ContractPositionFetcher } from './ethereum/jpegd.chef-v1.contract-position-fetcher';
+import { EthereumJpegdChefV2ContractPositionFetcher } from './ethereum/jpegd.chef-v2.contract-position-fetcher';
 
-@Register.AppModule({
-  appId: JPEGD_DEFINITION.id,
-  imports: [OlympusAppModule],
+@Module({
   providers: [
-    JpegdAppDefinition,
     JpegdContractFactory,
-    EthereumJpegdBalanceFetcher,
-    EthereumJpegdPoolContractPositionFetcher,
+    EthereumJpegdChefV1ContractPositionFetcher,
+    EthereumJpegdChefV2ContractPositionFetcher,
     EthereumJpegdBondContractPositionFetcher,
   ],
 })

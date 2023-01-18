@@ -1,11 +1,6 @@
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import { VaultTemplateTokenFetcher } from '~position/template/vault.template.token-fetcher';
 
-export type RedactedCartelWxBtrflyDataProps = {
-  liquidity: number;
-  reserve: number;
-};
-
 @PositionTemplate()
 export class EthereumRedactedCartelWxBtrflyTokenFetcher extends VaultTemplateTokenFetcher {
   groupLabel = 'wxBTRFLY';

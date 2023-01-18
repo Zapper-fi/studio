@@ -15,10 +15,9 @@ import {
   GetAddressesParams,
   DefaultAppTokenDataProps,
 } from '~position/template/app-token.template.types';
-import { Network, NETWORK_IDS } from '~types/network.interface';
+import { NETWORK_IDS } from '~types/network.interface';
 
 import { FurucomboContractFactory, FurucomboFundShareToken } from '../contracts';
-import { FURUCOMBO_DEFINITION } from '../furucombo.definition';
 
 interface FurucomboFund {
   address: string;
@@ -52,10 +51,6 @@ type FurucomboFundDefinition = {
   price: string;
 };
 
-const appId = FURUCOMBO_DEFINITION.id;
-const groupId = FURUCOMBO_DEFINITION.groups.fund.id;
-const network = Network.POLYGON_MAINNET;
-
 @PositionTemplate()
 export class PolygonFurucomboFundTokenFetcher extends AppTokenTemplatePositionFetcher<
   FurucomboFundShareToken,
@@ -77,8 +72,9 @@ export class PolygonFurucomboFundTokenFetcher extends AppTokenTemplatePositionFe
   }
 
   @CacheOnInterval({
-    key: `studio:${appId}:${groupId}:${network}:funds`,
+    key: `studio:furucombo:fund:ethereum:funds`,
     timeout: 15 * 60 * 1000,
+    failOnMissingData: false,
   })
   async getFurucomboFunds() {
     const { data } = await Axios.get<{ investables: FurucomboFund[] }>('https://api.furucombo.app/v1/investables', {
@@ -106,33 +102,33 @@ export class PolygonFurucomboFundTokenFetcher extends AppTokenTemplatePositionFe
     return definitions.map(v => v.address);
   }
 
-  async getUnderlyingTokenAddresses({
+  async getUnderlyingTokenDefinitions({
     definition,
   }: GetUnderlyingTokensParams<FurucomboFundShareToken, FurucomboFundDefinition>) {
-    return definition.stakingTokenAddress;
+    return [{ address: definition.stakingTokenAddress, network: this.network }];
   }
 
   async getPricePerShare({
     appToken,
     definition,
   }: GetPricePerShareParams<FurucomboFundShareToken, DefaultAppTokenDataProps, FurucomboFundDefinition>) {
-    return Number(definition.price) / appToken.tokens[0].price;
+    return [Number(definition.price) / appToken.tokens[0].price];
   }
 
-  getLiquidity({
+  async getLiquidity({
     definition,
   }: GetDataPropsParams<FurucomboFundShareToken, DefaultAppTokenDataProps, FurucomboFundDefinition>) {
     return Number(definition.liquidity);
   }
 
-  getReserves({
+  async getReserves({
     definition,
     appToken,
   }: GetDataPropsParams<FurucomboFundShareToken, DefaultAppTokenDataProps, FurucomboFundDefinition>) {
     return [Number(definition.liquidity) / appToken.tokens[0].price];
   }
 
-  getApy({
+  async getApy({
     definition,
   }: GetDataPropsParams<FurucomboFundShareToken, DefaultAppTokenDataProps, FurucomboFundDefinition>) {
     return Number(definition.apy) * 100;

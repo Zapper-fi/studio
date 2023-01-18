@@ -49,11 +49,15 @@ export abstract class RubiconBathTokenFetcher extends AppTokenTemplatePositionFe
     return definitions.map(v => v.address);
   }
 
-  async getUnderlyingTokenAddresses({ definition }: GetUnderlyingTokensParams<BathToken, RubiconPoolDefinition>) {
-    return definition.underlyingTokenAddress;
+  async getUnderlyingTokenDefinitions({ definition }: GetUnderlyingTokensParams<BathToken, RubiconPoolDefinition>) {
+    return [{ address: definition.underlyingTokenAddress, network: this.network }];
   }
 
-  async getSupply({ multicall, definition, contract }: GetTokenPropsParams<BathToken, RubiconPoolDefinition>) {
+  async getSupply({
+    multicall,
+    definition,
+    contract,
+  }: GetTokenPropsParams<BathToken, DefaultAppTokenDataProps, RubiconPoolDefinition>) {
     const underlyingAssetContract = this.contractFactory.erc20({
       address: definition.underlyingTokenAddress,
       network: this.network,
@@ -72,7 +76,8 @@ export abstract class RubiconBathTokenFetcher extends AppTokenTemplatePositionFe
     contract,
   }: GetPricePerShareParams<BathToken, DefaultDataProps, RubiconPoolDefinition>) {
     const ratioRaw = await contract.convertToAssets(BigNumber.from((1e18).toString()));
-    return Number(ratioRaw) / 10 ** appToken.decimals;
+    const ratio = Number(ratioRaw) / 10 ** appToken.decimals;
+    return [ratio];
   }
 
   async getLabel({ appToken }: GetDisplayPropsParams<BathToken>) {

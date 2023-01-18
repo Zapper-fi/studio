@@ -3,3 +3,4 @@
 /* eslint-disable */
 export { MeanFinanceHub__factory } from './MeanFinanceHub__factory';
 export { MeanFinancePermissionManager__factory } from './MeanFinancePermissionManager__factory';
+export { MeanFinanceTransformerRegistry__factory } from './MeanFinanceTransformerRegistry__factory';

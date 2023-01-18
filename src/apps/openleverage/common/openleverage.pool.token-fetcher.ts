@@ -3,6 +3,7 @@ import { gql } from 'graphql-request';
 
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
+import { gqlFetch } from '~app-toolkit/helpers/the-graph.helper';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import {
   GetUnderlyingTokensParams,
@@ -12,7 +13,8 @@ import {
 } from '~position/template/app-token.template.types';
 
 import { OpenleverageContractFactory, OpenleverageLpool } from '../contracts';
-import { OpenleveragePoolAPYHelper } from '../helpers/openleverage-pool.apy-helper';
+
+import { OpenleveragePoolAPYHelper } from './openleverage-pool.apy-helper';
 
 type OpenLeveragePoolsResponse = {
   pools: {
@@ -41,7 +43,7 @@ export abstract class OpenleveragePoolTokenFetcher extends AppTokenTemplatePosit
   }
 
   async getAddresses() {
-    const data = await this.appToolkit.helpers.theGraphHelper.request<OpenLeveragePoolsResponse>({
+    const data = await gqlFetch<OpenLeveragePoolsResponse>({
       endpoint: this.subgraphUrl,
       query,
     });
@@ -53,13 +55,14 @@ export abstract class OpenleveragePoolTokenFetcher extends AppTokenTemplatePosit
     return this.contractFactory.openleverageLpool({ address, network: this.network });
   }
 
-  getUnderlyingTokenAddresses({ contract }: GetUnderlyingTokensParams<OpenleverageLpool>) {
-    return contract.underlying();
+  async getUnderlyingTokenDefinitions({ contract }: GetUnderlyingTokensParams<OpenleverageLpool>) {
+    return [{ address: await contract.underlying(), network: this.network }];
   }
 
   async getPricePerShare({ contract }: GetPricePerShareParams<OpenleverageLpool>) {
-    const exchangeRateCurrent = await contract.exchangeRateStored();
-    return Number(exchangeRateCurrent) / 10 ** 18;
+    const exchangeRateCurrentRaw = await contract.exchangeRateStored();
+    const exchangeRate = Number(exchangeRateCurrentRaw) / 10 ** 18;
+    return [exchangeRate];
   }
 
   async getLiquidity({ appToken }: GetDataPropsParams<OpenleverageLpool>) {

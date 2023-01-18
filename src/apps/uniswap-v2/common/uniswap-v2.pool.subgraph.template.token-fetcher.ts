@@ -1,12 +1,10 @@
-import { Inject } from '@nestjs/common';
 import DataLoader from 'dataloader';
-import { range, uniq } from 'lodash';
+import { BigNumberish, Contract } from 'ethers';
+import { difference, range, uniq } from 'lodash';
 
-import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { BLOCKS_PER_DAY } from '~app-toolkit/constants/blocks';
+import { gqlFetch } from '~app-toolkit/helpers/the-graph.helper';
 import { GetDataPropsParams } from '~position/template/app-token.template.types';
-
-import { UniswapPair, UniswapV2ContractFactory } from '../contracts';
 
 import {
   UniswapV2PoolOnChainTemplateTokenFetcher,
@@ -18,12 +16,16 @@ import {
   DEFAULT_POOLS_QUERY,
   DEFAULT_POOL_VOLUMES_BY_ID_AT_BLOCK_QUERY,
   DEFAULT_POOL_VOLUMES_BY_ID_QUERY,
+  FURA_LAST_BLOCK_SYNCED_ON_GRAPH_QUERY,
+  LastBlockSyncedFuraResponse,
   LastBlockSyncedResponse,
   PoolsResponse,
   PoolVolumesResponse,
 } from './uniswap-v2.pool.subgraph.types';
 
-export abstract class UniswapV2PoolSubgraphTemplateTokenFetcher extends UniswapV2PoolOnChainTemplateTokenFetcher {
+export abstract class UniswapV2PoolSubgraphTemplateTokenFetcher<
+  T extends Contract,
+> extends UniswapV2PoolOnChainTemplateTokenFetcher<T, any> {
   volumeDataLoader: DataLoader<string, number> | null;
 
   abstract subgraphUrl: string;
@@ -34,19 +36,13 @@ export abstract class UniswapV2PoolSubgraphTemplateTokenFetcher extends UniswapV
   poolsQuery = DEFAULT_POOLS_QUERY;
   poolsByIdQuery = DEFAULT_POOLS_BY_ID_QUERY;
   requiredPools: string[] = [];
+  ignoredPools: string[] = [];
 
   // Volume
   skipVolume = false;
   lastBlockSyncedOnGraphQuery = DEFAULT_LAST_BLOCK_SYNCED_ON_GRAPH_QUERY;
   poolVolumesByIdQuery = DEFAULT_POOL_VOLUMES_BY_ID_QUERY;
   poolVolumesByIdAtBlockQuery = DEFAULT_POOL_VOLUMES_BY_ID_AT_BLOCK_QUERY;
-
-  constructor(
-    @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(UniswapV2ContractFactory) protected readonly contractFactory: UniswapV2ContractFactory,
-  ) {
-    super(appToolkit, contractFactory);
-  }
 
   async getAddresses() {
     // Initialize volume dataloader
@@ -56,7 +52,7 @@ export abstract class UniswapV2PoolSubgraphTemplateTokenFetcher extends UniswapV
     const chunks = await Promise.all(
       range(0, this.first, 1000).map(skip => {
         const count = Math.min(1000, this.first - skip);
-        return this.appToolkit.helpers.theGraphHelper.request<PoolsResponse>({
+        return gqlFetch<PoolsResponse>({
           endpoint: this.subgraphUrl,
           query: this.poolsQuery,
           variables: { first: count, skip, orderBy: this.orderBy },
@@ -65,7 +61,7 @@ export abstract class UniswapV2PoolSubgraphTemplateTokenFetcher extends UniswapV
     );
 
     const poolsData = chunks.flat();
-    const poolsByIdData = await this.appToolkit.helpers.theGraphHelper.request<PoolsResponse>({
+    const poolsByIdData = await gqlFetch<PoolsResponse>({
       endpoint: this.subgraphUrl,
       query: this.poolsByIdQuery,
       variables: { ids: this.requiredPools },
@@ -75,11 +71,25 @@ export abstract class UniswapV2PoolSubgraphTemplateTokenFetcher extends UniswapV
     const poolsById = poolsByIdData.pairs ?? [];
 
     const poolIds = [...pools, ...poolsById].map(v => v.id.toLowerCase());
-    const uniquepoolIds = uniq(poolIds);
-    return uniquepoolIds;
+    const uniquePoolIds = uniq(poolIds);
+    const filteredPoolIds = difference(uniquePoolIds, this.ignoredPools);
+
+    return filteredPoolIds;
   }
 
-  async getApy({ appToken }: GetDataPropsParams<UniswapPair, UniswapV2TokenDataProps>) {
+  getPoolFactoryContract(_address: string) {
+    throw new Error('Method not implemented.');
+  }
+
+  getPoolsLength(_contract: any): Promise<BigNumberish> {
+    throw new Error('Method not implemented.');
+  }
+
+  getPoolAddress(_contract: any, _index: number): Promise<string> {
+    throw new Error('Method not implemented.');
+  }
+
+  async getApy({ appToken }: GetDataPropsParams<T, UniswapV2TokenDataProps>) {
     const liquidity = appToken.supply * appToken.price;
     const volume = this.volumeDataLoader ? await this.volumeDataLoader.load(appToken.address) : 0;
     const yearlyFees = volume * (this.fee / 100) * 365;
@@ -87,7 +97,7 @@ export abstract class UniswapV2PoolSubgraphTemplateTokenFetcher extends UniswapV
     return apy;
   }
 
-  async getDataProps(params: GetDataPropsParams<UniswapPair, UniswapV2TokenDataProps>) {
+  async getDataProps(params: GetDataPropsParams<T, UniswapV2TokenDataProps>) {
     const defaultDataProps = await super.getDataProps(params);
     const volume = this.volumeDataLoader ? await this.volumeDataLoader.load(params.appToken.address) : 0;
     return { ...defaultDataProps, volume };
@@ -98,24 +108,37 @@ export abstract class UniswapV2PoolSubgraphTemplateTokenFetcher extends UniswapV
     const provider = this.appToolkit.getNetworkProvider(this.network);
     const block = await provider.getBlockNumber();
     const block1DayAgo = block - BLOCKS_PER_DAY[this.network];
+    let blockNumberLastSynced = 0;
 
     // Get last block synced on graph; if the graph is not caught up to yesterday, exit early
-    const graphMetaData = await this.appToolkit.helpers.theGraphHelper.request<LastBlockSyncedResponse>({
-      endpoint: this.subgraphUrl,
-      query: this.lastBlockSyncedOnGraphQuery,
-    });
+    if (this.subgraphUrl.includes('api.fura.org')) {
+      const subgraphName = this.subgraphUrl.substring(this.subgraphUrl.lastIndexOf('/') + 1);
+      const graphMetaData = await gqlFetch<LastBlockSyncedFuraResponse>({
+        endpoint: this.subgraphUrl,
+        query: FURA_LAST_BLOCK_SYNCED_ON_GRAPH_QUERY,
+        variables: { subgraphName },
+      });
 
-    const blockNumberLastSynced = graphMetaData._meta.block.number;
-    if (block1DayAgo > blockNumberLastSynced) return [];
+      blockNumberLastSynced = graphMetaData.indexingStatusForCurrentVersion.chains[0].latestBlock.number;
+    } else {
+      const graphMetaData = await gqlFetch<LastBlockSyncedResponse>({
+        endpoint: this.subgraphUrl,
+        query: this.lastBlockSyncedOnGraphQuery,
+      });
+
+      blockNumberLastSynced = graphMetaData._meta.block.number;
+    }
+
+    if (block1DayAgo > blockNumberLastSynced) return addresses.map(() => 0);
 
     // Retrieve volume data from TheGraph (@TODO Cache this)
     const [volumeByIDData, volumeByIDData1DayAgo] = await Promise.all([
-      this.appToolkit.helpers.theGraphHelper.request<PoolVolumesResponse>({
+      gqlFetch<PoolVolumesResponse>({
         endpoint: this.subgraphUrl,
         query: this.poolVolumesByIdQuery,
         variables: { ids: addresses },
       }),
-      this.appToolkit.helpers.theGraphHelper.request<PoolVolumesResponse>({
+      gqlFetch<PoolVolumesResponse>({
         endpoint: this.subgraphUrl,
         query: this.poolVolumesByIdAtBlockQuery,
         variables: { ids: addresses, block: block1DayAgo },

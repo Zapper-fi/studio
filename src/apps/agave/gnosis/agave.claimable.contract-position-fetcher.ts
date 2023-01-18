@@ -1,8 +1,8 @@
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
-import { AaveV2ClaimableTemplatePositionFetcher } from '~apps/aave-v2/helpers/aave-v2.claimable.template.contract-position-fetcher';
+import { AaveV2ClaimablePositionFetcher } from '~apps/aave-v2/common/aave-v2.claimable.contract-position-fetcher';
 
 @PositionTemplate()
-export class GnosisAgaveClaimableContractPositionFetcher extends AaveV2ClaimableTemplatePositionFetcher {
+export class GnosisAgaveClaimableContractPositionFetcher extends AaveV2ClaimablePositionFetcher {
   groupLabel = 'Rewards';
   isExcludedFromExplore = true;
   isExcludedFromTvl = true;

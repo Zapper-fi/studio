@@ -9,8 +9,9 @@ import {
   GetAddressesParams,
   GetDefinitionsParams,
   GetDisplayPropsParams,
+  GetUnderlyingTokensParams,
+  GetDataPropsParams,
 } from '~position/template/app-token.template.types';
-import { GetUnderlyingTokensParams, GetDataPropsParams } from '~position/template/app-token.template.types';
 
 import { PoolTogetherV3ContractFactory, PoolTogetherV3Ticket } from '../contracts';
 
@@ -123,29 +124,20 @@ export abstract class PoolTogetherV3CommunityTicketTokenFetcher extends AppToken
     return appToken.symbol;
   }
 
-  async getUnderlyingTokenAddresses({
+  async getUnderlyingTokenDefinitions({
     definition,
     multicall,
-  }: GetUnderlyingTokensParams<PoolTogetherV3Ticket, PoolTogetherV3CommunityTicketDefinition>): Promise<
-    string | string[]
-  > {
-    const contract = multicall.wrap(
-      this.contractFactory.poolTogetherV3CommunityPrizePool({ network: this.network, address: definition.prizePool }),
-    );
-    const underlyingTokenAddress = await contract.token().then(addr => addr.toLowerCase());
-    return [underlyingTokenAddress];
+  }: GetUnderlyingTokensParams<PoolTogetherV3Ticket, PoolTogetherV3CommunityTicketDefinition>) {
+    const prizePool = this.contractFactory.poolTogetherV3CommunityPrizePool({
+      network: this.network,
+      address: definition.prizePool,
+    });
+
+    return [{ address: await multicall.wrap(prizePool).token(), network: this.network }];
   }
 
-  getLiquidity({ appToken }: GetDataPropsParams<PoolTogetherV3Ticket>) {
-    return appToken.supply * appToken.price;
-  }
-
-  getReserves({ appToken }: GetDataPropsParams<PoolTogetherV3Ticket>) {
-    return [appToken.pricePerShare[0] * appToken.supply];
-  }
-
-  getApy(_params: GetDataPropsParams<PoolTogetherV3Ticket>) {
-    return 0;
+  async getPricePerShare() {
+    return [1];
   }
 
   async getDataProps(

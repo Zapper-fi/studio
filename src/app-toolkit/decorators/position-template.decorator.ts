@@ -14,7 +14,8 @@ export const getTemplateFragments = (filePath: string) => {
   const [appIdFromFile, groupIdFromFile] = filename.split('.');
 
   if (!Object.values(Network).includes(networkFromDir)) throw new Error('Invalid network folder name for template');
-  if (appIdFromFile !== appIdFromDir) throw new Error('App ID folder/file value mismatch');
+  if (appIdFromFile !== appIdFromDir)
+    throw new Error(`App ID folder/file value mismatch (expected ${appIdFromFile}, actual ${appIdFromDir})`);
 
   return { network: networkFromDir, appId: appIdFromDir, groupId: groupIdFromFile };
 };

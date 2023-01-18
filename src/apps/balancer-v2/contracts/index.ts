@@ -4,15 +4,19 @@ import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { ContractFactory } from '~contract/contracts';
 import { Network } from '~types/network.interface';
 
-import { BalancerAaveLinearPool__factory } from './ethers';
-import { BalancerChildChainGaugeFactory__factory } from './ethers';
-import { BalancerGauge__factory } from './ethers';
-import { BalancerMerkleOrchard__factory } from './ethers';
-import { BalancerMerkleRedeem__factory } from './ethers';
-import { BalancerPool__factory } from './ethers';
-import { BalancerVault__factory } from './ethers';
-import { BalancerVeBal__factory } from './ethers';
-import { BalancerWrappedAaveToken__factory } from './ethers';
+import {
+  BalancerChildChainGaugeFactory__factory,
+  BalancerComposableStablePool__factory,
+  BalancerGauge__factory,
+  BalancerMerkleOrchard__factory,
+  BalancerMerkleRedeem__factory,
+  BalancerPool__factory,
+  BalancerStablePhantomPool__factory,
+  BalancerStaticAToken__factory,
+  BalancerVault__factory,
+  BalancerVeBal__factory,
+  BalancerWrappedAaveToken__factory,
+} from './ethers';
 
 // eslint-disable-next-line
 type ContractOpts = { address: string; network: Network };
@@ -23,11 +27,11 @@ export class BalancerV2ContractFactory extends ContractFactory {
     super((network: Network) => appToolkit.getNetworkProvider(network));
   }
 
-  balancerAaveLinearPool({ address, network }: ContractOpts) {
-    return BalancerAaveLinearPool__factory.connect(address, this.appToolkit.getNetworkProvider(network));
-  }
   balancerChildChainGaugeFactory({ address, network }: ContractOpts) {
     return BalancerChildChainGaugeFactory__factory.connect(address, this.appToolkit.getNetworkProvider(network));
+  }
+  balancerComposableStablePool({ address, network }: ContractOpts) {
+    return BalancerComposableStablePool__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
   balancerGauge({ address, network }: ContractOpts) {
     return BalancerGauge__factory.connect(address, this.appToolkit.getNetworkProvider(network));
@@ -41,6 +45,12 @@ export class BalancerV2ContractFactory extends ContractFactory {
   balancerPool({ address, network }: ContractOpts) {
     return BalancerPool__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
+  balancerStablePhantomPool({ address, network }: ContractOpts) {
+    return BalancerStablePhantomPool__factory.connect(address, this.appToolkit.getNetworkProvider(network));
+  }
+  balancerStaticAToken({ address, network }: ContractOpts) {
+    return BalancerStaticAToken__factory.connect(address, this.appToolkit.getNetworkProvider(network));
+  }
   balancerVault({ address, network }: ContractOpts) {
     return BalancerVault__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
@@ -52,12 +62,14 @@ export class BalancerV2ContractFactory extends ContractFactory {
   }
 }
 
-export type { BalancerAaveLinearPool } from './ethers';
 export type { BalancerChildChainGaugeFactory } from './ethers';
+export type { BalancerComposableStablePool } from './ethers';
 export type { BalancerGauge } from './ethers';
 export type { BalancerMerkleOrchard } from './ethers';
 export type { BalancerMerkleRedeem } from './ethers';
 export type { BalancerPool } from './ethers';
+export type { BalancerStablePhantomPool } from './ethers';
+export type { BalancerStaticAToken } from './ethers';
 export type { BalancerVault } from './ethers';
 export type { BalancerVeBal } from './ethers';
 export type { BalancerWrappedAaveToken } from './ethers';

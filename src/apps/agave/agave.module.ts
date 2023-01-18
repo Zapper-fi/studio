@@ -1,8 +1,8 @@
-import { Register } from '~app-toolkit/decorators';
-import { AbstractApp } from '~app/app.dynamic-module';
-import { AaveV2AppModule } from '~apps/aave-v2';
+import { Module } from '@nestjs/common';
 
-import { AgaveAppDefinition, AGAVE_DEFINITION } from './agave.definition';
+import { AbstractApp } from '~app/app.dynamic-module';
+import { AaveV2ContractFactory } from '~apps/aave-v2/contracts';
+
 import { AgaveContractFactory } from './contracts';
 import { GnosisAgaveClaimableContractPositionFetcher } from './gnosis/agave.claimable.contract-position-fetcher';
 import { GnosisAgaveDepositTokenFetcher } from './gnosis/agave.deposit.token-fetcher';
@@ -10,12 +10,10 @@ import { GnosisAgavePositionPresenter } from './gnosis/agave.position-presenter'
 import { GnosisAgaveStableBorrowTokenFetcher } from './gnosis/agave.stable-borrow.token-fetcher';
 import { GnosisAgaveVariableBorrowTokenFetcher } from './gnosis/agave.variable-borrow.token-fetcher';
 
-@Register.AppModule({
-  appId: AGAVE_DEFINITION.id,
-  imports: [AaveV2AppModule],
+@Module({
   providers: [
-    AgaveAppDefinition,
     AgaveContractFactory,
+    AaveV2ContractFactory,
     GnosisAgaveClaimableContractPositionFetcher,
     GnosisAgaveDepositTokenFetcher,
     GnosisAgavePositionPresenter,

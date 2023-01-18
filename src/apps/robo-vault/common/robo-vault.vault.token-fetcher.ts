@@ -30,13 +30,14 @@ export abstract class RoboVaultVaultTokenFetcher extends AppTokenTemplatePositio
     return data.map(v => v.addr.toLowerCase());
   }
 
-  async getUnderlyingTokenAddresses({ contract }: GetUnderlyingTokensParams<RoboVault>) {
-    return contract.token();
+  async getUnderlyingTokenDefinitions({ contract }: GetUnderlyingTokensParams<RoboVault>) {
+    return [{ address: await contract.token(), network: this.network }];
   }
 
   async getPricePerShare({ contract, appToken }: GetPricePerShareParams<RoboVault>) {
     const pricePerShareRaw = await contract.pricePerShare();
-    return Number(pricePerShareRaw) / 10 ** appToken.tokens[0].decimals;
+    const pricePerShare = Number(pricePerShareRaw) / 10 ** appToken.tokens[0].decimals;
+    return [pricePerShare];
   }
 
   async getLiquidity({ appToken }: GetDataPropsParams<RoboVault>) {

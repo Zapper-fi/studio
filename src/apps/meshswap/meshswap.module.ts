@@ -1,27 +1,18 @@
-import { Register } from '~app-toolkit/decorators';
+import { Module } from '@nestjs/common';
+
 import { AbstractApp } from '~app/app.dynamic-module';
-import { UniswapV2AppModule } from '~apps/uniswap-v2';
+import { UniswapV2ContractFactory } from '~apps/uniswap-v2/contracts';
 
 import { MeshswapContractFactory } from './contracts';
-import { MeshswapSupplyBalanceHelper } from './helpers/meshpool.supply.balance-helper';
-import { MeshswapAppDefinition, MESHSWAP_DEFINITION } from './meshswap.definition';
-import { PolygonMeshswapBalanceFetcher } from './polygon/meshswap.balance-fetcher';
 import { PolygonMeshswapPoolTokenFetcher } from './polygon/meshswap.pool.token-fetcher';
 import { PolygonMeshswapSupplyTokenFetcher } from './polygon/meshswap.supply.token-fetcher';
 
-@Register.AppModule({
-  appId: MESHSWAP_DEFINITION.id,
-  imports: [UniswapV2AppModule],
+@Module({
   providers: [
-    MeshswapAppDefinition,
     MeshswapContractFactory,
-    // helpers
-    MeshswapSupplyBalanceHelper,
-    // Polygon
+    UniswapV2ContractFactory,
     PolygonMeshswapPoolTokenFetcher,
     PolygonMeshswapSupplyTokenFetcher,
-    PolygonMeshswapBalanceFetcher,
   ],
-  exports: [],
 })
 export class MeshswapAppModule extends AbstractApp() {}

@@ -34,20 +34,21 @@ export class EthereumLlamaAirforceVaultTokenFetcher extends AppTokenTemplatePosi
       '0xf964b0e3ffdea659c44a5a52bc0b82a24b89ce0e', // uFXS
       '0x8659fc767cad6005de79af65dafe4249c57927af', // uCVX
       '0xd6fc1ecd9965ba9cac895654979564a291c74c29', // uauraBAL
+      '0x8c4eb0fc6805ee7337ac126f89a807271a88dd67', // uauraBAL v2
     ];
   }
 
-  async getUnderlyingTokenAddresses({
+  async getUnderlyingTokenDefinitions({
     address,
     contract,
     multicall,
   }: GetUnderlyingTokensParams<LlamaAirforceUnionVault>) {
     if (address === '0x8659fc767cad6005de79af65dafe4249c57927af') {
       const pirexContract = this.contractFactory.llamaAirforceUnionVaultPirex({ address, network: this.network });
-      return multicall.wrap(pirexContract).asset();
+      return [{ address: await multicall.wrap(pirexContract).asset(), network: this.network }];
     }
 
-    return contract.underlying();
+    return [{ address: await contract.underlying(), network: this.network }];
   }
 
   async getPricePerShare({ contract, appToken, multicall }: GetPricePerShareParams<LlamaAirforceUnionVault>) {
@@ -59,23 +60,25 @@ export class EthereumLlamaAirforceVaultTokenFetcher extends AppTokenTemplatePosi
 
       const reserveRaw = await multicall.wrap(pirexContract).totalAssets();
       const reserve = Number(reserveRaw) / 10 ** appToken.tokens[0].decimals;
-      return reserve / appToken.supply;
+      const pricePerShare = reserve / appToken.supply;
+      return [pricePerShare];
     }
 
     const reserveRaw = await contract.totalUnderlying();
     const reserve = Number(reserveRaw) / 10 ** appToken.tokens[0].decimals;
-    return reserve / appToken.supply;
+    const pricePerShare = reserve / appToken.supply;
+    return [pricePerShare];
   }
 
-  getLiquidity({ appToken }: GetDataPropsParams<LlamaAirforceUnionVault>) {
+  async getLiquidity({ appToken }: GetDataPropsParams<LlamaAirforceUnionVault>) {
     return appToken.supply * appToken.price;
   }
 
-  getReserves({ appToken }: GetDataPropsParams<LlamaAirforceUnionVault>) {
+  async getReserves({ appToken }: GetDataPropsParams<LlamaAirforceUnionVault>) {
     return [appToken.pricePerShare[0] * appToken.supply];
   }
 
-  getApy(_params: GetDataPropsParams<LlamaAirforceUnionVault>) {
+  async getApy(_params: GetDataPropsParams<LlamaAirforceUnionVault>) {
     return 0;
   }
 

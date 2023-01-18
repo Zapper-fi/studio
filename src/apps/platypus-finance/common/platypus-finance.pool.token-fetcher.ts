@@ -42,8 +42,8 @@ export abstract class PlatypusFinancePoolTokenFetcher extends AppTokenTemplatePo
     return tokenAddressesByPool.flat();
   }
 
-  async getUnderlyingTokenAddresses({ contract }: GetUnderlyingTokensParams<PlatypusFinancePoolToken>) {
-    return contract.underlyingToken();
+  async getUnderlyingTokenDefinitions({ contract }: GetUnderlyingTokensParams<PlatypusFinancePoolToken>) {
+    return [{ address: await contract.underlyingToken(), network: this.network }];
   }
 
   async getPricePerShare({ contract, multicall, appToken }: GetPricePerShareParams<PlatypusFinancePoolToken>) {
@@ -53,18 +53,19 @@ export abstract class PlatypusFinancePoolTokenFetcher extends AppTokenTemplatePo
 
     const amount = new BigNumber(10).pow(appToken.tokens[0].decimals).toFixed(0);
     const pricePerShareRaw = await pool.quotePotentialWithdraw(appToken.tokens[0].address, amount);
-    return Number(pricePerShareRaw.amount) / 10 ** appToken.decimals;
+    const pricePerShare = Number(pricePerShareRaw.amount) / 10 ** appToken.decimals;
+    return [pricePerShare];
   }
 
-  getLiquidity({ appToken }: GetDataPropsParams<PlatypusFinancePoolToken>) {
+  async getLiquidity({ appToken }: GetDataPropsParams<PlatypusFinancePoolToken>) {
     return appToken.supply * appToken.price;
   }
 
-  getReserves({ appToken }: GetDataPropsParams<PlatypusFinancePoolToken>) {
+  async getReserves({ appToken }: GetDataPropsParams<PlatypusFinancePoolToken>) {
     return [appToken.pricePerShare[0] * appToken.supply];
   }
 
-  getApy(_params: GetDataPropsParams<PlatypusFinancePoolToken>) {
+  async getApy(_params: GetDataPropsParams<PlatypusFinancePoolToken>) {
     return 0;
   }
 }

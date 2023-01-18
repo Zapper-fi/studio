@@ -4,11 +4,15 @@ import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { ContractFactory } from '~contract/contracts';
 import { Network } from '~types/network.interface';
 
-import { QiDaoEscrowedQi__factory } from './ethers';
-import { QiDaoMasterChef__factory } from './ethers';
-import { QiDaoVaultInfo__factory } from './ethers';
-import { QiDaoVaultNft__factory } from './ethers';
-import { QiDaoYieldToken__factory } from './ethers';
+import {
+  QiDaoAnchorVault__factory,
+  QiDaoEscrowedQi__factory,
+  QiDaoMasterChef__factory,
+  QiDaoMasterChefV3__factory,
+  QiDaoVaultInfo__factory,
+  QiDaoVaultNft__factory,
+  QiDaoYieldToken__factory,
+} from './ethers';
 
 // eslint-disable-next-line
 type ContractOpts = { address: string; network: Network };
@@ -19,11 +23,17 @@ export class QiDaoContractFactory extends ContractFactory {
     super((network: Network) => appToolkit.getNetworkProvider(network));
   }
 
+  qiDaoAnchorVault({ address, network }: ContractOpts) {
+    return QiDaoAnchorVault__factory.connect(address, this.appToolkit.getNetworkProvider(network));
+  }
   qiDaoEscrowedQi({ address, network }: ContractOpts) {
     return QiDaoEscrowedQi__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
   qiDaoMasterChef({ address, network }: ContractOpts) {
     return QiDaoMasterChef__factory.connect(address, this.appToolkit.getNetworkProvider(network));
+  }
+  qiDaoMasterChefV3({ address, network }: ContractOpts) {
+    return QiDaoMasterChefV3__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
   qiDaoVaultInfo({ address, network }: ContractOpts) {
     return QiDaoVaultInfo__factory.connect(address, this.appToolkit.getNetworkProvider(network));
@@ -36,8 +46,10 @@ export class QiDaoContractFactory extends ContractFactory {
   }
 }
 
+export type { QiDaoAnchorVault } from './ethers';
 export type { QiDaoEscrowedQi } from './ethers';
 export type { QiDaoMasterChef } from './ethers';
+export type { QiDaoMasterChefV3 } from './ethers';
 export type { QiDaoVaultInfo } from './ethers';
 export type { QiDaoVaultNft } from './ethers';
 export type { QiDaoYieldToken } from './ethers';

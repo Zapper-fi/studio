@@ -1,45 +1,32 @@
-import { Register } from '~app-toolkit/decorators';
+import { Module } from '@nestjs/common';
+
 import { AbstractApp } from '~app/app.dynamic-module';
 
-import { ArbitrumSushiSwapBentoBoxBalanceFetcher } from './arbitrum/sushiswap-bentobox.balance-fetcher';
 import { ArbitrumSushiSwapBentoBoxContractPositionFetcher } from './arbitrum/sushiswap-bentobox.vault.contract-position-fetcher';
-import { BscSushiSwapBentoBoxBalanceFetcher } from './binance-smart-chain/sushiswap-bentobox.balance-fetcher';
-import { BscSushiSwapBentoBoxContractPositionFetcher } from './binance-smart-chain/sushiswap-bentobox.vault.contract-position-fetcher';
+import { AvalancheSushiSwapBentoBoxContractPositionFetcher } from './avalanche/sushiswap-bentobox.vault.contract-position-fetcher';
+import { BinanceSmartChainSushiSwapBentoBoxContractPositionFetcher } from './binance-smart-chain/sushiswap-bentobox.vault.contract-position-fetcher';
+import { SushiswapBentoboxVaultTokensResolver } from './common/sushiswap-bentobox.vault-tokens-resolver';
 import { SushiswapBentoboxContractFactory } from './contracts';
-import { EthereumSushiSwapBentoBoxBalanceFetcher } from './ethereum/sushiswap-bentobox.balance-fetcher';
 import { EthereumSushiSwapBentoBoxContractPositionFetcher } from './ethereum/sushiswap-bentobox.vault.contract-position-fetcher';
-import { SushiSwapBentoBoxContractPositionBalanceHelper } from './helpers/sushiswap-bentobox.vault.contract-position-balance-helper';
-import { SushiSwapBentoBoxContractPositionHelper } from './helpers/sushiswap-bentobox.vault.contract-position-helper';
-import { PolygonSushiSwapBentoBoxBalanceFetcher } from './polygon/sushiswap-bentobox.balance-fetcher';
+import { FantomSushiSwapBentoBoxContractPositionFetcher } from './fantom/sushiswap-bentobox.vault.contract-position-fetcher';
 import { PolygonSushiSwapBentoBoxContractPositionFetcher } from './polygon/sushiswap-bentobox.vault.contract-position-fetcher';
-import { SushiSwapBentoBoxAppDefinition, SUSHISWAP_BENTOBOX_DEFINITION } from './sushiswap-bentobox.definition';
 
-@Register.AppModule({
-  appId: SUSHISWAP_BENTOBOX_DEFINITION.id,
+@Module({
   providers: [
-    SushiSwapBentoBoxAppDefinition,
     SushiswapBentoboxContractFactory,
-    SushiSwapBentoBoxContractPositionBalanceHelper,
-    SushiSwapBentoBoxContractPositionHelper,
+    SushiswapBentoboxVaultTokensResolver,
     // Arbitrum
     ArbitrumSushiSwapBentoBoxContractPositionFetcher,
-    ArbitrumSushiSwapBentoBoxBalanceFetcher,
+    // Avalanche
+    AvalancheSushiSwapBentoBoxContractPositionFetcher,
     // Binance Smart Chain
-    BscSushiSwapBentoBoxContractPositionFetcher,
-    BscSushiSwapBentoBoxBalanceFetcher,
+    BinanceSmartChainSushiSwapBentoBoxContractPositionFetcher,
     // Ethereum
     EthereumSushiSwapBentoBoxContractPositionFetcher,
-    EthereumSushiSwapBentoBoxBalanceFetcher,
+    // Fantom
+    FantomSushiSwapBentoBoxContractPositionFetcher,
     // Polygon
     PolygonSushiSwapBentoBoxContractPositionFetcher,
-    PolygonSushiSwapBentoBoxBalanceFetcher,
-  ],
-  exports: [
-    SushiSwapBentoBoxAppDefinition,
-    SushiSwapBentoBoxAppModule,
-    SushiswapBentoboxContractFactory,
-    SushiSwapBentoBoxContractPositionBalanceHelper,
-    SushiSwapBentoBoxContractPositionHelper,
   ],
 })
 export class SushiSwapBentoBoxAppModule extends AbstractApp() {}

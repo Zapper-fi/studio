@@ -1,22 +1,29 @@
-import { Register } from '~app-toolkit/decorators';
+import { Module } from '@nestjs/common';
+
 import { AbstractApp } from '~app/app.dynamic-module';
 
+import { ArbitrumGammaStrategiesPoolTokenFetcher } from './arbitrum/gamma-strategies.pool.token-fetcher';
+import { CeloGammaStrategiesPoolTokenFetcher } from './celo/gamma-strategies.pool.token-fetcher';
 import { GammaStrategiesContractFactory } from './contracts';
-import { EthereumGammaStrategiesBalanceFetcher } from './ethereum/gamma-strategies.balance-fetcher';
 import { EthereumGammaStrategiesPoolTokenFetcher } from './ethereum/gamma-strategies.pool.token-fetcher';
 import { EthereumGammaStrategiesTGammaTokenFetcher } from './ethereum/gamma-strategies.t-gamma.token-fetcher';
 import { EthereumGammaStrategiesXGammaTokenFetcher } from './ethereum/gamma-strategies.x-gamma.token-fetcher';
-import { GammaStrategiesAppDefinition, GAMMA_STRATEGIES_DEFINITION } from './gamma-strategies.definition';
+import { GammaApiHelper } from './helpers/gamma-strategies.api';
+import { OptimismGammaStrategiesPoolTokenFetcher } from './optimism/gamma-strategies.pool.token-fetcher';
+import { PolygonGammaStrategiesPoolTokenFetcher } from './polygon/gamma-strategies.pool.token-fetcher';
 
-@Register.AppModule({
-  appId: GAMMA_STRATEGIES_DEFINITION.id,
+@Module({
   providers: [
-    GammaStrategiesAppDefinition,
-    GammaStrategiesContractFactory,
-    EthereumGammaStrategiesBalanceFetcher,
+    GammaApiHelper,
+    ArbitrumGammaStrategiesPoolTokenFetcher,
+    CeloGammaStrategiesPoolTokenFetcher,
     EthereumGammaStrategiesPoolTokenFetcher,
-    EthereumGammaStrategiesXGammaTokenFetcher,
     EthereumGammaStrategiesTGammaTokenFetcher,
+    EthereumGammaStrategiesXGammaTokenFetcher,
+
+    GammaStrategiesContractFactory,
+    OptimismGammaStrategiesPoolTokenFetcher,
+    PolygonGammaStrategiesPoolTokenFetcher,
   ],
 })
 export class GammaStrategiesAppModule extends AbstractApp() {}

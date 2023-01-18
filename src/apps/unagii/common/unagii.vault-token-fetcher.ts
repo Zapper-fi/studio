@@ -76,15 +76,14 @@ export abstract class UnagiiVaultTokenFetcher extends AppTokenTemplatePositionFe
     });
     const totalAssetsRaw = await multicall.wrap(vaultManagerContract).totalAssets();
     const underlyingAssets = Number(totalAssetsRaw) / 10 ** appToken.tokens[0].decimals;
-    return underlyingAssets / appToken.supply;
+    const pricePerShare = underlyingAssets / appToken.supply;
+    return [pricePerShare];
   }
 
-  async getUnderlyingTokenAddresses({
-    definition,
-  }: GetUnderlyingTokensParams<UnagiiUtoken, UnagiiTokenDefinition>): Promise<string[]> {
+  async getUnderlyingTokenDefinitions({ definition }: GetUnderlyingTokensParams<UnagiiUtoken, UnagiiTokenDefinition>) {
     const underlyingTokenAddress =
       definition.underlyingTokenAddress === ETH_ADDR_ALIAS ? ZERO_ADDRESS : definition.underlyingTokenAddress;
-    return [underlyingTokenAddress];
+    return [{ address: underlyingTokenAddress, network: this.network }];
   }
 
   async getLiquidity({ appToken }: GetDataPropsParams<UnagiiUtoken, DefaultDataProps, UnagiiTokenDefinition>) {

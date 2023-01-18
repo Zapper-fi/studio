@@ -1,12 +1,14 @@
 import { Inject } from '@nestjs/common';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
+import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import {
   GetDataPropsParams,
   GetUnderlyingTokensParams,
   GetAddressesParams,
   DefaultAppTokenDataProps,
+  GetDisplayPropsParams,
 } from '~position/template/app-token.template.types';
 
 import { EaseContractFactory, EaseRcaShield } from '../contracts';
@@ -44,19 +46,21 @@ export abstract class EaseRcaTokenFetcher extends AppTokenTemplatePositionFetche
     return definitions.map(v => v.address);
   }
 
-  async getUnderlyingTokenAddresses({ definition }: GetUnderlyingTokensParams<EaseRcaShield, EaseRcaTokenDefinition>) {
-    return definition.underlyingTokenAddress;
+  async getUnderlyingTokenDefinitions({
+    definition,
+  }: GetUnderlyingTokensParams<EaseRcaShield, EaseRcaTokenDefinition>) {
+    return [{ address: definition.underlyingTokenAddress, network: this.network }];
   }
 
-  async getLiquidity({ appToken }: GetDataPropsParams<EaseRcaShield>) {
-    return appToken.supply * appToken.price;
-  }
-
-  async getReserves({ appToken }: GetDataPropsParams<EaseRcaShield>) {
-    return [appToken.pricePerShare[0] * appToken.supply];
+  async getPricePerShare() {
+    return [1];
   }
 
   async getApy({ appToken }: GetDataPropsParams<EaseRcaShield>) {
     return this.vaultDefinitionsResolver.getRcaApy(appToken.address);
+  }
+
+  async getLabel({ appToken }: GetDisplayPropsParams<EaseRcaShield>) {
+    return `${getLabelFromToken(appToken.tokens[0])} Ease Vault`;
   }
 }

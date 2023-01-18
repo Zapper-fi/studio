@@ -1,46 +1,65 @@
 import { Inject } from '@nestjs/common';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
-import { Register } from '~app-toolkit/decorators';
-import { getAppImg } from '~app-toolkit/helpers/presentation/image.present';
-import { PositionFetcher } from '~position/position-fetcher.interface';
-import { AppTokenPosition } from '~position/position.interface';
-import { Network } from '~types/network.interface';
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
+import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
+import { GetDataPropsParams } from '~position/template/app-token.template.types';
 
 import { OlympusContractFactory, OlympusSOhmV1Token } from '../contracts';
-import { OLYMPUS_DEFINITION } from '../olympus.definition';
 
-const appId = OLYMPUS_DEFINITION.id;
-const network = Network.ETHEREUM_MAINNET;
-const groupId = OLYMPUS_DEFINITION.groups.sOhmV1.id;
+@PositionTemplate()
+export class EthereumOlympusSOhmV1TokenFetcher extends AppTokenTemplatePositionFetcher<OlympusSOhmV1Token> {
+  groupLabel = 'sOHM v1';
 
-@Register.TokenPositionFetcher({
-  appId,
-  groupId,
-  network,
-})
-export class EthereumOlympusSOhmV1TokenFetcher implements PositionFetcher<AppTokenPosition> {
   constructor(
-    @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
-    @Inject(OlympusContractFactory) private readonly contractFactory: OlympusContractFactory,
-  ) {}
+    @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
+    @Inject(OlympusContractFactory) protected readonly contractFactory: OlympusContractFactory,
+  ) {
+    super(appToolkit);
+  }
 
-  getPositions(): Promise<AppTokenPosition[]> {
-    return this.appToolkit.helpers.vaultTokenHelper.getTokens<OlympusSOhmV1Token>({
-      appId,
-      groupId,
-      network,
-      exchangeable: true,
-      resolveContract: ({ address, network }) => this.contractFactory.olympusSOhmV1Token({ address, network }),
-      resolveVaultAddresses: () => ['0x04f2694c8fcee23e8fd0dfea1d4f5bb8c352111f'], // sOHMv1
-      resolveUnderlyingTokenAddress: () => '0x383518188c0c6d7730d91b2c03a03c837814a899', // OHMv1
-      resolvePricePerShare: () => 1,
-      resolveImages: () => [getAppImg(OLYMPUS_DEFINITION.id)],
-      resolveReserve: ({ underlyingToken, network }) =>
-        this.contractFactory
-          .erc20({ address: underlyingToken.address, network })
-          .balanceOf('0xfd31c7d00ca47653c6ce64af53c1571f9c36566a')
-          .then(v => Number(v) / 10 ** underlyingToken.decimals),
+  getContract(address: string): OlympusSOhmV1Token {
+    return this.contractFactory.olympusSOhmV1Token({ address, network: this.network });
+  }
+
+  async getAddresses() {
+    return ['0x04f2694c8fcee23e8fd0dfea1d4f5bb8c352111f'];
+  }
+
+  async getUnderlyingTokenDefinitions() {
+    return [{ address: '0x383518188c0c6d7730d91b2c03a03c837814a899', network: this.network }];
+  }
+
+  async getPricePerShare() {
+    return [1];
+  }
+
+  async getLiquidity({ appToken, multicall }: GetDataPropsParams<OlympusSOhmV1Token>) {
+    const underlyingToken = appToken.tokens[0];
+    const reserveAddress = '0xfd31c7d00ca47653c6ce64af53c1571f9c36566a';
+    const underlyingTokenContract = this.contractFactory.erc20({
+      address: underlyingToken.address,
+      network: this.network,
     });
+
+    const reserveRaw = await multicall.wrap(underlyingTokenContract).balanceOf(reserveAddress);
+    const reserve = Number(reserveRaw) / 10 ** underlyingToken.decimals;
+    return reserve * underlyingToken.price;
+  }
+
+  async getReserves({ appToken, multicall }: GetDataPropsParams<OlympusSOhmV1Token>) {
+    const underlyingToken = appToken.tokens[0];
+    const reserveAddress = '0xfd31c7d00ca47653c6ce64af53c1571f9c36566a';
+    const underlyingTokenContract = this.contractFactory.erc20({
+      address: underlyingToken.address,
+      network: this.network,
+    });
+
+    const reserveRaw = await multicall.wrap(underlyingTokenContract).balanceOf(reserveAddress);
+    return [Number(reserveRaw) / 10 ** underlyingToken.decimals];
+  }
+
+  async getApy() {
+    return 0;
   }
 }

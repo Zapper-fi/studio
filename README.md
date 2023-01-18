@@ -18,7 +18,9 @@
 </div>
 
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-81-orange.svg?style=flat-square)](#contributors-)
+
+[![All Contributors](https://img.shields.io/badge/all_contributors-88-orange.svg?style=flat-square)](#contributors-)
+
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 ## Description
@@ -71,13 +73,12 @@ pnpm studio create-group [app-id]
 ```bash
 pnpm studio create-token-fetcher [app-id]
 pnpm studio create-contract-position-fetcher [app-id]
-pnpm studio create-balance-fetcher [app-id]
 ```
 
 ## Clearing the cache
 
 Clears the file-system cache that persists app tokens, contract positions and any other app related data.
-Useful when your are doing modification to an app and it keeps on returning stale data.
+Useful when you are doing modification to an app and it keeps on returning stale data.
 
 ```bash
 pnpm studio clear-cache
@@ -109,7 +110,7 @@ Simply copy `.env.sample` to `.env` and edit the configuration file.
 ### ENABLED_APPS
 
 Control which app to enable on startup. Particularly useful to keep local build times snappy.
-When developing your own app, it's recommended to add its identifier (aka: the folder name) and it's dependant apps
+When developing your own app, it's recommended to add its identifier (aka: the folder name) and its dependant apps
 (also their respective folder name) into this configuration key. See the `.env` file for further details.
 
 ## Contributing
@@ -124,7 +125,7 @@ You can generate a new cli command by running the hidden command:
 pnpm studio new:command [my-command-name]
 ```
 
-## Need help ?
+## Need help?
 
 Join our community on <a href="https://zapper.fi/discord">Discord</a>
 
@@ -244,6 +245,15 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href="https://github.com/maximebedard"><img src="https://avatars.githubusercontent.com/u/801405?v=4?s=64" width="64px;" alt=""/><br /><sub><b>Maxime Bedard</b></sub></a><br /><a href="https://github.com/Zapper-fi/studio/commits?author=maximebedard" title="Code">💻</a> <a href="#question-maximebedard" title="Answering Questions">💬</a> <a href="#maintenance-maximebedard" title="Maintenance">🚧</a></td>
     <td align="center"><a href="https://enamakel.com/"><img src="https://avatars.githubusercontent.com/u/31011319?v=4?s=64" width="64px;" alt=""/><br /><sub><b>Steven Enamakel</b></sub></a><br /><a href="https://github.com/Zapper-fi/studio/commits?author=senamakel" title="Code">💻</a></td>
     <td align="center"><a href="https://github.com/gdeschryver"><img src="https://avatars.githubusercontent.com/u/70271293?v=4?s=64" width="64px;" alt=""/><br /><sub><b>gauloiseth</b></sub></a><br /><a href="https://github.com/Zapper-fi/studio/commits?author=gdeschryver" title="Code">💻</a></td>
+    <td align="center"><a href="https://ooki.com/"><img src="https://avatars.githubusercontent.com/u/81377977?v=4?s=64" width="64px;" alt=""/><br /><sub><b>Eugene</b></sub></a><br /><a href="https://github.com/Zapper-fi/studio/commits?author=eugenesh1" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/Robsonsjre"><img src="https://avatars.githubusercontent.com/u/11945073?v=4?s=64" width="64px;" alt=""/><br /><sub><b>Rob</b></sub></a><br /><a href="https://github.com/Zapper-fi/studio/commits?author=Robsonsjre" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/vedantd"><img src="https://avatars.githubusercontent.com/u/29754152?v=4?s=64" width="64px;" alt=""/><br /><sub><b>Vedant Dalvi</b></sub></a><br /><a href="https://github.com/Zapper-fi/studio/commits?author=vedantd" title="Code">💻</a></td>
+  </tr>
+  <tr>
+    <td align="center"><a href="https://github.com/ibeandyy"><img src="https://avatars.githubusercontent.com/u/16962763?v=4?s=64" width="64px;" alt=""/><br /><sub><b>ibeandyy</b></sub></a><br /><a href="https://github.com/Zapper-fi/studio/commits?author=ibeandyy" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/0xdapper"><img src="https://avatars.githubusercontent.com/u/94534135?v=4?s=64" width="64px;" alt=""/><br /><sub><b>0xdapper</b></sub></a><br /><a href="https://github.com/Zapper-fi/studio/commits?author=0xdapper" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/OlehX"><img src="https://avatars.githubusercontent.com/u/16556962?v=4?s=64" width="64px;" alt=""/><br /><sub><b>Oleh Vovnianko</b></sub></a><br /><a href="https://github.com/Zapper-fi/studio/commits?author=OlehX" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/akashiceth"><img src="https://avatars.githubusercontent.com/u/96811933?v=4?s=64" width="64px;" alt=""/><br /><sub><b>akashiceth</b></sub></a><br /><a href="https://github.com/Zapper-fi/studio/commits?author=akashiceth" title="Code">💻</a></td>
   </tr>
 </table>
 

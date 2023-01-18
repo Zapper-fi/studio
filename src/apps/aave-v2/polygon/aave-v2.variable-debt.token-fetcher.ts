@@ -1,16 +1,16 @@
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import { GetDisplayPropsParams } from '~position/template/app-token.template.types';
 
-import { AaveV2AToken } from '../contracts/ethers/AaveV2AToken';
 import {
   AaveV2ReserveApyData,
   AaveV2ReserveTokenAddressesData,
-  AaveV2LendingTemplateTokenFetcher,
+  AaveV2LendingTokenFetcher,
   AaveV2LendingTokenDataProps,
-} from '../helpers/aave-v2.lending.template.token-fetcher';
+} from '../common/aave-v2.lending.token-fetcher';
+import { AaveV2AToken } from '../contracts/ethers/AaveV2AToken';
 
 @PositionTemplate()
-export class PolygonAaveV2VariableDebtTokenFetcher extends AaveV2LendingTemplateTokenFetcher {
+export class PolygonAaveV2VariableDebtTokenFetcher extends AaveV2LendingTokenFetcher {
   groupLabel = 'Lending';
   providerAddress = '0x7551b5d2763519d4e37e8b81929d336de671d46d';
   isDebt = true;

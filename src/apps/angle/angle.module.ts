@@ -1,30 +1,21 @@
-import { Register } from '~app-toolkit/decorators';
+import { Module } from '@nestjs/common';
+
 import { AbstractApp } from '~app/app.dynamic-module';
-import { CurveVotingEscrowContractPositionBalanceHelper } from '~apps/curve/helpers/curve.voting-escrow.contract-position-balance-helper';
-import { CurveVotingEscrowContractPositionHelper } from '~apps/curve/helpers/curve.voting-escrow.contract-position-helper';
 
-import { AngleAppDefinition, ANGLE_DEFINITION } from './angle.definition';
+import { AngleApiHelper } from './common/angle.api';
 import { AngleContractFactory } from './contracts';
-import { EthereumAngleBalanceFetcher } from './ethereum/angle.balance-fetcher';
-import { EthereumAnglePerpetualsContractPositionFetcher } from './ethereum/angle.perpetuals.contract-position-fetcher';
-import { EthereumAngleSantokenTokenFetcher } from './ethereum/angle.santoken.token-fetcher';
-import { EthereumAngleVaultsContractPositionFetcher } from './ethereum/angle.vaults.contract-position-fetcher';
-import { EthereumAngleVeAngleContractPositionFetcher } from './ethereum/angle.veangle.contract-position-fetcher';
-import { AngleApiHelper } from './helpers/angle.api';
+import { EthereumAnglePerpetualsContractPositionFetcher } from './ethereum/angle.perpetual.contract-position-fetcher';
+import { EthereumAngleSanTokenTokenFetcher } from './ethereum/angle.san-token.token-fetcher';
+import { EthereumAngleVaultsContractPositionFetcher } from './ethereum/angle.vault.contract-position-fetcher';
+import { EthereumAngleVeAngleContractPositionFetcher } from './ethereum/angle.voting-escrow.contract-position-fetcher';
 
-@Register.AppModule({
-  appId: ANGLE_DEFINITION.id,
+@Module({
   providers: [
-    AngleAppDefinition,
     AngleContractFactory,
-    // Helpers
     AngleApiHelper,
-    CurveVotingEscrowContractPositionHelper,
-    CurveVotingEscrowContractPositionBalanceHelper,
     // Ethereum
-    EthereumAngleSantokenTokenFetcher,
+    EthereumAngleSanTokenTokenFetcher,
     EthereumAngleVeAngleContractPositionFetcher,
-    EthereumAngleBalanceFetcher,
     EthereumAnglePerpetualsContractPositionFetcher,
     EthereumAngleVaultsContractPositionFetcher,
   ],

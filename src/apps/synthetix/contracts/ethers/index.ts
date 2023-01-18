@@ -2,13 +2,19 @@
 /* tslint:disable */
 /* eslint-disable */
 export type { SynthetixAddressResolver } from './SynthetixAddressResolver';
+export type { SynthetixExchangeRates } from './SynthetixExchangeRates';
 export type { SynthetixLoan } from './SynthetixLoan';
 export type { SynthetixNetworkToken } from './SynthetixNetworkToken';
+export type { SynthetixPerpV2 } from './SynthetixPerpV2';
 export type { SynthetixRewards } from './SynthetixRewards';
 export type { SynthetixSummaryUtil } from './SynthetixSummaryUtil';
+export type { SynthetixSynthToken } from './SynthetixSynthToken';
 export * as factories from './factories';
 export { SynthetixAddressResolver__factory } from './factories/SynthetixAddressResolver__factory';
+export { SynthetixExchangeRates__factory } from './factories/SynthetixExchangeRates__factory';
 export { SynthetixLoan__factory } from './factories/SynthetixLoan__factory';
 export { SynthetixNetworkToken__factory } from './factories/SynthetixNetworkToken__factory';
+export { SynthetixPerpV2__factory } from './factories/SynthetixPerpV2__factory';
 export { SynthetixRewards__factory } from './factories/SynthetixRewards__factory';
 export { SynthetixSummaryUtil__factory } from './factories/SynthetixSummaryUtil__factory';
+export { SynthetixSynthToken__factory } from './factories/SynthetixSynthToken__factory';

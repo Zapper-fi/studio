@@ -32,13 +32,14 @@ export class ArbitrumPlutusPlvGlpTokenFetcher extends AppTokenTemplatePositionFe
     return ['0x5326e71ff593ecc2cf7acae5fe57582d6e74cff1'];
   }
 
-  async getUnderlyingTokenAddresses({ contract }: GetUnderlyingTokensParams<PlutusPlvGlp>) {
-    return contract.asset();
+  async getUnderlyingTokenDefinitions({ contract }: GetUnderlyingTokensParams<PlutusPlvGlp>) {
+    return [{ address: await contract.asset(), network: this.network }];
   }
 
   async getPricePerShare({ contract }: GetPricePerShareParams<PlutusPlvGlp>) {
     const pricePerShareRaw = await contract.convertToAssets(BigNumber.from(10).pow(18).toString());
-    return Number(pricePerShareRaw) / 10 ** 18;
+    const pricePerShare = Number(pricePerShareRaw) / 10 ** 18;
+    return [pricePerShare];
   }
 
   async getLiquidity({ appToken, contract }: GetDataPropsParams<PlutusPlvGlp>) {

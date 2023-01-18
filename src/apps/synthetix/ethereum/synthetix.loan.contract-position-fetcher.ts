@@ -1,26 +1,12 @@
-import { Inject } from '@nestjs/common';
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 
-import { Register } from '~app-toolkit/decorators';
-import { PositionFetcher } from '~position/position-fetcher.interface';
-import { ContractPosition } from '~position/position.interface';
-import { Network } from '~types/network.interface';
+import { SynthetixLoanContractPositionFetcher } from '../common/synthetix.loan.contract-position-fetcher';
 
-import { SynthetixLoanContractPositionHelper } from '../helpers/synthetix.loan.contract-position-helper';
-import { SYNTHETIX_DEFINITION } from '../synthetix.definition';
-
-const appId = SYNTHETIX_DEFINITION.id;
-const groupId = SYNTHETIX_DEFINITION.groups.loan.id;
-const network = Network.ETHEREUM_MAINNET;
-
-@Register.ContractPositionFetcher({ appId, groupId, network })
-export class EthereumSynthetixLoanContractPositionFetcher implements PositionFetcher<ContractPosition> {
-  constructor(
-    @Inject(SynthetixLoanContractPositionHelper)
-    private readonly synthetixLoanContractPositionHelper: SynthetixLoanContractPositionHelper,
-  ) {}
-
-  async getPositions() {
-    const loanContractAddress = '0x5c8344bcdc38f1ab5eb5c1d4a35ddeea522b5dfa';
-    return this.synthetixLoanContractPositionHelper.getPositions({ loanContractAddress, network });
-  }
+@PositionTemplate()
+export class EthereumSynthetixLoanContractPositionFetcher extends SynthetixLoanContractPositionFetcher {
+  groupLabel = 'Loans';
+  loanAddress = '0x5c8344bcdc38f1ab5eb5c1d4a35ddeea522b5dfa';
+  sUSDAddress = '0x57ab1ec28d129707052df4df418d58a2d46d5f51';
+  sETHAddress = '0x5e74c9036fb86bd7ecdcb084a0673efc32ea31cb';
+  subgraphUrl = 'https://api.thegraph.com/subgraphs/name/synthetixio-team/mainnet-main';
 }

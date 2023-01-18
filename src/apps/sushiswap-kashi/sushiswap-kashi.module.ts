@@ -1,38 +1,32 @@
-import { Register } from '~app-toolkit/decorators';
+import { Module } from '@nestjs/common';
+
 import { AbstractApp } from '~app/app.dynamic-module';
 
-import { ArbitrumSushiswapKashiBalanceFetcher } from './arbitrum/sushiswap-kashi.balance-fetcher';
 import { ArbitrumSushiswapKashiLendingTokenFetcher } from './arbitrum/sushiswap-kashi.lending.token-fetcher';
-import { BinanceSmartChainSushiswapKashiBalanceFetcher } from './binance-smart-chain/sushiswap-kashi.balance-fetcher';
+import { ArbitrumSushiswapKashiLeverageContractPositionFetcher } from './arbitrum/sushiswap-kashi.leverage.contract-position-fetcher';
 import { BinanceSmartChainSushiswapKashiLendingTokenFetcher } from './binance-smart-chain/sushiswap-kashi.lending.token-fetcher';
+import { BinanceSmartChainSushiswapKashiLeverageContractPositionFetcher } from './binance-smart-chain/sushiswap-kashi.leverage.contract-position-fetcher';
 import { SushiswapKashiContractFactory } from './contracts';
-import { EthereumSushiswapKashiBalanceFetcher } from './ethereum/sushiswap-kashi.balance-fetcher';
 import { EthereumSushiswapKashiLendingTokenFetcher } from './ethereum/sushiswap-kashi.lending.token-fetcher';
-import { SushiSwapKashiLendingBalanceHelper } from './helpers/sushiswap-kashi.lending.balance-helper';
-import { SushiswapKashiLendingTokenHelper } from './helpers/sushiswap-kashi.lending.token-helper';
-import { PolygonSushiswapKashiBalanceFetcher } from './polygon/sushiswap-kashi.balance-fetcher';
+import { EthereumSushiswapKashiLeverageContractPositionFetcher } from './ethereum/sushiswap-kashi.leverage.contract-position-fetcher';
 import { PolygonSushiswapKashiLendingTokenFetcher } from './polygon/sushiswap-kashi.lending.token-fetcher';
-import { SushiswapKashiAppDefinition, SUSHISWAP_KASHI_DEFINITION } from './sushiswap-kashi.definition';
+import { PolygonSushiswapKashiLeverageContractPositionFetcher } from './polygon/sushiswap-kashi.leverage.contract-position-fetcher';
 
-@Register.AppModule({
-  appId: SUSHISWAP_KASHI_DEFINITION.id,
+@Module({
   providers: [
-    SushiswapKashiAppDefinition,
     SushiswapKashiContractFactory,
-    SushiswapKashiLendingTokenHelper,
-    SushiSwapKashiLendingBalanceHelper,
     // Arbitrum
-    ArbitrumSushiswapKashiBalanceFetcher,
     ArbitrumSushiswapKashiLendingTokenFetcher,
+    ArbitrumSushiswapKashiLeverageContractPositionFetcher,
     // Binance Smart Chain
-    BinanceSmartChainSushiswapKashiBalanceFetcher,
     BinanceSmartChainSushiswapKashiLendingTokenFetcher,
+    BinanceSmartChainSushiswapKashiLeverageContractPositionFetcher,
     // Ethereum
-    EthereumSushiswapKashiBalanceFetcher,
     EthereumSushiswapKashiLendingTokenFetcher,
+    EthereumSushiswapKashiLeverageContractPositionFetcher,
     // Polygon
-    PolygonSushiswapKashiBalanceFetcher,
     PolygonSushiswapKashiLendingTokenFetcher,
+    PolygonSushiswapKashiLeverageContractPositionFetcher,
   ],
 })
 export class SushiSwapKashiAppModule extends AbstractApp() {}

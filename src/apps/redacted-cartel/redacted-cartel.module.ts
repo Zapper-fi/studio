@@ -1,4 +1,5 @@
-import { Register } from '~app-toolkit/decorators';
+import { Module } from '@nestjs/common';
+
 import { AbstractApp } from '~app/app.dynamic-module';
 
 import { RedactedCartelContractFactory } from './contracts';
@@ -7,12 +8,9 @@ import { EthereumRedactedCartelRevenueLockContractPositionFetcher } from './ethe
 import { EthereumRedactedCartelWxBtrflyV1TokenFetcher } from './ethereum/redacted-cartel.wx-btrfly-v1.token-fetcher';
 import { EthereumRedactedCartelWxBtrflyTokenFetcher } from './ethereum/redacted-cartel.wx-btrfly.token-fetcher';
 import { EthereumRedactedCartelXBtrflyTokenFetcher } from './ethereum/redacted-cartel.x-btrfly.token-fetcher';
-import { RedactedCartelAppDefinition, REDACTED_CARTEL_DEFINITION } from './redacted-cartel.definition';
 
-@Register.AppModule({
-  appId: REDACTED_CARTEL_DEFINITION.id,
+@Module({
   providers: [
-    RedactedCartelAppDefinition,
     RedactedCartelContractFactory,
     EthereumRedactedCartelXBtrflyTokenFetcher,
     EthereumRedactedCartelWxBtrflyTokenFetcher,

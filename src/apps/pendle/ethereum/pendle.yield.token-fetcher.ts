@@ -107,8 +107,8 @@ export class EthereumPendleYieldTokenFetcher extends AppTokenTemplatePositionFet
     return this.contractFactory.pendleYieldToken({ address, network: this.network });
   }
 
-  getUnderlyingTokenAddresses({ contract }: GetUnderlyingTokensParams<PendleYieldToken>) {
-    return contract.underlyingAsset();
+  async getUnderlyingTokenDefinitions({ contract }: GetUnderlyingTokensParams<PendleYieldToken>) {
+    return [{ address: await contract.underlyingAsset(), network: this.network }];
   }
 
   async getPricePerShare({
@@ -121,7 +121,7 @@ export class EthereumPendleYieldTokenFetcher extends AppTokenTemplatePositionFet
     const { expiry, baseTokenAddress } = definition;
 
     const baseToken = await tokenLoader.getOne({ address: baseTokenAddress.toLowerCase(), network: this.network });
-    if (!baseToken || Date.now() / 1000 > Number(expiry)) return 0;
+    if (!baseToken || Date.now() / 1000 > Number(expiry)) return [0];
 
     const reserves = await multicall.wrap(market).getReserves();
 
@@ -134,18 +134,18 @@ export class EthereumPendleYieldTokenFetcher extends AppTokenTemplatePositionFet
       .times(baseToken.price)
       .toNumber();
 
-    return price / appToken.tokens[0].price;
+    return [price / appToken.tokens[0].price];
   }
 
-  getLiquidity({ appToken }: GetDataPropsParams<PendleYieldToken>) {
+  async getLiquidity({ appToken }: GetDataPropsParams<PendleYieldToken>) {
     return appToken.supply * appToken.price;
   }
 
-  getReserves({ appToken }: GetDataPropsParams<PendleYieldToken>) {
+  async getReserves({ appToken }: GetDataPropsParams<PendleYieldToken>) {
     return [appToken.pricePerShare[0] * appToken.supply];
   }
 
-  getApy(_params: GetDataPropsParams<PendleYieldToken>) {
+  async getApy(_params: GetDataPropsParams<PendleYieldToken>) {
     return 0;
   }
 

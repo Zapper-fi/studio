@@ -111,8 +111,8 @@ export class EthereumPendleOwnershipTokenFetcher extends AppTokenTemplatePositio
     return this.contractFactory.pendleOwnershipToken({ address, network: this.network });
   }
 
-  getUnderlyingTokenAddresses({ contract }: GetUnderlyingTokensParams<PendleOwnershipToken>) {
-    return contract.underlyingYieldToken();
+  async getUnderlyingTokenDefinitions({ contract }: GetUnderlyingTokensParams<PendleOwnershipToken>) {
+    return [{ address: await contract.underlyingYieldToken(), network: this.network }];
   }
 
   async getPricePerShare({
@@ -123,7 +123,7 @@ export class EthereumPendleOwnershipTokenFetcher extends AppTokenTemplatePositio
   }: GetPricePerShareParams<PendleOwnershipToken, PendleOwnershipTokenDataProps, PendleOwnershipTokenDefinition>) {
     const { expiry, baseTokenAddress } = definition;
     const baseToken = await tokenLoader.getOne({ address: baseTokenAddress.toLowerCase(), network: this.network });
-    if (!baseToken || Date.now() / 1000 > Number(expiry)) return 0;
+    if (!baseToken || Date.now() / 1000 > Number(expiry)) return [0];
 
     const dexFactory = this.contractFactory.pendleDexFactory({
       address: this.dexFactoryAddress,
@@ -131,7 +131,7 @@ export class EthereumPendleOwnershipTokenFetcher extends AppTokenTemplatePositio
     });
 
     const pairAddress = await multicall.wrap(dexFactory).getPair(appToken.address, baseTokenAddress);
-    if (pairAddress === ZERO_ADDRESS) return 0;
+    if (pairAddress === ZERO_ADDRESS) return [0];
 
     const pair = this.contractFactory.pendleDexPair({ address: pairAddress, network: this.network });
     const [token0, reserves] = await Promise.all([multicall.wrap(pair).token0(), multicall.wrap(pair).getReserves()]);
@@ -146,18 +146,18 @@ export class EthereumPendleOwnershipTokenFetcher extends AppTokenTemplatePositio
       .div(Number(otReserve) / 10 ** appToken.decimals)
       .toNumber();
 
-    return otPrice / appToken.tokens[0].price;
+    return [otPrice / appToken.tokens[0].price];
   }
 
-  getLiquidity({ appToken }: GetDataPropsParams<PendleOwnershipToken>) {
+  async getLiquidity({ appToken }: GetDataPropsParams<PendleOwnershipToken>) {
     return appToken.supply * appToken.price;
   }
 
-  getReserves({ appToken }: GetDataPropsParams<PendleOwnershipToken>) {
+  async getReserves({ appToken }: GetDataPropsParams<PendleOwnershipToken>) {
     return [appToken.pricePerShare[0] * appToken.supply];
   }
 
-  getApy(_params: GetDataPropsParams<PendleOwnershipToken>) {
+  async getApy(_params: GetDataPropsParams<PendleOwnershipToken>) {
     return 0;
   }
 

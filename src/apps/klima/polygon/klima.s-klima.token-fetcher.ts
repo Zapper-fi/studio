@@ -1,35 +1,65 @@
 import { Inject } from '@nestjs/common';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
-import { Register } from '~app-toolkit/decorators';
-import { PositionFetcher } from '~position/position-fetcher.interface';
-import { AppTokenPosition } from '~position/position.interface';
-import { Network } from '~types/network.interface';
+import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
+import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
+import { GetDataPropsParams } from '~position/template/app-token.template.types';
 
-import { KLIMA_DEFINITION } from '../klima.definition';
+import { KlimaContractFactory, KlimaSKlima } from '../contracts';
 
-const appId = KLIMA_DEFINITION.id;
-const groupId = KLIMA_DEFINITION.groups.sKlima.id;
-const network = Network.POLYGON_MAINNET;
+@PositionTemplate()
+export class PolygonKlimaSKlimaTokenFetcher extends AppTokenTemplatePositionFetcher<KlimaSKlima> {
+  groupLabel = 'sKLIMA';
 
-@Register.TokenPositionFetcher({ appId, groupId, network })
-export class PolygonKlimaSTokenFetcher implements PositionFetcher<AppTokenPosition> {
-  constructor(@Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit) {}
+  constructor(
+    @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
+    @Inject(KlimaContractFactory) protected readonly contractFactory: KlimaContractFactory,
+  ) {
+    super(appToolkit);
+  }
 
-  async getPositions() {
-    return this.appToolkit.helpers.vaultTokenHelper.getTokens({
-      network,
-      appId,
-      groupId,
-      resolveVaultAddresses: () => ['0xb0c22d8d350c67420f06f48936654f567c73e8c8'], // sKLIMA
-      resolveContract: ({ address, network }) => this.appToolkit.globalContracts.erc20({ address, network }),
-      resolveUnderlyingTokenAddress: () => '0x4e78011ce80ee02d2c3e649fb657e45898257815', // KLIMA
-      resolveReserve: ({ underlyingToken, network }) =>
-        this.appToolkit.globalContracts
-          .erc20({ address: underlyingToken.address, network })
-          .balanceOf('0x25d28a24ceb6f81015bb0b2007d795acac411b4d')
-          .then(v => Number(v) / 10 ** underlyingToken.decimals),
-      resolvePricePerShare: () => 1,
+  getContract(address: string): KlimaSKlima {
+    return this.contractFactory.klimaSKlima({ address, network: this.network });
+  }
+
+  async getAddresses() {
+    return ['0xb0c22d8d350c67420f06f48936654f567c73e8c8'];
+  }
+
+  async getUnderlyingTokenDefinitions() {
+    return [{ address: '0x4e78011ce80ee02d2c3e649fb657e45898257815', network: this.network }];
+  }
+
+  async getPricePerShare() {
+    return [1];
+  }
+
+  async getLiquidity({ appToken, multicall }: GetDataPropsParams<KlimaSKlima>) {
+    const underlyingToken = appToken.tokens[0];
+    const reserveAddress = '0x25d28a24ceb6f81015bb0b2007d795acac411b4d';
+    const underlyingTokenContract = this.contractFactory.erc20({
+      address: underlyingToken.address,
+      network: this.network,
     });
+
+    const reserveRaw = await multicall.wrap(underlyingTokenContract).balanceOf(reserveAddress);
+    const reserve = Number(reserveRaw) / 10 ** underlyingToken.decimals;
+    return reserve * underlyingToken.price;
+  }
+
+  async getReserves({ appToken, multicall }: GetDataPropsParams<KlimaSKlima>) {
+    const underlyingToken = appToken.tokens[0];
+    const reserveAddress = '0x25d28a24ceb6f81015bb0b2007d795acac411b4d';
+    const underlyingTokenContract = this.contractFactory.erc20({
+      address: underlyingToken.address,
+      network: this.network,
+    });
+
+    const reserveRaw = await multicall.wrap(underlyingTokenContract).balanceOf(reserveAddress);
+    return [Number(reserveRaw) / 10 ** underlyingToken.decimals];
+  }
+
+  async getApy() {
+    return 0;
   }
 }

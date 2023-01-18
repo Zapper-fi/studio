@@ -1,22 +1,30 @@
-import { Register } from '~app-toolkit/decorators';
+import { Module } from '@nestjs/common';
+
 import { AbstractApp } from '~app/app.dynamic-module';
 
-import { ConcentratorAppDefinition, CONCENTRATOR_DEFINITION } from './concentrator.definition';
 import { ConcentratorContractFactory } from './contracts';
 import { EthereumConcentratorAcrvTokenFetcher } from './ethereum/concentrator.acrv.token-fetcher';
-import { EthereumConcentratorBalanceFetcher } from './ethereum/concentrator.balance-fetcher';
-import { EthereumConcentratorIfoContractPositionFetcher } from './ethereum/concentrator.ifo.contract-position-fetcher';
-import { EthereumConcentratorPoolContractPositionFetcher } from './ethereum/concentrator.pool.contract-position-fetcher';
+import { EthereumConcentratorAfrxethTokenFetcher } from './ethereum/concentrator.afrxeth.token-fetcher';
+import { EthereumConcentratorAfxsTokenFetcher } from './ethereum/concentrator.afxs.token-fetcher';
+import { EthereumConcentratorAcrvVaultContractPositionFetcher } from './ethereum/concentrator.poolacrv.contract-position-fetcher';
+import { EthereumConcentratorPoolfrxethContractPositionFetcher } from './ethereum/concentrator.poolfrxeth.contract-position-fetcher';
+import { EthereumConcentratorAfxsVaultContractPositionFetcher } from './ethereum/concentrator.poolfxs.contract-position-fetcher';
+import { EthereumConcentratorLegacyVaultContractPositionFetcher } from './ethereum/concentrator.poollegacy.contract-position-fetcher';
+import { EthereumConcentratorVeContractPositionFetcher } from './ethereum/concentrator.ve.contract-position-fetcher';
+import { EthereumConcentratorVestingContractPositionFetcher } from './ethereum/concentrator.vesting.contract-position-fetcher';
 
-@Register.AppModule({
-  appId: CONCENTRATOR_DEFINITION.id,
+@Module({
   providers: [
-    ConcentratorAppDefinition,
     ConcentratorContractFactory,
     EthereumConcentratorAcrvTokenFetcher,
-    EthereumConcentratorBalanceFetcher,
-    EthereumConcentratorIfoContractPositionFetcher,
-    EthereumConcentratorPoolContractPositionFetcher,
+    EthereumConcentratorAcrvVaultContractPositionFetcher,
+    EthereumConcentratorAfrxethTokenFetcher,
+    EthereumConcentratorAfxsTokenFetcher,
+    EthereumConcentratorAfxsVaultContractPositionFetcher,
+    EthereumConcentratorLegacyVaultContractPositionFetcher,
+    EthereumConcentratorPoolfrxethContractPositionFetcher,
+    EthereumConcentratorVeContractPositionFetcher,
+    EthereumConcentratorVestingContractPositionFetcher,
   ],
 })
 export class ConcentratorAppModule extends AbstractApp() {}

@@ -29,16 +29,12 @@ export class EthereumAaveSafetyModuleStkAaveTokenFetcher extends AppTokenTemplat
     return ['0x4da27a545c0c5b758a6ba100e3a049001de870f5'];
   }
 
-  async getUnderlyingTokenAddresses(_params: GetUnderlyingTokensParams<AaveStkAave>) {
-    return ['0x7fc66500c84a76ad7e9c93437bfc5ac33e2ddae9'];
+  async getUnderlyingTokenDefinitions(_params: GetUnderlyingTokensParams<AaveStkAave>) {
+    return [{ address: '0x7fc66500c84a76ad7e9c93437bfc5ac33e2ddae9', network: this.network }];
   }
 
-  getLiquidity({ appToken }: GetDataPropsParams<AaveStkAave>) {
-    return appToken.price * appToken.supply;
-  }
-
-  getReserves({ appToken }: GetDataPropsParams<AaveStkAave>) {
-    return [appToken.pricePerShare[0] * appToken.supply];
+  async getPricePerShare() {
+    return [1];
   }
 
   async getApy({ multicall }: GetDataPropsParams<AaveStkAave>) {

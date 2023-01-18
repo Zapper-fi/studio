@@ -4,9 +4,12 @@ import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { ContractFactory } from '~contract/contracts';
 import { Network } from '~types/network.interface';
 
-import { IlluviumCorePool__factory } from './ethers';
-import { IlluviumIlvPoolV2__factory } from './ethers';
-import { IlluviumSushiLpPoolV2__factory } from './ethers';
+import {
+  IlluviumCorePool__factory,
+  IlluviumIlvPoolV2__factory,
+  IlluviumSIlv2__factory,
+  IlluviumSushiLpPoolV2__factory,
+} from './ethers';
 
 // eslint-disable-next-line
 type ContractOpts = { address: string; network: Network };
@@ -23,6 +26,9 @@ export class IlluviumContractFactory extends ContractFactory {
   illuviumIlvPoolV2({ address, network }: ContractOpts) {
     return IlluviumIlvPoolV2__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
+  illuviumSIlv2({ address, network }: ContractOpts) {
+    return IlluviumSIlv2__factory.connect(address, this.appToolkit.getNetworkProvider(network));
+  }
   illuviumSushiLpPoolV2({ address, network }: ContractOpts) {
     return IlluviumSushiLpPoolV2__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
@@ -30,4 +36,5 @@ export class IlluviumContractFactory extends ContractFactory {
 
 export type { IlluviumCorePool } from './ethers';
 export type { IlluviumIlvPoolV2 } from './ethers';
+export type { IlluviumSIlv2 } from './ethers';
 export type { IlluviumSushiLpPoolV2 } from './ethers';

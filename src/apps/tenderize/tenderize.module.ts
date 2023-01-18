@@ -1,4 +1,5 @@
-import { Register } from '~app-toolkit/decorators';
+import { Module } from '@nestjs/common';
+
 import { AbstractApp } from '~app/app.dynamic-module';
 
 import { ArbitrumTenderizeSwapTokenFetcher } from './arbitrum/tenderize.swap.token-fetcher';
@@ -7,12 +8,9 @@ import { TenderizeTokenDefinitionsResolver } from './common/tenderize.token-defi
 import { TenderizeContractFactory } from './contracts';
 import { EthereumTenderizeSwapTokenFetcher } from './ethereum/tenderize.swap.token-fetcher';
 import { EthereumTenderizeTenderTokenFetcher } from './ethereum/tenderize.tender.token-fetcher';
-import { TenderizeAppDefinition, TENDERIZE_DEFINITION } from './tenderize.definition';
 
-@Register.AppModule({
-  appId: TENDERIZE_DEFINITION.id,
+@Module({
   providers: [
-    TenderizeAppDefinition,
     TenderizeContractFactory,
     TenderizeTokenDefinitionsResolver,
     // Arbitrum

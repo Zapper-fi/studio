@@ -42,8 +42,10 @@ export abstract class TenderTokenFetcher extends AppTokenTemplatePositionFetcher
     return definitions.map(v => v.address);
   }
 
-  async getUnderlyingTokenAddresses({ definition }: GetUnderlyingTokensParams<TenderToken, TenderizeTokenDefinition>) {
-    return definition.steak;
+  async getUnderlyingTokenDefinitions({
+    definition,
+  }: GetUnderlyingTokensParams<TenderToken, TenderizeTokenDefinition>) {
+    return [{ address: definition.steak, network: this.network }];
   }
 
   async getPricePerShare({
@@ -58,7 +60,7 @@ export abstract class TenderTokenFetcher extends AppTokenTemplatePositionFetcher
 
     const pricePerShareRaw = await multicall.wrap(tenderSwapContract).getVirtualPrice();
     const pricePerShare = Number(pricePerShareRaw) / 10 ** appToken.decimals;
-    return pricePerShare;
+    return [pricePerShare];
   }
 
   async getLiquidity({ appToken }: GetDataPropsParams<TenderToken, DefaultDataProps, TenderizeTokenDefinition>) {

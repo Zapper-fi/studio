@@ -9,8 +9,8 @@ import {
   GetAddressesParams,
   GetDefinitionsParams,
   GetDisplayPropsParams,
+  GetUnderlyingTokensParams,
 } from '~position/template/app-token.template.types';
-import { GetUnderlyingTokensParams, GetDataPropsParams } from '~position/template/app-token.template.types';
 
 import { PoolTogetherV4ContractFactory, PoolTogetherV4Ticket } from '../contracts';
 
@@ -80,22 +80,14 @@ export abstract class PoolTogetherV4TicketTokenFetcher extends AppTokenTemplateP
     return definitions;
   }
 
-  async getUnderlyingTokenAddresses({
+  async getUnderlyingTokenDefinitions({
     definition,
-  }: GetUnderlyingTokensParams<PoolTogetherV4Ticket, PoolTogetherV4TicketDefinition>): Promise<string | string[]> {
-    return [definition.underlyingTokenAddress];
+  }: GetUnderlyingTokensParams<PoolTogetherV4Ticket, PoolTogetherV4TicketDefinition>) {
+    return [{ address: definition.underlyingTokenAddress, network: this.network }];
   }
 
-  async getLiquidity({ appToken }: GetDataPropsParams<PoolTogetherV4Ticket>) {
-    return appToken.supply * appToken.price;
-  }
-
-  async getReserves({ appToken }: GetDataPropsParams<PoolTogetherV4Ticket>) {
-    return [appToken.pricePerShare[0] * appToken.supply];
-  }
-
-  async getApy(_params: GetDataPropsParams<PoolTogetherV4Ticket>) {
-    return 0;
+  async getPricePerShare() {
+    return [1];
   }
 
   async getLabel({ appToken }: GetDisplayPropsParams<PoolTogetherV4Ticket>) {
