@@ -90,7 +90,7 @@ export class EthereumGoldfinchVaultContractPositionFetcher extends CustomContrac
 
   async getBalances(address: string): Promise<ContractPositionBalance<GoldfinchVaultDataProps>[]> {
     // Membership = Total Capital in Vault (FIDU+PoolTokens) + Total GFI in Vault
-    // Claimable = Claimable FIDU from Vault + Claimable GFI from StakedFIDU
+    // Claimable = Claimable FIDU from Vault + @TODO Claimable GFI from StakedFIDU
     const GFI = '0xdab396ccf3d84cf2d07c4454e10c8a6f5b008d2b';
     const FIDU = '0x6a445e9f40e0b97c92d0b8a3366cef1d67f700bf';
     const SENIOR_POOL = '0x8481a6ebaf5c7dabc3f7e09e44a89531fd31f822';
