@@ -3,6 +3,6 @@ import { PositionTemplate } from '~app-toolkit/decorators/position-template.deco
 import { LlamapayVestingEscrowContractPositionFetcher } from '../common/llamapay.vesting-escrow.contract-position-fetcher';
 
 @PositionTemplate()
-export class EthereumLlamapayVestingEscrowContractPositionFetcher extends LlamapayVestingEscrowContractPositionFetcher {
-  subgraph = 'mainnet';
+export class ArbitrumLlamapayVestingEscrowContractPositionFetcher extends LlamapayVestingEscrowContractPositionFetcher {
+  subgraph = 'arbitrum';
 }
