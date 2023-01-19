@@ -37,7 +37,6 @@ export class ArbitrumUnstoppableGlpCompounderTokenFetcher extends AppTokenTempla
   async getPricePerShare({ appToken, contract }: GetPricePerShareParams<UnstoppableGlpVault>) {
     const reserveRaw = await contract.totalAssets();
     const reserve = Number(reserveRaw) / 10 ** appToken.tokens[0].decimals;
-    console.warn('a', reserveRaw, reserve, appToken);
     return [reserve / appToken.supply];
   }
 }
