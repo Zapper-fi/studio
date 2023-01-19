@@ -4,6 +4,22 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.369.0](https://github.com/Zapper-fi/studio/compare/v0.368.1...v0.369.0) (2023-01-18)
+
+
+### Features
+
+* **api3:** Add staking position ([#2142](https://github.com/Zapper-fi/studio/issues/2142)) ([e5679fa](https://github.com/Zapper-fi/studio/commit/e5679fa1ea417bb6f1bc3a9307dfb87e64e99728))
+* **goldfinch:** Refactor logic and add claimable support ([#2138](https://github.com/Zapper-fi/studio/issues/2138)) ([323f8a5](https://github.com/Zapper-fi/studio/commit/323f8a50d242165fa2bb688723aa11879896bfed))
+* **strike:** Add lending markets ([#2144](https://github.com/Zapper-fi/studio/issues/2144)) ([54fb4e6](https://github.com/Zapper-fi/studio/commit/54fb4e64aad63782b085e70dfccc60db3b44a182))
+* **unlockd-finance:** Add app integration ([#2132](https://github.com/Zapper-fi/studio/issues/2132)) ([82dae3a](https://github.com/Zapper-fi/studio/commit/82dae3a36a384bf8d9f75d8a56b765345901a1e5))
+* **unlockd-finance:** Update UToken and Debt Token Address ([#2143](https://github.com/Zapper-fi/studio/issues/2143)) ([fbfce5a](https://github.com/Zapper-fi/studio/commit/fbfce5a8f82fa9126f6912f227ca22b3dfd81336))
+
+
+### Bug Fixes
+
+* **uwu-lend:** Add position presenter ([#2141](https://github.com/Zapper-fi/studio/issues/2141)) ([68a54b6](https://github.com/Zapper-fi/studio/commit/68a54b64f8d2ed2bc71eef001eb5b832df13f692))
+
 ## [0.368.1](https://github.com/Zapper-fi/studio/compare/v0.368.0...v0.368.1) (2023-01-17)
 
 

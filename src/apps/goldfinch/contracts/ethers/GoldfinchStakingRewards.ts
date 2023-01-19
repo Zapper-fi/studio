@@ -17,9 +17,27 @@ import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi
 import type { Listener, Provider } from '@ethersproject/providers';
 import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
+export type RewardsStruct = {
+  totalUnvested: PromiseOrValue<BigNumberish>;
+  totalVested: PromiseOrValue<BigNumberish>;
+  totalPreviouslyVested: PromiseOrValue<BigNumberish>;
+  totalClaimed: PromiseOrValue<BigNumberish>;
+  startTime: PromiseOrValue<BigNumberish>;
+  endTime: PromiseOrValue<BigNumberish>;
+};
+
+export type RewardsStructOutput = [BigNumber, BigNumber, BigNumber, BigNumber, BigNumber, BigNumber] & {
+  totalUnvested: BigNumber;
+  totalVested: BigNumber;
+  totalPreviouslyVested: BigNumber;
+  totalClaimed: BigNumber;
+  startTime: BigNumber;
+  endTime: BigNumber;
+};
+
 export type StakedPositionStruct = {
   amount: PromiseOrValue<BigNumberish>;
-  rewards: StakingRewardsVesting.RewardsStruct;
+  rewards: RewardsStruct;
   leverageMultiplier: PromiseOrValue<BigNumberish>;
   lockedUntil: PromiseOrValue<BigNumberish>;
   positionType: PromiseOrValue<BigNumberish>;
@@ -29,7 +47,7 @@ export type StakedPositionStruct = {
 
 export type StakedPositionStructOutput = [
   BigNumber,
-  StakingRewardsVesting.RewardsStructOutput,
+  RewardsStructOutput,
   BigNumber,
   BigNumber,
   number,
@@ -37,7 +55,7 @@ export type StakedPositionStructOutput = [
   BigNumber,
 ] & {
   amount: BigNumber;
-  rewards: StakingRewardsVesting.RewardsStructOutput;
+  rewards: RewardsStructOutput;
   leverageMultiplier: BigNumber;
   lockedUntil: BigNumber;
   positionType: number;
@@ -45,27 +63,7 @@ export type StakedPositionStructOutput = [
   unsafeBaseTokenExchangeRate: BigNumber;
 };
 
-export declare namespace StakingRewardsVesting {
-  export type RewardsStruct = {
-    totalUnvested: PromiseOrValue<BigNumberish>;
-    totalVested: PromiseOrValue<BigNumberish>;
-    totalPreviouslyVested: PromiseOrValue<BigNumberish>;
-    totalClaimed: PromiseOrValue<BigNumberish>;
-    startTime: PromiseOrValue<BigNumberish>;
-    endTime: PromiseOrValue<BigNumberish>;
-  };
-
-  export type RewardsStructOutput = [BigNumber, BigNumber, BigNumber, BigNumber, BigNumber, BigNumber] & {
-    totalUnvested: BigNumber;
-    totalVested: BigNumber;
-    totalPreviouslyVested: BigNumber;
-    totalClaimed: BigNumber;
-    startTime: BigNumber;
-    endTime: BigNumber;
-  };
-}
-
-export interface GoldfinchSeniorBondInterface extends utils.Interface {
+export interface GoldfinchStakingRewardsInterface extends utils.Interface {
   functions: {
     'DEFAULT_ADMIN_ROLE()': FunctionFragment;
     'MINTER_ROLE()': FunctionFragment;
@@ -120,6 +118,7 @@ export interface GoldfinchSeniorBondInterface extends utils.Interface {
     'safeTransferFrom(address,address,uint256)': FunctionFragment;
     'safeTransferFrom(address,address,uint256,bytes)': FunctionFragment;
     'setApprovalForAll(address,bool)': FunctionFragment;
+    'setBaseURI(string)': FunctionFragment;
     'setEffectiveMultiplier(uint256,uint8)': FunctionFragment;
     'setRewardsParameters(uint256,uint256,uint256,uint256,uint256)': FunctionFragment;
     'stake(uint256,uint8)': FunctionFragment;
@@ -137,10 +136,6 @@ export interface GoldfinchSeniorBondInterface extends utils.Interface {
     'transferFrom(address,address,uint256)': FunctionFragment;
     'unpause()': FunctionFragment;
     'unstake(uint256,uint256)': FunctionFragment;
-    'unstakeAndWithdraw(uint256,uint256)': FunctionFragment;
-    'unstakeAndWithdrawInFidu(uint256,uint256)': FunctionFragment;
-    'unstakeAndWithdrawMultiple(uint256[],uint256[])': FunctionFragment;
-    'unstakeAndWithdrawMultipleInFidu(uint256[],uint256[])': FunctionFragment;
     'unstakeMultiple(uint256[],uint256[])': FunctionFragment;
     'updatePositionEffectiveMultiplier(uint256)': FunctionFragment;
     'vestingLength()': FunctionFragment;
@@ -201,6 +196,7 @@ export interface GoldfinchSeniorBondInterface extends utils.Interface {
       | 'safeTransferFrom(address,address,uint256)'
       | 'safeTransferFrom(address,address,uint256,bytes)'
       | 'setApprovalForAll'
+      | 'setBaseURI'
       | 'setEffectiveMultiplier'
       | 'setRewardsParameters'
       | 'stake'
@@ -218,10 +214,6 @@ export interface GoldfinchSeniorBondInterface extends utils.Interface {
       | 'transferFrom'
       | 'unpause'
       | 'unstake'
-      | 'unstakeAndWithdraw'
-      | 'unstakeAndWithdrawInFidu'
-      | 'unstakeAndWithdrawMultiple'
-      | 'unstakeAndWithdrawMultipleInFidu'
       | 'unstakeMultiple'
       | 'updatePositionEffectiveMultiplier'
       | 'vestingLength',
@@ -337,6 +329,7 @@ export interface GoldfinchSeniorBondInterface extends utils.Interface {
     functionFragment: 'setApprovalForAll',
     values: [PromiseOrValue<string>, PromiseOrValue<boolean>],
   ): string;
+  encodeFunctionData(functionFragment: 'setBaseURI', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(
     functionFragment: 'setEffectiveMultiplier',
     values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
@@ -385,22 +378,6 @@ export interface GoldfinchSeniorBondInterface extends utils.Interface {
   encodeFunctionData(
     functionFragment: 'unstake',
     values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
-  ): string;
-  encodeFunctionData(
-    functionFragment: 'unstakeAndWithdraw',
-    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
-  ): string;
-  encodeFunctionData(
-    functionFragment: 'unstakeAndWithdrawInFidu',
-    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
-  ): string;
-  encodeFunctionData(
-    functionFragment: 'unstakeAndWithdrawMultiple',
-    values: [PromiseOrValue<BigNumberish>[], PromiseOrValue<BigNumberish>[]],
-  ): string;
-  encodeFunctionData(
-    functionFragment: 'unstakeAndWithdrawMultipleInFidu',
-    values: [PromiseOrValue<BigNumberish>[], PromiseOrValue<BigNumberish>[]],
   ): string;
   encodeFunctionData(
     functionFragment: 'unstakeMultiple',
@@ -465,6 +442,7 @@ export interface GoldfinchSeniorBondInterface extends utils.Interface {
   decodeFunctionResult(functionFragment: 'safeTransferFrom(address,address,uint256)', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'safeTransferFrom(address,address,uint256,bytes)', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'setApprovalForAll', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'setBaseURI', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'setEffectiveMultiplier', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'setRewardsParameters', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'stake', data: BytesLike): Result;
@@ -482,15 +460,12 @@ export interface GoldfinchSeniorBondInterface extends utils.Interface {
   decodeFunctionResult(functionFragment: 'transferFrom', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'unpause', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'unstake', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'unstakeAndWithdraw', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'unstakeAndWithdrawInFidu', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'unstakeAndWithdrawMultiple', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'unstakeAndWithdrawMultipleInFidu', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'unstakeMultiple', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'updatePositionEffectiveMultiplier', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'vestingLength', data: BytesLike): Result;
 
   events: {
+    'AddToStake(address,uint256,uint256,uint8)': EventFragment;
     'Approval(address,address,uint256)': EventFragment;
     'ApprovalForAll(address,address,bool)': EventFragment;
     'DepositedAndStaked(address,uint256,uint256,uint256)': EventFragment;
@@ -507,11 +482,10 @@ export interface GoldfinchSeniorBondInterface extends utils.Interface {
     'Transfer(address,address,uint256)': EventFragment;
     'Unpaused(address)': EventFragment;
     'Unstaked(address,uint256,uint256,uint8)': EventFragment;
-    'UnstakedAndWithdrew(address,uint256,uint256,uint256)': EventFragment;
-    'UnstakedAndWithdrewMultiple(address,uint256,uint256[],uint256[])': EventFragment;
     'UnstakedMultiple(address,uint256[],uint256[])': EventFragment;
   };
 
+  getEvent(nameOrSignatureOrTopic: 'AddToStake'): EventFragment;
   getEvent(nameOrSignatureOrTopic: 'Approval'): EventFragment;
   getEvent(nameOrSignatureOrTopic: 'ApprovalForAll'): EventFragment;
   getEvent(nameOrSignatureOrTopic: 'DepositedAndStaked'): EventFragment;
@@ -528,10 +502,18 @@ export interface GoldfinchSeniorBondInterface extends utils.Interface {
   getEvent(nameOrSignatureOrTopic: 'Transfer'): EventFragment;
   getEvent(nameOrSignatureOrTopic: 'Unpaused'): EventFragment;
   getEvent(nameOrSignatureOrTopic: 'Unstaked'): EventFragment;
-  getEvent(nameOrSignatureOrTopic: 'UnstakedAndWithdrew'): EventFragment;
-  getEvent(nameOrSignatureOrTopic: 'UnstakedAndWithdrewMultiple'): EventFragment;
   getEvent(nameOrSignatureOrTopic: 'UnstakedMultiple'): EventFragment;
 }
+
+export interface AddToStakeEventObject {
+  user: string;
+  tokenId: BigNumber;
+  amount: BigNumber;
+  positionType: number;
+}
+export type AddToStakeEvent = TypedEvent<[string, BigNumber, BigNumber, number], AddToStakeEventObject>;
+
+export type AddToStakeEventFilter = TypedEventFilter<AddToStakeEvent>;
 
 export interface ApprovalEventObject {
   owner: string;
@@ -693,32 +675,6 @@ export type UnstakedEvent = TypedEvent<[string, BigNumber, BigNumber, number], U
 
 export type UnstakedEventFilter = TypedEventFilter<UnstakedEvent>;
 
-export interface UnstakedAndWithdrewEventObject {
-  user: string;
-  usdcReceivedAmount: BigNumber;
-  tokenId: BigNumber;
-  amount: BigNumber;
-}
-export type UnstakedAndWithdrewEvent = TypedEvent<
-  [string, BigNumber, BigNumber, BigNumber],
-  UnstakedAndWithdrewEventObject
->;
-
-export type UnstakedAndWithdrewEventFilter = TypedEventFilter<UnstakedAndWithdrewEvent>;
-
-export interface UnstakedAndWithdrewMultipleEventObject {
-  user: string;
-  usdcReceivedAmount: BigNumber;
-  tokenIds: BigNumber[];
-  amounts: BigNumber[];
-}
-export type UnstakedAndWithdrewMultipleEvent = TypedEvent<
-  [string, BigNumber, BigNumber[], BigNumber[]],
-  UnstakedAndWithdrewMultipleEventObject
->;
-
-export type UnstakedAndWithdrewMultipleEventFilter = TypedEventFilter<UnstakedAndWithdrewMultipleEvent>;
-
 export interface UnstakedMultipleEventObject {
   user: string;
   tokenIds: BigNumber[];
@@ -728,12 +684,12 @@ export type UnstakedMultipleEvent = TypedEvent<[string, BigNumber[], BigNumber[]
 
 export type UnstakedMultipleEventFilter = TypedEventFilter<UnstakedMultipleEvent>;
 
-export interface GoldfinchSeniorBond extends BaseContract {
+export interface GoldfinchStakingRewards extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
 
-  interface: GoldfinchSeniorBondInterface;
+  interface: GoldfinchStakingRewardsInterface;
 
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,
@@ -920,9 +876,9 @@ export interface GoldfinchSeniorBond extends BaseContract {
       arg0: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<
-      [BigNumber, StakingRewardsVesting.RewardsStructOutput, BigNumber, BigNumber, number, BigNumber, BigNumber] & {
+      [BigNumber, RewardsStructOutput, BigNumber, BigNumber, number, BigNumber, BigNumber] & {
         amount: BigNumber;
-        rewards: StakingRewardsVesting.RewardsStructOutput;
+        rewards: RewardsStructOutput;
         leverageMultiplier: BigNumber;
         lockedUntil: BigNumber;
         positionType: number;
@@ -965,6 +921,11 @@ export interface GoldfinchSeniorBond extends BaseContract {
     setApprovalForAll(
       operator: PromiseOrValue<string>,
       approved: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<ContractTransaction>;
+
+    setBaseURI(
+      baseURI_: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
@@ -1033,30 +994,6 @@ export interface GoldfinchSeniorBond extends BaseContract {
     unstake(
       tokenId: PromiseOrValue<BigNumberish>,
       amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<ContractTransaction>;
-
-    unstakeAndWithdraw(
-      tokenId: PromiseOrValue<BigNumberish>,
-      usdcAmount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<ContractTransaction>;
-
-    unstakeAndWithdrawInFidu(
-      tokenId: PromiseOrValue<BigNumberish>,
-      fiduAmount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<ContractTransaction>;
-
-    unstakeAndWithdrawMultiple(
-      tokenIds: PromiseOrValue<BigNumberish>[],
-      usdcAmounts: PromiseOrValue<BigNumberish>[],
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<ContractTransaction>;
-
-    unstakeAndWithdrawMultipleInFidu(
-      tokenIds: PromiseOrValue<BigNumberish>[],
-      fiduAmounts: PromiseOrValue<BigNumberish>[],
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
@@ -1234,9 +1171,9 @@ export interface GoldfinchSeniorBond extends BaseContract {
     arg0: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides,
   ): Promise<
-    [BigNumber, StakingRewardsVesting.RewardsStructOutput, BigNumber, BigNumber, number, BigNumber, BigNumber] & {
+    [BigNumber, RewardsStructOutput, BigNumber, BigNumber, number, BigNumber, BigNumber] & {
       amount: BigNumber;
-      rewards: StakingRewardsVesting.RewardsStructOutput;
+      rewards: RewardsStructOutput;
       leverageMultiplier: BigNumber;
       lockedUntil: BigNumber;
       positionType: number;
@@ -1279,6 +1216,11 @@ export interface GoldfinchSeniorBond extends BaseContract {
   setApprovalForAll(
     operator: PromiseOrValue<string>,
     approved: PromiseOrValue<boolean>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
+  ): Promise<ContractTransaction>;
+
+  setBaseURI(
+    baseURI_: PromiseOrValue<string>,
     overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
@@ -1347,30 +1289,6 @@ export interface GoldfinchSeniorBond extends BaseContract {
   unstake(
     tokenId: PromiseOrValue<BigNumberish>,
     amount: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> },
-  ): Promise<ContractTransaction>;
-
-  unstakeAndWithdraw(
-    tokenId: PromiseOrValue<BigNumberish>,
-    usdcAmount: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> },
-  ): Promise<ContractTransaction>;
-
-  unstakeAndWithdrawInFidu(
-    tokenId: PromiseOrValue<BigNumberish>,
-    fiduAmount: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> },
-  ): Promise<ContractTransaction>;
-
-  unstakeAndWithdrawMultiple(
-    tokenIds: PromiseOrValue<BigNumberish>[],
-    usdcAmounts: PromiseOrValue<BigNumberish>[],
-    overrides?: Overrides & { from?: PromiseOrValue<string> },
-  ): Promise<ContractTransaction>;
-
-  unstakeAndWithdrawMultipleInFidu(
-    tokenIds: PromiseOrValue<BigNumberish>[],
-    fiduAmounts: PromiseOrValue<BigNumberish>[],
     overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
@@ -1536,9 +1454,9 @@ export interface GoldfinchSeniorBond extends BaseContract {
       arg0: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<
-      [BigNumber, StakingRewardsVesting.RewardsStructOutput, BigNumber, BigNumber, number, BigNumber, BigNumber] & {
+      [BigNumber, RewardsStructOutput, BigNumber, BigNumber, number, BigNumber, BigNumber] & {
         amount: BigNumber;
-        rewards: StakingRewardsVesting.RewardsStructOutput;
+        rewards: RewardsStructOutput;
         leverageMultiplier: BigNumber;
         lockedUntil: BigNumber;
         positionType: number;
@@ -1583,6 +1501,8 @@ export interface GoldfinchSeniorBond extends BaseContract {
       approved: PromiseOrValue<boolean>,
       overrides?: CallOverrides,
     ): Promise<void>;
+
+    setBaseURI(baseURI_: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     setEffectiveMultiplier(
       multiplier: PromiseOrValue<BigNumberish>,
@@ -1652,30 +1572,6 @@ export interface GoldfinchSeniorBond extends BaseContract {
       overrides?: CallOverrides,
     ): Promise<void>;
 
-    unstakeAndWithdraw(
-      tokenId: PromiseOrValue<BigNumberish>,
-      usdcAmount: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides,
-    ): Promise<void>;
-
-    unstakeAndWithdrawInFidu(
-      tokenId: PromiseOrValue<BigNumberish>,
-      fiduAmount: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides,
-    ): Promise<void>;
-
-    unstakeAndWithdrawMultiple(
-      tokenIds: PromiseOrValue<BigNumberish>[],
-      usdcAmounts: PromiseOrValue<BigNumberish>[],
-      overrides?: CallOverrides,
-    ): Promise<void>;
-
-    unstakeAndWithdrawMultipleInFidu(
-      tokenIds: PromiseOrValue<BigNumberish>[],
-      fiduAmounts: PromiseOrValue<BigNumberish>[],
-      overrides?: CallOverrides,
-    ): Promise<void>;
-
     unstakeMultiple(
       tokenIds: PromiseOrValue<BigNumberish>[],
       amounts: PromiseOrValue<BigNumberish>[],
@@ -1688,6 +1584,19 @@ export interface GoldfinchSeniorBond extends BaseContract {
   };
 
   filters: {
+    'AddToStake(address,uint256,uint256,uint8)'(
+      user?: PromiseOrValue<string> | null,
+      tokenId?: PromiseOrValue<BigNumberish> | null,
+      amount?: null,
+      positionType?: null,
+    ): AddToStakeEventFilter;
+    AddToStake(
+      user?: PromiseOrValue<string> | null,
+      tokenId?: PromiseOrValue<BigNumberish> | null,
+      amount?: null,
+      positionType?: null,
+    ): AddToStakeEventFilter;
+
     'Approval(address,address,uint256)'(
       owner?: PromiseOrValue<string> | null,
       approved?: PromiseOrValue<string> | null,
@@ -1859,32 +1768,6 @@ export interface GoldfinchSeniorBond extends BaseContract {
       amount?: null,
       positionType?: null,
     ): UnstakedEventFilter;
-
-    'UnstakedAndWithdrew(address,uint256,uint256,uint256)'(
-      user?: PromiseOrValue<string> | null,
-      usdcReceivedAmount?: null,
-      tokenId?: PromiseOrValue<BigNumberish> | null,
-      amount?: null,
-    ): UnstakedAndWithdrewEventFilter;
-    UnstakedAndWithdrew(
-      user?: PromiseOrValue<string> | null,
-      usdcReceivedAmount?: null,
-      tokenId?: PromiseOrValue<BigNumberish> | null,
-      amount?: null,
-    ): UnstakedAndWithdrewEventFilter;
-
-    'UnstakedAndWithdrewMultiple(address,uint256,uint256[],uint256[])'(
-      user?: PromiseOrValue<string> | null,
-      usdcReceivedAmount?: null,
-      tokenIds?: null,
-      amounts?: null,
-    ): UnstakedAndWithdrewMultipleEventFilter;
-    UnstakedAndWithdrewMultiple(
-      user?: PromiseOrValue<string> | null,
-      usdcReceivedAmount?: null,
-      tokenIds?: null,
-      amounts?: null,
-    ): UnstakedAndWithdrewMultipleEventFilter;
 
     'UnstakedMultiple(address,uint256[],uint256[])'(
       user?: PromiseOrValue<string> | null,
@@ -2094,6 +1977,11 @@ export interface GoldfinchSeniorBond extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
+    setBaseURI(
+      baseURI_: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
+
     setEffectiveMultiplier(
       multiplier: PromiseOrValue<BigNumberish>,
       positionType: PromiseOrValue<BigNumberish>,
@@ -2159,30 +2047,6 @@ export interface GoldfinchSeniorBond extends BaseContract {
     unstake(
       tokenId: PromiseOrValue<BigNumberish>,
       amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<BigNumber>;
-
-    unstakeAndWithdraw(
-      tokenId: PromiseOrValue<BigNumberish>,
-      usdcAmount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<BigNumber>;
-
-    unstakeAndWithdrawInFidu(
-      tokenId: PromiseOrValue<BigNumberish>,
-      fiduAmount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<BigNumber>;
-
-    unstakeAndWithdrawMultiple(
-      tokenIds: PromiseOrValue<BigNumberish>[],
-      usdcAmounts: PromiseOrValue<BigNumberish>[],
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<BigNumber>;
-
-    unstakeAndWithdrawMultipleInFidu(
-      tokenIds: PromiseOrValue<BigNumberish>[],
-      fiduAmounts: PromiseOrValue<BigNumberish>[],
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
@@ -2408,6 +2272,11 @@ export interface GoldfinchSeniorBond extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
+    setBaseURI(
+      baseURI_: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<PopulatedTransaction>;
+
     setEffectiveMultiplier(
       multiplier: PromiseOrValue<BigNumberish>,
       positionType: PromiseOrValue<BigNumberish>,
@@ -2473,30 +2342,6 @@ export interface GoldfinchSeniorBond extends BaseContract {
     unstake(
       tokenId: PromiseOrValue<BigNumberish>,
       amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<PopulatedTransaction>;
-
-    unstakeAndWithdraw(
-      tokenId: PromiseOrValue<BigNumberish>,
-      usdcAmount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<PopulatedTransaction>;
-
-    unstakeAndWithdrawInFidu(
-      tokenId: PromiseOrValue<BigNumberish>,
-      fiduAmount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<PopulatedTransaction>;
-
-    unstakeAndWithdrawMultiple(
-      tokenIds: PromiseOrValue<BigNumberish>[],
-      usdcAmounts: PromiseOrValue<BigNumberish>[],
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<PopulatedTransaction>;
-
-    unstakeAndWithdrawMultipleInFidu(
-      tokenIds: PromiseOrValue<BigNumberish>[],
-      fiduAmounts: PromiseOrValue<BigNumberish>[],
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
