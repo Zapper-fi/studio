@@ -93,4 +93,10 @@ export class EulerTokenDefinitionsResolver {
 
     return definitionsData.find(x => x[tokenType].toLowerCase() === tokenAddress);
   }
+
+  async getMarketByUnderlying(tokenAddress: string) {
+    const definitionsData = await this.getTokenDefinitionsData();
+
+    return definitionsData.find(x => x.id.toLowerCase() === tokenAddress);
+  }
 }
