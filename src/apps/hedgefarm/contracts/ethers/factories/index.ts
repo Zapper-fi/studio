@@ -2,3 +2,4 @@
 /* tslint:disable */
 /* eslint-disable */
 export { AlphaOne__factory } from './AlphaOne__factory';
+export { AlphaTwo__factory } from './AlphaTwo__factory';
