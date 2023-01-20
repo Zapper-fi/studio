@@ -104,8 +104,6 @@ export class EthereumGoldfinchSeniorPoolContractPositionFetcher extends CustomCo
       groupIds: [this.groupId],
       network: this.network,
     });
-    // const seniorPoolWithdrawalTokenPosition = positions.find(v => v.tokens[0].address === FIDU);
-    // console.log(JSON.stringify(positions), { seniorPoolWithdrawalTokenPosition, SENIORPOOL_WITHDRAWAL_TOKEN });
     const usdcPosition = positions.find(v => v.tokens[0].address === USDC);
     const fiduPosition = positions.find(v => v.tokens[0].address === FIDU);
     if (!usdcPosition || !fiduPosition) return [];
