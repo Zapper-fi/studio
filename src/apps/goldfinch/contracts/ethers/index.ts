@@ -4,7 +4,9 @@
 export type { GoldfinchSeniorPool } from './GoldfinchSeniorPool';
 export type { GoldfinchStakingRewards } from './GoldfinchStakingRewards';
 export type { GoldfinchVault } from './GoldfinchVault';
+export type { GoldfinchWithdrawalRequestToken } from './GoldfinchWithdrawalRequestToken';
 export * as factories from './factories';
 export { GoldfinchSeniorPool__factory } from './factories/GoldfinchSeniorPool__factory';
 export { GoldfinchStakingRewards__factory } from './factories/GoldfinchStakingRewards__factory';
 export { GoldfinchVault__factory } from './factories/GoldfinchVault__factory';
+export { GoldfinchWithdrawalRequestToken__factory } from './factories/GoldfinchWithdrawalRequestToken__factory';

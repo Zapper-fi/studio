@@ -4,7 +4,12 @@ import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { ContractFactory } from '~contract/contracts';
 import { Network } from '~types/network.interface';
 
-import { GoldfinchSeniorPool__factory, GoldfinchStakingRewards__factory, GoldfinchVault__factory } from './ethers';
+import {
+  GoldfinchSeniorPool__factory,
+  GoldfinchStakingRewards__factory,
+  GoldfinchVault__factory,
+  GoldfinchWithdrawalRequestToken__factory,
+} from './ethers';
 
 // eslint-disable-next-line
 type ContractOpts = { address: string; network: Network };
@@ -24,8 +29,12 @@ export class GoldfinchContractFactory extends ContractFactory {
   goldfinchVault({ address, network }: ContractOpts) {
     return GoldfinchVault__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
+  goldfinchWithdrawalRequestToken({ address, network }: ContractOpts) {
+    return GoldfinchWithdrawalRequestToken__factory.connect(address, this.appToolkit.getNetworkProvider(network));
+  }
 }
 
 export type { GoldfinchSeniorPool } from './ethers';
 export type { GoldfinchStakingRewards } from './ethers';
 export type { GoldfinchVault } from './ethers';
+export type { GoldfinchWithdrawalRequestToken } from './ethers';

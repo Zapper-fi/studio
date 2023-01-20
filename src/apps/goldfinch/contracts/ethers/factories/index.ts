@@ -4,3 +4,4 @@
 export { GoldfinchSeniorPool__factory } from './GoldfinchSeniorPool__factory';
 export { GoldfinchStakingRewards__factory } from './GoldfinchStakingRewards__factory';
 export { GoldfinchVault__factory } from './GoldfinchVault__factory';
+export { GoldfinchWithdrawalRequestToken__factory } from './GoldfinchWithdrawalRequestToken__factory';
