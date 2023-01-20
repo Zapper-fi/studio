@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.370.1](https://github.com/Zapper-fi/studio/compare/v0.370.0...v0.370.1) (2023-01-20)
+
+
+### Bug Fixes
+
+* **unlockd-finance:** Add position presenter ([#2154](https://github.com/Zapper-fi/studio/issues/2154)) ([c4de581](https://github.com/Zapper-fi/studio/commit/c4de58120f2b80fe018eceac315abde701c6fb87))
+
 ## [0.370.0](https://github.com/Zapper-fi/studio/compare/v0.369.0...v0.370.0) (2023-01-20)
 
 
