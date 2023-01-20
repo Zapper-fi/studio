@@ -36,19 +36,75 @@ const _abi = [
     anonymous: false,
     inputs: [
       {
+        indexed: false,
+        internalType: 'uint256',
+        name: 'newDuration',
+        type: 'uint256',
+      },
+    ],
+    name: 'EpochDurationChanged',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
         indexed: true,
-        internalType: 'address',
-        name: 'who',
-        type: 'address',
+        internalType: 'uint256',
+        name: 'epochId',
+        type: 'uint256',
       },
       {
         indexed: false,
-        internalType: 'address',
-        name: 'configAddress',
-        type: 'address',
+        internalType: 'uint256',
+        name: 'endTime',
+        type: 'uint256',
+      },
+      {
+        indexed: false,
+        internalType: 'uint256',
+        name: 'fiduRequested',
+        type: 'uint256',
+      },
+      {
+        indexed: false,
+        internalType: 'uint256',
+        name: 'usdcAllocated',
+        type: 'uint256',
+      },
+      {
+        indexed: false,
+        internalType: 'uint256',
+        name: 'fiduLiquidated',
+        type: 'uint256',
       },
     ],
-    name: 'GoldfinchConfigUpdated',
+    name: 'EpochEnded',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: 'uint256',
+        name: 'epochId',
+        type: 'uint256',
+      },
+      {
+        indexed: false,
+        internalType: 'uint256',
+        name: 'newEndTime',
+        type: 'uint256',
+      },
+      {
+        indexed: false,
+        internalType: 'uint256',
+        name: 'oldEndTime',
+        type: 'uint256',
+      },
+    ],
+    name: 'EpochExtended',
     type: 'event',
   },
   {
@@ -183,6 +239,31 @@ const _abi = [
     inputs: [
       {
         indexed: true,
+        internalType: 'address',
+        name: 'user',
+        type: 'address',
+      },
+      {
+        indexed: true,
+        internalType: 'address',
+        name: 'reserve',
+        type: 'address',
+      },
+      {
+        indexed: false,
+        internalType: 'uint256',
+        name: 'amount',
+        type: 'uint256',
+      },
+    ],
+    name: 'ReserveSharesCollected',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
         internalType: 'bytes32',
         name: 'role',
         type: 'bytes32',
@@ -246,6 +327,74 @@ const _abi = [
     inputs: [
       {
         indexed: true,
+        internalType: 'uint256',
+        name: 'epochId',
+        type: 'uint256',
+      },
+      {
+        indexed: true,
+        internalType: 'uint256',
+        name: 'tokenId',
+        type: 'uint256',
+      },
+      {
+        indexed: true,
+        internalType: 'address',
+        name: 'operator',
+        type: 'address',
+      },
+      {
+        indexed: false,
+        internalType: 'uint256',
+        name: 'fiduRequested',
+        type: 'uint256',
+      },
+    ],
+    name: 'WithdrawalAddedTo',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: 'uint256',
+        name: 'epochId',
+        type: 'uint256',
+      },
+      {
+        indexed: true,
+        internalType: 'uint256',
+        name: 'tokenId',
+        type: 'uint256',
+      },
+      {
+        indexed: true,
+        internalType: 'address',
+        name: 'operator',
+        type: 'address',
+      },
+      {
+        indexed: false,
+        internalType: 'uint256',
+        name: 'fiduCanceled',
+        type: 'uint256',
+      },
+      {
+        indexed: false,
+        internalType: 'uint256',
+        name: 'reserveFidu',
+        type: 'uint256',
+      },
+    ],
+    name: 'WithdrawalCanceled',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
         internalType: 'address',
         name: 'capitalProvider',
         type: 'address',
@@ -264,6 +413,37 @@ const _abi = [
       },
     ],
     name: 'WithdrawalMade',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: 'uint256',
+        name: 'epochId',
+        type: 'uint256',
+      },
+      {
+        indexed: true,
+        internalType: 'uint256',
+        name: 'tokenId',
+        type: 'uint256',
+      },
+      {
+        indexed: true,
+        internalType: 'address',
+        name: 'operator',
+        type: 'address',
+      },
+      {
+        indexed: false,
+        internalType: 'uint256',
+        name: 'fiduRequested',
+        type: 'uint256',
+      },
+    ],
+    name: 'WithdrawalRequested',
     type: 'event',
   },
   {
@@ -339,6 +519,24 @@ const _abi = [
     type: 'function',
   },
   {
+    inputs: [
+      {
+        internalType: 'uint256',
+        name: 'fiduAmount',
+        type: 'uint256',
+      },
+      {
+        internalType: 'uint256',
+        name: 'tokenId',
+        type: 'uint256',
+      },
+    ],
+    name: 'addToWithdrawalRequest',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
     inputs: [],
     name: 'assets',
     outputs: [
@@ -371,8 +569,14 @@ const _abi = [
     type: 'function',
   },
   {
-    inputs: [],
-    name: 'compoundBalance',
+    inputs: [
+      {
+        internalType: 'uint256',
+        name: 'tokenId',
+        type: 'uint256',
+      },
+    ],
+    name: 'cancelWithdrawalRequest',
     outputs: [
       {
         internalType: 'uint256',
@@ -380,7 +584,26 @@ const _abi = [
         type: 'uint256',
       },
     ],
-    stateMutability: 'view',
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'uint256',
+        name: 'tokenId',
+        type: 'uint256',
+      },
+    ],
+    name: 'claimWithdrawalRequest',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'nonpayable',
     type: 'function',
   },
   {
@@ -391,6 +614,41 @@ const _abi = [
         internalType: 'contract GoldfinchConfig',
         name: '',
         type: 'address',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'currentEpoch',
+    outputs: [
+      {
+        components: [
+          {
+            internalType: 'uint256',
+            name: 'endsAt',
+            type: 'uint256',
+          },
+          {
+            internalType: 'uint256',
+            name: 'fiduRequested',
+            type: 'uint256',
+          },
+          {
+            internalType: 'uint256',
+            name: 'fiduLiquidated',
+            type: 'uint256',
+          },
+          {
+            internalType: 'uint256',
+            name: 'usdcAllocated',
+            type: 'uint256',
+          },
+        ],
+        internalType: 'struct ISeniorPoolEpochWithdrawals.Epoch',
+        name: '',
+        type: 'tuple',
       },
     ],
     stateMutability: 'view',
@@ -455,6 +713,19 @@ const _abi = [
     type: 'function',
   },
   {
+    inputs: [],
+    name: 'epochDuration',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
     inputs: [
       {
         internalType: 'contract ITranchedPool',
@@ -477,7 +748,7 @@ const _abi = [
     inputs: [
       {
         internalType: 'uint256',
-        name: 'amount',
+        name: 'usdcAmount',
         type: 'uint256',
       },
     ],
@@ -597,13 +868,6 @@ const _abi = [
     type: 'function',
   },
   {
-    inputs: [],
-    name: 'initZapperRole',
-    outputs: [],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
     inputs: [
       {
         internalType: 'address',
@@ -622,6 +886,13 @@ const _abi = [
     type: 'function',
   },
   {
+    inputs: [],
+    name: 'initializeEpochs',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
     inputs: [
       {
         internalType: 'contract ITranchedPool',
@@ -630,26 +901,19 @@ const _abi = [
       },
     ],
     name: 'invest',
-    outputs: [],
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
+      },
+    ],
     stateMutability: 'nonpayable',
     type: 'function',
   },
   {
     inputs: [],
     name: 'isAdmin',
-    outputs: [
-      {
-        internalType: 'bool',
-        name: '',
-        type: 'bool',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'isZapper',
     outputs: [
       {
         internalType: 'bool',
@@ -714,6 +978,25 @@ const _abi = [
   {
     inputs: [
       {
+        internalType: 'uint256',
+        name: 'fiduAmount',
+        type: 'uint256',
+      },
+    ],
+    name: 'requestWithdrawal',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
         internalType: 'bytes32',
         name: 'role',
         type: 'bytes32',
@@ -725,6 +1008,19 @@ const _abi = [
       },
     ],
     name: 'revokeRole',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'uint256',
+        name: 'newEpochDuration',
+        type: 'uint256',
+      },
+    ],
+    name: 'setEpochDuration',
     outputs: [],
     stateMutability: 'nonpayable',
     type: 'function',
@@ -744,16 +1040,15 @@ const _abi = [
   },
   {
     inputs: [],
-    name: 'sweepFromCompound',
-    outputs: [],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'sweepToCompound',
-    outputs: [],
-    stateMutability: 'nonpayable',
+    name: 'sharesOutstanding',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
     type: 'function',
   },
   {
@@ -787,6 +1082,19 @@ const _abi = [
     name: 'unpause',
     outputs: [],
     stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'usdcAvailable',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
     type: 'function',
   },
   {
@@ -835,28 +1143,45 @@ const _abi = [
         type: 'uint256',
       },
     ],
-    name: 'writedown',
-    outputs: [],
-    stateMutability: 'nonpayable',
+    name: 'withdrawalRequest',
+    outputs: [
+      {
+        components: [
+          {
+            internalType: 'uint256',
+            name: 'epochCursor',
+            type: 'uint256',
+          },
+          {
+            internalType: 'uint256',
+            name: 'usdcWithdrawable',
+            type: 'uint256',
+          },
+          {
+            internalType: 'uint256',
+            name: 'fiduRequested',
+            type: 'uint256',
+          },
+        ],
+        internalType: 'struct ISeniorPoolEpochWithdrawals.WithdrawalRequest',
+        name: '',
+        type: 'tuple',
+      },
+    ],
+    stateMutability: 'view',
     type: 'function',
   },
   {
     inputs: [
       {
-        internalType: 'contract ITranchedPool',
-        name: '',
-        type: 'address',
-      },
-    ],
-    name: 'writedowns',
-    outputs: [
-      {
         internalType: 'uint256',
-        name: '',
+        name: 'tokenId',
         type: 'uint256',
       },
     ],
-    stateMutability: 'view',
+    name: 'writedown',
+    outputs: [],
+    stateMutability: 'nonpayable',
     type: 'function',
   },
   {

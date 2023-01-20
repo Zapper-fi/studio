@@ -4,6 +4,7 @@ import { AbstractApp } from '~app/app.dynamic-module';
 
 import { GoldfinchContractFactory } from './contracts';
 import { EthereumGoldfinchFiduTokenFetcher } from './ethereum/goldfinch.fidu.token-fetcher';
+import { EthereumGoldfinchSeniorPoolContractPositionFetcher } from './ethereum/goldfinch.seniorpool.contract-position-fetcher';
 import { EthereumGoldfinchStakingRewardsContractPositionFetcher } from './ethereum/goldfinch.staking-rewards.contract-position-fetcher';
 import { EthereumGoldfinchVaultContractPositionFetcher } from './ethereum/goldfinch.vault.contract-position-fetcher';
 
@@ -12,6 +13,7 @@ import { EthereumGoldfinchVaultContractPositionFetcher } from './ethereum/goldfi
     GoldfinchContractFactory,
     EthereumGoldfinchFiduTokenFetcher,
     EthereumGoldfinchStakingRewardsContractPositionFetcher,
+    EthereumGoldfinchSeniorPoolContractPositionFetcher,
     EthereumGoldfinchVaultContractPositionFetcher,
   ],
 })
