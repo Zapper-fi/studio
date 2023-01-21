@@ -74,7 +74,7 @@ export abstract class GmxPerpContractPositionFetcher extends ContractPositionTem
 
   async getTokenDefinitions({ definition }: GetTokenDefinitionsParams<GmxVault, GmxOptionContractPositionDefinition>) {
     return [
-      { metaType: MetaType.SUPPLIED, address: definition.collateralTokenAddress, network: this.network },
+      { metaType: MetaType.LOCKED, address: definition.collateralTokenAddress, network: this.network },
       { metaType: MetaType.SUPPLIED, address: definition.indexTokenAddress, network: this.network },
       { metaType: MetaType.SUPPLIED, address: this.usdcAddress, network: this.network },
     ];
