@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.371.0](https://github.com/Zapper-fi/studio/compare/v0.370.1...v0.371.0) (2023-01-21)
+
+
+### Features
+
+* **gmx:** Use different metatype for collateral token to fix balances on same token long ([abbad47](https://github.com/Zapper-fi/studio/commit/abbad47bbecf143af864e1de6d8170b53c6efe7c))
+
 ## [0.370.1](https://github.com/Zapper-fi/studio/compare/v0.370.0...v0.370.1) (2023-01-20)
 
 
