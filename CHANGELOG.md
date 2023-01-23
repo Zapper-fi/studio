@@ -4,6 +4,22 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.372.0](https://github.com/Zapper-fi/studio/compare/v0.371.0...v0.372.0) (2023-01-23)
+
+
+### Features
+
+* **convex:** Add cvxCrvStakingWrapped position ([#2161](https://github.com/Zapper-fi/studio/issues/2161)) ([f92838c](https://github.com/Zapper-fi/studio/commit/f92838cc3bd40b15dc01e197a020de4e68e0f11a))
+* **euler:** add euler staking ([#2148](https://github.com/Zapper-fi/studio/issues/2148)) ([010a94a](https://github.com/Zapper-fi/studio/commit/010a94ac6f22a45b1eb2bc7a9abd6eae6e159034))
+* **rari-fuse:** Fix regression on explore presentation config ([c6c92fd](https://github.com/Zapper-fi/studio/commit/c6c92fd6fedc6f2dbe405b3bac98a5fce245bd73))
+
+
+### Bug Fixes
+
+* **convex:** Fix cvxCrvStakingWrapped reward token balances ([#2164](https://github.com/Zapper-fi/studio/issues/2164)) ([028372b](https://github.com/Zapper-fi/studio/commit/028372b1367971ffa855c5c60692d7493570e21b))
+* **euler:** Add farms to position presenter ([#2165](https://github.com/Zapper-fi/studio/issues/2165)) ([c4d0166](https://github.com/Zapper-fi/studio/commit/c4d01663f0bbeed27bd3e6e8e847e68bf4063ef5))
+* **llama-airforce:** Add new uCRV pounder ([#2158](https://github.com/Zapper-fi/studio/issues/2158)) ([ea5fc73](https://github.com/Zapper-fi/studio/commit/ea5fc73da43d682e9860711ab185157ea28c4f89))
+
 ## [0.371.0](https://github.com/Zapper-fi/studio/compare/v0.370.1...v0.371.0) (2023-01-21)
 
 
