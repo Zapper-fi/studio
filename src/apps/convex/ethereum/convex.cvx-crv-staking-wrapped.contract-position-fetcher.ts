@@ -4,7 +4,9 @@ import { range } from 'lodash';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
+import { isSupplied } from '~position/position.utils';
 import {
+  DefaultContractPositionDefinition,
   GetDataPropsParams,
   GetTokenBalancesParams,
   GetTokenDefinitionsParams,
@@ -17,8 +19,10 @@ import {
 import { ConvexContractFactory, ConvexCvxCrvStakingWrapped } from '../contracts';
 
 @PositionTemplate()
-export class EthereumConvexCvxCrvStakingWrapperContractPositionFetcher extends SingleStakingFarmDynamicTemplateContractPositionFetcher<ConvexCvxCrvStakingWrapped> {
+export class EthereumConvexCvxCrvStakingWrappedContractPositionFetcher extends SingleStakingFarmDynamicTemplateContractPositionFetcher<ConvexCvxCrvStakingWrapped> {
   groupLabel = 'cvxCRV Staking Wrapped';
+
+  cvxCrvStakingUtilitiesAddress = '0xadd2f542f9ff06405fabf8cae4a74bd0fe29c673';
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
@@ -59,7 +63,7 @@ export class EthereumConvexCvxCrvStakingWrapperContractPositionFetcher extends S
     multicall,
   }: GetDataPropsParams<ConvexCvxCrvStakingWrapped>): Promise<BigNumberish | BigNumberish[]> {
     const cvxCrvStakingUtilitiesCotnract = this.contractFactory.convexCvxCrvStakingUtilities({
-      address: '0xadd2f542f9ff06405fabf8cae4a74bd0fe29c673',
+      address: this.cvxCrvStakingUtilitiesAddress,
       network: this.network,
     });
 
@@ -68,12 +72,42 @@ export class EthereumConvexCvxCrvStakingWrapperContractPositionFetcher extends S
     return defaultRewardRates.rates;
   }
 
-  async getRewardTokenBalances() {
-    return [0, 0, 0];
+  async getRewardTokenBalances({ address, contract }: GetTokenBalancesParams<ConvexCvxCrvStakingWrapped>) {
+    const rewards = await contract.callStatic.earned(address);
+    return rewards.map(reward => Number(reward.amount));
   }
 
-  // Temp override preventing null and infinite
-  async getDataProps(): Promise<SingleStakingFarmDataProps> {
-    return { liquidity: 0, apy: 0, isActive: true };
+  async getReserve({
+    contractPosition,
+    multicall,
+  }: GetDataPropsParams<
+    ConvexCvxCrvStakingWrapped,
+    SingleStakingFarmDataProps,
+    DefaultContractPositionDefinition
+  >): Promise<number> {
+    const cvxCrvStakingContract = this.contractFactory.convexCvxCrvStaking({
+      address: '0x3fe65692bfcd0e6cf84cb1e7d24108e434a7587e',
+      network: this.network,
+    });
+    const stakedToken = contractPosition.tokens.find(isSupplied)!;
+    const reserveRaw = await multicall.wrap(cvxCrvStakingContract).balanceOf(contractPosition.address);
+    const reserve = Number(reserveRaw) / 10 ** stakedToken.decimals;
+    return reserve;
+  }
+
+  // temp until we figure out APY
+  async getDataProps(
+    params: GetDataPropsParams<ConvexCvxCrvStakingWrapped, SingleStakingFarmDataProps>,
+  ): Promise<SingleStakingFarmDataProps> {
+    const { contractPosition } = params;
+    const stakedToken = contractPosition.tokens.find(isSupplied)!;
+
+    const reserve = await this.getReserve(params);
+    const liquidity = reserve * stakedToken.price;
+
+    const apy = 0;
+    const isActive = true;
+
+    return { liquidity, apy, isActive };
   }
 }
