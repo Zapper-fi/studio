@@ -4,6 +4,35 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.371.0](https://github.com/Zapper-fi/studio/compare/v0.370.1...v0.371.0) (2023-01-21)
+
+
+### Features
+
+* **gmx:** Use different metatype for collateral token to fix balances on same token long ([abbad47](https://github.com/Zapper-fi/studio/commit/abbad47bbecf143af864e1de6d8170b53c6efe7c))
+
+## [0.370.1](https://github.com/Zapper-fi/studio/compare/v0.370.0...v0.370.1) (2023-01-20)
+
+
+### Bug Fixes
+
+* **unlockd-finance:** Add position presenter ([#2154](https://github.com/Zapper-fi/studio/issues/2154)) ([c4de581](https://github.com/Zapper-fi/studio/commit/c4de58120f2b80fe018eceac315abde701c6fb87))
+
+## [0.370.0](https://github.com/Zapper-fi/studio/compare/v0.369.0...v0.370.0) (2023-01-20)
+
+
+### Features
+
+* **goldfinch:** Add Senior Pool Withdrawal requested fidu and claima… ([#2151](https://github.com/Zapper-fi/studio/issues/2151)) ([0f98391](https://github.com/Zapper-fi/studio/commit/0f983911bcc5ede9c9f0f5124a7fc41ceccc4adc))
+* **hedgefarm:** Add HedgeFarm Alpha 2 ([#2147](https://github.com/Zapper-fi/studio/issues/2147)) ([77f7e59](https://github.com/Zapper-fi/studio/commit/77f7e596d24c62e7ee43ba3850a2b98660fecc62))
+* **llamapay:** add other networks ([#2145](https://github.com/Zapper-fi/studio/issues/2145)) ([a652359](https://github.com/Zapper-fi/studio/commit/a65235942e482fb23eb1df6f48d9ac2ce2075b3d))
+* **unstoppable:** add glp compounder ([#2146](https://github.com/Zapper-fi/studio/issues/2146)) ([85825a5](https://github.com/Zapper-fi/studio/commit/85825a5c227bb2341409a84dfd3eaf508c9c8aff))
+
+
+### Bug Fixes
+
+* **gmx:** Refactor perpetuals definitions reflecting available position ([#2152](https://github.com/Zapper-fi/studio/issues/2152)) ([7659e3b](https://github.com/Zapper-fi/studio/commit/7659e3b5fe3fdc81dc60de6d91b81af22536b5a6))
+
 ## [0.369.0](https://github.com/Zapper-fi/studio/compare/v0.368.1...v0.369.0) (2023-01-18)
 
 
