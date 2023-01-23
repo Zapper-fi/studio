@@ -22,6 +22,7 @@ export class EthereumEulerPositionPresenter extends PositionPresenterTemplate {
           },
         ],
       },
+      { viewType: 'list', label: 'Farms', groupIds: ['single-staking-farm'] },
     ],
   };
 }
