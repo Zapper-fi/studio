@@ -4,7 +4,9 @@
 export type { EulerDtokenContract } from './EulerDtokenContract';
 export type { EulerEtokenContract } from './EulerEtokenContract';
 export type { EulerPtokenContract } from './EulerPtokenContract';
+export type { EulerStakingRewardsContract } from './EulerStakingRewardsContract';
 export * as factories from './factories';
 export { EulerDtokenContract__factory } from './factories/EulerDtokenContract__factory';
 export { EulerEtokenContract__factory } from './factories/EulerEtokenContract__factory';
 export { EulerPtokenContract__factory } from './factories/EulerPtokenContract__factory';
+export { EulerStakingRewardsContract__factory } from './factories/EulerStakingRewardsContract__factory';
