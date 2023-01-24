@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.372.1](https://github.com/Zapper-fi/studio/compare/v0.372.0...v0.372.1) (2023-01-24)
+
+
+### Bug Fixes
+
+* **uniswap-v2:** Fix pool subgraph strategy APY ([#2167](https://github.com/Zapper-fi/studio/issues/2167)) ([956b6f5](https://github.com/Zapper-fi/studio/commit/956b6f55570f19fc17664190c8e7e66fdc04d0fc))
+
 ## [0.372.0](https://github.com/Zapper-fi/studio/compare/v0.371.0...v0.372.0) (2023-01-23)
 
 
