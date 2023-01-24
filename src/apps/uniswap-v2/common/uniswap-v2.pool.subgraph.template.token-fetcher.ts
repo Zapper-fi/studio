@@ -94,7 +94,7 @@ export abstract class UniswapV2PoolSubgraphTemplateTokenFetcher<
     const volume = this.volumeDataLoader ? await this.volumeDataLoader.load(appToken.address) : 0;
     const yearlyFees = volume * (this.fee / 100) * 365;
     const apy = yearlyFees / liquidity;
-    return apy;
+    return apy * 100;
   }
 
   async getDataProps(params: GetDataPropsParams<T, UniswapV2TokenDataProps>) {
