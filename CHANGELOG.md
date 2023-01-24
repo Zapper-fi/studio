@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.373.0](https://github.com/Zapper-fi/studio/compare/v0.372.1...v0.373.0) (2023-01-24)
+
+
+### Features
+
+* **pancakeswap:** Add stable pools ([#2169](https://github.com/Zapper-fi/studio/issues/2169)) ([191db7d](https://github.com/Zapper-fi/studio/commit/191db7df4f1b1589af6284b6e210c4f4475f1f41))
+
 ## [0.372.1](https://github.com/Zapper-fi/studio/compare/v0.372.0...v0.372.1) (2023-01-24)
 
 
