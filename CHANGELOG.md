@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.374.1](https://github.com/Zapper-fi/studio/compare/v0.374.0...v0.374.1) (2023-01-25)
+
+
+### Bug Fixes
+
+* **euler:** Fix single staking farm definition ([#2182](https://github.com/Zapper-fi/studio/issues/2182)) ([08169f3](https://github.com/Zapper-fi/studio/commit/08169f3bab0c4b6b92e1f6c05f2da6dff31d2904))
+
 ## [0.374.0](https://github.com/Zapper-fi/studio/compare/v0.373.0...v0.374.0) (2023-01-25)
 
 
