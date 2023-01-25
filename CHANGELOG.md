@@ -4,6 +4,14 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.374.0](https://github.com/Zapper-fi/studio/compare/v0.373.0...v0.374.0) (2023-01-25)
+
+
+### Features
+
+* **defiedge:** Add liquidity mining on Optimism ([556eb1d](https://github.com/Zapper-fi/studio/commit/556eb1d931e956626b14e369b7f375322fb1a481))
+* **defiedge:** farming tokens ([#2175](https://github.com/Zapper-fi/studio/issues/2175)) ([556eb1d](https://github.com/Zapper-fi/studio/commit/556eb1d931e956626b14e369b7f375322fb1a481))
+
 ## [0.373.0](https://github.com/Zapper-fi/studio/compare/v0.372.1...v0.373.0) (2023-01-24)
 
 
