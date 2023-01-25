@@ -21,7 +21,7 @@ import {
 import { DefiedgeContractFactory, Strategy } from '../contracts';
 import { expandTo18Decimals } from '../utils';
 
-import { DefiEdgeStrategyDefinitionsResolver } from './defiedge.strategy.definitions-resolver';
+import { DefiedgeStrategyDefinitionsResolver } from './defiedge.strategy.definitions-resolver';
 
 export type DefiedgeStrategyDefinition = {
   address: string;
@@ -47,8 +47,8 @@ export abstract class DefiedgeStrategyTokenFetcher extends AppTokenTemplatePosit
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
     @Inject(DefiedgeContractFactory) protected readonly contractFactory: DefiedgeContractFactory,
-    @Inject(DefiEdgeStrategyDefinitionsResolver)
-    protected readonly definitionResolver: DefiEdgeStrategyDefinitionsResolver,
+    @Inject(DefiedgeStrategyDefinitionsResolver)
+    protected readonly definitionResolver: DefiedgeStrategyDefinitionsResolver,
   ) {
     super(appToolkit);
   }
