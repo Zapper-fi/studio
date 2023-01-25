@@ -15,12 +15,13 @@ import {
   GetDataPropsParams,
   GetDisplayPropsParams,
   GetTokenPropsParams,
+  GetPriceParams,
 } from '~position/template/app-token.template.types';
 
 import { DefiedgeContractFactory, Strategy } from '../contracts';
 import { expandTo18Decimals } from '../utils';
 
-import { DefiEdgeStrategyDefinitionsResolver } from './defiedge.strategy.definitions-resolver';
+import { DefiedgeStrategyDefinitionsResolver } from './defiedge.strategy.definitions-resolver';
 
 export type DefiedgeStrategyDefinition = {
   address: string;
@@ -46,8 +47,8 @@ export abstract class DefiedgeStrategyTokenFetcher extends AppTokenTemplatePosit
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
     @Inject(DefiedgeContractFactory) protected readonly contractFactory: DefiedgeContractFactory,
-    @Inject(DefiEdgeStrategyDefinitionsResolver)
-    protected readonly definitionResolver: DefiEdgeStrategyDefinitionsResolver,
+    @Inject(DefiedgeStrategyDefinitionsResolver)
+    protected readonly definitionResolver: DefiedgeStrategyDefinitionsResolver,
   ) {
     super(appToolkit);
   }
@@ -64,7 +65,7 @@ export abstract class DefiedgeStrategyTokenFetcher extends AppTokenTemplatePosit
       title: v.title,
       subTitle: v.subTitle,
       token0Address: v.token0.id.toLowerCase(),
-      token1Address: v.token0.id.toLowerCase(),
+      token1Address: v.token1.id.toLowerCase(),
     }));
 
     return definitions;
@@ -83,6 +84,29 @@ export abstract class DefiedgeStrategyTokenFetcher extends AppTokenTemplatePosit
       { address: definition.token0Address, network: this.network },
       { address: definition.token1Address, network: this.network },
     ];
+  }
+
+  async getPrice({
+    contract,
+    appToken,
+  }: GetPriceParams<Strategy, DefiedgeStrategyTokenDataProps, DefiedgeStrategyDefinition>): Promise<number> {
+    const [aumWithFee, totalSupplyBN] = await Promise.all([
+      contract.callStatic.getAUMWithFees(false),
+      contract.totalSupply(),
+    ]);
+
+    const { amount0, amount1 } = aumWithFee;
+    const [token0, token1] = appToken.tokens;
+
+    const t0Price = parseEther(token0.price.toString());
+    const t1Price = parseEther(token1.price.toString());
+    const aumBN = expandTo18Decimals(amount0, token0.decimals)
+      .mul(t0Price)
+      .add(expandTo18Decimals(amount1, token1.decimals).mul(t1Price));
+
+    const sharePrice = totalSupplyBN.eq(0) ? 0 : +Number(+formatEther(aumBN.div(totalSupplyBN))).toFixed(8) || 100;
+
+    return sharePrice;
   }
 
   async getPricePerShare({
@@ -114,18 +138,9 @@ export abstract class DefiedgeStrategyTokenFetcher extends AppTokenTemplatePosit
     const defaultDataProps = await super.getDataProps(params);
 
     const { contract, appToken } = params;
-    const aumWithFee = await contract.callStatic.getAUMWithFees(false);
     const totalSupplyBN = await contract.totalSupply();
-    const { amount0, amount1 } = aumWithFee;
-    const [token0, token1] = appToken.tokens;
-
-    const t0Price = parseEther(token0.price.toString());
-    const t1Price = parseEther(token1.price.toString());
-    const aumBN = expandTo18Decimals(amount0, token0.decimals)
-      .mul(t0Price)
-      .add(expandTo18Decimals(amount1, token1.decimals).mul(t1Price));
-    const aum = +formatEther(aumBN) / 1e18;
-    const sharePrice = totalSupplyBN.eq(0) ? 0 : +Number(+formatEther(aumBN.div(totalSupplyBN))).toFixed(8) || 100;
+    const sharePrice = appToken.price;
+    const aum = +formatEther(totalSupplyBN) * appToken.price;
 
     return { ...defaultDataProps, aum, sharePrice, sinceInception: sharePrice - 100 };
   }
@@ -152,7 +167,7 @@ export abstract class DefiedgeStrategyTokenFetcher extends AppTokenTemplatePosit
       },
       {
         label: 'Since inception',
-        value: buildPercentageDisplayItem(appToken.dataProps.sharePrice - 100),
+        value: buildPercentageDisplayItem(appToken.dataProps.sinceInception),
       },
     ];
   }
