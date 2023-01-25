@@ -27,13 +27,27 @@ export class EthereumEulerSingleStakingFarmContractPositionFetcher extends Singl
     return this.contractFactory.eulerStakingRewardsContract({ address, network: this.network });
   }
 
-  getFarmDefinitions(): Promise<SingleStakingFarmDefinition[]> {
-    return this.stakingCacheManager.getStakingDefinitions({ network: this.network }).then(markets =>
-      markets.map(market => ({
-        address: market.tokenAddress,
-        stakedTokenAddress: market.vaultAddress,
-        rewardTokenAddresses: ['0xd9fcd98c322942075a5c3860693e9f4f03aae07b'],
-      })),
+  async getFarmDefinitions(): Promise<SingleStakingFarmDefinition[]> {
+    const multicall = this.appToolkit.getMulticall(this.network);
+    const markets = await this.stakingCacheManager.getStakingDefinitions({ network: this.network });
+
+    return await Promise.all(
+      markets.map(async market => {
+        const vaultContract = this.contractFactory.eulerStakingRewardsContract({
+          address: market.vaultAddress.toLowerCase(),
+          network: this.network,
+        });
+        const [stakedTokenAddress, rewardTokenAddress] = await Promise.all([
+          multicall.wrap(vaultContract).stakingToken(),
+          multicall.wrap(vaultContract).rewardsToken(),
+        ]);
+
+        return {
+          address: market.vaultAddress,
+          stakedTokenAddress,
+          rewardTokenAddresses: [rewardTokenAddress],
+        };
+      }),
     );
   }
 
