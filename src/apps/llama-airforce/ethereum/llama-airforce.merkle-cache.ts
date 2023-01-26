@@ -35,7 +35,7 @@ export class EthereumLlamaAirforceMerkleCache extends MerkleCache<LlamaAirforceM
       ),
     ]);
 
-    const uCrvTokenAddress = '0x83507cc8c8b67ed48badd1f59f684d5d02884c81';
+    const uCrvTokenAddress = '0x4ebad8dbd4edbd74db0278714fbd67ebc76b89b7';
     const uFxsTokenAddress = '0xf964b0e3ffdea659c44a5a52bc0b82a24b89ce0e';
     const uCvxTokenAddress = '0x8659fc767cad6005de79af65dafe4249c57927af';
 
