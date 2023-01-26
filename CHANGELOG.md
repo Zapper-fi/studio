@@ -4,6 +4,18 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.375.0](https://github.com/Zapper-fi/studio/compare/v0.374.1...v0.375.0) (2023-01-26)
+
+
+### Features
+
+* **index-coop:** Add dsETH ([#2187](https://github.com/Zapper-fi/studio/issues/2187)) ([2178266](https://github.com/Zapper-fi/studio/commit/2178266fe4cd6c521b5b6592ed7b0bb6de524324))
+
+
+### Bug Fixes
+
+* **beefy:** 🐛 map `sGLP` to `GLP` ([#2184](https://github.com/Zapper-fi/studio/issues/2184)) ([99c23f0](https://github.com/Zapper-fi/studio/commit/99c23f00ffaebbbfc9f169237b0a9400fabca22a))
+
 ## [0.374.1](https://github.com/Zapper-fi/studio/compare/v0.374.0...v0.374.1) (2023-01-25)
 
 
