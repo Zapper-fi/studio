@@ -52,7 +52,10 @@ export class BeefyVaultTokenDefinitionsResolver {
   }
 
   async getVaultDefinitions(network: Network) {
-    const definitionsDataRaw = await this.getVaultDefinitionsData(network);
+    const [definitionsDataRaw, apyData] = await Promise.all([
+      this.getVaultDefinitionsData(network),
+      this.getVaultApyData(),
+    ]);
     const definitionsData = definitionsDataRaw.filter(x => x.tokenAddress);
 
     const vaultDefinitions = definitionsData.map(t => {
@@ -73,6 +76,7 @@ export class BeefyVaultTokenDefinitionsResolver {
         id: t.id,
         marketName: t.name,
         symbol: t.token,
+        apy: apyData[t.id] ?? 0,
       };
     });
 
