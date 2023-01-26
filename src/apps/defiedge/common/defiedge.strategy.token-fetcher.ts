@@ -113,20 +113,21 @@ export abstract class DefiedgeStrategyTokenFetcher extends AppTokenTemplatePosit
     contract,
     appToken,
   }: GetPricePerShareParams<Strategy, DefiedgeStrategyTokenDataProps, DefiedgeStrategyDefinition>) {
-    const aumWithFee = await contract.callStatic.getAUMWithFees(false);
+    const [aumWithFee, totalSupplyBN] = await Promise.all([
+      contract.callStatic.getAUMWithFees(false),
+      contract.totalSupply(),
+    ]);
+
+    if (totalSupplyBN.eq(0)) return [0, 0];
+
     const { amount0, amount1 } = aumWithFee;
     const [token0, token1] = appToken.tokens;
 
-    const t0Price = parseEther(token0.price.toString());
-    const t1Price = parseEther(token1.price.toString());
-    const aumBN = expandTo18Decimals(amount0, token0.decimals)
-      .mul(t0Price)
-      .add(expandTo18Decimals(amount1, token1.decimals).mul(t1Price));
-    const aum = +formatEther(aumBN) / 1e18;
+    const totalSupply = +formatEther(totalSupplyBN);
 
     const pricePerShare = [
-      +formatEther(expandTo18Decimals(amount0, token0.decimals).mul(t0Price)) / 1e18 / aum,
-      +formatEther(expandTo18Decimals(amount1, token1.decimals).mul(t1Price)) / 1e18 / aum,
+      +formatEther(expandTo18Decimals(amount0, token0.decimals)) / totalSupply,
+      +formatEther(expandTo18Decimals(amount1, token1.decimals)) / totalSupply,
     ];
 
     return pricePerShare;
