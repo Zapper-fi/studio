@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.376.1](https://github.com/Zapper-fi/studio/compare/v0.376.0...v0.376.1) (2023-01-26)
+
+
+### Bug Fixes
+
+* **llama-airforce:** Fix uCRV distributor looking at the old vault address ([#2196](https://github.com/Zapper-fi/studio/issues/2196)) ([fd1d80a](https://github.com/Zapper-fi/studio/commit/fd1d80a0af729d252fa623e13689ade6365f6964))
+
 ## [0.376.0](https://github.com/Zapper-fi/studio/compare/v0.375.0...v0.376.0) (2023-01-26)
 
 
