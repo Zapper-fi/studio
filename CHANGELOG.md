@@ -4,6 +4,20 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.376.0](https://github.com/Zapper-fi/studio/compare/v0.375.0...v0.376.0) (2023-01-26)
+
+
+### Features
+
+* **beefy:** Fix price per share and decimals ([#2194](https://github.com/Zapper-fi/studio/issues/2194)) ([7c95fa7](https://github.com/Zapper-fi/studio/commit/7c95fa797d9f3033ee49c1437c487a6abbaac130))
+* **beefy:** Support Beefy on Ethereum and Moonriver ([#2192](https://github.com/Zapper-fi/studio/issues/2192)) ([953dcaa](https://github.com/Zapper-fi/studio/commit/953dcaa983ee0036a580451c1b0528a9256cbba8))
+* **thales:** vaults ([#2190](https://github.com/Zapper-fi/studio/issues/2190)) ([2f5510f](https://github.com/Zapper-fi/studio/commit/2f5510f573cd8f720912ac0091b6f2fa9bb08ec8))
+
+
+### Bug Fixes
+
+* **thales:** Fix vault definitions ([#2195](https://github.com/Zapper-fi/studio/issues/2195)) ([9a29099](https://github.com/Zapper-fi/studio/commit/9a29099ff2d3a9da032e5f328fd835ef2eaee549))
+
 ## [0.375.0](https://github.com/Zapper-fi/studio/compare/v0.374.1...v0.375.0) (2023-01-26)
 
 
