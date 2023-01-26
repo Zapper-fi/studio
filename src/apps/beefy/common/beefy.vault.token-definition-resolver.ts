@@ -24,16 +24,18 @@ const NETWORK_NAME: Partial<Record<Network, string>> = {
   [Network.FANTOM_OPERA_MAINNET]: 'fantom',
   [Network.AVALANCHE_MAINNET]: 'avax',
   [Network.ARBITRUM_MAINNET]: 'arbitrum',
+  [Network.ETHEREUM_MAINNET]: 'ethereum',
+  [Network.MOONRIVER_MAINNET]: 'moonriver',
   [Network.CELO_MAINNET]: 'celo',
   [Network.AURORA_MAINNET]: 'aurora',
 };
 
 @Injectable()
 export class BeefyVaultTokenDefinitionsResolver {
-  @Cache({
+  /*@Cache({
     key: _network => `studio:beefy:${_network}:vault-data`,
     ttl: 5 * 60, // 60 minutes
-  })
+  })*/
   private async getVaultDefinitionsData(_network: Network) {
     const { data } = await Axios.get<BeefyMarketResponse[]>(`https://api.beefy.finance/vaults`);
     const vaultData = data.filter(x => x.network == NETWORK_NAME[_network]);
