@@ -17,4 +17,4 @@ import { OptimismThalesVaultContractPositionFetcher } from './optimism/thales.va
     OptimismThalesVaultContractPositionFetcher,
   ],
 })
-export class ThalesAppModule extends AbstractApp() { }
+export class ThalesAppModule extends AbstractApp() {}
