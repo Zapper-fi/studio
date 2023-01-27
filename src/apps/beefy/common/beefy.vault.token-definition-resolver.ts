@@ -32,10 +32,10 @@ const NETWORK_NAME: Partial<Record<Network, string>> = {
 
 @Injectable()
 export class BeefyVaultTokenDefinitionsResolver {
-  /*@Cache({
+  @Cache({
     key: _network => `studio:beefy:${_network}:vault-data`,
     ttl: 5 * 60, // 60 minutes
-  })*/
+  })
   private async getVaultDefinitionsData(_network: Network) {
     const { data } = await Axios.get<BeefyMarketResponse[]>(`https://api.beefy.finance/vaults`);
     const vaultData = data.filter(x => x.network == NETWORK_NAME[_network]);
