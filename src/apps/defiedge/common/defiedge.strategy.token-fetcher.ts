@@ -140,9 +140,9 @@ export abstract class DefiedgeStrategyTokenFetcher extends AppTokenTemplatePosit
     const { contract, appToken } = params;
     const totalSupplyBN = await contract.totalSupply();
     const sharePrice = appToken.price;
-    const aum = +formatEther(totalSupplyBN) * appToken.price;
+    const liquidity = +formatEther(totalSupplyBN) * appToken.price;
 
-    return { ...defaultDataProps, aum, sharePrice, sinceInception: sharePrice - 100 };
+    return { ...defaultDataProps, liquidity, sharePrice, sinceInception: sharePrice - 100 };
   }
 
   async getLabel({
@@ -160,15 +160,14 @@ export abstract class DefiedgeStrategyTokenFetcher extends AppTokenTemplatePosit
   async getStatsItems({
     appToken,
   }: GetDisplayPropsParams<Strategy, DefiedgeStrategyTokenDataProps, DefiedgeStrategyDefinition>) {
+    const { liquidity, apy, reserves, sinceInception } = appToken.dataProps;
+    const reservesDisplay = reserves.map(v => (v < 0.01 ? '<0.01' : v.toFixed(2))).join(' / ');
+
     return [
-      {
-        label: 'AUM',
-        value: buildDollarDisplayItem(appToken.dataProps.aum),
-      },
-      {
-        label: 'Since inception',
-        value: buildPercentageDisplayItem(appToken.dataProps.sinceInception),
-      },
+      { label: 'Liquidity', value: buildDollarDisplayItem(liquidity) },
+      { label: 'Reserves', value: reservesDisplay },
+      { label: 'APY', value: buildPercentageDisplayItem(apy) },
+      { label: 'Since inception', value: buildPercentageDisplayItem(sinceInception) },
     ];
   }
 }
