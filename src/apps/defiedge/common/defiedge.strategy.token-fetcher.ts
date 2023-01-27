@@ -1,4 +1,5 @@
 import { Inject } from '@nestjs/common';
+import { ethers } from 'ethers';
 import { formatEther, parseEther } from 'ethers/lib/utils';
 
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
@@ -76,7 +77,7 @@ export abstract class DefiedgeStrategyTokenFetcher extends AppTokenTemplatePosit
   }
 
   async getSymbol({ contract }: GetTokenPropsParams<Strategy>) {
-    return contract.symbol();
+    return ethers.utils.parseBytes32String(await contract.symbol());
   }
 
   async getUnderlyingTokenDefinitions({ definition }: GetUnderlyingTokensParams<Strategy, DefiedgeStrategyDefinition>) {
