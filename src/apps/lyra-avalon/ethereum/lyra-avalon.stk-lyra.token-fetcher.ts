@@ -26,7 +26,7 @@ export class EthereumLyraAvalonStkLyraTokenFetcher extends AppTokenTemplatePosit
   }
 
   async getUnderlyingTokenDefinitions() {
-    return [{ address: '0x01BA67AAC7f75f647D94220Cc98FB30FCc5105Bf', network: this.network }];
+    return [{ address: '0x01ba67aac7f75f647d94220cc98fb30fcc5105bf', network: this.network }];
   }
 
   async getPricePerShare() {
