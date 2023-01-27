@@ -4,6 +4,20 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.377.0](https://github.com/Zapper-fi/studio/compare/v0.376.1...v0.377.0) (2023-01-27)
+
+
+### Features
+
+* **beefy:** ✨ display vault apy ([#2198](https://github.com/Zapper-fi/studio/issues/2198)) ([727a46f](https://github.com/Zapper-fi/studio/commit/727a46fa08cde12b8cd0ff6a66c2176e4a14b172))
+* **lyra-avalon:** ethereum L1 staking contract ([#2201](https://github.com/Zapper-fi/studio/issues/2201)) ([894ecd0](https://github.com/Zapper-fi/studio/commit/894ecd00261f7df8dcb2e093f8e70f97f0c16157))
+
+
+### Bug Fixes
+
+* **beefy:** Uncomment cache decorator ([#2202](https://github.com/Zapper-fi/studio/issues/2202)) ([5c7bc6b](https://github.com/Zapper-fi/studio/commit/5c7bc6be87ee0d277f5d787c6ed0408c72a1bb6e))
+* **lyra-avalon:** Linting ([3630728](https://github.com/Zapper-fi/studio/commit/363072879d55064015afbbe4a2da33468ea8b757))
+
 ## [0.376.1](https://github.com/Zapper-fi/studio/compare/v0.376.0...v0.376.1) (2023-01-26)
 
 
