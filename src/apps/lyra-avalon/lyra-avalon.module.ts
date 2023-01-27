@@ -8,6 +8,7 @@ import { OptimismLyraAvalonPoolTokenFetcher } from './optimism/lyra-avalon.pool.
 import { OptimismLyraAvalonStakingContractPositionFetcher } from './optimism/lyra-avalon.staking.contract-position-fetcher';
 import { OptimismLyraAvalonStkLyraClaimableContractPositionFetcher } from './optimism/lyra-avalon.stk-lyra-claimable.contract-position-fetcher';
 import { OptimismLyraAvalonStkLyraTokenFetcher } from './optimism/lyra-avalon.stk-lyra.token-fetcher';
+import { EthereumLyraAvalonStkLyraTokenFetcher } from './ethereum/lyra-avalon.stk-lyra.token-fetcher';
 
 @Module({
   providers: [
@@ -17,6 +18,7 @@ import { OptimismLyraAvalonStkLyraTokenFetcher } from './optimism/lyra-avalon.st
     OptimismLyraAvalonStakingContractPositionFetcher,
     OptimismLyraAvalonStkLyraTokenFetcher,
     OptimismLyraAvalonStkLyraClaimableContractPositionFetcher,
+    EthereumLyraAvalonStkLyraTokenFetcher,
   ],
 })
-export class LyraAvalonAppModule extends AbstractApp() {}
+export class LyraAvalonAppModule extends AbstractApp() { }
