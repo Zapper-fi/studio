@@ -4,6 +4,15 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.377.1](https://github.com/Zapper-fi/studio/compare/v0.377.0...v0.377.1) (2023-01-27)
+
+
+### Bug Fixes
+
+* **defiedge:** Decode symbol on strategy app tokens ([#2206](https://github.com/Zapper-fi/studio/issues/2206)) ([5b05508](https://github.com/Zapper-fi/studio/commit/5b05508dfa49b35ae2dd129cebff658226606768))
+* **defiedge:** Fix strategy liquidity ([#2203](https://github.com/Zapper-fi/studio/issues/2203)) ([c6a30b9](https://github.com/Zapper-fi/studio/commit/c6a30b9c746cc8d902549e6b0333b3f2e17664d7))
+* **defiedge:** pricePerShare calculation ([#2186](https://github.com/Zapper-fi/studio/issues/2186)) ([e8ab883](https://github.com/Zapper-fi/studio/commit/e8ab883e3b90060a8d38a93a93dfb7860051797d))
+
 ## [0.377.0](https://github.com/Zapper-fi/studio/compare/v0.376.1...v0.377.0) (2023-01-27)
 
 
