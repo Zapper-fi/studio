@@ -4,7 +4,6 @@ import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import { Erc20 } from '~contract/contracts';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
-import { GetDataPropsParams } from '~position/template/app-token.template.types';
 
 import { CleverContractFactory } from '../contracts';
 
@@ -36,17 +35,5 @@ export class EthereumCleverLeverTokenFetcher extends AppTokenTemplatePositionFet
   async getPricePerShare() {
     // TODO: use Curve pool to determine price
     return [1];
-  }
-
-  async getLiquidity({ appToken }: GetDataPropsParams<Erc20>) {
-    return appToken.supply * appToken.price;
-  }
-
-  async getReserves({ appToken }: GetDataPropsParams<Erc20>) {
-    return [appToken.pricePerShare[0] * appToken.supply];
-  }
-
-  async getApy() {
-    return 0;
   }
 }

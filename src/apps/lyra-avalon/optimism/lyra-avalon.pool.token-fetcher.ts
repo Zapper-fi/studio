@@ -8,7 +8,6 @@ import { gqlFetch } from '~app-toolkit/helpers/the-graph.helper';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import {
   DefaultAppTokenDefinition,
-  GetDataPropsParams,
   DefaultAppTokenDataProps,
   GetAddressesParams,
   GetPricePerShareParams,
@@ -100,17 +99,5 @@ export class OptimismLyraAvalonPoolTokenFetcher extends AppTokenTemplatePosition
     const ratioRaw = await multicall.wrap(poolContract).getTokenPrice();
     const ratio = Number(ratioRaw) / 10 ** appToken.tokens[0].decimals;
     return [ratio];
-  }
-
-  async getLiquidity({ appToken }: GetDataPropsParams<LyraLiquidityToken>) {
-    return appToken.supply * appToken.price;
-  }
-
-  async getReserves({ appToken }: GetDataPropsParams<LyraLiquidityToken>) {
-    return [appToken.pricePerShare[0] * appToken.supply];
-  }
-
-  async getApy(_params: GetDataPropsParams<LyraLiquidityToken>) {
-    return 0;
   }
 }

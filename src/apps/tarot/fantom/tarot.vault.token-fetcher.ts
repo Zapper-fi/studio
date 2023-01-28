@@ -60,8 +60,4 @@ export class FantomTarotVaultTokenFetcher extends AppTokenTemplatePositionFetche
     const reserve = Number(reserveRaw) / 10 ** appToken.tokens[0].decimals;
     return [reserve];
   }
-
-  async getApy() {
-    return 0;
-  }
 }

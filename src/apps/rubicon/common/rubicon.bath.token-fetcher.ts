@@ -8,7 +8,6 @@ import {
   GetUnderlyingTokensParams,
   GetAddressesParams,
   GetPricePerShareParams,
-  GetDataPropsParams,
   GetDisplayPropsParams,
   GetTokenPropsParams,
   DefaultAppTokenDataProps,
@@ -82,17 +81,5 @@ export abstract class RubiconBathTokenFetcher extends AppTokenTemplatePositionFe
 
   async getLabel({ appToken }: GetDisplayPropsParams<BathToken>) {
     return appToken.tokens[0].symbol;
-  }
-
-  async getLiquidity({ appToken }: GetDataPropsParams<BathToken>) {
-    return appToken.supply * appToken.price;
-  }
-
-  async getReserves({ appToken }: GetDataPropsParams<BathToken>) {
-    return [appToken.pricePerShare[0] * appToken.supply];
-  }
-
-  async getApy(_params: GetDataPropsParams<BathToken>) {
-    return 0;
   }
 }

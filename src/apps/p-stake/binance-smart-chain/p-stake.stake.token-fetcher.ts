@@ -4,7 +4,7 @@ import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { ZERO_ADDRESS } from '~app-toolkit/constants/address';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
-import { GetDataPropsParams, GetPricePerShareParams } from '~position/template/app-token.template.types';
+import { GetPricePerShareParams } from '~position/template/app-token.template.types';
 
 import { PStakeContractFactory } from '../contracts';
 import { PStakeStkToken } from '../contracts/ethers/PStakeStkToken';
@@ -38,17 +38,5 @@ export class BinanceSmartChainPStakeStakeTokenFetcher extends AppTokenTemplatePo
     const exchangeRateRaw = await multicall.wrap(stakePool).exchangeRate();
     const exchangeRate = Number(exchangeRateRaw.totalWei) / Number(exchangeRateRaw.poolTokenSupply);
     return [exchangeRate];
-  }
-
-  async getLiquidity({ appToken }: GetDataPropsParams<PStakeStkToken>) {
-    return appToken.supply * appToken.price;
-  }
-
-  async getReserves({ appToken }: GetDataPropsParams<PStakeStkToken>) {
-    return [appToken.pricePerShare[0] * appToken.supply];
-  }
-
-  async getApy(_params: GetDataPropsParams<PStakeStkToken>) {
-    return 0;
   }
 }

@@ -63,14 +63,6 @@ export abstract class TenderTokenFetcher extends AppTokenTemplatePositionFetcher
     return [pricePerShare];
   }
 
-  async getLiquidity({ appToken }: GetDataPropsParams<TenderToken, DefaultDataProps, TenderizeTokenDefinition>) {
-    return appToken.supply * appToken.price;
-  }
-
-  async getReserves({ appToken }: GetDataPropsParams<TenderToken, DefaultDataProps, TenderizeTokenDefinition>) {
-    return [appToken.pricePerShare[0] * appToken.supply];
-  }
-
   async getApy({ definition }: GetDataPropsParams<TenderToken, DefaultDataProps, TenderizeTokenDefinition>) {
     return this.tokenDefinitionsResolver.getTokenApy(definition.id);
   }

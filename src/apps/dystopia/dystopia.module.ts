@@ -9,11 +9,10 @@ import { PolygonDystopiaVotingEscrowContractPositionFetcher } from './polygon/dy
 
 @Module({
   providers: [
+    DystopiaContractFactory,
     PolygonDystopiaPairsTokenFetcher,
     PolygonDystopiaStakingContractPositionFetcher,
     PolygonDystopiaVotingEscrowContractPositionFetcher,
-
-    DystopiaContractFactory,
   ],
 })
 export class DystopiaAppModule extends AbstractApp() {}

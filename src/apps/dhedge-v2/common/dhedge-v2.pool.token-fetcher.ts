@@ -50,16 +50,8 @@ export abstract class DhedgeV2PoolTokenFetcher extends AppTokenTemplatePositionF
     return [Number(pricePerShareRaw) / 10 ** 18];
   }
 
-  async getLiquidity({ appToken }: GetDataPropsParams<DhedgeV2Token>) {
-    return appToken.supply * appToken.price;
-  }
-
   async getReserves(_params: GetDataPropsParams<DhedgeV2Token>) {
     return [0]; // TBD
-  }
-
-  async getApy(_params: GetDataPropsParams<DhedgeV2Token>) {
-    return 0;
   }
 
   async getLabel({ contract }: GetDisplayPropsParams<DhedgeV2Token>) {

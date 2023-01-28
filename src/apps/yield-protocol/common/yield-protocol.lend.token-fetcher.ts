@@ -146,18 +146,6 @@ export abstract class YieldProtocolLendTokenFetcher extends AppTokenTemplatePosi
     return [+ethers.utils.formatUnits(estimateRaw, appToken.decimals)];
   }
 
-  async getLiquidity({ appToken }: GetDataPropsParams<YieldProtocolLendToken>) {
-    return appToken.supply * appToken.price;
-  }
-
-  async getReserves({ appToken }: GetDataPropsParams<YieldProtocolLendToken>) {
-    return [appToken.pricePerShare[0] * appToken.supply];
-  }
-
-  async getApy(_params: GetDataPropsParams<YieldProtocolLendToken>) {
-    return 0;
-  }
-
   async getDataProps(params: GetDataPropsParams<YieldProtocolLendToken, FyTokenDataProps, FyTokenDefinition>) {
     const defaultDataProps = await super.getDataProps(params);
     const maturity = await params.contract.maturity();

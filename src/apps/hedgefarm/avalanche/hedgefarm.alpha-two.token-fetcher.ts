@@ -15,8 +15,8 @@ export class AvalancheHedgefarmAlphaTwoTokenFetcher extends AppTokenTemplatePosi
   groupLabel: string;
 
   constructor(
-      @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-      @Inject(HedgefarmContractFactory) protected readonly contractFactory: HedgefarmContractFactory,
+    @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
+    @Inject(HedgefarmContractFactory) protected readonly contractFactory: HedgefarmContractFactory,
   ) {
     super(appToolkit);
   }
@@ -35,14 +35,6 @@ export class AvalancheHedgefarmAlphaTwoTokenFetcher extends AppTokenTemplatePosi
 
   async getPricePerShare({ contract }: GetPricePerShareParams<AlphaTwo>) {
     return [Number(await contract.lastUpdatedPricePerShare()) / 10 ** 8];
-  }
-
-  async getLiquidity({ appToken }: GetDataPropsParams<AlphaTwo>) {
-    return appToken.supply * appToken.price;
-  }
-
-  async getReserves({ appToken }: GetDataPropsParams<AlphaTwo>) {
-    return [appToken.pricePerShare[0] * appToken.supply];
   }
 
   async getApy(_params: GetDataPropsParams<AlphaTwo>) {

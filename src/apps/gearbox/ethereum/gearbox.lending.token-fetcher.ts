@@ -74,10 +74,6 @@ export class EthereumGearboxLendingTokenFetcher extends AppTokenTemplatePosition
     return this.gearboxContractFactory.dieselToken({ address, network });
   }
 
-  async getApy() {
-    return 0;
-  }
-
   async getLiquidity(
     params: GetDataPropsParams<DieselToken, DefaultAppTokenDataProps, GearboxLendingDefinition>,
   ): Promise<number> {

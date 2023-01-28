@@ -14,9 +14,9 @@ import {
 import { GetTokenDefinitionsParams } from '~position/template/contract-position.template.types';
 
 import { UnipilotContractFactory, UnipilotVault } from '../contracts';
-import { UnipilotVaultAPYHelper } from './unipilot-vault.apy.helper';
 import { UnipilotVaultDefinition } from '../utils/generalTypes';
 
+import { UnipilotVaultAPYHelper } from './unipilot-vault.apy.helper';
 import { UnipilotVaultDefinitionsResolver } from './unipilot.vault-definition-resolver';
 
 export type UnipilotVaultTokenDataProps = DefaultAppTokenDataProps & {
@@ -86,18 +86,6 @@ export abstract class UnipilotVaultTokenFetcher extends AppTokenTemplatePosition
       return r == 0 ? 0 : r / appToken.supply;
     });
     return pricePerShare;
-  }
-
-  async getLiquidity({
-    appToken,
-  }: GetDataPropsParams<UnipilotVault, UnipilotVaultTokenDataProps, UnipilotVaultDefinition>) {
-    return appToken.price * appToken.supply;
-  }
-
-  async getReserves({
-    appToken,
-  }: GetDataPropsParams<UnipilotVault, UnipilotVaultTokenDataProps, UnipilotVaultDefinition>) {
-    return (appToken.pricePerShare as number[]).map(v => v * appToken.supply);
   }
 
   async getApy({ appToken }: GetDataPropsParams<UnipilotVault, UnipilotVaultTokenDataProps, UnipilotVaultDefinition>) {

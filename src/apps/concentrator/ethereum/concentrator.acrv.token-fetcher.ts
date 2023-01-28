@@ -3,7 +3,7 @@ import { Inject } from '@nestjs/common';
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
-import { GetDataPropsParams, GetPricePerShareParams } from '~position/template/app-token.template.types';
+import { GetPricePerShareParams } from '~position/template/app-token.template.types';
 
 import { AladdinCrv, ConcentratorContractFactory } from '../contracts';
 
@@ -34,17 +34,5 @@ export class EthereumConcentratorAcrvTokenFetcher extends AppTokenTemplatePositi
     const reserveRaw = await contract.totalUnderlying();
     const reserve = Number(reserveRaw) / 10 ** appToken.tokens[0].decimals;
     return [reserve / appToken.supply];
-  }
-
-  async getLiquidity({ appToken }: GetDataPropsParams<AladdinCrv>) {
-    return appToken.supply * appToken.price;
-  }
-
-  async getReserves({ appToken }: GetDataPropsParams<AladdinCrv>) {
-    return [appToken.pricePerShare[0] * appToken.supply];
-  }
-
-  async getApy(_params: GetDataPropsParams<AladdinCrv>) {
-    return 0;
   }
 }

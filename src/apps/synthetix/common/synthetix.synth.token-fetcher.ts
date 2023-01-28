@@ -105,16 +105,8 @@ export abstract class SynthetixSynthTokenFetcher extends AppTokenTemplatePositio
     return price;
   }
 
-  async getLiquidity({ appToken }: GetDataPropsParams<SynthetixSynthToken>) {
-    return appToken.supply * appToken.price;
-  }
-
   async getReserves() {
     return [0];
-  }
-
-  async getApy() {
-    return 0;
   }
 
   async getDataProps(params: GetDataPropsParams<SynthetixSynthToken>) {

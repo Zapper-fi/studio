@@ -144,18 +144,6 @@ export class FantomTarotSupplyTokenFetcher extends AppTokenTemplatePositionFetch
     return `${getLabelFromToken(underlyingToken)} in ${appToken.dataProps.poolTokenLabel} Lending Pool`;
   }
 
-  async getLiquidity({ appToken }: GetDataPropsParams<TarotBorrowable>) {
-    return appToken.supply * appToken.price;
-  }
-
-  async getReserves({ appToken }: GetDataPropsParams<TarotBorrowable>) {
-    return [appToken.pricePerShare[0] * appToken.supply];
-  }
-
-  async getApy() {
-    return 0;
-  }
-
   async getDataProps(params: GetDataPropsParams<TarotBorrowable, TarotSupplyDataProps, Definition>) {
     const defaultDataProps = await super.getDataProps(params);
     return { ...defaultDataProps, poolTokenLabel: params.definition.poolTokenLabel };

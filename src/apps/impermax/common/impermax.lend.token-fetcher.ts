@@ -5,7 +5,6 @@ import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import {
   GetAddressesParams,
-  GetDataPropsParams,
   GetPricePerShareParams,
   GetUnderlyingTokensParams,
 } from '~position/template/app-token.template.types';
@@ -51,17 +50,5 @@ export abstract class ImpermaxLendTokenFetcher extends AppTokenTemplatePositionF
     const [underlyingToken] = appToken.tokens;
     const exchangeRate = await contract.exchangeRateLast();
     return [Number(exchangeRate) / 10 ** underlyingToken.decimals];
-  }
-
-  async getLiquidity({ appToken }: GetDataPropsParams<Borrowable>) {
-    return appToken.supply * appToken.price;
-  }
-
-  async getReserves({ appToken }: GetDataPropsParams<Borrowable>) {
-    return [appToken.pricePerShare[0] * appToken.supply];
-  }
-
-  async getApy() {
-    return 0;
   }
 }
