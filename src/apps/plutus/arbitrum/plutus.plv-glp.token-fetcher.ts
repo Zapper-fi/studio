@@ -54,8 +54,4 @@ export class ArbitrumPlutusPlvGlpTokenFetcher extends AppTokenTemplatePositionFe
     const reserve = Number(reserveRaw) / 10 ** appToken.tokens[0].decimals;
     return [reserve];
   }
-
-  async getApy(_params: GetDataPropsParams<PlutusPlvGlp>) {
-    return 0;
-  }
 }

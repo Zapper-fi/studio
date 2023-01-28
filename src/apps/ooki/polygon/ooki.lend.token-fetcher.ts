@@ -3,11 +3,7 @@ import { Inject } from '@nestjs/common';
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
-import {
-  GetDataPropsParams,
-  GetPricePerShareParams,
-  GetUnderlyingTokensParams,
-} from '~position/template/app-token.template.types';
+import { GetPricePerShareParams, GetUnderlyingTokensParams } from '~position/template/app-token.template.types';
 
 import { OokiContractFactory, OokiIToken } from '../contracts';
 
@@ -46,17 +42,5 @@ export class PolygonOokiLendTokenFetcher extends AppTokenTemplatePositionFetcher
     const exchangeRateRaw = await contract.tokenPrice();
     const exchangeRate = Number(exchangeRateRaw) / 10 ** 18;
     return [exchangeRate];
-  }
-
-  async getLiquidity({ appToken }: GetDataPropsParams<OokiIToken>) {
-    return appToken.supply * appToken.price;
-  }
-
-  async getReserves({ appToken }: GetDataPropsParams<OokiIToken>) {
-    return [appToken.pricePerShare[0] * appToken.supply];
-  }
-
-  async getApy(_params: GetDataPropsParams<OokiIToken>) {
-    return 0;
   }
 }

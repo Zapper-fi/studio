@@ -9,7 +9,6 @@ import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.te
 import {
   GetUnderlyingTokensParams,
   GetDisplayPropsParams,
-  GetDataPropsParams,
   GetPricePerShareParams,
 } from '~position/template/app-token.template.types';
 
@@ -54,18 +53,6 @@ export class AvalancheYieldyakVaultTokenFetcher extends AppTokenTemplatePosition
 
   async getLabel({ appToken }: GetDisplayPropsParams<YieldYakVault>): Promise<string> {
     return appToken.tokens.map(v => getLabelFromToken(v)).join(' / ');
-  }
-
-  async getLiquidity({ appToken }: GetDataPropsParams<YieldYakVault>) {
-    return appToken.supply * appToken.price;
-  }
-
-  async getReserves({ appToken }: GetDataPropsParams<YieldYakVault>) {
-    return [appToken.pricePerShare[0] * appToken.supply];
-  }
-
-  async getApy() {
-    return 0;
   }
 
   async getPricePerShare(_params: GetPricePerShareParams<YieldYakVault>) {

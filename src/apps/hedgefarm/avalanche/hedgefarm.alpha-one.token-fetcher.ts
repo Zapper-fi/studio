@@ -37,14 +37,6 @@ export class AvalancheHedgefarmAlphaOneTokenFetcher extends AppTokenTemplatePosi
     return [Number(await contract.pricePerShare()) / 10 ** 6];
   }
 
-  async getLiquidity({ appToken }: GetDataPropsParams<AlphaOne>) {
-    return appToken.supply * appToken.price;
-  }
-
-  async getReserves({ appToken }: GetDataPropsParams<AlphaOne>) {
-    return [appToken.pricePerShare[0] * appToken.supply];
-  }
-
   async getApy(_params: GetDataPropsParams<AlphaOne>) {
     const performance = await this.getPerformance();
     return performance.averageApy;

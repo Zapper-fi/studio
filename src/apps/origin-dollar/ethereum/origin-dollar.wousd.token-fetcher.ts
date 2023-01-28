@@ -7,7 +7,6 @@ import { PositionTemplate } from '~app-toolkit/decorators/position-template.deco
 import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import {
-  GetDataPropsParams,
   GetDisplayPropsParams,
   GetPriceParams,
   GetPricePerShareParams,
@@ -64,18 +63,6 @@ export class EthereumOriginDollarWousdTokenFetcher extends AppTokenTemplatePosit
     const ratio = parseFloat(format(supplyRaw.mul(oneEther).div(underlyingBalance)));
 
     return [1 / ratio];
-  }
-
-  async getLiquidity({ appToken }: GetDataPropsParams<Wousd>) {
-    return appToken.supply * appToken.price;
-  }
-
-  async getReserves({ appToken }: GetDataPropsParams<Wousd>) {
-    return [appToken.pricePerShare[0] * appToken.supply];
-  }
-
-  async getApy(_params: GetDataPropsParams<Wousd>) {
-    return 0;
   }
 
   async getLabel({ appToken }: GetDisplayPropsParams<Wousd>): Promise<string> {

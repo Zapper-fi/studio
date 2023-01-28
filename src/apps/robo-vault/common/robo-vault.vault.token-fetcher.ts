@@ -40,14 +40,6 @@ export abstract class RoboVaultVaultTokenFetcher extends AppTokenTemplatePositio
     return [pricePerShare];
   }
 
-  async getLiquidity({ appToken }: GetDataPropsParams<RoboVault>) {
-    return appToken.supply * appToken.price;
-  }
-
-  async getReserves({ appToken }: GetDataPropsParams<RoboVault>) {
-    return [appToken.pricePerShare[0] * appToken.supply];
-  }
-
   async getApy({ appToken }: GetDataPropsParams<RoboVault>) {
     const data = await this.apiClient.getCachedVaults(this.network);
     const apy = (data.find(v => v.addr.toLowerCase() === appToken.address)?.apy ?? 0) * 100;

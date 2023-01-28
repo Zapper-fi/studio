@@ -66,10 +66,6 @@ export class ArbitrumUmamiFinanceCompoundTokenFetcher extends AppTokenTemplatePo
     return [reserve];
   }
 
-  async getLiquidity({ appToken }: GetDataPropsParams<UmamiFinanceCompound>) {
-    return appToken.supply * appToken.price;
-  }
-
   async getApy(_params: GetDataPropsParams<UmamiFinanceCompound>) {
     const { apy } = await this.yieldResolver.getYield();
     return Number(apy);

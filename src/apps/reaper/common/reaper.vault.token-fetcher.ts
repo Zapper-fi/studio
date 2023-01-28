@@ -5,7 +5,6 @@ import { isMulticallUnderlyingError } from '~multicall/multicall.ethers';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import {
   GetAddressesParams,
-  GetDataPropsParams,
   DefaultAppTokenDataProps,
   GetUnderlyingTokensParams,
   GetPricePerShareParams,
@@ -63,18 +62,6 @@ export abstract class ReaperVaultTokenFetcher extends AppTokenTemplatePositionFe
 
     const pricePerShare = Number(pricePerShareRaw) / 10 ** appToken.decimals;
     return [pricePerShare];
-  }
-
-  async getLiquidity({ appToken }: GetDataPropsParams<ReaperCrypt>) {
-    return appToken.supply * appToken.price;
-  }
-
-  async getReserves({ appToken }: GetDataPropsParams<ReaperCrypt>) {
-    return [appToken.pricePerShare[0] * appToken.supply];
-  }
-
-  async getApy(_params: GetDataPropsParams<ReaperCrypt>) {
-    return 0;
   }
 
   async getLabel({ contract }: GetDisplayPropsParams<ReaperCrypt>) {

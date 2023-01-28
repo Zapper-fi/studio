@@ -8,7 +8,6 @@ import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.prese
 import { DefaultDataProps } from '~position/display.interface';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import {
-  GetDataPropsParams,
   GetDisplayPropsParams,
   GetPricePerShareParams,
   GetUnderlyingTokensParams,
@@ -57,18 +56,6 @@ export class OptimismVelodromePoolsTokenFetcher extends AppTokenTemplatePosition
     const reserves = [Number(reserve0) / 10 ** token0.decimals, Number(reserve1) / 10 ** token1.decimals];
     const pricePerShare = reserves.map(r => r / appToken.supply);
     return pricePerShare;
-  }
-
-  async getLiquidity({ appToken }: GetDataPropsParams<VelodromePool>) {
-    return appToken.supply * appToken.price;
-  }
-
-  async getReserves({ appToken }: GetDataPropsParams<VelodromePool>) {
-    return (appToken.pricePerShare as number[]).map(v => v * appToken.supply);
-  }
-
-  async getApy() {
-    return 0;
   }
 
   async getLabel({ appToken }: GetDisplayPropsParams<VelodromePool>): Promise<string> {

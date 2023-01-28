@@ -63,18 +63,6 @@ export abstract class YieldProtocolPoolTokenFetcher extends AppTokenTemplatePosi
     return [pricePerShare];
   }
 
-  async getLiquidity({ appToken }: GetDataPropsParams<YieldProtocolPoolToken>) {
-    return appToken.supply * appToken.price;
-  }
-
-  async getReserves({ appToken }: GetDataPropsParams<YieldProtocolPoolToken>) {
-    return [appToken.pricePerShare[0] * appToken.supply];
-  }
-
-  async getApy(_params: GetDataPropsParams<YieldProtocolPoolToken>) {
-    return 0;
-  }
-
   async getDataProps(params: GetDataPropsParams<YieldProtocolPoolToken>) {
     const defaultDataProps = await super.getDataProps(params);
 

@@ -4,7 +4,6 @@ import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import {
-  GetDataPropsParams,
   GetDisplayPropsParams,
   GetPricePerShareParams,
   GetUnderlyingTokensParams,
@@ -44,18 +43,6 @@ export class EthereumPodsYieldStrategyTokenFetcher extends AppTokenTemplatePosit
 
     const pricePerShare = assets / supply;
     return [pricePerShare];
-  }
-
-  async getLiquidity({ appToken }: GetDataPropsParams<PodsYieldVault>) {
-    return appToken.supply * appToken.price;
-  }
-
-  async getReserves({ appToken }: GetDataPropsParams<PodsYieldVault>) {
-    return [appToken.pricePerShare[0] * appToken.supply];
-  }
-
-  async getApy() {
-    return 0;
   }
 
   async getLabel({ appToken }: GetDisplayPropsParams<PodsYieldVault>) {
