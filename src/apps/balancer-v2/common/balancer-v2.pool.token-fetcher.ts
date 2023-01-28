@@ -140,18 +140,6 @@ export abstract class BalancerV2PoolTokenFetcher extends AppTokenTemplatePositio
     return reserves.map(r => r / appToken.supply);
   }
 
-  async getLiquidity({ appToken }: GetDataPropsParams<BalancerPool>) {
-    return appToken.supply * appToken.price;
-  }
-
-  async getReserves({ appToken }: GetDataPropsParams<BalancerPool>) {
-    return (appToken.pricePerShare as number[]).map(v => v * appToken.supply);
-  }
-
-  async getApy(_params: GetDataPropsParams<BalancerPool>) {
-    return 0;
-  }
-
   async getDataProps(
     params: GetDataPropsParams<BalancerPool, BalancerV2PoolTokenDataProps, BalancerV2PoolTokenDefinition>,
   ): Promise<BalancerV2PoolTokenDataProps> {

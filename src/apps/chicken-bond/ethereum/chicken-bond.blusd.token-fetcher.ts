@@ -4,7 +4,7 @@ import { BigNumber } from 'ethers';
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
-import { GetDataPropsParams, GetPriceParams } from '~position/template/app-token.template.types';
+import { GetPriceParams } from '~position/template/app-token.template.types';
 
 import { ChickenBondBlusd, ChickenBondContractFactory } from '../contracts';
 
@@ -47,17 +47,5 @@ export class EthereumChickenBondBlusdTokenFetcher extends AppTokenTemplatePositi
     const price = Number(priceRaw) / 10 ** 18;
 
     return price;
-  }
-
-  async getLiquidity({ appToken }: GetDataPropsParams<ChickenBondBlusd>) {
-    return appToken.price * appToken.supply;
-  }
-
-  async getReserves({ appToken }: GetDataPropsParams<ChickenBondBlusd>) {
-    return [appToken.pricePerShare[0] * appToken.supply];
-  }
-
-  async getApy() {
-    return 0;
   }
 }

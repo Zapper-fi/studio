@@ -5,7 +5,6 @@ import { PositionTemplate } from '~app-toolkit/decorators/position-template.deco
 import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import {
-  GetDataPropsParams,
   GetDisplayPropsParams,
   GetPricePerShareParams,
   GetUnderlyingTokensParams,
@@ -69,18 +68,6 @@ export class EthereumLlamaAirforceVaultTokenFetcher extends AppTokenTemplatePosi
     const reserve = Number(reserveRaw) / 10 ** appToken.tokens[0].decimals;
     const pricePerShare = reserve / appToken.supply;
     return [pricePerShare];
-  }
-
-  async getLiquidity({ appToken }: GetDataPropsParams<LlamaAirforceUnionVault>) {
-    return appToken.supply * appToken.price;
-  }
-
-  async getReserves({ appToken }: GetDataPropsParams<LlamaAirforceUnionVault>) {
-    return [appToken.pricePerShare[0] * appToken.supply];
-  }
-
-  async getApy(_params: GetDataPropsParams<LlamaAirforceUnionVault>) {
-    return 0;
   }
 
   async getLabel({ appToken }: GetDisplayPropsParams<LlamaAirforceUnionVault>) {

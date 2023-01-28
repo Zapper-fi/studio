@@ -8,7 +8,6 @@ import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.te
 import {
   DefaultAppTokenDataProps,
   GetAddressesParams,
-  GetDataPropsParams,
   GetDefinitionsParams,
   GetDisplayPropsParams,
   GetPricePerShareParams,
@@ -70,18 +69,6 @@ export abstract class AcrossV2PoolTokenFetcher extends AppTokenTemplatePositionF
     const reserveRaw = poolInfo.liquidReserves.add(poolInfo.utilizedReserves).sub(poolInfo.undistributedLpFees);
     const reserve = Number(reserveRaw) / 10 ** appToken.tokens[0].decimals;
     return [reserve / appToken.supply];
-  }
-
-  async getLiquidity({ appToken }: GetDataPropsParams<AcrossV2PoolToken>) {
-    return appToken.supply * appToken.price;
-  }
-
-  async getReserves({ appToken }: GetDataPropsParams<AcrossV2PoolToken>) {
-    return [appToken.pricePerShare[0] * appToken.supply];
-  }
-
-  async getApy(_params: GetDataPropsParams<AcrossV2PoolToken>) {
-    return 0;
   }
 
   async getLabel({

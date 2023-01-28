@@ -5,11 +5,7 @@ import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import { Erc20 } from '~contract/contracts';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
-import {
-  GetUnderlyingTokensParams,
-  GetPricePerShareParams,
-  GetDataPropsParams,
-} from '~position/template/app-token.template.types';
+import { GetUnderlyingTokensParams, GetPricePerShareParams } from '~position/template/app-token.template.types';
 
 import { StakeDaoContractFactory } from '../contracts';
 
@@ -75,17 +71,5 @@ export class EthereumStakeDaoLockerTokenFetcher extends AppTokenTemplatePosition
     const pricePerShareRaw = await multicall.wrap(pool).get_dy(1 - knownIndex, knownIndex, amount);
     const pricePerShare = Number(pricePerShareRaw) / 10 ** 18;
     return [pricePerShare];
-  }
-
-  async getLiquidity({ appToken }: GetDataPropsParams<Erc20>) {
-    return appToken.supply * appToken.price;
-  }
-
-  async getReserves({ appToken }: GetDataPropsParams<Erc20>) {
-    return [appToken.pricePerShare[0] * appToken.supply];
-  }
-
-  async getApy() {
-    return 0;
   }
 }

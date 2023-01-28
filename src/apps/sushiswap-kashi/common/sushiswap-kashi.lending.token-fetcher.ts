@@ -114,18 +114,6 @@ export abstract class SushiswapKashiLendingTokenFetcher extends AppTokenTemplate
     return [1, 0];
   }
 
-  async getLiquidity({ appToken }: GetDataPropsParams<SushiswapKashiLendingToken>) {
-    return appToken.supply * appToken.price;
-  }
-
-  async getReserves({ appToken }: GetDataPropsParams<SushiswapKashiLendingToken>) {
-    return (appToken.pricePerShare as number[]).map(v => v * appToken.supply);
-  }
-
-  async getApy(_params: GetDataPropsParams<SushiswapKashiLendingToken>) {
-    return 0;
-  }
-
   async getDataProps(
     params: GetDataPropsParams<
       SushiswapKashiLendingToken,
