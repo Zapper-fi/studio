@@ -62,9 +62,9 @@ export class TenderizeTokenDefinitionsResolver {
     const tokenDefinitions = definitionsData.configs.map(token => {
       return {
         id: token.id.toLowerCase(),
-        address: token.tenderToken.toLowerCase(),
         steak: token.steak.toLowerCase(),
         lpToken: token.lpToken.toLowerCase(),
+        tenderToken: token.tenderToken.toLowerCase(),
         tenderSwap: token.tenderSwap.toLowerCase(),
       };
     });

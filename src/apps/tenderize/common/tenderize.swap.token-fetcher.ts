@@ -1,7 +1,6 @@
 import { Inject } from '@nestjs/common';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
-import { DefaultDataProps } from '~position/display.interface';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import {
   GetUnderlyingTokensParams,
@@ -35,7 +34,8 @@ export abstract class SwapTokenFetcher extends AppTokenTemplatePositionFetcher<
   }
 
   async getDefinitions(): Promise<TenderizeTokenDefinition[]> {
-    return this.tokenDefinitionsResolver.getTokenDefinitions(this.network);
+    const definitions = await this.tokenDefinitionsResolver.getTokenDefinitions(this.network);
+    return definitions.map(v => ({ ...v, address: v.lpToken }));
   }
 
   async getAddresses({ definitions }: GetAddressesParams<TenderizeTokenDefinition>): Promise<string[]> {
@@ -47,7 +47,7 @@ export abstract class SwapTokenFetcher extends AppTokenTemplatePositionFetcher<
   }: GetUnderlyingTokensParams<TenderToken, TenderizeTokenDefinition>) {
     return [
       { address: definition.steak, network: this.network },
-      { address: definition.address, network: this.network },
+      { address: definition.tenderToken, network: this.network },
     ];
   }
 
@@ -57,7 +57,7 @@ export abstract class SwapTokenFetcher extends AppTokenTemplatePositionFetcher<
 
   async getPrice({
     appToken,
-  }: GetPriceParams<TenderToken, DefaultDataProps, TenderizeTokenDefinition>): Promise<number> {
+  }: GetPriceParams<TenderToken, DefaultAppTokenDataProps, TenderizeTokenDefinition>): Promise<number> {
     return appToken.tokens[0].price;
   }
 
