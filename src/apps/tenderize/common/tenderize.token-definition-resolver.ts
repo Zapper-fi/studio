@@ -23,6 +23,7 @@ export type TenderTokenFetcherResponse = {
     symbol: string;
     steak: string;
     tenderSwap: string;
+    tenderFarm: string;
   }[];
 };
 
@@ -35,6 +36,7 @@ export const TOKEN_QUERY = gql`
       symbol
       steak
       tenderSwap
+      tenderFarm
     }
   }
 `;
@@ -66,6 +68,7 @@ export class TenderizeTokenDefinitionsResolver {
         lpToken: token.lpToken.toLowerCase(),
         tenderToken: token.tenderToken.toLowerCase(),
         tenderSwap: token.tenderSwap.toLowerCase(),
+        tenderFarm: token.tenderFarm.toLowerCase(),
       };
     });
     return tokenDefinitions;

@@ -5,4 +5,5 @@ export type TenderizeTokenDefinition = {
   lpToken: string;
   tenderToken: string;
   tenderSwap: string;
+  tenderFarm: string;
 };
