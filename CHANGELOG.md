@@ -4,6 +4,18 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.378.0](https://github.com/Zapper-fi/studio/compare/v0.377.1...v0.378.0) (2023-01-30)
+
+
+### Features
+
+* **idle:** Add junior and senior tranches ([#2217](https://github.com/Zapper-fi/studio/issues/2217)) ([c0da62e](https://github.com/Zapper-fi/studio/commit/c0da62e2d33240d93b965ef5b46ed9b693a9ba66))
+
+
+### Bug Fixes
+
+* **apps:** Linting and clean up ([#2214](https://github.com/Zapper-fi/studio/issues/2214)) ([c9223de](https://github.com/Zapper-fi/studio/commit/c9223de454aa5b3cf1d28b0d2396988df257241f))
+
 ## [0.377.1](https://github.com/Zapper-fi/studio/compare/v0.377.0...v0.377.1) (2023-01-27)
 
 
