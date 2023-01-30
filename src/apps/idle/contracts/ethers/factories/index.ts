@@ -2,4 +2,5 @@
 /* tslint:disable */
 /* eslint-disable */
 export { IdleController__factory } from './IdleController__factory';
+export { IdlePerpYieldTranches__factory } from './IdlePerpYieldTranches__factory';
 export { IdleToken__factory } from './IdleToken__factory';
