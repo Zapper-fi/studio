@@ -4,8 +4,7 @@ import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { ContractFactory } from '~contract/contracts';
 import { Network } from '~types/network.interface';
 
-import { TenderSwap__factory } from './ethers';
-import { TenderToken__factory } from './ethers';
+import { TenderFarm__factory, TenderSwap__factory, TenderToken__factory } from './ethers';
 
 // eslint-disable-next-line
 type ContractOpts = { address: string; network: Network };
@@ -16,6 +15,9 @@ export class TenderizeContractFactory extends ContractFactory {
     super((network: Network) => appToolkit.getNetworkProvider(network));
   }
 
+  tenderFarm({ address, network }: ContractOpts) {
+    return TenderFarm__factory.connect(address, this.appToolkit.getNetworkProvider(network));
+  }
   tenderSwap({ address, network }: ContractOpts) {
     return TenderSwap__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
@@ -24,5 +26,6 @@ export class TenderizeContractFactory extends ContractFactory {
   }
 }
 
+export type { TenderFarm } from './ethers';
 export type { TenderSwap } from './ethers';
 export type { TenderToken } from './ethers';

@@ -35,11 +35,12 @@ export abstract class TenderTokenFetcher extends AppTokenTemplatePositionFetcher
   }
 
   async getDefinitions(): Promise<TenderizeTokenDefinition[]> {
-    return this.tokenDefinitionsResolver.getTokenDefinitions(this.network);
+    const definitions = await this.tokenDefinitionsResolver.getTokenDefinitions(this.network);
+    return definitions.map(v => ({ ...v, address: v.tenderToken }));
   }
 
   async getAddresses({ definitions }: GetAddressesParams<TenderizeTokenDefinition>): Promise<string[]> {
-    return definitions.map(v => v.address);
+    return definitions.map(v => v.tenderToken);
   }
 
   async getUnderlyingTokenDefinitions({

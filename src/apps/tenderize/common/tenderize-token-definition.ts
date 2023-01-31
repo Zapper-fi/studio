@@ -3,5 +3,7 @@ export type TenderizeTokenDefinition = {
   address: string;
   steak: string;
   lpToken: string;
+  tenderToken: string;
   tenderSwap: string;
+  tenderFarm: string;
 };
