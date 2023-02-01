@@ -9,6 +9,8 @@ import {
   JonesMillinerV2__factory,
   JonesStakingRewards__factory,
   JonesStakingRewardsFactory__factory,
+  JonesStrategyToken__factory,
+  JonesStrategyVault__factory,
   JonesVault__factory,
 } from './ethers';
 
@@ -33,6 +35,12 @@ export class JonesDaoContractFactory extends ContractFactory {
   jonesStakingRewardsFactory({ address, network }: ContractOpts) {
     return JonesStakingRewardsFactory__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
+  jonesStrategyToken({ address, network }: ContractOpts) {
+    return JonesStrategyToken__factory.connect(address, this.appToolkit.getNetworkProvider(network));
+  }
+  jonesStrategyVault({ address, network }: ContractOpts) {
+    return JonesStrategyVault__factory.connect(address, this.appToolkit.getNetworkProvider(network));
+  }
   jonesVault({ address, network }: ContractOpts) {
     return JonesVault__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
@@ -42,4 +50,6 @@ export type { JonesMetavault } from './ethers';
 export type { JonesMillinerV2 } from './ethers';
 export type { JonesStakingRewards } from './ethers';
 export type { JonesStakingRewardsFactory } from './ethers';
+export type { JonesStrategyToken } from './ethers';
+export type { JonesStrategyVault } from './ethers';
 export type { JonesVault } from './ethers';
