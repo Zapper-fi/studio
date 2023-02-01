@@ -4,6 +4,20 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.380.0](https://github.com/Zapper-fi/studio/compare/v0.379.0...v0.380.0) (2023-02-01)
+
+
+### Features
+
+* **jones-dao:** Add advanced strategies (jGLP + jUSDC) ([#2224](https://github.com/Zapper-fi/studio/issues/2224)) ([d44f02a](https://github.com/Zapper-fi/studio/commit/d44f02a458425fbfdd002347de96d088b5714619))
+* **velodrome:** claimable bribes ([#2185](https://github.com/Zapper-fi/studio/issues/2185)) ([e869a2f](https://github.com/Zapper-fi/studio/commit/e869a2fa9072798715ff78fe82ac311509469e43))
+
+
+### Bug Fixes
+
+* **amp:** Extract to studio ([#2226](https://github.com/Zapper-fi/studio/issues/2226)) ([8c29e63](https://github.com/Zapper-fi/studio/commit/8c29e63b9ec96d65da30cfb3c06f297c4b140d24))
+* **velodrome:** Filter out not supported underlying tokens on bribe contract position ([#2227](https://github.com/Zapper-fi/studio/issues/2227)) ([abffeec](https://github.com/Zapper-fi/studio/commit/abffeeca34e32cbd811c0a11d3f583c1d817c282))
+
 ## [0.379.0](https://github.com/Zapper-fi/studio/compare/v0.378.0...v0.379.0) (2023-01-31)
 
 
