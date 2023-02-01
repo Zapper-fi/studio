@@ -23,6 +23,14 @@ export type TenderTokenFetcherResponse = {
     symbol: string;
     steak: string;
     tenderSwap: string;
+    tenderFarm: string;
+  }[];
+};
+
+export type RewardRateFetcherResponse = {
+  rewardsAddedEvents: {
+    amount: string;
+    timestamp: string;
   }[];
 };
 
@@ -35,6 +43,7 @@ export const TOKEN_QUERY = gql`
       symbol
       steak
       tenderSwap
+      tenderFarm
     }
   }
 `;
@@ -62,10 +71,11 @@ export class TenderizeTokenDefinitionsResolver {
     const tokenDefinitions = definitionsData.configs.map(token => {
       return {
         id: token.id.toLowerCase(),
-        address: token.tenderToken.toLowerCase(),
         steak: token.steak.toLowerCase(),
         lpToken: token.lpToken.toLowerCase(),
+        tenderToken: token.tenderToken.toLowerCase(),
         tenderSwap: token.tenderSwap.toLowerCase(),
+        tenderFarm: token.tenderFarm.toLowerCase(),
       };
     });
     return tokenDefinitions;
@@ -87,5 +97,32 @@ export class TenderizeTokenDefinitionsResolver {
     const apyRaw = apyData.find(x => x.subgraphId.toLowerCase() === id)?.apy ?? 0;
 
     return Number(apyRaw);
+  }
+
+  @Cache({
+    key: (network, tenderFarm) => `studio:tenderize:${network}:${tenderFarm}-reward-data`,
+    ttl: 5 * 60, // 5 minutes
+  })
+  private async getRewardRateData(network: Network, tenderFarm: string) {
+    return gqlFetch<RewardRateFetcherResponse>({
+      endpoint: `https://api.thegraph.com/subgraphs/name/tenderize/tenderize-${network}`,
+      variables: { tenderFarm },
+      query: gql`
+        query ($tenderFarm: String!) {
+          rewardsAddedEvents(where: { tenderFarm: $tenderFarm }, first: 2, orderBy: timestamp, orderDirection: desc) {
+            amount
+            timestamp
+          }
+        }
+      `,
+    });
+  }
+
+  async getRewardRate(network: Network, tenderFarm: string) {
+    const { rewardsAddedEvents } = await this.getRewardRateData(network, tenderFarm.toLowerCase());
+    if (rewardsAddedEvents.length != 2) return 0;
+
+    const [{ amount, timestamp }, { timestamp: prevTimestamp }] = rewardsAddedEvents;
+    return BigInt(amount) / (BigInt(timestamp) - BigInt(prevTimestamp));
   }
 }

@@ -4,6 +4,18 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.379.0](https://github.com/Zapper-fi/studio/compare/v0.378.0...v0.379.0) (2023-01-31)
+
+
+### Features
+
+* **tenderize:** ✨ add farm support ([#2219](https://github.com/Zapper-fi/studio/issues/2219)) ([c853076](https://github.com/Zapper-fi/studio/commit/c853076bfe08e09ae8962830bfcbebdc7d61c932))
+
+
+### Bug Fixes
+
+* **stake-dao:** Add sdYFI locker ([#2222](https://github.com/Zapper-fi/studio/issues/2222)) ([b918c27](https://github.com/Zapper-fi/studio/commit/b918c27db8555dec13176a9219186824d361aaf5))
+
 ## [0.378.0](https://github.com/Zapper-fi/studio/compare/v0.377.1...v0.378.0) (2023-01-30)
 
 
