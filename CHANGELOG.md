@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.380.2](https://github.com/Zapper-fi/studio/compare/v0.380.1...v0.380.2) (2023-02-02)
+
+
+### Bug Fixes
+
+* **balancer-v2:** Remove liquidity mining claimables ([#2231](https://github.com/Zapper-fi/studio/issues/2231)) ([d899498](https://github.com/Zapper-fi/studio/commit/d899498a245507be72ab03c34f5d4192ea189fff))
+
 ## [0.380.1](https://github.com/Zapper-fi/studio/compare/v0.380.0...v0.380.1) (2023-02-02)
 
 
