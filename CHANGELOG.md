@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.380.1](https://github.com/Zapper-fi/studio/compare/v0.380.0...v0.380.1) (2023-02-02)
+
+
+### Bug Fixes
+
+* **velodrome:** Fix claimables and extract external api calls into a resolver ([#2229](https://github.com/Zapper-fi/studio/issues/2229)) ([36b4513](https://github.com/Zapper-fi/studio/commit/36b45137f131949a55d4eefd3f7bf41b7e654b0b))
+
 ## [0.380.0](https://github.com/Zapper-fi/studio/compare/v0.379.0...v0.380.0) (2023-02-01)
 
 
