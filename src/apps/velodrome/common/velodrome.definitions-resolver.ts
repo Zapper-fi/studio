@@ -23,7 +23,7 @@ export class VelodromeDefinitionsResolver {
     ttl: 5 * 60, // 60 minutes
   })
   private async getPoolDefinitionsData() {
-    const url = `htthttps://api.velodrome.finance/api/v1/pairs`;
+    const url = `https://api.velodrome.finance/api/v1/pairs`;
     const { data } = await Axios.get<{ data: VelodromeApiPairData[] }>(url);
 
     return data.data;
