@@ -11,7 +11,6 @@ import { LidoContractFactory, LidoWsteth } from '../contracts';
 @PositionTemplate()
 export class EthereumLidoWstethTokenFetcher extends AppTokenTemplatePositionFetcher<LidoWsteth> {
   groupLabel = 'wstETH';
-  isExcludedFromBalances = true;
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
