@@ -4,6 +4,19 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.381.0](https://github.com/Zapper-fi/studio/compare/v0.380.3...v0.381.0) (2023-02-03)
+
+
+### Features
+
+* **amp:** add staking rewards balance ([#2234](https://github.com/Zapper-fi/studio/issues/2234)) ([eff0100](https://github.com/Zapper-fi/studio/commit/eff01005848e8ba2c17a9e94d938c3ad222381f1))
+* **velodrome:** claimable fees ([#2240](https://github.com/Zapper-fi/studio/issues/2240)) ([7784180](https://github.com/Zapper-fi/studio/commit/77841806ebd5db733b153603097c76c68bd94d95))
+
+
+### Bug Fixes
+
+* **velodrome:** Fix definition resolver url and set staking position reward rates to 0 (temporary) ([#2238](https://github.com/Zapper-fi/studio/issues/2238)) ([a816f76](https://github.com/Zapper-fi/studio/commit/a816f7635413d6d9897b39b1d071cc85d7848aaa))
+
 ## [0.380.3](https://github.com/Zapper-fi/studio/compare/v0.380.2...v0.380.3) (2023-02-03)
 
 
