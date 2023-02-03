@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.381.1](https://github.com/Zapper-fi/studio/compare/v0.381.0...v0.381.1) (2023-02-03)
+
+
+### Bug Fixes
+
+* **lido:** Show stETH and wstETH balances ([#2241](https://github.com/Zapper-fi/studio/issues/2241)) ([3f0f346](https://github.com/Zapper-fi/studio/commit/3f0f3466a7a10318ea6727f04d6f3c9793e996f5))
+
 ## [0.381.0](https://github.com/Zapper-fi/studio/compare/v0.380.3...v0.381.0) (2023-02-03)
 
 
