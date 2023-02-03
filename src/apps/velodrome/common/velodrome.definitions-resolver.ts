@@ -13,6 +13,7 @@ export interface VelodromeApiPairData {
   apr: number;
   gauge: {
     wrapped_bribe_address: string;
+    fees_address: string;
   };
 }
 
@@ -23,7 +24,7 @@ export class VelodromeDefinitionsResolver {
     ttl: 5 * 60, // 60 minutes
   })
   private async getPoolDefinitionsData() {
-    const url = `htthttps://api.velodrome.finance/api/v1/pairs`;
+    const url = `https://api.velodrome.finance/api/v1/pairs`;
     const { data } = await Axios.get<{ data: VelodromeApiPairData[] }>(url);
 
     return data.data;
@@ -55,6 +56,22 @@ export class VelodromeDefinitionsResolver {
         if (wBribeAddress == null) return null;
 
         return { address: wBribeAddress.toLowerCase(), name: pool.symbol };
+      });
+
+    return _.compact(definitionsRaw);
+  }
+
+  async getFeesDefinitions() {
+    const definitionsData = await this.getPoolDefinitionsData();
+
+    const definitionsRaw = definitionsData
+      .filter(v => !!v)
+      .filter(v => !!v.gauge)
+      .map(pool => {
+        const feeAddress = pool.gauge.fees_address;
+        if (feeAddress == null) return null;
+
+        return { address: feeAddress.toLowerCase(), name: pool.symbol, poolAddress: pool.address.toLowerCase() };
       });
 
     return _.compact(definitionsRaw);

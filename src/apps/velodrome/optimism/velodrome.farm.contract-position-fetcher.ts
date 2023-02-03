@@ -46,9 +46,10 @@ export class OptimismVelodromeStakingContractPositionFetcher extends SingleStaki
     return Promise.all(range(numRewards).map(async n => await contract.rewards(n)));
   }
 
-  getRewardRates({ contract, contractPosition }: GetDataPropsParams<VelodromeGauge, SingleStakingFarmDataProps>) {
+  // @TODO: Find rewards rates which matches the APY returned from their API
+  getRewardRates({ contractPosition }: GetDataPropsParams<VelodromeGauge, SingleStakingFarmDataProps>) {
     const rewardTokens = contractPosition.tokens.filter(isClaimable);
-    return Promise.all(rewardTokens.map(rt => contract.rewardPerToken(rt.address)));
+    return Promise.all(rewardTokens.map(_rt => 0));
   }
 
   async getStakedTokenBalance({
