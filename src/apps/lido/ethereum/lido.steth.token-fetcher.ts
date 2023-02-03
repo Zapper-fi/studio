@@ -12,7 +12,6 @@ import { LidoSteth } from '../contracts/ethers/LidoSteth';
 @PositionTemplate()
 export class EthereumLidoStethTokenFetcher extends AppTokenTemplatePositionFetcher<LidoSteth> {
   groupLabel = 'stETH';
-  isExcludedFromBalances = true;
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
