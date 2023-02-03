@@ -47,7 +47,7 @@ export class EthereumAmpFarmContractPositionFetcher extends SingleStakingFarmTem
   })
   async getApiData(address: string) {
     const axiosInstance = axios.create({
-      baseURL: this.configService.get('FLEXA_CAPACITY_API_URL'),
+      baseURL: 'https://api.capacity.production.flexa.network',
       headers: {
         Accept: 'application/vnd.flexa.capacity.v1+json',
       },
@@ -81,7 +81,12 @@ export class EthereumAmpFarmContractPositionFetcher extends SingleStakingFarmTem
     return new BigNumber(supplyTotal).plus(rewardTotal).toFixed(0);
   }
 
-  async getRewardTokenBalances() {
-    return [0];
+  async getRewardTokenBalances({ address }: GetTokenBalancesParams<AmpStaking>) {
+    const { rewardTotal } = await this.getApiData(address);
+    return Number(rewardTotal).toFixed(0);
+  }
+
+  async getLabel() {
+    return 'Staked Amp';
   }
 }
