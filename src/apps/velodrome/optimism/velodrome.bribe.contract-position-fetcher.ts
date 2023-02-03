@@ -107,11 +107,13 @@ export class OptimismVelodromeBribeContractPositionFetcher extends ContractPosit
           }),
         );
 
-        const tokenBalances = tokenBalancesRaw.flat();
+        const allTokensRaw = contractPosition.tokens.map((cp, idx) => {
+          return veTokenIds.map((_id, index) => {
+            return drillBalance(cp, tokenBalancesRaw[idx][index]?.toString() ?? '0');
+          });
+        });
 
-        const allTokens = contractPosition.tokens.map((cp, idx) =>
-          drillBalance(cp, tokenBalances[idx]?.toString() ?? '0'),
-        );
+        const allTokens = allTokensRaw.flat();
 
         const tokens = allTokens.filter(v => Math.abs(v.balanceUSD) > 0.01);
         const balanceUSD = sumBy(tokens, t => t.balanceUSD);
