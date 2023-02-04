@@ -61,7 +61,7 @@ export class EthereumAmpFarmContractPositionFetcher extends ContractPositionTemp
   @Cache({
     instance: 'business',
     key: (address: string) => `apps-v3:balance:ethereum:amp:api-data:${address}`,
-    ttl: 5 * 60, // 5 minutes
+    ttl: 15 * 60, // 15 minutes
   })
   async getAddressBalances(address: string) {
     const axiosInstance = axios.create({
@@ -87,7 +87,7 @@ export class EthereumAmpFarmContractPositionFetcher extends ContractPositionTemp
   @Cache({
     instance: 'business',
     key: () => `apps-v3:balance:ethereum:amp:api-data`,
-    ttl: 5 * 60, // 5 minutes
+    ttl: 15 * 60, // 15 minutes
   })
   async getPoolApys() {
     const capacityResponse = axios.create({
