@@ -1,16 +1,18 @@
 import { Inject } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import axios, { AxiosError } from 'axios';
-import { BigNumber } from 'bignumber.js';
+import { BigNumberish } from 'ethers';
+import { sortBy } from 'lodash';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import { Cache } from '~cache/cache.decorator';
-import { GetTokenBalancesParams } from '~position/template/contract-position.template.types';
+import { MetaType } from '~position/position.interface';
+import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
 import {
-  SingleStakingFarmDefinition,
-  SingleStakingFarmTemplateContractPositionFetcher,
-} from '~position/template/single-staking.template.contract-position-fetcher';
+  DefaultContractPositionDefinition,
+  GetTokenBalancesParams,
+} from '~position/template/contract-position.template.types';
 
 import { AmpContractFactory, AmpStaking } from '../contracts';
 
@@ -19,18 +21,9 @@ type DepositedAmpResponse = {
   rewardTotal: string;
 };
 
-const FARMS = [
-  // AMP
-  {
-    address: '0x706d7f8b3445d8dfc790c524e3990ef014e7c578',
-    stakedTokenAddress: '0xff20817765cb7f73d4bde2e66e067e58d11095c2',
-    rewardTokenAddresses: ['0xff20817765cb7f73d4bde2e66e067e58d11095c2'],
-  },
-];
-
 @PositionTemplate()
-export class EthereumAmpFarmContractPositionFetcher extends SingleStakingFarmTemplateContractPositionFetcher<AmpStaking> {
-  groupLabel = 'Farms';
+export class EthereumAmpFarmContractPositionFetcher extends ContractPositionTemplatePositionFetcher<AmpStaking> {
+  groupLabel = 'Flexa Capacity';
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
@@ -45,14 +38,39 @@ export class EthereumAmpFarmContractPositionFetcher extends SingleStakingFarmTem
     key: (address: string) => `apps-v3:balance:ethereum:amp:api-data:${address}`,
     ttl: 5 * 60, // 5 minutes
   })
-  async getApiData(address: string) {
+  async getDefinitions(): Promise<DefaultContractPositionDefinition[]> {
+    return [{ address: '0x706d7f8b3445d8dfc790c524e3990ef014e7c578' }];
+  }
+
+  async getTokenDefinitions() {
+    return [
+      {
+        metaType: MetaType.SUPPLIED,
+        address: '0xff20817765cb7f73d4bde2e66e067e58d11095c2',
+        network: this.network,
+      },
+      //add second position to represent earned rewards that are not claimable and auto compounded
+      //we do not want claimable label on front end
+      {
+        metaType: MetaType.SUPPLIED,
+        address: '0xff20817765cb7f73d4bde2e66e067e58d11095c2',
+        network: this.network,
+        symbol: 'AMP Rewards',
+      },
+    ];
+  }
+
+  getContract(address: string): AmpStaking {
+    return this.contractFactory.ampStaking({ address, network: this.network });
+  }
+
+  async getAddressBalances(address: string) {
     const axiosInstance = axios.create({
       baseURL: 'https://api.capacity.production.flexa.network',
       headers: {
         Accept: 'application/vnd.flexa.capacity.v1+json',
       },
     });
-
     return axiosInstance
       .get<DepositedAmpResponse>(`/accounts/${address}/totals`)
       .then(({ data }) => data)
@@ -63,30 +81,42 @@ export class EthereumAmpFarmContractPositionFetcher extends SingleStakingFarmTem
       });
   }
 
-  getContract(address: string): AmpStaking {
-    return this.contractFactory.ampStaking({ address, network: this.network });
+  async getTokenBalancesPerPosition({ address }: GetTokenBalancesParams<AmpStaking>): Promise<BigNumberish[]> {
+    const { supplyTotal, rewardTotal } = await this.getAddressBalances(address);
+    return rewardTotal > supplyTotal ? [] : [supplyTotal, rewardTotal];
   }
 
-  async getFarmDefinitions(): Promise<SingleStakingFarmDefinition[]> {
-    return FARMS;
-  }
-
-  async getRewardRates() {
-    return [0];
-  }
-
-  async getStakedTokenBalance({ address }: GetTokenBalancesParams<AmpStaking>) {
-    // We rely on the API to get staked and claimable balances
-    const { supplyTotal, rewardTotal } = await this.getApiData(address);
-    return new BigNumber(supplyTotal).plus(rewardTotal).toFixed(0);
-  }
-
-  async getRewardTokenBalances({ address }: GetTokenBalancesParams<AmpStaking>) {
-    const { rewardTotal } = await this.getApiData(address);
-    return Number(rewardTotal).toFixed(0);
+  async getPoolApys() {
+    const capacityResponse = axios.create({
+      baseURL: 'https://api.capacity.production.flexa.network',
+      headers: {
+        Accept: 'application/vnd.flexa.capacity.v1+json',
+      },
+    });
+    return capacityResponse
+      .get('/apps')
+      .then(function (response) {
+        let apyRangeLabel;
+        const data = response.data;
+        if (data.apps) {
+          for (const i in data.apps) {
+            data.apps[i].numApy = Number(data.apps[i].apy);
+          }
+          const sortedApps = sortBy(data.apps, 'numApy');
+          const lowestApy = sortedApps[0].apy === '0' ? sortedApps[1].apy : sortedApps[0].apy;
+          const highestApy = sortedApps[sortedApps.length - 1].apy;
+          apyRangeLabel = 'Staked Amp (' + highestApy + '% to ' + lowestApy + '% APY)';
+        } else {
+          apyRangeLabel = 'Staked Amp';
+        }
+        return apyRangeLabel;
+      })
+      .catch(function () {
+        return 'Staked Amp';
+      });
   }
 
   async getLabel() {
-    return 'Staked Amp';
+    return await this.getPoolApys();
   }
 }
