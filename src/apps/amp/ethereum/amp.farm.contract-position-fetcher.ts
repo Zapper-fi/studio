@@ -33,11 +33,6 @@ export class EthereumAmpFarmContractPositionFetcher extends ContractPositionTemp
     super(appToolkit);
   }
 
-  @Cache({
-    instance: 'business',
-    key: (address: string) => `apps-v3:balance:ethereum:amp:api-data:${address}`,
-    ttl: 5 * 60, // 5 minutes
-  })
   async getDefinitions(): Promise<DefaultContractPositionDefinition[]> {
     return [{ address: '0x706d7f8b3445d8dfc790c524e3990ef014e7c578' }];
   }
@@ -50,9 +45,9 @@ export class EthereumAmpFarmContractPositionFetcher extends ContractPositionTemp
         network: this.network,
       },
       //add second position to represent earned rewards that are not claimable and auto compounded
-      //we do not want claimable label on front end
+      //we do not want claimable label on front end, using LOCKED for now
       {
-        metaType: MetaType.SUPPLIED,
+        metaType: MetaType.LOCKED,
         address: '0xff20817765cb7f73d4bde2e66e067e58d11095c2',
         network: this.network,
         symbol: 'AMP Rewards',
@@ -63,7 +58,11 @@ export class EthereumAmpFarmContractPositionFetcher extends ContractPositionTemp
   getContract(address: string): AmpStaking {
     return this.contractFactory.ampStaking({ address, network: this.network });
   }
-
+  @Cache({
+    instance: 'business',
+    key: (address: string) => `apps-v3:balance:ethereum:amp:api-data:${address}`,
+    ttl: 5 * 60, // 5 minutes
+  })
   async getAddressBalances(address: string) {
     const axiosInstance = axios.create({
       baseURL: 'https://api.capacity.production.flexa.network',
@@ -85,7 +84,11 @@ export class EthereumAmpFarmContractPositionFetcher extends ContractPositionTemp
     const { supplyTotal, rewardTotal } = await this.getAddressBalances(address);
     return rewardTotal > supplyTotal ? [] : [supplyTotal, rewardTotal];
   }
-
+  @Cache({
+    instance: 'business',
+    key: () => `apps-v3:balance:ethereum:amp:api-data`,
+    ttl: 5 * 60, // 5 minutes
+  })
   async getPoolApys() {
     const capacityResponse = axios.create({
       baseURL: 'https://api.capacity.production.flexa.network',
