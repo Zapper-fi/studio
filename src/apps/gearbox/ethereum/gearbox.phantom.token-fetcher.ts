@@ -11,6 +11,7 @@ import { GearboxContractFactory, PhantomToken } from '../contracts';
 export class EthereumGearboxPhantomTokenFetcher extends AppTokenTemplatePositionFetcher<PhantomToken> {
   groupLabel = 'Phantom Tokens';
   isExcludedFromExplore = true;
+  isExcludedFromBalances = true;
   isExcludedFromTvl = true;
 
   constructor(
