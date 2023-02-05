@@ -4,6 +4,18 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.382.0](https://github.com/Zapper-fi/studio/compare/v0.381.1...v0.382.0) (2023-02-05)
+
+
+### Features
+
+* **amp:** Add getTokenBalancesPerPosition, update label & update group label. ([#2247](https://github.com/Zapper-fi/studio/issues/2247)) ([168dbc6](https://github.com/Zapper-fi/studio/commit/168dbc62c03e881ca75e4e09e15f94dfb4386dc6))
+
+
+### Bug Fixes
+
+* **gearbox:** Exclude phantom app tokens from balances ([#2251](https://github.com/Zapper-fi/studio/issues/2251)) ([d9911df](https://github.com/Zapper-fi/studio/commit/d9911dfdec44deecaef728dc8c7a88a9d47acaab))
+
 ## [0.381.1](https://github.com/Zapper-fi/studio/compare/v0.381.0...v0.381.1) (2023-02-03)
 
 
