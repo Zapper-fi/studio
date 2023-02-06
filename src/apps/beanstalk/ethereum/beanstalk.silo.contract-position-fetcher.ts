@@ -29,7 +29,6 @@ export type SiloDefinition = {
 @PositionTemplate()
 export class EthereumBeanstalkSiloContractPositionFetcher extends ContractPositionTemplatePositionFetcher<Beanstalk> {
   groupLabel = 'Silo Deposits';
-  contract: Beanstalk;
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
@@ -38,12 +37,8 @@ export class EthereumBeanstalkSiloContractPositionFetcher extends ContractPositi
     super(appToolkit);
   }
 
-  // We memoize it since it's the same Beanstalk contract for all positions
   getContract(_address: string): Beanstalk {
-    if (!this.contract) {
-      this.contract = this.beanstalkContractFactory.beanstalk({ address: BEANSTALK_ADDRESS, network: this.network });
-    }
-    return this.contract;
+    return this.beanstalkContractFactory.beanstalk({ address: BEANSTALK_ADDRESS, network: this.network });
   }
 
   getDefinitions(_params: GetDefinitionsParams): Promise<SiloDefinition[]> {
