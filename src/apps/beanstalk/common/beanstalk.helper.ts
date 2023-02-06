@@ -40,7 +40,6 @@ export const whitelist: Token[] = [BEAN, BEANCRV3, urBEAN, urBEANCRV3];
 export const findByAddress = (address: string) => tokens.find(t => t.address === address);
 
 export const silos = {
-  '0xEARNINGS': { name: 'Silow Rewards', underlying: [BEAN] },
   [BEAN.address]: { name: 'Bean', underlying: [BEAN] },
   [BEANCRV3.address]: { name: 'BEAN:3CRV LP', underlying: [BEAN, CRV3] },
   // [urBEAN.address]: { name: 'Unripe Bean', underlying: [BEAN] },

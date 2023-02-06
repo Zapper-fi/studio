@@ -88,7 +88,7 @@ export class EthereumBeanstalkSiloContractPositionFetcher extends ContractPositi
       },
     });
 
-    const total = [...data.farmer.deposited, ...data.farmer.withdrawn].reduce((prev, curr) => {
+    const total = [...(data?.farmer?.deposited ?? []), ...(data?.farmer?.withdrawn ?? [])].reduce((prev, curr) => {
       return (prev as BigNumber).add(curr.amount);
     }, ethers.constants.Zero);
 
