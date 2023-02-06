@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.382.1](https://github.com/Zapper-fi/studio/compare/v0.382.0...v0.382.1) (2023-02-06)
+
+
+### Bug Fixes
+
+* **impermax:** Add position presenter ([#2254](https://github.com/Zapper-fi/studio/issues/2254)) ([1eef5bc](https://github.com/Zapper-fi/studio/commit/1eef5bca3251f1eafbe652760482e623f12f38a1))
+
 ## [0.382.0](https://github.com/Zapper-fi/studio/compare/v0.381.1...v0.382.0) (2023-02-05)
 
 
