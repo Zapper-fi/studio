@@ -7,8 +7,12 @@ import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.prese
 import { DisplayProps } from '~position/display.interface';
 import { MetaType } from '~position/position.interface';
 import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
-import { GetDisplayPropsParams, GetTokenBalancesParams } from '~position/template/contract-position.template.types';
-import { GetDefinitionsParams, GetTokenDefinitionsParams } from '~position/template/contract-position.template.types';
+import {
+  GetDisplayPropsParams,
+  GetTokenBalancesParams,
+  GetDefinitionsParams,
+  GetTokenDefinitionsParams,
+} from '~position/template/contract-position.template.types';
 
 import { ImpermaxContractFactory, Borrowable } from '../contracts';
 
