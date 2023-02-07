@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.384.0](https://github.com/Zapper-fi/studio/compare/v0.383.0...v0.384.0) (2023-02-07)
+
+
+### Features
+
+* **velodrome:** Fix raw balances ([#2260](https://github.com/Zapper-fi/studio/issues/2260)) ([bbef63a](https://github.com/Zapper-fi/studio/commit/bbef63a2076721b9a8c6932a705a1f6f96f896d1))
+
 ## [0.383.0](https://github.com/Zapper-fi/studio/compare/v0.382.1...v0.383.0) (2023-02-07)
 
 
