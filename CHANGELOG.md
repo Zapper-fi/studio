@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.383.0](https://github.com/Zapper-fi/studio/compare/v0.382.1...v0.383.0) (2023-02-07)
+
+
+### Features
+
+* **lyra:** Ethereum LP farming ([#2258](https://github.com/Zapper-fi/studio/issues/2258)) ([d91eea7](https://github.com/Zapper-fi/studio/commit/d91eea7575e36d6923e81bb00d9cfbfaaef5e749))
+
 ## [0.382.1](https://github.com/Zapper-fi/studio/compare/v0.382.0...v0.382.1) (2023-02-06)
 
 
