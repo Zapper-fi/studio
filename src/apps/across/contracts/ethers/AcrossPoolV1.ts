@@ -71,7 +71,7 @@ export declare namespace BridgePool {
   };
 }
 
-export interface BadgerPoolInterface extends utils.Interface {
+export interface AcrossPoolV1Interface extends utils.Interface {
   functions: {
     'addLiquidity(uint256)': FunctionFragment;
     'allowance(address,address)': FunctionFragment;
@@ -435,12 +435,12 @@ export type TransferEvent = TypedEvent<[string, string, BigNumber], TransferEven
 
 export type TransferEventFilter = TypedEventFilter<TransferEvent>;
 
-export interface BadgerPool extends BaseContract {
+export interface AcrossPoolV1 extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
 
-  interface: BadgerPoolInterface;
+  interface: AcrossPoolV1Interface;
 
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,

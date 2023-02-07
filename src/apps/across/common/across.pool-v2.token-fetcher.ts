@@ -14,17 +14,17 @@ import {
   GetUnderlyingTokensParams,
 } from '~position/template/app-token.template.types';
 
-import { AcrossContractFactory, AcrossV2PoolToken } from '../contracts';
+import { AcrossContractFactory, AcrossPoolV2 } from '../contracts';
 
-export type AcrossV2PoolTokenDefinition = {
+export type AcrossPoolV2TokenDefinition = {
   address: string;
   underlyingTokenAddress: string;
 };
 
-export abstract class AcrossV2PoolTokenFetcher extends AppTokenTemplatePositionFetcher<
-  AcrossV2PoolToken,
+export abstract class AcrossPoolV2TokenFetcher extends AppTokenTemplatePositionFetcher<
+  AcrossPoolV2,
   DefaultAppTokenDataProps,
-  AcrossV2PoolTokenDefinition
+  AcrossPoolV2TokenDefinition
 > {
   abstract hubAddress: string;
 
@@ -35,12 +35,12 @@ export abstract class AcrossV2PoolTokenFetcher extends AppTokenTemplatePositionF
     super(appToolkit);
   }
 
-  getContract(address: string): AcrossV2PoolToken {
-    return this.contractFactory.acrossV2PoolToken({ network: this.network, address });
+  getContract(address: string): AcrossPoolV2 {
+    return this.contractFactory.acrossPoolV2({ network: this.network, address });
   }
 
-  async getDefinitions({ multicall }: GetDefinitionsParams): Promise<AcrossV2PoolTokenDefinition[]> {
-    const hub = this.contractFactory.acrossV2HubPool({ address: this.hubAddress, network: this.network });
+  async getDefinitions({ multicall }: GetDefinitionsParams): Promise<AcrossPoolV2TokenDefinition[]> {
+    const hub = this.contractFactory.acrossHubPoolV2({ address: this.hubAddress, network: this.network });
     const logs = await hub.queryFilter(hub.filters.LiquidityAdded(), 14819537);
     const collateral = uniq(logs.map(v => v.args.l1Token.toLowerCase()));
 
@@ -59,21 +59,19 @@ export abstract class AcrossV2PoolTokenFetcher extends AppTokenTemplatePositionF
 
   async getUnderlyingTokenDefinitions({
     definition,
-  }: GetUnderlyingTokensParams<AcrossV2PoolToken, AcrossV2PoolTokenDefinition>) {
+  }: GetUnderlyingTokensParams<AcrossPoolV2, AcrossPoolV2TokenDefinition>) {
     return [{ address: definition.underlyingTokenAddress, network: this.network }];
   }
 
-  async getPricePerShare({ appToken, multicall }: GetPricePerShareParams<AcrossV2PoolToken>) {
-    const hub = this.contractFactory.acrossV2HubPool({ address: this.hubAddress, network: this.network });
+  async getPricePerShare({ appToken, multicall }: GetPricePerShareParams<AcrossPoolV2>) {
+    const hub = this.contractFactory.acrossHubPoolV2({ address: this.hubAddress, network: this.network });
     const poolInfo = await multicall.wrap(hub).pooledTokens(appToken.tokens[0].address);
     const reserveRaw = poolInfo.liquidReserves.add(poolInfo.utilizedReserves).sub(poolInfo.undistributedLpFees);
     const reserve = Number(reserveRaw) / 10 ** appToken.tokens[0].decimals;
     return [reserve / appToken.supply];
   }
 
-  async getLabel({
-    appToken,
-  }: GetDisplayPropsParams<AcrossV2PoolToken, DefaultAppTokenDataProps, AcrossV2PoolTokenDefinition>): Promise<string> {
+  async getLabel({ appToken }: GetDisplayPropsParams<AcrossPoolV2>): Promise<string> {
     return `${getLabelFromToken(appToken.tokens[0])} Pool`;
   }
 }

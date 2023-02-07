@@ -18,7 +18,7 @@ import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi
 import type { Listener, Provider } from '@ethersproject/providers';
 import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
-export interface AcrossV2HubPoolInterface extends utils.Interface {
+export interface AcrossHubPoolV2Interface extends utils.Interface {
   functions: {
     'addLiquidity(address,uint256)': FunctionFragment;
     'bondAmount()': FunctionFragment;
@@ -520,12 +520,12 @@ export type SpokePoolAdminFunctionTriggeredEvent = TypedEvent<
 
 export type SpokePoolAdminFunctionTriggeredEventFilter = TypedEventFilter<SpokePoolAdminFunctionTriggeredEvent>;
 
-export interface AcrossV2HubPool extends BaseContract {
+export interface AcrossHubPoolV2 extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
 
-  interface: AcrossV2HubPoolInterface;
+  interface: AcrossHubPoolV2Interface;
 
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,

@@ -4,7 +4,7 @@
 
 import { Contract, Signer, utils } from 'ethers';
 import type { Provider } from '@ethersproject/providers';
-import type { WethPool, WethPoolInterface } from '../WethPool';
+import type { AcrossPoolV1, AcrossPoolV1Interface } from '../AcrossPoolV1';
 
 const _abi = [
   {
@@ -1642,12 +1642,12 @@ const _abi = [
   },
 ];
 
-export class WethPool__factory {
+export class AcrossPoolV1__factory {
   static readonly abi = _abi;
-  static createInterface(): WethPoolInterface {
-    return new utils.Interface(_abi) as WethPoolInterface;
+  static createInterface(): AcrossPoolV1Interface {
+    return new utils.Interface(_abi) as AcrossPoolV1Interface;
   }
-  static connect(address: string, signerOrProvider: Signer | Provider): WethPool {
-    return new Contract(address, _abi, signerOrProvider) as WethPool;
+  static connect(address: string, signerOrProvider: Signer | Provider): AcrossPoolV1 {
+    return new Contract(address, _abi, signerOrProvider) as AcrossPoolV1;
   }
 }

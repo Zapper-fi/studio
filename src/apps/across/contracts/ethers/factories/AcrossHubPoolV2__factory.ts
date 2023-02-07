@@ -4,7 +4,7 @@
 
 import { Contract, Signer, utils } from 'ethers';
 import type { Provider } from '@ethersproject/providers';
-import type { AcrossV2HubPool, AcrossV2HubPoolInterface } from '../AcrossV2HubPool';
+import type { AcrossHubPoolV2, AcrossHubPoolV2Interface } from '../AcrossHubPoolV2';
 
 const _abi = [
   {
@@ -1361,12 +1361,12 @@ const _abi = [
   },
 ];
 
-export class AcrossV2HubPool__factory {
+export class AcrossHubPoolV2__factory {
   static readonly abi = _abi;
-  static createInterface(): AcrossV2HubPoolInterface {
-    return new utils.Interface(_abi) as AcrossV2HubPoolInterface;
+  static createInterface(): AcrossHubPoolV2Interface {
+    return new utils.Interface(_abi) as AcrossHubPoolV2Interface;
   }
-  static connect(address: string, signerOrProvider: Signer | Provider): AcrossV2HubPool {
-    return new Contract(address, _abi, signerOrProvider) as AcrossV2HubPool;
+  static connect(address: string, signerOrProvider: Signer | Provider): AcrossHubPoolV2 {
+    return new Contract(address, _abi, signerOrProvider) as AcrossHubPoolV2;
   }
 }
