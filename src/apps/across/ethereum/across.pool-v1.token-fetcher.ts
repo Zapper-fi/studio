@@ -1,9 +1,9 @@
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 
-import { AcrossV1PoolTokenFetcher } from '../common/across.v1-pool.token-fetcher';
+import { AcrossPoolV1TokenFetcher } from '../common/across.pool-v1.token-fetcher';
 
 @PositionTemplate()
-export class EthereumAcrossV1PoolTokenFetcher extends AcrossV1PoolTokenFetcher {
+export class EthereumAcrossPoolV1TokenFetcher extends AcrossPoolV1TokenFetcher {
   groupLabel = 'Pools';
 
   poolAddresses = [

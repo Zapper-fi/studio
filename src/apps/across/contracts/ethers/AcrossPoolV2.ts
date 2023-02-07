@@ -17,7 +17,7 @@ import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi
 import type { Listener, Provider } from '@ethersproject/providers';
 import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
-export interface AcrossV2PoolTokenInterface extends utils.Interface {
+export interface AcrossPoolV2Interface extends utils.Interface {
   functions: {
     'addBurner(address)': FunctionFragment;
     'addMember(uint256,address)': FunctionFragment;
@@ -209,12 +209,12 @@ export type TransferEvent = TypedEvent<[string, string, BigNumber], TransferEven
 
 export type TransferEventFilter = TypedEventFilter<TransferEvent>;
 
-export interface AcrossV2PoolToken extends BaseContract {
+export interface AcrossPoolV2 extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
 
-  interface: AcrossV2PoolTokenInterface;
+  interface: AcrossPoolV2Interface;
 
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,
