@@ -4,8 +4,9 @@ import { PositionTemplate } from '~app-toolkit/decorators/position-template.deco
 import { DefaultDataProps } from '~position/display.interface';
 import { MetaType } from '~position/position.interface';
 import { GetDisplayPropsParams, GetTokenDefinitionsParams } from '~position/template/contract-position.template.types';
-import { VelodromeBribe } from '../contracts';
+
 import { VotingRewardsContractPositionFetcher } from '../common/velodrome.voting-rewards.contract-position-fetcher';
+import { VelodromeBribe } from '../contracts';
 
 export type VelodromeBribeDefinition = {
   address: string;
@@ -46,5 +47,4 @@ export class OptimismVelodromeBribeContractPositionFetcher extends VotingRewards
   }: GetDisplayPropsParams<VelodromeBribe, DefaultDataProps, VelodromeBribeDefinition>): Promise<string> {
     return `${definition.name} Bribe`;
   }
-
 }
