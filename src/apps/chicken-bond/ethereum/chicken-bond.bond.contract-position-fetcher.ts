@@ -5,7 +5,7 @@ import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import { drillBalance } from '~app-toolkit/helpers/drill-balance.helper';
 import { DefaultDataProps } from '~position/display.interface';
-import { ContractPositionBalance } from '~position/position-balance.interface';
+import { ContractPositionBalance, RawContractPositionBalance } from '~position/position-balance.interface';
 import { MetaType } from '~position/position.interface';
 import { DefaultContractPositionDefinition } from '~position/template/contract-position.template.types';
 import { CustomContractPositionTemplatePositionFetcher } from '~position/template/custom-contract-position.template.position-fetcher';
@@ -21,6 +21,8 @@ enum BondStatus {
 @PositionTemplate()
 export class EthereumChickenBondBondContractPositionFetcher extends CustomContractPositionTemplatePositionFetcher<ChickenBondBondNft> {
   groupLabel = 'Bond';
+  BondManagerAddress = '0x57619fe9c539f890b19c61812226f9703ce37137';
+  BondNftAddress = '0xa8384862219188a8f03c144953cf21fc124029ee';
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
@@ -30,7 +32,7 @@ export class EthereumChickenBondBondContractPositionFetcher extends CustomContra
   }
 
   async getDefinitions(): Promise<DefaultContractPositionDefinition[]> {
-    return [{ address: '0xa8384862219188a8f03c144953cf21fc124029ee' }];
+    return [{ address: this.BondNftAddress }];
   }
 
   async getTokenDefinitions() {
@@ -63,12 +65,12 @@ export class EthereumChickenBondBondContractPositionFetcher extends CustomContra
   async getBalances(address: string): Promise<ContractPositionBalance<DefaultDataProps>[]> {
     const multicall = this.appToolkit.getMulticall(this.network);
     const bondManagerContract = this.contractFactory.chickenBondManager({
-      address: '0x57619fe9c539f890b19c61812226f9703ce37137',
+      address: this.BondManagerAddress,
       network: this.network,
     });
 
     const bondNftContract = this.contractFactory.chickenBondBondNft({
-      address: '0xa8384862219188a8f03c144953cf21fc124029ee',
+      address: this.BondNftAddress,
       network: this.network,
     });
     const contractPositions = await this.appToolkit.getAppContractPositions({
@@ -77,15 +79,23 @@ export class EthereumChickenBondBondContractPositionFetcher extends CustomContra
       groupIds: [this.groupId],
     });
 
-    const numPositionsRaw = await multicall.wrap(bondNftContract).balanceOf(address);
-
-    const balances = await Promise.all(
-      range(0, numPositionsRaw.toNumber()).map(async index => {
-        const bondId = await multicall.wrap(bondNftContract).tokenOfOwnerByIndex(address, index);
-
-        const bondStatus = await multicall.wrap(bondNftContract).getBondStatus(bondId);
+    // Get bond Ids
+    const mcBondNft = multicall.wrap(bondNftContract);
+    const bondCount = Number(await mcBondNft.balanceOf(address));
+    const bondIds = await Promise.all(range(bondCount).map(async i => mcBondNft.tokenOfOwnerByIndex(address, i)));
+    const validBondIdsRaw = await Promise.all(
+      bondIds.map(async bondId => {
+        const bondStatus = await mcBondNft.getBondStatus(bondId);
         if (bondStatus !== BondStatus.PENDING) return null;
 
+        return bondId;
+      }),
+    );
+    const validBondIds = _.compact(validBondIdsRaw);
+    if (validBondIds.length === 0) return [];
+
+    const balances = await Promise.all(
+      validBondIds.map(async bondId => {
         const [depositAmountRaw, claimableAmountRaw] = await Promise.all([
           multicall.wrap(bondNftContract).getBondAmount(bondId),
           multicall.wrap(bondManagerContract).calcAccruedBLUSD(bondId),
@@ -103,5 +113,67 @@ export class EthereumChickenBondBondContractPositionFetcher extends CustomContra
     );
 
     return _.compact(balances);
+  }
+
+  async getRawBalances(address: string): Promise<RawContractPositionBalance[]> {
+    const multicall = this.appToolkit.getMulticall(this.network);
+
+    const bondManagerContract = this.contractFactory.chickenBondManager({
+      address: this.BondManagerAddress,
+      network: this.network,
+    });
+
+    const bondNftContract = this.contractFactory.chickenBondBondNft({
+      address: this.BondNftAddress,
+      network: this.network,
+    });
+
+    const contractPositions = await this.appToolkit.getAppContractPositions({
+      appId: this.appId,
+      network: this.network,
+      groupIds: [this.groupId],
+    });
+
+    // Get bond Ids
+    const mcBondNft = multicall.wrap(bondNftContract);
+    const bondCount = Number(await mcBondNft.balanceOf(address));
+    const bondIds = await Promise.all(range(bondCount).map(async i => mcBondNft.tokenOfOwnerByIndex(address, i)));
+    const validBondIdsRaw = await Promise.all(
+      bondIds.map(async bondId => {
+        const bondStatus = await mcBondNft.getBondStatus(bondId);
+        if (bondStatus !== BondStatus.PENDING) return null;
+
+        return bondId;
+      }),
+    );
+    const validBondIds = _.compact(validBondIdsRaw);
+    if (validBondIds.length === 0) return [];
+
+    const balances = await Promise.all(
+      bondIds.map(async bondId => {
+        const [depositAmountRaw, claimableAmountRaw] = await Promise.all([
+          multicall.wrap(bondNftContract).getBondAmount(bondId),
+          multicall.wrap(bondManagerContract).calcAccruedBLUSD(bondId),
+        ]);
+
+        const balance: RawContractPositionBalance = {
+          key: this.appToolkit.getPositionKey(contractPositions[0]),
+          tokens: [
+            {
+              key: this.appToolkit.getPositionKey(contractPositions[0].tokens[0]),
+              balance: depositAmountRaw.toString(),
+            },
+            {
+              key: this.appToolkit.getPositionKey(contractPositions[0].tokens[1]),
+              balance: claimableAmountRaw.toString(),
+            },
+          ],
+        };
+
+        return balance;
+      }),
+    );
+
+    return balances.flat();
   }
 }
