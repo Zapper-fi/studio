@@ -33,11 +33,11 @@ export class EthereumBeanstalkSiloEarnedContractPositionFetcher extends Contract
     return this.beanstalkContractFactory.beanstalk({ address: BEANSTALK_ADDRESS, network: this.network });
   }
 
-  getDefinitions(_params: GetDefinitionsParams): Promise<DefaultContractPositionDefinition[]> {
-    return Promise.resolve([{ address: '0xearnedbeans' }]);
+  async getDefinitions(_params: GetDefinitionsParams): Promise<DefaultContractPositionDefinition[]> {
+    return [{ address: '0xearnedbeans' }];
   }
 
-  getTokenDefinitions({
+  async getTokenDefinitions({
     address,
   }: GetTokenDefinitionsParams<Contract, DefaultContractPositionDefinition>): Promise<
     UnderlyingTokenDefinition[] | null
@@ -46,19 +46,19 @@ export class EthereumBeanstalkSiloEarnedContractPositionFetcher extends Contract
       throw new Error(`Unknown token: ${address}`);
     }
 
-    return Promise.resolve([
+    return [
       {
         metaType: MetaType.CLAIMABLE,
         address: BEAN.address,
         network: this.network,
       },
-    ]);
+    ];
   }
 
-  getLabel(
+  async getLabel(
     _params: GetDisplayPropsParams<Contract, DefaultDataProps, DefaultContractPositionDefinition>,
   ): Promise<string> {
-    return Promise.resolve('Earned Beans');
+    return 'Earned Beans';
   }
 
   async getTokenBalancesPerPosition({

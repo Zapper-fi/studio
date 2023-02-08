@@ -3,34 +3,22 @@ export const GRAPH_URL = 'https://graph.node.bean.money/subgraphs/name/beanstalk
 
 export type Token = {
   address: string;
-  symbol: string;
-  decimals: number;
 };
 
 export const BEAN: Token = {
   address: '0xbea0000029ad1c77d3d5d23ba2d8893db9d1efab',
-  symbol: 'BEAN',
-  decimals: 6,
 };
 export const BEANCRV3: Token = {
   address: '0xc9c32cd16bf7efb85ff14e0c8603cc90f6f2ee49',
-  symbol: 'BEAN3CRV',
-  decimals: 18,
 };
 export const urBEAN: Token = {
   address: '0x1bea0050e63e05fbb5d8ba2f10cf5800b6224449',
-  symbol: 'urBEAN',
-  decimals: 6,
 };
 export const urBEANCRV3: Token = {
   address: '0x1bea3ccd22f4ebd3d37d731ba31eeca95713716d',
-  symbol: 'urBEAN3CRV',
-  decimals: 18,
 };
 export const CRV3: Token = {
   address: '0x6c3f90f043a72fa612cbac8115ee7e52bde6e490',
-  symbol: '3CRV',
-  decimals: 18,
 };
 
 export const tokens: Token[] = [BEAN, BEANCRV3, urBEAN, urBEANCRV3, CRV3];

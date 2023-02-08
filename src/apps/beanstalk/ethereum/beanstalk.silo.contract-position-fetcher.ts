@@ -41,33 +41,29 @@ export class EthereumBeanstalkSiloContractPositionFetcher extends ContractPositi
     return this.beanstalkContractFactory.beanstalk({ address: BEANSTALK_ADDRESS, network: this.network });
   }
 
-  getDefinitions(_params: GetDefinitionsParams): Promise<SiloDefinition[]> {
-    return Promise.resolve(
-      Object.keys(silos).map(address => ({
-        address: address,
-        underlying: silos[address].underlying,
-        siloName: silos[address].name,
-      })),
-    );
+  async getDefinitions(_params: GetDefinitionsParams): Promise<SiloDefinition[]> {
+    return Object.keys(silos).map(address => ({
+      address: address,
+      underlying: silos[address].underlying,
+      siloName: silos[address].name,
+    }));
   }
 
-  getTokenDefinitions({
+  async getTokenDefinitions({
     definition,
   }: GetTokenDefinitionsParams<Beanstalk, SiloDefinition>): Promise<UnderlyingTokenDefinition[] | null> {
-    return Promise.resolve(
-      definition.underlying.map(bt => ({
-        metaType: MetaType.SUPPLIED,
-        address: bt.address,
-        network: this.network,
-      })),
-    );
+    return definition.underlying.map(bt => ({
+      metaType: MetaType.SUPPLIED,
+      address: bt.address,
+      network: this.network,
+    }));
   }
 
-  getLabel({
+  async getLabel({
     contractPosition,
   }: GetDisplayPropsParams<Beanstalk, DefaultDataProps, DefaultContractPositionDefinition>): Promise<string> {
     const silo = silos[contractPosition.address];
-    return Promise.resolve(silo.name);
+    return silo.name;
   }
 
   async getTokenBalancesPerPosition({
