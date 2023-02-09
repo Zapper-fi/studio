@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.386.1](https://github.com/Zapper-fi/studio/compare/v0.386.0...v0.386.1) (2023-02-09)
+
+
+### Bug Fixes
+
+* **amp:** Fix staking label ([#2271](https://github.com/Zapper-fi/studio/issues/2271)) ([7023ea8](https://github.com/Zapper-fi/studio/commit/7023ea8bec87cbc8269b82860e177bfe4440107f))
+
 ## [0.386.0](https://github.com/Zapper-fi/studio/compare/v0.385.0...v0.386.0) (2023-02-09)
 
 
