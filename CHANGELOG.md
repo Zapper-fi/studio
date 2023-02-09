@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.385.0](https://github.com/Zapper-fi/studio/compare/v0.384.1...v0.385.0) (2023-02-09)
+
+
+### Features
+
+* **beanstalk:** Implement Silos deposits + earnings ([#2265](https://github.com/Zapper-fi/studio/issues/2265)) ([66841f2](https://github.com/Zapper-fi/studio/commit/66841f2f7e88e8d89635a36136109187b59c91db))
+
 ## [0.384.1](https://github.com/Zapper-fi/studio/compare/v0.384.0...v0.384.1) (2023-02-07)
 
 
