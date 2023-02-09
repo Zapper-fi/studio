@@ -54,8 +54,8 @@ export class BeanstalkBalanceResolver {
   async getSiloBalances(address: string, token: string) {
     const siloBalancesData = await this.getSiloBalancesData(address, token);
 
-    const depositBalances = sumBy(siloBalancesData.deposits, t => Number(t.amount));
-    const withdrawnBalances = sumBy(siloBalancesData.withdraws, t => Number(t.amount));
+    const depositBalances = sumBy(siloBalancesData?.deposits, t => Number(t.amount));
+    const withdrawnBalances = sumBy(siloBalancesData?.withdraws, t => Number(t.amount));
 
     return depositBalances + withdrawnBalances;
   }
