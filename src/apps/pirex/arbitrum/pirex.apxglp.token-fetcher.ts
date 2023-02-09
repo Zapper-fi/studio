@@ -15,7 +15,7 @@ import { PirexContractFactory, ApxGlp } from '../contracts';
 
 @PositionTemplate()
 export class ArbitrumPirexApxglpTokenFetcher extends AppTokenTemplatePositionFetcher<ApxGlp> {
-  groupLabel: string;
+  groupLabel = 'Pirex GMX';
 
   constructor(
     @Inject(APP_TOOLKIT) readonly appToolkit: IAppToolkit,
