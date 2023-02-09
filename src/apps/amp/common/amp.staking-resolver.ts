@@ -23,7 +23,7 @@ export class AmpStakingResolver {
     key: `studio:amp:staking:staking-data`,
     ttl: 15 * 60, // 15 minutes
   })
-  private async getPoolApyData() {
+  private async getStakingApyData() {
     const url = 'https://api.capacity.production.flexa.network/apps';
     const { data } = await Axios.get<AmpStakingApiData>(url, {
       headers: { Accept: 'application/vnd.flexa.capacity.v1+json' },
@@ -34,7 +34,7 @@ export class AmpStakingResolver {
 
   @Cache({
     key: (address: string) => `studio:amp:staking:balance-data:${address}`,
-    ttl: 5 * 60, // 15 minutes
+    ttl: 5 * 60, // 5 minutes
   })
   private async getBalanceData(address: string) {
     const url = `https://api.capacity.production.flexa.network/accounts/${address}/totals`;
@@ -61,12 +61,13 @@ export class AmpStakingResolver {
     };
   }
 
-  async getPoolApys(poolName: string) {
-    const poolApys = await this.getPoolApyData();
+  async getStakingLabel() {
+    const stakingApyData = await this.getStakingApyData();
 
-    const poolApy = poolApys.find(x => x.displayName == poolName);
-    if (!poolApy) return 0;
+    const poolApy = stakingApyData.map(x => Number(x.apy)).filter(x => x != 0);
+    const lowerBound = Math.min(...poolApy);
+    const upperBound = Math.max(...poolApy);
 
-    return poolApy.apy;
+    return `Staked Amp (${lowerBound}% to ${upperBound}% APY)`;
   }
 }

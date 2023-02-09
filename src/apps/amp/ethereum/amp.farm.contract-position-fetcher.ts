@@ -56,7 +56,6 @@ export class EthereumAmpFarmContractPositionFetcher extends ContractPositionTemp
   }
 
   async getLabel() {
-    const apy = await this.ampStakingResolver.getPoolApys(this.network);
-    return `Amp Staking ${apy}%`;
+    return this.ampStakingResolver.getStakingLabel();
   }
 }
