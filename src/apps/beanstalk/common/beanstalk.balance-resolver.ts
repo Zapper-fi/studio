@@ -3,7 +3,6 @@ import { gql } from 'graphql-request';
 import { sumBy } from 'lodash';
 
 import { gqlFetch } from '~app-toolkit/helpers/the-graph.helper';
-import { Cache } from '~cache/cache.decorator';
 
 export interface BeanstalkApiSiloData {
   farmer: {
@@ -33,10 +32,6 @@ export const GET_DEPOSIT = gql`
 
 @Injectable()
 export class BeanstalkBalanceResolver {
-  @Cache({
-    key: `studio:beanstalk:silo-token-data`,
-    ttl: 5 * 30, // 30 minutes
-  })
   private async getSiloBalancesData(address: string, tokenAddress: string) {
     const endpoint = `https://graph.node.bean.money/subgraphs/name/beanstalk`;
     const data = await gqlFetch<BeanstalkApiSiloData>({
