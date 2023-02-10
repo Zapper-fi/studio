@@ -2,32 +2,27 @@ import { Inject } from '@nestjs/common';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
-import { Erc20 } from '~contract/contracts';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import {
   GetAddressesParams,
-  DefaultAppTokenDefinition,
   GetUnderlyingTokensParams,
-  UnderlyingTokenDefinition,
-  GetPricePerShareParams,
   DefaultAppTokenDataProps,
-  GetDefinitionsParams,
 } from '~position/template/app-token.template.types';
 
 import { BeanstalkContractFactory, BeanstalkToken } from '../contracts';
 
-export type BeanstalkTokenDefinition = {
+export type BeanstalkUnripeAssetsTokenDefinition = {
   address: string;
   underlyingTokenAddress: string;
 };
 
 @PositionTemplate()
-export class EthereumBeanstalkSiloDepositTokenFetcher extends AppTokenTemplatePositionFetcher<
+export class EthereumBeanstalkUnripeAssetsTokenFetcher extends AppTokenTemplatePositionFetcher<
   BeanstalkToken,
   DefaultAppTokenDataProps,
-  BeanstalkTokenDefinition
+  BeanstalkUnripeAssetsTokenDefinition
 > {
-  groupLabel = 'Silo Deposits';
+  groupLabel = 'Unripe Assets';
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
@@ -40,7 +35,7 @@ export class EthereumBeanstalkSiloDepositTokenFetcher extends AppTokenTemplatePo
     return this.contractFactory.beanstalkToken({ address, network: this.network });
   }
 
-  async getDefinitions(params: GetDefinitionsParams): Promise<BeanstalkTokenDefinition[]> {
+  async getDefinitions(): Promise<BeanstalkUnripeAssetsTokenDefinition[]> {
     return [
       {
         address: '0x1bea0050e63e05fbb5d8ba2f10cf5800b6224449', // urBEAN
@@ -53,17 +48,17 @@ export class EthereumBeanstalkSiloDepositTokenFetcher extends AppTokenTemplatePo
     ];
   }
 
-  async getAddresses({ definitions }: GetAddressesParams<BeanstalkTokenDefinition>): Promise<string[]> {
+  async getAddresses({ definitions }: GetAddressesParams<BeanstalkUnripeAssetsTokenDefinition>): Promise<string[]> {
     return definitions.map(v => v.address);
   }
 
   async getUnderlyingTokenDefinitions({
     definition,
-  }: GetUnderlyingTokensParams<BeanstalkToken, BeanstalkTokenDefinition>) {
+  }: GetUnderlyingTokensParams<BeanstalkToken, BeanstalkUnripeAssetsTokenDefinition>) {
     return [{ address: definition.underlyingTokenAddress, network: this.network }];
   }
 
-  async getPricePerShare({}: GetPricePerShareParams<BeanstalkToken>) {
+  async getPricePerShare() {
     return [1];
   }
 }
