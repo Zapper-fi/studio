@@ -33,10 +33,14 @@ export class VelodromeDefinitionsResolver {
   async getPoolTokenDefinitions() {
     const definitionsData = await this.getPoolDefinitionsData();
 
-    return definitionsData.map(pool => ({
-      address: pool.address.toLowerCase(),
-      apy: pool.apr,
-    }));
+    return definitionsData.map(pool => {
+      // Definitely Not ideal, but seems like Velodrome's FE does same since their API returns humongous APY for certain pools
+      const apy = pool.apr < 300 ? pool.apr : 0;
+      return {
+        address: pool.address.toLowerCase(),
+        apy,
+      };
+    });
   }
 
   async getFarmAddresses() {
