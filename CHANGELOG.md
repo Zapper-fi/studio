@@ -4,6 +4,14 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.388.1](https://github.com/Zapper-fi/studio/compare/v0.388.0...v0.388.1) (2023-02-10)
+
+
+### Bug Fixes
+
+* **impermax:** Fix Impermax IMX TIV on Arbitrum ([#2280](https://github.com/Zapper-fi/studio/issues/2280)) ([0865825](https://github.com/Zapper-fi/studio/commit/0865825458d6b1a05a51ed46a18f5363e1642a6e))
+* **velodrome:** Filtering APYs above a certain threshold ([#2282](https://github.com/Zapper-fi/studio/issues/2282)) ([3b98cd4](https://github.com/Zapper-fi/studio/commit/3b98cd49db0ee3665a2ea91a4ee4d2a16b8d27fc))
+
 ## [0.388.0](https://github.com/Zapper-fi/studio/compare/v0.387.0...v0.388.0) (2023-02-10)
 
 
