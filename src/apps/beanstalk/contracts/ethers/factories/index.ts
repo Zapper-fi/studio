@@ -2,3 +2,4 @@
 /* tslint:disable */
 /* eslint-disable */
 export { Beanstalk__factory } from './Beanstalk__factory';
+export { BeanstalkToken__factory } from './BeanstalkToken__factory';
