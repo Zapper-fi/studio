@@ -1,8 +1,9 @@
 import { Inject } from '@nestjs/common';
-import { BigNumberish } from 'ethers';
+import { BigNumber, BigNumberish, FixedNumber } from 'ethers';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
+import { Cache } from '~cache/cache.decorator';
 import { DefaultDataProps } from '~position/display.interface';
 import { MetaType } from '~position/position.interface';
 import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
@@ -31,14 +32,14 @@ export const SILOS = [
     name: 'BEAN:3CRV LP',
     underlyingTokenAddress: '0xc9c32cd16bf7efb85ff14e0c8603cc90f6f2ee49',
   },
-  /*{
+  {
     name: 'Unripe Bean',
     underlyingTokenAddress: '0x1bea0050e63e05fbb5d8ba2f10cf5800b6224449',
   },
   {
     name: 'Unripe BEAN:3CRV LP',
     underlyingTokenAddress: '0x1bea3ccd22f4ebd3d37d731ba31eeca95713716d',
-  },*/
+  },
 ];
 
 @PositionTemplate()
@@ -95,9 +96,35 @@ export class EthereumBeanstalkSiloDepositContractPositionFetcher extends Contrac
   async getTokenBalancesPerPosition({
     address,
     contractPosition,
+    contract,
   }: GetTokenBalancesParams<Beanstalk, DefaultDataProps>): Promise<BigNumberish[]> {
-    const balances = await this.beanstalkBalanceResolver.getSiloBalances(address, contractPosition.tokens[0].address);
+    let balance = await this.beanstalkBalanceResolver.getSiloBalances(address, contractPosition.tokens[0].address);
 
-    return [balances];
+    // Get vested amount if token is unripe
+    const unripeTokens = ['0x1bea0050e63e05fbb5d8ba2f10cf5800b6224449', '0x1bea3ccd22f4ebd3d37d731ba31eeca95713716d'];
+    const tokenAddress = contractPosition.tokens[0].address;
+
+    if (unripeTokens.includes(tokenAddress)) {
+      balance = await this.getChoppedAmount(balance, tokenAddress, contract);
+    }
+
+    return [balance];
+  }
+
+  async getChoppedAmount(amount: number, token: string, contract: Beanstalk): Promise<number> {
+    const rate = await this.getChopRate(token, contract);
+    const balance = FixedNumber.from(amount);
+    const rateFixed = FixedNumber.fromValue(rate, 6);
+    const choppedAmount = Number(balance.mulUnsafe(rateFixed).floor().toString());
+
+    return choppedAmount;
+  }
+
+  @Cache({
+    key: `studio:beanstalk:unripe-chop-rate`,
+    ttl: 60 * 60 * 24, // 24 hrs
+  })
+  async getChopRate(token: string, contract: Beanstalk): Promise<BigNumber> {
+    return contract.getPercentPenalty(token);
   }
 }
