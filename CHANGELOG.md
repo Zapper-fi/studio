@@ -4,6 +4,25 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.386.1](https://github.com/Zapper-fi/studio/compare/v0.386.0...v0.386.1) (2023-02-09)
+
+
+### Bug Fixes
+
+* **amp:** Fix staking label ([#2271](https://github.com/Zapper-fi/studio/issues/2271)) ([7023ea8](https://github.com/Zapper-fi/studio/commit/7023ea8bec87cbc8269b82860e177bfe4440107f))
+
+## [0.386.0](https://github.com/Zapper-fi/studio/compare/v0.385.0...v0.386.0) (2023-02-09)
+
+
+### Features
+
+* add pirex gmx tracking ([#2243](https://github.com/Zapper-fi/studio/issues/2243)) ([8766bdf](https://github.com/Zapper-fi/studio/commit/8766bdf9c72b7ee3b56183c71c0ca274db7524c5))
+
+
+### Bug Fixes
+
+* **amp:** Fix staking balances ([#2269](https://github.com/Zapper-fi/studio/issues/2269)) ([037579a](https://github.com/Zapper-fi/studio/commit/037579a028b33076b6249a9161e016111f1cec94))
+
 ## [0.385.0](https://github.com/Zapper-fi/studio/compare/v0.384.1...v0.385.0) (2023-02-09)
 
 

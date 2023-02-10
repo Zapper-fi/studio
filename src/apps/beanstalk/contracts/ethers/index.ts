@@ -2,5 +2,7 @@
 /* tslint:disable */
 /* eslint-disable */
 export type { Beanstalk } from './Beanstalk';
+export type { BeanstalkToken } from './BeanstalkToken';
 export * as factories from './factories';
+export { BeanstalkToken__factory } from './factories/BeanstalkToken__factory';
 export { Beanstalk__factory } from './factories/Beanstalk__factory';
