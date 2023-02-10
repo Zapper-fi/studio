@@ -4,6 +4,18 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.387.0](https://github.com/Zapper-fi/studio/compare/v0.386.1...v0.387.0) (2023-02-10)
+
+
+### Features
+
+* **beanstalk:** add support for unripe assets ([#2275](https://github.com/Zapper-fi/studio/issues/2275)) ([3b97337](https://github.com/Zapper-fi/studio/commit/3b97337ad30641a2efbde7e15cd5c9eb89415ca2))
+
+
+### Bug Fixes
+
+* **beanstalk:** bug fixes ([#2273](https://github.com/Zapper-fi/studio/issues/2273)) ([dc48537](https://github.com/Zapper-fi/studio/commit/dc4853747ddbfa38cf357132dfc4faa9fd962910))
+
 ## [0.386.1](https://github.com/Zapper-fi/studio/compare/v0.386.0...v0.386.1) (2023-02-09)
 
 
