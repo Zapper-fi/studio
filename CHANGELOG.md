@@ -4,6 +4,19 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.388.0](https://github.com/Zapper-fi/studio/compare/v0.387.0...v0.388.0) (2023-02-10)
+
+
+### Features
+
+* **redacted-cartel:** add support for claimable rewards ([#2274](https://github.com/Zapper-fi/studio/issues/2274)) ([99efbbb](https://github.com/Zapper-fi/studio/commit/99efbbba9084b392700aa695c4713505fb46e158))
+* **synthetix:** perp v2 ([#2277](https://github.com/Zapper-fi/studio/issues/2277)) ([98c48e9](https://github.com/Zapper-fi/studio/commit/98c48e907ca02ee465db75c56dc82c0b5999ce9c))
+
+
+### Bug Fixes
+
+* **beanstalk:** Rename deposit token to unripe assets ([#2279](https://github.com/Zapper-fi/studio/issues/2279)) ([231eeb3](https://github.com/Zapper-fi/studio/commit/231eeb3211653f0f8d2bef9f6985d40137ec598b))
+
 ## [0.387.0](https://github.com/Zapper-fi/studio/compare/v0.386.1...v0.387.0) (2023-02-10)
 
 
