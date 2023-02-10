@@ -5,15 +5,15 @@ import { AbstractApp } from '~app/app.dynamic-module';
 import { BeanstalkBalanceResolver } from './common/beanstalk.balance-resolver';
 import { BeanstalkContractFactory } from './contracts';
 import { EthereumBeanstalkSiloDepositContractPositionFetcher } from './ethereum/beanstalk.silo-deposit.contract-position-fetcher';
-import { EthereumBeanstalkSiloDepositTokenFetcher } from './ethereum/beanstalk.silo-deposit.token-fetcher';
 import { EthereumBeanstalkSiloEarnedContractPositionFetcher } from './ethereum/beanstalk.silo-earned.contract-position-fetcher';
+import { EthereumBeanstalkUnripeAssetsTokenFetcher } from './ethereum/beanstalk.unripe-assets.token-fetcher';
 
 @Module({
   providers: [
     BeanstalkBalanceResolver,
     BeanstalkContractFactory,
     EthereumBeanstalkSiloDepositContractPositionFetcher,
-    EthereumBeanstalkSiloDepositTokenFetcher,
+    EthereumBeanstalkUnripeAssetsTokenFetcher,
     EthereumBeanstalkSiloEarnedContractPositionFetcher,
   ],
 })
