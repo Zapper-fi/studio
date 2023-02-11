@@ -4,6 +4,14 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.388.2](https://github.com/Zapper-fi/studio/compare/v0.388.1...v0.388.2) (2023-02-11)
+
+
+### Bug Fixes
+
+* **beanstalk:** Refactor fetching balances of silo deposit position ([#2288](https://github.com/Zapper-fi/studio/issues/2288)) ([a9a2e23](https://github.com/Zapper-fi/studio/commit/a9a2e23adbaf2f4b0ed775e29aadce7b07fc9a49))
+* **concentrator:** Calculate claimable using vesting state ([#2286](https://github.com/Zapper-fi/studio/issues/2286)) ([cda20b6](https://github.com/Zapper-fi/studio/commit/cda20b6729a57d622e7045b94f756a2cc99fae77))
+
 ## [0.388.1](https://github.com/Zapper-fi/studio/compare/v0.388.0...v0.388.1) (2023-02-10)
 
 
