@@ -1,5 +1,5 @@
 import { Inject } from '@nestjs/common';
-import { BigNumberish } from 'ethers';
+import { BigNumber, BigNumberish } from 'ethers';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
@@ -55,6 +55,7 @@ export class EthereumConcentratorVestingContractPositionFetcher extends Contract
     address,
     contract,
   }: GetTokenBalancesParams<AladdinConcentratorVest, DefaultDataProps>): Promise<BigNumberish[]> {
-    return Promise.all([contract.locked(address), contract.vested(address)]);
+    const claimable = (await contract.getUserVest(address)).reduce((claimable: BigNumber, current) => claimable.add(current[0].sub(current[1])), BigNumber.from(0));
+    return Promise.all([contract.locked(address), claimable]);
   }
 }
