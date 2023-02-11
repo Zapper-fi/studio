@@ -10,11 +10,11 @@ import { EthereumBeanstalkUnripeAssetsTokenFetcher } from './ethereum/beanstalk.
 
 @Module({
   providers: [
-    BeanstalkBalanceResolver,
     BeanstalkContractFactory,
+    BeanstalkBalanceResolver,
     EthereumBeanstalkSiloDepositContractPositionFetcher,
-    EthereumBeanstalkUnripeAssetsTokenFetcher,
     EthereumBeanstalkSiloEarnedContractPositionFetcher,
+    EthereumBeanstalkUnripeAssetsTokenFetcher,
   ],
 })
 export class BeanstalkAppModule extends AbstractApp() {}
