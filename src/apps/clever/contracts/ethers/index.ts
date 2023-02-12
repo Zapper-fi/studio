@@ -3,6 +3,8 @@
 /* eslint-disable */
 export type { CleverFurnace } from './CleverFurnace';
 export type { CleverLocker } from './CleverLocker';
+export type { CleverVesting } from './CleverVesting';
 export * as factories from './factories';
 export { CleverFurnace__factory } from './factories/CleverFurnace__factory';
 export { CleverLocker__factory } from './factories/CleverLocker__factory';
+export { CleverVesting__factory } from './factories/CleverVesting__factory';
