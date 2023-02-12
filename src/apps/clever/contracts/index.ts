@@ -10,7 +10,7 @@ import {
   CleverGauge__factory,
   CleverGaugeController__factory,
   CleverLocker__factory,
-  CleverVesting__factory
+  CleverVesting__factory,
 } from './ethers';
 
 // eslint-disable-next-line
