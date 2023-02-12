@@ -7,6 +7,8 @@ import { EthereumCleverFarmingContractPositionFetcher } from './ethereum/clever.
 import { EthereumCleverFurnaceContractPositionFetcher } from './ethereum/clever.furnace.contract-position-fetcher';
 import { EthereumCleverLeverTokenFetcher } from './ethereum/clever.lever.token-fetcher';
 import { EthereumCleverLockContractPositionFetcher } from './ethereum/clever.lock.contract-position-fetcher';
+import { EthereumCleverAbcTokenFetcher } from './ethereum/clever.abc.token-fetcher';
+
 
 @Module({
   providers: [
@@ -15,5 +17,6 @@ import { EthereumCleverLockContractPositionFetcher } from './ethereum/clever.loc
     EthereumCleverFurnaceContractPositionFetcher,
     EthereumCleverLockContractPositionFetcher,
     EthereumCleverFarmingContractPositionFetcher,
+    EthereumCleverAbcTokenFetcher]
 })
 export class CleverAppModule extends AbstractApp() {}
