@@ -4,8 +4,7 @@ import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { ContractFactory } from '~contract/contracts';
 import { Network } from '~types/network.interface';
 
-import { CleverFurnace__factory } from './ethers';
-import { CleverLocker__factory } from './ethers';
+import { CleverAbcCvxGauge__factory, CleverFurnace__factory, CleverLocker__factory } from './ethers';
 
 // eslint-disable-next-line
 type ContractOpts = { address: string; network: Network };
@@ -16,6 +15,9 @@ export class CleverContractFactory extends ContractFactory {
     super((network: Network) => appToolkit.getNetworkProvider(network));
   }
 
+  cleverAbcCvxGauge({ address, network }: ContractOpts) {
+    return CleverAbcCvxGauge__factory.connect(address, this.appToolkit.getNetworkProvider(network));
+  }
   cleverFurnace({ address, network }: ContractOpts) {
     return CleverFurnace__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
@@ -24,5 +26,6 @@ export class CleverContractFactory extends ContractFactory {
   }
 }
 
+export type { CleverAbcCvxGauge } from './ethers';
 export type { CleverFurnace } from './ethers';
 export type { CleverLocker } from './ethers';
