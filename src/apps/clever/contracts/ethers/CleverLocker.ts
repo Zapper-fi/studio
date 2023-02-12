@@ -15,12 +15,12 @@ import type {
 } from 'ethers';
 import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
 import type { Listener, Provider } from '@ethersproject/providers';
-import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
 export declare namespace CLeverCVXLocker {
   export type EpochUnlockInfoStruct = {
-    pendingUnlock: BigNumberish;
-    unlockEpoch: BigNumberish;
+    pendingUnlock: PromiseOrValue<BigNumberish>;
+    unlockEpoch: PromiseOrValue<BigNumberish>;
   };
 
   export type EpochUnlockInfoStructOutput = [BigNumber, BigNumber] & {
@@ -31,10 +31,10 @@ export declare namespace CLeverCVXLocker {
 
 export declare namespace IVotiumMultiMerkleStash {
   export type ClaimParamStruct = {
-    token: string;
-    index: BigNumberish;
-    amount: BigNumberish;
-    merkleProof: BytesLike[];
+    token: PromiseOrValue<string>;
+    index: PromiseOrValue<BigNumberish>;
+    amount: PromiseOrValue<BigNumberish>;
+    merkleProof: PromiseOrValue<BytesLike>[];
   };
 
   export type ClaimParamStructOutput = [string, BigNumber, BigNumber, string[]] & {
@@ -152,34 +152,54 @@ export interface CleverLockerInterface extends utils.Interface {
   ): FunctionFragment;
 
   encodeFunctionData(functionFragment: 'accRewardPerShare', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'borrow', values: [BigNumberish, boolean]): string;
+  encodeFunctionData(
+    functionFragment: 'borrow',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<boolean>],
+  ): string;
   encodeFunctionData(functionFragment: 'clevCVX', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'delegate', values: [string, BytesLike, string]): string;
-  encodeFunctionData(functionFragment: 'deposit', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'donate', values: [BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'delegate',
+    values: [PromiseOrValue<string>, PromiseOrValue<BytesLike>, PromiseOrValue<string>],
+  ): string;
+  encodeFunctionData(functionFragment: 'deposit', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'donate', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'furnace', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'getUserInfo', values: [string]): string;
-  encodeFunctionData(functionFragment: 'getUserLocks', values: [string]): string;
+  encodeFunctionData(functionFragment: 'getUserInfo', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'getUserLocks', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'governor', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'harvest', values: [string, BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'harvest',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
   encodeFunctionData(functionFragment: 'harvestBountyPercentage', values?: undefined): string;
   encodeFunctionData(
     functionFragment: 'harvestVotium',
-    values: [IVotiumMultiMerkleStash.ClaimParamStruct[], BigNumberish],
+    values: [IVotiumMultiMerkleStash.ClaimParamStruct[], PromiseOrValue<BigNumberish>],
   ): string;
   encodeFunctionData(
     functionFragment: 'initialize',
-    values: [string, string, string, string, string, BigNumberish, BigNumberish],
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+    ],
   ): string;
-  encodeFunctionData(functionFragment: 'isKeeper', values: [string]): string;
-  encodeFunctionData(functionFragment: 'manualSwapRewardToken', values: [string]): string;
+  encodeFunctionData(functionFragment: 'isKeeper', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'manualSwapRewardToken', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'owner', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'pendingUnlocked', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'pendingUnlocked', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'platform', values?: undefined): string;
   encodeFunctionData(functionFragment: 'platformFeePercentage', values?: undefined): string;
   encodeFunctionData(functionFragment: 'processUnlockableCVX', values?: undefined): string;
   encodeFunctionData(functionFragment: 'renounceOwnership', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'repay', values: [BigNumberish, BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'repay',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+  ): string;
   encodeFunctionData(functionFragment: 'repayFeePercentage', values?: undefined): string;
   encodeFunctionData(functionFragment: 'reserveRate', values?: undefined): string;
   encodeFunctionData(functionFragment: 'stakePercentage', values?: undefined): string;
@@ -189,21 +209,30 @@ export interface CleverLockerInterface extends utils.Interface {
   encodeFunctionData(functionFragment: 'totalLockedGlobal', values?: undefined): string;
   encodeFunctionData(functionFragment: 'totalPendingUnlockGlobal', values?: undefined): string;
   encodeFunctionData(functionFragment: 'totalUnlockedGlobal', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'transferOwnership', values: [string]): string;
-  encodeFunctionData(functionFragment: 'unlock', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'updateGovernor', values: [string]): string;
-  encodeFunctionData(functionFragment: 'updateHarvestBountyPercentage', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'updateKeepers', values: [string[], boolean]): string;
-  encodeFunctionData(functionFragment: 'updateManualSwapRewardToken', values: [string[], boolean]): string;
-  encodeFunctionData(functionFragment: 'updatePlatform', values: [string]): string;
-  encodeFunctionData(functionFragment: 'updatePlatformFeePercentage', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'updateRepayFeePercentage', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'updateReserveRate', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'updateStakePercentage', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'updateStakeThreshold', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'updateZap', values: [string]): string;
-  encodeFunctionData(functionFragment: 'userInfo', values: [string]): string;
-  encodeFunctionData(functionFragment: 'withdrawManualSwapRewardTokens', values: [string[], string]): string;
+  encodeFunctionData(functionFragment: 'transferOwnership', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'unlock', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'updateGovernor', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'updateHarvestBountyPercentage', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(
+    functionFragment: 'updateKeepers',
+    values: [PromiseOrValue<string>[], PromiseOrValue<boolean>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'updateManualSwapRewardToken',
+    values: [PromiseOrValue<string>[], PromiseOrValue<boolean>],
+  ): string;
+  encodeFunctionData(functionFragment: 'updatePlatform', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'updatePlatformFeePercentage', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'updateRepayFeePercentage', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'updateReserveRate', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'updateStakePercentage', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'updateStakeThreshold', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'updateZap', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'userInfo', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'withdrawManualSwapRewardTokens',
+    values: [PromiseOrValue<string>[], PromiseOrValue<string>],
+  ): string;
   encodeFunctionData(functionFragment: 'withdrawUnlocked', values?: undefined): string;
   encodeFunctionData(functionFragment: 'zap', values?: undefined): string;
 
@@ -453,34 +482,34 @@ export interface CleverLocker extends BaseContract {
     accRewardPerShare(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     borrow(
-      _amount: BigNumberish,
-      _depositToFurnace: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _amount: PromiseOrValue<BigNumberish>,
+      _depositToFurnace: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     clevCVX(overrides?: CallOverrides): Promise<[string]>;
 
     delegate(
-      _registry: string,
-      _id: BytesLike,
-      _delegate: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _registry: PromiseOrValue<string>,
+      _id: PromiseOrValue<BytesLike>,
+      _delegate: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     deposit(
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     donate(
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     furnace(overrides?: CallOverrides): Promise<[string]>;
 
     getUserInfo(
-      _account: string,
+      _account: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<
       [BigNumber, BigNumber, BigNumber, BigNumber, BigNumber] & {
@@ -493,7 +522,7 @@ export interface CleverLocker extends BaseContract {
     >;
 
     getUserLocks(
-      _account: string,
+      _account: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<
       [CLeverCVXLocker.EpochUnlockInfoStructOutput[], CLeverCVXLocker.EpochUnlockInfoStructOutput[]] & {
@@ -505,50 +534,50 @@ export interface CleverLocker extends BaseContract {
     governor(overrides?: CallOverrides): Promise<[string]>;
 
     harvest(
-      _recipient: string,
-      _minimumOut: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _recipient: PromiseOrValue<string>,
+      _minimumOut: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     harvestBountyPercentage(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     harvestVotium(
       claims: IVotiumMultiMerkleStash.ClaimParamStruct[],
-      _minimumOut: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _minimumOut: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     initialize(
-      _governor: string,
-      _clevCVX: string,
-      _zap: string,
-      _furnace: string,
-      _platform: string,
-      _platformFeePercentage: BigNumberish,
-      _harvestBountyPercentage: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _governor: PromiseOrValue<string>,
+      _clevCVX: PromiseOrValue<string>,
+      _zap: PromiseOrValue<string>,
+      _furnace: PromiseOrValue<string>,
+      _platform: PromiseOrValue<string>,
+      _platformFeePercentage: PromiseOrValue<BigNumberish>,
+      _harvestBountyPercentage: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    isKeeper(arg0: string, overrides?: CallOverrides): Promise<[boolean]>;
+    isKeeper(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[boolean]>;
 
-    manualSwapRewardToken(arg0: string, overrides?: CallOverrides): Promise<[boolean]>;
+    manualSwapRewardToken(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[boolean]>;
 
     owner(overrides?: CallOverrides): Promise<[string]>;
 
-    pendingUnlocked(arg0: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber]>;
+    pendingUnlocked(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     platform(overrides?: CallOverrides): Promise<[string]>;
 
     platformFeePercentage(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    processUnlockableCVX(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    processUnlockableCVX(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
-    renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     repay(
-      _cvxAmount: BigNumberish,
-      _clevCVXAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _cvxAmount: PromiseOrValue<BigNumberish>,
+      _clevCVXAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     repayFeePercentage(overrides?: CallOverrides): Promise<[BigNumber]>;
@@ -570,71 +599,74 @@ export interface CleverLocker extends BaseContract {
     totalUnlockedGlobal(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     unlock(
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     updateGovernor(
-      _governor: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _governor: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     updateHarvestBountyPercentage(
-      _percentage: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _percentage: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     updateKeepers(
-      _accounts: string[],
-      _status: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _accounts: PromiseOrValue<string>[],
+      _status: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     updateManualSwapRewardToken(
-      _tokens: string[],
-      _status: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _tokens: PromiseOrValue<string>[],
+      _status: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     updatePlatform(
-      _platform: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _platform: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     updatePlatformFeePercentage(
-      _feePercentage: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _feePercentage: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     updateRepayFeePercentage(
-      _feePercentage: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _feePercentage: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     updateReserveRate(
-      _reserveRate: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _reserveRate: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     updateStakePercentage(
-      _percentage: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _percentage: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     updateStakeThreshold(
-      _threshold: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _threshold: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    updateZap(_zap: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    updateZap(
+      _zap: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<ContractTransaction>;
 
     userInfo(
-      arg0: string,
+      arg0: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<
       [BigNumber, BigNumber, BigNumber, BigNumber, BigNumber, BigNumber, number] & {
@@ -649,12 +681,12 @@ export interface CleverLocker extends BaseContract {
     >;
 
     withdrawManualSwapRewardTokens(
-      _tokens: string[],
-      _recipient: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _tokens: PromiseOrValue<string>[],
+      _recipient: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    withdrawUnlocked(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    withdrawUnlocked(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     zap(overrides?: CallOverrides): Promise<[string]>;
   };
@@ -662,34 +694,34 @@ export interface CleverLocker extends BaseContract {
   accRewardPerShare(overrides?: CallOverrides): Promise<BigNumber>;
 
   borrow(
-    _amount: BigNumberish,
-    _depositToFurnace: boolean,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _amount: PromiseOrValue<BigNumberish>,
+    _depositToFurnace: PromiseOrValue<boolean>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   clevCVX(overrides?: CallOverrides): Promise<string>;
 
   delegate(
-    _registry: string,
-    _id: BytesLike,
-    _delegate: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _registry: PromiseOrValue<string>,
+    _id: PromiseOrValue<BytesLike>,
+    _delegate: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   deposit(
-    _amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   donate(
-    _amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   furnace(overrides?: CallOverrides): Promise<string>;
 
   getUserInfo(
-    _account: string,
+    _account: PromiseOrValue<string>,
     overrides?: CallOverrides,
   ): Promise<
     [BigNumber, BigNumber, BigNumber, BigNumber, BigNumber] & {
@@ -702,7 +734,7 @@ export interface CleverLocker extends BaseContract {
   >;
 
   getUserLocks(
-    _account: string,
+    _account: PromiseOrValue<string>,
     overrides?: CallOverrides,
   ): Promise<
     [CLeverCVXLocker.EpochUnlockInfoStructOutput[], CLeverCVXLocker.EpochUnlockInfoStructOutput[]] & {
@@ -714,50 +746,50 @@ export interface CleverLocker extends BaseContract {
   governor(overrides?: CallOverrides): Promise<string>;
 
   harvest(
-    _recipient: string,
-    _minimumOut: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _recipient: PromiseOrValue<string>,
+    _minimumOut: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   harvestBountyPercentage(overrides?: CallOverrides): Promise<BigNumber>;
 
   harvestVotium(
     claims: IVotiumMultiMerkleStash.ClaimParamStruct[],
-    _minimumOut: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _minimumOut: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   initialize(
-    _governor: string,
-    _clevCVX: string,
-    _zap: string,
-    _furnace: string,
-    _platform: string,
-    _platformFeePercentage: BigNumberish,
-    _harvestBountyPercentage: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _governor: PromiseOrValue<string>,
+    _clevCVX: PromiseOrValue<string>,
+    _zap: PromiseOrValue<string>,
+    _furnace: PromiseOrValue<string>,
+    _platform: PromiseOrValue<string>,
+    _platformFeePercentage: PromiseOrValue<BigNumberish>,
+    _harvestBountyPercentage: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  isKeeper(arg0: string, overrides?: CallOverrides): Promise<boolean>;
+  isKeeper(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
-  manualSwapRewardToken(arg0: string, overrides?: CallOverrides): Promise<boolean>;
+  manualSwapRewardToken(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
   owner(overrides?: CallOverrides): Promise<string>;
 
-  pendingUnlocked(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+  pendingUnlocked(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
   platform(overrides?: CallOverrides): Promise<string>;
 
   platformFeePercentage(overrides?: CallOverrides): Promise<BigNumber>;
 
-  processUnlockableCVX(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  processUnlockableCVX(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
-  renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   repay(
-    _cvxAmount: BigNumberish,
-    _clevCVXAmount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _cvxAmount: PromiseOrValue<BigNumberish>,
+    _clevCVXAmount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   repayFeePercentage(overrides?: CallOverrides): Promise<BigNumber>;
@@ -779,71 +811,74 @@ export interface CleverLocker extends BaseContract {
   totalUnlockedGlobal(overrides?: CallOverrides): Promise<BigNumber>;
 
   transferOwnership(
-    newOwner: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    newOwner: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   unlock(
-    _amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   updateGovernor(
-    _governor: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _governor: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   updateHarvestBountyPercentage(
-    _percentage: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _percentage: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   updateKeepers(
-    _accounts: string[],
-    _status: boolean,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _accounts: PromiseOrValue<string>[],
+    _status: PromiseOrValue<boolean>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   updateManualSwapRewardToken(
-    _tokens: string[],
-    _status: boolean,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _tokens: PromiseOrValue<string>[],
+    _status: PromiseOrValue<boolean>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   updatePlatform(
-    _platform: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _platform: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   updatePlatformFeePercentage(
-    _feePercentage: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _feePercentage: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   updateRepayFeePercentage(
-    _feePercentage: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _feePercentage: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   updateReserveRate(
-    _reserveRate: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _reserveRate: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   updateStakePercentage(
-    _percentage: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _percentage: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   updateStakeThreshold(
-    _threshold: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _threshold: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  updateZap(_zap: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  updateZap(
+    _zap: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
+  ): Promise<ContractTransaction>;
 
   userInfo(
-    arg0: string,
+    arg0: PromiseOrValue<string>,
     overrides?: CallOverrides,
   ): Promise<
     [BigNumber, BigNumber, BigNumber, BigNumber, BigNumber, BigNumber, number] & {
@@ -858,32 +893,41 @@ export interface CleverLocker extends BaseContract {
   >;
 
   withdrawManualSwapRewardTokens(
-    _tokens: string[],
-    _recipient: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _tokens: PromiseOrValue<string>[],
+    _recipient: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  withdrawUnlocked(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  withdrawUnlocked(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   zap(overrides?: CallOverrides): Promise<string>;
 
   callStatic: {
     accRewardPerShare(overrides?: CallOverrides): Promise<BigNumber>;
 
-    borrow(_amount: BigNumberish, _depositToFurnace: boolean, overrides?: CallOverrides): Promise<void>;
+    borrow(
+      _amount: PromiseOrValue<BigNumberish>,
+      _depositToFurnace: PromiseOrValue<boolean>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
     clevCVX(overrides?: CallOverrides): Promise<string>;
 
-    delegate(_registry: string, _id: BytesLike, _delegate: string, overrides?: CallOverrides): Promise<void>;
+    delegate(
+      _registry: PromiseOrValue<string>,
+      _id: PromiseOrValue<BytesLike>,
+      _delegate: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    deposit(_amount: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    deposit(_amount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
-    donate(_amount: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    donate(_amount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
     furnace(overrides?: CallOverrides): Promise<string>;
 
     getUserInfo(
-      _account: string,
+      _account: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<
       [BigNumber, BigNumber, BigNumber, BigNumber, BigNumber] & {
@@ -896,7 +940,7 @@ export interface CleverLocker extends BaseContract {
     >;
 
     getUserLocks(
-      _account: string,
+      _account: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<
       [CLeverCVXLocker.EpochUnlockInfoStructOutput[], CLeverCVXLocker.EpochUnlockInfoStructOutput[]] & {
@@ -907,34 +951,38 @@ export interface CleverLocker extends BaseContract {
 
     governor(overrides?: CallOverrides): Promise<string>;
 
-    harvest(_recipient: string, _minimumOut: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    harvest(
+      _recipient: PromiseOrValue<string>,
+      _minimumOut: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     harvestBountyPercentage(overrides?: CallOverrides): Promise<BigNumber>;
 
     harvestVotium(
       claims: IVotiumMultiMerkleStash.ClaimParamStruct[],
-      _minimumOut: BigNumberish,
+      _minimumOut: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     initialize(
-      _governor: string,
-      _clevCVX: string,
-      _zap: string,
-      _furnace: string,
-      _platform: string,
-      _platformFeePercentage: BigNumberish,
-      _harvestBountyPercentage: BigNumberish,
+      _governor: PromiseOrValue<string>,
+      _clevCVX: PromiseOrValue<string>,
+      _zap: PromiseOrValue<string>,
+      _furnace: PromiseOrValue<string>,
+      _platform: PromiseOrValue<string>,
+      _platformFeePercentage: PromiseOrValue<BigNumberish>,
+      _harvestBountyPercentage: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
-    isKeeper(arg0: string, overrides?: CallOverrides): Promise<boolean>;
+    isKeeper(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
-    manualSwapRewardToken(arg0: string, overrides?: CallOverrides): Promise<boolean>;
+    manualSwapRewardToken(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
     owner(overrides?: CallOverrides): Promise<string>;
 
-    pendingUnlocked(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    pendingUnlocked(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     platform(overrides?: CallOverrides): Promise<string>;
 
@@ -944,7 +992,11 @@ export interface CleverLocker extends BaseContract {
 
     renounceOwnership(overrides?: CallOverrides): Promise<void>;
 
-    repay(_cvxAmount: BigNumberish, _clevCVXAmount: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    repay(
+      _cvxAmount: PromiseOrValue<BigNumberish>,
+      _clevCVXAmount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
     repayFeePercentage(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -964,34 +1016,42 @@ export interface CleverLocker extends BaseContract {
 
     totalUnlockedGlobal(overrides?: CallOverrides): Promise<BigNumber>;
 
-    transferOwnership(newOwner: string, overrides?: CallOverrides): Promise<void>;
+    transferOwnership(newOwner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    unlock(_amount: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    unlock(_amount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
-    updateGovernor(_governor: string, overrides?: CallOverrides): Promise<void>;
+    updateGovernor(_governor: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    updateHarvestBountyPercentage(_percentage: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    updateHarvestBountyPercentage(_percentage: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
-    updateKeepers(_accounts: string[], _status: boolean, overrides?: CallOverrides): Promise<void>;
+    updateKeepers(
+      _accounts: PromiseOrValue<string>[],
+      _status: PromiseOrValue<boolean>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    updateManualSwapRewardToken(_tokens: string[], _status: boolean, overrides?: CallOverrides): Promise<void>;
+    updateManualSwapRewardToken(
+      _tokens: PromiseOrValue<string>[],
+      _status: PromiseOrValue<boolean>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    updatePlatform(_platform: string, overrides?: CallOverrides): Promise<void>;
+    updatePlatform(_platform: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    updatePlatformFeePercentage(_feePercentage: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    updatePlatformFeePercentage(_feePercentage: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
-    updateRepayFeePercentage(_feePercentage: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    updateRepayFeePercentage(_feePercentage: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
-    updateReserveRate(_reserveRate: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    updateReserveRate(_reserveRate: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
-    updateStakePercentage(_percentage: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    updateStakePercentage(_percentage: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
-    updateStakeThreshold(_threshold: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    updateStakeThreshold(_threshold: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
-    updateZap(_zap: string, overrides?: CallOverrides): Promise<void>;
+    updateZap(_zap: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     userInfo(
-      arg0: string,
+      arg0: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<
       [BigNumber, BigNumber, BigNumber, BigNumber, BigNumber, BigNumber, number] & {
@@ -1005,7 +1065,11 @@ export interface CleverLocker extends BaseContract {
       }
     >;
 
-    withdrawManualSwapRewardTokens(_tokens: string[], _recipient: string, overrides?: CallOverrides): Promise<void>;
+    withdrawManualSwapRewardTokens(
+      _tokens: PromiseOrValue<string>[],
+      _recipient: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
     withdrawUnlocked(overrides?: CallOverrides): Promise<void>;
 
@@ -1013,47 +1077,55 @@ export interface CleverLocker extends BaseContract {
   };
 
   filters: {
-    'Borrow(address,uint256)'(_account?: string | null, _amount?: null): BorrowEventFilter;
-    Borrow(_account?: string | null, _amount?: null): BorrowEventFilter;
+    'Borrow(address,uint256)'(_account?: PromiseOrValue<string> | null, _amount?: null): BorrowEventFilter;
+    Borrow(_account?: PromiseOrValue<string> | null, _amount?: null): BorrowEventFilter;
 
-    'Claim(address,uint256)'(_account?: string | null, _amount?: null): ClaimEventFilter;
-    Claim(_account?: string | null, _amount?: null): ClaimEventFilter;
+    'Claim(address,uint256)'(_account?: PromiseOrValue<string> | null, _amount?: null): ClaimEventFilter;
+    Claim(_account?: PromiseOrValue<string> | null, _amount?: null): ClaimEventFilter;
 
-    'Deposit(address,uint256)'(_account?: string | null, _amount?: null): DepositEventFilter;
-    Deposit(_account?: string | null, _amount?: null): DepositEventFilter;
+    'Deposit(address,uint256)'(_account?: PromiseOrValue<string> | null, _amount?: null): DepositEventFilter;
+    Deposit(_account?: PromiseOrValue<string> | null, _amount?: null): DepositEventFilter;
 
     'Harvest(address,uint256,uint256,uint256)'(
-      _caller?: string | null,
+      _caller?: PromiseOrValue<string> | null,
       _reward?: null,
       _platformFee?: null,
       _harvestBounty?: null,
     ): HarvestEventFilter;
-    Harvest(_caller?: string | null, _reward?: null, _platformFee?: null, _harvestBounty?: null): HarvestEventFilter;
+    Harvest(
+      _caller?: PromiseOrValue<string> | null,
+      _reward?: null,
+      _platformFee?: null,
+      _harvestBounty?: null,
+    ): HarvestEventFilter;
 
     'OwnershipTransferred(address,address)'(
-      previousOwner?: string | null,
-      newOwner?: string | null,
+      previousOwner?: PromiseOrValue<string> | null,
+      newOwner?: PromiseOrValue<string> | null,
     ): OwnershipTransferredEventFilter;
-    OwnershipTransferred(previousOwner?: string | null, newOwner?: string | null): OwnershipTransferredEventFilter;
+    OwnershipTransferred(
+      previousOwner?: PromiseOrValue<string> | null,
+      newOwner?: PromiseOrValue<string> | null,
+    ): OwnershipTransferredEventFilter;
 
     'Repay(address,uint256,uint256)'(
-      _account?: string | null,
+      _account?: PromiseOrValue<string> | null,
       _cvxAmount?: null,
       _clevCVXAmount?: null,
     ): RepayEventFilter;
-    Repay(_account?: string | null, _cvxAmount?: null, _clevCVXAmount?: null): RepayEventFilter;
+    Repay(_account?: PromiseOrValue<string> | null, _cvxAmount?: null, _clevCVXAmount?: null): RepayEventFilter;
 
-    'Unlock(address,uint256)'(_account?: string | null, _amount?: null): UnlockEventFilter;
-    Unlock(_account?: string | null, _amount?: null): UnlockEventFilter;
+    'Unlock(address,uint256)'(_account?: PromiseOrValue<string> | null, _amount?: null): UnlockEventFilter;
+    Unlock(_account?: PromiseOrValue<string> | null, _amount?: null): UnlockEventFilter;
 
-    'UpdateGovernor(address)'(_governor?: string | null): UpdateGovernorEventFilter;
-    UpdateGovernor(_governor?: string | null): UpdateGovernorEventFilter;
+    'UpdateGovernor(address)'(_governor?: PromiseOrValue<string> | null): UpdateGovernorEventFilter;
+    UpdateGovernor(_governor?: PromiseOrValue<string> | null): UpdateGovernorEventFilter;
 
     'UpdateHarvestBountyPercentage(uint256)'(_percentage?: null): UpdateHarvestBountyPercentageEventFilter;
     UpdateHarvestBountyPercentage(_percentage?: null): UpdateHarvestBountyPercentageEventFilter;
 
-    'UpdatePlatform(address)'(_platform?: string | null): UpdatePlatformEventFilter;
-    UpdatePlatform(_platform?: string | null): UpdatePlatformEventFilter;
+    'UpdatePlatform(address)'(_platform?: PromiseOrValue<string> | null): UpdatePlatformEventFilter;
+    UpdatePlatform(_platform?: PromiseOrValue<string> | null): UpdatePlatformEventFilter;
 
     'UpdatePlatformFeePercentage(uint256)'(_feePercentage?: null): UpdatePlatformFeePercentageEventFilter;
     UpdatePlatformFeePercentage(_feePercentage?: null): UpdatePlatformFeePercentageEventFilter;
@@ -1067,91 +1139,100 @@ export interface CleverLocker extends BaseContract {
     'UpdateStakeThreshold(uint256)'(_threshold?: null): UpdateStakeThresholdEventFilter;
     UpdateStakeThreshold(_threshold?: null): UpdateStakeThresholdEventFilter;
 
-    'UpdateWhitelist(address,bool)'(_whitelist?: string | null, _status?: null): UpdateWhitelistEventFilter;
-    UpdateWhitelist(_whitelist?: string | null, _status?: null): UpdateWhitelistEventFilter;
+    'UpdateWhitelist(address,bool)'(
+      _whitelist?: PromiseOrValue<string> | null,
+      _status?: null,
+    ): UpdateWhitelistEventFilter;
+    UpdateWhitelist(_whitelist?: PromiseOrValue<string> | null, _status?: null): UpdateWhitelistEventFilter;
 
-    'UpdateZap(address)'(_zap?: string | null): UpdateZapEventFilter;
-    UpdateZap(_zap?: string | null): UpdateZapEventFilter;
+    'UpdateZap(address)'(_zap?: PromiseOrValue<string> | null): UpdateZapEventFilter;
+    UpdateZap(_zap?: PromiseOrValue<string> | null): UpdateZapEventFilter;
 
-    'Withdraw(address,uint256)'(_account?: string | null, _amount?: null): WithdrawEventFilter;
-    Withdraw(_account?: string | null, _amount?: null): WithdrawEventFilter;
+    'Withdraw(address,uint256)'(_account?: PromiseOrValue<string> | null, _amount?: null): WithdrawEventFilter;
+    Withdraw(_account?: PromiseOrValue<string> | null, _amount?: null): WithdrawEventFilter;
   };
 
   estimateGas: {
     accRewardPerShare(overrides?: CallOverrides): Promise<BigNumber>;
 
     borrow(
-      _amount: BigNumberish,
-      _depositToFurnace: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _amount: PromiseOrValue<BigNumberish>,
+      _depositToFurnace: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     clevCVX(overrides?: CallOverrides): Promise<BigNumber>;
 
     delegate(
-      _registry: string,
-      _id: BytesLike,
-      _delegate: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _registry: PromiseOrValue<string>,
+      _id: PromiseOrValue<BytesLike>,
+      _delegate: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    deposit(_amount: BigNumberish, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    deposit(
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
-    donate(_amount: BigNumberish, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    donate(
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     furnace(overrides?: CallOverrides): Promise<BigNumber>;
 
-    getUserInfo(_account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getUserInfo(_account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    getUserLocks(_account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getUserLocks(_account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     governor(overrides?: CallOverrides): Promise<BigNumber>;
 
     harvest(
-      _recipient: string,
-      _minimumOut: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _recipient: PromiseOrValue<string>,
+      _minimumOut: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     harvestBountyPercentage(overrides?: CallOverrides): Promise<BigNumber>;
 
     harvestVotium(
       claims: IVotiumMultiMerkleStash.ClaimParamStruct[],
-      _minimumOut: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _minimumOut: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     initialize(
-      _governor: string,
-      _clevCVX: string,
-      _zap: string,
-      _furnace: string,
-      _platform: string,
-      _platformFeePercentage: BigNumberish,
-      _harvestBountyPercentage: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _governor: PromiseOrValue<string>,
+      _clevCVX: PromiseOrValue<string>,
+      _zap: PromiseOrValue<string>,
+      _furnace: PromiseOrValue<string>,
+      _platform: PromiseOrValue<string>,
+      _platformFeePercentage: PromiseOrValue<BigNumberish>,
+      _harvestBountyPercentage: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    isKeeper(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    isKeeper(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    manualSwapRewardToken(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    manualSwapRewardToken(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     owner(overrides?: CallOverrides): Promise<BigNumber>;
 
-    pendingUnlocked(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    pendingUnlocked(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     platform(overrides?: CallOverrides): Promise<BigNumber>;
 
     platformFeePercentage(overrides?: CallOverrides): Promise<BigNumber>;
 
-    processUnlockableCVX(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    processUnlockableCVX(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
-    renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     repay(
-      _cvxAmount: BigNumberish,
-      _clevCVXAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _cvxAmount: PromiseOrValue<BigNumberish>,
+      _clevCVXAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     repayFeePercentage(overrides?: CallOverrides): Promise<BigNumber>;
@@ -1173,69 +1254,81 @@ export interface CleverLocker extends BaseContract {
     totalUnlockedGlobal(overrides?: CallOverrides): Promise<BigNumber>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    unlock(_amount: BigNumberish, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    unlock(
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
-    updateGovernor(_governor: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    updateGovernor(
+      _governor: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     updateHarvestBountyPercentage(
-      _percentage: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _percentage: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     updateKeepers(
-      _accounts: string[],
-      _status: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _accounts: PromiseOrValue<string>[],
+      _status: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     updateManualSwapRewardToken(
-      _tokens: string[],
-      _status: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _tokens: PromiseOrValue<string>[],
+      _status: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    updatePlatform(_platform: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    updatePlatform(
+      _platform: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     updatePlatformFeePercentage(
-      _feePercentage: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _feePercentage: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     updateRepayFeePercentage(
-      _feePercentage: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _feePercentage: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     updateReserveRate(
-      _reserveRate: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _reserveRate: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     updateStakePercentage(
-      _percentage: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _percentage: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     updateStakeThreshold(
-      _threshold: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _threshold: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    updateZap(_zap: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    updateZap(
+      _zap: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
-    userInfo(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    userInfo(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     withdrawManualSwapRewardTokens(
-      _tokens: string[],
-      _recipient: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _tokens: PromiseOrValue<string>[],
+      _recipient: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    withdrawUnlocked(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    withdrawUnlocked(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     zap(overrides?: CallOverrides): Promise<BigNumber>;
   };
@@ -1244,83 +1337,83 @@ export interface CleverLocker extends BaseContract {
     accRewardPerShare(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     borrow(
-      _amount: BigNumberish,
-      _depositToFurnace: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _amount: PromiseOrValue<BigNumberish>,
+      _depositToFurnace: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     clevCVX(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     delegate(
-      _registry: string,
-      _id: BytesLike,
-      _delegate: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _registry: PromiseOrValue<string>,
+      _id: PromiseOrValue<BytesLike>,
+      _delegate: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     deposit(
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     donate(
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     furnace(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    getUserInfo(_account: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getUserInfo(_account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    getUserLocks(_account: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getUserLocks(_account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     governor(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     harvest(
-      _recipient: string,
-      _minimumOut: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _recipient: PromiseOrValue<string>,
+      _minimumOut: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     harvestBountyPercentage(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     harvestVotium(
       claims: IVotiumMultiMerkleStash.ClaimParamStruct[],
-      _minimumOut: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _minimumOut: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     initialize(
-      _governor: string,
-      _clevCVX: string,
-      _zap: string,
-      _furnace: string,
-      _platform: string,
-      _platformFeePercentage: BigNumberish,
-      _harvestBountyPercentage: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _governor: PromiseOrValue<string>,
+      _clevCVX: PromiseOrValue<string>,
+      _zap: PromiseOrValue<string>,
+      _furnace: PromiseOrValue<string>,
+      _platform: PromiseOrValue<string>,
+      _platformFeePercentage: PromiseOrValue<BigNumberish>,
+      _harvestBountyPercentage: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    isKeeper(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    isKeeper(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    manualSwapRewardToken(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    manualSwapRewardToken(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    pendingUnlocked(arg0: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    pendingUnlocked(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     platform(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     platformFeePercentage(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    processUnlockableCVX(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    processUnlockableCVX(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
-    renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     repay(
-      _cvxAmount: BigNumberish,
-      _clevCVXAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _cvxAmount: PromiseOrValue<BigNumberish>,
+      _clevCVXAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     repayFeePercentage(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -1342,78 +1435,81 @@ export interface CleverLocker extends BaseContract {
     totalUnlockedGlobal(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     unlock(
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     updateGovernor(
-      _governor: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _governor: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     updateHarvestBountyPercentage(
-      _percentage: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _percentage: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     updateKeepers(
-      _accounts: string[],
-      _status: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _accounts: PromiseOrValue<string>[],
+      _status: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     updateManualSwapRewardToken(
-      _tokens: string[],
-      _status: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _tokens: PromiseOrValue<string>[],
+      _status: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     updatePlatform(
-      _platform: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _platform: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     updatePlatformFeePercentage(
-      _feePercentage: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _feePercentage: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     updateRepayFeePercentage(
-      _feePercentage: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _feePercentage: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     updateReserveRate(
-      _reserveRate: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _reserveRate: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     updateStakePercentage(
-      _percentage: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _percentage: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     updateStakeThreshold(
-      _threshold: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _threshold: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    updateZap(_zap: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    updateZap(
+      _zap: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<PopulatedTransaction>;
 
-    userInfo(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    userInfo(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     withdrawManualSwapRewardTokens(
-      _tokens: string[],
-      _recipient: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _tokens: PromiseOrValue<string>[],
+      _recipient: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    withdrawUnlocked(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    withdrawUnlocked(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     zap(overrides?: CallOverrides): Promise<PopulatedTransaction>;
   };

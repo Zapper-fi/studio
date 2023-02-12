@@ -3,3 +3,4 @@
 /* eslint-disable */
 export { CleverFurnace__factory } from './CleverFurnace__factory';
 export { CleverLocker__factory } from './CleverLocker__factory';
+export { CleverVesting__factory } from './CleverVesting__factory';
