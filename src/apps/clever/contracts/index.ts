@@ -10,6 +10,7 @@ import {
   CleverGauge__factory,
   CleverGaugeController__factory,
   CleverLocker__factory,
+  CleverVesting__factory
 } from './ethers';
 
 // eslint-disable-next-line
@@ -36,6 +37,9 @@ export class CleverContractFactory extends ContractFactory {
   cleverLocker({ address, network }: ContractOpts) {
     return CleverLocker__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
+  cleverVesting({ address, network }: ContractOpts) {
+    return CleverVesting__factory.connect(address, this.appToolkit.getNetworkProvider(network));
+  }
 }
 
 export type { AbcCvx } from './ethers';
@@ -43,3 +47,4 @@ export type { CleverFurnace } from './ethers';
 export type { CleverGauge } from './ethers';
 export type { CleverGaugeController } from './ethers';
 export type { CleverLocker } from './ethers';
+export type { CleverVesting } from './ethers';
