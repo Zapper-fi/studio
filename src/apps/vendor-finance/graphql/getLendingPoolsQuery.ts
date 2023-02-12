@@ -21,7 +21,7 @@ export type VendorLendingPoolsGraphResponse = {
 
 export const lendingPoolsQuery = gql`
   query getPoolsList {
-    pools(first: 1000, where: { _lendBalance_gt: "0", _expiry_gt: ${`${Math.floor(new Date().getTime() / 1000)}`} }) {
+    pools(first: 1000, where: { _expiry_gt: ${`${Math.floor(new Date().getTime() / 1000)}`} }) {
       id
       _deployer
       _mintRatio
