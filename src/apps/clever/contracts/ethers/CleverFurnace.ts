@@ -12,383 +12,225 @@ import type {
   PopulatedTransaction,
   Signer,
   utils,
-} from "ethers";
-import type {
-  FunctionFragment,
-  Result,
-  EventFragment,
-} from "@ethersproject/abi";
-import type { Listener, Provider } from "@ethersproject/providers";
-import type {
-  TypedEventFilter,
-  TypedEvent,
-  TypedListener,
-  OnEvent,
-  PromiseOrValue,
-} from "./common";
+} from 'ethers';
+import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
+import type { Listener, Provider } from '@ethersproject/providers';
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
 export interface CleverFurnaceInterface extends utils.Interface {
   functions: {
-    "accUnrealisedFraction()": FunctionFragment;
-    "claim(address)": FunctionFragment;
-    "clevCVX()": FunctionFragment;
-    "deposit(uint256)": FunctionFragment;
-    "depositFor(address,uint256)": FunctionFragment;
-    "distribute(address,uint256)": FunctionFragment;
-    "distributeIndex()": FunctionFragment;
-    "exit(address)": FunctionFragment;
-    "getUserInfo(address)": FunctionFragment;
-    "governor()": FunctionFragment;
-    "harvest(address,uint256)": FunctionFragment;
-    "harvestBountyPercentage()": FunctionFragment;
-    "initialize(address,address,address,address,uint256,uint256)": FunctionFragment;
-    "isWhitelisted(address)": FunctionFragment;
-    "lastPaidOffDistributeIndex()": FunctionFragment;
-    "owner()": FunctionFragment;
-    "platform()": FunctionFragment;
-    "platformFeePercentage()": FunctionFragment;
-    "renounceOwnership()": FunctionFragment;
-    "stakePercentage()": FunctionFragment;
-    "stakeThreshold()": FunctionFragment;
-    "totalCVXInPool()": FunctionFragment;
-    "totalRealised()": FunctionFragment;
-    "totalUnrealised()": FunctionFragment;
-    "transferOwnership(address)": FunctionFragment;
-    "updateGovernor(address)": FunctionFragment;
-    "updateHarvestBountyPercentage(uint256)": FunctionFragment;
-    "updatePlatform(address)": FunctionFragment;
-    "updatePlatformFeePercentage(uint256)": FunctionFragment;
-    "updateStakePercentage(uint256)": FunctionFragment;
-    "updateStakeThreshold(uint256)": FunctionFragment;
-    "updateWhitelists(address[],bool)": FunctionFragment;
-    "updateZap(address)": FunctionFragment;
-    "userInfo(address)": FunctionFragment;
-    "withdraw(address,uint256)": FunctionFragment;
-    "withdrawAll(address)": FunctionFragment;
-    "zap()": FunctionFragment;
+    'accUnrealisedFraction()': FunctionFragment;
+    'claim(address)': FunctionFragment;
+    'clevCVX()': FunctionFragment;
+    'deposit(uint256)': FunctionFragment;
+    'depositFor(address,uint256)': FunctionFragment;
+    'distribute(address,uint256)': FunctionFragment;
+    'distributeIndex()': FunctionFragment;
+    'exit(address)': FunctionFragment;
+    'getUserInfo(address)': FunctionFragment;
+    'governor()': FunctionFragment;
+    'harvest(address,uint256)': FunctionFragment;
+    'harvestBountyPercentage()': FunctionFragment;
+    'initialize(address,address,address,address,uint256,uint256)': FunctionFragment;
+    'isWhitelisted(address)': FunctionFragment;
+    'lastPaidOffDistributeIndex()': FunctionFragment;
+    'owner()': FunctionFragment;
+    'platform()': FunctionFragment;
+    'platformFeePercentage()': FunctionFragment;
+    'renounceOwnership()': FunctionFragment;
+    'stakePercentage()': FunctionFragment;
+    'stakeThreshold()': FunctionFragment;
+    'totalCVXInPool()': FunctionFragment;
+    'totalRealised()': FunctionFragment;
+    'totalUnrealised()': FunctionFragment;
+    'transferOwnership(address)': FunctionFragment;
+    'updateGovernor(address)': FunctionFragment;
+    'updateHarvestBountyPercentage(uint256)': FunctionFragment;
+    'updatePlatform(address)': FunctionFragment;
+    'updatePlatformFeePercentage(uint256)': FunctionFragment;
+    'updateStakePercentage(uint256)': FunctionFragment;
+    'updateStakeThreshold(uint256)': FunctionFragment;
+    'updateWhitelists(address[],bool)': FunctionFragment;
+    'updateZap(address)': FunctionFragment;
+    'userInfo(address)': FunctionFragment;
+    'withdraw(address,uint256)': FunctionFragment;
+    'withdrawAll(address)': FunctionFragment;
+    'zap()': FunctionFragment;
   };
 
   getFunction(
     nameOrSignatureOrTopic:
-      | "accUnrealisedFraction"
-      | "claim"
-      | "clevCVX"
-      | "deposit"
-      | "depositFor"
-      | "distribute"
-      | "distributeIndex"
-      | "exit"
-      | "getUserInfo"
-      | "governor"
-      | "harvest"
-      | "harvestBountyPercentage"
-      | "initialize"
-      | "isWhitelisted"
-      | "lastPaidOffDistributeIndex"
-      | "owner"
-      | "platform"
-      | "platformFeePercentage"
-      | "renounceOwnership"
-      | "stakePercentage"
-      | "stakeThreshold"
-      | "totalCVXInPool"
-      | "totalRealised"
-      | "totalUnrealised"
-      | "transferOwnership"
-      | "updateGovernor"
-      | "updateHarvestBountyPercentage"
-      | "updatePlatform"
-      | "updatePlatformFeePercentage"
-      | "updateStakePercentage"
-      | "updateStakeThreshold"
-      | "updateWhitelists"
-      | "updateZap"
-      | "userInfo"
-      | "withdraw"
-      | "withdrawAll"
-      | "zap"
+      | 'accUnrealisedFraction'
+      | 'claim'
+      | 'clevCVX'
+      | 'deposit'
+      | 'depositFor'
+      | 'distribute'
+      | 'distributeIndex'
+      | 'exit'
+      | 'getUserInfo'
+      | 'governor'
+      | 'harvest'
+      | 'harvestBountyPercentage'
+      | 'initialize'
+      | 'isWhitelisted'
+      | 'lastPaidOffDistributeIndex'
+      | 'owner'
+      | 'platform'
+      | 'platformFeePercentage'
+      | 'renounceOwnership'
+      | 'stakePercentage'
+      | 'stakeThreshold'
+      | 'totalCVXInPool'
+      | 'totalRealised'
+      | 'totalUnrealised'
+      | 'transferOwnership'
+      | 'updateGovernor'
+      | 'updateHarvestBountyPercentage'
+      | 'updatePlatform'
+      | 'updatePlatformFeePercentage'
+      | 'updateStakePercentage'
+      | 'updateStakeThreshold'
+      | 'updateWhitelists'
+      | 'updateZap'
+      | 'userInfo'
+      | 'withdraw'
+      | 'withdrawAll'
+      | 'zap',
   ): FunctionFragment;
 
+  encodeFunctionData(functionFragment: 'accUnrealisedFraction', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'claim', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'clevCVX', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'deposit', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(
-    functionFragment: "accUnrealisedFraction",
-    values?: undefined
+    functionFragment: 'depositFor',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
   ): string;
   encodeFunctionData(
-    functionFragment: "claim",
-    values: [PromiseOrValue<string>]
+    functionFragment: 'distribute',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
   ): string;
-  encodeFunctionData(functionFragment: "clevCVX", values?: undefined): string;
+  encodeFunctionData(functionFragment: 'distributeIndex', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'exit', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'getUserInfo', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'governor', values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "deposit",
-    values: [PromiseOrValue<BigNumberish>]
+    functionFragment: 'harvest',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
   ): string;
+  encodeFunctionData(functionFragment: 'harvestBountyPercentage', values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "depositFor",
-    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "distribute",
-    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "distributeIndex",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "exit",
-    values: [PromiseOrValue<string>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "getUserInfo",
-    values: [PromiseOrValue<string>]
-  ): string;
-  encodeFunctionData(functionFragment: "governor", values?: undefined): string;
-  encodeFunctionData(
-    functionFragment: "harvest",
-    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "harvestBountyPercentage",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "initialize",
+    functionFragment: 'initialize',
     values: [
       PromiseOrValue<string>,
       PromiseOrValue<string>,
       PromiseOrValue<string>,
       PromiseOrValue<string>,
       PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BigNumberish>
-    ]
+      PromiseOrValue<BigNumberish>,
+    ],
   ): string;
+  encodeFunctionData(functionFragment: 'isWhitelisted', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'lastPaidOffDistributeIndex', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'owner', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'platform', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'platformFeePercentage', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'renounceOwnership', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'stakePercentage', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'stakeThreshold', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'totalCVXInPool', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'totalRealised', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'totalUnrealised', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'transferOwnership', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'updateGovernor', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'updateHarvestBountyPercentage', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'updatePlatform', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'updatePlatformFeePercentage', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'updateStakePercentage', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'updateStakeThreshold', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(
-    functionFragment: "isWhitelisted",
-    values: [PromiseOrValue<string>]
+    functionFragment: 'updateWhitelists',
+    values: [PromiseOrValue<string>[], PromiseOrValue<boolean>],
   ): string;
+  encodeFunctionData(functionFragment: 'updateZap', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'userInfo', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(
-    functionFragment: "lastPaidOffDistributeIndex",
-    values?: undefined
+    functionFragment: 'withdraw',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
   ): string;
-  encodeFunctionData(functionFragment: "owner", values?: undefined): string;
-  encodeFunctionData(functionFragment: "platform", values?: undefined): string;
-  encodeFunctionData(
-    functionFragment: "platformFeePercentage",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "renounceOwnership",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "stakePercentage",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "stakeThreshold",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "totalCVXInPool",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "totalRealised",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "totalUnrealised",
-    values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "transferOwnership",
-    values: [PromiseOrValue<string>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "updateGovernor",
-    values: [PromiseOrValue<string>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "updateHarvestBountyPercentage",
-    values: [PromiseOrValue<BigNumberish>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "updatePlatform",
-    values: [PromiseOrValue<string>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "updatePlatformFeePercentage",
-    values: [PromiseOrValue<BigNumberish>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "updateStakePercentage",
-    values: [PromiseOrValue<BigNumberish>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "updateStakeThreshold",
-    values: [PromiseOrValue<BigNumberish>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "updateWhitelists",
-    values: [PromiseOrValue<string>[], PromiseOrValue<boolean>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "updateZap",
-    values: [PromiseOrValue<string>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "userInfo",
-    values: [PromiseOrValue<string>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "withdraw",
-    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "withdrawAll",
-    values: [PromiseOrValue<string>]
-  ): string;
-  encodeFunctionData(functionFragment: "zap", values?: undefined): string;
+  encodeFunctionData(functionFragment: 'withdrawAll', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'zap', values?: undefined): string;
 
-  decodeFunctionResult(
-    functionFragment: "accUnrealisedFraction",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "claim", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "clevCVX", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "deposit", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "depositFor", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "distribute", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "distributeIndex",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "exit", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "getUserInfo",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "governor", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "harvest", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "harvestBountyPercentage",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "initialize", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "isWhitelisted",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "lastPaidOffDistributeIndex",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "owner", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "platform", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "platformFeePercentage",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "renounceOwnership",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "stakePercentage",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "stakeThreshold",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "totalCVXInPool",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "totalRealised",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "totalUnrealised",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "transferOwnership",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "updateGovernor",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "updateHarvestBountyPercentage",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "updatePlatform",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "updatePlatformFeePercentage",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "updateStakePercentage",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "updateStakeThreshold",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "updateWhitelists",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "updateZap", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "userInfo", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "withdraw", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "withdrawAll",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(functionFragment: "zap", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'accUnrealisedFraction', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'claim', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'clevCVX', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'deposit', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'depositFor', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'distribute', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'distributeIndex', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'exit', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'getUserInfo', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'governor', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'harvest', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'harvestBountyPercentage', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'initialize', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'isWhitelisted', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'lastPaidOffDistributeIndex', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'owner', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'platform', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'platformFeePercentage', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'renounceOwnership', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'stakePercentage', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'stakeThreshold', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'totalCVXInPool', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'totalRealised', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'totalUnrealised', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'transferOwnership', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'updateGovernor', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'updateHarvestBountyPercentage', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'updatePlatform', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'updatePlatformFeePercentage', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'updateStakePercentage', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'updateStakeThreshold', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'updateWhitelists', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'updateZap', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'userInfo', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'withdraw', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'withdrawAll', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'zap', data: BytesLike): Result;
 
   events: {
-    "Claim(address,address,uint256)": EventFragment;
-    "Deposit(address,uint256)": EventFragment;
-    "Distribute(address,uint256)": EventFragment;
-    "Harvest(address,uint256)": EventFragment;
-    "OwnershipTransferred(address,address)": EventFragment;
-    "UpdateGovernor(address)": EventFragment;
-    "UpdateHarvestBountyPercentage(uint256)": EventFragment;
-    "UpdatePlatform(address)": EventFragment;
-    "UpdatePlatformFeePercentage(uint256)": EventFragment;
-    "UpdateStakePercentage(uint256)": EventFragment;
-    "UpdateStakeThreshold(uint256)": EventFragment;
-    "UpdateWhitelist(address,bool)": EventFragment;
-    "UpdateZap(address)": EventFragment;
-    "Withdraw(address,address,uint256)": EventFragment;
+    'Claim(address,address,uint256)': EventFragment;
+    'Deposit(address,uint256)': EventFragment;
+    'Distribute(address,uint256)': EventFragment;
+    'Harvest(address,uint256)': EventFragment;
+    'OwnershipTransferred(address,address)': EventFragment;
+    'UpdateGovernor(address)': EventFragment;
+    'UpdateHarvestBountyPercentage(uint256)': EventFragment;
+    'UpdatePlatform(address)': EventFragment;
+    'UpdatePlatformFeePercentage(uint256)': EventFragment;
+    'UpdateStakePercentage(uint256)': EventFragment;
+    'UpdateStakeThreshold(uint256)': EventFragment;
+    'UpdateWhitelist(address,bool)': EventFragment;
+    'UpdateZap(address)': EventFragment;
+    'Withdraw(address,address,uint256)': EventFragment;
   };
 
-  getEvent(nameOrSignatureOrTopic: "Claim"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "Deposit"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "Distribute"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "Harvest"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "OwnershipTransferred"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "UpdateGovernor"): EventFragment;
-  getEvent(
-    nameOrSignatureOrTopic: "UpdateHarvestBountyPercentage"
-  ): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "UpdatePlatform"): EventFragment;
-  getEvent(
-    nameOrSignatureOrTopic: "UpdatePlatformFeePercentage"
-  ): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "UpdateStakePercentage"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "UpdateStakeThreshold"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "UpdateWhitelist"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "UpdateZap"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "Withdraw"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'Claim'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'Deposit'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'Distribute'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'Harvest'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'OwnershipTransferred'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'UpdateGovernor'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'UpdateHarvestBountyPercentage'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'UpdatePlatform'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'UpdatePlatformFeePercentage'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'UpdateStakePercentage'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'UpdateStakeThreshold'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'UpdateWhitelist'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'UpdateZap'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'Withdraw'): EventFragment;
 }
 
 export interface ClaimEventObject {
@@ -396,10 +238,7 @@ export interface ClaimEventObject {
   _recipient: string;
   _amount: BigNumber;
 }
-export type ClaimEvent = TypedEvent<
-  [string, string, BigNumber],
-  ClaimEventObject
->;
+export type ClaimEvent = TypedEvent<[string, string, BigNumber], ClaimEventObject>;
 
 export type ClaimEventFilter = TypedEventFilter<ClaimEvent>;
 
@@ -415,10 +254,7 @@ export interface DistributeEventObject {
   _origin: string;
   _amount: BigNumber;
 }
-export type DistributeEvent = TypedEvent<
-  [string, BigNumber],
-  DistributeEventObject
->;
+export type DistributeEvent = TypedEvent<[string, BigNumber], DistributeEventObject>;
 
 export type DistributeEventFilter = TypedEventFilter<DistributeEvent>;
 
@@ -434,86 +270,57 @@ export interface OwnershipTransferredEventObject {
   previousOwner: string;
   newOwner: string;
 }
-export type OwnershipTransferredEvent = TypedEvent<
-  [string, string],
-  OwnershipTransferredEventObject
->;
+export type OwnershipTransferredEvent = TypedEvent<[string, string], OwnershipTransferredEventObject>;
 
-export type OwnershipTransferredEventFilter =
-  TypedEventFilter<OwnershipTransferredEvent>;
+export type OwnershipTransferredEventFilter = TypedEventFilter<OwnershipTransferredEvent>;
 
 export interface UpdateGovernorEventObject {
   _governor: string;
 }
-export type UpdateGovernorEvent = TypedEvent<
-  [string],
-  UpdateGovernorEventObject
->;
+export type UpdateGovernorEvent = TypedEvent<[string], UpdateGovernorEventObject>;
 
 export type UpdateGovernorEventFilter = TypedEventFilter<UpdateGovernorEvent>;
 
 export interface UpdateHarvestBountyPercentageEventObject {
   _percentage: BigNumber;
 }
-export type UpdateHarvestBountyPercentageEvent = TypedEvent<
-  [BigNumber],
-  UpdateHarvestBountyPercentageEventObject
->;
+export type UpdateHarvestBountyPercentageEvent = TypedEvent<[BigNumber], UpdateHarvestBountyPercentageEventObject>;
 
-export type UpdateHarvestBountyPercentageEventFilter =
-  TypedEventFilter<UpdateHarvestBountyPercentageEvent>;
+export type UpdateHarvestBountyPercentageEventFilter = TypedEventFilter<UpdateHarvestBountyPercentageEvent>;
 
 export interface UpdatePlatformEventObject {
   _platform: string;
 }
-export type UpdatePlatformEvent = TypedEvent<
-  [string],
-  UpdatePlatformEventObject
->;
+export type UpdatePlatformEvent = TypedEvent<[string], UpdatePlatformEventObject>;
 
 export type UpdatePlatformEventFilter = TypedEventFilter<UpdatePlatformEvent>;
 
 export interface UpdatePlatformFeePercentageEventObject {
   _feePercentage: BigNumber;
 }
-export type UpdatePlatformFeePercentageEvent = TypedEvent<
-  [BigNumber],
-  UpdatePlatformFeePercentageEventObject
->;
+export type UpdatePlatformFeePercentageEvent = TypedEvent<[BigNumber], UpdatePlatformFeePercentageEventObject>;
 
-export type UpdatePlatformFeePercentageEventFilter =
-  TypedEventFilter<UpdatePlatformFeePercentageEvent>;
+export type UpdatePlatformFeePercentageEventFilter = TypedEventFilter<UpdatePlatformFeePercentageEvent>;
 
 export interface UpdateStakePercentageEventObject {
   _percentage: BigNumber;
 }
-export type UpdateStakePercentageEvent = TypedEvent<
-  [BigNumber],
-  UpdateStakePercentageEventObject
->;
+export type UpdateStakePercentageEvent = TypedEvent<[BigNumber], UpdateStakePercentageEventObject>;
 
-export type UpdateStakePercentageEventFilter =
-  TypedEventFilter<UpdateStakePercentageEvent>;
+export type UpdateStakePercentageEventFilter = TypedEventFilter<UpdateStakePercentageEvent>;
 
 export interface UpdateStakeThresholdEventObject {
   _threshold: BigNumber;
 }
-export type UpdateStakeThresholdEvent = TypedEvent<
-  [BigNumber],
-  UpdateStakeThresholdEventObject
->;
+export type UpdateStakeThresholdEvent = TypedEvent<[BigNumber], UpdateStakeThresholdEventObject>;
 
-export type UpdateStakeThresholdEventFilter =
-  TypedEventFilter<UpdateStakeThresholdEvent>;
+export type UpdateStakeThresholdEventFilter = TypedEventFilter<UpdateStakeThresholdEvent>;
 
 export interface UpdateWhitelistEventObject {
   _whitelist: string;
   _status: boolean;
 }
-export type UpdateWhitelistEvent = TypedEvent<
-  [string, boolean],
-  UpdateWhitelistEventObject
->;
+export type UpdateWhitelistEvent = TypedEvent<[string, boolean], UpdateWhitelistEventObject>;
 
 export type UpdateWhitelistEventFilter = TypedEventFilter<UpdateWhitelistEvent>;
 
@@ -529,10 +336,7 @@ export interface WithdrawEventObject {
   _recipient: string;
   _amount: BigNumber;
 }
-export type WithdrawEvent = TypedEvent<
-  [string, string, BigNumber],
-  WithdrawEventObject
->;
+export type WithdrawEvent = TypedEvent<[string, string, BigNumber], WithdrawEventObject>;
 
 export type WithdrawEventFilter = TypedEventFilter<WithdrawEvent>;
 
@@ -546,16 +350,12 @@ export interface CleverFurnace extends BaseContract {
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,
     fromBlockOrBlockhash?: string | number | undefined,
-    toBlock?: string | number | undefined
+    toBlock?: string | number | undefined,
   ): Promise<Array<TEvent>>;
 
-  listeners<TEvent extends TypedEvent>(
-    eventFilter?: TypedEventFilter<TEvent>
-  ): Array<TypedListener<TEvent>>;
+  listeners<TEvent extends TypedEvent>(eventFilter?: TypedEventFilter<TEvent>): Array<TypedListener<TEvent>>;
   listeners(eventName?: string): Array<Listener>;
-  removeAllListeners<TEvent extends TypedEvent>(
-    eventFilter: TypedEventFilter<TEvent>
-  ): this;
+  removeAllListeners<TEvent extends TypedEvent>(eventFilter: TypedEventFilter<TEvent>): this;
   removeAllListeners(eventName?: string): this;
   off: OnEvent<this>;
   on: OnEvent<this>;
@@ -567,48 +367,46 @@ export interface CleverFurnace extends BaseContract {
 
     claim(
       _recipient: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     clevCVX(overrides?: CallOverrides): Promise<[string]>;
 
     deposit(
       _amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     depositFor(
       _account: PromiseOrValue<string>,
       _amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     distribute(
       _origin: PromiseOrValue<string>,
       _amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     distributeIndex(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     exit(
       _recipient: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     getUserInfo(
       _account: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<
-      [BigNumber, BigNumber] & { unrealised: BigNumber; realised: BigNumber }
-    >;
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber, BigNumber] & { unrealised: BigNumber; realised: BigNumber }>;
 
     governor(overrides?: CallOverrides): Promise<[string]>;
 
     harvest(
       _recipient: PromiseOrValue<string>,
       _minimumOut: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     harvestBountyPercentage(overrides?: CallOverrides): Promise<[BigNumber]>;
@@ -620,13 +418,10 @@ export interface CleverFurnace extends BaseContract {
       _platform: PromiseOrValue<string>,
       _platformFeePercentage: PromiseOrValue<BigNumberish>,
       _harvestBountyPercentage: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    isWhitelisted(
-      arg0: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<[boolean]>;
+    isWhitelisted(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[boolean]>;
 
     lastPaidOffDistributeIndex(overrides?: CallOverrides): Promise<[BigNumber]>;
 
@@ -636,9 +431,7 @@ export interface CleverFurnace extends BaseContract {
 
     platformFeePercentage(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    renounceOwnership(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<ContractTransaction>;
+    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     stakePercentage(overrides?: CallOverrides): Promise<[BigNumber]>;
 
@@ -652,53 +445,53 @@ export interface CleverFurnace extends BaseContract {
 
     transferOwnership(
       newOwner: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     updateGovernor(
       _governor: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     updateHarvestBountyPercentage(
       _percentage: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     updatePlatform(
       _platform: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     updatePlatformFeePercentage(
       _feePercentage: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     updateStakePercentage(
       _percentage: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     updateStakeThreshold(
       _threshold: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     updateWhitelists(
       _whitelists: PromiseOrValue<string>[],
       _status: PromiseOrValue<boolean>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     updateZap(
       _zap: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     userInfo(
       arg0: PromiseOrValue<string>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<
       [BigNumber, BigNumber, BigNumber, BigNumber] & {
         unrealised: BigNumber;
@@ -711,12 +504,12 @@ export interface CleverFurnace extends BaseContract {
     withdraw(
       _recipient: PromiseOrValue<string>,
       _amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     withdrawAll(
       _recipient: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     zap(overrides?: CallOverrides): Promise<[string]>;
@@ -726,48 +519,46 @@ export interface CleverFurnace extends BaseContract {
 
   claim(
     _recipient: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   clevCVX(overrides?: CallOverrides): Promise<string>;
 
   deposit(
     _amount: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   depositFor(
     _account: PromiseOrValue<string>,
     _amount: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   distribute(
     _origin: PromiseOrValue<string>,
     _amount: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   distributeIndex(overrides?: CallOverrides): Promise<BigNumber>;
 
   exit(
     _recipient: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   getUserInfo(
     _account: PromiseOrValue<string>,
-    overrides?: CallOverrides
-  ): Promise<
-    [BigNumber, BigNumber] & { unrealised: BigNumber; realised: BigNumber }
-  >;
+    overrides?: CallOverrides,
+  ): Promise<[BigNumber, BigNumber] & { unrealised: BigNumber; realised: BigNumber }>;
 
   governor(overrides?: CallOverrides): Promise<string>;
 
   harvest(
     _recipient: PromiseOrValue<string>,
     _minimumOut: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   harvestBountyPercentage(overrides?: CallOverrides): Promise<BigNumber>;
@@ -779,13 +570,10 @@ export interface CleverFurnace extends BaseContract {
     _platform: PromiseOrValue<string>,
     _platformFeePercentage: PromiseOrValue<BigNumberish>,
     _harvestBountyPercentage: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  isWhitelisted(
-    arg0: PromiseOrValue<string>,
-    overrides?: CallOverrides
-  ): Promise<boolean>;
+  isWhitelisted(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
   lastPaidOffDistributeIndex(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -795,9 +583,7 @@ export interface CleverFurnace extends BaseContract {
 
   platformFeePercentage(overrides?: CallOverrides): Promise<BigNumber>;
 
-  renounceOwnership(
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
-  ): Promise<ContractTransaction>;
+  renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   stakePercentage(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -811,53 +597,53 @@ export interface CleverFurnace extends BaseContract {
 
   transferOwnership(
     newOwner: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   updateGovernor(
     _governor: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   updateHarvestBountyPercentage(
     _percentage: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   updatePlatform(
     _platform: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   updatePlatformFeePercentage(
     _feePercentage: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   updateStakePercentage(
     _percentage: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   updateStakeThreshold(
     _threshold: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   updateWhitelists(
     _whitelists: PromiseOrValue<string>[],
     _status: PromiseOrValue<boolean>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   updateZap(
     _zap: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   userInfo(
     arg0: PromiseOrValue<string>,
-    overrides?: CallOverrides
+    overrides?: CallOverrides,
   ): Promise<
     [BigNumber, BigNumber, BigNumber, BigNumber] & {
       unrealised: BigNumber;
@@ -870,12 +656,12 @@ export interface CleverFurnace extends BaseContract {
   withdraw(
     _recipient: PromiseOrValue<string>,
     _amount: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   withdrawAll(
     _recipient: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   zap(overrides?: CallOverrides): Promise<string>;
@@ -883,50 +669,39 @@ export interface CleverFurnace extends BaseContract {
   callStatic: {
     accUnrealisedFraction(overrides?: CallOverrides): Promise<BigNumber>;
 
-    claim(
-      _recipient: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    claim(_recipient: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     clevCVX(overrides?: CallOverrides): Promise<string>;
 
-    deposit(
-      _amount: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    deposit(_amount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
     depositFor(
       _account: PromiseOrValue<string>,
       _amount: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<void>;
 
     distribute(
       _origin: PromiseOrValue<string>,
       _amount: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<void>;
 
     distributeIndex(overrides?: CallOverrides): Promise<BigNumber>;
 
-    exit(
-      _recipient: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    exit(_recipient: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     getUserInfo(
       _account: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<
-      [BigNumber, BigNumber] & { unrealised: BigNumber; realised: BigNumber }
-    >;
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber, BigNumber] & { unrealised: BigNumber; realised: BigNumber }>;
 
     governor(overrides?: CallOverrides): Promise<string>;
 
     harvest(
       _recipient: PromiseOrValue<string>,
       _minimumOut: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     harvestBountyPercentage(overrides?: CallOverrides): Promise<BigNumber>;
@@ -938,13 +713,10 @@ export interface CleverFurnace extends BaseContract {
       _platform: PromiseOrValue<string>,
       _platformFeePercentage: PromiseOrValue<BigNumberish>,
       _harvestBountyPercentage: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<void>;
 
-    isWhitelisted(
-      arg0: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<boolean>;
+    isWhitelisted(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
     lastPaidOffDistributeIndex(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -966,55 +738,31 @@ export interface CleverFurnace extends BaseContract {
 
     totalUnrealised(overrides?: CallOverrides): Promise<BigNumber>;
 
-    transferOwnership(
-      newOwner: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    transferOwnership(newOwner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    updateGovernor(
-      _governor: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    updateGovernor(_governor: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    updateHarvestBountyPercentage(
-      _percentage: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    updateHarvestBountyPercentage(_percentage: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
-    updatePlatform(
-      _platform: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    updatePlatform(_platform: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    updatePlatformFeePercentage(
-      _feePercentage: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    updatePlatformFeePercentage(_feePercentage: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
-    updateStakePercentage(
-      _percentage: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    updateStakePercentage(_percentage: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
-    updateStakeThreshold(
-      _threshold: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    updateStakeThreshold(_threshold: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
     updateWhitelists(
       _whitelists: PromiseOrValue<string>[],
       _status: PromiseOrValue<boolean>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<void>;
 
-    updateZap(
-      _zap: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    updateZap(_zap: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     userInfo(
       arg0: PromiseOrValue<string>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<
       [BigNumber, BigNumber, BigNumber, BigNumber] & {
         unrealised: BigNumber;
@@ -1027,127 +775,73 @@ export interface CleverFurnace extends BaseContract {
     withdraw(
       _recipient: PromiseOrValue<string>,
       _amount: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
+      overrides?: CallOverrides,
     ): Promise<void>;
 
-    withdrawAll(
-      _recipient: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<void>;
+    withdrawAll(_recipient: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     zap(overrides?: CallOverrides): Promise<string>;
   };
 
   filters: {
-    "Claim(address,address,uint256)"(
+    'Claim(address,address,uint256)'(
       _account?: PromiseOrValue<string> | null,
       _recipient?: null,
-      _amount?: null
+      _amount?: null,
     ): ClaimEventFilter;
-    Claim(
-      _account?: PromiseOrValue<string> | null,
-      _recipient?: null,
-      _amount?: null
-    ): ClaimEventFilter;
+    Claim(_account?: PromiseOrValue<string> | null, _recipient?: null, _amount?: null): ClaimEventFilter;
 
-    "Deposit(address,uint256)"(
-      _account?: PromiseOrValue<string> | null,
-      _amount?: null
-    ): DepositEventFilter;
-    Deposit(
-      _account?: PromiseOrValue<string> | null,
-      _amount?: null
-    ): DepositEventFilter;
+    'Deposit(address,uint256)'(_account?: PromiseOrValue<string> | null, _amount?: null): DepositEventFilter;
+    Deposit(_account?: PromiseOrValue<string> | null, _amount?: null): DepositEventFilter;
 
-    "Distribute(address,uint256)"(
-      _origin?: PromiseOrValue<string> | null,
-      _amount?: null
-    ): DistributeEventFilter;
-    Distribute(
-      _origin?: PromiseOrValue<string> | null,
-      _amount?: null
-    ): DistributeEventFilter;
+    'Distribute(address,uint256)'(_origin?: PromiseOrValue<string> | null, _amount?: null): DistributeEventFilter;
+    Distribute(_origin?: PromiseOrValue<string> | null, _amount?: null): DistributeEventFilter;
 
-    "Harvest(address,uint256)"(
-      _caller?: PromiseOrValue<string> | null,
-      _amount?: null
-    ): HarvestEventFilter;
-    Harvest(
-      _caller?: PromiseOrValue<string> | null,
-      _amount?: null
-    ): HarvestEventFilter;
+    'Harvest(address,uint256)'(_caller?: PromiseOrValue<string> | null, _amount?: null): HarvestEventFilter;
+    Harvest(_caller?: PromiseOrValue<string> | null, _amount?: null): HarvestEventFilter;
 
-    "OwnershipTransferred(address,address)"(
+    'OwnershipTransferred(address,address)'(
       previousOwner?: PromiseOrValue<string> | null,
-      newOwner?: PromiseOrValue<string> | null
+      newOwner?: PromiseOrValue<string> | null,
     ): OwnershipTransferredEventFilter;
     OwnershipTransferred(
       previousOwner?: PromiseOrValue<string> | null,
-      newOwner?: PromiseOrValue<string> | null
+      newOwner?: PromiseOrValue<string> | null,
     ): OwnershipTransferredEventFilter;
 
-    "UpdateGovernor(address)"(
-      _governor?: PromiseOrValue<string> | null
-    ): UpdateGovernorEventFilter;
-    UpdateGovernor(
-      _governor?: PromiseOrValue<string> | null
-    ): UpdateGovernorEventFilter;
+    'UpdateGovernor(address)'(_governor?: PromiseOrValue<string> | null): UpdateGovernorEventFilter;
+    UpdateGovernor(_governor?: PromiseOrValue<string> | null): UpdateGovernorEventFilter;
 
-    "UpdateHarvestBountyPercentage(uint256)"(
-      _percentage?: null
-    ): UpdateHarvestBountyPercentageEventFilter;
-    UpdateHarvestBountyPercentage(
-      _percentage?: null
-    ): UpdateHarvestBountyPercentageEventFilter;
+    'UpdateHarvestBountyPercentage(uint256)'(_percentage?: null): UpdateHarvestBountyPercentageEventFilter;
+    UpdateHarvestBountyPercentage(_percentage?: null): UpdateHarvestBountyPercentageEventFilter;
 
-    "UpdatePlatform(address)"(
-      _platform?: PromiseOrValue<string> | null
-    ): UpdatePlatformEventFilter;
-    UpdatePlatform(
-      _platform?: PromiseOrValue<string> | null
-    ): UpdatePlatformEventFilter;
+    'UpdatePlatform(address)'(_platform?: PromiseOrValue<string> | null): UpdatePlatformEventFilter;
+    UpdatePlatform(_platform?: PromiseOrValue<string> | null): UpdatePlatformEventFilter;
 
-    "UpdatePlatformFeePercentage(uint256)"(
-      _feePercentage?: null
-    ): UpdatePlatformFeePercentageEventFilter;
-    UpdatePlatformFeePercentage(
-      _feePercentage?: null
-    ): UpdatePlatformFeePercentageEventFilter;
+    'UpdatePlatformFeePercentage(uint256)'(_feePercentage?: null): UpdatePlatformFeePercentageEventFilter;
+    UpdatePlatformFeePercentage(_feePercentage?: null): UpdatePlatformFeePercentageEventFilter;
 
-    "UpdateStakePercentage(uint256)"(
-      _percentage?: null
-    ): UpdateStakePercentageEventFilter;
+    'UpdateStakePercentage(uint256)'(_percentage?: null): UpdateStakePercentageEventFilter;
     UpdateStakePercentage(_percentage?: null): UpdateStakePercentageEventFilter;
 
-    "UpdateStakeThreshold(uint256)"(
-      _threshold?: null
-    ): UpdateStakeThresholdEventFilter;
+    'UpdateStakeThreshold(uint256)'(_threshold?: null): UpdateStakeThresholdEventFilter;
     UpdateStakeThreshold(_threshold?: null): UpdateStakeThresholdEventFilter;
 
-    "UpdateWhitelist(address,bool)"(
+    'UpdateWhitelist(address,bool)'(
       _whitelist?: PromiseOrValue<string> | null,
-      _status?: null
+      _status?: null,
     ): UpdateWhitelistEventFilter;
-    UpdateWhitelist(
-      _whitelist?: PromiseOrValue<string> | null,
-      _status?: null
-    ): UpdateWhitelistEventFilter;
+    UpdateWhitelist(_whitelist?: PromiseOrValue<string> | null, _status?: null): UpdateWhitelistEventFilter;
 
-    "UpdateZap(address)"(
-      _zap?: PromiseOrValue<string> | null
-    ): UpdateZapEventFilter;
+    'UpdateZap(address)'(_zap?: PromiseOrValue<string> | null): UpdateZapEventFilter;
     UpdateZap(_zap?: PromiseOrValue<string> | null): UpdateZapEventFilter;
 
-    "Withdraw(address,address,uint256)"(
+    'Withdraw(address,address,uint256)'(
       _account?: PromiseOrValue<string> | null,
       _recipient?: null,
-      _amount?: null
+      _amount?: null,
     ): WithdrawEventFilter;
-    Withdraw(
-      _account?: PromiseOrValue<string> | null,
-      _recipient?: null,
-      _amount?: null
-    ): WithdrawEventFilter;
+    Withdraw(_account?: PromiseOrValue<string> | null, _recipient?: null, _amount?: null): WithdrawEventFilter;
   };
 
   estimateGas: {
@@ -1155,46 +849,43 @@ export interface CleverFurnace extends BaseContract {
 
     claim(
       _recipient: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     clevCVX(overrides?: CallOverrides): Promise<BigNumber>;
 
     deposit(
       _amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     depositFor(
       _account: PromiseOrValue<string>,
       _amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     distribute(
       _origin: PromiseOrValue<string>,
       _amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     distributeIndex(overrides?: CallOverrides): Promise<BigNumber>;
 
     exit(
       _recipient: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    getUserInfo(
-      _account: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    getUserInfo(_account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     governor(overrides?: CallOverrides): Promise<BigNumber>;
 
     harvest(
       _recipient: PromiseOrValue<string>,
       _minimumOut: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     harvestBountyPercentage(overrides?: CallOverrides): Promise<BigNumber>;
@@ -1206,13 +897,10 @@ export interface CleverFurnace extends BaseContract {
       _platform: PromiseOrValue<string>,
       _platformFeePercentage: PromiseOrValue<BigNumberish>,
       _harvestBountyPercentage: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    isWhitelisted(
-      arg0: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    isWhitelisted(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     lastPaidOffDistributeIndex(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -1222,9 +910,7 @@ export interface CleverFurnace extends BaseContract {
 
     platformFeePercentage(overrides?: CallOverrides): Promise<BigNumber>;
 
-    renounceOwnership(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
+    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     stakePercentage(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -1238,121 +924,111 @@ export interface CleverFurnace extends BaseContract {
 
     transferOwnership(
       newOwner: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     updateGovernor(
       _governor: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     updateHarvestBountyPercentage(
       _percentage: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     updatePlatform(
       _platform: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     updatePlatformFeePercentage(
       _feePercentage: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     updateStakePercentage(
       _percentage: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     updateStakeThreshold(
       _threshold: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     updateWhitelists(
       _whitelists: PromiseOrValue<string>[],
       _status: PromiseOrValue<boolean>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     updateZap(
       _zap: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    userInfo(
-      arg0: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    userInfo(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     withdraw(
       _recipient: PromiseOrValue<string>,
       _amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     withdrawAll(
       _recipient: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     zap(overrides?: CallOverrides): Promise<BigNumber>;
   };
 
   populateTransaction: {
-    accUnrealisedFraction(
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    accUnrealisedFraction(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     claim(
       _recipient: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     clevCVX(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     deposit(
       _amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     depositFor(
       _account: PromiseOrValue<string>,
       _amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     distribute(
       _origin: PromiseOrValue<string>,
       _amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     distributeIndex(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     exit(
       _recipient: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    getUserInfo(
-      _account: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    getUserInfo(_account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     governor(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     harvest(
       _recipient: PromiseOrValue<string>,
       _minimumOut: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    harvestBountyPercentage(
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    harvestBountyPercentage(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     initialize(
       _governor: PromiseOrValue<string>,
@@ -1361,29 +1037,20 @@ export interface CleverFurnace extends BaseContract {
       _platform: PromiseOrValue<string>,
       _platformFeePercentage: PromiseOrValue<BigNumberish>,
       _harvestBountyPercentage: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    isWhitelisted(
-      arg0: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    isWhitelisted(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    lastPaidOffDistributeIndex(
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    lastPaidOffDistributeIndex(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     platform(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    platformFeePercentage(
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    platformFeePercentage(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    renounceOwnership(
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<PopulatedTransaction>;
+    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     stakePercentage(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
@@ -1397,64 +1064,61 @@ export interface CleverFurnace extends BaseContract {
 
     transferOwnership(
       newOwner: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     updateGovernor(
       _governor: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     updateHarvestBountyPercentage(
       _percentage: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     updatePlatform(
       _platform: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     updatePlatformFeePercentage(
       _feePercentage: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     updateStakePercentage(
       _percentage: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     updateStakeThreshold(
       _threshold: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     updateWhitelists(
       _whitelists: PromiseOrValue<string>[],
       _status: PromiseOrValue<boolean>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     updateZap(
       _zap: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    userInfo(
-      arg0: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
+    userInfo(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     withdraw(
       _recipient: PromiseOrValue<string>,
       _amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     withdrawAll(
       _recipient: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     zap(overrides?: CallOverrides): Promise<PopulatedTransaction>;
