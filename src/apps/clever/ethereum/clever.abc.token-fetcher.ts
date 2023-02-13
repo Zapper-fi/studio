@@ -2,12 +2,11 @@ import { Inject } from '@nestjs/common';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
-import { Erc20 } from '~contract/contracts';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 
 import { AbcCvx, CleverContractFactory } from '../contracts';
 
-import { CVX, CLEVCVX, abcCVX } from './addresses';
+import { CLEVCVX, abcCVX } from './addresses';
 
 @PositionTemplate()
 export class EthereumCleverAbcTokenFetcher extends AppTokenTemplatePositionFetcher<AbcCvx> {
@@ -20,7 +19,7 @@ export class EthereumCleverAbcTokenFetcher extends AppTokenTemplatePositionFetch
     super(appToolkit);
   }
 
-  getContract(address: string) : AbcCvx{
+  getContract(address: string): AbcCvx {
     return this.contractFactory.abcCvx({ address, network: this.network });
   }
 
@@ -29,11 +28,13 @@ export class EthereumCleverAbcTokenFetcher extends AppTokenTemplatePositionFetch
   }
 
   async getUnderlyingTokenDefinitions() {
-    return [{ address: '0xF9078Fb962A7D13F55d40d49C8AA6472aBD1A5a6', network: this.network }, { address: CLEVCVX, network: this.network }];
-    
+    return [
+      { address: '0xf9078fb962a7d13f55d40d49c8aa6472abd1a5a6', network: this.network },
+      { address: CLEVCVX, network: this.network },
+    ];
   }
 
   async getPricePerShare() {
-    return [(await this.getContract(abcCVX).ratio()).div(10**6).toNumber() / 2 ];
+    return [(await this.getContract(abcCVX).ratio()).div(10 ** 6).toNumber() / 2];
   }
 }

@@ -175,6 +175,5 @@ export class ArbitrumVendorFinancePoolContractPositionFetcher extends ContractPo
 
     // Deposit, borrow, no lending out (not pool creator)
     return [suppliedBalanceRaw.toString(), borrowedBalance.toString(), '0'];
-    // --! Borrower logic !---
   }
 }

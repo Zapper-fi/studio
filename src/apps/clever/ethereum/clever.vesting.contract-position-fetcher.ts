@@ -1,5 +1,6 @@
 import { Inject } from '@nestjs/common';
-import { BigNumber, BigNumberish } from 'ethers';
+import { BigNumberish } from 'ethers';
+import _ from 'lodash';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
@@ -11,6 +12,7 @@ import { ContractPositionTemplatePositionFetcher } from '~position/template/cont
 import { GetDisplayPropsParams, GetTokenBalancesParams } from '~position/template/contract-position.template.types';
 
 import { CleverContractFactory, CleverVesting } from '../contracts';
+
 import { CLEV } from './addresses';
 
 @PositionTemplate()
@@ -29,7 +31,7 @@ export class EthereumCleverVestingContractPositionFetcher extends ContractPositi
   }
 
   async getDefinitions() {
-    return [{ address: '0x84C82d43f1Cc64730849f3E389fE3f6d776F7A4E' }];
+    return [{ address: '0x84c82d43f1cc64730849f3e389fe3f6d776f7a4e' }];
   }
 
   async getTokenDefinitions() {
@@ -56,10 +58,15 @@ export class EthereumCleverVestingContractPositionFetcher extends ContractPositi
     address,
     contract,
   }: GetTokenBalancesParams<CleverVesting, DefaultDataProps>): Promise<BigNumberish[]> {
-    const locked = await contract.locked(address)
-    const toBeClaimed = (await contract.getUserVest(address)).reduce((claimable: BigNumber, current) => claimable.add(current[0].sub(current[1])), BigNumber.from(0));
+    const locked = await contract.locked(address);
+    const userVesting = await contract.getUserVest(address);
+    const toBeClaimbedRaw = userVesting.map(x => {
+      return Number(x.vestingAmount) - Number(x.claimedAmount);
+    });
 
-    const claimable = toBeClaimed.sub(locked)
+    const toBeClaimed = _.sum(toBeClaimbedRaw);
+
+    const claimable = toBeClaimed - Number(locked);
 
     return Promise.all([locked, claimable]);
   }
