@@ -1,11 +1,11 @@
 import { Inject } from '@nestjs/common';
-import { keys } from 'lodash';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
 import {
   DefaultAppTokenDefinition,
+  GetAddressesParams,
   GetDisplayPropsParams,
   GetPricePerShareParams,
   GetUnderlyingTokensParams,
@@ -13,15 +13,13 @@ import {
 
 import { GammaStrategiesContractFactory, GammaStrategiesHypervisor } from '../contracts';
 
-import { GammaApiHelper } from './gamma-strategies.api'
+import { GammaStrategiesDefinitionResolver } from './gamma-strategies.definition-resolver';
 
-export class GammaStrategiesPoolTokenFetcher extends AppTokenTemplatePositionFetcher<GammaStrategiesHypervisor> {
-  groupLabel = 'Pools';
-
+export abstract class GammaStrategiesPoolTokenFetcher extends AppTokenTemplatePositionFetcher<GammaStrategiesHypervisor> {
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
     @Inject(GammaStrategiesContractFactory) protected readonly contractFactory: GammaStrategiesContractFactory,
-    @Inject(GammaApiHelper) protected readonly gammaApiHelper,
+    @Inject(GammaStrategiesDefinitionResolver) protected readonly definitionResolver: GammaStrategiesDefinitionResolver,
   ) {
     super(appToolkit);
   }
@@ -30,14 +28,12 @@ export class GammaStrategiesPoolTokenFetcher extends AppTokenTemplatePositionFet
     return this.contractFactory.gammaStrategiesHypervisor({ address, network: this.network });
   }
 
-  getDataUrls(): Array<string> {
-    return [`https://gammawire.net/${this.network}/hypervisors/allData`]
+  async getDefinitions() {
+    return this.definitionResolver.getPoolDefinitions(this.network);
   }
 
-  async getAddresses() {
-    const urls = this.getDataUrls();
-    const vaultData = await this.gammaApiHelper.getVaultDefinitionsData(urls);
-    return keys(vaultData);
+  async getAddresses({ definitions }: GetAddressesParams) {
+    return definitions.map(v => v.address);
   }
 
   async getUnderlyingTokenDefinitions({
@@ -54,6 +50,7 @@ export class GammaStrategiesPoolTokenFetcher extends AppTokenTemplatePositionFet
     const reserve0 = Number(totalAmountInfo.total0) / 10 ** appToken.tokens[0].decimals;
     const reserve1 = Number(totalAmountInfo.total1) / 10 ** appToken.tokens[1].decimals;
     const pricePerShare = [reserve0, reserve1].map(r => r / appToken.supply);
+
     return pricePerShare;
   }
 
@@ -67,5 +64,3 @@ export class GammaStrategiesPoolTokenFetcher extends AppTokenTemplatePositionFet
     return reservePercentages.map(p => `${Math.round(p * 100)}%`).join(' / ');
   }
 }
-
-
