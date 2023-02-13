@@ -27,7 +27,7 @@ export class EthereumBeanstalkSiloEarnedContractPositionFetcher extends Contract
 > {
   groupLabel = 'Silo Earnings';
 
-  isExcludedFromExplore = false;
+  isExcludedFromExplore = true;
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
