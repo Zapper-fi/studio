@@ -4,6 +4,21 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.389.0](https://github.com/Zapper-fi/studio/compare/v0.388.2...v0.389.0) (2023-02-13)
+
+
+### Features
+
+* **clever:** implement farms and abcCVX ([#2293](https://github.com/Zapper-fi/studio/issues/2293)) ([cdbe335](https://github.com/Zapper-fi/studio/commit/cdbe3353e9c92f813e005875dde23df2058b8958))
+* **clever:** implement vesting ([#2292](https://github.com/Zapper-fi/studio/issues/2292)) ([b5a6486](https://github.com/Zapper-fi/studio/commit/b5a6486f0ba12bc6ad3e7f67aad25852232c5c12))
+
+
+### Bug Fixes
+
+* **beanstalk:** Remove earned beans position from explorer ([#2295](https://github.com/Zapper-fi/studio/issues/2295)) ([06f5ed1](https://github.com/Zapper-fi/studio/commit/06f5ed12cd48dcb4fbb30281e2f997ada0b0f9cf))
+* **clever:** Refactor faming position and commented out abc token ([#2296](https://github.com/Zapper-fi/studio/issues/2296)) ([a323b9f](https://github.com/Zapper-fi/studio/commit/a323b9fbd036e894cd10b0f37ef6c9765d7b4d7d))
+* update vendor query ([#2291](https://github.com/Zapper-fi/studio/issues/2291)) ([eb32079](https://github.com/Zapper-fi/studio/commit/eb32079464c11d6e595976c3d003e608270688de))
+
 ## [0.388.2](https://github.com/Zapper-fi/studio/compare/v0.388.1...v0.388.2) (2023-02-11)
 
 
