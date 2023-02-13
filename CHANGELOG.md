@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.389.1](https://github.com/Zapper-fi/studio/compare/v0.389.0...v0.389.1) (2023-02-13)
+
+
+### Bug Fixes
+
+* **gamma-strategies:** Filter out pool addresses with no liquidity ([#2297](https://github.com/Zapper-fi/studio/issues/2297)) ([71c031e](https://github.com/Zapper-fi/studio/commit/71c031e3bb5309670103c1089a3b962988af2fc7))
+
 ## [0.389.0](https://github.com/Zapper-fi/studio/compare/v0.388.2...v0.389.0) (2023-02-13)
 
 
