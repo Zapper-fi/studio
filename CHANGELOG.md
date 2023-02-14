@@ -4,6 +4,15 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.390.1](https://github.com/Zapper-fi/studio/compare/v0.390.0...v0.390.1) (2023-02-14)
+
+
+### Bug Fixes
+
+* **gamma-strategies:** Fix endpoint url ([#2306](https://github.com/Zapper-fi/studio/issues/2306)) ([e16105d](https://github.com/Zapper-fi/studio/commit/e16105d092430f5da5cea64d9e072c672d087c60))
+* **redacted-cartel:** fix claimable amounts ([#2300](https://github.com/Zapper-fi/studio/issues/2300)) ([1b0169f](https://github.com/Zapper-fi/studio/commit/1b0169f56e25358f4eb39670ed935c830a458f9a))
+* **unipilot:** Remove APY helper ([#2305](https://github.com/Zapper-fi/studio/issues/2305)) ([ab00318](https://github.com/Zapper-fi/studio/commit/ab0031898b0b2242234672508e449f23666bb02e))
+
 ## [0.390.0](https://github.com/Zapper-fi/studio/compare/v0.389.1...v0.390.0) (2023-02-14)
 
 
