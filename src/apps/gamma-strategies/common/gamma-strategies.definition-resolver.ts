@@ -8,7 +8,11 @@ import { Network } from '~types/network.interface';
 export type GammaApiTokensResponse = Record<string, Pool>;
 
 type Pool = {
-  tvlUSD: string;
+  returns: {
+    allTime: {
+      feeApy: number;
+    };
+  };
 };
 
 @Injectable()
@@ -20,7 +24,7 @@ export class GammaStrategiesDefinitionResolver {
   async getPoolDefinitionsData(network: Network) {
     const url =
       network == Network.ETHEREUM_MAINNET
-        ? 'https://gammawire.net/hypervisors/allData'
+        ? 'https://wire2.gamma.xyz/hypervisors/allData'
         : `https://gammawire.net/${network}/hypervisors/allData`;
 
     const { data } = await Axios.get<GammaApiTokensResponse>(url);
@@ -33,7 +37,7 @@ export class GammaStrategiesDefinitionResolver {
     const definitionsDataRaw = Object.entries(definitionsData);
 
     const defintionsRaw = definitionsDataRaw.map(([key, value]) => {
-      return Number(value.tvlUSD) > 0.01 ? { address: key.toLowerCase() } : null;
+      return Number(value.returns.allTime.feeApy) > 0 ? { address: key.toLowerCase() } : null;
     });
 
     return _.compact(defintionsRaw);
