@@ -4,10 +4,13 @@ import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { ContractFactory } from '~contract/contracts';
 import { Network } from '~types/network.interface';
 
-import { RedactedBondDepository__factory } from './ethers';
-import { RedactedRevenueLock__factory } from './ethers';
-import { RedactedWxBtrfly__factory } from './ethers';
-import { RedactedXBtrfly__factory } from './ethers';
+import {
+  RedactedBondDepository__factory,
+  RedactedRevenueLock__factory,
+  RedactedRewardDistributor__factory,
+  RedactedWxBtrfly__factory,
+  RedactedXBtrfly__factory,
+} from './ethers';
 
 // eslint-disable-next-line
 type ContractOpts = { address: string; network: Network };
@@ -24,6 +27,9 @@ export class RedactedCartelContractFactory extends ContractFactory {
   redactedRevenueLock({ address, network }: ContractOpts) {
     return RedactedRevenueLock__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
+  redactedRewardDistributor({ address, network }: ContractOpts) {
+    return RedactedRewardDistributor__factory.connect(address, this.appToolkit.getNetworkProvider(network));
+  }
   redactedWxBtrfly({ address, network }: ContractOpts) {
     return RedactedWxBtrfly__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
@@ -34,5 +40,6 @@ export class RedactedCartelContractFactory extends ContractFactory {
 
 export type { RedactedBondDepository } from './ethers';
 export type { RedactedRevenueLock } from './ethers';
+export type { RedactedRewardDistributor } from './ethers';
 export type { RedactedWxBtrfly } from './ethers';
 export type { RedactedXBtrfly } from './ethers';
