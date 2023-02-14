@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.390.0](https://github.com/Zapper-fi/studio/compare/v0.389.1...v0.390.0) (2023-02-14)
+
+
+### Features
+
+* **maple:** Fix price per share on pools ([#2301](https://github.com/Zapper-fi/studio/issues/2301)) ([44f3d69](https://github.com/Zapper-fi/studio/commit/44f3d695cd569a14de1581e76cb3ccbc735ce22e))
+
 ## [0.389.1](https://github.com/Zapper-fi/studio/compare/v0.389.0...v0.389.1) (2023-02-13)
 
 
