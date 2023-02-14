@@ -7,4 +7,4 @@ export const SUBGRAPH_ENDPOINTS = {
   },
 };
 
-export const SERVER_ENDPOINTS = 'https://api.unipilot.io/api/unipilot';
+export const SERVER_ENDPOINTS = 'https://apis.unipilot.io/api/unipilot';
