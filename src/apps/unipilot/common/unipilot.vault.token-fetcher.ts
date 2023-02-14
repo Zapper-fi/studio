@@ -6,7 +6,6 @@ import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.te
 import {
   DefaultAppTokenDataProps,
   GetAddressesParams,
-  GetDataPropsParams,
   GetDisplayPropsParams,
   GetPricePerShareParams,
   GetUnderlyingTokensParams,
@@ -16,7 +15,6 @@ import { GetTokenDefinitionsParams } from '~position/template/contract-position.
 import { UnipilotContractFactory, UnipilotVault } from '../contracts';
 import { UnipilotVaultDefinition } from '../utils/generalTypes';
 
-import { UnipilotVaultAPYHelper } from './unipilot-vault.apy.helper';
 import { UnipilotVaultDefinitionsResolver } from './unipilot.vault-definition-resolver';
 
 export type UnipilotVaultTokenDataProps = DefaultAppTokenDataProps & {
@@ -32,7 +30,6 @@ export abstract class UnipilotVaultTokenFetcher extends AppTokenTemplatePosition
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
     @Inject(UnipilotVaultDefinitionsResolver)
     private readonly vaultDefinitionsResolver: UnipilotVaultDefinitionsResolver,
-    @Inject(UnipilotVaultAPYHelper) private readonly vaultApyHelper: UnipilotVaultAPYHelper,
     @Inject(UnipilotContractFactory)
     private readonly contractFactory: UnipilotContractFactory,
   ) {
@@ -86,14 +83,6 @@ export abstract class UnipilotVaultTokenFetcher extends AppTokenTemplatePosition
       return r == 0 ? 0 : r / appToken.supply;
     });
     return pricePerShare;
-  }
-
-  async getApy({ appToken }: GetDataPropsParams<UnipilotVault, UnipilotVaultTokenDataProps, UnipilotVaultDefinition>) {
-    const apys = await this.vaultApyHelper.getApy();
-    if (apys && Object.keys(apys).length > 0) {
-      return parseFloat(apys[appToken.address].stats);
-    }
-    return 0;
   }
 
   async getLabel({
