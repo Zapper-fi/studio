@@ -4,6 +4,15 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.390.2](https://github.com/Zapper-fi/studio/compare/v0.390.1...v0.390.2) (2023-02-15)
+
+
+### Bug Fixes
+
+* **clearpool:** Fix endpoint URL + extract external calls into a resolver ([#2309](https://github.com/Zapper-fi/studio/issues/2309)) ([82a9d90](https://github.com/Zapper-fi/studio/commit/82a9d900c530e23e5788de22c9303da5cc4ec70c))
+* **platypus-finance:** Remove deprecated faulty pool ([#2308](https://github.com/Zapper-fi/studio/issues/2308)) ([95b0696](https://github.com/Zapper-fi/studio/commit/95b069607bb13bd1b3843172241ec8579449b295))
+* **uniswap-v2:** Add condition on skipVolume ([#2307](https://github.com/Zapper-fi/studio/issues/2307)) ([2388909](https://github.com/Zapper-fi/studio/commit/2388909bf179e6e034690a146d926cb0249f2d99))
+
 ## [0.390.1](https://github.com/Zapper-fi/studio/compare/v0.390.0...v0.390.1) (2023-02-14)
 
 
