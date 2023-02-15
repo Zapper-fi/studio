@@ -21,7 +21,7 @@ import {
 
 import { VendorFinanceContractFactory } from '../contracts';
 import { VendorFinancePool } from '../contracts/ethers';
-import { VENDOR_GRAPH_URL_ARBI } from '../graphql/constants';
+import { VENDOR_GRAPH_URL_MAINNET } from '../graphql/constants';
 import { borrowerInfosQuery, VendorBorrowerGraphResponse } from '../graphql/getBorrowerInfosQuery';
 import { lendingPoolsQuery, VendorLendingPoolsGraphResponse } from '../graphql/getLendingPoolsQuery';
 
@@ -43,7 +43,7 @@ type VendorFinancePoolDataProps = DefaultDataProps & {
 };
 
 @PositionTemplate()
-export class ArbitrumVendorFinancePoolContractPositionFetcher extends ContractPositionTemplatePositionFetcher<VendorFinancePool> {
+export class EthereumVendorFinancePoolContractPositionFetcher extends ContractPositionTemplatePositionFetcher<VendorFinancePool> {
   groupLabel = 'Lending Pools';
 
   constructor(
@@ -59,11 +59,23 @@ export class ArbitrumVendorFinancePoolContractPositionFetcher extends ContractPo
 
   async getDefinitions() {
     const data = await gqlFetch<VendorLendingPoolsGraphResponse>({
-      endpoint: VENDOR_GRAPH_URL_ARBI,
+      endpoint: VENDOR_GRAPH_URL_MAINNET,
       query: lendingPoolsQuery,
     });
 
-    return (data?.pools ?? []).map(poolData => ({
+    // return (data?.pools ?? []).map(poolData => ({
+    //   address: poolData.id,
+    //   deployer: poolData._deployer,
+    //   mintRatio: poolData._mintRatio,
+    //   colToken: poolData._colToken,
+    //   lendToken: poolData._lendToken,
+    //   expiry: poolData._expiry,
+    //   feeRate: poolData._feeRate,
+    //   lendBalance: poolData._lendBalance,
+    //   totalBorrowed: poolData._totalBorrowed,
+    // }));
+
+    const pools = (data?.pools ?? []).map(poolData => ({
       address: poolData.id,
       deployer: poolData._deployer,
       mintRatio: poolData._mintRatio,
@@ -74,6 +86,9 @@ export class ArbitrumVendorFinancePoolContractPositionFetcher extends ContractPo
       lendBalance: poolData._lendBalance,
       totalBorrowed: poolData._totalBorrowed,
     }));
+
+    console.log(pools)
+    return pools
   }
 
   // returning the lendToken with two different status as it'll either be
@@ -149,19 +164,23 @@ export class ArbitrumVendorFinancePoolContractPositionFetcher extends ContractPo
     address,
     contractPosition,
   }: GetTokenBalancesParams<VendorFinancePool, VendorFinancePoolDataProps>) {
+
+    console.log(address)
+
     const collateralToken = contractPosition.tokens[0]!;
     const lentToken = contractPosition.tokens[1]!;
 
     // --- Lender logic ----
     // No deposit, no borrow, but lending out
     if (address === contractPosition.dataProps.deployer.toLowerCase()) {
+      console.log("here")
       return ['0', '0', contractPosition.dataProps.totalDeposited.toString()];
     }
     // --! Lender logic !---
 
     // --- Borrower logic ----
     const data = await gqlFetch<VendorBorrowerGraphResponse>({
-      endpoint: VENDOR_GRAPH_URL_ARBI,
+      endpoint: VENDOR_GRAPH_URL_MAINNET,
       query: borrowerInfosQuery(address),
     });
 
