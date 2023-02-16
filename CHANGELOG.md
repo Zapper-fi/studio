@@ -4,6 +4,21 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.392.0](https://github.com/Zapper-fi/studio/compare/v0.391.0...v0.392.0) (2023-02-16)
+
+
+### Features
+
+* **lyra-newport:** Add Lyra Network Integration ([#2316](https://github.com/Zapper-fi/studio/issues/2316)) ([7b0aace](https://github.com/Zapper-fi/studio/commit/7b0aacee792f5eb7d337465be1c29d5f2667bcd0))
+
+
+### Bug Fixes
+
+* **across:** Fix pools-v2 ([#2317](https://github.com/Zapper-fi/studio/issues/2317)) ([5101601](https://github.com/Zapper-fi/studio/commit/510160119a555135e7e67ff272c9149a3a4d1bd0))
+* **lyra-newport:** Linting ([#2321](https://github.com/Zapper-fi/studio/issues/2321)) ([31beb15](https://github.com/Zapper-fi/studio/commit/31beb15fe9ef1eb649f73e2dc7a58106c8c92233))
+* **platypus-finance:** Temporary pausing the app every position related to their pools ([#2320](https://github.com/Zapper-fi/studio/issues/2320)) ([6567437](https://github.com/Zapper-fi/studio/commit/6567437b62d8877e3fa3cb893beaa63c4e4c37b8))
+* **vendor-finance:** Extract duplicated logic ([#2319](https://github.com/Zapper-fi/studio/issues/2319)) ([210d564](https://github.com/Zapper-fi/studio/commit/210d564ee85a73b51c28dc6b8b149fb68fc47039))
+
 ## [0.391.0](https://github.com/Zapper-fi/studio/compare/v0.390.2...v0.391.0) (2023-02-16)
 
 
