@@ -4,6 +4,19 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.391.0](https://github.com/Zapper-fi/studio/compare/v0.390.2...v0.391.0) (2023-02-16)
+
+
+### Features
+
+* **vendor:** Added mainnet support for vendor finance ([#2311](https://github.com/Zapper-fi/studio/issues/2311)) ([1248394](https://github.com/Zapper-fi/studio/commit/12483946fcbe38c860e87e3484390e8c4d140fe3))
+
+
+### Bug Fixes
+
+* **apps:** Linting ([#2314](https://github.com/Zapper-fi/studio/issues/2314)) ([5282d9a](https://github.com/Zapper-fi/studio/commit/5282d9a71cad7eb4bd822cb8af1603eb5869f832))
+* **kwenta:** Perp markets duplicate ([#2312](https://github.com/Zapper-fi/studio/issues/2312)) ([31370c0](https://github.com/Zapper-fi/studio/commit/31370c09d06845c510084419404cd05cef37ac1d))
+
 ## [0.390.2](https://github.com/Zapper-fi/studio/compare/v0.390.1...v0.390.2) (2023-02-15)
 
 
