@@ -9,6 +9,7 @@ export class AvalanchePlatypusFinancePoolTokenFetcher extends PlatypusFinancePoo
   poolAddresses = [
     // MAIN POOL
     '0x66357dcace80431aee0a7507e2e361b7e2402370',
+
     // ALT POOLS
     '0x39de4e02f76dbd4352ec2c926d8d64db8abdf5b2', // BTC.b / WBTC.e
     '0xb8e567fc23c39c94a1f6359509d7b43d1fbed824', // FRAX / USDC
