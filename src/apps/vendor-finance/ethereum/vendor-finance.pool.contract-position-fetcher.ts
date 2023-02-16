@@ -63,19 +63,7 @@ export class EthereumVendorFinancePoolContractPositionFetcher extends ContractPo
       query: lendingPoolsQuery,
     });
 
-    // return (data?.pools ?? []).map(poolData => ({
-    //   address: poolData.id,
-    //   deployer: poolData._deployer,
-    //   mintRatio: poolData._mintRatio,
-    //   colToken: poolData._colToken,
-    //   lendToken: poolData._lendToken,
-    //   expiry: poolData._expiry,
-    //   feeRate: poolData._feeRate,
-    //   lendBalance: poolData._lendBalance,
-    //   totalBorrowed: poolData._totalBorrowed,
-    // }));
-
-    const pools = (data?.pools ?? []).map(poolData => ({
+    return (data?.pools ?? []).map(poolData => ({
       address: poolData.id,
       deployer: poolData._deployer,
       mintRatio: poolData._mintRatio,
@@ -86,9 +74,6 @@ export class EthereumVendorFinancePoolContractPositionFetcher extends ContractPo
       lendBalance: poolData._lendBalance,
       totalBorrowed: poolData._totalBorrowed,
     }));
-
-    console.log(pools)
-    return pools
   }
 
   // returning the lendToken with two different status as it'll either be
@@ -164,16 +149,12 @@ export class EthereumVendorFinancePoolContractPositionFetcher extends ContractPo
     address,
     contractPosition,
   }: GetTokenBalancesParams<VendorFinancePool, VendorFinancePoolDataProps>) {
-
-    console.log(address)
-
     const collateralToken = contractPosition.tokens[0]!;
     const lentToken = contractPosition.tokens[1]!;
 
     // --- Lender logic ----
     // No deposit, no borrow, but lending out
     if (address === contractPosition.dataProps.deployer.toLowerCase()) {
-      console.log("here")
       return ['0', '0', contractPosition.dataProps.totalDeposited.toString()];
     }
     // --! Lender logic !---
