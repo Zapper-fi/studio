@@ -14,6 +14,31 @@ import {
 
 import { SynthetixContractFactory, SynthetixPerpV2 } from '../contracts';
 
+export const PerpV2MarketAddresses = [{ address: '0x5374761526175b59f1e583246e20639909e189ce' },
+{ address: '0x5b6beb79e959aac2659bee60fe0d0885468bf886' },
+{ address: '0xbb16c7b3244dfa1a6bf83fcce3ee4560837763cd' },
+{ address: '0x9de146b5663b82f44e5052dede2aa3fd4cbcdc99' },
+{ address: '0xc203a12f298ce73e44f7d45a4f59a43dbffe204d' },
+{ address: '0x3a52b21816168dfe35be99b7c5fc209f17a0adb1' },
+{ address: '0x0940b0a96c5e1ba33aee331a9f950bb2a6f2fb25' },
+{ address: '0x59b007e9ea8f89b069c43f8f45834d30853e3699' },
+{ address: '0x98ccbc721cc05e28a125943d69039b39be6a21e9' },
+{ address: '0x139f94e4f0e1101c1464a321cba815c34d58b5d9' },
+{ address: '0x2b3bb4c683bfc5239b029131eef3b1d214478d93' },
+{ address: '0x87ae62c5720dab812bdacba66cc24839440048d1' },
+{ address: '0x27665271210acff4fab08ad9bb657e91866471f0' },
+{ address: '0xc18f85a6dd3bcd0516a1ca08d3b1f0a4e191a2c4' },
+{ address: '0x1dad8808d8ac58a0df912adc4b215ca3b93d6c49' },
+{ address: '0x31a1659ca00f617e86dc765b6494afe70a5a9c1a' },
+{ address: '0x074b8f19fc91d6b2eb51143e1f186ca0ddb88042' },
+{ address: '0xc8fcd6fb4d15dd7c455373297def375a08942ece' },
+{ address: '0x442b69937a0daf9d46439a71567fabe6cb69fbaf' },
+{ address: '0x0ea09d97b4084d859328ec4bf8ebcf9ecca26f1d' },
+{ address: '0x4308427c463caeaab50fff98a9dec569c31e4e87' },
+{ address: '0xdcb8438c979fa030581314e5a5df42bbfed744a0' },
+{ address: '0x549dbdffbd47bd5639f9348ebe82e63e2f9f777a' },
+];
+
 @PositionTemplate()
 export class OptimismSynthetixPerpV2ContractPositionFetcher extends ContractPositionTemplatePositionFetcher<SynthetixPerpV2> {
   constructor(
@@ -22,37 +47,14 @@ export class OptimismSynthetixPerpV2ContractPositionFetcher extends ContractPosi
   ) {
     super(appToolkit);
   }
-  groupLabel = 'Isolated';
+  groupLabel = 'PerpV2';
 
   getContract(address: string): SynthetixPerpV2 {
     return this.contractFactory.synthetixPerpV2({ address, network: this.network });
   }
 
   async getDefinitions(): Promise<DefaultContractPositionDefinition[]> {
-    return [{ address: '0x8c14db69b1778c7bbb0683b2dea21f79b9b5f059' },
-    { address: '0x74dccf74644485a6920d0cfe1a4d34b2f4216181' },
-    { address: '0x407e5a7548869ce520354d8eca127754625cc9c8' },
-    { address: '0x002089829127a5769db0d53372d5d53a4d1a87a2' },
-    { address: '0x69d255473d0d15dc087cbf4962a65839aa28a2c5' },
-    { address: '0x637340ce915a6e2eee7c02521ac334c30c219d0d' },
-    { address: '0x857d91d6c63892b383cf10cd15285604ff9976b8' },
-    { address: '0xb0a1d2c68bf4d0980402dc220ca6ddeb8dbfbc56' },
-    { address: '0xea46a4dfa7d2767ff4bae2b76f5c6bd80057c723' },
-    { address: '0x6aa31707bd6acf24063a806570160978e62752a0' },
-    { address: '0x9363c080ca0b16ead12fd33aac65c8d0214e9d6d' },
-    { address: '0x156e18b355b36ff3b9cb36bcaaf3155d95d3319a' },
-    { address: '0x0965efeb0579c9bf8d15a77a4f14ec623421d902' },
-    { address: '0x0868d8421b6c4f13b392ea4b72f8012884c45b74' },
-    { address: '0x1fb664858da319b68fc5f6d47dd6ca0d994055a2' },
-    { address: '0xcd077eab8efbcb94aa04f2055d7a9216f23697a6' },
-    { address: '0xf23c5ec62ec4398302efd84587eb8ba26f21b155' },
-    { address: '0x1eaed534ee8d25da73a4e21cde96e4fca9c46187' },
-    { address: '0x423ddc17a01e3e44a0bd125ec2f645b8b9ad3259' },
-    { address: '0x6ee44d9e0f868833a5543bcabc3bd1a7d843edb8' },
-    { address: '0xda3a5e9502b23eaedc8cc048998893013e09787d' },
-    { address: '0x9ab1f9b25b312f162e815a027b4805516401093e' },
-    { address: '0xe05637e338b11640c51766304878b08181463413' }
-    ];
+    return PerpV2MarketAddresses;
   }
 
   async getTokenDefinitions() {
@@ -79,8 +81,7 @@ export class OptimismSynthetixPerpV2ContractPositionFetcher extends ContractPosi
 
   async getLabel({ contractPosition }: GetDisplayPropsParams<SynthetixPerpV2>): Promise<string> {
     const baseAsset = await this.getBaseAsset({ contractPosition });
-    const marginType = this.groupId;
-    return `${baseAsset}-PERP (${marginType})`;
+    return `${baseAsset}-PERP`;
   }
 
   async getImages({ contractPosition }: GetDisplayPropsParams<SynthetixPerpV2>) {
