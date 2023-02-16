@@ -95,7 +95,7 @@ export class ArbitrumLyraNewportPoolTokenFetcher extends AppTokenTemplatePositio
     const pool = await contract.liquidityPool();
     const poolContract = this.contractFactory.lyraLiquidityPool({ address: pool, network: this.network });
     const ratioRaw = await multicall.wrap(poolContract).getTokenPrice();
-    const ratio = Number(ratioRaw) / 10 ** appToken.tokens[0].decimals;
+    const ratio = Number(ratioRaw) / 10 ** 18;
     return [ratio];
   }
 }

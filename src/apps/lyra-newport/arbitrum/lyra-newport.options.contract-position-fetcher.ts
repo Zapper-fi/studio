@@ -17,6 +17,7 @@ import {
 } from '~position/template/contract-position.template.types';
 
 import { LyraNewportContractFactory, LyraOptionToken } from '../contracts';
+import { BigNumber } from 'ethers';
 
 const OPTION_TYPES = {
   0: 'Long Call',
@@ -144,8 +145,8 @@ export class ArbitrumLyraNewportOptionsContractPositionFetcher extends ContractP
             baseAddress: market.baseAddress,
             quoteAddress: market.quoteAddress,
             tokenAddress: market.optionToken.id,
-            callPrice: Number(strike.callOption.latestOptionPriceAndGreeks.optionPrice),
-            putPrice: Number(strike.putOption.latestOptionPriceAndGreeks.optionPrice),
+            callPrice: Number(strike.callOption.latestOptionPriceAndGreeks.optionPrice)/1e18,
+            putPrice: Number(strike.putOption.latestOptionPriceAndGreeks.optionPrice)/1e18,
             strikePriceReadable: strike.strikePriceReadable,
           }));
         });
@@ -239,9 +240,12 @@ export class ArbitrumLyraNewportOptionsContractPositionFetcher extends ContractP
     // Find amount of position
     const quoteToken = contractPosition.tokens[0];
     const price = OPTION_TYPES[optionType].includes('Call') ? callPrice : putPrice;
-    const amountRaw = ((Number(price) * Number(userPosition.amount)) / 10 ** quoteToken.decimals).toString();
+    const amountRaw = ((Number(price) * Number(userPosition.amount)/ (10 ** (18 - contractPosition.tokens[0].decimals))) ).toString();
 
     if (optionType === 0 || optionType === 1) return [amountRaw];
-    return [amountRaw, userPosition.collateral];
+
+    const decimals = optionType == 2 ? 10 ** (18 - contractPosition.tokens[1].decimals) : 10 ** (18 - contractPosition.tokens[0].decimals)
+    const positionCollateral = userPosition.collateral.div(decimals)
+    return [amountRaw, positionCollateral];
   }
 }
