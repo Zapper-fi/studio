@@ -14,3 +14,4 @@ import { ArbitrumLyraNewportPoolTokenFetcher } from './arbitrum/lyra-newport.poo
   ],
 })
 export class LyraNewportAppModule extends AbstractApp() { }
+
