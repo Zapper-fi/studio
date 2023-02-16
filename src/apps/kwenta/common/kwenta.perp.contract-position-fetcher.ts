@@ -12,8 +12,8 @@ import {
   GetDisplayPropsParams,
   GetTokenBalancesParams,
 } from '~position/template/contract-position.template.types';
-import { PerpV2MarketAddresses } from '../../synthetix/optimism/synthetix.perp-v2.contract-position-fetcher';
 
+import { PERP_V2_MARKET_ADDRESSES } from '../../synthetix/optimism/synthetix.perp-v2.contract-position-fetcher';
 import { KwentaContractFactory, KwentaFutures } from '../contracts';
 
 type GetContracts = {
@@ -48,11 +48,12 @@ export abstract class OptimismKwentaPerpContractPositionFetcher extends Contract
       query: getContractsQuery,
     });
 
-    return contractsFromSubgraph.futuresMarkets.filter((market) => {
-      const isPerpV2Market = PerpV2MarketAddresses.find(element => element.address === market.id);
-      return !isPerpV2Market;
-    }
-    ).map(futuresMarket => ({ address: futuresMarket.id }));
+    return contractsFromSubgraph.futuresMarkets
+      .filter(market => {
+        const isPerpV2Market = PERP_V2_MARKET_ADDRESSES.find(element => element.address === market.id);
+        return !isPerpV2Market;
+      })
+      .map(futuresMarket => ({ address: futuresMarket.id }));
   }
 
   async getTokenDefinitions() {
