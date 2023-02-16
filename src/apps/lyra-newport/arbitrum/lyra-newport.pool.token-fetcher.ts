@@ -1,5 +1,4 @@
 import { Inject } from '@nestjs/common';
-import Axios from 'axios';
 import { gql } from 'graphql-request';
 
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
@@ -14,17 +13,6 @@ import {
 } from '~position/template/app-token.template.types';
 
 import { LyraNewportContractFactory, LyraLiquidityToken } from '../contracts';
-
-type LyraMainnetAddresses = Record<
-  string,
-  {
-    contractName: string;
-    source: string;
-    address: string;
-    txn: string;
-    blockNumber: number;
-  }
->;
 
 // TODO: find better way to determine available markets
 type QueryResponse = {
@@ -67,7 +55,7 @@ export class ArbitrumLyraNewportPoolTokenFetcher extends AppTokenTemplatePositio
 
   async getAddresses({ multicall }: GetAddressesParams<DefaultAppTokenDefinition>) {
     const registryContract = this.contractFactory.lyraRegistry({
-      address: "0x6c87e4364Fd44B0D425ADfD0328e56b89b201329",
+      address: '0x6c87e4364fd44b0d425adfd0328e56b89b201329',
       network: this.network,
     });
 
@@ -88,7 +76,6 @@ export class ArbitrumLyraNewportPoolTokenFetcher extends AppTokenTemplatePositio
   }
 
   async getPricePerShare({
-    appToken,
     contract,
     multicall,
   }: GetPricePerShareParams<LyraLiquidityToken, DefaultAppTokenDataProps, DefaultAppTokenDefinition>) {
@@ -96,6 +83,7 @@ export class ArbitrumLyraNewportPoolTokenFetcher extends AppTokenTemplatePositio
     const poolContract = this.contractFactory.lyraLiquidityPool({ address: pool, network: this.network });
     const ratioRaw = await multicall.wrap(poolContract).getTokenPrice();
     const ratio = Number(ratioRaw) / 10 ** 18;
+
     return [ratio];
   }
 }
