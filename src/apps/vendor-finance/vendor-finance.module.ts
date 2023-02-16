@@ -8,8 +8,10 @@ import { EthereumVendorFinancePoolContractPositionFetcher } from './ethereum/ven
 
 @Module({
   providers: [
-    ArbitrumVendorFinancePoolContractPositionFetcher,
     VendorFinanceContractFactory,
+    // Arbitrum
+    ArbitrumVendorFinancePoolContractPositionFetcher,
+    // Ethereum
     EthereumVendorFinancePoolContractPositionFetcher,
   ],
 })
