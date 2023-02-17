@@ -5,6 +5,7 @@ import { ContractFactory } from '~contract/contracts';
 import { Network } from '~types/network.interface';
 
 import {
+  AbcCvx__factory,
   AladdinConcentratorAcrvVault__factory,
   AladdinConcentratorAfrxEthVault__factory,
   AladdinConcentratorAfxsVault__factory,
@@ -26,6 +27,9 @@ export class ConcentratorContractFactory extends ContractFactory {
     super((network: Network) => appToolkit.getNetworkProvider(network));
   }
 
+  abcCvx({ address, network }: ContractOpts) {
+    return AbcCvx__factory.connect(address, this.appToolkit.getNetworkProvider(network));
+  }
   aladdinConcentratorAcrvVault({ address, network }: ContractOpts) {
     return AladdinConcentratorAcrvVault__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
@@ -58,6 +62,7 @@ export class ConcentratorContractFactory extends ContractFactory {
   }
 }
 
+export type { AbcCvx } from './ethers';
 export type { AladdinConcentratorAcrvVault } from './ethers';
 export type { AladdinConcentratorAfrxEthVault } from './ethers';
 export type { AladdinConcentratorAfxsVault } from './ethers';

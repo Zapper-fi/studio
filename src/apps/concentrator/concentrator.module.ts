@@ -3,6 +3,7 @@ import { Module } from '@nestjs/common';
 import { AbstractApp } from '~app/app.dynamic-module';
 
 import { ConcentratorContractFactory } from './contracts';
+import { EthereumConcentratorAbcCvxTokenFetcher } from './ethereum/concentrator.abc.token-fetcher';
 import { EthereumConcentratorAcrvTokenFetcher } from './ethereum/concentrator.acrv.token-fetcher';
 import { EthereumConcentratorAfrxethTokenFetcher } from './ethereum/concentrator.afrxeth.token-fetcher';
 import { EthereumConcentratorAfxsTokenFetcher } from './ethereum/concentrator.afxs.token-fetcher';
@@ -25,6 +26,7 @@ import { EthereumConcentratorVestingContractPositionFetcher } from './ethereum/c
     EthereumConcentratorPoolfrxethContractPositionFetcher,
     EthereumConcentratorVeContractPositionFetcher,
     EthereumConcentratorVestingContractPositionFetcher,
+    EthereumConcentratorAbcCvxTokenFetcher
   ],
 })
 export class ConcentratorAppModule extends AbstractApp() {}

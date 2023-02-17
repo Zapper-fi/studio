@@ -5,7 +5,6 @@ import { ContractFactory } from '~contract/contracts';
 import { Network } from '~types/network.interface';
 
 import {
-  AbcCvx__factory,
   CleverFurnace__factory,
   CleverGauge__factory,
   CleverGaugeController__factory,
@@ -22,9 +21,6 @@ export class CleverContractFactory extends ContractFactory {
     super((network: Network) => appToolkit.getNetworkProvider(network));
   }
 
-  abcCvx({ address, network }: ContractOpts) {
-    return AbcCvx__factory.connect(address, this.appToolkit.getNetworkProvider(network));
-  }
   cleverFurnace({ address, network }: ContractOpts) {
     return CleverFurnace__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
@@ -42,7 +38,6 @@ export class CleverContractFactory extends ContractFactory {
   }
 }
 
-export type { AbcCvx } from './ethers';
 export type { CleverFurnace } from './ethers';
 export type { CleverGauge } from './ethers';
 export type { CleverGaugeController } from './ethers';
