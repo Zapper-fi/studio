@@ -35,7 +35,7 @@ export declare namespace IPerpsV2MarketBaseTypes {
   };
 }
 
-export interface SynthetixPerpV2Interface extends utils.Interface {
+export interface SynthetixPerpInterface extends utils.Interface {
   functions: {
     'acceptOwnership()': FunctionFragment;
     'accessibleMargin(address)': FunctionFragment;
@@ -226,12 +226,12 @@ export type OwnerNominatedEvent = TypedEvent<[string], OwnerNominatedEventObject
 
 export type OwnerNominatedEventFilter = TypedEventFilter<OwnerNominatedEvent>;
 
-export interface SynthetixPerpV2 extends BaseContract {
+export interface SynthetixPerp extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
 
-  interface: SynthetixPerpV2Interface;
+  interface: SynthetixPerpInterface;
 
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,

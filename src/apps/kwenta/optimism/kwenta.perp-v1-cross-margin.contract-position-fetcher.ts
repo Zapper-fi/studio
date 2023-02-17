@@ -3,8 +3,10 @@ import { gql } from 'graphql-request';
 import { ZERO_ADDRESS } from '~app-toolkit/constants/address';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import { gqlFetch } from '~app-toolkit/helpers/the-graph.helper';
+import { GetDisplayPropsParams } from '~position/template/contract-position.template.types';
 
-import { OptimismKwentaPerpContractPositionFetcher } from '../common/kwenta.perp.contract-position-fetcher';
+import { OptimismSynthetixPerpV1ContractPositionFetcher } from '../../synthetix/optimism/synthetix.perp-v1.contract-position-fetcher';
+import { SynthetixPerp } from '../../synthetix/contracts';
 
 type GetCrossMarginAccounts = {
   crossMarginAccounts: {
@@ -21,8 +23,8 @@ const getCrossMarginAccountsQuery = gql`
 `;
 
 @PositionTemplate()
-export class OptimismKwentaCrossContractPositionFetcher extends OptimismKwentaPerpContractPositionFetcher {
-  groupLabel = 'Cross Margin';
+export class OptimismKwentaPerpV1CrossMarginContractPositionFetcher extends OptimismSynthetixPerpV1ContractPositionFetcher {
+  groupLabel = 'PerpV1 cross-margin';
 
   async getAccountAddress(address: string): Promise<string> {
     const crossMarginAccountsFromSubgraph = await gqlFetch<GetCrossMarginAccounts>({
@@ -36,5 +38,10 @@ export class OptimismKwentaCrossContractPositionFetcher extends OptimismKwentaPe
     }
 
     return crossMarginAccountsFromSubgraph.crossMarginAccounts[0].id;
+  }
+
+  async getLabel({ contractPosition }: GetDisplayPropsParams<SynthetixPerp>): Promise<string> {
+    const baseAsset = await this.getBaseAsset({ contractPosition });
+    return `${baseAsset}-PERP (v1 cross-margin)`;
   }
 }

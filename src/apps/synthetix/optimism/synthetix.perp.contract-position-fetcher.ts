@@ -4,7 +4,6 @@ import { gql } from 'graphql-request';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { getAppAssetImage } from '~app-toolkit/helpers/presentation/image.present';
-import { gqlFetch } from '~app-toolkit/helpers/the-graph.helper';
 import { MetaType } from '~position/position.interface';
 import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
 import {
@@ -13,48 +12,37 @@ import {
   GetTokenBalancesParams,
 } from '~position/template/contract-position.template.types';
 
-import { PERP_V2_MARKET_ADDRESSES } from '../../synthetix/optimism/synthetix.perp-v2.contract-position-fetcher';
-import { KwentaContractFactory, KwentaFutures } from '../contracts';
+import { SynthetixContractFactory, SynthetixPerp } from '../contracts';
 
-type GetContracts = {
+export type GetContracts = {
   futuresMarkets: {
     id: string;
+    marketKey: string;
   }[];
 };
 
-const getContractsQuery = gql`
+export const getContractsQuery = gql`
   query MyQuery {
     futuresMarkets {
       id
+      marketKey
     }
   }
 `;
 
-export abstract class OptimismKwentaPerpContractPositionFetcher extends ContractPositionTemplatePositionFetcher<KwentaFutures> {
+export abstract class OptimismSynthetixPerpContractPositionFetcher extends ContractPositionTemplatePositionFetcher<SynthetixPerp> {
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(KwentaContractFactory) protected readonly contractFactory: KwentaContractFactory,
+    @Inject(SynthetixContractFactory) protected readonly contractFactory: SynthetixContractFactory,
   ) {
     super(appToolkit);
   }
 
-  getContract(address: string): KwentaFutures {
-    return this.contractFactory.kwentaFutures({ address, network: this.network });
+  getContract(address: string): SynthetixPerp {
+    return this.contractFactory.synthetixPerp({ address, network: this.network });
   }
 
-  async getDefinitions(): Promise<DefaultContractPositionDefinition[]> {
-    const contractsFromSubgraph = await gqlFetch<GetContracts>({
-      endpoint: 'https://api.thegraph.com/subgraphs/name/kwenta/optimism-main',
-      query: getContractsQuery,
-    });
-
-    return contractsFromSubgraph.futuresMarkets
-      .filter(market => {
-        const isPerpV2Market = PERP_V2_MARKET_ADDRESSES.find(element => element.address === market.id);
-        return !isPerpV2Market;
-      })
-      .map(futuresMarket => ({ address: futuresMarket.id }));
-  }
+  abstract getDefinitions(): Promise<DefaultContractPositionDefinition[]>;
 
   async getTokenDefinitions() {
     return [
@@ -66,7 +54,7 @@ export abstract class OptimismKwentaPerpContractPositionFetcher extends Contract
     ];
   }
 
-  private async getBaseAsset({ contractPosition }) {
+  protected async getBaseAsset({ contractPosition }) {
     const multicall = this.appToolkit.getMulticall(this.network);
     const contract = multicall.wrap(this.getContract(contractPosition.address));
     const baseAssetRaw = await contract.baseAsset();
@@ -78,18 +66,14 @@ export abstract class OptimismKwentaPerpContractPositionFetcher extends Contract
     return baseAsset;
   }
 
-  async getLabel({ contractPosition }: GetDisplayPropsParams<KwentaFutures>): Promise<string> {
-    const baseAsset = await this.getBaseAsset({ contractPosition });
-    const marginType = this.groupId;
-    return `${baseAsset}-PERP (${marginType})`;
-  }
+  abstract getLabel({ contractPosition }: GetDisplayPropsParams<SynthetixPerp>): Promise<string>;
 
-  async getImages({ contractPosition }: GetDisplayPropsParams<KwentaFutures>) {
+  async getImages({ contractPosition }: GetDisplayPropsParams<SynthetixPerp>) {
     const baseAsset = await this.getBaseAsset({ contractPosition });
     return [getAppAssetImage('synthetix', `s${baseAsset}`)];
   }
 
-  async getTokenBalancesPerPosition({ address, contract }: GetTokenBalancesParams<KwentaFutures>) {
+  async getTokenBalancesPerPosition({ address, contract }: GetTokenBalancesParams<SynthetixPerp>) {
     const remainingMargin = await contract.remainingMargin(address);
     return [remainingMargin.marginRemaining];
   }

@@ -9,7 +9,7 @@ import {
   SynthetixExchangeRates__factory,
   SynthetixLoan__factory,
   SynthetixNetworkToken__factory,
-  SynthetixPerpV2__factory,
+  SynthetixPerp__factory,
   SynthetixRewards__factory,
   SynthetixSummaryUtil__factory,
   SynthetixSynthToken__factory,
@@ -36,8 +36,8 @@ export class SynthetixContractFactory extends ContractFactory {
   synthetixNetworkToken({ address, network }: ContractOpts) {
     return SynthetixNetworkToken__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
-  synthetixPerpV2({ address, network }: ContractOpts) {
-    return SynthetixPerpV2__factory.connect(address, this.appToolkit.getNetworkProvider(network));
+  synthetixPerp({ address, network }: ContractOpts) {
+    return SynthetixPerp__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
   synthetixRewards({ address, network }: ContractOpts) {
     return SynthetixRewards__factory.connect(address, this.appToolkit.getNetworkProvider(network));
@@ -54,7 +54,7 @@ export type { SynthetixAddressResolver } from './ethers';
 export type { SynthetixExchangeRates } from './ethers';
 export type { SynthetixLoan } from './ethers';
 export type { SynthetixNetworkToken } from './ethers';
-export type { SynthetixPerpV2 } from './ethers';
+export type { SynthetixPerp } from './ethers';
 export type { SynthetixRewards } from './ethers';
 export type { SynthetixSummaryUtil } from './ethers';
 export type { SynthetixSynthToken } from './ethers';
