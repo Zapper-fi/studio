@@ -37,13 +37,3 @@ export type UnipilotVaultDefinition = {
   totalLockedToken0: string;
   totalLockedToken1: string;
 };
-
-export type FeeAPR = {
-  statsOnSpot: string;
-  stats: string;
-  stats7d: string;
-};
-
-export type ResponseAPRData = {
-  [key: string]: FeeAPR;
-};

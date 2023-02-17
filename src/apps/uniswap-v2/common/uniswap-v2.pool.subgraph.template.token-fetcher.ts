@@ -47,7 +47,9 @@ export abstract class UniswapV2PoolSubgraphTemplateTokenFetcher<
   async getAddresses() {
     // Initialize volume dataloader
     const dataLoaderOptions = { cache: true, maxBatchSize: 1000 };
-    this.volumeDataLoader = new DataLoader<string, number>(this.batchGetVolume.bind(this), dataLoaderOptions);
+    if (!this.skipVolume) {
+      this.volumeDataLoader = new DataLoader<string, number>(this.batchGetVolume.bind(this), dataLoaderOptions);
+    }
 
     const chunks = await Promise.all(
       range(0, this.first, 1000).map(skip => {

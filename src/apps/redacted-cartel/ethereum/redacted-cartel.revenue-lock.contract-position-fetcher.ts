@@ -1,5 +1,4 @@
 import { Inject } from '@nestjs/common';
-import axios from 'axios';
 import { BigNumberish, Contract } from 'ethers';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
@@ -19,6 +18,7 @@ import {
   GetTokenBalancesParams,
 } from '~position/template/contract-position.template.types';
 
+import { RedactedEarningsResolver } from '../common/redacted.earnings-resolver';
 import { RedactedCartelContractFactory, RedactedRevenueLock } from '../contracts';
 
 @PositionTemplate()
@@ -29,8 +29,8 @@ export class EthereumRedactedCartelRevenueLockContractPositionFetcher extends Co
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(RedactedCartelContractFactory)
-    protected readonly contractFactory: RedactedCartelContractFactory,
+    @Inject(RedactedCartelContractFactory) protected readonly contractFactory: RedactedCartelContractFactory,
+    @Inject(RedactedEarningsResolver) protected readonly earningsResolver: RedactedEarningsResolver,
   ) {
     super(appToolkit);
   }
@@ -76,11 +76,9 @@ export class EthereumRedactedCartelRevenueLockContractPositionFetcher extends Co
     address,
     contract,
   }: GetTokenBalancesParams<Contract, DefaultDataProps>): Promise<BigNumberish[]> {
-    const lockedBalances = await contract.lockedBalances(address);
-    const { data } = await axios.get(`https://app.redacted.finance/api/rewards/1/${address}`, { headers: {} });
-    const ethRewards = data?.data?.find(t => t.symbol === 'ETH');
-    const btrRewards = data?.data?.find(t => t.symbol === 'BTRFLY');
+    const { total } = await contract.lockedBalances(address);
 
-    return [lockedBalances.total, btrRewards?.claimable, ethRewards?.claimable];
+    const [claimableBTRFLY, claimableETH] = await this.earningsResolver.getClaimableAmount(address, this.network);
+    return [total, claimableBTRFLY, claimableETH];
   }
 }

@@ -4,8 +4,15 @@ import { AbstractApp } from '~app/app.dynamic-module';
 
 import { ArbitrumVendorFinancePoolContractPositionFetcher } from './arbitrum/vendor-finance.pool.contract-position-fetcher';
 import { VendorFinanceContractFactory } from './contracts';
+import { EthereumVendorFinancePoolContractPositionFetcher } from './ethereum/vendor-finance.pool.contract-position-fetcher';
 
 @Module({
-  providers: [ArbitrumVendorFinancePoolContractPositionFetcher, VendorFinanceContractFactory],
+  providers: [
+    VendorFinanceContractFactory,
+    // Arbitrum
+    ArbitrumVendorFinancePoolContractPositionFetcher,
+    // Ethereum
+    EthereumVendorFinancePoolContractPositionFetcher,
+  ],
 })
 export class VendorFinanceAppModule extends AbstractApp() {}

@@ -4,6 +4,66 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.392.0](https://github.com/Zapper-fi/studio/compare/v0.391.0...v0.392.0) (2023-02-16)
+
+
+### Features
+
+* **lyra-newport:** Add Lyra Network Integration ([#2316](https://github.com/Zapper-fi/studio/issues/2316)) ([7b0aace](https://github.com/Zapper-fi/studio/commit/7b0aacee792f5eb7d337465be1c29d5f2667bcd0))
+
+
+### Bug Fixes
+
+* **across:** Fix pools-v2 ([#2317](https://github.com/Zapper-fi/studio/issues/2317)) ([5101601](https://github.com/Zapper-fi/studio/commit/510160119a555135e7e67ff272c9149a3a4d1bd0))
+* **lyra-newport:** Linting ([#2321](https://github.com/Zapper-fi/studio/issues/2321)) ([31beb15](https://github.com/Zapper-fi/studio/commit/31beb15fe9ef1eb649f73e2dc7a58106c8c92233))
+* **platypus-finance:** Temporary pausing the app every position related to their pools ([#2320](https://github.com/Zapper-fi/studio/issues/2320)) ([6567437](https://github.com/Zapper-fi/studio/commit/6567437b62d8877e3fa3cb893beaa63c4e4c37b8))
+* **vendor-finance:** Extract duplicated logic ([#2319](https://github.com/Zapper-fi/studio/issues/2319)) ([210d564](https://github.com/Zapper-fi/studio/commit/210d564ee85a73b51c28dc6b8b149fb68fc47039))
+
+## [0.391.0](https://github.com/Zapper-fi/studio/compare/v0.390.2...v0.391.0) (2023-02-16)
+
+
+### Features
+
+* **vendor:** Added mainnet support for vendor finance ([#2311](https://github.com/Zapper-fi/studio/issues/2311)) ([1248394](https://github.com/Zapper-fi/studio/commit/12483946fcbe38c860e87e3484390e8c4d140fe3))
+
+
+### Bug Fixes
+
+* **apps:** Linting ([#2314](https://github.com/Zapper-fi/studio/issues/2314)) ([5282d9a](https://github.com/Zapper-fi/studio/commit/5282d9a71cad7eb4bd822cb8af1603eb5869f832))
+* **kwenta:** Perp markets duplicate ([#2312](https://github.com/Zapper-fi/studio/issues/2312)) ([31370c0](https://github.com/Zapper-fi/studio/commit/31370c09d06845c510084419404cd05cef37ac1d))
+
+## [0.390.2](https://github.com/Zapper-fi/studio/compare/v0.390.1...v0.390.2) (2023-02-15)
+
+
+### Bug Fixes
+
+* **clearpool:** Fix endpoint URL + extract external calls into a resolver ([#2309](https://github.com/Zapper-fi/studio/issues/2309)) ([82a9d90](https://github.com/Zapper-fi/studio/commit/82a9d900c530e23e5788de22c9303da5cc4ec70c))
+* **platypus-finance:** Remove deprecated faulty pool ([#2308](https://github.com/Zapper-fi/studio/issues/2308)) ([95b0696](https://github.com/Zapper-fi/studio/commit/95b069607bb13bd1b3843172241ec8579449b295))
+* **uniswap-v2:** Add condition on skipVolume ([#2307](https://github.com/Zapper-fi/studio/issues/2307)) ([2388909](https://github.com/Zapper-fi/studio/commit/2388909bf179e6e034690a146d926cb0249f2d99))
+
+## [0.390.1](https://github.com/Zapper-fi/studio/compare/v0.390.0...v0.390.1) (2023-02-14)
+
+
+### Bug Fixes
+
+* **gamma-strategies:** Fix endpoint url ([#2306](https://github.com/Zapper-fi/studio/issues/2306)) ([e16105d](https://github.com/Zapper-fi/studio/commit/e16105d092430f5da5cea64d9e072c672d087c60))
+* **redacted-cartel:** fix claimable amounts ([#2300](https://github.com/Zapper-fi/studio/issues/2300)) ([1b0169f](https://github.com/Zapper-fi/studio/commit/1b0169f56e25358f4eb39670ed935c830a458f9a))
+* **unipilot:** Remove APY helper ([#2305](https://github.com/Zapper-fi/studio/issues/2305)) ([ab00318](https://github.com/Zapper-fi/studio/commit/ab0031898b0b2242234672508e449f23666bb02e))
+
+## [0.390.0](https://github.com/Zapper-fi/studio/compare/v0.389.1...v0.390.0) (2023-02-14)
+
+
+### Features
+
+* **maple:** Fix price per share on pools ([#2301](https://github.com/Zapper-fi/studio/issues/2301)) ([44f3d69](https://github.com/Zapper-fi/studio/commit/44f3d695cd569a14de1581e76cb3ccbc735ce22e))
+
+## [0.389.1](https://github.com/Zapper-fi/studio/compare/v0.389.0...v0.389.1) (2023-02-13)
+
+
+### Bug Fixes
+
+* **gamma-strategies:** Filter out pool addresses with no liquidity ([#2297](https://github.com/Zapper-fi/studio/issues/2297)) ([71c031e](https://github.com/Zapper-fi/studio/commit/71c031e3bb5309670103c1089a3b962988af2fc7))
+
 ## [0.389.0](https://github.com/Zapper-fi/studio/compare/v0.388.2...v0.389.0) (2023-02-13)
 
 
