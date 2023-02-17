@@ -1,5 +1,4 @@
 import { Inject } from '@nestjs/common';
-import axios, { Axios } from 'axios';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
@@ -33,17 +32,14 @@ export class EthereumConcentratorAbcCvxTokenFetcher extends AppTokenTemplatePosi
       { address: await contract.debtToken(), network: this.network },
     ];
   }
-
-  async getPricePerShare({ } : GetPricePerShareParams<AbcCvx> )  {
-    return [1]; 
-  }
-
-  async getPrice({ }: GetPriceParams<AbcCvx>): Promise<number> {
-    return await axios.get('https://api.aladdin.club/api/aladdin/initInfo').then(v => v.data.data.abcCVXPrice)
+  
+  async getPricePerShare({ contract } : GetPricePerShareParams<AbcCvx> )  {
+    const supply = await contract.totalSupply();
+    const reserves = await Promise.all([contract.totalCurveLpToken(), contract.totalDebtToken()])
+    return reserves.map(r => Number(r)/ Number(supply))
   }
 
   async getLiquidity({ appToken }: GetDataPropsParams<AbcCvx>) {
     return appToken.supply * appToken.price;
   }
-
 }
