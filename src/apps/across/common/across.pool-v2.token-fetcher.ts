@@ -1,5 +1,4 @@
 import { Inject } from '@nestjs/common';
-import { uniq } from 'lodash';
 import 'moment-duration-format';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
@@ -8,7 +7,6 @@ import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.te
 import {
   DefaultAppTokenDataProps,
   GetAddressesParams,
-  GetDefinitionsParams,
   GetDisplayPropsParams,
   GetPricePerShareParams,
   GetUnderlyingTokensParams,
@@ -27,6 +25,7 @@ export abstract class AcrossPoolV2TokenFetcher extends AppTokenTemplatePositionF
   AcrossPoolV2TokenDefinition
 > {
   abstract hubAddress: string;
+  abstract poolDefinitions: AcrossPoolV2TokenDefinition[];
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
@@ -39,18 +38,8 @@ export abstract class AcrossPoolV2TokenFetcher extends AppTokenTemplatePositionF
     return this.contractFactory.acrossPoolV2({ network: this.network, address });
   }
 
-  async getDefinitions({ multicall }: GetDefinitionsParams): Promise<AcrossPoolV2TokenDefinition[]> {
-    const hub = this.contractFactory.acrossHubPoolV2({ address: this.hubAddress, network: this.network });
-    const logs = await hub.queryFilter(hub.filters.LiquidityAdded(), 14819537);
-    const collateral = uniq(logs.map(v => v.args.l1Token.toLowerCase()));
-
-    const lpTokens = await Promise.all(collateral.map(c => multicall.wrap(hub).pooledTokens(c)));
-    const definitions = collateral.map((c, i) => ({
-      address: lpTokens[i].lpToken.toLowerCase(),
-      underlyingTokenAddress: c,
-    }));
-
-    return definitions;
+  async getDefinitions(): Promise<AcrossPoolV2TokenDefinition[]> {
+    return this.poolDefinitions;
   }
 
   async getAddresses({ definitions }: GetAddressesParams) {

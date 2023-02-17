@@ -3,5 +3,6 @@
 /* eslint-disable */
 export { RedactedBondDepository__factory } from './RedactedBondDepository__factory';
 export { RedactedRevenueLock__factory } from './RedactedRevenueLock__factory';
+export { RedactedRewardDistributor__factory } from './RedactedRewardDistributor__factory';
 export { RedactedWxBtrfly__factory } from './RedactedWxBtrfly__factory';
 export { RedactedXBtrfly__factory } from './RedactedXBtrfly__factory';

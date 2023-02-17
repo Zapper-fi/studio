@@ -19,7 +19,7 @@ export type VendorLendingPoolsGraphResponse = {
   pools: Array<VendorLendingPool>;
 };
 
-export const lendingPoolsQuery = gql`
+export const LENDING_POOLS_QUERY = gql`
   query getPoolsList {
     pools(first: 1000, where: { _expiry_gt: ${`${Math.floor(new Date().getTime() / 1000)}`} }) {
       id
