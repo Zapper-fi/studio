@@ -5,7 +5,6 @@ import { AbstractApp } from '~app/app.dynamic-module';
 import { SynthetixContractFactory } from '../synthetix/contracts';
 
 import { KwentaContractFactory } from './contracts';
-import { OptimismKwentaLpStakingContractPositionFetcher } from './optimism/kwenta.lp-staking.contract-position-fetcher';
 import { OptimismKwentaPerpV1CrossMarginContractPositionFetcher } from './optimism/kwenta.perp-v1-cross-margin.contract-position-fetcher';
 import { OptimismKwentaStakingContractPositionFetcher } from './optimism/kwenta.staking.contract-position-fetcher';
 
@@ -15,7 +14,6 @@ import { OptimismKwentaStakingContractPositionFetcher } from './optimism/kwenta.
     SynthetixContractFactory,
     OptimismKwentaPerpV1CrossMarginContractPositionFetcher,
     OptimismKwentaStakingContractPositionFetcher,
-    OptimismKwentaLpStakingContractPositionFetcher,
   ],
 })
-export class KwentaAppModule extends AbstractApp() {}
+export class KwentaAppModule extends AbstractApp() { }
