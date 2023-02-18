@@ -17,8 +17,7 @@ import { Network } from '~types';
 
 import { AbracadabraContractFactory } from '../contracts';
 
-const MAGIC_GLP_ADDRESS = '0x85667409a723684fe1e57dd1abde8d88c2f54214';
-const S_GLP_ADDRESS = '0x5402b5f40310bded796c7d0f3ff6683f5c0cffdf';
+import { MAGIC_GLP_ADDRESS, S_GLP_ADDRESS } from './abracadabra.arbitrum.constants';
 
 @PositionTemplate()
 export class ArbitrumAbracadabraMagicGlpTokenFetcher extends AppTokenTemplatePositionFetcher<Erc20> {
