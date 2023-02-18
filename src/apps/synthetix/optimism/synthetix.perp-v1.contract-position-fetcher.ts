@@ -11,8 +11,8 @@ import { OptimismSynthetixPerpContractPositionFetcher, getContractsQuery, GetCon
 import { SynthetixPerp } from '../contracts';
 
 @PositionTemplate()
-export class OptimismSynthetixPerpV2ContractPositionFetcher extends OptimismSynthetixPerpContractPositionFetcher {
-  groupLabel = 'PerpV2';
+export class OptimismSynthetixPerpV1ContractPositionFetcher extends OptimismSynthetixPerpContractPositionFetcher {
+  groupLabel = 'PerpV1';
 
   async getDefinitions(): Promise<DefaultContractPositionDefinition[]> {
     const contractsFromSubgraph = await gqlFetch<GetContracts>({
@@ -24,13 +24,13 @@ export class OptimismSynthetixPerpV2ContractPositionFetcher extends OptimismSynt
       .filter(market => {
         const marketKeyString = parseBytes32String(market.marketKey);
         //v2 marketKey includes 'PERP', v1 doesn't
-        return marketKeyString.includes('PERP');
+        return !marketKeyString.includes('PERP');
       })
       .map(futuresMarket => ({ address: futuresMarket.id }));
   }
 
   async getLabel({ contractPosition }: GetDisplayPropsParams<SynthetixPerp>): Promise<string> {
     const baseAsset = await this.getBaseAsset({ contractPosition });
-    return `${baseAsset}-PERP`;
+    return `${baseAsset}-PERP (v1)`;
   }
 }

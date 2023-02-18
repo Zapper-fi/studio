@@ -4,7 +4,7 @@
 
 import { Contract, Signer, utils } from 'ethers';
 import type { Provider } from '@ethersproject/providers';
-import type { SynthetixPerpV2, SynthetixPerpV2Interface } from '../SynthetixPerpV2';
+import type { SynthetixPerp, SynthetixPerpInterface } from '../SynthetixPerp';
 
 const _abi = [
   {
@@ -790,12 +790,12 @@ const _abi = [
   },
 ];
 
-export class SynthetixPerpV2__factory {
+export class SynthetixPerp__factory {
   static readonly abi = _abi;
-  static createInterface(): SynthetixPerpV2Interface {
-    return new utils.Interface(_abi) as SynthetixPerpV2Interface;
+  static createInterface(): SynthetixPerpInterface {
+    return new utils.Interface(_abi) as SynthetixPerpInterface;
   }
-  static connect(address: string, signerOrProvider: Signer | Provider): SynthetixPerpV2 {
-    return new Contract(address, _abi, signerOrProvider) as SynthetixPerpV2;
+  static connect(address: string, signerOrProvider: Signer | Provider): SynthetixPerp {
+    return new Contract(address, _abi, signerOrProvider) as SynthetixPerp;
   }
 }

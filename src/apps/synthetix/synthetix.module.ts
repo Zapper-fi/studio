@@ -13,6 +13,7 @@ import { EthereumSynthetixSynthTokenFetcher } from './ethereum/synthetix.synth.t
 import { OptimismSynthetixLoanContractPositionFetcher } from './optimism/synthetix.loan.contract-position-fetcher';
 import { OptimismSynthetixMintrContractPositionFetcher } from './optimism/synthetix.mintr.contract-position-fetcher';
 import { OptimismSynthetixPerpV2ContractPositionFetcher } from './optimism/synthetix.perp-v2.contract-position-fetcher';
+import { OptimismSynthetixPerpV1ContractPositionFetcher } from './optimism/synthetix.perp-v1.contract-position-fetcher';
 import { OptimismSynthetixPositionPresenter } from './optimism/synthetix.position-presenter';
 import { OptimismSynthetixSnxTokenFetcher } from './optimism/synthetix.snx.token-fetcher';
 import { OptimismSynthetixSynthTokenFetcher } from './optimism/synthetix.synth.token-fetcher';
@@ -35,6 +36,7 @@ import { OptimismSynthetixSynthTokenFetcher } from './optimism/synthetix.synth.t
     OptimismSynthetixLoanContractPositionFetcher,
     OptimismSynthetixPositionPresenter,
     OptimismSynthetixPerpV2ContractPositionFetcher,
+    OptimismSynthetixPerpV1ContractPositionFetcher,
   ],
 })
-export class SynthetixAppModule extends AbstractApp() {}
+export class SynthetixAppModule extends AbstractApp() { }
