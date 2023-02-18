@@ -2,8 +2,10 @@ import { PositionTemplate } from '~app-toolkit/decorators/position-template.deco
 
 import { AbracadabraMspellContractPositionFetcher } from '../common/abracadabra.m-spell.contract-position-fetcher';
 
+import { M_SPELL_ADDRESS } from './abracadabra.arbitrum.constants';
+
 @PositionTemplate()
 export class ArbitrumAbracadabraMspellContractPositionFetcher extends AbracadabraMspellContractPositionFetcher {
   groupLabel = 'mSPELL';
-  mSpellAddress = '0x1df188958a8674b5177f77667b8d173c3cdd9e51';
+  mSpellAddress = M_SPELL_ADDRESS;
 }

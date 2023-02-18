@@ -2,8 +2,10 @@ import { PositionTemplate } from '~app-toolkit/decorators/position-template.deco
 
 import { AbracadabraFarmContractPositionFetcher } from '../common/abracadabra.farm.contract-position-fetcher';
 
+import { CURVE_MIM_3POOL_FARM } from './abracadabra.arbitrum.constants';
+
 @PositionTemplate()
 export class ArbitrumAbracadabraFarmContractPositionFetcher extends AbracadabraFarmContractPositionFetcher {
   groupLabel = 'Farms';
-  chefAddress = '0x839de324a1ab773f76a53900d70ac1b913d2b387';
+  chefAddress = CURVE_MIM_3POOL_FARM;
 }
