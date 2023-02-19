@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.394.0](https://github.com/Zapper-fi/studio/compare/v0.393.0...v0.394.0) (2023-02-19)
+
+
+### Features
+
+* **gains-network:** add arbitrum support ([#2330](https://github.com/Zapper-fi/studio/issues/2330)) ([36c5b26](https://github.com/Zapper-fi/studio/commit/36c5b261f87222ad1b2eb7c20ae1c52f0a0b37bd))
+
 ## [0.393.0](https://github.com/Zapper-fi/studio/compare/v0.392.0...v0.393.0) (2023-02-19)
 
 
