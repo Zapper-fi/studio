@@ -24,7 +24,6 @@ export class EthereumAbracadabraCauldronContractPositionFetcher extends Abracada
     '0xc319eea1e792577c319723b5e60a15da3857e7da', // sSPELL v2 (deprecated)
     '0x3410297d89dcdaf4072b805efc1ef701bb3dd9bf', // sSPELL v3
     '0x4eaed76c3a388f4a841e9c765560bbe7b3e4b3a0', // cvxTricrypto2
-    '0x35a0dd182e4bca59d5931eae13d0a2332fa30321', // cvxRenCrv
     '0x252dcf1b621cc53bc22c256255d2be5c8c32eae4', // SHIB
     '0x9617b633ef905860d919b88e1d9d9a6191795341', // FTT
     '0xcfc571f3203756319c231d3bc643cee807e74636', // SPELL (DegenBox)
