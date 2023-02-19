@@ -26,7 +26,7 @@ import { EthereumConcentratorVestingContractPositionFetcher } from './ethereum/c
     EthereumConcentratorPoolfrxethContractPositionFetcher,
     EthereumConcentratorVeContractPositionFetcher,
     EthereumConcentratorVestingContractPositionFetcher,
-    EthereumConcentratorAbcCvxTokenFetcher
+    EthereumConcentratorAbcCvxTokenFetcher,
   ],
 })
 export class ConcentratorAppModule extends AbstractApp() {}

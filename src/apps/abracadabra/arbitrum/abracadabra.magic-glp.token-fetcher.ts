@@ -13,7 +13,6 @@ import {
   GetPricePerShareParams,
   DefaultAppTokenDataProps,
 } from '~position/template/app-token.template.types';
-import { Network } from '~types';
 
 import { AbracadabraContractFactory } from '../contracts';
 
@@ -21,7 +20,7 @@ import { MAGIC_GLP_ADDRESS, S_GLP_ADDRESS } from './abracadabra.arbitrum.constan
 
 @PositionTemplate()
 export class ArbitrumAbracadabraMagicGlpTokenFetcher extends AppTokenTemplatePositionFetcher<Erc20> {
-  groupLabel: string;
+  groupLabel = 'Magic GLP';
 
   constructor(
     @Inject(APP_TOOLKIT) public readonly appToolkit: IAppToolkit,
@@ -44,24 +43,25 @@ export class ArbitrumAbracadabraMagicGlpTokenFetcher extends AppTokenTemplatePos
     const glpTokenDefinitions = await this.appToolkit.getAppTokenPositionsFromDatabase({
       appId: 'gmx',
       groupIds: ['glp'],
-      network: Network.ARBITRUM_MAINNET,
+      network: this.network,
     });
 
     const glpUnderlying = glpTokenDefinitions[0];
 
-    return [{ address: glpUnderlying.address, network: glpUnderlying.network }];
+    return [{ address: glpUnderlying.address, network: this.network }];
   }
 
-  async getPricePerShare(
-    _params: GetPricePerShareParams<Erc20, DefaultAppTokenDataProps, DefaultAppTokenDefinition>,
-  ): Promise<number[]> {
+  async getPricePerShare({
+    contract,
+    appToken,
+  }: GetPricePerShareParams<Erc20, DefaultAppTokenDataProps, DefaultAppTokenDefinition>): Promise<number[]> {
     const glpContract = this.abracadabraContractFactory.erc20({
       address: S_GLP_ADDRESS,
       network: this.network,
     });
     const [totalSupply, balanceOf] = await Promise.all([
-      _params.contract.totalSupply(),
-      glpContract.balanceOf(_params.address),
+      contract.totalSupply(),
+      glpContract.balanceOf(appToken.address),
     ]);
 
     const glpDecimals = await glpContract.decimals();
