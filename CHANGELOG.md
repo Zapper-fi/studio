@@ -4,6 +4,21 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.395.0](https://github.com/Zapper-fi/studio/compare/v0.394.0...v0.395.0) (2023-02-19)
+
+
+### Features
+
+* **abracadabra:** Update Ethereum cauldrons ([#2336](https://github.com/Zapper-fi/studio/issues/2336)) ([a7ee75d](https://github.com/Zapper-fi/studio/commit/a7ee75d946c4ea7ae564c363595d4c17da698c7b))
+* **ethereum-staking:** Use beaconcha.in API to retrieve real lives balances ([#2337](https://github.com/Zapper-fi/studio/issues/2337)) ([de0ef8d](https://github.com/Zapper-fi/studio/commit/de0ef8d48db225f844ead18554ef6a2134de0cf4))
+* **klima:** ✨ Display staking APY ([#2333](https://github.com/Zapper-fi/studio/issues/2333)) ([68c5d62](https://github.com/Zapper-fi/studio/commit/68c5d6277c4f808a799ed978eeb7b2c8fe674b1c))
+
+
+### Bug Fixes
+
+* **abracadabra:** Wrap bentobox calls in multicall to mitigate reverts ([#2335](https://github.com/Zapper-fi/studio/issues/2335)) ([b8287bc](https://github.com/Zapper-fi/studio/commit/b8287bc70f747a33ea416ba158a69e723dce77b9))
+* **kwenta:** avoid duplicate code ([#2332](https://github.com/Zapper-fi/studio/issues/2332)) ([5986660](https://github.com/Zapper-fi/studio/commit/598666051735546291e2997c1cb8c933f3821393))
+
 ## [0.394.0](https://github.com/Zapper-fi/studio/compare/v0.393.0...v0.394.0) (2023-02-19)
 
 
