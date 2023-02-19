@@ -1,6 +1,10 @@
+import { escape } from 'querystring';
+
 import { Inject } from '@nestjs/common';
+import axios from 'axios';
 import BigNumber from 'bignumber.js';
 import { gql } from 'graphql-request';
+import { uniq } from 'lodash';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { ZERO_ADDRESS } from '~app-toolkit/constants/address';
@@ -21,16 +25,30 @@ type Eth2DepositsResponse = {
   deposits: {
     id: string;
     amount: string;
+    index: number;
   }[];
 };
 
-const GQL_ENDPOINT = `https://api.thegraph.com/subgraphs/name/terryyyyyy/eth2staking`;
+type BeaconChainResponse = {
+  status: string;
+  data: {
+    balance: number;
+    effectivebalance: number;
+    epoch: number;
+    validatorindex: number;
+    week: number;
+  }[];
+};
+
+const SUBGRAPH_DEPOSITS_ENDPOINT = `https://api.thegraph.com/subgraphs/name/terryyyyyy/eth2staking`;
+const BEACON_CHAIN_API_ENDPOINT = `https://beaconcha.in/api/v1`;
 
 const ETH2_DEPOSITS_QUERY = gql`
   query getEth2Deposits($address: String!, $first: Int, $lastId: String) {
     deposits(where: { from: $address, isDepositor: true, id_gt: $lastId }, first: $first) {
       id
       amount
+      index
     }
   }
 `;
@@ -69,8 +87,9 @@ export class EthereumEthereumStakingDepositContractPositionFetcher extends Contr
   }
 
   async getTokenBalancesPerPosition({ address }: GetTokenBalancesParams<EthereumStakingDeposit>) {
-    const data = await gqlFetchAll<Eth2DepositsResponse>({
-      endpoint: GQL_ENDPOINT,
+    // First, hit the subgraph to see if the user has any deposits
+    const depositsData = await gqlFetchAll<Eth2DepositsResponse>({
+      endpoint: SUBGRAPH_DEPOSITS_ENDPOINT,
       query: ETH2_DEPOSITS_QUERY,
       dataToSearch: 'deposits',
       variables: {
@@ -78,7 +97,24 @@ export class EthereumEthereumStakingDepositContractPositionFetcher extends Contr
       },
     });
 
-    const balanceRaw = new BigNumber(data.deposits.length).times(32).times(1e18).toFixed(0);
-    return [balanceRaw];
+    if (!depositsData.deposits.length) return [0];
+
+    // Then, hit the beaconcha.in API to get the balance history (rate limit is 10 req/s, hence using the subgraph first)
+    const indices = uniq(depositsData.deposits.map(deposit => deposit.index));
+    const { data } = await axios.get<BeaconChainResponse>(`/validator/${escape(indices.join(','))}/balancehistory`, {
+      baseURL: BEACON_CHAIN_API_ENDPOINT,
+      params: {
+        limit: 1,
+      },
+    });
+
+    if (data.status !== 'OK') {
+      throw new Error('Failed to fetch balance history');
+    }
+
+    // @TODO Custom balances would make more sense to split by indices
+    const totalBalanceRawNormalized = data.data.reduce((acc, { balance }) => acc.plus(balance), new BigNumber(0));
+    const totalBalanceRaw = totalBalanceRawNormalized.div(1e9).times(1e18).toFixed(0);
+    return [totalBalanceRaw];
   }
 }
