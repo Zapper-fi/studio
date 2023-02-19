@@ -3,7 +3,11 @@ import { Inject } from '@nestjs/common';
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
-import { GetDataPropsParams, GetPriceParams, GetPricePerShareParams, GetUnderlyingTokensParams } from '~position/template/app-token.template.types';
+import {
+  GetDataPropsParams,
+  GetPricePerShareParams,
+  GetUnderlyingTokensParams,
+} from '~position/template/app-token.template.types';
 
 import { AbcCvx, ConcentratorContractFactory } from '../contracts';
 
@@ -23,7 +27,7 @@ export class EthereumConcentratorAbcCvxTokenFetcher extends AppTokenTemplatePosi
   }
 
   getAddresses() {
-    return ['0xDEC800C2b17c9673570FDF54450dc1bd79c8E359'];
+    return ['0xdec800c2b17c9673570fdf54450dc1bd79c8e359'];
   }
 
   async getUnderlyingTokenDefinitions({ contract }: GetUnderlyingTokensParams<AbcCvx>) {
@@ -32,11 +36,11 @@ export class EthereumConcentratorAbcCvxTokenFetcher extends AppTokenTemplatePosi
       { address: await contract.debtToken(), network: this.network },
     ];
   }
-  
-  async getPricePerShare({ contract } : GetPricePerShareParams<AbcCvx> )  {
+
+  async getPricePerShare({ contract }: GetPricePerShareParams<AbcCvx>) {
     const supply = await contract.totalSupply();
-    const reserves = await Promise.all([contract.totalCurveLpToken(), contract.totalDebtToken()])
-    return reserves.map(r => Number(r)/ Number(supply))
+    const reserves = await Promise.all([contract.totalCurveLpToken(), contract.totalDebtToken()]);
+    return reserves.map(r => Number(r) / Number(supply));
   }
 
   async getLiquidity({ appToken }: GetDataPropsParams<AbcCvx>) {

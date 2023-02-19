@@ -5,8 +5,8 @@ import { PositionTemplate } from '~app-toolkit/decorators/position-template.deco
 import { gqlFetch } from '~app-toolkit/helpers/the-graph.helper';
 import { GetDisplayPropsParams } from '~position/template/contract-position.template.types';
 
-import { OptimismSynthetixPerpV1ContractPositionFetcher } from '../../synthetix/optimism/synthetix.perp-v1.contract-position-fetcher';
 import { SynthetixPerp } from '../../synthetix/contracts';
+import { OptimismSynthetixPerpV1ContractPositionFetcher } from '../../synthetix/optimism/synthetix.perp-v1.contract-position-fetcher';
 
 type GetCrossMarginAccounts = {
   crossMarginAccounts: {

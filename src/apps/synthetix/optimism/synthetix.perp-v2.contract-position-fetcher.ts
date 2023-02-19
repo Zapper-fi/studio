@@ -1,14 +1,19 @@
 import { parseBytes32String } from 'ethers/lib/utils';
-import { gqlFetch } from '~app-toolkit/helpers/the-graph.helper';
 
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
+import { gqlFetch } from '~app-toolkit/helpers/the-graph.helper';
 import {
   DefaultContractPositionDefinition,
   GetDisplayPropsParams,
 } from '~position/template/contract-position.template.types';
-import { OptimismSynthetixPerpContractPositionFetcher, getContractsQuery, GetContracts } from './synthetix.perp.contract-position-fetcher';
 
 import { SynthetixPerp } from '../contracts';
+
+import {
+  OptimismSynthetixPerpContractPositionFetcher,
+  getContractsQuery,
+  GetContracts,
+} from './synthetix.perp.contract-position-fetcher';
 
 @PositionTemplate()
 export class OptimismSynthetixPerpV2ContractPositionFetcher extends OptimismSynthetixPerpContractPositionFetcher {
