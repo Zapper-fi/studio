@@ -31,14 +31,19 @@ export class EthereumAbracadabraCauldronContractPositionFetcher extends Abracada
     '0x806e16ec797c69afa8590a55723ce4cc1b54050e', // cvx3Pool (deprecated)
     '0x6371efe5cd6e3d2d7c477935b7669401143b7985', // cvx3pool (deprecated)
     '0x257101f20cb7243e2c7129773ed5dbbcef8b34e0', // cvx3pool
-    '0xbc36fde44a7fd8f545d459452ef9539d7a14dd63', // UST V1 (Deprecated)
-    '0x59e9082e068ddb27fc5ef1690f9a9f22b32e573f', // UST V2
+    '0xbc36fde44a7fd8f545d459452ef9539d7a14dd63', // UST V1 (deprecated)
+    '0x59e9082e068ddb27fc5ef1690f9a9f22b32e573f', // UST V2 (deprecated)
     '0x390db10e65b5ab920c19149c919d970ad9d18a41', // WETH
     '0x5ec47ee69bede0b6c2a2fc0d9d094df16c192498', // WBTC
     '0xf179fe36a36b32a4644587b8cdee7a23af98ed37', // yvCVXETH
     '0x7ce7d9ed62b9a6c5ace1c6ec9aeb115fa3064757', // yvDAI
     '0xd31e19a0574dbf09310c3b06f3416661b4dc7324', // Stargate USDC
     '0xc6b2b3fe7c3d7a6f823d9106e22e66660709001e', // Stargate USDT
-    '0x53375add9d2dfe19398ed65baaeffe622760a9a6', // yvstETH Concentrated
+    '0x53375add9d2dfe19398ed65baaeffe622760a9a6', // yvstETH Concentrated (deprecated)
+    '0x8227965A7f42956549aFaEc319F4E444aa438Df5', // LUSD
+    '0x207763511da879a900973A5E092382117C3c1588', // CRV
+    '0x85f60D3ea4E86Af43c9D4E9CC9095281fC25c405', // Migrated WBTC
+    '0x7259e152103756e1616A77Ae982353c3751A6a90', // yvCrv3Crypto
+    '0x1062eB452f8C7A94276437ec1F4aAca9b1495B72', // Stargate USDT (POF)
   ];
 }
