@@ -2,9 +2,11 @@
 /* tslint:disable */
 /* eslint-disable */
 export type { KlimaBondDepository } from './KlimaBondDepository';
+export type { KlimaDistributor } from './KlimaDistributor';
 export type { KlimaSKlima } from './KlimaSKlima';
 export type { KlimaWsKlima } from './KlimaWsKlima';
 export * as factories from './factories';
 export { KlimaBondDepository__factory } from './factories/KlimaBondDepository__factory';
+export { KlimaDistributor__factory } from './factories/KlimaDistributor__factory';
 export { KlimaSKlima__factory } from './factories/KlimaSKlima__factory';
 export { KlimaWsKlima__factory } from './factories/KlimaWsKlima__factory';
