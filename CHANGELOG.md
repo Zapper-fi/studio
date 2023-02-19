@@ -4,6 +4,21 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.393.0](https://github.com/Zapper-fi/studio/compare/v0.392.0...v0.393.0) (2023-02-19)
+
+
+### Features
+
+* **abracadabra:** add support for magicGLP ([#2327](https://github.com/Zapper-fi/studio/issues/2327)) ([3f611d0](https://github.com/Zapper-fi/studio/commit/3f611d0f05463a231c9c75516f6b2089f87ba5f9))
+
+
+### Bug Fixes
+
+* **apps:** Linting ([#2329](https://github.com/Zapper-fi/studio/issues/2329)) ([0be77e6](https://github.com/Zapper-fi/studio/commit/0be77e6edcea331dde9e9cf0903f9a9f63ff3ffa))
+* **concentrator:** fix abc token fetcher ([#2323](https://github.com/Zapper-fi/studio/issues/2323)) ([ee6d0a0](https://github.com/Zapper-fi/studio/commit/ee6d0a0b75a10017419bfd9c0ec2bcd6bb60a821))
+* **concentrator:** Fix abc token pricePerShare ([ee6d0a0](https://github.com/Zapper-fi/studio/commit/ee6d0a0b75a10017419bfd9c0ec2bcd6bb60a821))
+* **synthetix:** use new subgraph for PerpV2 markets ([#2324](https://github.com/Zapper-fi/studio/issues/2324)) ([622cdd1](https://github.com/Zapper-fi/studio/commit/622cdd12a1d425f32aaba3e34825e1fb4d2a79bf))
+
 ## [0.392.0](https://github.com/Zapper-fi/studio/compare/v0.391.0...v0.392.0) (2023-02-16)
 
 
