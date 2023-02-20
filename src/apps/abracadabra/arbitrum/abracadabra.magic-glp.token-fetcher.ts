@@ -1,45 +1,17 @@
-import { Inject } from '@nestjs/common';
-import { ethers } from 'ethers';
-
-import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { PositionTemplate } from '~app-toolkit/decorators/position-template.decorator';
 import { Erc20 } from '~contract/contracts';
-import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
-import {
-  GetAddressesParams,
-  DefaultAppTokenDefinition,
-  GetUnderlyingTokensParams,
-  UnderlyingTokenDefinition,
-  GetPricePerShareParams,
-  DefaultAppTokenDataProps,
-} from '~position/template/app-token.template.types';
+import { GetDisplayPropsParams, UnderlyingTokenDefinition } from '~position/template/app-token.template.types';
+import { Erc4626VaultTemplateTokenFetcher } from '~position/template/erc4626-vault.template.token-fetcher';
 
-import { AbracadabraContractFactory } from '../contracts';
-
-import { MAGIC_GLP_ADDRESS, S_GLP_ADDRESS } from './abracadabra.arbitrum.constants';
+import { MAGIC_GLP_ADDRESS } from './abracadabra.arbitrum.constants';
 
 @PositionTemplate()
-export class ArbitrumAbracadabraMagicGlpTokenFetcher extends AppTokenTemplatePositionFetcher<Erc20> {
+export class ArbitrumAbracadabraMagicGlpTokenFetcher extends Erc4626VaultTemplateTokenFetcher {
   groupLabel = 'Magic GLP';
+  vaultAddress = MAGIC_GLP_ADDRESS;
 
-  constructor(
-    @Inject(APP_TOOLKIT) public readonly appToolkit: IAppToolkit,
-    @Inject(AbracadabraContractFactory) private readonly abracadabraContractFactory: AbracadabraContractFactory,
-  ) {
-    super(appToolkit);
-  }
-
-  getContract(_address: string): Erc20 {
-    return this.abracadabraContractFactory.erc20({ address: _address, network: this.network });
-  }
-
-  async getAddresses(_params: GetAddressesParams<DefaultAppTokenDefinition>): Promise<string[]> {
-    return [MAGIC_GLP_ADDRESS];
-  }
-
-  async getUnderlyingTokenDefinitions(
-    _params: GetUnderlyingTokensParams<Erc20, DefaultAppTokenDefinition>,
-  ): Promise<UnderlyingTokenDefinition[]> {
+  // Override as the underlying is sGLP, but users expect to see GLP
+  async getUnderlyingTokenDefinitions(): Promise<UnderlyingTokenDefinition[]> {
     const glpTokenDefinitions = await this.appToolkit.getAppTokenPositionsFromDatabase({
       appId: 'gmx',
       groupIds: ['glp'],
@@ -51,28 +23,7 @@ export class ArbitrumAbracadabraMagicGlpTokenFetcher extends AppTokenTemplatePos
     return [{ address: glpUnderlying.address, network: this.network }];
   }
 
-  async getPricePerShare({
-    contract,
-    appToken,
-  }: GetPricePerShareParams<Erc20, DefaultAppTokenDataProps, DefaultAppTokenDefinition>): Promise<number[]> {
-    const glpContract = this.abracadabraContractFactory.erc20({
-      address: S_GLP_ADDRESS,
-      network: this.network,
-    });
-    const [totalSupply, balanceOf] = await Promise.all([
-      contract.totalSupply(),
-      glpContract.balanceOf(appToken.address),
-    ]);
-
-    const glpDecimals = await glpContract.decimals();
-    const pricePerShare =
-      parseFloat(ethers.utils.formatUnits(balanceOf, glpDecimals)) /
-      parseFloat(ethers.utils.formatUnits(totalSupply, glpDecimals));
-
-    return [pricePerShare];
-  }
-
-  async getLabel(): Promise<string> {
-    return 'magicGLP';
+  async getLabel({ contract }: GetDisplayPropsParams<Erc20>): Promise<string> {
+    return contract.name();
   }
 }
