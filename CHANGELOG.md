@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.396.0](https://github.com/Zapper-fi/studio/compare/v0.395.0...v0.396.0) (2023-02-20)
+
+
+### Features
+
+* **ethereum-staking:** Deal with rate limits by falling back to subgraph ([#2339](https://github.com/Zapper-fi/studio/issues/2339)) ([4026035](https://github.com/Zapper-fi/studio/commit/4026035d0dd3a4166470562ec960f3bb769a0e1d))
+
 ## [0.395.0](https://github.com/Zapper-fi/studio/compare/v0.394.0...v0.395.0) (2023-02-19)
 
 
