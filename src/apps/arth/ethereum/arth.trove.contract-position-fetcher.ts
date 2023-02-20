@@ -39,7 +39,7 @@ export class EthereumArthTroveContractPositionFetcher extends ContractPositionTe
   }
 
   async getDescriptors(): Promise<DefaultContractPositionDescriptor[]> {
-    return [{ address: '0xf4ed5d0c3c977b57382fabbea441a63faaf843d3' }];
+    return [{ address: '0x8b1da95724b1e376aE49FdB67afE33Fe41093af5' }];
   }
 
   async getTokenDescriptors() {

@@ -39,14 +39,14 @@ export class EthereumArthStabilityPoolContractPositionFetcher extends ContractPo
   }
 
   async getDescriptors(): Promise<DefaultContractPositionDescriptor[]> {
-    return [{ address: '0x2c360b513ae52947eeb37cfad57ac9b7c9373e1b' }];
+    return [{ address: '0x910F16455E5eB4605Fe639e2846579c228eeD3B5' }];
   }
 
   async getTokenDescriptors() {
     return [
       { metaType: MetaType.SUPPLIED, address: '0x8cc0f052fff7ead7f2edcccac895502e884a8a71' }, // ARTH
       { metaType: MetaType.CLAIMABLE, address: ZERO_ADDRESS }, // ETH
-      { metaType: MetaType.CLAIMABLE, address: '0xb4d930279552397bba2ee473229f89ec245bc365' }, // MAHA
+      { metaType: MetaType.CLAIMABLE, address: '0x745407c86DF8DB893011912d3aB28e68B62E49B0' }, // MAHA
     ];
   }
 
